@@ -46,7 +46,7 @@ const App = () => {
               path={["/feed", "/composer*"]}
               component={Feed}
             />
-            <AuthenticatedRoute exact path="/posts/:postId" component={Post} />
+            <Route exact path="/posts/:postId" component={Post} />
             <AuthenticatedRoute
               exact
               path={"/messages/:conversationId?"}

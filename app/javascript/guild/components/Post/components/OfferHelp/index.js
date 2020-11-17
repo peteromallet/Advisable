@@ -34,6 +34,8 @@ const OfferHelp = ({ recipient, guildPostId, engagementsCount }) => {
 
   const [offerHelpModal, toggleOfferHelpModal] = useToggle(false);
   const handleToggleOfferModal = () => {
+    if (!viewer?.guild || viewer?.id === recipient.id) return;
+
     toggleOfferHelpModal();
     setMessageBody("");
     send("RESET");

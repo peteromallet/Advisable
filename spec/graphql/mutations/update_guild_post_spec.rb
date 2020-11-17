@@ -13,6 +13,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         title
         body
         status
+        shareable
         author {
           id
         }
@@ -103,6 +104,18 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         }.to change { guild_post.title }.to("this is a new title").
           and change { guild_post.body }.to("this is a new body").
           and change { guild_post.audience_type }.to("skills")
+      end
+
+      it "updates shareable" do
+        input = {
+          guildPostId: guild_post.id,
+          shareable: true
+        }
+        query = mutation[input]
+        expect {
+          create_guild_post.call(query)
+          guild_post.reload
+        }.to change(guild_post, :shareable).from(false).to(true)
       end
 
       it "changes status back to draft if publish is not included" do

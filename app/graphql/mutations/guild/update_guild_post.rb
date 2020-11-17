@@ -9,6 +9,7 @@ class Mutations::Guild::UpdateGuildPost < Mutations::BaseMutation
   argument :type, String, required: false
   argument :audience_type, String, required: false
   argument :guild_topic_names, [String], required: false
+  argument :shareable, Boolean, required: false
 
   field :guild_post, Types::Guild::PostInterface, null: true
   field :errors, [Types::Error], null: true
