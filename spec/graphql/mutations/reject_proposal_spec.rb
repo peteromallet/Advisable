@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Mutations::RejectProposal do
   let(:application) do
-    create(:application, { status: 'Proposed', rejection_reason: nil })
+    create(:application, {status: 'Proposed', rejection_reason: nil})
   end
 
   let(:query) do
     <<-GRAPHQL
     mutation {
       rejectProposal(input: {
-        id: "#{application.airtable_id}",
+        id: "#{application.uid}",
         reason: "This is the rejection reason",
         comment: "This is the rejection comment"
       }) {
@@ -25,9 +25,9 @@ RSpec.describe Mutations::RejectProposal do
     GRAPHQL
   end
 
-  let(:context) { { current_user: application.project.user } }
+  let(:context) { {current_user: application.project.user} }
 
-  before :each do
+  before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
   end
 
@@ -37,30 +37,33 @@ RSpec.describe Mutations::RejectProposal do
     expect(status).to eq('Application Rejected')
   end
 
+  # rubocop:disable RSpec/MessageSpies
   it 'triggers a webhook' do
     expect(WebhookEvent).to receive(:trigger).with(
       'applications.proposal_rejected',
       any_args
     )
+
     AdvisableSchema.execute(query, context: context)
   end
+  # rubocop:enable RSpec/MessageSpies
 
   it 'sets the rejection_reason' do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       application.reload.rejection_reason
-    }.from(nil)
-      .to('This is the rejection reason')
+    }.from(nil).
+      to('This is the rejection reason')
   end
 
   it 'sets the rejection_reason_comment' do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       application.reload.rejection_reason_comment
-    }.from(nil)
-      .to('This is the rejection comment')
+    }.from(nil).
+      to('This is the rejection comment')
   end
 
   context 'when there is no logged in user' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)

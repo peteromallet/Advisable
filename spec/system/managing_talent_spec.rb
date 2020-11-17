@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'Manaing talent' do
+RSpec.describe 'Manaing talent', type: :system do
   let(:application) { create(:application, status: 'Working') }
 
-  before :each do
+  before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
     authenticate_as application.project.user
     application.project.user.complete_tutorial('fixedProjects')
@@ -24,7 +24,7 @@ RSpec.describe 'Manaing talent' do
   end
 
   context 'when there is an existing task' do
-    before :each do
+    before do
       create(
         :task,
         {
@@ -39,13 +39,13 @@ RSpec.describe 'Manaing talent' do
     end
 
     it 'enables the client to view the task' do
-      visit "/manage/#{application.airtable_id}"
+      visit "/manage/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       expect(page).to have_content('This is the task description')
     end
 
     it 'allows the client to create a new task for the freelancer' do
-      visit "/manage/#{application.airtable_id}"
+      visit "/manage/#{application.uid}"
       click_on 'Add a project'
       fill_in 'name', with: 'This is a task'
       click_on 'Due Date'
@@ -58,7 +58,7 @@ RSpec.describe 'Manaing talent' do
   end
 
   context "when there is a task with a stage of 'Not Assigned'" do
-    before :each do
+    before do
       create(
         :task,
         {
@@ -73,7 +73,7 @@ RSpec.describe 'Manaing talent' do
     end
 
     it 'enables the client to request a quote for the task' do
-      visit "/manage/#{application.airtable_id}"
+      visit "/manage/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       click_on 'Request Quote'
       expect(page).to have_content(
@@ -82,7 +82,7 @@ RSpec.describe 'Manaing talent' do
     end
 
     it 'enables the client to assign the task' do
-      visit "/manage/#{application.airtable_id}"
+      visit "/manage/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       click_on 'Assign Task'
       within "div[class^='styles__ConfirmationContainer']" do
@@ -93,17 +93,17 @@ RSpec.describe 'Manaing talent' do
 
     it 'allows the client to delete it' do
       allow_any_instance_of(Task).to receive(:remove_from_airtable)
-      visit "/manage/#{application.airtable_id}"
+      visit "/manage/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       click_on 'Open task actions menu'
       click_on 'Delete task'
       click_on 'Delete'
-      expect(page).to_not have_content('This is an existing task')
+      expect(page).not_to have_content('This is an existing task')
     end
   end
 
   context "when there is a task with a stage of 'Quote Requested'" do
-    before :each do
+    before do
       create(
         :task,
         {
@@ -118,7 +118,7 @@ RSpec.describe 'Manaing talent' do
     end
 
     it 'enables the client to assign the task' do
-      visit "/manage/#{application.airtable_id}"
+      visit "/manage/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       click_on 'Assign Task'
       click_on 'Assign'
@@ -126,7 +126,7 @@ RSpec.describe 'Manaing talent' do
     end
 
     it 'allows the client do edit the task' do
-      visit "/manage/#{application.airtable_id}"
+      visit "/manage/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       fill_in 'name', with: 'Updated task name'
       click_on 'Close Drawer'
@@ -135,7 +135,7 @@ RSpec.describe 'Manaing talent' do
   end
 
   context "when there is a task with a stage of 'Quote Provided'" do
-    before :each do
+    before do
       create(
         :task,
         {
@@ -150,7 +150,7 @@ RSpec.describe 'Manaing talent' do
     end
 
     it 'enables the client to assign the task' do
-      visit "/manage/#{application.airtable_id}"
+      visit "/manage/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       click_on 'Assign Task'
       click_on 'Assign'
@@ -158,7 +158,7 @@ RSpec.describe 'Manaing talent' do
     end
 
     it 'allows the client to edit the task and remove the estimate' do
-      visit "/manage/#{application.airtable_id}"
+      visit "/manage/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       find("textarea[name='name']").click
       click_on 'Continue'
@@ -169,7 +169,7 @@ RSpec.describe 'Manaing talent' do
   end
 
   context "when there is a task with a stage of 'Submitted'" do
-    before :each do
+    before do
       create(
         :task,
         {
@@ -184,7 +184,7 @@ RSpec.describe 'Manaing talent' do
     end
 
     it 'enables the client to approve the task' do
-      visit "/manage/#{application.airtable_id}"
+      visit "/manage/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       click_on 'Approve'
       within "div[class^='styles__ConfirmationContainer']" do

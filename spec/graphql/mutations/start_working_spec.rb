@@ -6,7 +6,7 @@ RSpec.describe Mutations::StartWorking do
     <<-GRAPHQL
     mutation {
       startWorking(input: {
-        application: "#{application.airtable_id}",
+        application: "#{application.uid}",
         projectType: "Fixed"
       }) {
         application {
@@ -18,14 +18,14 @@ RSpec.describe Mutations::StartWorking do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(PreviousProject).to receive(:sync_to_airtable)
   end
 
   context 'when a user is signed in' do
-    context 'and the user owns the project' do
-      let(:context) { { current_user: application.project.user } }
+    context 'when the user owns the project' do
+      let(:context) { {current_user: application.project.user} }
       let(:response) { AdvisableSchema.execute(query, context: context) }
 
       it "sets the status to 'Working'" do
@@ -34,8 +34,8 @@ RSpec.describe Mutations::StartWorking do
       end
     end
 
-    context 'and the user does not have access to the project' do
-      let(:context) { { current_user: create(:user) } }
+    context 'when the user does not have access to the project' do
+      let(:context) { {current_user: create(:user)} }
       let(:response) { AdvisableSchema.execute(query, context: context) }
 
       it 'returns a not_authorized error' do
@@ -46,7 +46,7 @@ RSpec.describe Mutations::StartWorking do
   end
 
   context 'when there is no user signed in' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
     let(:response) { AdvisableSchema.execute(query, context: context) }
 
     it 'returns a not_authorized error' do

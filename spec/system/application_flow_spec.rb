@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Application flow' do
-  before :each do
+RSpec.describe 'Application flow', type: :system do
+  before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     # mock the skills endpoint for the add a previous project modal
-    skill = double(Airtable: Skill, id: 'rec_123', fields: {'Name' => 'Testing'})
+    skill = instance_double(Airtable::Skill, id: 'rec_123', fields: {'Name' => 'Testing'})
     allow(Airtable::Skill).to receive(:active).and_return([skill])
   end
 
@@ -19,7 +19,7 @@ RSpec.describe 'Application flow' do
   end
 
   describe 'Overview step' do
-    fit 'Continues to the questions step' do
+    it 'Continues to the questions step' do
       visit "/invites/#{application.uid}/apply"
       fill_in :introduction, with: 'This is my intro'
       find('label', text: 'Immediately').click
@@ -111,17 +111,10 @@ RSpec.describe 'Application flow' do
         expect(page).to have_content("Including Advisable's fee")
       end
     end
-
-    context 'when the user has no previous projects' do
-      let!(:specialist) { create(:specialist) }
-      let(:application) do
-        create(:application, specialist: specialist, status: 'Invited To Apply')
-      end
-    end
   end
 
   describe 'Terms step' do
-    before :each do
+    before do
       create(:application_reference, application: application)
     end
 

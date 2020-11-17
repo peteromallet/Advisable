@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Submitting a proposal' do
+RSpec.describe 'Submitting a proposal', type: :system do
   let!(:project) { create(:project) }
   let!(:application) { create(:application, project: project) }
 
-  before :each do
+  before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
@@ -12,7 +12,7 @@ RSpec.describe 'Submitting a proposal' do
 
   it 'sets the status to Proposed' do
     authenticate_as application.specialist
-    visit "/applications/#{application.airtable_id}/proposal"
+    visit "/applications/#{application.uid}/proposal"
 
     fill_in 'rate', with: '55'
     click_on 'Continue'
