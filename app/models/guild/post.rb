@@ -73,13 +73,13 @@ end
 # Table name: guild_posts
 #
 #  id                 :uuid             not null, primary key
-#  body               :text
+#  body               :text             not null
 #  comments_count     :integer          default(0), not null
 #  data               :jsonb            not null
 #  engagements_count  :integer          default(0)
 #  reactionable_count :integer          default(0), not null
 #  status             :integer          default("draft"), not null
-#  title              :string
+#  title              :string           not null
 #  type               :string           default("Post"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
