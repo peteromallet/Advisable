@@ -4,6 +4,7 @@ import { useMutation, gql } from "@apollo/client";
 import { Box, Text, theme } from "@advisable/donut";
 import { Thanks } from "@guild/icons";
 import ReactTooltip from "react-tooltip";
+import { GuildBox } from "@guild/styles";
 
 export const GUILD_UPDATE_POST_REACTIONS = gql`
   mutation guildUpdatePostReactions($input: GuildUpdatePostReactionsInput!) {
@@ -58,18 +59,20 @@ const ReactionsButton = ({ post }) => {
       py="xxs"
       display="flex"
       alignSelf="flex-start"
-      alignItems="center"
       background="white"
       borderRadius={8}
       reacted={reacted}
       onClick={handleReaction}
       data-tip="Give Thanks"
+      minWidth="54px"
     >
       <ReactTooltip backgroundColor={theme.colors.catalinaBlue100} />
-      <Text fontSize="xs" mr="xs" color={reacted ? "white" : "catalinaBlue100"}>
-        {reactionsCount || "0"}
-      </Text>
-      <Thanks size={18} />
+      <GuildBox flexCenterBoth spaceChildrenHorizontal={4}>
+        <Text fontSize="xs" color={reacted ? "white" : "catalinaBlue100"}>
+          {reactionsCount || "0"}
+        </Text>
+        <Thanks size={16} />
+      </GuildBox>
     </StyledButton>
   );
 };
