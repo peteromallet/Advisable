@@ -3,7 +3,14 @@ import { useMutation } from "@apollo/client";
 import ExpandableText from "@advisable-main/components/ExpandableText";
 import { useToggle } from "@guild/hooks/useToggle";
 import { Messages } from "@guild/icons";
-import { Text, Avatar, Link, Textarea, useBreakpoint } from "@advisable/donut";
+import {
+  Box,
+  Text,
+  Avatar,
+  Link,
+  Textarea,
+  useBreakpoint,
+} from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
 import { StyledModal, ModalClose } from "./styles";
 import { MessageButton, SubmitButton } from "@guild/components/Buttons/styles";
@@ -45,7 +52,7 @@ const DirectMessage = ({ count, recipient, guildPostId }) => {
         >
           <ModalClose onClose={toggleMessageModal} />
           <GuildBox spaceChildrenHorizontal={34} mb="l">
-            <GuildBox display="flex" flexShrink={0}>
+            <Box display="flex" flexShrink={0}>
               <Avatar
                 as={Link.External}
                 href={`/freelancers/${recipient.id}`}
@@ -53,12 +60,12 @@ const DirectMessage = ({ count, recipient, guildPostId }) => {
                 name={recipient.name}
                 url={recipient.avatar}
               />
-            </GuildBox>
+            </Box>
             <GuildBox spaceChildrenVertical={mUp && 8} alignSelf="center">
               <Text fontSize="xxl" fontWeight="medium" color="catalinaBlue100">
                 {recipient.name}
               </Text>
-              <GuildBox>
+              <Box>
                 {mUp && <Label label="Location" />}
                 <Text
                   fontSize={{ _: "m", m: "l" }}
@@ -68,7 +75,7 @@ const DirectMessage = ({ count, recipient, guildPostId }) => {
                 >
                   {recipient.location}
                 </Text>
-              </GuildBox>
+              </Box>
               {mUp && <Bio bio={recipient.bio} />}
             </GuildBox>
           </GuildBox>
@@ -118,7 +125,7 @@ const Label = ({ label }) => (
 );
 
 const Bio = ({ bio }) => (
-  <GuildBox>
+  <Box>
     <Label label="Bio" />
     <ExpandableText
       fontSize="m"
@@ -128,7 +135,7 @@ const Bio = ({ bio }) => (
     >
       {bio}
     </ExpandableText>
-  </GuildBox>
+  </Box>
 );
 
 export default DirectMessage;

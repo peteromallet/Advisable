@@ -53,7 +53,7 @@ const Post = () => {
   return (
     data && (
       <>
-        <GuildBox display="flex" justifyContent="center" m={{ _: "s", m: "l" }}>
+        <Box display="flex" justifyContent="center" m={{ _: "s", m: "l" }}>
           <Card
             elevation={{ _: "s", m: "m" }}
             maxWidth={theme.breakpoints.l}
@@ -64,7 +64,7 @@ const Post = () => {
             )}
 
             {/* Header */}
-            <GuildBox
+            <Box
               px={{ _: "s", s: "xxl" }}
               py="l"
               backgroundColor="ghostWhite100"
@@ -105,7 +105,7 @@ const Post = () => {
                   </Text>
                 </Box>
               </GuildBox>
-            </GuildBox>
+            </Box>
 
             {/* Topics and Interactions */}
             <GuildBox
@@ -142,7 +142,7 @@ const Post = () => {
             </GuildBox>
 
             {/* Post body */}
-            <GuildBox px={{ _: "s", m: "l", l: "80px" }} py="3xl">
+            <Box px={{ _: "s", m: "l", l: "80px" }} py="3xl">
               <Text
                 size="m"
                 lineHeight="l"
@@ -167,7 +167,7 @@ const Post = () => {
                   </Button>
                 </Box>
               )}
-            </GuildBox>
+            </Box>
 
             {/* Comments */}
             {/* <GuildBox
@@ -255,7 +255,7 @@ const Post = () => {
               </GuildBox>
             )} */}
           </Card>
-        </GuildBox>
+        </Box>
       </>
     )
   );

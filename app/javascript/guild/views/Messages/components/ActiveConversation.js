@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { css } from "styled-components";
 import { motion } from "framer-motion";
 import { truncate } from "lodash-es";
-import { Text, Avatar, Link, Textarea, theme } from "@advisable/donut";
+import { Box, Text, Avatar, Link, Textarea, theme } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { useTwilioChat } from "@guild/hooks/twilioChat/useTwilioChat";
@@ -146,7 +146,7 @@ const ActiveConversation = ({ channelSid }) => {
                 </GuildBox>
               </StyledMessage>
 
-              <GuildBox
+              <Box
                 alignSelf={message.author === other ? "flex-start" : "flex-end"}
               >
                 <Text
@@ -157,7 +157,7 @@ const ActiveConversation = ({ channelSid }) => {
                 >
                   {relativeDate(message.dateCreated)} ago
                 </Text>
-              </GuildBox>
+              </Box>
             </GuildBox>
           ))}
           <ScrollToBottom />

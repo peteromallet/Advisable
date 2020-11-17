@@ -15,6 +15,7 @@ end
 #  body               :text             not null
 #  comments_count     :integer          default(0), not null
 #  data               :jsonb            not null
+#  engagements_count  :integer          default(0)
 #  reactionable_count :integer          default(0), not null
 #  status             :integer          default("draft"), not null
 #  title              :string           not null
