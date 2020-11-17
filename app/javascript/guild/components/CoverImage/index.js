@@ -3,7 +3,7 @@ import { useImage } from "react-image";
 import styled from "styled-components";
 import Loading from "@advisable-main/components/Loading";
 import PostImages from "@guild/components/PostImages";
-import { GuildBox } from "@guild/styles";
+import { Box } from "@advisable/donut";
 
 const StyledCoverImage = styled.img`
   object-fit: cover;
@@ -19,10 +19,10 @@ const Cover = ({ srcList }) => {
 export const CoverImage = ({ images, cover }) => {
   return (
     <Suspense fallback={<Loading />}>
-      <GuildBox position="relative" width="100%" display="inline-flex">
+      <Box position="relative" width="100%" display="inline-flex">
         <Cover srcList={cover} />
         {images && <PostImages images={images} />}
-      </GuildBox>
+      </Box>
     </Suspense>
   );
 };

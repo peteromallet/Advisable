@@ -11,7 +11,7 @@ export const NotificationDropdown = styled(Box)`
     padding: 24px;
     width: 442px;
   }
-  height: 80%;
+  max-height: 80%;
   right: 0;
   width: 100%;
   padding: 8px;
