@@ -10,7 +10,7 @@ import useViewer from "../../../../hooks/useViewer";
 
 function ButtonsBar({ isOwner, specialist }) {
   const viewer = useViewer();
-  const viewerIsGuild = viewer.guild;
+  const viewerIsGuild = viewer?.guild || false;
 
   return (
     <Box
