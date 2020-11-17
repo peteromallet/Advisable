@@ -8,7 +8,7 @@ RSpec.describe Mutations::RequestIntroduction do
     <<-GRAPHQL
     mutation {
       requestIntroduction(input: {
-        application: "#{application.airtable_id}",
+        application: "#{application.uid}",
         availability: ["#{time}"],
         timeZone: "Dublin"
       }) {
@@ -25,7 +25,7 @@ RSpec.describe Mutations::RequestIntroduction do
 
   let(:context) { {current_user: application.project.user} }
 
-  before :each do
+  before do
     allow_any_instance_of(Interview).to receive(:sync_to_airtable)
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Types::Interview).to receive(:id).and_return(

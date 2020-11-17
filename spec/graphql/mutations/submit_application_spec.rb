@@ -8,7 +8,7 @@ RSpec.describe Mutations::SubmitApplication do
     <<-GRAPHQL
     mutation {
       submitApplication(input: {
-        id: "#{application.airtable_id}",
+        id: "#{application.uid}",
       }) {
         application {
           id
@@ -22,9 +22,9 @@ RSpec.describe Mutations::SubmitApplication do
     GRAPHQL
   end
 
-  let(:context) { { current_user: application.specialist } }
+  let(:context) { {current_user: application.specialist} }
 
-  before :each do
+  before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
   end
 
@@ -37,7 +37,7 @@ RSpec.describe Mutations::SubmitApplication do
   it 'sets the applied at attribute' do
     expect(application.reload.applied_at).to be_nil
     AdvisableSchema.execute(query, context: context)
-    expect(application.reload.applied_at).to_not be_nil
+    expect(application.reload.applied_at).not_to be_nil
   end
 
   context 'when applications are closed' do

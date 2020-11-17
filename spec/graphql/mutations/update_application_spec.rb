@@ -15,7 +15,7 @@ RSpec.describe Mutations::UpdateApplication do
     )
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
   end
 
@@ -24,7 +24,7 @@ RSpec.describe Mutations::UpdateApplication do
       <<-GRAPHQL
       mutation {
         updateApplication(input: {
-          id: "#{application.airtable_id}",
+          id: "#{application.uid}",
           introduction: "This is the intro"
         }) {
           application {
@@ -48,7 +48,7 @@ RSpec.describe Mutations::UpdateApplication do
       <<-GRAPHQL
       mutation {
         updateApplication(input: {
-          id: "#{application.airtable_id}",
+          id: "#{application.uid}",
           availability: "2 Weeks"
         }) {
           application {
@@ -73,7 +73,7 @@ RSpec.describe Mutations::UpdateApplication do
       <<-GRAPHQL
       mutation {
         updateApplication(input: {
-          id: "#{application.airtable_id}",
+          id: "#{application.uid}",
           questions: [{question: "#{question}",
             answer: "This is an answer"
           }]
@@ -98,7 +98,7 @@ RSpec.describe Mutations::UpdateApplication do
       )
     end
 
-    context 'and an invalid question is passed' do
+    context 'when an invalid question is passed' do
       let(:question) { 'Not a question?' }
 
       it 'returns an error' do
@@ -111,22 +111,14 @@ RSpec.describe Mutations::UpdateApplication do
 
   context 'when updating the references' do
     let(:previous_project) { create(:previous_project, specialist: specialist) }
-    let(:previous_project_2) do
-      create(:previous_project, specialist: specialist)
-    end
-
-    before :each do
-      create(:application, specialist: specialist)
-    end
-
     let(:query) do
       <<-GRAPHQL
       mutation {
         updateApplication(input: {
-          id: "#{application.airtable_id}",
+          id: "#{application.uid}",
           references: [
             "#{previous_project.uid}",
-            "#{previous_project_2.uid}"]
+            "#{previous_project2.uid}"]
         }) {
           errors {
             code
@@ -134,6 +126,13 @@ RSpec.describe Mutations::UpdateApplication do
         }
       }
       GRAPHQL
+    end
+    let(:previous_project2) do
+      create(:previous_project, specialist: specialist)
+    end
+
+    before do
+      create(:application, specialist: specialist)
     end
 
     it 'adds the references' do
@@ -148,7 +147,7 @@ RSpec.describe Mutations::UpdateApplication do
       <<-GRAPHQL
       mutation {
         updateApplication(input: {
-          id: "#{application.airtable_id}",
+          id: "#{application.uid}",
           rate: 100
         }) {
           application {
@@ -174,7 +173,7 @@ RSpec.describe Mutations::UpdateApplication do
       <<-GRAPHQL
       mutation {
         updateApplication(input: {
-          id: "#{application.airtable_id}",
+          id: "#{application.uid}",
           acceptsFee: true
         }) {
           application {
@@ -201,7 +200,7 @@ RSpec.describe Mutations::UpdateApplication do
       <<-GRAPHQL
       mutation {
         updateApplication(input: {
-          id: "#{application.airtable_id}",
+          id: "#{application.uid}",
           acceptsTerms: true
         }) {
           application {
