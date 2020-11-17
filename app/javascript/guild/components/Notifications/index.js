@@ -42,8 +42,8 @@ const Notifications = ({ open }) => {
           </NotificationItem>
         ))
       ) : (
-        <NotificationItem alignItems="center" justifyContent="center">
-          <Text size="l" color="catalinaBlue100">
+        <NotificationItem pb="l" alignItems="center" justifyContent="center">
+          <Text size="m" fontWeight="500" color="catalinaBlue100">
             {"No Notifications"}
           </Text>
         </NotificationItem>
@@ -108,12 +108,7 @@ const CommentNotification = ({ author, post, body, id, createdAtTimeAgo }) => (
   </>
 );
 
-const ReactionNotification = ({
-  author,
-  kind,
-  reactionable,
-  createdAtTimeAgo,
-}) => (
+const ReactionNotification = ({ author, reactionable, createdAtTimeAgo }) => (
   <Box display="flex">
     <GuildBox
       width="87px"
@@ -135,7 +130,9 @@ const ReactionNotification = ({
       to={`/posts/${reactionable?.id}`}
     >
       <Text size="xs" color="catalinaBlue100">
-        {`Reacted to your Post with: ${kind}`}
+        {`Gave Thanks for your post, "${truncate(reactionable.title, {
+          length: 100,
+        })}"`}
       </Text>
     </Box>
   </Box>

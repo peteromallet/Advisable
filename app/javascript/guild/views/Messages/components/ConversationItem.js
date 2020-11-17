@@ -1,12 +1,13 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Avatar, Text } from "@advisable/donut";
+import { Box, Avatar, Text, useBreakpoint } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import { GuildBox, flex } from "@guild/styles";
 import { StyledConversationItem } from "../styles";
 import { CHAT_PARTICIPANT_QUERY } from "../queries";
 
 const ConversationItem = ({ conversation, setActive, isActive }) => {
+  const sUp = useBreakpoint("sUp");
   const { data, loading } = useQuery(CHAT_PARTICIPANT_QUERY, {
     variables: { id: conversation?.other },
   });
@@ -18,13 +19,13 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
       onClick={() => setActive(conversation.sid)}
       active={isActive}
     >
-      <GuildBox display="flex" alignSelf="flex-end">
+      <Box display="flex" alignSelf="flex-end">
         <Text size="xxs" color="darkGray">
           {conversation.lastMessageWords} ago
         </Text>
-      </GuildBox>
-      <GuildBox alignItems="center" display="flex">
-        <GuildBox flexShrink={0}>
+      </Box>
+      <Box alignItems="center" display="flex">
+        <Box flexShrink={0}>
           <Avatar
             as="a"
             size={"s"}
@@ -32,7 +33,7 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
             url={other.avatar}
             href={`/freelancers/${other.id}`}
           />
-        </GuildBox>
+        </Box>
         <GuildBox
           ml={"s"}
           display="flex"
@@ -49,7 +50,7 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
             {conversation.friendlyName}
           </Text>
           <Text
-            as="a"
+            as={sUp ? "a" : "div"}
             href={`/freelancers/${other.id}`}
             size="xs"
             color="quartz"
@@ -57,7 +58,7 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
             {other.name}
           </Text>
         </GuildBox>
-      </GuildBox>
+      </Box>
     </StyledConversationItem>
   );
 };

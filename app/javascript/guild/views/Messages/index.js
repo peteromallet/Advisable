@@ -1,7 +1,7 @@
 import { css } from "styled-components";
 import React, { useCallback, useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Card, Text, theme, useBreakpoint } from "@advisable/donut";
+import { Box, Card, Text, theme, useBreakpoint } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import { ArrowBack } from "@styled-icons/ionicons-outline";
 import { useToggle } from "@guild/hooks/useToggle";
@@ -22,12 +22,18 @@ const Messages = () => {
   const [sortConversations, toggleSortConversations] = useToggle();
   const [activeChannelSid, setActiveChannelSid] = useState(null);
 
-  /* Set initial channel */
+  /* Set the initial channel */
   useEffect(() => {
-    if (!subscribedChannels.length || activeChannelSid) return;
+    if (!subscribedChannels.length || !sUp || activeChannelSid) return;
     const initialChannel = paramsChannelSid || subscribedChannels[0].sid;
     handleSetActive(initialChannel);
-  }, [subscribedChannels, activeChannelSid, handleSetActive, paramsChannelSid]);
+  }, [
+    subscribedChannels,
+    activeChannelSid,
+    handleSetActive,
+    paramsChannelSid,
+    sUp,
+  ]);
 
   const handleSetActive = useCallback(
     (channelSid) => {
@@ -46,11 +52,7 @@ const Messages = () => {
 
   return (
     <>
-      <GuildBox
-        display="flex"
-        justifyContent="center"
-        mt={{ _: "s", m: "3xl" }}
-      >
+      <Box display="flex" justifyContent="center" mt={{ _: "s", m: "3xl" }}>
         <Card
           elevation="m"
           maxWidth={theme.breakpoints.l}
@@ -60,11 +62,11 @@ const Messages = () => {
           {loading ? (
             <Loading />
           ) : (
-            <GuildBox height="100%" display="flex" flexDirection="row">
+            <Box height="100%" display="flex" flexDirection="row">
               {subscribedChannels.length ? (
                 <>
                   {(sUp || !activeChannelSid) && (
-                    <GuildBox
+                    <Box
                       width={{ _: "100%", s: "38%" }}
                       display="flex"
                       flexDirection="column"
@@ -87,7 +89,7 @@ const Messages = () => {
                       </InboxHeader>
 
                       {/* Conversations Inbox List */}
-                      <GuildBox
+                      <Box
                         width="100%"
                         height="100%"
                         display="flex"
@@ -106,13 +108,13 @@ const Messages = () => {
                             isActive={activeChannelSid === conversation.sid}
                           />
                         ))}
-                      </GuildBox>
-                    </GuildBox>
+                      </Box>
+                    </Box>
                   )}
 
                   {/* Active Conversation and New Message */}
                   {activeChannelSid && (
-                    <GuildBox
+                    <Box
                       width={{ _: "100%", s: "62%" }}
                       display="flex"
                       flexDirection="column"
@@ -124,7 +126,7 @@ const Messages = () => {
                         />
                       )}
                       <ActiveConversation channelSid={activeChannelSid} />
-                    </GuildBox>
+                    </Box>
                   )}
                 </>
               ) : (
@@ -135,16 +137,16 @@ const Messages = () => {
                   prefix
                 />
               )}
-            </GuildBox>
+            </Box>
           )}
         </Card>
-      </GuildBox>
+      </Box>
     </>
   );
 };
 
 const MobileBackConversations = ({ onBack }) => (
-  <GuildBox
+  <Box
     height="60px"
     display="flex"
     flexShrink={0}
@@ -162,7 +164,7 @@ const MobileBackConversations = ({ onBack }) => (
         Conversations
       </Text>
     </GuildBox>
-  </GuildBox>
+  </Box>
 );
 
 export default Messages;
