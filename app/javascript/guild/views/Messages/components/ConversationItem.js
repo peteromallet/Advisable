@@ -1,12 +1,13 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Box, Avatar, Text } from "@advisable/donut";
+import { Box, Avatar, Text, useBreakpoint } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import { GuildBox, flex } from "@guild/styles";
 import { StyledConversationItem } from "../styles";
 import { CHAT_PARTICIPANT_QUERY } from "../queries";
 
 const ConversationItem = ({ conversation, setActive, isActive }) => {
+  const sUp = useBreakpoint("sUp");
   const { data, loading } = useQuery(CHAT_PARTICIPANT_QUERY, {
     variables: { id: conversation?.other },
   });
@@ -49,7 +50,7 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
             {conversation.friendlyName}
           </Text>
           <Text
-            as="a"
+            as={sUp ? "a" : "div"}
             href={`/freelancers/${other.id}`}
             size="xs"
             color="quartz"
