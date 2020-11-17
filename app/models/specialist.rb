@@ -129,8 +129,10 @@ end
 #
 # Indexes
 #
-#  index_specialists_on_account_id  (account_id)
-#  index_specialists_on_country_id  (country_id)
+#  index_specialists_on_account_id   (account_id)
+#  index_specialists_on_airtable_id  (airtable_id)
+#  index_specialists_on_country_id   (country_id)
+#  index_specialists_on_uid          (uid)
 #
 # Foreign Keys
 #

@@ -182,6 +182,7 @@ end
 #  index_users_on_country_id       (country_id)
 #  index_users_on_industry_id      (industry_id)
 #  index_users_on_sales_person_id  (sales_person_id)
+#  index_users_on_uid              (uid)
 #
 # Foreign Keys
 #

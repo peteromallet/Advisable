@@ -53,34 +53,27 @@ class Application < ApplicationRecord
 
   belongs_to :specialist
   belongs_to :project
-  has_many :bookings
-  has_many :interviews
-  has_many :tasks
-  has_one :trial_task, -> { where(trial: true) }, class_name: 'Task'
+  has_many :bookings, dependent: :destroy
+  has_many :interviews, dependent: :destroy
+  has_many :tasks, dependent: :destroy
+  has_one :trial_task, -> { where(trial: true) }, class_name: "Task", inverse_of: :application
   # This previous project association represents a previous project that was created
   # from the application record after working with the client.
-  has_one :previous_project
+  has_one :previous_project, dependent: :destroy
 
   # references attached are previous projects that the specialist attaches to the application
   # during the application process.
-  has_many :references,
-           -> { where(project_type: 'PreviousProject') },
-           class_name: 'ApplicationReference'
-  has_many :previous_projects,
-           through: :references,
-           source: :project,
-           source_type: 'PreviousProject'
-  has_one :interview
+  has_many :references, -> { where(project_type: "PreviousProject") }, class_name: "ApplicationReference", dependent: :destroy, inverse_of: :application
+  has_many :previous_projects, through: :references, source: :project, source_type: "PreviousProject"
+  has_one :interview, dependent: :destroy
 
-  # Every time an application is created, updated or destroyed we want to update
-  # the assoicated specialists average_score.
-  after_save :update_specialist_average_score
+  # Every time an application is created, updated or destroyed we want to:
+  # - update the associated specialists average_score
+  # -update the counts for the associated project
   after_destroy :update_specialist_average_score
-
-  # Every time an application is created, updated or destroyed we want to update
-  # the counts for the associated project.
-  after_save :update_project_counts, if: :saved_change_to_status?
   after_destroy :update_project_counts
+  after_save :update_specialist_average_score
+  after_save :update_project_counts, if: :saved_change_to_status?
 
   scope :applied, -> { where(status: 'Applied') }
   scope :high_score, -> { where('score > ?', 65) }
@@ -125,6 +118,7 @@ class Application < ApplicationRecord
   # Returns the application rate as cents
   def invoice_rate
     return 0 if rate.nil?
+
     (rate * 100).ceil
   end
 
@@ -140,11 +134,13 @@ class Application < ApplicationRecord
 
   def update_project_counts
     return unless project
+
     project.update_application_counts
   end
 
   def update_specialist_average_score
-    return unless specialist.present?
+    return if specialist.blank?
+
     specialist.update(average_score: specialist.applications.average(:score))
   end
 end
@@ -199,6 +195,7 @@ end
 #  index_applications_on_project_id           (project_id)
 #  index_applications_on_rejection_reason_id  (rejection_reason_id)
 #  index_applications_on_specialist_id        (specialist_id)
+#  index_applications_on_uid                  (uid)
 #
 # Foreign Keys
 #
