@@ -115,7 +115,6 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                   value={formik.values.guildTopicNames}
                   onChange={(guildTopicNames) => {
                     formik.setFieldValue("guildTopicNames", guildTopicNames);
-                    formik.submitForm();
                   }}
                 />
                 <ErrorMessage
