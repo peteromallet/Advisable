@@ -9,22 +9,23 @@ export default {
 
 function FirstPage({ setPage }) {
   return (
-    <Box height="50vh" width="50vw">
+    <Box height="70vh" width="100%">
       <OrbitsSystem
-        increment={15}
-        x={60}
-        y={60}
+        increment={80}
+        x={80}
+        y={80}
         fill="transparent"
-        stroke="red"
-        offsetX="10px"
-        offsetY="10px"
+        stroke="#E1E1E4"
+        offsetX="0px"
+        offsetY="0px"
+        transition={{ duration: 1 }}
       >
-        <Orbit />
-        <Orbit />
-        <Orbit />
-        <Orbit />
-        <Orbit />
-        <Orbit />
+        <Orbit stroke="#1E42C2" />
+        <Orbit stroke="#1E42C2" />
+        <Orbit stroke="#1E42C2" />
+        <Orbit stroke="#1E42C2" />
+        <Orbit stroke="#1E42C2" />
+        <Orbit fill="#234EE4" />
         <Orbit />
         <Orbit />
         <Orbit />
@@ -40,22 +41,23 @@ function FirstPage({ setPage }) {
 
 function SecondPage({ setPage }) {
   return (
-    <Box height="50vh" width="50vw">
+    <Box height="70vh" width="100%">
       <OrbitsSystem
-        increment={15}
+        increment={80}
         x={180}
         y={280}
         fill="transparent"
-        stroke="blue"
+        stroke="#E1E1E4"
         offsetX="-10px"
-        offsetY="10px"
+        offsetY="30px"
+        transition={{ duration: 1 }}
       >
-        <Orbit />
-        <Orbit />
-        <Orbit />
-        <Orbit />
-        <Orbit />
-        <Orbit />
+        <Orbit stroke="#1E42C2" />
+        <Orbit stroke="#1E42C2" />
+        <Orbit stroke="#1E42C2" />
+        <Orbit stroke="#1E42C2" />
+        <Orbit stroke="#1E42C2" />
+        <Orbit fill="#234EE4" />
         <Orbit />
         <Orbit />
         <Orbit />
