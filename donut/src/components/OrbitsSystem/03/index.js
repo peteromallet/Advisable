@@ -11,18 +11,12 @@ function OrbitsSystem({ children, increment, x, y, ...props }) {
     const maxRadius = increment * numOfOrbits;
     const offsetX = child.props.offsetX || props.offsetX || "0%";
     const offsetY = child.props.offsetY || props.offsetY || "0%";
-    const xFactor =
-      offsetX.replace(/[0-9]|-/g, "") === "%" ? parseInt(offsetX) / 100 : 0;
-    const yFactor =
-      offsetY.replace(/[0-9]|-/g, "") === "%" ? parseInt(offsetY) / 100 : 0;
-    const xShift =
-      offsetX.replace(/[0-9]|-/g, "") === "px"
-        ? parseInt(offsetX) * reverseOrder
-        : 0;
-    const yShift =
-      offsetY.replace(/[0-9]|-/g, "") === "px"
-        ? parseInt(offsetY) * reverseOrder
-        : 0;
+    const unitX = offsetX.replace(/[0-9]|-/g, "");
+    const unitY = offsetY.replace(/[0-9]|-/g, "");
+    const xFactor = unitX === "%" ? parseInt(offsetX) / 100 : 0;
+    const yFactor = unitY === "%" ? parseInt(offsetY) / 100 : 0;
+    const xShift = unitX === "px" ? parseInt(offsetX) * reverseOrder : 0;
+    const yShift = unitY === "px" ? parseInt(offsetY) * reverseOrder : 0;
     const cx = x + maxRadius * xFactor + radius * -xFactor + xShift;
     const cy = y + maxRadius * yFactor + radius * -yFactor + yShift;
 
