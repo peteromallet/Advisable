@@ -14,6 +14,7 @@ export default gql`
     createdAtTimeAgo
     denormalizedType
     audienceType
+    shareable
     coverImage {
       id
       url
