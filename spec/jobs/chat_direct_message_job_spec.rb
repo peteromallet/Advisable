@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe ChatDirectMessageJob do
-  let(:guild_post) { create(:guild_post) }
-  let(:recipient) { build(:specialist, :guild) }
-  let(:sender) { build(:specialist, :guild) }
+  let(:recipient) { create(:specialist, :guild) }
+  let(:sender) { create(:specialist, :guild) }
+  let(:guild_post) { create(:guild_post, specialist: recipient) }
   let(:twilio_double) { instance_double(TwilioChat::Client, identity: "sender-123") }
   let(:other) {
     instance_double(Twilio::REST::Chat::V2::ServiceContext::UserInstance, identity: recipient.uid)
@@ -40,8 +40,9 @@ RSpec.describe ChatDirectMessageJob do
         allow(other).to receive(:is_online) { true }
       end
 
-      it "records a new engagment" do
-        expect { subject }.to change { guild_post.reload.engagements_count }.by(1)
+      it "records a post engagement" do
+        expect { subject }.to change { guild_post.reload.engagements_count }.by(1).
+          and change { Guild::PostEngagement.count }.by(1)
       end
 
       describe "with calendly link" do

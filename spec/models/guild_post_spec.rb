@@ -102,12 +102,6 @@ RSpec.describe Guild::Post, type: :model do
     end
   end
 
-  describe "with engagements" do
-    it "is incremented when an engagment is recorded" do
-      expect { guild_post.record_engagement! }.to change(guild_post, :engagements_count).from(0).to(1)
-    end
-  end
-
   describe "with audience type" do
     before do
       guild_post.guild_topic_list = %w[foo bar baz]

@@ -18,12 +18,14 @@ class ChatDirectMessageJob < ApplicationJob
     end
 
     # If this message is an offer to help on a guild post:
-    #  a. count this as an engagment
+    #  a. create a post engagement
     #  b. modify the message to include the context
     if guild_post_id && (guild_post = Guild::Post.find(guild_post_id))
       context = "Offering help for '#{guild_post.title}':\n\n"
       @message_with_context = "#{context} #{message}"
-      guild_post.record_engagement!
+
+      specialist_sender = Specialist.find_by(uid: sender_uid)
+      guild_post.engagements.create(specialist: specialist_sender)
     end
 
     # Add the first or additional message
