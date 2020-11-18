@@ -36,12 +36,13 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
         },
       },
     });
+
+    progress("EDIT_TARGETING", nextPath);
   };
 
   const handleAddSuggested = (suggested, formik) => {
     const prev = formik.values.guildTopicNames || [];
     formik.setFieldValue("guildTopicNames", [...prev, suggested]);
-    formik.submitForm();
   };
 
   const guildTopicNames = guildPost?.guildTopics.map((gt) => gt.name);
@@ -69,10 +70,6 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
   const singularAudience = capitalize(
     pluralize.singular(guildPost.audienceType),
   );
-
-  const onContinue = () => {
-    progress("EDIT_TARGETING", nextPath);
-  };
 
   return (
     <Box display="flex">
@@ -118,7 +115,6 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                   value={formik.values.guildTopicNames}
                   onChange={(guildTopicNames) => {
                     formik.setFieldValue("guildTopicNames", guildTopicNames);
-                    formik.submitForm();
                   }}
                 />
                 <ErrorMessage
@@ -153,6 +149,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                         .map((name, key) => (
                           <StyledTopicable
                             selectable
+                            type="button"
                             disabled={formik.values.guildTopicNames.length > 4}
                             onClick={() => handleAddSuggested(name, formik)}
                             key={key}
@@ -172,7 +169,6 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                   type="submit"
                   loading={formik.isSubmitting}
                   suffix={<ArrowRight />}
-                  onClick={onContinue}
                   disabled={
                     formik.isSubmitting || !formik.values.guildTopicNames.length
                   }

@@ -25,7 +25,7 @@ export default function EditImages({ guildPost }) {
           mb="s"
           fontSize="l"
           fontWeight="medium"
-          to={pathWithState(`/composer/${guildPost.id}/edit`)}
+          to={pathWithState(`/composer/${guildPost.id}/post`)}
         >
           <Box display="inline-block" mr="xxs">
             <ArrowLeft size={20} strokeWidth={2} />

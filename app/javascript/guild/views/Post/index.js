@@ -13,7 +13,7 @@ import Topics from "@guild/components/Post/components/Topics";
 import { CoverImage } from "@guild/components/CoverImage";
 import ReactionsButton from "@guild/components/Post/components/ReactionsButton";
 import useViewer from "@advisable-main/hooks/useViewer";
-import { css } from "styled-components";
+import Markdown from "@guild/components/Markdown";
 // import { useToggle } from "@guild/hooks/useToggle";
 // import { SubmitButton } from "@guild/components/Buttons/styles";
 // import pluralize from "@advisable-main/utilities/pluralize";
@@ -143,23 +143,14 @@ const Post = () => {
 
             {/* Post body */}
             <Box px={{ _: "s", m: "l", l: "80px" }} py="3xl">
-              <Text
-                size="m"
-                lineHeight="l"
-                color="quartz"
-                css={css`
-                  white-space: pre-wrap;
-                  white-space: pre-line;
-                `}
-              >
-                {post.body}
-              </Text>
+              <Markdown>{post.body}</Markdown>
+
               {viewer.id === post.author.id && (
                 <Box display="flex" justifyContent="flex-end">
                   <Button
                     size="s"
                     as={Link}
-                    to={`/composer/${post.id}/edit`}
+                    to={`/composer/${post.id}/post`}
                     variant="subtle"
                     prefix={<Edit />}
                   >

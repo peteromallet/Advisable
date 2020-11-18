@@ -1,14 +1,14 @@
 import React from "react";
-import { css } from "styled-components";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
 import { ArrowLeft, ArrowRight, Edit } from "@styled-icons/feather";
-import { Box, Text, Link, Button, Stack } from "@advisable/donut";
+import { Box, Paragraph, Text, Link, Button, Stack } from "@advisable/donut";
 import { useUpdateGuildPostWriteCache } from "./mutations";
 import { capitalize } from "@guild/utils";
 import { GuildBox } from "@guild/styles";
 import useProgressSteps from "./useProgressSteps";
 import { StyledTopicable } from "./styles";
 import { StaticImageTiles } from "./Images";
+import Markdown from "../Markdown";
 
 export default function Review({ guildPost, onPublish }) {
   const [updateGuildPost] = useUpdateGuildPostWriteCache();
@@ -49,32 +49,27 @@ export default function Review({ guildPost, onPublish }) {
           </Box>
           Back
         </Link>
-        <Text mb="xs" fontSize="28px" color="blue900" fontWeight="semibold">
+        <Text mb="xs" fontSize="3xl" color="neutral900" fontWeight="medium">
           Review & Publish
         </Text>
-        <Text mb="xl" size="m" lineHeight="l" color="neutral600">
-          Please review the details below. Once you are happy with everything we
-          will begin searching for the perfect freelancer for you.
-        </Text>
+        <Paragraph size="lg">
+          Please review the details of your post below before publishing it.
+        </Paragraph>
+        <Box height="1px" bg="neutral100" marginY="2xl" />
         <Stack spacing="2xl">
-          <Text size="2xl" fontWeight="medium" color="blue900">
+          <Text
+            size="5xl"
+            fontWeight="medium"
+            color="neutral900"
+            letterSpacing="-0.03rem"
+          >
             {guildPost.title}
           </Text>
-          <Text
-            size="l"
-            fontWeight="light"
-            color="blue900"
-            css={css`
-              white-space: pre-wrap;
-              white-space: pre-line;
-            `}
-          >
-            {guildPost.body}
-          </Text>
+          <Markdown>{guildPost.body}</Markdown>
         </Stack>
 
         <Box mt="l">
-          <EditButton to={`/composer/${guildPost.id}/edit`} resource="Post" />
+          <EditButton to={`/composer/${guildPost.id}/post`} resource="Post" />
           <Box height={1} bg="neutral100" my="l" />
           {guildPost.audienceType !== "none" && (
             <>
@@ -132,17 +127,9 @@ export default function Review({ guildPost, onPublish }) {
         >
           Publish Post
         </Button>
-        <Text
-          mt="l"
-          size="s"
-          fontWeight="light"
-          lineHeight="m"
-          color="#626575"
-          css={"white-space: pre-line;"}
-        >
-          {
-            "By publishing this job you feel like you have completed & submitted something substantial.\nYou should feel like you have committed to something."
-          }
+        <Text mt="l" size="s" fontWeight="light" lineHeight="m" color="#626575">
+          By publishing this post you are aggreeing to the Advisable Guild code
+          of conduct and community guidelines.
         </Text>
       </Box>
     </Box>
