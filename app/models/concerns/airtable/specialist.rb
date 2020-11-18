@@ -108,6 +108,7 @@ class Airtable::Specialist < Airtable::Base
   # Describes how data should be synced to airtable.
   push_data do |specialist|
     self['Biography'] = specialist.bio
+    self['LinkedIn URL'] = specialist.linkedin
     self['Email Address'] = specialist.account.email
     self['First Name'] = specialist.account.first_name
     self['Last Name'] = specialist.account.last_name
