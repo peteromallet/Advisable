@@ -109,6 +109,7 @@ class Airtable::Specialist < Airtable::Base
   push_data do |specialist|
     self['Biography'] = specialist.bio
     self['LinkedIn URL'] = specialist.linkedin
+    self['Can Travel'] = specialist.travel_availability
     self['Email Address'] = specialist.account.email
     self['First Name'] = specialist.account.first_name
     self['Last Name'] = specialist.account.last_name
