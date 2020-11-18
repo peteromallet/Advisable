@@ -9,8 +9,6 @@ export default gql`
     reacted
     reactionsCount
     status
-    commented
-    commentsCount
     engagementsCount
     authored
     createdAtTimeAgo

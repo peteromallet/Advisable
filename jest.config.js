@@ -12,9 +12,11 @@ module.exports = {
   transformIgnorePatterns: ["<rootDir>/node_modules/(?!lodash-es)"],
   moduleNameMapper: {
     "@advisable/donut": "<rootDir>/donut/src",
+    "@guild/(.*)": "<rootDir>/app/javascript/guild/$1",
+    "@advisable-main/(.*)": "<rootDir>/app/javascript/src/$1",
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)$":
       "<rootDir>/app/javascript/src/__mocks__/fileMock.js",
-    "\\.css$": "<rootDir>/app/javascript/src/__mocks__/styleMock.js",
+    "\\.(css|scss)$": "<rootDir>/app/javascript/src/__mocks__/styleMock.js",
   },
   transform: {
     "^.+\\.graphql$": "jest-transform-graphql",

@@ -48,9 +48,7 @@ const Posts = () => {
       // mb="xxl"
     >
       {data &&
-        data.guildPosts.nodes.map((post, idx) => (
-          <Post key={idx} post={post} />
-        ))}
+        data.guildPosts.nodes.map((post) => <Post key={post.id} post={post} />)}
       {!loading && !data?.guildPosts?.nodes?.length && (
         <GuildBox
           background="white"
