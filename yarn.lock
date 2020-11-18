@@ -6645,10 +6645,10 @@ detect-port@^1.3.0:
     address "^1.0.1"
     debug "^2.6.0"
 
-devtools-protocol@0.0.809251:
-  version "0.0.809251"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.809251.tgz#300b3366be107d5c46114ecb85274173e3999518"
-  integrity sha512-pf+2OY6ghMDPjKkzSWxHMq+McD+9Ojmq5XVRYpv/kPd9sTMQxzEt21592a31API8qRjro0iYYOc3ag46qF/1FA==
+devtools-protocol@0.0.818844:
+  version "0.0.818844"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.818844.tgz#d1947278ec85b53e4c8ca598f607a28fa785ba9e"
+  integrity sha512-AD1hi7iVJ8OD0aMLQU5VK0XH9LDlA1+BcPIgrAxPfaibx2DbWucuyOhc4oyQCbnvDDO68nN6/LcKfqTP343Jjg==
 
 diff-sequences@^25.2.6:
   version "25.2.6"
@@ -13325,13 +13325,13 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-puppeteer@^5.4.1:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-5.4.1.tgz#f2038eb23a0f593ed2cce0d6e7cd5c43aecd6756"
-  integrity sha512-8u6r9tFm3gtMylU4uCry1W/CeAA8uczKMONvGvivkTsGqKA7iB7DWO2CBFYlB9GY6/IEoq9vkI5slJWzUBkwNw==
+puppeteer@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-5.5.0.tgz#331a7edd212ca06b4a556156435f58cbae08af00"
+  integrity sha512-OM8ZvTXAhfgFA7wBIIGlPQzvyEETzDjeRa4mZRCRHxYL+GNH5WAuYUQdja3rpWZvkX/JKqmuVgbsxDNsDFjMEg==
   dependencies:
     debug "^4.1.0"
-    devtools-protocol "0.0.809251"
+    devtools-protocol "0.0.818844"
     extract-zip "^2.0.0"
     https-proxy-agent "^4.0.0"
     node-fetch "^2.6.1"
@@ -17168,10 +17168,10 @@ zen-observable@^0.8.14:
   resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.8.15.tgz#96415c512d8e3ffd920afd3889604e30b9eaac15"
   integrity sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==
 
-zustand@^3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.1.4.tgz#684bb863e27b5a04b551c621a0aa73a5ccafc368"
-  integrity sha512-DB/r73Dm3YsUEo9KilbGWsKXQLOrM41aYItznvD68f44P2hYo+FY65D7N8m2ojKVzg6eIPgXZWqkFO60Utko8A==
+zustand@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.2.0.tgz#a718a964440796d44edda3073b69e78b95f4c8f5"
+  integrity sha512-MBYFrnUdgFVi38tdQNSzVN9cPpRDf7w2HhdHGDSgBRHN7vIbUGUR3aBdVQykelXzSFR7iVj3YNBuq7B9ceMI5w==
 
 zwitch@^1.0.0:
   version "1.0.5"
