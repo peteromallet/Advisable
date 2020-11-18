@@ -108,18 +108,7 @@ class Types::ProjectType < Types::BaseType
       return Stripe::PaymentIntent.retrieve(object.deposit_payment_intent_id)
     end
 
-    intent =
-      Stripe::PaymentIntent.create(
-        {
-          currency: 'usd',
-          amount: object.deposit_owed,
-          customer: object.user.company.stripe_customer_id,
-          setup_future_usage: 'off_session',
-          metadata: {payment_type: 'deposit', project: object.uid}
-        },
-        {idempotency_key: "deposit_#{object.uid}"}
-      )
-
+    intent = object.deposit_payment_intent
     object.update_columns(deposit_payment_intent_id: intent.id) # rubocop:disable Rails/SkipsModelValidations
     intent
   end
@@ -169,5 +158,16 @@ class Types::ProjectType < Types::BaseType
 
     policy = ProjectPolicy.new(current_user, object)
     policy.can_access_project?
+  end
+
+  field :deposit, Types::DepositType, null: true
+
+  # In cases where there is no deposit we just return nil. Otherwise we pass
+  # the project object to the DepositType.
+  def deposit
+    return nil if object.deposit.blank?
+    return nil if object.deposit.zero?
+
+    object
   end
 end
