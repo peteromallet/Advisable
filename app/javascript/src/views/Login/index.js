@@ -64,8 +64,14 @@ const Login = ({ location }) => {
   };
 
   return (
-    <Box maxWidth={460} mx="auto" pt="xxl" pb="l">
-      <Box textAlign="center" mb="l">
+    <Box
+      pb="6"
+      mx="auto"
+      px={["6", "0"]}
+      mt={["10", "80px"]}
+      maxWidth={["100%", 460]}
+    >
+      <Box textAlign={["left", "center"]} mb="10">
         <svg className="Logo" width={120} height={22} fill="none">
           <path
             fillRule="evenodd"
@@ -75,18 +81,23 @@ const Login = ({ location }) => {
           />
         </svg>
       </Box>
-      <Card py="xl" px="xl">
+      <Card
+        p={["0", "10"]}
+        elevation={["none", "m"]}
+        bg={["transparent", "white"]}
+        borderRadius="12px"
+      >
         <Text
           as="h3"
-          mb="2xs"
+          mb="1"
           fontSize="4xl"
           color="neutral900"
           fontWeight="medium"
-          letterSpacing="-0.02em"
+          letterSpacing="-0.04rem"
         >
           Welcome Back!
         </Text>
-        <Text color="neutral700" mb="l">
+        <Text fontSize="l" color="neutral700" mb="6" letterSpacing="-0.01rem">
           Please sign in to your account
         </Text>
         <Formik
@@ -98,7 +109,7 @@ const Login = ({ location }) => {
             <Form>
               <FormField
                 name="email"
-                marginBottom="l"
+                marginBottom="6"
                 placeholder="Email"
                 label="Email Address"
               />
@@ -106,7 +117,7 @@ const Login = ({ location }) => {
                 type="password"
                 name="password"
                 label="Password"
-                marginBottom="xl"
+                marginBottom="8"
                 placeholder="Password"
                 labelHint={
                   <Link to="/reset_password">Forgot your password?</Link>
@@ -117,9 +128,9 @@ const Login = ({ location }) => {
               </SubmitButton>
               {formik.status && (
                 <Box
-                  mt="s"
+                  mt="3"
                   bg="red100"
-                  padding="s"
+                  padding="3"
                   fontSize="s"
                   color="red600"
                   borderRadius="12px"
@@ -133,8 +144,8 @@ const Login = ({ location }) => {
       </Card>
 
       <Text
-        mt="l"
-        mb="s"
+        mt="8"
+        mb="3"
         fontSize="s"
         color="neutral700"
         textAlign="center"
