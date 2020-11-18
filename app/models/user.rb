@@ -173,7 +173,6 @@ end
 #  updated_at                        :datetime         not null
 #  account_id                        :bigint
 #  airtable_id                       :string
-#  client_id                         :bigint
 #  country_id                        :bigint
 #  industry_id                       :bigint
 #  sales_person_id                   :bigint
@@ -184,7 +183,6 @@ end
 #
 #  index_users_on_account_id       (account_id)
 #  index_users_on_airtable_id      (airtable_id)
-#  index_users_on_client_id        (client_id)
 #  index_users_on_country_id       (country_id)
 #  index_users_on_industry_id      (industry_id)
 #  index_users_on_sales_person_id  (sales_person_id)
@@ -193,7 +191,6 @@ end
 # Foreign Keys
 #
 #  fk_rails_...  (account_id => accounts.id)
-#  fk_rails_...  (client_id => clients.id)
 #  fk_rails_...  (country_id => countries.id)
 #  fk_rails_...  (industry_id => industries.id)
 #  fk_rails_...  (sales_person_id => sales_people.id)
