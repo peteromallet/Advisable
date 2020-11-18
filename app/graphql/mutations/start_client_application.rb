@@ -39,7 +39,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
     return if user.client.present?
 
     client = Client.create(domain: user.account.email.split('@').last)
-    # TODO: ClientUsers
+    # TODO: User Companies
     # user.update(client: client)
     client.users << user
     client.reload.sync_to_airtable

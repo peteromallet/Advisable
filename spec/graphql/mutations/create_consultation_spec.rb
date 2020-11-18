@@ -70,7 +70,7 @@ RSpec.describe Mutations::CreateConsultation do
         to(company)
     end
 
-    # TODO: ClientUsers
+    # TODO: User Companies
     it 'updates their associated client name' do
       client = create(:client, name: 'Existing')
       client.users << user
