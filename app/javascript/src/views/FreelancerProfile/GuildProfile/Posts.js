@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useParams } from "react-router";
-import { Stack } from "@advisable/donut";
+import { Stack, Box } from "@advisable/donut";
 import Post from "@guild/components/Post";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useGuildPosts } from "../queries";
@@ -35,7 +35,7 @@ export default function GuildProfilePosts({ specialist }) {
   if (nodes.length === 0) return <NoPosts specialist={specialist} />;
 
   return (
-    <>
+    <Box mb="4xl">
       <SectionHeaderWrapper>
         <SectionHeaderText>Posts</SectionHeaderText>
       </SectionHeaderWrapper>
@@ -44,6 +44,6 @@ export default function GuildProfilePosts({ specialist }) {
           <Post key={post.id} post={post} />
         ))}
       </Stack>
-    </>
+    </Box>
   );
 }
