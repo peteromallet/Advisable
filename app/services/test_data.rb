@@ -215,7 +215,7 @@ class TestData
         c.domain = 'advisable.com'
       end
 
-    # TODO: ClientUsers
+    # TODO: User Companies
     client.users << user unless client.users.include?(user)
 
     # Test project
