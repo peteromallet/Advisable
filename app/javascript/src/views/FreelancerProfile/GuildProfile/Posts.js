@@ -1,11 +1,15 @@
 import React, { useCallback } from "react";
 import { useParams } from "react-router";
-import { Stack, Text } from "@advisable/donut";
+import { Stack } from "@advisable/donut";
 import Post from "@guild/components/Post";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useGuildPosts } from "../queries";
 import Loading from "./Loading";
 import NoPosts from "./NoPosts";
+import {
+  SectionHeaderText,
+  SectionHeaderWrapper,
+} from "../components/SectionHeader";
 
 export default function GuildProfilePosts({ specialist }) {
   const { id } = useParams();
@@ -32,9 +36,9 @@ export default function GuildProfilePosts({ specialist }) {
 
   return (
     <>
-      <Text fontSize="l" fontWeight="medium" marginBottom="md">
-        Posts
-      </Text>
+      <SectionHeaderWrapper>
+        <SectionHeaderText>Posts</SectionHeaderText>
+      </SectionHeaderWrapper>
       <Stack spacing="lg">
         {nodes.map((post) => (
           <Post key={post.id} post={post} />
