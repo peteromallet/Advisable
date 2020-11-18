@@ -85,6 +85,7 @@ class Types::SpecialistType < Types::BaseType
   def linkedin
     url = object.linkedin
     return nil if url.nil?
+
     url.starts_with?('http') ? url : "https://#{url}"
   end
 
@@ -221,9 +222,10 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :guild, Boolean, null: true do
-    authorize :is_specialist, :is_admin
     description 'Whether or not the specialist is a Guild user'
   end
+
+  field :guild_posts, Types::Guild::PostInterface.connection_type, null: false
 
   field :guild_joined_time_ago, String, null: true do
     description 'The timestamp in words for when the specialist first joined the guild'
