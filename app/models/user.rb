@@ -6,6 +6,7 @@ class User < ApplicationRecord
   include SpecialistOrUser
   include Airtable::Syncable
   airtable_class Airtable::ClientContact
+
   has_many :projects, dependent: :destroy
   has_many :interviews, dependent: :destroy
   has_many :applications, through: :projects
@@ -15,6 +16,9 @@ class User < ApplicationRecord
   has_many :client_calls, dependent: :destroy
   has_one :client_user, dependent: :destroy
   has_one :client, through: :client_user
+
+  # TODO: ClientUsers
+  # belongs_to :client
   belongs_to :sales_person, optional: true
   belongs_to :industry, optional: true
   belongs_to :country, optional: true
