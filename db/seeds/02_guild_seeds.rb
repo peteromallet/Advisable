@@ -1,3 +1,4 @@
+# rubocop:disable all
 # Usage:
 # $> rake db:seed:02_guild_seeds
 
@@ -14,6 +15,8 @@ def random_specialist
 
   Specialist.order(Arel.sql("RANDOM()")).first
 end
+
+Specialist.update_all(guild: true)
 
 5.times do |num|
   body = Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false)
@@ -43,3 +46,5 @@ end
   gpi.image.attach(io: File.open(image), filename: 'cover.jpg', content_type: 'image/jpeg')
   gpi.save
 end
+
+# rubocop:enable all

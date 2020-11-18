@@ -1,8 +1,9 @@
 import React from "react";
 import stickybits from "stickybits";
+import { Box } from "@advisable/donut";
 import usePrevious from "../../utilities/usePrevious";
 
-const Sticky = ({ children, offset = 0, enabled = true }) => {
+const Sticky = ({ children, zIndex, offset = 0, enabled = true }) => {
   const ref = React.useRef(null);
   const previouslyEnabled = usePrevious(enabled);
 
@@ -29,7 +30,11 @@ const Sticky = ({ children, offset = 0, enabled = true }) => {
     }
   }, [enabled]);
 
-  return <div ref={ref}>{children}</div>;
+  return (
+    <Box zIndex={zIndex} ref={ref}>
+      {children}
+    </Box>
+  );
 };
 
 export default Sticky;
