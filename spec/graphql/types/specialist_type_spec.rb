@@ -37,19 +37,19 @@ RSpec.describe Types::SpecialistType do
 
     it 'returns the specialists applications' do
       applications = response['data']['specialist']['applications']
-      expect(applications).to_not be_empty
+      expect(applications).not_to be_empty
     end
 
     it 'excludes the applications where project sales_status is Lost' do
       applications = response['data']['specialist']['applications']
-      expect(applications).to_not include({'id' => application2.uid})
+      expect(applications).not_to include({'id' => application2.uid})
     end
 
     it 'can filter by status' do
       applications = response['data']['specialist']['applications']
       expect(applications).to include({'id' => application1.uid})
       expect(applications).to include({'id' => application3.uid})
-      expect(applications).to_not include({'id' => application4.uid})
+      expect(applications).not_to include({'id' => application4.uid})
     end
 
     context 'when logged in as another specialist' do
@@ -77,7 +77,44 @@ RSpec.describe Types::SpecialistType do
 
       it 'allows access' do
         applications = response['data']['specialist']['applications']
-        expect(applications).to_not be_nil
+        expect(applications).not_to be_nil
+      end
+    end
+  end
+
+  context "with a guild specialist" do
+    let!(:specialist) { create(:specialist, :guild) }
+    let(:query) do
+      <<-GRAPHQL
+      {
+        specialist(id: "#{specialist.uid}") {
+          id
+          guildPosts(first: 10) {
+            pageInfo {
+              endCursor
+              hasNextPage
+            }
+            nodes {
+              ... on PostInterface {
+                status
+                id
+              }
+            }
+          }
+        }
+      }
+      GRAPHQL
+    end
+
+    context "with a freelancer profile" do
+      it "does not include draft posts" do
+        published_post = create(:guild_post, specialist: specialist, status: "published")
+        create(:guild_post, specialist: specialist, status: "draft")
+        expect(specialist.guild_posts.count).to eq(2)
+
+        response = AdvisableSchema.execute(query)
+        data = response.dig("data", "specialist", "guildPosts", "nodes")
+        expect(data).to eq([{"status" => "published", "id" => published_post.id}])
       end
     end
   end
