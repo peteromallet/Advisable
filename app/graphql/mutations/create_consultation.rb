@@ -81,9 +81,15 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
       user.client.update(name: args[:company]) if user.client.present?
     else
       client = Client.create(name: args[:company])
-      # TODO: User Companies
-      # user.update(client: client)
       client.users << user
+    end
+
+    if user.company.present?
+      user.company.update(name: args[:company])
+    else
+      name = Company.fresh_company_name_for(user)
+      company = Company.create(name: name)
+      user.update(company: company)
     end
   end
 
@@ -111,9 +117,11 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     domain = user.account.email.split('@').last
     client = Client.create(name: args[:company], domain: domain)
     client.users << user
-    # TODO: User Companies
-    # Maybe do it before and assign it in create?
-    # user.update(client: client)
+
+    name = Company.fresh_company_name_for(user)
+    company = Company.create(name: name)
+    user.update(company: company)
+
     user.sync_to_airtable
     # Currently we dont have a relationship between clients and client
     # contacts so we set the 'Client Contacts' column while calling sync.

@@ -215,8 +215,10 @@ class TestData
         c.domain = 'advisable.com'
       end
 
-    # TODO: User Companies
     client.users << user unless client.users.include?(user)
+
+    company = Company.create(name: Company.fresh_company_name_for(user), kind: 'Startup', sales_person: sales_person, industry: industry)
+    user.update(company: company)
 
     # Test project
     sales_automation = Skill.find_by_name('Sales Automation')
