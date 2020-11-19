@@ -84,7 +84,7 @@ const Login = ({ location }) => {
       <Card
         p={["0", "10"]}
         elevation={["none", "m"]}
-        variant={["ghost", null]}
+        variant={["ghost", "white"]}
         borderRadius="12px"
       >
         <Text
