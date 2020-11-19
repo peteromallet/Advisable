@@ -66,6 +66,7 @@ export { default as Skeleton } from "./components/Skeleton";
 export { default as Checkbox } from "./components/Checkbox";
 export { default as RadioGroup } from "./components/RadioGroup";
 export { default as NumberedList } from "./components/NumberedList";
+export { default as OrbitsSystem } from "./components/OrbitsSystem";
 export { default as BulletList } from "./components/BulletList";
 export * from "./components/BulletList/styles";
 export { default as Autocomplete } from "./components/Autocomplete";
