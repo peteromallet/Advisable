@@ -25,7 +25,7 @@ export default function StoppedWorkingNotice({ firstName, application }) {
     await resumeWorking({
       variables: {
         input: {
-          application: application.airtableId,
+          application: application.id,
           projectType: application.projectType,
         },
       },

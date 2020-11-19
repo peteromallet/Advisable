@@ -23,7 +23,7 @@ const ProjectTypeModal = ({ isOpen, onClose, application }) => {
     await setProjectType({
       variables: {
         input: {
-          application: application.airtableId,
+          application: application.id,
           projectType: values.projectType,
           monthlyLimit: values.monthlyLimit
             ? Number(values.monthlyLimit)

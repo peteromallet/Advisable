@@ -38,11 +38,11 @@ test("Overview step continues to the questions step", async () => {
   const { specialist, application } = setupData();
   const graphQLMocks = [
     mockViewer(specialist),
-    mockQuery(GET_APPLICATION, { id: application.airtableId }, { application }),
+    mockQuery(GET_APPLICATION, { id: application.id }, { application }),
     mockMutation(
       UPDATE,
       {
-        id: application.airtableId,
+        id: application.id,
         introduction: "This is an overview",
         availability: "2 - 4 weeks",
       },
@@ -61,7 +61,7 @@ test("Overview step continues to the questions step", async () => {
   ];
 
   const app = renderRoute({
-    route: `/invites/${application.airtableId}/apply`,
+    route: `/invites/${application.id}/apply`,
     graphQLMocks,
   });
 
@@ -81,11 +81,11 @@ test("Questions step continues to the references step", async () => {
 
   const graphQLMocks = [
     mockViewer(specialist),
-    mockQuery(GET_APPLICATION, { id: application.airtableId }, { application }),
+    mockQuery(GET_APPLICATION, { id: application.id }, { application }),
     mockMutation(
       UPDATE,
       {
-        id: application.airtableId,
+        id: application.id,
         questions: [
           {
             question: project.questions[0],
@@ -112,7 +112,7 @@ test("Questions step continues to the references step", async () => {
     mockMutation(
       UPDATE,
       {
-        id: application.airtableId,
+        id: application.id,
         questions: [
           {
             question: project.questions[1],
@@ -143,7 +143,7 @@ test("Questions step continues to the references step", async () => {
   ];
 
   const app = renderRoute({
-    route: `/invites/${application.airtableId}/apply/questions`,
+    route: `/invites/${application.id}/apply/questions`,
     graphQLMocks,
   });
 
@@ -195,11 +195,11 @@ test("References continue to payment terms step", async () => {
 
   const graphQLMocks = [
     mockViewer(specialist),
-    mockQuery(GET_APPLICATION, { id: application.airtableId }, { application }),
+    mockQuery(GET_APPLICATION, { id: application.id }, { application }),
     mockMutation(
       UPDATE,
       {
-        id: application.airtableId,
+        id: application.id,
         references: [project1.id, project2.id],
       },
       {
@@ -213,7 +213,7 @@ test("References continue to payment terms step", async () => {
   ];
 
   const app = renderRoute({
-    route: `/invites/${application.airtableId}/apply/references`,
+    route: `/invites/${application.id}/apply/references`,
     graphQLMocks,
   });
 

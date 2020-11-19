@@ -7,7 +7,7 @@ RSpec.describe Mutations::RejectApplicationInvitation do
     <<-GRAPHQL
     mutation {
       rejectApplicationInvitation(input: {
-        id: "#{application.airtable_id}",
+        id: "#{application.uid}",
         reason: "Not a good fit"
       }) {
         application {
@@ -19,7 +19,7 @@ RSpec.describe Mutations::RejectApplicationInvitation do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
   end
 
@@ -33,7 +33,7 @@ RSpec.describe Mutations::RejectApplicationInvitation do
   it 'sets the invitation_rejection_reason' do
     expect { AdvisableSchema.execute(query, context: {}) }.to change {
       application.reload.invitation_rejection_reason
-    }.from(nil)
-      .to('Not a good fit')
+    }.from(nil).
+      to('Not a good fit')
   end
 end

@@ -16,7 +16,7 @@ test("Shows form to add card when user has no card", async () => {
   let specialist = generateTypes.specialist({ firstName: "Dennis" });
   let application = generateTypes.application({
     status: "Applied",
-    airtableId: "rec1234",
+    id: "rec1234",
     project,
     specialist,
   });

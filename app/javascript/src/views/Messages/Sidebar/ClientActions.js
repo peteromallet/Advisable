@@ -28,7 +28,7 @@ const ClientActions = ({ application }) => {
           as={Link}
           width="100%"
           prefix={<FileText />}
-          to={`/projects/${application.project.airtableId}/applications/${application.airtableId}/proposal`}
+          to={`/projects/${application.project.airtableId}/applications/${application.id}/proposal`}
         >
           View Proposal
         </Button>
@@ -44,7 +44,7 @@ const ClientActions = ({ application }) => {
           width="100%"
           variant="subtle"
           prefix={<FileText />}
-          to={`/projects/${application.project.airtableId}/applications/${application.airtableId}`}
+          to={`/projects/${application.project.airtableId}/applications/${application.id}`}
         >
           View Application
         </Button>
@@ -63,7 +63,7 @@ const ClientActions = ({ application }) => {
         width="100%"
         key="viewTasks"
         prefix={<Check />}
-        to={`/manage/${application.airtableId}`}
+        to={`/manage/${application.id}`}
       >
         View Tasks
       </Button>,

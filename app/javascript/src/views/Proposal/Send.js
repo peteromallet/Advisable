@@ -20,7 +20,7 @@ const Send = ({ application, history }) => {
     await sendProposal({
       variables: {
         input: {
-          application: application.airtableId,
+          application: application.id,
           ...values,
         },
       },

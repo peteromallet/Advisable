@@ -29,7 +29,7 @@ RSpec.describe Applications::Update do
     {
       introduction: 'testing',
       availability: '3 Months',
-      questions: [{ question: 'Is this a test?', answer: "Yes it's a test" }],
+      questions: [{question: 'Is this a test?', answer: "Yes it's a test"}],
       references: [previous_project.airtable_id],
       rate: 90,
       accepts_fee: true,
@@ -37,49 +37,49 @@ RSpec.describe Applications::Update do
     }
   end
 
-  before :each do
-    airtable_record = double(Airtable::Application)
+  before do
+    airtable_record = instance_double(Airtable::Application)
     allow(airtable_record).to receive(:push)
     allow(Airtable::Application).to receive(:find).and_return(airtable_record)
   end
 
   it 'updates the introduction' do
-    Applications::Update.call(
-      id: application.airtable_id, attributes: attributes
+    described_class.call(
+      id: application.uid, attributes: attributes
     )
     expect(application.reload.introduction).to eq(attributes[:introduction])
   end
 
   it "raises an error if the application doesn't exist" do
     expect {
-      Applications::Update.call(id: 'nope', attributes: attributes)
+      described_class.call(id: 'nope', attributes: attributes)
     }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   it 'updates the availability' do
-    Applications::Update.call(
-      id: application.airtable_id, attributes: attributes
+    described_class.call(
+      id: application.uid, attributes: attributes
     )
     expect(application.reload.availability).to eq(attributes[:availability])
   end
 
   describe 'when setting questions' do
     it 'assigns the answer based on the question' do
-      Applications::Update.call(
-        id: application.airtable_id, attributes: attributes
+      described_class.call(
+        id: application.uid, attributes: attributes
       )
       expect(application.reload.questions[0]['answer']).to eq("Yes it's a test")
     end
 
-    context 'and passing a question that does not exist' do
+    context 'when passing a question that does not exist' do
       it 'raises an error' do
         expect {
-          Applications::Update.call(
-            id: application.airtable_id,
+          described_class.call(
+            id: application.uid,
             attributes:
               attributes.merge(
                 {
-                  questions: [{ question: 'Does this exist?', answer: 'Nope' }]
+                  questions: [{question: 'Does this exist?', answer: 'Nope'}]
                 }
               )
           )
@@ -91,8 +91,8 @@ RSpec.describe Applications::Update do
   describe 'assigning references' do
     it 'creates a new application_reference' do
       expect {
-        Applications::Update.call(
-          id: application.airtable_id, attributes: attributes
+        described_class.call(
+          id: application.uid, attributes: attributes
         )
       }.to change { application.references.count }.by(1)
     end
@@ -100,20 +100,20 @@ RSpec.describe Applications::Update do
     it 'overrides any existing references' do
       previous_project = create(:project)
       application.references.create(project: previous_project)
-      Applications::Update.call(
-        id: application.airtable_id, attributes: attributes
+      described_class.call(
+        id: application.uid, attributes: attributes
       )
       application.reload
       projects = application.references.map(&:project)
-      expect(projects).to_not include(previous_project)
+      expect(projects).not_to include(previous_project)
     end
 
     context 'when an invalid ID is passed' do
       it 'raises and error' do
         expect {
-          Applications::Update.call(
-            id: application.airtable_id,
-            attributes: attributes.merge({ references: %w[oasindfoaoinsdfo] })
+          described_class.call(
+            id: application.uid,
+            attributes: attributes.merge({references: %w[oasindfoaoinsdfo]})
           )
         }.to raise_error(Service::Error, 'invalid_reference')
       end
@@ -121,22 +121,22 @@ RSpec.describe Applications::Update do
   end
 
   it 'updates the rate' do
-    Applications::Update.call(
-      id: application.airtable_id, attributes: attributes
+    described_class.call(
+      id: application.uid, attributes: attributes
     )
     expect(application.reload.rate).to eq(attributes[:rate])
   end
 
   it 'updates accepts_fee' do
-    Applications::Update.call(
-      id: application.airtable_id, attributes: attributes
+    described_class.call(
+      id: application.uid, attributes: attributes
     )
     expect(application.reload.accepts_fee).to eq(attributes[:accepts_fee])
   end
 
   it 'updates accepts_terms' do
-    Applications::Update.call(
-      id: application.airtable_id, attributes: attributes
+    described_class.call(
+      id: application.uid, attributes: attributes
     )
     expect(application.reload.accepts_terms).to eq(attributes[:accepts_terms])
   end

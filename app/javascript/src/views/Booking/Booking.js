@@ -97,7 +97,7 @@ export default function Booking({ data, match }) {
       (a, b) => new Date(a.dueDate) - new Date(b.dueDate),
     );
     history.replace(
-      `/manage/${data.application.airtableId}/tasks/${sorted[0].id}`,
+      `/manage/${data.application.id}/tasks/${sorted[0].id}`,
     );
   }, []);
 

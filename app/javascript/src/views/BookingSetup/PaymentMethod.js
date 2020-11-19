@@ -39,11 +39,11 @@ const PaymentMethod = ({ data }) => {
     });
 
     if (values.paymentMethod === "Bank Transfer") {
-      history.push(`/book/${data.application.airtableId}/invoice_settings`);
+      history.push(`/book/${data.application.id}/invoice_settings`);
       return;
     }
 
-    history.push(`/book/${data.application.airtableId}/card_details`);
+    history.push(`/book/${data.application.id}/card_details`);
   };
 
   return (

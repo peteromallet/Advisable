@@ -6,7 +6,6 @@ export default gql`
       id
       rate
       status
-      airtableId
       availability
       monthlyLimit
       projectType

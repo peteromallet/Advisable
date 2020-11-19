@@ -16,7 +16,7 @@ const RepeatPrompt = ({ task, onRepeat, onClose }) => {
     const response = await createTask({
       variables: {
         input: {
-          application: task.application.airtableId,
+          application: task.application.id,
           name: task.name,
           description: task.description,
           estimate: task.estimate,

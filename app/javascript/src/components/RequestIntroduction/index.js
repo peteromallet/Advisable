@@ -37,7 +37,7 @@ function RequestIntroduction({ modal, application }) {
   const notifications = useNotifications();
   const [requestIntroduction] = useMutation(REQUEST_INTRODUCTION);
   const { data, loading } = useQuery(GET_AVAILABILITY, {
-    variables: { id: application.airtableId },
+    variables: { id: application.id },
     skip: !modal.visible,
   });
 
@@ -54,7 +54,7 @@ function RequestIntroduction({ modal, application }) {
     await requestIntroduction({
       variables: {
         input: {
-          applicationId: application.airtableId,
+          applicationId: application.id,
           ...values,
         },
       },
@@ -123,14 +123,14 @@ function RequestIntroduction({ modal, application }) {
                   }}
                 />
               ) : (
-                <Availability
-                  timezone={formik.values.timeZone}
-                  value={filterTimes(formik.values.availability)}
-                  onChange={(times) => {
-                    formik.setFieldValue("availability", times);
-                  }}
-                />
-              )}
+                  <Availability
+                    timezone={formik.values.timeZone}
+                    value={filterTimes(formik.values.availability)}
+                    onChange={(times) => {
+                      formik.setFieldValue("availability", times);
+                    }}
+                  />
+                )}
             </Box>
             <Box pt="m" flexGrow={0} flexShink={0}>
               {formik.values.availability.length < 5 && (
