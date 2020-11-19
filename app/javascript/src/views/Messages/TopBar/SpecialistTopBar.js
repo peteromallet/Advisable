@@ -33,18 +33,18 @@ const SpecialistTopBar = (props) => {
 
   if (application.status === "Applied") {
     actionText = "Update Application";
-    actionURL = `/invites/${application.airtableId}/apply`;
+    actionURL = `/invites/${application.id}/apply`;
   }
 
   if (application.status === "Proposed") {
     actionText = "Update Proposal";
-    actionURL = `/applications/${application.airtableId}/proposal`;
+    actionURL = `/applications/${application.id}/proposal`;
   }
 
   if (application.status === "Application Accepted") {
     if (get(application, "interview.status") === "Call Completed") {
       actionText = "Send Proposal";
-      actionURL = `/applications/${application.airtableId}/proposal`;
+      actionURL = `/applications/${application.id}/proposal`;
     }
 
     if (get(application, "interview.status") === "Call Requested") {
@@ -55,7 +55,7 @@ const SpecialistTopBar = (props) => {
 
   if (application.status === "Working") {
     actionText = "View Tasks";
-    actionURL = `/clients/${application.airtableId}`;
+    actionURL = `/clients/${application.id}`;
   }
 
   const handleClick = () => {

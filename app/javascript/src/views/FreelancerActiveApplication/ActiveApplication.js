@@ -35,7 +35,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
   }
 
   const handleTaskClick = (task) => {
-    history.replace(`/clients/${application.airtableId}/tasks/${task.id}`);
+    history.replace(`/clients/${application.id}/tasks/${task.id}`);
   };
 
   const taskDrawerPath = matchPath(location.pathname, {
@@ -50,7 +50,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
     let newData = client.readQuery({
       query: FETCH_APPLICATION,
       variables: {
-        id: application.airtableId,
+        id: application.id,
       },
     });
 
@@ -58,7 +58,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
     client.writeQuery({
       query: FETCH_APPLICATION,
       variables: {
-        id: application.airtableId,
+        id: application.id,
       },
       data: {
         ...newData,
@@ -70,7 +70,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
     });
 
     // open the task
-    history.replace(`/clients/${application.airtableId}/tasks/${task.id}`);
+    history.replace(`/clients/${application.id}/tasks/${task.id}`);
   };
 
   const handleDeleteTask = (task) => {
@@ -89,8 +89,8 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
         {tutorial === "flexibleProjects" ? (
           <FlexibleTutorial modal={tutorialModal} />
         ) : (
-          <FixedTutorial modal={tutorialModal} />
-        )}
+            <FixedTutorial modal={tutorialModal} />
+          )}
       </Modal>
       <TaskDrawer
         isClient={false}

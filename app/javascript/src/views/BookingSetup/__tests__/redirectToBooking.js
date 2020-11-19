@@ -21,7 +21,7 @@ test("User is redirected to booking step when application is already Working", a
   let specialist = generateTypes.specialist({ firstName: "Dennis" });
   let application = generateTypes.application({
     status: "Working",
-    airtableId: "rec1234",
+    id: "rec1234",
     project,
     specialist,
   });

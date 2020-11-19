@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Application invitation view' do
+RSpec.describe 'Application invitation view', type: :system do
   let(:project) { create(:project) }
 
-  before :each do
-    airtable_record = double(Airtable::Application)
+  before do
+    airtable_record = instance_double(Airtable::Application)
     allow(airtable_record).to receive(:push)
     allow(Airtable::Application).to receive(:find).and_return(airtable_record)
   end
@@ -15,13 +15,13 @@ RSpec.describe 'Application invitation view' do
     end
 
     it 'allows the user to appy' do
-      visit "/invites/#{application.airtable_id}"
+      visit "/invites/#{application.uid}"
       click_on 'Apply'
       expect(page).to have_content(project.primary_skill.name)
     end
 
     it 'allows the user to decline the invitation' do
-      visit "/invites/#{application.airtable_id}"
+      visit "/invites/#{application.uid}"
       click_on 'Reject Invitation'
       select 'No availability currently', from: 'reason'
       click_on 'Reject Invite'
@@ -37,7 +37,7 @@ RSpec.describe 'Application invitation view' do
     end
 
     it 'allows the user to update their application' do
-      visit "/invites/#{application.airtable_id}"
+      visit "/invites/#{application.uid}"
       click_on 'Update Application'
       expect(page).to have_content(project.primary_skill.name)
     end
@@ -49,7 +49,7 @@ RSpec.describe 'Application invitation view' do
     end
 
     it 'allows the user to change their mind and apply' do
-      visit "/invites/#{application.airtable_id}"
+      visit "/invites/#{application.uid}"
       click_on 'Apply Now'
       expect(page).to have_content(project.primary_skill.name)
     end
@@ -61,7 +61,7 @@ RSpec.describe 'Application invitation view' do
     end
 
     it 'allows the user to re-apply' do
-      visit "/invites/#{application.airtable_id}"
+      visit "/invites/#{application.uid}"
       click_on 'Apply Now'
       expect(page).to have_content(project.primary_skill.name)
     end

@@ -26,7 +26,7 @@ class Airtable::Task < Airtable::Base
     self['Estimate'] = task.estimate.try(:to_i)
     self['Hours Worked'] = task.hours_worked
     self['Flexible Estimate'] = task.flexible_estimate
-    self['Application'] = [task.application.try(:airtable_id)]
+    self['Application'] = [task.application.try(:airtable_id)].compact
     self['Due Date'] = task.due_date.try(:strftime, '%Y-%m-%d')
     self['Description'] = task.description
     self['Repeat'] = task.repeat

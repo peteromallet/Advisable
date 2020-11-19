@@ -10,7 +10,7 @@ const FreelancerProjects = ({ history }) => {
   const { loading, data } = useQuery(FETCH_DATA);
 
   const handleClick = (application) => {
-    history.push(`/clients/${application.airtableId}`);
+    history.push(`/clients/${application.id}`);
   };
 
   const applications = get(data, "viewer.applications") || [];

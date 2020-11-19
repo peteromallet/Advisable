@@ -9,7 +9,7 @@ RSpec.describe Mutations::SendProposal do
     <<-GRAPHQL
     mutation {
       sendProposal(input: {
-        application: "#{application.airtable_id}",
+        application: "#{application.uid}",
         proposalComment: "This is the proposal comment"
       }) {
         application {
@@ -25,9 +25,9 @@ RSpec.describe Mutations::SendProposal do
     GRAPHQL
   end
 
-  let(:context) { { current_user: application.specialist } }
+  let(:context) { {current_user: application.specialist} }
 
-  before :each do
+  before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
@@ -50,6 +50,7 @@ RSpec.describe Mutations::SendProposal do
     }.from('Brief Confirmed').to('Proposal Received')
   end
 
+  # rubocop:disable RSpec/MessageSpies
   it 'triggers a webhook' do
     expect(WebhookEvent).to receive(:trigger).with(
       'applications.proposal_sent',
@@ -57,9 +58,10 @@ RSpec.describe Mutations::SendProposal do
     )
     AdvisableSchema.execute(query, context: context)
   end
+  # rubocop:enable RSpec/MessageSpies
 
   context 'when there is no logged in user' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
@@ -69,7 +71,7 @@ RSpec.describe Mutations::SendProposal do
   end
 
   context 'when the client is logged in' do
-    let(:context) { { current_user: application.project.user } }
+    let(:context) { {current_user: application.project.user} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
@@ -79,7 +81,7 @@ RSpec.describe Mutations::SendProposal do
   end
 
   context 'when the logged in specialist is not the application specialist' do
-    let(:context) { { current_user: create(:specialist) } }
+    let(:context) { {current_user: create(:specialist)} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)

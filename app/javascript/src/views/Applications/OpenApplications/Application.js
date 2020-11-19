@@ -13,7 +13,7 @@ const INFORMATION = {
           Your application has submitted. We will let you know when you get a
           response.
         </Text>
-        <Link target="_blank" to={`/invites/${application.airtableId}/apply`}>
+        <Link target="_blank" to={`/invites/${application.id}/apply`}>
           Update Application
         </Link>
       </React.Fragment>
@@ -28,7 +28,7 @@ const INFORMATION = {
         </Text>
         <Link
           target="_blank"
-          to={`/applications/${application.airtableId}/proposal`}
+          to={`/applications/${application.id}/proposal`}
         >
           Update Proposal
         </Link>
@@ -48,7 +48,7 @@ const INFORMATION = {
           </Text>
           <Link
             target="_blank"
-            to={`/applications/${application.airtableId}/proposal`}
+            to={`/applications/${application.id}/proposal`}
           >
             Send Proposal
           </Link>
@@ -65,7 +65,7 @@ const INFORMATION = {
           </Text>
           <Link
             target="_blank"
-            to={`/interview_request/${interview.airtableId}`}
+            to={`/interview_request/${interview.id}`}
           >
             Schedule Interview
           </Link>

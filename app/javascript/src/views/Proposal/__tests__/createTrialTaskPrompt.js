@@ -13,8 +13,7 @@ test("Freelancer can mark a task as a trial task", async () => {
     trial: false,
   });
   const application = generateTypes.application({
-    id: "rec1324",
-    airtableId: "rec1234",
+    id: "rec1234",
     tasks: [task],
     trialTask: null,
     trialProgram: true,

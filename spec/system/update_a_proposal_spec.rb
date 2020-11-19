@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'Updating a proposal' do
+RSpec.describe 'Updating a proposal', type: :system do
   let(:application) { create(:application, status: 'Proposed') }
 
-  before :each do
+  before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
@@ -11,7 +11,7 @@ RSpec.describe 'Updating a proposal' do
 
   it 'updates the proposal record' do
     authenticate_as application.specialist
-    visit "/applications/#{application.airtable_id}/proposal"
+    visit "/applications/#{application.uid}/proposal"
     fill_in 'rate', with: '55'
     click_on 'Continue'
     find(:label, text: 'Flexible - Monthly Limit').click

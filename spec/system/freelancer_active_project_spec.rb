@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'Freelancer active project view' do
+RSpec.describe 'Freelancer active project view', type: :system do
   let(:application) { create(:application, status: 'Working') }
 
-  before :each do
+  before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
     application.specialist.complete_tutorial('fixedProjects')
     application.specialist.complete_tutorial('flexibleProjects')
@@ -12,7 +12,7 @@ RSpec.describe 'Freelancer active project view' do
 
   context 'when there are no tasks' do
     it 'enables the freelancer to add a task' do
-      visit "/clients/#{application.airtable_id}"
+      visit "/clients/#{application.uid}"
       click_on 'Add a project'
       fill_in 'name', with: 'This is a task'
       click_on 'Due Date'
@@ -25,7 +25,7 @@ RSpec.describe 'Freelancer active project view' do
   end
 
   context 'when there is an existing task' do
-    before :each do
+    before do
       create(
         :task,
         {
@@ -40,13 +40,13 @@ RSpec.describe 'Freelancer active project view' do
     end
 
     it 'the freelancer can view the task' do
-      visit "/clients/#{application.airtable_id}"
+      visit "/clients/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       expect(page).to have_content('This is the task description')
     end
 
     it 'the freelancer can create an additional task' do
-      visit "/clients/#{application.airtable_id}"
+      visit "/clients/#{application.uid}"
       click_on 'Add a project'
       fill_in 'name', with: 'This is a task'
       click_on 'Due Date'
@@ -59,7 +59,7 @@ RSpec.describe 'Freelancer active project view' do
   end
 
   context "when there is an existing task with a stage of 'Quote Requested'" do
-    before :each do
+    before do
       create(
         :task,
         {
@@ -74,7 +74,7 @@ RSpec.describe 'Freelancer active project view' do
     end
 
     it 'prompts the freelancer to provide an estimate' do
-      visit "/clients/#{application.airtable_id}"
+      visit "/clients/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       click_on 'Set estimate'
       fill_in 'estimate', with: '8'
@@ -84,7 +84,7 @@ RSpec.describe 'Freelancer active project view' do
   end
 
   context "when there is an existing task with a stage of 'Assigned'" do
-    before :each do
+    before do
       create(
         :task,
         {
@@ -100,14 +100,14 @@ RSpec.describe 'Freelancer active project view' do
 
     it 'enables the freelancer to start working on the task' do
       allow(Tasks::CreateInvoiceItem).to receive(:call)
-      visit "/clients/#{application.airtable_id}"
+      visit "/clients/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       click_on 'Start Working'
     end
   end
 
   context "when there is an existing task with a stage of 'Working'" do
-    before :each do
+    before do
       create(
         :task,
         {
@@ -122,7 +122,7 @@ RSpec.describe 'Freelancer active project view' do
     end
 
     it 'enables the freelancer to submit the task for approval' do
-      visit "/clients/#{application.airtable_id}"
+      visit "/clients/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       click_on 'Mark as complete'
       click_on 'Complete'

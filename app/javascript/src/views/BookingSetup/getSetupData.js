@@ -12,7 +12,6 @@ export default gql`
     }
     application(id: $id) {
       id
-      airtableId
       rate
       status
       project {

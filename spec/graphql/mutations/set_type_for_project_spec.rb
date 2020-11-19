@@ -11,7 +11,7 @@ RSpec.describe Mutations::SetTypeForProject do
     <<-GRAPHQL
     mutation {
       setTypeForProject(input: {
-        application: "#{application.airtable_id}",
+        application: "#{application.uid}",
         projectType: "#{project_type}",
         monthlyLimit: #{monthly_limit}
       }) {
@@ -26,24 +26,24 @@ RSpec.describe Mutations::SetTypeForProject do
     GRAPHQL
   end
 
-  let(:context) { { current_user: application.project.user } }
+  let(:context) { {current_user: application.project.user} }
 
-  before :each do
+  before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
   end
 
   it "sets the project_type to 'Flexible'" do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       application.reload.project_type
-    }.from('Flexible')
-      .to('Fixed')
+    }.from('Flexible').
+      to('Fixed')
   end
 
   it 'sets the monthly_limit' do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       application.reload.monthly_limit
-    }.from(nil)
-      .to(400)
+    }.from(nil).
+      to(400)
   end
 
   context 'when an invalid project type is passed' do
@@ -56,7 +56,8 @@ RSpec.describe Mutations::SetTypeForProject do
     end
   end
 
-  context "When setting the project type to 'Flexible'" do
+  # rubocop:disable RSpec/MessageSpies
+  context "when setting the project type to 'Flexible'" do
     let(:application) do
       create(:application, project_type: 'Fixed', monthly_limit: monthly_limit)
     end
@@ -68,7 +69,7 @@ RSpec.describe Mutations::SetTypeForProject do
     end
   end
 
-  context 'When only updating the monthly limit' do
+  context 'when only updating the monthly limit' do
     let(:application) do
       create(:application, project_type: 'Flexible', monthly_limit: 100)
     end
@@ -80,9 +81,10 @@ RSpec.describe Mutations::SetTypeForProject do
       AdvisableSchema.execute(query, context: context)
     end
   end
+  # rubocop:enable RSpec/MessageSpies
 
-  context 'When the user is not the owner of the project' do
-    let(:context) { { current_user: create(:user) } }
+  context 'when the user is not the owner of the project' do
+    let(:context) { {current_user: create(:user)} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)

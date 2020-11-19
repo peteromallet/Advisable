@@ -530,7 +530,6 @@ Style/MutableConstant:
     - 'app/graphql/types/project_type.rb'
     - 'app/models/address_attribute.rb'
     - 'app/models/alphanumeric_id.rb'
-    - 'app/models/application.rb'
     - 'app/models/concerns/account.rb'
     - 'app/models/concerns/permissions.rb'
     - 'app/models/slack.rb'

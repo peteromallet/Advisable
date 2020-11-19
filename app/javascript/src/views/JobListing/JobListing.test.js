@@ -60,7 +60,7 @@ test("specialist can reject the invitation", async () => {
       mockMutation(
         REJECT_INVITATION,
         {
-          id: application.airtableId,
+          id: application.id,
           reason: "No availability currently",
         },
         {

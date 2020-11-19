@@ -33,7 +33,7 @@ const RejectModal = ({ modal, onReject, application }) => {
           await reject({
             variables: {
               input: {
-                id: application.airtableId,
+                id: application.id,
                 ...values,
               },
             },

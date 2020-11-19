@@ -42,14 +42,8 @@ class Application < ApplicationRecord
   include Uid
   include Airtable::Syncable
 
-  ACTIVE_STATUSES = [
-    'Application Accepted',
-    'Interview Scheduled',
-    'Interview Completed',
-    'Proposed'
-  ]
-
-  HIRED_STATUSES = ['Working', 'Stopped Working']
+  ACTIVE_STATUSES = ['Application Accepted', 'Interview Scheduled', 'Interview Completed', 'Proposed'].freeze
+  HIRED_STATUSES = ['Working', 'Stopped Working'].freeze
 
   belongs_to :specialist
   belongs_to :project
@@ -69,7 +63,7 @@ class Application < ApplicationRecord
 
   # Every time an application is created, updated or destroyed we want to:
   # - update the associated specialists average_score
-  # -update the counts for the associated project
+  # - update the counts for the associated project
   after_destroy :update_specialist_average_score
   after_destroy :update_project_counts
   after_save :update_specialist_average_score
@@ -89,27 +83,26 @@ class Application < ApplicationRecord
   scope :not_hidden, -> { where(hidden: [nil, false]) }
   scope :active, -> { where(status: ACTIVE_STATUSES) }
 
-  # Filters a collection of application based on its associated projects
-  # sales status column.
-  scope :by_sales_status,
-        ->(status) { joins(:project).where(projects: {sales_status: status}) }
+  # Filters a collection of application based on its associated projects sales status column.
+  scope :by_sales_status, ->(status) { joins(:project).where(projects: {sales_status: status}) }
 
   # Filters out any applications that are in a final state.
-  scope :not_final,
-        lambda {
-          where.not(
-            status: [
-              'Working',
-              'Application Rejected',
-              'Invited To Apply',
-              'Invitation Rejected'
-            ]
-          )
-        }
+  scope :not_final, -> { where.not(status: ['Working', 'Application Rejected', 'Invited To Apply', 'Invitation Rejected']) }
 
   # Returns the top 3 candidates
-  scope :top_three_applied,
-        -> { applied.where('score > ?', 65.0).order(score: :desc).limit(3) }
+  scope :top_three_applied, -> { applied.where('score > ?', 65.0).order(score: :desc).limit(3) }
+
+  # TODO: Part of airtable_id deprecation
+  def self.find_by_uid_or_airtable_id(id)
+    return find_by(uid: id) unless is_airtable_id(id)
+
+    Raven.capture_message("#find_by_uid_or_airtable_id called on Application with an airtable id!", backtrace: caller, level: 'debug')
+    find_by(airtable_id: id)
+  end
+
+  def self.find_by_uid_or_airtable_id!(id)
+    find_by_uid_or_airtable_id(id) || raise(ActiveRecord::RecordNotFound)
+  end
 
   def questions
     self[:questions] || []

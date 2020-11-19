@@ -12,7 +12,7 @@ const BookingType = ({ data }) => {
   const firstName = data.application.specialist.firstName;
 
   const handleSubmit = async (values) => {
-    const id = data.application.airtableId;
+    const id = data.application.id;
     await startWorking({
       variables: {
         input: {

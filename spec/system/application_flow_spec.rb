@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Application flow' do
-  before :each do
+RSpec.describe 'Application flow', type: :system do
+  before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     # mock the skills endpoint for the add a previous project modal
-    skill =
-      double(Airtable: Skill, id: 'rec_123', fields: { 'Name' => 'Testing' })
+    skill = instance_double(Airtable::Skill, id: 'rec_123', fields: {'Name' => 'Testing'})
     allow(Airtable::Skill).to receive(:active).and_return([skill])
   end
 
@@ -30,7 +29,7 @@ RSpec.describe 'Application flow' do
 
     context 'when there are no questions' do
       let(:application) do
-        create(:application, { status: 'Invited To Apply', questions: [] })
+        create(:application, {status: 'Invited To Apply', questions: []})
       end
 
       it 'goes to the references step' do
@@ -82,7 +81,7 @@ RSpec.describe 'Application flow' do
     context 'when there are no questions' do
       let(:project) { create(:project, questions: []) }
       let(:application) do
-        create(:application, { project: project, status: 'Invited To Apply' })
+        create(:application, {project: project, status: 'Invited To Apply'})
       end
 
       it 'proceeds to the references step' do
@@ -112,17 +111,10 @@ RSpec.describe 'Application flow' do
         expect(page).to have_content("Including Advisable's fee")
       end
     end
-
-    context 'when the user has no previous projects' do
-      let!(:specialist) { create(:specialist) }
-      let(:application) do
-        create(:application, specialist: specialist, status: 'Invited To Apply')
-      end
-    end
   end
 
   describe 'Terms step' do
-    before :each do
+    before do
       create(:application_reference, application: application)
     end
 

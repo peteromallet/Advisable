@@ -7,7 +7,7 @@ RSpec.describe Mutations::CreateTask do
   let(:application) do
     create(:application, specialist: specialist, project: project)
   end
-  let(:context) { { current_user: user } }
+  let(:context) { {current_user: user} }
   let(:response) { AdvisableSchema.execute(query, context: context) }
 
   let(:query) do
@@ -15,7 +15,7 @@ RSpec.describe Mutations::CreateTask do
     mutation {
       createTask(input: {
         id: "#{Task.generate_uid}",
-        application: "#{application.airtable_id}",
+        application: "#{application.uid}",
       }) {
         task {
           id
@@ -28,31 +28,31 @@ RSpec.describe Mutations::CreateTask do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Airtable::Task).to receive(:create)
   end
 
   context 'when a user is signed in' do
     it 'creates a new task' do
-      expect(response['data']['createTask']['task']).to_not be_nil
+      expect(response['data']['createTask']['task']).not_to be_nil
     end
 
     it 'triggers a webhook' do
-      expect(WebhookEvent).to receive(:trigger).with('tasks.created', any_args)
+      expect(WebhookEvent).to receive(:trigger).with('tasks.created', any_args) # rubocop:disable RSpec/MessageSpies
       AdvisableSchema.execute(query, context: context)
     end
   end
 
   context 'when the specialist is authenticated' do
-    let(:context) { { current_user: specialist } }
+    let(:context) { {current_user: specialist} }
 
     it 'responds with not_authorized error code' do
-      expect(response['data']['createTask']['task']).to_not be_nil
+      expect(response['data']['createTask']['task']).not_to be_nil
     end
   end
 
   context 'when there is no user signed in' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'responds with not_authorized error code' do
       error = response['data']['createTask']['errors'][0]
@@ -61,7 +61,7 @@ RSpec.describe Mutations::CreateTask do
   end
 
   context 'when a user is logged in but they dont have access to the project' do
-    let(:context) { { current_user: create(:user) } }
+    let(:context) { {current_user: create(:user)} }
 
     it 'responds with not_authorized error code' do
       error = response['data']['createTask']['errors'][0]
@@ -70,7 +70,7 @@ RSpec.describe Mutations::CreateTask do
   end
 
   context 'when a specialist is logged in but they dont have access to the project' do
-    let(:context) { { current_user: create(:specialist) } }
+    let(:context) { {current_user: create(:specialist)} }
 
     it 'responds with not_authorized error code' do
       error = response['data']['createTask']['errors'][0]
@@ -79,7 +79,7 @@ RSpec.describe Mutations::CreateTask do
   end
 
   context 'when a Service::Error is thrown' do
-    before :each do
+    before do
       error = Service::Error.new('service_error')
       allow(Tasks::Create).to receive(:call).and_raise(error)
     end

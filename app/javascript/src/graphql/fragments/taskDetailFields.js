@@ -10,7 +10,6 @@ export default gql`
       id
       rate
       status
-      airtableId
       projectType
       trialProgram
       specialist {

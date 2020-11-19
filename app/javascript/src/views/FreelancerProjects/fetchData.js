@@ -11,7 +11,6 @@ export default gql`
         ) {
           id
           status
-          airtableId
           tasks {
             id
           }

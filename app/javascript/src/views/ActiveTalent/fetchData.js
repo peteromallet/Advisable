@@ -8,7 +8,6 @@ export default gql`
         applications(status: ["Working", "Stopped Working"]) {
           id
           status
-          airtableId
           tasks {
             id
           }

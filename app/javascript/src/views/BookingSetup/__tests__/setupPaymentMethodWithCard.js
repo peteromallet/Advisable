@@ -32,7 +32,7 @@ test("User can complete booking setup", async () => {
   let specialist = generateTypes.specialist({ firstName: "Dennis" });
   let application = generateTypes.application({
     status: "Applied",
-    airtableId: "rec1234",
+    id: "rec1234",
     project,
     specialist,
   });

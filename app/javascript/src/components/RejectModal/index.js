@@ -129,7 +129,7 @@ const RejectModal = ({
           await reject({
             variables: {
               input: {
-                id: application.airtableId,
+                id: application.id,
                 ...values,
               },
             },

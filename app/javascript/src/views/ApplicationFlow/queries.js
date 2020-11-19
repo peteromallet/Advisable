@@ -7,7 +7,6 @@ export const applicationFields = gql`
     rate
     acceptsFee
     acceptsTerms
-    airtableId
     introduction
     availability
     trialProgram
