@@ -4,8 +4,6 @@ class Client < ApplicationRecord
   has_many :applications, through: :projects
   has_many :client_users, dependent: :destroy
   has_many :users, through: :client_users
-  # TODO: User Companies
-  # has_many :users, dependent: :destroy
   has_many :interviews, through: :applications
 end
 
