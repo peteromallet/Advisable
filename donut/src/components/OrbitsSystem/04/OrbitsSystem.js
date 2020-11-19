@@ -4,8 +4,12 @@ import styled from "styled-components";
 import { useSharedState } from "./SharedStateProvider";
 
 export const StyledOrbitsSystem = styled.svg`
+  top: 0;
+  left: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
+  position: absolute;
   pointer-events: none;
 `;
 
@@ -33,7 +37,13 @@ function circlePath(cx, cy, r) {
   );
 }
 
-export function Orbit({ stroke, fill, index, path }) {
+export function Orbit({
+  stroke,
+  fill,
+  index,
+  path,
+  transition = { duration: 0.5 },
+}) {
   const [state, setState] = useSharedState();
   const id = `orbit-${index}`;
   const d = circlePath(path.x, path.y, path.size);
@@ -46,11 +56,7 @@ export function Orbit({ stroke, fill, index, path }) {
   }, [animate, id, setState, state]);
 
   return (
-    <motion.path
-      initial={initial}
-      animate={animate}
-      transition={{ duration: 0.5 }}
-    />
+    <motion.path initial={initial} animate={animate} transition={transition} />
   );
 }
 
@@ -64,6 +70,7 @@ export default function OrbitsSystem({
   offsetX = 0,
   offsetY = 0,
   increment = 200,
+  transition,
 }) {
   const orbits = React.Children.map(children, (child, i) => {
     const orbitSize = startSize + (i + 1) * increment;
@@ -79,6 +86,7 @@ export default function OrbitsSystem({
       key: i,
       index: i,
       path,
+      transition,
       stroke: child.props.stroke || stroke,
       fill: child.props.fill || fill,
     });
