@@ -23,6 +23,7 @@ const StyledHeader = styled(Box)`
   position: fixed;
   align-items: center;
   justify-content: space-between;
+  background: ${theme.colors.blue800};
   box-shadow: 0 1px 2px ${rgba(theme.colors.neutral900, 0.2)};
 `;
 
@@ -66,7 +67,7 @@ const Header = () => {
   const safeToggleNav = React.useCallback(() => {
     if (notificationsOpen) toggleNotifications();
     if (userMenuOpen) toggleUserMenu();
-  }, [notificationsOpen, userMenuOpen]);
+  }, [toggleNotifications, toggleUserMenu, notificationsOpen, userMenuOpen]);
 
   const handleUpdateLastRead = async (input) =>
     await guildUpdateLastRead({ variables: { input } });
@@ -77,7 +78,7 @@ const Header = () => {
     <>
       <Notifications open={notificationsOpen} />
       <UserMenu open={userMenuOpen} onToggle={toggleUserMenu} />
-      <StyledHeader bg="slateBlue" px="lg">
+      <StyledHeader px="lg">
         <Box display="flex">
           <Link to={"/"}>
             <img src={logo} alt="" />
