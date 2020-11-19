@@ -36,6 +36,9 @@ const elevation = variant({
 
 const cardType = variant({
   variants: {
+    white: {
+      background: "white",
+    },
     ghost: {
       background: "transparent",
     },
