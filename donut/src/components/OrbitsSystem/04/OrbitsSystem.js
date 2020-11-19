@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { useSharedState } from "./SharedStateProvider";
+import { useSharedOrbits } from "./SharedOrbitsProvider";
 
 export const StyledOrbitsSystem = styled.svg`
   top: 0;
@@ -44,7 +44,7 @@ export function Orbit({
   path,
   transition = { duration: 0.5 },
 }) {
-  const [state, setState] = useSharedState();
+  const [state, setState] = useSharedOrbits();
   const id = `orbit-${index}`;
   const d = circlePath(path.x, path.y, path.size);
   const animate = useMemo(() => ({ d, fill, stroke }), [d, fill, stroke]);

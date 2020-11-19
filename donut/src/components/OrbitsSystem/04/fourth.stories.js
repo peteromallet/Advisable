@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Card, Text, Paragraph, Button } from "@advisable/donut";
 import OrbitsSystem, { Orbit } from "./OrbitsSystem";
-import SharedStateProvider from "./SharedStateProvider";
+import SharedOrbitsProvider from "./SharedOrbitsProvider";
 
 export default {
   title: "Content/OrbitsSystem-04",
@@ -97,13 +97,13 @@ export function SwitchComponentsWithHistoryStack() {
   const [page, setPage] = React.useState("FIRST");
 
   return (
-    <SharedStateProvider>
+    <SharedOrbitsProvider>
       {page === "FIRST" ? (
         <FirstPage setPage={setPage} />
       ) : (
         <SecondPage setPage={setPage} />
       )}
-    </SharedStateProvider>
+    </SharedOrbitsProvider>
   );
 }
 
@@ -166,7 +166,7 @@ function PropForm({ values, setValues }) {
         />
       </Box>
       <Box display="flex" alignItems="center">
-        <label style={{ width: 100 }}>offsetX</label>
+        <label style={{ width: 100 }}>offsetY</label>
         <input
           type="range"
           min={`-${values.increment}`}
