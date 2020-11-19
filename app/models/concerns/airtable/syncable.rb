@@ -9,11 +9,11 @@ module Airtable::Syncable
     end
 
     def find_by_uid_or_airtable_id(id)
-      is_airtable_id(id) ? find_by_airtable_id(id) : find_by_uid(id)
+      is_airtable_id(id) ? find_by(airtable_id: id) : find_by(uid: id)
     end
 
     def find_by_uid_or_airtable_id!(id)
-      is_airtable_id(id) ? find_by_airtable_id!(id) : find_by_uid!(id)
+      find_by_uid_or_airtable_id(id) || raise(ActiveRecord::RecordNotFound)
     end
 
     private
