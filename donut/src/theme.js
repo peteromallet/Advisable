@@ -8,27 +8,50 @@ breakpoints.m = breakpoints[1];
 breakpoints.l = breakpoints[2];
 breakpoints.xl = breakpoints[3];
 
-// Spacing
-// You should prefer the sizes 'sm' over 's' and 'md' over 'm' as well as '3xl'
-// over 'xxxl'
-const space = [0, 4, 8, 12, 16, 24, 32, 40, 48, 64, 96];
-space.none = space[0];
-space["2xs"] = space[1];
-space.xxs = space[1];
-space.xs = space[2];
-space.s = space[3];
-space.sm = space[3];
-space.m = space[4];
-space.md = space[4];
-space.l = space[5];
-space.lg = space[5];
-space.xl = space[6];
-space.xxl = space[7];
-space["2xl"] = space[7];
-space.xxxl = space[8];
-space["3xl"] = space[8];
-space["4xl"] = space[9];
-space["5xl"] = space[10];
+// Our spacing scale follows the same principle as tailwind. You need to think
+// of the scale as units and not pixels. Each "unit" is 0.25rem which is 4px
+// on a typical browser.
+// https://tailwindcss.com/docs/customizing-spacing#default-spacing-scale
+const space = {
+  0: "0",
+  0.5: "0.125rem", // 2px
+  1: "0.25rem", // 4px
+  1.5: "0.375rem", // 6px
+  2: "0.5rem", // 8px
+  2.5: "0.625rem", // 10px
+  3: "0.75rem", // 12px
+  4: "1rem", // 16px
+  5: "1.25rem", // 20px
+  6: "1.5rem", // 24px
+  7: "1.75rem", // 28px
+  8: "2rem", // 32px
+  9: "2.25rem", // 36px
+  10: "2.5rem", // 40px
+  11: "2.75rem", // 44px
+  12: "3rem", // 48px
+  13: "3.25rem", // 52px
+  14: "3.5rem", // 56px
+  15: "3.75rem", // 60px
+  16: "4rem", // 64px
+
+  // SUPPORT OLD VALUES
+  none: "0",
+  "2xs": "0.25rem",
+  xxs: "0.25rem",
+  xs: "0.5rem",
+  s: "0.75rem",
+  sm: "0.75rem",
+  m: "1rem",
+  md: "1rem",
+  l: "1.5rem",
+  lg: "1.5rem",
+  xl: "2rem",
+  xxl: "2.5rem",
+  "2xl": "2.5rem",
+  xxxl: "3rem",
+  "3xl": "3rem",
+  "4xl": "4rem",
+};
 
 // Font sizes
 const fontSizes = {

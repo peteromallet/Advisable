@@ -7,6 +7,7 @@ import {
   border,
   variant,
   typography,
+  color,
 } from "styled-system";
 import theme from "../../theme";
 
@@ -44,17 +45,17 @@ const cardType = variant({
 });
 
 export const StyledCard = styled.div`
-  ${compose(space, layout, border, elevation, typography)}
+  ${compose(space, layout, border, elevation, typography, color)};
 
   outline: none;
   display: block;
-  background: white;
 
   ${cardType};
 `;
 
 StyledCard.defaltProps = {
   borderRadius: "2px",
+  bg: "white",
 };
 
 export default StyledCard;
