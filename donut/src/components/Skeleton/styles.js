@@ -13,7 +13,7 @@ const animation = keyframes`
 `;
 
 export const SkeletonStyles = styled.div`
-  border-radius: 4px;
+  border-radius: 8px;
   background: #3c466a;
   animation: ${animation} 0.6s linear infinite alternate;
 

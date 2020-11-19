@@ -2,11 +2,11 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { GUILD_POSTS_QUERY } from "./queries";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
-import Loading from "@advisable-main/components/Loading";
 import Post from "../Post";
+import LoadingPosts from "./Loading";
 import { GuildBox } from "@guild/styles";
 import { feedStore } from "@guild/stores/Feed";
-import { Text } from "@advisable/donut";
+import { Stack, Text } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
 import { cursorLoadMore } from "@guild/utils";
 
@@ -37,16 +37,9 @@ const Posts = () => {
   });
 
   return loading ? (
-    <Loading />
+    <LoadingPosts />
   ) : (
-    <GuildBox
-      flexGrow={1}
-      width="100%"
-      display="flex"
-      flexBasis="640px"
-      spaceChildrenVertical={40}
-      // mb="xxl"
-    >
+    <Stack spacing="4">
       {data &&
         data.guildPosts.nodes.map((post) => <Post key={post.id} post={post} />)}
       {!loading && !data?.guildPosts?.nodes?.length && (
@@ -69,7 +62,7 @@ const Posts = () => {
           </GuildTag>
         </GuildBox>
       )}
-    </GuildBox>
+    </Stack>
   );
 };
 

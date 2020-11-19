@@ -6,6 +6,7 @@ export default gql`
     type
     title
     body
+    excerpt
     reacted
     reactionsCount
     status
