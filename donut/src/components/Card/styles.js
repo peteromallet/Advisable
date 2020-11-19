@@ -7,7 +7,6 @@ import {
   border,
   variant,
   typography,
-  color,
 } from "styled-system";
 import theme from "../../theme";
 
@@ -37,6 +36,9 @@ const elevation = variant({
 
 const cardType = variant({
   variants: {
+    ghost: {
+      background: "transparent",
+    },
     bordered: {
       background: "transparent",
       border: "1px solid #E1E2E9",
@@ -45,17 +47,17 @@ const cardType = variant({
 });
 
 export const StyledCard = styled.div`
-  ${compose(space, layout, border, elevation, typography, color)};
+  ${compose(space, layout, border, elevation, typography)};
 
   outline: none;
   display: block;
+  background: white;
 
   ${cardType};
 `;
 
 StyledCard.defaltProps = {
   borderRadius: "2px",
-  bg: "white",
 };
 
 export default StyledCard;
