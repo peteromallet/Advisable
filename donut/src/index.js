@@ -67,6 +67,7 @@ export { default as Checkbox } from "./components/Checkbox";
 export { default as RadioGroup } from "./components/RadioGroup";
 export { default as NumberedList } from "./components/NumberedList";
 export { default as OrbitsSystem } from "./components/OrbitsSystem";
+export { Orbit } from "./components/OrbitsSystem";
 export { default as SharedOrbitsProvider } from "./components/OrbitsSystem/SharedOrbitsProvider";
 export { default as BulletList } from "./components/BulletList";
 export * from "./components/BulletList/styles";
