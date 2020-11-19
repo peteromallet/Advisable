@@ -25,7 +25,7 @@ const Topics = () => {
         Topics
       </Text>
 
-      <Stack spacing="3xs" marginBottom="lg">
+      <Stack spacing="1" marginBottom="lg">
         {data?.guildTopTopics?.nodes?.map(
           (topic, key) =>
             (moreTopics || key < data?.guildTopTopics?.nodes?.length / 2.5) && (
