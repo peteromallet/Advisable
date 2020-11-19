@@ -20,6 +20,12 @@ module Types::Guild::PostInterface
     description 'The title of the guild post'
   end
 
+  field :excerpt, String, null: true
+
+  def excerpt
+    object.body&.truncate(300)
+  end
+
   field :body, String, null: true do
     description 'The body of the guild post'
   end
