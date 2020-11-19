@@ -2,6 +2,12 @@ import { space } from "styled-system";
 import styled, { css } from "styled-components";
 import theme from "../../theme";
 
+function halfRems(rems) {
+  if (!rems) return 0;
+  const units = parseFloat(rems) / 2;
+  return `${units}rem`;
+}
+
 export const StyledStack = styled.div`
   ${space}
 `;
@@ -11,8 +17,8 @@ const dividerStyles = css`
 `;
 
 export const StyledStackItem = styled.div`
-  padding-top: ${(p) => (theme.space[p.spacing] || p.spacing) / 2}px;
-  padding-bottom: ${(p) => (theme.space[p.spacing] || p.spacing) / 2}px;
+  padding-top: ${(p) => halfRems(theme.space[p.spacing] || p.spacing)};
+  padding-bottom: ${(p) => halfRems(theme.space[p.spacing] || p.spacing)};
   ${(p) => p.divider && dividerStyles};
 
   &:first-child {
