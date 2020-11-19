@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_18_104114) do
+ActiveRecord::Schema.define(version: 2020_11_19_092750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -243,6 +243,10 @@ ActiveRecord::Schema.define(version: 2020_11_18_104114) do
     t.string "kind"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "sales_person_id"
+    t.bigint "industry_id"
+    t.index ["industry_id"], name: "index_companies_on_industry_id"
+    t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
   end
 
   create_table "consultations", force: :cascade do |t|
@@ -963,6 +967,8 @@ ActiveRecord::Schema.define(version: 2020_11_18_104114) do
   add_foreign_key "client_calls", "users"
   add_foreign_key "client_users", "clients"
   add_foreign_key "client_users", "users"
+  add_foreign_key "companies", "industries"
+  add_foreign_key "companies", "sales_people"
   add_foreign_key "consultations", "interviews"
   add_foreign_key "consultations", "skills"
   add_foreign_key "consultations", "specialists"
