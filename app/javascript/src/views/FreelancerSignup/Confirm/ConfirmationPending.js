@@ -8,12 +8,11 @@ import { useNotifications } from "../../../components/Notifications";
 
 const RESEND = gql`
   mutation ResendConfirmationEmail {
-    resendConfirmationEmail {
-      user {
-        id
-      }
-      errors {
-        code
+    resendConfirmationEmail(input: {}) {
+      viewer {
+        ... on Specialist {
+          id
+        }
       }
     }
   }
