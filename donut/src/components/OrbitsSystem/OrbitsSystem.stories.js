@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Box, Card, Text, Paragraph, Button } from "@advisable/donut";
-import OrbitsSystem, { Orbit } from "./OrbitsSystem";
+import OrbitsSystem, { Orbit } from ".";
 import SharedOrbitsProvider from "./SharedOrbitsProvider";
 
 export default {
-  title: "Content/OrbitsSystem-04",
+  title: "Content/OrbitsSystem",
 };
 
 function FirstPage({ setPage }) {
@@ -93,7 +93,7 @@ function SecondPage({ setPage }) {
   );
 }
 
-export function SwitchComponentsWithHistoryStack() {
+export function SwitchComponentsWithSharedOrbitsProvider() {
   const [page, setPage] = React.useState("FIRST");
 
   return (
