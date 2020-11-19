@@ -20,7 +20,7 @@ module Guild
                source: :reactions,
                class_name: 'Guild::Reaction'
 
-      before_save :set_guild_joined_date, if: -> { guild_changed? }
+      before_save :guild_joined_callbacks, if: -> { guild_changed? && guild }
 
       scope :guild, -> { where(guild: true) }
       scope :guild_featured_members, lambda {
@@ -60,6 +60,32 @@ module Guild
         guild_activity.first.created_at > guild_notifications_last_read
       end
 
+      def guild_add_topic_followables!
+        # Skills
+        skills.each do |skill|
+          next unless skill.guild_topic
+
+          follow(skill.guild_topic)
+        end
+
+        # Previous Project industries and skills
+        previous_projects.each do |pp|
+          pp.industries.each do |pp_industry|
+            next unless pp_industry.guild_topic
+
+            follow(pp_industry.guild_topic)
+          end
+          pp.skills.each do |pp_skill|
+            next unless pp_skill.guild_topic
+
+            follow(pp_skill.guild_topic)
+          end
+        end
+
+        # Location
+        follow(country.guild_topic) if country
+      end
+
       def guild_activity
         @guild_activity ||= [
           guild_post_comments.limit(10),
@@ -95,10 +121,9 @@ module Guild
 
       protected
 
-      def set_guild_joined_date
-        return unless guild
-
+      def guild_joined_callbacks
         self.guild_joined_date ||= Time.current
+        guild_add_topic_followables!
       end
     end
   end
