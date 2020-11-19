@@ -45,7 +45,7 @@ const errorLink = onError(({ graphQLErrors, operation }) => {
           [
             "graphql-error",
             operation.operationName,
-            rest.path.join("."),
+            rest.path?.join("."),
             rest.extensions?.code,
           ].filter(Boolean),
         );
