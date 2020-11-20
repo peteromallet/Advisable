@@ -28,7 +28,7 @@ const OPTIONS = [
 
 const optionByValue = (value) => OPTIONS.find((o) => o.value === value);
 
-export default function RejectApplicationModal({
+export default function RejectApplicationForm({
   id,
   firstName,
   onReject = () => {},

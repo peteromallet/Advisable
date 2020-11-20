@@ -3,7 +3,7 @@ import ActionBar from "./ActionBar";
 import { useParams, useHistory } from "react-router-dom";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import ActionBarModal from "./ActionBarModal";
-import RejectApplicationModal from "components/RejectApplicationModal";
+import RejectApplicationForm from "components/RejectApplicationForm";
 import { useNotifications } from "components/Notifications";
 import { Trash } from "@styled-icons/ionicons-solid";
 import { useRejectCacheUpdate } from "./queries";
@@ -44,7 +44,7 @@ export default function RejectApplication({ application }) {
         data-walkthrough="actionBarReject"
       />
       <ActionBarModal dialog={dialog} label={`Reject ${firstName}`}>
-        <RejectApplicationModal
+        <RejectApplicationForm
           id={application.id}
           firstName={firstName}
           onReject={handleReject}
