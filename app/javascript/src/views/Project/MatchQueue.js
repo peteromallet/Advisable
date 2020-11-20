@@ -18,7 +18,7 @@ const StyledMatchImage = styled(motion.div)`
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-image: url(${(p) => p.$image});
+  background-image: url("${(p) => p.$image}");
 `;
 
 const ANIMATIONS = {

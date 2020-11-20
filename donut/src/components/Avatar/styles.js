@@ -65,7 +65,7 @@ export const StyledAvatarInitials = styled.div`
 
 export const StyledAvatarImage = styled.div.attrs((props) => ({
   style: {
-    backgroundImage: props.url && `url(${props.url})`,
+    backgroundImage: props.url && `url("${props.url}")`,
   },
 }))`
   top: 0;

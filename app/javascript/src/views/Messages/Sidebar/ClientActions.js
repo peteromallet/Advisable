@@ -1,15 +1,46 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Button } from "@advisable/donut";
+import { Box, Button, Modal, useModal } from "@advisable/donut";
+import { useNotifications } from "components/Notifications";
+import RejectApplicationForm from "components/RejectApplicationForm";
 import CreateBookingButton from "../../../components/CreateBookingButton";
-import DeclineApplicationButton from "../../../components/DeclineApplicationButton";
 import { FileText, Check } from "@styled-icons/feather";
+
+function RejectApplicationAction({ application }) {
+  const modal = useModal();
+  const notifications = useNotifications();
+  const firstName = application.specialist.firstName;
+
+  const handleReject = (response) => {
+    if (!response.errors) {
+      notifications.notify(`You have rejected ${firstName}`);
+    }
+  };
+
+  return (
+    <>
+      <Modal modal={modal} label="Reject application">
+        <RejectApplicationForm
+          modal={modal}
+          id={application.id}
+          firstName={firstName}
+          onCancel={modal.hide}
+          onReject={handleReject}
+        />
+      </Modal>
+      <Button width="100%" variant="subtle" onClick={modal.show}>
+        Reject {firstName}
+      </Button>
+    </>
+  );
+}
 
 // Renders all of the available actions in the messages sidebar when viewed
 // by the client.
 const ClientActions = ({ application }) => {
   const actions = [];
   const isBooking = application.status === "Working";
+  const isRejected = application.status === "Application Rejected";
 
   // Show an action to begin working with the specialist if the application is
   // in an accepted state.
@@ -50,9 +81,11 @@ const ClientActions = ({ application }) => {
         </Button>
       </Box>,
     );
+  }
 
+  if (!isBooking && !isRejected) {
     actions.push(
-      <DeclineApplicationButton key="decline" application={application} />,
+      <RejectApplicationAction key="decline" application={application} />,
     );
   }
 

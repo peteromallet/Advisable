@@ -10,6 +10,7 @@ import {
   mockBreakpoint,
 } from "../../testHelpers/test-utils";
 import * as queries from "./queries";
+import { REJECT_APPLICATION } from "components/RejectApplicationForm/queries";
 
 // Its always 27th may 2020 at midday
 Settings.now = () => new Date(2020, 4, 27, 12, 0, 0, 0).valueOf();
@@ -232,7 +233,7 @@ test("can reject a match", async () => {
         },
       ),
       mockMutation(
-        queries.REJECT_APPLICATION,
+        REJECT_APPLICATION,
         {
           id: project.matches[0].id,
           reason: "I want someone with more relevant experience",
