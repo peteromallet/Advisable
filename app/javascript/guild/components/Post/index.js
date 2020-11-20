@@ -19,40 +19,8 @@ const Post = ({ post }) => {
   };
 
   return (
-    <Card padding="8" borderRadius="12px" width="100%">
-      <Box
-        marginBottom="5"
-        display="flex"
-        justifyContent="space-between"
-        alignItems="start"
-      >
-        <Box display="flex">
-          <Avatar
-            as={Link}
-            to={`/freelancers/${post.author.id}`}
-            size="s"
-            name={post.author.name}
-            url={post.author.avatar}
-          />
-          <Box
-            ml="3"
-            display="flex"
-            justifyContent="center"
-            flexDirection="column"
-          >
-            <Text
-              mb={0.5}
-              fontSize="l"
-              color="neutral900"
-              letterSpacing="-0.01rem"
-            >
-              {post.author.name}
-            </Text>
-            <Text fontSize="xs" letterSpacing="-0.01rem" color="neutral600">
-              {post.createdAtTimeAgo} ago
-            </Text>
-          </Box>
-        </Box>
+    <Card position="relative" padding="8" borderRadius="12px" width="100%">
+      <Box position="absolute" right="4" top="4">
         {post.needHelp ? (
           <GuildTag variant="needHelp">
             {mediumAndUp && <NeedHelp size={20} />}
@@ -61,6 +29,31 @@ const Post = ({ post }) => {
         ) : (
           <GuildTag>{post.type}</GuildTag>
         )}
+      </Box>
+
+      <Box display="flex" marginBottom="5" alignItems="center">
+        <Avatar
+          as={Link}
+          to={`/freelancers/${post.author.id}`}
+          size="s"
+          name={post.author.name}
+          url={post.author.avatar}
+        />
+        <Box ml="3">
+          <Text
+            mb={0.5}
+            fontSize="l"
+            as={Link.External}
+            color="neutral900"
+            letterSpacing="-0.01rem"
+            href={`/freelancers/${post.author.id}`}
+          >
+            {post.author.name}
+          </Text>
+          <Text fontSize="xs" letterSpacing="-0.01rem" color="neutral600">
+            {post.createdAtTimeAgo} ago
+          </Text>
+        </Box>
       </Box>
 
       {post.coverImage && (

@@ -1,6 +1,7 @@
 import { rgba } from "polished";
 import styled from "styled-components";
 import {
+  position,
   compose,
   space,
   layout,
@@ -50,7 +51,7 @@ const cardType = variant({
 });
 
 export const StyledCard = styled.div`
-  ${compose(space, layout, border, elevation, typography)};
+  ${compose(position, space, layout, border, elevation, typography)};
 
   outline: none;
   display: block;

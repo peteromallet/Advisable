@@ -16,11 +16,11 @@ const FeaturedMembers = () => {
   return (
     <Box flexShrink={1} alignSelf="flex-start">
       <Text
-        fontSize="xl"
-        marginBottom="lg"
+        fontSize="xs"
+        marginBottom="4"
+        color="neutral600"
         fontWeight="medium"
-        color="catalinaBlue100"
-        letterSpacing="-0.02em"
+        textTransform="uppercase"
       >
         Featured Members
       </Text>

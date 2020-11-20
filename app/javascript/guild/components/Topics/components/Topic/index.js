@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Text } from "@advisable/donut";
 import { lowerDashed } from "@guild/utils";
 import { feedStore } from "@guild/stores/Feed";
 import shallow from "zustand/shallow";
@@ -28,9 +27,7 @@ const Topic = ({ topic }) => {
 
   return (
     <StyledTopic selected={selected} onClick={handleSelectedTopic}>
-      <Text fontWeight="medium" size="xs" color="catalinaBlue100">
-        #{lowerDashed(topic.name)}
-      </Text>
+      #{lowerDashed(topic.name)}
     </StyledTopic>
   );
 };
