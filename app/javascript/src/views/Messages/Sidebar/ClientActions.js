@@ -29,7 +29,7 @@ function RejectApplicationAction({ application }) {
         />
       </Modal>
       <Button width="100%" variant="subtle" onClick={modal.show}>
-        Reject
+        Reject {firstName}
       </Button>
     </>
   );
