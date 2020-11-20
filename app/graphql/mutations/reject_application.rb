@@ -10,6 +10,7 @@ class Mutations::RejectApplication < Mutations::BaseMutation
     application = Application.find_by_uid_or_airtable_id!(args[:id])
     policy = ApplicationPolicy.new(current_user, application)
     return true if policy.write
+
     ApiError.not_authorized('You do not have access to this')
   end
 
@@ -23,9 +24,9 @@ class Mutations::RejectApplication < Mutations::BaseMutation
       }
     )
 
-    application.sync_to_airtable if application.save
+    application.save_and_sync!
     application.project.update_sourcing
 
-    { application: application }
+    {application: application}
   end
 end
