@@ -8,7 +8,6 @@ import { GuildBox } from "@guild/styles";
 import { feedStore } from "@guild/stores/Feed";
 import { Stack, Text } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
-import { cursorLoadMore } from "@guild/utils";
 
 const Posts = () => {
   const [
@@ -23,26 +22,30 @@ const Posts = () => {
 
   const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
     fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
     variables: { selectedFilter, selectedTopicsIds: selectedTopicsIds() },
   });
 
+  const hasNextPage = data?.guildPosts.pageInfo.hasNextPage || false;
+  const endCursor = data?.guildPosts.pageInfo.endCursor;
+
   useBottomScrollListener(() => {
-    if (data?.guildPosts && !loading) {
-      cursorLoadMore({
-        data,
-        fetchMore,
-        collectionKey: "guildPosts",
-      });
+    if (!loading && hasNextPage) {
+      fetchMore({ variables: { cursor: endCursor } });
     }
   });
 
-  return loading ? (
-    <LoadingPosts />
-  ) : (
-    <Stack spacing="4">
-      {data &&
-        data.guildPosts.nodes.map((post) => <Post key={post.id} post={post} />)}
-      {!loading && !data?.guildPosts?.nodes?.length && (
+  const posts = data?.guildPosts.edges.map((e) => e.node) || [];
+
+  return (
+    <>
+      <Stack spacing="4">
+        {posts.map((post) => (
+          <Post key={post.id} post={post} />
+        ))}
+      </Stack>
+      {loading ? <LoadingPosts skeletonPosts={hasNextPage ? 1 : 3} /> : null}
+      {!loading && posts.length === 0 ? (
         <GuildBox
           background="white"
           spaceChildrenVertical={16}
@@ -61,8 +64,8 @@ const Posts = () => {
             Clear All Filters
           </GuildTag>
         </GuildBox>
-      )}
-    </Stack>
+      ) : null}
+    </>
   );
 };
 

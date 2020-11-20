@@ -19,6 +19,11 @@ const createCache = () => {
       ],
     },
     typePolicies: {
+      Query: {
+        fields: {
+          guildPosts: relayStylePagination(),
+        },
+      },
       Specialist: {
         fields: {
           guildPosts: relayStylePagination(),

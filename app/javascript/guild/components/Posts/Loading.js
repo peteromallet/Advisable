@@ -22,12 +22,10 @@ function SkeletonPost() {
   );
 }
 
-export default function LoadingPosts() {
-  return (
-    <Stack spacing="4">
-      <SkeletonPost />
-      <SkeletonPost />
-      <SkeletonPost />
-    </Stack>
-  );
+export default function LoadingPosts({ skeletonPosts = 3 }) {
+  const posts = [...Array(skeletonPosts)].map((_, i) => (
+    <SkeletonPost key={i} />
+  ));
+
+  return <Stack spacing="4">{posts}</Stack>;
 }
