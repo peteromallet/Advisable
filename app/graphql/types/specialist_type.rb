@@ -226,6 +226,9 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :guild_posts, Types::Guild::PostInterface.connection_type, null: false
+  def guild_posts
+    object.guild_posts.published.order(created_at: :desc)
+  end
 
   field :guild_joined_time_ago, String, null: true do
     description 'The timestamp in words for when the specialist first joined the guild'
