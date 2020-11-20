@@ -6,7 +6,7 @@ import { PersonCircle } from "@styled-icons/ionicons-outline";
 const StyledNoVideoCircle = styled(Circle)`
   background-size: cover;
   background-position: center;
-  background-image: ${(p) => (p.$avatar ? `url(${p.$avatar})` : null)};
+  background-image: ${(p) => (p.$avatar ? `url("${p.$avatar}")` : null)};
 `;
 
 export default function NoVideo({ avatar }) {

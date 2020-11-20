@@ -11,9 +11,9 @@ export const StyledProfileImageWrapper = styled.div`
   box-shadow: 0 8px 20px ${rgba(theme.colors.neutral900, 0.2)};
 `;
 
-export const StyledProfileImage = styled(Box).attrs(props => ({
+export const StyledProfileImage = styled(Box).attrs((props) => ({
   style: {
-    backgroundImage: `url(${props.url})`,
+    backgroundImage: `url("${props.url}")`,
   },
 }))`
   top: 0;
@@ -28,7 +28,7 @@ export const StyledProfileImage = styled(Box).attrs(props => ({
   background-position: center;
   background-color: ${theme.colors.neutral200};
 
-  ${props =>
+  ${(props) =>
     props.loaded &&
     css`
       opacity: 1;
