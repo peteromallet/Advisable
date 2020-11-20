@@ -33,10 +33,11 @@ export default function RejectApplicationModal({
   firstName,
   onReject = () => {},
   onCancel = () => {},
+  mutationOptions,
 }) {
-  const [rejectApplication] = useRejectApplication();
+  const [rejectApplication] = useRejectApplication(mutationOptions);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, formik) => {
     const response = await rejectApplication({
       variables: {
         input: {
@@ -45,6 +46,10 @@ export default function RejectApplicationModal({
         },
       },
     });
+
+    if (!response.errors) {
+      formik.resetForm();
+    }
 
     onReject(response);
   };
