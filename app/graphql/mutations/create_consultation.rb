@@ -60,17 +60,16 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     @user ||=
       begin
         if context[:current_user].try(:is_a?, User)
-          return context[:current_user]
+          context[:current_user]
+        else
+          user = Account.find_by(email: args[:email])&.user
+          if user.present?
+            update_existing_user(user, **args)
+            user
+          else
+            create_new_user(**args)
+          end
         end
-
-        user = Account.find_by(email: args[:email])&.user
-
-        if user.present?
-          update_existing_user(user, **args)
-          return user
-        end
-
-        create_new_user(**args)
       end
   end
 
@@ -82,6 +81,12 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     else
       client = Client.create(name: args[:company])
       client.users << user
+    end
+
+    if user.company.present?
+      user.company.update(name: args[:company])
+    else
+      Company.create_for_user(user)
     end
   end
 
@@ -109,6 +114,9 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     domain = user.account.email.split('@').last
     client = Client.create(name: args[:company], domain: domain)
     client.users << user
+
+    Company.create_for_user(user)
+
     user.sync_to_airtable
     # Currently we dont have a relationship between clients and client
     # contacts so we set the 'Client Contacts' column while calling sync.
