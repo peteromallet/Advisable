@@ -60,17 +60,16 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     @user ||=
       begin
         if context[:current_user].try(:is_a?, User)
-          return context[:current_user]
+          context[:current_user]
+        else
+          user = Account.find_by(email: args[:email])&.user
+          if user.present?
+            update_existing_user(user, **args)
+            user
+          else
+            create_new_user(**args)
+          end
         end
-
-        user = Account.find_by(email: args[:email])&.user
-
-        if user.present?
-          update_existing_user(user, **args)
-          return user
-        end
-
-        create_new_user(**args)
       end
   end
 
