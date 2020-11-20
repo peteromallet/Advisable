@@ -107,7 +107,7 @@ const withoutCoverStyles = css`
 `;
 
 const withCoverStyles = css`
-  background-image: url(${(p) => p.coverImage});
+  background-image: url("${(p) => p.coverImage}");
 `;
 
 export const StyledCoverPhoto = styled.div`
