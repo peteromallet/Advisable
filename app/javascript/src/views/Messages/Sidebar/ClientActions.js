@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Button, Modal, useModal } from "@advisable/donut";
 import { useNotifications } from "components/Notifications";
-import RejectApplicationModal from "components/RejectApplicationModal";
+import RejectApplicationForm from "components/RejectApplicationForm";
 import CreateBookingButton from "../../../components/CreateBookingButton";
 import { FileText, Check } from "@styled-icons/feather";
 
@@ -20,7 +20,7 @@ function RejectApplicationAction({ application }) {
   return (
     <>
       <Modal modal={modal} label="Reject application">
-        <RejectApplicationModal
+        <RejectApplicationForm
           modal={modal}
           id={application.id}
           firstName={firstName}
