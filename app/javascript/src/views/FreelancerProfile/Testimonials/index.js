@@ -15,7 +15,7 @@ function Testimonials({ reviews }) {
         <SectionHeaderText>Testimonials</SectionHeaderText>
       </SectionHeaderWrapper>
       <Stack
-        spacing={isWidescreen ? 80 : 48}
+        spacing={isWidescreen ? "20" : "12"}
         divider={"neutral200"}
         pt={["m", "xl"]}
       >
