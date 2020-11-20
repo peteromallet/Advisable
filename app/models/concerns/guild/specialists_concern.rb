@@ -83,7 +83,7 @@ module Guild
         end
 
         # Location
-        follow(country.guild_topic) if country
+        follow(country.guild_topic) if country&.guild_topic
       end
 
       def guild_activity
