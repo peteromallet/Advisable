@@ -1,40 +1,29 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Box, Text, Stack } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import { GUILD_TOP_TOPICS_QUERY } from "./queries";
-import { useToggle } from "@guild/hooks/useToggle";
-import Loading from "@advisable-main/components/Loading";
-import ShowMore from "@guild/components/ShowMore";
-import Topic from "./components/Topic";
+import Loading from "./Loading";
+import TopicsList from "./TopicsList";
 
 const Topics = () => {
-  const { data, loading } = useQuery(GUILD_TOP_TOPICS_QUERY);
-  const [moreTopics, toggleMoreTopics] = useToggle();
-
-  if (loading) return <Loading />;
+  const { data, loading, error } = useQuery(GUILD_TOP_TOPICS_QUERY);
+  const topics = data?.guildTopTopics.nodes;
 
   return (
     <Box flexShrink={1} alignSelf="flex-start">
       <Text
-        fontSize="xl"
-        marginBottom="md"
+        fontSize="xs"
+        marginBottom="4"
+        color="neutral600"
         fontWeight="medium"
-        color="catalinaBlue100"
-        letterSpacing="-0.02em"
+        textTransform="uppercase"
       >
         Topics
       </Text>
 
-      <Stack spacing="1" marginBottom="lg">
-        {data?.guildTopTopics?.nodes?.map(
-          (topic, key) =>
-            (moreTopics || key < data?.guildTopTopics?.nodes?.length / 2.5) && (
-              <Topic key={key} topic={topic} />
-            ),
-        )}
-      </Stack>
-
-      <ShowMore showingMore={moreTopics} onToggle={toggleMoreTopics} />
+      {loading ? <Loading /> : null}
+      {!loading && data ? <TopicsList topics={topics} /> : null}
+      {error ? <Text>Failed to load topics</Text> : null}
     </Box>
   );
 };

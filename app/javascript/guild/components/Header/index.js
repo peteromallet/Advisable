@@ -24,7 +24,7 @@ const StyledHeader = styled(Box)`
   align-items: center;
   justify-content: space-between;
   background: ${theme.colors.blue800};
-  box-shadow: 0 1px 2px ${rgba(theme.colors.neutral900, 0.2)};
+  box-shadow: 0 1px 2px ${rgba(theme.colors.neutral900, 0.3)};
 `;
 
 const TWO_MINUTES = 120000;

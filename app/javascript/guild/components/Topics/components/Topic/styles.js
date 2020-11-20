@@ -8,9 +8,14 @@ export const activeTopicStyle = css`
 `;
 
 export const StyledTopic = styled(GuildBox)`
+  font-size: 1rem;
+  overflow: hidden;
   padding: 12px 12px;
-  margin-left: -8px;
+  margin-left: -12px;
   border-radius: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: ${theme.colors.neutral800};
 
   ${({ selected }) => selected && activeTopicStyle}
 
