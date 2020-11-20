@@ -85,7 +85,7 @@ function Project({ project }) {
             backgroundSize="cover"
             backgroundPosition="center"
             backgroundColor="neutral100"
-            backgroundImage={`url(${project.coverPhoto.url})`}
+            backgroundImage={`url("${project.coverPhoto.url}")`}
           />
         )}
         <Text

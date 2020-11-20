@@ -84,7 +84,7 @@ const StyledImageTile = styled.div`
   position: relative;
   background-size: cover;
   background-position: center;
-  background-image: url(${(p) => p.image});
+  background-image: url("${(p) => p.image}");
   background-color: ${theme.colors.neutral100};
   ${(p) => p.isCover && coverPhotoTile};
 
