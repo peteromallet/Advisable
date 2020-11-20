@@ -217,6 +217,8 @@ class TestData
 
     client.users << user unless client.users.include?(user)
 
+    Company.create_for_user(user)
+
     # Test project
     sales_automation = Skill.find_by_name('Sales Automation')
     sales_operations = Skill.find_by_name('Sales Operations')

@@ -23,6 +23,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
         if account.save && user.save
           user.sync_to_airtable
           create_client_record(user)
+          Company.create_for_user(user)
           if context[:request]
             GeocodeUserJob.perform_later(user.id, context[:client_ip])
           end

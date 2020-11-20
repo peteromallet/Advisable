@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_17_075912) do
+ActiveRecord::Schema.define(version: 2020_11_19_092750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -238,6 +238,17 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
     t.index ["airtable_id"], name: "index_clients_on_airtable_id"
   end
 
+  create_table "companies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "kind"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "sales_person_id"
+    t.bigint "industry_id"
+    t.index ["industry_id"], name: "index_companies_on_industry_id"
+    t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
+  end
+
   create_table "consultations", force: :cascade do |t|
     t.string "uid"
     t.bigint "specialist_id"
@@ -368,8 +379,8 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
 
   create_table "guild_posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", default: "Post", null: false
-    t.text "body", null: false
-    t.string "title", null: false
+    t.text "body"
+    t.string "title"
     t.integer "status", default: 0, null: false
     t.integer "comments_count", default: 0, null: false
     t.integer "reactionable_count", default: 0, null: false
@@ -893,8 +904,10 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
     t.datetime "application_rejected_at"
     t.datetime "application_reminder_at"
     t.bigint "account_id"
+    t.uuid "company_id"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
+    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["industry_id"], name: "index_users_on_industry_id"
     t.index ["sales_person_id"], name: "index_users_on_sales_person_id"
@@ -954,6 +967,8 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
   add_foreign_key "client_calls", "users"
   add_foreign_key "client_users", "clients"
   add_foreign_key "client_users", "users"
+  add_foreign_key "companies", "industries"
+  add_foreign_key "companies", "sales_people"
   add_foreign_key "consultations", "interviews"
   add_foreign_key "consultations", "skills"
   add_foreign_key "consultations", "specialists"
@@ -989,6 +1004,7 @@ ActiveRecord::Schema.define(version: 2020_11_17_075912) do
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
   add_foreign_key "users", "accounts"
+  add_foreign_key "users", "companies"
   add_foreign_key "users", "countries"
   add_foreign_key "users", "industries"
   add_foreign_key "users", "sales_people"

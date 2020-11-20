@@ -6,7 +6,7 @@ RSpec.describe Mutations::CreateConsultation do
   let(:first_name) { 'John' }
   let(:last_name) { 'Doe' }
   let(:email) { 'test@test.com' }
-  let(:company) { 'Testing' }
+  let(:company_name) { 'Testing' }
   let(:skill_name) { skill.name }
 
   let(:query) do
@@ -17,7 +17,7 @@ RSpec.describe Mutations::CreateConsultation do
         firstName: "#{first_name}",
         lastName: "#{last_name}",
         email: "#{email}",
-        company: "#{company}",
+        company: "#{company_name}",
         skill: "#{skill_name}",
       }) {
         consultation {
@@ -67,7 +67,7 @@ RSpec.describe Mutations::CreateConsultation do
       expect { AdvisableSchema.execute(query) }.to change {
         user.reload.company_name
       }.from('Existing').
-        to(company)
+        to(company_name)
     end
 
     it 'updates their associated client name' do
@@ -76,7 +76,16 @@ RSpec.describe Mutations::CreateConsultation do
       expect { AdvisableSchema.execute(query) }.to change {
         user.reload.client.name
       }.from('Existing').
-        to(company)
+        to(company_name)
+    end
+
+    it 'updates their associated company name' do
+      company = create(:company, name: 'Existing')
+      company.users << user
+      expect { AdvisableSchema.execute(query) }.to change {
+        user.reload.company.name
+      }.from('Existing').
+        to(company_name)
     end
 
     it 'creates a client for the user if they dont have one' do
