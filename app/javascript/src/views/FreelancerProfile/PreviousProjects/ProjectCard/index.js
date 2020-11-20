@@ -58,8 +58,8 @@ function Project({ project }) {
   return (
     <>
       <ActionBarModal
+        width={800}
         leftIndent={0}
-        width={700}
         dialog={dialog}
         label={project.title}
       >
