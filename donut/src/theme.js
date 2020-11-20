@@ -33,6 +33,7 @@ const space = {
   14: "3.5rem", // 56px
   15: "3.75rem", // 60px
   16: "4rem", // 64px
+  20: "5rem", // 80px
 
   // SUPPORT OLD VALUES
   none: "0",

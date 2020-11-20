@@ -2,6 +2,12 @@ import { space, variant } from "styled-system";
 import styled, { css } from "styled-components";
 import theme from "../../theme";
 
+function halfRems(rems) {
+  if (!rems) return 0;
+  const units = parseFloat(rems) / 2;
+  return `${units}rem`;
+}
+
 const alignment = variant({
   prop: "align",
   variants: {
@@ -44,8 +50,8 @@ const StyledColumn_Default = css`
 `;
 
 export const StyledColumn = styled.div`
-  padding-left: ${(p) => theme.space[p.spacing] / 2}px;
-  padding-right: ${(p) => theme.space[p.spacing] / 2}px;
+  padding-left: ${(p) => halfRems(theme.space[p.spacing]) || 0};
+  padding-right: ${(p) => halfRems(theme.space[p.spacing]) || 0};
 
   ${(p) => (p.expand ? StyledColumn_Expanded : StyledColumn_Default)};
   ${(p) => p.shrink && StyledColumn_Shrink};

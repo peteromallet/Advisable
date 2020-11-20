@@ -17,8 +17,8 @@ const dividerStyles = css`
 `;
 
 export const StyledStackItem = styled.div`
-  padding-top: ${(p) => halfRems(theme.space[p.spacing] || p.spacing)};
-  padding-bottom: ${(p) => halfRems(theme.space[p.spacing] || p.spacing)};
+  padding-top: ${(p) => halfRems(theme.space[p.spacing]) || 0};
+  padding-bottom: ${(p) => halfRems(theme.space[p.spacing]) || 0};
   ${(p) => p.divider && dividerStyles};
 
   &:first-child {
