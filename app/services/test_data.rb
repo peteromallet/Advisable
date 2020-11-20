@@ -217,8 +217,7 @@ class TestData
 
     client.users << user unless client.users.include?(user)
 
-    company = Company.create(name: Company.fresh_company_name_for(user), kind: 'Startup', sales_person: sales_person, industry: industry)
-    user.update(company: company)
+    Company.create_for_user(user)
 
     # Test project
     sales_automation = Skill.find_by_name('Sales Automation')

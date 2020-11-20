@@ -10,6 +10,19 @@ class Company < ApplicationRecord
     n += 1 while exists?(name: "#{user.company_name} (#{n})")
     "#{user.company_name} (#{n})"
   end
+
+  def self.create_for_user(user, **attributes)
+    return if user.company_id.present?
+
+    default_attributes = {
+      name: fresh_company_name_for(user),
+      kind: user.company_type,
+      sales_person_id: user.sales_person_id,
+      industry_id: user.industry_id
+    }
+    company = create(default_attributes.merge(attributes))
+    user.update_columns(company_id: company.id)  # rubocop:disable Rails/SkipsModelValidations
+  end
 end
 
 # == Schema Information

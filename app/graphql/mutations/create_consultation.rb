@@ -86,9 +86,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     if user.company.present?
       user.company.update(name: args[:company])
     else
-      name = Company.fresh_company_name_for(user)
-      company = Company.create(name: name)
-      user.update(company: company)
+      Company.create_for_user(user)
     end
   end
 
@@ -117,9 +115,7 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     client = Client.create(name: args[:company], domain: domain)
     client.users << user
 
-    name = Company.fresh_company_name_for(user)
-    company = Company.create(name: name)
-    user.update(company: company)
+    Company.create_for_user(user)
 
     user.sync_to_airtable
     # Currently we dont have a relationship between clients and client
