@@ -3,20 +3,27 @@ import { useQuery } from "@apollo/client";
 import { Modal, Avatar, Box, Text, Tag, Paragraph } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
 import IndustryTag from "../IndustryTag";
+import ImageGallery, { useImageGallery } from "components/ImageGallery";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
 import Review from "components/Review";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
+import { StyledImageThumbnail } from "./styles";
 
 function PreviousProjectDetails({ id }) {
-  const { loading, data } = useQuery(GET_PROJECT, {
+  const gallery = useImageGallery();
+  const { loading, data, error } = useQuery(GET_PROJECT, {
     variables: {
       id: id,
     },
   });
 
   if (loading) return <ProjectDetailsLoading />;
+  if (error) return <Text>Failed to load project, please try again.</Text>;
 
   const project = data.previousProject;
+
+  const cover = project.images.find((i) => i.cover);
+  const otherImages = project.images.filter((i) => !i.cover);
 
   return (
     <>
@@ -35,6 +42,34 @@ function PreviousProjectDetails({ id }) {
           {project.title}
         </Text>
       </Box>
+      {cover ? (
+        <Box mb="6">
+          <ImageGallery dialog={gallery} images={project.images} />
+          <StyledImageThumbnail
+            height="350px"
+            marginBottom="2"
+            onClick={() => gallery.open(0)}
+            style={{ backgroundImage: `url("${cover.url}")` }}
+          />
+          {otherImages.length > 0 ? (
+            <Box
+              display="grid"
+              gridTemplateColumns="1fr 1fr 1fr 1fr 1fr"
+              gridGap="8px"
+            >
+              {otherImages.map((i, index) => (
+                <StyledImageThumbnail
+                  key={i.id}
+                  height="100px"
+                  max-width="140px"
+                  onClick={() => gallery.open(index)}
+                  style={{ backgroundImage: `url("${i.url}")` }}
+                />
+              ))}
+            </Box>
+          ) : null}
+        </Box>
+      ) : null}
       <Box height={1} bg="neutral100" mb="m" />
       <Box mb="m" display="flex" alignItems="center">
         <Box flexShrink={0} mr="s">

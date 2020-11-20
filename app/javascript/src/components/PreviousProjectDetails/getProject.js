@@ -11,6 +11,11 @@ const getProject = gql`
         name
         color
       }
+      images {
+        id
+        url
+        cover
+      }
       skills {
         id
         name
