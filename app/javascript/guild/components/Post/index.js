@@ -81,7 +81,7 @@ const Post = ({ post }) => {
       </Box>
 
       <Text mb="8" href={url} fontSize="s" color="blue700" as={Link.External}>
-        Read More
+        Read more
       </Text>
 
       <Box mb="4">
