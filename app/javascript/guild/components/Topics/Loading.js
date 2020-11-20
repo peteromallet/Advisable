@@ -3,7 +3,7 @@ import { Stack, Skeleton } from "@advisable/donut";
 
 export default function LoadingTopics() {
   return (
-    <Stack spacing="3">
+    <Stack spacing="5">
       <Skeleton height="15px" width="100px" />
       <Skeleton height="15px" width="140px" />
       <Skeleton height="15px" width="120px" />
