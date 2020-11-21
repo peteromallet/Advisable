@@ -6,6 +6,7 @@ import Loading from "@advisable-main/components/Loading";
 import useViewer from "@advisable-main/hooks/useViewer";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Header from "@guild/components/Header";
+import { NotificationsProvider } from "components/Notifications";
 
 const Feed = lazy(() => import("./views/Feed"));
 const Post = lazy(() => import("./views/Post"));
@@ -29,36 +30,38 @@ const App = () => {
   return (
     <ApplicationProvider>
       <RootErrorBoundary>
-        <Header />
-        <Suspense fallback={<Loading />}>
-          <Switch>
-            <Route
-              path="/freelancers/:id"
-              component={GuildOrRedirectFreelancerProfile}
-            />
-            <AuthenticatedRoute
-              exact
-              path="/"
-              component={() => <Redirect to="/feed" />}
-            />
-            <AuthenticatedRoute
-              exact
-              path={["/feed", "/composer*"]}
-              component={Feed}
-            />
-            <Route exact path="/posts/:postId" component={Post} />
-            <AuthenticatedRoute
-              exact
-              path={"/messages/:conversationId?"}
-              component={Messages}
-            />
-            <AuthenticatedRoute
-              exact
-              path={"/your-posts"}
-              component={YourPosts}
-            />
-          </Switch>
-        </Suspense>
+        <NotificationsProvider>
+          <Header />
+          <Suspense fallback={<Loading />}>
+            <Switch>
+              <Route
+                path="/freelancers/:id"
+                component={GuildOrRedirectFreelancerProfile}
+              />
+              <AuthenticatedRoute
+                exact
+                path="/"
+                component={() => <Redirect to="/feed" />}
+              />
+              <AuthenticatedRoute
+                exact
+                path={["/feed", "/composer*"]}
+                component={Feed}
+              />
+              <Route exact path="/posts/:postId" component={Post} />
+              <AuthenticatedRoute
+                exact
+                path={"/messages/:conversationId?"}
+                component={Messages}
+              />
+              <AuthenticatedRoute
+                exact
+                path={"/your-posts"}
+                component={YourPosts}
+              />
+            </Switch>
+          </Suspense>
+        </NotificationsProvider>
       </RootErrorBoundary>
     </ApplicationProvider>
   );

@@ -4,6 +4,7 @@ import GuildTag from "@guild/components/GuildTag";
 import Topics from "./components/Topics";
 import { NeedHelp } from "@guild/icons";
 import Markdown from "../Markdown";
+import MessageAction from "@guild/components/PostAction/Message";
 import ReactionsButton from "./components/ReactionsButton";
 import { GuildBox } from "@guild/styles";
 import { CoverImage } from "@guild/components/CoverImage";
@@ -91,6 +92,7 @@ const Post = ({ post }) => {
             recipient={post.author}
             engagementsCount={post.engagementsCount}
           />
+          <MessageAction post={post} />
           <ReactionsButton post={post} />
         </GuildBox>
       </Box>
