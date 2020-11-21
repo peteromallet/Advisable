@@ -6,7 +6,7 @@ import Post from "../Post";
 import LoadingPosts from "./Loading";
 import { GuildBox } from "@guild/styles";
 import { feedStore } from "@guild/stores/Feed";
-import { Stack, Text } from "@advisable/donut";
+import { Stack, Box, Text } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
 
 const Posts = () => {
@@ -64,6 +64,12 @@ const Posts = () => {
             Clear All Filters
           </GuildTag>
         </GuildBox>
+      ) : null}
+
+      {posts.length > 0 && !hasNextPage ? (
+        <Box py="12" textAlign="center">
+          <Text color="neutral500">You have reached the end of the feed.</Text>
+        </Box>
       ) : null}
     </>
   );

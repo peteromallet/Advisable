@@ -1,11 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+import { Heart } from "@styled-icons/heroicons-outline";
+import { Heart as HeartFilled } from "@styled-icons/heroicons-solid";
 import { useMutation, gql } from "@apollo/client";
-import { Box, Text, theme } from "@advisable/donut";
-import useViewer from "@advisable-main/hooks/useViewer";
-import { Thanks } from "@guild/icons";
-import ReactTooltip from "react-tooltip";
-import { GuildBox } from "@guild/styles";
+import PostAction from "@guild/components/PostAction";
 
 export const GUILD_UPDATE_POST_REACTIONS = gql`
   mutation guildUpdatePostReactions($input: GuildUpdatePostReactionsInput!) {
@@ -24,13 +21,11 @@ const ReactionsButton = ({ post }) => {
   const viewer = useViewer();
   const [reactToPost] = useMutation(GUILD_UPDATE_POST_REACTIONS);
   const [reacted, setReacted] = useState(post.reacted);
-  const [reactionsCount, setReactionsCount] = useState(post.reactionsCount);
   const { id } = post;
 
   // in cases when the post might change then resync the reactions state.
   useEffect(() => {
     setReacted(post.reacted);
-    setReactionsCount(post.reactionsCount);
   }, [post]);
 
   // We want to prevet situations where someone can spam the react button to
@@ -42,7 +37,6 @@ const ReactionsButton = ({ post }) => {
 
     const reaction = reacted ? "NONE" : "THANK";
     setReacted(reacted ? false : true);
-    setReactionsCount(reacted ? reactionsCount - 1 : reactionsCount + 1);
 
     timer.current = setTimeout(() => {
       reactToPost({
@@ -57,53 +51,13 @@ const ReactionsButton = ({ post }) => {
   };
 
   return (
-    <StyledButton
-      px="s"
-      py="xxs"
-      display="flex"
-      alignSelf="flex-start"
-      background="white"
-      borderRadius={8}
-      reacted={reacted}
+    <PostAction
       onClick={handleReaction}
-      data-tip="Give Thanks"
-      minWidth="54px"
-    >
-      <ReactTooltip backgroundColor={theme.colors.catalinaBlue100} />
-      <GuildBox flexCenterBoth spaceChildrenHorizontal={4}>
-        <Text fontSize="xs" color={reacted ? "white" : "catalinaBlue100"}>
-          {reactionsCount || "0"}
-        </Text>
-        <Thanks size={16} />
-      </GuildBox>
-    </StyledButton>
+      color={reacted ? "white" : "red600"}
+      bg={reacted ? "red500" : "neutral100"}
+      icon={reacted ? <HeartFilled /> : <Heart />}
+    />
   );
 };
-
-const StyledButton = styled(Box)`
-  cursor: pointer;
-  outline: none;
-  user-select: none;
-  box-shadow: ${theme.shadows.xs};
-  svg {
-    fill: ${theme.colors.catalinaBlue100};
-  }
-  &:hover {
-    text-decoration: none;
-    svg {
-      fill: ${(props) => (props.reacted ? "white" : theme.colors.froly50)};
-      transition: fill 0.2s ease;
-    }
-  }
-  ${({ reacted }) =>
-    reacted &&
-    css`
-      background: ${theme.colors.froly50};
-      svg {
-        fill: white;
-        transition: fill 0.2s ease;
-      }
-    `}
-`;
 
 export default ReactionsButton;
