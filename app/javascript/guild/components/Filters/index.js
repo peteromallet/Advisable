@@ -41,7 +41,7 @@ const Filters = ({ yourPosts }) => {
       data: {
         guildPosts: {
           __typename: previous.guildPosts.__typename,
-          nodes: [...previous.guildPosts.nodes, guildPost],
+          nodes: [...previous.guildPosts.edges, guildPost],
           pageInfo,
         },
       },
