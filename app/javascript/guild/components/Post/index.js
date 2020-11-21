@@ -1,9 +1,8 @@
 import React from "react";
-import { Box, Card, Text, Avatar, Link, useBreakpoint } from "@advisable/donut";
-import GuildTag from "@guild/components/GuildTag";
+import { Box, Card, Text, Avatar, Link } from "@advisable/donut";
 import Topics from "./components/Topics";
-import { NeedHelp } from "@guild/icons";
 import Markdown from "../Markdown";
+import PostTypeTag from "@guild/components/PostTypeTag";
 import MessageAction from "@guild/components/PostAction/Message";
 import ReactionsButton from "./components/ReactionsButton";
 import { GuildBox } from "@guild/styles";
@@ -11,7 +10,6 @@ import { CoverImage } from "@guild/components/CoverImage";
 import OfferHelp from "./components/OfferHelp";
 
 const Post = ({ post }) => {
-  const mediumAndUp = useBreakpoint("mUp");
   const url = `/guild/posts/${post.id}`;
 
   const handleOpen = () => {
@@ -22,14 +20,7 @@ const Post = ({ post }) => {
   return (
     <Card position="relative" padding="8" borderRadius="12px" width="100%">
       <Box position="absolute" right="4" top="4">
-        {post.needHelp ? (
-          <GuildTag variant="needHelp">
-            {mediumAndUp && <NeedHelp size={20} />}
-            <span>Need Help</span>
-          </GuildTag>
-        ) : (
-          <GuildTag>{post.type}</GuildTag>
-        )}
+        <PostTypeTag post={post} />
       </Box>
 
       <Box display="flex" marginBottom="5" alignItems="center">

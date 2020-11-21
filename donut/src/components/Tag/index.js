@@ -1,8 +1,13 @@
 import React from "react";
 import { StyledTag } from "./styles";
 
-function Tag({ children, ...props }) {
-  return <StyledTag {...props}>{children}</StyledTag>;
+function Tag({ children, icon: Icon, ...props }) {
+  return (
+    <StyledTag {...props}>
+      {Icon ? <Icon /> : null}
+      {children}
+    </StyledTag>
+  );
 }
 
 Tag.defaultProps = {
