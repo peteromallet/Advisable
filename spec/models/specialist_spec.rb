@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Specialist do
   include_examples "uid"
 
-  it { should have_many(:applications) }
-  it { should have_many(:skills).through(:specialist_skills) }
+  it { is_expected.to have_many(:applications) }
+  it { is_expected.to have_many(:skills).through(:specialist_skills) }
 
   describe "#has_setup_payments" do
     it 'returns false if there is no bank_holder_name' do
@@ -39,36 +39,42 @@ RSpec.describe Specialist do
     end
   end
 
-  context "guild" do
+  context "when guild" do
     let(:specialist) { create(:specialist) }
 
-    describe "guild_joined_date" do
+    describe "guild_joined_callbacks" do
       it "sets a date when a specialist joins the guild" do
         expect {
           specialist.update!(guild: true)
-        }.to change(specialist.reload, :guild_joined_date)
+          specialist.reload
+        }.to change(specialist, :guild_joined_date)
       end
 
       it "does not overwrite the original date" do
         specialist.update!(guild: true)
         expect {
           specialist.update!(guild: false)
-        }.to_not change(specialist.reload, :guild_joined_date)
+        }.not_to change(specialist.reload, :guild_joined_date)
+      end
+
+      it "adds guild followables" do
+        specialist.update!(guild: true)
+        expect(GuildAddFollowablesJob).to have_been_enqueued.with(specialist.id)
       end
     end
 
     describe "guild_featured_member_at" do
-      let!(:spe_featured) { create(:specialist, :guild, guild_featured_member_at: Time.current) }
-      let!(:spe_not_featured) { create(:specialist, :guild) }
-      let!(:spe_non_guild) { create(:specialist) }
-
       subject(:guild_feature_members) {
-        Specialist.guild_featured_members
+        described_class.guild_featured_members
       }
 
+      let!(:spe_featured) { create(:specialist, :guild, guild_featured_member_at: Time.current) }
+      let(:spe_not_featured) { create(:specialist, :guild) }
+      let(:spe_non_guild) { create(:specialist) }
+
       it "only includes guild members who have the respective datetime" do
-        expect(subject.count).to eq(1)
-        expect(subject).to include(spe_featured)
+        expect(guild_feature_members.count).to eq(1)
+        expect(guild_feature_members).to include(spe_featured)
       end
     end
   end

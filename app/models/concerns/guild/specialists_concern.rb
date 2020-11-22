@@ -60,32 +60,6 @@ module Guild
         guild_activity.first.created_at > guild_notifications_last_read
       end
 
-      def guild_add_topic_followables!
-        # Skills
-        skills.each do |skill|
-          next unless skill.guild_topic
-
-          follow(skill.guild_topic)
-        end
-
-        # Previous Project industries and skills
-        previous_projects.each do |pp|
-          pp.industries.each do |pp_industry|
-            next unless pp_industry.guild_topic
-
-            follow(pp_industry.guild_topic)
-          end
-          pp.skills.each do |pp_skill|
-            next unless pp_skill.guild_topic
-
-            follow(pp_skill.guild_topic)
-          end
-        end
-
-        # Location
-        follow(country.guild_topic) if country&.guild_topic
-      end
-
       def guild_activity
         @guild_activity ||= [
           guild_post_comments.limit(10),
@@ -123,7 +97,7 @@ module Guild
 
       def guild_joined_callbacks
         self.guild_joined_date ||= Time.current
-        guild_add_topic_followables!
+        GuildAddFollowablesJob.perform_later(id)
       end
     end
   end
