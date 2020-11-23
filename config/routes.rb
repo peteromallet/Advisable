@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   if Rails.env.development? || ENV["STAGING"]
     mount GraphqlPlayground::Rails::Engine, as: "graphql_playground", at: '/playground', graphql_path: '/graphql'
     mount GraphqlPlayground::Rails::Engine, as: "admin_graphql_playground", at: '/admin_playground', graphql_path: '/admin_graphql'
+    post '/admin_graphql', to: 'graphql#admin'
+    get "/advisatable", to: "application#advisatable"
+    get "/advisatable/*admin", to: "application#advisatable"
   end
 
   namespace :admin do
@@ -43,12 +46,6 @@ Rails.application.routes.draw do
   end
 
   post '/graphql', to: 'graphql#execute'
-
-  if Rails.env.development? || ENV["STAGING"]
-    post '/admin_graphql', to: 'graphql#admin'
-    get "/advisatable", to: "application#advisatable"
-    get "/advisatable/*admin", to: "application#advisatable"
-  end
 
   post '/stripe_events', to: 'stripe_events#create'
 
