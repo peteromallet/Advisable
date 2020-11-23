@@ -6,11 +6,6 @@ const getProject = gql`
       id
       title
       description
-      primaryIndustry {
-        id
-        name
-        color
-      }
       images {
         id
         url
