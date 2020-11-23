@@ -3,11 +3,11 @@ import { object, boolean, string, number, ref } from "yup";
 import { useMutation } from "@apollo/client";
 import { Formik, Form, useField, useFormikContext } from "formik";
 import { Box, Checkbox, Button, Text } from "@advisable/donut";
+import SegmentedControl from "components/SegmentedControl";
+import CurrencyInput from "components/CurrencyInput";
 import SubmitButton from "components/SubmitButton";
-import CurrencyInput from "../../CurrencyInput";
+import priceInputProps from "src/utilities/priceInputProps";
 import UPDATE_ESTIMATE from "./updateEstimate";
-import SegmentedControl from "../../SegmentedControl";
-import priceInputProps from "../../../utilities/priceInputProps";
 import QuoteInputPriceCalcuation from "./QuoteInputPriceCalculation";
 
 const CONTENT = {
