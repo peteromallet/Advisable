@@ -27,9 +27,11 @@ class Mutations::CompleteSetup < Mutations::BaseMutation
   def resolve(**args)
     specialist = context[:current_user]
     specialist.application_stage = "On Hold"
-    specialist.save
+    Logidze.with_responsible(specialist.account_id) do
+      specialist.save
+    end
     specialist.sync_to_airtable
 
-    { specialist: specialist }
+    {specialist: specialist}
   end
 end

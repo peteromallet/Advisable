@@ -1,15 +1,16 @@
 require "rails_helper"
 
 RSpec.describe Specialists::UpdateProfile do
+  let(:account) { create(:account) }
   let(:specialist) { create(:specialist, remote: false) }
 
-  before :each do
+  before do
     allow(specialist).to receive(:sync_to_airtable)
   end
 
   it "sets the specialist bio" do
     expect {
-      Specialists::UpdateProfile.call(
+      described_class.call(
         specialist: specialist,
         attributes: {bio: "changed"}
       )
@@ -18,7 +19,7 @@ RSpec.describe Specialists::UpdateProfile do
 
   it 'sets the city' do
     expect {
-      Specialists::UpdateProfile.call(
+      described_class.call(
         specialist: specialist,
         attributes: {city: "Berlin"}
       )
@@ -27,7 +28,7 @@ RSpec.describe Specialists::UpdateProfile do
 
   it 'sets the remote attribute' do
     expect {
-      Specialists::UpdateProfile.call(
+      described_class.call(
         specialist: specialist,
         attributes: {remote: true}
       )
@@ -37,7 +38,7 @@ RSpec.describe Specialists::UpdateProfile do
   it 'sets the specialists skills' do
     a = create(:skill, name: "Marketing")
     b = create(:skill, name: "Testing")
-    Specialists::UpdateProfile.call(
+    described_class.call(
       specialist: specialist,
       attributes: {skills: ['Marketing', 'Testing']}
     )
@@ -47,7 +48,7 @@ RSpec.describe Specialists::UpdateProfile do
 
   it 'sets the specialists country' do
     country = create(:country, name: "Germany")
-    Specialists::UpdateProfile.call(
+    described_class.call(
       specialist: specialist,
       attributes: {country: country.uid}
     )
@@ -55,18 +56,28 @@ RSpec.describe Specialists::UpdateProfile do
   end
 
   it 'calls #sync_to_airtable' do
-    expect(specialist).to receive(:sync_to_airtable)
-    Specialists::UpdateProfile.call(
+    expect(specialist).to receive(:sync_to_airtable) # rubocop:disable RSpec/MessageSpies
+    described_class.call(
       specialist: specialist,
       attributes: {bio: "Testing"}
     )
   end
 
   it 'returns the specialist' do
-    result = Specialists::UpdateProfile.call(
+    result = described_class.call(
       specialist: specialist,
       attributes: {bio: "Testing"}
     )
     expect(result).to be_a(Specialist)
+  end
+
+  it 'saves the responsible person' do
+    result = described_class.call(
+      specialist: specialist,
+      attributes: {bio: "Testing"},
+      responsible: account
+    )
+    result.reload_log_data
+    expect(result.log_data.responsible_id).to eq(account.id)
   end
 end

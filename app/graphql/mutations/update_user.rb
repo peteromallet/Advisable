@@ -5,7 +5,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
   field :user, Types::User, null: true
 
   def authorized?(**args)
-    unless context[:current_user]&.is_a?(User)
+    unless context[:current_user].is_a?(User)
       raise ApiError::NotAuthenticated.new
     end
 
@@ -22,9 +22,11 @@ class Mutations::UpdateUser < Mutations::BaseMutation
 
     user.industry = Industry.find_by_name!(args[:industry]) if args[:industry]
     user.company_type = args[:company_type] if args[:company_type]
-    user.save
+    Logidze.with_responsible(context[:current_account]&.id) do
+      user.save
+    end
     user.sync_to_airtable
 
-    { user: user }
+    {user: user}
   end
 end

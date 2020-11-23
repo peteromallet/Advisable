@@ -85,8 +85,11 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     end
 
     specialist.skills = skills
+    success = Logidze.with_responsible(specialist.account_id) do
+      specialist.save
+    end
 
-    if specialist.save
+    if success
       specialist.sync_to_airtable
       create_application_record(specialist, args[:pid])
       specialist.send_confirmation_email
@@ -105,9 +108,11 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
   # mutation to create an application record for that project.
   def create_application_record(specialist, pid)
     return unless pid
+
     project = Project.find_by_uid_or_airtable_id(pid)
     project = Airtable::Project.find(pid).sync if project.nil?
     return if project.blank?
+
     application = specialist.applications.create(project: project, status: 'Invited To Apply')
     application.sync_to_airtable({'Source' => 'new-signup'})
   end

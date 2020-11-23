@@ -27,9 +27,11 @@ class Mutations::SubmitFullApplication < Mutations::BaseMutation
   def resolve(**args)
     specialist = context[:current_user]
     specialist.application_stage = 'Full Application'
-    specialist.save
+    Logidze.with_responsible(context[:current_account]&.id) do
+      specialist.save
+    end
     specialist.sync_to_airtable
 
-    { specialist: specialist }
+    {specialist: specialist}
   end
 end

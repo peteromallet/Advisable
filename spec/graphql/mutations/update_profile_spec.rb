@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Mutations::UpdateProfile do
   let(:skill) { create(:skill) }
-  let!(:country) { create(:country, alpha2: 'IE', name: 'Ireland') }
   let(:specialist) do
     create(:specialist, {bio: nil, city: nil, country: nil, remote: false})
   end
@@ -43,7 +42,7 @@ RSpec.describe Mutations::UpdateProfile do
     AdvisableSchema.execute(query, context: {current_user: specialist})
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
   end
 
@@ -73,8 +72,9 @@ RSpec.describe Mutations::UpdateProfile do
   end
 
   it 'updates the country' do
+    create(:country, alpha2: 'IE', name: 'Ireland')
     country = response['data']['updateProfile']['specialist']['country']
-    expect(country).to_not be_nil
+    expect(country).not_to be_nil
   end
 
   it 'updates the remote attribute' do
@@ -88,7 +88,7 @@ RSpec.describe Mutations::UpdateProfile do
   end
 
   context 'when a Service::Error is thrown' do
-    before :each do
+    before do
       error = Service::Error.new('service_error')
       allow(Specialists::UpdateProfile).to receive(:call).and_raise(error)
     end

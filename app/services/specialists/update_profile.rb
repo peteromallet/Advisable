@@ -2,10 +2,12 @@
 # used by the graphql update_profile mutation.
 class Specialists::UpdateProfile < ApplicationService
   attr_accessor :specialist, :attributes
+  attr_reader :responsible
 
-  def initialize(specialist:, attributes:)
+  def initialize(specialist:, attributes:, responsible: nil)
     @specialist = specialist
     @attributes = attributes
+    @responsible = responsible
   end
 
   def call
@@ -16,7 +18,11 @@ class Specialists::UpdateProfile < ApplicationService
     update_skills
     update_country
 
-    if specialist.save
+    success = Logidze.with_responsible(responsible&.id) do
+      specialist.save
+    end
+
+    if success
       specialist.sync_to_airtable
       specialist
     else
@@ -48,17 +54,20 @@ class Specialists::UpdateProfile < ApplicationService
 
   def attach_avatar
     return unless attributes[:avatar]
+
     specialist.avatar.attach(attributes[:avatar])
   end
 
   def attach_resume
     return unless attributes[:resume]
+
     specialist.resume.attach(attributes[:resume])
   end
 
   # Update the specialists skills if a skills attribute was passed.
   def update_skills
     return unless attributes[:skills]
+
     skills = Skill.where(name: attributes[:skills])
     specialist.skill_ids = skills.map(&:id)
   end
@@ -66,6 +75,7 @@ class Specialists::UpdateProfile < ApplicationService
   # Update the country if it was passed
   def update_country
     return if attributes[:country].blank?
+
     country = Country.find_by(uid: attributes[:country]) || Country.find_by(alpha2: attributes[:country]) || Country.find_by(name: attributes[:country])
     specialist.country_id = country&.id
   end

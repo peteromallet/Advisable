@@ -12,7 +12,9 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
     account.confirmed_at = Time.zone.now
     account.confirmation_digest = nil
     account.confirmation_token = nil
-    account.save(validate: false)
+    Logidze.with_responsible(account.id) do
+      account.save(validate: false)
+    end
     login_as(account)
 
     {viewer: account.specialist_or_user}
@@ -24,6 +26,7 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
     valid =
       BCrypt::Password.new(account.confirmation_digest).is_password?(token)
     return if valid
+
     ApiError.invalid_request(code: 'INVALID_CONFIRMATION_TOKEN')
   rescue BCrypt::Errors::InvalidHash => e
     ApiError.invalid_request(code: 'INVALID_CONFIRMATION_TOKEN')

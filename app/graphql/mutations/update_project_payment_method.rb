@@ -39,7 +39,10 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
     store_vat_number(user) if user.account.vat_number_changed?
 
     user.update_payments_setup
-    user.save_and_sync!
+    Logidze.with_responsible(context[:current_account]&.id) do
+      user.save!
+    end
+    user.sync_to_airtable
     {user: user}
   end
 
@@ -47,6 +50,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
 
   def store_vat_number(user)
     return if user.account.vat_number.blank?
+
     Stripe::Customer.create_tax_id(
       user.stripe_customer_id,
       {
