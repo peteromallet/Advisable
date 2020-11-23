@@ -5,6 +5,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
   let(:skill) { create(:skill, name: 'Marketing') }
   let(:skill_name) { skill.name }
   let(:email) { 'test@test.com' }
+  let(:password) { 'test1234' }
   let(:session_manager) do
     SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
   end
@@ -17,7 +18,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
         lastName: "Account",
         email: "#{email}",
         phone: "0861234567",
-        password: "testing123",
+        #{password.blank? ? "" : "password: \"#{password}\","}
         skills: ["#{skill_name}"],
         pid: "#{project.try(:airtable_id)}",
         campaignName: "campaignName",
@@ -34,11 +35,11 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow(session_manager).to receive(:login)
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
-    project = double(Airtable::Project)
+    project = instance_double(Airtable::Project)
     allow(project).to receive(:sync)
     allow(Airtable::Project).to receive(:find).and_return(project)
   end
@@ -51,7 +52,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
   end
 
   it 'Creates a new specialist' do
-    expect { response }.to change { Specialist.count }.by(1)
+    expect { response }.to change(Specialist, :count).by(1)
   end
 
   it 'Adds the provided skills' do
@@ -81,7 +82,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     end
   end
 
-  context "When given a skill that doesn't exist" do
+  context "when given a skill that doesn't exist" do
     let(:skill_name) { 'Nope' }
 
     it 'returns an error' do
@@ -90,7 +91,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     end
   end
 
-  context 'When given an email that is already been used' do
+  context 'when given an email that is already been used' do
     let(:user) { create(:user) }
     let(:email) { user.account.email.upcase }
 
@@ -122,5 +123,29 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     response
     specialist = Specialist.last
     expect(specialist.phone).to eq('0861234567')
+  end
+
+  context "when no password provided" do
+    let(:password) { nil }
+
+    it "creates a new specialist" do
+      expect { response }.to change(Specialist, :count).by(1)
+    end
+
+    it "sets the first_name, last_name, and email" do
+      response
+      specialist = Specialist.last
+      expect(specialist.account.attributes.slice("first_name", "last_name", "email").values).to match_array(["Account", "Test", "test@test.com"])
+    end
+
+    context "when given an email that is already been used" do
+      let(:user) { create(:user) }
+      let(:email) { user.account.email.upcase }
+
+      it "returns an error" do
+        error = response["errors"][0]["extensions"]["code"]
+        expect(error).to eq("emailTaken")
+      end
+    end
   end
 end

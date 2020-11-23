@@ -44,6 +44,9 @@ Style/AndOr:
   Enabled: true
   EnforcedStyle: always
 
+Style/StringLiteralsInInterpolation:
+  Enabled: false
+
 Rails/DynamicFindBy:
   Enabled: false
 

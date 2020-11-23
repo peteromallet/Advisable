@@ -22,7 +22,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
     description 'The freelancers phone number'
   end
 
-  argument :password, String, required: true do
+  argument :password, String, required: false do
     description 'The account password'
   end
 
