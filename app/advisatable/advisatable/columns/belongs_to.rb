@@ -1,7 +1,7 @@
 module Advisatable
   module Columns
     class BelongsTo < Base
-      option_field :labelled_by, GraphQL::Types::String
+      option_field :labeled_by, GraphQL::Types::String
 
       def type
         opts.fetch(:resource).type

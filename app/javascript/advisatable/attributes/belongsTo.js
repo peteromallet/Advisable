@@ -14,13 +14,13 @@ export default {
     const columnConfig = getResourceColumn(
       resources,
       field.type.name,
-      column.labelledBy || "id",
+      column.labeledBy || "id",
     );
 
     const Component = getColumnRenderComponent(columnConfig);
     return <Component record={record[column.field]} column={columnConfig} />;
   },
-  input: function BelongsToInput({ record, column }) {
+  input: function BelongsToInput() {
     return <>div</>;
   },
 };

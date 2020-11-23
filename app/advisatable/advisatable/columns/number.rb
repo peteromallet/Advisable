@@ -2,8 +2,9 @@ module Advisatable
   module Columns
     class Number < Base
       def type
-        percision = opts.fetch(:percision, 0)
-        return GraphQL::Types::Int if percision.zero?
+        precision = opts.fetch(:precision, 0)
+        return GraphQL::Types::Int if precision.zero?
+
         GraphQL::Types::Float
       end
 
@@ -12,8 +13,8 @@ module Advisatable
       end
 
       def read(resource)
-        percision = opts.fetch(:percision, 0)
-        resource.public_send(attribute)&.round(percision)
+        precision = opts.fetch(:precision, 0)
+        resource.public_send(attribute)&.round(precision)
       end
     end
   end
