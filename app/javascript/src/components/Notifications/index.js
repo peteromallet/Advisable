@@ -28,6 +28,13 @@ export const NotificationsProvider = ({ children }) => {
     ]);
   };
 
+  const error = (content, opts = {}) => {
+    notify(content, {
+      variant: "error",
+      ...opts,
+    });
+  };
+
   const variants = {
     initial: {
       opacity: 0,
@@ -47,7 +54,7 @@ export const NotificationsProvider = ({ children }) => {
   };
 
   return (
-    <Context.Provider value={{ notify }}>
+    <Context.Provider value={{ notify, error }}>
       <Container>
         <AnimatePresence initial={false}>
           {queue.map((item) => {
