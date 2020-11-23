@@ -34,6 +34,7 @@ const getProject = gql`
         id
         name
         role
+        avatar
         comment
         companyName
         ratings {
