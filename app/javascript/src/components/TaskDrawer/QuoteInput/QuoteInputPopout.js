@@ -1,12 +1,13 @@
+import React, { useEffect, useCallback } from "react";
 import { object, boolean, string, number, ref } from "yup";
-import React from "react";
 import { useMutation } from "@apollo/client";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, useField, useFormikContext } from "formik";
 import { Box, Checkbox, Button, Text } from "@advisable/donut";
-import CurrencyInput from "../../CurrencyInput";
+import SegmentedControl from "components/SegmentedControl";
+import CurrencyInput from "components/CurrencyInput";
+import SubmitButton from "components/SubmitButton";
+import priceInputProps from "src/utilities/priceInputProps";
 import UPDATE_ESTIMATE from "./updateEstimate";
-import SegmentedControl from "../../SegmentedControl";
-import priceInputProps from "../../../utilities/priceInputProps";
 import QuoteInputPriceCalcuation from "./QuoteInputPriceCalculation";
 
 const CONTENT = {
@@ -32,8 +33,118 @@ const validationSchema = object({
     then: number()
       .required("Field is required")
       .min(ref("estimate"), "Value must be greater than ${min}"),
+    otherwise: number().nullable(),
   }),
 });
+
+function EstimateType() {
+  const { setFieldValue } = useFormikContext();
+  const [field] = useField("estimateType");
+
+  const handleChange = useCallback(
+    (e) => {
+      field.onChange(e);
+      setFieldValue("estimate", "");
+      setFieldValue("flexibleEstimate", "");
+    },
+    [field, setFieldValue],
+  );
+
+  return (
+    <SegmentedControl
+      {...field}
+      mb="m"
+      onChange={handleChange}
+      options={[
+        { label: "Hourly", value: "Hourly" },
+        { label: "Fixed", value: "Fixed" },
+      ]}
+    />
+  );
+}
+
+function EstimateInput() {
+  const formik = useFormikContext();
+  const [estimateField] = useField("estimate");
+  const [flexibleEstimateField] = useField("flexibleEstimate");
+  const estimateType = formik.values.estimateType;
+  const isFixed = estimateType === "Fixed";
+  const isRange = formik.values.isFlexible;
+
+  return (
+    <>
+      <Text as="label" fontSize="s" htmlFor="amount" fontWeight="medium">
+        {CONTENT[`${estimateType}`].label}
+      </Text>
+      <Box pt="xs" display="flex" alignItems="center">
+        <Box width="100%">
+          <CurrencyInput
+            {...estimateField}
+            size="sm"
+            id="estimate"
+            name="estimate"
+            prefix={isFixed ? "$" : "Hours"}
+            placeholder={CONTENT[estimateType].amountPlaceholder}
+            {...(isFixed ? priceInputProps(formik, "estimate") : {})}
+          />
+        </Box>
+        {isRange && (
+          <>
+            <Text px="xs" color="neutral600">
+              to
+            </Text>
+            <Box width="100%">
+              <CurrencyInput
+                {...flexibleEstimateField}
+                size="sm"
+                autoFocus
+                prefix={isFixed ? "$" : "Hours"}
+                placeholder={
+                  CONTENT[`${estimateType}`].flexibleAmountPlaceholder
+                }
+                {...(isFixed
+                  ? priceInputProps(formik, "flexibleEstimate")
+                  : {})}
+              />
+            </Box>
+          </>
+        )}
+      </Box>
+    </>
+  );
+}
+
+function ToggleRange() {
+  const { values, setFieldValue } = useFormikContext();
+  const [field] = useField({ name: "isFlexible", type: "checkbox" });
+
+  useEffect(() => {
+    if (!values.isFlexible) {
+      setFieldValue("flexibleEstimate", "");
+    }
+  }, [values.isFlexible, setFieldValue]);
+
+  return (
+    <Checkbox {...field} mb="l" size="s" mt="s">
+      {CONTENT[`${values.estimateType}`].flexibleToggle}
+    </Checkbox>
+  );
+}
+
+function EstimateCalculation({ task }) {
+  const { values } = useFormikContext();
+  const [, { error }] = useField("flexibleEstimate");
+
+  if (error) {
+    return (
+      <Text color="red600" mt="xs" fontSize="xs" lineHeight="xs">
+        {error}
+      </Text>
+    );
+  }
+
+  return <QuoteInputPriceCalcuation task={task} {...values} />;
+}
 
 const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
   const [updateEstimate] = useMutation(UPDATE_ESTIMATE);
@@ -45,26 +156,13 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
     flexibleEstimate: task.flexibleEstimate ? task.flexibleEstimate : "",
   };
 
-  const handleChangePricingType = (formik) => (e) => {
-    formik.handleChange(e);
-    formik.setFieldValue("estimate", undefined);
-    formik.setFieldValue("flexibleEstimate", undefined);
-  };
-
-  const handleToggleFlexible = (formik) => (e) => {
-    if (formik.values.isFlexible) {
-      formik.setFieldValue("flexibleEstimate", undefined);
-    }
-    formik.handleChange(e);
-  };
-
   const handleSubmit = async (values) => {
     await updateEstimate({
       variables: {
         input: {
           id: task.id,
           estimateType: values.estimateType,
-          estimate: values.estimate ? Number(values.estimate) : undefined,
+          estimate: values.estimate ? Number(values.estimate) : null,
           flexibleEstimate: values.flexibleEstimate
             ? Number(values.flexibleEstimate)
             : null,
@@ -77,107 +175,28 @@ const QuoteInputPopout = ({ onSuccess, onCancel, task }) => {
 
   return (
     <Formik
+      validateOnMount
       onSubmit={handleSubmit}
       initialValues={initialValues}
       validationSchema={validationSchema}
-      validateOnMount
     >
-      {({ isSubmitting, ...formik }) => (
-        <Form>
-          <Field
-            mb="m"
-            name="estimateType"
-            as={SegmentedControl}
-            onChange={handleChangePricingType(formik)}
-            options={[
-              { label: "Hourly", value: "Hourly" },
-              { label: "Fixed", value: "Fixed" },
-            ]}
-          />
-          <Text as="label" fontSize="s" htmlFor="amount" fontWeight="medium">
-            {CONTENT[`${formik.values.estimateType}`].label}
-          </Text>
-          <Box pt="xs" display="flex" alignItems="center">
-            <Box width="100%">
-              <Field
-                size="sm"
-                as={CurrencyInput}
-                id="estimate"
-                name="estimate"
-                prefix={formik.values.estimateType === "Fixed" ? "$" : "Hours"}
-                autoFocus={formik.values.estimateType !== "Fixed"}
-                placeholder={
-                  CONTENT[`${formik.values.estimateType}`].amountPlaceholder
-                }
-                {...(formik.values.estimateType === "Fixed"
-                  ? priceInputProps(formik, "estimate")
-                  : {})}
-              />
-            </Box>
-            {formik.values.isFlexible && (
-              <>
-                <Text px="xs" color="neutral600">
-                  to
-                </Text>
-                <Box width="100%">
-                  <Field
-                    size="sm"
-                    autoFocus
-                    as={CurrencyInput}
-                    name="flexibleEstimate"
-                    prefix={
-                      formik.values.estimateType === "Fixed" ? "$" : "Hours"
-                    }
-                    placeholder={
-                      CONTENT[`${formik.values.estimateType}`]
-                        .flexibleAmountPlaceholder
-                    }
-                    {...(formik.values.estimateType === "Fixed"
-                      ? priceInputProps(formik, "flexibleEstimate")
-                      : {})}
-                  />
-                </Box>
-              </>
-            )}
-          </Box>
-          {formik.errors.flexibleEstimate ? (
-            <Text color="red600" mt="xs" fontSize="xs" lineHeight="xs">
-              {formik.errors.flexibleEstimate}
-            </Text>
-          ) : (
-            <QuoteInputPriceCalcuation
-              task={task}
-              isFlexible={formik.values.isFlexible}
-              {...formik.values}
-            />
-          )}
-          <Field
-            as={Checkbox}
-            mt="s"
-            mb="l"
-            size="s"
-            type="checkbox"
-            name="isFlexible"
-            onChange={handleToggleFlexible(formik)}
-          >
-            {CONTENT[`${formik.values.estimateType}`].flexibleToggle}
-          </Field>
-
-          <Button
-            mr="xs"
-            size="s"
-            type="submit"
-            loading={isSubmitting}
-            disabled={!formik.isValid}
-            aria-label="Save Quote"
-          >
-            Save Quote
-          </Button>
-          <Button type="button" size="s" variant="secondary" onClick={onCancel}>
-            Cancel
-          </Button>
-        </Form>
-      )}
+      <Form>
+        <EstimateType />
+        <EstimateInput />
+        <EstimateCalculation task={task} />
+        <ToggleRange />
+        <SubmitButton
+          mr="xs"
+          size="s"
+          aria-label="Save Quote"
+          disableUntilValid
+        >
+          Save Quote
+        </SubmitButton>
+        <Button type="button" size="s" variant="secondary" onClick={onCancel}>
+          Cancel
+        </Button>
+      </Form>
     </Formik>
   );
 };
