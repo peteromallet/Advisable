@@ -2,6 +2,8 @@ class Account < ApplicationRecord
   include Uid
   include Permissions
 
+  has_logidze
+
   has_one :user, dependent: :nullify # Change to :destroy
   has_one :specialist, dependent: :nullify # Change to :destroy
   has_many :magic_links, dependent: :destroy
@@ -79,6 +81,7 @@ end
 #  email               :citext
 #  first_name          :string
 #  last_name           :string
+#  log_data            :jsonb
 #  password_digest     :string
 #  permissions         :jsonb
 #  remember_token      :string
