@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Box, Avatar, Text, useBreakpoint } from "@advisable/donut";
+import { Box, Avatar, Text, Link, useBreakpoint } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import { GuildBox, flex } from "@guild/styles";
 import { StyledConversationItem } from "../styles";
@@ -27,11 +27,11 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
       <Box alignItems="center" display="flex">
         <Box flexShrink={0}>
           <Avatar
-            as="a"
+            as={Link}
             size={"s"}
             name={other.name}
             url={other.avatar}
-            href={`/freelancers/${other.id}`}
+            to={`/freelancers/${other.id}`}
           />
         </Box>
         <GuildBox
@@ -50,8 +50,8 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
             {conversation.friendlyName}
           </Text>
           <Text
-            as={sUp ? "a" : "div"}
-            href={`/freelancers/${other.id}`}
+            as={sUp ? Link : "div"}
+            to={`/freelancers/${other.id}`}
             size="xs"
             color="quartz"
           >

@@ -85,8 +85,8 @@ const Post = () => {
 
               <GuildBox alignItems="start" spaceChildrenHorizontal={24}>
                 <Avatar
-                  as={Link.External}
-                  href={`/freelancers/${post.author.id}`}
+                  as={Link}
+                  to={`/freelancers/${post.author.id}`}
                   size={{ _: "s", m: "m" }}
                   name={post.author.name}
                   url={post.author.avatar}
