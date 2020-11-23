@@ -3,7 +3,7 @@ require 'admin_constraint'
 
 Rails.application.routes.draw do
   if Rails.env.development? || ENV["STAGING"]
-    mount GraphqlPlayground::Rails::Engine, at: '/playground', graphql_path: '/graphql'
+    mount GraphqlPlayground::Rails::Engine, at: '/playground', graphql_path: '/admin_graphql'
   end
 
   namespace :admin do
@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   end
 
   post '/graphql', to: 'graphql#execute'
+  post '/admin_graphql', to: 'graphql#admin'
 
   post '/stripe_events', to: 'stripe_events#create'
 
@@ -62,6 +63,9 @@ Rails.application.routes.draw do
   post '/accounts/user'
   post '/accounts/specialist'
   post 'zappier_interactor/attach_previous_project_image'
+
+  get "/advisatable", to: "application#advisatable"
+  get "/advisatable/*admin", to: "application#advisatable"
 
   # match every other route to the frontend codebase
   root 'application#frontend'

@@ -25,6 +25,23 @@ class GraphqlController < ApplicationController
     render json: result
   end
 
+  def admin
+    variables = ensure_hash(params[:variables])
+    query = params[:query]
+    operation_name = params[:operationName]
+    context = {
+      session_manager: session_manager,
+    }
+
+    result =
+      AdminSchema.execute(
+        query,
+        variables: variables, context: context, operation_name: operation_name
+      )
+    render json: result
+  end
+
+
   private
 
   # Handle form data, JSON body, or a blank value
