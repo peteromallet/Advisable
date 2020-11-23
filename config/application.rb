@@ -18,6 +18,9 @@ module Advisable
     config.action_mailer.preview_path = Rails.root.join("test/mailers/previews")
     config.action_mailbox.ingress = :sendgrid
     config.assets.paths << Rails.root.join("app/assets/fonts")
+
+    # Do not load log_data columns unless needed
+    config.logidze.ignore_log_data_by_default = true
   end
 end
 

@@ -15,7 +15,10 @@ class AccountsController < ApplicationController
     [:airtable_id, :company_name].each do |key|
       user.public_send("#{key}=", params[key].strip) if params[key].present?
     end
-    user.save!
+
+    Logidze.with_responsible(user.account_id) do
+      user.save!
+    end
 
     render json: {user_uid: user.uid, account_uid: account.uid}
   rescue ActiveRecord::RecordInvalid => e
@@ -28,7 +31,9 @@ class AccountsController < ApplicationController
     [:airtable_id, :application_stage].each do |key|
       specialist.public_send("#{key}=", params[key].strip) if params[key].present?
     end
-    specialist.save!
+    Logidze.with_responsible(specialist.account_id) do
+      specialist.save!
+    end
 
     render json: {specialist_uid: specialist.uid, account_uid: account.uid}
   rescue ActiveRecord::RecordInvalid => e
@@ -43,7 +48,10 @@ class AccountsController < ApplicationController
     [:first_name, :last_name].each do |key|
       account.public_send("#{key}=", params[key].strip) if params[key].present?
     end
-    account.save!
+
+    Logidze.with_responsible("Zappier Accounts") do
+      account.save!
+    end
   end
 
   def account_params
@@ -52,6 +60,7 @@ class AccountsController < ApplicationController
 
   def verify_key!
     return if params[:key].present? && params[:key] == ENV["ACCOUNTS_CREATE_KEY"]
+
     render json: {error: "You are not authorized to perform this action."}, status: :unauthorized
   end
 end
