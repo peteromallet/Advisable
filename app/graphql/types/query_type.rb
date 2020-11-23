@@ -1,4 +1,5 @@
 class Types::QueryType < Types::BaseType
+
   field :project, Types::ProjectType, null: true do
     argument :id, ID, required: true
   end

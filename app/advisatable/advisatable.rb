@@ -1,0 +1,2 @@
+module Advisatable
+end
