@@ -6,11 +6,6 @@ const getProject = gql`
       id
       title
       description
-      primaryIndustry {
-        id
-        name
-        color
-      }
       images {
         id
         url
@@ -34,16 +29,9 @@ const getProject = gql`
         id
         name
         role
+        avatar
         comment
         companyName
-        ratings {
-          overall
-          skills
-          communication
-          qualityOfWork
-          availability
-          adherenceToSchedule
-        }
       }
     }
   }
