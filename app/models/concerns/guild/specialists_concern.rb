@@ -20,7 +20,7 @@ module Guild
                source: :reactions,
                class_name: 'Guild::Reaction'
 
-      before_save :set_guild_joined_date, if: -> { guild_changed? }
+      before_save :guild_joined_callbacks, if: -> { guild_changed? && guild }
 
       scope :guild, -> { where(guild: true) }
       scope :guild_featured_members, lambda {
@@ -95,10 +95,9 @@ module Guild
 
       protected
 
-      def set_guild_joined_date
-        return unless guild
-
+      def guild_joined_callbacks
         self.guild_joined_date ||= Time.current
+        GuildAddFollowablesJob.perform_later(id)
       end
     end
   end
