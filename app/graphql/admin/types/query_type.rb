@@ -1,13 +1,11 @@
 class Admin::Types::QueryType < Types::BaseType
-  Zeitwerk::Loader.eager_load_all
-
   field :__resources, [Advisatable::Types::Resource], null: false
 
   def __resources
-    Advisatable::Resource.descendants.sort_by(&:name)
+    Advisatable::Resources.resource_classes.sort_by(&:name)
   end
 
-  Advisatable::Resource.descendants.each do |admin|
+  Advisatable::Resources.resource_classes.each do |admin|
     field admin.index_query_name, [admin.type], null: false do
       argument :filter, admin.filter_type, required: false
     end
