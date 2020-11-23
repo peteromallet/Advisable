@@ -4739,10 +4739,20 @@ babel-plugin-react-docgen@^4.2.1:
     lodash "^4.17.15"
     react-docgen "^5.0.0"
 
-"babel-plugin-styled-components@>= 1", babel-plugin-styled-components@^1.11.1:
+"babel-plugin-styled-components@>= 1":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-styled-components/-/babel-plugin-styled-components-1.11.1.tgz#5296a9e557d736c3186be079fff27c6665d63d76"
   integrity sha512-YwrInHyKUk1PU3avIRdiLyCpM++18Rs1NgyMXEAQC33rIXs/vro0A+stf4sT0Gf22Got+xRWB8Cm0tw+qkRzBA==
+  dependencies:
+    "@babel/helper-annotate-as-pure" "^7.0.0"
+    "@babel/helper-module-imports" "^7.0.0"
+    babel-plugin-syntax-jsx "^6.18.0"
+    lodash "^4.17.11"
+
+babel-plugin-styled-components@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-styled-components/-/babel-plugin-styled-components-1.12.0.tgz#1dec1676512177de6b827211e9eda5a30db4f9b9"
+  integrity sha512-FEiD7l5ZABdJPpLssKXjBUJMYqzbcNzBowfXDCdJhOpbhWiewapUaY+LZGT8R4Jg2TwOjGjG4RKeyrO5p9sBkA==
   dependencies:
     "@babel/helper-annotate-as-pure" "^7.0.0"
     "@babel/helper-module-imports" "^7.0.0"
@@ -16291,10 +16301,10 @@ twilio-sync@^0.12.2:
     twilsock "^0.5.13"
     uuid "^3.3.2"
 
-twilio-video@^2.7.3:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/twilio-video/-/twilio-video-2.7.3.tgz#7e7a311bc73a5460dccd9df000d8e64c0af967c5"
-  integrity sha512-EsioqFZ5rB0hVCrBuiSl3ZtuDf2kBD9Uwod8OeKDqnKWhAyEgopKWcgs742/GGOon+BNxmNKg73cBKGb8+DxmQ==
+twilio-video@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/twilio-video/-/twilio-video-2.8.0.tgz#e25e49ac0c8f658852f68ac9cea83dd3edaa1069"
+  integrity sha512-TDL4GxlSqYE32zmN0nOVtsdIVAgValRl3LRBuUAuREsQXXk7oEWyXHqNIF1/N9Kvh5J5BVK6FvXnxSA5TsdLkA==
   dependencies:
     "@twilio/webrtc" "4.3.2"
     backoff "^2.5.0"
@@ -16377,10 +16387,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@4.0.5:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.5.tgz#ae9dddfd1069f1cb5beb3ef3b2170dd7c1332389"
-  integrity sha512-ywmr/VrTVCmNTJ6iV2LwIrfG1P+lv6luD8sUJs+2eI9NLGigaN+nUQc13iHqisq7bra9lnmUSYqbJvegraBOPQ==
+typescript@4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.2.tgz#6369ef22516fe5e10304aae5a5c4862db55380e9"
+  integrity sha512-thGloWsGH3SOxv1SoY7QojKi0tc+8FnOmiarEGMbd/lar7QOEd3hvlx3Fp5y6FlDUGl9L+pd4n2e+oToGMmhRQ==
 
 ua-parser-js@^0.7.18:
   version "0.7.22"
