@@ -2,7 +2,6 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { Modal, Avatar, Box, Text, Tag, Paragraph } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
-import IndustryTag from "../IndustryTag";
 import ImageGallery, { useImageGallery } from "components/ImageGallery";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
 import Review from "components/Review";
@@ -27,9 +26,6 @@ function PreviousProjectDetails({ id }) {
 
   return (
     <>
-      {project.industry && (
-        <IndustryTag industry={project.primaryIndustry} mb="s" />
-      )}
       <Box mb="m" width="80%">
         <Text
           as="h2"
