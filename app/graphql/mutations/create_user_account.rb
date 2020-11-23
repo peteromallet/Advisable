@@ -135,7 +135,9 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
       raise ApiError::InvalidRequest.new('resourceInvalid', user.errors.full_messages.first)
     end
 
-    user.save
+    Logidze.with_responsible(user.account_id) do
+      user.save
+    end
     user
   end
 

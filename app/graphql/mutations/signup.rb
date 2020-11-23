@@ -20,7 +20,11 @@ class Mutations::Signup < Mutations::BaseMutation
       password_confirmation: args[:password_confirmation]
     )
 
-    if account.save
+    success = Logidze.with_responsible(account.id) do
+      account.save
+    end
+
+    if success
       specialist_or_user.send_confirmation_email
       specialist_or_user.sync_to_airtable
     else
