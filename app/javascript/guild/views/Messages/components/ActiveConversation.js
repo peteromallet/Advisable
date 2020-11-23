@@ -111,8 +111,8 @@ const ActiveConversation = ({ channelSid }) => {
                   >
                     <Avatar
                       width={"24px"}
-                      as={Link.External}
-                      href={`/freelancers/${other}`}
+                      as={Link}
+                      to={`/freelancers/${other}`}
                       size="s"
                       name={otherParticipant.name}
                       url={otherParticipant.avatar}

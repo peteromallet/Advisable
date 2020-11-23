@@ -35,8 +35,8 @@ const Post = ({ post }) => {
         <Box display="flex" justifyContent="space-between" alignItems="start">
           <Box display="flex">
             <Avatar
-              as={Link.External}
-              href={`/freelancers/${post.author.id}`}
+              as={Link}
+              to={`/freelancers/${post.author.id}`}
               size={{ _: "s", m: "m" }}
               name={post.author.name}
               url={post.author.avatar}
