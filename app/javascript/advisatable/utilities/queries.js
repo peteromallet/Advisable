@@ -46,13 +46,13 @@ function resolveColumnField(type, column, resources, schema) {
     const nextType = getType(schema, field.type.name);
     const resource = getResourceByType(resources, nextType.name);
     const nextColumn = resource.columns.find(
-      (c) => c.field === (column.labelledBy || "id"),
+      (c) => c.field === (column.labeledBy || "id"),
     );
 
     const query = { id: true };
 
-    if (column.labelledBy) {
-      query[column.labelledBy] = resolveColumnField(
+    if (column.labeledBy) {
+      query[column.labeledBy] = resolveColumnField(
         nextType,
         nextColumn,
         resources,
