@@ -37,6 +37,7 @@ const SetupMenu = React.memo(function SetupMenu({ guildPost, urlPrefix }) {
       <MultistepMenu.Item
         to={`${urlPrefix}/type`}
         isComplete={Boolean(guildPost)}
+        isDisabled={!guildPost}
       >
         Post Type
       </MultistepMenu.Item>
@@ -44,6 +45,7 @@ const SetupMenu = React.memo(function SetupMenu({ guildPost, urlPrefix }) {
       <MultistepMenu.Item
         to={pathWithState(`${urlPrefix}/post`)}
         isComplete={yourPostComplete}
+        isDisabled={!guildPost}
       >
         Your Post
       </MultistepMenu.Item>
