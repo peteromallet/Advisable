@@ -37,14 +37,6 @@ const getProject = gql`
         avatar
         comment
         companyName
-        ratings {
-          overall
-          skills
-          communication
-          qualityOfWork
-          availability
-          adherenceToSchedule
-        }
       }
     }
   }
