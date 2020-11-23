@@ -1,4 +1,5 @@
 import React from "react";
+import userEvent from "@testing-library/user-event";
 import { fireEvent, waitFor } from "@testing-library/react";
 import {
   renderComponent,
@@ -144,7 +145,7 @@ test("Setting a fixed price estimate", async () => {
   expect(label).toBeInTheDocument();
 });
 
-test("Can switch from flexible estimate to strit", async () => {
+test("Can switch from flexible estimate to strict", async () => {
   const graphQLMocks = [
     mockViewer(user),
     {
@@ -202,12 +203,8 @@ test("Can switch from flexible estimate to strit", async () => {
     },
   );
 
-  const estimateButton = await comp.findByLabelText("Set estimate");
-  fireEvent.click(estimateButton);
-  const flexible = comp.getByLabelText("Flexible hours");
-  fireEvent.click(flexible);
-  await waitFor(() => {}); // wait for validations to finish!
-  const save = comp.getByLabelText("Save Quote");
-  fireEvent.click(save);
+  userEvent.click(await comp.findByLabelText("Set estimate"));
+  userEvent.click(await comp.findByLabelText("Flexible hours"));
+  userEvent.click(await comp.findByLabelText("Save Quote"));
   await comp.findByText("10 hours", { exact: false });
 });

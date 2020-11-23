@@ -37,6 +37,7 @@ export const StyledInputDecoration = styled.div`
 export const StyledInputControl = styled.input`
   flex: 1;
   margin: 0;
+  width: 100%;
   border: none;
   height: 48px;
   outline: none;
