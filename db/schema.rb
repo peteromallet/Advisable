@@ -364,6 +364,7 @@ ActiveRecord::Schema.define(version: 2020_11_24_081214) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["guild_post_id"], name: "index_guild_post_engagements_on_guild_post_id"
+    t.index ["specialist_id", "guild_post_id"], name: "index_guild_post_engagements_on_specialist_id_and_guild_post_id", unique: true
     t.index ["specialist_id"], name: "index_guild_post_engagements_on_specialist_id"
   end
 
