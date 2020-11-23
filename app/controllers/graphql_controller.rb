@@ -1,7 +1,7 @@
 class GraphqlController < ApplicationController
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token,
-                     if: -> { Rails.env == 'development' }
+                     if: -> { Rails.env.development? }
 
   def execute
     variables = ensure_hash(params[:variables])
@@ -12,6 +12,7 @@ class GraphqlController < ApplicationController
       client_ip: client_ip,
       session_manager: session_manager,
       current_user: current_user,
+      current_account: current_account,
       oauth_viewer:
         session[:omniauth] ? OauthViewer.new(session[:omniauth]) : nil
     }

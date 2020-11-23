@@ -20,7 +20,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
       if user.application_status == "Application Started"
         account.first_name = args[:first_name]
         account.last_name = args[:last_name]
-        if account.save && user.save
+        if save_account(account) && save_user(user)
           user.sync_to_airtable
           create_client_record(user)
           Company.create_for_user(user)
@@ -35,6 +35,18 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
   end
 
   private
+
+  def save_account(account)
+    Logidze.with_responsible(account.id) do
+      account.save
+    end
+  end
+
+  def save_user(user)
+    Logidze.with_responsible(user.account_id) do
+      user.save
+    end
+  end
 
   def create_client_record(user)
     return if user.client.present?

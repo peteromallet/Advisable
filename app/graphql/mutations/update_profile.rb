@@ -34,7 +34,9 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
   def resolve(**args)
     specialist =
       Specialists::UpdateProfile.call(
-        specialist: context[:current_user], attributes: args.except(:id)
+        specialist: context[:current_user],
+        attributes: args.except(:id),
+        responsible: context[:current_account]
       )
 
     {specialist: specialist}
