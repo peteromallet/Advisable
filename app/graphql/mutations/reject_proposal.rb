@@ -10,7 +10,8 @@ class Mutations::RejectProposal < Mutations::BaseMutation
     application = Application.find_by_uid_or_airtable_id!(args[:id])
     policy = ApplicationPolicy.new(context[:current_user], application)
     return true if policy.is_client
-    [false, { errors: [{ code: "not_authorized" }] }]
+
+    [false, {errors: [{code: "not_authorized"}]}]
   end
 
   def resolve(**args)
@@ -20,11 +21,12 @@ class Mutations::RejectProposal < Mutations::BaseMutation
       application: Proposals::Reject.call(
         application: application,
         reason: args[:reason],
-        comment: args[:comment]
+        comment: args[:comment],
+        current_account_id: current_account_id
       )
     }
 
     rescue Service::Error => e
-      { errors: [e] }
+      {errors: [e]}
   end
 end

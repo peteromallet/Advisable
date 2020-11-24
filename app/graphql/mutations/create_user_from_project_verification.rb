@@ -43,10 +43,8 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
       campaign_source: 'validation',
       industry: project.primary_industry
     )
-    Logidze.with_responsible(context[:current_account]&.id) do
-      user.save!
-    end
-    user.sync_to_airtable
+    user.save_and_sync_with_responsible!(current_account_id)
+
     AttachImageJob.perform_later(user, viewer.image)
     {user: user}
   rescue ActiveRecord::RecordInvalid

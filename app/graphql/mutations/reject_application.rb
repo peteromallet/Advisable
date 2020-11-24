@@ -24,7 +24,7 @@ class Mutations::RejectApplication < Mutations::BaseMutation
       }
     )
 
-    application.save_and_sync!
+    application.save_and_sync_with_responsible!(current_account_id)
     application.project.update_sourcing
 
     {application: application}

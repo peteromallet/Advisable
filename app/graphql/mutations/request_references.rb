@@ -5,9 +5,10 @@ class Mutations::RequestReferences < Mutations::BaseMutation
 
   def resolve(**args)
     {
-      application: Applications::RequestReferences.call({
-        application: Application.find_by_uid_or_airtable_id!(args[:id])
-      })
+      application: Applications::RequestReferences.call(
+        application: Application.find_by_uid_or_airtable_id!(args[:id]),
+        current_account_id: current_account_id
+      )
     }
   end
 end

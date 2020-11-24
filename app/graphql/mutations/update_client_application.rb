@@ -17,9 +17,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
       update_company_name(user, args[:company_name]) if args[:company_name]
       update_industry(user, args[:industry]) if args[:industry]
       update_skills(user, args[:skills]) if args[:skills]
-      Logidze.with_responsible(context[:current_account]&.id) do
-        user.save
-      end
+      current_account_responsible_for { user.save }
       failed_to_save(user) if user.errors.any?
       user.sync_to_airtable
     end

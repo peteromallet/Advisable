@@ -57,5 +57,10 @@ module Airtable::Syncable
       save!
       sync_to_airtable
     end
+
+    def save_and_sync_with_responsible!(responsible_id)
+      Logidze.with_responsible(responsible_id) { save! }
+      sync_to_airtable
+    end
   end
 end

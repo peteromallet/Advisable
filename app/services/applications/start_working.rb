@@ -1,10 +1,11 @@
 class Applications::StartWorking < ApplicationService
-  attr_reader :application, :project_type, :monthly_limit
+  attr_reader :application, :project_type, :monthly_limit, :current_account_id
 
-  def initialize(application:, project_type:, monthly_limit:)
+  def initialize(application:, project_type:, monthly_limit:, current_account_id: nil)
     @application = application
     @project_type = project_type
     @monthly_limit = monthly_limit
+    @current_account_id = current_account_id
   end
 
   def call
@@ -16,8 +17,12 @@ class Applications::StartWorking < ApplicationService
     application.project_type = project_type
     application.monthly_limit = monthly_limit if project_type == 'Flexible'
 
-    if application.save
-      unless application.previous_project.present?
+    success = Logidze.with_responsible(current_account_id) do
+      application.save
+    end
+
+    if success
+      if application.previous_project.blank?
         project = application.create_previous_project
       end
 

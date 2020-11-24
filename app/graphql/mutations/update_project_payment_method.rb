@@ -39,10 +39,8 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
     store_vat_number(user) if user.account.vat_number_changed?
 
     user.update_payments_setup
-    Logidze.with_responsible(context[:current_account]&.id) do
-      user.save!
-    end
-    user.sync_to_airtable
+    user.save_and_sync_with_responsible!(current_account_id)
+
     {user: user}
   end
 
