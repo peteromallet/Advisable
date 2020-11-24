@@ -19,9 +19,7 @@ class Mutations::RequestApplicationReminder < Mutations::BaseMutation
     user = User.find_by_uid_or_airtable_id!(id)
     user.application_status = 'Requested Reminder'
     user.application_reminder_at = 6.months.from_now
-    Logidze.with_responsible(context[:current_account]&.id) do
-      user.save!
-    end
+    current_account_responsible_for { user.save! }
     user.sync_to_airtable
 
     {client_application: user}

@@ -22,9 +22,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
 
     user.industry = Industry.find_by_name!(args[:industry]) if args[:industry]
     user.company_type = args[:company_type] if args[:company_type]
-    Logidze.with_responsible(context[:current_account]&.id) do
-      user.save
-    end
+    current_account_responsible_for { user.save }
     user.sync_to_airtable
 
     {user: user}

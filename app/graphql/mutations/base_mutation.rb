@@ -5,6 +5,10 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
 
   private
 
+  def current_account_responsible_for(&block)
+    Logidze.with_responsible(context[:current_account]&.id, &block)
+  end
+
   def requires_current_user!
     return true if current_user.present?
 
