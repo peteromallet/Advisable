@@ -22,12 +22,9 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def resolve(**args)
-    {
-      application:
-        Applications::Update.call(id: args[:id], attributes: attributes(args))
-    }
+    {application: Applications::Update.call(id: args[:id], attributes: attributes(args), current_account_id: current_account_id)}
   rescue Service::Error => e
-    { errors: [e] }
+    {errors: [e]}
   end
 
   private
@@ -37,7 +34,7 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
       {
         questions:
           (args[:questions] || []).map do |question|
-            { question: question.question, answer: question.answer }
+            {question: question.question, answer: question.answer}
           end
       }
     )

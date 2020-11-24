@@ -1,16 +1,20 @@
 class Applications::Update < ApplicationService
-  attr_reader :application, :attributes
+  attr_reader :application, :attributes, :current_account_id
 
-  def initialize(id:, attributes:)
+  def initialize(id:, attributes:, current_account_id: nil)
     @application = Application.find_by_uid_or_airtable_id!(id)
     @attributes = attributes
+    @current_account_id = current_account_id
   end
 
   def call
     application.assign_attributes(permitted_attributes)
     apply_question_answers
     create_references
-    application.sync_to_airtable if application.save
+    success = Logidze.with_responsible(current_account_id) do
+      application.save
+    end
+    application.sync_to_airtable if success
     application
   end
 
@@ -75,6 +79,7 @@ class Applications::Update < ApplicationService
         attributes[:references].map do |id|
           project = specialist.previous_projects.find_by_uid_or_airtable_id(id)
           raise Service::Error.new(:invalid_reference) if project.blank?
+
           project
         end
       end

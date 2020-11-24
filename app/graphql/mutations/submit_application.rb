@@ -9,7 +9,7 @@ class Mutations::SubmitApplication < Mutations::BaseMutation
     begin
       application = Application.find_by_uid_or_airtable_id!(args[:id])
       {
-        application: Applications::Submit.call(application)
+        application: Applications::Submit.call(application, current_account_id: current_account_id)
       }
     rescue Service::Error => e
       {
