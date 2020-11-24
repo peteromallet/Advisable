@@ -1,30 +1,21 @@
 import * as React from "react";
 import { Box, Card, Button } from "@advisable/donut";
 import { useApolloClient } from "@apollo/client";
-import { matchPath, useParams } from "react-router";
+import { matchPath } from "react-router";
 import Text from "../../components/Text";
 import Modal from "../../components/Modal";
 import Heading from "../../components/Heading";
 import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
-import FETCH_APPLICATION from "./fetchApplication";
 import TASK_FIELDS from "../../graphql/fragments/task";
 import { hasCompleteTasksStep } from "./validationSchema";
 
 const Tasks = ({ application, match, location, history }) => {
   const client = useApolloClient();
-  const params = useParams();
   const [confirmModal, setConfirmModal] = React.useState(false);
   const onSelectTask = (task) => {
     history.push(`${match.url}/${task.id}`);
-  };
-
-  const applicationQuery = {
-    query: FETCH_APPLICATION,
-    variables: {
-      id: params.applicationId,
-    },
   };
 
   const handleNewTask = (task) => {
@@ -50,15 +41,17 @@ const Tasks = ({ application, match, location, history }) => {
   };
 
   const handleDeleteTask = (task) => {
-    client.writeQuery({
-      ...applicationQuery,
-      data: {
-        application: {
-          ...application,
-          tasks: application.tasks.filter((t) => task.id !== t.id),
+    client.cache.modify({
+      id: client.cache.identify(application),
+      fields: {
+        tasks(existingTasks, { readField }) {
+          return existingTasks.filter(
+            (ref) => task.id !== readField("id", ref),
+          );
         },
       },
     });
+
     history.push(match.url);
   };
 
