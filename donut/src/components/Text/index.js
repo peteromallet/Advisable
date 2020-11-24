@@ -2,7 +2,10 @@ import React from "react";
 import Linkify from "linkifyjs/react";
 import { Text as TextStyles } from "./styles";
 
-const Text = ({ children, autoLink, size, weight, truncate, ...rest }) => {
+const Text = React.forwardRef(function Text(
+  { children, autoLink, size, weight, truncate, ...rest },
+  ref,
+) {
   const linkProps = {
     options: {
       attributes: {
@@ -14,6 +17,7 @@ const Text = ({ children, autoLink, size, weight, truncate, ...rest }) => {
 
   return (
     <TextStyles
+      ref={ref}
       fontSize={size}
       fontWeight={weight}
       $truncate={truncate}
@@ -22,7 +26,7 @@ const Text = ({ children, autoLink, size, weight, truncate, ...rest }) => {
       {autoLink ? <Linkify {...linkProps}>{children}</Linkify> : children}
     </TextStyles>
   );
-};
+});
 
 Text.defaultProps = {
   fontWeight: "regular",
