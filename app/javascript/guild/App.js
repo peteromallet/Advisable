@@ -15,7 +15,7 @@ const FreelancerProfile = lazy(() =>
   import("@advisable-main/views/FreelancerProfile"),
 );
 
-const GuildorRedirectFreelancerProfile = () => {
+const GuildOrRedirectFreelancerProfile = () => {
   const viewer = useViewer();
 
   if (viewer?.guild) {
@@ -34,7 +34,7 @@ const App = () => {
           <Switch>
             <Route
               path="/freelancers/:id"
-              component={GuildorRedirectFreelancerProfile}
+              component={GuildOrRedirectFreelancerProfile}
             />
             <AuthenticatedRoute
               exact
