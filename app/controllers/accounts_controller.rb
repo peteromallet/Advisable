@@ -20,6 +20,8 @@ class AccountsController < ApplicationController
       user.save!
     end
 
+    Company.create_for_user(user)
+
     render json: {user_uid: user.uid, account_uid: account.uid}
   rescue ActiveRecord::RecordInvalid => e
     Raven.capture_exception(e, extra: {params: params})

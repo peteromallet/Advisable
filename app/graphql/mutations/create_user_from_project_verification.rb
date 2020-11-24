@@ -44,7 +44,7 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
       industry: project.primary_industry
     )
     user.save_and_sync_with_responsible!(current_account_id)
-
+    Company.create_for_user(user)
     AttachImageJob.perform_later(user, viewer.image)
     {user: user}
   rescue ActiveRecord::RecordInvalid
