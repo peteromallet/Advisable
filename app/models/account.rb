@@ -81,7 +81,6 @@ end
 #  email               :citext
 #  first_name          :string
 #  last_name           :string
-#  log_data            :jsonb
 #  password_digest     :string
 #  permissions         :jsonb
 #  remember_token      :string

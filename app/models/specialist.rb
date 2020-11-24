@@ -109,7 +109,6 @@ end
 #  hourly_rate                        :integer
 #  image                              :jsonb
 #  linkedin                           :string
-#  log_data                           :jsonb
 #  member_of_week_email               :integer
 #  number_of_projects                 :string
 #  phone                              :string
