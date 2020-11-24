@@ -9,6 +9,7 @@ import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";
 import TaskDrawer from "../../components/TaskDrawer";
 import FETCH_APPLICATION from "./fetchApplication";
+import TASK_FIELDS from "../../graphql/fragments/task";
 import { hasCompleteTasksStep } from "./validationSchema";
 
 const Tasks = ({ application, match, location, history }) => {
@@ -27,14 +28,20 @@ const Tasks = ({ application, match, location, history }) => {
   };
 
   const handleNewTask = (task) => {
-    const newData = client.readQuery(applicationQuery);
-    client.writeQuery({
-      ...applicationQuery,
-      data: {
-        ...newData,
-        application: {
-          ...newData.application,
-          tasks: [...newData.application.tasks, task],
+    client.cache.modify({
+      id: client.cache.identify(application),
+      fields: {
+        tasks(existingTasks, { readField }) {
+          const taskRef = client.cache.writeFragment({
+            data: task,
+            fragment: TASK_FIELDS,
+          });
+
+          if (existingTasks.some((ref) => readField("id", ref) === task.id)) {
+            return existingTasks;
+          }
+
+          return [...existingTasks, taskRef];
         },
       },
     });
