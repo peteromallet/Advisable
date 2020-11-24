@@ -45,9 +45,7 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
       user.application_rejected_at = Time.zone.now
     end
 
-    Logidze.with_responsible(context[:current_account]&.id) do
-      user.save
-    end
+    current_account_responsible_for { user.save }
     user.sync_to_airtable
     ClientApplicationSubmittedNotificationJob.perform_later(user.id)
 
