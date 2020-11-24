@@ -7,8 +7,9 @@ class StripeEvents::PaymentIntentSucceeded < StripeEvents::BaseEvent
       # Mark the deposit as paid
       project.deposit_paid += payment_intent.amount
 
-      # TODO: Thomas: who should be _responsible_ for this?
-      project.save(validate: false)
+      Logidze.with_responsible(project&.user&.account_id) do
+        project.save(validate: false)
+      end
       project.sync_to_airtable
 
       # Attach the payment method
