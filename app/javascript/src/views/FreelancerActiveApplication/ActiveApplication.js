@@ -3,17 +3,17 @@
 import React from "react";
 import { get } from "lodash-es";
 import { Box, Modal, useModal } from "@advisable/donut";
-import { matchPath } from "react-router-dom";
+import { matchPath, useParams } from "react-router-dom";
 import Layout from "../../components/Layout";
 import TaskDrawer from "../../components/TaskDrawer";
 import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
 import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
 import Sidebar from "./Sidebar";
-import FETCH_APPLICATION from "./fetchApplication";
 import Tasks from "./Tasks";
 import SetupPayments from "./SetupPayments";
 import StoppedWorkingNotice from "./StoppedWorkingNotice";
 import useViewer from "../../hooks/useViewer";
+import TASK_FIELDS from "../../graphql/fragments/task";
 
 const tutorials = {
   Fixed: "fixedProjects",
@@ -21,6 +21,7 @@ const tutorials = {
 };
 
 const ActiveApplication = ({ location, history, match, data, client }) => {
+  const params = useParams();
   const application = data.application;
   const tutorial = tutorials[application.projectType];
   const viewer = useViewer();
@@ -47,30 +48,26 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
   };
 
   const addNewTaskToCache = (task) => {
-    let newData = client.readQuery({
-      query: FETCH_APPLICATION,
-      variables: {
-        id: application.id,
-      },
-    });
+    client.cache.modify({
+      id: client.cache.identify(application),
+      fields: {
+        tasks(existingTasks, { readField }) {
+          const taskRef = client.cache.writeFragment({
+            data: task,
+            fragment: TASK_FIELDS,
+          });
 
-    // Add the task to the application queries list of tasks
-    client.writeQuery({
-      query: FETCH_APPLICATION,
-      variables: {
-        id: application.id,
-      },
-      data: {
-        ...newData,
-        application: {
-          ...newData.application,
-          tasks: [...newData.application.tasks, task],
+          if (existingTasks.some((ref) => readField("id", ref) === task.id)) {
+            return existingTasks;
+          }
+
+          return [...existingTasks, taskRef];
         },
       },
     });
 
     // open the task
-    history.replace(`/clients/${application.id}/tasks/${task.id}`);
+    history.replace(`/clients/${params.applicationId}/tasks/${task.id}`);
   };
 
   const handleDeleteTask = (task) => {
@@ -89,8 +86,8 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
         {tutorial === "flexibleProjects" ? (
           <FlexibleTutorial modal={tutorialModal} />
         ) : (
-            <FixedTutorial modal={tutorialModal} />
-          )}
+          <FixedTutorial modal={tutorialModal} />
+        )}
       </Modal>
       <TaskDrawer
         isClient={false}
