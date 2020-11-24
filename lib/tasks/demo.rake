@@ -55,6 +55,7 @@ namespace :demo do
           last_name: Faker::Name.last_name,
           company_name: Faker::Company.name
         )
+        Company.create_for_user(user)
 
         industry = industries.sample
         skill = skills.sample

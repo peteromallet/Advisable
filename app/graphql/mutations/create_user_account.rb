@@ -138,6 +138,7 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     Logidze.with_responsible(user.account_id) do
       user.save
     end
+    Company.create_for_user(user)
     user
   end
 
