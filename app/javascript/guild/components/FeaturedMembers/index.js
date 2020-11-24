@@ -1,7 +1,7 @@
 import React from "react";
 import { GUILD_FEATURED_MEMBERS_QUERY } from "./queries";
 import { useQuery } from "@apollo/client";
-import { Text } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import Loading from "./Loading";
 import FeaturedMembersList from "./FeaturedMembersList";
 
@@ -12,7 +12,7 @@ const FeaturedMembers = () => {
   if (error) return null;
 
   return (
-    <>
+    <Box pb="12">
       <Text
         fontSize="xs"
         marginBottom="6"
@@ -25,7 +25,7 @@ const FeaturedMembers = () => {
 
       {loading ? <Loading /> : null}
       {!loading && data ? <FeaturedMembersList members={members} /> : null}
-    </>
+    </Box>
   );
 };
 
