@@ -5,7 +5,6 @@ RSpec.describe Mutations::ConfirmAccount do
   let(:input_token) { token }
   let(:digest) { Token.digest(token) }
   let(:account) { create(:account, confirmed_at: nil, confirmation_digest: digest) }
-  let!(:user) { create(:user, account: account) }
   let(:email) { account.email }
   let(:session_manager) do
     SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
@@ -33,15 +32,16 @@ RSpec.describe Mutations::ConfirmAccount do
     GRAPHQL
   end
 
-  before :each do
-    allow(session_manager).to receive(:login)
-  end
-
-  def response
+  let(:response) do
     AdvisableSchema.execute(
       query,
       context: {session_manager: session_manager}
     )
+  end
+
+  before do
+    allow(session_manager).to receive(:login)
+    create(:user, account: account)
   end
 
   it 'returns the viewer' do
@@ -52,26 +52,28 @@ RSpec.describe Mutations::ConfirmAccount do
   it 'confirms the account' do
     expect(account.reload.confirmed_at).to be_nil
     response
-    expect(account.reload.confirmed_at).to_not be_nil
+    expect(account.reload.confirmed_at).not_to be_nil
   end
 
   it 'logs in the user' do
-    expect(session_manager).to receive(:login).with(account)
     response
+    expect(session_manager).to have_received(:login).with(account)
   end
 
   context 'when the account has already been confirmed' do
     let(:account) { create(:account, confirmation_digest: digest, confirmed_at: 2.hours.ago) }
-    let(:user) { create(:user, account: account) }
 
-    it 'returns an error' do
-      error = response['errors'][0]
-      expect(error['extensions']['code']).to eq('ALREADY_CONFIRMED')
+    it 'does not update the confirmed_at timestamp' do
+      expect { response }.not_to(change { account.reload.confirmed_at })
     end
 
-    it 'does not login the user' do
-      expect(session_manager).to_not receive(:login)
+    it 'does not return any errors' do
+      expect(response['errors']).to be_nil
+    end
+
+    it 'authenticates the user' do
       response
+      expect(session_manager).to have_received(:login).with(account)
     end
   end
 
@@ -84,8 +86,8 @@ RSpec.describe Mutations::ConfirmAccount do
     end
 
     it 'does not login the user' do
-      expect(session_manager).to_not receive(:login)
       response
+      expect(session_manager).not_to have_received(:login)
     end
   end
 end

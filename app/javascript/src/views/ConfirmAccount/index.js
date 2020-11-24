@@ -9,7 +9,7 @@ import CONFIRM_ACCOUNT from "./confirmAccount.graphql";
 const ConfirmAccount = ({ match, location, history }) => {
   const client = useApolloClient();
   const [mutate] = useMutation(CONFIRM_ACCOUNT);
-  const notifications = useNotifications();
+  const { notify } = useNotifications();
   const parsed = queryString.parse(location.search);
 
   const confirmAccount = useCallback(async () => {
@@ -19,26 +19,21 @@ const ConfirmAccount = ({ match, location, history }) => {
 
     const errorCode = errors?.[0]?.extensions?.code;
 
-    if (errorCode === "ALREADY_CONFIRMED") {
-      notifications.notify("Your account has already been confirmed");
-    }
-
     if (errorCode === "INVALID_CONFIRMATION_TOKEN") {
-      notifications.notify("Failed to confirm your account, please try again.");
+      notify("Failed to confirm your account, please try again.");
     }
 
     if (!errorCode) {
-      notifications.notify("Your account has been confirmed");
+      notify("Your account has been confirmed");
     }
 
     await client.resetStore();
     history.replace("/");
-  }, []);
+  }, [notify, client, mutate, history, parsed.email, match.params.token]);
 
   useEffect(() => {
-    if (!parsed.email) return;
     confirmAccount();
-  }, [parsed.email, confirmAccount]);
+  }, [confirmAccount]);
 
   if (!parsed.email) {
     return <Redirect to="/" />;

@@ -7,9 +7,12 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
 
   def resolve(email:, token:)
     account = Account.find_by!(email: email)
-    ApiError.invalid_request(code: 'ALREADY_CONFIRMED') if account.confirmed_at.present?
     validate_token(account, token)
-    account.confirmed_at = Time.zone.now
+
+    if account.confirmed_at.blank?
+      account.confirmed_at = Time.zone.now
+    end
+
     account.confirmation_digest = nil
     account.confirmation_token = nil
     Logidze.with_responsible(account.id) do
