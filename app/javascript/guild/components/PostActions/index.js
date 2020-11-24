@@ -1,8 +1,8 @@
 import React from "react";
-import pluralize from "src/utilities/pluralize";
-import { Box, Text } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 import MessageAction from "./Message";
 import VideoCallAction from "./VideoCall";
+import ConnectionsCount from "./ConnectionsCount";
 import ReactionsButton from "../Post/components/ReactionsButton";
 
 export default function PostActions({ post }) {
@@ -20,11 +20,7 @@ export default function PostActions({ post }) {
         <Box mr="2">
           <VideoCallAction post={post} />
         </Box>
-        {count > 0 ? (
-          <Text ml="1" fontSize="sm" color="neutral500">
-            {pluralize(count, "connection", "connections")}
-          </Text>
-        ) : null}
+        {count > 0 ? <ConnectionsCount post={post} /> : null}
       </Box>
     </>
   );
