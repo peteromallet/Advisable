@@ -36,7 +36,8 @@ class Mutations::PublishProject < Mutations::BaseMutation
     project.published_at = Time.zone.now
     project.sales_status = 'Open'
     project.sourcing = true
-    project.sync_to_airtable if project.save
+    success = current_account_responsible_for { project.save }
+    project.sync_to_airtable if success
     {project: project}
   end
 end

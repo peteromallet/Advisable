@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_19_092750) do
+ActiveRecord::Schema.define(version: 2020_11_24_075513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -650,6 +650,7 @@ ActiveRecord::Schema.define(version: 2020_11_19_092750) do
     t.bigint "sales_person_id"
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
+    t.jsonb "log_data"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["sales_person_id"], name: "index_projects_on_sales_person_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
@@ -1289,6 +1290,9 @@ ActiveRecord::Schema.define(version: 2020_11_19_092750) do
   SQL
 
 
+  create_trigger :logidze_on_projects, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_projects BEFORE INSERT OR UPDATE ON public.projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
   create_trigger :logidze_on_specialists, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_specialists BEFORE INSERT OR UPDATE ON public.specialists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
