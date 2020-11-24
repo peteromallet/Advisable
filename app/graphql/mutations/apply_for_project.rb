@@ -32,7 +32,7 @@ class Mutations::ApplyForProject < Mutations::BaseMutation
       )
     end
 
-    application.save_and_sync!
+    application.save_and_sync_with_responsible!(current_account_id)
 
     {application: application}
   end

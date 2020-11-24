@@ -1,7 +1,8 @@
+# TODO: Thomas: is this still used anywhere?
 class Applications::UpdateStatus < Service
   attr_reader :id, :status, :rejection_reason_id
 
-  def initialize(id:, status:, rejection_reason_id: nil)
+  def initialize(id:, status:, rejection_reason_id: nil, current_account_id: nil)
     @id = id
     @status = status
     @rejection_reason_id = rejection_reason_id
