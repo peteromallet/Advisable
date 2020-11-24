@@ -4,11 +4,9 @@ import { Box, Card, Text, Avatar, Link } from "@advisable/donut";
 import Topics from "./components/Topics";
 import Markdown from "../Markdown";
 import PostTypeTag from "@guild/components/PostTypeTag";
-import MessageAction from "@guild/components/PostAction/Message";
-import ReactionsButton from "./components/ReactionsButton";
+import PostActions from "@guild/components/PostActions";
 import { GuildBox } from "@guild/styles";
 import { CoverImage } from "@guild/components/CoverImage";
-import OfferHelp from "./components/OfferHelp";
 
 const Post = ({ post }) => {
   const url = `/guild/posts/${post.id}`;
@@ -78,16 +76,8 @@ const Post = ({ post }) => {
           Read more
         </Text>
 
-        <Box mb="4">
-          <GuildBox ml="xxs" display="flex" spaceChildrenHorizontal={8}>
-            <OfferHelp
-              guildPostId={post.id}
-              recipient={post.author}
-              engagementsCount={post.engagementsCount}
-            />
-            <MessageAction post={post} />
-            <ReactionsButton post={post} />
-          </GuildBox>
+        <Box mb="5">
+          <PostActions post={post} />
         </Box>
 
         <Topics topics={post.guildTopics} />

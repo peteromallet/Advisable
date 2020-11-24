@@ -2,14 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 import { Heart } from "@styled-icons/heroicons-outline";
 import { Heart as HeartFilled } from "@styled-icons/heroicons-solid";
 import { useMutation, gql } from "@apollo/client";
-import PostAction from "@guild/components/PostAction";
+import PostAction from "@guild/components/PostActions/PostAction";
 
 export const GUILD_UPDATE_POST_REACTIONS = gql`
   mutation guildUpdatePostReactions($input: GuildUpdatePostReactionsInput!) {
     guildUpdatePostReactions(input: $input) {
       guildPost {
         id
-        reactionsCount
         reacted
       }
     }
@@ -38,16 +37,15 @@ const ReactionsButton = ({ post }) => {
     const reaction = reacted ? "NONE" : "THANK";
     setReacted(reacted ? false : true);
 
-    timer.current = setTimeout(() => {
-      reactToPost({
-        variables: {
-          input: {
-            guildPostId: id,
-            reaction,
-          },
+    reactToPost({
+      variables: {
+        input: {
+          guildPostId: id,
+          reaction,
         },
-      });
-    }, 500);
+      },
+    });
+    timer.current = setTimeout(() => {}, 500);
   };
 
   return (
