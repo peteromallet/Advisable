@@ -20,6 +20,7 @@ class ChatDirectMessageJob < ApplicationJob
     # If this message is an offer to help on a guild post:
     #  a. create a post engagement
     #  b. modify the message to include the context
+    #  c. update calendly link if there is one
     if guild_post_id && (guild_post = Guild::Post.find(guild_post_id))
       context = "Offering help for '#{guild_post.title}':\n\n"
       @message_with_context = "#{context} #{message}"
@@ -28,6 +29,8 @@ class ChatDirectMessageJob < ApplicationJob
       if guild_post.engagements.where(specialist: specialist_sender).none?
         guild_post.engagements.create(specialist: specialist_sender)
       end
+
+      specialist_sender.update(guild_calendly_link: guild_calendly_link) if guild_calendly_link
     end
 
     # Add the first or additional message

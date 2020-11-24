@@ -77,6 +77,13 @@ RSpec.describe ChatDirectMessageJob do
           )
           message_job
         end
+
+        it "saves the calendly link" do
+          expect {
+            message_job
+            sender.reload
+          }.to change(sender, :guild_calendly_link).from(nil).to(guild_calendly_link)
+        end
       end
     end
 
