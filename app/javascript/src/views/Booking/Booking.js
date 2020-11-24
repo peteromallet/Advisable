@@ -14,9 +14,9 @@ import TaskDrawer from "../../components/TaskDrawer";
 import useViewer from "../../hooks/useViewer";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
-import GET_ACTIVE_APPLICATION from "./getActiveApplication";
 import StoppedWorkingNotice from "./StoppedWorkingNotice";
 import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
+import TASK_FIELDS from "../../graphql/fragments/task";
 
 export default function Booking({ data, match }) {
   const viewer = useViewer();
@@ -49,24 +49,21 @@ export default function Booking({ data, match }) {
   });
 
   const addNewTaskToCache = (task) => {
-    const existing = client.readQuery({
-      query: GET_ACTIVE_APPLICATION,
-      variables: {
-        id: applicationId,
-      },
-    });
+    client.cache.modify({
+      id: client.cache.identify(application),
+      fields: {
+        tasks(existingTasks, { readField }) {
+          const taskRef = client.cache.writeFragment({
+            data: task,
+            fragment: TASK_FIELDS,
+          });
 
-    client.writeQuery({
-      query: GET_ACTIVE_APPLICATION,
-      data: {
-        ...existing,
-        application: {
-          ...existing.application,
-          tasks: [...existing.application.tasks, task],
+          if (existingTasks.some((ref) => readField("id", ref) === task.id)) {
+            return existingTasks;
+          }
+
+          return [...existingTasks, taskRef];
         },
-      },
-      variables: {
-        id: applicationId,
       },
     });
 
@@ -96,9 +93,7 @@ export default function Booking({ data, match }) {
     const sorted = tasks.sort(
       (a, b) => new Date(a.dueDate) - new Date(b.dueDate),
     );
-    history.replace(
-      `/manage/${data.application.id}/tasks/${sorted[0].id}`,
-    );
+    history.replace(`/manage/${data.application.id}/tasks/${sorted[0].id}`);
   }, []);
 
   return (
