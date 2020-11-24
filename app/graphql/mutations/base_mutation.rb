@@ -5,10 +5,6 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
 
   private
 
-  # TODO: Thomas: do you have a better name suggestion?
-  # just `responsible_for`?
-  # or `with_current_account`?
-  # or something else?
   def current_account_responsible_for(&block)
     Logidze.with_responsible(current_account_id, &block)
   end
