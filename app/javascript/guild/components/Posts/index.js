@@ -21,7 +21,8 @@ const Posts = () => {
   ]);
 
   const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
-    fetchPolicy: "network-only",
+    fetchPolicy: "cache-and-network",
+    nextFetchPolicy: "cache-first",
     notifyOnNetworkStatusChange: true,
     variables: { selectedFilter, selectedTopicsIds: selectedTopicsIds() },
   });
