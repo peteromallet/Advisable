@@ -19,8 +19,7 @@ class Mutations::RequestApplicationReminder < Mutations::BaseMutation
     user = User.find_by_uid_or_airtable_id!(id)
     user.application_status = 'Requested Reminder'
     user.application_reminder_at = 6.months.from_now
-    current_account_responsible_for { user.save! }
-    user.sync_to_airtable
+    user.save_and_sync_with_responsible!(current_account_id)
 
     {client_application: user}
   end

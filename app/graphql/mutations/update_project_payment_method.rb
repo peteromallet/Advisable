@@ -39,8 +39,8 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
     store_vat_number(user) if user.account.vat_number_changed?
 
     user.update_payments_setup
-    current_account_responsible_for { user.save! }
-    user.sync_to_airtable
+    user.save_and_sync_with_responsible!(current_account_id)
+
     {user: user}
   end
 
