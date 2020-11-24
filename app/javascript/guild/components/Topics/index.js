@@ -10,7 +10,7 @@ const Topics = () => {
   const topics = data?.guildTopTopics.nodes;
 
   return (
-    <Box flexShrink={1} alignSelf="flex-start">
+    <Box pb="12" flexShrink={1} alignSelf="flex-start">
       <Text
         fontSize="xs"
         marginBottom="4"
