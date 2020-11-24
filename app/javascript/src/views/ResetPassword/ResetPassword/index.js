@@ -1,18 +1,17 @@
 import React from "react";
 import { Formik } from "formik";
 import queryString from "query-string";
-import { useMutation } from "@apollo/client";
 import { Button } from "@advisable/donut";
 import { withNotifications } from "src/components/Notifications";
 import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import validationSchema from "./validationSchema";
-import RESET_PASSWORD from "./resetPassword.graphql";
 import { Container, Card } from "../styles";
+import { useResetPassword } from "./queries";
 
 export default withNotifications(
   ({ history, location, match, notifications }) => {
-    const [resetPassword] = useMutation(RESET_PASSWORD);
+    const [resetPassword] = useResetPassword();
     const queryParams = queryString.parse(location.search);
 
     if (!queryParams.email) {
@@ -39,11 +38,15 @@ export default withNotifications(
               token: match.params.token,
             }}
             onSubmit={async (values) => {
-              const { data } = await resetPassword({
+              const { data, errors } = await resetPassword({
                 variables: {
                   input: values,
                 },
               });
+
+              if (errors) {
+                notifications.error("Something went wrong, please try again");
+              }
 
               if (data.resetPassword.reset) {
                 notifications.notify("Your password has been updated");
