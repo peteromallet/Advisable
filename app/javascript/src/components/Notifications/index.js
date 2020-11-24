@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { uniqueId } from "lodash-es";
 import { AnimatePresence, motion } from "framer-motion";
 import { Container } from "./styles";
@@ -17,23 +17,29 @@ export const NotificationsProvider = ({ children }) => {
     [setQueue],
   );
 
-  const notify = (content, opts = {}) => {
-    const id = uniqueId("notification");
-    const timeout = opts.timeout || 3000;
-    const variant = opts.variant;
-    const onTimeout = () => remove(id);
-    setQueue((items) => [
-      ...items,
-      { id, variant, content, timeout, onTimeout },
-    ]);
-  };
+  const notify = useCallback(
+    (content, opts = {}) => {
+      const id = uniqueId("notification");
+      const timeout = opts.timeout || 3000;
+      const variant = opts.variant;
+      const onTimeout = () => remove(id);
+      setQueue((items) => [
+        ...items,
+        { id, variant, content, timeout, onTimeout },
+      ]);
+    },
+    [remove],
+  );
 
-  const error = (content, opts = {}) => {
-    notify(content, {
-      variant: "error",
-      ...opts,
-    });
-  };
+  const error = useCallback(
+    (content, opts = {}) => {
+      notify(content, {
+        variant: "error",
+        ...opts,
+      });
+    },
+    [notify],
+  );
 
   const variants = {
     initial: {

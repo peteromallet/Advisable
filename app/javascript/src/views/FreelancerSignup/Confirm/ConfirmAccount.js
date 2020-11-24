@@ -19,7 +19,7 @@ export const CONFIRM = gql`
 
 // Renders the freelancer signup flow.
 const ConfirmAccount = ({ token, email, history }) => {
-  const notifications = useNotifications();
+  const { notify } = useNotifications();
 
   const [confirm] = useMutation(CONFIRM, {
     update(cache, response) {
@@ -39,7 +39,7 @@ const ConfirmAccount = ({ token, email, history }) => {
   });
 
   const confirmAccount = useCallback(async () => {
-    const { errors, data } = await confirm({
+    const { errors } = await confirm({
       variables: {
         input: {
           token,
@@ -49,13 +49,12 @@ const ConfirmAccount = ({ token, email, history }) => {
     });
 
     if (errors) {
-      notifications.notify("Failed to confirm your account. Please try again.");
+      notify("Failed to confirm your account. Please try again.");
       history.replace("/freelancers/signup/confirm");
     } else {
-      window.localStorage.setItem("authToken", data.confirmAccount.token);
       window.location = "/freelancers/signup/preferences";
     }
-  }, [confirm, email, token, history, notifications]);
+  }, [confirm, email, token, history, notify]);
 
   React.useEffect(() => {
     confirmAccount();
