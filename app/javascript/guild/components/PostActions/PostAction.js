@@ -46,7 +46,10 @@ const spring = {
   stiffness: 400,
 };
 
-export default function PostAction({ icon, bg, color, onClick }) {
+export default React.forwardRef(function PostAction(
+  { icon, bg, color, onClick },
+  ref,
+) {
   const colorAnimation = {
     color: theme.colors[color],
     transition: { duration: 0.3 },
@@ -58,6 +61,7 @@ export default function PostAction({ icon, bg, color, onClick }) {
   };
   return (
     <StyledPostAction
+      ref={ref}
       color={color}
       onClick={onClick}
       whileHover="hover"
@@ -75,4 +79,4 @@ export default function PostAction({ icon, bg, color, onClick }) {
       />
     </StyledPostAction>
   );
-}
+});

@@ -1,7 +1,7 @@
 import React from "react";
 import { useApolloClient } from "@apollo/client";
 import { VideoCamera } from "@styled-icons/heroicons-outline";
-import { useModal } from "@advisable/donut";
+import { useModal, Tooltip, Box } from "@advisable/donut";
 import PostAction from "./PostAction";
 import { useNotifications } from "components/Notifications";
 import RequestVideoCallModal from "./RequestVideoCallModal";
@@ -34,12 +34,20 @@ function VideoCallAction({ post }) {
         modal={modal}
         onSend={handleSend}
       />
-      <PostAction
-        color="blue800"
-        bg="neutral100"
-        icon={<VideoCamera />}
-        onClick={modal.show}
-      />
+      <Tooltip placement="top" content="Request Call">
+        <Box
+          css={`
+            outline: none;
+          `}
+        >
+          <PostAction
+            color="blue800"
+            bg="neutral100"
+            icon={<VideoCamera />}
+            onClick={modal.show}
+          />
+        </Box>
+      </Tooltip>
     </>
   );
 }
