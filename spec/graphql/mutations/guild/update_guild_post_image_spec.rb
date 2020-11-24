@@ -35,6 +35,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPostImage do
 
   context "with an unauthorized specialist" do
     let(:resp) { AdvisableSchema.execute(query, context: {current_user: create(:specialist, :guild)}) }
+
     it 'returns an error' do
       error = resp['errors'].first['extensions']['code']
       expect(error).to eq('notAuthorized')
@@ -45,10 +46,9 @@ RSpec.describe Mutations::Guild::UpdateGuildPostImage do
     it "updates a guild post image" do
       expect {
         r = AdvisableSchema.execute(query, context: {current_user: specialist})
-        puts r.inspect
         guild_post_image.reload
-      }.to change { guild_post_image.cover }.from(true).to(false).
-        and change { guild_post_image.position }.from(1).to(2)
+      }.to change(guild_post_image, :cover).from(true).to(false).
+        and change(guild_post_image, :position).from(1).to(2)
     end
   end
 end
