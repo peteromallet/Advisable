@@ -161,7 +161,6 @@ end
 #  invoice_company_name              :string
 #  invoice_name                      :string
 #  locality_importance               :integer
-#  log_data                          :jsonb
 #  number_of_freelancers             :string
 #  payments_setup                    :boolean          default(FALSE)
 #  pid                               :string
