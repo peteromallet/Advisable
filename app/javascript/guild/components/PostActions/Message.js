@@ -1,6 +1,6 @@
 import React from "react";
 import { Chat } from "@styled-icons/heroicons-outline";
-import { useModal } from "@advisable/donut";
+import { useModal, Box, Tooltip } from "@advisable/donut";
 import PostAction from "./PostAction";
 import { useNotifications } from "components/Notifications";
 import MessageModal from "@guild/components/MessageModal";
@@ -10,6 +10,7 @@ function MessagePostAction({ post }) {
   const modal = useModal();
   const client = useApolloClient();
   const notifications = useNotifications();
+  const firstName = post.author.firstName;
 
   const handleSend = () => {
     client.cache.modify({
@@ -34,12 +35,20 @@ function MessagePostAction({ post }) {
         modal={modal}
         onSend={handleSend}
       />
-      <PostAction
-        color="cyan700"
-        bg="neutral100"
-        icon={<Chat />}
-        onClick={modal.show}
-      />
+      <Tooltip placement="top" content={`Message ${firstName}`}>
+        <Box
+          css={`
+            outline: none;
+          `}
+        >
+          <PostAction
+            color="cyan700"
+            bg="neutral100"
+            icon={<Chat />}
+            onClick={modal.show}
+          />
+        </Box>
+      </Tooltip>
     </>
   );
 }
