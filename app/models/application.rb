@@ -42,6 +42,8 @@ class Application < ApplicationRecord
   include Uid
   include Airtable::Syncable
 
+  has_logidze
+
   ACTIVE_STATUSES = ['Application Accepted', 'Interview Scheduled', 'Interview Completed', 'Proposed'].freeze
   HIRED_STATUSES = ['Working', 'Stopped Working'].freeze
 

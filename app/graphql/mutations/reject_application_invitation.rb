@@ -9,7 +9,8 @@ class Mutations::RejectApplicationInvitation < Mutations::BaseMutation
     {
       application: Applications::RejectApplicationInvitation.call(
         application_id: args[:id],
-        reason: args[:reason]
+        reason: args[:reason],
+        current_account_id: current_account_id
       ),
     }
   end

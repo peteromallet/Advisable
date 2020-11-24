@@ -10,7 +10,11 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
   # or `with_current_account`?
   # or something else?
   def current_account_responsible_for(&block)
-    Logidze.with_responsible(context[:current_account]&.id, &block)
+    Logidze.with_responsible(current_account_id, &block)
+  end
+
+  def current_account_id
+    context[:current_account]&.id
   end
 
   def requires_current_user!
