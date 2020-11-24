@@ -181,7 +181,7 @@ class Mutations::CreateUserAccount < Mutations::BaseMutation
     end
 
     project.skills << skill
-    project.save
+    current_account_responsible_for { project.save }
     project
   end
 

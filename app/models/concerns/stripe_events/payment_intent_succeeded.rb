@@ -6,6 +6,8 @@ class StripeEvents::PaymentIntentSucceeded < StripeEvents::BaseEvent
       project = Project.find_by_uid(payment_intent.metadata.project)
       # Mark the deposit as paid
       project.deposit_paid += payment_intent.amount
+
+      # TODO: Thomas: who should be _responsible_ for this?
       project.save(validate: false)
       project.sync_to_airtable
 

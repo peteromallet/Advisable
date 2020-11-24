@@ -29,7 +29,8 @@ class Mutations::UpdateProject < Mutations::BaseMutation
     project.assign_attributes(assign_attributes(args))
     update_skills(project, args)
     update_primary_skill(project, args[:primary_skill])
-    project.save_and_sync!
+    current_account_responsible_for { project.save! }
+    project.sync_to_airtable
 
     {project: project}
   end

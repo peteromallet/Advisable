@@ -30,8 +30,8 @@ class Mutations::CreatePreviousProject < Mutations::BaseMutation
         )
     end
 
-    project.save
+    current_account_responsible_for { project.save }
 
-    { previous_project: project }
+    {previous_project: project}
   end
 end

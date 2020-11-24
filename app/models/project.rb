@@ -14,6 +14,8 @@ class Project < ApplicationRecord
   include Airtable::Syncable
   include Project::Constants
 
+  has_logidze
+
   has_many :applications, dependent: :destroy
   has_many :bookings, through: :applications
   has_many :reviews, as: :project, dependent: :destroy

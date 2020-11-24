@@ -36,7 +36,7 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
     update_description(project, args)
     update_skills(project, args)
     update_industries(project, args)
-    project.save
+    current_account_responsible_for { project.save }
     {previous_project: project}
   end
 

@@ -14,6 +14,7 @@ class Projects::Update < ApplicationService
   def call
     project.assign_attributes(attributes)
 
+    # TODO: Thomas: is this used anywhere anymore?
     if project.save
       project.sync_to_airtable
       return project
