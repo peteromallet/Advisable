@@ -43,8 +43,8 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
       campaign_source: 'validation',
       industry: project.primary_industry
     )
-    current_account_responsible_for { user.save! }
-    user.sync_to_airtable
+    user.save_and_sync_with_responsible!(current_account_id)
+
     AttachImageJob.perform_later(user, viewer.image)
     {user: user}
   rescue ActiveRecord::RecordInvalid
