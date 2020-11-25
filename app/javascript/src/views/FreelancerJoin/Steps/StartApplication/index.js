@@ -7,6 +7,7 @@ import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { Box, Card, Text, Input, Button } from "@advisable/donut";
 import OrbitsBackground from "../../OrbitsBackground";
+import validationSchema from "./validationSchema";
 import STEPS from "../.";
 
 export default function StartApplication() {
@@ -34,7 +35,11 @@ export default function StartApplication() {
               mollis
             </Text>
           </Box>
-          <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+          <Formik
+            onSubmit={handleSubmit}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+          >
             <Form>
               <Box mb="m">
                 <FormField
@@ -49,7 +54,7 @@ export default function StartApplication() {
                   as={Input}
                   name="email"
                   placeholder="dwight@dundermifflin.com"
-                  label="Company email address"
+                  label="Email"
                 />
               </Box>
               <Box display="flex">
