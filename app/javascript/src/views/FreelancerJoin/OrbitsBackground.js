@@ -1,11 +1,12 @@
 import React from "react";
 import { Orbit, OrbitsSystem, theme } from "@advisable/donut";
 
-function OrbitsBackground() {
+function OrbitsBackground({ step }) {
+  const y = step === 1 ? 45 : 725;
   return (
     <OrbitsSystem
       x={-895}
-      y={45}
+      y={y}
       fill="transparent"
       stroke={theme.colors.neutral200}
       increment={200}

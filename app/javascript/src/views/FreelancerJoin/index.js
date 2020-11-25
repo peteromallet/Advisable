@@ -1,10 +1,9 @@
 import React from "react";
-import OrbitsBackground from "./OrbitsBackground";
-import { Box } from "@advisable/donut";
-import useSteps from "../../hooks/useSteps";
-import steps from "./Steps";
 import { AnimatePresence } from "framer-motion";
 import { Switch, useLocation } from "react-router";
+import useSteps from "src/hooks/useSteps";
+import steps from "./Steps";
+import { Box, SharedOrbitsProvider } from "@advisable/donut";
 
 function FreelancerJoin() {
   const { routes } = useSteps(steps);
@@ -12,12 +11,13 @@ function FreelancerJoin() {
 
   return (
     <Box height="100vh" width="100%" position="relative">
-      <OrbitsBackground />
-      <AnimatePresence exitBeforeEnter initial={false}>
-        <Switch location={location} key={location.pathname}>
-          {routes}
-        </Switch>
-      </AnimatePresence>
+      <SharedOrbitsProvider>
+        <AnimatePresence exitBeforeEnter initial={false}>
+          <Switch location={location} key={location.pathname}>
+            {routes}
+          </Switch>
+        </AnimatePresence>
+      </SharedOrbitsProvider>
     </Box>
   );
 }
