@@ -1,24 +1,31 @@
 module Permissions
   extend ActiveSupport::Concern
 
-  SCOPES = [
-    "admin",
-    "projects:all"
-  ]
-
   included do
-    validate :valid_permissions
-
     def has_permission?(permission)
       permissions.include?(permission)
     end
+  end
 
-    private
+  class_methods do
+    def register_permissions(*permissions)
+      permissions.map(&:to_s).each do |permission|
+        define_method "#{permission}?" do
+          self.permissions.include?(permission)
+        end
 
-    def valid_permissions
-      permissions.each do |p|
-        next if SCOPES.include?(p)
-        errors.add(:permissions, "#{p} is not a valid permission")
+        define_method "toggle_#{permission}" do
+          self.permissions = if self.permissions.include?(permission)
+                               self.permissions - [permission]
+                             else
+                               self.permissions + [permission]
+                             end
+        end
+
+        define_method "toggle_#{permission}!" do
+          public_send("toggle_#{permission}")
+          save!
+        end
       end
     end
   end
