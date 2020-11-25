@@ -200,6 +200,7 @@ class TestData
     end
 
     user = User.find_or_create_by(account: account) do |u|
+      u.company =  Company.new(name: Company.fresh_name_for('Dunder Mifflin'))
       u.company_name = 'Dunder Mifflin'
       u.company_type = 'Startup'
       u.industry = industry
@@ -216,8 +217,6 @@ class TestData
       end
 
     client.users << user unless client.users.include?(user)
-
-    Company.create_for_user(user)
 
     # Test project
     sales_automation = Skill.find_by_name('Sales Automation')

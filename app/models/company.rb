@@ -10,24 +10,12 @@ class Company < ApplicationRecord
   has_many :consultations, through: :users
   # WIP User migration
 
-  def self.fresh_company_name_for(user)
-    return user.company_name unless exists?(name: user.company_name)
+  def self.fresh_name_for(company_name)
+    return company_name unless exists?(name: company_name)
 
     n = 2
-    n += 1 while exists?(name: "#{user.company_name} (#{n})")
-    "#{user.company_name} (#{n})"
-  end
-
-  def self.create_for_user(user)
-    return if user.company_id.present?
-
-    company = create(
-      name: fresh_company_name_for(user),
-      kind: user.company_type,
-      sales_person_id: user.sales_person_id,
-      industry_id: user.industry_id
-    )
-    user.update_columns(company_id: company.id) # rubocop:disable Rails/SkipsModelValidations
+    n += 1 while exists?(name: "#{company_name} (#{n})")
+    "#{company_name} (#{n})"
   end
 end
 
