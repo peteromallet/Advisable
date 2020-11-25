@@ -44,15 +44,20 @@ export default function PublishJob({ data }) {
   const industry = user.industry?.name;
   const companyType = user.companyType;
 
-  const nextStep = () => {
-    history.push(`/projects/${id}/setup/published`);
+  const nextStep = (step) => {
+    history.push(`/projects/${id}/setup${step}`);
   };
 
   const handlePublish = async () => {
+    if (project.deposit && !project.deposit.paid) {
+      nextStep("/deposit");
+      return;
+    }
+
     // If the project has already been published then just go to the next step.
     // The user is just making edits.
     if (project.publishedAt) {
-      nextStep();
+      nextStep("/published");
       return;
     }
 

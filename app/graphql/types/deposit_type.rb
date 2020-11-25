@@ -13,7 +13,9 @@ module Types
     end
 
     def payment_intent
-      object.deposit_payment_intent.id
+      return nil if object.deposit_owed < 1
+
+      object.deposit_payment_intent.client_secret
     end
   end
 end

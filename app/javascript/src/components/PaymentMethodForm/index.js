@@ -1,10 +1,9 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Box, Text, Button, theme } from "@advisable/donut";
+import { Box, Text, Button, Label, theme, InputError } from "@advisable/donut";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { CardField } from "./styles";
 import FormField from "../FormField";
-import InputLabel from "../InputLabel";
 import validationSchema from "./validationSchema";
 
 // Used to update a user's payment method. It does not atomatically handle the
@@ -15,6 +14,7 @@ import validationSchema from "./validationSchema";
 // elements card.
 // - formikBag: The formikBag from the underlying formik component.
 const PaymentMethodForm = ({
+  loading,
   buttonLabel,
   initialValues,
   handleCardDetails,
@@ -24,6 +24,7 @@ const PaymentMethodForm = ({
 
   const handleSubmit = async (values, formikBag) => {
     formikBag.setStatus(null);
+    formikBag.setFieldError("card", null);
     const card = elements.getElement(CardElement);
     await handleCardDetails(stripe, { ...values, card }, formikBag);
   };
@@ -41,36 +42,39 @@ const PaymentMethodForm = ({
     >
       {(formik) => (
         <Form>
-          <Box mb="s">
-            <FormField
-              name="cardholder"
-              label="Cardholder Name"
-              placeholder="Cardholder Name"
-            />
+          <FormField
+            marginBottom="4"
+            name="cardholder"
+            label="Cardholder Name"
+            placeholder="Cardholder Name"
+          />
+          <Box mb="8">
+            <Label marginBottom="2">Card Details</Label>
+            <CardField>
+              <CardElement
+                options={{
+                  style: {
+                    base: {
+                      iconColor: theme.colors.neutral600,
+                      color: theme.colors.neutral900,
+                      fontSize: "16px",
+                    },
+                    invalid: {
+                      iconColor: theme.colors.red600,
+                      color: theme.colors.red600,
+                    },
+                  },
+                }}
+              />
+            </CardField>
+            {formik.errors.card && (
+              <InputError mt="2">{formik.errors.card}</InputError>
+            )}
           </Box>
-          <InputLabel>Card Details</InputLabel>
-          <CardField>
-            <CardElement
-              options={{
-                style: {
-                  base: {
-                    iconColor: theme.colors.neutral600,
-                    color: theme.colors.neutral900,
-                    fontSize: "16px",
-                  },
-                  invalid: {
-                    iconColor: theme.colors.red600,
-                    color: theme.colors.red600,
-                  },
-                },
-              }}
-            />
-          </CardField>
           <Button
             size="l"
-            width="100%"
             type="submit"
-            loading={formik.isSubmitting}
+            loading={loading || formik.isSubmitting}
           >
             {buttonLabel || "Continue"}
           </Button>

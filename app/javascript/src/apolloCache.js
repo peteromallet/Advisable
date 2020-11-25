@@ -7,6 +7,9 @@ import { relayStylePagination } from "@apollo/client/utilities";
 // array rather than doing any kind of merge.
 const replaceArrayMerge = (_, incoming) => incoming;
 
+// see https://www.apollographql.com/docs/react/caching/cache-field-behavior/#merging-non-normalized-objects
+const combineValues = (existing, incoming) => ({ ...existing, ...incoming });
+
 const createCache = () => {
   return new InMemoryCache({
     possibleTypes: {
@@ -45,6 +48,9 @@ const createCache = () => {
       },
       Project: {
         fields: {
+          deposit: {
+            merge: combineValues,
+          },
           applications: {
             merge: replaceArrayMerge,
           },
