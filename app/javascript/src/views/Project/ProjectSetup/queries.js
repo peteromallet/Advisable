@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 
 const projectFields = gql`
   fragment ProjectSetupFields on Project {
@@ -13,6 +13,10 @@ const projectFields = gql`
     likelyToHire
     locationImportance
     industryExperienceImportance
+    deposit {
+      paid
+      amount
+    }
     primarySkill {
       id
       name
@@ -97,6 +101,9 @@ export const PUBLISH_PROJECT = gql`
   }
 `;
 
+export const usePublishProject = (opts = {}) =>
+  useMutation(PUBLISH_PROJECT, opts);
+
 export const DELETE_JOB = gql`
   mutation deleteJob($input: DeleteJobInput!) {
     deleteJob(input: $input) {
@@ -104,3 +111,52 @@ export const DELETE_JOB = gql`
     }
   }
 `;
+
+export const GET_PAYMENT_DETAILS = gql`
+  query getDepositPaymentDetails($id: ID!) {
+    viewer {
+      ... on User {
+        id
+        paymentMethod {
+          id
+          last4
+          brand
+          expMonth
+          expYear
+        }
+      }
+    }
+    project(id: $id) {
+      id
+      deposit {
+        paid
+        amount
+        paymentIntent
+      }
+    }
+  }
+`;
+
+export const usePaymentDetails = (id) =>
+  useQuery(GET_PAYMENT_DETAILS, {
+    variables: { id },
+  });
+
+export const GET_DEPOSIT_STATUS = gql`
+  query getDepositStatus($id: ID!) {
+    project(id: $id) {
+      id
+      deposit {
+        paid
+        amount
+      }
+    }
+  }
+`;
+
+export const useDepositStatus = (id) => {
+  return useQuery(GET_DEPOSIT_STATUS, {
+    pollInterval: 2000,
+    variables: { id },
+  });
+};

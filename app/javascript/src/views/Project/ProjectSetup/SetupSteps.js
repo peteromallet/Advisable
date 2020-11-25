@@ -9,6 +9,7 @@ import {
   useLocation,
   useParams,
 } from "react-router-dom";
+import Deposit from "./Deposit";
 import JobSkills from "./JobSkills";
 import PublishJob from "./PublishJob";
 import JobLocation from "./JobLocation";
@@ -72,6 +73,10 @@ const steps = [
   {
     component: PublishJob,
     path: "/projects/:id/setup/publish",
+  },
+  {
+    path: "/projects/:id/setup/deposit",
+    component: Deposit,
   },
   {
     path: "/projects/:id/setup/published",

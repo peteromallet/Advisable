@@ -3,7 +3,6 @@ import { theme } from "@advisable/donut";
 
 export const CardField = styled.div`
   border-radius: 8px;
-  margin-bottom: 20px;
   background: ${theme.colors.neutral100};
 
   .StripeElement--webkit-autofill {
