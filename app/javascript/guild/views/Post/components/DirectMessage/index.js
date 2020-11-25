@@ -54,8 +54,8 @@ const DirectMessage = ({ count, recipient, guildPostId }) => {
           <GuildBox spaceChildrenHorizontal={34} mb="l">
             <Box display="flex" flexShrink={0}>
               <Avatar
-                as={Link.External}
-                href={`/freelancers/${recipient.id}`}
+                as={Link}
+                to={`/freelancers/${recipient.id}`}
                 size={{ _: "l", m: "xxl" }}
                 name={recipient.name}
                 url={recipient.avatar}

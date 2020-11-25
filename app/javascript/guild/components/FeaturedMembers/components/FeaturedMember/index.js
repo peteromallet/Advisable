@@ -7,8 +7,8 @@ const FeaturedMember = ({ featuredMember }) => {
     <GuildBox px="xs" alignItems="center" spaceChildrenHorizontal={24}>
       <Box flexShrink={0}>
         <Avatar
-          as={Link.External}
-          href={`/freelancers/${featuredMember.id}`}
+          as={Link}
+          to={`/freelancers/${featuredMember.id}`}
           name={featuredMember.name}
           url={featuredMember.avatar}
           size={"s"}
