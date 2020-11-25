@@ -1,12 +1,18 @@
 import React from "react";
-import { Box, Card, Text, Button, Input } from "@advisable/donut";
+import { Box, Card, Text, Button } from "@advisable/donut";
 import { Form, Formik } from "formik";
 import SubmitButton from "components/SubmitButton";
 import FormField from "components/FormField";
 import { motion } from "framer-motion";
 import OrbitsBackground from "../../OrbitsBackground";
+import validationSchema from "./validationSchema";
 
 export default function SetPassword() {
+  const initialValues = {
+    password: "",
+    passwordConfirmation: "",
+  };
+  const handleSubmit = () => {};
   return (
     <>
       <OrbitsBackground step={2} />
@@ -21,11 +27,15 @@ export default function SetPassword() {
               your applications on Advisable and manage your work.
             </Text>
           </Box>
-          <Formik>
+          <Formik
+            onSubmit={handleSubmit}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+          >
             <Form>
               <Box mb="m">
                 <FormField
-                  as={Input}
+                  type="password"
                   name="password"
                   placeholder="assistanttotheregionalmanager1"
                   label="Password"
@@ -33,8 +43,8 @@ export default function SetPassword() {
               </Box>
               <Box mb="2xl">
                 <FormField
-                  as={Input}
-                  name="confirmPassword"
+                  type="password"
+                  name="passwordConfirmation"
                   placeholder="assistanttotheregionalmanager1"
                   label="Confirm password"
                 />
