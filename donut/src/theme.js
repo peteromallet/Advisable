@@ -92,6 +92,7 @@ const fonts = {
 
 // Line heights
 const lineHeights = {
+  "2xs": "14px",
   xxs: "14px",
   xs: "17px",
   s: "19px",
@@ -99,8 +100,11 @@ const lineHeights = {
   l: "24px",
   xl: "26px",
   xxl: "28px",
+  "2xl": "28px",
   xxxl: "34px",
+  "3xl": "34px",
   xxxxl: "36px",
+  "4xl": "36px",
 };
 
 const boxShadow = {
