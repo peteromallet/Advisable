@@ -14,12 +14,14 @@ class ApplicationController < ActionController::Base
   end
 
   def internal
-    return if current_account&.has_permission?("admin")
+    return if current_account&.admin?
+
     redirect_to "/"
   end
 
   def advisatable
-    return if current_account&.has_permission?("admin")
+    return if current_account&.admin?
+
     redirect_to "/"
   end
 

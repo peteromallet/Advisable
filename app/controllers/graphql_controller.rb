@@ -45,7 +45,8 @@ class GraphqlController < ApplicationController
   private
 
   def require_admin
-    return if current_account&.has_permission?("admin")
+    return if current_account&.admin?
+
     render status: :not_found, json: {error: 'Not Found'}
   end
 

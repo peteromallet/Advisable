@@ -1,12 +1,6 @@
 module Permissions
   extend ActiveSupport::Concern
 
-  included do
-    def has_permission?(permission)
-      permissions.include?(permission)
-    end
-  end
-
   class_methods do
     def register_permissions(*permissions)
       permissions.map(&:to_s).each do |permission|

@@ -20,18 +20,20 @@ class SessionManager
         uid = session[:account_uid]
         if uid
           if uid&.starts_with?('acc_')
-            return Account.find_by(uid: uid)
+            Account.find_by(uid: uid)
           else
             clear_browser_data
           end
+        else
+          restore_session
         end
-        restore_session
       end
   end
 
   def restore_session
     token = cookies.signed[:remember]
     return unless token
+
     account = Account.find_by(remember_token: token)
     account ? start_session(account) : cookies.delete(:remember)
     account
@@ -62,7 +64,7 @@ class SessionManager
   private
 
   def admin_override
-    return unless current_account&.has_permission?("admin")
+    return unless current_account&.admin?
 
     user = GlobalID::Locator.locate(session[:admin_override])
     return user if user.respond_to?(:account)
