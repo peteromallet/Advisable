@@ -1,24 +1,37 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useStripe } from "@stripe/react-stripe-js";
-import { Circle, Text, Paragraph, Box, Button } from "@advisable/donut";
+import { Redirect } from "react-router-dom";
+import { Text, Paragraph, Box, Button } from "@advisable/donut";
 import { useParams } from "react-router";
 import Loading from "components/Loading";
+import { useNotifications } from "src/components/Notifications";
 import PaymentMethod from "components/PaymentMethod";
-import Loader from "components/Loader";
 import PaymentMethodForm from "components/PaymentMethodForm";
 import currency from "src/utilities/currency";
-import {
-  usePaymentDetails,
-  useDepositStatus,
-  usePublishProject,
-} from "./queries";
-import illustration from "./illustration.png";
+import { usePaymentDetails, useDepositStatus } from "./queries";
 
 function PaymentProcessing() {
   const { id } = useParams();
-  useDepositStatus(id);
+  const { notify } = useNotifications();
+  const { data } = useDepositStatus(id);
+
+  useEffect(() => {
+    if (data?.project.publishedAt) {
+      notify("Your project has been published");
+    }
+  }, [notify, data?.project.publishedAt]);
 
   return <Text mt="8">Please wait while we process your payment...</Text>;
+}
+
+function PaymentError({ error }) {
+  return (
+    <>
+      <Text color="red600" mt="8">
+        {error}
+      </Text>
+    </>
+  );
 }
 
 function ExistingPaymentMethod({
@@ -32,8 +45,8 @@ function ExistingPaymentMethod({
       <Box mb="4">
         <PaymentMethod paymentMethod={paymentMethod} />
       </Box>
-      <Box mb="l">
-        <Button size="s" variant="subtle" onClick={onNewCard}>
+      <Box mb="8">
+        <Button size="xs" variant="subtle" onClick={onNewCard}>
           Update payment method
         </Button>
       </Box>
@@ -47,6 +60,7 @@ function ExistingPaymentMethod({
 function DepositPayment({ data }) {
   const stripe = useStripe();
   const [newCard, setNewCard] = React.useState(false);
+  const [paymentError, setPaymentError] = React.useState(null);
   // processing is set to true once the stripe requests have succeeded and we
   // are waiting for webhook to mark the deposit as paid.
   const [processing, setProcessing] = useState(false);
@@ -55,38 +69,41 @@ function DepositPayment({ data }) {
   const paymentIntent = data.project.deposit.paymentIntent;
   const newCardForm = newCard || !viewer.paymentMethod;
 
-  const handleExistingPaymentMethod = async () => {
-    setProcessing(true);
-    const { error } = await stripe.handleCardPayment(paymentIntent, {
-      payment_method: viewer.paymentMethod.id,
-    });
+  const handleStripeResponse = (response) => {
+    const { error } = response;
 
     if (error) {
       setProcessing(false);
+      setPaymentError(error.message);
     }
+  };
+
+  const handleExistingPaymentMethod = async () => {
+    setProcessing(true);
+    setPaymentError(null);
+    const response = await stripe.confirmCardPayment(paymentIntent, {
+      payment_method: viewer.paymentMethod.id,
+    });
+
+    handleStripeResponse(response);
   };
 
   // Handler for PaymentMethodForm component card details. This is used to
   // complete the payment when the user does not have an existing payment
   // method.
-  const handleCardDetails = async (stripe, details, formik) => {
+  const handleCardDetails = async (stripe, details) => {
     setProcessing(true);
-    const { error } = await stripe.handleCardPayment(
-      paymentIntent,
-      details.card,
-      {
-        payment_method_data: {
-          billing_details: {
-            name: details.cardholder,
-          },
+    setPaymentError(null);
+    const response = await stripe.confirmCardPayment(paymentIntent, {
+      payment_method: {
+        card: details.card,
+        billing_details: {
+          name: details.cardholder,
         },
       },
-    );
+    });
 
-    if (error) {
-      setProcessing(false);
-      formik.setFieldError("card", error.message);
-    }
+    handleStripeResponse(response);
   };
 
   return (
@@ -106,52 +123,18 @@ function DepositPayment({ data }) {
           onSubmit={handleExistingPaymentMethod}
         />
       )}
+      {paymentError ? <PaymentError error={paymentError} /> : null}
       {processing ? <PaymentProcessing /> : null}
     </>
   );
 }
 
-function PublishProject() {
-  const { id } = useParams();
-  const [publishProject] = usePublishProject();
-
-  const handlePublish = useCallback(() => {
-    publishProject({
-      variables: {
-        input: { id },
-      },
-    });
-  }, [publishProject, id]);
-
-  useEffect(() => {
-    const timeout = setTimeout(handlePublish, 1000);
-    return () => clearTimeout(timeout);
-  }, [handlePublish]);
-
-  return (
-    <Box mx="auto" maxWidth="300px" textAlign="center">
-      <img width="100%" src={illustration} alt="" />
-      <Box mt="4" mb="5" display="flex" justifyContent="center">
-        <Circle size="32px" bg="blue100">
-          <Loader size="sm" color="blue900" />
-        </Circle>
-      </Box>
-      <Text mb="2" fontSize="lg" fontWeight="medium" letterSpacing="-0.02rem">
-        Publishing...
-      </Text>
-      <Text fontSize="sm" lineHeight="1.2rem">
-        Please wait while we publish your project. This should only take a
-        second.
-      </Text>
-    </Box>
-  );
-}
-
 export default function Deposit({ data: { project } }) {
+  const { id } = useParams();
   const { data, loading, error } = usePaymentDetails(project.id);
 
-  if (project.deposit.paid) {
-    return <PublishProject />;
+  if (data?.project.deposit.paid) {
+    return <Redirect to={`/projects/${id}/setup/publish`} />;
   }
 
   return (

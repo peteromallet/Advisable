@@ -128,6 +128,7 @@ export const GET_PAYMENT_DETAILS = gql`
     }
     project(id: $id) {
       id
+      publishedAt
       deposit {
         paid
         amount
@@ -146,9 +147,10 @@ export const GET_DEPOSIT_STATUS = gql`
   query getDepositStatus($id: ID!) {
     project(id: $id) {
       id
+      status
+      publishedAt
       deposit {
         paid
-        amount
       }
     }
   }
@@ -157,6 +159,7 @@ export const GET_DEPOSIT_STATUS = gql`
 export const useDepositStatus = (id) => {
   return useQuery(GET_DEPOSIT_STATUS, {
     pollInterval: 2000,
+    fetchPolicy: "network-only",
     variables: { id },
   });
 };
