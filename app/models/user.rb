@@ -20,8 +20,7 @@ class User < ApplicationRecord
   has_one :client_user, dependent: :destroy
   has_one :client, through: :client_user
 
-  # TODO: User Companies - shouldn't be optional
-  belongs_to :company, optional: true
+  belongs_to :company
   belongs_to :sales_person, optional: true
   belongs_to :industry, optional: true
   belongs_to :country, optional: true

@@ -15,7 +15,10 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
         ApiError.invalid_request(code: 'existingAccount', message: 'An account already exists with this email')
       end
 
-      user = User.find_or_create_by(account: account) { |u| u.application_status = "Application Started" }
+      user = User.find_or_create_by(account: account) do |u|
+        u.application_status = "Application Started"
+        u.company = Company.new(name: Company.fresh_name_for(''))
+      end
 
       if user.application_status == "Application Started"
         account.first_name = args[:first_name]
@@ -23,7 +26,6 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
         if save_account(account) && save_user(user)
           user.sync_to_airtable
           create_client_record(user)
-          Company.create_for_user(user)
           if context[:request]
             GeocodeUserJob.perform_later(user.id, context[:client_ip])
           end
