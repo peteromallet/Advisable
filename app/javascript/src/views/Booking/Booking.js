@@ -9,13 +9,13 @@ import {
   useHistory,
 } from "react-router-dom";
 import NotFound from "../NotFound";
-import Layout from "../../components/Layout";
-import TaskDrawer from "../../components/TaskDrawer";
-import useViewer from "../../hooks/useViewer";
+import Layout from "components/Layout";
+import TaskDrawer from "components/TaskDrawer";
+import useViewer from "src/hooks/useViewer";
 import Tasks from "./Tasks";
 import Sidebar from "./Sidebar";
+import FlexibleTutorial from "components/Tutorial/FlexibleProjectTutorial";
 import StoppedWorkingNotice from "./StoppedWorkingNotice";
-import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
 import TASK_FIELDS from "../../graphql/fragments/task";
 
 export default function Booking({ data, match }) {

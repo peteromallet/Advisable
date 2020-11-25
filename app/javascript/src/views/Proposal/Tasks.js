@@ -2,12 +2,12 @@ import * as React from "react";
 import { Box, Card, Button } from "@advisable/donut";
 import { useApolloClient } from "@apollo/client";
 import { matchPath } from "react-router";
-import Text from "../../components/Text";
-import Modal from "../../components/Modal";
-import Heading from "../../components/Heading";
-import NewTask from "../../components/NewTask";
-import TaskList from "../../components/TaskList";
-import TaskDrawer from "../../components/TaskDrawer";
+import Text from "components/Text";
+import Modal from "components/Modal";
+import Heading from "components/Heading";
+import NewTask from "components/NewTask";
+import TaskList from "components/TaskList";
+import TaskDrawer from "components/TaskDrawer";
 import TASK_FIELDS from "../../graphql/fragments/task";
 import { hasCompleteTasksStep } from "./validationSchema";
 

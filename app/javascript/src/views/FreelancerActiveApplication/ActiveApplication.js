@@ -4,15 +4,15 @@ import React from "react";
 import { get } from "lodash-es";
 import { Box, Modal, useModal } from "@advisable/donut";
 import { matchPath, useParams } from "react-router-dom";
-import Layout from "../../components/Layout";
-import TaskDrawer from "../../components/TaskDrawer";
-import FixedTutorial from "../../components/Tutorial/FixedProjectTutorial";
-import FlexibleTutorial from "../../components/Tutorial/FlexibleProjectTutorial";
+import Layout from "components/Layout";
+import TaskDrawer from "components/TaskDrawer";
+import FixedTutorial from "components/Tutorial/FixedProjectTutorial";
+import FlexibleTutorial from "components/Tutorial/FlexibleProjectTutorial";
 import Sidebar from "./Sidebar";
 import Tasks from "./Tasks";
 import SetupPayments from "./SetupPayments";
 import StoppedWorkingNotice from "./StoppedWorkingNotice";
-import useViewer from "../../hooks/useViewer";
+import useViewer from "src/hooks/useViewer";
 import TASK_FIELDS from "../../graphql/fragments/task";
 
 const tutorials = {
