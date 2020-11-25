@@ -22,12 +22,14 @@ module Admin
     # end
 
     def authenticate_admin
-      return if current_account&.has_permission?("admin")
+      return if current_account&.admin?
+
       redirect_to '/'
     end
 
     def resync
       return unless ENV['STAGING']
+
       Airtable.sync
       redirect_to '/admin', notice: 'Airtable has been synced'
     end
@@ -39,6 +41,7 @@ module Admin
 
     def reset_test
       return unless ENV['STAGING'] || Rails.env.development?
+
       TestData.reset
 
       redirect_to '/admin', notice: 'Test data has been reset'

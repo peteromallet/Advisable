@@ -19,8 +19,9 @@ class TaskPolicy < BasePolicy
   end
 
   def update_name
-    return true if has_permission?('admin')
+    return true if admin?
     return false if user.nil?
+
     ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(record.stage)
   end
 
@@ -28,20 +29,21 @@ class TaskPolicy < BasePolicy
   # a task.
   def update_due_date
     return false if user.nil?
-    return true if has_permission?('admin')
+    return true if admin?
     if ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(
          record.stage
        )
       return true
     end
     return true if task.stage == 'Assigned' && is_specialist
+
     false
   end
 
   # Wether or not the current user has permission to update the estimate for a
   # task.
   def update_estimate
-    return true if has_permission?('admin')
+    return true if admin?
     return false if user.nil?
     if ['Not Assigned', 'Quote Requested', 'Requested To Start'].include?(
          record.stage
@@ -50,6 +52,7 @@ class TaskPolicy < BasePolicy
     end
     return true if task.stage == 'Quote Provided' && is_specialist
     return true if task.stage == 'Assigned' && is_specialist
+
     false
   end
 
@@ -68,23 +71,26 @@ class TaskPolicy < BasePolicy
   end
 
   def update_description
-    return true if has_permission?('admin')
+    return true if admin?
     return false if user.nil?
+
     ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(record.stage)
   end
 
   def update_trial
-    return true if has_permission?('admin')
+    return true if admin?
+
     is_specialist
   end
 
   def delete
-    return true if has_permission?('admin')
+    return true if admin?
+
     ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(record.stage)
   end
 
   def set_repeating
-    is_client || is_specialist || has_permission?('admin')
+    is_client || is_specialist || admin?
   end
 
   private

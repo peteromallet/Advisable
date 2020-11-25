@@ -5,7 +5,7 @@
 class SpecialistPolicy < BasePolicy
   # Wether or not the current user is an admin
   def is_admin
-    user&.account&.has_permission?("admin")
+    user&.account&.admin?
   end
 
   # Checks if the specialist is the current user
@@ -16,7 +16,8 @@ class SpecialistPolicy < BasePolicy
   # checks wether the specialist has applied to any of the current users
   # projects
   def is_applicant_of_user_project
-    return false unless user.present?
+    return false if user.blank?
+
     record.projects.where(user_id: user.id).any?
   end
 end
