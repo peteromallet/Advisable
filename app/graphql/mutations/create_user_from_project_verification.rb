@@ -36,6 +36,7 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
 
     user = User.new(
       account: account,
+      company: Company.new(name: Company.fresh_name_for(project.client_name)),
       company_name: project.client_name,
       company_type: project.company_type,
       fid: fid,
@@ -44,7 +45,6 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
       industry: project.primary_industry
     )
     user.save_and_sync_with_responsible!(current_account_id)
-    Company.create_for_user(user)
     AttachImageJob.perform_later(user, viewer.image)
     {user: user}
   rescue ActiveRecord::RecordInvalid

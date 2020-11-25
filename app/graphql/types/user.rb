@@ -5,7 +5,11 @@ class Types::User < Types::BaseType
   field :is_admin, Boolean, null: false
 
   def is_admin
-    object.account&.has_permission?('admin')
+    object.account.admin?
+  end
+
+  def can_manage_teams
+    object.account.team_manager?
   end
 
   def name

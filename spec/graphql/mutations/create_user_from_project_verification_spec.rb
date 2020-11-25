@@ -33,14 +33,14 @@ RSpec.describe Mutations::CreateUserFromProjectVerification do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
   it 'creates a new user' do
     expect {
       AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
-    }.to change { User.count }.by(1)
+    }.to change(User, :count).by(1)
   end
 
   context 'when not logged in with oauth' do
