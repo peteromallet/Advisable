@@ -1,7 +1,14 @@
 class Company < ApplicationRecord
-  has_many :users, dependent: :nullify
   belongs_to :sales_person, optional: true
   belongs_to :industry, optional: true
+  has_many :users, dependent: :nullify
+
+  # WIP User migration
+  has_many :projects, through: :users
+  has_many :applications, through: :projects
+  has_many :interviews, through: :users
+  has_many :consultations, through: :users
+  # WIP User migration
 
   def self.fresh_company_name_for(user)
     return user.company_name unless exists?(name: user.company_name)
@@ -20,7 +27,7 @@ class Company < ApplicationRecord
       sales_person_id: user.sales_person_id,
       industry_id: user.industry_id
     )
-    user.update_columns(company_id: company.id)  # rubocop:disable Rails/SkipsModelValidations
+    user.update_columns(company_id: company.id) # rubocop:disable Rails/SkipsModelValidations
   end
 end
 
