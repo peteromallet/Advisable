@@ -11,7 +11,10 @@ class AccountsController < ApplicationController
   end
 
   def user
-    user = User.find_or_create_by(account: account)
+    user = User.find_or_create_by(account: account) do |u|
+      u.company = Company.new(name: Company.fresh_name_for(params[:company_name].strip))
+    end
+
     [:airtable_id, :company_name].each do |key|
       user.public_send("#{key}=", params[key].strip) if params[key].present?
     end
@@ -19,8 +22,6 @@ class AccountsController < ApplicationController
     Logidze.with_responsible(user.account_id) do
       user.save!
     end
-
-    Company.create_for_user(user)
 
     render json: {user_uid: user.uid, account_uid: account.uid}
   rescue ActiveRecord::RecordInvalid => e

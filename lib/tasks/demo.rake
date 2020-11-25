@@ -51,11 +51,11 @@ namespace :demo do
         account = Account.create(email: Faker::Internet.email)
         user = User.create(
           account: account,
+          company: Company.new(name: Company.fresh_name_for(Faker::Company.name)),
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name,
           company_name: Faker::Company.name
         )
-        Company.create_for_user(user)
 
         industry = industries.sample
         skill = skills.sample
