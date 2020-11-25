@@ -30,6 +30,14 @@ module Integrations
       member.user_channels.list.any? { |channel| channel&.unread_messages_count != 0 }
     end
 
+    def create_channel_member(channel, args)
+      channel.members.create(args)
+    end
+
+    def create_channel_message(channel, args)
+      channel.messages.create(args)
+    end
+
     # Service utilities
 
     def find_or_create_channel(sender_uid:, recipient_uid:, message:)

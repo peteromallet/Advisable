@@ -13,7 +13,7 @@ class ChatDirectMessageJob < ApplicationJob
     # Add both members of the 1:1 direct message chat channel
     if channel.members_count.zero?
       [recipient_uid, sender_uid].each do |identity|
-        channel.members.create(identity: identity)
+        client.create_channel_member(channel, identity: identity)
       end
     end
 
@@ -30,15 +30,17 @@ class ChatDirectMessageJob < ApplicationJob
         guild_post.engagements.create(specialist: specialist_sender)
       end
 
-      specialist_sender.update(guild_calendly_link: guild_calendly_link) if guild_calendly_link
+      if guild_calendly_link && specialist_sender.guild_calendly_link.nil?
+        specialist_sender.update(guild_calendly_link: guild_calendly_link)
+      end
     end
 
     # Add the first or additional message
-    channel.messages.create(
+    client.create_channel_message(channel, {
       from: sender_uid,
       body: @message_with_context || message,
       attributes: guild_calendly_link ? {calendly_link: guild_calendly_link}.to_json : {}
-    )
+    })
 
     # Email notify other member of the conversation if they arent online
     other = client.fetch_user(recipient_uid)
