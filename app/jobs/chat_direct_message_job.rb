@@ -25,7 +25,9 @@ class ChatDirectMessageJob < ApplicationJob
       @message_with_context = "#{context} #{message}"
 
       specialist_sender = Specialist.find_by(uid: sender_uid)
-      guild_post.engagements.create(specialist: specialist_sender)
+      if guild_post.engagements.where(specialist: specialist_sender).none?
+        guild_post.engagements.create(specialist: specialist_sender)
+      end
     end
 
     # Add the first or additional message
