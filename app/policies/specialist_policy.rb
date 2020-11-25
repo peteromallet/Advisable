@@ -3,11 +3,6 @@
 # policy and can easily be used outside of graphql.
 
 class SpecialistPolicy < BasePolicy
-  # Wether or not the current user is an admin
-  def is_admin
-    user&.account&.admin?
-  end
-
   # Checks if the specialist is the current user
   def is_specialist
     record == user
