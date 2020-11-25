@@ -28,6 +28,27 @@ export default function Booking({ data, match }) {
     visible: viewer.completedTutorials.indexOf("flexibleProjects") === -1,
   });
 
+  // For fixed projects, if they haven't completed tthe fixedProjects tutorial then
+  // we show the first task.
+  React.useEffect(() => {
+    if (data.application.projectType !== "Fixed") return;
+    const completedFixedTutorial =
+      viewer.completedTutorials.indexOf("fixedProjects") > -1;
+    if (completedFixedTutorial) return;
+    const tasks = filter(
+      data.application.tasks,
+      (task) =>
+        ["Not Assigned", "Quote Provided", "Requested To Start"].indexOf(
+          task.stage,
+        ) > -1,
+    );
+    if (tasks.length === 0) return;
+    const sorted = tasks.sort(
+      (a, b) => new Date(a.dueDate) - new Date(b.dueDate),
+    );
+    history.replace(`/manage/${data.application.id}/tasks/${sorted[0].id}`);
+  }, []);
+
   let status = get(data, "application.status");
   if (["Working", "Stopped Working"].indexOf(status) === -1) {
     return <NotFound />;
@@ -74,27 +95,6 @@ export default function Booking({ data, match }) {
     client.cache.evict(client.cache.identify(task));
     history.push(match.url);
   };
-
-  // For fixed projects, if they haven't completed tthe fixedProjects tutorial then
-  // we show the first task.
-  React.useEffect(() => {
-    if (data.application.projectType !== "Fixed") return;
-    const completedFixedTutorial =
-      viewer.completedTutorials.indexOf("fixedProjects") > -1;
-    if (completedFixedTutorial) return;
-    const tasks = filter(
-      data.application.tasks,
-      (task) =>
-        ["Not Assigned", "Quote Provided", "Requested To Start"].indexOf(
-          task.stage,
-        ) > -1,
-    );
-    if (tasks.length === 0) return;
-    const sorted = tasks.sort(
-      (a, b) => new Date(a.dueDate) - new Date(b.dueDate),
-    );
-    history.replace(`/manage/${data.application.id}/tasks/${sorted[0].id}`);
-  }, []);
 
   return (
     <>
