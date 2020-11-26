@@ -76,8 +76,8 @@ const Post = ({ post }) => {
           Read more
         </Text>
 
-        <Box mb="5">
-          <PostActions post={post} />
+        <Box>
+          <PostActions marginBottom={5} post={post} />
         </Box>
 
         <Topics topics={post.guildTopics} />
