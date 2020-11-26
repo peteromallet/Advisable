@@ -81,7 +81,7 @@ class Types::User < Types::BaseType
   end
 
   field :email, String, null: false do
-    authorize :is_admin, :is_user, :is_candidate_for_user_project
+    authorize :is_admin, :is_user, :is_candidate_for_user_project, :is_team_manager
   end
 
   def email

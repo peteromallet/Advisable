@@ -5,6 +5,7 @@ import Layout from "components/Layout";
 import { useBreakpoint } from "@advisable/donut";
 import Sidebar from "./Sidebar";
 import PaymentSettings from "./PaymentSettings";
+import Team from "./Team";
 import Invoices from "./Invoices";
 import Password from "./Password";
 import Invoice from "./Invoices/Invoice";
@@ -22,6 +23,7 @@ const ClientSettings = ({ match }) => {
       <Layout.Main>
         <Switch>
           <Route path="/settings/payments" component={PaymentSettings} />
+          <Route path="/settings/team" component={Team} />
           <Route path="/settings/invoices" exact component={Invoices} />
           <Route path="/settings/invoices/:invoice_id" component={Invoice} />
           <Route path="/settings/password" component={Password} />
