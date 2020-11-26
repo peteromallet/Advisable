@@ -16,12 +16,12 @@ const FreelancerProfile = lazy(() =>
 );
 
 const GuildOrRedirectFreelancerProfile = () => {
+  const { id } = useParams();
   const viewer = useViewer();
 
   if (viewer?.guild) {
     return <FreelancerProfile />;
   } else {
-    const { id } = useParams();
     return (window.location.href = `/freelancers/${id}`);
   }
 };
