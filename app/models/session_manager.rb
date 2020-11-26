@@ -23,6 +23,7 @@ class SessionManager
             Account.find_by(uid: uid)
           else
             clear_browser_data
+            nil
           end
         else
           restore_session
