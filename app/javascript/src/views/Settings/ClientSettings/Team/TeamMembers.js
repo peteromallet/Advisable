@@ -3,6 +3,7 @@ import { Text } from "@advisable/donut";
 import { useTeamMembers } from "./queries";
 import TeamMember from "./TeamMember";
 import LoadingSkeleton from "./LoadingSkeleton";
+import NewTeamMember from "./NewTeamMember";
 
 export default function TeamList() {
   const { loading, data, errors } = useTeamMembers();
@@ -17,7 +18,14 @@ export default function TeamList() {
     );
   }
 
-  return data.viewer.company.users.map((user) => (
-    <TeamMember key={user.id} member={user} />
-  ));
+  const members = data.viewer.company.users;
+
+  return (
+    <>
+      {members.map((member) => (
+        <TeamMember key={member.id} member={member} />
+      ))}
+      <NewTeamMember company={data.viewer.company} />
+    </>
+  );
 }

@@ -14,8 +14,8 @@ export default function Team() {
   return (
     <Card padding="10">
       <Text
+        marginBottom={5}
         fontSize="3xl"
-        marginBottom="5"
         fontWeight="medium"
         color="neutral900"
         letterSpacing="-0.02rem"

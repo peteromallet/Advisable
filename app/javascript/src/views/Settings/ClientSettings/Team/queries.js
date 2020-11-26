@@ -1,6 +1,17 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
+
+const userFields = gql`
+  fragment UserFields on User {
+    id
+    name
+    email
+    isTeamManager
+  }
+`;
 
 export const GET_TEAM_MEMBERS = gql`
+  ${userFields}
+
   query getTeamMembers {
     viewer {
       ... on User {
@@ -8,10 +19,7 @@ export const GET_TEAM_MEMBERS = gql`
         company {
           id
           users {
-            id
-            name
-            email
-            isTeamManager
+            ...UserFields
           }
         }
       }
@@ -21,4 +29,38 @@ export const GET_TEAM_MEMBERS = gql`
 
 export function useTeamMembers(opts = {}) {
   return useQuery(GET_TEAM_MEMBERS, opts);
+}
+
+export const CREATE_USER_FOR_COMPANY = gql`
+  ${userFields}
+
+  mutation createUserForCompany($input: CreateUserForCompanyInput!) {
+    createUserForCompany(input: $input) {
+      user {
+        ...UserFields
+      }
+    }
+  }
+`;
+
+export function useCreateUserForCompany(company) {
+  return useMutation(CREATE_USER_FOR_COMPANY, {
+    update(cache, { data }) {
+      const user = data.createUserForCompany.user;
+
+      cache.modify({
+        id: cache.identify(company),
+        fields: {
+          users(existing = []) {
+            const newUserRef = cache.writeFragment({
+              data: user,
+              fragment: userFields,
+            });
+
+            return [...existing, newUserRef];
+          },
+        },
+      });
+    },
+  });
 }
