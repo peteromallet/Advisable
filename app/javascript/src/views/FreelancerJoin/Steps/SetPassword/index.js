@@ -1,22 +1,32 @@
 import React from "react";
+import queryString from "query-string";
 import { Box, Card, Text, Button } from "@advisable/donut";
 import { Form, Formik } from "formik";
 import SubmitButton from "components/SubmitButton";
 import FormField from "components/FormField";
-import { motion } from "framer-motion";
 import OrbitsBackground from "../../OrbitsBackground";
 import validationSchema from "./validationSchema";
+import { useHistory, useLocation } from "react-router";
+import MotionBox from "../MotionBox";
 
-export default function SetPassword() {
+export default function SetPassword({ nextStep, forwards }) {
+  const location = useLocation();
+  const history = useHistory();
+  const project_id = queryString.parse(location.search)?.pid;
   const initialValues = {
     password: "",
     passwordConfirmation: "",
   };
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    const nextPath = project_id
+      ? `/opportunities/${project_id}`
+      : nextStep.path;
+    history.push(nextPath);
+  };
   return (
     <>
       <OrbitsBackground step={2} />
-      <Box as={motion.div} exit py="xl" zIndex={2} position="relative">
+      <MotionBox forwards={forwards} py="xl" zIndex={2} position="relative">
         <Card padding="2xl" width={650} marginX="auto">
           <Box mb="xl">
             <Text as="h2" fontSize="4xl" mb="xs" color="neutral900">
@@ -66,7 +76,7 @@ export default function SetPassword() {
             </Form>
           </Formik>
         </Card>
-      </Box>
+      </MotionBox>
     </>
   );
 }
