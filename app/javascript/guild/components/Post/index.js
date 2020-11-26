@@ -1,11 +1,11 @@
 import React from "react";
 import * as Sentry from "@sentry/react";
+import { Link as RouterLink } from "react-router-dom";
 import { Box, Card, Text, Avatar, Link } from "@advisable/donut";
 import Topics from "./components/Topics";
 import Markdown from "../Markdown";
 import PostTypeTag from "@guild/components/PostTypeTag";
 import PostActions from "@guild/components/PostActions";
-import { GuildBox } from "@guild/styles";
 import { CoverImage } from "@guild/components/CoverImage";
 
 const Post = ({ post }) => {
@@ -25,8 +25,8 @@ const Post = ({ post }) => {
 
         <Box display="flex" marginBottom="5" alignItems="center">
           <Avatar
-            as={Link}
-            to={`/freelancers/${post.author.id}`}
+            as={RouterLink}
+            to={`/freelancers/${post.author.id}/guild`}
             size="s"
             name={post.author.name}
             url={post.author.avatar}
@@ -35,10 +35,10 @@ const Post = ({ post }) => {
             <Text
               mb={0.5}
               fontSize="l"
-              as={Link.External}
+              as={RouterLink}
               color="neutral900"
               letterSpacing="-0.01rem"
-              href={`/freelancers/${post.author.id}`}
+              to={`/freelancers/${post.author.id}/guild`}
             >
               {post.author.name}
             </Text>
