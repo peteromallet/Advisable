@@ -55,8 +55,26 @@ class Types::User < Types::BaseType
   end
 
   field :bank_transfers_enabled, Boolean, null: true
+
   field :industry, Types::IndustryType, null: true
+
+  # TODO: Teams - frontend should not query for user industry, instead it should
+  # query for the users company's industry.
+  # It doesn't make sense to copy the industry onto each team member so we
+  # return the industry from the associated company
+  def industry
+    object.company.industry || object.industry
+  end
+
   field :company_type, String, null: true
+
+  # TODO: Teams - frontend should not query for user company type, instead it
+  # should fetch this field from the viewers company
+  # For now we override to the associated companies kind
+  def company_type
+    object.company.kind || object.company_type
+  end
+
   field :sales_person, Types::SalesPersonType, null: true
 
   field :talk_signature, String, null: false do
