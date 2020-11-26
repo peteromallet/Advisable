@@ -337,3 +337,20 @@ export const CREATE_USER_FOR_COMPANY = gql`
 export function useCreateUserForCompany() {
   return useMutation(CREATE_USER_FOR_COMPANY);
 }
+
+
+export const TOGGLE_TEAM_MANAGER = gql`
+  mutation toggleTeamManager(
+    $input: ToggleTeamManagerInput!
+  ) {
+    toggleTeamManager(input: $input) {
+      user {
+        id
+      }
+    }
+  }
+`;
+
+export function useToggleTeamManager() {
+  return useMutation(TOGGLE_TEAM_MANAGER);
+}
