@@ -9,7 +9,14 @@ import PaymentMethod from "components/PaymentMethod";
 import PaymentMethodForm from "components/PaymentMethodForm";
 import currency from "src/utilities/currency";
 import { usePaymentDetails, useDepositStatus } from "./queries";
+import poweredByStripe from "./stripe.png";
 
+// We render this component when the user submits their payment information.
+// This component uses the useDepositStatus hook which polls the project every
+// 2 seconds waiting for it's status to be updated. This update is handelled
+// inside of the webhook stripe sends to us. Once the status update's then
+// apollos cache will update and the Routing inside of Project/index.js will
+// rerender the correct route.
 function PaymentProcessing() {
   const { id } = useParams();
   const { notify } = useNotifications();
@@ -26,11 +33,9 @@ function PaymentProcessing() {
 
 function PaymentError({ error }) {
   return (
-    <>
-      <Text color="red600" mt="8">
-        {error}
-      </Text>
-    </>
+    <Text color="red600" mt="8">
+      {error}
+    </Text>
   );
 }
 
@@ -61,7 +66,7 @@ function DepositPayment({ data }) {
   const stripe = useStripe();
   const [newCard, setNewCard] = React.useState(false);
   const [paymentError, setPaymentError] = React.useState(null);
-  // processing is set to true once the stripe requests have succeeded and we
+  // processing is set to true once the stripe requests are started and we
   // are waiting for webhook to mark the deposit as paid.
   const [processing, setProcessing] = useState(false);
 
@@ -107,7 +112,7 @@ function DepositPayment({ data }) {
   };
 
   return (
-    <>
+    <Box position="relative">
       {newCardForm ? (
         <PaymentMethodForm
           userId={viewer.id}
@@ -125,7 +130,10 @@ function DepositPayment({ data }) {
       )}
       {paymentError ? <PaymentError error={paymentError} /> : null}
       {processing ? <PaymentProcessing /> : null}
-    </>
+      <Box position="absolute" bottom="0" right="0" opacity="0.3">
+        <img width="150px" src={poweredByStripe} alt="Powered by stripe" />
+      </Box>
+    </Box>
   );
 }
 

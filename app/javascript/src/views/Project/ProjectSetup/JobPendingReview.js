@@ -5,9 +5,9 @@ import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 
 export default function PublishJob({ data }) {
   const { id } = useParams();
-  const { salesPerson, status } = data.project;
+  const { salesPerson, publishedAt } = data.project;
 
-  if (status === "Brief Pending Confirmation") {
+  if (!publishedAt) {
     return <Redirect to={`/projects/${id}/setup`} />;
   }
 
