@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_24_081214) do
+ActiveRecord::Schema.define(version: 2020_11_24_175436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -393,6 +393,7 @@ ActiveRecord::Schema.define(version: 2020_11_24_081214) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "engagements_count", default: 0
+    t.boolean "shareable", default: false
     t.index ["data"], name: "index_guild_posts_on_data", using: :gin
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end

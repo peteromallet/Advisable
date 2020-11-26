@@ -90,6 +90,8 @@ module Types::Guild::PostInterface
 
   field :cover_image, Types::Guild::PostImageType, null: true
 
+  field :shareable, Boolean, null: true
+
   definition_methods do
     def resolve_type(object, context)
       if Guild::Post::POST_TYPES.include?(object.type)

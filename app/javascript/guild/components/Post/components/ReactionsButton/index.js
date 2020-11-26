@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useMutation, gql } from "@apollo/client";
 import { Box, Text, theme } from "@advisable/donut";
+import useViewer from "@advisable-main/hooks/useViewer";
 import { Thanks } from "@guild/icons";
 import ReactTooltip from "react-tooltip";
 import { GuildBox } from "@guild/styles";
@@ -20,6 +21,7 @@ export const GUILD_UPDATE_POST_REACTIONS = gql`
 
 const ReactionsButton = ({ post }) => {
   const timer = useRef(null);
+  const viewer = useViewer();
   const [reactToPost] = useMutation(GUILD_UPDATE_POST_REACTIONS);
   const [reacted, setReacted] = useState(post.reacted);
   const [reactionsCount, setReactionsCount] = useState(post.reactionsCount);
@@ -36,6 +38,7 @@ const ReactionsButton = ({ post }) => {
   // immediately and use setTimeout to delay the actual request by 500ms.
   const handleReaction = () => {
     clearTimeout(timer.current);
+    if (!viewer?.guild) return;
 
     const reaction = reacted ? "NONE" : "THANK";
     setReacted(reacted ? false : true);

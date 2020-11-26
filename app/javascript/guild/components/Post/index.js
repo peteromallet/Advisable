@@ -26,7 +26,7 @@ const Post = ({ post }) => {
     [wrapBody],
   );
 
-  const handleReadMore = () => history.push(`/posts/${post.id}`);
+  const handleViewPost = () => history.push(`/posts/${post.id}`);
 
   return (
     <Card elevation={{ _: "s", m: "m" }} width="100%">
@@ -76,7 +76,12 @@ const Post = ({ post }) => {
           )}
         </Box>
 
-        <Box display="flex" flexDirection="column" mt="m">
+        <Box
+          onClick={handleViewPost}
+          display="flex"
+          flexDirection="column"
+          mt="m"
+        >
           <Text
             as={Link.External}
             mb="sm"
@@ -95,7 +100,7 @@ const Post = ({ post }) => {
             ref={bodyRef}
           >
             <Markdown>{post.body}</Markdown>
-            {wrapBody && <ReadMore onReadMore={handleReadMore} />}
+            {wrapBody && <ReadMore onReadMore={handleViewPost} />}
           </Box>
         </Box>
       </Box>
