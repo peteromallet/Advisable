@@ -17,5 +17,9 @@ FactoryBot.define do
         2.days.from_now.change({hour: 12, min: 30, sec: 0})
       ]
     end
+
+    trait :team_manager do
+      association :account, :team_manager
+    end
   end
 end
