@@ -5,7 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import client from "./graphqlClient";
 
-const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY);
+const keys = JSON.parse(document.getElementById("keys").dataset.value);
+const stripePromise = loadStripe(keys.stripePublicKey);
 
 import "./i18n";
 import App from "./App";

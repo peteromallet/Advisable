@@ -97,6 +97,8 @@
   </head>
 
   <body>
+    <div id="keys" data-value="<%= { stripePublicKey: ENV.fetch("STRIPE_PUBLIC_KEY", nil) }.to_json %>"></div>
+
     <% if ENV["GTM"] %>
       <!-- Google Tag Manager (noscript) -->
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<%= ENV["GTM"] %>"
