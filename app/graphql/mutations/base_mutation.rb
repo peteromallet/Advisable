@@ -47,4 +47,15 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
 
     ApiError.invalid_request(code: "invalidPermissions", message: "Not a guild user")
   end
+
+  def requires_team_manager!
+    requires_client!
+
+    return true if current_user.account.team_manager?
+
+    ApiError.invalid_request(
+      code: "MUST_BE_TEAM_MANAGER",
+      message: "Current user must have team management permission."
+    )
+  end
 end
