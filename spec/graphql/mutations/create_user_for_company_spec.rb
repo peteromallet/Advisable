@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Mutations::CreateUserForCompany do
-  let(:context) { {current_user: create(:user, :team_manager)} }
-  let(:company) { create(:company) }
+  let(:user) { create(:user, :team_manager) }
+  let(:context) { {current_user: user} }
   let(:email) { Faker::Internet.email }
   let(:first_name) { Faker::Name.first_name }
   let(:last_name) { Faker::Name.last_name }
@@ -11,7 +11,6 @@ RSpec.describe Mutations::CreateUserForCompany do
     <<-GRAPHQL
     mutation {
       createUserForCompany(input: {
-        companyId: "#{company.id}",
         email: "#{email}",
         firstName: "#{first_name}",
         lastName: "#{last_name}",
@@ -36,11 +35,11 @@ RSpec.describe Mutations::CreateUserForCompany do
     uid = response["data"]["createUserForCompany"]["user"]["id"]
     created_user = User.find_by(uid: uid)
     expect(created_user.account.attributes.slice("email", "first_name", "last_name").values).to match_array([email, first_name, last_name])
-    expect(created_user.company_id).to eq(company.id)
+    expect(created_user.company_id).to eq(user.company_id)
   end
 
   context "when no team manager permission" do
-    let(:context) { {current_user: create(:user)} }
+    let(:user) { create(:user) }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)

@@ -1,5 +1,4 @@
 class Mutations::CreateUserForCompany < Mutations::BaseMutation
-  argument :company_id, ID, required: true
   argument :email, String, required: true
   argument :first_name, String, required: false
   argument :last_name, String, required: false
@@ -10,12 +9,12 @@ class Mutations::CreateUserForCompany < Mutations::BaseMutation
     requires_team_manager!
   end
 
-  def resolve(company_id:, email:, first_name:, last_name:)
+  def resolve(email:, first_name:, last_name:)
     unless BlacklistedDomain.email_allowed?(email)
       raise ApiError::InvalidRequest.new("nonCorporateEmail", "The email #{email} is not allowed")
     end
 
-    company = Company.find(company_id)
+    company = Company.find(current_user.company_id)
 
     account = Account.new(email: email, first_name: first_name, last_name: last_name)
     account.save!
