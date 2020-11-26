@@ -12,6 +12,15 @@ RSpec.describe ChatDirectMessageJob do
   let(:channel) { double('channel', sid: 'channel-123') }
 
   context "when creating a 1:1 direct message" do
+    subject(:enqueued_job) {
+      described_class.perform_now(
+        recipient_uid: recipient.uid,
+        sender_uid: sender.uid,
+        message: message,
+        guild_post_id: guild_post.id
+      )
+    }
+
     before do
       allow(TwilioChat::Client).to receive(:new).with(any_args) { twilio_double }
       allow(twilio_double).to receive(:find_or_create_channel).
@@ -24,31 +33,30 @@ RSpec.describe ChatDirectMessageJob do
       allow(channel).to receive_message_chain("messages.create")
     end
 
-    subject(:enqueued_job) {
-      ChatDirectMessageJob.perform_now(
-        recipient_uid: recipient.uid,
-        sender_uid: sender.uid,
-        message: message,
-        guild_post_id: guild_post.id
-      )
-    }
-
     context "when its a new channel" do
       before do
         allow(channel).to receive_message_chain("members.create")
-        allow(channel).to receive(:members_count) { 0 }
-        allow(other).to receive(:is_online) { true }
+        allow(channel).to receive(:members_count).and_return(0)
+        allow(other).to receive(:is_online).and_return(true)
       end
 
       it "records a post engagement" do
-        expect { subject }.to change { guild_post.reload.engagements_count }.by(1).
+        expect { enqueued_job }.to change { guild_post.reload.engagements_count }.by(1).
           and change { Guild::PostEngagement.count }.by(1)
+      end
+
+      it "does not record additional post engagements from the same specialist" do
+        guild_post.engagements.create(specialist: sender)
+        expect {
+          enqueued_job
+          guild_post.reload
+        }.not_to change(guild_post, :engagements_count)
       end
 
       describe "with calendly link" do
         let(:guild_calendly_link) { "https://www.calendly.com/yoda/15min" }
         let(:message_job) {
-          ChatDirectMessageJob.perform_now(
+          described_class.perform_now(
             recipient_uid: recipient.uid,
             sender_uid: sender.uid,
             message: message,
@@ -76,10 +84,10 @@ RSpec.describe ChatDirectMessageJob do
       chat_mailer = double('guild chat mailer')
       expect(chat_mailer).to receive(:deliver_later)
 
-      expect(channel).to receive(:members_count) { 2 }
-      expect(other).to receive(:is_online) { false }
-      expect(Guild::ChatMailer).to receive(:new_message) { chat_mailer }
-      subject
+      allow(channel).to receive(:members_count).and_return(2)
+      allow(other).to receive(:is_online).and_return(false)
+      allow(Guild::ChatMailer).to receive(:new_message) { chat_mailer }
+      enqueued_job
     end
   end
 end
