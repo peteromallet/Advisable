@@ -8,6 +8,12 @@ class Types::User < Types::BaseType
     object.account.admin?
   end
 
+  field :is_team_manager, Boolean, null: true
+
+  def is_team_manager
+    object.account.team_manager?
+  end
+
   def can_manage_teams
     object.account.team_manager?
   end
@@ -32,6 +38,8 @@ class Types::User < Types::BaseType
   field :company_name, String, null: true
   field :time_zone, String, null: true
   field :projects, [Types::ProjectType], null: true
+  field :company, Types::CompanyType, null: true
+
   field :confirmed, Boolean, null: false
 
   def confirmed
