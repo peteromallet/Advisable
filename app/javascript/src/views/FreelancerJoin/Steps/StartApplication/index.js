@@ -1,21 +1,18 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import queryString from "query-string";
-import { motion } from "framer-motion";
 import { useQuery } from "@apollo/client";
 import { useHistory, useLocation } from "react-router";
-import useSteps from "src/hooks/useSteps";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { Box, Card, Text, Input, Button } from "@advisable/donut";
 import OrbitsBackground from "../../OrbitsBackground";
 import validationSchema from "./validationSchema";
-import STEPS from "../.";
 import Description from "./Description";
 import { GET_PROJECT } from "../queries";
+import MotionBox from "../MotionBox";
 
-export default function StartApplication() {
-  const { nextStep } = useSteps(STEPS);
+export default function StartApplication({ nextStep, forwards }) {
   const history = useHistory();
   const location = useLocation();
   const project_id = queryString.parse(location.search)?.pid;
@@ -44,7 +41,7 @@ export default function StartApplication() {
   return (
     <>
       <OrbitsBackground step={1} />
-      <Box as={motion.div} exit py="xl" zIndex={2} position="relative">
+      <MotionBox forwards={forwards} py="xl" zIndex={2} position="relative">
         <Card padding="2xl" width={650} marginX="auto">
           <Box mb={8}>
             <Description project={data?.project} />
@@ -95,7 +92,7 @@ export default function StartApplication() {
             </Form>
           </Formik>
         </Card>
-      </Box>
+      </MotionBox>
     </>
   );
 }
