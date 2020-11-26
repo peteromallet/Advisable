@@ -30,6 +30,8 @@ test("User can publish a job", async () => {
     status: "Draft",
     goals: [],
     characteristics: [],
+    deposit: null,
+    publishedAt: null,
     optionalCharacteristics: [],
     requiredCharacteristics: [],
     likelyToHire: null,
@@ -218,6 +220,7 @@ test("User can publish a job", async () => {
           id: project.id,
         },
         () => {
+          project.publishedAt = "2020-11-26T12:00:00";
           project.status = "Pending Advisable Confirmation";
 
           return {
@@ -299,6 +302,7 @@ test("When pending review redirects to published page", async () => {
 
   const project = mockData.project({
     user,
+    publishedAt: "2020-11-26T12:00:00",
     status: "Pending Advisable Confirmation",
     salesPerson: mockData.salesPerson(),
     skills: [mockData.skill({ name: "Linkedin Marketing" })],
