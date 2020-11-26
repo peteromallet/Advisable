@@ -5,10 +5,12 @@ import { Switch, useHistory, useLocation } from "react-router";
 import useViewer from "src/hooks/useViewer";
 import useSteps from "src/hooks/useSteps";
 import steps from "./Steps";
-import { Box, SharedOrbitsProvider } from "@advisable/donut";
+import OrbitsBackground from "./OrbitsBackground";
+import { Box } from "@advisable/donut";
 
 function FreelancerJoin() {
-  const { routes } = useSteps(steps);
+  const { routes, currentStepIndex } = useSteps(steps);
+  console.log("current step index", currentStepIndex);
   const location = useLocation();
   const history = useHistory();
   const viewer = useViewer();
@@ -25,13 +27,12 @@ function FreelancerJoin() {
 
   return (
     <Box height="100vh" width="100%" position="relative">
-      <SharedOrbitsProvider>
-        <AnimatePresence exitBeforeEnter initial={false}>
-          <Switch location={location} key={location.pathname}>
-            {routes}
-          </Switch>
-        </AnimatePresence>
-      </SharedOrbitsProvider>
+      <OrbitsBackground step={currentStepIndex} />
+      <AnimatePresence exitBeforeEnter initial={false}>
+        <Switch location={location} key={location.pathname}>
+          {routes}
+        </Switch>
+      </AnimatePresence>
     </Box>
   );
 }

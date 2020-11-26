@@ -1,12 +1,24 @@
 import React from "react";
 import { Orbit, OrbitsSystem, theme } from "@advisable/donut";
 
+const getCoords = (step) => {
+  switch (step) {
+    case 0:
+      return { y: 45, x: -895 };
+    case 1:
+      return { y: 725, x: -895 };
+    case 2:
+      return { y: 1245, x: -895 };
+    default:
+      return { y: 45, x: -895 };
+  }
+};
+
 function OrbitsBackground({ step }) {
-  const y = step === 1 ? 45 : 725;
+  const coords = getCoords(step);
   return (
     <OrbitsSystem
-      x={-895}
-      y={y}
+      {...coords}
       fill="transparent"
       stroke={theme.colors.neutral200}
       increment={200}

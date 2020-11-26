@@ -6,7 +6,6 @@ import { useHistory, useLocation } from "react-router";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { Box, Card, Text, Input, Button } from "@advisable/donut";
-import OrbitsBackground from "../../OrbitsBackground";
 import validationSchema from "./validationSchema";
 import Description from "./Description";
 import { GET_PROJECT } from "../queries";
@@ -40,7 +39,6 @@ export default function StartApplication({ nextStep, forwards }) {
 
   return (
     <>
-      <OrbitsBackground step={1} />
       <MotionBox forwards={forwards} py="xl" zIndex={2} position="relative">
         <Card padding="2xl" width={650} marginX="auto">
           <Box mb={8}>
