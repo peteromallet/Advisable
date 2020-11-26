@@ -1,34 +1,38 @@
 import React, { useMemo, useCallback } from "react";
-import { Route, matchPath, useLocation } from "react-router-dom";
+import { Route, matchPath } from "react-router-dom";
+import usePathnameQueue from "src/utilities/usePathnameQueue";
 import { findIndex } from "lodash-es";
 
 function useSteps(steps) {
-  const location = useLocation();
-
+  const [currentPathname, previousPathname] = usePathnameQueue(2);
   const activeSteps = useMemo(() => steps.filter((step) => !step.passive), [
     steps,
   ]);
 
   // STEPS search methods
   const matchStepPath = useCallback(
-    (step) =>
-      matchPath(location.pathname, {
+    (pathname) => (step) =>
+      matchPath(pathname, {
         path: step.path,
         exact: step.exact,
         strict: step.strict,
       }),
-    [location],
+    [],
   );
 
   // Indexes
-  const currentStepIndex = useMemo(() => findIndex(steps, matchStepPath), [
-    matchStepPath,
+  const prevPathMatchedIndex = findIndex(
     steps,
-  ]);
-  const currentActiveStepIndex = useMemo(
-    () => findIndex(activeSteps, matchStepPath),
-    [activeSteps, matchStepPath],
+    matchStepPath(previousPathname),
   );
+  const currentStepIndex = findIndex(steps, matchStepPath(currentPathname));
+  const currentActiveStepIndex = findIndex(
+    activeSteps,
+    matchStepPath(currentPathname),
+  );
+
+  // Use forwards value to determine the direction of a movement between steps
+  const forwards = prevPathMatchedIndex < currentStepIndex;
 
   // Number of steps
   const numberOfSteps = steps.length;
@@ -54,10 +58,10 @@ function useSteps(steps) {
     () =>
       steps.map((step, index) => (
         <Route key={index} path={step.path} exact={step.exact}>
-          <step.component />
+          <step.component nextStep={nextStep} forwards={forwards} />
         </Route>
       )),
-    [steps],
+    [forwards, nextStep, steps],
   );
 
   return {
