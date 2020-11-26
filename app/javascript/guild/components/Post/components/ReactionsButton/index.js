@@ -3,6 +3,7 @@ import { Heart } from "@styled-icons/heroicons-outline";
 import { Heart as HeartFilled } from "@styled-icons/heroicons-solid";
 import { useMutation, gql } from "@apollo/client";
 import PostAction from "@guild/components/PostActions/PostAction";
+import useViewer from "src/hooks/useViewer";
 
 export const GUILD_UPDATE_POST_REACTIONS = gql`
   mutation guildUpdatePostReactions($input: GuildUpdatePostReactionsInput!) {
