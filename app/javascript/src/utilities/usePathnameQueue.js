@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 
-function usePathnameQueue() {
-  const location = useLocation();
-  const [state, setState] = useState([location.pathname]);
+const setQueue = (state, value, limit) =>
+  state[0] !== value ? [value, ...state].slice(0, limit) : state;
 
+function useQueue(value, limit = Infinity) {
+  const [state, setState] = useState([value]);
+  // Store update in state
   useEffect(() => {
-    location.pathname !== state[0] &&
-      setState((state) => [location.pathname, ...state]);
-  }, [location.pathname, state]);
+    setState((state) => setQueue(state, value, limit));
+  }, [limit, value, state]);
+  // Return the most recent update
+  return setQueue(state, value, limit);
+}
 
-  const result =
-    state[0] !== location.pathname ? [location.pathname, ...state] : state;
-
-  return result;
+function usePathnameQueue(limit = Infinity) {
+  const location = useLocation();
+  const state = useQueue(location.pathname, limit);
+  return state;
 }
 
 export default usePathnameQueue;
