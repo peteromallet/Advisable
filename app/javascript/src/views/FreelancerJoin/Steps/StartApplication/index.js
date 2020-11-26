@@ -28,12 +28,19 @@ export default function StartApplication() {
   if (project_id && error) history.replace(history.pathname);
 
   const initialValues = {
-    fullName: "",
-    email: "",
+    fullName: location.state?.fullName || "",
+    email: location.state?.email || "",
   };
-  const handleSubmit = () => {
-    history.push(nextStep.path);
+
+  const handleSubmit = (values) => {
+    // redirect to set password step, pass values, and preserve query string param
+    history.replace({ ...history.location }, { ...values });
+    history.push(
+      { ...history.location, pathname: nextStep.path },
+      { ...values },
+    );
   };
+
   return (
     <>
       <OrbitsBackground step={1} />
