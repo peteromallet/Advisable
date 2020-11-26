@@ -4,7 +4,6 @@ import { Box, Card, Text, Button } from "@advisable/donut";
 import { Form, Formik } from "formik";
 import SubmitButton from "components/SubmitButton";
 import FormField from "components/FormField";
-import OrbitsBackground from "../../OrbitsBackground";
 import validationSchema from "./validationSchema";
 import { useHistory, useLocation } from "react-router";
 import MotionBox from "../MotionBox";
@@ -25,7 +24,6 @@ export default function SetPassword({ nextStep, forwards }) {
   };
   return (
     <>
-      <OrbitsBackground step={2} />
       <MotionBox forwards={forwards} py="xl" zIndex={2} position="relative">
         <Card padding="2xl" width={650} marginX="auto">
           <Box mb="xl">
