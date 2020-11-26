@@ -1,7 +1,9 @@
 import React from "react";
 import { Form, Formik } from "formik";
+import queryString from "query-string";
 import { motion } from "framer-motion";
-import { useHistory } from "react-router";
+import { useQuery } from "@apollo/client";
+import { useHistory, useLocation } from "react-router";
 import useSteps from "src/hooks/useSteps";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
@@ -9,10 +11,22 @@ import { Box, Card, Text, Input, Button } from "@advisable/donut";
 import OrbitsBackground from "../../OrbitsBackground";
 import validationSchema from "./validationSchema";
 import STEPS from "../.";
+import Description from "./Description";
+import { GET_PROJECT } from "../queries";
 
 export default function StartApplication() {
   const { nextStep } = useSteps(STEPS);
   const history = useHistory();
+  const location = useLocation();
+  const project_id = queryString.parse(location.search)?.pid;
+  const { data, loading, error } = useQuery(GET_PROJECT, {
+    variables: { id: project_id },
+  });
+
+  if (project_id && loading) return <>loading</>;
+  // Clean query string if pid is wrong
+  if (project_id && error) history.replace(history.pathname);
+
   const initialValues = {
     fullName: "",
     email: "",
@@ -25,15 +39,13 @@ export default function StartApplication() {
       <OrbitsBackground step={1} />
       <Box as={motion.div} exit py="xl" zIndex={2} position="relative">
         <Card padding="2xl" width={650} marginX="auto">
-          <Box mb="xl">
-            <Text as="h2" fontSize="4xl" mb="xs" color="neutral900">
-              Apply to join our network of top freelancers
-            </Text>
-            <Text as="p" color="neutral800" fontSize="m" lineHeight="m">
-              Join our network of freelancers and Per lectus magnis etiam
-              malesuada accumsan suscipit convallis luctus cursus semper porta
-              mollis
-            </Text>
+          <Box mb={8}>
+            <Description project={data?.project} />
+            {project_id && error && (
+              <Text color="red400" pt={2}>
+                The project you&apos;ve tried to apply is not available.
+              </Text>
+            )}
           </Box>
           <Formik
             onSubmit={handleSubmit}
