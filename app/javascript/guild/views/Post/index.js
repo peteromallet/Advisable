@@ -1,8 +1,19 @@
-import React from "react";
-import { Card, Text, Avatar, Link, theme, Box, Button } from "@advisable/donut";
+import React, { useRef, useCallback } from "react";
+import {
+  Card,
+  Text,
+  Avatar,
+  Link,
+  theme,
+  Box,
+  Button,
+  DialogDisclosure,
+  useModal,
+} from "@advisable/donut";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
+import NotFound from "@advisable-main/components/PreviousProjectFormModal/NotFound";
 import { GuildBox } from "@guild/styles";
 import { Edit } from "@styled-icons/feather";
 import GuildTag from "@guild/components/GuildTag";
@@ -14,75 +25,74 @@ import { CoverImage } from "@guild/components/CoverImage";
 import ReactionsButton from "@guild/components/Post/components/ReactionsButton";
 import useViewer from "@advisable-main/hooks/useViewer";
 import Markdown from "@guild/components/Markdown";
-// import { useToggle } from "@guild/hooks/useToggle";
-// import { SubmitButton } from "@guild/components/Buttons/styles";
-// import pluralize from "@advisable-main/utilities/pluralize";
-// import ShowMore from "@guild/components/ShowMore";
-// import { CREATE_GUILD_COMMENT } from "./mutations";
-// import { truncate } from "lodash-es";
+import ShareModal from "@guild/components/Post/components/ShareModal";
+import { Share2 as Share, ExternalLink } from "@styled-icons/feather";
+import ErrorBoundary from "@guild/components/ErrorBoundary";
 
 const Post = () => {
   const { postId } = useParams();
   const viewer = useViewer();
+  const shareModal = useModal();
 
   const { data, loading } = useQuery(GUILD_POST_QUERY, {
     variables: { id: postId },
   });
   const post = data?.guildPost;
+  const guildViewer = viewer?.guild;
 
-  // const { state } = useLocation();
-  // const [createGuildComment] = useMutation(CREATE_GUILD_COMMENT);
-  // const [showComments, toggleShowComments] = useToggle(true);
-  // const commentsRef = useRef();
-  // const commentsEffectRef = useCallback(
-  //   (node) => {
-  //     if (!node) return;
-  //     commentsRef.current = node;
-  //     if (state?.commentsAnchor) scrollToComments();
-  //   },
-  //   [state?.commentsAnchor],
-  // );
-  // const scrollToComments = () => {
-  //   commentsRef.current?.scrollIntoView({
-  //     behavior: "smooth",
-  //   });
-  // };
+  const joinGuildRef = useRef();
+  const joinGuildEffectRef = useCallback(
+    (node) => {
+      if (!node) return;
+      joinGuildRef.current = node;
+    },
+    [guildViewer],
+  );
+  const scrollToJoinGuild = () => {
+    joinGuildRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
+  const handlePostInteractions = () => {
+    if (guildViewer) return;
+    scrollToJoinGuild();
+  };
 
   if (loading) return <Loading />;
 
-  return (
-    data && (
-      <>
-        <Box display="flex" justifyContent="center" m={{ _: "s", m: "l" }}>
-          <Card
-            elevation={{ _: "s", m: "m" }}
-            maxWidth={theme.breakpoints.l}
-            width="100%"
-          >
-            {post.coverImage && (
-              <CoverImage images={post.images} cover={post.coverImage.url} />
-            )}
+  return post ? (
+    <ErrorBoundary>
+      {post.shareable && (
+        <ShareModal externalUrl={window.location.href} modal={shareModal} />
+      )}
+      <Box display="flex" justifyContent="center" m={{ _: "s", m: "l" }}>
+        <Card
+          elevation={{ _: "s", m: "m" }}
+          maxWidth={theme.breakpoints.l}
+          width="100%"
+        >
+          {post.coverImage && (
+            <CoverImage images={post.images} cover={post.coverImage.url} />
+          )}
 
-            {/* Header */}
-            <Box
-              px={{ _: "s", s: "xxl" }}
-              py="l"
-              backgroundColor="ghostWhite100"
-            >
-              <GuildBox mb="l" flexSpaceBetween>
-                <Text fontWeight="medium" size="4xl" color="catalinaBlue100">
-                  {post.title}
-                </Text>
-                {post.needHelp ? (
-                  <GuildTag variant="needHelp">
-                    <NeedHelp size={20} />
-                    <span>Need Help</span>
-                  </GuildTag>
-                ) : (
-                  <GuildTag>{post.type}</GuildTag>
-                )}
-              </GuildBox>
+          {/* Header */}
+          <Box px={{ _: "s", s: "xxl" }} py="l" backgroundColor="ghostWhite100">
+            <GuildBox mb="l" flexSpaceBetween>
+              <Text fontWeight="medium" size="4xl" color="catalinaBlue100">
+                {post.title}
+              </Text>
+              {post.needHelp ? (
+                <GuildTag variant="needHelp">
+                  <NeedHelp size={20} />
+                  <span>Need Help</span>
+                </GuildTag>
+              ) : (
+                <GuildTag>{post.type}</GuildTag>
+              )}
+            </GuildBox>
 
+            <Box display="flex" justifyContent="space-between">
               <GuildBox alignItems="start" spaceChildrenHorizontal={24}>
                 <Avatar
                   as={Link}
@@ -105,170 +115,106 @@ const Post = () => {
                   </Text>
                 </Box>
               </GuildBox>
-            </Box>
 
-            {/* Topics and Interactions */}
-            <GuildBox
-              px={{ _: "xs", s: "xxl" }}
-              py="xs"
-              minHeight="58px"
-              flexSpaceBetween
-              backgroundColor="#6770f10d"
-              alignItems="center"
-            >
-              <Topics topics={post.guildTopics} />
-
-              <GuildBox
-                display="flex"
-                spaceChildrenHorizontal={8}
-                alignSelf={"center"}
-              >
-                <OfferHelp
-                  guildPostId={post.id}
-                  recipient={post.author}
-                  engagementsCount={post.engagementsCount}
-                />
-                <ReactionsButton post={post} />
-              </GuildBox>
-
-              {/* <StyledCommentsButton flexSpaceBetween onClick={scrollToComments}>
-                <Text fontWeight="medium" size="xs" color="catalinaBlue100">
-                  {post.commentsCount
-                    ? pluralize(post.commentsCount, "Comment", "Comments")
-                    : "Comments"}
-                </Text>
-                <Comments ml={12} size={16} />
-              </StyledCommentsButton> */}
-            </GuildBox>
-
-            {/* Post body */}
-            <Box px={{ _: "s", m: "l", l: "80px" }} py="3xl">
-              <Markdown>{post.body}</Markdown>
-
-              {viewer.id === post.author.id && (
-                <Box display="flex" justifyContent="flex-end">
-                  <Button
-                    size="s"
-                    as={Link}
-                    to={`/composer/${post.id}/post`}
-                    variant="subtle"
-                    prefix={<Edit />}
-                  >
-                    Edit Post
-                  </Button>
-                </Box>
+              {post.shareable && (
+                <DialogDisclosure
+                  button
+                  size="s"
+                  as={GuildTag}
+                  {...shareModal}
+                  aria-label="Share Post"
+                >
+                  <Share color={theme.colors.catalinaBlue100} size={18} />
+                  <span>Share Post</span>
+                </DialogDisclosure>
               )}
             </Box>
+          </Box>
 
-            {/* Comments */}
-            {/* <GuildBox
-              ref={commentsEffectRef}
-              px="xxl"
-              py="m"
+          {/* Topics and Interactions */}
+          <GuildBox
+            px={{ _: "xs", s: "xxl" }}
+            py="xs"
+            minHeight="58px"
+            flexSpaceBetween
+            backgroundColor="#6770f10d"
+            alignItems="center"
+          >
+            <Topics topics={post.guildTopics} />
+
+            <GuildBox
               display="flex"
-              flexDirection="column"
-              minHeight="165px"
+              spaceChildrenHorizontal={8}
+              alignSelf={"center"}
+              onClick={handlePostInteractions}
             >
-              <GuildBox
-                mb="m"
-                alignItems="baseline"
-                spaceChildrenHorizontal={24}
-              >
-                <Text size="3xl" fontWeight="medium" color="catalinaBlue100">
-                  {post.commentsCount
-                    ? pluralize(post.commentsCount, "Comment", "Comments")
-                    : "Comments"}
-                </Text>
-                <ShowMore
-                  showingMore={showComments}
-                  onToggle={toggleShowComments}
-                  text={{ more: "Show", less: "Hide" }}
-                />
-              </GuildBox>
-
-              <Textarea
-                marginBottom="s"
-                minRows={3}
-                maxRows={8}
-                placeholder="Join the Discussion ..."
+              <OfferHelp
+                guildPostId={post.id}
+                recipient={post.author}
+                engagementsCount={post.engagementsCount}
               />
-              <SubmitButton loading={false} type="submit">
-                Submit
-              </SubmitButton>
-            </GuildBox> */}
+              <ReactionsButton post={post} />
+            </GuildBox>
+          </GuildBox>
 
-            {/* Post Comments */}
-            {/* {showComments && post.comments?.length > 0 && (
-              <GuildBox px="xxl" py="l" spaceChildrenVertical={24}>
-                {post.comments.map((comment, key) => (
-                  <GuildBox key={key} spaceChildrenHorizontal={16}>
-                    <GuildBox
-                      height={"102px"}
-                      width={"102px"}
-                      backgroundColor="#FBFBFF"
-                      flexShrink={0}
-                      flexCenterBoth
-                      spaceChildrenVertical={4}
-                      borderRadius={2}
-                      p="xxs"
-                    >
-                      <Avatar
-                        width={"24px"}
-                        as={Link}
-                        to={`/profiles/${comment.author.id}`}
-                        size="s"
-                        name={comment.author.name}
-                        url={comment.author.avatar}
-                      />
-                      <Text size="xs" color="quartz">
-                        {truncate(
-                          `${comment.author.firstName} ${comment.author.lastName?.[0]}`,
-                          { length: 15 },
-                        )}
-                      </Text>
-                      <Text size="xxs" color="darkGrey">
-                        {comment.createdAtTimeAgo} ago
-                      </Text>
-                    </GuildBox>
+          {/* Post body */}
+          <Box px={{ _: "s", m: "l", l: "80px" }} py="3xl">
+            <Markdown>{post.body}</Markdown>
 
-                    <GuildBox
-                      py="m"
-                      px="l"
-                      backgroundColor="aliceBlue"
-                      borderRadius={2}
-                    >
-                      <Text lineHeight="l" color="catalinaBlue100">
-                        {comment.body}
-                      </Text>
-                    </GuildBox>
-                  </GuildBox>
-                ))}
+            {viewer?.id === post.author.id && (
+              <Box display="flex" justifyContent="flex-end">
+                <Button
+                  size="s"
+                  as={Link}
+                  to={`/composer/${post.id}/post`}
+                  variant="subtle"
+                  prefix={<Edit />}
+                >
+                  Edit Post
+                </Button>
+              </Box>
+            )}
+          </Box>
+
+          {/* Join Guild */}
+          {!guildViewer && (
+            <>
+              <Box height={1} bg="neutral100" my="l" />
+              <GuildBox
+                ref={joinGuildEffectRef}
+                spaceChildrenVertical={24}
+                p="l"
+                maxWidth="600px"
+                margin="0 auto"
+                mb="l"
+              >
+                <Text size="l" lineHeight="m" fontWeight="medium">
+                  Want to join a community featuring the writer of this post &
+                  hundreds more like them?
+                </Text>
+                <Text size="l" lineHeight="m" color="catalinaBlue100">
+                  Advisable Guild is an invitation-only network that helps
+                  world-class freelancers from across 500+ marketing-related
+                  skills collaborate and connect.
+                </Text>
+                <Button
+                  size="l"
+                  mr="xs"
+                  as={"a"}
+                  href={"/freelancers/signup"}
+                  suffix={<ExternalLink />}
+                >
+                  Apply To Access Now
+                </Button>
               </GuildBox>
-            )} */}
-          </Card>
-        </Box>
-      </>
-    )
+            </>
+          )}
+        </Card>
+      </Box>
+    </ErrorBoundary>
+  ) : (
+    <NotFound resource="Post" id={postId} />
   );
 };
-
-// const StyledCommentsButton = styled(Button)`
-//   padding: 6px 14px;
-//   border-radius: 15px;
-//   height: 29px;
-//   background: white;
-
-//   &:focus {
-//     outline: none;
-//     border: none;
-//   }
-//   svg {
-//     margin-left: 12px;
-//   }
-//   &:hover {
-//     background-color: ${theme.colors.lavender} !important;
-//   }
-//   filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.12));
-// `;
 
 export default Post;

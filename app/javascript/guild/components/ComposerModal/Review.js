@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
 import { ArrowLeft, ArrowRight, Edit } from "@styled-icons/feather";
-import { Box, Paragraph, Text, Link, Button, Stack } from "@advisable/donut";
+import {
+  Box,
+  Paragraph,
+  Text,
+  Link,
+  Button,
+  Stack,
+  Checkbox,
+} from "@advisable/donut";
 import { useUpdateGuildPostWriteCache } from "./mutations";
 import { capitalize } from "@guild/utils";
 import { GuildBox } from "@guild/styles";
@@ -12,6 +20,7 @@ import Markdown from "../Markdown";
 
 export default function Review({ guildPost, onPublish }) {
   const [updateGuildPost] = useUpdateGuildPostWriteCache();
+  const [shareable, setShareable] = useState(guildPost.shareable);
   const { pathWithState } = useLocationStages();
   const { progress } = useProgressSteps();
   const nextPath = `/posts/${guildPost.id}`;
@@ -22,6 +31,7 @@ export default function Review({ guildPost, onPublish }) {
         input: {
           guildPostId: guildPost.id,
           publish: true,
+          shareable,
         },
       },
     });
@@ -117,6 +127,25 @@ export default function Review({ guildPost, onPublish }) {
             <Box height={1} bg="neutral100" my="l" />
           </>
         )}
+
+        <Box paddingBottom="l">
+          <Checkbox
+            name="shareable"
+            checked={shareable}
+            onChange={() => setShareable(!shareable)}
+          >
+            Make this post public
+          </Checkbox>
+          <Text
+            mt="s"
+            size="xs"
+            fontWeight="light"
+            lineHeight="s"
+            color="#626575"
+          >
+            Allow this post to be shared publicly to non guild members
+          </Text>
+        </Box>
 
         <Button
           size="l"

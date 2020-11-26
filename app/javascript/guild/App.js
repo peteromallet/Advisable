@@ -16,12 +16,12 @@ const FreelancerProfile = lazy(() =>
 );
 
 const GuildOrRedirectFreelancerProfile = () => {
+  const { id } = useParams();
   const viewer = useViewer();
 
   if (viewer?.guild) {
     return <FreelancerProfile />;
   } else {
-    const { id } = useParams();
     return (window.location.href = `/freelancers/${id}`);
   }
 };
@@ -46,7 +46,7 @@ const App = () => {
               path={["/feed", "/composer*"]}
               component={Feed}
             />
-            <AuthenticatedRoute exact path="/posts/:postId" component={Post} />
+            <Route exact path="/posts/:postId" component={Post} />
             <AuthenticatedRoute
               exact
               path={"/messages/:conversationId?"}

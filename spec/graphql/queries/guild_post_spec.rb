@@ -49,6 +49,32 @@ RSpec.describe Types::Guild::PostInterface do
     end
   end
 
+  context "with no current_user" do
+    it "returns a guild post if its shareable" do
+      guild_post.update!(shareable: true)
+
+      resp = AdvisableSchema.execute(
+        query[guild_post.id],
+        context: {
+          current_user: nil
+        }
+      )
+      expect(resp.dig('data', 'guildPost')).not_to be_nil
+    end
+
+    it "does not return a guild post if its not shareable" do
+      guild_post.update!(shareable: false)
+
+      resp = AdvisableSchema.execute(
+        query[guild_post.id],
+        context: {
+          current_user: nil
+        }
+      )
+      expect(resp.dig('data', 'guildPost')).to be_nil
+    end
+  end
+
   it 'includes additional fields for other guild_post types' do
     resp = AdvisableSchema.execute(
       query[advice_required.id],
@@ -75,7 +101,7 @@ RSpec.describe Types::Guild::PostInterface do
 
     it 'includes interface fields for a Guild::Post' do
       expect(node).to include({"id" => guild_post.id})
-      expect(node).to_not have_key("needHelp")
+      expect(node).not_to have_key("needHelp")
     end
 
     it "includes the normalized type instead of type" do

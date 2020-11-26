@@ -17,6 +17,7 @@ end
 #  data               :jsonb            not null
 #  engagements_count  :integer          default(0)
 #  reactionable_count :integer          default(0), not null
+#  shareable          :boolean          default(FALSE)
 #  status             :integer          default("draft"), not null
 #  title              :string
 #  type               :string           default("Post"), not null

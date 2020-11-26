@@ -260,10 +260,8 @@ class Types::QueryType < Types::BaseType
   end
 
   def guild_post(id:)
-    requires_guild_user!
     post = Guild::Post.find(id)
     policy = Guild::PostPolicy.new(context[:current_user], post)
-
     raise ApiError::NotAuthorized.new('You dont have access to this') unless policy.show
 
     post
