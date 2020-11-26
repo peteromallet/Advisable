@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { theme, Text, Box, Avatar, StyledAvatar } from "@advisable/donut";
 
 const StyledFeaturedMember = styled(Box)`
