@@ -17,6 +17,10 @@ module MailHelper
     timestamp.in_time_zone(zone).strftime(format)
   end
 
+  def set_password_url
+    "#{app_host}/set_password"
+  end
+
   private
 
   def root_host
