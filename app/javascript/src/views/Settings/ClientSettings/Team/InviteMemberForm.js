@@ -1,8 +1,8 @@
 import React from "react";
 import { object, string } from "yup";
-import { Text, Columns } from "@advisable/donut";
+import { Box, Text, Columns, Toggle } from "@advisable/donut";
 import { Send } from "@styled-icons/ionicons-solid";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { useCreateUserForCompany } from "./queries";
@@ -20,6 +20,7 @@ export default function InviteMemberForm({ company, onInvite = () => {} }) {
     firstName: "",
     lastName: "",
     email: "",
+    teamManager: false,
   };
 
   const handleSubmit = async (values, formik) => {
@@ -59,7 +60,24 @@ export default function InviteMemberForm({ company, onInvite = () => {} }) {
               <FormField name="lastName" label="Last Name" />
             </Columns.Column>
           </Columns>
-          <FormField name="email" label="Email Address" marginBottom={8} />
+          <FormField name="email" label="Email Address" marginBottom={6} />
+          <Box
+            mb={8}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box maxWidth="320px">
+              <Text fontWeight="medium" mb={1}>
+                Team Manager
+              </Text>
+              <Text fontSize="xs" color="neutral600">
+                Managers can invite other team members and manage company
+                settings
+              </Text>
+            </Box>
+            <Field name="teamManager" as={Toggle} />
+          </Box>
           <SubmitButton prefix={<Send />} disableUntilValid>
             Send Invite
           </SubmitButton>
