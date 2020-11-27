@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Text, Box } from "@advisable/donut";
+import { InformationCircle } from "@styled-icons/ionicons-outline";
+import { Card, Text, Box, Tooltip } from "@advisable/donut";
 import { Redirect } from "react-router";
 import useViewer from "src/hooks/useViewer";
 import TeamMembers from "./TeamMembers";
@@ -23,13 +24,30 @@ export default function Team() {
         Team
       </Text>
       <Box height="1px" bg="neutral100" />
-      <Box pt="3" pb="2" display="grid" gridTemplateColumns="3fr 1fr">
+      <Box
+        py="3"
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <Text fontSize="11px" color="neutral700" textTransform="uppercase">
           Team Member
         </Text>
-        <Text fontSize="11px" color="neutral700" textTransform="uppercase">
-          Role
-        </Text>
+        <Box display="flex" alignItems="center">
+          <Text
+            mr={1}
+            fontSize="11px"
+            color="neutral700"
+            textTransform="uppercase"
+          >
+            Manager
+          </Text>
+          <Tooltip content="Managers have permission to invite other team members and manage company settings">
+            <Box color="neutral500" marginTop="-3px">
+              <InformationCircle size={16} />
+            </Box>
+          </Tooltip>
+        </Box>
       </Box>
       <Box height="1px" bg="neutral100" />
       <TeamMembers />
