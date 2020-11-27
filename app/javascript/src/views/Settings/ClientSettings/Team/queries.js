@@ -13,15 +13,9 @@ export const GET_TEAM_MEMBERS = gql`
   ${userFields}
 
   query getTeamMembers {
-    viewer {
-      ... on User {
-        id
-        company {
-          id
-          users {
-            ...UserFields
-          }
-        }
+    currentCompany {
+      users {
+        ...UserFields
       }
     }
   }

@@ -18,14 +18,14 @@ export default function TeamList() {
     );
   }
 
-  const members = data.viewer.company.users;
+  const members = data.currentCompany.users;
 
   return (
     <>
       {members.map((member) => (
         <TeamMember key={member.id} member={member} />
       ))}
-      <NewTeamMember company={data.viewer.company} />
+      <NewTeamMember company={data.currentCompany} />
     </>
   );
 }
