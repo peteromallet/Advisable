@@ -4,13 +4,11 @@ import Share from "./Share";
 import Edit from "./Edit";
 import MessageAction from "./Message";
 import VideoCallAction from "./VideoCall";
-import ConnectionsCount from "./ConnectionsCount";
 import ReactionsButton from "../Post/components/ReactionsButton";
 import useViewer from "src/hooks/useViewer";
 
 export default function PostActions({ post, showEdit = true, ...props }) {
   const viewer = useViewer();
-  const count = post.engagementsCount;
   const viewerIsAuthor = post.author.id === viewer?.id;
 
   return (
@@ -29,7 +27,6 @@ export default function PostActions({ post, showEdit = true, ...props }) {
         </Box>
       ) : null}
       {post.shareable ? <Share post={post} /> : null}
-      {count > 0 ? <ConnectionsCount post={post} /> : null}
       {showEdit && viewerIsAuthor ? (
         <Box ml={2}>
           <Edit post={post} />
