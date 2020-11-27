@@ -8,7 +8,7 @@ const getCoords = (step) => {
     case 1:
       return { y: 725, x: -895 };
     case 2:
-      return { y: 1245, x: -895 };
+      return { y: 1245, x: -525 };
     default:
       return { y: 45, x: -895 };
   }
