@@ -5,12 +5,23 @@ import PostAction from "./PostAction";
 import { useNotifications } from "components/Notifications";
 import MessageModal from "@guild/components/MessageModal";
 import { useApolloClient } from "@apollo/client";
+import useViewer from "src/hooks/useViewer";
 
 function MessagePostAction({ post }) {
   const modal = useModal();
+  const viewer = useViewer();
   const client = useApolloClient();
   const notifications = useNotifications();
   const firstName = post.author.firstName;
+
+  const handleMessage = () => {
+    if (viewer?.guild) {
+      modal.show;
+    } else {
+      const cta = document.getElementById("joinGuild");
+      cta?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const handleSend = () => {
     client.cache.modify({
@@ -45,7 +56,7 @@ function MessagePostAction({ post }) {
             color="cyan700"
             bg="neutral100"
             icon={<Chat />}
-            onClick={modal.show}
+            onClick={handleMessage}
           />
         </Box>
       </Tooltip>

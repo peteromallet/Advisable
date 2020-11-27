@@ -10,7 +10,6 @@ const StyledPostAction = styled(motion.div)`
   position: relative;
   align-items: center;
   justify-content: center;
-  color: ${theme.colors.red500};
 
   svg {
     z-index: 2;
@@ -47,7 +46,7 @@ const spring = {
 };
 
 export default React.forwardRef(function PostAction(
-  { icon, bg, color, onClick },
+  { icon, bg, color, onClick, ...props },
   ref,
 ) {
   const colorAnimation = {
@@ -68,6 +67,7 @@ export default React.forwardRef(function PostAction(
       whileTap="pressed"
       animate={colorAnimation}
       initial={colorAnimation}
+      {...props}
     >
       {icon}
       <StyledPostActionBackground
