@@ -1,10 +1,12 @@
 import React from "react";
 import pluralize from "src/utilities/pluralize";
-import { Box, Text, Tooltip } from "@advisable/donut";
+import { Text, Tooltip } from "@advisable/donut";
 
-export default function ConnectionsCount({ post }) {
+export default function ConnectionsCount({ post, ...props }) {
   const count = post.engagementsCount;
   const firstName = post.author.firstName;
+
+  if (count <= 0) return null;
 
   const tooltipText = `${pluralize(
     count,
@@ -15,7 +17,7 @@ export default function ConnectionsCount({ post }) {
   return (
     <Tooltip maxWidth={200} content={tooltipText}>
       <Text
-        ml="1"
+        {...props}
         fontSize="sm"
         color="neutral500"
         css={`

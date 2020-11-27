@@ -7,6 +7,7 @@ import Markdown from "../Markdown";
 import PostTypeTag from "@guild/components/PostTypeTag";
 import PostActions from "@guild/components/PostActions";
 import { CoverImage } from "@guild/components/CoverImage";
+import ConnectionsCount from "@guild/components/ConnectionsCount";
 
 const Post = ({ post }) => {
   const url = `/guild/posts/${post.id}`;
@@ -76,8 +77,11 @@ const Post = ({ post }) => {
           Read more
         </Text>
 
-        <Box>
-          <PostActions marginBottom={5} post={post} showEdit={false} />
+        <Box display="flex" alignItems="center" marginBottom={5}>
+          <PostActions post={post} showEdit={false} />
+          <Box ml={3}>
+            <ConnectionsCount post={post} />
+          </Box>
         </Box>
 
         <Topics topics={post.guildTopics} />

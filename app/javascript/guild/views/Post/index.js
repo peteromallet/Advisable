@@ -12,6 +12,7 @@ import Markdown from "@guild/components/Markdown";
 import PostTypeTag from "@guild/components/PostTypeTag";
 import PostActions from "@guild/components/PostActions";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
+import ConnectionsCount from "@guild/components/ConnectionsCount";
 import JoinGuild from "./JoinGuild";
 
 const Post = () => {
@@ -65,7 +66,10 @@ const Post = () => {
                 </Box>
               </Box>
 
-              <PostActions post={post} />
+              <Box display="flex" alignItems="center">
+                <ConnectionsCount mr={3} post={post} />
+                <PostActions post={post} />
+              </Box>
             </Box>
 
             <Box mb={8}>
