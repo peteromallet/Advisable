@@ -3,7 +3,7 @@ class Mutations::UpdatePassword < Mutations::BaseMutation
     Updates the logged in specialists/user password.
   HEREDOC
 
-  argument :current_password, String, required: true
+  argument :current_password, String, required: false
   argument :password, String, required: true
   argument :password_confirmation, String, required: true
 
@@ -13,14 +13,20 @@ class Mutations::UpdatePassword < Mutations::BaseMutation
     requires_current_user!
   end
 
-  def resolve(current_password:, password:, password_confirmation:)
+  def resolve(password:, password_confirmation:, current_password: nil)
     account = current_user.account
 
-    if account.authenticate(current_password) && password == password_confirmation
+    if valid_current_password(current_password) && password == password_confirmation
       account.update!(password: password)
       {viewer: current_user}
     else
       ApiError.invalid_request(code: 'CAN_NOT_CHANGE_PASSWORD')
     end
+  end
+
+  private
+
+  def valid_current_password(current_password)
+    current_user.account.password_digest.blank? || current_user.account.authenticate(current_password)
   end
 end
