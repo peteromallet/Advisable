@@ -1,37 +1,37 @@
 class Types::User < Types::BaseType
   field :id, ID, null: false
   field :airtable_id, String, null: true
+
+  delegate :account, to: :object
   field :name, String, null: true
+  field :first_name, String, null: true
+  field :last_name, String, null: true
+  delegate :name, to: :account
+  delegate :first_name, to: :account
+  delegate :last_name, to: :account
+
   field :is_admin, Boolean, null: false
 
   def is_admin
-    object.account.admin?
+    account.admin?
   end
 
   field :is_team_manager, Boolean, null: true
 
   def is_team_manager
-    object.account.team_manager?
+    account.team_manager?
   end
 
-  def can_manage_teams
-    object.account.team_manager?
+  field :needs_to_set_a_password, Boolean, null: true
+
+  def needs_to_set_a_password
+    account.password_digest.blank?
   end
 
-  def name
-    object.account.name
-  end
+  field :confirmed, Boolean, null: false
 
-  field :first_name, String, null: true
-
-  def first_name
-    object.account.first_name
-  end
-
-  field :last_name, String, null: true
-
-  def last_name
-    object.account.last_name
+  def confirmed
+    account.confirmed_at.present?
   end
 
   field :title, String, null: true
@@ -39,12 +39,6 @@ class Types::User < Types::BaseType
   field :time_zone, String, null: true
   field :projects, [Types::ProjectType], null: true
   field :company, Types::CompanyType, null: true
-
-  field :confirmed, Boolean, null: false
-
-  def confirmed
-    object.account.confirmed_at.present?
-  end
 
   field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
     argument :exclude_conflicts,
@@ -102,9 +96,7 @@ class Types::User < Types::BaseType
     authorize :is_admin, :is_user, :is_candidate_for_user_project, :is_team_manager
   end
 
-  def email
-    object.account.email
-  end
+  delegate :email, to: :account
 
   field :applications, [Types::ApplicationType], null: true do
     authorize :is_user

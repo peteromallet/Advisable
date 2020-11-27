@@ -9,6 +9,7 @@ export const user = (fields = {}) => {
       lastName: "Account",
       isAdmin: false,
       isTeamManager: false,
+      needsToSetAPassword: false,
       name: "Test Account",
       email: "test@test.com",
       airtableId: "airtableid",
