@@ -17,7 +17,9 @@ module CurrentUser
       magic_link = load_magic_link
       return if magic_link.blank?
 
-      session_manager.start_session(magic_link.account)
+      account = magic_link.account
+      account.update(confirmed_at: Time.zone.now) if account.confirmed_at.blank?
+      session_manager.start_session(account)
       redirect_without_magic_link_params
     end
 
