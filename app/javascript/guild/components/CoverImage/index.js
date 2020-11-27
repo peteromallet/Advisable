@@ -9,7 +9,7 @@ import { Box } from "@advisable/donut";
 const StyledCoverImage = styled.img`
   object-fit: cover;
   width: 100%;
-  height: 300px;
+  height: 100%;
 `;
 
 const Cover = ({ srcList }) => {
@@ -17,10 +17,15 @@ const Cover = ({ srcList }) => {
   return <StyledCoverImage src={src} />;
 };
 
-export const CoverImage = ({ images, cover }) => {
+export const CoverImage = ({ height = "320px", images, cover }) => {
   return (
     <Suspense fallback={<Loading />}>
-      <Box position="relative" width="100%" display="inline-flex">
+      <Box
+        position="relative"
+        height={height}
+        width="100%"
+        display="inline-flex"
+      >
         <ErrorBoundary FallbackComponent={() => null}>
           <Cover srcList={cover} />
         </ErrorBoundary>

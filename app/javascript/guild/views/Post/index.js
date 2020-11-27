@@ -31,7 +31,11 @@ const Post = () => {
       <Box pt={12} pb={20} mx="auto" maxWidth={["100%", "100%", "960px"]}>
         <Card>
           {post.coverImage && (
-            <CoverImage images={post.images} cover={post.coverImage.url} />
+            <CoverImage
+              height="480px"
+              images={post.images}
+              cover={post.coverImage.url}
+            />
           )}
 
           <Box px={{ _: "s", s: "xxl" }} pt={10} pb={14}>
