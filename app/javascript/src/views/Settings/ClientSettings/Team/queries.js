@@ -64,3 +64,19 @@ export function useCreateUserForCompany(company) {
     },
   });
 }
+
+export const TOGGLE_TEAM_MANAGER = gql`
+  ${userFields}
+
+  mutation toggleTeamManager($input: ToggleTeamManagerInput!) {
+    toggleTeamManager(input: $input) {
+      user {
+        ...UserFields
+      }
+    }
+  }
+`;
+
+export function useToggleTeamManager() {
+  return useMutation(TOGGLE_TEAM_MANAGER);
+}

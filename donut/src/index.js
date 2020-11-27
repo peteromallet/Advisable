@@ -81,3 +81,5 @@ export { default as VerticalLayout } from "./components/VerticalLayout";
 export * from "./components/VerticalLayout/styles";
 
 export { default as Notice } from "./components/Notice";
+
+export { default as Toggle } from "./components/Toggle";

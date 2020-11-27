@@ -1,14 +1,39 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
+import useViewer from "src/hooks/useViewer";
+import { Box, Text, Toggle } from "@advisable/donut";
+import { useToggleTeamManager } from "./queries";
 
 export default function TeamMember({ member }) {
+  const viewer = useViewer();
+  const [toggle] = useToggleTeamManager();
+
+  const handleToggleManager = () => {
+    toggle({
+      variables: {
+        input: {
+          userId: member.id,
+        },
+      },
+      optimisticResponse: {
+        __typename: "Mutation",
+        toggleTeamManager: {
+          __typename: "ToggleTeamManagerPayload",
+          user: {
+            ...member,
+            isTeamManager: !member.isTeamManager,
+          },
+        },
+      },
+    });
+  };
+
   return (
     <>
       <Box
         height="60px"
-        display="grid"
+        display="flex"
         alignItems="center"
-        gridTemplateColumns="3fr 1fr"
+        justifyContent="space-between"
       >
         <Box>
           <Text fontSize="md" color="neutral900" mb={0.5}>
@@ -19,7 +44,11 @@ export default function TeamMember({ member }) {
           </Text>
         </Box>
         <Text fontSize="sm" color="neutral800">
-          {member.isTeamManager ? "Manager" : "Member"}
+          <Toggle
+            value={member.isTeamManager}
+            onChange={handleToggleManager}
+            disabled={member.id === viewer.id}
+          />
         </Text>
       </Box>
       <Box height="1px" bg="neutral100" />
