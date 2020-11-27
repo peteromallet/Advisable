@@ -1,5 +1,4 @@
 class Types::QueryType < Types::BaseType
-
   field :project, Types::ProjectType, null: true do
     argument :id, ID, required: true
   end
@@ -58,10 +57,16 @@ class Types::QueryType < Types::BaseType
     GraphQL::ExecutionError.new("Could not find user #{id}")
   end
 
+  field :current_company, Types::CompanyType, description: 'Get the current company', null: true
+
+  def current_company
+    current_user.company
+  end
+
   field :viewer, Types::ViewerUnion, 'Get the current viewer', null: true
 
   def viewer
-    context[:current_user]
+    current_user
   end
 
   field :countries,
@@ -184,7 +189,7 @@ class Types::QueryType < Types::BaseType
       industry_required: args[:industry_required],
       company_type: args[:company_type],
       company_type_required: args[:company_type_required],
-      user: context[:current_user]
+      user: current_user
     )
   end
 
@@ -215,13 +220,13 @@ class Types::QueryType < Types::BaseType
   end
 
   def invoice(id:)
-    unless context[:current_user].try(:is_a?, User)
+    unless current_user.try(:is_a?, User)
       raise ApiError::NotAuthenticated
     end
 
     invoice = Stripe::Invoice.retrieve(id)
 
-    if invoice.customer != context[:current_user].stripe_customer_id
+    if invoice.customer != current_user.stripe_customer_id
       raise ApiError::NotAuthorized.new('You dont have access to this')
     end
 
@@ -261,7 +266,7 @@ class Types::QueryType < Types::BaseType
 
   def guild_post(id:)
     post = Guild::Post.find(id)
-    policy = Guild::PostPolicy.new(context[:current_user], post)
+    policy = Guild::PostPolicy.new(current_user, post)
     raise ApiError::NotAuthorized.new('You dont have access to this') unless policy.show
 
     post
@@ -308,7 +313,7 @@ class Types::QueryType < Types::BaseType
 
   def guild_activity
     requires_guild_user!
-    context[:current_user].guild_activity
+    current_user.guild_activity
   end
 
   field :guild_top_topics,
