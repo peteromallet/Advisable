@@ -15,7 +15,7 @@ function VideoCallAction({ post }) {
 
   const handleAction = () => {
     if (viewer?.guild) {
-      modal.show;
+      modal.show();
     } else {
       const cta = document.getElementById("joinGuild");
       cta?.scrollIntoView({ behavior: "smooth" });
