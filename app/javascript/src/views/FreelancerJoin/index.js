@@ -7,10 +7,10 @@ import useSteps from "src/hooks/useSteps";
 import steps from "./Steps";
 import OrbitsBackground from "./OrbitsBackground";
 import { Box } from "@advisable/donut";
+import OrbitsContent from "./OrbitsContent";
 
 function FreelancerJoin() {
   const { routes, currentStepIndex } = useSteps(steps);
-  console.log("current step index", currentStepIndex);
   const location = useLocation();
   const history = useHistory();
   const viewer = useViewer();
@@ -28,11 +28,14 @@ function FreelancerJoin() {
   return (
     <Box height="100vh" width="100%" position="relative">
       <OrbitsBackground step={currentStepIndex} />
-      <AnimatePresence exitBeforeEnter initial={false}>
-        <Switch location={location} key={location.pathname}>
-          {routes}
-        </Switch>
-      </AnimatePresence>
+      <Box display="flex" height="100%">
+        <OrbitsContent step={currentStepIndex} />
+        <AnimatePresence exitBeforeEnter initial={false}>
+          <Switch location={location} key={location.pathname}>
+            {routes}
+          </Switch>
+        </AnimatePresence>
+      </Box>
     </Box>
   );
 }
