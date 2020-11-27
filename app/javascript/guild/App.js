@@ -8,9 +8,9 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Header from "@guild/components/Header";
 import { NotificationsProvider } from "components/Notifications";
 
-const Feed = lazy(() => import("./views/Feed"));
-const Post = lazy(() => import("./views/Post"));
-const Messages = lazy(() => import("./views/Messages"));
+import Feed from "./views/Feed";
+import Post from "./views/Post";
+import Messages from "./views/Messages";
 const YourPosts = lazy(() => import("./views/YourPosts"));
 const FreelancerProfile = lazy(() =>
   import("@advisable-main/views/FreelancerProfile"),
