@@ -1,12 +1,4 @@
-module DeleteThisClassHelper
-  def password_link_goes_here_thomas(param)
-    "http://advisable.com/delete-me"
-  end
-end
-
 class UserMailer < ApplicationMailer
-  helper DeleteThisClassHelper
-
   def confirm(uid:, token:)
     @user = User.find_by(uid: uid)
     @token = token
