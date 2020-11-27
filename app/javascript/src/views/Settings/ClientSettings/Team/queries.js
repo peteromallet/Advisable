@@ -45,22 +45,24 @@ export const CREATE_USER_FOR_COMPANY = gql`
 
 export function useCreateUserForCompany(company) {
   return useMutation(CREATE_USER_FOR_COMPANY, {
-    update(cache, { data }) {
-      const user = data.createUserForCompany.user;
+    update(cache, { data, errors }) {
+      if (!errors) {
+        const user = data.createUserForCompany.user;
 
-      cache.modify({
-        id: cache.identify(company),
-        fields: {
-          users(existing = []) {
-            const newUserRef = cache.writeFragment({
-              data: user,
-              fragment: userFields,
-            });
+        cache.modify({
+          id: cache.identify(company),
+          fields: {
+            users(existing = []) {
+              const newUserRef = cache.writeFragment({
+                data: user,
+                fragment: userFields,
+              });
 
-            return [...existing, newUserRef];
+              return [...existing, newUserRef];
+            },
           },
-        },
-      });
+        });
+      }
     },
   });
 }
