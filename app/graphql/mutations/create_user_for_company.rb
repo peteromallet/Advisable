@@ -31,6 +31,9 @@ class Mutations::CreateUserForCompany < Mutations::BaseMutation
       industry: company.industry
     )
     user.save_and_sync_with_responsible!(current_account_id)
+
+    UserMailer.invited_by_manager(current_user, user).deliver_later
+
     {user: user}
   rescue ActiveRecord::RecordInvalid
     if account.errors.added?(:email, :taken, value: email)

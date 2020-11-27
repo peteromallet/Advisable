@@ -32,13 +32,14 @@ RSpec.describe Mutations::CreateUserForCompany do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
-  it "creates a new user on the company" do
+  it "creates a new user on the company and sends an email to new user" do
     response = AdvisableSchema.execute(query, context: context)
     uid = response["data"]["createUserForCompany"]["user"]["id"]
     created_user = User.find_by(uid: uid)
     expect(created_user.account.attributes.slice("email", "first_name", "last_name").values).to match_array([email, first_name, last_name])
     expect(created_user.account).not_to be_team_manager
     expect(created_user.company_id).to eq(user.company_id)
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_by_manager", "deliver_now", {args: [user, created_user]})
   end
 
   context "when no team manager permission" do
