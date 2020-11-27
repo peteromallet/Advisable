@@ -5,11 +5,22 @@ import { useModal, Tooltip, Box } from "@advisable/donut";
 import PostAction from "./PostAction";
 import { useNotifications } from "components/Notifications";
 import RequestVideoCallModal from "./RequestVideoCallModal";
+import useViewer from "src/hooks/useViewer";
 
 function VideoCallAction({ post }) {
   const modal = useModal();
+  const viewer = useViewer();
   const client = useApolloClient();
   const notifications = useNotifications();
+
+  const handleAction = () => {
+    if (viewer?.guild) {
+      modal.show;
+    } else {
+      const cta = document.getElementById("joinGuild");
+      cta?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const handleSend = () => {
     client.cache.modify({
@@ -28,12 +39,14 @@ function VideoCallAction({ post }) {
 
   return (
     <>
-      <RequestVideoCallModal
-        recipient={post.author}
-        post={post}
-        modal={modal}
-        onSend={handleSend}
-      />
+      {viewer?.guild ? (
+        <RequestVideoCallModal
+          recipient={post.author}
+          post={post}
+          modal={modal}
+          onSend={handleSend}
+        />
+      ) : null}
       <Tooltip placement="top" content="Request Call">
         <Box
           css={`
@@ -44,7 +57,7 @@ function VideoCallAction({ post }) {
             color="blue800"
             bg="neutral100"
             icon={<VideoCamera />}
-            onClick={modal.show}
+            onClick={handleAction}
           />
         </Box>
       </Tooltip>

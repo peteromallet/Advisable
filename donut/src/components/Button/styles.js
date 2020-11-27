@@ -179,7 +179,7 @@ const buttonSize = variant({
     l: {
       height: 50,
       fontSize: 18,
-      fontWeight: 600,
+      fontWeight: 500,
       paddingLeft: 24,
       paddingRight: 24,
       svg: {

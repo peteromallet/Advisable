@@ -1,18 +1,17 @@
 import React from "react";
 import { Box } from "@advisable/donut";
 import Share from "./Share";
+import Edit from "./Edit";
 import MessageAction from "./Message";
 import VideoCallAction from "./VideoCall";
 import ConnectionsCount from "./ConnectionsCount";
 import ReactionsButton from "../Post/components/ReactionsButton";
 import useViewer from "src/hooks/useViewer";
 
-export default function PostActions({ post, ...props }) {
+export default function PostActions({ post, showEdit = true, ...props }) {
   const viewer = useViewer();
   const count = post.engagementsCount;
   const viewerIsAuthor = post.author.id === viewer?.id;
-
-  if (!viewer?.guild) return null;
 
   return (
     <Box display="inline-flex" alignItems="center" {...props}>
@@ -31,6 +30,11 @@ export default function PostActions({ post, ...props }) {
       ) : null}
       {post.shareable ? <Share post={post} /> : null}
       {count > 0 ? <ConnectionsCount post={post} /> : null}
+      {showEdit && viewerIsAuthor ? (
+        <Box ml={2}>
+          <Edit post={post} />
+        </Box>
+      ) : null}
     </Box>
   );
 }

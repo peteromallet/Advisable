@@ -77,7 +77,7 @@ const Post = ({ post }) => {
         </Text>
 
         <Box>
-          <PostActions marginBottom={5} post={post} />
+          <PostActions marginBottom={5} post={post} showEdit={false} />
         </Box>
 
         <Topics topics={post.guildTopics} />

@@ -33,7 +33,12 @@ const ReactionsButton = ({ post }) => {
   // immediately and use setTimeout to delay the actual request by 500ms.
   const handleReaction = () => {
     clearTimeout(timer.current);
-    if (!viewer?.guild) return;
+
+    if (!viewer?.guild) {
+      const cta = document.getElementById("joinGuild");
+      cta?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
 
     const reaction = reacted ? "NONE" : "THANK";
     setReacted(reacted ? false : true);
