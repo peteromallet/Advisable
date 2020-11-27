@@ -16,7 +16,7 @@ function MessagePostAction({ post }) {
 
   const handleMessage = () => {
     if (viewer?.guild) {
-      modal.show;
+      modal.show();
     } else {
       const cta = document.getElementById("joinGuild");
       cta?.scrollIntoView({ behavior: "smooth" });
