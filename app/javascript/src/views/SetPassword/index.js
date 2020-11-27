@@ -31,7 +31,10 @@ export default function SetPassword() {
     return <Redirect to={from} />;
   }
 
-  const initialValues = {};
+  const initialValues = {
+    password: "",
+    passwordConfirmation: "",
+  };
 
   async function handleSubmit(values, formik) {
     const { errors } = await setPassword({
