@@ -6,6 +6,7 @@ RSpec.describe Mutations::CreateUserForCompany do
   let(:email) { Faker::Internet.email }
   let(:first_name) { Faker::Name.first_name }
   let(:last_name) { Faker::Name.last_name }
+  let(:extra) { "" }
 
   let(:query) do
     <<-GRAPHQL
@@ -14,6 +15,7 @@ RSpec.describe Mutations::CreateUserForCompany do
         email: "#{email}",
         firstName: "#{first_name}",
         lastName: "#{last_name}",
+        #{extra}
       }) {
         user {
           id
@@ -35,6 +37,7 @@ RSpec.describe Mutations::CreateUserForCompany do
     uid = response["data"]["createUserForCompany"]["user"]["id"]
     created_user = User.find_by(uid: uid)
     expect(created_user.account.attributes.slice("email", "first_name", "last_name").values).to match_array([email, first_name, last_name])
+    expect(created_user.account).not_to be_team_manager
     expect(created_user.company_id).to eq(user.company_id)
   end
 
@@ -75,6 +78,30 @@ RSpec.describe Mutations::CreateUserForCompany do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("emailBlank")
+    end
+  end
+
+  describe "set team manager" do
+    context "when true" do
+      let(:extra) { "teamManager: true" }
+
+      it "created user is a team manager" do
+        response = AdvisableSchema.execute(query, context: context)
+        uid = response["data"]["createUserForCompany"]["user"]["id"]
+        created_user = User.find_by(uid: uid)
+        expect(created_user.account).to be_team_manager
+      end
+    end
+
+    context "when false" do
+      let(:extra) { "teamManager: false" }
+
+      it "created user is not a team manager" do
+        response = AdvisableSchema.execute(query, context: context)
+        uid = response["data"]["createUserForCompany"]["user"]["id"]
+        created_user = User.find_by(uid: uid)
+        expect(created_user.account).not_to be_team_manager
+      end
     end
   end
 end
