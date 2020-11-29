@@ -23,17 +23,25 @@ export const GET_PROJECT = gql`
 `;
 
 export const CREATE_FREELANCER_ACCOUNT = gql`
-  mutation CreateFreelancerAccount($input: CreateFreelancerAccountPayload!) {
-    CreateFreelancerAccount(input: $input) {
-      viewer
+  mutation CreateFreelancerAccount($input: CreateFreelancerAccountInput!) {
+    createFreelancerAccount(input: $input) {
+      viewer {
+        ... on Specialist {
+          id
+        }
+      }
     }
   }
 `;
 
 export const SIGNUP = gql`
-  mutation Signup($input: SignupPayload!) {
+  mutation Signup($input: SignupInput!) {
     signup(input: $input) {
-      viewer
+      viewer {
+        ... on Specialist {
+          id
+        }
+      }
     }
   }
 `;
