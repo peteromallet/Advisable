@@ -58,10 +58,18 @@ function useSteps(steps) {
     () =>
       steps.map((step, index) => (
         <Route key={index} path={step.path} exact={step.exact}>
-          <step.component nextStep={nextStep} forwards={forwards} />
+          {step.component ? (
+            <step.component
+              nextStep={nextStep}
+              prevStep={prevStep}
+              forwards={forwards}
+            />
+          ) : (
+            <React.Fragment />
+          )}
         </Route>
       )),
-    [forwards, nextStep, steps],
+    [forwards, nextStep, prevStep, steps],
   );
 
   return {
