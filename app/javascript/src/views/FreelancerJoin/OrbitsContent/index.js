@@ -119,7 +119,9 @@ export default function OrbitsContent({ step }) {
       alignItems="flex-start"
       alignContent="center"
     >
-      <img src={logo} alt="" />
+      <Link.External href="https://advisable.com/">
+        <img src={logo} alt="Advisable logo" />
+      </Link.External>
       {step === 2 ? <ThankYouContent /> : <FormsContent />}
       <Footer />
     </Box>
