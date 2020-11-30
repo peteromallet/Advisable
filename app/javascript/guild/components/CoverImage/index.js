@@ -19,7 +19,7 @@ const Cover = ({ srcList }) => {
 export const CoverImage = ({ height = "320px", images, cover }) => {
   return (
     <Suspense
-      fallback={<Skeleton height="100%" width="100%" borderRadius="4px" />}
+      fallback={<Skeleton height={height} width="100%" borderRadius="4px" />}
     >
       <Box
         position="relative"
