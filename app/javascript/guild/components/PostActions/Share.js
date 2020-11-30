@@ -1,6 +1,6 @@
 import React from "react";
 import { DialogDisclosure, useDialogState } from "reakit/Dialog";
-import { Upload } from "@styled-icons/heroicons-outline";
+import { Link } from "@styled-icons/heroicons-outline";
 import { Box, Tooltip } from "@advisable/donut";
 import PostAction from "./PostAction";
 import ShareModal from "@guild/components/Post/components/ShareModal";
@@ -24,7 +24,7 @@ function MessagePostAction({ post }) {
                 {...props}
                 color="neutral600"
                 bg="neutral100"
-                icon={<Upload />}
+                icon={<Link />}
               />
             )}
           </DialogDisclosure>

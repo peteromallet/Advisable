@@ -7,6 +7,7 @@ const StyledPostAction = styled(motion.div)`
   width: 40px;
   height: 40px;
   display: flex;
+  outline: none;
   position: relative;
   align-items: center;
   justify-content: center;
