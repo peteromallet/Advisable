@@ -11,21 +11,33 @@ RSpec.describe Airtable::ClientContact do
     ]
   })
 
-  describe "syncs title column" do
-    let(:user) { create(:user, title: "Old Title") }
-    let(:airtable) { Airtable::ClientContact.new({"Email Address" => "test@airtable.com", "Title" => "New Title"}, id: user.airtable_id) }
-
-    it "sync the Title column to :title" do
-      expect { airtable.sync }.to change { user.reload.title }.from("Old Title").to("New Title")
-    end
-  end
-
   describe "sync_data" do
+    describe "syncs title column" do
+      let(:user) { create(:user, title: "Old Title") }
+      let(:airtable) { described_class.new({"Email Address" => "test@airtable.com", "Title" => "New Title"}, id: user.airtable_id) }
+
+      it "sync the Title column to :title" do
+        expect { airtable.sync }.to change { user.reload.title }.from("Old Title").to("New Title")
+      end
+    end
+
+    describe "syncs company type" do
+      let!(:company) { create(:company, kind: "Startup") }
+      let!(:user) { create(:user, company_type: "Startup", company: company) }
+      let(:airtable) { described_class.new({"Email Address" => "test@airtable.com", "Type of Company" => "Hyper Mega Company"}, id: user.airtable_id) }
+
+      it "sync the company type to User and Company" do
+        airtable.sync
+        expect(user.reload.company_type).to eq("Hyper Mega Company")
+        expect(company.reload.kind).to eq("Hyper Mega Company")
+      end
+    end
+
     context "when the associated client has been synced" do
       it "associates the user to that client record" do
         user = create(:user, client: nil)
         client = create(:client)
-        airtable = Airtable::ClientContact.new({
+        airtable = described_class.new({
           "Client" => [client.airtable_id],
           "Email Address" => "test@airtable.com"
         }, id: user.airtable_id)
@@ -39,7 +51,7 @@ RSpec.describe Airtable::ClientContact do
   describe "value stripping" do
     let(:user) { create(:user) }
     let(:airtable) {
-      Airtable::ClientContact.new({
+      described_class.new({
       "Email Address" => " test@airtable.com ",
       "First Name" => " Dwight ",
       "Last Name" => " Schrute ",
@@ -56,9 +68,9 @@ RSpec.describe Airtable::ClientContact do
 
   describe "push_data" do
     let(:user) { create(:user) }
-    let(:airtable) { Airtable::ClientContact.new({}, id: user.airtable_id) }
+    let(:airtable) { described_class.new({}, id: user.airtable_id) }
 
-    before :each do
+    before do
       allow(airtable).to receive(:save)
     end
 
@@ -89,7 +101,7 @@ RSpec.describe Airtable::ClientContact do
 
   describe "account handling" do
     let(:user) { create(:user) }
-    let(:airtable) { Airtable::ClientContact.new({"Email Address" => email}, id: user.airtable_id) }
+    let(:airtable) { described_class.new({"Email Address" => email}, id: user.airtable_id) }
 
     context "when email is present" do
       let(:email) { "test@airtable.com" }
