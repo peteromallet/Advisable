@@ -17,6 +17,8 @@ const CurrentUser = () => {
   const menu = useMenuState();
   const [logout] = useMutation(LOGOUT, { variables: { input: {} } });
 
+  if (!viewer) return null;
+
   const handleLogout = async () => {
     await logout();
     window.location = "/login";
