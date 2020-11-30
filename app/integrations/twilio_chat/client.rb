@@ -27,7 +27,15 @@ module Integrations
 
     def has_unread_messages?
       member = chat_service.users(identity).fetch
-      member.user_channels.list.any? { |channel| channel&.unread_messages_count != 0 }
+
+      member.user_channels.list.any? do |channel|
+        if channel&.unread_messages_count != 0
+          fetched_channel = chat_service.channels(channel.channel_sid).fetch
+          # Is the last message from the sender
+          last_message = fetched_channel.messages.list(limit: 1, order: 'desc').first
+          last_message&.from != identity
+        end
+      end
     end
 
     def create_channel_member(channel, args)
