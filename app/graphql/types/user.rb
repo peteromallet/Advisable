@@ -117,10 +117,6 @@ class Types::User < Types::BaseType
 
   field :country, Types::CountryType, null: true
 
-  field :setup_intent_status, String, null: true do
-    authorize :is_user
-  end
-
   field :interviews, [Types::Interview], null: true do
     argument :status, String, required: false
     authorize :is_user
@@ -130,16 +126,6 @@ class Types::User < Types::BaseType
     interviews = object.interviews
     interviews = interviews.where(status: status) if status
     interviews
-  end
-
-  # The customer field returns information from the users stripe customer
-  # object.
-  field :customer, Types::CustomerType, null: true do
-    authorize :is_user
-  end
-
-  def customer
-    Stripe::Customer.retrieve(object.stripe_customer_id)
   end
 
   field :city, String, null: true
@@ -160,14 +146,30 @@ class Types::User < Types::BaseType
     "#{object.address.city}, #{country.name}"
   end
 
-  # The paymentMethod field returns the users default payment method from
-  # stripe.
+  field :setup_intent_status, String, null: true do
+    authorize :is_user
+  end
+
+  def setup_intent_status
+    object.company.setup_intent_status
+  end
+
+  # The customer field returns information from the users stripe customer object.
+  field :customer, Types::CustomerType, null: true do
+    authorize :is_user
+  end
+
+  def customer
+    object.company.stripe_customer
+  end
+
+  # The paymentMethod field returns the users default payment method from stripe.
   field :payment_method, Types::PaymentMethodType, null: true do
     authorize :is_user
   end
 
   def payment_method
-    object.stripe_customer.invoice_settings.default_payment_method
+    customer.invoice_settings.default_payment_method
   end
 
   field :invoices, [Types::InvoiceType], null: false do
@@ -175,7 +177,7 @@ class Types::User < Types::BaseType
   end
 
   def invoices
-    Stripe::Invoice.list(customer: object.stripe_customer_id).reject do |invoice|
+    Stripe::Invoice.list(customer: object.company.stripe_customer_id).reject do |invoice|
       invoice.status == "draft"
     end
   end

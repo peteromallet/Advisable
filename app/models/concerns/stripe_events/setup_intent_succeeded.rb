@@ -7,15 +7,16 @@
 # users setup_intent_status changes from pending to succeeded.
 class StripeEvents::SetupIntentSucceeded < StripeEvents::BaseEvent
   def process
-    # If the user record wasn't found then just return true
-    return true if user.nil?
+    # If the record wasn't found then just return true
+    return true if company.nil?
+
     # Attach the payment method
     Users::AttachPaymentMethod.call(
-      user: user,
+      user: company.first_account.user,
       payment_method_id: setup_intent.payment_method
     )
     # Update the setup_intent_status so the frontend can respond
-    user.update_columns(setup_intent_status: 'succeeded')
+    company.update_columns(setup_intent_status: 'succeeded') # rubocop:disable Rails/SkipsModelValidations
   end
 
   private
@@ -24,7 +25,7 @@ class StripeEvents::SetupIntentSucceeded < StripeEvents::BaseEvent
     event.data.object
   end
 
-  def user
-    @user ||= User.find_by_stripe_setup_intent_id(setup_intent.id)
+  def company
+    @company ||= Company.find_by(stripe_setup_intent_id: setup_intent.id)
   end
 end
