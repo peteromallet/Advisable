@@ -23,13 +23,16 @@ end
 #
 # Table name: companies
 #
-#  id              :uuid             not null, primary key
-#  kind            :string
-#  name            :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  industry_id     :bigint
-#  sales_person_id :bigint
+#  id                     :uuid             not null, primary key
+#  kind                   :string
+#  name                   :string
+#  setup_intent_status    :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  industry_id            :bigint
+#  sales_person_id        :bigint
+#  stripe_customer_id     :string
+#  stripe_setup_intent_id :string
 #
 # Indexes
 #
