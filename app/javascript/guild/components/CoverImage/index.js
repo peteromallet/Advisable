@@ -2,9 +2,8 @@ import React, { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useImage } from "react-image";
 import styled from "styled-components";
-import Loading from "@advisable-main/components/Loading";
 import PostImages from "@guild/components/PostImages";
-import { Box } from "@advisable/donut";
+import { Box, Skeleton } from "@advisable/donut";
 
 const StyledCoverImage = styled.img`
   object-fit: cover;
@@ -19,7 +18,9 @@ const Cover = ({ srcList }) => {
 
 export const CoverImage = ({ height = "320px", images, cover }) => {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense
+      fallback={<Skeleton height="100%" width="100%" borderRadius="4px" />}
+    >
       <Box
         position="relative"
         height={height}
