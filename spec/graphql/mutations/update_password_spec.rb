@@ -8,15 +8,16 @@ RSpec.describe Mutations::UpdatePassword do
   let(:password_confirmation) { password }
   let(:current_password_param) { current_password }
   let(:password_param) { password }
+  let(:extra) { "currentPassword: \"#{current_password_param}\"" }
   let(:context) { {current_user: user} }
 
   let(:query) do
     <<-GRAPHQL
     mutation {
       updatePassword(input: {
-        currentPassword: "#{current_password_param}",
         password: "#{password_param}",
-        passwordConfirmation: "#{password_confirmation}"
+        passwordConfirmation: "#{password_confirmation}",
+        #{extra}
       }) {
         viewer {
           ... on User {
@@ -34,7 +35,7 @@ RSpec.describe Mutations::UpdatePassword do
   end
 
   describe "happy path" do
-    context "user" do
+    context "when user" do
       it "updates password" do
         expect(account.authenticate(password)).to be_falsy
         AdvisableSchema.execute(query, context: context)
@@ -42,7 +43,7 @@ RSpec.describe Mutations::UpdatePassword do
       end
     end
 
-    context "specialist" do
+    context "when specialist" do
       let(:user) { create(:specialist, account: account) }
 
       it "updates password" do
@@ -72,6 +73,16 @@ RSpec.describe Mutations::UpdatePassword do
       response = AdvisableSchema.execute(query, context: context)
       expect(response["errors"][0]["extensions"]["code"]).to eq("CAN_NOT_CHANGE_PASSWORD")
       expect(account.authenticate(password)).to be_falsy
+    end
+  end
+
+  describe "empty current password" do
+    let(:account) { create(:account, password_digest: nil) }
+    let(:extra) { "" }
+
+    it "sets password" do
+      AdvisableSchema.execute(query, context: context)
+      expect(account.authenticate(password)).to be_truthy
     end
   end
 end

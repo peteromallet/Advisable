@@ -1,13 +1,16 @@
 import React from "react";
 import StyledCircle from "./styles";
 
-const Circle = ({ children, size, ...props }) => {
+const Circle = React.forwardRef(function Circle(
+  { children, size, ...props },
+  ref,
+) {
   return (
-    <StyledCircle width={size} height={size} {...props}>
+    <StyledCircle ref={ref} width={size} height={size} {...props}>
       {children}
     </StyledCircle>
   );
-};
+});
 
 Circle.defaultProps = {
   size: 60,

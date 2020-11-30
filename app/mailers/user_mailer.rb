@@ -9,4 +9,10 @@ class UserMailer < ApplicationMailer
     @interview = interview
     mail(from: interview.user.sales_person.email_with_name, to: interview.user.account.email, subject: 'Interview Reschedule Request')
   end
+
+  def invited_by_manager(manager, user)
+    @manager = manager
+    @user = user
+    mail(to: user.account.email, subject: "#{manager.account.first_name} invited you to Advisable")
+  end
 end

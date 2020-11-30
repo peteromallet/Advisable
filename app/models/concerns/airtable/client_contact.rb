@@ -8,6 +8,7 @@ class Airtable::ClientContact < Airtable::Base
   sync_column_to_association 'First Name', association: :account, to: :first_name, strip: true
   sync_column_to_association 'Last Name', association: :account, to: :last_name, strip: true
   sync_column_to_association 'VAT Number', association: :account, to: :vat_number, strip: true
+  sync_column_to_association 'Type of Company', association: :company, to: :kind, strip: true
 
   sync_column 'Title', to: :title
   sync_column 'Project Payment Method', to: :project_payment_method

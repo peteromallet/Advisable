@@ -1,5 +1,17 @@
 import { merge, uniqueId } from "lodash-es";
 
+export const company = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Company",
+      id: uniqueId("company"),
+      name: "Test",
+      users: [],
+    },
+    fields,
+  );
+};
+
 export const user = (fields = {}) => {
   return merge(
     {
@@ -8,6 +20,8 @@ export const user = (fields = {}) => {
       firstName: "Test",
       lastName: "Account",
       isAdmin: false,
+      isTeamManager: false,
+      needsToSetAPassword: false,
       name: "Test Account",
       email: "test@test.com",
       airtableId: "airtableid",
@@ -479,6 +493,7 @@ export default {
   skill,
   search,
   review,
+  company,
   country,
   project,
   currency,

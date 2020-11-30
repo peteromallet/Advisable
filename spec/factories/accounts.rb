@@ -6,5 +6,9 @@ FactoryBot.define do
     sequence(:email) { |n| "account_#{n}@test.com" }
     password { 'testing123' }
     confirmed_at { 1.day.ago }
+
+    trait :team_manager do
+      permissions { ["team_manager"] }
+    end
   end
 end

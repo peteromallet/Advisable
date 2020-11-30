@@ -22,7 +22,7 @@ class Account < ApplicationRecord
   end
 
   def name
-    "#{first_name} #{last_name}"
+    @name ||= [first_name, last_name].select(&:present?).join(" ")
   end
 
   def has_password?

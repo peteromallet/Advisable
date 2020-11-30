@@ -66,7 +66,7 @@ export const START_CLIENT_APPLICATION = gql`
 `;
 
 export const useStartClientApplication = () =>
-  useMutation(START_CLIENT_APPLICATION, { onError: () => {} });
+  useMutation(START_CLIENT_APPLICATION, { onError: () => { } });
 
 /* 2 Step. About Company */
 
@@ -312,3 +312,45 @@ export const useCoutryCode = () => {
     variables: { id: state?.applicationId },
   });
 };
+
+
+export const CREATE_USER_FOR_COMPANY = gql`
+  mutation createUserForCompany(
+    $input: CreateUserForCompanyInput!
+  ) {
+    createUserForCompany(input: $input) {
+      user {
+        id
+        firstName
+        lastName
+        companyName
+        companyType
+        industry {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
+export function useCreateUserForCompany() {
+  return useMutation(CREATE_USER_FOR_COMPANY);
+}
+
+
+export const TOGGLE_TEAM_MANAGER = gql`
+  mutation toggleTeamManager(
+    $input: ToggleTeamManagerInput!
+  ) {
+    toggleTeamManager(input: $input) {
+      user {
+        id
+      }
+    }
+  }
+`;
+
+export function useToggleTeamManager() {
+  return useMutation(TOGGLE_TEAM_MANAGER);
+}
