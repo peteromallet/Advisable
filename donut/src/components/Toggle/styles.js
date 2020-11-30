@@ -6,13 +6,26 @@ import theme from "../../theme";
 export const StyledToggleInput = styled.input`
   top: 0px;
   left: 0px;
-  opacity: 0;
   right: 0px;
   z-index: 1;
   bottom: 0px;
   width: 100%;
   height: 100%;
+  opacity: 0.0001;
   position: absolute;
+`;
+
+export const StyledToggleLabel = styled.span`
+  top: 0;
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
 `;
 
 export const StyledToggleThumb = styled.div`
@@ -24,6 +37,7 @@ export const StyledToggleThumb = styled.div`
 
 export const StyledToggleBackground = styled.div`
   padding: 3px;
+  display: inline-block;
   transition: background-color 200ms;
   background: ${theme.colors.neutral200};
 `;
@@ -63,7 +77,7 @@ export const StyledToggle_Checked = css`
   }
 `;
 
-export const StyledToggle = styled.div`
+export const StyledToggle = styled.label`
   ${size};
   user-select: none;
   position: relative;

@@ -1,14 +1,16 @@
 import React from "react";
 import useViewer from "src/hooks/useViewer";
+import { useNotifications } from "src/components/Notifications";
 import { Box, Text, Toggle } from "@advisable/donut";
 import { useToggleTeamManager } from "./queries";
 
 export default function TeamMember({ member }) {
   const viewer = useViewer();
+  const { notify } = useNotifications();
   const [toggle] = useToggleTeamManager();
 
-  const handleToggleManager = () => {
-    toggle({
+  const handleToggleManager = async () => {
+    await toggle({
       variables: {
         input: {
           userId: member.id,
@@ -25,6 +27,12 @@ export default function TeamMember({ member }) {
         },
       },
     });
+
+    if (member.isTeamManager) {
+      notify(`${member.name} has been demoted`);
+    } else {
+      notify(`${member.name} has been promoted to manager`);
+    }
   };
 
   return (
@@ -45,6 +53,11 @@ export default function TeamMember({ member }) {
         </Box>
         <Text fontSize="sm" color="neutral800">
           <Toggle
+            label={
+              member.isTeamManager
+                ? `Demote ${member.name}`
+                : `Promote ${member.name} to manager`
+            }
             value={member.isTeamManager}
             onChange={handleToggleManager}
             disabled={member.id === viewer.id}

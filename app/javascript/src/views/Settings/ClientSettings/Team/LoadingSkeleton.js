@@ -6,9 +6,9 @@ function SkeletonTeamMember() {
     <>
       <Box
         height="60px"
-        display="grid"
+        display="flex"
         alignItems="center"
-        gridTemplateColumns="3fr 1fr"
+        justifyContent="space-between"
       >
         <Box>
           <Skeleton height="12px" width="100px" mb={1} />
