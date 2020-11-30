@@ -28,7 +28,7 @@ function MessagePostAction({ post }) {
       id: client.cache.identify(post),
       fields: {
         engagementsCount(count) {
-          return count + 1;
+          return post.engaged ? count : count + 1;
         },
       },
     });

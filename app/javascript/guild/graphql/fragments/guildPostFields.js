@@ -10,6 +10,7 @@ export default gql`
     reacted
     reactionsCount
     status
+    engaged
     engagementsCount
     authored
     createdAtTimeAgo
