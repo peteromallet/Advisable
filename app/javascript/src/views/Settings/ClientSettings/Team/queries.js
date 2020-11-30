@@ -14,6 +14,7 @@ export const GET_TEAM_MEMBERS = gql`
 
   query getTeamMembers {
     currentCompany {
+      id
       users {
         ...UserFields
       }

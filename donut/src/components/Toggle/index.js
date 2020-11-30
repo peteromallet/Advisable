@@ -1,12 +1,13 @@
 import React from "react";
 import {
   StyledToggle,
+  StyledToggleLabel,
   StyledToggleThumb,
   StyledToggleInput,
   StyledToggleBackground,
 } from "./styles";
 
-function Toggle({ size, ...props }) {
+function Toggle({ size, label, ...props }) {
   return (
     <StyledToggle
       size={size}
@@ -18,6 +19,7 @@ function Toggle({ size, ...props }) {
       <StyledToggleBackground>
         <StyledToggleThumb />
       </StyledToggleBackground>
+      {label ? <StyledToggleLabel>{label}</StyledToggleLabel> : null}
     </StyledToggle>
   );
 }
