@@ -83,6 +83,14 @@ module Types::Guild::PostInterface
     description 'The recorded number of engagements for this post'
   end
 
+  field :engaged, Boolean, null: false do
+    description "Wether or not the current user has engaged with this post"
+  end
+
+  def engaged
+    object.engagements.exists?(specialist: current_user)
+  end
+
   field :audience_type, String, null: true do
     description 'The type of audience configured for this post'
   end

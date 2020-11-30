@@ -11,6 +11,7 @@ const size = variant({
     xs: {
       width: 30,
       height: 30,
+      fontSize: "12px",
     },
     s: {
       width: 40,

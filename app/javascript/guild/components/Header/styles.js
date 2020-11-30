@@ -20,7 +20,8 @@ export const StyledHeaderLink = styled.a`
   color: ${rgba(theme.colors.blue100, 0.6)};
   align-items: center;
   display: inline-flex;
-  padding: 6px 12px;
+  height: 36px;
+  padding: 0 12px;
   border-radius: 12px;
   margin-right: 8px;
   position: relative;
@@ -87,5 +88,51 @@ export const NavIcon = styled.div`
     svg {
       fill: ${theme.colors.purpleBlue};
     }
+  }
+`;
+
+export const StyledCurrentUser = styled.div`
+  outline: none;
+  display: flex;
+  font-size: 15px;
+  padding: 4px 8px;
+  user-select: none;
+  align-items: center;
+  --arrow-color: ${rgba(theme.colors.blue100, 0.8)};
+
+  &:hover {
+    --arrow-color: white;
+  }
+`;
+
+export const StyledCurrentUserArrow = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid var(--arrow-color);
+`;
+
+export const StyledCurrentUserMenu = styled.div`
+  right: 0;
+  width: 180px;
+  outline: none;
+  padding: 8px 0;
+  background: white;
+  position: absolute;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px -8px ${rgba(theme.colors.neutral900, 0.3)};
+`;
+
+export const StyledCurrentUserMenuItem = styled.div`
+  outline: none;
+  display: block;
+  font-size: 15px;
+  padding: 8px 16px;
+  user-select: none;
+  color: ${theme.colors.neutral800};
+
+  &:focus {
+    background: ${theme.colors.neutral100};
   }
 `;

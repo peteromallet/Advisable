@@ -5,16 +5,15 @@ import { NavLink, Link } from "react-router-dom";
 import { Box } from "@advisable/donut";
 import logo from "@advisable-main/components/Header/logo.svg";
 import { useToggle } from "@guild/hooks/useToggle";
-import { Notification, Menu } from "@guild/icons";
+import { Notification } from "@guild/icons";
 import Notifications from "@guild/components/Notifications";
-import UserMenu from "@guild/components/UserMenu";
+import CurrentUser from "./CurrentUser";
 import {
   StyledHeader,
   StyledHeaderLink,
   StyledHeaderBadge,
   NavIcon,
 } from "./styles";
-import { GuildBox } from "@guild/styles";
 import { GUILD_LAST_READ_QUERY } from "./queries";
 import { GUILD_UPDATE_LAST_READ } from "./mutations";
 
@@ -22,7 +21,6 @@ const TWO_MINUTES = 120000;
 
 const Header = () => {
   const [notificationsOpen, toggleNotifications] = useToggle();
-  const [userMenuOpen, toggleUserMenu] = useToggle();
 
   const { data: lastReadData } = useQuery(GUILD_LAST_READ_QUERY, {
     pollInterval: TWO_MINUTES,
@@ -44,15 +42,9 @@ const Header = () => {
     handleUpdateLastRead({ readNotifications: true });
   };
 
-  const handleUserMenu = () => {
-    toggleUserMenu();
-    safeToggleNav();
-  };
-
   const safeToggleNav = React.useCallback(() => {
     if (notificationsOpen) toggleNotifications();
-    if (userMenuOpen) toggleUserMenu();
-  }, [toggleNotifications, toggleUserMenu, notificationsOpen, userMenuOpen]);
+  }, [toggleNotifications, notificationsOpen]);
 
   const handleUpdateLastRead = async (input) =>
     await guildUpdateLastRead({ variables: { input } });
@@ -62,7 +54,6 @@ const Header = () => {
   return (
     <>
       <Notifications open={notificationsOpen} />
-      <UserMenu open={userMenuOpen} onToggle={toggleUserMenu} />
       <StyledHeader px="lg">
         <Box display="flex" alignItems="center">
           <Box mr={8}>
@@ -86,18 +77,18 @@ const Header = () => {
           </nav>
         </Box>
 
-        <GuildBox spaceChildrenHorizontal={24} display="flex">
-          <NavIcon
-            unread={lastReadData?.viewer?.guildUnreadNotifications}
-            open={notificationsOpen}
-            onClick={handleNotifications}
-          >
-            <Notification />
-          </NavIcon>
-          <NavIcon onClick={handleUserMenu} open={userMenuOpen}>
-            <Menu />
-          </NavIcon>
-        </GuildBox>
+        <Box display="flex" alignItems="center">
+          <Box mr={4}>
+            <NavIcon
+              unread={lastReadData?.viewer?.guildUnreadNotifications}
+              open={notificationsOpen}
+              onClick={handleNotifications}
+            >
+              <Notification />
+            </NavIcon>
+          </Box>
+          <CurrentUser />
+        </Box>
       </StyledHeader>
       <Box height="58px" />
       {/* <Mask isOpen={maskOpen} toggler={safeToggleMask} /> */}
