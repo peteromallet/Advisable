@@ -17,6 +17,26 @@ class Company < ApplicationRecord
     n += 1 while exists?(name: "#{company_name} (#{n})")
     "#{company_name} (#{n})"
   end
+
+  def stripe_customer
+    Stripe::Customer.retrieve({
+      id: stripe_customer_id,
+      expand: %w[invoice_settings.default_payment_method]
+    })
+  end
+
+  def stripe_customer_id
+    return self[:stripe_customer_id] if self[:stripe_customer_id].present?
+
+    customer = Stripe::Customer.create(email: first_account.email, name: name, metadata: {company_id: id})
+    update_columns(stripe_customer_id: customer.id) # rubocop:disable Rails/SkipsModelValidations
+    customer.id
+  end
+
+  def first_account
+    company_accounts = Account.where(id: users.pluck(:account_id))
+    company_accounts.find(&:team_manager?) || company_accounts.first
+  end
 end
 
 # == Schema Information

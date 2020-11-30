@@ -25,8 +25,8 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
       user.address = args[:invoice_settings][:address].try(:to_h)
 
       Stripe::Customer.update(
-        user.stripe_customer_id, {
-          name: user.invoice_company_name,
+        user.company.stripe_customer_id, {
+          name: user.invoice_company_name, # TODO: Store this on Company too
           email: user.account.email
         }
       )
@@ -50,12 +50,12 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
     return if user.account.vat_number.blank?
 
     Stripe::Customer.create_tax_id(
-      user.stripe_customer_id,
+      user.company.stripe_customer_id,
       {
         type: "eu_vat",
-        value: user.account.vat_number
+        value: user.account.vat_number # TODO: Store this on Company too
       }, {
-        idempotency_key: "#{user.uid}-#{user.account.vat_number}"
+        idempotency_key: "#{user.company.id}-#{user.account.vat_number}"
       }
     )
   rescue Stripe::InvalidRequestError
