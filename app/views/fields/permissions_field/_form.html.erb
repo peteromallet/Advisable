@@ -2,7 +2,7 @@
   <%= f.label field.attribute %>
 </div>
 <div class="field-unit__field">
-  <% Permissions::SCOPES.each do |scope| %>
+  <% ["admin", "team_manager"].each do |scope| %>
     <%= f.check_box field.attribute, { multiple: true }, scope, false %>
     <%= scope %>
   <% end %>

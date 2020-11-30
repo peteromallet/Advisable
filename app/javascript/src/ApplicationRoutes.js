@@ -1,6 +1,6 @@
 // ApplicationRoutes renders the routes that should be rendered with a header
 import React, { Suspense, lazy } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import NotFound from "./views/NotFound";
 import Header from "./components/Header";
 import Loading from "./components/Loading";
@@ -31,18 +31,35 @@ const ProjectSetup = lazy(() => import("./views/ProjectSetup"));
 const FullApplication = lazy(() => import("./views/FullApplication"));
 const Interview = lazy(() => import("./views/Interview"));
 const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
+const SetPassword = lazy(() => import("./views/SetPassword"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
   return <Redirect to={`/freelancers/${viewer.id}`} />;
 }
 
+function RedirectToSetPassword() {
+  const location = useLocation();
+  return (
+    <Redirect
+      to={{
+        pathname: "/set_password",
+        state: { from: location },
+      }}
+    />
+  );
+}
+
 const ApplicationRoutes = () => {
+  const viewer = useViewer();
+
   return (
     <>
       <Header />
       <Suspense fallback={<Loading />}>
         <Switch>
+          <AuthenticatedRoute path="/set_password" component={SetPassword} />
+          {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
           <Route path="/clients/signup" component={ClientSignup} />
           <AuthenticatedRoute exact path="/messages" component={Messages} />
           <Route path="/freelancers/:id" component={FreelancerProfile} />

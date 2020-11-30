@@ -1,42 +1,44 @@
 class Types::User < Types::BaseType
   field :id, ID, null: false
   field :airtable_id, String, null: true
+
+  delegate :account, to: :object
   field :name, String, null: true
+  field :first_name, String, null: true
+  field :last_name, String, null: true
+  delegate :name, to: :account
+  delegate :first_name, to: :account
+  delegate :last_name, to: :account
+
   field :is_admin, Boolean, null: false
 
   def is_admin
-    object.account.admin?
+    account.admin?
   end
 
-  def can_manage_teams
-    object.account.team_manager?
+  field :is_team_manager, Boolean, null: true
+
+  def is_team_manager
+    account.team_manager?
   end
 
-  def name
-    object.account.name
+  field :needs_to_set_a_password, Boolean, null: true
+
+  def needs_to_set_a_password
+    account.password_digest.blank?
   end
 
-  field :first_name, String, null: true
+  field :confirmed, Boolean, null: false
 
-  def first_name
-    object.account.first_name
-  end
-
-  field :last_name, String, null: true
-
-  def last_name
-    object.account.last_name
+  def confirmed
+    account.confirmed_at.present?
   end
 
   field :title, String, null: true
   field :company_name, String, null: true
   field :time_zone, String, null: true
   field :projects, [Types::ProjectType], null: true
-  field :confirmed, Boolean, null: false
-
-  def confirmed
-    object.account.confirmed_at.present?
-  end
+  field :company, Types::CompanyType, null: true
 
   field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
     argument :exclude_conflicts,
@@ -47,8 +49,26 @@ class Types::User < Types::BaseType
   end
 
   field :bank_transfers_enabled, Boolean, null: true
+
   field :industry, Types::IndustryType, null: true
+
+  # TODO: Teams - frontend should not query for user industry, instead it should
+  # query for the users company's industry.
+  # It doesn't make sense to copy the industry onto each team member so we
+  # return the industry from the associated company
+  def industry
+    object.company.industry || object.industry
+  end
+
   field :company_type, String, null: true
+
+  # TODO: Teams - frontend should not query for user company type, instead it
+  # should fetch this field from the viewers company
+  # For now we override to the associated companies kind
+  def company_type
+    object.company.kind || object.company_type
+  end
+
   field :sales_person, Types::SalesPersonType, null: true
 
   field :talk_signature, String, null: false do
@@ -73,12 +93,10 @@ class Types::User < Types::BaseType
   end
 
   field :email, String, null: false do
-    authorize :is_admin, :is_user, :is_candidate_for_user_project
+    authorize :is_admin, :is_user, :is_candidate_for_user_project, :is_team_manager
   end
 
-  def email
-    object.account.email
-  end
+  delegate :email, to: :account
 
   field :applications, [Types::ApplicationType], null: true do
     authorize :is_user

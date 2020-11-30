@@ -1,10 +1,16 @@
 import React from "react";
 import { padding } from "styled-system";
 import { motion } from "framer-motion";
-import { Card, Document, LockClosed } from "@styled-icons/ionicons-outline";
+import {
+  Card,
+  Document,
+  LockClosed,
+  PeopleCircle,
+} from "@styled-icons/ionicons-outline";
 import NavigationMenu from "../../../components/NavigationMenu";
 import styled from "styled-components";
 import { Text, useBreakpoint } from "@advisable/donut";
+import useViewer from "src/hooks/useViewer";
 
 const SidebarContainer = styled.div`
   width: 280px;
@@ -44,7 +50,9 @@ const Sidebar = styled.div`
 `;
 
 const SettingsSidebar = () => {
+  const viewer = useViewer();
   const isDesktop = useBreakpoint("lUp");
+
   return (
     <SidebarContainer>
       <Sidebar
@@ -69,6 +77,11 @@ const SettingsSidebar = () => {
           <NavigationMenu.Item to="/settings/payments" icon={<Card />}>
             Payments
           </NavigationMenu.Item>
+          {viewer.isTeamManager ? (
+            <NavigationMenu.Item to="/settings/team" icon={<PeopleCircle />}>
+              Team Members
+            </NavigationMenu.Item>
+          ) : null}
           <NavigationMenu.Item to="/settings/invoices" icon={<Document />}>
             Invoices
           </NavigationMenu.Item>

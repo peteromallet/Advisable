@@ -195,7 +195,7 @@ class TestData
       a.first_name = 'Michael'
       a.last_name = 'Scott'
       a.password = 'testing123'
-      a.permissions = ["admin"]
+      a.permissions = ["team_manager", "admin"]
       a.confirmed_at = 1.day.ago
     end
 

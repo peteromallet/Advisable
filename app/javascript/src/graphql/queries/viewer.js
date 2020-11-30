@@ -7,6 +7,8 @@ export const viewerFields = gql`
       email
       name
       isAdmin
+      isTeamManager
+      needsToSetAPassword
       airtableId
       firstName
       lastName
