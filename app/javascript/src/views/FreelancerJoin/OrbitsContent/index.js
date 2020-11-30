@@ -1,7 +1,15 @@
 import React from "react";
 import { Box, Text, Button, Link } from "@advisable/donut";
 import { ChevronRight } from "@styled-icons/feather";
+import lambdaSchoolLogoWhite from "./logos/lambdaSchoolLogoWhite.png";
+import StackOverflowLogo from "./logos/StackOverflowLogo";
+import SpotifyLogo from "./logos/SpotifyLogo";
+import ProductHuntLogo from "./logos/ProductHuntLogo";
 import logo from "./logo.svg";
+import BigCommerceLogo from "./logos/BigCommerceLogo";
+import WorldRemitLogo from "./logos/WorldRemitLogo";
+import SapLogo from "./logos/SapLogo";
+import BabbelLogo from "./logos/BabbelLogo";
 
 function ThankYouContent() {
   return (
@@ -37,23 +45,62 @@ function Footer() {
   );
 }
 
+function Logos() {
+  const params = {
+    width: "100%",
+    height: "100%",
+    preserveAspectRatio: "xMinYMin meet",
+    fill: "white",
+  };
+  return (
+    <Box
+      display="grid"
+      gridTemplateColumns="157px 157px"
+      gridTemplateRows="32px 30px 28px 26px"
+      gridColumnGap="54px"
+      gridRowGap="22px"
+    >
+      <SpotifyLogo {...params} />
+      <StackOverflowLogo {...params} height="96%" />
+      <Box
+        as="img"
+        src={lambdaSchoolLogoWhite}
+        alt="lambda-school-logo"
+        height="100%"
+        css={`
+          object-fit: scale-down;
+        `}
+        opacity="0.6"
+      />
+      <ProductHuntLogo {...params} opacity="0.8" height="98%" />
+      <WorldRemitLogo {...params} fill="none" opacity="0.6" />
+      <BabbelLogo {...params} opacity="0.6" height="88%" />
+      <SapLogo {...params} opacity="0.4" />
+      <BigCommerceLogo {...params} opacity="0.4" />
+    </Box>
+  );
+}
+
 function FormsContent() {
   return (
-    <Box pb={20}>
-      <Text fontSize={48} color="white" fontWeight="semibold">
-        Advisable connects
-      </Text>
-      <Text fontSize={48} color="#FEB6C8" fontWeight="semibold">
-        top freelancers
-      </Text>
-      <Text fontSize={48} color="white" fontWeight="semibold">
-        with clients
-      </Text>
-      <Text fontSize="l" color="white" lineHeight="l">
-        Advisable helps connect the worlds top freelance marketing talent with
-        companies. Rutrum est mi nascetur nibh pellentesque mollis dignissim
-        vulputate pretium ultricies.
-      </Text>
+    <Box>
+      <Box mb={16}>
+        <Text fontSize={48} color="white" fontWeight="semibold">
+          Advisable connects
+        </Text>
+        <Text fontSize={48} color="#FEB6C8" fontWeight="semibold">
+          top freelancers
+        </Text>
+        <Text fontSize={48} color="white" fontWeight="semibold" mb={5}>
+          with clients
+        </Text>
+        <Text fontSize="l" color="white" lineHeight="l">
+          Advisable helps connect the worlds top freelance marketing talent with
+          companies. Rutrum est mi nascetur nibh pellentesque mollis dignissim
+          vulputate pretium ultricies.
+        </Text>
+      </Box>
+      <Logos />
     </Box>
   );
 }
