@@ -4,7 +4,11 @@ class Types::CompanyType < Types::BaseType
   field :kind, String, null: true
   field :industry, Types::IndustryType, null: true
   field :sales_person, Types::SalesPersonType, null: true
-  field :users, [Types::User], null: true
+
+  field :users, [Types::User], null: true do
+    authorize :is_team_manager
+  end
+
   field :created_at, GraphQL::Types::ISO8601DateTime, null: false
   field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 end

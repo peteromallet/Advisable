@@ -10,7 +10,7 @@ class Mutations::RequestIntroduction < Mutations::BaseMutation
     requires_current_user!
     application = Application.find_by_uid_or_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(current_user, application)
-    return true if policy.write
+    return true if policy.write?
 
     ApiError.not_authorized('You do not have access to this')
   end
