@@ -2,8 +2,7 @@ import React from "react";
 import { Box } from "@advisable/donut";
 import Share from "./Share";
 import Edit from "./Edit";
-import MessageAction from "./Message";
-import VideoCallAction from "./VideoCall";
+import Connect from "./Connect";
 import ReactionsButton from "../Post/components/ReactionsButton";
 import useViewer from "src/hooks/useViewer";
 
@@ -18,12 +17,7 @@ export default function PostActions({ post, showEdit = true, ...props }) {
       </Box>
       {!viewerIsAuthor ? (
         <Box mr="2">
-          <MessageAction post={post} />
-        </Box>
-      ) : null}
-      {!viewerIsAuthor ? (
-        <Box mr="2">
-          <VideoCallAction post={post} />
+          <Connect post={post} />
         </Box>
       ) : null}
       {post.shareable ? <Share post={post} /> : null}
