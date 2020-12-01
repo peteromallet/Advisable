@@ -38,7 +38,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
 
     store_vat_number(user) if user.account.vat_number_changed?
 
-    user.update_payments_setup
+    user.company.update_payments_setup
     user.save_and_sync_with_responsible!(current_account_id)
 
     {user: user}

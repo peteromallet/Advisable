@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_30_095552) do
+ActiveRecord::Schema.define(version: 2020_12_01_113148) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -250,6 +251,9 @@ ActiveRecord::Schema.define(version: 2020_11_30_095552) do
     t.string "stripe_customer_id"
     t.string "stripe_setup_intent_id"
     t.string "setup_intent_status"
+    t.boolean "payments_setup", default: false
+    t.string "project_payment_method"
+    t.datetime "accepted_project_payment_terms_at"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
     t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
   end
@@ -808,7 +812,7 @@ ActiveRecord::Schema.define(version: 2020_11_30_095552) do
     t.string "context", limit: 128
     t.datetime "created_at"
     t.index ["context"], name: "index_taggings_on_context"
-    t.index %w[tag_id taggable_id taggable_type context tagger_id tagger_type], name: "taggings_idx", unique: true
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
     t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
     t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
@@ -1293,6 +1297,7 @@ ActiveRecord::Schema.define(version: 2020_11_30_095552) do
         END;
       $function$
   SQL
+
 
   create_trigger :logidze_on_accounts, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')

@@ -110,7 +110,11 @@ class Types::User < Types::BaseType
   end
 
   field :project_payment_method, String, null: true do
-    authorize :is_user
+    authorize :is_team_manager
+  end
+
+  def project_payment_method
+    object.company.project_payment_method
   end
 
   field :invoice_settings, Types::InvoiceSettingsType, null: true do
