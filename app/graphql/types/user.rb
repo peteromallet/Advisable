@@ -103,6 +103,12 @@ class Types::User < Types::BaseType
     argument :status, [String], required: false
   end
 
+  def applications(status: nil)
+    records = object.company.applications
+    records = records.where(status: status) if status
+    records
+  end
+
   field :project_payment_method, String, null: true do
     authorize :is_user
   end
@@ -207,11 +213,5 @@ class Types::User < Types::BaseType
       times.reject! { |t| interviews.include?(t) }
     end
     times
-  end
-
-  def applications(status:)
-    records = object.applications
-    records = records.where(status: status) if status
-    records
   end
 end
