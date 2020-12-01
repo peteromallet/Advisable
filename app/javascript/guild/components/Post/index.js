@@ -78,7 +78,7 @@ const Post = ({ post }) => {
         </Text>
 
         <Box display="flex" alignItems="center" marginBottom={5}>
-          <PostActions post={post} showEdit={false} />
+          <PostActions post={post} showEdit={false} showShare={false} />
           <Box ml={3}>
             <ConnectionsCount post={post} />
           </Box>
