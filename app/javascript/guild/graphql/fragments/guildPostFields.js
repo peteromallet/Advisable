@@ -21,12 +21,6 @@ export default gql`
       id
       url
     }
-    images {
-      id
-      url
-      cover
-      position
-    }
     author {
       id
       name

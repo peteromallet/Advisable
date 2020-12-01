@@ -13,11 +13,14 @@ import PostTypeTag from "@guild/components/PostTypeTag";
 import PostActions from "@guild/components/PostActions";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
+import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 import JoinGuild from "./JoinGuild";
+import { StyledImageThumbnail } from "./styles";
 
 const Post = () => {
   const { postId } = useParams();
   const viewer = useViewer();
+  const gallery = useImageGallery();
 
   const { data, loading } = useQuery(GUILD_POST_QUERY, {
     variables: { id: postId },
@@ -27,17 +30,45 @@ const Post = () => {
 
   if (loading) return <Loading />;
 
+  const otherImages = (post?.images || []).filter((p) => p.cover === false);
+
   return post ? (
     <ErrorBoundary>
       <Box pt={12} pb={20} mx="auto" maxWidth={["100%", "100%", "960px"]}>
+        <ImageGallery dialog={gallery} images={post.images} />
         <Card>
           {post.coverImage && (
             <CoverImage
               height="480px"
               images={post.images}
               cover={post.coverImage.url}
+              onClick={() => gallery.open(0)}
             />
           )}
+
+          {otherImages.length > 0 ? (
+            <Box
+              px={4}
+              pt={4}
+              display="grid"
+              gridGap="16px"
+              gridTemplateColumns={{
+                _: "1fr 1fr 1fr",
+                s: "1fr 1fr 1fr 1fr",
+                m: "1fr 1fr 1fr 1fr 1fr",
+              }}
+            >
+              {otherImages.map((i) => (
+                <StyledImageThumbnail
+                  key={i.id}
+                  height="100px"
+                  max-width="140px"
+                  onClick={() => gallery.open(post.images.indexOf(i))}
+                  style={{ backgroundImage: `url("${i.url}")` }}
+                />
+              ))}
+            </Box>
+          ) : null}
 
           <Box px={{ _: "s", s: "xxl" }} pt={10} pb={14}>
             <Box mb={4}>
