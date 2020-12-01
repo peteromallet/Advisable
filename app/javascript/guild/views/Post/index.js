@@ -35,7 +35,9 @@ const Post = () => {
   return post ? (
     <ErrorBoundary>
       <Box pt={12} pb={20} mx="auto" maxWidth={["100%", "100%", "960px"]}>
-        <ImageGallery dialog={gallery} images={post.images} />
+        {post.images.length > 0 ? (
+          <ImageGallery dialog={gallery} images={post.images} />
+        ) : null}
         <Card>
           {post.coverImage && (
             <CoverImage
