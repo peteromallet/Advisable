@@ -1,7 +1,7 @@
 import React from "react";
 import { DialogDisclosure, useDialogState } from "reakit/Dialog";
 import { Link } from "@styled-icons/heroicons-outline";
-import { Box, Tooltip } from "@advisable/donut";
+import { Modal, Box, Tooltip } from "@advisable/donut";
 import PostAction from "./PostAction";
 import ShareModal from "@guild/components/Post/components/ShareModal";
 
@@ -11,7 +11,9 @@ function MessagePostAction({ post }) {
 
   return (
     <>
-      <ShareModal externalUrl={url} modal={modal} />
+      <Modal modal={modal} label="Share post">
+        <ShareModal externalUrl={url} />
+      </Modal>
       <Tooltip placement="top" content="Share">
         <Box
           css={`

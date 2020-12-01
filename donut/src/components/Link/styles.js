@@ -45,10 +45,6 @@ const styles = css`
   &::after {
     content: "";
   }
-
-  svg {
-    margin: 0 4px;
-  }
 `;
 
 export const LinkStyles = styled(Link)`
