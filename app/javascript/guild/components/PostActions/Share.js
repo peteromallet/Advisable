@@ -5,7 +5,7 @@ import { Modal, Box, Tooltip } from "@advisable/donut";
 import PostAction from "./PostAction";
 import ShareModal from "@guild/components/Post/components/ShareModal";
 
-function MessagePostAction({ post }) {
+function MessagePostAction({ post, size }) {
   const modal = useDialogState();
   const url = `https://app.advisable.com/guild/posts/${post.id}`;
 
@@ -24,6 +24,7 @@ function MessagePostAction({ post }) {
             {(props) => (
               <PostAction
                 {...props}
+                size={size}
                 color="neutral600"
                 bg="neutral100"
                 icon={<Link />}
