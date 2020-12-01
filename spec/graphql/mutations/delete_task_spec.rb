@@ -32,11 +32,10 @@ RSpec.describe Mutations::DeleteTask do
     end
   end
 
-  context 'when there is no user signed in' do
-    it 'responds with a not_authorized error code' do
+  context "when there is no user signed in" do
+    it "responds with a not_authorized error code" do
       response = AdvisableSchema.execute(query, context: {current_user: nil})
-      errors = response['data']['deleteTask']['errors']
-      expect(errors[0]['code']).to eq('not_authorized')
+      expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHENTICATED")
     end
   end
 

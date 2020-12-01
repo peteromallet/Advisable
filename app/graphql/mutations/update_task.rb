@@ -12,31 +12,32 @@ class Mutations::UpdateTask < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def authorized?(**args)
-    task = Task.find_by_uid!(args[:id])
-    policy = TaskPolicy.new(context[:current_user], task)
-    return true if policy.is_specialist_or_client
-    [false, { errors: [{ code: 'not_authorized' }] }]
+    requires_current_user!
+
+    task = Task.find_by!(uid: args[:id])
+    policy = TaskPolicy.new(current_user, task)
+    args.except(:id).each do |arg, _val|
+      next if policy.public_send("update_#{arg}")
+
+      raise ApiError.not_authorized('You do not have access to update this task')
+    end
+
+    true
   end
 
   def resolve(**args)
     task = Task.find_by_uid!(args[:id])
 
-    if task.application.status === 'Stopped Working'
-      raise ApiError::InvalidRequest.new(
-              'applicationStatusNotWorking',
-              "Application status is 'Stopped Working'"
-            )
+    if task.application.status == "Stopped Working"
+      raise ApiError::InvalidRequest.new("applicationStatusNotWorking", "Application status is 'Stopped Working'")
     end
 
-    task =
-      Tasks::Update.call(
-        task: task, attributes: args.except(:id), user: context[:current_user]
-      )
+    task = Tasks::Update.call(task: task, attributes: args.except(:id), user: context[:current_user])
 
     task.application.reload
 
-    { task: task }
+    {task: task}
   rescue Service::Error => e
-    { errors: [e] }
+    {errors: [e]}
   end
 end
