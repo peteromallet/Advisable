@@ -2,40 +2,41 @@
 # an action. The TaskPolicy is a PORO that follows the rules set out by the
 # pundit gem.
 class TaskPolicy < BasePolicy
-  # Returns true if the user is the specialisr or the client.
-  # DEPRECATED: Use the is_client or is_specialist methods separately. If you
-  # are using the graphql autorize option you can pass multiple methods.
-  def is_specialist_or_client
-    return true if record.application.specialist == user
-    return true if record.application.project.user == user
+  def is_client_owner?
+    record.application.project.user == user
   end
 
-  def is_client
-    return true if record.application.project.user == user
+  def is_specialist_owner?
+    record.application.specialist == user
   end
 
-  def is_specialist
-    return true if record.application.specialist == user
+  def belongs_to_company?
+    user.is_a?(User) && user.company.users.include?(record.application.project.user)
+  end
+
+  def via_client?
+    is_client_owner? || belongs_to_company?
+  end
+
+  def via_specialist_or_client?
+    is_specialist_owner? || via_client?
   end
 
   def update_name
     return true if is_admin
-    return false if user.nil?
 
-    ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(record.stage)
+    changeable_stage? && via_specialist_or_client?
   end
+  alias update_description update_name
+  alias delete update_name
 
   # Wether or not the current user has permission to update the due date for
   # a task.
   def update_due_date
     return false if user.nil?
     return true if is_admin
-    if ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(
-         record.stage
-       )
-      return true
-    end
-    return true if task.stage == 'Assigned' && is_specialist
+    return true if changeable_stage?
+    return true if record.stage == 'Assigned' && is_specialist_owner?
 
     false
   end
@@ -43,59 +44,27 @@ class TaskPolicy < BasePolicy
   # Wether or not the current user has permission to update the estimate for a
   # task.
   def update_estimate
-    return true if is_admin
     return false if user.nil?
-    if ['Not Assigned', 'Quote Requested', 'Requested To Start'].include?(
-         record.stage
-       )
-      return true
-    end
-    return true if task.stage == 'Quote Provided' && is_specialist
-    return true if task.stage == 'Assigned' && is_specialist
+    return true if is_admin
+    return true if ['Not Assigned', 'Quote Requested', 'Requested To Start'].include?(record.stage)
+    return true if is_specialist_owner? && ['Quote Provided', 'Assigned'].include?(record.stage)
 
     false
   end
-
-  # Wether or not the current user has permission to update the flexible estimate
-  # for a task. The reason we need another method for this rather than just
-  # reusing the 'update_estimate' method is becuase in the update_task mutation
-  # we iterate through all of the changes and call methods based on the
-  # attributes that were updated. e.g update_name is called if the name attribute
-  # is changed
-  def update_flexible_estimate
-    update_estimate
-  end
-
-  def update_estimate_type
-    update_estimate
-  end
-
-  def update_description
-    return true if is_admin
-    return false if user.nil?
-
-    ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(record.stage)
-  end
+  alias update_flexible_estimate update_estimate
+  alias update_estimate_type update_estimate
 
   def update_trial
-    return true if is_admin
-
-    is_specialist
-  end
-
-  def delete
-    return true if is_admin
-
-    ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(record.stage)
+    is_admin || is_specialist_owner?
   end
 
   def set_repeating
-    is_client || is_specialist || is_admin
+    is_admin || via_specialist_or_client?
   end
 
   private
 
-  def task
-    record
+  def changeable_stage?
+    ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(record.stage)
   end
 end

@@ -16,6 +16,7 @@ class WebhookConfiguration < ApplicationRecord
   # table inheritance. i.e allways use webhook_configuration_path
   def self.model_name
     return super if self == WebhookConfiguration
+
     WebhookConfiguration.model_name
   end
 
@@ -23,9 +24,10 @@ class WebhookConfiguration < ApplicationRecord
   def process(entity)
     matched_criteria = criteria.select do |c|
       c.symbolize_keys
-      send(c[:operator], entity, c[:attribute], c[:value])
+      __send__(c[:operator], entity, c[:attribute], c[:value])
     end
     return unless matched_criteria.length == criteria.length
+
     webhook = Webhook.create(url: url, data: data(entity))
     webhook
   end
@@ -39,14 +41,15 @@ class WebhookConfiguration < ApplicationRecord
   # operator method to check if an entities attribute has changed to a given
   # value.
   def changes_to(entity, attribute, value)
-    return false unless entity.send("saved_change_to_#{attribute}?")
+    return false unless entity.public_send("saved_change_to_#{attribute}?")
+
     entity[attribute] =~ Regexp.new(value)
   end
 
   private
 
   def valid_criteria
-    errors.add(:criteria, "must have at least one criteria") if criteria.length === 0
+    errors.add(:criteria, "must have at least one criteria") if criteria.length.zero?
     criteria.each do |config|
       config.symbolize_keys
       break errors.add(:criteria, "block must have an attribute") unless config[:attribute]
