@@ -315,7 +315,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :email, String, null: true do
-    authorize :is_admin, :is_specialist, :is_applicant_of_user_project
+    authorize :is_admin, :is_specialist, :is_applicant_of_company_projects
     description 'The specialists email address'
   end
 

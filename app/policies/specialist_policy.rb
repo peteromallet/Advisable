@@ -8,11 +8,8 @@ class SpecialistPolicy < BasePolicy
     record == user
   end
 
-  # checks wether the specialist has applied to any of the current users
-  # projects
-  def is_applicant_of_user_project
-    return false if user.blank?
-
-    record.projects.where(user_id: user.id).any?
+  # checks wether the specialist has applied to any of the current user company's projects
+  def is_applicant_of_company_projects
+    user.is_a?(User) && user.company.projects.joins(:applications).exists?(applications: {specialist_id: record.id})
   end
 end
