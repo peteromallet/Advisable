@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe StripeEvents::SetupIntentSucceeded do
-  let!(:user) { create(:user, stripe_setup_intent_id: "si_12345", setup_intent_status: "pending") }
+  let!(:company) { create(:company, stripe_setup_intent_id: "si_12345", setup_intent_status: "pending") }
   let(:event) {
     OpenStruct.new({
       type: "setup_intent.succeeded",
@@ -14,30 +14,32 @@ RSpec.describe StripeEvents::SetupIntentSucceeded do
     })
   }
 
-  before :each do
+  before do
     allow(Users::AttachPaymentMethod).to receive(:call)
+    create(:user, company: company)
   end
 
   it "sets the setup_intent_status attribute for the user to succeeded" do
     expect {
       StripeEvents.process(event)
     }.to change {
-      user.reload.setup_intent_status
+      company.reload.setup_intent_status
     }.from("pending").to("succeeded")
   end
 
-  it 'calls the attach payment method service' do
+  # rubocop:disable RSpec/MessageSpies
+  it "calls the attach payment method service" do
     expect(Users::AttachPaymentMethod).to receive(:call).with(
       user: instance_of(User),
       payment_method_id: "pm_12345"
     )
     StripeEvents.process(event)
   end
+  # rubocop:enable RSpec/MessageSpies
 
-  context 'when the user cant be found' do
-    let!(:user) { create(:user, stripe_setup_intent_id: nil) }
-
-    it 'returns true' do
+  context "when the user cant be found" do
+    it "returns true" do
+      company.update(stripe_setup_intent_id: nil)
       expect(StripeEvents.process(event)).to be_truthy
     end
   end

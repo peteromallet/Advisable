@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Mutations::UpdateProjectPaymentMethod do
   let(:user) { create(:user, project_payment_method: nil) }
+  let(:context) { {current_user: user} }
+  let(:response) { AdvisableSchema.execute(query, context: context) }
   let(:query) do
     <<-GRAPHQL
     mutation {
@@ -45,14 +47,11 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     allow(Stripe::Customer).to receive(:update)
     allow(Stripe::Customer).to receive(:create_tax_id)
   end
-
-  let(:context) { { current_user: user } }
-  let(:response) { AdvisableSchema.execute(query, context: context) }
 
   it 'updates the project pament method' do
     bio =
@@ -82,7 +81,7 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
   end
 
   context 'when not logged in' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'returns an error' do
       error =
@@ -92,7 +91,7 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
   end
 
   context 'when logged in as a specialist' do
-    let(:context) { { current_user: create(:specialist) } }
+    let(:context) { {current_user: create(:specialist)} }
 
     it 'returns an error' do
       error =
@@ -101,17 +100,19 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
     end
   end
 
+  # rubocop:disable RSpec/MessageSpies
   it "stores the VAT number in stripe" do
     expect(Stripe::Customer).to receive(:create_tax_id).with(
-      user.stripe_customer_id,
+      user.company.stripe_customer_id,
       {
         type: "eu_vat",
         value: "1234",
       }, {
-        idempotency_key: "#{user.uid}-1234"
+        idempotency_key: "#{user.company.id}-1234"
       }
     )
 
     response
   end
+  # rubocop:enable RSpec/MessageSpies
 end

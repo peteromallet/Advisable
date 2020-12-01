@@ -226,7 +226,7 @@ class Types::QueryType < Types::BaseType
 
     invoice = Stripe::Invoice.retrieve(id)
 
-    if invoice.customer != current_user.stripe_customer_id
+    if invoice.customer != current_user.company.stripe_customer_id
       raise ApiError::NotAuthorized.new('You dont have access to this')
     end
 
