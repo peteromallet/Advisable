@@ -2,11 +2,11 @@ class ProjectPolicy < BasePolicy
   def read?
     is_owner? || belongs_to_company? || is_admin
   end
+  alias publish? read?
 
-  def publish?
+  def delete?
     is_owner? || is_admin
   end
-  alias delete? publish?
 
   def can_access_project?
     return true if record.status == "Brief Pending Confirmation"
