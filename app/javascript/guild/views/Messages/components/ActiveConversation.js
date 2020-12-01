@@ -96,8 +96,9 @@ const ActiveConversation = ({ channelSid }) => {
               <StyledMessage
                 key={key}
                 as={motion.div}
-                sender={message.author !== other}
-                width={{ _: "90%", s: "50%" }}
+                bg={message.author !== other ? "blue200" : "neutral100"}
+                alignSelf={message.author !== other ? "flex-end" : "flex-start"}
+                maxWidth={{ _: "100%", m: "90%" }}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0 }}
@@ -123,7 +124,7 @@ const ActiveConversation = ({ channelSid }) => {
                   </GuildBox>
                 )}
 
-                <GuildBox spaceChildrenVertical={16}>
+                <Box minWidth="0">
                   <Text
                     css={css`
                       white-space: pre-wrap;
@@ -143,7 +144,7 @@ const ActiveConversation = ({ channelSid }) => {
                       Book a call with me
                     </Link.External>
                   )}
-                </GuildBox>
+                </Box>
               </StyledMessage>
 
               <Box
