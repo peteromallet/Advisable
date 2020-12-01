@@ -2,7 +2,6 @@ import React, { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useImage } from "react-image";
 import styled from "styled-components";
-import PostImages from "@guild/components/PostImages";
 import { Box, Skeleton } from "@advisable/donut";
 
 const StyledCoverImage = styled.img`
@@ -16,21 +15,21 @@ const Cover = ({ srcList }) => {
   return <StyledCoverImage src={src} />;
 };
 
-export const CoverImage = ({ height = "320px", images, cover }) => {
+export const CoverImage = ({ height = "320px", cover, onClick }) => {
   return (
     <Suspense
       fallback={<Skeleton height={height} width="100%" borderRadius="4px" />}
     >
       <Box
-        position="relative"
-        height={height}
         width="100%"
+        height={height}
+        position="relative"
         display="inline-flex"
+        onClick={onClick}
       >
         <ErrorBoundary FallbackComponent={() => null}>
           <Cover srcList={cover} />
         </ErrorBoundary>
-        {images && <PostImages images={images} />}
       </Box>
     </Suspense>
   );
