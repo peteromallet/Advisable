@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { theme, Text } from "@advisable/donut";
+import { theme, Box } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
 
 const { colors } = theme;
@@ -22,18 +22,10 @@ export const StyledConversationItem = styled(GuildBox)`
     `}
 `;
 
-export const StyledMessage = styled(GuildBox)`
+export const StyledMessage = styled(Box)`
   padding: 16px;
-  background: ${colors.ghostWhite};
   color: ${colors.catalinaBlue100};
   display: flex;
-  align-self: flex-start;
   border-radius: 12px;
-
-  ${({ sender }) =>
-    sender &&
-    css`
-      background: ${colors.lavender};
-      align-self: flex-end;
-    `}
+  overflow-wrap: break-word;
 `;
