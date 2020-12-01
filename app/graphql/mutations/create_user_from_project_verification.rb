@@ -30,7 +30,8 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
     account = Account.new(
       email: email,
       first_name: viewer.first_name,
-      last_name: viewer.last_name
+      last_name: viewer.last_name,
+      permissions: [:team_manager]
     )
     account.save!
 

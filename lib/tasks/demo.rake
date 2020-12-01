@@ -48,7 +48,7 @@ namespace :demo do
 
       # Create on platform projects
       5.times do |p|
-        account = Account.create(email: Faker::Internet.email)
+        account = Account.create(email: Faker::Internet.email, permissions: [:team_manager])
         user = User.create(
           account: account,
           company: Company.new(name: Company.fresh_name_for(Faker::Company.name)),
