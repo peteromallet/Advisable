@@ -82,6 +82,58 @@ RSpec.describe Types::SpecialistType do
     end
   end
 
+  describe "email field" do
+    let(:query) do
+      <<-GRAPHQL
+      {
+        specialist(id: "#{specialist.uid}") {
+          email
+        }
+      }
+      GRAPHQL
+    end
+
+    context "when logged in as another specialist" do
+      let(:context) { {current_user: create(:specialist)} }
+
+      it "prevents access" do
+        error = response["errors"][0][:code]
+        expect(response["data"]["specialist"]["applications"]).to be_nil
+        expect(error).to eq("invalidPermissions")
+      end
+    end
+
+    context "when logged in as a user" do
+      let(:context) { {current_user: create(:user)} }
+
+      it "prevents access" do
+        error = response["errors"][0][:code]
+        expect(response["data"]["specialist"]["applications"]).to be_nil
+        expect(error).to eq("invalidPermissions")
+      end
+    end
+
+    context "when logged in as a user from the same company" do
+      let(:project) { create(:project) }
+      let(:application) { create(:application, specialist: specialist, status: 'Applied', project: project) }
+      let(:context) { {current_user: create(:user, company: application.project.user.company)} }
+
+      it "allows access" do
+        email = response["data"]["specialist"]["email"]
+        expect(email).not_to be_nil
+      end
+    end
+
+    context "when logged in as an admin" do
+      let(:context) { {current_user: create(:user, account: create(:account, permissions: %w[admin]))} }
+
+      it "allows access" do
+        email = response["data"]["specialist"]["email"]
+        expect(email).not_to be_nil
+      end
+    end
+  end
+
   context "with a guild specialist" do
     let!(:specialist) { create(:specialist, :guild) }
     let(:query) do
