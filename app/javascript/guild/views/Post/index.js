@@ -80,7 +80,7 @@ const Post = () => {
 
             <Box my={10} height="1px" width="200px" mx="auto" bg="neutral100" />
             <Box display="flex" justifyContent="center">
-              <PostActions post={post} />
+              <PostActions size={{ _: "lg", md: "xl" }} post={post} />
             </Box>
             {!guildViewer && <JoinGuild />}
           </Box>

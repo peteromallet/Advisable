@@ -16,7 +16,7 @@ export const GUILD_UPDATE_POST_REACTIONS = gql`
   }
 `;
 
-const ReactionsButton = ({ post }) => {
+const ReactionsButton = ({ size, post }) => {
   const timer = useRef(null);
   const viewer = useViewer();
   const [reactToPost] = useMutation(GUILD_UPDATE_POST_REACTIONS);
@@ -56,6 +56,7 @@ const ReactionsButton = ({ post }) => {
 
   return (
     <PostAction
+      size={size}
       onClick={handleReaction}
       color={reacted ? "white" : "red600"}
       bg={reacted ? "red500" : "neutral100"}

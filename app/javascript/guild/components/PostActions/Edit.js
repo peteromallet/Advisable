@@ -4,7 +4,7 @@ import { Pencil } from "@styled-icons/heroicons-outline";
 import { Box, Tooltip } from "@advisable/donut";
 import PostAction from "./PostAction";
 
-function EditPost({ post }) {
+function EditPost({ post, size }) {
   const history = useHistory();
 
   function handleClick() {
@@ -18,6 +18,7 @@ function EditPost({ post }) {
         `}
       >
         <PostAction
+          size={size}
           bg="neutral100"
           color="neutral600"
           icon={<Pencil />}

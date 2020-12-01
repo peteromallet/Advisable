@@ -10,7 +10,7 @@ const LABELS = {
   default: (name) => `Connect with ${name}`,
 };
 
-function ConnectAction({ post }) {
+function ConnectAction({ post, size }) {
   const modal = useModal();
   const viewer = useViewer();
   const firstName = post.author.firstName;
@@ -36,6 +36,7 @@ function ConnectAction({ post }) {
           `}
         >
           <PostAction
+            size={size}
             color="blue800"
             bg="neutral100"
             icon={<Chat />}

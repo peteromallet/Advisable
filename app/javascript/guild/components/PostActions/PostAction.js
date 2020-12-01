@@ -1,11 +1,30 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { variant } from "styled-system";
 import { theme } from "@advisable/donut";
 
+const size = variant({
+  prop: "size",
+  variants: {
+    md: {
+      width: "40px",
+      height: "40px",
+    },
+    lg: {
+      width: "52px",
+      height: "52px",
+    },
+    xl: {
+      width: "64px",
+      height: "64px",
+    },
+  },
+});
+
 const StyledPostAction = styled(motion.div)`
-  width: 40px;
-  height: 40px;
+  ${size};
+
   display: flex;
   outline: none;
   position: relative;
@@ -47,7 +66,7 @@ const spring = {
 };
 
 export default React.forwardRef(function PostAction(
-  { icon, bg, color, onClick, ...props },
+  { icon, bg, color, onClick, size, ...props },
   ref,
 ) {
   const colorAnimation = {
@@ -62,6 +81,7 @@ export default React.forwardRef(function PostAction(
   return (
     <StyledPostAction
       ref={ref}
+      size={size || "md"}
       color={color}
       onClick={onClick}
       whileHover="hover"
