@@ -43,6 +43,12 @@ RSpec.describe Mutations::CreateUserFromProjectVerification do
     }.to change(User, :count).by(1)
   end
 
+  it "gives newly created user's account team manager permission" do
+    response = AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
+    user = User.find_by(uid: response["data"]["createUserFromProjectVerification"]["user"]["id"])
+    expect(user.account.permissions).to include('team_manager')
+  end
+
   context 'when not logged in with oauth' do
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: {oauth_viewer: nil})

@@ -18,6 +18,7 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
       user = User.find_or_create_by(account: account) do |u|
         u.application_status = "Application Started"
         u.company = Company.new(name: Company.fresh_name_for(''))
+        account.permissions << :team_manager
       end
 
       if user.application_status == "Application Started"

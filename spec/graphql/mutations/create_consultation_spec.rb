@@ -28,31 +28,23 @@ RSpec.describe Mutations::CreateConsultation do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Consultation).to receive(:sync_to_airtable)
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     allow_any_instance_of(Client).to receive(:sync_to_airtable)
   end
 
   it 'creates a new consultation record' do
-    expect { AdvisableSchema.execute(query) }.to change {
-      Consultation.count
-    }.by(1)
+    expect { AdvisableSchema.execute(query) }.to change(Consultation, :count).by(1)
   end
 
   context 'when a consultation record already exists' do
-    let!(:consultation) do
-      create(
-        :consultation,
-        user: user, status: 'Request Started', specialist: specialist
-      )
-    end
     let!(:user) { create(:user, account: create(:account, email: email)) }
 
+    before { create(:consultation, user: user, status: 'Request Started', specialist: specialist) }
+
     it 'does not create a new consultation record' do
-      expect { AdvisableSchema.execute(query) }.not_to change {
-        Consultation.count
-      }
+      expect { AdvisableSchema.execute(query) }.not_to change(Consultation, :count)
     end
   end
 
@@ -60,7 +52,7 @@ RSpec.describe Mutations::CreateConsultation do
     let!(:user) { create(:user, company_name: 'Existing', account: create(:account, email: email)) }
 
     it 'doesnt create a new user record' do
-      expect { AdvisableSchema.execute(query) }.not_to change { User.count }
+      expect { AdvisableSchema.execute(query) }.not_to change(User, :count)
     end
 
     it 'updates their company name' do
@@ -92,18 +84,24 @@ RSpec.describe Mutations::CreateConsultation do
       user.client_user.try(:destroy)
       expect(user.reload.client).to be_nil
       AdvisableSchema.execute(query)
-      expect(user.reload.client).to_not be_nil
+      expect(user.reload.client).not_to be_nil
     end
   end
 
   context 'when there is no existing user with the email' do
     it 'creates a new user account' do
-      expect { AdvisableSchema.execute(query) }.to change { User.count }.by(1)
+      expect { AdvisableSchema.execute(query) }.to change(User, :count).by(1)
+    end
+
+    it "gives user's account team manager permission" do
+      response = AdvisableSchema.execute(query)
+      consultation = Consultation.find_by(uid: response["data"]["createConsultation"]["consultation"]["id"])
+      expect(consultation.user.account.permissions).to include('team_manager')
     end
   end
 
   context 'when a freelancers email is provided' do
-    let!(:specialist) { create(:specialist, account: create(:account, email: email)) }
+    before { create(:specialist, account: create(:account, email: email)) }
 
     it 'raises an error' do
       response = AdvisableSchema.execute(query)
