@@ -66,7 +66,7 @@ const Post = () => {
                 </Box>
               </Box>
 
-              <Box display="flex" alignItems="center">
+              <Box display={{ _: "none", s: "flex" }} alignItems="center">
                 <ConnectionsCount mr={3} post={post} />
                 <PostActions post={post} />
               </Box>

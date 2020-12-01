@@ -6,21 +6,29 @@ import Connect from "./Connect";
 import ReactionsButton from "../Post/components/ReactionsButton";
 import useViewer from "src/hooks/useViewer";
 
-export default function PostActions({ post, size, showEdit = true, ...props }) {
+export default function PostActions({
+  post,
+  size,
+  showShare = true,
+  showEdit = true,
+  ...props
+}) {
   const viewer = useViewer();
   const viewerIsAuthor = post.author.id === viewer?.id;
 
   return (
     <Box display="inline-flex" alignItems="center" {...props}>
-      <Box mr="2">
-        <ReactionsButton size={size} post={post} />
-      </Box>
+      <ReactionsButton size={size} post={post} />
       {!viewerIsAuthor ? (
-        <Box mr="2">
+        <Box ml="2">
           <Connect post={post} size={size} />
         </Box>
       ) : null}
-      {post.shareable ? <Share post={post} size={size} /> : null}
+      {showShare && post.shareable ? (
+        <Box ml="2">
+          <Share post={post} size={size} />
+        </Box>
+      ) : null}
       {showEdit && viewerIsAuthor ? (
         <Box ml={2}>
           <Edit post={post} size={size} />
