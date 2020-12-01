@@ -15,23 +15,23 @@ RSpec.describe User, type: :model do
     user.availability = [a, b]
     expect(user.availability).to include(a)
     user.save
-    expect(user.availability).to_not include(a)
+    expect(user.availability).not_to include(a)
     expect(user.availability).to include(b)
   end
 
   describe "#send_confirmation_email" do
     let(:user) { build(:user) }
-    let(:mail) { double('email') }
+    let(:mail) { double('email') } # rubocop:disable RSpec/VerifiedDoubles
 
     it "sets the confirmation_digest" do
       expect(user.account.confirmation_digest).to be_nil
       user.send_confirmation_email
-      expect(user.account.reload.confirmation_digest).to_not be_nil
+      expect(user.account.reload.confirmation_digest).not_to be_nil
     end
 
     it 'sends the confirmation email' do
-      expect(mail).to receive(:deliver_later)
-      expect(UserMailer).to receive(:confirm).and_return(mail)
+      expect(mail).to receive(:deliver_later) # rubocop:disable RSpec/MessageSpies
+      allow(UserMailer).to receive(:confirm).and_return(mail)
       user.send_confirmation_email
     end
   end
@@ -39,7 +39,7 @@ RSpec.describe User, type: :model do
   describe '#invoice_settings' do
     it 'returns a hash of the users invoice settings' do
       account = Account.new(email: "test@test.com", vat_number: "VAT")
-      user = User.new({
+      user = described_class.new({
         account: account,
         invoice_name: "Test Account",
         invoice_company_name: "Test Inc",
@@ -64,47 +64,18 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#stripe_customer_id' do
-    context "when the user has a stripe customer id set" do
-      it 'returns the existing id' do
-        u = create(:user, stripe_customer_id: "test")
-        expect(u.stripe_customer_id).to eq("test")
-      end
-    end
-
-    context 'when the user has no existing stripe customer id' do
-      it 'creates a new stripe customer and stores the id' do
-        user = create(:user)
-        user.update stripe_customer_id: nil
-        customer = double(Stripe::Customer, id: "cus_123")
-
-        expect(Stripe::Customer).to receive(:create).with({
-          email: user.account.email,
-          name: user.company_name,
-          metadata: {
-            user_id: user.uid,
-          }
-        }).and_return(customer)
-
-        expect {
-          user.stripe_customer_id
-        }.to change {
-          user.reload[:stripe_customer_id]
-        }.from(nil).to("cus_123")
-      end
-    end
-  end
-
-  describe '#stripe_customer' do
-    it 'returns the stripe customers' do
-      user = create(:user)
-      customer = double(Stripe::Customer)
-      expect(Stripe::Customer).to receive(:retrieve).with({
-        id: user.stripe_customer_id,
-        expand: ['invoice_settings.default_payment_method']
+  describe "#stripe_customer" do
+    it "returns the stripe customer from company" do
+      user = create(:user, :team_manager)
+      customer = instance_double(Stripe::Customer)
+      allow(Stripe::Customer).to receive(:retrieve).with({
+        id: user.company.stripe_customer_id,
+        expand: ["invoice_settings.default_payment_method"]
       }).and_return(customer)
 
-      expect(user.stripe_customer).to eq(customer)
+      expect(user.stripe_customer).
+        to eq(user.company.stripe_customer).
+        and eq(customer)
     end
   end
 
@@ -164,6 +135,7 @@ RSpec.describe User, type: :model do
     end
   end
 
+  # rubocop:disable RSpec/VerifiedDoubles, RSpec/MessageSpies
   describe '#payment_method' do
     it 'calls invoice_settings.default_payment_method on the stripe customer' do
       user = create(:user)
@@ -174,6 +146,7 @@ RSpec.describe User, type: :model do
       user.payment_method
     end
   end
+  # rubocop:enable RSpec/VerifiedDoubles, RSpec/MessageSpies
 
   describe '#company_name' do
     context "when the user has a client record" do

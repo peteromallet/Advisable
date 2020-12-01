@@ -2,27 +2,17 @@ class Mutations::CreateSetupIntent < Mutations::BaseMutation
   field :secret, String, null: true
   field :errors, [Types::Error], null: true
 
-  # There must be a User logged in ( not a specialist )
   def authorized?(**args)
-    return true if context[:current_user].is_a?(User)
-    [false, { errors: [{ code: "notAuthorized" }] }]
+    requires_client!
   end
 
   def resolve(**args)
     intent = Stripe::SetupIntent.create
-    user.update_columns(
+    current_user.company.update(
       stripe_setup_intent_id: intent.id,
       setup_intent_status: 'pending'
     )
 
-    {
-      secret: intent.client_secret
-    }
-  end
-
-  private
-
-  def user
-    context[:current_user]
+    {secret: intent.client_secret}
   end
 end

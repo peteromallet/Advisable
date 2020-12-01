@@ -109,7 +109,7 @@ class Types::ProjectType < Types::BaseType
         {
           currency: 'usd',
           amount: object.deposit_owed,
-          customer: object.user.stripe_customer_id,
+          customer: object.user.company.stripe_customer_id,
           setup_future_usage: 'off_session',
           metadata: {payment_type: 'deposit', project: object.uid}
         },
