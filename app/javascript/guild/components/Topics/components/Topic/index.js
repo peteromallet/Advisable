@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { lowerDashed } from "@guild/utils";
 import { feedStore } from "@guild/stores/Feed";
+import { Hashtag } from "@styled-icons/heroicons-solid";
 import shallow from "zustand/shallow";
 import { StyledTopic } from "./styles";
 
@@ -27,7 +28,8 @@ const Topic = ({ topic }) => {
 
   return (
     <StyledTopic selected={selected} onClick={handleSelectedTopic}>
-      #{lowerDashed(topic.name)}
+      <Hashtag />
+      {lowerDashed(topic.name)}
     </StyledTopic>
   );
 };
