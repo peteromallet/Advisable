@@ -15,8 +15,9 @@ class Mutations::CreateTask < Mutations::BaseMutation
   def authorized?(**args)
     application = Application.find_by_uid_or_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
-    return true if policy.create_task
-    [false, { errors: [{ code: 'not_authorized' }] }]
+    return true if policy.create?
+
+    [false, {errors: [{code: 'not_authorized'}]}]
   end
 
   def resolve(**args)
@@ -26,10 +27,10 @@ class Mutations::CreateTask < Mutations::BaseMutation
       task:
         Tasks::Create.call(
           application: application,
-          attributes: args.except(:application, :id).merge({ uid: args[:id] })
+          attributes: args.except(:application, :id).merge({uid: args[:id]})
         )
     }
   rescue Service::Error => e
-    { errors: [e] }
+    {errors: [e]}
   end
 end
