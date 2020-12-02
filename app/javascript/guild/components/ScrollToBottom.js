@@ -1,9 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useLayoutEffect } from "react";
 
 export const ScrollToBottom = () => {
   const ref = useRef();
-  useEffect(() =>
-    ref.current.scrollIntoView({ behavior: "smooth", block: "end" }),
-  );
+  const behavior = useRef("auto");
+
+  useLayoutEffect(() => {
+    ref.current.scrollIntoView({ behavior: behavior.current, block: "end" });
+    behavior.current = "smooth";
+  });
+
   return <div ref={ref} />;
 };
