@@ -18,7 +18,7 @@ export default function PostActions({
   const isShareable = showShare && post.shareable;
   const isEditable = showEdit && viewerIsAuthor;
 
-  // if (viewerIsAuthor && !isShareable && !isEditable) return null;
+  if (viewerIsAuthor && !isShareable && !isEditable) return null;
 
   return (
     <Box display="inline-flex" alignItems="center" {...props}>
