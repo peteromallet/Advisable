@@ -136,3 +136,31 @@ export const StyledCurrentUserMenuItem = styled.div`
     background: ${theme.colors.neutral100};
   }
 `;
+
+export const StyledHamburger = styled.button`
+  padding: 0;
+  width: 20px;
+  border: none;
+  opacity: 0.8;
+  outline: none;
+  display: block;
+  appearance: none;
+  margin-right: 12px;
+  background: transparent;
+
+  &:active {
+    opacity: 1;
+  }
+
+  div {
+    width: 100%;
+    height: 2px;
+    background: white;
+    border-radius: 1px;
+    margin-bottom: 5px;
+  }
+
+  div:last-child {
+    margin-bottom: 0;
+  }
+`;
