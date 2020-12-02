@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Mutations::UpdateTask do
+RSpec.describe Mutations::UpdateUser do
   let(:user) do
     create(
       :user,
@@ -9,9 +9,7 @@ RSpec.describe Mutations::UpdateTask do
     )
   end
 
-  let(:query) {}
-
-  before :each do
+  before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
@@ -20,7 +18,7 @@ RSpec.describe Mutations::UpdateTask do
     expect {
       AdvisableSchema.execute(
         query("{ industry: \"Advertising\" }"),
-        context: { current_user: user }
+        context: {current_user: user}
       )
     }.to change { user.reload.industry }.to(industry)
   end
@@ -30,7 +28,7 @@ RSpec.describe Mutations::UpdateTask do
     expect {
       AdvisableSchema.execute(
         query("{ companyType: \"Startup\" }"),
-        context: { current_user: user }
+        context: {current_user: user}
       )
     }.to change { user.reload.company_type }.to('Startup')
   end
@@ -40,7 +38,7 @@ RSpec.describe Mutations::UpdateTask do
       response =
         AdvisableSchema.execute(
           query("{ companyType: \"Startup\" }"),
-          context: { current_user: nil }
+          context: {current_user: nil}
         )
       error = response['errors'].first['extensions']['type']
       expect(error).to eq('NOT_AUTHENTICATED')
