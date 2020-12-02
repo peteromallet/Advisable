@@ -61,6 +61,12 @@ const ActiveConversation = ({ channelSid }) => {
     }
   };
 
+  function handleKeyUp(e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      onSubmitNewMessage();
+    }
+  }
+
   if (initializing) return <Loading />;
 
   return (
@@ -185,6 +191,7 @@ const ActiveConversation = ({ channelSid }) => {
             minRows="3"
             maxRows="3"
             value={message}
+            onKeyUp={handleKeyUp}
             onChange={({ currentTarget }) => setMessage(currentTarget.value)}
             placeholder="New Message ..."
           ></Textarea>
