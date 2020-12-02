@@ -6,7 +6,6 @@ FactoryBot.define do
     company
     company_name { 'Test Company' }
     company_type { 'Startup' }
-    payments_setup { true }
     sequence(:uid) { "use_#{SecureRandom.hex[0..14]}" }
     sequence(:airtable_id) { |n| "recuser#{n}" }
 

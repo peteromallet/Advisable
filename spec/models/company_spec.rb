@@ -64,4 +64,73 @@ RSpec.describe Company, type: :model do
       expect(company.stripe_customer).to eq(customer)
     end
   end
+
+  describe '#update_payments_setup' do
+    it "sets payments_setup to true" do
+      company = create(:company, project_payment_method: "Bank Transfer", payments_setup: nil, invoice_name: "Test", accepted_project_payment_terms_at: 2.hours.ago)
+      expect {
+        company.update_payments_setup
+      }.to change {
+        company.reload.payments_setup
+      }.from(nil).to(true)
+    end
+
+    context 'when project_payment_method is nil' do
+      it 'sets the payments_setup to false' do
+        company = create(:company, project_payment_method: nil, payments_setup: nil)
+        expect {
+          company.update_payments_setup
+        }.to change {
+          company.reload.payments_setup
+        }.from(nil).to(false)
+      end
+    end
+
+    context "when the project payment method is Card and the payment_method is nil" do
+      it "sets payments_setup to false" do
+        company = create(:company, project_payment_method: "Card", payments_setup: nil)
+        allow(company).to receive(:payment_method).and_return(nil)
+        expect {
+          company.update_payments_setup
+        }.to change {
+          company.reload.payments_setup
+        }.from(nil).to(false)
+      end
+    end
+
+    context 'when the invoice_name is nil' do
+      it "sets payments_setup to false" do
+        company = create(:company, project_payment_method: "Bank Transfer", payments_setup: nil, invoice_name: nil)
+        expect {
+          company.update_payments_setup
+        }.to change {
+          company.reload.payments_setup
+        }.from(nil).to(false)
+      end
+    end
+
+    context 'when accepted_project_payment_terms_at is nil' do
+      it "sets payments_setup to false" do
+        company = create(:company, project_payment_method: "Bank Transfer", payments_setup: nil, invoice_name: "Test", accepted_project_payment_terms_at: nil)
+        expect {
+          company.update_payments_setup
+        }.to change {
+          company.reload.payments_setup
+        }.from(nil).to(false)
+      end
+    end
+  end
+
+  # rubocop:disable RSpec/VerifiedDoubles, RSpec/MessageSpies
+  describe '#payment_method' do
+    it 'calls invoice_settings.default_payment_method on the stripe customer' do
+      company = create(:company)
+      stripe_invoice_settings = double("InvoiceSettings")
+      expect(stripe_invoice_settings).to receive(:default_payment_method)
+      customer = double(Stripe::Customer, invoice_settings: stripe_invoice_settings)
+      allow(company).to receive(:stripe_customer).and_return(customer)
+      company.payment_method
+    end
+  end
+  # rubocop:enable RSpec/VerifiedDoubles, RSpec/MessageSpies
 end

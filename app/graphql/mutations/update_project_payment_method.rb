@@ -14,7 +14,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
 
   def resolve(**args)
     user = context[:current_user]
-    user.project_payment_method = args[:payment_method] if args.has_key?(:payment_method)
+    user.company.project_payment_method = args[:payment_method] if args.has_key?(:payment_method)
     user.exceptional_project_payment_terms = args[:exceptional_terms] if args.has_key?(:exceptional_terms)
 
     if args.has_key?(:invoice_settings)
