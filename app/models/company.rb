@@ -55,7 +55,7 @@ class Company < ApplicationRecord
       name: invoice_name,
       company_name: invoice_company_name,
       billing_email: billing_email,
-      vat_number: first_account&.vat_number, # WIP Company migration: save on company instead of acc
+      vat_number: vat_number,
       address: address
     }
   end

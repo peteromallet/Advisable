@@ -55,16 +55,12 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
   end
 
   it 'updates the project pament method' do
-    bio =
-      response['data']['updateProjectPaymentMethod']['user'][
-        'projectPaymentMethod'
-      ]
+    bio = response['data']['updateProjectPaymentMethod']['user']['projectPaymentMethod']
     expect(bio).to eq('Bank Transfer')
   end
 
   it 'updates the invoice settings' do
-    bio =
-      response['data']['updateProjectPaymentMethod']['user']['invoiceSettings']
+    bio = response['data']['updateProjectPaymentMethod']['user']['invoiceSettings']
     expect(bio).to eq(
       {
         name: 'Test Person',

@@ -94,14 +94,11 @@ end
 #
 #  id                                :bigint           not null, primary key
 #  accepted_guarantee_terms_at       :datetime
-#  accepted_project_payment_terms_at :datetime
-#  address                           :jsonb
 #  application_accepted_at           :datetime
 #  application_rejected_at           :datetime
 #  application_reminder_at           :datetime
 #  availability                      :text
 #  bank_transfers_enabled            :boolean          default(FALSE)
-#  billing_email                     :string
 #  budget                            :bigint
 #  campaign_medium                   :string
 #  campaign_name                     :string
@@ -112,13 +109,9 @@ end
 #  exceptional_project_payment_terms :string
 #  fid                               :string
 #  gclid                             :string
-#  invoice_company_name              :string
-#  invoice_name                      :string
 #  locality_importance               :integer
 #  number_of_freelancers             :string
-#  payments_setup                    :boolean          default(FALSE)
 #  pid                               :string
-#  project_payment_method            :string
 #  rejection_reason                  :string
 #  rid                               :string
 #  setup_intent_status               :string
