@@ -16,6 +16,7 @@ end
 #  comments_count     :integer          default(0), not null
 #  data               :jsonb            not null
 #  engagements_count  :integer          default(0)
+#  pinned             :boolean          default(FALSE)
 #  reactionable_count :integer          default(0), not null
 #  shareable          :boolean          default(FALSE)
 #  status             :integer          default("draft"), not null

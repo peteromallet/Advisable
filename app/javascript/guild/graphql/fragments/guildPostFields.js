@@ -17,6 +17,7 @@ export default gql`
     denormalizedType
     audienceType
     shareable
+    pinned
     images {
       id
       url

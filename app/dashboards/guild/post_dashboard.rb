@@ -23,7 +23,8 @@ module Guild
       updated_at: Field::DateTime,
       audience_notified_at: Field::DateTime,
       engagements_count: Field::Number,
-      audience_type: Field::String.with_options(searchable: false, collection: ->(_field) { Guild::Post::AUDIENCE_TYPES })
+      audience_type: Field::String.with_options(searchable: false, collection: ->(_field) { Guild::Post::AUDIENCE_TYPES }),
+      pinned: Field::Boolean
     }.freeze
 
     # COLLECTION_ATTRIBUTES
@@ -55,6 +56,7 @@ module Guild
       guild_topic_list
       audience_type
       audience_notified_at
+      pinned
     ].freeze
 
     # FORM_ATTRIBUTES
@@ -70,6 +72,7 @@ module Guild
       created_at
       updated_at
       audience_notified_at
+      pinned
     ].freeze
 
     # COLLECTION_FILTERS

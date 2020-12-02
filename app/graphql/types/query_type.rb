@@ -302,7 +302,7 @@ class Types::QueryType < Types::BaseType
       @query = @query.tagged_with(guild_topics, on: :guild_topics, any: true)
     end
 
-    @query.order(created_at: :desc)
+    @query.order(pinned: :desc, created_at: :desc)
   end
 
   field :guild_activity,
