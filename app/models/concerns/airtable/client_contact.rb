@@ -9,9 +9,9 @@ class Airtable::ClientContact < Airtable::Base
   sync_column_to_association 'Last Name', association: :account, to: :last_name, strip: true
   sync_column_to_association 'VAT Number', association: :account, to: :vat_number, strip: true
   sync_column_to_association 'Type of Company', association: :company, to: :kind, strip: true
+  sync_column_to_association 'Project Payment Method', association: :company, to: :project_payment_method, strip: true
 
   sync_column 'Title', to: :title
-  sync_column 'Project Payment Method', to: :project_payment_method
   sync_column 'Exceptional Project Payment Terms', to: :exceptional_project_payment_terms
   sync_column 'Invoice Name', to: :invoice_name
   sync_column 'Invoice Company Name', to: :invoice_company_name
@@ -73,7 +73,7 @@ class Airtable::ClientContact < Airtable::Base
     self['First Name'] = user.account.first_name
     self['Last Name'] = user.account.last_name
     self['Country'] = [user.country.airtable_id] if user.country.present?
-    self['Project Payment Method'] = user.project_payment_method
+    self['Project Payment Method'] = user.company.project_payment_method
     self['Exceptional Project Payment Terms'] =
       user.exceptional_project_payment_terms
     self['Invoice Name'] = user.invoice_name
