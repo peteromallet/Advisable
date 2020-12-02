@@ -48,6 +48,18 @@ const CurrentUser = () => {
                 <StyledCurrentUserMenuItem
                   {...menuItemProps}
                   as={Link}
+                  to={`/freelancers/${viewer.id}/guild`}
+                  onClick={menu.hide}
+                >
+                  Your profile
+                </StyledCurrentUserMenuItem>
+              )}
+            </MenuItem>
+            <MenuItem {...menu}>
+              {(menuItemProps) => (
+                <StyledCurrentUserMenuItem
+                  {...menuItemProps}
+                  as={Link}
                   to="/your-posts"
                   onClick={menu.hide}
                 >
