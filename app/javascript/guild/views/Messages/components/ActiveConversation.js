@@ -17,8 +17,6 @@ import { CHAT_PARTICIPANT_QUERY } from "../queries";
 
 const ActiveConversation = ({ channelSid }) => {
   const viewer = useViewer();
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const {
     activeChannel: activeConversation,
@@ -48,24 +46,15 @@ const ActiveConversation = ({ channelSid }) => {
   });
   const otherParticipant = data?.specialist;
 
-  const onSubmitNewMessage = async () => {
+  const onSubmitNewMessage = async (message) => {
     if (!message?.length) return;
-    setLoading(true);
+
     try {
       await activeConversation.sendMessage(message);
     } catch (err) {
       console.log(err);
-    } finally {
-      setMessage("");
-      setLoading(false);
     }
   };
-
-  function handleKeyUp(e) {
-    if (e.keyCode === 13 && !e.shiftKey) {
-      onSubmitNewMessage();
-    }
-  }
 
   if (initializing) return <Loading />;
 
@@ -187,27 +176,51 @@ const ActiveConversation = ({ channelSid }) => {
           alignSelf="center"
           spaceChildrenVertical={8}
         >
-          <Textarea
-            minRows="3"
-            maxRows="3"
-            value={message}
-            onKeyUp={handleKeyUp}
-            onChange={({ currentTarget }) => setMessage(currentTarget.value)}
-            placeholder="New Message ..."
-          ></Textarea>
-          <SubmitButton
-            size="l"
-            type="submit"
-            loading={loading}
-            onClick={onSubmitNewMessage}
-            disabled={loading}
-          >
-            Send
-          </SubmitButton>
+          <Composer onSubmit={onSubmitNewMessage} />
         </GuildBox>
       </>
     )
   );
 };
+
+function Composer({ onSubmit }) {
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit() {
+    setLoading(true);
+    await onSubmit(message);
+    setMessage("");
+    setLoading(false);
+  }
+
+  function handleKeyDown(e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  }
+
+  return (
+    <>
+      <Textarea
+        minRows="3"
+        maxRows="3"
+        value={message}
+        onKeyDown={handleKeyDown}
+        onChange={({ currentTarget }) => setMessage(currentTarget.value)}
+        placeholder="New Message ..."
+      ></Textarea>
+      <SubmitButton
+        size="l"
+        type="submit"
+        loading={loading}
+        onClick={handleSubmit}
+      >
+        Send
+      </SubmitButton>
+    </>
+  );
+}
 
 export default ActiveConversation;
