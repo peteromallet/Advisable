@@ -3,12 +3,14 @@ class Company < ApplicationRecord
   belongs_to :industry, optional: true
   has_many :users, dependent: :nullify
 
-  # WIP User migration
+  # WIP Company migration 👇️
   has_many :projects, through: :users
   has_many :applications, through: :projects
   has_many :interviews, through: :users
   has_many :consultations, through: :users
-  # WIP User migration
+  # WIP Company migration 👆️
+
+  attribute :address, AddressAttribute::Type.new
 
   def self.fresh_name_for(company_name)
     return company_name unless exists?(name: company_name)
@@ -76,11 +78,16 @@ end
 #
 #  id                                :uuid             not null, primary key
 #  accepted_project_payment_terms_at :datetime
+#  address                           :jsonb
+#  billing_email                     :string
+#  invoice_company_name              :string
+#  invoice_name                      :string
 #  kind                              :string
 #  name                              :string
 #  payments_setup                    :boolean          default(FALSE)
 #  project_payment_method            :string
 #  setup_intent_status               :string
+#  vat_number                        :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
 #  industry_id                       :bigint
