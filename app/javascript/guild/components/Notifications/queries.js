@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GUILD_NOTIFICATIONS_QUERY = gql`
   query guildActivity {
-    guildActivity(first: 20) {
+    guildActivity(first: 10) {
       nodes {
         __typename
         ... on GuildComment {
