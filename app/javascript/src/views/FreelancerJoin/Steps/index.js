@@ -1,4 +1,3 @@
-import React from "react";
 import StartApplication from "./StartApplication";
 import SetPassword from "./SetPassword";
 
@@ -16,7 +15,7 @@ export default [
   },
   {
     title: "Thank You",
-    component: React.Fragment,
+    component: null,
     path: "/freelancers/join/thank_you",
   },
 ];
