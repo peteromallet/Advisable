@@ -108,14 +108,12 @@ class Types::User < Types::BaseType
   end
 
   field :project_payment_method, String, null: true do
-    authorize :is_team_manager
+    authorize :is_user
   end
 
   field :setup_intent_status, String, null: true do
     authorize :is_user
   end
-
-  delegate :project_payment_method, :setup_intent_status, to: :company
 
   field :invoice_settings, Types::InvoiceSettingsType, null: true do
     authorize :is_user
@@ -124,6 +122,8 @@ class Types::User < Types::BaseType
   field :payments_setup, Boolean, null: true do
     authorize :is_user
   end
+
+  delegate :project_payment_method, :setup_intent_status, :invoice_settings, :payments_setup, to: :company
 
   field :country, Types::CountryType, null: true
 
