@@ -16,6 +16,7 @@ RSpec.describe Guild::Post, type: :model do
     it { expect(guild_post).to have_db_column :status }
     it { expect(guild_post).to have_db_column :reactionable_count }
     it { expect(guild_post).to have_db_column :comments_count }
+    it { expect(guild_post).to have_db_column :pinned }
   end
 
   describe "relationships" do
@@ -119,6 +120,17 @@ RSpec.describe Guild::Post, type: :model do
       expect {
         guild_post.update!(audience_type: guild_post.audience_type, title: "some other title")
       }.not_to change(guild_post.reload, :guild_topics)
+    end
+  end
+
+  describe "with a pinned post" do
+    let(:pinned_post) { create(:guild_post, pinned: true) }
+
+    it "will change the previously pinned post" do
+      expect {
+        guild_post.update!(pinned: true)
+        pinned_post.reload
+      }.to change(pinned_post, :pinned).from(true).to(false)
     end
   end
 end
