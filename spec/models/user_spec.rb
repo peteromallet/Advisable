@@ -36,34 +36,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#invoice_settings' do
-    it 'returns a hash of the users invoice settings' do
-      account = Account.new(email: "test@test.com", vat_number: "VAT")
-      company = Company.new(
-        invoice_name: "Test Account",
-        invoice_company_name: "Test Inc",
-        billing_email: "test@test.com",
-        address: {
-          line1: "Test",
-          line2: "Address",
-          city: "Dublin",
-          state: "Leinster",
-          country: "IE",
-          postcode: "00000"
-        }
-      )
-      user = described_class.create(account: account, company: company)
-
-      expect(user.company.invoice_settings).to eq({
-        name: user.company.invoice_name,
-        company_name: user.company.invoice_company_name,
-        billing_email: user.company.billing_email,
-        vat_number: user.account.vat_number,
-        address: user.company.address
-      })
-    end
-  end
-
   describe '#company_name' do
     context "when the user has a client record" do
       it "returns the clients name" do
