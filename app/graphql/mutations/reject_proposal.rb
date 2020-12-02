@@ -9,7 +9,7 @@ class Mutations::RejectProposal < Mutations::BaseMutation
   def authorized?(**args)
     application = Application.find_by_uid_or_airtable_id!(args[:id])
     policy = ApplicationPolicy.new(context[:current_user], application)
-    return true if policy.is_client
+    return true if policy.is_client_owner?
 
     [false, {errors: [{code: "not_authorized"}]}]
   end

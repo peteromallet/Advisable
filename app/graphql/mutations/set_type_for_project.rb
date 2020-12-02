@@ -13,13 +13,14 @@ class Mutations::SetTypeForProject < Mutations::BaseMutation
   def authorized?(application:, project_type:, monthly_limit:)
     ap = Application.find_by_uid_or_airtable_id!(application)
     policy = ApplicationPolicy.new(context[:current_user], ap)
-    return true if policy.is_client
-    [false, { errors: [{ code: "not_authorized" }] }]
+    return true if policy.is_client_owner?
+
+    [false, {errors: [{code: "not_authorized"}]}]
   end
 
   def resolve(application:, project_type:, monthly_limit:)
     unless ['Fixed', 'Flexible'].include?(project_type)
-      return { errors: [{ code: "invalidProjectType" }] }
+      return {errors: [{code: "invalidProjectType"}]}
     end
 
     ap = Application.find_by_uid_or_airtable_id!(application)
@@ -30,6 +31,6 @@ class Mutations::SetTypeForProject < Mutations::BaseMutation
     end
 
     ap.sync_to_airtable
-    { application: ap }
+    {application: ap}
   end
 end

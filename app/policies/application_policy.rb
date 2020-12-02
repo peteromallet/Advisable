@@ -1,5 +1,5 @@
 class ApplicationPolicy < BasePolicy
-  def is_client
+  def is_client_owner?
     record.project.user == user
   end
 
@@ -13,7 +13,7 @@ class ApplicationPolicy < BasePolicy
 
   # Wether or not the user has access to read information about the application.
   def read?
-    is_client || is_specialist || belongs_to_company || is_admin
+    is_client_owner? || is_specialist || belongs_to_company || is_admin
   end
   alias write? read?
   alias create? read?
