@@ -16,12 +16,18 @@ class Mutations::UpdateUser < Mutations::BaseMutation
     user = context[:current_user]
 
     # If the users address has not yet been set then schedule the geocode job
-    unless user.address.provided?
+    unless user.company.address.provided?
       GeocodeUserJob.perform_later(user.id, context[:client_ip])
     end
 
     user.industry = Industry.find_by_name!(args[:industry]) if args[:industry]
     user.company_type = args[:company_type] if args[:company_type]
+
+    # WIP Company migration 👇️
+    user.company.industry = user.industry
+    user.company.kind = user.company_type
+    # WIP Company migration 👆️
+
     current_account_responsible_for { user.save }
     user.sync_to_airtable
 
