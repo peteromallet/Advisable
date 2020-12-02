@@ -53,6 +53,33 @@ RSpec.describe Company, type: :model do
     end
   end
 
+  describe '#invoice_settings' do
+    it 'returns a hash of the users invoice settings' do
+      company = described_class.new(
+        invoice_name: "Test Account",
+        invoice_company_name: "Test Inc",
+        billing_email: "test@test.com",
+        vat_number: "VAT",
+        address: {
+          line1: "Test",
+          line2: "Address",
+          city: "Dublin",
+          state: "Leinster",
+          country: "IE",
+          postcode: "00000"
+        }
+      )
+
+      expect(company.invoice_settings).to eq({
+        name: company.invoice_name,
+        company_name: company.invoice_company_name,
+        billing_email: company.billing_email,
+        vat_number: company.vat_number,
+        address: company.address
+      })
+    end
+  end
+
   describe "#stripe_customer" do
     it "returns the stripe customer" do
       customer = instance_double(Stripe::Customer)

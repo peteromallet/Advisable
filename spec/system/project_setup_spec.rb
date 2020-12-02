@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Project setup flow' do
+RSpec.describe 'project setup flow', type: :system do
   let(:project) do
     create(
       :project,
@@ -19,13 +19,10 @@ RSpec.describe 'Project setup flow' do
     )
   end
 
-  before :each do
+  # rubocop:disable RSpec/VerifiedDoubles
+  before do
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
-    intent =
-      double(
-        Stripe::PaymentIntent,
-        id: '1234', client_secret: '1234', last_payment_error: nil
-      )
+    intent = double(Stripe::PaymentIntent, id: '1234', client_secret: '1234', last_payment_error: nil)
     allow(Stripe::PaymentIntent).to receive(:create).and_return(intent)
     invoice_settings = OpenStruct.new(default_payment_method: nil)
     customer = double(Stripe::Customer, id: '1234', name: 'Test', email: '')
@@ -33,6 +30,7 @@ RSpec.describe 'Project setup flow' do
     allow(Stripe::Customer).to receive(:create).and_return(customer)
     allow(Stripe::Customer).to receive(:retrieve).and_return(customer)
   end
+  # rubocop:enable RSpec/VerifiedDoubles
 
   describe 'company overview step' do
     it 'progresses to the next step' do

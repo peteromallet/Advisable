@@ -12,8 +12,7 @@ class Users::AttachPaymentMethod < ApplicationService
       type: "card"
     )
 
-    ids = existing.data.map(&:id)
-    unless ids.include?(payment_method_id)
+    unless existing.data.map(&:id).include?(payment_method_id)
       # Attach the payment method to the customer
       Stripe::PaymentMethod.attach(payment_method_id, {
         customer: stripe_customer_id
@@ -22,9 +21,7 @@ class Users::AttachPaymentMethod < ApplicationService
 
     # Set the payment method as the customer's default payment method
     Stripe::Customer.update(stripe_customer_id, {
-      invoice_settings: {
-        default_payment_method: payment_method_id
-      }
+      invoice_settings: {default_payment_method: payment_method_id}
     })
   end
 
