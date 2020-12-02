@@ -89,7 +89,7 @@ const ReactionNotification = ({
         >
           {author.name}
         </Link>
-        {" liked your post: "}
+        {" found your post insightful: "}
         <Link
           to={`/posts/${reactionable?.id}`}
           fontWeight="medium"
