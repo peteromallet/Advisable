@@ -17,6 +17,12 @@ export default gql`
     denormalizedType
     audienceType
     shareable
+    images {
+      id
+      url
+      cover
+      position
+    }
     coverImage {
       id
       url

@@ -9,12 +9,6 @@ export const GUILD_POST_QUERY = gql`
       ... on GuildPostAdviceRequired {
         needHelp
       }
-      images {
-        id
-        url
-        cover
-        position
-      }
       author {
         location
         id
