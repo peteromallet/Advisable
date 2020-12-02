@@ -7,8 +7,8 @@ import SpotifyLogo from "./logos/SpotifyLogo";
 import ProductHuntLogo from "./logos/ProductHuntLogo";
 import BigCommerceLogo from "./logos/BigCommerceLogo";
 import WorldRemitLogo from "./logos/WorldRemitLogo";
-import SapLogo from "./logos/SapLogo";
 import BabbelLogo from "./logos/BabbelLogo";
+import UberAllLogo from "./logos/UberAllLogo";
 
 function ThankYouContent() {
   return (
@@ -65,7 +65,7 @@ function Logos() {
       <ProductHuntLogo {...params} opacity="0.8" height="98%" />
       <WorldRemitLogo {...params} fill="none" opacity="0.6" />
       <BabbelLogo {...params} opacity="0.6" height="88%" />
-      <SapLogo {...params} opacity="0.4" />
+      <UberAllLogo {...params} opacity="0.4" />
       <BigCommerceLogo {...params} opacity="0.4" />
     </Box>
   );
