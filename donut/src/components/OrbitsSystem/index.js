@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { useSharedOrbits } from "./SharedOrbitsProvider";
+import { useBreakpoints } from "@advisable/donut";
 
 export const StyledOrbitsSystem = styled.svg`
   top: 0;
@@ -60,6 +61,24 @@ export function Orbit({
   );
 }
 
+function useResponsiveProp(prop) {
+  const breakpoints = useBreakpoints();
+
+  if (Array.isArray(prop)) {
+    throw "Orbits system does not support responsive props as an array";
+  }
+
+  if (typeof prop === "object") {
+    const matched = Object.keys(prop)
+      .slice()
+      .reverse()
+      .find((breakpoint) => breakpoints[breakpoint]);
+    return matched ? prop[matched] : prop._;
+  }
+
+  return prop;
+}
+
 export default function OrbitsSystem({
   children,
   x = 0,
@@ -72,10 +91,13 @@ export default function OrbitsSystem({
   increment = 200,
   transition,
 }) {
+  const responsiveX = useResponsiveProp(x);
+  const responsiveY = useResponsiveProp(y);
+
   const orbits = React.Children.map(children, (child, i) => {
     const orbitSize = startSize + (i + 1) * increment;
-    const orbitX = x - offsetX * i;
-    const orbitY = y - offsetY * i;
+    const orbitX = responsiveX - offsetX * i;
+    const orbitY = responsiveY - offsetY * i;
     const path = {
       size: orbitSize,
       x: orbitX,

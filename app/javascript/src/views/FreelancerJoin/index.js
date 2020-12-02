@@ -1,40 +1,59 @@
 import React from "react";
-import queryString from "query-string";
 import { AnimatePresence } from "framer-motion";
-import { Switch, useHistory, useLocation } from "react-router";
+import { Redirect, Switch, useLocation } from "react-router";
 import useViewer from "src/hooks/useViewer";
 import useSteps from "src/hooks/useSteps";
 import steps from "./Steps";
 import OrbitsBackground from "./OrbitsBackground";
 import { Box } from "@advisable/donut";
 import OrbitsContent from "./OrbitsContent";
+import Footer from "./Footer";
+import Header from "./Header";
 
 function FreelancerJoin() {
   const { routes, currentStepIndex } = useSteps(steps);
   const location = useLocation();
-  const history = useHistory();
   const viewer = useViewer();
-  const project_id = queryString.parse(location.search)?.pid;
 
-  // Redirect to opportunity if specialist logged in
-  if (viewer?.isSpecialist && project_id) {
-    history.replace(`/opportunities/${project_id}`);
-  }
   // Redirect to root if client or specialist logged in
-  if (viewer?.isClient || (viewer?.isSpecialist && !project_id)) {
-    history.replace("/");
+  if (
+    viewer?.isClient ||
+    (viewer?.isSpecialist && viewer?.applicationStage !== "Started")
+  ) {
+    return <Redirect to="/" />;
   }
 
   return (
-    <Box height="100vh" width="100%" position="relative">
+    <Box minHeight="100vh" height="100%" width="100%" position="relative">
       <OrbitsBackground step={currentStepIndex} />
-      <Box display="flex" height="100%">
-        <OrbitsContent step={currentStepIndex} />
-        <AnimatePresence exitBeforeEnter initial={false}>
-          <Switch location={location} key={location.pathname}>
-            {routes}
-          </Switch>
-        </AnimatePresence>
+      <Box
+        pl={{ _: 5, xl: 20 }}
+        pr={{ _: 5, xl: 0 }}
+        pt={{ _: 6, xl: 12 }}
+        pb={{ _: 12 }}
+        height="100%"
+        minHeight="100vh"
+        display="flex"
+        position="relative"
+        flexDirection="column"
+        justifyContent={{ xl: "space-between" }}
+      >
+        <Header />
+        <Box
+          display="flex"
+          flexDirection={{ xl: "row", _: "column" }}
+          // alignItems="flex-start"
+          alignItems="center"
+          my={{ xl: 6 }}
+        >
+          <OrbitsContent step={currentStepIndex} />
+          <AnimatePresence exitBeforeEnter initial={false}>
+            <Switch location={location} key={location.pathname}>
+              {routes}
+            </Switch>
+          </AnimatePresence>
+        </Box>
+        <Footer />
       </Box>
     </Box>
   );

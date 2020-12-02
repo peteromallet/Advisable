@@ -3,11 +3,22 @@ import { Box, Link, Text } from "@advisable/donut";
 
 export default function HaveAccount() {
   return (
-    <Box ml="auto" display="flex" flexDirection="column">
-      <Text color="neutral600" mb={1.5}>
+    <Box
+      display="flex"
+      flexDirection={{ m: "column" }}
+      ml="auto"
+      mr={{ xs: "auto", m: 0 }}
+    >
+      <Text color="neutral600" mb={{ m: 1.5 }} fontSize={["xs", "m"]}>
         Already have an account?
       </Text>
-      <Link to="/login" fontWeight="medium" color="blue500" ml="auto">
+      <Link
+        to="/login"
+        color="blue500"
+        fontWeight="medium"
+        fontSize={["xs", "m"]}
+        ml={{ xs: 2, m: "auto" }}
+      >
         Login
       </Link>
     </Box>

@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Box, useBreakpoint } from "@advisable/donut";
+import { Box, Card, useBreakpoint } from "@advisable/donut";
 
 const cardAnimations = {
   enter: ({ largeScreen, forwards }) => {
@@ -38,9 +38,27 @@ export default function MotionBox({ children, forwards, ...props }) {
       initial="enter"
       animate="center"
       exit="exit"
+      zIndex={2}
+      position="relative"
+      // my="auto"
+      // mx={[0, "auto"]}
+      // ml={{ _: "auto", xl: "5.75rem" }}
+      // mr={{ _: "auto", xl: 12 }}
+      ml={{ _: "auto", xl: "8%" }}
+      mr={{ _: "auto", xl: "3.8%" }}
+      width={["100%", "auto"]}
+      // pb={{ xl: 20 }}
       {...props}
     >
-      {children}
+      <Card
+        padding={[5, 10]}
+        maxWidth={650}
+        width="100%"
+        marginX="auto"
+        borderRadius="8px"
+      >
+        {children}
+      </Card>
     </Box>
   );
 }

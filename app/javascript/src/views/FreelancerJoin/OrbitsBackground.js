@@ -4,11 +4,20 @@ import { Orbit, OrbitsSystem, theme } from "@advisable/donut";
 const getCoords = (step) => {
   switch (step) {
     case 0:
-      return { y: 45, x: -895 };
+      return {
+        y: { _: -1000, xlUp: 45 },
+        x: { _: -140, sUp: 250, xlUp: -825 },
+      };
     case 1:
-      return { y: 725, x: -895 };
+      return {
+        y: { _: -1100, xlUp: 725 },
+        x: { _: -140, sUp: 350, xlUp: -825 },
+      };
     case 2:
-      return { y: 1245, x: -525 };
+      return {
+        y: { _: -1170, xlUp: 1245 },
+        x: { _: -140, sUp: 380, xlUp: -525 },
+      };
     default:
       return { y: 45, x: -895 };
   }

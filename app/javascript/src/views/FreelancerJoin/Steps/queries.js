@@ -1,4 +1,5 @@
-import { gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
+import { viewerFields } from "src/graphql/queries/viewer";
 
 export const GET_PROJECT = gql`
   query GetProject($id: ID!) {
@@ -6,6 +7,10 @@ export const GET_PROJECT = gql`
       id
       industry
       estimatedBudget
+      specialistDescription
+      skills {
+        name
+      }
       primarySkill {
         name
       }
@@ -23,25 +28,41 @@ export const GET_PROJECT = gql`
 `;
 
 export const CREATE_FREELANCER_ACCOUNT = gql`
+  ${viewerFields}
+
   mutation CreateFreelancerAccount($input: CreateFreelancerAccountInput!) {
     createFreelancerAccount(input: $input) {
       viewer {
-        ... on Specialist {
-          id
-        }
+        ...ViewerFields
       }
     }
   }
 `;
 
 export const SIGNUP = gql`
+  ${viewerFields}
+
   mutation Signup($input: SignupInput!) {
     signup(input: $input) {
       viewer {
-        ... on Specialist {
-          id
-        }
+        ...ViewerFields
       }
     }
   }
 `;
+
+export const UPDATE_PASSWORD = gql`
+  ${viewerFields}
+
+  mutation updatePassword($input: UpdatePasswordInput!) {
+    updatePassword(input: $input) {
+      viewer {
+        ...ViewerFields
+      }
+    }
+  }
+`;
+
+export function useUpdatePassword(opts) {
+  return useMutation(UPDATE_PASSWORD, opts);
+}

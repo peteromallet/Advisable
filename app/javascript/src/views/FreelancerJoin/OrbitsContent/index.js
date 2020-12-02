@@ -1,11 +1,10 @@
 import React from "react";
-import { Box, Text, Button, Link } from "@advisable/donut";
+import { Box, Text, Button } from "@advisable/donut";
 import { ChevronRight } from "@styled-icons/feather";
 import lambdaSchoolLogoWhite from "./logos/lambdaSchoolLogoWhite.png";
 import StackOverflowLogo from "./logos/StackOverflowLogo";
 import SpotifyLogo from "./logos/SpotifyLogo";
 import ProductHuntLogo from "./logos/ProductHuntLogo";
-import logo from "./logo.svg";
 import BigCommerceLogo from "./logos/BigCommerceLogo";
 import WorldRemitLogo from "./logos/WorldRemitLogo";
 import SapLogo from "./logos/SapLogo";
@@ -13,34 +12,25 @@ import BabbelLogo from "./logos/BabbelLogo";
 
 function ThankYouContent() {
   return (
-    <Box pb={20}>
-      <Text fontSize={48} color="white" fontWeight="semibold" mb={5}>
-        Thank you
-      </Text>
-      <Text fontSize="l" color="white" lineHeight="l" mb={8}>
+    <Box pb={20} mt={{ _: 10, xl: 0 }} maxWidth="560px">
+      <Header mb={5}>Thank you</Header>
+      <Text
+        fontSize={{ _: "m", l: "l" }}
+        color="white"
+        lineHeight={{ _: "m", l: "l" }}
+        mb={{ _: 6, xl: 8 }}
+      >
         Advisable helps connect the worlds top freelance marketing talent with
         companies. Rutrum est mi nascetur nibh pellentesque mollis dignissim
         vulputate pretium ultricies.
       </Text>
-      <Button variant="dark" size="l" suffix={<ChevronRight />}>
+      <Button
+        variant="dark"
+        size={{ _: "m", xl: "l" }}
+        suffix={<ChevronRight />}
+      >
         Get Started
       </Button>
-    </Box>
-  );
-}
-
-function Footer() {
-  return (
-    <Box display="flex">
-      <Text fontWeight="medium" color="blue900" mr="xs">
-        &#169; Advisable
-      </Text>
-      <Text mr="xs" color="blue900">
-        •
-      </Text>
-      <Link.External to="/" color="blue900">
-        Privacy & Terms
-      </Link.External>
     </Box>
   );
 }
@@ -54,7 +44,7 @@ function Logos() {
   };
   return (
     <Box
-      display="grid"
+      display={{ xl: "grid", _: "none" }}
       gridTemplateColumns="157px 157px"
       gridTemplateRows="32px 30px 28px 26px"
       gridColumnGap="54px"
@@ -81,20 +71,31 @@ function Logos() {
   );
 }
 
+function Header({ children, ...props }) {
+  return (
+    <Text
+      fontSize={{ _: "5xl", xl: 48 }}
+      color="white"
+      fontWeight="semibold"
+      {...props}
+    >
+      {children}
+    </Text>
+  );
+}
+
 function FormsContent() {
   return (
     <Box>
-      <Box mb={16}>
-        <Text fontSize={48} color="white" fontWeight="semibold">
-          Advisable connects
-        </Text>
-        <Text fontSize={48} color="#FEB6C8" fontWeight="semibold">
-          top freelancers
-        </Text>
-        <Text fontSize={48} color="white" fontWeight="semibold" mb={5}>
-          with clients
-        </Text>
-        <Text fontSize="l" color="white" lineHeight="l">
+      <Box mb={{ _: 4, xl: 20 }} pt={{ _: 9, xl: 0 }}>
+        <Header>Advisable connects</Header>
+        <Header color="#FEB6C8">top freelancers</Header>
+        <Header mb={{ _: 4, l: 5 }}>with clients</Header>
+        <Text
+          fontSize={{ _: "m", l: "l" }}
+          color="white"
+          lineHeight={{ _: "m", l: "l" }}
+        >
           Advisable helps connect the worlds top freelance marketing talent with
           companies. Rutrum est mi nascetur nibh pellentesque mollis dignissim
           vulputate pretium ultricies.
@@ -108,22 +109,16 @@ function FormsContent() {
 export default function OrbitsContent({ step }) {
   return (
     <Box
-      zIndex={2}
       position="relative"
-      px="70px"
-      py={12}
-      maxWidth="620px"
+      width={{ _: "100%", xl: "40%" }}
+      mx={{ _: "auto", xl: 0 }}
+      maxWidth={{ _: "650px", xl: "500px" }}
       display="flex"
       flexDirection="column"
-      justifyContent="space-between"
-      alignItems="flex-start"
-      alignContent="center"
+      justifyContent="flex-start"
+      pt={4}
     >
-      <Link.External href="https://advisable.com/">
-        <img src={logo} alt="Advisable logo" />
-      </Link.External>
       {step === 2 ? <ThankYouContent /> : <FormsContent />}
-      <Footer />
     </Box>
   );
 }
