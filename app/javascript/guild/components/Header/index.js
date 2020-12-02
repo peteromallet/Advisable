@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Home, Chat } from "@styled-icons/heroicons-solid";
 import { useQuery, useMutation } from "@apollo/client";
 import { NavLink, Link } from "react-router-dom";
@@ -8,10 +8,12 @@ import { useToggle } from "@guild/hooks/useToggle";
 import { Notification } from "@guild/icons";
 import Notifications from "@guild/components/Notifications";
 import CurrentUser from "./CurrentUser";
+import MobileNavigation from "./MobileNavigation";
 import {
   StyledHeader,
   StyledHeaderLink,
   StyledHeaderBadge,
+  StyledHamburger,
   NavIcon,
 } from "./styles";
 import { GUILD_LAST_READ_QUERY } from "./queries";
@@ -20,6 +22,7 @@ import { GUILD_UPDATE_LAST_READ } from "./mutations";
 const TWO_MINUTES = 120000;
 
 const Header = () => {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [notificationsOpen, toggleNotifications] = useToggle();
 
   const { data: lastReadData } = useQuery(GUILD_LAST_READ_QUERY, {
@@ -56,13 +59,26 @@ const Header = () => {
       <Notifications open={notificationsOpen} />
       <StyledHeader px="lg">
         <Box display="flex" alignItems="center">
-          <Box mr={8}>
+          <Box display={{ _: "block", m: "none" }}>
+            <StyledHamburger onClick={() => setMobileNavOpen(true)}>
+              <div />
+              <div />
+              <div />
+            </StyledHamburger>
+          </Box>
+
+          <Box mt="-2px" mr={8}>
             <Link to="/">
               <img src={logo} alt="" />
             </Link>
           </Box>
 
-          <nav>
+          <MobileNavigation
+            mobileNavOpen={mobileNavOpen}
+            setMobileNavOpen={setMobileNavOpen}
+          />
+
+          <Box as="nav" display={{ _: "none", m: "block" }}>
             <StyledHeaderLink as={NavLink} to="/feed">
               <Home />
               Feed
@@ -74,7 +90,7 @@ const Header = () => {
               ) : null}
               Messages
             </StyledHeaderLink>
-          </nav>
+          </Box>
         </Box>
 
         <Box display="flex" alignItems="center">
