@@ -1,9 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useModal } from "@advisable/donut";
 import { Heart } from "@styled-icons/heroicons-outline";
 import { Heart as HeartFilled } from "@styled-icons/heroicons-solid";
 import { useMutation, gql } from "@apollo/client";
 import PostAction from "@guild/components/PostActions/PostAction";
 import useViewer from "src/hooks/useViewer";
+import HeartFirstUseModal from "./HeartFirstUseModal";
 
 export const GUILD_UPDATE_POST_REACTIONS = gql`
   mutation guildUpdatePostReactions($input: GuildUpdatePostReactionsInput!) {
@@ -16,9 +18,15 @@ export const GUILD_UPDATE_POST_REACTIONS = gql`
   }
 `;
 
+// When a user first interacts with the reaction button we show a modal to
+// explain it. After this modal is shown once we set this key in local storage
+// to prevent it from being shown again.
+const LOCALSTORAGE_REACTION_MODAL = "guildReactionModal";
+
 const ReactionsButton = ({ size, post }) => {
   const timer = useRef(null);
   const viewer = useViewer();
+  const firstUseModal = useModal();
   const [reactToPost] = useMutation(GUILD_UPDATE_POST_REACTIONS);
   const [reacted, setReacted] = useState(post.reacted);
   const { id } = post;
@@ -33,6 +41,11 @@ const ReactionsButton = ({ size, post }) => {
   // immediately and use setTimeout to delay the actual request by 500ms.
   const handleReaction = () => {
     clearTimeout(timer.current);
+
+    if (!reacted && !window.localStorage.getItem(LOCALSTORAGE_REACTION_MODAL)) {
+      window.localStorage.setItem(LOCALSTORAGE_REACTION_MODAL, true);
+      firstUseModal.show();
+    }
 
     if (!viewer?.guild) {
       const cta = document.getElementById("joinGuild");
@@ -55,13 +68,16 @@ const ReactionsButton = ({ size, post }) => {
   };
 
   return (
-    <PostAction
-      size={size}
-      onClick={handleReaction}
-      color={reacted ? "white" : "red600"}
-      bg={reacted ? "red500" : "neutral100"}
-      icon={reacted ? <HeartFilled /> : <Heart />}
-    />
+    <>
+      <HeartFirstUseModal modal={firstUseModal} />
+      <PostAction
+        size={size}
+        onClick={handleReaction}
+        color={reacted ? "white" : "red600"}
+        bg={reacted ? "red500" : "neutral100"}
+        icon={reacted ? <HeartFilled /> : <Heart />}
+      />
+    </>
   );
 };
 
