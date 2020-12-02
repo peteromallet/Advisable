@@ -15,6 +15,10 @@ export default function PostActions({
 }) {
   const viewer = useViewer();
   const viewerIsAuthor = post.author.id === viewer?.id;
+  const isShareable = showShare && post.shareable;
+  const isEditable = showEdit && viewerIsAuthor;
+
+  // if (viewerIsAuthor && !isShareable && !isEditable) return null;
 
   return (
     <Box display="inline-flex" alignItems="center" {...props}>
@@ -24,12 +28,12 @@ export default function PostActions({
           <Connect post={post} size={size} />
         </Box>
       ) : null}
-      {showShare && post.shareable ? (
+      {isShareable ? (
         <Box ml="2">
           <Share post={post} size={size} />
         </Box>
       ) : null}
-      {showEdit && viewerIsAuthor ? (
+      {isEditable ? (
         <Box ml={2}>
           <Edit post={post} size={size} />
         </Box>

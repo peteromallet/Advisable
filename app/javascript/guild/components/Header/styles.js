@@ -55,7 +55,9 @@ export const StyledHeaderBadge = styled.div`
 `;
 
 export const NavIcon = styled.div`
+  outline: none;
   position: relative;
+
   ${({ unread }) =>
     unread &&
     css`
@@ -78,8 +80,8 @@ export const NavIcon = styled.div`
     `}
   
   svg {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     fill: white;
   }
   &:hover,
@@ -113,9 +115,9 @@ export const StyledCurrentUserArrow = styled.div`
   border-top: 4px solid var(--arrow-color);
 `;
 
-export const StyledCurrentUserMenu = styled.div`
+export const StyledCurrentUserMenu = styled(Box)`
   right: 0;
-  width: 180px;
+  overflow-y: scroll;
   outline: none;
   padding: 8px 0;
   background: white;

@@ -42,7 +42,7 @@ const CurrentUser = () => {
       </MenuButton>
       <Menu {...menu}>
         {(props) => (
-          <StyledCurrentUserMenu {...props}>
+          <StyledCurrentUserMenu width="180px" {...props}>
             <MenuItem {...menu}>
               {(menuItemProps) => (
                 <StyledCurrentUserMenuItem

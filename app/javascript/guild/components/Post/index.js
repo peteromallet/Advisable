@@ -78,10 +78,8 @@ const Post = ({ post }) => {
         </Text>
 
         <Box display="flex" alignItems="center" marginBottom={5}>
-          <PostActions post={post} showEdit={false} showShare={false} />
-          <Box ml={3}>
-            <ConnectionsCount post={post} />
-          </Box>
+          <PostActions mr={3} post={post} showEdit={false} showShare={false} />
+          <ConnectionsCount post={post} />
         </Box>
 
         <Topics topics={post.guildTopics} />
