@@ -141,19 +141,18 @@ class Types::User < Types::BaseType
   field :city, String, null: true
 
   def city
-    object.address.city
+    company.address.city
   end
 
   field :location, String, null: true
 
   def location
-    city = object.address.city
     return nil if city.nil?
 
-    country = ISO3166::Country.new(object.address.country)
+    country = ISO3166::Country.new(company.address.country)
     return city if country.nil?
 
-    "#{object.address.city}, #{country.name}"
+    "#{company.address.city}, #{country.name}"
   end
 
   # The customer field returns information from the users stripe customer object.
