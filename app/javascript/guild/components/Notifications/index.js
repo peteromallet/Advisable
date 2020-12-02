@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GUILD_NOTIFICATIONS_QUERY } from "./queries";
 import { truncate } from "lodash-es";
 import { useQuery } from "@apollo/client";
@@ -7,11 +7,18 @@ import { Box, Avatar, Text, Link, Stack } from "@advisable/donut";
 import { NotificationItem } from "./styles";
 import { GuildBox } from "@guild/styles";
 
-const Notifications = ({ closeNotifications }) => {
-  const { data, loading } = useQuery(GUILD_NOTIFICATIONS_QUERY, {
+const Notifications = ({ open, closeNotifications }) => {
+  const { data, loading, refetch } = useQuery(GUILD_NOTIFICATIONS_QUERY, {
     fetchPolicy: "cache-and-network",
+    skip: !open,
   });
   const notificationItems = data?.guildActivity?.nodes;
+
+  useEffect(() => {
+    if (open) {
+      refetch();
+    }
+  }, [refetch, open]);
 
   return (
     <Box py={4} px={6} display="flex" flexDirection="column">

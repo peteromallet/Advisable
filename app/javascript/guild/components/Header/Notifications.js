@@ -52,7 +52,10 @@ export default function NotificationsMenu({ hasUnread }) {
             tabIndex={0}
             {...props}
           >
-            <Notifications closeNotifications={popover.hide} />
+            <Notifications
+              open={popover.visible}
+              closeNotifications={popover.hide}
+            />
           </StyledCurrentUserMenu>
         )}
       </Popover>
