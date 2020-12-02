@@ -33,16 +33,16 @@ const Post = ({ post }) => {
             url={post.author.avatar}
           />
           <Box ml="3">
-            <Text
+            <Link
               mb={0.5}
+              variant="dark"
               fontSize="l"
-              as={RouterLink}
               color="neutral900"
               letterSpacing="-0.01rem"
               to={`/freelancers/${post.author.id}/guild`}
             >
               {post.author.name}
-            </Text>
+            </Link>
             <Text fontSize="xs" letterSpacing="-0.01rem" color="neutral600">
               {post.createdAtTimeAgo} ago
             </Text>
