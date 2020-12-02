@@ -90,9 +90,16 @@ const Post = () => {
                   to={`/freelancers/${post.author.id}`}
                 />
                 <Box ml={3}>
-                  <Text mb={0.5} fontWeight="medium" color="neutral900">
+                  <Link
+                    mb={0.5}
+                    variant="dark"
+                    fontSize="l"
+                    color="neutral900"
+                    letterSpacing="-0.01rem"
+                    to={`/freelancers/${post.author.id}/guild`}
+                  >
                     {post.author.name}
-                  </Text>
+                  </Link>
                   <Text fontSize="xs" color="neutral500">
                     {post.createdAtTimeAgo} ago
                   </Text>
