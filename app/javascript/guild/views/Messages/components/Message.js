@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { relativeDate } from "@guild/utils";
 import { Calendar } from "@styled-icons/ionicons-outline";
-import { Box, Avatar, Text, Button } from "@advisable/donut";
+import { Box, Avatar, Text, Link, Button } from "@advisable/donut";
 
 export default function Message({ message, author, isAuthor }) {
   return (
@@ -16,7 +16,7 @@ export default function Message({ message, author, isAuthor }) {
           <Box flexShrink="0" mr={2}>
             <Avatar
               size="xxs"
-              as={Link}
+              as={RouterLink}
               to={`/freelacners/${author.id}/guild`}
               url={author.avatar}
               name={author.name}
@@ -28,6 +28,7 @@ export default function Message({ message, author, isAuthor }) {
           flexDirection="column"
           alignItems={isAuthor ? "flex-end" : "flex-start"}
         >
+          <MessageContext author={author} message={message} />
           <Box
             py={2}
             px={3}
@@ -51,7 +52,7 @@ export default function Message({ message, author, isAuthor }) {
               {message.body}
             </Text>
           </Box>
-          {message.attributes?.calendly_link ? (
+          {message.attributes?.calendlyLink ? (
             <Button
               as="a"
               href={message.attributes?.calendly_link}
@@ -86,6 +87,53 @@ export default function Message({ message, author, isAuthor }) {
           </Box>
         ) : null}
       </Box>
+    </Box>
+  );
+}
+
+function contextMessage(type) {
+  switch (type) {
+    case "AdviceRequired":
+      return "has offered help for your post:";
+    default: {
+      return "wants to connect with you over your post:";
+    }
+  }
+}
+
+function MessageContext({ author, message }) {
+  if (!message.attributes?.calendlyLink) return null;
+  const { post, postType, postTitle } = message.attributes;
+  return (
+    <Box
+      mb={2}
+      padding={3}
+      border="1px solid"
+      borderRadius="12px"
+      borderColor="neutral200"
+    >
+      <Text fontSize="sm" lineHeight="1.2rem">
+        <Link
+          fontSize="sm"
+          variant="dark"
+          fontWeight="medium"
+          to={`/freelancers/${author.id}`}
+        >
+          {author.name}
+        </Link>
+        {` ${contextMessage(postType)} `}
+        <Link
+          fontSize="sm"
+          css={`
+            display: inline;
+          `}
+          variant="dark"
+          fontWeight="medium"
+          to={`/posts/${post}`}
+        >
+          {postTitle}
+        </Link>
+      </Text>
     </Box>
   );
 }
