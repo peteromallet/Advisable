@@ -91,17 +91,16 @@ function FormsContent() {
   return (
     <Box>
       <Box mb={{ xl: 20 }}>
-        <Header>Advisable connects</Header>
+        <Header>Advisable helps</Header>
         <Header color="#FEB6C8">top freelancers</Header>
-        <Header mb={{ _: 4, l: 5 }}>with clients</Header>
+        <Header mb={{ _: 4, l: 5 }}>succeed</Header>
         <Text
           fontSize={{ _: "m", l: "l" }}
           color="white"
           lineHeight={{ _: "m", l: "l" }}
         >
-          Advisable helps connect the worlds top freelance marketing talent with
-          companies. Rutrum est mi nascetur nibh pellentesque mollis dignissim
-          vulputate pretium ultricies.
+          Discover a world of opportunity with clients who value your brilliance
+          and a network of world-class peers from 500+ marketing-related skills.
         </Text>
       </Box>
       <Logos />

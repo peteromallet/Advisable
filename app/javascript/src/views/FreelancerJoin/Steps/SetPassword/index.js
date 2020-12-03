@@ -45,8 +45,8 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
           Welcome to Advisable!
         </Text>
         <Text as="p" color="neutral800" fontSize="m" lineHeight="m">
-          Set the password on your Advisable account to see the status of your
-          applications on Advisable and manage your work.
+          Set the password on your account to create your profile, manage your
+          applications, and see your work.
         </Text>
       </Box>
       <Formik
