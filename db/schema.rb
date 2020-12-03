@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_02_214909) do
+ActiveRecord::Schema.define(version: 2020_12_03_115702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -95,14 +95,6 @@ ActiveRecord::Schema.define(version: 2020_12_02_214909) do
     t.index ["uid"], name: "index_application_references_on_uid"
   end
 
-  create_table "application_rejection_reasons", force: :cascade do |t|
-    t.string "reason"
-    t.string "airtable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["airtable_id"], name: "index_application_rejection_reasons_on_airtable_id"
-  end
-
   create_table "applications", force: :cascade do |t|
     t.decimal "rate"
     t.string "availability"
@@ -115,7 +107,6 @@ ActiveRecord::Schema.define(version: 2020_12_02_214909) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "rejection_reason_id"
     t.boolean "accepts_fee"
     t.boolean "accepts_terms"
     t.boolean "featured", default: false
@@ -145,7 +136,6 @@ ActiveRecord::Schema.define(version: 2020_12_02_214909) do
     t.boolean "hide_from_profile"
     t.jsonb "log_data"
     t.index ["project_id"], name: "index_applications_on_project_id"
-    t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
     t.index ["uid"], name: "index_applications_on_uid"
   end
@@ -977,7 +967,6 @@ ActiveRecord::Schema.define(version: 2020_12_02_214909) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "specialists"
   add_foreign_key "application_references", "applications"
-  add_foreign_key "applications", "application_rejection_reasons", column: "rejection_reason_id"
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
   add_foreign_key "auth_providers", "accounts"
