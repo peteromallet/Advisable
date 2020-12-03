@@ -17,7 +17,7 @@ function ThankYouContent() {
   const history = useHistory();
   return (
     <>
-      <Header mb={5}>Thank you</Header>
+      <Title mb={5}>Thank you</Title>
       <Text
         fontSize={{ _: "m", l: "l" }}
         color="white"
@@ -76,12 +76,12 @@ function Logos() {
   );
 }
 
-function Header({ children, ...props }) {
+function Title({ children, ...props }) {
   return (
     <Text
       fontSize={{ _: "5xl", xl: 48 }}
       color="white"
-      fontWeight="semibold"
+      fontWeight="medium"
       {...props}
     >
       {children}
@@ -93,9 +93,9 @@ function FormsContent() {
   return (
     <>
       <Box mb={{ xl: 20 }}>
-        <Header>Advisable helps</Header>
-        <Header color="#FEB6C8">top freelancers</Header>
-        <Header mb={{ _: 4, l: 5 }}>succeed</Header>
+        <Title>Advisable helps</Title>
+        <Title color="#FEB6C8">top freelancers</Title>
+        <Title mb={{ _: 4, l: 5 }}>succeed</Title>
         <Text
           fontSize={{ _: "m", l: "l" }}
           color="white"
