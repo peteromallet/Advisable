@@ -7,14 +7,6 @@ class Types::QueryType < Types::BaseType
     Project.find_by_uid_or_airtable_id!(id)
   end
 
-  field :application_rejection_reasons,
-        [Types::ApplicationRejectionReasonType, null: true],
-        null: true
-
-  def application_rejection_reasons
-    ::ApplicationRejectionReason.all
-  end
-
   field :booking_rejection_reasons,
         [Types::BookingRejectionReason, null: true],
         null: true

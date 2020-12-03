@@ -182,19 +182,16 @@ end
 #  updated_at                  :datetime         not null
 #  airtable_id                 :string
 #  project_id                  :bigint
-#  rejection_reason_id         :bigint
 #  specialist_id               :bigint
 #
 # Indexes
 #
-#  index_applications_on_project_id           (project_id)
-#  index_applications_on_rejection_reason_id  (rejection_reason_id)
-#  index_applications_on_specialist_id        (specialist_id)
-#  index_applications_on_uid                  (uid)
+#  index_applications_on_project_id     (project_id)
+#  index_applications_on_specialist_id  (specialist_id)
+#  index_applications_on_uid            (uid)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (project_id => projects.id)
-#  fk_rails_...  (rejection_reason_id => application_rejection_reasons.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #
