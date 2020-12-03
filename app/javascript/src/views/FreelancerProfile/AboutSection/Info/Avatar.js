@@ -39,8 +39,8 @@ function DefaultAvatar() {
   return (
     <Box
       color="neutral900"
-      width="190px"
-      height="234px"
+      width="100%"
+      height="100%"
       bg="neutral200"
       borderRadius={16}
       display="flex"
