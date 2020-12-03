@@ -1,5 +1,4 @@
 import React, { useMemo, useReducer } from "react";
-import { useHistory } from "react-router";
 import { every } from "lodash-es";
 import { rgba } from "polished";
 // Utils
@@ -58,7 +57,6 @@ const filterProjects = (state) => (project) => {
 
 function PreviousProjects({ data, isOwner }) {
   const [state, dispatch] = useReducer(reducer, data, init);
-  const history = useHistory();
 
   // Update state actions
   const createAction = useMemo(() => createDispatcher(dispatch), []);
@@ -147,11 +145,13 @@ function PreviousProjects({ data, isOwner }) {
           <SectionHeaderText>Previous Projects</SectionHeaderText>
           {isOwner && (
             <Button
-              variant="minimal"
+              as="a"
+              size="xs"
+              variant="subtle"
               ml="auto"
-              onClick={() => history.push("/settings/references")}
+              href="/settings/references"
             >
-              Edit
+              Edit projects
             </Button>
           )}
         </SectionHeaderWrapper>
