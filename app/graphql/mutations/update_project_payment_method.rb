@@ -9,7 +9,7 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def authorized?(**args)
-    requires_client!
+    requires_team_manager!
   end
 
   def resolve(**args)
