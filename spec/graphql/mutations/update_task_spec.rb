@@ -40,26 +40,23 @@ RSpec.describe Mutations::UpdateTask do
     GRAPHQL
   end
 
-  let(:context) { { current_user: task.application.project.user } }
+  let(:context) { {current_user: task.application.project.user} }
 
-  before :each do
+  before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
   end
 
   context 'when the user does not have access to the project' do
     it 'returns an error' do
-      response =
-        AdvisableSchema.execute(query, context: { current_user: create(:user) })
-      error = response['data']['updateTask']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      response = AdvisableSchema.execute(query, context: {current_user: create(:user)})
+      expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
     end
   end
 
   context 'when there is no authenticated user' do
     it 'returns an error' do
-      response = AdvisableSchema.execute(query, context: { current_user: nil })
-      error = response['data']['updateTask']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      response = AdvisableSchema.execute(query, context: {current_user: nil})
+      expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHENTICATED")
     end
   end
 
@@ -68,8 +65,7 @@ RSpec.describe Mutations::UpdateTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['updateTask']['errors'][0]
-      expect(error['code']).to eq('tasks.nameIsLocked')
+      expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
     end
   end
 
@@ -78,8 +74,7 @@ RSpec.describe Mutations::UpdateTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['updateTask']['errors'][0]
-      expect(error['code']).to eq('tasks.nameIsLocked')
+      expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
     end
   end
 
@@ -88,8 +83,7 @@ RSpec.describe Mutations::UpdateTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['updateTask']['errors'][0]
-      expect(error['code']).to eq('tasks.nameIsLocked')
+      expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
     end
   end
 
@@ -98,8 +92,7 @@ RSpec.describe Mutations::UpdateTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['updateTask']['errors'][0]
-      expect(error['code']).to eq('tasks.nameIsLocked')
+      expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
     end
   end
 
@@ -120,21 +113,20 @@ RSpec.describe Mutations::UpdateTask do
     end
 
     it 'doesnt trigger a webhook' do
-      expect(WebhookEvent).to_not receive(:trigger)
+      expect(WebhookEvent).not_to receive(:trigger) # rubocop:disable RSpec/MessageSpies
       AdvisableSchema.execute(query, context: context)
     end
 
-    context 'and the stage is Assigned' do
+    context 'when the stage is Assigned' do
       let(:task) { create(:task, name: nil, stage: 'Assigned') }
 
       it 'returns an error' do
         response = AdvisableSchema.execute(query, context: context)
-        error = response['data']['updateTask']['errors'][0]
-        expect(error['code']).to eq('tasks.nameIsLocked')
+        expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
       end
     end
 
-    context 'and the stage is Quote Provided' do
+    context 'when the stage is Quote Provided' do
       let(:task) { create(:task, name: nil, stage: 'Quote Provided') }
 
       it 'sets the stage to Not Assigned' do
@@ -144,13 +136,14 @@ RSpec.describe Mutations::UpdateTask do
       end
     end
 
-    context 'and the task has an estimate' do
+    context 'when the task has an estimate' do
       let(:task) do
         create(:task, name: nil, stage: 'Not Assigned', estimate: 8)
       end
 
-      context 'and the user is the client' do
-        let(:context) { { current_user: task.application.project.user } }
+      # rubocop:disable RSpec/NestedGroups
+      context 'when the user is the client' do
+        let(:context) { {current_user: task.application.project.user} }
 
         it 'removes the estimate' do
           expect {
@@ -159,15 +152,16 @@ RSpec.describe Mutations::UpdateTask do
         end
       end
 
-      context 'and the user is the specialist' do
-        let(:context) { { current_user: task.application.specialist } }
+      context 'when the user is the specialist' do
+        let(:context) { {current_user: task.application.specialist} }
 
         it 'does not removes the estimate' do
           expect {
             AdvisableSchema.execute(query, context: context)
-          }.to_not change { task.reload.estimate }
+          }.not_to change { task.reload.estimate }
         end
       end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 
@@ -187,7 +181,7 @@ RSpec.describe Mutations::UpdateTask do
       }.from(nil).to('Updated description')
     end
 
-    context 'and the stage is Quote Provided' do
+    context 'when the stage is Quote Provided' do
       let(:task) { create(:task, description: nil, stage: 'Quote Provided') }
 
       it 'sets the stage to Not Assigned' do
@@ -215,7 +209,7 @@ RSpec.describe Mutations::UpdateTask do
       }.from(nil).to(due_date.to_date)
     end
 
-    context 'and the stage is Quote Provided' do
+    context 'when the stage is Quote Provided' do
       let(:task) do
         create(:task, due_date: nil, estimate: 4, stage: 'Quote Provided')
       end
@@ -250,7 +244,7 @@ RSpec.describe Mutations::UpdateTask do
       }.from(nil).to(8)
     end
 
-    context 'and the stage is Quote Requested' do
+    context 'when the stage is Quote Requested' do
       let(:task) { create(:task, estimate: nil, stage: 'Quote Requested') }
 
       it "sets the stage to 'Quote Provided'" do
@@ -260,7 +254,7 @@ RSpec.describe Mutations::UpdateTask do
       end
 
       it 'triggers a webhook' do
-        expect(WebhookEvent).to receive(:trigger).with(
+        allow(WebhookEvent).to receive(:trigger).with(
           'tasks.quote_provided',
           any_args
         )
@@ -275,11 +269,11 @@ RSpec.describe Mutations::UpdateTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('applicationStatusNotWorking')
+      expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
     end
   end
 
+  # rubocop:disable RSpec/NestedGroups
   context 'when the trial argument is passed' do
     let(:task) { create(:task, trial: false) }
     let(:input) do
@@ -291,8 +285,8 @@ RSpec.describe Mutations::UpdateTask do
       GRAPHQL
     end
 
-    context 'and the specialist is logged in' do
-      let(:context) { { current_user: task.application.specialist } }
+    context 'when the specialist is logged in' do
+      let(:context) { {current_user: task.application.specialist} }
 
       it 'sets the trial' do
         expect {
@@ -300,7 +294,7 @@ RSpec.describe Mutations::UpdateTask do
         }.to change { task.reload.trial }.from(false).to(true)
       end
 
-      context 'and the application has an existing trial task' do
+      context 'when the application has an existing trial task' do
         let!(:trial) do
           create(:task, application: task.application, trial: true)
         end
@@ -312,13 +306,8 @@ RSpec.describe Mutations::UpdateTask do
         end
       end
 
-      context 'and the application has an existing trial task that is in progress' do
-        let!(:trial) do
-          create(
-            :task,
-            application: task.application, trial: true, stage: 'Working'
-          )
-        end
+      context 'when the application has an existing trial task that is in progress' do
+        before { create(:task, application: task.application, trial: true, stage: 'Working') }
 
         it 'Returns an error' do
           response = AdvisableSchema.execute(query, context: context)
@@ -328,14 +317,15 @@ RSpec.describe Mutations::UpdateTask do
       end
     end
 
-    context 'and the user is logged in' do
-      let(:context) { { current_user: task.application.project.user } }
+    context 'when the user is logged in' do
+      let(:context) { {current_user: task.application.project.user} }
 
       it 'does not set the trial' do
         expect {
           response = AdvisableSchema.execute(query, context: context)
-        }.to_not change { task.reload.trial }
+        }.not_to change { task.reload.trial }
       end
     end
   end
+  # rubocop:enable RSpec/NestedGroups
 end

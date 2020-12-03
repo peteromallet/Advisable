@@ -410,6 +410,7 @@ export function useToggleSourcing(opts) {
 const projectFields = gql`
   fragment ProjectFields on Project {
     id
+    isOwner
     goals
     locationImportance
     industryExperienceImportance

@@ -7,7 +7,7 @@ class Mutations::DeleteJob < Mutations::BaseMutation
     project = Project.find_by_uid_or_airtable_id!(id)
     policy = ProjectPolicy.new(current_user, project)
 
-    unless policy.is_client
+    unless policy.delete?
       ApiError.not_authorized('You do not have access to this project')
     end
 

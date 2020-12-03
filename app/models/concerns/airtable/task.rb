@@ -30,8 +30,8 @@ class Airtable::Task < Airtable::Base
     self['Due Date'] = task.due_date.try(:strftime, '%Y-%m-%d')
     self['Description'] = task.description
     self['Repeat'] = task.repeat
-    self['Trial'] = 'Yes' if task.trial === true
-    self['Trial'] = 'No' if task.trial === false
+    self['Trial'] = 'Yes' if task.trial == true
+    self['Trial'] = 'No' if task.trial == false
     self['Final Cost'] = task.final_cost.try(:/, 100)
     self['Estimate Type'] = task.estimate_type
 

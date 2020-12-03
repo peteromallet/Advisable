@@ -8,7 +8,7 @@ class Mutations::StartWorking < Mutations::BaseMutation
   def authorized?(**args)
     application = Application.find_by_uid_or_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
-    return true if policy.is_client
+    return true if policy.is_client_owner?
 
     raise ApiError::NotAuthorized.new("You do not have permission to execute this mutation")
   end

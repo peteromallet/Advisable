@@ -92,6 +92,7 @@ export const project = (fields = {}) => {
   return {
     __typename: "Project",
     id: uniqueId("project"),
+    isOwner: true,
     airtableId: uniqueId("rec"),
     name: "Project",
     currency: "USD",

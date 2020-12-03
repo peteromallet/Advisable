@@ -5,11 +5,7 @@ class Mutations::DeleteTask < Mutations::BaseMutation
   field :errors, [Types::Error], null: true
 
   def authorized?(**args)
-    task = Task.find_by_uid!(args[:task])
-    policy = TaskPolicy.new(context[:current_user], task)
-    return true if policy.is_specialist_or_client
-
-    [false, {errors: [{code: "not_authorized"}]}]
+    requires_current_user!
   end
 
   def resolve(**args)

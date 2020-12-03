@@ -27,7 +27,7 @@ class Types::ApplicationType < Types::BaseType
   field :trial_task, Types::TaskType, null: true
 
   field :proposal_comment, String, null: true do
-    authorize :read
+    authorize :read?
   end
 
   field :previous_projects, [Types::PreviousProject], null: false do
@@ -35,7 +35,7 @@ class Types::ApplicationType < Types::BaseType
   end
 
   field :tasks, [Types::TaskType], null: true do
-    authorize :read
+    authorize :read?
   end
 
   def tasks

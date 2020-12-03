@@ -7,12 +7,12 @@ RSpec.describe TaskPolicy do
     it 'returns true if the user is an admin' do
       user = task.application.project.user
       user.account.update(permissions: ["admin"])
-      policy = TaskPolicy.new(user, task)
+      policy = described_class.new(user, task)
       expect(policy.update_due_date).to be_truthy
     end
 
     it 'returns false if there is no user' do
-      policy = TaskPolicy.new(nil, task)
+      policy = described_class.new(nil, task)
       expect(policy.update_due_date).to be_falsey
     end
 
@@ -21,7 +21,7 @@ RSpec.describe TaskPolicy do
         let(:task) { create(:task, stage: stage) }
 
         it "returns true" do
-          policy = TaskPolicy.new(task.application.project.user, task)
+          policy = described_class.new(task.application.project.user, task)
           expect(policy.update_due_date).to be_truthy
         end
       end
@@ -31,24 +31,24 @@ RSpec.describe TaskPolicy do
       let(:task) { create(:task, stage: 'Assigned') }
 
       it "returns true for specialists" do
-        policy = TaskPolicy.new(task.application.specialist, task)
+        policy = described_class.new(task.application.specialist, task)
         expect(policy.update_due_date).to be_truthy
       end
 
       it "returns false for the client" do
-        policy = TaskPolicy.new(task.application.project.user, task)
+        policy = described_class.new(task.application.project.user, task)
         expect(policy.update_due_date).to be_falsey
       end
     end
 
     context "when the stage is 'Working'" do
       it "returns false for the specialist" do
-        policy = TaskPolicy.new(task.application.specialist, task)
+        policy = described_class.new(task.application.specialist, task)
         expect(policy.update_due_date).to be_falsey
       end
 
       it "returns false for the client" do
-        policy = TaskPolicy.new(task.application.project.user, task)
+        policy = described_class.new(task.application.project.user, task)
         expect(policy.update_due_date).to be_falsey
       end
     end
@@ -58,12 +58,12 @@ RSpec.describe TaskPolicy do
     it 'returns true if the user is an admin' do
       user = task.application.project.user
       user.account.update(permissions: ["admin"])
-      policy = TaskPolicy.new(user, task)
+      policy = described_class.new(user, task)
       expect(policy.update_estimate).to be_truthy
     end
 
     it 'returns false if there is no user' do
-      policy = TaskPolicy.new(nil, task)
+      policy = described_class.new(nil, task)
       expect(policy.update_estimate).to be_falsey
     end
 
@@ -72,12 +72,12 @@ RSpec.describe TaskPolicy do
         let(:task) { create(:task, stage: stage) }
 
         it "returns true for client" do
-          policy = TaskPolicy.new(task.application.project.user, task)
+          policy = described_class.new(task.application.project.user, task)
           expect(policy.update_estimate).to be_truthy
         end
 
         it "returns true for specialist" do
-          policy = TaskPolicy.new(task.application.specialist, task)
+          policy = described_class.new(task.application.specialist, task)
           expect(policy.update_estimate).to be_truthy
         end
       end
@@ -88,12 +88,12 @@ RSpec.describe TaskPolicy do
         let(:task) { create(:task, stage: stage) }
 
         it "returns true for specialists" do
-          policy = TaskPolicy.new(task.application.specialist, task)
+          policy = described_class.new(task.application.specialist, task)
           expect(policy.update_estimate).to be_truthy
         end
 
         it "returns false for the client" do
-          policy = TaskPolicy.new(task.application.project.user, task)
+          policy = described_class.new(task.application.project.user, task)
           expect(policy.update_estimate).to be_falsey
         end
       end
@@ -101,44 +101,44 @@ RSpec.describe TaskPolicy do
 
     context "when the stage is 'Working'" do
       it "returns false for the specialist" do
-        policy = TaskPolicy.new(task.application.specialist, task)
+        policy = described_class.new(task.application.specialist, task)
         expect(policy.update_estimate).to be_falsey
       end
 
       it "returns false for the client" do
-        policy = TaskPolicy.new(task.application.project.user, task)
+        policy = described_class.new(task.application.project.user, task)
         expect(policy.update_estimate).to be_falsey
       end
     end
   end
 
   describe '#update_flexible_estimate' do
-    it 'calls #update_estimate' do
+    it 'calls #update_flexible_estimate' do
       user = task.application.project.user
-      policy = TaskPolicy.new(user, task)
-      expect(policy).to receive(:update_estimate)
+      policy = described_class.new(user, task)
+      allow(policy).to receive(:update_flexible_estimate)
       policy.update_flexible_estimate
     end
   end
 
-  context "#set_repeating" do
+  describe "#set_repeating" do
     it 'returns true for the client' do
-      policy = TaskPolicy.new(task.application.project.user, task)
+      policy = described_class.new(task.application.project.user, task)
       expect(policy.set_repeating).to be_truthy
     end
 
     it 'returns true for the specialist' do
-      policy = TaskPolicy.new(task.application.specialist, task)
+      policy = described_class.new(task.application.specialist, task)
       expect(policy.set_repeating).to be_truthy
     end
 
     it 'returns false for a random user' do
-      policy = TaskPolicy.new(create(:user), task)
+      policy = described_class.new(create(:user), task)
       expect(policy.set_repeating).to be_falsey
     end
 
     it 'returns true for admins' do
-      policy = TaskPolicy.new(create(:user, account: create(:account, permissions: ["admin"])), task)
+      policy = described_class.new(create(:user, account: create(:account, permissions: ["admin"])), task)
       expect(policy.set_repeating).to be_truthy
     end
   end
