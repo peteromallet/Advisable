@@ -5,14 +5,15 @@ import useViewer from "src/hooks/useViewer";
 import useSteps from "src/hooks/useSteps";
 import steps from "./Steps";
 import OrbitsBackground from "./OrbitsBackground";
-import { Box } from "@advisable/donut";
+import { Box, useBreakpoint } from "@advisable/donut";
 import OrbitsContent from "./OrbitsContent";
 import Footer from "./Footer";
 import Header from "./Header";
 
 function FreelancerJoin() {
-  const { routes, currentStepIndex } = useSteps(steps);
+  const { routes, currentStepIndex, forwards } = useSteps(steps);
   const location = useLocation();
+  const largeScreen = useBreakpoint("lUp");
   const viewer = useViewer();
 
   // Redirect to root if client or specialist logged in
@@ -58,7 +59,11 @@ function FreelancerJoin() {
       >
         <Header />
         <OrbitsContent step={currentStepIndex} />
-        <AnimatePresence exitBeforeEnter initial={false}>
+        <AnimatePresence
+          exitBeforeEnter
+          initial={false}
+          custom={{ forwards, largeScreen }}
+        >
           <Switch location={location} key={location.pathname}>
             {routes}
           </Switch>
