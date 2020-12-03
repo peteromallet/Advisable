@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { css } from "styled-components";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { truncate } from "lodash-es";
 import { Box, Text, Avatar, Link, Textarea, theme } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
@@ -17,8 +17,6 @@ import { CHAT_PARTICIPANT_QUERY } from "../queries";
 
 const ActiveConversation = ({ channelSid }) => {
   const viewer = useViewer();
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const {
     activeChannel: activeConversation,
@@ -48,16 +46,13 @@ const ActiveConversation = ({ channelSid }) => {
   });
   const otherParticipant = data?.specialist;
 
-  const onSubmitNewMessage = async () => {
+  const onSubmitNewMessage = async (message) => {
     if (!message?.length) return;
-    setLoading(true);
+
     try {
       await activeConversation.sendMessage(message);
     } catch (err) {
       console.log(err);
-    } finally {
-      setMessage("");
-      setLoading(false);
     }
   };
 
@@ -91,75 +86,84 @@ const ActiveConversation = ({ channelSid }) => {
             started {relativeDate(activeConversation?.dateCreated)} ago
           </Text>
 
-          {messages?.map((message, key) => (
-            <GuildBox flexShrink={0} key={key} spaceChildrenVertical={4}>
-              <StyledMessage
+          <AnimatePresence initial={false}>
+            {messages?.map((message, key) => (
+              <GuildBox
                 key={key}
+                flexShrink={0}
                 as={motion.div}
-                sender={message.author !== other}
-                width={{ _: "90%", s: "50%" }}
-                initial={{ opacity: 0, y: 8 }}
+                spaceChildrenVertical={4}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0 }}
               >
-                {message.author === other && (
-                  <GuildBox
-                    mr="s"
-                    flexShrink={0}
-                    flexCenterBoth
-                    spaceChildrenVertical={4}
-                  >
-                    <Avatar
-                      width={"24px"}
-                      as={Link}
-                      to={`/freelancers/${other}`}
-                      size="s"
-                      name={otherParticipant.name}
-                      url={otherParticipant.avatar}
-                    />
-                    <Text size="xs" color="quartz">
-                      {truncate(otherParticipant.firstName, { length: 13 })}
-                    </Text>
-                  </GuildBox>
-                )}
-
-                <GuildBox spaceChildrenVertical={16}>
-                  <Text
-                    css={css`
-                      white-space: pre-wrap;
-                      white-space: pre-line;
-                    `}
-                  >
-                    {message.body}
-                  </Text>
-                  {message.attributes?.calendly_link && (
-                    <Link.External
-                      href={message.attributes.calendly_link}
-                      rel="noreferrer noopener"
-                      target="_blank"
-                      color="catalinaBlue100"
-                      fontWeight="medium"
-                    >
-                      Book a call with me
-                    </Link.External>
-                  )}
-                </GuildBox>
-              </StyledMessage>
-
-              <Box
-                alignSelf={message.author === other ? "flex-start" : "flex-end"}
-              >
-                <Text
-                  as={GuildBox}
-                  alignSelf="flex-end"
-                  color="darkGray"
-                  size="xxs"
+                <StyledMessage
+                  bg={message.author !== other ? "blue200" : "neutral100"}
+                  alignSelf={
+                    message.author !== other ? "flex-end" : "flex-start"
+                  }
+                  maxWidth={{ _: "100%", m: "90%" }}
                 >
-                  {relativeDate(message.dateCreated)} ago
-                </Text>
-              </Box>
-            </GuildBox>
-          ))}
+                  {message.author === other && (
+                    <GuildBox
+                      mr="s"
+                      flexShrink={0}
+                      flexCenterBoth
+                      spaceChildrenVertical={4}
+                    >
+                      <Avatar
+                        width={"24px"}
+                        as={Link}
+                        to={`/freelancers/${other}`}
+                        size="s"
+                        name={otherParticipant.name}
+                        url={otherParticipant.avatar}
+                      />
+                      <Text size="xs" color="quartz">
+                        {truncate(otherParticipant.firstName, { length: 13 })}
+                      </Text>
+                    </GuildBox>
+                  )}
+
+                  <Box minWidth="0">
+                    <Text
+                      css={css`
+                        white-space: pre-wrap;
+                        white-space: pre-line;
+                      `}
+                    >
+                      {message.body}
+                    </Text>
+                    {message.attributes?.calendly_link && (
+                      <Link.External
+                        href={message.attributes.calendly_link}
+                        rel="noreferrer noopener"
+                        target="_blank"
+                        color="catalinaBlue100"
+                        fontWeight="medium"
+                      >
+                        Book a call with me
+                      </Link.External>
+                    )}
+                  </Box>
+                </StyledMessage>
+
+                <Box
+                  alignSelf={
+                    message.author === other ? "flex-start" : "flex-end"
+                  }
+                >
+                  <Text
+                    as={GuildBox}
+                    alignSelf="flex-end"
+                    color="darkGray"
+                    size="xxs"
+                  >
+                    {relativeDate(message.dateCreated)} ago
+                  </Text>
+                </Box>
+              </GuildBox>
+            ))}
+          </AnimatePresence>
           <ScrollToBottom />
         </GuildBox>
 
@@ -172,26 +176,51 @@ const ActiveConversation = ({ channelSid }) => {
           alignSelf="center"
           spaceChildrenVertical={8}
         >
-          <Textarea
-            minRows="3"
-            maxRows="3"
-            value={message}
-            onChange={({ currentTarget }) => setMessage(currentTarget.value)}
-            placeholder="New Message ..."
-          ></Textarea>
-          <SubmitButton
-            size="l"
-            type="submit"
-            loading={loading}
-            onClick={onSubmitNewMessage}
-            disabled={loading}
-          >
-            Send
-          </SubmitButton>
+          <Composer onSubmit={onSubmitNewMessage} />
         </GuildBox>
       </>
     )
   );
 };
+
+function Composer({ onSubmit }) {
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit() {
+    setLoading(true);
+    await onSubmit(message);
+    setMessage("");
+    setLoading(false);
+  }
+
+  function handleKeyDown(e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  }
+
+  return (
+    <>
+      <Textarea
+        minRows="3"
+        maxRows="3"
+        value={message}
+        onKeyDown={handleKeyDown}
+        onChange={({ currentTarget }) => setMessage(currentTarget.value)}
+        placeholder="New Message ..."
+      ></Textarea>
+      <SubmitButton
+        size="l"
+        type="submit"
+        loading={loading}
+        onClick={handleSubmit}
+      >
+        Send
+      </SubmitButton>
+    </>
+  );
+}
 
 export default ActiveConversation;

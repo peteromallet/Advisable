@@ -18,16 +18,18 @@ export const GUILD_POSTS_QUERY = gql`
         endCursor
         hasNextPage
       }
-      nodes {
-        ...GuildPostFields
-        ... on GuildPostAdviceRequired {
-          needHelp
-        }
-        author {
-          location
-          id
-          bio
-          firstName
+      edges {
+        node {
+          ...GuildPostFields
+          ... on GuildPostAdviceRequired {
+            needHelp
+          }
+          author {
+            location
+            id
+            bio
+            firstName
+          }
         }
       }
     }

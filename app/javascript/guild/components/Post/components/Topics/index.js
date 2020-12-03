@@ -12,7 +12,7 @@ const Topics = ({ topics = [] }) => (
     wrapChildrenBoth={8}
   >
     {topics.map((topic, key) => (
-      <Text key={key} fontSize="xs" fontWeight="medium" color="catalinaBlue100">
+      <Text key={key} fontSize="s" fontWeight="medium" color="neutral400">
         #{lowerDashed(topic.name)}
       </Text>
     ))}

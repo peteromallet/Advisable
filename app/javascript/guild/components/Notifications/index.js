@@ -1,46 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GUILD_NOTIFICATIONS_QUERY } from "./queries";
 import { truncate } from "lodash-es";
 import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
-import { Box, Avatar, Text, Link } from "@advisable/donut";
-import {
-  NotificationDropdown,
-  NotificationItem,
-  CommentNotificationBody,
-} from "./styles";
+import { Box, Avatar, Text, Link, Stack } from "@advisable/donut";
+import { NotificationItem } from "./styles";
 import { GuildBox } from "@guild/styles";
 
-const Notifications = ({ open }) => {
-  const { data, loading } = useQuery(GUILD_NOTIFICATIONS_QUERY, {
+const Notifications = ({ open, closeNotifications }) => {
+  const { data, loading, refetch } = useQuery(GUILD_NOTIFICATIONS_QUERY, {
     fetchPolicy: "cache-and-network",
     skip: !open,
   });
   const notificationItems = data?.guildActivity?.nodes;
 
+  useEffect(() => {
+    if (open) {
+      refetch();
+    }
+  }, [refetch, open]);
+
   return (
-    <NotificationDropdown display="flex" flexDirection="column" open={open}>
+    <Box py={4} px={6} display="flex" flexDirection="column">
       <Text
-        fontSize="xxl"
-        fontWeight="light"
-        letterSpacing="-0.01%"
-        lineHeight="24px"
-        color="catalinaBlue100"
+        fontSize="3xl"
+        color="blue900"
+        marginBottom={4}
+        fontWeight="medium"
+        letterSpacing="-0.02rem"
       >
         Notifications
       </Text>
       {loading ? (
         <Loading />
       ) : notificationItems && notificationItems.length ? (
-        notificationItems.map((notification, key) => (
-          <NotificationItem key={key}>
-            {notification.__typename === "GuildComment" ? (
-              <CommentNotification {...notification} />
-            ) : (
-              <ReactionNotification {...notification} />
-            )}
-          </NotificationItem>
-        ))
+        <NotificationsList
+          closeNotifications={closeNotifications}
+          notifications={notificationItems}
+        />
       ) : (
         <NotificationItem pb="l" alignItems="center" justifyContent="center">
           <Text size="m" fontWeight="500" color="catalinaBlue100">
@@ -48,94 +45,70 @@ const Notifications = ({ open }) => {
           </Text>
         </NotificationItem>
       )}
-    </NotificationDropdown>
+    </Box>
   );
 };
 
-const AuthorDetails = ({ author, createdAt }) => (
+function NotificationsList({ notifications, closeNotifications }) {
+  return (
+    <Stack spacing={4}>
+      {notifications.map((notification, key) => (
+        <ReactionNotification
+          key={key}
+          closeNotifications={closeNotifications}
+          {...notification}
+        />
+      ))}
+    </Stack>
+  );
+}
+
+const AuthorDetails = ({ author }) => (
   <GuildBox flexCenterBoth spaceChildrenVertical={8}>
     <Avatar size="s" name={author.name} url={author.avatar} />
-    <Text
-      fontSize="xs"
-      fontWeight="light"
-      letterSpacing="-0.01em"
-      color="quartz"
-    >
-      {truncate(author.firstName || author.name, { length: 12 })}
-    </Text>
-    <Text
-      fontSize="xxs"
-      fontWeight="light"
-      letterSpacing="-0.01em"
-      color="darkGrey"
-      textAlign="center"
-    >
-      {createdAt} ago
-    </Text>
   </GuildBox>
 );
 
-const CommentNotification = ({ author, post, body, id, createdAtTimeAgo }) => (
-  <>
-    <GuildBox
-      width="87px"
-      backgroundColor="ghostWhite"
-      spaceChildrenVertical={4}
-      flexCenterBoth
-    >
-      <Avatar size="s" name={author.name} url={author.avatar} />
-      <AuthorDetails authorName={author.name} createdAt={createdAtTimeAgo} />
-    </GuildBox>
-
-    <Box
-      as={Link}
-      to={`/posts/${post.id}#comments`}
-      width="305px"
-      height="116px"
-      px="24px"
-      backgroundColor="aliceBlue"
-    >
-      <CommentNotificationBody
-        text={`commented, "${body}"`}
-        id={id}
-        lines={3}
-        ellipsis="..."
-        className="comment-notification"
-        innerElement="p"
-        buttons={false}
-      />
-    </Box>
-  </>
-);
-
-const ReactionNotification = ({ author, reactionable, createdAtTimeAgo }) => (
-  <Box display="flex">
-    <GuildBox
-      width="87px"
-      padding="s"
-      flexShrink={0}
-      flexDirection="column"
-      backgroundColor="ghostWhite"
-      flexCenterBoth
-    >
+const ReactionNotification = ({
+  closeNotifications,
+  author,
+  reactionable,
+  createdAtTimeAgo,
+}) => (
+  <NotificationItem>
+    <Box mr={4}>
       <AuthorDetails author={author} createdAt={createdAtTimeAgo} />
-    </GuildBox>
-    <Box
-      as={Link}
-      pl="24px"
-      width="305px"
-      backgroundColor="aliceBlue"
-      display="flex"
-      alignItems="center"
-      to={`/posts/${reactionable?.id}`}
-    >
-      <Text size="xs" color="catalinaBlue100">
-        {`Gave Thanks for your post, "${truncate(reactionable.title, {
-          length: 100,
-        })}"`}
+    </Box>
+    <Box flex={1}>
+      <Text size="s" color="neutral600" mb={1} lineHeight="1.1rem">
+        <Link
+          to={`/freelancers/${author.id}/guild`}
+          fontWeight="medium"
+          variant="dark"
+          onClick={closeNotifications}
+        >
+          {author.name}
+        </Link>
+        {" found your post insightful: "}
+        <Link
+          to={`/posts/${reactionable?.id}`}
+          fontWeight="medium"
+          variant="dark"
+          onClick={closeNotifications}
+        >
+          {truncate(reactionable.title, { length: 100 })}
+        </Link>
+      </Text>
+      <Text
+        fontSize="xxs"
+        fontWeight="light"
+        letterSpacing="-0.01em"
+        color="darkGrey"
+      >
+        {createdAtTimeAgo} ago
       </Text>
     </Box>
-  </Box>
+  </NotificationItem>
 );
 
 export default Notifications;

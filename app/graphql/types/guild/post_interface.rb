@@ -20,6 +20,12 @@ module Types::Guild::PostInterface
     description 'The title of the guild post'
   end
 
+  field :excerpt, String, null: true
+
+  def excerpt
+    object.body&.truncate(300)
+  end
+
   field :body, String, null: true do
     description 'The body of the guild post'
   end
@@ -75,6 +81,14 @@ module Types::Guild::PostInterface
 
   field :engagements_count, Integer, null: true do
     description 'The recorded number of engagements for this post'
+  end
+
+  field :engaged, Boolean, null: false do
+    description "Wether or not the current user has engaged with this post"
+  end
+
+  def engaged
+    object.engagements.exists?(specialist: current_user)
   end
 
   field :audience_type, String, null: true do

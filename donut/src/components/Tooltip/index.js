@@ -13,7 +13,7 @@ import LinkStyles from "../Link/styles";
 
 const TooltipContent = styled.div`
   font-size: 14px;
-  max-width: 320px;
+  max-width: ${(p) => p.$maxWidth}px;
   color: white;
   padding: 8px 16px;
   line-height: 20px;
@@ -53,9 +53,7 @@ const openStyling = css`
 // underlying component.
 // The only downside of this is that it breaks the styled-components 'as'
 // prop
-const ExtractedReakitTooltip = ({ interactable, ...props }) => (
-  <ReakitTooltip {...props} />
-);
+const ExtractedReakitTooltip = (props) => <ReakitTooltip {...props} />;
 
 const StyledTooltip = styled(ExtractedReakitTooltip)`
   opacity: 0;
@@ -76,6 +74,7 @@ const Tooltip = ({
   children,
   content,
   gutter,
+  maxWidth = 320,
   interactable,
   placement = "bottom",
 }) => {
@@ -92,7 +91,7 @@ const Tooltip = ({
         {(referenceProps) => React.cloneElement(children, referenceProps)}
       </TooltipReference>
       <StyledTooltip interactable={interactable} {...tooltip}>
-        <TooltipContent>
+        <TooltipContent $maxWidth={maxWidth}>
           <StyledTooltipArrow size={16} {...tooltip} />
           {content}
         </TooltipContent>
