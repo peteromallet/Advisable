@@ -11,7 +11,6 @@ import "draft-js/dist/Draft.css";
 
 export default function RichTextEditor({ value, onChange }) {
   const editor = useRef(null);
-  const [focused, setFocused] = useState(false);
   const [editorState, setEditorState] = useState(() => {
     if (!value) return EditorState.createEmpty();
     const contentState = stateFromMarkdown(value);
@@ -51,6 +50,14 @@ export default function RichTextEditor({ value, onChange }) {
 
   function toggleInlineStyle(inlineStyle) {
     setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
+  }
+
+  function blockStyleFunction(content) {
+    const type = content.getType();
+
+    if (type === "unstyled") {
+      return "paragraph";
+    }
   }
 
   const handleChange = useCallback(
@@ -160,13 +167,12 @@ export default function RichTextEditor({ value, onChange }) {
       <StyledEditor>
         <Editor
           ref={editor}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
           onChange={handleChange}
           editorState={editorState}
           placeholder="Write your post..."
           handleKeyCommand={handleKeyCommand}
           keyBindingFn={mapKeyToEditorCommand}
+          blockStyleFn={blockStyleFunction}
         />
       </StyledEditor>
     </StyledMarkdown>
