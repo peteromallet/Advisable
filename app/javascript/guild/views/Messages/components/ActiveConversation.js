@@ -2,18 +2,17 @@ import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { css } from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
-import { truncate } from "lodash-es";
-import { Box, Text, Avatar, Link, Textarea, theme } from "@advisable/donut";
+import { Box, Text, Textarea, theme } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { useTwilioChat } from "@guild/hooks/twilioChat/useTwilioChat";
-import { StyledMessage } from "../styles";
 import InboxHeader from "../components/InboxHeader";
 import { GuildBox, flex } from "@guild/styles";
 import { SubmitButton } from "@guild/components/Buttons/styles";
 import { relativeDate } from "@guild/utils";
 import { ScrollToBottom } from "@guild/components/ScrollToBottom";
 import { CHAT_PARTICIPANT_QUERY } from "../queries";
+import Message from "./Message";
 
 const ActiveConversation = ({ channelSid }) => {
   const viewer = useViewer();
@@ -44,16 +43,18 @@ const ActiveConversation = ({ channelSid }) => {
     variables: { id: other },
     skip: !other,
   });
+
   const otherParticipant = data?.specialist;
+
+  const participants = [otherParticipant, viewer];
+
+  function getParticipantById(id) {
+    return participants.find((participant) => participant.id === id);
+  }
 
   const onSubmitNewMessage = async (message) => {
     if (!message?.length) return;
-
-    try {
-      await activeConversation.sendMessage(message);
-    } catch (err) {
-      console.log(err);
-    }
+    await activeConversation.sendMessage(message);
   };
 
   if (initializing) return <Loading />;
@@ -88,80 +89,18 @@ const ActiveConversation = ({ channelSid }) => {
 
           <AnimatePresence initial={false}>
             {messages?.map((message, key) => (
-              <GuildBox
+              <Box
                 key={key}
-                flexShrink={0}
                 as={motion.div}
-                spaceChildrenVertical={4}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <StyledMessage
-                  bg={message.author !== other ? "blue200" : "neutral100"}
-                  alignSelf={
-                    message.author !== other ? "flex-end" : "flex-start"
-                  }
-                  maxWidth={{ _: "100%", m: "90%" }}
-                >
-                  {message.author === other && (
-                    <GuildBox
-                      mr="s"
-                      flexShrink={0}
-                      flexCenterBoth
-                      spaceChildrenVertical={4}
-                    >
-                      <Avatar
-                        width={"24px"}
-                        as={Link}
-                        to={`/freelancers/${other}`}
-                        size="s"
-                        name={otherParticipant.name}
-                        url={otherParticipant.avatar}
-                      />
-                      <Text size="xs" color="quartz">
-                        {truncate(otherParticipant.firstName, { length: 13 })}
-                      </Text>
-                    </GuildBox>
-                  )}
-
-                  <Box minWidth="0">
-                    <Text
-                      css={css`
-                        white-space: pre-wrap;
-                        white-space: pre-line;
-                      `}
-                    >
-                      {message.body}
-                    </Text>
-                    {message.attributes?.calendly_link && (
-                      <Link.External
-                        href={message.attributes.calendly_link}
-                        rel="noreferrer noopener"
-                        target="_blank"
-                        color="catalinaBlue100"
-                        fontWeight="medium"
-                      >
-                        Book a call with me
-                      </Link.External>
-                    )}
-                  </Box>
-                </StyledMessage>
-
-                <Box
-                  alignSelf={
-                    message.author === other ? "flex-start" : "flex-end"
-                  }
-                >
-                  <Text
-                    as={GuildBox}
-                    alignSelf="flex-end"
-                    color="darkGray"
-                    size="xxs"
-                  >
-                    {relativeDate(message.dateCreated)} ago
-                  </Text>
-                </Box>
-              </GuildBox>
+                <Message
+                  message={message}
+                  isAuthor={viewer.id === message.author}
+                  author={getParticipantById(message.author)}
+                />
+              </Box>
             ))}
           </AnimatePresence>
           <ScrollToBottom />
