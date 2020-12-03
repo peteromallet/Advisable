@@ -19,6 +19,11 @@ RSpec.describe ProjectPolicy do
       policy = described_class.new(create(:user), project)
       expect(policy).not_to be_read
     end
+
+    it "returns false if the user is a specialist" do
+      policy = described_class.new(create(:specialist), project)
+      expect(policy).not_to be_read
+    end
   end
 
   describe "#publish?" do
