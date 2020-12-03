@@ -96,17 +96,6 @@ class Types::User < Types::BaseType
     authorize :is_user
   end
 
-  field :applications, [Types::ApplicationType], null: true do
-    authorize :is_user
-    argument :status, [String], required: false
-  end
-
-  def applications(status: nil)
-    records = company.applications
-    records = records.where(status: status) if status
-    records
-  end
-
   field :project_payment_method, String, null: true do
     authorize :is_user
   end
