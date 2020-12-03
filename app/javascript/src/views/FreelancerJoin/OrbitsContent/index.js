@@ -9,8 +9,10 @@ import BigCommerceLogo from "./logos/BigCommerceLogo";
 import WorldRemitLogo from "./logos/WorldRemitLogo";
 import BabbelLogo from "./logos/BabbelLogo";
 import UberAllLogo from "./logos/UberAllLogo";
+import { useHistory } from "react-router";
 
 function ThankYouContent() {
+  const history = useHistory();
   return (
     <Box pb={20} mt={{ _: 10, xl: 0 }} maxWidth="560px">
       <Header mb={5}>Thank you</Header>
@@ -28,6 +30,7 @@ function ThankYouContent() {
         variant="dark"
         size={{ _: "m", xl: "l" }}
         suffix={<ChevronRight />}
+        onClick={() => history.push("/")}
       >
         Get Started
       </Button>
