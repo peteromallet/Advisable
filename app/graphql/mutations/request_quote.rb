@@ -7,19 +7,15 @@ class Mutations::RequestQuote < Mutations::BaseMutation
   def authorized?(**args)
     task = Task.find_by_uid!(args[:task])
     policy = TaskPolicy.new(context[:current_user], task)
-    return true if policy.is_client_owner?
+    return true if policy.via_client?
 
     [false, {errors: [{code: "not_authorized"}]}]
   end
 
   def resolve(**args)
     task = Task.find_by_uid!(args[:task])
-
-    {
-      task: Tasks::RequestQuote.call(task: task)
-    }
-
-    rescue Service::Error => e
-      {errors: [e]}
+    {task: Tasks::RequestQuote.call(task: task)}
+  rescue Service::Error => e
+    {errors: [e]}
   end
 end

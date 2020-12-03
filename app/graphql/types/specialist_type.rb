@@ -279,7 +279,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :completed_tutorials, [String], null: false do
-    authorize :is_specialist, :is_admin
+    authorize :is_specialist?, :is_admin
     description <<~HEREDOC
       An array of tutorial ID's that the user has completed. This is used to
       track when to show onboarding flows for certain features.
@@ -287,7 +287,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
-    authorize :is_specialist, :is_admin
+    authorize :is_specialist?, :is_admin
     description 'The timestamp for when the specialist record was created'
   end
 
@@ -296,7 +296,7 @@ class Types::SpecialistType < Types::BaseType
   # to only fetch applications where the associated project sales_status is
   # "Open"
   field :applications, [Types::ApplicationType], null: true do
-    authorize :is_specialist, :is_admin
+    authorize :is_specialist?, :is_admin
     argument :status, [String], required: false
     argument :sales_status, [String], required: false
     description <<~HEREDOC
@@ -315,7 +315,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :email, String, null: true do
-    authorize :is_admin, :is_specialist, :is_applicant_of_company_projects
+    authorize :is_admin, :is_specialist?, :is_applicant_of_company_projects
     description 'The specialists email address'
   end
 
@@ -324,7 +324,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :talk_signature, String, null: false do
-    authorize :is_specialist
+    authorize :is_specialist?
     description 'A unique signature used to for identification with talkjs'
   end
 
@@ -344,7 +344,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :has_setup_payments, Boolean, null: true do
-    authorize :is_specialist, :is_admin
+    authorize :is_specialist?, :is_admin
     description <<~HEREDOC
       Wether or not the specialist has provided their bank information so that
       they can be paid.
@@ -352,28 +352,28 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :bank_holder_name, String, null: true do
-    authorize :is_specialist, :is_admin
+    authorize :is_specialist?, :is_admin
     description <<~HEREDOC
       The full name or company name of the bank account holder.
     HEREDOC
   end
 
   field :bank_holder_address, Types::AddressType, null: true do
-    authorize :is_specialist, :is_admin
+    authorize :is_specialist?, :is_admin
     description <<~HEREDOC
       The address of the bank accound holder.
     HEREDOC
   end
 
   field :bank_currency, String, null: true do
-    authorize :is_specialist, :is_admin
+    authorize :is_specialist?, :is_admin
     description <<~HEREDOC
       The currency of the specialists bank account.
     HEREDOC
   end
 
   field :vat_number, String, null: true do
-    authorize :is_specialist, :is_admin
+    authorize :is_specialist?, :is_admin
     description <<~HEREDOC
       The specialists VAT number
     HEREDOC
@@ -400,7 +400,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   field :application_stage, String, null: true do
-    authorize :is_specialist
+    authorize :is_specialist?
     description 'The account status for the specialist'
   end
 
