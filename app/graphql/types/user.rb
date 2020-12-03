@@ -9,7 +9,7 @@ class Types::User < Types::BaseType
   field :last_name, String, null: true
 
   field :email, String, null: false do
-    authorize :is_admin, :is_user, :is_candidate_for_user_project, :is_team_manager
+    authorize :is_admin, :is_user, :is_candidate_for_user_project, :is_team_manager?
   end
 
   delegate :name, :first_name, :last_name, :email, to: :account
@@ -174,7 +174,7 @@ class Types::User < Types::BaseType
   end
 
   field :invoices, [Types::InvoiceType], null: false do
-    authorize :is_team_manager
+    authorize :is_team_manager?
   end
 
   def invoices

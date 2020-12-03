@@ -18,7 +18,7 @@ class Mutations::StopWorking < Mutations::BaseMutation
   def authorized?(**args)
     application = Application.find_by_uid!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
-    return true if policy.is_client_owner?
+    return true if policy.stop_working?
 
     raise ApiError::NotAuthorized.new(
       "You do not have permission to execute this mutation"

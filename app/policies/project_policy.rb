@@ -5,7 +5,7 @@ class ProjectPolicy < BasePolicy
   alias publish? read?
 
   def delete?
-    is_owner? || is_admin
+    is_owner? || is_company_team_manager? || is_admin
   end
 
   def can_access_project?
@@ -16,9 +16,5 @@ class ProjectPolicy < BasePolicy
 
   def is_owner?
     record.user == user
-  end
-
-  def belongs_to_company?
-    user.is_a?(User) && user.company.users.include?(record.user)
   end
 end

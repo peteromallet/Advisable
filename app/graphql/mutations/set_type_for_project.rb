@@ -13,7 +13,7 @@ class Mutations::SetTypeForProject < Mutations::BaseMutation
   def authorized?(application:, project_type:, monthly_limit:)
     ap = Application.find_by_uid_or_airtable_id!(application)
     policy = ApplicationPolicy.new(context[:current_user], ap)
-    return true if policy.is_client_owner?
+    return true if policy.set_type_for_project?
 
     [false, {errors: [{code: "not_authorized"}]}]
   end
