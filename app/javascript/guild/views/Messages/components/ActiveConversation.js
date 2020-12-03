@@ -78,7 +78,6 @@ const ActiveConversation = ({ channelSid }) => {
           py="s"
           height="100%"
           overflow="scroll"
-          spaceChildrenVertical={16}
           css={css`
             border-bottom: 1px solid ${theme.colors.ghostWhite};
           `}
@@ -92,6 +91,7 @@ const ActiveConversation = ({ channelSid }) => {
               <Box
                 key={key}
                 as={motion.div}
+                marginBottom={6}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
               >
