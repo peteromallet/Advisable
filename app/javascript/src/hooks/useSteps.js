@@ -57,7 +57,7 @@ function useSteps(steps) {
   const routes = useMemo(
     () =>
       steps.map((step, index) => (
-        <Route key={index} path={step.path} exact={step.exact}>
+        <Route key={`step-${index}`} path={step.path} exact={step.exact}>
           {step.component ? (
             <step.component
               nextStep={nextStep}
@@ -74,6 +74,7 @@ function useSteps(steps) {
 
   return {
     routes,
+    forwards,
     nextStep,
     prevStep,
     lastStep,
