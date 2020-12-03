@@ -4,7 +4,7 @@
 
 class SpecialistPolicy < BasePolicy
   # Checks if the specialist is the current user
-  def is_specialist
+  def is_specialist?
     record == user
   end
 
