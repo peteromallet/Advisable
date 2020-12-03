@@ -1,5 +1,6 @@
 import StartApplication from "./StartApplication";
 import SetPassword from "./SetPassword";
+import MotionBox from "./MotionBox";
 
 export default [
   {
@@ -15,7 +16,7 @@ export default [
   },
   {
     title: "Thank You",
-    component: null,
+    component: MotionBox,
     path: "/freelancers/join/thank_you",
   },
 ];
