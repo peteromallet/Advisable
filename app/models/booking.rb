@@ -3,14 +3,14 @@
 # application record with a status of 'Working'.
 class Booking < ApplicationRecord
   include Airtable::Syncable
-  validates :status, inclusion: { in: ["Proposal Started", "Proposed", "Offered", "Accepted", "Declined", "Complete"] }, allow_nil: true
+  validates :status, inclusion: {in: ["Proposal Started", "Proposed", "Offered", "Accepted", "Declined", "Complete"]}, allow_nil: true
 
   validate :valid_proposal, on: :create
 
   # disable STI
   self.inheritance_column = :_type_disabled
 
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
   belongs_to :application
 
   serialize :deliverables, Array
@@ -28,6 +28,7 @@ class Booking < ApplicationRecord
   # data from airtable.
   def calculate_end_date
     return unless recurring? && start_date
+
     # Parse the duration to an int.
     # "Until Cancellation" has no numbers so will be parsed as 0.
     # "3 Months" will be parsed as 3.
@@ -45,6 +46,7 @@ class Booking < ApplicationRecord
   def valid_proposal
     return if application.nil?
     return if application.bookings.proposals.empty?
+
     errors.add(:application, 'This application already has a proposal')
   end
 end
@@ -70,13 +72,11 @@ end
 #  updated_at             :datetime         not null
 #  airtable_id            :string
 #  application_id         :bigint
-#  rejection_reason_id    :bigint
 #
 # Indexes
 #
-#  index_bookings_on_airtable_id          (airtable_id)
-#  index_bookings_on_application_id       (application_id)
-#  index_bookings_on_rejection_reason_id  (rejection_reason_id)
+#  index_bookings_on_airtable_id     (airtable_id)
+#  index_bookings_on_application_id  (application_id)
 #
 # Foreign Keys
 #

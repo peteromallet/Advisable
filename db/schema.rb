@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_03_115702) do
+ActiveRecord::Schema.define(version: 2020_12_03_120204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -160,14 +160,6 @@ ActiveRecord::Schema.define(version: 2020_12_03_115702) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "booking_rejection_reasons", force: :cascade do |t|
-    t.string "name"
-    t.string "airtable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["airtable_id"], name: "index_booking_rejection_reasons_on_airtable_id"
-  end
-
   create_table "bookings", force: :cascade do |t|
     t.string "type"
     t.decimal "rate"
@@ -181,14 +173,12 @@ ActiveRecord::Schema.define(version: 2020_12_03_115702) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "decline_comment"
-    t.bigint "rejection_reason_id"
     t.date "start_date"
     t.date "end_date"
     t.string "proposal_comment"
     t.string "client_decline_comment"
     t.index ["airtable_id"], name: "index_bookings_on_airtable_id"
     t.index ["application_id"], name: "index_bookings_on_application_id"
-    t.index ["rejection_reason_id"], name: "index_bookings_on_rejection_reason_id"
   end
 
   create_table "client_calls", force: :cascade do |t|
@@ -1294,19 +1284,19 @@ ActiveRecord::Schema.define(version: 2020_12_03_115702) do
   SQL
 
 
+  create_trigger :logidze_on_accounts, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_applications, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_applications BEFORE INSERT OR UPDATE ON public.applications FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
   create_trigger :logidze_on_projects, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_projects BEFORE INSERT OR UPDATE ON public.projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_specialists, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_specialists BEFORE INSERT OR UPDATE ON public.specialists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
-  create_trigger :logidze_on_applications, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_applications BEFORE INSERT OR UPDATE ON public.applications FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
   create_trigger :logidze_on_users, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_accounts, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
