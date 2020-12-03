@@ -41,7 +41,7 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
       ? `/opportunities/${project_id}`
       : nextStep.path;
 
-    history.push(nextPath);
+    history.replace(nextPath);
   };
 
   return (
