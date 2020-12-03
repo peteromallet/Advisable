@@ -32,7 +32,7 @@ function useSteps(steps) {
   );
 
   // Use forwards value to determine the direction of a movement between steps
-  const forwards = prevPathMatchedIndex < currentStepIndex;
+  const forwards = prevPathMatchedIndex <= currentStepIndex;
 
   // Number of steps
   const numberOfSteps = steps.length;

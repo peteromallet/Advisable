@@ -4,7 +4,7 @@ import AdvisableLogo from "./AdvisableLogo";
 
 export default function Header() {
   return (
-    <Box width="100%" maxWidth="650px" mx={{ _: "auto", xl: 0 }}>
+    <Box gridArea="header" alignSelf="end">
       <Link.External href="https://advisable.com/">
         <AdvisableLogo alt="Advisable logo" />
       </Link.External>

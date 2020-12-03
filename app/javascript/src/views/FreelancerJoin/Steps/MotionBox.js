@@ -40,23 +40,11 @@ export default function MotionBox({ children, forwards, ...props }) {
       exit="exit"
       zIndex={2}
       position="relative"
-      // my="auto"
-      // mx={[0, "auto"]}
-      // ml={{ _: "auto", xl: "5.75rem" }}
-      // mr={{ _: "auto", xl: 12 }}
-      ml={{ _: "auto", xl: "8%" }}
-      mr={{ _: "auto", xl: "3.8%" }}
-      width={["100%", "auto"]}
-      // pb={{ xl: 20 }}
+      gridArea="card"
+      alignSelf={{ _: "start", xl: "center" }}
       {...props}
     >
-      <Card
-        padding={[5, 10]}
-        maxWidth={650}
-        width="100%"
-        marginX="auto"
-        borderRadius="8px"
-      >
+      <Card padding={[5, 10]} maxWidth={650} borderRadius="8px">
         {children}
       </Card>
     </Box>

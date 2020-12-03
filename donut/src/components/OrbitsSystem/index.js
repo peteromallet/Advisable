@@ -57,13 +57,19 @@ export function Orbit({
   }, [animate, id, setState, state]);
 
   return (
-    <motion.path initial={initial} animate={animate} transition={transition} />
+    <motion.path
+      initial={initial}
+      animate={animate}
+      transition={transition}
+      vectorEffect="non-scaling-stroke"
+    />
   );
 }
 
 function useResponsiveProp(prop) {
   const breakpoints = useBreakpoints();
 
+  if (!prop) return prop;
   if (Array.isArray(prop)) {
     throw "Orbits system does not support responsive props as an array";
   }
@@ -73,7 +79,7 @@ function useResponsiveProp(prop) {
       .slice()
       .reverse()
       .find((breakpoint) => breakpoints[breakpoint]);
-    return matched ? prop[matched] : prop._;
+    return matched ? prop[matched] : prop._ || null;
   }
 
   return prop;
@@ -89,10 +95,14 @@ export default function OrbitsSystem({
   offsetX = 0,
   offsetY = 0,
   increment = 200,
+  viewBox = null,
+  preserveAspectRatio = null,
   transition,
 }) {
   const responsiveX = useResponsiveProp(x);
   const responsiveY = useResponsiveProp(y);
+  const responsiveViewBox = useResponsiveProp(viewBox);
+  const respPreserveAspectRatio = useResponsiveProp(preserveAspectRatio);
 
   const orbits = React.Children.map(children, (child, i) => {
     const orbitSize = startSize + (i + 1) * increment;
@@ -114,5 +124,12 @@ export default function OrbitsSystem({
     });
   }).reverse();
 
-  return <StyledOrbitsSystem>{orbits}</StyledOrbitsSystem>;
+  return (
+    <StyledOrbitsSystem
+      viewBox={responsiveViewBox}
+      preserveAspectRatio={respPreserveAspectRatio}
+    >
+      {orbits && orbits}
+    </StyledOrbitsSystem>
+  );
 }

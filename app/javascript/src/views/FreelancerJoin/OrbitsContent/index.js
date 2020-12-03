@@ -87,7 +87,7 @@ function Header({ children, ...props }) {
 function FormsContent() {
   return (
     <Box>
-      <Box mb={{ _: 4, xl: 20 }} pt={{ _: 9, xl: 0 }}>
+      <Box mb={{ xl: 20 }}>
         <Header>Advisable connects</Header>
         <Header color="#FEB6C8">top freelancers</Header>
         <Header mb={{ _: 4, l: 5 }}>with clients</Header>
@@ -110,13 +110,14 @@ export default function OrbitsContent({ step }) {
   return (
     <Box
       position="relative"
-      width={{ _: "100%", xl: "40%" }}
-      mx={{ _: "auto", xl: 0 }}
+      gridArea="orbits-content"
+      alignSelf={{ _: "start", xl: "center" }}
       maxWidth={{ _: "650px", xl: "500px" }}
+      pt={{ _: 0, xl: 14 }}
+      pb={{ xl: 14 }}
       display="flex"
       flexDirection="column"
       justifyContent="flex-start"
-      pt={4}
     >
       {step === 2 ? <ThankYouContent /> : <FormsContent />}
     </Box>
