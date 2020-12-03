@@ -38,7 +38,7 @@ function FreelancerJoin() {
         justifyContent="center"
         gridColumnGap="3.33%"
         gridRowGap={{ _: 9, xl: 0 }}
-        gridTemplateColumns={{ _: "auto", xl: "auto auto" }}
+        gridTemplateColumns={{ _: "auto", xl: "auto 640px" }}
         gridTemplateRows={{
           _: "48px auto auto 56px",
           xl: "72px auto 72px",
