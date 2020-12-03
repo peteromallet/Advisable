@@ -204,7 +204,7 @@ class TestData
         name: Company.fresh_name_for('Dunder Mifflin'),
         address: {city: 'Dublin', country: 'IE'},
         industry: industry,
-        company_type: 'Startup',
+        kind: 'Startup',
         sales_person: sales_person
       )
       u.company_name = 'Dunder Mifflin'
