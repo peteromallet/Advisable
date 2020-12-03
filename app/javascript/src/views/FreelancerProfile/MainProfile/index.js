@@ -3,8 +3,11 @@ import PreviousProjects from "../PreviousProjects";
 import Testimonials from "../Testimonials";
 import NoProjects from "../NoProjects";
 import CallToActionBox from "../CallToActionBox";
+import useViewer from "src/hooks/useViewer";
 
 export default function MainProfile({ isOwner, data }) {
+  const viewer = useViewer();
+  const viewerIsGuild = viewer?.guild || false;
   const reviews = data.specialist.reviews.filter((r) => r.comment);
   const hasReviews = reviews.length > 0;
 
@@ -17,7 +20,9 @@ export default function MainProfile({ isOwner, data }) {
         <NoProjects data={data} isOwner={isOwner} />
       )}
       {hasReviews && <Testimonials reviews={reviews} />}
-      {!isOwner && <CallToActionBox specialist={data.specialist} />}
+      {!isOwner && !viewerIsGuild && (
+        <CallToActionBox specialist={data.specialist} />
+      )}
     </>
   );
 }
