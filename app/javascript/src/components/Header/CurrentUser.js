@@ -34,8 +34,6 @@ const CurrentUser = ({ user, onLogout }) => {
     }
   });
 
-  if (!user) return null;
-
   return (
     <CurrentUserWrapper tabIndex="0" onFocus={handleFocus} onBlur={handleBlur}>
       <CurrentUserToggle>
