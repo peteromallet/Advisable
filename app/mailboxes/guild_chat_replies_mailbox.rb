@@ -1,7 +1,6 @@
 class GuildChatRepliesMailbox < ApplicationMailbox
   def process
-    body = (mail.text_part || mail).body
-    reply = EmailReplyParser.parse_reply(body.raw_source)
+    reply = EmailReplyParser.parse_reply(mail_body(mail))
 
     encoded_regexp = /(?<encoded>.*)@#{ENV.fetch('GUILD_REPLIES_DOMAIN')}/
 
@@ -21,6 +20,16 @@ class GuildChatRepliesMailbox < ApplicationMailbox
         sender_uid: sender_uid,
         recipient_uid: recipient_uid
       )
+    end
+  end
+
+  private
+
+  def mail_body(mail)
+    if mail.parts.present?
+      mail.parts.first.body.decoded
+    else
+      mail.decoded
     end
   end
 end
