@@ -96,8 +96,7 @@ function NoProjectDetails() {
       </Text>
       {isWideScreen ? (
         <Text as="p" color="neutral800" fontSize="m" lineHeight="m">
-          Join our network of freelancers and Per lectus magnis etiam malesuada
-          accumsan suscipit convallis luctus cursus semper porta mollis
+          Enter your details now to get started.
         </Text>
       ) : null}
     </>
