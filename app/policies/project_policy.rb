@@ -19,6 +19,6 @@ class ProjectPolicy < BasePolicy
   end
 
   def belongs_to_company?
-    user && user.company.users.include?(record.user)
+    user.is_a?(User) && user.company.users.include?(record.user)
   end
 end
