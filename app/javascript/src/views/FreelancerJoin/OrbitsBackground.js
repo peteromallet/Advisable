@@ -25,9 +25,14 @@ const getCoords = (step) => {
 
 function OrbitsBackground({ step }) {
   const coords = getCoords(step);
+  const viewBox = { xlUp: "0 0 1420 1420" };
+  const preserveAspectRatio = "xMidYMin slice";
+
   return (
     <OrbitsSystem
       {...coords}
+      viewBox={viewBox}
+      preserveAspectRatio={preserveAspectRatio}
       fill="transparent"
       stroke={theme.colors.neutral200}
       increment={200}

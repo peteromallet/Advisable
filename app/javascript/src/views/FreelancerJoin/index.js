@@ -24,35 +24,45 @@ function FreelancerJoin() {
   }
 
   return (
-    <Box minHeight="100vh" height="100%" width="100%" position="relative">
+    <Box minHeight="100vh" height="100%" position="relative">
       <OrbitsBackground step={currentStepIndex} />
       <Box
-        pl={{ _: 5, xl: 20 }}
-        pr={{ _: 5, xl: 0 }}
-        pt={{ _: 6, xl: 12 }}
-        pb={{ _: 12 }}
-        height="100%"
-        minHeight="100vh"
-        display="flex"
+        px={{ _: 5, xl: 16 }}
         position="relative"
-        flexDirection="column"
-        justifyContent={{ xl: "space-between" }}
+        minHeight="100vh"
+        height="100%"
+        // grid props
+        display="grid"
+        alignContent={{ _: "start", xl: "stretch" }}
+        justifyContent="center"
+        gridColumnGap="3.33%"
+        gridRowGap={{ _: 9, xl: 0 }}
+        gridTemplateColumns={{ _: "auto", xl: "auto auto" }}
+        gridTemplateRows={{
+          _: "48px auto auto 56px",
+          xl: "72px auto 72px",
+        }}
+        gridTemplateAreas={{
+          _: `
+            "header"
+            "orbits-content"
+            "card"
+            "footer"
+          `,
+          xl: `
+            "header header"
+            "orbits-content card"
+            "footer footer"
+          `,
+        }}
       >
         <Header />
-        <Box
-          display="flex"
-          flexDirection={{ xl: "row", _: "column" }}
-          // alignItems="flex-start"
-          alignItems="center"
-          my={{ xl: 6 }}
-        >
-          <OrbitsContent step={currentStepIndex} />
-          <AnimatePresence exitBeforeEnter initial={false}>
-            <Switch location={location} key={location.pathname}>
-              {routes}
-            </Switch>
-          </AnimatePresence>
-        </Box>
+        <OrbitsContent step={currentStepIndex} />
+        <AnimatePresence exitBeforeEnter initial={false}>
+          <Switch location={location} key={location.pathname}>
+            {routes}
+          </Switch>
+        </AnimatePresence>
         <Footer />
       </Box>
     </Box>
