@@ -9,12 +9,14 @@ import BigCommerceLogo from "./logos/BigCommerceLogo";
 import WorldRemitLogo from "./logos/WorldRemitLogo";
 import BabbelLogo from "./logos/BabbelLogo";
 import UberAllLogo from "./logos/UberAllLogo";
+import { AnimatePresence, motion } from "framer-motion";
 import { useHistory } from "react-router";
+import { transitionVariants } from "../transitionVariants";
 
 function ThankYouContent() {
   const history = useHistory();
   return (
-    <Box pb={20} mt={{ _: 10, xl: 0 }} maxWidth="560px">
+    <>
       <Header mb={5}>Thank you</Header>
       <Text
         fontSize={{ _: "m", l: "l" }}
@@ -34,7 +36,7 @@ function ThankYouContent() {
       >
         Get Started
       </Button>
-    </Box>
+    </>
   );
 }
 
@@ -89,7 +91,7 @@ function Header({ children, ...props }) {
 
 function FormsContent() {
   return (
-    <Box>
+    <>
       <Box mb={{ xl: 20 }}>
         <Header>Advisable helps</Header>
         <Header color="#FEB6C8">top freelancers</Header>
@@ -104,11 +106,19 @@ function FormsContent() {
         </Text>
       </Box>
       <Logos />
-    </Box>
+    </>
   );
 }
 
-export default function OrbitsContent({ step }) {
+export default function OrbitsContent({ step, custom }) {
+  const framerParams = {
+    as: motion.div,
+    variants: transitionVariants,
+    initial: "enter",
+    animate: "center",
+    exit: "exit",
+    custom,
+  };
   return (
     <Box
       position="relative"
@@ -121,7 +131,23 @@ export default function OrbitsContent({ step }) {
       flexDirection="column"
       justifyContent="flex-start"
     >
-      {step === 2 ? <ThankYouContent /> : <FormsContent />}
+      <AnimatePresence exitBeforeEnter initial={false} custom={custom}>
+        {step === 2 ? (
+          <Box
+            {...framerParams}
+            key="thanks"
+            pb={20}
+            mt={{ _: 10, xl: 0 }}
+            maxWidth={560}
+          >
+            <ThankYouContent />
+          </Box>
+        ) : (
+          <Box {...framerParams} key="forms">
+            <FormsContent />
+          </Box>
+        )}
+      </AnimatePresence>
     </Box>
   );
 }

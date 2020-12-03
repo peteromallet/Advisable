@@ -58,7 +58,10 @@ function FreelancerJoin() {
         }}
       >
         <Header />
-        <OrbitsContent step={currentStepIndex} />
+        <OrbitsContent
+          step={currentStepIndex}
+          custom={{ forwards, largeScreen }}
+        />
         <AnimatePresence
           exitBeforeEnter
           initial={false}
