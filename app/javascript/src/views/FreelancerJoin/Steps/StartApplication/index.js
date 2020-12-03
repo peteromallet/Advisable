@@ -58,7 +58,6 @@ export default function StartApplication({ nextStep, forwards }) {
     });
 
     const id = res?.data?.createFreelancerAccount?.viewer?.id;
-    history.replace({ ...history.location }, { ...values, id });
     history.push(
       { ...history.location, pathname: nextStep.path },
       { ...values, id },
