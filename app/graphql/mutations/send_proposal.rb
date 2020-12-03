@@ -8,7 +8,7 @@ class Mutations::SendProposal < Mutations::BaseMutation
   def authorized?(**args)
     application = Application.find_by_uid_or_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
-    return true if policy.is_specialist
+    return true if policy.is_specialist?
 
     [false, {errors: [{code: 'not_authorized'}]}]
   end

@@ -16,7 +16,7 @@ class Mutations::PublishProject < Mutations::BaseMutation
     project = Project.find_by_uid_or_airtable_id!(id)
     policy = ProjectPolicy.new(context[:current_user], project)
 
-    unless policy.is_client
+    unless policy.publish?
       raise ApiError.not_authorized("You don't have access to this project")
     end
 

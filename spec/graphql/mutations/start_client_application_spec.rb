@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Mutations::Signup do
+RSpec.describe Mutations::StartClientApplication do
   let(:first_name) { 'John' }
   let(:last_name) { 'Doe' }
   let(:email) { 'test@test.com' }
@@ -23,18 +23,24 @@ RSpec.describe Mutations::Signup do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     allow_any_instance_of(Client).to receive(:sync_to_airtable)
   end
 
   it 'creates a new user' do
-    expect { AdvisableSchema.execute(query) }.to change { User.count }.by(1)
+    expect { AdvisableSchema.execute(query) }.to change(User, :count).by(1)
     user = User.last
     expect(user.account.first_name).to eq(first_name)
     expect(user.account.last_name).to eq(last_name)
     expect(user.account.email).to eq(email)
     expect(user.application_status).to eq("Application Started")
+  end
+
+  it "gives newly created user's account team manager permission" do
+    response = AdvisableSchema.execute(query)
+    user = User.find_by(uid: response["data"]["startClientApplication"]["clientApplication"]["id"])
+    expect(user.account.permissions).to include('team_manager')
   end
 
   context 'when a user account already exists with that email' do
@@ -70,7 +76,7 @@ RSpec.describe Mutations::Signup do
   end
 
   context 'when application already exists for that email' do
-    context 'and the application status is started' do
+    context 'when the application status is started' do
       it 'updates that user record' do
         user =
           create(
@@ -78,13 +84,13 @@ RSpec.describe Mutations::Signup do
             account: create(:account, email: email, password: nil, first_name: 'Michael', last_name: 'Scott'),
             application_status: "Application Started"
           )
-        expect { AdvisableSchema.execute(query) }.not_to change { User.count }
+        expect { AdvisableSchema.execute(query) }.not_to change(User, :count)
         expect(user.account.reload.first_name).to eq(first_name)
         expect(user.account.reload.last_name).to eq(last_name)
       end
     end
 
-    context 'and the application_status is not started' do
+    context 'when the application_status is not started' do
       it 'does not update the user' do
         user =
           create(
@@ -92,7 +98,7 @@ RSpec.describe Mutations::Signup do
             account: create(:account, email: email, password: nil, first_name: 'Michael', last_name: 'Scott'),
             application_status: "Application Accepted"
           )
-        expect { AdvisableSchema.execute(query) }.not_to change { User.count }
+        expect { AdvisableSchema.execute(query) }.not_to change(User, :count)
         expect(user.account.reload.first_name).not_to eq(first_name)
         expect(user.account.reload.last_name).not_to eq(last_name)
         expect(user.reload.application_status).not_to eq("Application Started")

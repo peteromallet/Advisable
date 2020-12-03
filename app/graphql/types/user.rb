@@ -103,6 +103,12 @@ class Types::User < Types::BaseType
     argument :status, [String], required: false
   end
 
+  def applications(status: nil)
+    records = object.company.applications
+    records = records.where(status: status) if status
+    records
+  end
+
   field :project_payment_method, String, null: true do
     authorize :is_user
   end
@@ -173,7 +179,7 @@ class Types::User < Types::BaseType
   end
 
   field :invoices, [Types::InvoiceType], null: false do
-    authorize :is_user
+    authorize :is_team_manager
   end
 
   def invoices
@@ -195,8 +201,8 @@ class Types::User < Types::BaseType
   # or statement here otherwise SQL will also exclude records where sales_status
   # is null.
   def projects
-    object.projects.where.not(sales_status: 'Lost').or(
-      object.projects.where(sales_status: nil)
+    object.company.projects.where.not(sales_status: 'Lost').or(
+      object.company.projects.where(sales_status: nil)
     ).order(created_at: :desc)
   end
 
@@ -207,11 +213,5 @@ class Types::User < Types::BaseType
       times.reject! { |t| interviews.include?(t) }
     end
     times
-  end
-
-  def applications(status:)
-    records = object.applications
-    records = records.where(status: status) if status
-    records
   end
 end

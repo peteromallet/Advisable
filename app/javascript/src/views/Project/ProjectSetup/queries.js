@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 const projectFields = gql`
   fragment ProjectSetupFields on Project {
     id
+    isOwner
     status
     goals
     publishedAt

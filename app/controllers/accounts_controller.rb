@@ -13,6 +13,9 @@ class AccountsController < ApplicationController
   def user
     user = User.find_or_create_by(account: account) do |u|
       u.company = Company.new(name: Company.fresh_name_for(params[:company_name].strip))
+
+      account.permissions << :team_manager
+      account.save!
     end
 
     [:airtable_id, :company_name].each do |key|

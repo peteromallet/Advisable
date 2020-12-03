@@ -29,9 +29,7 @@ class Types::ProjectType < Types::BaseType
   end
 
   field :currency, String, null: true
-
   field :status, String, null: true
-
   field :service_type, String, null: true
   field :client_referral_url, String, null: true
   field :user, Types::User, null: true
@@ -54,7 +52,13 @@ class Types::ProjectType < Types::BaseType
   field :created_at, GraphQL::Types::ISO8601DateTime, null: false
 
   field :published_at, GraphQL::Types::ISO8601DateTime, null: true do
-    authorize :is_client
+    authorize :read?
+  end
+
+  field :is_owner, Boolean, null: true
+
+  def is_owner
+    current_user == object.user
   end
 
   field :industry_experience_importance, Int, null: true do

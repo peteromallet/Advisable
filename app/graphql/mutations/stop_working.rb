@@ -18,7 +18,8 @@ class Mutations::StopWorking < Mutations::BaseMutation
   def authorized?(**args)
     application = Application.find_by_uid!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
-    return true if policy.is_client
+    return true if policy.is_client_owner?
+
     raise ApiError::NotAuthorized.new(
       "You do not have permission to execute this mutation"
     )
@@ -41,6 +42,6 @@ class Mutations::StopWorking < Mutations::BaseMutation
 
     application.sync_to_airtable
 
-    { application: application }
+    {application: application}
   end
 end

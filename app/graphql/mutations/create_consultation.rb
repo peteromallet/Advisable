@@ -95,7 +95,8 @@ class Mutations::CreateConsultation < Mutations::BaseMutation
     account = Account.new(
       first_name: args[:first_name],
       last_name: args[:last_name],
-      email: args[:email]
+      email: args[:email],
+      permissions: [:team_manager]
     )
 
     user = User.create(
