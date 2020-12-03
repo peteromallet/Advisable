@@ -74,7 +74,7 @@ class Airtable::Base < Airrecord::Table
     def sync_column_to_association(column, association:, **options)
       @column_associations ||= {}
       @column_associations[association] ||= {}
-      @column_associations[association][column] = options
+      @column_associations[association][column] = {strip: true}.merge(options)
     end
 
     # sync_data allows us to sync data which might not fit into a direct mapping
