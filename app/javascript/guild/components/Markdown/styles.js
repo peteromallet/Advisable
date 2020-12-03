@@ -30,16 +30,23 @@ export const StyledMarkdown = styled.div`
     color: ${theme.colors.neutral900};
   }
 
+  p,
+  .paragraph {
+    margin-bottom: 32px;
+  }
+
   ul {
     margin: 0;
     padding: 0;
     list-style: disc;
+    margin-bottom: 32px;
   }
 
   ol {
     margin: 0;
     padding: 0;
-    list-style: disc;
+    list-style: decimal;
+    margin-bottom: 32px;
   }
 
   li {
