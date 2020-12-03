@@ -12,6 +12,18 @@ const color = variant({
       color: theme.colors.white[9],
       background: theme.colors.blue900,
     },
+    blue: {
+      color: theme.colors.blue900,
+      background: theme.colors.blue100,
+    },
+    orange: {
+      color: theme.colors.orange900,
+      background: theme.colors.orange100,
+    },
+    cyan: {
+      color: theme.colors.cyan900,
+      background: theme.colors.cyan100,
+    },
   },
 });
 
@@ -19,16 +31,30 @@ const size = variant({
   prop: "size",
   variants: {
     s: {
+      height: 28,
       fontSize: 13,
-      padding: "6px 12px",
-      letterSpacing: "-0.01rem",
       borderRadius: 8,
+      padding: "0 12px",
+      letterSpacing: "-0.01rem",
+
+      svg: {
+        width: 16,
+        height: 16,
+        marginRight: "2",
+      },
     },
     m: {
-      fontSize: 14,
-      padding: "9px 16px",
+      height: 32,
+      fontSize: 15,
+      borderRadius: 10,
+      padding: "0 16px",
       letterSpacing: "-0.02rem",
-      borderRadius: 12,
+
+      svg: {
+        width: 20,
+        height: 20,
+        marginRight: "2",
+      },
     },
   },
 });
@@ -39,6 +65,7 @@ export const StyledTag = styled.div`
   ${size};
 
   font-weight: 500;
+  align-items: center;
   display: inline-flex;
 `;
 

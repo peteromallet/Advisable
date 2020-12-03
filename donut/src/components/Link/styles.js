@@ -12,9 +12,10 @@ const variants = variant({
       },
     },
     dark: {
-      color: theme.colors.blue800,
+      color: theme.colors.blue900,
       "&:hover": {
-        color: theme.colors.blue600,
+        color: theme.colors.blue700,
+        textDecoration: "underline",
       },
     },
     subtle: {
@@ -44,10 +45,6 @@ const styles = css`
 
   &::after {
     content: "";
-  }
-
-  svg {
-    margin: 0 4px;
   }
 `;
 

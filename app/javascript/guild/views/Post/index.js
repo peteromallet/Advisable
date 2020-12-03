@@ -1,38 +1,26 @@
-import React, { useRef, useCallback } from "react";
-import {
-  Card,
-  Text,
-  Avatar,
-  Link,
-  theme,
-  Box,
-  Button,
-  DialogDisclosure,
-  useModal,
-} from "@advisable/donut";
+import React from "react";
+import { Card, Text, Avatar, Link, Box } from "@advisable/donut";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
 import NotFound from "@advisable-main/components/PreviousProjectFormModal/NotFound";
-import { GuildBox } from "@guild/styles";
-import { Edit } from "@styled-icons/feather";
-import GuildTag from "@guild/components/GuildTag";
-import { NeedHelp } from "@guild/icons";
-import OfferHelp from "@guild/components/Post/components/OfferHelp";
 import { GUILD_POST_QUERY } from "./queries";
 import Topics from "@guild/components/Post/components/Topics";
 import { CoverImage } from "@guild/components/CoverImage";
-import ReactionsButton from "@guild/components/Post/components/ReactionsButton";
 import useViewer from "@advisable-main/hooks/useViewer";
 import Markdown from "@guild/components/Markdown";
-import ShareModal from "@guild/components/Post/components/ShareModal";
-import { Share2 as Share, ExternalLink } from "@styled-icons/feather";
+import PostTypeTag from "@guild/components/PostTypeTag";
+import PostActions from "@guild/components/PostActions";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
+import ConnectionsCount from "@guild/components/ConnectionsCount";
+import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
+import JoinGuild from "./JoinGuild";
+import { StyledImageThumbnail } from "./styles";
 
 const Post = () => {
   const { postId } = useParams();
   const viewer = useViewer();
-  const shareModal = useModal();
+  const gallery = useImageGallery();
 
   const { data, loading } = useQuery(GUILD_POST_QUERY, {
     variables: { id: postId },
@@ -40,175 +28,102 @@ const Post = () => {
   const post = data?.guildPost;
   const guildViewer = viewer?.guild;
 
-  const joinGuildRef = useRef();
-  const joinGuildEffectRef = useCallback(
-    (node) => {
-      if (!node) return;
-      joinGuildRef.current = node;
-    },
-    [guildViewer],
-  );
-  const scrollToJoinGuild = () => {
-    joinGuildRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
-  const handlePostInteractions = () => {
-    if (guildViewer) return;
-    scrollToJoinGuild();
-  };
-
   if (loading) return <Loading />;
+
+  const otherImages = (post?.images || []).filter((p) => p.cover === false);
 
   return post ? (
     <ErrorBoundary>
-      {post.shareable && (
-        <ShareModal externalUrl={window.location.href} modal={shareModal} />
-      )}
-      <Box display="flex" justifyContent="center" m={{ _: "s", m: "l" }}>
-        <Card
-          elevation={{ _: "s", m: "m" }}
-          maxWidth={theme.breakpoints.l}
-          width="100%"
-        >
+      <Box pt={12} pb={20} mx="auto" maxWidth={["100%", "100%", "960px"]}>
+        {post.images.length > 0 ? (
+          <ImageGallery dialog={gallery} images={post.images} />
+        ) : null}
+        <Card>
           {post.coverImage && (
-            <CoverImage images={post.images} cover={post.coverImage.url} />
+            <CoverImage
+              height="480px"
+              images={post.images}
+              cover={post.coverImage.url}
+              onClick={() => gallery.open(0)}
+            />
           )}
 
-          {/* Header */}
-          <Box px={{ _: "s", s: "xxl" }} py="l" backgroundColor="ghostWhite100">
-            <GuildBox mb="l" flexSpaceBetween>
-              <Text fontWeight="medium" size="4xl" color="catalinaBlue100">
-                {post.title}
-              </Text>
-              {post.needHelp ? (
-                <GuildTag variant="needHelp">
-                  <NeedHelp size={20} />
-                  <span>Need Help</span>
-                </GuildTag>
-              ) : (
-                <GuildTag>{post.type}</GuildTag>
-              )}
-            </GuildBox>
+          {otherImages.length > 0 ? (
+            <Box
+              px={4}
+              pt={4}
+              display="grid"
+              gridGap="16px"
+              gridTemplateColumns={{
+                _: "1fr 1fr 1fr",
+                s: "1fr 1fr 1fr 1fr",
+                m: "1fr 1fr 1fr 1fr 1fr",
+              }}
+            >
+              {otherImages.map((i) => (
+                <StyledImageThumbnail
+                  key={i.id}
+                  height="100px"
+                  max-width="140px"
+                  onClick={() => gallery.open(post.images.indexOf(i))}
+                  style={{ backgroundImage: `url("${i.url}")` }}
+                />
+              ))}
+            </Box>
+          ) : null}
 
-            <Box display="flex" justifyContent="space-between">
-              <GuildBox alignItems="start" spaceChildrenHorizontal={24}>
+          <Box px={{ _: "s", s: "xxl" }} pt={10} pb={14}>
+            <Box mb={4}>
+              <PostTypeTag post={post} />
+            </Box>
+            <Text fontWeight="medium" size="5xl" color="meutral900" mb={6}>
+              {post.title}
+            </Text>
+
+            <Box mb={10} display="flex" justifyContent="space-between">
+              <Box display="flex" alignItems="center">
                 <Avatar
+                  size="s"
                   as={Link}
-                  to={`/freelancers/${post.author.id}`}
-                  size={{ _: "s", m: "m" }}
                   name={post.author.name}
                   url={post.author.avatar}
+                  to={`/freelancers/${post.author.id}`}
                 />
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  alignSelf="center"
-                  flexDirection="column"
-                >
-                  <Text fontSize="m" fontWeight="light" color="quartz">
+                <Box ml={3}>
+                  <Link
+                    mb={0.5}
+                    variant="dark"
+                    fontSize="l"
+                    color="neutral900"
+                    letterSpacing="-0.01rem"
+                    to={`/freelancers/${post.author.id}/guild`}
+                  >
                     {post.author.name}
-                  </Text>
-                  <Text fontSize="xs" fontWeight="light" color="darkGrey">
+                  </Link>
+                  <Text fontSize="xs" color="neutral500">
                     {post.createdAtTimeAgo} ago
                   </Text>
                 </Box>
-              </GuildBox>
+              </Box>
 
-              {post.shareable && (
-                <DialogDisclosure
-                  button
-                  size="s"
-                  as={GuildTag}
-                  {...shareModal}
-                  aria-label="Share Post"
-                >
-                  <Share color={theme.colors.catalinaBlue100} size={18} />
-                  <span>Share Post</span>
-                </DialogDisclosure>
-              )}
+              <Box display={{ _: "none", s: "flex" }} alignItems="center">
+                <ConnectionsCount mr={3} post={post} />
+                <PostActions post={post} />
+              </Box>
             </Box>
-          </Box>
 
-          {/* Topics and Interactions */}
-          <GuildBox
-            px={{ _: "xs", s: "xxl" }}
-            py="xs"
-            minHeight="58px"
-            flexSpaceBetween
-            backgroundColor="#6770f10d"
-            alignItems="center"
-          >
+            <Box mb={8}>
+              <Markdown>{post.body}</Markdown>
+            </Box>
+
             <Topics topics={post.guildTopics} />
 
-            <GuildBox
-              display="flex"
-              spaceChildrenHorizontal={8}
-              alignSelf={"center"}
-              onClick={handlePostInteractions}
-            >
-              <OfferHelp
-                guildPostId={post.id}
-                recipient={post.author}
-                engagementsCount={post.engagementsCount}
-              />
-              <ReactionsButton post={post} />
-            </GuildBox>
-          </GuildBox>
-
-          {/* Post body */}
-          <Box px={{ _: "s", m: "l", l: "80px" }} py="3xl">
-            <Markdown>{post.body}</Markdown>
-
-            {viewer?.id === post.author.id && (
-              <Box display="flex" justifyContent="flex-end">
-                <Button
-                  size="s"
-                  as={Link}
-                  to={`/composer/${post.id}/post`}
-                  variant="subtle"
-                  prefix={<Edit />}
-                >
-                  Edit Post
-                </Button>
-              </Box>
-            )}
+            <Box my={10} height="1px" width="200px" mx="auto" bg="neutral100" />
+            <Box display="flex" justifyContent="center">
+              <PostActions size={{ _: "lg", md: "xl" }} post={post} />
+            </Box>
+            {!guildViewer && <JoinGuild />}
           </Box>
-
-          {/* Join Guild */}
-          {!guildViewer && (
-            <>
-              <Box height={1} bg="neutral100" my="l" />
-              <GuildBox
-                ref={joinGuildEffectRef}
-                spaceChildrenVertical={24}
-                p="l"
-                maxWidth="600px"
-                margin="0 auto"
-                mb="l"
-              >
-                <Text size="l" lineHeight="m" fontWeight="medium">
-                  Want to join a community featuring the writer of this post &
-                  hundreds more like them?
-                </Text>
-                <Text size="l" lineHeight="m" color="catalinaBlue100">
-                  Advisable Guild is an invitation-only network that helps
-                  world-class freelancers from across 500+ marketing-related
-                  skills collaborate and connect.
-                </Text>
-                <Button
-                  size="l"
-                  mr="xs"
-                  as={"a"}
-                  href={"/freelancers/signup"}
-                  suffix={<ExternalLink />}
-                >
-                  Apply To Access Now
-                </Button>
-              </GuildBox>
-            </>
-          )}
         </Card>
       </Box>
     </ErrorBoundary>

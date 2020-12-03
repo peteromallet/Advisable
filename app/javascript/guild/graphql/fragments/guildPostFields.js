@@ -6,24 +6,26 @@ export default gql`
     type
     title
     body
+    excerpt
     reacted
     reactionsCount
     status
+    engaged
     engagementsCount
     authored
     createdAtTimeAgo
     denormalizedType
     audienceType
     shareable
-    coverImage {
-      id
-      url
-    }
     images {
       id
       url
       cover
       position
+    }
+    coverImage {
+      id
+      url
     }
     author {
       id

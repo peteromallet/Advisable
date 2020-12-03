@@ -1,44 +1,30 @@
 import React from "react";
 import { GUILD_FEATURED_MEMBERS_QUERY } from "./queries";
 import { useQuery } from "@apollo/client";
-import { Box, Text, Stack } from "@advisable/donut";
-import { useToggle } from "@guild/hooks/useToggle";
-import Loading from "@advisable-main/components/Loading";
-import ShowMore from "@guild/components/ShowMore";
-import FeaturedMember from "./components/FeaturedMember";
+import { Box, Text } from "@advisable/donut";
+import Loading from "./Loading";
+import FeaturedMembersList from "./FeaturedMembersList";
 
 const FeaturedMembers = () => {
-  const { data, loading } = useQuery(GUILD_FEATURED_MEMBERS_QUERY);
-  const [moreFeaturedMembers, toggleMoreFeaturedMembers] = useToggle();
+  const { data, loading, error } = useQuery(GUILD_FEATURED_MEMBERS_QUERY);
+  const members = data?.guildFeaturedMembers;
 
-  if (loading) return <Loading />;
+  if (error) return null;
 
   return (
-    <Box flexShrink={1} alignSelf="flex-start">
+    <Box pb="12">
       <Text
-        fontSize="xl"
-        marginBottom="lg"
+        fontSize="xs"
+        marginBottom="6"
+        color="neutral600"
         fontWeight="medium"
-        color="catalinaBlue100"
-        letterSpacing="-0.02em"
+        textTransform="uppercase"
       >
         Featured Members
       </Text>
 
-      <Stack spacing="lg" marginBottom="lg">
-        {data?.guildFeaturedMembers?.map(
-          (member, key) =>
-            (moreFeaturedMembers ||
-              key < data?.guildFeaturedMembers?.length / 2) && (
-              <FeaturedMember key={key} featuredMember={member} />
-            ),
-        )}
-      </Stack>
-
-      <ShowMore
-        showingMore={moreFeaturedMembers}
-        onToggle={toggleMoreFeaturedMembers}
-      />
+      {loading ? <Loading /> : null}
+      {!loading && data ? <FeaturedMembersList members={members} /> : null}
     </Box>
   );
 };

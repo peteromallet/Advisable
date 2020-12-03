@@ -332,7 +332,7 @@ class Types::QueryType < Types::BaseType
   field :guild_featured_members, [Types::SpecialistType], null: true
 
   def guild_featured_members
-    Specialist.guild_featured_members.limit(10)
+    Specialist.guild_featured_members.limit(6)
   end
 
   field :guild_your_posts,
