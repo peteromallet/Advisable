@@ -5,10 +5,9 @@ import { rgba } from "polished";
 export function SectionHeaderWrapper({ children, divider, ...props }) {
   return (
     <Box
+      mb={3}
       display="flex"
       alignItems="center"
-      mb="xxs"
-      px="xs"
       pb={divider && "xs"}
       borderStyle="solid"
       borderBottomWidth={divider && "1px"}
