@@ -1,14 +1,15 @@
 // Renders the primary header for the app
 import React, { Fragment } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Header as Wrapper, Spacer, Logo, Hamburger } from "./styles";
+import { Header as Wrapper, Spacer, Logo, Hamburger, Login } from "./styles";
 import logo from "./logo.svg";
 import CurrentUser from "./CurrentUser";
-import { useMobile } from "../../components/Breakpoint";
+import { useMobile } from "src/components/Breakpoint";
+import AnonymousNavigation from "./AnonymousNavigation";
 import ClientNavigation from "./ClientNavigation";
 import FreelancerNavigation from "./FreelancerNavigation";
 import useLogoURL from "../ApplicationProvider/useLogoURL";
-import useViewer from "../../hooks/useViewer";
+import useViewer from "src/hooks/useViewer";
 
 const LOGOUT = gql`
   mutation logout($input: LogoutInput!) {
@@ -57,9 +58,16 @@ const Header = () => {
               onCloseNav={() => setNavOpen(false)}
             />
           )}
-          {!isMobile && (
+          {!viewer && (
+            <AnonymousNavigation
+              onCloseNav={() => setNavOpen(false)}
+              navOpen={navOpen}
+            />
+          )}
+          {viewer && !isMobile && (
             <CurrentUser user={viewer} onLogout={() => handleLogout()} />
           )}
+          {!viewer && !isMobile && <Login to="/login">Login</Login>}
         </React.Fragment>
       </Wrapper>
     </Fragment>
