@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
-import { theme } from "@advisable/donut";
+import { theme, Link } from "@advisable/donut";
 
 export const Spacer = styled.div`
   width: 100%;
@@ -249,5 +249,21 @@ export const CurrentUserDropdown = styled.div`
     &:hover {
       background-color: #f4f5fb;
     }
+  }
+`;
+
+export const Login = styled(Link)`
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 5px 10px;
+  margin-left: auto;
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
   }
 `;
