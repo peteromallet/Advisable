@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import queryString from "query-string";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, Error } from "@advisable/donut";
 import { Form, Formik } from "formik";
 import SubmitButton from "components/SubmitButton";
 import FormField from "components/FormField";
@@ -28,8 +28,14 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
     }
   }, [viewer, history, prevStep.path]);
 
-  const handleSubmit = async (values) => {
-    await setPassword({ variables: { input: values } });
+  const handleSubmit = async (values, { setStatus }) => {
+    setStatus(null);
+    const res = await setPassword({ variables: { input: values } });
+
+    if (res.errors) {
+      setStatus(res.errors[0]?.message);
+      return;
+    }
 
     const nextPath = project_id
       ? `/opportunities/${project_id}`
@@ -54,30 +60,39 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        <Form>
-          <Box mb="m">
-            <FormField
-              type="password"
-              name="password"
-              size={["sm", "md"]}
-              placeholder="assistanttotheregionalmanager1"
-              label="Password"
-            />
-          </Box>
-          <Box mb="2xl">
-            <FormField
-              type="password"
-              size={["sm", "md"]}
-              name="passwordConfirmation"
-              placeholder="assistanttotheregionalmanager1"
-              label="Confirm password"
-            />
-          </Box>
-          <Box display="flex">
-            <SubmitButton size="l">Get Started</SubmitButton>
-            <HaveAccount />
-          </Box>
-        </Form>
+        {({ status }) => (
+          <Form>
+            <Box mb="m">
+              <FormField
+                type="password"
+                name="password"
+                size={["sm", "md"]}
+                placeholder="assistanttotheregionalmanager1"
+                label="Password"
+              />
+            </Box>
+            <Box mb={[4, 5]}>
+              <FormField
+                type="password"
+                size={["sm", "md"]}
+                name="passwordConfirmation"
+                placeholder="assistanttotheregionalmanager1"
+                label="Confirm password"
+              />
+            </Box>
+            <Error>{status}</Error>
+            <Box
+              display="flex"
+              flexDirection={{ _: "column", m: "row" }}
+              pt={[4, 5]}
+            >
+              <SubmitButton size={["m", "l"]} variant="dark" mb={{ xs: 3 }}>
+                Get Started
+              </SubmitButton>
+              <HaveAccount />
+            </Box>
+          </Form>
+        )}
       </Formik>
     </MotionBox>
   );

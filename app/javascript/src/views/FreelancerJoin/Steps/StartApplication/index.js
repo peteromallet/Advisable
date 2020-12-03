@@ -5,7 +5,7 @@ import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { useHistory, useLocation } from "react-router";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import { Box, Text, Input } from "@advisable/donut";
+import { Box, Text, Input, Error } from "@advisable/donut";
 import validationSchema from "./validationSchema";
 import Description from "./Description";
 import { CREATE_FREELANCER_ACCOUNT, GET_PROJECT } from "../queries";
@@ -32,7 +32,8 @@ export default function StartApplication({ nextStep, forwards }) {
     email: location.state?.email || "",
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { setStatus }) => {
+    setStatus(null);
     // redirect to set password step, pass values, and preserve query string param
     const splited = values.fullName.split(" ");
     const firstName = splited[0];
@@ -42,6 +43,11 @@ export default function StartApplication({ nextStep, forwards }) {
         input: { firstName, lastName, email: values.email, skills: [] },
       },
     });
+
+    if (res.errors) {
+      setStatus(res.errors[0]?.message);
+      return;
+    }
 
     await client.resetStore();
     client.writeQuery({
@@ -74,32 +80,39 @@ export default function StartApplication({ nextStep, forwards }) {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        <Form>
-          <Box mb="m">
-            <FormField
-              as={Input}
-              name="fullName"
-              size={["sm", "md"]}
-              placeholder="Dwight Schrutt"
-              label="Full Name"
-            />
-          </Box>
-          <Box mb={["xl", "2xl"]}>
-            <FormField
-              as={Input}
-              name="email"
-              size={["sm", "md"]}
-              placeholder="dwight@dundermifflin.com"
-              label="Email"
-            />
-          </Box>
-          <Box display="flex" flexDirection={{ _: "column", m: "row" }}>
-            <SubmitButton size={["m", "l"]} variant="dark" mb={{ xs: 3 }}>
-              Get Started
-            </SubmitButton>
-            <HaveAccount />
-          </Box>
-        </Form>
+        {({ status }) => (
+          <Form>
+            <Box mb="m">
+              <FormField
+                as={Input}
+                name="fullName"
+                size={["sm", "md"]}
+                placeholder="Dwight Schrutt"
+                label="Full Name"
+              />
+            </Box>
+            <Box mb={[4, 5]}>
+              <FormField
+                as={Input}
+                name="email"
+                size={["sm", "md"]}
+                placeholder="dwight@dundermifflin.com"
+                label="Email"
+              />
+            </Box>
+            <Error>{status}</Error>
+            <Box
+              display="flex"
+              flexDirection={{ _: "column", m: "row" }}
+              pt={[4, 5]}
+            >
+              <SubmitButton size={["m", "l"]} variant="dark" mb={{ xs: 3 }}>
+                Get Started
+              </SubmitButton>
+              <HaveAccount />
+            </Box>
+          </Form>
+        )}
       </Formik>
     </MotionBox>
   );
