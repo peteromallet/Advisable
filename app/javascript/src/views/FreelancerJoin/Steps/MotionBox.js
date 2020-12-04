@@ -4,7 +4,7 @@ import { Box, Card, useBreakpoint } from "@advisable/donut";
 import { transitionVariants } from "../transitionVariants";
 
 export default function MotionBox({ children, forwards, ...props }) {
-  const largeScreen = useBreakpoint("lUp");
+  const largeScreen = useBreakpoint("xlUp");
   return (
     <Box
       as={motion.div}
