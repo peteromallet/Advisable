@@ -57,12 +57,15 @@ RSpec.describe ChatDirectMessageJob do
       }
 
       it "modifies the message with a calendly link and a context prefix" do
-        offer_help_prefix = "Offering help for '#{guild_post.title}':\n\n "
-
         message_job
         expect(twilio_double).to have_received(:create_channel_message).with(channel, {
-          attributes: {calendly_link: guild_calendly_link}.to_json,
-          body: offer_help_prefix + message,
+          attributes: {
+            post: guild_post.id,
+            postType: "Post",
+            postTitle: guild_post.title,
+            calendlyLink: guild_calendly_link,
+          }.to_json,
+          body: message,
           from: sender.uid
         })
       end
