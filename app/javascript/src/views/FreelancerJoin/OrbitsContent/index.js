@@ -124,7 +124,7 @@ export default function OrbitsContent({ step, custom }) {
       position="relative"
       gridArea="orbits-content"
       alignSelf={{ _: "start", xl: "center" }}
-      maxWidth={{ _: "650px", xl: "500px" }}
+      maxWidth={{ _: "640px", xl: "500px" }}
       pt={{ _: 0, xl: 14 }}
       pb={{ xl: 14 }}
       display="flex"
