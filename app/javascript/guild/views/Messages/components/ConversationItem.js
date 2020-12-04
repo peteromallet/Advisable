@@ -1,13 +1,12 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Box, Avatar, Text, Link, useBreakpoint } from "@advisable/donut";
+import { Box, Avatar, Text, Link } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
-import { GuildBox, flex } from "@guild/styles";
+import { flex } from "@guild/styles";
 import { StyledConversationItem } from "../styles";
 import { CHAT_PARTICIPANT_QUERY } from "../queries";
 
 const ConversationItem = ({ conversation, setActive, isActive }) => {
-  const sUp = useBreakpoint("sUp");
   const { data, loading } = useQuery(CHAT_PARTICIPANT_QUERY, {
     variables: { id: conversation?.other },
   });
@@ -19,11 +18,6 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
       onClick={() => setActive(conversation.sid)}
       active={isActive}
     >
-      <Box display="flex" alignSelf="flex-end">
-        <Text size="xxs" color="darkGray">
-          {conversation.lastMessageWords} ago
-        </Text>
-      </Box>
       <Box alignItems="center" display="flex">
         <Box flexShrink={0}>
           <Avatar
@@ -34,30 +28,24 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
             to={`/freelancers/${other.id}`}
           />
         </Box>
-        <GuildBox
-          ml={"s"}
-          display="flex"
-          flexDirection="column"
-          css={flex.flexTruncate}
-          spaceChildrenVertical={6}
-        >
-          <Text
-            fontWeight="medium"
-            size="m"
-            color="catalinaBlue100"
-            css={flex.flexTruncate}
+        <Box flexGrow="1" ml={2} css={flex.flexTruncate}>
+          <Box
+            mb={1}
+            display="flex"
+            alignItems="flex-end"
+            justifyContent="space-between"
           >
+            <Text color="neutral900" fontWeight="medium">
+              {other.name}
+            </Text>
+            <Text size="xxs" color="darkGray">
+              {conversation.lastMessageWords}
+            </Text>
+          </Box>
+          <Text size="sm" color="neutral600" css={flex.flexTruncate}>
             {conversation.friendlyName}
           </Text>
-          <Text
-            as={sUp ? Link : "div"}
-            to={`/freelancers/${other.id}`}
-            size="xs"
-            color="quartz"
-          >
-            {other.name}
-          </Text>
-        </GuildBox>
+        </Box>
       </Box>
     </StyledConversationItem>
   );

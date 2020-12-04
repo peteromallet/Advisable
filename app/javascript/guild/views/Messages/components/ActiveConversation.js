@@ -2,18 +2,17 @@ import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { css } from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
-import { truncate } from "lodash-es";
-import { Box, Text, Avatar, Link, Textarea, theme } from "@advisable/donut";
-import Loading from "@advisable-main/components/Loading";
+import { Link as RouterLink } from "react-router-dom";
+import { Send } from "@styled-icons/ionicons-solid";
+import { Box, Button, Link, Textarea, Avatar, theme } from "@advisable/donut";
+import Loading from "src/components/Loading";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { useTwilioChat } from "@guild/hooks/twilioChat/useTwilioChat";
-import { StyledMessage } from "../styles";
-import InboxHeader from "../components/InboxHeader";
 import { GuildBox, flex } from "@guild/styles";
-import { SubmitButton } from "@guild/components/Buttons/styles";
-import { relativeDate } from "@guild/utils";
 import { ScrollToBottom } from "@guild/components/ScrollToBottom";
 import { CHAT_PARTICIPANT_QUERY } from "../queries";
+import Message from "./Message";
+import { StyledComposer } from "../styles";
 
 const ActiveConversation = ({ channelSid }) => {
   const viewer = useViewer();
@@ -44,16 +43,18 @@ const ActiveConversation = ({ channelSid }) => {
     variables: { id: other },
     skip: !other,
   });
+
   const otherParticipant = data?.specialist;
+
+  const participants = [otherParticipant, viewer];
+
+  function getParticipantById(id) {
+    return participants.find((participant) => participant.id === id);
+  }
 
   const onSubmitNewMessage = async (message) => {
     if (!message?.length) return;
-
-    try {
-      await activeConversation.sendMessage(message);
-    } catch (err) {
-      console.log(err);
-    }
+    await activeConversation.sendMessage(message);
   };
 
   if (initializing) return <Loading />;
@@ -61,123 +62,66 @@ const ActiveConversation = ({ channelSid }) => {
   return (
     activeConversation && (
       <>
-        <InboxHeader>
-          <Text
+        <Box
+          py={4}
+          px={5}
+          display="flex"
+          alignItems="center"
+          borderBottom="1px solid"
+          borderColor="neutral200"
+        >
+          <Avatar
+            mr={2}
+            size="xs"
+            as={RouterLink}
+            to={`/freelancers/${otherParticipant.id}/guild`}
+            name={otherParticipant.name}
+            url={otherParticipant.avatar}
+          />
+          <Link
+            fontSize="lg"
+            variant="dark"
             fontWeight="medium"
-            size="2xl"
-            color="catalinaBlue100"
+            to={`/freelancers/${otherParticipant.id}/guild`}
             css={flex.flexTruncate}
           >
-            {activeConversation?.attributes?.subject}
-          </Text>
-        </InboxHeader>
+            {otherParticipant.name}
+          </Link>
+        </Box>
 
         <GuildBox
-          px="l"
-          py="s"
+          px={5}
+          pt={5}
           height="100%"
           overflow="scroll"
-          spaceChildrenVertical={16}
           css={css`
             border-bottom: 1px solid ${theme.colors.ghostWhite};
           `}
         >
-          <Text as={GuildBox} size="xs" color="darkGray" alignSelf="center">
-            started {relativeDate(activeConversation?.dateCreated)} ago
-          </Text>
-
           <AnimatePresence initial={false}>
             {messages?.map((message, key) => (
-              <GuildBox
+              <Box
                 key={key}
-                flexShrink={0}
                 as={motion.div}
-                spaceChildrenVertical={4}
+                paddingBottom={6}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <StyledMessage
-                  bg={message.author !== other ? "blue200" : "neutral100"}
-                  alignSelf={
-                    message.author !== other ? "flex-end" : "flex-start"
-                  }
-                  maxWidth={{ _: "100%", m: "90%" }}
-                >
-                  {message.author === other && (
-                    <GuildBox
-                      mr="s"
-                      flexShrink={0}
-                      flexCenterBoth
-                      spaceChildrenVertical={4}
-                    >
-                      <Avatar
-                        width={"24px"}
-                        as={Link}
-                        to={`/freelancers/${other}`}
-                        size="s"
-                        name={otherParticipant.name}
-                        url={otherParticipant.avatar}
-                      />
-                      <Text size="xs" color="quartz">
-                        {truncate(otherParticipant.firstName, { length: 13 })}
-                      </Text>
-                    </GuildBox>
-                  )}
-
-                  <Box minWidth="0">
-                    <Text
-                      css={css`
-                        white-space: pre-wrap;
-                        white-space: pre-line;
-                      `}
-                    >
-                      {message.body}
-                    </Text>
-                    {message.attributes?.calendly_link && (
-                      <Link.External
-                        href={message.attributes.calendly_link}
-                        rel="noreferrer noopener"
-                        target="_blank"
-                        color="catalinaBlue100"
-                        fontWeight="medium"
-                      >
-                        Book a call with me
-                      </Link.External>
-                    )}
-                  </Box>
-                </StyledMessage>
-
-                <Box
-                  alignSelf={
-                    message.author === other ? "flex-start" : "flex-end"
-                  }
-                >
-                  <Text
-                    as={GuildBox}
-                    alignSelf="flex-end"
-                    color="darkGray"
-                    size="xxs"
-                  >
-                    {relativeDate(message.dateCreated)} ago
-                  </Text>
-                </Box>
-              </GuildBox>
+                <Message
+                  message={message}
+                  isAuthor={viewer.id === message.author}
+                  author={getParticipantById(message.author)}
+                />
+              </Box>
             ))}
           </AnimatePresence>
           <ScrollToBottom />
         </GuildBox>
 
         {/* New Message */}
-        <GuildBox
-          marginY="m"
-          marginX="l"
-          width={"95%"}
-          height={"143px"}
-          alignSelf="center"
-          spaceChildrenVertical={8}
-        >
+        <Box width="100%" px={5} pb={4}>
           <Composer onSubmit={onSubmitNewMessage} />
-        </GuildBox>
+        </Box>
       </>
     )
   );
@@ -202,24 +146,25 @@ function Composer({ onSubmit }) {
   }
 
   return (
-    <>
+    <StyledComposer>
       <Textarea
         minRows="3"
-        maxRows="3"
+        maxRows="5"
         value={message}
         onKeyDown={handleKeyDown}
         onChange={({ currentTarget }) => setMessage(currentTarget.value)}
         placeholder="New Message ..."
       ></Textarea>
-      <SubmitButton
-        size="l"
-        type="submit"
+      <Button
+        size="s"
+        prefix={<Send />}
         loading={loading}
+        disabled={loading}
         onClick={handleSubmit}
       >
         Send
-      </SubmitButton>
-    </>
+      </Button>
+    </StyledComposer>
   );
 }
 

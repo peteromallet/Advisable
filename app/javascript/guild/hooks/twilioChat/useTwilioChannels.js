@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useMutation } from "@apollo/client";
 import useViewer from "@advisable-main/hooks/useViewer";
-import { relativeDate } from "@guild/utils";
+import { timestamp } from "@guild/utils";
 import { useTwilioClient } from "./useTwilioClient";
 import { UPDATE_CHAT_FRIENDLY_NAME } from "./mutations";
 
@@ -22,11 +22,8 @@ export const useTwilioChannels = () => {
 
     const initializeChat = async () => {
       try {
-        client.on("channelJoined", onChannelJoined);
         client.on("channelUpdated", onChannelUpdated);
         await refreshSubscribedChannels();
-      } catch (error) {
-        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -34,9 +31,6 @@ export const useTwilioChannels = () => {
     initializeChat();
     return () => client && client.removeAllListeners();
   }, [client, onChannelUpdated, refreshSubscribedChannels]);
-
-  const onChannelJoined = (channel) =>
-    console.debug("onChannelJoined", channel);
 
   /* Event handler focused on lastMessage and joined updates */
   const onChannelUpdated = useCallback(
@@ -89,8 +83,8 @@ export const useTwilioChannels = () => {
       )?.[0];
 
       const lastMessageDateTime = lastMessage?.dateCreated || new Date();
-      const lastMessageWords = relativeDate(lastMessageDateTime);
-      const createdAtWords = relativeDate(dateCreated || new Date());
+      const lastMessageWords = timestamp(lastMessageDateTime);
+      const createdAtWords = timestamp(dateCreated || new Date());
       return {
         other,
         friendlyName,
