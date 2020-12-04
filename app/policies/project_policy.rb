@@ -1,6 +1,6 @@
 class ProjectPolicy < BasePolicy
   def read?
-    is_owner? || belongs_to_company? || is_admin
+    is_owner? || record_belongs_to_company? || is_admin
   end
   alias publish? read?
 
