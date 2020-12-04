@@ -71,8 +71,9 @@ function FreelancerJoin() {
             {routes}
           </Switch>
         </AnimatePresence>
-        <Footer />
+        {largeScreen ? <Footer /> : null}
       </Box>
+      {!largeScreen ? <Footer /> : null}
     </Box>
   );
 }

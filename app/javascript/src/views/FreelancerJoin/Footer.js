@@ -5,6 +5,11 @@ function Footer() {
   return (
     <Box
       display="flex"
+      justifyContent={{ _: "center", xl: "start" }}
+      my={{ _: 8, xl: 0 }}
+      position={{ _: "absolute", xl: "relative" }}
+      bottom={0}
+      width="100%"
       gridArea="footer"
       alignSelf="start"
       justifySelf={{ _: "center", xl: "start" }}
