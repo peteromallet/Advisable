@@ -49,7 +49,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
   }
 
   context "with a guild specialist" do
-    subject(:create_guild_post) {
+    subject(:update_guild_post) {
       lambda { |query|
         resp = AdvisableSchema.execute(
           query,
@@ -99,7 +99,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         query = mutation[input]
 
         expect {
-          create_guild_post.call(query)
+          update_guild_post.call(query)
           guild_post.reload
         }.to change(guild_post, :title).to("this is a new title").
           and change(guild_post, :body).to("this is a new body").
@@ -113,23 +113,24 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         }
         query = mutation[input]
         expect {
-          create_guild_post.call(query)
+          update_guild_post.call(query)
           guild_post.reload
         }.to change(guild_post, :shareable).from(false).to(true)
       end
 
-      it "changes the status to published" do
+      it "does not change the status from published to draft" do
+        guild_post.published!
         input = {
           guildPostId: guild_post.id,
-          publish: true
+          title: "this is a new title!"
         }
 
         query = mutation[input]
 
         expect {
-          create_guild_post.call(query)
+          update_guild_post.call(query)
           guild_post.reload
-        }.to change(guild_post, :status).from("draft").to("published")
+        }.not_to change(guild_post, :status)
       end
 
       it "updates the topic names" do
@@ -140,9 +141,31 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         query = mutation[input]
 
         expect {
-          create_guild_post.call(query)
+          update_guild_post.call(query)
           guild_post.reload
         }.to change { guild_post.guild_topics.count }.from(0).to(3)
+      end
+
+      it "does not change the status to draft if removed" do
+        guild_post.removed!
+        input = {
+          guildPostId: guild_post.id,
+          title: "new title"
+        }
+        query = mutation[input]
+        update_guild_post.call(query)
+        expect(guild_post.reload.status).to eq("removed")
+      end
+
+      it "does not change the status to published if removed" do
+        guild_post.removed!
+        input = {
+          guildPostId: guild_post.id,
+          publish: true
+        }
+        query = mutation[input]
+        update_guild_post.call(query)
+        expect(guild_post.reload.status).to eq("removed")
       end
     end
   end
