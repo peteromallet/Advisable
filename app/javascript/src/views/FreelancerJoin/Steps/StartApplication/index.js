@@ -12,6 +12,7 @@ import { CREATE_FREELANCER_ACCOUNT, GET_PROJECT } from "../queries";
 import MotionBox from "../MotionBox";
 import HaveAccount from "../HaveAccount";
 import VIEWER from "src/graphql/queries/viewer";
+import Loading from "./Loading";
 
 export default function StartApplication({ nextStep, forwards }) {
   const history = useHistory();
@@ -23,7 +24,6 @@ export default function StartApplication({ nextStep, forwards }) {
     variables: { id: project_id },
   });
 
-  if (project_id && loading) return <>loading</>;
   // Clean query string if pid is wrong
   if (project_id && error) history.replace(history.pathname);
 
@@ -66,53 +66,63 @@ export default function StartApplication({ nextStep, forwards }) {
 
   return (
     <MotionBox forwards={forwards}>
-      <Box mb={[0, 8]}>
-        <Description project={data?.project} />
-        {project_id && error && (
-          <Text color="red400" pt={2}>
-            The project you&apos;ve tried to apply is not available.
-          </Text>
-        )}
-      </Box>
-      <Formik
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-      >
-        {({ status }) => (
-          <Form>
-            <Box mb="m">
-              <FormField
-                as={Input}
-                name="fullName"
-                size={["sm", "md"]}
-                placeholder="Dwight Schrutt"
-                label="Full Name"
-              />
-            </Box>
-            <Box mb={[4, 5]}>
-              <FormField
-                as={Input}
-                name="email"
-                size={["sm", "md"]}
-                placeholder="dwight@dundermifflin.com"
-                label="Email"
-              />
-            </Box>
-            <Error>{status}</Error>
-            <Box
-              display="flex"
-              flexDirection={{ _: "column", m: "row" }}
-              pt={[4, 5]}
-            >
-              <SubmitButton size={["m", "l"]} variant="dark" mb={{ xs: 3 }}>
-                Get Started
-              </SubmitButton>
-              <HaveAccount />
-            </Box>
-          </Form>
-        )}
-      </Formik>
+      {project_id && loading ? (
+        <Loading />
+      ) : (
+        <>
+          <Box mb={[0, 8]}>
+            <Description project={data?.project} />
+            {project_id && error && (
+              <Text color="red400" pt={2}>
+                The project you&apos;ve tried to apply is not available.
+              </Text>
+            )}
+          </Box>
+          <Formik
+            onSubmit={handleSubmit}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+          >
+            {({ status }) => (
+              <Form>
+                <Box mb="m">
+                  <FormField
+                    as={Input}
+                    name="fullName"
+                    size={["sm", "md"]}
+                    placeholder="Dwight Schrutt"
+                    label="Full Name"
+                  />
+                </Box>
+                <Box mb={[4, 5]}>
+                  <FormField
+                    as={Input}
+                    name="email"
+                    size={["sm", "md"]}
+                    placeholder="dwight@dundermifflin.com"
+                    label="Email"
+                  />
+                </Box>
+                <Error>{status}</Error>
+                <Box
+                  display="flex"
+                  flexDirection={{ _: "column", m: "row" }}
+                  pt={[4, 5]}
+                >
+                  <SubmitButton
+                    size={["m", "l"]}
+                    variant="dark"
+                    mb={{ _: 3, m: 0 }}
+                  >
+                    Get Started
+                  </SubmitButton>
+                  <HaveAccount />
+                </Box>
+              </Form>
+            )}
+          </Formik>
+        </>
+      )}
     </MotionBox>
   );
 }
