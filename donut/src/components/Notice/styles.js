@@ -61,9 +61,12 @@ export const StyledNotice = styled.div`
   ${noticeTypes}
 
   display: flex;
-  padding: 18px;
   border-radius: 12px;
   align-items: flex-start;
 `;
+
+StyledNotice.defaultProps = {
+  padding: 5,
+};
 
 export default StyledNotice;

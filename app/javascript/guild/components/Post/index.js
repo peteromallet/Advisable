@@ -1,8 +1,8 @@
 import React from "react";
 import * as Sentry from "@sentry/react";
+import { Pin } from "@styled-icons/ionicons-solid";
 import { Link as RouterLink } from "react-router-dom";
-import { css } from "styled-components";
-import { Box, Card, Text, Avatar, Link, theme } from "@advisable/donut";
+import { Box, Card, Text, Avatar, Link, Notice } from "@advisable/donut";
 import Topics from "./components/Topics";
 import Markdown from "../Markdown";
 import PostTypeTag from "@guild/components/PostTypeTag";
@@ -25,12 +25,8 @@ const Post = ({ post }) => {
         padding="8"
         borderRadius="12px"
         width="100%"
-        css={
-          post.pinned &&
-          css`
-            border: 1px solid ${theme.colors.catalinaBlue100};
-          `
-        }
+        border="2px solid"
+        borderColor={post.pinned ? "neutral400" : "white"}
       >
         <Box position="absolute" right="4" top="4">
           <PostTypeTag post={post} />
@@ -97,9 +93,9 @@ const Post = ({ post }) => {
         <Topics topics={post.guildTopics} />
 
         {post.pinned && (
-          <Text mt="4" size="s">
+          <Notice mt={4} icon={<Pin />} padding={3} variant="orange">
             This post has been pinned by the Advisable team
-          </Text>
+          </Notice>
         )}
       </Card>
     </Sentry.ErrorBoundary>
