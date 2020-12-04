@@ -1,5 +1,5 @@
 import React from "react";
-import { Chat } from "@styled-icons/heroicons-outline";
+import { ChatbubbleEllipses } from "@styled-icons/ionicons-outline";
 import { useModal, Box, Tooltip } from "@advisable/donut";
 import PostAction from "./PostAction";
 import useViewer from "src/hooks/useViewer";
@@ -37,9 +37,9 @@ function ConnectAction({ post, size }) {
         >
           <PostAction
             size={size}
-            color="blue800"
             bg="neutral100"
-            icon={<Chat />}
+            color="blue800"
+            icon={<ChatbubbleEllipses />}
             onClick={handleConnect}
           />
         </Box>
