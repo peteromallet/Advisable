@@ -28,6 +28,13 @@ module Guild
     has_many :engagements,
              class_name: 'Guild::PostEngagement', foreign_key: 'guild_post_id', dependent: :destroy, inverse_of: 'post'
 
+    scope :feed, lambda { |specialist|
+      published.
+        or(removed.where(specialist: specialist)).
+        includes(:specialist).
+        order(created_at: :desc)
+    }
+
     enum status: {draft: 0, published: 1, removed: 2}
 
     validates :type, :status, presence: true

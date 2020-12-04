@@ -159,14 +159,29 @@ RSpec.describe Types::SpecialistType do
     end
 
     context "with a freelancer profile" do
-      it "does not include draft posts" do
-        published_post = create(:guild_post, specialist: specialist, status: "published")
-        create(:guild_post, specialist: specialist, status: "draft")
-        expect(specialist.guild_posts.count).to eq(2)
+      let(:shadow_ban_specialist) { create(:specialist, :guild) }
+      let!(:published_post) { create(:guild_post, specialist: specialist, status: "published") }
+      let!(:removed_post) { create(:guild_post, specialist: specialist, status: "removed") }
 
-        response = AdvisableSchema.execute(query)
-        data = response.dig("data", "specialist", "guildPosts", "nodes")
-        expect(data).to eq([{"status" => "published", "id" => published_post.id}])
+      it "only includes published posts" do
+        viewer = create(:specialist, :guild)
+        create(:guild_post, specialist: specialist, status: "draft")
+        response = AdvisableSchema.execute(query, context: {current_user: viewer})
+        specialist_posts = response.dig("data", "specialist", "guildPosts", "nodes")
+
+        expect(specialist.guild_posts.count).to eq(3)
+        expect(specialist_posts.size).to eq(1)
+        expect(specialist_posts).to eq([{"status" => "published", "id" => published_post.id}])
+      end
+
+      it "includes removed posts if the viewer is the author" do
+        response = AdvisableSchema.execute(query, context: {current_user: specialist})
+        specialist_posts = response.dig("data", "specialist", "guildPosts", "nodes")
+        expect(specialist_posts.size).to eq(2)
+        expect(specialist_posts).to eq([
+                                         {"status" => "removed", "id" => removed_post.id},
+                                         {"status" => "published", "id" => published_post.id}
+                                       ])
       end
     end
   end
