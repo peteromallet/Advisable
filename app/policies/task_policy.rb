@@ -11,7 +11,7 @@ class TaskPolicy < BasePolicy
   end
 
   def via_client?
-    is_client_owner? || belongs_to_company?
+    is_client_owner? || record_belongs_to_company?
   end
 
   def via_specialist_or_client?

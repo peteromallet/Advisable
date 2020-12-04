@@ -13,7 +13,7 @@ class ApplicationPolicy < BasePolicy
   alias stop_working? set_type_for_project?
 
   def via_client?
-    is_client_owner? || belongs_to_company?
+    is_client_owner? || record_belongs_to_company?
   end
   alias reject_proposal? via_client?
 
@@ -26,7 +26,7 @@ class ApplicationPolicy < BasePolicy
 
   private
 
-  def belongs_to_company_record_user
-    record.project.user
+  def company_of_record
+    record.project&.user&.company
   end
 end

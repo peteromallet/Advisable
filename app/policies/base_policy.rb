@@ -14,17 +14,18 @@ class BasePolicy
     user.is_a?(User) && user.account.team_manager?
   end
 
-  def belongs_to_company?
-    user.is_a?(User) && user.company.users.include?(belongs_to_company_record_user)
+  def record_belongs_to_company?
+    user.is_a?(User) && user.company == company_of_record
   end
 
   def is_company_team_manager?
-    belongs_to_company? && is_team_manager?
+    record_belongs_to_company? && is_team_manager?
   end
 
   private
 
-  def belongs_to_company_record_user
-    record.try(:user)
+  # .try will return nil even when record doesn't respond to #user
+  def company_of_record
+    record.try(:user)&.company
   end
 end
