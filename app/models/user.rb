@@ -2,6 +2,12 @@
 # A freelancer account is represented by the Specialist model. Ideally these
 # two models will eventually be merged to be different types of users.
 class User < ApplicationRecord
+  # WIP Company migration 👇️
+  # self.ignored_columns = [:invoice_name, :invoice_company_name, :billing_email, :address, :payments_setup, :project_payment_method, :accepted_project_payment_terms_at]
+  attribute :address, AddressAttribute::Type.new
+  # delegate :stripe_customer_id, :stripe_customer, :invoice_name, :invoice_company_name, :billing_email, :address, :payments_setup, :project_payment_method, :accepted_project_payment_terms_at, :invoice_settings, to: :company
+  # WIP Company migration 👆️
+
   include Uid
   include SpecialistOrUser
   include Airtable::Syncable
@@ -30,7 +36,6 @@ class User < ApplicationRecord
   before_save :remove_past_availabililty
 
   attribute :availability, :datetime, default: [], array: true
-  attribute :address, AddressAttribute::Type.new
 
   has_one_attached :avatar
 
@@ -58,18 +63,6 @@ class User < ApplicationRecord
 
   alias_attribute :application_status, :contact_status
 
-  def invoice_settings
-    {
-      name: invoice_name,
-      company_name: invoice_company_name,
-      billing_email: billing_email,
-      vat_number: account.vat_number,
-      address: address
-    }
-  end
-
-  delegate :stripe_customer_id, :stripe_customer, to: :company
-
   # company name is both a column on the users table and an attribute of the
   # users associated "client" record. We are leaning towards deprecating the
   # user "company_name" column and so this method provide a bridge between
@@ -81,32 +74,9 @@ class User < ApplicationRecord
     self[:company_name]
   end
 
-  def payment_method
-    stripe_customer.invoice_settings.default_payment_method
-  end
-
-  # Updates the payments_setup column to either true or false depending on
-  # wether enough payment information has been provided.
-  def update_payments_setup
-    setup = are_payments_setup
-    update(payments_setup: setup)
-    setup
-  end
-
   def send_confirmation_email
     token = account.create_confirmation_token
     UserMailer.confirm(uid: uid, token: token).deliver_later
-  end
-
-  private
-
-  def are_payments_setup
-    return false if project_payment_method.nil?
-    return false if project_payment_method == 'Card' && payment_method.nil?
-    return false if invoice_settings[:name].nil?
-    return false if accepted_project_payment_terms_at.nil?
-
-    true
   end
 
   # Called before the client record is saved to clean up any availability

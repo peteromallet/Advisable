@@ -11,7 +11,8 @@ class GeocodeUserJob < ApplicationJob
     return if results.blank? || !results.first.respond_to?(:country)
 
     country = Country.where.not(alpha2: nil).find_by(alpha2: results.first.country)
-    user.update(country: country, address: {city: results.first.city, country: results.first.country})
+    user.country = country
+    user.company.address = {city: results.first.city, country: results.first.country}
     user.sync_to_airtable
   end
 

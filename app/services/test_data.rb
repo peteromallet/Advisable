@@ -200,12 +200,17 @@ class TestData
     end
 
     user = User.find_or_create_by(account: account) do |u|
-      u.company =  Company.new(name: Company.fresh_name_for('Dunder Mifflin'))
+      u.company =  Company.new(
+        name: Company.fresh_name_for('Dunder Mifflin'),
+        address: {city: 'Dublin', country: 'IE'},
+        industry: industry,
+        kind: 'Startup',
+        sales_person: sales_person
+      )
       u.company_name = 'Dunder Mifflin'
       u.company_type = 'Startup'
       u.industry = industry
       u.sales_person = sales_person
-      u.address = {city: 'Dublin', country: 'IE'}
     end
 
     user.update(availability: [])

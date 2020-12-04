@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Confirming a project brief' do
+RSpec.describe 'confirming a project brief', type: :system do
   let(:project) do
     create(
       :project,
@@ -21,7 +21,7 @@ RSpec.describe 'Confirming a project brief' do
     create(:project_skill, project: project, primary: true)
   }
 
-  before :each do
+  before do
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
 

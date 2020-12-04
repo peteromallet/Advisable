@@ -6,10 +6,10 @@ class Airtable::Specialist < Airtable::Base
   # Tells which active record model to sync data with.
   sync_with ::Specialist
 
-  sync_column_to_association 'Email Address', association: :account, to: :email, strip: true
-  sync_column_to_association 'First Name', association: :account, to: :first_name, strip: true
-  sync_column_to_association 'Last Name', association: :account, to: :last_name, strip: true
-  sync_column_to_association 'VAT Number', association: :account, to: :vat_number, strip: true
+  sync_column_to_association 'Email Address', association: :account, to: :email
+  sync_column_to_association 'First Name', association: :account, to: :first_name
+  sync_column_to_association 'Last Name', association: :account, to: :last_name
+  sync_column_to_association 'VAT Number', association: :account, to: :vat_number
 
   sync_column 'Phone Number', to: :phone
   sync_column 'Can Travel', to: :travel_availability

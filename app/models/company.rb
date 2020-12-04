@@ -3,12 +3,14 @@ class Company < ApplicationRecord
   belongs_to :industry, optional: true
   has_many :users, dependent: :nullify
 
-  # WIP User migration
+  # WIP Company migration 👇️
   has_many :projects, through: :users
   has_many :applications, through: :projects
   has_many :interviews, through: :users
   has_many :consultations, through: :users
-  # WIP User migration
+  # WIP Company migration 👆️
+
+  attribute :address, AddressAttribute::Type.new
 
   def self.fresh_name_for(company_name)
     return company_name unless exists?(name: company_name)
@@ -37,22 +39,61 @@ class Company < ApplicationRecord
     company_accounts = Account.where(id: users.pluck(:account_id))
     company_accounts.find(&:team_manager?) || company_accounts.first
   end
+
+  def update_payments_setup
+    setup = are_payments_setup
+    update(payments_setup: setup)
+    setup
+  end
+
+  def payment_method
+    stripe_customer.invoice_settings.default_payment_method
+  end
+
+  def invoice_settings
+    {
+      name: invoice_name,
+      company_name: invoice_company_name,
+      billing_email: billing_email,
+      vat_number: vat_number,
+      address: address
+    }
+  end
+
+  private
+
+  def are_payments_setup
+    return false if project_payment_method.nil?
+    return false if project_payment_method == 'Card' && payment_method.nil?
+    return false if invoice_settings[:name].nil?
+    return false if accepted_project_payment_terms_at.nil?
+
+    true
+  end
 end
 
 # == Schema Information
 #
 # Table name: companies
 #
-#  id                     :uuid             not null, primary key
-#  kind                   :string
-#  name                   :string
-#  setup_intent_status    :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  industry_id            :bigint
-#  sales_person_id        :bigint
-#  stripe_customer_id     :string
-#  stripe_setup_intent_id :string
+#  id                                :uuid             not null, primary key
+#  accepted_project_payment_terms_at :datetime
+#  address                           :jsonb
+#  billing_email                     :string
+#  invoice_company_name              :string
+#  invoice_name                      :string
+#  kind                              :string
+#  name                              :string
+#  payments_setup                    :boolean          default(FALSE)
+#  project_payment_method            :string
+#  setup_intent_status               :string
+#  vat_number                        :string
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#  industry_id                       :bigint
+#  sales_person_id                   :bigint
+#  stripe_customer_id                :string
+#  stripe_setup_intent_id            :string
 #
 # Indexes
 #

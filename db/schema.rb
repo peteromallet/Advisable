@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_30_095552) do
+ActiveRecord::Schema.define(version: 2020_12_02_083607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -250,6 +250,14 @@ ActiveRecord::Schema.define(version: 2020_11_30_095552) do
     t.string "stripe_customer_id"
     t.string "stripe_setup_intent_id"
     t.string "setup_intent_status"
+    t.boolean "payments_setup", default: false
+    t.string "project_payment_method"
+    t.datetime "accepted_project_payment_terms_at"
+    t.string "invoice_name"
+    t.string "invoice_company_name"
+    t.string "billing_email"
+    t.string "vat_number"
+    t.jsonb "address"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
     t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
   end
