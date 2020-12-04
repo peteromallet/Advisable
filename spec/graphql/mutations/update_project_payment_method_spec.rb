@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::UpdateProjectPaymentMethod do
-  let(:user) { create(:user, project_payment_method: nil) }
+  let(:company) { create(:company, project_payment_method: nil) }
+  let(:user) { create(:user, company: company) }
   let(:context) { {current_user: user} }
   let(:response) { AdvisableSchema.execute(query, context: context) }
   let(:query) do
@@ -54,16 +55,12 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
   end
 
   it 'updates the project pament method' do
-    bio =
-      response['data']['updateProjectPaymentMethod']['user'][
-        'projectPaymentMethod'
-      ]
+    bio = response['data']['updateProjectPaymentMethod']['user']['projectPaymentMethod']
     expect(bio).to eq('Bank Transfer')
   end
 
   it 'updates the invoice settings' do
-    bio =
-      response['data']['updateProjectPaymentMethod']['user']['invoiceSettings']
+    bio = response['data']['updateProjectPaymentMethod']['user']['invoiceSettings']
     expect(bio).to eq(
       {
         name: 'Test Person',

@@ -4,5 +4,6 @@ FactoryBot.define do
     kind { 'Startup' }
     industry
     stripe_customer_id { 'cus_1234' }
+    payments_setup { true }
   end
 end

@@ -47,6 +47,9 @@ Style/AndOr:
 Style/StringLiteralsInInterpolation:
   Enabled: false
 
+Style/AsciiComments:
+  Enabled: false
+
 Rails/DynamicFindBy:
   Enabled: false
 
