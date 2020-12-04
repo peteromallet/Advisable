@@ -13,7 +13,7 @@ import Header from "./Header";
 function FreelancerJoin() {
   const { routes, currentStepIndex, forwards } = useSteps(steps);
   const location = useLocation();
-  const largeScreen = useBreakpoint("lUp");
+  const largeScreen = useBreakpoint("xlUp");
   const viewer = useViewer();
 
   // Redirect to root if client or specialist logged in
