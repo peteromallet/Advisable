@@ -1,23 +1,25 @@
 import React from "react";
-import { Form, Formik } from "formik";
-import queryString from "query-string";
 import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { useHistory, useLocation } from "react-router";
-import FormField from "src/components/FormField";
+import queryString from "query-string";
+import { Form, Formik } from "formik";
+import { ChevronRight } from "@styled-icons/feather";
+import { Box, Text, Input, Error, useBreakpoint } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
-import { Box, Text, Input, Error } from "@advisable/donut";
-import validationSchema from "./validationSchema";
-import Description from "./Description";
-import { CREATE_FREELANCER_ACCOUNT, GET_PROJECT } from "../queries";
-import MotionBox from "../MotionBox";
-import HaveAccount from "../HaveAccount";
+import FormField from "src/components/FormField";
 import VIEWER from "src/graphql/queries/viewer";
+import validationSchema from "./validationSchema";
+import HaveAccount from "../HaveAccount";
+import Description from "./Description";
+import MotionBox from "../MotionBox";
 import Loading from "./Loading";
+import { CREATE_FREELANCER_ACCOUNT, GET_PROJECT } from "../queries";
 
 export default function StartApplication({ nextStep, forwards }) {
   const history = useHistory();
   const location = useLocation();
   const client = useApolloClient();
+  const isMobile = useBreakpoint("s");
   const [createFreelancerAccount] = useMutation(CREATE_FREELANCER_ACCOUNT);
   const project_id = queryString.parse(location.search)?.pid;
   const { data, loading, error } = useQuery(GET_PROJECT, {
@@ -112,9 +114,14 @@ export default function StartApplication({ nextStep, forwards }) {
                   <SubmitButton
                     size={["m", "l"]}
                     variant="dark"
+                    suffix={<ChevronRight />}
                     mb={{ _: 3, m: 0 }}
                   >
-                    Get Started
+                    {project_id
+                      ? isMobile
+                        ? "Request Details"
+                        : "Request more details"
+                      : "Get Started"}
                   </SubmitButton>
                   <HaveAccount />
                 </Box>

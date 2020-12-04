@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import queryString from "query-string";
-import { Box, Text, Error } from "@advisable/donut";
 import { Form, Formik } from "formik";
-import SubmitButton from "components/SubmitButton";
-import FormField from "components/FormField";
-import validationSchema from "./validationSchema";
 import { useHistory, useLocation } from "react-router";
+import { ChevronRight } from "@styled-icons/feather";
+import { Box, Text, Error } from "@advisable/donut";
+import SubmitButton from "src/components/SubmitButton";
+import FormField from "src/components/FormField";
+import useViewer from "src/hooks/useViewer";
 import MotionBox from "../MotionBox";
 import HaveAccount from "../HaveAccount";
-import useViewer from "src/hooks/useViewer";
 import { useUpdatePassword } from "../queries";
+import validationSchema from "./validationSchema";
 
 export default function SetPassword({ nextStep, prevStep, forwards }) {
   const viewer = useViewer();
@@ -86,7 +87,12 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
               flexDirection={{ _: "column", m: "row" }}
               pt={[4, 5]}
             >
-              <SubmitButton size={["m", "l"]} variant="dark" mb={{ xs: 3 }}>
+              <SubmitButton
+                size={["m", "l"]}
+                variant="dark"
+                mb={{ xs: 3 }}
+                suffix={<ChevronRight />}
+              >
                 Get Started
               </SubmitButton>
               <HaveAccount />
