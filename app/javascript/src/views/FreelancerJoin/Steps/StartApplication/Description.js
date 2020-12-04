@@ -44,12 +44,19 @@ function WithProjectDetails({ project }) {
     primarySkill,
     industry,
     estimatedBudget,
+    specialistDescription,
     goals,
     remote,
   } = project;
   const location = remote
     ? "remote"
     : [user.city, user.country].filter(Boolean).join(", ");
+
+  const generatedDescription = `${user?.companyName || ""} is hiring a ${
+    primarySkill?.name || ""
+  } specialist to ${lowerFirst(goals?.[0]) || ""}`;
+  const description = specialistDescription || generatedDescription;
+
   return (
     <>
       <Text as="h2" fontSize={["3xl", "4xl"]} mb={[3, 5]} color="neutral900">
@@ -79,8 +86,7 @@ function WithProjectDetails({ project }) {
       </Box>
       {isWideScreen ? (
         <Text as="p" color="neutral800" fontSize="m" lineHeight="m">
-          {user.companyName} is hiring a {primarySkill.name} specialist to{" "}
-          {lowerFirst(goals[0])}
+          {description}
         </Text>
       ) : null}
     </>
