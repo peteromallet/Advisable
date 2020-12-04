@@ -21,6 +21,7 @@ const TooltipContent = styled.div`
   border-radius: 12px;
   transform: scale(0.8);
   transition: transform 200ms;
+  text-align: ${(p) => p.$textAlign};
   background: ${theme.colors.blue900};
   box-shadow: 0 0 0 1px rgba(136, 152, 170, 0.1),
     0 15px 50px 0 rgba(49, 49, 93, 0.1), 0 5px 20px 0 rgba(0, 0, 0, 0.08);
@@ -74,6 +75,7 @@ const Tooltip = ({
   children,
   content,
   gutter,
+  textAlign,
   maxWidth = 320,
   interactable,
   placement = "bottom",
@@ -91,7 +93,7 @@ const Tooltip = ({
         {(referenceProps) => React.cloneElement(children, referenceProps)}
       </TooltipReference>
       <StyledTooltip interactable={interactable} {...tooltip}>
-        <TooltipContent $maxWidth={maxWidth}>
+        <TooltipContent $textAlign={textAlign} $maxWidth={maxWidth}>
           <StyledTooltipArrow size={16} {...tooltip} />
           {content}
         </TooltipContent>
