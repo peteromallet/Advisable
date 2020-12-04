@@ -24,8 +24,11 @@ function Footer() {
       <Text mr="xs" color={{ _: "neutral500", xl: "blue900" }}>
         •
       </Text>
-      <Link.External to="/" color={{ xl: "blue900", _: "neutral500" }}>
-        Privacy & Terms
+      <Link.External
+        href="https://advisable.com/terms-of-service/"
+        color={{ xl: "blue900", _: "neutral500" }}
+      >
+        Terms of Service
       </Link.External>
     </Box>
   );
