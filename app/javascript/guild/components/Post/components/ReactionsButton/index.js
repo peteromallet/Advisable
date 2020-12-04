@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useModal } from "@advisable/donut";
-import { Heart } from "@styled-icons/heroicons-outline";
-import { Heart as HeartFilled } from "@styled-icons/heroicons-solid";
+import { useModal, Tooltip } from "@advisable/donut";
+import { Bulb } from "@styled-icons/ionicons-outline";
+import { Bulb as BulbFilled } from "@styled-icons/ionicons-solid";
 import { useMutation, gql } from "@apollo/client";
 import PostAction from "@guild/components/PostActions/PostAction";
 import useViewer from "src/hooks/useViewer";
@@ -67,16 +67,25 @@ const ReactionsButton = ({ size, post }) => {
     timer.current = setTimeout(() => {}, 500);
   };
 
+  const author = post.author.firstName;
+
   return (
     <>
       <HeartFirstUseModal modal={firstUseModal} />
-      <PostAction
-        size={size}
-        onClick={handleReaction}
-        color={reacted ? "white" : "red600"}
-        bg={reacted ? "red500" : "neutral100"}
-        icon={reacted ? <HeartFilled /> : <Heart />}
-      />
+      <Tooltip
+        placement="top"
+        textAlign="center"
+        maxWidth={200}
+        content={`Let ${author} know you found this post interesting`}
+      >
+        <PostAction
+          size={size}
+          onClick={handleReaction}
+          color={reacted ? "white" : "yellow700"}
+          bg={reacted ? "yellow500" : "yellow100"}
+          icon={reacted ? <BulbFilled /> : <Bulb />}
+        />
+      </Tooltip>
     </>
   );
 };
