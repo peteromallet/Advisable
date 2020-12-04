@@ -27,7 +27,7 @@ class GuildChatRepliesMailbox < ApplicationMailbox
 
   def mail_body(mail)
     if mail.parts.present?
-      mail.parts.first.body.decoded
+      mail.parts.first.decoded
     else
       mail.decoded
     end
