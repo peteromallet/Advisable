@@ -124,7 +124,7 @@ function MessageContext({ author, message }) {
 
       <Button
         as="a"
-        href={message.attributes?.calendly_link}
+        href={message.attributes?.calendlyLink}
         target="_blank"
         rel="noreferrer noopener"
         prefix={<Calendar />}
