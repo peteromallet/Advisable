@@ -38,7 +38,8 @@ export default function Message({ message, author, isAuthor }) {
             color="neutral800"
             lineHeight="1.2rem"
             borderRadius="12px"
-            bg={isAuthor ? "blue100" : "neutral100"}
+            bg={isAuthor ? "blue200" : "white"}
+            boxShadow="0 4px 8px -4px rgba(0, 0, 0, 0.2)"
           >
             <Text fontSize="xs" mb={0.5} fontWeight="medium">
               {author.name}
@@ -52,19 +53,6 @@ export default function Message({ message, author, isAuthor }) {
               {message.body}
             </Text>
           </Box>
-          {message.attributes?.calendlyLink ? (
-            <Button
-              as="a"
-              href={message.attributes?.calendly_link}
-              target="_blank"
-              rel="noreferrer noopener"
-              prefix={<Calendar />}
-              mb={2}
-              size="s"
-            >
-              Book a call with {author.firstName}
-            </Button>
-          ) : null}
           <Text
             fontSize="2xs"
             color="neutral400"
@@ -108,13 +96,13 @@ function MessageContext({ author, message }) {
     <Box
       mb={2}
       padding={3}
+      pb={1}
       border="1px solid"
       borderRadius="12px"
       borderColor="neutral200"
     >
-      <Text fontSize="sm" lineHeight="1.2rem">
+      <Text lineHeight="1.2rem" mb={3}>
         <Link
-          fontSize="sm"
           variant="dark"
           fontWeight="medium"
           to={`/freelancers/${author.id}`}
@@ -123,7 +111,6 @@ function MessageContext({ author, message }) {
         </Link>
         {` ${contextMessage(postType)} `}
         <Link
-          fontSize="sm"
           css={`
             display: inline;
           `}
@@ -134,6 +121,18 @@ function MessageContext({ author, message }) {
           {postTitle}
         </Link>
       </Text>
+
+      <Button
+        as="a"
+        href={message.attributes?.calendly_link}
+        target="_blank"
+        rel="noreferrer noopener"
+        prefix={<Calendar />}
+        mb={2}
+        size="s"
+      >
+        Book a call with {author.firstName}
+      </Button>
     </Box>
   );
 }
