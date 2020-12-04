@@ -167,6 +167,7 @@ export default function RichTextEditor({ value, onChange }) {
       <StyledEditor>
         <Editor
           ref={editor}
+          stripPastedStyles
           onChange={handleChange}
           editorState={editorState}
           placeholder="Write your post..."
