@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Home, Chat } from "@styled-icons/heroicons-solid";
 import { useQuery } from "@apollo/client";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { Box } from "@advisable/donut";
 import logo from "@advisable-main/components/Header/logo.svg";
 import CurrentUser from "./CurrentUser";
@@ -20,7 +20,9 @@ const TWO_MINUTES = 120000;
 
 const Header = () => {
   const viewer = useViewer();
+  const location = useLocation();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const path = encodeURIComponent(`/guild${location.pathname}`);
 
   const { data: lastReadData } = useQuery(GUILD_LAST_READ_QUERY, {
     pollInterval: TWO_MINUTES,
@@ -75,7 +77,11 @@ const Header = () => {
             <Box mr={4}>
               <Notifications hasUnread={hasUnreadNotifications} />
             </Box>
-          ) : null}
+          ) : (
+            <StyledHeaderLink as="a" href={`/login?redirect=${path}`}>
+              Login
+            </StyledHeaderLink>
+          )}
           <CurrentUser />
         </Box>
       </StyledHeader>
