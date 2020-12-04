@@ -15,7 +15,7 @@ export default function ConnectionsCount({ post, ...props }) {
   )} connected with ${firstName} over this post`;
 
   return (
-    <Tooltip maxWidth={200} content={tooltipText}>
+    <Tooltip placement="top" maxWidth={200} content={tooltipText}>
       <Text
         {...props}
         fontSize="sm"

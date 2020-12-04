@@ -1,9 +1,9 @@
 import React from "react";
+import { Bulb } from "@styled-icons/ionicons-outline";
 import styled, { keyframes } from "styled-components";
-import { Heart } from "@styled-icons/heroicons-solid";
 import { Circle, Box, Modal, Text, Button, Paragraph } from "@advisable/donut";
 
-const heartAnimation = keyframes`
+const iconAnimation = keyframes`
   from {
     opacity: 0;
     transform: translateY(0) scale(0.25);
@@ -11,15 +11,15 @@ const heartAnimation = keyframes`
 
   to {
     opacity: 1;
-    transform: translateY(-200px) scale(1);
+    transform: translateY(-240px) scale(1);
   }
 `;
 
-const StyledAnimatedHeart = styled(Box)`
+const StyledAnimatedIcon = styled(Box)`
   top: 150px;
   z-index: 1;
   position: absolute;
-  animation-name: ${heartAnimation};
+  animation-name: ${iconAnimation};
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 `;
@@ -28,12 +28,12 @@ function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function AnimatedHeart({ left }) {
+function AnimatedIcon({ left }) {
   const duration = randomNumber(15, 25);
   const delay = randomNumber(0, duration);
 
   return (
-    <StyledAnimatedHeart
+    <StyledAnimatedIcon
       left={left}
       color="red200"
       style={{
@@ -41,10 +41,10 @@ function AnimatedHeart({ left }) {
         animationDelay: `-${delay}s`,
       }}
     >
-      <Box opacity={randomNumber(0.5, 1)}>
-        <Heart size={24} />
-      </Box>
-    </StyledAnimatedHeart>
+      <Circle bg="yellow100" opacity={randomNumber(0.5, 1)}>
+        <Bulb size={24} />
+      </Circle>
+    </StyledAnimatedIcon>
   );
 }
 
@@ -66,33 +66,24 @@ export default function HeartFirstUseModal({ modal }) {
           overflow: hidden;
         `}
       >
-        <AnimatedHeart left="5%" y={90} />
-        <AnimatedHeart left="10%" y={100} />
-        <AnimatedHeart left="15%" y={130} />
-        <AnimatedHeart left="20%" y={95} />
-        <AnimatedHeart left="25%" y={115} />
-        <AnimatedHeart left="30%" y={100} />
-        <AnimatedHeart left="35%" y={140} />
-        <AnimatedHeart left="40%" y={140} />
-        <AnimatedHeart left="45%" y={80} />
-        <AnimatedHeart left="50%" y={110} />
-        <AnimatedHeart left="55%" y={125} />
-        <AnimatedHeart left="60%" y={105} />
-        <AnimatedHeart left="65%" y={110} />
-        <AnimatedHeart left="70%" y={100} />
-        <AnimatedHeart left="75%" y={90} />
-        <AnimatedHeart left="80%" y={120} />
-        <AnimatedHeart left="85%" y={105} />
-        <AnimatedHeart left="90%" y={80} />
+        <AnimatedIcon left="10%" y={100} />
+        <AnimatedIcon left="20%" y={95} />
+        <AnimatedIcon left="30%" y={100} />
+        <AnimatedIcon left="40%" y={140} />
+        <AnimatedIcon left="50%" y={110} />
+        <AnimatedIcon left="60%" y={105} />
+        <AnimatedIcon left="70%" y={100} />
+        <AnimatedIcon left="80%" y={120} />
+        <AnimatedIcon left="90%" y={80} />
 
         <Circle
-          bg="neutral100"
-          color="red500"
+          bg="yellow100"
+          color="yellow700"
           mb={8}
           zIndex={2}
           position="relative"
         >
-          <Heart size={32} />
+          <Bulb size={32} />
         </Circle>
         <Text
           mb={3}
@@ -106,9 +97,9 @@ export default function HeartFirstUseModal({ modal }) {
         <Paragraph mb={8} color="neutral700">
           We don’t believe in vanity metrics. Our goal is to help you make
           authentic connections, and we think counters prevent that from
-          happening. When you favourite a post, we will let the author know and
-          give them the opportunity to connect with you. You won&apos;t see a
-          count of how many other people have favourited the post.
+          happening. When you mark a post as interesting, we will let the author
+          know and give them the opportunity to connect with you. You won&apos;t
+          see a count of how many other people found it interesting.
         </Paragraph>
         <Button variant="dark" onClick={modal.hide}>
           Okay
