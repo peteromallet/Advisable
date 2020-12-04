@@ -24,9 +24,9 @@ function ThankYouContent() {
         lineHeight={{ _: "m", l: "l" }}
         mb={{ _: 6, xl: 8 }}
       >
-        Advisable helps connect the worlds top freelance marketing talent with
-        companies. Rutrum est mi nascetur nibh pellentesque mollis dignissim
-        vulputate pretium ultricies.
+        We&apos;re ready to start now. Please follow the app, fill the profile
+        page, and add your previous projects so that we could match you with the
+        best clients.
       </Text>
       <Button
         variant="dark"
