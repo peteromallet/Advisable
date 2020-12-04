@@ -60,6 +60,7 @@ export * from "reakit/Dialog";
 export { default as Modal, useModal, useRoutedModal } from "./components/Modal";
 
 export { default as Button } from "./components/Button";
+export * from "./components/Button/styles";
 export { default as Tooltip } from "./components/Tooltip";
 export { default as Provider } from "./components/Provider";
 export { default as Skeleton } from "./components/Skeleton";

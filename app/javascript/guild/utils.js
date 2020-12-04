@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { DateTime } from "luxon";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
@@ -13,6 +14,11 @@ export const omit = (obj, ...omit) =>
   Object.fromEntries(
     Object.entries(obj).filter(([key]) => !omit.includes(key)),
   );
+
+export function timestamp(date) {
+  const asLuxon = DateTime.fromJSDate(date);
+  return asLuxon.toFormat("dd LLL");
+}
 
 export const relativeDate = (date) => dayjs().from(date, true);
 

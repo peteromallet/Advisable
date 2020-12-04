@@ -5,11 +5,8 @@ import { GuildBox } from "@guild/styles";
 
 const InboxHeader = ({ children }) => (
   <GuildBox
-    px="l"
     flexSpaceBetween
     alignItems="center"
-    background="white"
-    minHeight="70px"
     css={css`
       border-width: 0 1px 1px 0;
       box-sizing: border-box;
