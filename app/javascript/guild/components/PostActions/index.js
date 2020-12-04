@@ -22,7 +22,7 @@ export default function PostActions({
 
   return (
     <Box display="inline-flex" alignItems="center" {...props}>
-      <ReactionsButton size={size} post={post} />
+      {!viewerIsAuthor ? <ReactionsButton size={size} post={post} /> : null}
       {!viewerIsAuthor ? (
         <Box ml="2">
           <Connect post={post} size={size} />
