@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Button } from "@advisable/donut";
+import { Box, Text, Button, useBreakpoint } from "@advisable/donut";
 import { ChevronRight } from "@styled-icons/feather";
 import lambdaSchoolLogoWhite from "./logos/lambdaSchoolLogoWhite.png";
 import StackOverflowLogo from "./logos/StackOverflowLogo";
@@ -16,7 +16,7 @@ import { transitionVariants } from "../transitionVariants";
 function ThankYouContent() {
   const history = useHistory();
   return (
-    <>
+    <Box pb={20} mt={{ _: 10, xl: 0 }} maxWidth={560}>
       <Title mb={5}>Thank you</Title>
       <Text
         fontSize={{ _: "m", l: "l" }}
@@ -36,7 +36,7 @@ function ThankYouContent() {
       >
         Get Started
       </Button>
-    </>
+    </Box>
   );
 }
 
@@ -111,8 +111,8 @@ function FormsContent() {
 }
 
 export default function OrbitsContent({ step, custom }) {
+  const isMobile = useBreakpoint("s");
   const framerParams = {
-    as: motion.div,
     variants: transitionVariants,
     initial: "enter",
     animate: "center",
@@ -133,19 +133,15 @@ export default function OrbitsContent({ step, custom }) {
     >
       <AnimatePresence exitBeforeEnter initial={false} custom={custom}>
         {step === 2 ? (
-          <Box
-            {...framerParams}
-            key="thanks"
-            pb={20}
-            mt={{ _: 10, xl: 0 }}
-            maxWidth={560}
-          >
+          <motion.div {...framerParams} key="thanks">
             <ThankYouContent />
-          </Box>
+          </motion.div>
+        ) : isMobile && step === 1 ? (
+          <motion.div {...framerParams} />
         ) : (
-          <Box {...framerParams} key="forms">
+          <motion.div {...framerParams} key="forms">
             <FormsContent />
-          </Box>
+          </motion.div>
         )}
       </AnimatePresence>
     </Box>
