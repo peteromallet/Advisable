@@ -11,7 +11,7 @@ const iconAnimation = keyframes`
 
   to {
     opacity: 1;
-    transform: translateY(-200px) scale(1);
+    transform: translateY(-240px) scale(1);
   }
 `;
 
