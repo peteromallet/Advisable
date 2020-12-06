@@ -4,6 +4,7 @@ import { object, string } from "yup";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
+import useViewer from "src/hooks/useViewer";
 import {
   Card,
   Box,
@@ -15,13 +16,16 @@ import {
   Link,
 } from "@advisable/donut";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
+import RequiresTeamManager from "./RequiresTeamManager";
 
 const validationSchema = object({
   paymentMethod: string().required("Please select a payment method"),
 });
 
 const PaymentMethod = ({ data }) => {
+  const viewer = useViewer();
   const history = useHistory();
+
   const [updatePaymentMethod] = useMutation(UPDATE_PAYMENT_METHOD);
   const specialist = data.application.specialist;
 
@@ -45,6 +49,10 @@ const PaymentMethod = ({ data }) => {
 
     history.push(`/book/${data.application.id}/card_details`);
   };
+
+  if (!viewer.isTeamManager) {
+    return <RequiresTeamManager data={data} />;
+  }
 
   return (
     <Card>
