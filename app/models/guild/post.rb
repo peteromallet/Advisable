@@ -39,6 +39,7 @@ module Guild
                    audience_notified_at: [:datetime]
 
     before_save :reset_guild_topics, if: :guild_topics_resettable?
+    before_save :reset_previous_pinned, if: :pinned_changed?
 
     # General, Opportunity, Advice Required, Case Study
     def normalized_type
@@ -65,6 +66,12 @@ module Guild
 
       self.guild_topics = []
     end
+
+    def reset_previous_pinned
+      return unless pinned
+
+      Guild::Post.where(pinned: true).find_each { |post| post.update(pinned: false) }
+    end
   end
 end
 
@@ -77,6 +84,7 @@ end
 #  comments_count     :integer          default(0), not null
 #  data               :jsonb            not null
 #  engagements_count  :integer          default(0)
+#  pinned             :boolean          default(FALSE)
 #  reactionable_count :integer          default(0), not null
 #  shareable          :boolean          default(FALSE)
 #  status             :integer          default("draft"), not null

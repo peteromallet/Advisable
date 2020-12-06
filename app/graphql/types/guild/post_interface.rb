@@ -106,6 +106,8 @@ module Types::Guild::PostInterface
 
   field :shareable, Boolean, null: true
 
+  field :pinned, Boolean, null: true
+
   definition_methods do
     def resolve_type(object, context)
       if Guild::Post::POST_TYPES.include?(object.type)
