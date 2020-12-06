@@ -7,6 +7,7 @@ import useViewer from "@advisable-main/hooks/useViewer";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Header from "@guild/components/Header";
 import { NotificationsProvider } from "components/Notifications";
+import useHideIntercom from "src/hooks/useHideIntercom";
 
 import Feed from "./views/Feed";
 import Post from "./views/Post";
@@ -27,6 +28,8 @@ const GuildOrRedirectFreelancerProfile = () => {
   }
 };
 const App = () => {
+  useHideIntercom();
+
   return (
     <ApplicationProvider>
       <RootErrorBoundary>
