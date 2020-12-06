@@ -21,5 +21,6 @@ export default function BookingContainer({ match }) {
   if (error?.graphQLErrors[0]?.code === "invalidPermissions") {
     return <AccessDenied />;
   }
+
   return <Booking data={data} match={match} />;
 }
