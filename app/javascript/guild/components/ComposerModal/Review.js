@@ -154,7 +154,7 @@ export default function Review({ guildPost, onPublish }) {
           suffix={<ArrowRight />}
           disabled={false}
         >
-          Publish Post
+          {guildPost.status === "published" ? "Save Changes" : "Publish Post"}
         </Button>
         <Text mt="l" size="s" fontWeight="light" lineHeight="m" color="#626575">
           By publishing this post you are aggreeing to the Advisable Guild code
