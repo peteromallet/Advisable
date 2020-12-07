@@ -59,7 +59,11 @@ export default function StartApplication({ nextStep, forwards }) {
       },
     });
 
-    history.push(nextStep.path);
+    const id = res?.data?.createFreelancerAccount?.viewer?.id;
+    history.push(
+      { ...history.location, pathname: nextStep.path },
+      { ...values, id },
+    );
   };
 
   return (
