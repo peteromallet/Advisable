@@ -32,9 +32,8 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
   const application = data.application;
   const { specialist, project } = application;
   const [projectTypeModal, setProjectTypeModal] = React.useState(false);
-  const canStopWorking =
-    application.status === "Working" &&
-    (project.isOwner || viewer.isTeamManager);
+  const isOwnerOrManager = project.isOwner || viewer.isTeamManager;
+  const canStopWorking = application.status === "Working" && isOwnerOrManager;
 
   const handleEditPayment = () => {
     history.push("/settings/payments");
@@ -105,7 +104,7 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
                 />
               )}
 
-              {application.projectType === "Flexible" && (
+              {application.projectType === "Flexible" && isOwnerOrManager && (
                 <AttributeList.Item
                   label="Monthly Limit"
                   action={
@@ -128,45 +127,53 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
                 onClose={() => setProjectTypeModal(false)}
               />
 
-              <AttributeList.Item
-                label="Project Type"
-                action={
-                  <Button
-                    size="s"
-                    variant="subtle"
-                    aria-label="Edit project type"
-                    onClick={() => setProjectTypeModal(true)}
-                  >
-                    <Edit />
-                  </Button>
-                }
-              >
-                <Tooltip
-                  content={t(
-                    `projectTypes.${application.projectType}.clientDescription`,
-                  )}
+              {isOwnerOrManager ? (
+                <AttributeList.Item
+                  label="Project Type"
+                  action={
+                    <Button
+                      size="s"
+                      variant="subtle"
+                      aria-label="Edit project type"
+                      onClick={() => setProjectTypeModal(true)}
+                    >
+                      <Edit />
+                    </Button>
+                  }
                 >
-                  <Box display="flex" alignItems="center">
-                    <Box color="neutral500" mr="xxs">
-                      <HelpCircle size={16} strokeWidth={2} />
+                  <Tooltip
+                    content={t(
+                      `projectTypes.${application.projectType}.clientDescription`,
+                    )}
+                  >
+                    <Box display="flex" alignItems="center">
+                      <Box color="neutral500" mr="xxs">
+                        <HelpCircle size={16} strokeWidth={2} />
+                      </Box>
+                      <div data-testid="projectType">
+                        {t(`projectTypes.${application.projectType}.label`)}
+                      </div>
                     </Box>
-                    <div data-testid="projectType">
-                      {t(`projectTypes.${application.projectType}.label`)}
-                    </div>
-                  </Box>
-                </Tooltip>
-              </AttributeList.Item>
+                  </Tooltip>
+                </AttributeList.Item>
+              ) : null}
 
-              <AttributeList.Item
-                label="Payment Method"
-                action={
-                  <Button variant="subtle" onClick={handleEditPayment} size="s">
-                    <Edit />
-                  </Button>
-                }
-              >
-                {get(data, "viewer.projectPaymentMethod")}
-              </AttributeList.Item>
+              {isOwnerOrManager ? (
+                <AttributeList.Item
+                  label="Payment Method"
+                  action={
+                    <Button
+                      variant="subtle"
+                      onClick={handleEditPayment}
+                      size="s"
+                    >
+                      <Edit />
+                    </Button>
+                  }
+                >
+                  {get(data, "viewer.projectPaymentMethod")}
+                </AttributeList.Item>
+              ) : null}
             </AttributeList>
           </Box>
           <Box paddingBottom="xl">
