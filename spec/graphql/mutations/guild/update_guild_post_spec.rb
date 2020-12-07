@@ -99,11 +99,11 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         query = mutation[input]
 
         expect {
-          subject.call(query)
+          create_guild_post.call(query)
           guild_post.reload
-        }.to change { guild_post.title }.to("this is a new title").
-          and change { guild_post.body }.to("this is a new body").
-          and change { guild_post.audience_type }.to("skills")
+        }.to change(guild_post, :title).to("this is a new title").
+          and change(guild_post, :body).to("this is a new body").
+          and change(guild_post, :audience_type).to("skills")
       end
 
       it "updates shareable" do
@@ -118,32 +118,18 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         }.to change(guild_post, :shareable).from(false).to(true)
       end
 
-      it "changes status back to draft if publish is not included" do
-        guild_post.published!
-        input = {
-          title: "this is another title",
-          guildPostId: guild_post.id
-        }
-        query = mutation[input]
-
-        expect {
-          subject.call(query)
-          guild_post.reload
-        }.to change { guild_post.status }.from("published").to("draft").
-          and change { guild_post.title }.to("this is another title")
-      end
-
       it "changes the status to published" do
         input = {
           guildPostId: guild_post.id,
           publish: true
         }
+
         query = mutation[input]
 
         expect {
-          subject.call(query)
+          create_guild_post.call(query)
           guild_post.reload
-        }.to change { guild_post.status }.from("draft").to("published")
+        }.to change(guild_post, :status).from("draft").to("published")
       end
 
       it "updates the topic names" do
@@ -154,7 +140,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         query = mutation[input]
 
         expect {
-          subject.call(query)
+          create_guild_post.call(query)
           guild_post.reload
         }.to change { guild_post.guild_topics.count }.from(0).to(3)
       end
