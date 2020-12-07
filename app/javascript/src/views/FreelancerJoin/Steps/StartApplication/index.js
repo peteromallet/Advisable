@@ -11,7 +11,7 @@ import VIEWER from "src/graphql/queries/viewer";
 import validationSchema from "./validationSchema";
 import HaveAccount from "../HaveAccount";
 import Description from "./Description";
-import MotionBox from "../MotionBox";
+import MotionCard from "../MotionCard";
 import Loading from "./Loading";
 import { CREATE_FREELANCER_ACCOUNT, GET_PROJECT } from "../queries";
 
@@ -64,7 +64,7 @@ export default function StartApplication({ nextStep, forwards }) {
   };
 
   return (
-    <MotionBox forwards={forwards}>
+    <MotionCard forwards={forwards}>
       {project_id && loading ? (
         <Loading />
       ) : (
@@ -127,6 +127,6 @@ export default function StartApplication({ nextStep, forwards }) {
           </Formik>
         </>
       )}
-    </MotionBox>
+    </MotionCard>
   );
 }

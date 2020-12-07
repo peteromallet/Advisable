@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Box, Card, useBreakpoint } from "@advisable/donut";
 import { transitionVariants } from "../transitionVariants";
 
-export default function MotionBox({ children, forwards, ...props }) {
+export default function MotionCard({ children, forwards, ...props }) {
   const largeScreen = useBreakpoint("xlUp");
   return (
     <Box
