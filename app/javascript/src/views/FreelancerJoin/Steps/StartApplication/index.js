@@ -60,10 +60,7 @@ export default function StartApplication({ nextStep, forwards }) {
     });
 
     const id = res?.data?.createFreelancerAccount?.viewer?.id;
-    history.push(
-      { ...history.location, pathname: nextStep.path },
-      { ...values, id },
-    );
+    history.push({ ...history.location, pathname: nextStep.path }, { id });
   };
 
   return (
