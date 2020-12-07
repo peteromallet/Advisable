@@ -198,4 +198,15 @@ class Types::User < Types::BaseType
     end
     times
   end
+
+  field :applications, [Types::ApplicationType], null: true do
+    authorize :is_user
+    argument :status, [String], required: false
+  end
+
+  def applications(status: nil)
+    records = company.applications
+    records = records.where(status: status) if status
+    records
+  end
 end
