@@ -38,6 +38,7 @@ export const user = (fields = {}) => {
       companyType: "Startup",
       projectPaymentMethod: "Bank Transfer",
       location: "Dublin, Ireland",
+      city: "Dublin",
       invoiceSettings: {
         __typename: "InvoiceSettings",
         name: "Test Account",
@@ -118,6 +119,8 @@ export const project = (fields = {}) => {
     optionalCharacteristics: ["Optional characteristic"],
     estimatedBudget: "€10,000",
     remote: true,
+    skills: [],
+    user: user(),
     acceptedTerms: true,
     depositOwed: 0,
     applications: [],
