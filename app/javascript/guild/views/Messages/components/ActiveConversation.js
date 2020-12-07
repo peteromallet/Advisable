@@ -3,13 +3,14 @@ import { useQuery } from "@apollo/client";
 import { css } from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link as RouterLink } from "react-router-dom";
-import { Send } from "@styled-icons/ionicons-solid";
+import { Send, ArrowUp } from "@styled-icons/ionicons-solid";
 import { Box, Button, Link, Textarea, Avatar, theme } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { useTwilioChat } from "@guild/hooks/twilioChat/useTwilioChat";
 import { GuildBox, flex } from "@guild/styles";
 import { ScrollToBottom } from "@guild/components/ScrollToBottom";
+import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { CHAT_PARTICIPANT_QUERY } from "../queries";
 import Message from "./Message";
 import { StyledComposer } from "../styles";
@@ -21,6 +22,8 @@ const ActiveConversation = ({ channelSid }) => {
     activeChannel: activeConversation,
     messages,
     initializing,
+    paginator,
+    onLoadPreviousMessages,
   } = useTwilioChat({
     channelSid,
   });
@@ -57,6 +60,18 @@ const ActiveConversation = ({ channelSid }) => {
     await activeConversation.sendMessage(message);
   };
 
+  /*
+    Only scroll to the bottom if there are new messages.
+    Loading previous messages should not trigger this.
+  */
+  const scrollToBottom =
+    !paginator?.hasNextPage ||
+    activeConversation?.lastConsumedMessageIndex !== messages.length - 1;
+
+  const messagesRef = useBottomScrollListener(async () => {
+    await activeConversation.setAllMessagesConsumed();
+  });
+
   if (initializing) return <Loading />;
 
   return (
@@ -90,6 +105,7 @@ const ActiveConversation = ({ channelSid }) => {
         </Box>
 
         <GuildBox
+          ref={messagesRef}
           px={5}
           pt={5}
           height="100%"
@@ -98,6 +114,17 @@ const ActiveConversation = ({ channelSid }) => {
             border-bottom: 1px solid ${theme.colors.ghostWhite};
           `}
         >
+          {paginator?.hasPrevPage && (
+            <GuildBox flexCenterBoth>
+              <Button
+                size="s"
+                prefix={<ArrowUp />}
+                onClick={onLoadPreviousMessages}
+              >
+                Show previous messages
+              </Button>
+            </GuildBox>
+          )}
           <AnimatePresence initial={false}>
             {messages?.map((message, key) => (
               <Box
@@ -109,13 +136,13 @@ const ActiveConversation = ({ channelSid }) => {
               >
                 <Message
                   message={message}
-                  isAuthor={viewer.id === message.author}
+                  isAuthor={viewer?.id === message.author}
                   author={getParticipantById(message.author)}
                 />
               </Box>
             ))}
           </AnimatePresence>
-          <ScrollToBottom />
+          {scrollToBottom && <ScrollToBottom />}
         </GuildBox>
 
         {/* New Message */}
