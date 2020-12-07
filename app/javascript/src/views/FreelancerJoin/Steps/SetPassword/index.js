@@ -7,7 +7,7 @@ import { Box, Text, Error } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
 import useViewer from "src/hooks/useViewer";
-import MotionBox from "../MotionBox";
+import MotionCard from "../MotionCard";
 import HaveAccount from "../HaveAccount";
 import { useUpdatePassword } from "../queries";
 import validationSchema from "./validationSchema";
@@ -46,7 +46,7 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
   };
 
   return (
-    <MotionBox forwards={forwards}>
+    <MotionCard forwards={forwards}>
       <Box mb="xl">
         <Text as="h2" fontSize="4xl" mb="xs" color="neutral900">
           Welcome to Advisable!
@@ -100,6 +100,6 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
           </Form>
         )}
       </Formik>
-    </MotionBox>
+    </MotionCard>
   );
 }
