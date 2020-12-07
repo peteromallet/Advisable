@@ -16,6 +16,7 @@ import { useMobile } from "../../components/Breakpoint";
 import TalkModal from "../../components/TalkModal";
 import ProjectTypeModal from "./ProjectTypeModal";
 import StopWorkingModal from "./StopWorkingModal";
+import useViewer from "src/hooks/useViewer";
 import {
   HelpCircle,
   MessageCircle,
@@ -24,12 +25,16 @@ import {
 } from "@styled-icons/feather";
 
 const Sidebar = ({ data, history, tutorialModal, match }) => {
+  const viewer = useViewer();
   const isMobile = useMobile();
   const dialog = useDialogState();
   const { t } = useTranslation();
   const application = data.application;
-  const specialist = application.specialist;
+  const { specialist, project } = application;
   const [projectTypeModal, setProjectTypeModal] = React.useState(false);
+  const canStopWorking =
+    application.status === "Working" &&
+    (project.isOwner || viewer.isTeamManager);
 
   const handleEditPayment = () => {
     history.push("/settings/payments");
@@ -69,7 +74,7 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
             >
               Message {specialist.firstName}
             </DialogDisclosure>
-            {application.status === "Working" && (
+            {canStopWorking && (
               <>
                 <Route path={`${match.path}/stop`}>
                   <StopWorkingModal
