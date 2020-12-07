@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import useViewer from "@advisable-main/hooks/useViewer";
 import { useTwilioClient } from "@guild/hooks/twilioChat/useTwilioClient";
 
 export const useTwilioChat = ({ channelSid }) => {
-  const viewer = useViewer();
   const { client } = useTwilioClient();
   const [chatState, setChatState] = useState({
     messages: [],
@@ -19,11 +17,12 @@ export const useTwilioChat = ({ channelSid }) => {
 
     const initializeChannel = async () => {
       channel = await client.getChannelBySid(channelSid);
-      const messages = await channel.getMessages(pageSize);
+      const paginator = await channel.getMessages(pageSize);
       setChatState({
         activeChannel: channel,
-        messages: messages?.items,
+        messages: paginator?.items,
         initializing: false,
+        paginator,
       });
       return channel;
     };
@@ -37,8 +36,7 @@ export const useTwilioChat = ({ channelSid }) => {
     return () => channel && channel.removeAllListeners();
   }, [client, channelSid, onMessageAdded]);
 
-  const onMessageAdded = useCallback(async (message, channel) => {
-    await channel.setAllMessagesConsumed();
+  const onMessageAdded = useCallback(async (message) => {
     setChatState((prev) => ({
       ...prev,
       initializing: false,
@@ -46,6 +44,17 @@ export const useTwilioChat = ({ channelSid }) => {
     }));
   }, []);
 
-  const { messages, activeChannel, initializing } = chatState;
-  return { messages, activeChannel, initializing };
+  const onLoadPreviousMessages = async () => {
+    const { paginator: old, activeChannel } = chatState;
+    const paginator = await old.prevPage();
+    await activeChannel.setAllMessagesConsumed();
+
+    setChatState((prev) => ({
+      ...prev,
+      paginator,
+      messages: [...paginator.items, ...prev.messages],
+    }));
+  };
+
+  return { ...chatState, onLoadPreviousMessages };
 };
