@@ -42,15 +42,15 @@ const ReactionsButton = ({ size, post }) => {
   const handleReaction = () => {
     clearTimeout(timer.current);
 
-    if (!reacted && !window.localStorage.getItem(LOCALSTORAGE_REACTION_MODAL)) {
-      window.localStorage.setItem(LOCALSTORAGE_REACTION_MODAL, true);
-      firstUseModal.show();
-    }
-
     if (!viewer?.guild) {
       const cta = document.getElementById("joinGuild");
       cta?.scrollIntoView({ behavior: "smooth" });
       return;
+    }
+
+    if (!reacted && !window.localStorage.getItem(LOCALSTORAGE_REACTION_MODAL)) {
+      window.localStorage.setItem(LOCALSTORAGE_REACTION_MODAL, true);
+      firstUseModal.show();
     }
 
     const reaction = reacted ? "NONE" : "THANK";
