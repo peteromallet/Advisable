@@ -114,6 +114,14 @@ test("successful flow", async () => {
   });
   fireEvent.click(app.getByLabelText(/get started/i));
   await app.findByText("Welcome to Advisable!");
+  fireEvent.change(app.getByLabelText("Password"), {
+    target: { value: "123123123" },
+  });
+  fireEvent.change(app.getByLabelText("Confirm password"), {
+    target: { value: "123123123" },
+  });
+  fireEvent.click(app.getByLabelText(/get started/i));
+  await app.findByText(/thank you/i);
 });
 
 test("successful flow with project details", async () => {
