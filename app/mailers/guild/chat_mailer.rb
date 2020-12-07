@@ -14,7 +14,7 @@ class Guild::ChatMailer < ApplicationMailer
 
     # Set as a header in case the <encoded>@guild exceeds the RFC length
     # This will be accessed under the "References" header.
-    headers['Message-ID'] = "<#{reply_to}>"
+    headers['Message-ID'] = "#{reply_to}.#{Time.zone.now.to_i}"
 
     mail(
       to: @recipient.account.email,
