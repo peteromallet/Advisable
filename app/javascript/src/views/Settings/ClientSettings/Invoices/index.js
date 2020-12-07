@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 // Components
 import { Box, Text, Stack, Badge, theme, StyledCard } from "@advisable/donut";
 import NotFound from "../../../NotFound";
@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { rgba } from "polished";
 import Breadcrumbs from "./Breadcrumbs";
 import isoToLocalFormat from "../../../../utilities/isoToLocalFormat";
+import useViewer from "src/hooks/useViewer";
 
 const StyledInvoiceCard = styled(StyledCard)`
   transition: box-shadow 0.3s, transform 0.2s;
@@ -23,8 +24,13 @@ const StyledInvoiceCard = styled(StyledCard)`
 `;
 
 function Invoices() {
+  const viewer = useViewer();
   const formatTime = isoToLocalFormat("d MMMM yyyy");
   const { loading, error, data, client } = useInvoices();
+
+  if (!viewer.isTeamManager) {
+    return <Redirect to="/settings" />;
+  }
 
   if (loading) return <Loading />;
   if (error) return <NotFound />;

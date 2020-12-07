@@ -162,7 +162,7 @@ class Types::User < Types::BaseType
     customer.invoice_settings.default_payment_method
   end
 
-  field :invoices, [Types::InvoiceType], null: false do
+  field :invoices, [Types::InvoiceType], null: true do
     authorize :is_team_manager?
   end
 
