@@ -39,18 +39,6 @@ export const CREATE_FREELANCER_ACCOUNT = gql`
   }
 `;
 
-export const SIGNUP = gql`
-  ${viewerFields}
-
-  mutation Signup($input: SignupInput!) {
-    signup(input: $input) {
-      viewer {
-        ...ViewerFields
-      }
-    }
-  }
-`;
-
 export const UPDATE_PASSWORD = gql`
   ${viewerFields}
 
