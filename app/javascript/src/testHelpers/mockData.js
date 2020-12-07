@@ -20,7 +20,7 @@ export const user = (fields = {}) => {
       firstName: "Test",
       lastName: "Account",
       isAdmin: false,
-      isTeamManager: false,
+      isTeamManager: true,
       needsToSetAPassword: false,
       name: "Test Account",
       email: "test@test.com",

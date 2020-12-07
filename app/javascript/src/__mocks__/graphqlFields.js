@@ -8,7 +8,7 @@ export const user = (fields = {}) => {
       firstName: "Test",
       lastName: "Account",
       isAdmin: false,
-      isTeamManager: false,
+      isTeamManager: true,
       needsToSetAPassword: false,
       name: "Test Account",
       email: "test@test.com",
@@ -74,6 +74,7 @@ export const project = (fields = {}) => {
     {
       __typename: "Project",
       id: uniqueId("project"),
+      isOwner: true,
       airtableId: uniqueId("rec"),
       name: "Project",
       currency: "USD",
