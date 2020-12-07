@@ -29,10 +29,10 @@ class Mutations::Guild::UpdateGuildPost < Mutations::BaseMutation
       guild_post.guild_topic_list = guild_topics
     end
 
-    # All multi step edit/updates reset a post back to a draft state unless the :publish bool is included in the payload
-    #  which is included in the final step
+    if args[:publish].present?
+      guild_post.status = args[:publish] ? "published" : "draft"
+    end
 
-    guild_post.status = args[:publish] ? "published" : "draft"
     guild_post.save!
 
     {guild_post: guild_post}
