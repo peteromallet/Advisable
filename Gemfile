@@ -45,7 +45,7 @@ gem "webpacker", "~> 5.1"
 gem "slim"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", ">= 1.4.2", require: false
+gem "bootsnap", require: false
 
 # Airrecord for querying airtable
 gem "airrecord", "~> 1.0.5"
@@ -74,11 +74,9 @@ gem "email_reply_parser"
 group :development, :test do
   gem "pry"
   gem "pry-doc"
+  gem "pry-rails"
   gem "pry-byebug"
   gem "dotenv-rails"
-  # Call "byebug" anywhere in the code to stop execution and get a debugger console
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
-  gem "rspec-rails", "~> 4.0.0"
   gem "factory_bot_rails"
   gem "cypress-on-rails", "~> 1.0"
   gem "database_cleaner-active_record"
@@ -88,11 +86,6 @@ group :development do
   # Access an interactive console on exception pages or by calling "console" anywhere in the code.
   gem "web-console", ">= 3.3.0"
   gem "listen", "~> 3.2"
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
-  gem "spring-commands-rspec"
-  gem "pry-rails"
   gem "niceql"
   gem "graphql-rails_logger"
   gem "rubocop", require: false
@@ -114,6 +107,7 @@ group :test do
   gem "webdrivers"
   gem "shoulda-matchers"
   gem "webmock"
+  gem "rspec-rails", "~> 4.0.0"
   gem "rspec-github", require: false
   gem "rspec-retry"
   gem "rspec_junit_formatter"
