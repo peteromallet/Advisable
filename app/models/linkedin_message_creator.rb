@@ -61,7 +61,7 @@ class LinkedinMessageCreator
         text: "Yes",
         body: sentences.join("\n\n"),
         actions: [
-          {text: "Yes", url: "https://advisable.com/projects/request-more-information/?pid=#{project.airtable_id}&utm_campaign=#{project.airtable_id}"},
+          {text: "Yes", url: "http://app.advisable.com/freelancers/join?pid=#{project.uid}"},
           action_no
         ]
       },
