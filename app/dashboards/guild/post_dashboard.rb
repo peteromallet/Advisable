@@ -91,7 +91,7 @@ module Guild
     # across all pages of the admin dashboard.
     #
     def display_resource(post)
-      "#{post.normalized_type} - #{post.title.truncate(24)}"
+      "#{post.normalized_type} - #{post.title.try(:truncate, 24)}"
     end
   end
 end
