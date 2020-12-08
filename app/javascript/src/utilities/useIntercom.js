@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import usePrevious from "./usePrevious";
 
 const bootIntercom = (viewer) => {
-  if (!window.Intercom) return null;
+  if (!window?.Intercom) return null;
 
   let data = {
     app_id: process.env.INTERCOM_APP_ID,
