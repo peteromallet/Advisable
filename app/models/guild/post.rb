@@ -38,6 +38,7 @@ module Guild
                    audience_type: [:string],
                    audience_notified_at: [:datetime]
 
+    before_validation :set_default_values
     before_save :reset_guild_topics, if: :guild_topics_resettable?
     before_save :reset_previous_pinned, if: :pinned_changed?
 
@@ -71,6 +72,12 @@ module Guild
       return unless pinned
 
       Guild::Post.where(pinned: true).find_each { |post| post.update(pinned: false) }
+    end
+
+    private
+
+    def set_default_values
+      self.status = 'draft' if status.blank?
     end
   end
 end
