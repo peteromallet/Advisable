@@ -200,7 +200,6 @@ Lint/AmbiguousBlockAssociation:
     - 'spec/graphql/mutations/start_client_application_spec.rb'
     - 'spec/graphql/mutations/update_client_application_spec.rb'
     - 'spec/graphql/mutations/update_task_spec.rb'
-    - 'spec/models/booking_spec.rb'
     - 'spec/models/concerns/airtable/application_spec.rb'
     - 'spec/models/webhook_configuration_spec.rb'
 
@@ -414,7 +413,6 @@ Style/CommentAnnotation:
 Style/ConditionalAssignment:
   Exclude:
     - 'app/graphql/mutations/submit_client_application.rb'
-    - 'app/models/booking.rb'
     - 'app/models/concerns/airtable/specialist.rb'
     - 'app/models/levenshtein.rb'
 
@@ -562,7 +560,6 @@ Style/NonNilCheck:
 Style/NumericPredicate:
   Exclude:
     - 'spec/**/*'
-    - 'app/models/booking.rb'
     - 'app/services/projects/confirm.rb'
     - 'app/services/test_data.rb'
 
@@ -587,7 +584,6 @@ Style/PreferredHashMethods:
 Style/RedundantAssignment:
   Exclude:
     - 'app/models/webhook_configuration.rb'
-    - 'app/models/webhook_configuration/booking.rb'
     - 'app/services/specialists/search.rb'
 
 # Offense count: 6
