@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe LinkedinMessageCreator do
-  let(:project) { build_stubbed(:project, primary_skill: skill, user: user, goals: goals, characteristics: characteristics, required_characteristics: required_characteristics) }
+  subject(:lmc) { described_class.new(project, name) }
+
+  let(:project) { build_stubbed(:project, primary_skill: skill, user: user, goals: goals, characteristics: characteristics, required_characteristics: required_characteristics, uid: 'pro_123') }
   let(:user) { build_stubbed(:user, industry: industry) }
   let(:industry) { build_stubbed(:industry, name: "Rock Music") }
   let(:skill) { build_stubbed(:skill, name: "Ruby Ruby Ruby Ruby") }
@@ -16,8 +18,6 @@ RSpec.describe LinkedinMessageCreator do
   let(:fourth) { dig_to_action(third[:actions], "Yes") }
   let(:fifth) { dig_to_action(fourth[:actions], "Yes") }
 
-  subject(:lmc) { described_class.new(project, name) }
-
   def dig_to_action(actions, text)
     actions.find { |action| action[:text] == text }
   end
@@ -29,11 +29,11 @@ RSpec.describe LinkedinMessageCreator do
   end
 
   it "has the correct links" do
-    expect(third[:url]).to eq("https://advisable.com/projects/request-more-information/?pid=#{project.airtable_id}&utm_campaign=#{project.airtable_id}")
+    expect(third[:url]).to eq("http://app.advisable.com/freelancers/join?pid=pro_123")
     expect(dig_to_action(second[:actions], "No")[:url]).to eq("https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit")
   end
 
-  context "lots of goals and characteristics" do
+  context "when lots of goals and characteristics" do
     let(:goals) { ["short", "Sometimes I’ll start a sentence and I don’t even know where it’s going. I just hope I find it along the way.", "The Dunder Mifflin stock symbol is D.M.I. Do you know what that stands for? Dummies, Morons, and Idiots.", "another goal that will hopefully be ignored because it's third, not because it's too short"] }
     let(:characteristics) { ["short", "I’m glad Michael’s getting help. He has a lot of issues, and he’s stupid.", "I wanna do a cartwheel. But real casual like. Not enough to make a big deal out of it, but I know everyone saw it. One stunning, gorgeous cartwheel.", "another characteristic that will be ignored probably because we just take the first couple of ones"] }
 
@@ -48,7 +48,7 @@ RSpec.describe LinkedinMessageCreator do
     end
   end
 
-  context "1 goal and lots of characteristics" do
+  context "when 1 goal and lots of characteristics" do
     let(:goals) { ["short", "Sometimes I’ll start a sentence and I don’t even know where it’s going. I just hope I find it along the way."] }
     let(:characteristics) { ["short", "I’m glad Michael’s getting help. He has a lot of issues, and he’s stupid.", "another characteristic that will be ignored probably because we just take the first couple of ones"] }
     let(:required_characteristics) { ["I wanna do a cartwheel. But real casual like. Not enough to make a big deal out of it, but I know everyone saw it. One stunning, gorgeous cartwheel."] }
@@ -64,7 +64,7 @@ RSpec.describe LinkedinMessageCreator do
     end
   end
 
-  context "no goals just characteristics" do
+  context "when no goals just characteristics" do
     let(:characteristics) { ["short", "I’m glad Michael’s getting help. He has a lot of issues, and he’s stupid.", "another characteristic that will be ignored probably because we just take the first couple of ones"] }
     let(:required_characteristics) { ["I wanna do a cartwheel. But real casual like. Not enough to make a big deal out of it, but I know everyone saw it. One stunning, gorgeous cartwheel."] }
 
