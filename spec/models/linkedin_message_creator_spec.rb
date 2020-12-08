@@ -31,6 +31,8 @@ RSpec.describe LinkedinMessageCreator do
   it "has the correct links" do
     expect(third[:url]).to eq("http://app.advisable.com/freelancers/join?pid=pro_123")
     expect(dig_to_action(second[:actions], "No")[:url]).to eq("https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit")
+    expect(dig_to_action(first[:actions], "I might know someone")[:url]).to eq("https://discover.advisable.com/projects/pro_123?utm_campaign=liadreferral&utm_source=linkedin")
+    expect(dig_to_action(second[:actions], "I might know someone")[:url]).to eq("https://discover.advisable.com/projects/pro_123?utm_campaign=liadreferral&utm_source=linkedin")
   end
 
   context "when lots of goals and characteristics" do
