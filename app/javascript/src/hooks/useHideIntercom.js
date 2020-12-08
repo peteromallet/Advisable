@@ -1,6 +1,8 @@
 import { useLayoutEffect } from "react";
 
 export default function useHideIntercom() {
+  if (!window?.Intercom) return null;
+
   useLayoutEffect(() => {
     setTimeout(() => {
       window.Intercom("update", {
