@@ -45,8 +45,9 @@ class LinkedinApi
     end
   end
 
-  def get_request(path, expected_status: 200)
-    response = Faraday.get(API_ROOT + path, nil, request_headers_v2)
+  def get_request(path, expected_status: 200, headers: 2)
+    headers = headers == 2 ? request_headers_v2 : request_headers
+    response = Faraday.get(API_ROOT + path, nil, headers)
     if response.status == expected_status
       response
     else
