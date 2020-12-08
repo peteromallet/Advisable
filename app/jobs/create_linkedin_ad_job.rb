@@ -34,6 +34,7 @@ class CreateLinkedinAdJob < ApplicationJob
 
   def create_campaign!
     return if project.linkedin_campaign_id.present?
+
     params = {
       account: "urn:li:sponsoredAccount:#{ACCOUNT_ID}",
       campaignGroup: "urn:li:sponsoredCampaignGroup:#{CAMPAIGN_GROUP_ID}",
@@ -61,7 +62,7 @@ class CreateLinkedinAdJob < ApplicationJob
   end
 
   def build_message_flowchart!
-    flowchart = LinkedinMessageCreator.new(project, "Alexandra").flowchart
+    flowchart = LinkedinMessageCreator.new(project, "Marina").flowchart
     @first_message_urn = create_message!(flowchart)
   end
 
@@ -80,9 +81,9 @@ class CreateLinkedinAdJob < ApplicationJob
         subContent: {"com.linkedin.ads.AdInMailGuidedRepliesSubContent": {sponsoredConversation: "urn:li:sponsoredConversation:#{conversation_id}"}},
         subject: "#{project.primary_skill&.name} Project With #{project.industry} #{project.company_type}".truncate(60),
         sender: {
-          displayName: "Alexandra Ponomareva",
+          displayName: "Marina Krizman",
           displayPictureV2: "urn:li:digitalmediaAsset:C5603AQEOBKwTNiLKgg",
-          from: "urn:li:person:2TsTW-IKX3"
+          from: "urn:li:person:1A7F7aK1ZO"
       }
     }
     response = api.post_request_with_retries("adInMailContentsV2", params)
