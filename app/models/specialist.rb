@@ -46,17 +46,13 @@ class Specialist < ApplicationRecord
   # We also have an 'image' column in the specalists table. This is a deprecated
   # column that we used to use to store the avatar from airtable in.
   has_one_attached :avatar
-
   has_one_attached :resume
-
   has_one_attached :cover_photo
 
   # DEPRECATED IN FAVOUR OF phone column
   attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
 
-  validates :number_of_projects,
-            inclusion: {in: %w[1-5 5-20 20+ None], message: 'is invalid'},
-            allow_nil: true
+  validates :number_of_projects, inclusion: {in: %w[1-5 5-20 20+ None], message: 'is invalid'}, allow_nil: true
 
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'
@@ -69,11 +65,9 @@ class Specialist < ApplicationRecord
   # Wether or not the specialist has provided payment information. Returns true
   # if enough payment information has been provided.
   def has_setup_payments
-    return false if bank_holder_name.blank?
-    return false if bank_holder_address.blank?
-    return false if bank_currency.blank?
-
-    true
+    bank_holder_name.present? &&
+      bank_holder_address.present? &&
+      bank_currency.present?
   end
 
   def update_project_count
