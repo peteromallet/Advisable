@@ -16,4 +16,5 @@ class Types::MutationType < GraphQL::Schema::Object
   field :delete_guild_post_image, mutation: Mutations::Guild::DeleteGuildPostImage
   field :create_guild_post_image, mutation: Mutations::Guild::CreateGuildPostImage
   field :update_guild_post_image, mutation: Mutations::Guild::UpdateGuildPostImage
+  field :delete_guild_post, mutation: Mutations::Guild::DeleteGuildPost
 end

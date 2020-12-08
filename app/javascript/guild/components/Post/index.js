@@ -86,7 +86,13 @@ const Post = ({ post }) => {
         </Text>
 
         <Box display="flex" alignItems="center" marginBottom={5}>
-          <PostActions mr={3} post={post} showEdit={false} showShare={false} />
+          <PostActions
+            mr={3}
+            post={post}
+            showEdit={false}
+            showShare={false}
+            showDelete={false}
+          />
           <ConnectionsCount post={post} />
         </Box>
 
