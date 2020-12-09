@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include CurrentUser
 
   before_action :set_sentry_context
-  before_action :authenticate_with_magic_link, only: :frontend
+  before_action :authenticate_with_magic_link, only: [:frontend, :guild]
 
   def frontend
     respond_to(&:html)
