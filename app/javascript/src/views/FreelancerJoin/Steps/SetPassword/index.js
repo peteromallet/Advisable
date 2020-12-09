@@ -65,6 +65,7 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
           <Form>
             <Box mb="m">
               <FormField
+                autoFocus
                 type="password"
                 name="password"
                 size={["sm", "md"]}
