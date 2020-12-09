@@ -120,7 +120,7 @@ export const project = (fields = {}) => {
     estimatedBudget: "€10,000",
     remote: true,
     skills: [],
-    user: user(),
+    user: null,
     acceptedTerms: true,
     depositOwed: 0,
     applications: [],
