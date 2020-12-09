@@ -1,10 +1,10 @@
 import React from "react";
 import { useApolloClient, useMutation, useQuery } from "@apollo/client";
-import { useHistory, useLocation } from "react-router";
+import { Redirect, useHistory, useLocation } from "react-router";
 import queryString from "query-string";
 import { Form, Formik } from "formik";
 import { ChevronRight } from "@styled-icons/feather";
-import { Box, Text, Input, Error, useBreakpoint } from "@advisable/donut";
+import { Box, Input, Error, useBreakpoint } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
 import VIEWER from "src/graphql/queries/viewer";
@@ -28,7 +28,9 @@ export default function StartApplication({ nextStep, forwards }) {
   });
 
   // Clean query string if pid is wrong
-  if (project_id && error) history.replace(history.pathname);
+  if (project_id && error) {
+    return <Redirect to={location.pathname} />;
+  }
 
   const initialValues = {
     fullName: location.state?.fullName || "",
@@ -72,11 +74,6 @@ export default function StartApplication({ nextStep, forwards }) {
         <>
           <Box mb={[0, 8]}>
             <Description project={data?.project} />
-            {project_id && error && (
-              <Text color="red400" pt={2}>
-                The project you&apos;ve tried to apply is not available.
-              </Text>
-            )}
           </Box>
           <Formik
             onSubmit={handleSubmit}
