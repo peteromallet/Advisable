@@ -104,4 +104,25 @@ RSpec.describe ZappierInteractorController, type: :request do
       end
     end
   end
+
+  describe "POST /enable_guild" do
+    let(:specialist) { create(:specialist, guild: false) }
+    let(:params) { {uid: specialist.uid, key: key} }
+
+    context "when no key" do
+      let(:key) { '' }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/enable_guild", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    it "enables guild" do
+      post("/zappier_interactor/enable_guild", params: params)
+      expect(response).to have_http_status(:success)
+      expect(specialist.reload).to be_guild
+      expect(GuildAddFollowablesJob).to have_been_enqueued.with(specialist.id)
+    end
+  end
 end

@@ -11,6 +11,7 @@ module Advisable
     ORIGIN_HOST = ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
+    config.add_autoload_paths_to_load_path = false
 
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.default_url_options = {host: ORIGIN_HOST}
