@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import queryString from "query-string";
 import { Form, Formik } from "formik";
-import { useHistory, useLocation } from "react-router";
+import { Redirect, useHistory, useLocation } from "react-router";
 import { ChevronRight } from "@styled-icons/feather";
 import { Box, Text, Error } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
@@ -11,6 +11,7 @@ import MotionCard from "../MotionCard";
 import HaveAccount from "../HaveAccount";
 import { useUpdatePassword } from "../queries";
 import validationSchema from "./validationSchema";
+import { motion } from "framer-motion";
 
 export default function SetPassword({ nextStep, prevStep, forwards }) {
   const viewer = useViewer();
@@ -23,11 +24,13 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
     passwordConfirmation: "",
   };
 
-  useEffect(() => {
-    if (!viewer) {
-      history.replace({ pathname: prevStep.path });
-    }
-  }, [viewer, history, prevStep.path]);
+  if (!viewer) {
+    return (
+      <motion.div exit>
+        <Redirect to={prevStep.path} />
+      </motion.div>
+    );
+  }
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
