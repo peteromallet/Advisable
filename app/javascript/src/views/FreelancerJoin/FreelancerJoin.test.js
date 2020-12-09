@@ -25,7 +25,7 @@ const viewer = generateType.specialist({
   invitations: [],
 });
 const projectId = "proj_01";
-const project = mockData.project({ id: projectId });
+const project = mockData.project({ id: projectId, user: mockData.user() });
 
 const queries = [
   mockViewer(null),
@@ -161,6 +161,7 @@ test("display alt description", async () => {
   const project = mockData.project({
     id: projectId,
     specialistDescription: null,
+    user: mockData.user(),
   });
   mockBreakpoint("mUp");
   const graphQLMocks = [...queries];
