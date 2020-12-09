@@ -24,6 +24,7 @@ export default function StartApplication({ nextStep, forwards }) {
   const project_id = queryString.parse(location.search)?.pid;
   const { data, loading, error } = useQuery(GET_PROJECT, {
     variables: { id: project_id },
+    skip: !project_id,
   });
 
   // Clean query string if pid is wrong
