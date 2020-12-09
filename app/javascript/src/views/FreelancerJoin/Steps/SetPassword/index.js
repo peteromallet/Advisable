@@ -47,15 +47,13 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
 
   return (
     <MotionCard forwards={forwards}>
-      <Box mb="xl">
-        <Text as="h2" fontSize="4xl" mb="xs" color="neutral900">
-          Welcome to Advisable!
-        </Text>
-        <Text as="p" color="neutral800" fontSize="m" lineHeight="m">
-          Set the password on your account to create your profile, manage your
-          applications, and see your work.
-        </Text>
-      </Box>
+      <Text as="h2" fontSize="4xl" mb="xs" color="neutral900">
+        Welcome to Advisable!
+      </Text>
+      <Text as="p" color="neutral800" fontSize="m" lineHeight="m" mb={8}>
+        Set the password on your account to create your profile, manage your
+        applications, and see your work.
+      </Text>
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
