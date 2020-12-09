@@ -14,6 +14,7 @@ gem "logidze", ">= 1.0.0"
 gem "fx"
 # Use Puma as the app server
 gem "puma", "~> 4.3.6"
+gem "puma_worker_killer"
 gem "barnes"
 # Use SCSS for stylesheets
 gem "sass-rails", ">= 6"
