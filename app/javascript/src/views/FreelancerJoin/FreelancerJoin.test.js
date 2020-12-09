@@ -5,12 +5,10 @@ import {
   mockViewer,
   mockQuery,
   mockMutation,
-} from "../../testHelpers/apolloMocks";
-import {
   renderRoute,
   mockData,
   mockBreakpoint,
-} from "../../testHelpers/test-utils";
+} from "test-utils";
 import {
   CREATE_FREELANCER_ACCOUNT,
   GET_PROJECT as GET_PROJECT_JOIN,
@@ -24,8 +22,7 @@ const viewer = generateType.specialist({
   applicationStage: "Started",
   invitations: [],
 });
-const projectId = "proj_01";
-const project = mockData.project({ id: projectId, user: mockData.user() });
+let project = mockData.project({ user: mockData.user() });
 
 const queries = [
   mockViewer(null),
@@ -158,11 +155,7 @@ test("successful flow with project details", async () => {
 });
 
 test("display alt description", async () => {
-  const project = mockData.project({
-    id: projectId,
-    specialistDescription: null,
-    user: mockData.user(),
-  });
+  project = mockData.project({ ...project, specialistDescription: null });
   mockBreakpoint("mUp");
   const graphQLMocks = [...queries];
   const app = renderRoute({
