@@ -25,6 +25,14 @@ class ZappierInteractorController < ApplicationController
     render json: {error: "Account not found"}, status: :unprocessable_entity
   end
 
+  def enable_guild
+    specialist = Specialist.find_by!(uid: params[:uid])
+    specialist.update!(guild: true)
+    render json: {status: "OK."}
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "Account not found"}, status: :unprocessable_entity
+  end
+
   private
 
   def find_account_from_uid(uid)
