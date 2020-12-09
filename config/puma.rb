@@ -17,6 +17,9 @@ on_worker_boot do
 end
 
 before_fork do
+  require 'puma_worker_killer'
+  PumaWorkerKiller.enable_rolling_restart # Default is every 6 hours
+
   # worker specific setup
   Barnes.start # Must have enabled worker mode for this to block to be called
 end
