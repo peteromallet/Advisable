@@ -116,7 +116,7 @@ class Types::SpecialistType < Types::BaseType
     end
   end
 
-  field :skills, [Types::SpecialistSkillType, null: true], null: true do
+  field :skills, [Types::SpecialistSkillType, {null: true}], null: true do
     description 'A list of skills that the specialist possesses'
     argument :project_skills, Boolean, required: false
     argument :limit, Int, required: false
@@ -217,6 +217,10 @@ class Types::SpecialistType < Types::BaseType
 
   field :guild_calendly_link, String, null: true do
     description 'The calendly url for the guild specialist'
+  end
+
+  field :guild_topics_follows, [Types::Guild::TopicType], null: true do
+    description 'The guild topics that the specialist follows'
   end
 
   field :previous_projects,

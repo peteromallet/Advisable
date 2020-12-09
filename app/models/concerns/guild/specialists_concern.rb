@@ -19,7 +19,9 @@ module Guild::SpecialistsConcern
              source: :reactions,
              class_name: 'Guild::Reaction'
 
-    before_save :guild_joined_callbacks, if: -> { guild_changed? && guild }
+      has_many :guild_topics_follows, through: :follows, source: :followable, source_type: "ActsAsTaggableOn::Tag"
+
+      before_save :guild_joined_callbacks, if: -> { guild_changed? && guild }
 
     scope :guild, -> { where(guild: true) }
     scope :guild_featured_members, lambda {
