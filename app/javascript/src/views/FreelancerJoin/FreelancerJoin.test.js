@@ -1,6 +1,5 @@
 import { fireEvent } from "@testing-library/react";
 import generateType from "../../__mocks__/graphqlFields";
-import { GraphQLError } from "graphql";
 import {
   mockViewer,
   mockQuery,
@@ -26,47 +25,9 @@ let project = mockData.project({ user: mockData.user() });
 
 const queries = [
   mockViewer(null),
-  {
-    request: {
-      query: GET_PROJECT_JOIN,
-      variables: {
-        id: undefined,
-      },
-    },
-    result: {
-      errors: [
-        new GraphQLError("Variable $id of type ID! was provided invalid value"),
-      ],
-    },
-  },
-  {
-    request: {
-      query: GET_PROJECT_JOIN,
-      variables: {
-        id: project.id,
-      },
-    },
-    result: {
-      data: {
-        project,
-      },
-    },
-  },
-  mockQuery(GET_PROJECT_JOIN, { id: undefined }, { project }),
   mockQuery(GET_PROJECT_JOIN, { id: project.id }, { project }),
-  {
-    request: {
-      query: GET_PROJECT,
-      variables: {
-        id: project.id,
-      },
-    },
-    result: {
-      data: {
-        project,
-      },
-    },
-  },
+  mockQuery(GET_PROJECT_JOIN, { id: project.id }, { project }),
+  mockQuery(GET_PROJECT, { id: project.id }, { project }),
   mockMutation(
     CREATE_FREELANCER_ACCOUNT,
     {
