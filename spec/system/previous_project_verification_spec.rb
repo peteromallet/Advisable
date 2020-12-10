@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Previous project verification', type: :system do
-  before :each do
+  before do
     allow_any_instance_of(Review).to receive(:sync_to_airtable)
 
     OmniAuth.config.test_mode = true

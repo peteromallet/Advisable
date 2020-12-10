@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'Specialist settings' do
-  before :each do
+RSpec.describe 'Specialist settings', type: :system do
+  before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
   end
 
