@@ -9,8 +9,8 @@ module Guild
     # which determines how the attribute is displayed
     # on pages throughout the dashboard.
     ATTRIBUTE_TYPES = {
+      specialist: SimpleBelongsToField,
       guild_topic_list: Field::String.with_options(searchable: false),
-      specialist: Field::BelongsTo,
       images: Field::HasMany.with_options(class_name: "Guild::PostImage"),
       id: Field::String.with_options(searchable: false),
       type: Field::Select.with_options(searchable: false, collection: ->(_field) { Guild::Post::POST_TYPES }),
@@ -33,26 +33,23 @@ module Guild
     # By default, it's limited to four items to reduce clutter on index pages.
     # Feel free to add, remove, or rearrange items.
     COLLECTION_ATTRIBUTES = %i[
-      type
       title
+      specialist
+      type
       status
-      audience_type
-      engagements_count
-      audience_notified_at
     ].freeze
 
     # SHOW_PAGE_ATTRIBUTES
     # an array of attributes that will be displayed on the model's show page.
     SHOW_PAGE_ATTRIBUTES = %i[
       specialist
-      reactionable_count
-      id
-      type
-      body
       title
       status
+      type
+      body
       created_at
       updated_at
+      reactionable_count
       guild_topic_list
       audience_type
       audience_notified_at
@@ -91,7 +88,7 @@ module Guild
     # across all pages of the admin dashboard.
     #
     def display_resource(post)
-      "#{post.normalized_type} - #{post.title.try(:truncate, 24)}"
+      post.title.try(:truncate, 24)
     end
   end
 end
