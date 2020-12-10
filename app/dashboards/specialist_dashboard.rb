@@ -8,10 +8,11 @@ class SpecialistDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
+    uid: Field::String,
     country: Field::BelongsTo,
     skills: Field::HasMany,
     id: Field::Number,
-    account: Field::BelongsTo.with_options(
+    account: SimpleBelongsToField.with_options(
       searchable: true,
       searchable_fields: %w[first_name last_name email]
     ),

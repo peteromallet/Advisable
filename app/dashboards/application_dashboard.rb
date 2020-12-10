@@ -8,7 +8,8 @@ class ApplicationDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    specialist: Field::BelongsTo,
+    uid: Field::String,
+    specialist: SimpleBelongsToField,
     project: Field::BelongsTo,
     id: Field::Number,
     rate: Field::Number,
@@ -68,4 +69,8 @@ class ApplicationDashboard < Administrate::BaseDashboard
   # def display_resource(application)
   #   "Application ##{application.id}"
   # end
+
+  def collection_includes
+    super + [specialist: :account]
+  end
 end
