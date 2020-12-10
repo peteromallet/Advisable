@@ -110,11 +110,10 @@ class Types::PreviousProject < Types::BaseType
     industry = object.primary_industry
     return [] if industry.nil?
 
-    Specialist.joins(previous_projects: :industries).where(
-      'average_score >= 65 AND off_platform_projects.company_type = ?',
-      object.company_type
-    ).where(
-      previous_projects: {industries: {id: object.primary_industry.id}}
-    ).where.not(id: object.specialist.id).uniq
+    Specialist.joins(previous_projects: :industries).
+      where("average_score >= 65").
+      where(previous_projects: {company_type: object.company_type}).
+      where(previous_projects: {industries: {id: object.primary_industry.id}}).
+      where.not(id: object.specialist.id).uniq
   end
 end

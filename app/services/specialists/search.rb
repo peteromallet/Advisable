@@ -33,6 +33,7 @@ class Specialists::Search < ApplicationService
   # Update the users industry and company type based on their search
   def update_user_info
     return unless user.present? && user.is_a?(User)
+
     user.update(
       industry: Industry.find_by_name(industry), company_type: company_type
     )
@@ -42,7 +43,7 @@ class Specialists::Search < ApplicationService
   def by_skills
     query =
       Specialist.joins(:skills).where('average_score >= ?', 65.0).where(
-        skills: { name: skill }
+        skills: {name: skill}
       ).where.not(hourly_rate: nil)
     query = filter_industry(query)
     query = filter_company_type(query)
@@ -54,7 +55,7 @@ class Specialists::Search < ApplicationService
       Specialist.joins(previous_projects: :skills).where(
         'average_score >= ?',
         65.0
-      ).where(previous_projects: { skills: { name: skill } }).where.not(
+      ).where(previous_projects: {skills: {name: skill}}).where.not(
         hourly_rate: nil
       )
     query = filter_industry(query)
@@ -64,13 +65,15 @@ class Specialists::Search < ApplicationService
 
   def filter_industry(query)
     return query unless industry_required
+
     joined = query.left_outer_joins(:previous_projects)
-    joined.where(off_platform_projects: { industry: industry })
+    joined.where(previous_projects: {industry: industry})
   end
 
   def filter_company_type(query)
     return query unless company_type_required
+
     joined = query.left_outer_joins(:previous_projects)
-    joined.where(off_platform_projects: { company_type: company_type })
+    joined.where(previous_projects: {company_type: company_type})
   end
 end

@@ -6,6 +6,6 @@ class Mutations::DeletePreviousProjectImage < Mutations::BaseMutation
   def resolve(**args)
     image = PreviousProjectImage.find_by_uid!(args[:previous_project_image])
     image.destroy
-    { image: image }
+    {image: image}
   end
 end
