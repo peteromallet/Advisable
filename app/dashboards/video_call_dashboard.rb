@@ -10,7 +10,7 @@ class VideoCallDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     uid: Field::String,
-    interview: Field::BelongsTo,
+    interview: SimpleBelongsToField,
     fallback: Field::Boolean,
     zoom_meeting_id: Field::String,
     zoom_passcode: Field::String,
@@ -72,5 +72,9 @@ class VideoCallDashboard < Administrate::BaseDashboard
   #
   # def display_resource(video_call)
   #   "VideoCall ##{video_call.id}"
-  # end
+  # en
+
+  def collection_includes
+    super + [interview: {specialist: :account, user: :account}]
+  end
 end

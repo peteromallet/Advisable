@@ -76,6 +76,10 @@ class InterviewDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(interview)
-    "#{interview.user&.account&.name} & #{interview.application&.specialist&.account&.name} #{interview.starts_at&.strftime('%D at %r')}"
+    "#{interview.user&.account&.name} & #{interview.specialist&.account&.name} #{interview.starts_at&.strftime('%D at %r')}"
+  end
+
+  def collection_includes
+    super + [user: :account] + [specialist: :account]
   end
 end

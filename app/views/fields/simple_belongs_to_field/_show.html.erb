@@ -1,1 +1,10 @@
-<%= field.display_associated_resource %>
+<% if field.data %>
+  <% if valid_action?(:show, field.associated_class) %>
+    <%= link_to(
+      field.display_associated_resource,
+      [namespace, field.data],
+    ) %>
+  <% else %>
+    <%= field.display_associated_resource %>
+  <% end %>
+<% end %>
