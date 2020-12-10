@@ -9,6 +9,7 @@ class UserDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
+    uid: Field::String,
     airtable_id: Field::String,
     account: SimpleBelongsToField.with_options(
       searchable: true,
