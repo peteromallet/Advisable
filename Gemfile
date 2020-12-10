@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "~> 2.6.6"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem "rails", "~> 6.0", ">= 6.0.3.4"
+gem "rails", "~> 6.1"
 # Use postgresql as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
 gem "strong_migrations"
@@ -68,7 +68,12 @@ gem "graphql_playground-rails"
 
 # Guild
 gem "jsonb_accessor", "~> 1.1.0"
-gem "acts-as-taggable-on", "~> 6.0"
+# Remove github reference once
+# https://github.com/mbleigh/acts-as-taggable-on/pull/1013
+# or
+# https://github.com/mbleigh/acts-as-taggable-on/pull/1012/files
+# is merged
+gem "acts-as-taggable-on", github: "kvokka/acts-as-taggable-on", branch: "add-rails-6-1-support"
 gem "acts_as_follower", github: "tcocca/acts_as_follower", branch: "master"
 gem "email_reply_parser"
 

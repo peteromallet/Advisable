@@ -20,9 +20,9 @@ end
 #
 # Indexes
 #
-#  index_application_references_on_application_id               (application_id)
-#  index_application_references_on_project_type_and_project_id  (project_type,project_id)
-#  index_application_references_on_uid                          (uid)
+#  index_application_references_on_application_id  (application_id)
+#  index_application_references_on_project         (project_type,project_id)
+#  index_application_references_on_uid             (uid)
 #
 # Foreign Keys
 #

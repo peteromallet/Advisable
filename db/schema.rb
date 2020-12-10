@@ -2,8 +2,8 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
@@ -69,7 +69,14 @@ ActiveRecord::Schema.define(version: 2020_12_15_135238) do
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
     t.datetime "created_at", null: false
+    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "answers", force: :cascade do |t|
@@ -91,7 +98,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_135238) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["application_id"], name: "index_application_references_on_application_id"
-    t.index ["project_type", "project_id"], name: "index_application_references_on_project_type_and_project_id"
+    t.index ["project_type", "project_id"], name: "index_application_references_on_project"
     t.index ["uid"], name: "index_application_references_on_uid"
   end
 
@@ -564,7 +571,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_135238) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "primary"
-    t.index ["project_type", "project_id"], name: "index_project_skills_on_project_type_and_project_id"
+    t.index ["project_type", "project_id"], name: "index_project_skills_on_project"
     t.index ["skill_id"], name: "index_project_skills_on_skill_id"
   end
 
@@ -650,8 +657,8 @@ ActiveRecord::Schema.define(version: 2020_12_15_135238) do
     t.datetime "updated_at", null: false
     t.string "uid"
     t.index ["airtable_id"], name: "index_reviews_on_airtable_id"
-    t.index ["project_type", "project_id"], name: "index_reviews_on_project_type_and_project_id"
-    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id"
+    t.index ["project_type", "project_id"], name: "index_reviews_on_project"
+    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
     t.index ["specialist_id"], name: "index_reviews_on_specialist_id"
   end
 
@@ -932,6 +939,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_135238) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "specialists"
   add_foreign_key "application_references", "applications"
