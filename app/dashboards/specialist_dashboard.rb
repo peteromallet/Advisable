@@ -11,7 +11,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     country: Field::BelongsTo,
     skills: Field::HasMany,
     id: Field::Number,
-    account: Field::BelongsTo.with_options(
+    account: SimpleBelongsToField.with_options(
       searchable: true,
       searchable_fields: %w[first_name last_name email]
     ),

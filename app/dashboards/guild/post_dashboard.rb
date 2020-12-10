@@ -35,7 +35,6 @@ module Guild
     COLLECTION_ATTRIBUTES = %i[
       title
       specialist
-      type
       status
     ].freeze
 
@@ -89,6 +88,10 @@ module Guild
     #
     def display_resource(post)
       post.title.try(:truncate, 24)
+    end
+
+    def collection_includes
+      super + [specialist: :account]
     end
   end
 end

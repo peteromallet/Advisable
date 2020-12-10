@@ -10,7 +10,7 @@ class UserDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     airtable_id: Field::String,
-    account: Field::BelongsTo.with_options(
+    account: SimpleBelongsToField.with_options(
       searchable: true,
       searchable_fields: %w[first_name last_name email]
     ),
