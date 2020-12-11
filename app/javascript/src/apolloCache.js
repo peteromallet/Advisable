@@ -27,6 +27,9 @@ const createCache = () => {
       Specialist: {
         fields: {
           guildPosts: relayStylePagination(),
+          guildTopicsFollows: {
+            merge: replaceArrayMerge,
+          },
         },
       },
       PreviousProject: {
