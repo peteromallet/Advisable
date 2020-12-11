@@ -17,7 +17,7 @@ const YourPosts = lazy(() => import("./views/YourPosts"));
 const FreelancerProfile = lazy(() =>
   import("@advisable-main/views/FreelancerProfile"),
 );
-const FollowedTopics = lazy(() => import("./views/FollowedTopics"));
+const Follows = lazy(() => import("./views/Follows"));
 
 const GuildOrRedirectFreelancerProfile = () => {
   const { id } = useParams();
@@ -67,8 +67,8 @@ const App = () => {
                 />
                 <AuthenticatedRoute
                   exact
-                  path={"/followed-topics"}
-                  component={FollowedTopics}
+                  path={"/follows"}
+                  component={Follows}
                 />
               </Switch>
             </Suspense>

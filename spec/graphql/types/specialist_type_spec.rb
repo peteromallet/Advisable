@@ -141,10 +141,6 @@ RSpec.describe Types::SpecialistType do
       {
         specialist(id: "#{specialist.uid}") {
           id
-          guildTopicsFollows {
-            name
-            id
-          }
           guildPosts(first: 10) {
             pageInfo {
               endCursor
@@ -186,20 +182,6 @@ RSpec.describe Types::SpecialistType do
                                          {"status" => "removed", "id" => removed_post.id},
                                          {"status" => "published", "id" => published_post.id}
                                        ])
-      end
-    end
-
-    describe "guild topics follows" do
-      let(:guild_topics) { create_list(:guild_topic, 3) }
-
-      before do
-        guild_topics.each { |topic| specialist.follow(topic) }
-      end
-
-      it "returns the guild topics that the specialist follows" do
-        response = AdvisableSchema.execute(query)
-        data = response.dig("data", "specialist", "guildTopicsFollows")
-        expect(data).to eq(guild_topics.as_json(only: [:id, :name]))
       end
     end
   end

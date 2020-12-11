@@ -78,7 +78,7 @@ export const NavIcon = styled.div`
         fill: ${theme.colors.purpleBlue} !important;
       }
     `}
-  
+
   svg {
     width: 24px;
     height: 24px;

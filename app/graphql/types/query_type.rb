@@ -326,4 +326,13 @@ class Types::QueryType < Types::BaseType
     requires_guild_user!
     current_user.guild_posts.order(updated_at: :desc)
   end
+
+  field :guild_followed_topics, [Types::Guild::TopicType], null: true do
+    description 'Returns the topics that the specialist follows'
+  end
+
+  def guild_followed_topics(**args)
+    requires_guild_user!
+    current_user.guild_followed_topics.order(created_at: :desc)
+  end
 end
