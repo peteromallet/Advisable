@@ -135,7 +135,7 @@ const Availability = () => {
                 />
               </Box>
               <Box pt="m" flexShrink={1}>
-                {formik.values.availability.length < 6 && (
+                {formik.values.availability.length < 5 && (
                   <Box
                     p="xs"
                     mb="s"
@@ -155,7 +155,7 @@ const Availability = () => {
                 <Button
                   type="submit"
                   width={["100%", "auto"]}
-                  disabled={formik.values.availability.length < 6}
+                  disabled={formik.values.availability.length < 5}
                   loading={formik.isSubmitting}
                   suffix={<ArrowRight />}
                 >
