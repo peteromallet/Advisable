@@ -22,6 +22,8 @@ import Masonry from "components/Masonry";
 import ProjectCard from "./ProjectCard";
 import Tags from "./Filter/Tags";
 import Filter from "./Filter";
+import AddPreviousProjectButton from "../../../components/AddPreviousProjectButton";
+import { usePreviousProjectModal } from "../../../components/PreviousProjectFormModal";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -57,6 +59,7 @@ const filterProjects = (state) => (project) => {
 
 function PreviousProjects({ data, isOwner }) {
   const [state, dispatch] = useReducer(reducer, data, init);
+  const modal = usePreviousProjectModal("/previous_projects/new");
 
   // Update state actions
   const createAction = useMemo(() => createDispatcher(dispatch), []);
@@ -156,7 +159,10 @@ function PreviousProjects({ data, isOwner }) {
           )}
         </SectionHeaderWrapper>
         {projectCards.length ? (
-          <Masonry columns={numOfColumns}>{projectCards}</Masonry>
+          <Masonry columns={numOfColumns}>
+            {isOwner ? <AddPreviousProjectButton modal={modal} /> : null}
+            {projectCards}
+          </Masonry>
         ) : (
           <NoFilteredProjects firstName={data.specialist.firstName} />
         )}
