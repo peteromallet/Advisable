@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Project do
   include_examples 'Airtable::Syncable'
-  it { should have_many(:applications) }
+  it { is_expected.to have_many(:applications) }
 
   describe '#deposit' do
     context 'when there is no deposit' do
@@ -203,16 +203,20 @@ RSpec.describe Project do
 
   describe "project paused emails" do
     let(:project) { create(:project) }
-    let!(:applied_candidate) { create(:application, project: project, status: "Application Accepted") }
+    let!(:applied_candidate) { create(:application, project: project, status: "Applied") }
+    let!(:accepted_candidate) { create(:application, project: project, status: "Application Accepted") }
     let!(:rejected_candidate) { create(:application, project: project, status: "Application Rejected") }
 
-    context "status changed to paused" do
+    context "when status changed to paused" do
       it "schedules emails to non-rejected applicants" do
-        expect { project.update(sales_status: "Paused") }.to have_enqueued_job.with("SpecialistMailer", "project_paused", "deliver_now", {args: [project, applied_candidate]})
+        project.update(sales_status: "Paused")
+        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "project_paused", "deliver_now", {args: [project, applied_candidate]})
+        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "project_paused", "deliver_now", {args: [project, accepted_candidate]})
+        expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "project_paused", "deliver_now", {args: [project, rejected_candidate]})
       end
     end
 
-    context "status was paused already" do
+    context "when status was paused already" do
       let(:project) { create(:project, sales_status: "Paused") }
 
       it "does not schedule any emails" do
