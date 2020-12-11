@@ -121,7 +121,7 @@ class Project < ApplicationRecord
   private
 
   def send_paused_emails
-    applications.active.find_each do |application|
+    applications.where(status: Application::ACTIVE_STATUSES + ["Applied"]).find_each do |application|
       SpecialistMailer.project_paused(self, application).deliver_later
     end
   end
