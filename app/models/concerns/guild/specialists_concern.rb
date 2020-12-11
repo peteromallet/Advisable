@@ -3,9 +3,6 @@ module Guild::SpecialistsConcern
 
   included do
     acts_as_tagger
-
-    # specialist.follow(Guild::Topic.last)
-    # specialist.follows.where(followable_type: 'ActsAsTaggableOn::Tag')
     acts_as_follower
 
     has_many :guild_posts, class_name: 'Guild::Post', dependent: :destroy, inverse_of: :specialist
@@ -19,9 +16,9 @@ module Guild::SpecialistsConcern
              source: :reactions,
              class_name: 'Guild::Reaction'
 
-      has_many :guild_topics_follows, through: :follows, source: :followable, source_type: "ActsAsTaggableOn::Tag"
+    has_many :guild_topics_follows, through: :follows, source: :followable, source_type: "ActsAsTaggableOn::Tag"
 
-      before_save :guild_joined_callbacks, if: -> { guild_changed? && guild }
+    before_save :guild_joined_callbacks, if: -> { guild_changed? && guild }
 
     scope :guild, -> { where(guild: true) }
     scope :guild_featured_members, lambda {
