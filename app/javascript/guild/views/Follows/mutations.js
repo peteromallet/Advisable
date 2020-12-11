@@ -10,3 +10,14 @@ export const UNFOLLOW_GUILD_TOPIC = gql`
     }
   }
 `;
+
+export const FOLLOW_GUILD_TOPIC = gql`
+  mutation followGuildTopic($input: FollowGuildTopicInput!) {
+    followGuildTopic(input: $input) {
+      guildTopic {
+        id
+        name
+      }
+    }
+  }
+`;

@@ -72,7 +72,7 @@ const CurrentUser = () => {
                 <StyledCurrentUserMenuItem
                   {...menuItemProps}
                   as={Link}
-                  to="/followed-topics"
+                  to="/follows"
                   onClick={menu.hide}
                 >
                   Followed topics

@@ -30,7 +30,7 @@ RSpec.describe Mutations::Guild::FollowGuildTopic do
       specialist.reload
     }.to change(Follow, :count).from(0).to(1).
       and change(specialist.follows, :count).from(0).to(1)
-    expect(specialist.guild_topics_follows.first).to eq(guild_topic)
+    expect(specialist.guild_followed_topics.first).to eq(guild_topic)
   end
 
   it "does not follow a topic thats already followed" do
