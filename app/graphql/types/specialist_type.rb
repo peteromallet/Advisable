@@ -219,10 +219,6 @@ class Types::SpecialistType < Types::BaseType
     description 'The calendly url for the guild specialist'
   end
 
-  field :guild_topics_follows, [Types::Guild::TopicType], null: true do
-    description 'The guild topics that the specialist follows'
-  end
-
   field :previous_projects,
         Types::PreviousProject.connection_type,
         null: false do

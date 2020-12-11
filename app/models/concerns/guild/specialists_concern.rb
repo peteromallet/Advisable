@@ -16,7 +16,7 @@ module Guild::SpecialistsConcern
              source: :reactions,
              class_name: 'Guild::Reaction'
 
-    has_many :guild_topics_follows, through: :follows, source: :followable, source_type: "ActsAsTaggableOn::Tag"
+    has_many :guild_followed_topics, through: :follows, source: :followable, source_type: "ActsAsTaggableOn::Tag"
 
     before_save :guild_joined_callbacks, if: -> { guild_changed? && guild }
 
