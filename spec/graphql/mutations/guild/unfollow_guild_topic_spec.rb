@@ -32,7 +32,7 @@ RSpec.describe Mutations::Guild::UnfollowGuildTopic do
       specialist.reload
     }.to change(Follow, :count).from(1).to(0).
       and change(specialist.follows, :count).from(1).to(0)
-    expect(specialist.guild_topics_follows).to be_empty
+    expect(specialist.guild_followed_topics).to be_empty
   end
 
   it "does not unfollow a guild_topic that is not followed" do
