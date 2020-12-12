@@ -24,7 +24,7 @@ const Follows = () => {
   const topTopics = topTopicsData?.guildTopTopics?.nodes;
 
   /*
-    Top Topics thats aren't followed
+    Top Topics that aren't followed
   */
   const unfollowedTopTopics = useMemo(() => {
     return followedTopics?.length
