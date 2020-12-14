@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { get } from "lodash-es";
 import { Link } from "react-router-dom";
-import * as Sentry from "@sentry/react";
 import {
   CurrentUserWrapper,
   CurrentUserToggle,
@@ -16,23 +15,6 @@ const CurrentUser = ({ user, onLogout }) => {
   const handleFocus = () => setOpen(true);
   let isClient = get(viewer, "__typename") === "User";
   let isAdmin = isClient && viewer?.isAdmin;
-
-  React.useEffect(() => {
-    if (!Sentry) return;
-    if (user) {
-      Sentry.configureScope((scope) => {
-        scope.setUser({
-          id: user.id,
-          email: user.email,
-          username: user.name,
-        });
-      });
-    } else {
-      Sentry.configureScope((scope) => {
-        scope.setUser(null);
-      });
-    }
-  });
 
   return (
     <CurrentUserWrapper tabIndex="0" onFocus={handleFocus} onBlur={handleBlur}>
