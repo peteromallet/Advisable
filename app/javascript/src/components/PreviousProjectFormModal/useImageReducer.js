@@ -47,7 +47,7 @@ function reducer(state, action) {
 
       let nextState = state.filter((img) => img.id !== action.id);
 
-      if (isCover) {
+      if (isCover && nextState[0]) {
         nextState[0].cover = true;
       }
 
