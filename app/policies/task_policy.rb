@@ -10,12 +10,8 @@ class TaskPolicy < BasePolicy
     record.application.specialist == user
   end
 
-  def belongs_to_company?
-    user.is_a?(User) && user.company.users.include?(record.application.project.user)
-  end
-
   def via_client?
-    is_client_owner? || belongs_to_company?
+    is_client_owner? || record_belongs_to_company?
   end
 
   def via_specialist_or_client?

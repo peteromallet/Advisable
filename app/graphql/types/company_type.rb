@@ -6,7 +6,7 @@ class Types::CompanyType < Types::BaseType
   field :sales_person, Types::SalesPersonType, null: true
 
   field :users, [Types::User], null: true do
-    authorize :is_team_manager
+    authorize :is_team_manager?
   end
 
   field :created_at, GraphQL::Types::ISO8601DateTime, null: false

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Mutations::UpdateProjectPaymentMethod do
   let(:company) { create(:company, project_payment_method: nil) }
-  let(:user) { create(:user, company: company) }
+  let(:user) { create(:user, :team_manager, company: company) }
   let(:context) { {current_user: user} }
   let(:response) { AdvisableSchema.execute(query, context: context) }
   let(:query) do
@@ -61,6 +61,7 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
 
   it 'updates the invoice settings' do
     bio = response['data']['updateProjectPaymentMethod']['user']['invoiceSettings']
+
     expect(bio).to eq(
       {
         name: 'Test Person',

@@ -18,6 +18,8 @@ import CardDetails from "./CardDetails";
 import InvoiceSettings from "./InvoiceSettings";
 import PaymentTerms from "./PaymentTerms";
 import BookingType from "./BookingType";
+import useViewer from "src/hooks/useViewer";
+import RequiresTeamManager from "./RequiresTeamManager";
 
 // The steps
 const STEPS = [
@@ -50,6 +52,7 @@ const STEPS = [
 
 const BookingSetup = () => {
   const params = useParams();
+  const viewer = useViewer();
   const history = useHistory();
   const { data, loading } = useQuery(GET_SETUP_DATA, {
     variables: { id: params.applicationId },
@@ -64,6 +67,10 @@ const BookingSetup = () => {
   const filteredSteps = STEPS.filter((step) => {
     return step.enabled ? step.enabled(data) : true;
   });
+
+  if (!viewer.isTeamManager) {
+    return <RequiresTeamManager data={data} />;
+  }
 
   return (
     <Box maxWidth={600} px="xs" mx="auto" mt="xxl" pb="l">

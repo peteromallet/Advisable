@@ -28,7 +28,9 @@ module MailHelper
   end
 
   def app_host
-    if Rails.env.production?
+    if ENV.key?("HEROKU_APP_NAME")
+      "https://#{ENV["HEROKU_APP_NAME"]}.herokuapp.com"
+    elsif Rails.env.production?
       'https://app.advisable.com'
     else
       ActionMailer::Base.default_url_options[:host]

@@ -22,6 +22,7 @@ const validationSchema = object({
 
 const PaymentMethod = ({ data }) => {
   const history = useHistory();
+
   const [updatePaymentMethod] = useMutation(UPDATE_PAYMENT_METHOD);
   const specialist = data.application.specialist;
 

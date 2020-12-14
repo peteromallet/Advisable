@@ -9,7 +9,7 @@ class Types::User < Types::BaseType
   field :last_name, String, null: true
 
   field :email, String, null: false do
-    authorize :is_admin, :is_user, :is_candidate_for_user_project, :is_team_manager
+    authorize :is_admin, :is_user, :is_candidate_for_user_project, :is_team_manager?
   end
 
   delegate :name, :first_name, :last_name, :email, to: :account
@@ -96,17 +96,6 @@ class Types::User < Types::BaseType
     authorize :is_user
   end
 
-  field :applications, [Types::ApplicationType], null: true do
-    authorize :is_user
-    argument :status, [String], required: false
-  end
-
-  def applications(status: nil)
-    records = company.applications
-    records = records.where(status: status) if status
-    records
-  end
-
   field :project_payment_method, String, null: true do
     authorize :is_user
   end
@@ -173,8 +162,8 @@ class Types::User < Types::BaseType
     customer.invoice_settings.default_payment_method
   end
 
-  field :invoices, [Types::InvoiceType], null: false do
-    authorize :is_team_manager
+  field :invoices, [Types::InvoiceType], null: true do
+    authorize :is_team_manager?
   end
 
   def invoices
@@ -208,5 +197,16 @@ class Types::User < Types::BaseType
       times.reject! { |t| interviews.include?(t) }
     end
     times
+  end
+
+  field :applications, [Types::ApplicationType], null: true do
+    authorize :is_user
+    argument :status, [String], required: false
+  end
+
+  def applications(status: nil)
+    records = company.applications
+    records = records.where(status: status) if status
+    records
   end
 end
