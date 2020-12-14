@@ -4,7 +4,7 @@ class Mutations::SetupZoomForVideoCall < Mutations::BaseMutation
 
   field :video_call, Types::VideoCallType, null: true
 
-  def authorize(id:)
+  def authorized?(id:)
     requires_current_user!
   end
 
