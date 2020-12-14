@@ -15,6 +15,7 @@ export default function JobDescription({ data }) {
   const history = useHistory();
   const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
+  const goalMaxLength = 375;
 
   if (!setupProgress(data.project).requiredCharacteristics) {
     return <Redirect to={`/projects/${id}/setup/characteristics`} />;
@@ -51,31 +52,44 @@ export default function JobDescription({ data }) {
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {(formik) => (
         <Form>
-          <JobSetupStepHeader mb="xs">
+          <JobSetupStepHeader mb={2}>
             Briefly describe your goals from working with this specialist
           </JobSetupStepHeader>
-          <JobSetupStepSubHeader mb="l">
+          <JobSetupStepSubHeader mb={6}>
             We&apos;ll make sure that specialists we match you with have
             experience helping companies achieve similar goals.
           </JobSetupStepSubHeader>
           <Field
             name="goals"
             as={BulletPointInput}
-            marginBottom="l"
+            marginBottom={3}
             placeholder={
               primarySkill?.goalPlaceholder ||
               "e.g Building a Facebook advertising campaign for launching our new product"
             }
-            onChange={(items) => formik.setFieldValue("goals", items)}
+            onChange={(items) =>
+              formik.setFieldValue(
+                "goals",
+                items.map((item) => {
+                  formik.setStatus(
+                    item.length > goalMaxLength
+                      ? `The goal can't be longer than ${goalMaxLength} characters`
+                      : null,
+                  );
+                  return item.substring(0, goalMaxLength);
+                }),
+              )
+            }
           />
+          {formik.status && <Error mb={1}>{formik.status}</Error>}
           <SubmitButton
             size="l"
+            marginTop={3}
             suffix={<ArrowRight />}
             disabled={formik.values.goals.length === 0}
           >
             Continue
           </SubmitButton>
-          {formik.status && <Error marginTop="m">{formik.status}</Error>}
         </Form>
       )}
     </Formik>
