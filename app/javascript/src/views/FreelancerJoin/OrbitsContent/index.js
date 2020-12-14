@@ -53,7 +53,7 @@ function Logos() {
       gridTemplateColumns="157px 157px"
       gridTemplateRows="32px 30px 28px 26px"
       gridColumnGap="54px"
-      gridRowGap="22px"
+      gridRowGap={7}
     >
       <SpotifyLogo {...params} />
       <StackOverflowLogo {...params} height="96%" />
