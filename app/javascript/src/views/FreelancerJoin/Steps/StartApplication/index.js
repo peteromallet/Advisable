@@ -12,9 +12,11 @@ import HaveAccount from "../HaveAccount";
 import Description from "./Description";
 import MotionCard from "../MotionCard";
 import Loading from "./Loading";
+import useViewer from "src/hooks/useViewer";
 import { GET_PROJECT, useCreateFreelancerAccount } from "../queries";
 
 export default function StartApplication({ nextStep, forwards }) {
+  const viewer = useViewer();
   const history = useHistory();
   const location = useLocation();
   const isMobile = useBreakpoint("s");
@@ -31,19 +33,17 @@ export default function StartApplication({ nextStep, forwards }) {
   }
 
   const initialValues = {
-    fullName: location.state?.fullName || "",
-    email: location.state?.email || "",
+    firstName: viewer?.firstName || "",
+    lastName: viewer?.lastName || "",
+    email: viewer?.email || "",
   };
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
     // redirect to set password step, pass values, and preserve query string param
-    const splited = values.fullName.split(" ");
-    const firstName = splited[0];
-    const lastName = splited.slice(1, Infinity).join(" ");
     const res = await createFreelancerAccount({
       variables: {
-        input: { firstName, lastName, email: values.email, skills: [] },
+        input: { ...values, skills: [] },
       },
     });
 
@@ -72,14 +72,25 @@ export default function StartApplication({ nextStep, forwards }) {
           >
             {({ status }) => (
               <Form>
-                <Box mb="m">
-                  <FormField
-                    as={Input}
-                    name="fullName"
-                    size={["sm", "md"]}
-                    placeholder="Dwight Schrutt"
-                    label="Full Name"
-                  />
+                <Box display="flex" flexDirection={["column", "row"]}>
+                  <Box mb={4} mr={[0, 2]} width="100%">
+                    <FormField
+                      as={Input}
+                      name="firstName"
+                      size={["sm", "md"]}
+                      placeholder="Dwight"
+                      label="First Name"
+                    />
+                  </Box>
+                  <Box mb={4} width="100%">
+                    <FormField
+                      as={Input}
+                      name="lastName"
+                      size={["sm", "md"]}
+                      placeholder="Schrutt"
+                      label="Last Name"
+                    />
+                  </Box>
                 </Box>
                 <Box mb={[4, 5]}>
                   <FormField

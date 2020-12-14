@@ -1,7 +1,8 @@
 import { object, string } from "yup";
 
 const validationSchema = object().shape({
-  fullName: string().required("Please enter your full name"),
+  firstName: string().required("Please enter your first name"),
+  lastName: string(),
   email: string().required("Please enter your email").email(),
 });
 
