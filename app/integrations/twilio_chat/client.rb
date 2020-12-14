@@ -38,7 +38,7 @@ module Integrations
             last_message&.from != identity
           end
         end
-      rescue Twilio::RestError => e
+      rescue Twilio::REST::RestError => e
         if retries <= 2
           retries += 1
           sleep 2**retries
