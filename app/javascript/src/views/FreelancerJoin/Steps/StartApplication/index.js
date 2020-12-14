@@ -1,5 +1,5 @@
 import React from "react";
-import { useApolloClient, useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Redirect, useHistory, useLocation } from "react-router";
 import queryString from "query-string";
 import { Form, Formik } from "formik";
@@ -7,25 +7,23 @@ import { ChevronRight } from "@styled-icons/feather";
 import { Box, Input, Error, useBreakpoint } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
-import VIEWER from "src/graphql/queries/viewer";
 import validationSchema from "./validationSchema";
 import HaveAccount from "../HaveAccount";
 import Description from "./Description";
 import MotionCard from "../MotionCard";
 import Loading from "./Loading";
-import { CREATE_FREELANCER_ACCOUNT, GET_PROJECT } from "../queries";
+import { GET_PROJECT, useCreateFreelancerAccount } from "../queries";
 
 export default function StartApplication({ nextStep, forwards }) {
   const history = useHistory();
   const location = useLocation();
-  const client = useApolloClient();
   const isMobile = useBreakpoint("s");
-  const [createFreelancerAccount] = useMutation(CREATE_FREELANCER_ACCOUNT);
   const project_id = queryString.parse(location.search)?.pid;
   const { data, loading, error } = useQuery(GET_PROJECT, {
     variables: { id: project_id },
     skip: !project_id,
   });
+  const [createFreelancerAccount] = useCreateFreelancerAccount();
 
   // Clean query string if pid is wrong
   if (project_id && error) {
@@ -53,14 +51,6 @@ export default function StartApplication({ nextStep, forwards }) {
       setStatus(res.errors[0]?.message);
       return;
     }
-
-    await client.resetStore();
-    client.writeQuery({
-      query: VIEWER,
-      data: {
-        viewer: res.data.createFreelancerAccount.viewer,
-      },
-    });
 
     const id = res?.data?.createFreelancerAccount?.viewer?.id;
     history.push({ ...history.location, pathname: nextStep.path }, { id });

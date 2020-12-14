@@ -27,7 +27,6 @@ let project = mockData.project({ user: mockData.user() });
 const queries = [
   mockViewer(null),
   mockQuery(GET_PROJECT_JOIN, { id: project.id }, { project }),
-  mockQuery(GET_PROJECT_JOIN, { id: project.id }, { project }),
   mockQuery(GET_PROJECT, { id: project.id }, { project }),
   mockMutation(
     CREATE_FREELANCER_ACCOUNT,
@@ -50,10 +49,7 @@ const queries = [
   ),
   mockMutation(
     UPDATE_PASSWORD,
-    {
-      password: "123123123",
-      passwordConfirmation: "123123123",
-    },
+    { password: "123123123", passwordConfirmation: "123123123" },
     {
       updatePassword: { viewer, __typename: "UpdatePasswordPayload" },
     },

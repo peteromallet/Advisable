@@ -1,5 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { viewerFields } from "src/graphql/queries/viewer";
+import VIEWER from "src/graphql/queries/viewer";
 
 export const GET_PROJECT = gql`
   query GetProject($id: ID!) {
@@ -38,6 +39,18 @@ export const CREATE_FREELANCER_ACCOUNT = gql`
     }
   }
 `;
+
+export const useCreateFreelancerAccount = () =>
+  useMutation(CREATE_FREELANCER_ACCOUNT, {
+    update(cache, { data }) {
+      cache.writeQuery({
+        query: VIEWER,
+        data: {
+          viewer: data.createFreelancerAccount.viewer,
+        },
+      });
+    },
+  });
 
 export const UPDATE_PASSWORD = gql`
   ${viewerFields}
