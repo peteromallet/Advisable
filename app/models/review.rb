@@ -11,25 +11,26 @@ class Review < ApplicationRecord
   # disable STI for the type column
   self.inheritance_column = :_type_disabled
 
-  belongs_to :specialist, required: false
+  belongs_to :specialist, optional: true
   # The review project is a polymorphic association. The review
   # can either blong to a project or an off-platform project.
   belongs_to :project, polymorphic: true
   # The 'reviewable' for a review represents the record that was reviewed. This
-  # can be a 'booking', 'application' or 'interview'
-  belongs_to :reviewable, polymorphic: true, required: false
+  # can be a 'application' or 'interview'
+  belongs_to :reviewable, polymorphic: true, optional: true
 
+  after_destroy :update_specialist_ratings
+  after_destroy :update_specialist_reviews_count
   # After the record is saved we want to update the specialists average ratings
   after_save :update_specialist_ratings, if: :saved_change_to_ratings?
-  after_destroy :update_specialist_ratings
 
   after_save :update_specialist_reviews_count
-  after_destroy :update_specialist_reviews_count
 
   private
 
   def update_specialist_reviews_count
-    return unless specialist.present?
+    return if specialist.blank?
+
     specialist.reviews_count =
       Review.where(
         specialist: specialist,
@@ -39,7 +40,8 @@ class Review < ApplicationRecord
   end
 
   def update_specialist_ratings
-    return unless specialist.present?
+    return if specialist.blank?
+
     Specialists::CalculateRatings.call(specialist: specialist)
   end
 end
