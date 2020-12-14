@@ -57,16 +57,19 @@ class Types::PreviousProject < Types::BaseType
   # to the authed specialist.
   def cost_to_hire
     return nil unless object.draft?
+
     object.cost_to_hire
   end
 
   def execution_cost
     return nil unless object.draft?
+
     object.execution_cost
   end
 
   def title
     return "Project with #{client_name}" if object.primary_skill.nil?
+
     "#{object.primary_skill.try(:name)} project with #{client_name}"
   end
 
@@ -76,6 +79,10 @@ class Types::PreviousProject < Types::BaseType
 
   def confidential
     object.confidential || false
+  end
+
+  def company_type
+    object.company_type || "company"
   end
 
   def client_name
@@ -95,17 +102,19 @@ class Types::PreviousProject < Types::BaseType
   # Only show the contact email if the validation status is in progress
   def contact_email
     return object.contact_email if object.validation_status == 'In Progress'
+
     nil
   end
 
   def similar_specialists
     industry = object.primary_industry
     return [] if industry.nil?
+
     Specialist.joins(previous_projects: :industries).where(
       'average_score >= 65 AND off_platform_projects.company_type = ?',
       object.company_type
     ).where(
-      previous_projects: { industries: { id: object.primary_industry.id } }
+      previous_projects: {industries: {id: object.primary_industry.id}}
     ).where.not(id: object.specialist.id).uniq
   end
 end
