@@ -104,8 +104,10 @@ class Airtable::Base < Airrecord::Table
   # You can pass an instance of Airtable::SyncReport to capture any
   # errors that prevented the record from being synced
   # => Airtable::Project.find("rec_123").sync
+  # rubocop:disable Metrics/PerceivedComplexity
   def sync(report = nil)
     ActiveRecord::Base.transaction do
+      error = false
       record_type = self.class.sync_model.to_s.underscore
 
       self.class.columns_hash.each do |column, attr|
@@ -127,30 +129,32 @@ class Airtable::Base < Airrecord::Table
         message = "Failed to sync association columns of #{association} on #{record_type} #{id} \n#{association.errors.full_messages}"
         Rails.logger.warn(message)
         report.failed(id, record_type, association.errors.full_messages) if report
-        return nil
+        error = true
       end
 
-      self.class.associations.each do |column, options|
-        sync_association(column: column, record: model, attribute: options[:to])
-      end
-
-      instance_exec(model, &self.class.sync_block) if self.class.sync_block
-
-      if model.save
-        Webhook.process(model)
-        if self.class.after_sync_block
-          instance_exec(model, &self.class.after_sync_block)
+      unless error
+        self.class.associations.each do |column, options|
+          sync_association(column: column, record: model, attribute: options[:to])
         end
 
-        return model
-      end
+        instance_exec(model, &self.class.sync_block) if self.class.sync_block
 
-      message = "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
-      Rails.logger.warn(message)
-      report.failed(id, record_type, model.errors.full_messages) if report
-      return nil
+        if model.save
+          Webhook.process(model)
+          if self.class.after_sync_block
+            instance_exec(model, &self.class.after_sync_block)
+          end
+
+          model
+        else
+          message = "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
+          Rails.logger.warn(message)
+          report.failed(id, record_type, model.errors.full_messages) if report
+        end
+      end
     end
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # The push method describes how data should be pushed to airtable. This is
   # not the only place where data is pushed to airtable, we also push data
