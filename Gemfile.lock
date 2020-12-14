@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: https://github.com/kvokka/acts-as-taggable-on.git
-  revision: d5503124bdd21650449ad4d1499744ff185f11fd
+  revision: 37bfebce03d21f37e1c141d362f0e2cdbb9355c6
   branch: add-rails-6-1-support
   specs:
     acts-as-taggable-on (6.5.0)
