@@ -7,10 +7,12 @@ import Loading from "../Loading";
 import VIEWER from "../../graphql/queries/viewer";
 import useIntercom from "../../utilities/useIntercom";
 import ApplicationContext from "../../applicationContext";
+import useSentryUser from "src/hooks/useSentryUser";
 
 const ApplicationProvider = ({ children }) => {
   const location = useLocation();
   const { data, loading } = useQuery(VIEWER);
+  useSentryUser(data?.viewer);
   useIntercom(location, data?.viewer);
   const [logoURL, setLogoURL] = React.useState("/");
 
