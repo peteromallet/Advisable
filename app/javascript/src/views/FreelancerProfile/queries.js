@@ -33,6 +33,7 @@ const fields = gql`
     profileProjects {
       id
       title
+      validationStatus
       clientName
       coverPhoto {
         url

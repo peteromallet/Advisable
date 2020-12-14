@@ -81,6 +81,7 @@ function PreviousProjects({ data, isOwner }) {
   }, [isTablet, isMobile]);
 
   const projectCards = state.projects
+    .filter((p) => p.validationStatus || isOwner)
     .filter(filterProjects(state))
     .filter((project) => !!project.excerpt)
     .map((project) => {
