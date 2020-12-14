@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Text, useBreakpoint } from "@advisable/donut";
 import { Tag, MapPin, DollarSign } from "@styled-icons/feather";
 import { lowerFirst } from "lodash-es";
+import { CardHeader } from "../styles";
 
 function InfoTag({ title, icon: Icon, value }) {
   return (
@@ -59,11 +60,11 @@ function WithProjectDetails({ project }) {
 
   return (
     <>
-      <Text as="h2" fontSize={["3xl", "4xl"]} mb={[3, 5]} color="neutral900">
+      <CardHeader>
         {user.companyName} is looking for a{" "}
         {primarySkill?.name || skills[0].name} specialist and we think
         you&apos;re a great fit!
-      </Text>
+      </CardHeader>
       <Box
         flexDirection={["column", "row"]}
         py={4}
@@ -97,9 +98,7 @@ function NoProjectDetails() {
   const isWideScreen = useBreakpoint("sUp");
   return (
     <>
-      <Text as="h2" fontSize={["3xl", "4xl"]} mb={2} color="neutral900">
-        Apply to join our network of top freelancers
-      </Text>
+      <CardHeader>Apply to join our network of top freelancers</CardHeader>
       {isWideScreen ? (
         <Text as="p" color="neutral800" fontSize="m" lineHeight="m">
           Enter your details now to get started.

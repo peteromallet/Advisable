@@ -12,6 +12,7 @@ import HaveAccount from "../HaveAccount";
 import { useUpdatePassword } from "../queries";
 import validationSchema from "./validationSchema";
 import { motion } from "framer-motion";
+import { CardHeader } from "../styles";
 
 export default function SetPassword({ nextStep, prevStep, forwards }) {
   const viewer = useViewer();
@@ -50,9 +51,7 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
 
   return (
     <MotionCard forwards={forwards}>
-      <Text as="h2" fontSize="4xl" mb="xs" color="neutral900">
-        Welcome to Advisable!
-      </Text>
+      <CardHeader>Welcome to Advisable!</CardHeader>
       <Text as="p" color="neutral800" fontSize="m" lineHeight="m" mb={8}>
         Set the password on your account to create your profile, manage your
         applications, and see your work.

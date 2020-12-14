@@ -26,6 +26,7 @@ export default function MotionCard({ children, forwards, ...props }) {
           maxWidth={640}
           width={{ xl: 640 }}
           borderRadius={8}
+          elevation="l"
         >
           {children}
         </Card>
