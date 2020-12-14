@@ -49,7 +49,6 @@ class Application < ApplicationRecord
 
   belongs_to :specialist
   belongs_to :project
-  has_many :bookings, dependent: :destroy
   has_many :interviews, dependent: :destroy
   has_many :tasks, dependent: :destroy
   has_one :trial_task, -> { where(trial: true) }, class_name: "Task", inverse_of: :application
