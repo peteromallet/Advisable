@@ -80,6 +80,7 @@ function Title({ children, ...props }) {
   return (
     <Text
       fontSize={{ _: "5xl", xl: 48 }}
+      letterSpacing="-0.02rem"
       color="white"
       fontWeight="medium"
       {...props}
