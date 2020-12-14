@@ -74,17 +74,19 @@ const SettingsSidebar = () => {
           Settings
         </Text>
         <NavigationMenu title="Settings">
-          <NavigationMenu.Item to="/settings/payments" icon={<Card />}>
-            Payments
-          </NavigationMenu.Item>
           {viewer.isTeamManager ? (
-            <NavigationMenu.Item to="/settings/team" icon={<PeopleCircle />}>
-              Team Members
-            </NavigationMenu.Item>
+            <>
+              <NavigationMenu.Item to="/settings/payments" icon={<Card />}>
+                Payments
+              </NavigationMenu.Item>
+              <NavigationMenu.Item to="/settings/team" icon={<PeopleCircle />}>
+                Team Members
+              </NavigationMenu.Item>
+              <NavigationMenu.Item to="/settings/invoices" icon={<Document />}>
+                Invoices
+              </NavigationMenu.Item>
+            </>
           ) : null}
-          <NavigationMenu.Item to="/settings/invoices" icon={<Document />}>
-            Invoices
-          </NavigationMenu.Item>
           <NavigationMenu.Item to="/settings/password" icon={<LockClosed />}>
             Password
           </NavigationMenu.Item>

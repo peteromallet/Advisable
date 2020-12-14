@@ -1,5 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
+import { Redirect } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import {
@@ -13,6 +14,7 @@ import {
   RadioGroup,
 } from "@advisable/donut";
 import Modal from "../../../../components/Modal";
+import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "../../../../components/Notifications";
 import UpdatePaymentMethod from "../../../../components/UpdatePaymentMethod";
 import InvoiceSettingsFields from "../../../../components/InvoiceSettingsFields";
@@ -21,10 +23,15 @@ import UPDATE_PAYMENT_INFO from "./updateProjectPaymentMethod";
 import GET_PAYMENT_SETTINGS from "./getPaymentSettings";
 
 const PaymentSettings = () => {
+  const viewer = useViewer();
   let notificaitons = useNotifications();
   const { data, loading, refetch } = useQuery(GET_PAYMENT_SETTINGS);
   const [updateProjectPaymentMethod] = useMutation(UPDATE_PAYMENT_INFO);
   const [paymentMethodModal, setPaymentMethodModal] = React.useState(false);
+
+  if (!viewer.isTeamManager) {
+    return <Redirect to="/settings" />;
+  }
 
   const handleSubmit = async (values, formik) => {
     const { errors } = await updateProjectPaymentMethod({

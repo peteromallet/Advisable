@@ -1,6 +1,6 @@
 :concurrency: 5
 production:
-  :concurrency: <%= ENV['SIDEKIQ_CONCURRENCY'] %>
+  :concurrency: <%= ENV.fetch("SIDEKIQ_CONCURRENCY", 1) %>
 :queues:
   - default
   - mailers

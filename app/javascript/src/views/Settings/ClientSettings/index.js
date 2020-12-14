@@ -9,10 +9,14 @@ import Team from "./Team";
 import Invoices from "./Invoices";
 import Password from "./Password";
 import Invoice from "./Invoices/Invoice";
+import useViewer from "src/hooks/useViewer";
 
 // Renders the settings view for a client user type.
 const ClientSettings = ({ match }) => {
-  let breakpointS = useBreakpoint("sUp");
+  const viewer = useViewer();
+  const breakpointS = useBreakpoint("sUp");
+
+  const initialPath = viewer.isTeamManager ? "/payments" : "/password";
 
   return (
     <Layout>
@@ -33,7 +37,7 @@ const ClientSettings = ({ match }) => {
             <Route
               exact
               path={match.path}
-              render={() => <Redirect to="/settings/payments" />}
+              render={() => <Redirect to={`/settings${initialPath}`} />}
             />
           )}
         </Switch>

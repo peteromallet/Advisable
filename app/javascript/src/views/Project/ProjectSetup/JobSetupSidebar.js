@@ -8,6 +8,7 @@ import { useLocation, useParams } from "react-router-dom";
 import BackButton from "components/BackButton";
 import MultistepMenu from "components/MultistepMenu";
 import { setupProgress } from "./SetupSteps";
+import useViewer from "src/hooks/useViewer";
 
 const SidebarContainer = styled.div`
   width: 280px;
@@ -29,6 +30,7 @@ const Sidebar = styled.div`
 export default function JobSetupSidebar({ data }) {
   const { id } = useParams();
   const location = useLocation();
+  const viewer = useViewer();
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,6 +38,7 @@ export default function JobSetupSidebar({ data }) {
 
   const { project } = data;
   const completeSteps = setupProgress(project);
+  const canDelete = viewer.isTeamManager || project.isOwner;
 
   return (
     <SidebarContainer>
@@ -117,9 +120,11 @@ export default function JobSetupSidebar({ data }) {
             Review
           </MultistepMenu.Item>
         </MultistepMenu>
-        <Box position="absolute" bottom="24px" left="24px">
-          <DeleteDraftJob id={id} />
-        </Box>
+        {canDelete ? (
+          <Box position="absolute" bottom="24px" left="24px">
+            <DeleteDraftJob id={id} />
+          </Box>
+        ) : null}
       </Sidebar>
     </SidebarContainer>
   );

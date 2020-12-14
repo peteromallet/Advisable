@@ -19,6 +19,7 @@ export default gql`
       project {
         id
         currency
+        isOwner
         primarySkill {
           id
           name

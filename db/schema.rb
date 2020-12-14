@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_02_214909) do
+ActiveRecord::Schema.define(version: 2020_12_03_120204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -95,14 +95,6 @@ ActiveRecord::Schema.define(version: 2020_12_02_214909) do
     t.index ["uid"], name: "index_application_references_on_uid"
   end
 
-  create_table "application_rejection_reasons", force: :cascade do |t|
-    t.string "reason"
-    t.string "airtable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["airtable_id"], name: "index_application_rejection_reasons_on_airtable_id"
-  end
-
   create_table "applications", force: :cascade do |t|
     t.decimal "rate"
     t.string "availability"
@@ -115,7 +107,6 @@ ActiveRecord::Schema.define(version: 2020_12_02_214909) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "rejection_reason_id"
     t.boolean "accepts_fee"
     t.boolean "accepts_terms"
     t.boolean "featured", default: false
@@ -145,7 +136,6 @@ ActiveRecord::Schema.define(version: 2020_12_02_214909) do
     t.boolean "hide_from_profile"
     t.jsonb "log_data"
     t.index ["project_id"], name: "index_applications_on_project_id"
-    t.index ["rejection_reason_id"], name: "index_applications_on_rejection_reason_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
     t.index ["uid"], name: "index_applications_on_uid"
   end
@@ -170,14 +160,6 @@ ActiveRecord::Schema.define(version: 2020_12_02_214909) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "booking_rejection_reasons", force: :cascade do |t|
-    t.string "name"
-    t.string "airtable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["airtable_id"], name: "index_booking_rejection_reasons_on_airtable_id"
-  end
-
   create_table "bookings", force: :cascade do |t|
     t.string "type"
     t.decimal "rate"
@@ -191,14 +173,12 @@ ActiveRecord::Schema.define(version: 2020_12_02_214909) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "decline_comment"
-    t.bigint "rejection_reason_id"
     t.date "start_date"
     t.date "end_date"
     t.string "proposal_comment"
     t.string "client_decline_comment"
     t.index ["airtable_id"], name: "index_bookings_on_airtable_id"
     t.index ["application_id"], name: "index_bookings_on_application_id"
-    t.index ["rejection_reason_id"], name: "index_bookings_on_rejection_reason_id"
   end
 
   create_table "client_calls", force: :cascade do |t|
@@ -977,7 +957,6 @@ ActiveRecord::Schema.define(version: 2020_12_02_214909) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "specialists"
   add_foreign_key "application_references", "applications"
-  add_foreign_key "applications", "application_rejection_reasons", column: "rejection_reason_id"
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
   add_foreign_key "auth_providers", "accounts"
@@ -1305,19 +1284,19 @@ ActiveRecord::Schema.define(version: 2020_12_02_214909) do
   SQL
 
 
+  create_trigger :logidze_on_accounts, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_applications, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_applications BEFORE INSERT OR UPDATE ON public.applications FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
   create_trigger :logidze_on_projects, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_projects BEFORE INSERT OR UPDATE ON public.projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_specialists, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_specialists BEFORE INSERT OR UPDATE ON public.specialists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
-  create_trigger :logidze_on_applications, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_applications BEFORE INSERT OR UPDATE ON public.applications FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
   create_trigger :logidze_on_users, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_accounts, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
