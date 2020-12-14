@@ -61,7 +61,8 @@ test("successful flow", async () => {
   const graphQLMocks = [...queries];
   const app = renderRoute({ route: `/freelancers/join`, graphQLMocks });
   await app.findByText(/advisable helps/i);
-  userEvent.type(app.getByLabelText(/full name/i), viewer.name);
+  userEvent.type(app.getByLabelText(/first name/i), viewer.firstName);
+  userEvent.type(app.getByLabelText(/last name/i), viewer.lastName);
   userEvent.type(app.getByLabelText(/email/i), viewer.email);
   fireEvent.click(app.getByLabelText(/get started/i));
   await app.findByText("Welcome to Advisable!");
@@ -86,7 +87,8 @@ test("successful flow with project details", async () => {
   await app.findByText(location);
   await app.findByText(project.estimatedBudget);
   await app.findByText(project.specialistDescription);
-  userEvent.type(app.getByLabelText(/full name/i), viewer.name);
+  userEvent.type(app.getByLabelText(/first name/i), viewer.firstName);
+  userEvent.type(app.getByLabelText(/last name/i), viewer.lastName);
   userEvent.type(app.getByLabelText(/email/i), viewer.email);
   fireEvent.click(app.getByLabelText(/request more/i));
   await app.findByText("Welcome to Advisable!");
