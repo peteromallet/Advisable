@@ -8,9 +8,17 @@ class User < ApplicationRecord
 
   # WIP Company migration 👇️
   self.ignored_columns = [:invoice_name, :invoice_company_name, :billing_email, :address, :payments_setup, :project_payment_method, :accepted_project_payment_terms_at, :industry_id, :company_type]
-  delegate :stripe_customer_id, :stripe_customer, :invoice_name, :invoice_company_name, :billing_email, :address, :payments_setup, :project_payment_method, :accepted_project_payment_terms_at, :invoice_settings, :industry, to: :company
+
+  [:stripe_customer_id, :stripe_customer, :invoice_name, :invoice_company_name, :billing_email, :address, :payments_setup, :project_payment_method, :accepted_project_payment_terms_at, :invoice_settings, :industry].each do |method|
+    define_method(method) do
+      Raven.capture_message("Method ##{method} called on User that was meant for Company", backtrace: caller, level: 'debug')
+      company.public_send(method)
+    end
+  end
 
   def company_type
+    Raven.capture_message("Method #company_type called on User that was meant for Company", backtrace: caller, level: 'debug')
+
     company.kind
   end
   # WIP Company migration 👆️
@@ -96,31 +104,23 @@ end
 #
 #  id                                :bigint           not null, primary key
 #  accepted_guarantee_terms_at       :datetime
-#  accepted_project_payment_terms_at :datetime
-#  address                           :jsonb
 #  application_accepted_at           :datetime
 #  application_rejected_at           :datetime
 #  application_reminder_at           :datetime
 #  availability                      :text
 #  bank_transfers_enabled            :boolean          default(FALSE)
-#  billing_email                     :string
 #  budget                            :bigint
 #  campaign_medium                   :string
 #  campaign_name                     :string
 #  campaign_source                   :string
 #  company_name                      :string
-#  company_type                      :string
 #  contact_status                    :string
 #  exceptional_project_payment_terms :string
 #  fid                               :string
 #  gclid                             :string
-#  invoice_company_name              :string
-#  invoice_name                      :string
 #  locality_importance               :integer
 #  number_of_freelancers             :string
-#  payments_setup                    :boolean          default(FALSE)
 #  pid                               :string
-#  project_payment_method            :string
 #  rejection_reason                  :string
 #  rid                               :string
 #  setup_intent_status               :string
@@ -134,7 +134,6 @@ end
 #  airtable_id                       :string
 #  company_id                        :uuid
 #  country_id                        :bigint
-#  industry_id                       :bigint
 #  sales_person_id                   :bigint
 #  stripe_customer_id                :string
 #  stripe_setup_intent_id            :string
