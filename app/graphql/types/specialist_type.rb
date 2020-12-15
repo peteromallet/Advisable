@@ -1,6 +1,8 @@
 class Types::SpecialistType < Types::BaseType
   include ActionView::Helpers::DateHelper
 
+  implements Types::AccountInterface
+
   class Types::SpecialistType::EdgeType < GraphQL::Types::Relay::BaseEdge
     node_type(Types::SpecialistType)
   end
@@ -31,30 +33,6 @@ class Types::SpecialistType < Types::BaseType
     description 'The airtable ID for the specialist'
   end
 
-  field :first_name, String, null: true do
-    description 'The specialists first name'
-  end
-
-  def first_name
-    object.account.first_name
-  end
-
-  field :last_name, String, null: true do
-    description 'The specialists last name'
-  end
-
-  def last_name
-    object.account.last_name
-  end
-
-  field :name, String, null: true do
-    description 'The specailists full name'
-  end
-
-  def name
-    object.account.name
-  end
-
   field :city, String, null: true do
     description 'The specialists city'
   end
@@ -64,14 +42,6 @@ class Types::SpecialistType < Types::BaseType
       A short bio text for the specialist. This is used to prefill the intro
       text when applying for applications.
     HEREDOC
-  end
-
-  field :confirmed, Boolean, null: false do
-    description 'Wether or not the specialists account has been confirmed'
-  end
-
-  def confirmed
-    object.account.confirmed_at.present?
   end
 
   field :travel_availability, String, null: true do
