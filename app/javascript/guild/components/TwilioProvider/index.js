@@ -140,6 +140,7 @@ export default function TwilioProvider({ children }) {
   const value = useMemo(
     () => ({
       loading: state.loading,
+      client: state.client,
       channels,
       unreadMessages,
     }),
