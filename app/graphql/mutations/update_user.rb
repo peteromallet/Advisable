@@ -20,13 +20,12 @@ class Mutations::UpdateUser < Mutations::BaseMutation
       GeocodeUserJob.perform_later(user.id, context[:client_ip])
     end
 
-    user.industry = Industry.find_by_name!(args[:industry]) if args[:industry]
-    user.company_type = args[:company_type] if args[:company_type]
+    company_args = {}
 
-    # WIP Company migration 👇️
-    user.company.industry = user.industry
-    user.company.kind = user.company_type
-    # WIP Company migration 👆️
+    company_args[:industry] = Industry.find_by!(name: args[:industry]) if args[:industry]
+    company_args[:kind] = args[:company_type] if args[:company_type]
+
+    user.company.update(company_args)
 
     current_account_responsible_for { user.save }
     user.sync_to_airtable

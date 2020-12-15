@@ -2,15 +2,18 @@
 # A freelancer account is represented by the Specialist model. Ideally these
 # two models will eventually be merged to be different types of users.
 class User < ApplicationRecord
-  # WIP Company migration 👇️
-  # self.ignored_columns = [:invoice_name, :invoice_company_name, :billing_email, :address, :payments_setup, :project_payment_method, :accepted_project_payment_terms_at]
-  attribute :address, AddressAttribute::Type.new
-  # delegate :stripe_customer_id, :stripe_customer, :invoice_name, :invoice_company_name, :billing_email, :address, :payments_setup, :project_payment_method, :accepted_project_payment_terms_at, :invoice_settings, to: :company
-  # WIP Company migration 👆️
-
   include Uid
   include SpecialistOrUser
   include Airtable::Syncable
+
+  # WIP Company migration 👇️
+  self.ignored_columns = [:invoice_name, :invoice_company_name, :billing_email, :address, :payments_setup, :project_payment_method, :accepted_project_payment_terms_at, :industry_id, :company_type]
+  delegate :stripe_customer_id, :stripe_customer, :invoice_name, :invoice_company_name, :billing_email, :address, :payments_setup, :project_payment_method, :accepted_project_payment_terms_at, :invoice_settings, :industry, to: :company
+
+  def company_type
+    company.kind
+  end
+  # WIP Company migration 👆️
 
   has_logidze
 
@@ -28,7 +31,6 @@ class User < ApplicationRecord
 
   belongs_to :company
   belongs_to :sales_person, optional: true
-  belongs_to :industry, optional: true
   belongs_to :country, optional: true
 
   serialize :available_payment_methods, Array

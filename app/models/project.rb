@@ -112,7 +112,7 @@ class Project < ApplicationRecord
   # we are moving the industry data from the project to the user
   # record so first check for it there before falling back to the project.
   def industry
-    user&.industry&.name || self[:industry]
+    user.company&.industry&.name || self[:industry]
   end
 
   private
