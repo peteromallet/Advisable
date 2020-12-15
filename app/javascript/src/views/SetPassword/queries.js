@@ -10,6 +10,7 @@ export const UPDATE_PASSWORD = gql`
         }
         ... on Specialist {
           id
+          needsToSetAPassword
         }
       }
     }
