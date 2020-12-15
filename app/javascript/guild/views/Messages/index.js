@@ -4,9 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { Box, Text, theme, useBreakpoint } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import { ArrowBack } from "@styled-icons/ionicons-outline";
-import { useToggle } from "@guild/hooks/useToggle";
 import { useTwilioChannels } from "@guild/hooks/twilioChat/useTwilioChannels";
-import SortConversations from "@guild/components/ShowMore";
 import { GuildBox } from "@guild/styles";
 import ActiveConversation from "./components/ActiveConversation";
 import ConversationItem from "./components/ConversationItem";
@@ -19,8 +17,7 @@ const Messages = () => {
   const { conversationId: paramsChannelSid } = useParams();
   const sUp = useBreakpoint("sUp");
 
-  const { loading, subscribedChannels, sortChannels } = useTwilioChannels();
-  const [sortConversations, toggleSortConversations] = useToggle();
+  const { loading, subscribedChannels } = useTwilioChannels();
   const [activeChannelSid, setActiveChannelSid] = useState(null);
 
   /* Set the initial channel */
@@ -44,12 +41,6 @@ const Messages = () => {
     },
     [history],
   );
-
-  const handleSortConversations = () => {
-    const order = sortConversations ? "desc" : "asc";
-    toggleSortConversations();
-    sortChannels({ order });
-  };
 
   return (
     <Box height={height - 60} width="100%">
@@ -86,11 +77,6 @@ const Messages = () => {
                     >
                       Inbox
                     </Text>
-                    <SortConversations
-                      showingMore={sortConversations}
-                      onToggle={handleSortConversations}
-                      text={{ more: "Sort", less: "Sort" }}
-                    />
                   </Box>
 
                   {/* Conversations Inbox List */}

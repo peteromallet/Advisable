@@ -16,7 +16,7 @@ import {
 } from "./styles";
 import { GUILD_LAST_READ_QUERY } from "./queries";
 import Notifications from "./Notifications";
-import useUnreadCount from "../../hooks/twilioChat/useUnreadCount";
+import { useTwilioChat } from "../TwilioProvider";
 
 const TWO_MINUTES = 120000;
 
@@ -24,7 +24,7 @@ const Header = () => {
   const viewer = useViewer();
   const location = useLocation();
   const isLargeScreen = useBreakpoint("mUp");
-  const unreadMessages = useUnreadCount();
+  const { unreadMessages } = useTwilioChat();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const path = encodeURIComponent(`/guild${location.pathname}`);
 

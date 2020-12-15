@@ -11,6 +11,24 @@ import { GuildBox } from "@guild/styles";
 
 const { colors } = theme;
 
+const StyledConversationItem_Unread = css`
+  position: relative;
+  padding-right: 50px;
+  background: ${colors.blue50};
+
+  &::before {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    right: 20px;
+    height: 8px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    background: ${colors.blue700};
+  }
+`;
+
 export const StyledConversationItem = styled(GuildBox)`
   padding: 12px;
   display: flex;
@@ -25,6 +43,8 @@ export const StyledConversationItem = styled(GuildBox)`
       background: ${colors.neutral100};
       cursor: default;
     `}
+
+  ${(p) => (p.$hasUnread && !p.active ? StyledConversationItem_Unread : null)};
 `;
 
 export const StyledComposer = styled(Box)`
