@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { useTwilioClient } from "@guild/hooks/twilioChat/useTwilioClient";
+import useTwilio from "../../components/TwilioProvider/useTwilioChat";
 
 export const useTwilioChat = ({ channelSid }) => {
-  const { client } = useTwilioClient();
+  const { client } = useTwilio();
   const [chatState, setChatState] = useState({
     messages: [],
     initializing: false,
@@ -25,19 +25,15 @@ export const useTwilioChat = ({ channelSid }) => {
         initializing: false,
         paginator,
       });
+
       return channel;
     };
-    initializeChannel().then((channel) => {
-      channel.on(
-        "messageAdded",
-        async (message) => await onMessageAdded(message, channel),
-      );
-    });
 
-    return () => channel && channel.removeAllListeners();
+    initializeChannel();
   }, [client, channelSid, onMessageAdded]);
 
   const onMessageAdded = useCallback(async (message) => {
+    await message.channel.setAllMessagesConsumed();
     setChatState((prev) => ({
       ...prev,
       initializing: false,

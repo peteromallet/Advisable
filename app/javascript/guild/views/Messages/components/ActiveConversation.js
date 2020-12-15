@@ -60,6 +60,7 @@ const ActiveConversation = ({ channelSid }) => {
   const onSubmitNewMessage = async (message) => {
     if (!message?.length) return;
     await activeConversation.sendMessage(message);
+    activeConversation.updateFriendlyName(message);
   };
 
   /*
