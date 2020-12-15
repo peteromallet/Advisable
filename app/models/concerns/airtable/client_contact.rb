@@ -16,7 +16,6 @@ class Airtable::ClientContact < Airtable::Base
 
   sync_column 'Title', to: :title
   sync_column 'Exceptional Project Payment Terms', to: :exceptional_project_payment_terms
-  sync_column 'Type of Company', to: :company_type
   sync_column 'Campaign Name', to: :campaign_name
   sync_column 'Campaign Source', to: :campaign_source
   sync_column 'Contact Status', to: :contact_status
@@ -26,16 +25,22 @@ class Airtable::ClientContact < Airtable::Base
   sync_column 'fid', to: :fid
   sync_column 'gclid', to: :gclid
   sync_column 'Same City Importance', to: :locality_importance
-  sync_association 'Industry', to: :industry
   sync_association 'Owner', to: :sales_person
 
   sync_data do |user|
     if self['Address']
-      # sync the address
       user.company.address = Address.parse(self['Address']).to_h
     end
 
-    user.company_name = self['Company Name'].try(:first)
+    user.company_name = self['Company Name'].try(:first) # WIP Company migration
+
+    user.company.name = self['Company Name'].try(:first)
+    industry_id = self['Industry'].try(:first)
+    if industry_id
+      industry = Industry.find_by_airtable_id(industry_id)
+      industry = Airtable::Industry.find(industry_id).sync if associate.nil?
+      user.company.industry = industry
+    end
 
     # if there is a client_id and it is not already synced then sync it.
     client_id = fields['Client'].try(:first)
@@ -80,8 +85,8 @@ class Airtable::ClientContact < Airtable::Base
     self['Invoice Name'] = user.company.invoice_name
     self['Invoice Company Name'] = user.company.invoice_company_name
     self['VAT Number'] = user.account.vat_number # TODO: Read this from Company
-    self['Industry'] = [user.industry.try(:airtable_id)].compact
-    self['Type of Company'] = user.company_type
+    self['Industry'] = [user.company.industry.try(:airtable_id)].compact
+    self['Type of Company'] = user.company.kind
 
     self['PID'] = user.pid
     self['Campaign Name'] = user.campaign_name
