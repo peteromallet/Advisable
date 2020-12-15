@@ -17,7 +17,7 @@ export default function Message({ message, author, isAuthor }) {
             <Avatar
               size="xxs"
               as={RouterLink}
-              to={`/freelacners/${author.id}/guild`}
+              to={`/freelancers/${author.id}/guild`}
               url={author.avatar}
               name={author.name}
             />
@@ -70,7 +70,7 @@ export default function Message({ message, author, isAuthor }) {
               as={Link}
               name={author.name}
               url={author.avatar}
-              to={`/freelacners/${author.id}/guild`}
+              to={`/freelancers/${author.id}/guild`}
             />
           </Box>
         ) : null}
