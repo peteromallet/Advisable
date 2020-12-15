@@ -34,7 +34,9 @@ Rails.application.routes.draw do
     resources :webhook_configurations
     resources :webhooks, only: %i[index show]
     namespace :guild do
-      resources :posts
+      resources :posts do
+        post 'boost_post', on: :member
+      end
       resources :posts, as: :post_opportunity
       resources :posts, as: :post_case_study
       resources :posts, as: :post_advice_required

@@ -15,6 +15,7 @@ end
 #
 #  id                 :uuid             not null, primary key
 #  body               :text
+#  boosted_at         :datetime
 #  comments_count     :integer          default(0), not null
 #  data               :jsonb            not null
 #  engagements_count  :integer          default(0)
