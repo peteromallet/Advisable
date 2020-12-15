@@ -15,6 +15,7 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
   if (loading) return <Loading />;
   return (
     <StyledConversationItem
+      $hasUnread={conversation.unreadMessages > 0}
       onClick={() => setActive(conversation.sid)}
       active={isActive}
     >
