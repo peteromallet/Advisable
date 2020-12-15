@@ -198,6 +198,7 @@ export const specialist = (fields = {}) => {
       hourlyRate: 45,
       numberOfProjects: null,
       primarilyFreelance: null,
+      needsToSetAPassword: false,
       phoneNumber: null,
       createdAt: new Date().toISOString(),
       city: "Dublin",
