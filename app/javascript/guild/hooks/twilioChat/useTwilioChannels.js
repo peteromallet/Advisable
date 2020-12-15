@@ -21,12 +21,9 @@ export const useTwilioChannels = () => {
     if (!client) return;
 
     const initializeChat = async () => {
-      try {
-        client.on("channelUpdated", onChannelUpdated);
-        await refreshSubscribedChannels();
-      } finally {
-        setLoading(false);
-      }
+      client.on("channelUpdated", onChannelUpdated);
+      await refreshSubscribedChannels();
+      setLoading(false);
     };
     initializeChat();
     return () => client && client.removeAllListeners();
