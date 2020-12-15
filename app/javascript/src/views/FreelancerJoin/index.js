@@ -19,7 +19,8 @@ function FreelancerJoin() {
   // Redirect to root if client or specialist logged in
   if (
     viewer?.isClient ||
-    (viewer?.isSpecialist && viewer?.applicationStage !== "Started")
+    (viewer?.isSpecialist && viewer?.applicationStage !== "Started") ||
+    (viewer?.isSpecialist && viewer?.needsToSetAPassword === false)
   ) {
     return <Redirect to="/" />;
   }

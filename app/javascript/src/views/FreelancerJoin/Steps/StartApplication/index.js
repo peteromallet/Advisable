@@ -13,7 +13,11 @@ import Description from "./Description";
 import MotionCard from "../MotionCard";
 import Loading from "./Loading";
 import useViewer from "src/hooks/useViewer";
-import { GET_PROJECT, useCreateFreelancerAccount } from "../queries";
+import {
+  GET_PROJECT,
+  useCreateFreelancerAccount,
+  useUpdateProfile,
+} from "../queries";
 
 export default function StartApplication({ nextStep, forwards }) {
   const viewer = useViewer();
@@ -21,11 +25,12 @@ export default function StartApplication({ nextStep, forwards }) {
   const location = useLocation();
   const isMobile = useBreakpoint("s");
   const project_id = queryString.parse(location.search)?.pid;
+  const [updateProfile] = useUpdateProfile();
+  const [createFreelancerAccount] = useCreateFreelancerAccount();
   const { data, loading, error } = useQuery(GET_PROJECT, {
     variables: { id: project_id },
     skip: !project_id,
   });
-  const [createFreelancerAccount] = useCreateFreelancerAccount();
 
   // Clean query string if pid is wrong
   if (project_id && error) {
@@ -41,18 +46,24 @@ export default function StartApplication({ nextStep, forwards }) {
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
     // redirect to set password step, pass values, and preserve query string param
-    const res = await createFreelancerAccount({
-      variables: {
-        input: { ...values, skills: [] },
-      },
-    });
+    const res = viewer
+      ? await updateProfile({
+          variables: { input: { skills: viewer.skills, ...values } },
+        })
+      : await createFreelancerAccount({
+          variables: {
+            input: { ...values, skills: [] },
+          },
+        });
 
     if (res.errors) {
       setStatus(res.errors[0]?.message);
       return;
     }
 
-    const id = res?.data?.createFreelancerAccount?.viewer?.id;
+    const id = viewer
+      ? res?.data?.createFreelancerAccount?.viewer?.id
+      : res?.data?.updateProfile?.specialist?.id;
     history.push({ ...history.location, pathname: nextStep.path }, { id });
   };
 
