@@ -71,8 +71,13 @@ export default function SetPassword() {
         >
           Please set a password
         </Text>
-        <Text fontSize="l" color="neutral700" mb="6" letterSpacing="-0.01rem">
-          Set a password for your Adivsable account.
+        <Text
+          mb="6"
+          color="neutral700"
+          lineHeight="1.4rem"
+          letterSpacing="-0.01rem"
+        >
+          We have noticed you have not set a password for your account yet.
         </Text>
         <Formik
           validateOnMount

@@ -8,7 +8,6 @@ export const viewerFields = gql`
       name
       isAdmin
       isTeamManager
-      needsToSetAPassword
       airtableId
       firstName
       lastName
@@ -17,6 +16,7 @@ export const viewerFields = gql`
       companyName
       talkSignature
       completedTutorials
+      needsToSetAPassword
       country {
         id
         name
@@ -34,6 +34,7 @@ export const viewerFields = gql`
       talkSignature
       applicationStage
       completedTutorials
+      needsToSetAPassword
       avatar
       guild
       guildCalendlyLink
