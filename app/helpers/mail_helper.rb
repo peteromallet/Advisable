@@ -28,8 +28,9 @@ module MailHelper
   end
 
   def app_host
-    if ENV.key?("HEROKU_APP_NAME")
-      "https://#{ENV["HEROKU_APP_NAME"]}.herokuapp.com"
+    heroku_name = ENV["HEROKU_APP_NAME"]
+    if heroku_name.present? && heroku_name != "advisable"
+      "https://#{heroku_name}.herokuapp.com"
     elsif Rails.env.production?
       'https://app.advisable.com'
     else

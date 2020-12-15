@@ -2,6 +2,8 @@ require 'sidekiq/web'
 require 'admin_constraint'
 
 Rails.application.routes.draw do
+  match "(*any)", to: redirect { |_, req| "https://app.advisable.com#{req.fullpath}" }, via: :all, constraints: {host: "advisable.herokuapp.com"}
+
   if Rails.env.development? || ENV["STAGING"]
     mount GraphqlPlayground::Rails::Engine, as: "graphql_playground", at: '/playground', graphql_path: '/graphql'
     mount GraphqlPlayground::Rails::Engine, as: "admin_graphql_playground", at: '/admin_playground', graphql_path: '/admin_graphql'
