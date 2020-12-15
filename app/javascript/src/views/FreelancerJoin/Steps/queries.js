@@ -52,6 +52,30 @@ export const useCreateFreelancerAccount = () =>
     },
   });
 
+export const UPDATE_PROFILE = gql`
+  ${viewerFields}
+
+  mutation UpdateProfile($input: UpdateProfileInput!) {
+    updateProfile(input: $input) {
+      specialist {
+        ...ViewerFields
+      }
+    }
+  }
+`;
+
+export const useUpdateProfile = () =>
+  useMutation(UPDATE_PROFILE, {
+    update(cache, { data }) {
+      cache.writeQuery({
+        query: VIEWER,
+        data: {
+          viewer: data.updateProfile.specialist,
+        },
+      });
+    },
+  });
+
 export const UPDATE_PASSWORD = gql`
   ${viewerFields}
 
@@ -64,6 +88,15 @@ export const UPDATE_PASSWORD = gql`
   }
 `;
 
-export function useUpdatePassword(opts) {
-  return useMutation(UPDATE_PASSWORD, opts);
+export function useUpdatePassword() {
+  return useMutation(UPDATE_PASSWORD, {
+    update(cache, { data }) {
+      cache.writeQuery({
+        query: VIEWER,
+        data: {
+          viewer: data.updatePassword.viewer,
+        },
+      });
+    },
+  });
 }

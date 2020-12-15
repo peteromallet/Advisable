@@ -16,10 +16,12 @@ import {
 } from "./Steps/queries";
 import VIEWER from "src/graphql/queries/viewer";
 import { GET_PROJECT } from "../JobOpportunity/queries";
+import { GET_APPLICATIONS } from "../Applications/queries";
 
 const viewer = generateType.specialist({
   confirmed: false,
   applicationStage: "Started",
+  needsToSetAPassword: false,
   invitations: [],
 });
 let project = mockData.project({ user: mockData.user() });
@@ -28,6 +30,16 @@ const queries = [
   mockViewer(null),
   mockQuery(GET_PROJECT_JOIN, { id: project.id }, { project }),
   mockQuery(GET_PROJECT, { id: project.id }, { project }),
+  mockQuery(
+    GET_APPLICATIONS,
+    {},
+    {
+      viewer: {
+        ...viewer,
+        applications: [],
+      },
+    },
+  ),
   mockMutation(
     CREATE_FREELANCER_ACCOUNT,
     {
@@ -41,6 +53,7 @@ const queries = [
         __typename: "CreateFreelancerAccountPayload",
         viewer: generateType.specialist({
           confirmed: false,
+          needsToSetAPassword: true,
           applicationStage: "Started",
           invitations: [],
         }),
@@ -69,7 +82,7 @@ test("successful flow", async () => {
   userEvent.type(app.getByLabelText("Password"), "123123123");
   userEvent.type(app.getByLabelText("Confirm password"), "123123123");
   fireEvent.click(app.getByLabelText(/get started/i));
-  await app.findByText(/thank you/i);
+  await app.findByText("You have not applied to any projects yet");
 });
 
 test("successful flow with project details", async () => {
