@@ -28,7 +28,6 @@ module Guild
       data: Field::String.with_options(searchable: false),
       created_at: Field::DateTime,
       updated_at: Field::DateTime,
-      audience_notified_at: Field::DateTime,
       engagements_count: Field::Number,
       audience_type: Field::String.with_options(searchable: false, collection: ->(_field) { Guild::Post::AUDIENCE_TYPES }),
       pinned: Field::Boolean,
@@ -58,8 +57,8 @@ module Guild
       created_at
       updated_at
       reactionable_count
+      boosted_at
       audience_type
-      audience_notified_at
       pinned
     ].freeze
 

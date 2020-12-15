@@ -43,8 +43,7 @@ module Guild
     validates :body, length: {maximum: 10_000, minimum: 16}, allow_nil: true
     validates :audience_type, inclusion: {in: AUDIENCE_TYPES}, allow_nil: true
     jsonb_accessor :data,
-                   audience_type: [:string],
-                   audience_notified_at: [:datetime]
+                   audience_type: [:string]
 
     before_validation :set_default_values
     before_save :reset_guild_topics, if: :guild_topics_resettable?
@@ -62,6 +61,15 @@ module Guild
 
     def cover_image
       images.find_by(cover: true)
+    end
+
+    def boost!
+      raise "is already boosted" if boosted_at.instance_of?(ActiveSupport::TimeWithZone)
+      raise "cannot boost if not published" unless published?
+      raise "cannot boost with zero topics" if guild_topics.empty?
+
+      update(boosted_at: Time.current)
+      GuildPostBoostedJob.perform_later(id)
     end
 
     protected
@@ -96,6 +104,7 @@ end
 #
 #  id                 :uuid             not null, primary key
 #  body               :text
+#  boosted_at         :datetime
 #  comments_count     :integer          default(0), not null
 #  data               :jsonb            not null
 #  engagements_count  :integer          default(0)
