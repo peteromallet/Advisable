@@ -1,18 +1,15 @@
 class Types::User < Types::BaseType
+  implements Types::AccountInterface
   delegate :account, :company, to: :object
 
   field :id, ID, null: false
   field :airtable_id, String, null: true
 
-  field :name, String, null: true
-  field :first_name, String, null: true
-  field :last_name, String, null: true
-
   field :email, String, null: false do
     authorize :is_admin, :is_user, :is_candidate_for_user_project, :is_team_manager?
   end
 
-  delegate :name, :first_name, :last_name, :email, to: :account
+  delegate :email, to: :account
 
   field :is_admin, Boolean, null: false
 
@@ -24,18 +21,6 @@ class Types::User < Types::BaseType
 
   def is_team_manager
     account.team_manager?
-  end
-
-  field :needs_to_set_a_password, Boolean, null: true
-
-  def needs_to_set_a_password
-    account.password_digest.blank?
-  end
-
-  field :confirmed, Boolean, null: false
-
-  def confirmed
-    account.confirmed_at.present?
   end
 
   field :title, String, null: true
