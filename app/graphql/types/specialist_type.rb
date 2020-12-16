@@ -197,7 +197,7 @@ class Types::SpecialistType < Types::BaseType
 
   field :guild_posts, Types::Guild::PostInterface.connection_type, null: false
   def guild_posts
-    object.guild_posts.published.order(created_at: :desc)
+    object.guild_posts.feed(current_user)
   end
 
   field :guild_joined_time_ago, String, null: true do

@@ -272,10 +272,7 @@ class Types::QueryType < Types::BaseType
 
   def guild_posts(**args)
     requires_guild_user!
-    @query = Guild::Post.includes(
-      :specialist,
-      parent_comments: [child_comments: %i[post]]
-    ).published
+    @query = Guild::Post.feed(current_user)
 
     if (type = args[:type].presence) && type != 'For You'
       @query = @query.where(type: type)
@@ -327,6 +324,6 @@ class Types::QueryType < Types::BaseType
 
   def guild_your_posts(**args)
     requires_guild_user!
-    current_user.guild_your_posts.order(updated_at: :desc)
+    current_user.guild_posts.order(updated_at: :desc)
   end
 end
