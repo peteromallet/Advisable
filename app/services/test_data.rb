@@ -24,7 +24,7 @@ class TestData
     unless specialist.avatar.attached? || attrs.fetch(:avatar, nil).nil?
       url = attrs.fetch(:avatar)
       specialist.avatar.attach(
-        io: open(url), filename: File.basename(URI.parse(url).path)
+        io: URI.open(url), filename: File.basename(URI.parse(url).path)
       )
     end
 
@@ -74,14 +74,14 @@ class TestData
 
     url = "https://advisable-test-assets.s3.eu-central-1.amazonaws.com/characters/toby.png"
     previous_project.contact_image.attach(
-      io: open(url), filename: File.basename(URI.parse(url).path)
+      io: URI.open(url), filename: File.basename(URI.parse(url).path)
     )
 
     if [true, false].sample
       image = previous_project.images.create(cover: true)
       url = stock_image
       image.image.attach(
-        io: open(url), filename: File.basename(URI.parse(url).path)
+        io: URI.open(url), filename: File.basename(URI.parse(url).path)
       )
     end
 
