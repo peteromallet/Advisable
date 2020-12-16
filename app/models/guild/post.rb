@@ -32,7 +32,7 @@ module Guild
       published.
         or(removed.where(specialist: specialist)).
         includes(:specialist).
-        order(created_at: :desc)
+        order(pinned: :desc, created_at: :desc)
     }
 
     enum status: {draft: 0, published: 1, removed: 2}
