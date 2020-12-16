@@ -38,7 +38,7 @@ class Airtable::ClientContact < Airtable::Base
     industry_id = self['Industry'].try(:first)
     if industry_id
       industry = Industry.find_by_airtable_id(industry_id)
-      industry = Airtable::Industry.find(industry_id).sync if associate.nil?
+      industry = Airtable::Industry.find(industry_id).sync if industry.nil?
       user.company.industry = industry
     end
 
