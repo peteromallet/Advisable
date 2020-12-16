@@ -14,6 +14,9 @@ class Project < ApplicationRecord
 
   has_logidze
 
+  belongs_to :user, optional: true
+  belongs_to :sales_person, optional: true
+
   has_many :applications, dependent: :destroy
   has_many :reviews, as: :project, dependent: :destroy
   has_many :project_skills, as: :project, dependent: :destroy
@@ -23,9 +26,6 @@ class Project < ApplicationRecord
 
   has_one :primary_project_skill, -> { where(primary: true) }, class_name: 'ProjectSkill', as: :project, inverse_of: :project, dependent: :destroy
   has_one :primary_skill, through: :primary_project_skill, source: :skill
-
-  belongs_to :user, optional: true
-  belongs_to :sales_person, optional: true
 
   validates :service_type, inclusion: {in: SERVICE_TYPES}, allow_nil: true
   validates :industry_experience_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true

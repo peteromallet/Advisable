@@ -27,6 +27,10 @@ class User < ApplicationRecord
 
   airtable_class Airtable::ClientContact
 
+  belongs_to :company
+  belongs_to :sales_person, optional: true
+  belongs_to :country, optional: true
+
   has_many :projects, dependent: :destroy
   has_many :interviews, dependent: :destroy
   has_many :applications, through: :projects
@@ -36,10 +40,6 @@ class User < ApplicationRecord
   has_many :client_calls, dependent: :destroy
   has_one :client_user, dependent: :destroy
   has_one :client, through: :client_user
-
-  belongs_to :company
-  belongs_to :sales_person, optional: true
-  belongs_to :country, optional: true
 
   serialize :available_payment_methods, Array
 
