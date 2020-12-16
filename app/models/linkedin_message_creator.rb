@@ -36,7 +36,7 @@ class LinkedinMessageCreator
     [
       {text: "Yes", body: sentences.join("\n\n"), actions: requirement_actions(3)},
       action_no,
-      {text: "I might know someone", url: "https://advisable.formstack.com/forms/performance_marketing_referral"}
+      action_might_know_someone
     ]
   end
 
@@ -46,7 +46,8 @@ class LinkedinMessageCreator
 
     [
       {text: "Yes", body: sentences_for(*requirement, number).join("\n\n"), actions: requirement_actions(number - 1)},
-      action_no
+      action_no,
+      action_might_know_someone
     ]
   end
 
@@ -61,11 +62,13 @@ class LinkedinMessageCreator
         text: "Yes",
         body: sentences.join("\n\n"),
         actions: [
-          {text: "Yes", url: "https://advisable.com/projects/request-more-information/?pid=#{project.airtable_id}&utm_campaign=#{project.airtable_id}"},
-          action_no
+          {text: "Yes", url: "http://app.advisable.com/freelancers/join?pid=#{project.uid}"},
+          action_no,
+          action_might_know_someone
         ]
       },
-      action_no
+      action_no,
+      action_might_know_someone
     ]
   end
 
@@ -73,6 +76,13 @@ class LinkedinMessageCreator
     {
       text: "No",
       url: "https://advisable.com/thank-you/?text=Unfortunately%2C%20we%20don%27t%20think%20you%27re%20a%20good%20fit"
+    }
+  end
+
+  def action_might_know_someone
+    {
+      text: "I might know someone",
+      url: "https://discover.advisable.com/projects/#{project.uid}?utm_campaign=liadreferral&utm_source=linkedin"
     }
   end
 
