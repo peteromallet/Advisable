@@ -99,15 +99,18 @@ export default function OrbitsSystem({
   preserveAspectRatio = null,
   transition,
 }) {
+  const responsiveIncrement = useResponsiveProp(increment);
+  const responsiveOffsetX = useResponsiveProp(offsetX);
+  const responsiveOffsetY = useResponsiveProp(offsetY);
   const responsiveX = useResponsiveProp(x);
   const responsiveY = useResponsiveProp(y);
   const responsiveViewBox = useResponsiveProp(viewBox);
   const respPreserveAspectRatio = useResponsiveProp(preserveAspectRatio);
 
   const orbits = React.Children.map(children, (child, i) => {
-    const orbitSize = startSize + (i + 1) * increment;
-    const orbitX = responsiveX - offsetX * i;
-    const orbitY = responsiveY - offsetY * i;
+    const orbitSize = startSize + (i + 1) * responsiveIncrement;
+    const orbitX = responsiveX - responsiveOffsetX * i;
+    const orbitY = responsiveY - responsiveOffsetY * i;
     const path = {
       size: orbitSize,
       x: orbitX,

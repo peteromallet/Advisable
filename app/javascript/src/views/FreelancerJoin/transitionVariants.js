@@ -11,7 +11,7 @@ export const transitionVariants = {
     y: 0,
     zIndex: 1,
     opacity: 1,
-    transition: { duration: 0.4 },
+    transition: { duration: 0.5 },
   },
   exit: ({ largeScreen, forwards }) => {
     return {
@@ -19,7 +19,7 @@ export const transitionVariants = {
       x: 0,
       opacity: 0,
       zIndex: 1,
-      transition: { duration: 0.4 },
+      transition: { duration: 0.5 },
     };
   },
 };
