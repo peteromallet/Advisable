@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Redirect, useLocation } from "react-router-dom";
 import useViewer from "../../hooks/useViewer";
-import useSteps from "./useSteps";
+import useSteps from "src/hooks/useSteps";
 import steps from "./Steps";
 import Testimonials from "./Testimonials";
 import { Box, useTheme, useBreakpoint } from "@advisable/donut";

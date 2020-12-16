@@ -74,6 +74,7 @@ export { default as BulletList } from "./components/BulletList";
 export * from "./components/BulletList/styles";
 export { default as Autocomplete } from "./components/Autocomplete";
 export { default as useBreakpoint } from "./hooks/useBreakpoint";
+export { default as useBreakpoints } from "./hooks/useBreakpoints";
 export { default as useTheme } from "./hooks/useTheme";
 export { default as theme } from "./theme";
 export { default as extractSpacingProps } from "./utilities/extractSpacingProps";

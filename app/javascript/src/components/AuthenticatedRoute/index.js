@@ -14,7 +14,6 @@ const AuthenticatedRoute = ({
 }) => {
   const viewer = useViewer();
   const __typename = viewer?.__typename;
-  const applicationStage = viewer?.applicationStage;
 
   if (specialistOnly && viewer && __typename !== "Specialist") {
     return <Redirect to="/" />;
@@ -37,11 +36,6 @@ const AuthenticatedRoute = ({
               }}
             />
           );
-        }
-
-        // Redirect to specialist setup if their applicationStage is 'Started'
-        if (__typename === "Specialist" && applicationStage === "Started") {
-          return <Redirect to="/freelancers/signup/preferences" />;
         }
 
         return Component ? <Component {...props} /> : render(props);
