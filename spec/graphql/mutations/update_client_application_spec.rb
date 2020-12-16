@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::UpdateClientApplication do
-  before :each do
+  before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
@@ -47,7 +47,7 @@ RSpec.describe Mutations::UpdateClientApplication do
   it 'can update industry' do
     design = create(:industry, name: 'Design')
     development = create(:industry, name: 'Development')
-    user = create(:user, application_status: "Application Started", industry: design)
+    user = create(:user, application_status: "Application Started", company: create(:company, industry: design))
     query = <<-GRAPHQL
       mutation {
         updateClientApplication(input: {
@@ -62,7 +62,7 @@ RSpec.describe Mutations::UpdateClientApplication do
     GRAPHQL
 
     expect { AdvisableSchema.execute(query) }.to change {
-      user.reload.industry
+      user.company.reload.industry
     }.from(design).to(development)
   end
 
@@ -148,7 +148,7 @@ RSpec.describe Mutations::UpdateClientApplication do
     }.by(1)
   end
 
-  context 'if the application_status is accepted' do
+  context 'when the application_status is accepted' do
     it "Can't update any data" do
       user = create(:user, application_status: "Application Accepted")
       query = <<-GRAPHQL

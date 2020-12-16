@@ -1,30 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::UpdateUser do
-  let(:user) do
-    create(
-      :user,
-      company_type: 'Major Corporation',
-      industry: create(:industry, name: 'Marketing')
-    )
-  end
+  let(:marketing) { create(:industry, name: 'Marketing') }
+  let(:company) { create(:company, kind: 'Major Corporation', industry: marketing) }
+  let(:user) { create(:user, company: company) }
 
   before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
   it 'can update the industry' do
-    industry = create(:industry, name: 'Advertising')
-    expect {
-      AdvisableSchema.execute(
-        query("{ industry: \"Advertising\" }"),
-        context: {current_user: user}
-      )
-    }.to change { user.reload.industry }.to(industry)
+    advertising = create(:industry, name: 'Advertising')
+    AdvisableSchema.execute(
+      query("{ industry: \"Advertising\" }"),
+      context: {current_user: user}
+    )
+    expect(company.reload.industry).to eq(advertising)
   end
 
   it 'can update the company_type' do
-    industry = create(:industry, name: 'Advertising')
     expect {
       AdvisableSchema.execute(
         query("{ companyType: \"Startup\" }"),

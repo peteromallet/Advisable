@@ -15,8 +15,9 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
     if user.application_status == "Application Started"
       update_assignable_attributes(user, args)
       update_company_name(user, args[:company_name]) if args[:company_name]
-      update_industry(user, args[:industry]) if args[:industry]
       update_skills(user, args[:skills]) if args[:skills]
+      user.company.update(industry: Industry.find_by!(name: args[:industry])) if args[:industry]
+      user.company.update(kind: args[:company_type]) if args[:company_type]
       current_account_responsible_for { user.save }
       failed_to_save(user) if user.errors.any?
       user.sync_to_airtable
@@ -34,11 +35,12 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
 
   # which attributes can just be simply assigned
   def assignable_attributes
-    %i[budget company_type number_of_freelancers]
+    %i[budget number_of_freelancers]
   end
 
   def update_company_name(user, company_name)
     user.company_name = company_name
+    user.company.name = company_name
     user.client&.update(name: company_name)
     user.client&.sync_to_airtable
   end
@@ -47,11 +49,6 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
     assignable_attributes.each do |attribute|
       user.public_send("#{attribute}=", args[attribute]) if args[attribute]
     end
-  end
-
-  def update_industry(user, industry)
-    record = Industry.find_by_name!(industry)
-    user.industry = record
   end
 
   def update_skills(user, skills)

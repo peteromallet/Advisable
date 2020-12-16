@@ -16,14 +16,23 @@ class Types::ClientApplicationType < Types::BaseType
   end
 
   field :company_name, String, null: true
-  field :industry, Types::IndustryType, null: true
   field :budget, Int, null: true
   field :skills, [Types::Skill], null: true
   field :locality_importance, Int, null: true
   field :accepted_guarantee_terms, Boolean, null: true
   field :talent_quality, String, null: true
   field :rejection_reason, String, null: true
+
   field :company_type, String, null: true
+  def company_type
+    object.company.kind
+  end
+
+  field :industry, Types::IndustryType, null: true
+  def industry
+    object.company.industry
+  end
+
   field :number_of_freelancers, String, null: true
   field :country, Types::CountryType, null: true
 

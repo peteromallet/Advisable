@@ -208,8 +208,6 @@ class TestData
         sales_person: sales_person
       )
       u.company_name = 'Dunder Mifflin'
-      u.company_type = 'Startup'
-      u.industry = industry
       u.sales_person = sales_person
     end
 

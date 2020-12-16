@@ -2,10 +2,8 @@ FactoryBot.define do
   factory :user do
     account
     country
-    industry
     company
     company_name { 'Test Company' }
-    company_type { 'Startup' }
     sequence(:uid) { "use_#{SecureRandom.hex[0..14]}" }
     sequence(:airtable_id) { |n| "recuser#{n}" }
 
