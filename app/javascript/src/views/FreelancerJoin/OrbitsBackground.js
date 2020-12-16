@@ -5,13 +5,17 @@ const getCoords = (step) => {
   switch (step) {
     case 0:
       return {
-        y: { _: -1000, xlUp: 45 },
-        x: { _: -140, sUp: 250, xlUp: -825 },
+        y: { _: -1340, xlUp: 600 },
+        x: { _: -140, sUp: 250, xlUp: -800 },
+        offsetY: { _: -30, xlUp: 70 },
+        increment: { _: 220, xlUp: 200 },
       };
     case 1:
       return {
-        y: { _: -1100, xlUp: 725 },
-        x: { _: -140, sUp: 350, xlUp: -825 },
+        y: { _: -700, xlUp: 265 },
+        x: { _: 140, sUp: 550, xlUp: -820 },
+        offsetY: { _: 70, xlUp: -30 },
+        increment: { _: 210, xlUp: 220 },
       };
     case 2:
       return {
@@ -35,7 +39,7 @@ function OrbitsBackground({ step }) {
       preserveAspectRatio={preserveAspectRatio}
       fill="transparent"
       stroke={theme.colors.neutral200}
-      increment={200}
+      transition={{ duration: 1 }}
     >
       <Orbit stroke={theme.colors.blue600} />
       <Orbit stroke={theme.colors.blue600} />
