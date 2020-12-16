@@ -119,4 +119,46 @@ RSpec.describe "guild posts query" do
       end
     end
   end
+
+  context "with removed posts" do
+    let(:shadow_ban_specialist) { create(:specialist, :guild) }
+    let!(:removed_post) { create(:guild_post, status: "removed", specialist: shadow_ban_specialist) }
+    let!(:published_post) { create(:guild_post, status: "published") }
+
+    let(:query) {
+      <<-GRAPHQL
+        {
+          guildPosts(first: 5) {
+            nodes {
+              ... on PostInterface {
+                id
+                status
+              }
+            }
+          }
+        }
+      GRAPHQL
+    }
+
+    it "does not include removed posts" do
+      feed_response = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
+      posts = feed_response.dig("data", *response_keys)
+
+      expect(posts.count).to eq(1)
+      expect(posts).to eq([published_post.slice("id", "status")])
+    end
+
+    it "includes removed posts if the viewer is the author" do
+      feed_response = AdvisableSchema.execute(query, context: {current_user: shadow_ban_specialist})
+      posts = feed_response.dig("data", *response_keys)
+
+      expect(posts.count).to eq(2)
+      expect(posts).to include(
+        {
+          "id" => removed_post.id,
+          "status" => "removed"
+        }
+      )
+    end
+  end
 end

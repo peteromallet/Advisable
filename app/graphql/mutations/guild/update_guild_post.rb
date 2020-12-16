@@ -29,8 +29,9 @@ class Mutations::Guild::UpdateGuildPost < Mutations::BaseMutation
       guild_post.guild_topic_list = guild_topics
     end
 
-    if args[:publish].present?
-      guild_post.status = args[:publish] ? "published" : "draft"
+    # - A removed post cannot be published
+    if args[:publish].present? && guild_post.status != "removed"
+      guild_post.status = "published"
     end
 
     guild_post.save!

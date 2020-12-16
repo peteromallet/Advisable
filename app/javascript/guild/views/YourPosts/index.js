@@ -40,16 +40,19 @@ const YourPosts = () => {
       <GuildBox spaceChildrenVertical={48}>
         <Filters yourPosts />
         {data &&
-          data.guildYourPosts.nodes.map((post, key) => (
-            <Box key={key} position="relative">
-              <StyledStatus onClick={() => handleEdit(post.id)}>
-                {post.status === "draft" ? "Edit Draft" : "Edit"}
-              </StyledStatus>
-              <StyledYourPost draft={post.status === "draft"}>
-                <Post post={post} showDelete={true} />
-              </StyledYourPost>
-            </Box>
-          ))}
+          data.guildYourPosts.nodes.map((post, key) => {
+            const published = /published|removed/.test(post.status);
+            return (
+              <Box key={key} position="relative">
+                <StyledStatus onClick={() => handleEdit(post.id)}>
+                  {published ? "Edit" : "Edit Draft"}
+                </StyledStatus>
+                <StyledYourPost draft={!published}>
+                  <Post post={post} />
+                </StyledYourPost>
+              </Box>
+            );
+          })}
         {!loading && !data?.guildYourPosts?.nodes?.length && (
           <GuildBox
             background="white"
