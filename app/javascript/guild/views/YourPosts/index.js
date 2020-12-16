@@ -46,7 +46,7 @@ const YourPosts = () => {
                 {post.status === "draft" ? "Edit Draft" : "Edit"}
               </StyledStatus>
               <StyledYourPost draft={post.status === "draft"}>
-                <Post post={post} />
+                <Post post={post} showDelete={true} />
               </StyledYourPost>
             </Box>
           ))}
