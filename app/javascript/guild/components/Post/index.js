@@ -10,7 +10,12 @@ import PostActions from "@guild/components/PostActions";
 import { CoverImage } from "@guild/components/CoverImage";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 
-const Post = ({ post }) => {
+const Post = ({
+  post,
+  showEdit = false,
+  showShare = false,
+  showDelete = false,
+}) => {
   const url = `/guild/posts/${post.id}`;
 
   const handleOpen = () => {
@@ -86,7 +91,13 @@ const Post = ({ post }) => {
         </Text>
 
         <Box display="flex" alignItems="center" marginBottom={5}>
-          <PostActions mr={3} post={post} showEdit={false} showShare={false} />
+          <PostActions
+            mr={3}
+            post={post}
+            showEdit={showEdit}
+            showShare={showShare}
+            showDelete={showDelete}
+          />
           <ConnectionsCount post={post} />
         </Box>
 

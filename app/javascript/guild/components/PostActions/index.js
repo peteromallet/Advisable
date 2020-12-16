@@ -3,6 +3,7 @@ import { Box } from "@advisable/donut";
 import Share from "./Share";
 import Edit from "./Edit";
 import Connect from "./Connect";
+import Delete from "./Delete";
 import ReactionsButton from "../Post/components/ReactionsButton";
 import useViewer from "src/hooks/useViewer";
 
@@ -11,14 +12,17 @@ export default function PostActions({
   size,
   showShare = true,
   showEdit = true,
+  showDelete = true,
   ...props
 }) {
   const viewer = useViewer();
   const viewerIsAuthor = post.author.id === viewer?.id;
   const isShareable = showShare && post.shareable;
   const isEditable = showEdit && viewerIsAuthor;
+  const isDeleteable = showDelete && viewerIsAuthor;
 
-  if (viewerIsAuthor && !isShareable && !isEditable) return null;
+  if (viewerIsAuthor && !isShareable && !isEditable && !isDeleteable)
+    return null;
 
   return (
     <Box display="inline-flex" alignItems="center" {...props}>
@@ -36,6 +40,11 @@ export default function PostActions({
       {isEditable ? (
         <Box ml={2}>
           <Edit post={post} size={size} />
+        </Box>
+      ) : null}
+      {isDeleteable ? (
+        <Box ml={2}>
+          <Delete post={post} size={size} />
         </Box>
       ) : null}
     </Box>
