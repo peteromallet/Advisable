@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Text, Button, useBreakpoint } from "@advisable/donut";
-import { ChevronRight } from "@styled-icons/feather";
+import { Box, Text, useBreakpoint } from "@advisable/donut";
 import lambdaSchoolLogoWhite from "./logos/lambdaSchoolLogoWhite.png";
 import StackOverflowLogo from "./logos/StackOverflowLogo";
 import SpotifyLogo from "./logos/SpotifyLogo";
@@ -10,35 +9,7 @@ import WorldRemitLogo from "./logos/WorldRemitLogo";
 import BabbelLogo from "./logos/BabbelLogo";
 import UberAllLogo from "./logos/UberAllLogo";
 import { AnimatePresence, motion } from "framer-motion";
-import { useHistory } from "react-router";
 import { transitionVariants } from "../transitionVariants";
-
-function ThankYouContent() {
-  const history = useHistory();
-  return (
-    <Box pb={20} mt={{ _: 10, xl: 0 }} maxWidth={560}>
-      <Title mb={5}>Thank you</Title>
-      <Text
-        fontSize={{ _: "m", l: "l" }}
-        color="white"
-        lineHeight={{ _: "m", l: "l" }}
-        mb={{ _: 6, xl: 8 }}
-      >
-        We&apos;re ready to start now. Please follow the app, fill the profile
-        page, and add your previous projects so that we could match you with the
-        best clients.
-      </Text>
-      <Button
-        variant="dark"
-        size={{ _: "m", xl: "l" }}
-        suffix={<ChevronRight />}
-        onClick={() => history.push("/")}
-      >
-        Get Started
-      </Button>
-    </Box>
-  );
-}
 
 function Logos() {
   const params = {
@@ -133,11 +104,7 @@ export default function OrbitsContent({ step, custom }) {
       justifyContent="flex-start"
     >
       <AnimatePresence exitBeforeEnter initial={false} custom={custom}>
-        {step === 2 ? (
-          <motion.div {...framerParams} key="thanks">
-            <ThankYouContent />
-          </motion.div>
-        ) : isMobile && step === 1 ? (
+        {isMobile && step === 1 ? (
           <motion.div {...framerParams} />
         ) : (
           <motion.div {...framerParams} key="forms">

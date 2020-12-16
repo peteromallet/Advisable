@@ -14,7 +14,7 @@ import validationSchema from "./validationSchema";
 import { motion } from "framer-motion";
 import { CardHeader } from "../styles";
 
-export default function SetPassword({ nextStep, prevStep, forwards }) {
+export default function SetPassword({ prevStep, forwards }) {
   const viewer = useViewer();
   const { search } = useLocation();
   const [setPassword] = useUpdatePassword();
@@ -42,10 +42,7 @@ export default function SetPassword({ nextStep, prevStep, forwards }) {
       return;
     }
 
-    const nextPath = project_id
-      ? `/opportunities/${project_id}`
-      : nextStep.path;
-
+    const nextPath = project_id ? `/opportunities/${project_id}` : "/";
     history.replace(nextPath);
   };
 

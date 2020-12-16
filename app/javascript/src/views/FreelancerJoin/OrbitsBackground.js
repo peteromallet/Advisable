@@ -17,11 +17,6 @@ const getCoords = (step) => {
         offsetY: { _: 70, xlUp: -30 },
         increment: { _: 210, xlUp: 220 },
       };
-    case 2:
-      return {
-        y: { _: -1170, xlUp: 1245 },
-        x: { _: -140, sUp: 380, xlUp: -525 },
-      };
     default:
       return { y: 45, x: -895 };
   }
