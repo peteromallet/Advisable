@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Redirect } from "react-router";
 import { useNotifications } from "src/components/Notifications";
 import STEPS from ".";
-import useSteps from "../useSteps";
+import useSteps from "src/hooks/useSteps";
 import { useLocationState } from "../queries";
 
 const Navigation = ({

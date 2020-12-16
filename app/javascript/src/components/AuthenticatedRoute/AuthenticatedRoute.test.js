@@ -98,16 +98,3 @@ test("clientOnly does not redirect user", async () => {
   await screen.findByText("Current: /test");
   await screen.findByText("From: none");
 });
-
-test("redirects specialists to signup if applicationStage is Started", async () => {
-  renderTestCase(
-    mockData.specialist({
-      applicationStage: "Started",
-    }),
-    "/test",
-    <AuthenticatedRoute path="/test" component={View} />,
-  );
-
-  await screen.findByText("Current: /freelancers/signup/preferences");
-  await screen.findByText("From: none");
-});
