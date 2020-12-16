@@ -16,10 +16,7 @@ export const GET_PROJECT = gql`
         name
       }
       user {
-        city
-        country {
-          name
-        }
+        location
         companyName
       }
       remote
@@ -42,13 +39,15 @@ export const CREATE_FREELANCER_ACCOUNT = gql`
 
 export const useCreateFreelancerAccount = () =>
   useMutation(CREATE_FREELANCER_ACCOUNT, {
-    update(cache, { data }) {
-      cache.writeQuery({
-        query: VIEWER,
-        data: {
-          viewer: data.createFreelancerAccount.viewer,
-        },
-      });
+    update(cache, { data, errors }) {
+      if (!errors) {
+        cache.writeQuery({
+          query: VIEWER,
+          data: {
+            viewer: data.createFreelancerAccount.viewer,
+          },
+        });
+      }
     },
   });
 
@@ -66,13 +65,15 @@ export const UPDATE_PROFILE = gql`
 
 export const useUpdateProfile = () =>
   useMutation(UPDATE_PROFILE, {
-    update(cache, { data }) {
-      cache.writeQuery({
-        query: VIEWER,
-        data: {
-          viewer: data.updateProfile.specialist,
-        },
-      });
+    update(cache, { data, errors }) {
+      if (!errors) {
+        cache.writeQuery({
+          query: VIEWER,
+          data: {
+            viewer: data.updateProfile.specialist,
+          },
+        });
+      }
     },
   });
 
