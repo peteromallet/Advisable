@@ -4,10 +4,10 @@ class Company < ApplicationRecord
   has_many :users, dependent: :nullify
 
   # WIP Company migration 👇️
-  has_many :applications, through: :projects
   has_many :projects, through: :users
   has_many :interviews, through: :users
   has_many :consultations, through: :users
+  has_many :applications, through: :projects
   # WIP Company migration 👆️
 
   attribute :address, AddressAttribute::Type.new
