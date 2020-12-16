@@ -3,7 +3,7 @@ class ClientApplicationSubmittedNotificationJob < ApplicationJob
 
   def perform(id)
     user = User.find(id)
-    return unless user.present?
+    return if user.blank?
 
     Slack.message(
       channel: 'new_client_application',
@@ -15,7 +15,7 @@ class ClientApplicationSubmittedNotificationJob < ApplicationJob
             "type": 'mrkdwn',
             "text":
               "#{user.account.first_name} from #{
-                user.company_name
+                user.company.name
               } has submitted their application and has been *#{
                 signup_result(user)
               }*."
@@ -29,8 +29,8 @@ class ClientApplicationSubmittedNotificationJob < ApplicationJob
               "type": 'mrkdwn',
               "text":
                 "*Company Details*\nName: `#{user.company_name}`\nIndustry: `#{
-                  user.industry.try(:name)
-                }`\nCompany Type: `#{user.company_type}`"
+                  user.company.industry.try(:name)
+                }`\nCompany Type: `#{user.company.kind}`"
             },
             {
               "type": 'mrkdwn',
@@ -74,6 +74,7 @@ class ClientApplicationSubmittedNotificationJob < ApplicationJob
       return 'offered to setup a 6 month reminder'
     end
     return 'sent to upwork' if user.rejection_reason == 'cheap_talent'
+
     'invited to schedule a call'
   end
 end

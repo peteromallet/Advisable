@@ -35,15 +35,20 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
     )
     account.save!
 
+    company = Company.new(
+      name: Company.fresh_name_for(project.client_name),
+      kind: project.company_type,
+      industry: project.primary_industry
+    )
+    company.save!
+
     user = User.new(
       account: account,
-      company: Company.new(name: Company.fresh_name_for(project.client_name)),
+      company: company,
       company_name: project.client_name,
-      company_type: project.company_type,
       fid: fid,
       contact_status: 'Application Started',
-      campaign_source: 'validation',
-      industry: project.primary_industry
+      campaign_source: 'validation'
     )
     user.save_and_sync_with_responsible!(current_account_id)
     AttachImageJob.perform_later(user, viewer.image)

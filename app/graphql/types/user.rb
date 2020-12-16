@@ -45,9 +45,7 @@ class Types::User < Types::BaseType
   # query for the users company's industry.
   # It doesn't make sense to copy the industry onto each team member so we
   # return the industry from the associated company
-  def industry
-    company.industry || object.industry
-  end
+  delegate :industry, to: :company
 
   field :company_type, String, null: true
 
@@ -55,7 +53,7 @@ class Types::User < Types::BaseType
   # should fetch this field from the viewers company
   # For now we override to the associated companies kind
   def company_type
-    company.kind || object.company_type
+    company.kind
   end
 
   field :sales_person, Types::SalesPersonType, null: true

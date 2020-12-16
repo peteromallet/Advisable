@@ -21,7 +21,7 @@ class PreviousProject::ConvertApplication
       goal: project.goals.try(:first),
       client_name: project.user.company_name,
       validation_status: 'Validated',
-      company_type: project.user.company_type,
+      company_type: project.user.company.kind,
       contact_job_title: project.user.title,
       contact_first_name: project.user.account.first_name,
       contact_last_name: project.user.account.last_name,
@@ -42,7 +42,8 @@ class PreviousProject::ConvertApplication
   end
 
   def project_industries
-    return [] unless project.industry.present?
+    return [] if project.industry.blank?
+
     [
       ProjectIndustry.new(
         industry: Industry.find_by_name(project.industry), primary: true
