@@ -266,7 +266,7 @@ class TestData
         p.name = "Dunder Miflin - Marketing"
       end
 
-    project.update_attributes(sourcing: true)
+    project.update(sourcing: true)
 
     dwight =
       create_specialist(

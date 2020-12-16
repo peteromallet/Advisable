@@ -10,7 +10,7 @@ module Advisable
   class Application < Rails::Application
     ORIGIN_HOST = ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 6.1
     config.add_autoload_paths_to_load_path = false
 
     config.active_job.queue_adapter = :sidekiq
