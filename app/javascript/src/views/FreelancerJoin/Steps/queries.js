@@ -16,10 +16,7 @@ export const GET_PROJECT = gql`
         name
       }
       user {
-        city
-        country {
-          name
-        }
+        location
         companyName
       }
       remote
