@@ -18,8 +18,8 @@ end
 #
 # Indexes
 #
-#  index_project_skills_on_project_type_and_project_id  (project_type,project_id)
-#  index_project_skills_on_skill_id                     (skill_id)
+#  index_project_skills_on_project   (project_type,project_id)
+#  index_project_skills_on_skill_id  (skill_id)
 #
 # Foreign Keys
 #

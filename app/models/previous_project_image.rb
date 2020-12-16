@@ -11,16 +11,21 @@ class PreviousProjectImage < ApplicationRecord
   private
 
   def reduce_positions
-    previous_project.images.where('position > ?', position).find_each do |ppi|
+    always_fresh_previous_project.images.where('position > ?', position).find_each do |ppi|
       ppi.update position: ppi.position - 1
     end
   end
 
   def set_first_to_cover
-    previous_project.images.order(position: :asc).first.try(
+    always_fresh_previous_project.images.order(position: :asc).first.try(
       :update,
       cover: true
     )
+  end
+
+  # Needed because of after_destroy hooks where the object is gone
+  def always_fresh_previous_project
+    @always_fresh_previous_project ||= PreviousProject.find(off_platform_project_id)
   end
 end
 

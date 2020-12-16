@@ -66,10 +66,10 @@ end
 #
 # Indexes
 #
-#  index_reviews_on_airtable_id                        (airtable_id)
-#  index_reviews_on_project_type_and_project_id        (project_type,project_id)
-#  index_reviews_on_reviewable_type_and_reviewable_id  (reviewable_type,reviewable_id)
-#  index_reviews_on_specialist_id                      (specialist_id)
+#  index_reviews_on_airtable_id    (airtable_id)
+#  index_reviews_on_project        (project_type,project_id)
+#  index_reviews_on_reviewable     (reviewable_type,reviewable_id)
+#  index_reviews_on_specialist_id  (specialist_id)
 #
 # Foreign Keys
 #

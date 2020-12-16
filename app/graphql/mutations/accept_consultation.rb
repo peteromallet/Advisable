@@ -5,9 +5,7 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
 
   def resolve(**args)
     ActiveRecord::Base.transaction do
-      consultation =
-        Consultation.find_by_uid_or_airtable_id!(args[:consultation])
-
+      consultation = Consultation.find_by_uid_or_airtable_id!(args[:consultation])
       project = get_project(consultation)
       application = create_application(project, consultation.specialist)
       interview = create_interview(application)
