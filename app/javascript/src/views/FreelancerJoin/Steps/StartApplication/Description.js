@@ -49,9 +49,7 @@ function WithProjectDetails({ project }) {
     goals,
     remote,
   } = project;
-  const location = remote
-    ? "remote"
-    : [user.city, user.country].filter(Boolean).join(", ");
+  const location = remote ? "remote" : user.location;
 
   const generatedDescription = `${user?.companyName || ""} is hiring a ${
     primarySkill?.name || ""
