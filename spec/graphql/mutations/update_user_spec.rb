@@ -24,7 +24,7 @@ RSpec.describe Mutations::UpdateUser do
         query("{ companyType: \"Startup\" }"),
         context: {current_user: user}
       )
-    }.to change { user.reload.company_type }.to('Startup')
+    }.to change { user.company.reload.kind }.to('Startup')
   end
 
   context 'when not logged in' do
