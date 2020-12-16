@@ -207,10 +207,6 @@ class Types::SpecialistType < Types::BaseType
     time_ago_in_words(object.guild_joined_date || Time.now.utc)
   end
 
-  field :guild_unread_messages, Boolean, null: true do
-    description 'Whether the guild specialist has unread messages'
-  end
-
   field :guild_unread_notifications, Boolean, null: true do
     description 'Whether the guild specialist has unread notifications'
   end
