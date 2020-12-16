@@ -23,7 +23,7 @@ function CoverImage({ coverPhoto, isOwner }) {
   };
 
   return (
-    <CoverImageWrapper>
+    <CoverImageWrapper id="cover-img-wrapper">
       {isOwner && <FileUpload onChange={submit} updated={updated} />}
       <StyledCoverImage src={image} loaded={loaded} />
     </CoverImageWrapper>
