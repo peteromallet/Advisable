@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { css } from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
@@ -17,12 +17,14 @@ import { StyledComposer } from "../styles";
 
 const ActiveConversation = ({ channelSid }) => {
   const viewer = useViewer();
+  const topMessage = useRef(null);
 
   const {
     activeChannel: activeConversation,
     messages,
     initializing,
     paginator,
+    fetchingMoreMessages,
     onLoadPreviousMessages,
   } = useTwilioChat({
     channelSid,
@@ -64,13 +66,21 @@ const ActiveConversation = ({ channelSid }) => {
     Only scroll to the bottom if there are new messages.
     Loading previous messages should not trigger this.
   */
-  const scrollToBottom =
-    !paginator?.hasNextPage ||
+  const hasUnreadMessages =
     activeConversation?.lastConsumedMessageIndex !== messages.length - 1;
+  const scrollToBottom =
+    !fetchingMoreMessages && (!paginator?.hasNextPage || hasUnreadMessages);
 
   const messagesRef = useBottomScrollListener(async () => {
     await activeConversation.setAllMessagesConsumed();
   });
+
+  async function loadMoreMessages() {
+    const topMessageBefore = topMessage.current;
+    await onLoadPreviousMessages();
+    topMessageBefore.scrollIntoView();
+    messagesRef.current.scrollTop = messagesRef.current.scrollTop - 64;
+  }
 
   if (initializing) return <Loading />;
 
@@ -117,20 +127,24 @@ const ActiveConversation = ({ channelSid }) => {
           {paginator?.hasPrevPage && (
             <GuildBox flexCenterBoth>
               <Button
-                size="s"
+                mb={4}
+                size="xs"
+                variant="subtle"
                 prefix={<ArrowUp />}
-                onClick={onLoadPreviousMessages}
+                onClick={loadMoreMessages}
+                loading={fetchingMoreMessages}
               >
-                Show previous messages
+                Load previous messages
               </Button>
             </GuildBox>
           )}
           <AnimatePresence initial={false}>
             {messages?.map((message, key) => (
               <Box
-                key={key}
+                key={message.sid}
                 as={motion.div}
                 paddingBottom={6}
+                ref={key === 0 ? topMessage : null}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
               >

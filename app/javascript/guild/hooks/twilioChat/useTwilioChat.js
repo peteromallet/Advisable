@@ -7,6 +7,7 @@ export const useTwilioChat = ({ channelSid }) => {
     messages: [],
     initializing: false,
     activeChannel: null,
+    fetchingMoreMessages: false,
   });
 
   useEffect(() => {
@@ -45,6 +46,7 @@ export const useTwilioChat = ({ channelSid }) => {
   }, []);
 
   const onLoadPreviousMessages = async () => {
+    setChatState({ ...chatState, fetchingMoreMessages: true });
     const { paginator: old, activeChannel } = chatState;
     const paginator = await old.prevPage();
     await activeChannel.setAllMessagesConsumed();
@@ -53,6 +55,7 @@ export const useTwilioChat = ({ channelSid }) => {
       ...prev,
       paginator,
       messages: [...paginator.items, ...prev.messages],
+      fetchingMoreMessages: false,
     }));
   };
 
