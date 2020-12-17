@@ -2,6 +2,42 @@ import { gql, useQuery } from "@apollo/client";
 import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
 
 const fields = gql`
+  fragment ProjectFields on PreviousProject {
+    id
+    title
+    clientName
+    coverPhoto {
+      url
+    }
+    excerpt
+    draft
+    validationStatus
+    primaryIndustry {
+      id
+      name
+      color
+    }
+    primarySkill {
+      id
+      name
+    }
+    skills {
+      id
+      name
+    }
+    industries {
+      id
+      name
+    }
+    reviews {
+      id
+      name
+      role
+      comment
+      companyName
+    }
+  }
+
   fragment SpecialistFields on Specialist {
     id
     name
@@ -30,40 +66,6 @@ const fields = gql`
       name
     }
 
-    profileProjects {
-      id
-      title
-      clientName
-      coverPhoto {
-        url
-      }
-      excerpt
-      primaryIndustry {
-        id
-        name
-        color
-      }
-      primarySkill {
-        id
-        name
-      }
-      skills {
-        id
-        name
-      }
-      industries {
-        id
-        name
-      }
-      reviews {
-        id
-        name
-        role
-        comment
-        companyName
-      }
-    }
-
     reviews {
       id
       name
@@ -77,9 +79,18 @@ const fields = gql`
 
 export const GET_PROFILE = gql`
   ${fields}
-  query getProfileData($id: ID!) {
+  query getProfileData($id: ID!, $isOwner: Boolean!) {
     specialist(id: $id) {
       ...SpecialistFields
+      previousProjects(
+        includeDrafts: $isOwner
+        includeValidationFailed: $isOwner
+        includeValidationPending: $isOwner
+      ) {
+        nodes {
+          ...ProjectFields
+        }
+      }
     }
   }
 `;

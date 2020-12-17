@@ -26,7 +26,7 @@ const initFilterSection = (list) =>
   );
 
 export const init = (data) => {
-  const projects = data.specialist.profileProjects;
+  const projects = data.specialist.previousProjects.nodes;
   const {
     clientNames,
     industries: industriesList,
