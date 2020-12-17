@@ -8,7 +8,7 @@ import { useTwilioChat } from "../../components/TwilioProvider";
 */
 export const useTwilioChannels = () => {
   const viewer = useViewer();
-  const { loading, channels } = useTwilioChat();
+  const { loading, channels, connectionState } = useTwilioChat();
 
   /* Normalize a chat channel as a guild 'conversations'*/
   const normalizeChannel = useCallback(
@@ -43,6 +43,7 @@ export const useTwilioChannels = () => {
 
   return {
     loading,
+    connectionState,
     subscribedChannels: normalizedChannels,
   };
 };
