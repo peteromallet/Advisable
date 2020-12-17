@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { CHAT_GRANT_QUERY } from "./queries";
 export { default as useTwilioChat } from "./useTwilioChat";
+import useViewer from "src/hooks/useViewer";
 
 export const TwilioContext = createContext();
 
@@ -20,11 +21,12 @@ const initialState = {
   loading: true,
   client: null,
   channels: {},
-  unreadMessages: {},
+  connectionState: null,
 };
 
 const LOAD_TWILIO = "LOAD_TWILIO";
 const UPDATE_CHANNEL = "UPDATE_CHANNEL";
+const UPDATE_CONNECTION_STATE = "UPDATE_CONNECTION_STATE";
 
 function extendChannel(channel) {
   return {
@@ -47,6 +49,9 @@ function twilioReducer(state, action) {
           };
         }, {}),
       };
+    case UPDATE_CONNECTION_STATE: {
+      return { ...state, connectionState: action.connectionState };
+    }
     case UPDATE_CHANNEL:
       return {
         ...state,
@@ -81,11 +86,16 @@ async function loadChannels(client) {
 }
 
 export default function TwilioProvider({ children }) {
+  const viewer = useViewer();
   const apolloClient = useApolloClient();
   const [state, dispatch] = useReducer(twilioReducer, initialState);
 
   const getAccessToken = useCallback(async () => {
-    const { data } = await apolloClient.query({ query: CHAT_GRANT_QUERY });
+    const { data } = await apolloClient.query({
+      fetchPolicy: "network-only",
+      query: CHAT_GRANT_QUERY,
+    });
+    console.log("NEW_TOKEN", data.chatGrant.accessToken);
     return data.chatGrant.accessToken;
   }, [apolloClient]);
 
@@ -96,14 +106,28 @@ export default function TwilioProvider({ children }) {
   const setupTwilio = useCallback(async () => {
     const token = await getAccessToken();
     const chatClient = await Chat.Client.create(token);
+    window.chatClient = chatClient;
 
     const handleExpiredToken = async () => {
       const token = await getAccessToken();
       chatClient.updateToken(token);
     };
 
-    chatClient.on("tokenAboutToExpire", handleExpiredToken);
+    chatClient.on("connectionError", (e) => {
+      console.log("CONNECTION_ERROR", e);
+    });
+
+    chatClient.on("connectionStateChanged", (connectionState) => {
+      if (state.connectionState !== connectionState) {
+        dispatch({
+          type: UPDATE_CONNECTION_STATE,
+          connectionState,
+        });
+      }
+    });
+
     chatClient.on("tokenExpired", handleExpiredToken);
+    chatClient.on("tokenAboutToExpire", handleExpiredToken);
     chatClient.addListener("channelUpdated", handleChannelUpdated);
 
     const channels = await loadChannels(chatClient);
@@ -115,11 +139,13 @@ export default function TwilioProvider({ children }) {
     });
 
     return () => chatClient.removeAllListeners();
-  }, [getAccessToken, handleChannelUpdated]);
+  }, [getAccessToken, handleChannelUpdated, state.connectionState]);
 
   useEffect(() => {
-    setupTwilio();
-  }, [setupTwilio]);
+    if (viewer && !state.client) {
+      setupTwilio();
+    }
+  }, [viewer, setupTwilio, state.client]);
 
   const channels = useMemo(() => {
     return Object.values(state.channels).sort((a, b) => {
@@ -136,6 +162,8 @@ export default function TwilioProvider({ children }) {
       return sum + channel.unreadMessages;
     }, 0);
   }, [channels]);
+
+  console.log(state);
 
   const value = useMemo(
     () => ({
