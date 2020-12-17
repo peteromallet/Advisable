@@ -39,6 +39,7 @@ function ConnectAction({ post, size }) {
             size={size}
             bg="neutral100"
             color="blue800"
+            aria-label={label(firstName)}
             icon={<ChatbubbleEllipses />}
             onClick={handleConnect}
           />
