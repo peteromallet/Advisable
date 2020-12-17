@@ -22,13 +22,16 @@ const size = variant({
   },
 });
 
-const StyledPostAction = styled(motion.div)`
+const StyledPostAction = styled(motion.button)`
   ${size};
 
+  border: none;
   display: flex;
   outline: none;
+  appearance: none;
   position: relative;
   align-items: center;
+  background: transparent;
   justify-content: center;
 
   svg {

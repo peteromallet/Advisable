@@ -77,7 +77,10 @@ function ConnectionType({ post, modal }) {
             gridGap="8px"
             gridTemplateColumns={{ _: "1fr", m: "1fr 1fr 1fr" }}
           >
-            <StyledConnectionType onClick={() => setConnectionType("MESSAGE")}>
+            <StyledConnectionType
+              onClick={() => setConnectionType("MESSAGE")}
+              aria-label={`Send ${firstName} an instant message`}
+            >
               <Circle bg="blue400" color="white" mb={5}>
                 <Chat size={24} />
               </Circle>
