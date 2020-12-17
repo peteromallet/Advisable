@@ -11,12 +11,13 @@ export const useTwilioChat = ({ channelSid }) => {
   });
 
   useEffect(() => {
-    if (!client || !channelSid || chatState.activeChannel) return;
-    let channel;
-    const pageSize = 50;
+    if (!client || !channelSid) return;
+    if (chatState.activeChannel?.sid === channelSid) return;
 
     const initializeChannel = async () => {
-      channel = await client.getChannelBySid(channelSid);
+      const pageSize = 50;
+      setChatState((prev) => ({ ...prev, initializing: true }));
+      const channel = await client.getChannelBySid(channelSid);
       const paginator = await channel.getMessages(pageSize);
       setChatState({
         activeChannel: channel,
@@ -24,12 +25,10 @@ export const useTwilioChat = ({ channelSid }) => {
         initializing: false,
         paginator,
       });
-
-      return channel;
     };
 
     initializeChannel();
-  }, [client, channelSid, onMessageAdded, chatState.activeChannel]);
+  }, [client, channelSid, chatState.activeChannel]);
 
   const onMessageAdded = useCallback(async (message) => {
     await message.channel.setAllMessagesConsumed();
@@ -53,6 +52,15 @@ export const useTwilioChat = ({ channelSid }) => {
       fetchingMoreMessages: false,
     }));
   };
+
+  useEffect(() => {
+    if (chatState.activeChannel) {
+      chatState.activeChannel.on("messageAdded", onMessageAdded);
+      return () => {
+        chatState.activeChannel.removeListener("messageAdded", onMessageAdded);
+      };
+    }
+  }, [chatState.activeChannel, onMessageAdded]);
 
   return { ...chatState, onLoadPreviousMessages };
 };

@@ -33,9 +33,7 @@ const ActiveConversation = ({ channelSid }) => {
 
   useEffect(() => {
     if (!activeConversation) return;
-    const setAllMessagesConsumed = async () =>
-      await activeConversation.setAllMessagesConsumed();
-    setAllMessagesConsumed();
+    activeConversation.setAllMessagesConsumed();
   }, [activeConversation]);
 
   /* Get the other participant uid  */

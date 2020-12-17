@@ -42,6 +42,7 @@ function twilioReducer(state, action) {
         ...state,
         loading: false,
         client: action.client,
+        connectionState: action.client.connectionState,
         channels: action.channels.reduce((sum, channel) => {
           return {
             ...sum,
@@ -50,7 +51,11 @@ function twilioReducer(state, action) {
         }, {}),
       };
     case UPDATE_CONNECTION_STATE: {
-      return { ...state, connectionState: action.connectionState };
+      if (state.connectionState !== action.connectionState) {
+        return { ...state, connectionState: action.connectionState };
+      }
+
+      return state;
     }
     case UPDATE_CHANNEL:
       return {
@@ -102,6 +107,13 @@ export default function TwilioProvider({ children }) {
     dispatch({ type: UPDATE_CHANNEL, channel: e.channel });
   }, []);
 
+  const handleConnectionStateChange = useCallback((connectionState) => {
+    dispatch({
+      type: UPDATE_CONNECTION_STATE,
+      connectionState,
+    });
+  }, []);
+
   const setupTwilio = useCallback(async () => {
     const token = await getAccessToken();
     const chatClient = await Chat.Client.create(token);
@@ -112,20 +124,12 @@ export default function TwilioProvider({ children }) {
       chatClient.updateToken(token);
     };
 
-    chatClient.on("connectionStateChanged", (connectionState) => {
-      if (state.connectionState !== connectionState) {
-        dispatch({
-          type: UPDATE_CONNECTION_STATE,
-          connectionState,
-        });
-      }
-    });
+    const channels = await loadChannels(chatClient);
 
+    chatClient.on("connectionStateChanged", handleConnectionStateChange);
     chatClient.on("tokenExpired", handleExpiredToken);
     chatClient.on("tokenAboutToExpire", handleExpiredToken);
-    chatClient.addListener("channelUpdated", handleChannelUpdated);
-
-    const channels = await loadChannels(chatClient);
+    chatClient.on("channelUpdated", handleChannelUpdated);
 
     dispatch({
       type: LOAD_TWILIO,
@@ -134,7 +138,7 @@ export default function TwilioProvider({ children }) {
     });
 
     return () => chatClient.removeAllListeners();
-  }, [getAccessToken, handleChannelUpdated, state.connectionState]);
+  }, [getAccessToken, handleChannelUpdated, handleConnectionStateChange]);
 
   useEffect(() => {
     if (viewer && !state.client) {
@@ -168,6 +172,8 @@ export default function TwilioProvider({ children }) {
     }),
     [state, channels, unreadMessages],
   );
+
+  console.log(value);
 
   return (
     <TwilioContext.Provider value={value}>{children}</TwilioContext.Provider>
