@@ -37,11 +37,10 @@ export const StyledRadioOption = styled.div`
     bottom: 0;
     margin: 0;
     padding: 0;
-    opacity: 0;
+    opacity: 0.001;
     width: 100%;
     height: 100%;
     cursor: pointer;
-    appearance: none;
     position: absolute;
   }
 `;
@@ -50,7 +49,9 @@ export default function PostType({ children, ...props }) {
   return (
     <StyledRadioOption $checked={props.checked}>
       <input type="radio" {...props} />
-      {children}
+      <div aria-role="radio" aria-checked={props.checked ? "true" : "false"}>
+        {children}
+      </div>
     </StyledRadioOption>
   );
 }
