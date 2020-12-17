@@ -95,7 +95,6 @@ export default function TwilioProvider({ children }) {
       fetchPolicy: "network-only",
       query: CHAT_GRANT_QUERY,
     });
-    console.log("NEW_TOKEN", data.chatGrant.accessToken);
     return data.chatGrant.accessToken;
   }, [apolloClient]);
 
@@ -112,10 +111,6 @@ export default function TwilioProvider({ children }) {
       const token = await getAccessToken();
       chatClient.updateToken(token);
     };
-
-    chatClient.on("connectionError", (e) => {
-      console.log("CONNECTION_ERROR", e);
-    });
 
     chatClient.on("connectionStateChanged", (connectionState) => {
       if (state.connectionState !== connectionState) {
@@ -163,12 +158,11 @@ export default function TwilioProvider({ children }) {
     }, 0);
   }, [channels]);
 
-  console.log(state);
-
   const value = useMemo(
     () => ({
       loading: state.loading,
       client: state.client,
+      connectionState: state.connectionState,
       channels,
       unreadMessages,
     }),

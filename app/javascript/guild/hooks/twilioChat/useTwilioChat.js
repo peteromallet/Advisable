@@ -5,16 +5,15 @@ export const useTwilioChat = ({ channelSid }) => {
   const { client } = useTwilio();
   const [chatState, setChatState] = useState({
     messages: [],
-    initializing: false,
+    initializing: true,
     activeChannel: null,
     fetchingMoreMessages: false,
   });
 
   useEffect(() => {
-    if (!client || !channelSid) return;
+    if (!client || !channelSid || chatState.activeChannel) return;
     let channel;
     const pageSize = 50;
-    setChatState((prev) => ({ ...prev, initializing: true }));
 
     const initializeChannel = async () => {
       channel = await client.getChannelBySid(channelSid);
@@ -30,7 +29,7 @@ export const useTwilioChat = ({ channelSid }) => {
     };
 
     initializeChannel();
-  }, [client, channelSid, onMessageAdded]);
+  }, [client, channelSid, onMessageAdded, chatState.activeChannel]);
 
   const onMessageAdded = useCallback(async (message) => {
     await message.channel.setAllMessagesConsumed();

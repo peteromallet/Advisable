@@ -9,6 +9,7 @@ import Loading from "src/components/Loading";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { useTwilioChat } from "@guild/hooks/twilioChat/useTwilioChat";
 import { GuildBox, flex } from "@guild/styles";
+import useTwilio from "@guild/components/TwilioProvider/useTwilioChat";
 import { ScrollToBottom } from "@guild/components/ScrollToBottom";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { CHAT_PARTICIPANT_QUERY } from "../queries";
@@ -170,8 +171,10 @@ const ActiveConversation = ({ channelSid }) => {
 };
 
 function Composer({ onSubmit }) {
+  const { connectionState } = useTwilio();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const isConnected = connectionState === "connected";
 
   async function handleSubmit() {
     setLoading(true);
@@ -194,6 +197,7 @@ function Composer({ onSubmit }) {
         maxRows="5"
         value={message}
         onKeyDown={handleKeyDown}
+        disabled={!isConnected}
         onChange={({ currentTarget }) => setMessage(currentTarget.value)}
         placeholder="New Message ..."
       ></Textarea>
@@ -201,7 +205,7 @@ function Composer({ onSubmit }) {
         size="s"
         prefix={<Send />}
         loading={loading}
-        disabled={loading}
+        disabled={loading || !isConnected}
         onClick={handleSubmit}
       >
         Send
