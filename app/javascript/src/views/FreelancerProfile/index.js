@@ -19,17 +19,17 @@ function FreelancerProfile() {
   useLogoURL("https://advisable.com");
   const params = useParams();
   const viewer = useViewer();
+  const isOwner = viewer?.id === params.id;
   const { loading, data, error } = useQuery(GET_PROFILE, {
     variables: {
       id: params.id,
+      isOwner,
     },
   });
   useInitialScroll(data);
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
-
-  const isOwner = viewer?.id === data.specialist.id;
 
   return (
     <Box

@@ -53,7 +53,8 @@ class PreviousProject < ApplicationRecord
 
   # Scopes
   scope :validated, -> { where(validation_status: 'Validated') }
-  scope :validation_not_failed, -> { where.not(validation_status: 'Failed') }
+  scope :validation_pending, -> { where(validation_status: 'Pending') }
+  scope :validation_failed, -> { where(validation_status: 'Failed') }
   scope :on_platform, -> { where.not(application_id: nil) }
   scope :not_hidden, -> { where(hide_from_profile: [nil, false]) }
   scope :published, -> { where(draft: [false, nil]) }

@@ -215,16 +215,19 @@ class Types::SpecialistType < Types::BaseType
     description 'The calendly url for the guild specialist'
   end
 
-  field :previous_projects,
-        Types::PreviousProject.connection_type,
-        null: false do
+  # TODO: authenticated-application-flow - Simplify this query arguments once
+  # we know application flow is authenticated only.
+  field :previous_projects, Types::PreviousProject.connection_type, null: false do
     argument :include_validation_failed, Boolean, required: false
     argument :include_drafts, Boolean, required: false
+    argument :include_validation_pending, Boolean, required: false
   end
 
-  def previous_projects(include_validation_failed: false, include_drafts: false)
-    records = object.previous_projects
-    records = records.validation_not_failed unless include_validation_failed
+  def previous_projects(include_validation_failed: false, include_drafts: false, include_validation_pending: true)
+    validation_statuses = ["Validated"]
+    validation_statuses << "Pending" if include_validation_pending
+    validation_statuses << "Failed" if include_validation_failed
+    records = object.previous_projects.where(validation_status: validation_statuses)
     records = records.published unless include_drafts
     records.order(created_at: :asc)
   end

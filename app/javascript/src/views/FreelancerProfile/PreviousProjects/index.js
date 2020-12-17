@@ -81,9 +81,9 @@ function PreviousProjects({ data, isOwner }) {
 
   const projectCards = state.projects
     .filter(filterProjects(state))
-    .filter((project) => !!project.excerpt)
-    .map((project) => {
-      return <ProjectCard key={project.id} project={project} />;
+    .filter((p) => !!p.excerpt || p.draft)
+    .map((p) => {
+      return <ProjectCard key={p.id} project={p} />;
     });
 
   return (
