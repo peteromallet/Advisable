@@ -165,4 +165,18 @@ RSpec.describe "guild posts query" do # rubocop:disable Rspec/DescribeClass
       )
     end
   end
+
+  context 'when a post is pinned' do
+    let!(:pinned) { create(:guild_post, created_at: 10.days.ago, pinned: true) }
+
+    before do
+      create_list(:guild_post, 5)
+    end
+
+    it 'is always first in the result' do
+      response = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
+      posts = response["data"]["guildPosts"]["nodes"]
+      expect(posts.first["id"]).to eq(pinned.id)
+    end
+  end
 end
