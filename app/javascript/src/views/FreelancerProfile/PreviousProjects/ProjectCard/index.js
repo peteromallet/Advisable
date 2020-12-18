@@ -1,11 +1,12 @@
 import React from "react";
 import { rgba } from "polished";
-import { Button, Box, Text, theme, StyledCard, Tags } from "@advisable/donut";
+import { Button, Box, Text, theme, StyledCard } from "@advisable/donut";
 import styled from "styled-components";
 import ActionBarModal from "../../../Project/ActionBarModal";
 import ProjectDetails from "components/PreviousProjectDetails";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Home, ArrowRight } from "@styled-icons/feather";
+import Tags from "./Tags";
 
 const StyledSpecialistProject = styled(StyledCard)`
   position: relative;
@@ -122,11 +123,16 @@ function Project({ project }) {
           fontSize="sm"
           color="neutral800"
           lineHeight="20px"
-          marginBottom="24px"
+          marginBottom={2}
         >
           {project.excerpt}
         </Text>
-        <Tags tags={skillTags} />
+        <Tags
+          primarySkill={project.primarySkill}
+          skills={project.skills}
+          primaryIndustry={project.primaryIndustry}
+          industries={project.industries}
+        />
       </DialogDisclosure>
     </>
   );
