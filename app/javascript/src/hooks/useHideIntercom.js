@@ -1,9 +1,9 @@
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 
 export default function useHideIntercom() {
-  if (!window?.Intercom) return null;
+  useEffect(() => {
+    if (!window?.Intercom) return null;
 
-  useLayoutEffect(() => {
     setTimeout(() => {
       window.Intercom("update", {
         hide_default_launcher: true,
