@@ -177,6 +177,7 @@ function Composer({ onSubmit }) {
   const isConnected = connectionState === "connected";
 
   async function handleSubmit() {
+    if (loading) return;
     setLoading(true);
     await onSubmit(message);
     setMessage("");
