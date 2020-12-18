@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Home, Chat } from "@styled-icons/heroicons-solid";
 import { useQuery } from "@apollo/client";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import { Box } from "@advisable/donut";
+import { Box, useBreakpoint } from "@advisable/donut";
 import logo from "@advisable-main/components/Header/logo.svg";
 import CurrentUser from "./CurrentUser";
 import MobileNavigation from "./MobileNavigation";
 import useViewer from "src/hooks/useViewer";
+import GuildToggle from "src/components/GuildToggle";
 import {
   StyledHeader,
   StyledHeaderLink,
@@ -21,6 +22,7 @@ const TWO_MINUTES = 120000;
 const Header = () => {
   const viewer = useViewer();
   const location = useLocation();
+  const isLargeScreen = useBreakpoint("mUp");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const path = encodeURIComponent(`/guild${location.pathname}`);
 
@@ -73,6 +75,11 @@ const Header = () => {
         </Box>
 
         <Box display="flex" alignItems="center">
+          {viewer && isLargeScreen ? (
+            <GuildToggle mr={4} url="/">
+              Switch to projects
+            </GuildToggle>
+          ) : null}
           {viewer ? (
             <Box mr={4}>
               <Notifications hasUnread={hasUnreadNotifications} />

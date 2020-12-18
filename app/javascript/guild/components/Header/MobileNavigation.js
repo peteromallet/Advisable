@@ -1,5 +1,5 @@
 import React from "react";
-import { X } from "@styled-icons/heroicons-outline";
+import { X, SwitchHorizontal } from "@styled-icons/heroicons-outline";
 import { Box, Circle } from "@advisable/donut";
 import { Link } from "react-router-dom";
 
@@ -34,6 +34,20 @@ export default function MobileNavigation({ mobileNavOpen, setMobileNavOpen }) {
       <Box height={1} bg="neutral100" />
       <Box as={Link} display="block" py={6} to="/messages" color="neutral900">
         Messages
+      </Box>
+      <Box height={1} bg="neutral100" />
+      <Box
+        as="a"
+        display="flex"
+        alignItems="center"
+        py={6}
+        href="/"
+        color="neutral900"
+      >
+        <Box mr={2}>
+          <SwitchHorizontal size={20} />
+        </Box>
+        Switch to projects
       </Box>
       <Box height={1} bg="neutral100" />
     </Box>

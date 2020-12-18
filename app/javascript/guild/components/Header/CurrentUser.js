@@ -69,13 +69,6 @@ const CurrentUser = () => {
             </MenuItem>
             <MenuItem {...menu}>
               {(menuItemProps) => (
-                <StyledCurrentUserMenuItem as="a" href="/" {...menuItemProps}>
-                  Back to Advisable
-                </StyledCurrentUserMenuItem>
-              )}
-            </MenuItem>
-            <MenuItem {...menu}>
-              {(menuItemProps) => (
                 <StyledCurrentUserMenuItem
                   {...menuItemProps}
                   onClick={handleLogout}
