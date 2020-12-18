@@ -5,7 +5,6 @@ export const useTwilioChat = ({ channelSid }) => {
   const { client } = useTwilio();
   const [chatState, setChatState] = useState({
     messages: [],
-    error: null,
     initializing: true,
     activeChannel: null,
     fetchingMoreMessages: false,
@@ -19,23 +18,14 @@ export const useTwilioChat = ({ channelSid }) => {
       const pageSize = 50;
       setChatState((prev) => ({ ...prev, initializing: true }));
 
-      try {
-        const channel = await client.getChannelBySid(channelSid);
-        const paginator = await channel.getMessages(pageSize);
-        setChatState({
-          activeChannel: channel,
-          messages: paginator?.items,
-          initializing: false,
-          paginator,
-        });
-      } catch (e) {
-        console.log(e);
-        setChatState((prev) => ({
-          ...prev,
-          initializing: false,
-          error: "FAILED_TO_INITIALIZE",
-        }));
-      }
+      const channel = await client.getChannelBySid(channelSid);
+      const paginator = await channel.getMessages(pageSize);
+      setChatState({
+        activeChannel: channel,
+        messages: paginator?.items,
+        initializing: false,
+        paginator,
+      });
     };
 
     initializeChannel();
