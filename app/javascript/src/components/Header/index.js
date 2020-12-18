@@ -4,7 +4,7 @@ import { gql, useMutation } from "@apollo/client";
 import { Header as Wrapper, Spacer, Logo, Hamburger, Login } from "./styles";
 import logo from "./logo.svg";
 import CurrentUser from "./CurrentUser";
-import { Box } from "@advisable/donut";
+import { Box, useBreakpoint } from "@advisable/donut";
 import { useMobile } from "src/components/Breakpoint";
 import AnonymousNavigation from "./AnonymousNavigation";
 import ClientNavigation from "./ClientNavigation";
@@ -24,6 +24,7 @@ const LOGOUT = gql`
 const Header = () => {
   const viewer = useViewer();
   const isMobile = useMobile();
+  const isMedium = useBreakpoint("mUp");
   const [logout] = useMutation(LOGOUT, { variables: { input: {} } });
   const [navOpen, setNavOpen] = React.useState(false);
   const logoURL = useLogoURL();
@@ -72,15 +73,13 @@ const Header = () => {
             display="flex"
             alignItems="center"
           >
+            {viewer && isMedium && viewer.guild ? (
+              <GuildToggle url="/guild" mr={3}>
+                Switch to guild
+              </GuildToggle>
+            ) : null}
             {viewer && !isMobile && (
-              <>
-                {viewer.guild ? (
-                  <GuildToggle url="/guild" mr={3}>
-                    Switch to guild
-                  </GuildToggle>
-                ) : null}
-                <CurrentUser user={viewer} onLogout={() => handleLogout()} />
-              </>
+              <CurrentUser user={viewer} onLogout={() => handleLogout()} />
             )}
             {!viewer && !isMobile && <Login to="/login">Login</Login>}
           </Box>
