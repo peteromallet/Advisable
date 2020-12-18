@@ -23,7 +23,7 @@ function DeletePost({ post, size }) {
         },
       },
     });
-    notifications.notify("Deleted Guild Post");
+    notifications.notify("Deleted guild post");
     history.push(`/feed`);
   };
 
@@ -77,6 +77,8 @@ function DeletePost({ post, size }) {
                 size={size}
                 bg="neutral100"
                 color="neutral600"
+                aria-label="Delete post"
+                data-testid="deletePost"
                 icon={<Trash />}
               />
             )}
