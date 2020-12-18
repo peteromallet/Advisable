@@ -173,8 +173,6 @@ export default function TwilioProvider({ children }) {
     [state, channels, unreadMessages],
   );
 
-  console.log(value);
-
   return (
     <TwilioContext.Provider value={value}>{children}</TwilioContext.Provider>
   );
