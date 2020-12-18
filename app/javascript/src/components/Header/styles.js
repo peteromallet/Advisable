@@ -179,9 +179,7 @@ export const Badge = styled.div`
 `;
 
 export const CurrentUserWrapper = styled.div`
-  right: 25px;
   outline: none;
-  position: absolute;
 `;
 
 export const CurrentUserToggle = styled.div`
