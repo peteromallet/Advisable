@@ -32,6 +32,7 @@ const fields = gql`
     reviews {
       id
       name
+      avatar
       role
       comment
       companyName

@@ -7,6 +7,7 @@ import ProjectDetails from "src/components/PreviousProjectDetails";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Home, ArrowRight } from "@styled-icons/feather";
 import Tags from "./Tags";
+import ProjectStatus from "./ProjectStatus";
 
 const StyledSpecialistProject = styled(StyledCard)`
   position: relative;
@@ -55,7 +56,6 @@ function Project({ project }) {
   const extraSkills = project.skills.length - NUM_OF_SKILL_TAGS;
   let skillTags = project.skills.slice(0, NUM_OF_SKILL_TAGS).map((s) => s.name);
   extraSkills > 0 && skillTags.push(`+${extraSkills}`);
-
   return (
     <>
       <ActionBarModal
@@ -133,6 +133,7 @@ function Project({ project }) {
           primaryIndustry={project.primaryIndustry}
           industries={project.industries}
         />
+        <ProjectStatus project={project} />
       </DialogDisclosure>
     </>
   );
