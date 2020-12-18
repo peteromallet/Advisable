@@ -103,48 +103,57 @@ export default function TwilioProvider({ children }) {
     return data.chatGrant.accessToken;
   }, [apolloClient]);
 
+  const handleExpiredToken = useCallback(async () => {
+    const token = await getAccessToken();
+    state.client.updateToken(token);
+  }, [state, getAccessToken]);
+
   const handleChannelUpdated = useCallback((e) => {
     dispatch({ type: UPDATE_CHANNEL, channel: e.channel });
   }, []);
 
-  const handleConnectionStateChange = useCallback((connectionState) => {
-    dispatch({
-      type: UPDATE_CONNECTION_STATE,
-      connectionState,
-    });
-  }, []);
+  const handleConnectionStateChange = useCallback(
+    (connectionState) => {
+      if (connectionState === "denied") {
+        handleExpiredToken();
+      }
+
+      dispatch({
+        type: UPDATE_CONNECTION_STATE,
+        connectionState,
+      });
+    },
+    [handleExpiredToken],
+  );
 
   const setupTwilio = useCallback(async () => {
     const token = await getAccessToken();
     const chatClient = await Chat.Client.create(token);
-    window.chatClient = chatClient;
-
-    const handleExpiredToken = async () => {
-      const token = await getAccessToken();
-      chatClient.updateToken(token);
-    };
-
     const channels = await loadChannels(chatClient);
-
-    chatClient.on("connectionStateChanged", handleConnectionStateChange);
-    chatClient.on("tokenExpired", handleExpiredToken);
-    chatClient.on("tokenAboutToExpire", handleExpiredToken);
-    chatClient.on("channelUpdated", handleChannelUpdated);
-
-    dispatch({
-      type: LOAD_TWILIO,
-      client: chatClient,
-      channels,
-    });
-
-    return () => chatClient.removeAllListeners();
-  }, [getAccessToken, handleChannelUpdated, handleConnectionStateChange]);
+    dispatch({ type: LOAD_TWILIO, client: chatClient, channels });
+  }, [getAccessToken]);
 
   useEffect(() => {
     if (viewer && !state.client) {
       setupTwilio();
     }
   }, [viewer, setupTwilio, state.client]);
+
+  useEffect(() => {
+    if (state.client) {
+      state.client.on("channelUpdated", handleChannelUpdated);
+      state.client.on("tokenAboutToExpire", handleExpiredToken);
+      state.client.on("tokenExpired", handleExpiredToken);
+      state.client.on("connectionStateChanged", handleConnectionStateChange);
+
+      return () => state.client.removeAllListeners();
+    }
+  }, [
+    state.client,
+    handleChannelUpdated,
+    handleConnectionStateChange,
+    handleExpiredToken,
+  ]);
 
   const channels = useMemo(() => {
     return Object.values(state.channels).sort((a, b) => {
