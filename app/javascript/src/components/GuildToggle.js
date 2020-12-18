@@ -7,6 +7,8 @@ export const StyledGuildToggle = styled.a`
   ${margin};
 
   color: white;
+  flex-shrink: 0;
+  min-width: 0;
   cursor: pointer;
   font-size: 15px;
   font-weight: 400;
@@ -15,6 +17,7 @@ export const StyledGuildToggle = styled.a`
   align-items: center;
   display: inline-flex;
   text-decoration: none;
+  white-space: nowrap;
   letter-spacing: -0.01rem;
   background: rgba(255, 255, 255, 0.16);
 
