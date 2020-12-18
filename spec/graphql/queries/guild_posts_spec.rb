@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "guild posts query" do
+RSpec.describe "guild posts query" do # rubocop:disable Rspec/DescribeClass
   let(:guild_specialist) { build(:specialist, :guild) }
   let(:response_keys) { %w[guildPosts nodes] }
   let(:query) do
@@ -48,10 +48,21 @@ RSpec.describe "guild posts query" do
   it_behaves_like "guild specialist"
 
   context "with filters" do
-    let!(:guild_post) { create_list(:guild_post, 5) }
     let!(:opportunity) { create(:opportunity_guild_post) }
 
+    before do
+      create_list(:guild_post, 5)
+    end
+
     describe "when filtered by type" do
+      subject(:filtered_by_type) {
+        resp = AdvisableSchema.execute(
+          query,
+          context: {current_user: guild_specialist}
+        )
+        resp.dig("data", *response_keys)
+      }
+
       let(:query) {
         <<-GRAPHQL
           #{guild_post_fields_fragment}
@@ -65,18 +76,10 @@ RSpec.describe "guild posts query" do
         GRAPHQL
       }
 
-      subject(:filtered_by_type) {
-        resp = AdvisableSchema.execute(
-          query,
-          context: {current_user: guild_specialist}
-        )
-        resp.dig("data", *response_keys)
-      }
-
       it "filters by the type of post" do
-        expect(subject.size).to eq(1)
-        expect(subject.size).to_not eq(Guild::Post.count)
-        expect(subject.first).to include({
+        expect(filtered_by_type.size).to eq(1)
+        expect(filtered_by_type.size).not_to eq(Guild::Post.count)
+        expect(filtered_by_type.first).to include({
           "type" => "Opportunity",
           "id" => opportunity.id
         })
@@ -84,6 +87,11 @@ RSpec.describe "guild posts query" do
     end
 
     describe "when filtered by topic" do
+      subject(:filtered_by_topic) {
+        resp = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
+        resp.dig("data", *response_keys)
+      }
+
       let(:guild_topics) { create_list(:guild_topic, 2) }
 
       let(:query) {
@@ -100,19 +108,15 @@ RSpec.describe "guild posts query" do
         GRAPHQL
       }
 
-      subject(:filtered_by_topic) {
-        resp = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
-        resp.dig("data", *response_keys)
-      }
       before do
         opportunity.guild_topic_list.add(guild_topics.first)
         opportunity.save!
       end
 
       it "filters by a guild topic" do
-        topic_results = subject[0]["guildTopics"]
+        topic_results = filtered_by_topic[0]["guildTopics"]
         expect(topic_results.size).to eq(1)
-        expect(topic_results.size).to_not eq(Guild::Topic.count)
+        expect(topic_results.size).not_to eq(Guild::Topic.count)
         expect(topic_results[0]).to include({
           "id" => guild_topics.first.id
         })
@@ -159,6 +163,20 @@ RSpec.describe "guild posts query" do
           "status" => "removed"
         }
       )
+    end
+  end
+
+  context 'when a post is pinned' do
+    let!(:pinned) { create(:guild_post, created_at: 10.days.ago, pinned: true) }
+
+    before do
+      create_list(:guild_post, 5)
+    end
+
+    it 'is always first in the result' do
+      response = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
+      posts = response["data"]["guildPosts"]["nodes"]
+      expect(posts.first["id"]).to eq(pinned.id)
     end
   end
 end

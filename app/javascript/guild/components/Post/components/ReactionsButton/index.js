@@ -81,6 +81,7 @@ const ReactionsButton = ({ size, post }) => {
         <PostAction
           size={size}
           onClick={handleReaction}
+          aria-label="Mark as interesting"
           color={reacted ? "white" : "yellow700"}
           bg={reacted ? "yellow500" : "yellow100"}
           icon={reacted ? <BulbFilled /> : <Bulb />}

@@ -104,6 +104,7 @@ export default function CreateGuildPost({ guildPost }) {
                   type="radio"
                   as={RadioOption}
                   value="AdviceRequired"
+                  aria-label="Looking for advice"
                   onChange={(e) => selectHandler(formik, e)}
                   onClick={(e) => selectHandler(formik, e)}
                 >
@@ -137,6 +138,7 @@ export default function CreateGuildPost({ guildPost }) {
                   type="radio"
                   as={RadioOption}
                   value="Opportunity"
+                  aria-label="Opportunity"
                   onChange={(e) => selectHandler(formik, e)}
                   onClick={(e) => selectHandler(formik, e)}
                 >
@@ -170,6 +172,7 @@ export default function CreateGuildPost({ guildPost }) {
                   type="radio"
                   as={RadioOption}
                   value="CaseStudy"
+                  aria-label="Case study"
                   onChange={(e) => selectHandler(formik, e)}
                   onClick={(e) => selectHandler(formik, e)}
                 >
@@ -203,6 +206,7 @@ export default function CreateGuildPost({ guildPost }) {
                   type="radio"
                   as={RadioOption}
                   value="Post"
+                  aria-label="Other"
                   onChange={(e) => selectHandler(formik, e)}
                   onClick={(e) => selectHandler(formik, e)}
                 >

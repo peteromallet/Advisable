@@ -125,6 +125,7 @@ export default function EditAudience({ guildPost }) {
                     as={RadioOption}
                     key={type.value}
                     value={type.value}
+                    aria-label={type.title}
                     onChange={(e) => handleChange(formik, e)}
                     onClick={(e) => handleClick(formik, e)}
                   >
