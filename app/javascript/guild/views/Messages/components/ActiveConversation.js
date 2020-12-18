@@ -71,8 +71,10 @@ const ActiveConversation = ({ channelSid }) => {
   const scrollToBottom =
     !fetchingMoreMessages && (!paginator?.hasNextPage || hasUnreadMessages);
 
-  const messagesRef = useBottomScrollListener(async () => {
-    await activeConversation.setAllMessagesConsumed();
+  const messagesRef = useBottomScrollListener(() => {
+    if (activeConversation) {
+      activeConversation.setAllMessagesConsumed();
+    }
   });
 
   async function loadMoreMessages() {
