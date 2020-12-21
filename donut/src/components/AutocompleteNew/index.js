@@ -43,6 +43,7 @@ function scrollToItem(listbox, item) {
 
 export default function Autocomplete({
   options: defaultOptions,
+  max,
   value,
   multiple,
   onChange,
@@ -156,6 +157,8 @@ export default function Autocomplete({
     searchDirectMatch,
   ]);
 
+  const reachedMax = max ? value.length === max : false;
+
   function handleChange(option) {
     if (multiple) {
       onChange([...value, option]);
@@ -187,6 +190,10 @@ export default function Autocomplete({
     }
   }
 
+  function removeOption(optionValue) {
+    onChange(value.filter((v) => v.value !== optionValue));
+  }
+
   function handleOpen() {
     if (!props.disabled && !isOpen) {
       setOpen(true);
@@ -216,7 +223,7 @@ export default function Autocomplete({
     setSearchValue(e.target.value);
   }
 
-  function handleClick(e) {
+  function handleClick() {
     handleOpen();
   }
 
@@ -286,7 +293,14 @@ export default function Autocomplete({
           suffix={<ChevronDown />}
         />
       </div>
-      <Box width="100%" ref={listboxContainerRef}>
+      <Box
+        width="100%"
+        position="absolute"
+        ref={listboxContainerRef}
+        style={{
+          pointerEvents: isOpen ? "all" : "none",
+        }}
+      >
         <StyledAutocompleteMenu
           as={motion.div}
           $isOpen={isOpen}
@@ -317,7 +331,13 @@ export default function Autocomplete({
               </StyledAutocompleteNoResults>
             ) : null}
 
-            {!loading
+            {reachedMax ? (
+              <StyledAutocompleteNoResults>
+                You can&apos;t select more than {max} options.
+              </StyledAutocompleteNoResults>
+            ) : null}
+
+            {!loading && !reachedMax
               ? filteredOptions.map((option, index) => (
                   <AutocompleteOption
                     key={option.value}
@@ -337,7 +357,12 @@ export default function Autocomplete({
       {multiple && value.length > 0 && (
         <Box paddingTop="sm">
           {value.map((v) => (
-            <Tag key={v.value} marginBottom="2xs" marginRight="2xs">
+            <Tag
+              key={v.value}
+              marginBottom="2xs"
+              marginRight="2xs"
+              onRemove={() => removeOption(v.value)}
+            >
               {v.label}
             </Tag>
           ))}
