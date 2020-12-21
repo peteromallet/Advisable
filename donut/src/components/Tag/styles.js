@@ -16,20 +16,21 @@ const color = variant({
       color: theme.colors.blue900,
       background: theme.colors.blue100,
     },
-    skill: {
-      color: theme.colors.blue500,
-      background: theme.colors.blue50,
-    },
-    industry: {
-      color: theme.colors.cyan700,
-      background: theme.colors.cyan100,
-    },
     orange: {
       color: theme.colors.orange900,
       background: theme.colors.orange100,
     },
     cyan: {
       color: theme.colors.cyan900,
+      background: theme.colors.cyan100,
+    },
+    // Temporary variants
+    skill: {
+      color: theme.colors.blue500,
+      background: theme.colors.blue50,
+    },
+    industry: {
+      color: theme.colors.cyan700,
       background: theme.colors.cyan100,
     },
   },
@@ -39,11 +40,13 @@ const size = variant({
   prop: "size",
   variants: {
     s: {
-      height: 28,
-      fontSize: 13,
       borderRadius: 8,
-      padding: "0 12px",
-      letterSpacing: "-0.01rem",
+
+      span: {
+        fontSize: 13,
+        letterSpacing: "-0.01rem",
+        padding: "8px 12px",
+      },
 
       svg: {
         width: 16,
@@ -52,11 +55,13 @@ const size = variant({
       },
     },
     m: {
-      height: 32,
-      fontSize: 15,
       borderRadius: 10,
-      padding: "0 16px",
-      letterSpacing: "-0.02rem",
+
+      span: {
+        fontSize: 15,
+        letterSpacing: "-0.02rem",
+        padding: "8px 16px",
+      },
 
       svg: {
         width: 20,
@@ -72,9 +77,12 @@ export const StyledTag = styled.div`
   ${color};
   ${size};
 
-  font-weight: 500;
   align-items: center;
   display: inline-flex;
+`;
+
+export const StyledTagText = styled.span`
+  font-weight: 500;
 `;
 
 export default StyledTag;

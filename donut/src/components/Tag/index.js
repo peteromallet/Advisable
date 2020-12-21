@@ -1,11 +1,11 @@
 import React from "react";
-import { StyledTag } from "./styles";
+import { StyledTag, StyledTagText } from "./styles";
 
 function Tag({ children, icon: Icon, suffix, ...props }) {
   return (
     <StyledTag {...props}>
       {Icon ? <Icon /> : null}
-      {children}
+      <StyledTagText>{children}</StyledTagText>
       {suffix ? suffix : null}
     </StyledTag>
   );
