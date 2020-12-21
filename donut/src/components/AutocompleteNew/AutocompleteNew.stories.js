@@ -1,7 +1,7 @@
 import React from "react";
 import { sortBy } from "lodash-es";
 import Fuse from "fuse.js";
-import { withKnobs, select, text } from "@storybook/addon-knobs";
+import { withKnobs, select } from "@storybook/addon-knobs";
 import Card from "../Card";
 import Autocomplete from "./";
 
@@ -1274,7 +1274,7 @@ const fuse = new Fuse(COUNTRIES, {
 });
 
 const searchCountries = (query) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     console.log("SEARCHING");
     const options = fuse.search(query).map((obj) => ({
       value: obj.item.code,
@@ -1376,12 +1376,43 @@ export const asyncAndCreatable = () => {
 };
 
 export const multiple = () => {
-  const [value, setValue] = React.useState([]);
+  const [value, setValue] = React.useState([
+    { label: "Ireland", value: "IE" },
+    { label: "Germany", value: "DE" },
+    { label: "Italy", value: "IT" },
+    { label: "France", value: "FR" },
+  ]);
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">
       <Autocomplete
         multiple
+        value={value}
+        label="Choose countries"
+        placeholder="Country"
+        onChange={(v) => setValue(v)}
+        options={sortBy(COUNTRIES, "name").map((country) => ({
+          label: country.name,
+          value: country.code,
+        }))}
+      />
+    </Card>
+  );
+};
+
+export const multipleWithMax = () => {
+  const [value, setValue] = React.useState([
+    { label: "Ireland", value: "IE" },
+    { label: "Germany", value: "DE" },
+    { label: "Italy", value: "IT" },
+    { label: "France", value: "FR" },
+  ]);
+
+  return (
+    <Card maxWidth={600} margin="50px auto" padding="l">
+      <Autocomplete
+        multiple
+        max={4}
         value={value}
         label="Choose countries"
         placeholder="Country"

@@ -30,6 +30,22 @@ const color = variant({
 export const StyledTagPrefix = styled.div``;
 export const StyledTagSuffix = styled.div``;
 
+export const StyledTagRemoveButton = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: ${theme.colors.neutral200};
+
+  &:hover {
+    background: ${theme.colors.neutral300};
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
 const size = variant({
   prop: "size",
   variants: {
@@ -49,6 +65,9 @@ const size = variant({
 
       [StyledTagSuffix]: {
         marginLeft: 2,
+      },
+      [StyledTagRemoveButton]: {
+        padding: "0 4px",
       },
 
       svg: {
@@ -74,6 +93,10 @@ const size = variant({
         marginLeft: 2,
       },
 
+      [StyledTagRemoveButton]: {
+        padding: "0 6px",
+      },
+
       svg: {
         width: 20,
         height: 20,
@@ -87,6 +110,9 @@ export const StyledTag = styled.div`
   ${color};
   ${size};
 
+  font-weight: 500;
+  overflow: hidden;
+  user-select: none;
   align-items: center;
   display: inline-flex;
 `;
