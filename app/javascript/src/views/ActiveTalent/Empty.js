@@ -1,7 +1,6 @@
 // Loads the empty state for the manage talent view
 import React from "react";
-import { Link } from "react-router-dom";
-import { Box, Text, Button } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import illustration from "./illustration.png";
 
 export default function ActiveTalentEmpty() {
@@ -19,9 +18,6 @@ export default function ActiveTalentEmpty() {
           start a project with a freelancer you will be able to manage their
           work from here.
         </Text>
-        <Link to="/freelancer_search">
-          <Button>Create a project</Button>
-        </Link>
       </div>
     </div>
   );
