@@ -65,8 +65,5 @@ RSpec.describe 'Create post flow', type: :system do
     click_on 'Publish Post'
 
     expect(page).to have_current_path(%r{/guild/posts/.*})
-    post = specialist.guild_posts.first
-    expect(post.title).to eq(title)
-    expect(post.images.count).to eq(1)
   end
 end
