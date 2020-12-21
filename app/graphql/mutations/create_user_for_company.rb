@@ -26,7 +26,8 @@ class Mutations::CreateUserForCompany < Mutations::BaseMutation
       account: account,
       company_id: company.id,
       company_name: company.name,
-      application_status: "Active"
+      application_status: "Active",
+      sales_person: current_user.sales_person
     )
     user.save_and_sync_with_responsible!(current_account_id)
 
