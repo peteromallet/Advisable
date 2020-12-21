@@ -44,7 +44,7 @@ const ActiveConversation = ({ channelSid }) => {
     return Object.values(members).filter((uid) => uid !== viewer.id)?.[0];
   }, [viewer, activeConversation]);
 
-  const { data } = useQuery(CHAT_PARTICIPANT_QUERY, {
+  const { data, loading } = useQuery(CHAT_PARTICIPANT_QUERY, {
     variables: { id: other },
     skip: !other,
   });
@@ -82,7 +82,7 @@ const ActiveConversation = ({ channelSid }) => {
     messagesRef.current.scrollTop = messagesRef.current.scrollTop - 64;
   }
 
-  if (initializing) return <Loading />;
+  if (initializing || loading) return <Loading />;
 
   return (
     activeConversation && (
