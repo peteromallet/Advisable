@@ -1,26 +1,41 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Modal, Avatar, Box, Text, Tag, Paragraph } from "@advisable/donut";
+import {
+  DialogDisclosure,
+  Button,
+  Modal,
+  Avatar,
+  Box,
+  Text,
+  Tag,
+  Paragraph,
+} from "@advisable/donut";
+import useViewer from "src/hooks/useViewer";
+import { Edit } from "@styled-icons/feather";
 import GET_PROJECT from "./getProject";
 import ImageGallery, { useImageGallery } from "components/ImageGallery";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
 import Review from "components/Review";
+import { usePreviousProjectModal } from "src/components/PreviousProjectFormModal";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
 import { StyledImageThumbnail } from "./styles";
 
 function PreviousProjectDetails({ id }) {
   const gallery = useImageGallery();
+  const viewer = useViewer();
   const { loading, data, error } = useQuery(GET_PROJECT, {
     variables: {
       id: id,
     },
   });
 
+  const modal = usePreviousProjectModal("/previous_projects/new");
   if (loading) return <ProjectDetailsLoading />;
   if (error) return <Text>Failed to load project, please try again.</Text>;
 
   const project = data.previousProject;
 
+  const isOwner = project.specialist.id === viewer?.id;
   const cover = project.images.find((i) => i.cover);
   const otherImages = project.images.filter((i) => !i.cover);
 
@@ -143,6 +158,25 @@ function PreviousProjectDetails({ id }) {
           <Review review={project.reviews[0]} />
         </>
       )}
+      {isOwner ? (
+        <Box
+          display="flex"
+          borderTop="1px solid"
+          borderColor="neutral100"
+          pt={6}
+          mt={8}
+        >
+          <DialogDisclosure
+            ml="auto"
+            as={Button}
+            variant="subtle"
+            prefix={<Edit />}
+            {...modal.atPath(`/previous_projects/${project.id}`)}
+          >
+            Edit Project
+          </DialogDisclosure>
+        </Box>
+      ) : null}
     </>
   );
 }
