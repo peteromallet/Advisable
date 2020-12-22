@@ -1,6 +1,5 @@
 import React from "react";
-import { Refresh } from "@styled-icons/heroicons-outline";
-import { Pencil } from "@styled-icons/heroicons-solid";
+import { RefreshCcw, Edit2, AlertCircle } from "@styled-icons/feather";
 import { Box, Text, Avatar } from "@advisable/donut";
 import { StyledBadge, StyledBadgePrefix } from "./styles";
 
@@ -8,17 +7,18 @@ function Review({ review }) {
   const role = review.role;
   const atCompany = review.companyName && `at ${review.companyName}`;
   return (
-    <Box display="flex" mt={4} alignItems="center">
-      <Avatar
-        size="xs"
-        mr={2}
-        bg="neutral100"
-        name={review.name}
-        url={review.avatar}
-      />
+    <Box display="flex" py={3} alignItems="center">
+      <Box mr={2}>
+        <Avatar
+          size="xs"
+          bg="neutral100"
+          name={review.name}
+          url={review.avatar}
+        />
+      </Box>
       <Box>
-        <Text fontSize="s" fontWeight="medium" color="neutral800" mb={0.5}>
-          Reviewer by {review.name}
+        <Text fontSize="s" fontWeight="medium" color="neutral700" mb={0.5}>
+          Reviewed by {review.name}
         </Text>
         <Text fontSize="xs" color="neutral600">
           {role} {atCompany}
@@ -45,28 +45,31 @@ const STATUSES = {
     component: Status,
     variant: "neutral",
     label: "Draft Project",
-    icon: <Pencil />,
+    icon: <Edit2 />,
   },
   Pending: {
     component: Status,
     variant: "yellow",
     label: "Pending Verification",
-    icon: <Refresh />,
+    icon: <RefreshCcw />,
   },
   "Validation Failed": {
     component: Status,
     variant: "red",
     label: "Validation Failed",
-    icon: <Refresh />,
+    icon: <AlertCircle />,
   },
 };
 
 function ProjectStatus({ project }) {
-  console.log("project", project);
   const status = (project.draft && "Draft") || project.validationStatus;
   const config = STATUSES[status];
-  console.log("config", config);
-  return <config.component {...config} review={project.reviews?.[0]} />;
+
+  return (
+    <Box px={6} borderTop="1px solid" borderTopColor="neutral100">
+      <config.component {...config} review={project.reviews?.[0]} />
+    </Box>
+  );
 }
 
 export default ProjectStatus;

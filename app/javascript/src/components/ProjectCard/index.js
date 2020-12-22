@@ -69,70 +69,71 @@ function Project({ project }) {
       <DialogDisclosure
         {...dialog}
         as={StyledSpecialistProject}
-        padding="24px"
         data-testid="project-card"
       >
-        <StyledHoverDecoration>
-          <Button variant="subtle" suffix={<ArrowRight />}>
-            View More
-          </Button>
-        </StyledHoverDecoration>
-        {project.coverPhoto && (
-          <Box
-            width="100%"
-            height="160px"
-            borderRadius="12px"
-            marginBottom="24px"
-            backgroundSize="cover"
-            backgroundPosition="center"
-            backgroundColor="neutral100"
-            backgroundImage={`url("${project.coverPhoto.url}")`}
-          />
-        )}
-        <Text
-          fontSize="xl"
-          lineHeight="22px"
-          color="neutral900"
-          fontWeight="medium"
-          letterSpacing="-0.02em"
-          className="projectTitle"
-        >
-          {project.primarySkill?.name || project.skills[0]?.name} project
-        </Text>
-        <Box
-          color="neutral600"
-          display="flex"
-          alignItems="center"
-          mb="xs"
-          mt="2px"
-        >
-          <Home size={18} />
+        <Box padding={6} pb={4}>
+          <StyledHoverDecoration>
+            <Button variant="subtle" suffix={<ArrowRight />}>
+              View More
+            </Button>
+          </StyledHoverDecoration>
+          {project.coverPhoto && (
+            <Box
+              width="100%"
+              height="160px"
+              borderRadius="12px"
+              marginBottom="24px"
+              backgroundSize="cover"
+              backgroundPosition="center"
+              backgroundColor="neutral100"
+              backgroundImage={`url("${project.coverPhoto.url}")`}
+            />
+          )}
           <Text
-            fontSize="m"
+            fontSize="xl"
             lineHeight="22px"
-            color="neutral600"
+            color="neutral900"
+            fontWeight="medium"
             letterSpacing="-0.02em"
-            className="clientName"
-            mt="xxs"
-            ml="xxs"
+            className="projectTitle"
           >
-            {project.clientName}
+            {project.primarySkill?.name || project.skills[0]?.name} project
           </Text>
+          <Box
+            color="neutral600"
+            display="flex"
+            alignItems="center"
+            mb="xs"
+            mt="2px"
+          >
+            <Home size={18} />
+            <Text
+              fontSize="m"
+              lineHeight="22px"
+              color="neutral600"
+              letterSpacing="-0.02em"
+              className="clientName"
+              mt="xxs"
+              ml="xxs"
+            >
+              {project.clientName}
+            </Text>
+          </Box>
+          <Text
+            fontSize="sm"
+            color="neutral800"
+            lineHeight="20px"
+            marginBottom={2}
+          >
+            {project.excerpt}
+          </Text>
+          <Tags
+            primarySkill={project.primarySkill}
+            skills={project.skills}
+            primaryIndustry={project.primaryIndustry}
+            industries={project.industries}
+          />
         </Box>
-        <Text
-          fontSize="sm"
-          color="neutral800"
-          lineHeight="20px"
-          marginBottom={2}
-        >
-          {project.excerpt}
-        </Text>
-        <Tags
-          primarySkill={project.primarySkill}
-          skills={project.skills}
-          primaryIndustry={project.primaryIndustry}
-          industries={project.industries}
-        />
         <ProjectStatus project={project} />
       </DialogDisclosure>
     </>
