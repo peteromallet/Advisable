@@ -226,7 +226,7 @@ class Types::SpecialistType < Types::BaseType
   def previous_projects(include_validation_failed: false, include_drafts: false, include_validation_pending: true)
     validation_statuses = ["Validated"]
     validation_statuses << "Pending" if include_validation_pending
-    validation_statuses << "Failed" if include_validation_failed
+    validation_statuses << "Validation Failed" if include_validation_failed
     records = object.previous_projects.where(validation_status: validation_statuses)
     records = records.published unless include_drafts
     records.order(created_at: :asc)
