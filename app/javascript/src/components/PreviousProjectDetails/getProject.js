@@ -6,6 +6,8 @@ const getProject = gql`
       id
       title
       description
+      validationStatus
+      draft
       images {
         id
         url
