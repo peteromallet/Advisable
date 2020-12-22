@@ -2,9 +2,10 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { Modal, Avatar, Box, Text, Tag, Paragraph } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
-import ImageGallery, { useImageGallery } from "components/ImageGallery";
+import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
-import Review from "components/Review";
+import Review from "src/components/Review";
+import ProjectValidationPrompt from "src/components/ProjectValidationPrompt";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
 import { StyledImageThumbnail } from "./styles";
 
@@ -137,11 +138,16 @@ function PreviousProjectDetails({ id }) {
           </Box>
         </Box>
       </Box>
-      {project.reviews.length > 0 && project.reviews[0]?.comment && (
+      {project.reviews.length > 0 && project.reviews[0]?.comment ? (
         <>
           <Box height={1} bg="neutral100" marginBottom="xl" />
           <Review review={project.reviews[0]} />
         </>
+      ) : null}
+      {!project.draft && project.validationStatus === "Pending" && (
+        <Box mb="m">
+          <ProjectValidationPrompt project={project} />
+        </Box>
       )}
     </>
   );
