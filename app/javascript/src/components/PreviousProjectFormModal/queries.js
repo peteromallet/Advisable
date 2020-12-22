@@ -39,6 +39,9 @@ const previousProjectFields = gql`
     executionCost
     industryRelevance
     locationRelevance
+    coverPhoto {
+      url
+    }
     images {
       id
       url
@@ -47,6 +50,7 @@ const previousProjectFields = gql`
     primaryIndustry {
       id
       name
+      color
     }
     industries {
       id
@@ -62,6 +66,10 @@ const previousProjectFields = gql`
     }
     reviews {
       id
+      name
+      role
+      comment
+      companyName
     }
   }
 `;
