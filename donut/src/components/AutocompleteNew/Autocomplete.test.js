@@ -1,8 +1,7 @@
 import React from "react";
 import Autocomplete from "./index";
-import { render, fireEvent, waitFor, screen } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { eq } from "lodash-es";
 
 const OPTIONS = [
   { value: "1", label: "Jim" },

@@ -1,3 +1,4 @@
+import { rgba, darken } from "polished";
 import { space, variant } from "styled-system";
 import theme from "../../theme";
 import styled from "styled-components";
@@ -5,12 +6,24 @@ import styled from "styled-components";
 const color = variant({
   variants: {
     neutral: {
-      color: theme.colors.blue900,
-      background: "#EFF0F3",
+      color: theme.colors.neutral800,
+      background: theme.colors.neutral100,
+      [StyledTagRemoveButton]: {
+        background: darken(0.04, theme.colors.neutral100),
+        "&:hover": {
+          background: darken(0.05, theme.colors.neutral200),
+        },
+      },
     },
     dark: {
-      color: theme.colors.white[9],
+      color: theme.colors.white,
       background: theme.colors.blue900,
+      [StyledTagRemoveButton]: {
+        background: "rgba(255, 255, 255, 0.1)",
+        "&:hover": {
+          background: "rgba(255, 255, 255, 0.15)",
+        },
+      },
     },
     blue: {
       color: theme.colors.blue500,
@@ -73,6 +86,10 @@ const size = variant({
       svg: {
         width: 16,
         height: 16,
+      },
+      [StyledTagRemoveButton]: {
+        padding: "0 6px",
+        svg: { margin: 0 },
       },
     },
     m: {

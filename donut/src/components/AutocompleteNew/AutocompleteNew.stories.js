@@ -1308,6 +1308,30 @@ export const singleSelect = () => {
   );
 };
 
+export const existingValue = () => {
+  const [value, setValue] = React.useState({
+    label: "Ireland",
+    value: "IE",
+  });
+  const size = select("Size", ["sm", "md", "lg"], "md");
+
+  return (
+    <Card maxWidth={600} margin="50px auto" padding="l">
+      <Autocomplete
+        size={size}
+        value={value}
+        label="Choose a country"
+        placeholder="Country"
+        onChange={(v) => setValue(v)}
+        options={sortBy(COUNTRIES, "name").map((country) => ({
+          label: country.name,
+          value: country.code,
+        }))}
+      />
+    </Card>
+  );
+};
+
 export const async = () => {
   const [value, setValue] = React.useState("");
   const size = select("Size", ["sm", "md", "lg"], "md");
