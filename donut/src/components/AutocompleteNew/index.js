@@ -63,7 +63,7 @@ export default function Autocomplete({
   const [loading, setLoading] = React.useState(false);
   const [options, setOptions] = React.useState(defaultOptions);
   const [searchValue, setSearchValue] = React.useState("");
-  const [selectionIndex, setSelectionIndex] = React.useState(-1);
+  const [selectionIndex, setSelectionIndex] = React.useState(0);
 
   const listboxID = React.useMemo(() => uniqueId("listbox"), []);
 
@@ -72,7 +72,17 @@ export default function Autocomplete({
       const popper = createPopper(
         inputRef.current,
         listboxContainerRef.current,
-        { placement: "bottom" },
+        {
+          placement: "bottom",
+          modifiers: [
+            {
+              name: "offset",
+              options: {
+                offset: [0, 8],
+              },
+            },
+          ],
+        },
       );
 
       return () => popper.destroy();
@@ -177,7 +187,7 @@ export default function Autocomplete({
 
     setOpen(false);
     setSearchValue("");
-    setSelectionIndex(-1);
+    setSelectionIndex(0);
 
     if (
       searchValue &&
@@ -216,15 +226,16 @@ export default function Autocomplete({
 
     setOpen(false);
     setSearchValue("");
-    setSelectionIndex(-1);
+    setSelectionIndex(0);
     setOptions(defaultOptions);
     if (props.onBlur) props.onBlur(e);
   }
 
   function handleInputChange(e) {
     handleOpen();
-    setSelectionIndex(-1);
+    setSelectionIndex(0);
     setSearchValue(e.target.value);
+    listboxRef.current.scrollTop = 0;
   }
 
   function handleClick() {
