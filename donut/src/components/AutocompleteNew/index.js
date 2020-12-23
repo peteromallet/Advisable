@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Box, Tag } from "@advisable/donut";
+import { uniqueId } from "lodash-es";
 import Fuse from "fuse.js";
 import { createPopper } from "@popperjs/core";
 import { ChevronDown } from "@styled-icons/ionicons-outline";
@@ -28,6 +29,7 @@ const ENTER = 13;
 const ESCAPE = 27;
 const ARROW_UP = 38;
 const ARROW_DOWN = 40;
+const TYPING_TIMER = 700;
 
 function scrollToItem(listbox, item) {
   if (listbox.scrollHeight > listbox.clientHeight) {
@@ -62,6 +64,8 @@ export default function Autocomplete({
   const [options, setOptions] = React.useState(defaultOptions);
   const [searchValue, setSearchValue] = React.useState("");
   const [selectionIndex, setSelectionIndex] = React.useState(-1);
+
+  const listboxID = React.useMemo(() => uniqueId("listbox"), []);
 
   useEffect(() => {
     if (inputRef.current && listboxContainerRef.current) {
@@ -104,7 +108,7 @@ export default function Autocomplete({
 
       typingTimer.current = setTimeout(() => {
         handleLoadOptions();
-      }, 300);
+      }, TYPING_TIMER);
     } else {
       setLoading(false);
       setOptions(defaultOptions);
@@ -280,11 +284,22 @@ export default function Autocomplete({
   }
 
   return (
-    <StyledAutocomplete>
+    <StyledAutocomplete
+      role="combobox"
+      aria-owns={isOpen ? listboxID : null}
+      aria-expanded={isOpen ? "true" : "false"}
+      aria-haspopup="listbox"
+    >
       <div ref={inputRef}>
         <Input
           {...props}
+          role="combobox"
           autoComplete="off"
+          aria-autocomplete="list"
+          aria-activedescendant={
+            selectionIndex !== null ? `option_${selectionIndex}` : null
+          }
+          aria-controls={isOpen ? listboxID : null}
           value={isOpen ? searchValue : value?.label || ""}
           onBlur={handleBlur}
           onClick={handleClick}
@@ -318,6 +333,7 @@ export default function Autocomplete({
           }}
         >
           <StyledAutocompleteMenuList
+            id={listboxID}
             ref={listboxRef}
             role="listbox"
             tabIndex="-1"
@@ -326,7 +342,10 @@ export default function Autocomplete({
               <StyledAutocompleteLoading>loading...</StyledAutocompleteLoading>
             ) : null}
 
-            {!loading && !creatable && filteredOptions.length === 0 ? (
+            {!loading &&
+            !creatable &&
+            !reachedMax &&
+            filteredOptions.length === 0 ? (
               <StyledAutocompleteNoResults>
                 No results
               </StyledAutocompleteNoResults>
@@ -342,6 +361,8 @@ export default function Autocomplete({
               ? filteredOptions.map((option, index) => (
                   <AutocompleteOption
                     key={option.value}
+                    role="option"
+                    id={`option_${index}`}
                     selected={selectionIndex === index}
                     onClick={() => handleOptionClick(index)}
                     ref={selectionIndex === index ? selectedItemRef : null}
@@ -359,8 +380,8 @@ export default function Autocomplete({
         <Box paddingTop="sm">
           {value.map((v) => (
             <Tag
-              key={v.value}
               size="m"
+              key={v.value}
               marginRight="2xs"
               marginBottom="2xs"
               onRemove={() => removeOption(v.value)}
