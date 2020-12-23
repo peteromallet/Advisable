@@ -39,6 +39,7 @@ export const StyledAutocompleteNoResults = styled.div`
 
 export const StyledAutocompleteLoading = styled.div`
   padding: 20px;
+  font-size: 15px;
   user-select: none;
   text-align: center;
   color: ${theme.colors.neutral400};
@@ -60,7 +61,7 @@ export const StyledAutocompleteMenuItem = styled.li`
   span {
     display: block;
     font-size: 14px;
-    padding: 12px 12px;
+    padding: 8px 12px;
     color: ${theme.colors.neutral800};
   }
 

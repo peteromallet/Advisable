@@ -21,7 +21,6 @@ export const Autocomplete = styled.div`
 
 export const Input = styled.input`
   width: 100%;
-  height: 38px;
   border: none;
   outline: none;
   font-size: 16px;
