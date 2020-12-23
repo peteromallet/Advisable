@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Box, Tag } from "@advisable/donut";
 import useCombobox from "./useCombobox";
 import { createPopper } from "@popperjs/core";
@@ -49,69 +49,60 @@ export default function Autocomplete({ ...props }) {
 
       return () => popper.destroy();
     }
-  }, []);
+  }, [isOpen]);
 
   return (
     <StyledAutocomplete {...containerProps}>
       <div ref={inputConatinerRef}>
         <Input {...inputProps} suffix={<ChevronDown />} />
       </div>
-      <Box
-        width="100%"
-        position="absolute"
-        ref={listboxContainerRef}
-        style={{
-          pointerEvents: isOpen ? "all" : "none",
-        }}
-      >
-        <StyledAutocompleteMenu
-          as={motion.div}
-          $isOpen={isOpen}
-          initial={{
-            opacity: 0,
-            y: 8,
-          }}
-          animate={{
-            opacity: isOpen ? 1 : 0,
-            y: isOpen ? 0 : 8,
-            transition: {
-              duration: 0.3,
-            },
-          }}
-        >
-          <StyledAutocompleteMenuList {...listboxProps}>
-            {isLoading ? (
-              <StyledAutocompleteLoading>loading...</StyledAutocompleteLoading>
-            ) : null}
+      <AnimatePresence>
+        {isOpen && (
+          <Box width="100%" position="absolute" ref={listboxContainerRef}>
+            <StyledAutocompleteMenu
+              as={motion.div}
+              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+            >
+              <StyledAutocompleteMenuList {...listboxProps}>
+                {isLoading ? (
+                  <StyledAutocompleteLoading>
+                    loading...
+                  </StyledAutocompleteLoading>
+                ) : null}
 
-            {!isLoading &&
-            !props.creatable &&
-            !hasReachedMax &&
-            options.length === 0 ? (
-              <StyledAutocompleteNoResults>
-                No results
-              </StyledAutocompleteNoResults>
-            ) : null}
+                {!isLoading &&
+                !props.creatable &&
+                !hasReachedMax &&
+                options.length === 0 ? (
+                  <StyledAutocompleteNoResults>
+                    No results
+                  </StyledAutocompleteNoResults>
+                ) : null}
 
-            {hasReachedMax ? (
-              <StyledAutocompleteNoResults>
-                You can&apos;t select more than {props.max} options.
-              </StyledAutocompleteNoResults>
-            ) : null}
+                {hasReachedMax ? (
+                  <StyledAutocompleteNoResults>
+                    You can&apos;t select more than {props.max} options.
+                  </StyledAutocompleteNoResults>
+                ) : null}
 
-            {!isLoading && !hasReachedMax
-              ? options.map((option, index) => (
-                  <AutocompleteOption
-                    key={option.value}
-                    {...propsForOption(index)}
-                  >
-                    {option.label}
-                  </AutocompleteOption>
-                ))
-              : null}
-          </StyledAutocompleteMenuList>
-        </StyledAutocompleteMenu>
-      </Box>
+                {!isLoading && !hasReachedMax
+                  ? options.map((option, index) => (
+                      <AutocompleteOption
+                        key={option.value}
+                        {...propsForOption(index)}
+                      >
+                        {option.label}
+                      </AutocompleteOption>
+                    ))
+                  : null}
+              </StyledAutocompleteMenuList>
+            </StyledAutocompleteMenu>
+          </Box>
+        )}
+      </AnimatePresence>
 
       {props.multiple && props.value.length > 0 && (
         <Box paddingTop={2}>

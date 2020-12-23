@@ -97,7 +97,7 @@ export default function useCombobox({
   const listboxID = useMemo(() => uniqueId("listbox"), []);
 
   useEffect(() => {
-    if (!state.isOpen) {
+    if (!state.isOpen && listboxRef.current) {
       listboxRef.current.scrollTop = 0;
     }
   }, [state.isOpen]);
