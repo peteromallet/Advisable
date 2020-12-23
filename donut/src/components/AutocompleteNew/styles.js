@@ -1,13 +1,8 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import theme from "../../theme";
 
 export const StyledAutocomplete = styled.div`
   position: relative;
-`;
-
-const StyledAutocompleteMenu_Closed = css`
-  visibility: hidden;
-  pointer-events: none;
 `;
 
 export const StyledAutocompleteMenu = styled.div`
@@ -19,8 +14,6 @@ export const StyledAutocompleteMenu = styled.div`
   border-bottom-right-radius: 8px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-
-  ${(p) => !p.$isOpen && StyledAutocompleteMenu_Closed};
 `;
 
 export const StyledAutocompleteMenuList = styled.ul`
