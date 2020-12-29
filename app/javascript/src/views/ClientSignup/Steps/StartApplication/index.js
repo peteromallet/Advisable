@@ -57,10 +57,10 @@ function StartApplication() {
             firstName: values.firstName,
             lastName: values.lastName,
             email: values.email,
-            rid: queryParams.rid,
-            utmMedium: queryParams.utmMedium,
-            utmSource: queryParams.utmSource,
-            utmCampaign: queryParams.utmCampaign,
+            rid: queryParams.rid || null,
+            utmMedium: queryParams.utmMedium || null,
+            utmSource: queryParams.utmSource || null,
+            utmCampaign: queryParams.utmCampaign || null,
           },
         },
       });
@@ -83,7 +83,7 @@ function StartApplication() {
   }, [queryParams, called, handleStartApplication]);
 
   // Handle mutation errors
-  const errorCodes = error?.graphQLErrors.map((err) => err.extensions?.code);
+  const errorCodes = error?.graphQLErrors?.map((err) => err.extensions?.code);
   const emailNotAllowed = errorCodes?.includes("emailNotAllowed");
   const existingAccount = errorCodes?.includes("existingAccount");
   useEffect(() => {
