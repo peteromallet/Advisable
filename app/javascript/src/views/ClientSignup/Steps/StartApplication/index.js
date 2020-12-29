@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useMemo, useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import * as Yup from "yup";
 import queryString from "query-string";
@@ -31,7 +31,10 @@ function StartApplication() {
   const history = useHistory();
   const isMobile = useBreakpoint("m");
   const [applicationId, setApplicationId] = useState();
-  const queryParams = queryString.parse(location.search, { decode: true });
+  const queryParams = useMemo(
+    () => queryString.parse(location.search, { decode: true }),
+    [location.search],
+  );
 
   const updateLocationState = useCallback(
     (params) => {
@@ -54,34 +57,30 @@ function StartApplication() {
             firstName: values.firstName,
             lastName: values.lastName,
             email: values.email,
-            rid: values.rid,
-            utmMedium: values.utmMedium,
-            utmSource: values.utmSource,
-            utmCampaign: values.utmCampaign,
+            rid: queryParams.rid,
+            utmMedium: queryParams.utmMedium,
+            utmSource: queryParams.utmSource,
+            utmCampaign: queryParams.utmCampaign,
           },
         },
       });
     },
-    [updateLocationState, startClientApplication],
+    [updateLocationState, startClientApplication, queryParams],
   );
 
   // Check query params
   useEffect(() => {
-    const { firstName, lastName, email, ...rest } = queryParams;
+    const { firstName, lastName, email } = queryParams;
     if (!called && firstName && lastName && email) {
-      validationSchema
-        .validate(queryParams)
-        .then(() => {
-          handleStartApplication(queryParams);
-        })
-        .catch(() => {
-          history.replace({
-            pathname: location.pathname,
-            search: queryString.stringify(rest, { encode: true }),
-          });
-        });
+      const valid = validationSchema.validateSync({
+        firstName,
+        lastName,
+        email,
+      });
+      if (!valid) return;
+      handleStartApplication(queryParams);
     }
-  }, [queryParams, called, history, location, handleStartApplication]);
+  }, [queryParams, called, handleStartApplication]);
 
   // Handle mutation errors
   const errorCodes = error?.graphQLErrors.map((err) => err.extensions?.code);
@@ -114,13 +113,9 @@ function StartApplication() {
 
   // Formik
   const initialValues = {
-    firstName: location.state?.firstName || "",
-    lastName: location.state?.lastName || "",
-    email: "",
-    rid: queryParams.rid || "",
-    utmMedium: queryParams.utmMedium || "",
-    utmSource: queryParams.utmSource || "",
-    utmCampaign: queryParams.utmCampaign || "",
+    firstName: location.state?.firstName || queryParams.firstName || "",
+    lastName: location.state?.lastName || queryParams.lastName || "",
+    email: queryParams.email || "",
   };
 
   const handleSubmit = (values) => {
