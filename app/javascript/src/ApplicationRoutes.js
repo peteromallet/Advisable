@@ -88,6 +88,7 @@ const ApplicationRoutes = () => {
             component={BookingSetup}
           />
           <AuthenticatedRoute
+            clientOnly
             path="/manage/:applicationId"
             component={Booking}
           />
