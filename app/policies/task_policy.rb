@@ -61,6 +61,6 @@ class TaskPolicy < BasePolicy
   private
 
   def changeable_stage?
-    ['Not Assigned', 'Quote Requested', 'Quote Provided'].include?(record.stage)
+    ['Not Assigned', 'Quote Requested', 'Quote Provided', 'Requested To Start'].include?(record.stage)
   end
 end
