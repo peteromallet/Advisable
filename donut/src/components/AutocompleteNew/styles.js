@@ -13,7 +13,7 @@ export const StyledAutocompleteMenu = styled.div`
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    rgba(0, 0, 0, 0.3) 0px 8px 20px -8px;
 `;
 
 export const StyledAutocompleteMenuList = styled.ul`
@@ -40,7 +40,7 @@ export const StyledAutocompleteLoading = styled.div`
 `;
 
 export const StyledAutocompleteMenuItem = styled.li`
-  padding: 0 8px;
+  padding: 0;
   user-select: none;
   cursor: default;
 
@@ -56,7 +56,6 @@ export const StyledAutocompleteMenuItem = styled.li`
     display: block;
     font-size: 14px;
     padding: 10px 10px;
-    border-radius: 8px;
     color: ${theme.colors.neutral800};
   }
 

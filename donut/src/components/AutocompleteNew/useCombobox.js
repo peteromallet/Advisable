@@ -219,6 +219,10 @@ export default function useCombobox({
     }
   }
 
+  function handleClose() {
+    dispatch({ type: RESET });
+  }
+
   function handleFocus(e) {
     if (!state.isOpen) {
       handleOpen();
@@ -323,13 +327,6 @@ export default function useCombobox({
     ...props,
   };
 
-  const listboxProps = {
-    id: listboxID,
-    ref: listboxRef,
-    role: "listbox",
-    tabIndex: -1,
-  };
-
   const propsForOption = (index) => {
     return {
       role: "option",
@@ -341,15 +338,28 @@ export default function useCombobox({
     };
   };
 
+  const menuProps = {
+    id: listboxID,
+    ref: listboxRef,
+    role: "listbox",
+    tabIndex: -1,
+    propsForOption,
+    hasReachedMax: reachedMax,
+    isLoading: state.isLoading,
+    isCreateable: props.isCreateable,
+    options: filteredOptions,
+  };
+
   return {
     isOpen: state.isOpen,
     isLoading: state.isLoading,
     hasReachedMax: reachedMax,
     options: filteredOptions,
     inputProps,
-    listboxProps,
+    menuProps,
     propsForOption,
     containerProps,
     removeOption,
+    close: handleClose,
   };
 }
