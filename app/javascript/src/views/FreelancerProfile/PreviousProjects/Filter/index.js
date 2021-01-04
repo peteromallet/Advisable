@@ -38,7 +38,7 @@ const StyledFilterCard = styled(StyledCard)`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  border: 1px solid #c6c6c6;
+  border: 1px solid ${theme.colors.neutral200};
 `;
 
 const StyledExpandButton = styled.button`
