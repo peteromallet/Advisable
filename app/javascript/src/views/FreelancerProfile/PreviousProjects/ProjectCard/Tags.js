@@ -22,8 +22,10 @@ export default function Tags({
   const numOfSkills = skills.length - 1;
   const numOfIndustries = industries.length - 1;
 
-  const SkillsSuffix = <TagSuffix color="blue500">+{numOfSkills}</TagSuffix>;
-  const IndustrySuffix = (
+  const SkillsSuffix = numOfSkills && (
+    <TagSuffix color="blue500">+{numOfSkills}</TagSuffix>
+  );
+  const IndustrySuffix = numOfIndustries && (
     <TagSuffix color="cyan700">+{numOfIndustries}</TagSuffix>
   );
 
