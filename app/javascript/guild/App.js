@@ -67,6 +67,11 @@ const App = () => {
                 />
                 <AuthenticatedRoute
                   exact
+                  path={"/topics/:topicId"}
+                  component={Feed}
+                />
+                <AuthenticatedRoute
+                  exact
                   path={"/follows"}
                   component={Follows}
                 />
