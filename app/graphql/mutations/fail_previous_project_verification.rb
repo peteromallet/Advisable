@@ -13,7 +13,10 @@ class Mutations::FailPreviousProjectVerification < Mutations::BaseMutation
 
   def resolve(previous_project:, reason:)
     project = PreviousProject.find_by_uid!(previous_project)
-    project.update(validation_status: 'Validation Failed', validation_failed_reason: reason)
+    current_account_responsible_for do
+      project.update(validation_status: 'Validation Failed', validation_failed_reason: reason)
+    end
+
     AttachImageJob.perform_later(project, context[:oauth_viewer].image)
 
     {previous_project: project}
