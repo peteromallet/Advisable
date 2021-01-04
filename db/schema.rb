@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_15_135238) do
+ActiveRecord::Schema.define(version: 2021_01_04_074543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -485,6 +485,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_135238) do
     t.string "pending_description"
     t.string "validation_failed_reason"
     t.bigint "reviewed_by_id"
+    t.jsonb "log_data"
     t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
     t.index ["reviewed_by_id"], name: "index_off_platform_projects_on_reviewed_by_id"
@@ -1280,6 +1281,9 @@ ActiveRecord::Schema.define(version: 2020_12_15_135238) do
   SQL
   create_trigger :logidze_on_users, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_off_platform_projects, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_off_platform_projects BEFORE INSERT OR UPDATE ON public.off_platform_projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_accounts, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
