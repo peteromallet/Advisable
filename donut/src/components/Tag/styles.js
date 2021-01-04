@@ -30,8 +30,8 @@ const color = variant({
       background: "#D9E6FF",
     },
     industry: {
-      color: theme.colors.cyan700,
-      background: theme.colors.cyan100,
+      color: "#3CA3A8",
+      background: "#CEF0ED",
     },
   },
 });
