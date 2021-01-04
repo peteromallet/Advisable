@@ -123,19 +123,19 @@ function PreviousProjects({ data, isOwner }) {
               sectionName="industries"
               sectionTags={state.industriesSection}
               onClick={switchIndustrySelection}
-              color={rgba("#1B7A7D", 0.9)}
-              colorHover="#1B7A7D"
-              colorActive={rgba("#125153", 0.85)}
-              colorActiveHover={rgba("#125153", 0.85)}
+              color="#3CA3A8"
+              colorHover="#3CA3A8"
+              colorActive="#25828F"
+              colorActiveHover={rgba("#25828F", 0.85)}
               bg={theme.colors.neutral50}
-              bgHover={theme.colors.cyan50}
-              bgActive="#C3E9EB"
-              bgActiveHover={rgba("#C3E9EB", 0.9)}
+              bgHover="#EDFAF9"
+              bgActive="#CEF0ED"
+              bgActiveHover={rgba("#CEF0ED", 0.9)}
               borderWidth="1px"
-              borderColor="#9DCDCE"
-              borderColorHover="#9DCDCE"
-              borderColorActive="#C3E9EB"
-              borderColorActiveHover={rgba("#C3E9EB", 0.9)}
+              borderColor="#92DBD9"
+              borderColorHover="#92DBD9"
+              borderColorActive="#CEF0ED"
+              borderColorActiveHover={rgba("#CEF0ED", 0.9)}
             />
           )}
         </Filter>
