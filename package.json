@@ -92,8 +92,7 @@
     "use-sound": "^1.0.2",
     "webpack-bundle-analyzer": "^4.1.0",
     "xstate": "^4.14.0",
-    "yup": "^0.29.3",
-    "zustand": "^3.2.0"
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",

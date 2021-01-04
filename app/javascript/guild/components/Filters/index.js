@@ -7,32 +7,28 @@ import { GuildBox } from "@guild/styles";
 import GuildTag from "@guild/components/GuildTag";
 import { Filter as FilterIcon, Add as AddIcon } from "@guild/icons";
 import useViewer from "@advisable-main/hooks/useViewer";
-import { feedStore } from "@guild/stores/Feed";
 import { useComposerModal } from "@guild/components/ComposerModal/useComposerModal";
 import ComposerModal from "../ComposerModal";
 import { GUILD_POSTS_QUERY } from "@guild/components/Posts/queries";
 
-const Filters = ({ yourPosts }) => {
+const Filters = ({ postTypeFilter, setPostTypeFilter, yourPosts }) => {
+  const viewer = useViewer();
+  const client = useApolloClient();
   const sUp = useBreakpoint("sUp");
   const [expanded, toggleExpanded] = useToggle();
-  const viewer = useViewer();
   const composerModal = useComposerModal("/composer");
-  const client = useApolloClient();
 
-  const feedFilters = ["For You", "Opportunity", "AdviceRequired", "CaseStudy"];
-
-  const [
-    selectedFilter,
-    selectedTopicsIds,
-  ] = feedStore(({ selectedFilter, selectedTopicsIds }) => [
-    selectedFilter,
-    selectedTopicsIds,
-  ]);
+  const postTypeFilters = [
+    "For You",
+    "Opportunity",
+    "AdviceRequired",
+    "CaseStudy",
+  ];
 
   const handlePublishedGuildPost = (guildPost) => {
     const previous = client.readQuery({
       query: GUILD_POSTS_QUERY,
-      variables: { selectedFilter, selectedTopicsIds: selectedTopicsIds() },
+      variables: { postTypeFilter },
     });
 
     const pageInfo = previous.guildPosts.pageInfo;
@@ -49,10 +45,8 @@ const Filters = ({ yourPosts }) => {
     });
   };
 
-  const normalizeFilter = (name) => name.replace(/([A-Z])/g, " $1").trim();
-
-  const handleApplyFilter = (selectedFilter) => {
-    feedStore.setState({ selectedFilter });
+  const handleApplyFilter = (selected) => {
+    setPostTypeFilter(selected);
     !sUp && toggleExpanded();
   };
 
@@ -100,29 +94,34 @@ const Filters = ({ yourPosts }) => {
                 spaceChildrenHorizontal={sUp && 16}
                 spaceChildrenVertical={!sUp && 16}
               >
-                {feedFilters.map((filter, key) => (
-                  <motion.div key={key} {...motionAnimations}>
-                    {filter === selectedFilter ? (
-                      <GuildTag variant="dark" size={sUp ? "s" : "l"}>
-                        {normalizeFilter(selectedFilter)}
-                      </GuildTag>
-                    ) : (
-                      <GuildTag
-                        button
-                        size={sUp ? "s" : "l"}
-                        onClick={() => handleApplyFilter(filter)}
-                      >
-                        {normalizeFilter(filter)}
-                      </GuildTag>
-                    )}
-                  </motion.div>
-                ))}
+                {postTypeFilters.map((postType, key) => {
+                  const normalizedType = postType
+                    .replace(/([A-Z])/g, " $1")
+                    .trim();
+                  return (
+                    <motion.div key={key} {...motionAnimations}>
+                      {postType === postTypeFilter ? (
+                        <GuildTag variant="dark" size={sUp ? "s" : "l"}>
+                          {normalizedType}
+                        </GuildTag>
+                      ) : (
+                        <GuildTag
+                          button
+                          size={sUp ? "s" : "l"}
+                          onClick={() => handleApplyFilter(postType)}
+                        >
+                          {normalizedType}
+                        </GuildTag>
+                      )}
+                    </motion.div>
+                  );
+                })}
               </GuildBox>
             )}
 
             {!expanded && !yourPosts && (
               <GuildTag variant="dark" size={sUp ? "s" : "l"}>
-                {selectedFilter}
+                {postTypeFilter}
               </GuildTag>
             )}
 
