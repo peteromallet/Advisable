@@ -26,8 +26,8 @@ const color = variant({
     },
     // Temporary variants
     skill: {
-      color: theme.colors.blue500,
-      background: theme.colors.blue50,
+      color: "#3A6FF9",
+      background: "#D9E6FF",
     },
     industry: {
       color: theme.colors.cyan700,
