@@ -144,10 +144,10 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
     <StyledFilterCard
       variant="bordered"
       borderRadius="12px"
-      mb="2xl"
-      p="xs"
-      pt="s"
-      pb={filtering ? "m" : "s"}
+      mb={10}
+      p={2}
+      pt={2.5}
+      pb={filtering ? 4 : 3}
       elevation="none"
     >
       <Box ref={layoutRef} width="100%" pb="2xs" display="flex">

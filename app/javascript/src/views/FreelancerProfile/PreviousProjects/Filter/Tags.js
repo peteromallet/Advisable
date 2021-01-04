@@ -149,12 +149,12 @@ function Tags({
         left="6px"
         px="4px"
         css={`
-          transform: translateY(-130%);
+          transform: translateY(-114%);
         `}
       >
         <Text
           color="neutral500"
-          fontSize={{ _: "2xs", l: "xs" }}
+          fontSize={{ _: "2xs", l: "13px" }}
           fontWeight="medium"
           letterSpacing="1px"
           textTransform="uppercase"
