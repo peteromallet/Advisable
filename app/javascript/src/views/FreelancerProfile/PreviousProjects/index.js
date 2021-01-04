@@ -102,19 +102,19 @@ function PreviousProjects({ data, isOwner }) {
               sectionName="skills"
               sectionTags={state.skillsSection}
               onClick={switchSkillSelection}
-              color={rgba("#234EE4", 0.85)}
-              colorHover="#234EE4"
-              colorActive={rgba("#1937A0", 0.85)}
-              colorActiveHover={rgba("#1937A0", 0.85)}
+              color="#3A6FF9"
+              colorHover="#3A6FF9"
+              colorActive="#2350ED"
+              colorActiveHover={rgba("#2350ED", 0.85)}
               bg={theme.colors.neutral50}
-              bgHover={theme.colors.blue50}
-              bgActive="#CCD1F9"
-              bgActiveHover={rgba("#CCD1F9", 0.9)}
+              bgHover="#F1F6FF"
+              bgActive="#D9E6FF"
+              bgActiveHover={rgba("#DBE7FF", 0.9)}
               borderWidth="1px"
-              borderColor="#AAB4F5"
+              borderColor="#A5C3FF"
               borderColorHover="#AAB4F5"
-              borderColorActive="#CCD1F9"
-              borderColorActiveHover={rgba("#CCD1F9", 0.9)}
+              borderColorActive="#D9E6FF"
+              borderColorActiveHover={rgba("#D9E6FF", 0.9)}
             />
           )}
           {state.hasIndustries && (
