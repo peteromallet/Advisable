@@ -9,31 +9,32 @@ const Wrapper = styled(Box)`
   transition: opacity 0.1s;
 `;
 
+const StyledTagText = styled(Text)`
+  transition: color 0.2s;
+`;
+
 const StyledTag = styled(Box)`
   transition: background-color 0.2s, opacity 0.2s;
   &:hover {
     background-color: ${(props) => props.bgHover};
     border-color: ${(props) => props.borderColorHover};
   }
+  &:hover ${StyledTagText} {
+    color: ${(props) => props.colorHover};
+  }
+
   &[data-selected="true"] {
     background-color: ${(props) => props.bgActive};
     border-color: ${(props) => props.borderColorActive};
+  }
+  &[data-selected="true"] ${StyledTagText} {
+    color: ${(props) => props.colorActive};
   }
   &[data-selected="true"]:hover {
     background-color: ${(props) => props.bgActiveHover};
     border-color: ${(props) => props.borderColorActiveHover};
   }
-`;
-
-const StyledTagText = styled(Text)`
-  transition: color 0.2s;
-  &:hover {
-    color: ${(props) => props.colorHover};
-  }
-  &[data-selected="true"] {
-    color: ${(props) => props.colorActive};
-  }
-  &[data-selected="true"]:hover {
+  &[data-selected="true"]:hover ${StyledTagText} {
     color: ${(props) => props.colorActiveHover};
   }
 `;
@@ -86,6 +87,9 @@ function Tags({
               borderWidth: borderWidth,
             }}
             data-testid={`${sectionName}-filter-tag-${tagKey}`}
+            colorHover={colorHover}
+            colorActive={colorActive}
+            colorActiveHover={colorActiveHover}
             borderRadius="12px"
             borderStyle="solid"
             borderColor={borderColor}
@@ -106,9 +110,6 @@ function Tags({
           >
             <StyledTagText
               color={color}
-              colorHover={colorHover}
-              colorActive={colorActive}
-              colorActiveHover={colorActiveHover}
               data-selected={selected}
               fontSize="xs"
               id={`${sectionName}-${tagKey}-text`}
