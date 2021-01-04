@@ -20,7 +20,7 @@ class Mutations::AssignTask < Mutations::BaseMutation
       user.complete_tutorial('fixedProjects')
     end
 
-    {task: Tasks::Assign.call(task: task)}
+    {task: Tasks::Assign.call(task: task, responsible_id: current_account_id)}
   rescue Service::Error => e
     {errors: [e]}
   end

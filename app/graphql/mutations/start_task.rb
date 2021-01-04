@@ -15,9 +15,7 @@ class Mutations::StartTask < Mutations::BaseMutation
   def resolve(**args)
     task = Task.find_by_uid!(args[:task])
 
-    {
-      task: Tasks::Start.call(task: task)
-    }
+    {task: Tasks::Start.call(task: task, responsible_id: current_account_id)}
 
     rescue Service::Error => e
       {errors: [e]}
