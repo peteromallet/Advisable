@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_04_074543) do
+ActiveRecord::Schema.define(version: 2021_01_04_075601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -832,6 +832,7 @@ ActiveRecord::Schema.define(version: 2021_01_04_074543) do
     t.datetime "started_working_at"
     t.datetime "submitted_at"
     t.datetime "approved_at"
+    t.jsonb "log_data"
     t.index ["airtable_id"], name: "index_tasks_on_airtable_id"
     t.index ["application_id"], name: "index_tasks_on_application_id"
     t.index ["uid"], name: "index_tasks_on_uid"
@@ -1284,6 +1285,9 @@ ActiveRecord::Schema.define(version: 2021_01_04_074543) do
   SQL
   create_trigger :logidze_on_off_platform_projects, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_off_platform_projects BEFORE INSERT OR UPDATE ON public.off_platform_projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_tasks, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_tasks BEFORE INSERT OR UPDATE ON public.tasks FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_accounts, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')

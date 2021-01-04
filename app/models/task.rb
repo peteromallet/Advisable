@@ -26,6 +26,8 @@ class Task < ApplicationRecord
   include Uid
   include Airtable::Syncable
 
+  has_logidze
+
   validates :estimate_type, inclusion: {in: %w[Hourly Fixed]}, allow_nil: true
 
   belongs_to :application
