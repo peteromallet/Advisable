@@ -43,9 +43,9 @@ const size = variant({
       borderRadius: 8,
 
       span: {
-        fontSize: 13,
+        fontSize: 14,
         letterSpacing: "-0.01rem",
-        padding: "8px 12px",
+        padding: "6px 8px",
       },
 
       svg: {
@@ -82,7 +82,7 @@ export const StyledTag = styled.div`
 `;
 
 export const StyledTagText = styled.span`
-  font-weight: 500;
+  font-weight: 400;
 `;
 
 export default StyledTag;
