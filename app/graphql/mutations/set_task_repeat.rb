@@ -9,14 +9,15 @@ class Mutations::SetTaskRepeat < Mutations::BaseMutation
     task = Task.find_by_uid!(args[:id])
     policy = TaskPolicy.new(context[:current_user], task)
     return true if policy.set_repeating
-    [false, { errors: [{ code: 'not_authorized' }] }]
+
+    [false, {errors: [{code: 'not_authorized'}]}]
   end
 
   def resolve(**args)
     task = Task.find_by_uid!(args[:id])
-    task.update(repeat: args[:repeat])
+    current_account_responsible_for { task.update(repeat: args[:repeat]) }
     task.sync_to_airtable
 
-    { task: task }
+    {task: task}
   end
 end

@@ -21,9 +21,9 @@ RSpec.describe Mutations::AssignTask do
     GRAPHQL
   end
 
-  let(:context) { { current_user: task.application.project.user } }
+  let(:context) { {current_user: task.application.project.user} }
 
-  before :each do
+  before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
   end
 
@@ -33,10 +33,12 @@ RSpec.describe Mutations::AssignTask do
     expect(stage).to eq('Assigned')
   end
 
+  # rubocop:disable RSpec/MessageSpies
   it 'triggers a webhook' do
     expect(WebhookEvent).to receive(:trigger).with('tasks.assigned', any_args)
     AdvisableSchema.execute(query, context: context)
   end
+  # rubocop:enable RSpec/MessageSpies
 
   context 'when the task does not have a name' do
     let(:task) { create(:task, stage: 'Not Assigned', name: nil) }
@@ -59,7 +61,7 @@ RSpec.describe Mutations::AssignTask do
   end
 
   context "when the user doesn't have access to the project" do
-    let(:context) { { current_user: create(:user) } }
+    let(:context) { {current_user: create(:user)} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
@@ -69,7 +71,7 @@ RSpec.describe Mutations::AssignTask do
   end
 
   context 'when there is no user' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
@@ -79,7 +81,7 @@ RSpec.describe Mutations::AssignTask do
   end
 
   context 'when the specialist is logged in' do
-    let(:context) { { current_user: task.application.specialist } }
+    let(:context) { {current_user: task.application.specialist} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)

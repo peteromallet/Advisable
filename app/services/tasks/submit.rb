@@ -1,28 +1,23 @@
 class Tasks::Submit < ApplicationService
-  attr_reader :task, :final_cost
+  attr_reader :task, :final_cost, :responsible_id
 
-  def initialize(task:, final_cost:)
+  def initialize(task:, final_cost:, responsible_id: nil)
     @task = task
     @final_cost = final_cost
+    @responsible_id = responsible_id
   end
 
   def call
     if task.application.status != 'Working'
-      raise Service::Error.new(
-              'tasks.notSubmittable',
-              message: "Application status is not 'Working'"
-            )
+      raise Service::Error.new('tasks.notSubmittable', message: "Application status is not 'Working'")
     end
 
     unless allowed_stages.include?(task.stage)
       raise Service::Error.new('tasks.notSubmittable')
     end
 
-    if task.update(
-         stage: 'Submitted',
-         final_cost: final_cost,
-         submitted_at: Time.zone.now
-       )
+    updated = Logidze.with_responsible(responsible_id) { task.update(stage: 'Submitted', final_cost: final_cost, submitted_at: Time.zone.now) }
+    if updated
       task.sync_to_airtable
       WebhookEvent.trigger('tasks.submitted', WebhookEvent::Task.data(task))
       return task
