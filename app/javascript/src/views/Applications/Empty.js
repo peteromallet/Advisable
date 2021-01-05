@@ -31,7 +31,7 @@ const Empty = () => {
           application that we present directly to clients.
         </Paragraph>
         <Text fontSize="lg" fontWeight="medium" color="neutral900" mb="xxs">
-          What more projects from Advisable?
+          Want more projects from Advisable?
         </Text>
         <Paragraph marginBottom="sm">
           Try adding some more information to your profile to increase your
