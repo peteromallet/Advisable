@@ -1,10 +1,11 @@
 class Tasks::Update < ApplicationService
-  attr_reader :task, :attributes, :user
+  attr_reader :task, :attributes, :user, :responsible_id
 
-  def initialize(task:, attributes:, user:)
+  def initialize(task:, attributes:, user:, responsible_id: nil)
     @task = task
     @attributes = attributes
     @user = user
+    @responsible_id = responsible_id
   end
 
   def call
@@ -25,14 +26,14 @@ class Tasks::Update < ApplicationService
 
     # Set the stage to Not Assigned if the task was Quote Provided
 
-    if task.name_changed? or task.due_date_changed? or task.description_changed?
+    if task.name_changed? || task.due_date_changed? || task.description_changed?
       task.estimate = nil if task.estimate? && is_client?
       task.flexible_estimate = nil if task.flexible_estimate? && is_client?
 
       task.stage = 'Not Assigned' if task.stage == 'Quote Provided'
     end
 
-    task.sync_to_airtable if task.save
+    task.sync_to_airtable if Logidze.with_responsible(responsible_id) { task.save }
 
     if task.saved_change_to_stage? && task.stage == 'Quote Provided'
       WebhookEvent.trigger(
@@ -74,7 +75,7 @@ class Tasks::Update < ApplicationService
     policy = TaskPolicy.new(user, task)
 
     task.changes.each do |att, changes|
-      unless policy.send("update_#{att}")
+      unless policy.public_send("update_#{att}")
         raise Service::Error.new("tasks.#{att}IsLocked")
       end
     end

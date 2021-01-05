@@ -32,7 +32,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
       raise ApiError::InvalidRequest.new("applicationStatusNotWorking", "Application status is 'Stopped Working'")
     end
 
-    task = Tasks::Update.call(task: task, attributes: args.except(:id), user: context[:current_user])
+    task = Tasks::Update.call(task: task, attributes: args.except(:id), user: context[:current_user], responsible_id: current_account_id)
 
     task.application.reload
 

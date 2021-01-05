@@ -1,8 +1,9 @@
 class Tasks::Assign < ApplicationService
-  attr_reader :task
+  attr_reader :task, :responsible_id
 
-  def initialize(task:)
+  def initialize(task:, responsible_id: nil)
     @task = task
+    @responsible_id = responsible_id
   end
 
   def call
@@ -21,7 +22,9 @@ class Tasks::Assign < ApplicationService
       raise Service::Error.new('tasks.alreadyAssigned')
     end
 
-    if task.update(stage: 'Assigned', assigned_at: Time.zone.now)
+    updated = Logidze.with_responsible(responsible_id) { task.update(stage: 'Assigned', assigned_at: Time.zone.now) }
+
+    if updated
       task.sync_to_airtable
       WebhookEvent.trigger('tasks.assigned', WebhookEvent::Task.data(task))
       return task

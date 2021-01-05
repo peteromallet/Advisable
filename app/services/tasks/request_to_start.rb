@@ -1,8 +1,9 @@
 class Tasks::RequestToStart < ApplicationService
-  attr_reader :task
+  attr_reader :task, :responsible_id
 
-  def initialize(task:)
+  def initialize(task:, responsible_id: nil)
     @task = task
+    @responsible_id = responsible_id
   end
 
   def call
@@ -22,7 +23,8 @@ class Tasks::RequestToStart < ApplicationService
       raise Service::Error.new("tasks.cantRequestToStart", message: "Application status is not 'Working'")
     end
 
-    if task.update(stage: "Requested To Start")
+    updated = Logidze.with_responsible(responsible_id) { task.update(stage: "Requested To Start") }
+    if updated
       task.sync_to_airtable
       WebhookEvent.trigger("tasks.requested_to_start", WebhookEvent::Task.data(task))
       return task

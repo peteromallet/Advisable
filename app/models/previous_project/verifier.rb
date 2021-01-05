@@ -1,9 +1,10 @@
 class PreviousProject::Verifier
-  attr_reader :oauth_viewer, :project
+  attr_reader :oauth_viewer, :project, :responsible_id
 
-  def initialize(viewer, project)
+  def initialize(viewer, project, responsible_id: nil)
     @oauth_viewer = viewer
     @project = project
+    @responsible_id = responsible_id
   end
 
   def can_verify?
@@ -15,7 +16,7 @@ class PreviousProject::Verifier
   end
 
   def verify
-    project.update(validation_status: "Validated")
+    Logidze.with_responsible(responsible_id) { project.update(validation_status: "Validated") }
     AttachImageJob.perform_later(project, oauth_viewer.image)
   end
 

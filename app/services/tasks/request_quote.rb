@@ -1,8 +1,9 @@
 class Tasks::RequestQuote < ApplicationService
-  attr_reader :task
+  attr_reader :task, :responsible_id
 
-  def initialize(task:)
+  def initialize(task:, responsible_id: nil)
     @task = task
+    @responsible_id = responsible_id
   end
 
   def call
@@ -16,9 +17,8 @@ class Tasks::RequestQuote < ApplicationService
       raise Service::Error.new('tasks.descriptionRequired')
     end
 
-    if task.update(
-         stage: 'Quote Requested', quote_requested_at: Time.zone.now
-       )
+    updated = Logidze.with_responsible(responsible_id) { task.update(stage: 'Quote Requested', quote_requested_at: Time.zone.now) }
+    if updated
       task.sync_to_airtable
       WebhookEvent.trigger(
         'tasks.quote_requested',
