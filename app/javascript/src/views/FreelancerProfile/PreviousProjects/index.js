@@ -108,13 +108,13 @@ function PreviousProjects({ data, isOwner }) {
               colorActiveHover={rgba("#2350ED", 0.85)}
               bg={theme.colors.neutral50}
               bgHover="#F1F6FF"
-              bgActive="#D9E6FF"
-              bgActiveHover={rgba("#DBE7FF", 0.9)}
+              bgActive="#DEE9FF"
+              bgActiveHover={rgba("#DEE9FF", 0.9)}
               borderWidth="1px"
               borderColor="#A5C3FF"
               borderColorHover="#AAB4F5"
-              borderColorActive="#D9E6FF"
-              borderColorActiveHover={rgba("#D9E6FF", 0.9)}
+              borderColorActive="#DEE9FF"
+              borderColorActiveHover={rgba("#DEE9FF", 0.9)}
             />
           )}
           {state.hasIndustries && (
@@ -129,13 +129,13 @@ function PreviousProjects({ data, isOwner }) {
               colorActiveHover={rgba("#25828F", 0.85)}
               bg={theme.colors.neutral50}
               bgHover="#EDFAF9"
-              bgActive="#CEF0ED"
-              bgActiveHover={rgba("#CEF0ED", 0.9)}
+              bgActive="#D3F2F0"
+              bgActiveHover={rgba("#D3F2F0", 0.9)}
               borderWidth="1px"
               borderColor="#92DBD9"
               borderColorHover="#92DBD9"
-              borderColorActive="#CEF0ED"
-              borderColorActiveHover={rgba("#CEF0ED", 0.9)}
+              borderColorActive="#D3F2F0"
+              borderColorActiveHover={rgba("#D3F2F0", 0.9)}
             />
           )}
         </Filter>
