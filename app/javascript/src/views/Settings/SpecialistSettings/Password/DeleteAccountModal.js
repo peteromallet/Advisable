@@ -14,6 +14,11 @@ export default function DeleteAccountModal({ modal }) {
   const [deleteAccount, { loading }] = useMutation(DELETE_ACCOUNT);
   const [inputValue, setInputValue] = React.useState("");
 
+  const handleDestroy = async () => {
+    await deleteAccount();
+    window.location = "/login";
+  };
+
   return (
     <Modal modal={modal} padding={8}>
       <Text fontSize="3xl" fontWeight="medium" mb={2}>
@@ -41,7 +46,7 @@ export default function DeleteAccountModal({ modal }) {
       <Button
         mt={4}
         loading={loading}
-        onClick={deleteAccount}
+        onClick={handleDestroy}
         disabled={inputValue !== "DELETE"}
         size="s"
         variant="dark"

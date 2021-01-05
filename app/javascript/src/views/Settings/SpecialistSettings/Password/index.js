@@ -4,7 +4,8 @@ import ChangePasswordForm from "components/ChangePasswordForm";
 import DeleteAccountModal from "./DeleteAccountModal";
 
 export default function Password() {
-  const modal = useModal({ visible: true });
+  const modal = useModal();
+
   return (
     <Card padding="2xl">
       <Text
