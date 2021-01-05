@@ -81,7 +81,7 @@ const SettingsSidebar = () => {
             Payment Settings
           </NavigationMenu.Item>
           <NavigationMenu.Item to="/settings/password" icon={<LockClosed />}>
-            Password
+            Account
           </NavigationMenu.Item>
         </NavigationMenu>
       </Sidebar>
