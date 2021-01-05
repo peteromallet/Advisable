@@ -24,7 +24,7 @@ class Tasks::Start < ApplicationService
   private
 
   def add_invoice_item
-    Tasks::CreateInvoiceItem.call(task: task)
+    Tasks::CreateInvoiceItem.call(task: task, responsible_id: responsible_id)
   rescue Stripe::StripeError => e
     # Still log the error in sentry
     Raven.capture_exception(e)

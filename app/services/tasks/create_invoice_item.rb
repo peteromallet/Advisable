@@ -1,8 +1,9 @@
 class Tasks::CreateInvoiceItem < ApplicationService
-  attr_reader :task
+  attr_reader :task, :responsible_id
 
-  def initialize(task:)
+  def initialize(task:, responsible_id: nil)
     @task = task
+    @responsible_id = responsible_id
   end
 
   def call
@@ -21,7 +22,7 @@ class Tasks::CreateInvoiceItem < ApplicationService
         create_hourly_invoice_item
       end
 
-    task.update(stripe_invoice_id: invoice_item.id)
+    Logidze.with_responsible(responsible_id) { task.update(stripe_invoice_id: invoice_item.id) }
   end
 
   private
