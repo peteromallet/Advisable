@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::StartClientApplication < Mutations::BaseMutation
   argument :first_name, String, required: true
   argument :last_name, String, required: false

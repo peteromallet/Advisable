@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApiRequestError < StandardError
   attr_reader :response_log, :backtrace
 
