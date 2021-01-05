@@ -14,7 +14,7 @@ class Mutations::ToggleSourcing < Mutations::BaseMutation
 
   def resolve(**args)
     project = Project.find_by_uid_or_airtable_id!(args[:project])
-    project.update(sourcing: !project.sourcing)
+    current_account_responsible_for { project.update(sourcing: !project.sourcing) }
     {project: project}
   end
 end

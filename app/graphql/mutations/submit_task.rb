@@ -16,7 +16,7 @@ class Mutations::SubmitTask < Mutations::BaseMutation
   def resolve(**args)
     task = Task.find_by_uid!(args[:task])
 
-    {task: Tasks::Submit.call(task: task, final_cost: args[:final_cost])}
+    {task: Tasks::Submit.call(task: task, final_cost: args[:final_cost], responsible_id: current_account_id)}
   rescue Service::Error => e
     {errors: [e]}
   end

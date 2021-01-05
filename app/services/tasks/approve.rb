@@ -1,8 +1,9 @@
 class Tasks::Approve < ApplicationService
-  attr_reader :task
+  attr_reader :task, :responsible_id
 
-  def initialize(task:)
+  def initialize(task:, responsible_id: nil)
     @task = task
+    @responsible_id = responsible_id
   end
 
   def call
@@ -10,7 +11,8 @@ class Tasks::Approve < ApplicationService
       raise Service::Error.new('tasks.statusNotSubmitted')
     end
 
-    if task.update(stage: 'Approved', approved_at: Time.zone.now)
+    updated = Logidze.with_responsible(responsible_id) { task.update(stage: 'Approved', approved_at: Time.zone.now) }
+    if updated
       task.sync_to_airtable
       WebhookEvent.trigger('tasks.approved', WebhookEvent::Task.data(task))
       return task

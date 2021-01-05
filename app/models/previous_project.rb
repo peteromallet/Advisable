@@ -18,9 +18,12 @@
 # [Failed] The project validation has failed.
 #
 class PreviousProject < ApplicationRecord
+  self.table_name = 'off_platform_projects'
+
   include Uid
   include Airtable::Syncable
-  self.table_name = 'off_platform_projects'
+
+  has_logidze
 
   has_one_attached :contact_image
 
@@ -70,8 +73,8 @@ class PreviousProject < ApplicationRecord
   end
 
   def contact_name=(name)
-    self.contact_first_name = name.split(' ').try(:[], 0)
-    self.contact_last_name = name.split(' ').try(:[], 1)
+    self.contact_first_name = name.split.try(:[], 0)
+    self.contact_last_name = name.split.try(:[], 1)
   end
 
   def self.for_project(specialist:, project:)

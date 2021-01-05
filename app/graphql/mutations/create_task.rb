@@ -27,7 +27,8 @@ class Mutations::CreateTask < Mutations::BaseMutation
       task:
         Tasks::Create.call(
           application: application,
-          attributes: args.except(:application, :id).merge({uid: args[:id]})
+          attributes: args.except(:application, :id).merge({uid: args[:id]}),
+          responsible_id: current_account_id
         )
     }
   rescue Service::Error => e
