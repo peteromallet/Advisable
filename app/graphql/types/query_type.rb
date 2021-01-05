@@ -37,8 +37,6 @@ class Types::QueryType < Types::BaseType
 
   def user(id:)
     ::User.find_by_uid_or_airtable_id!(id)
-  rescue Airrecord::Error => e
-    GraphQL::ExecutionError.new("Could not find user #{id}")
   end
 
   field :current_company, Types::CompanyType, description: 'Get the current company', null: true
@@ -272,18 +270,16 @@ class Types::QueryType < Types::BaseType
 
   def guild_posts(**args)
     requires_guild_user!
-    @query = Guild::Post.feed(current_user)
-
-    if (type = args[:type].presence) && type != 'For You'
-      return @query.where(type: type)
-    end
+    query = Guild::Post.feed(current_user)
 
     if (topic_id = args[:topic_id].presence)
       guild_topic = Guild::Topic.find_by(id: topic_id)
-      return @query.tagged_with(guild_topic, on: :guild_topics, any: true)
+      query.tagged_with(guild_topic, on: :guild_topics, any: true)
+    elsif (type = args[:type].presence) && type != 'For You'
+      query.where(type: type)
+    else
+      query
     end
-
-    @query
   end
 
   field :guild_topic, Types::Guild::TopicType, null: true do
