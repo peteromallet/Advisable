@@ -26,7 +26,7 @@ class CreateLinkedinAdJob < ApplicationJob
     pause_campaign!
   rescue ActiveRecord::RecordNotFound
     Rails.logger.error("You need to Set Up LinkedIn Ads in Admin!")
-  rescue LinkedinApi::RequestError => e
+  rescue ApiRequestError => e
     # Do not retry jobs that fail LinkedIn API calls just log to Sentry
     Raven.capture_message("Something went wrong with the LinkedIn API request", backtrace: e.backtrace, extra: {response: e.response_log, project_airtable_id: project.airtable_id})
     Slack.message(channel: "paid_marketing", text: "LinkedIn API job posting *failed* for #{project.name} (##{project.airtable_id})!")
