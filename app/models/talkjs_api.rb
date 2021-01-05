@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class TalkjsApi
-  API_ROOT = "https://api.talkjs.com/v1/#{ENV["TALKJS"]}/".freeze
+  API_ROOT = "https://api.talkjs.com/v1/#{ENV["TALKJS"]}/"
 
   def messages(conversation_id)
     response = Faraday.get(API_ROOT + "conversations/#{conversation_id}/messages", nil, request_headers)

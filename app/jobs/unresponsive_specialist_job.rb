@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UnresponsiveSpecialistJob < ApplicationJob
   queue_as :default
 
