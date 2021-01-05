@@ -20,11 +20,11 @@ test("Skills step continues to the company details", async () => {
 
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_SPECIALIST, { id: specialist.airtableId }, { specialist }),
+    mockQuery(GET_SPECIALIST, { id: specialist.id }, { specialist }),
   ];
 
   const app = renderRoute({
-    route: `/request_consultation/${specialist.airtableId}`,
+    route: `/request_consultation/${specialist.id}`,
     graphQLMocks,
   });
 
@@ -47,7 +47,7 @@ test("When logged in the skills step continues to availability", async () => {
 
   const graphQLMocks = [
     mockViewer(viewer),
-    mockQuery(GET_SPECIALIST, { id: specialist.airtableId }, { specialist }),
+    mockQuery(GET_SPECIALIST, { id: specialist.id }, { specialist }),
     mockMutation(
       CREATE_CONSULTATION,
       {
@@ -55,7 +55,7 @@ test("When logged in the skills step continues to availability", async () => {
         utmCampaign: undefined,
         utmMedium: undefined,
         gclid: undefined,
-        specialist: specialist.airtableId,
+        specialist: specialist.id,
         skill: "Testing",
       },
       {
@@ -69,7 +69,7 @@ test("When logged in the skills step continues to availability", async () => {
   ];
 
   const app = renderRoute({
-    route: `/request_consultation/${specialist.airtableId}`,
+    route: `/request_consultation/${specialist.id}`,
     graphQLMocks,
   });
 
@@ -93,7 +93,7 @@ test("company details step continues to availability", async () => {
 
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_SPECIALIST, { id: specialist.airtableId }, { specialist }),
+    mockQuery(GET_SPECIALIST, { id: specialist.id }, { specialist }),
     mockMutation(
       CREATE_CONSULTATION,
       {
@@ -101,7 +101,7 @@ test("company details step continues to availability", async () => {
         utmCampaign: undefined,
         utmMedium: undefined,
         gclid: undefined,
-        specialist: specialist.airtableId,
+        specialist: specialist.id,
         firstName: "Jane",
         lastName: "Doe",
         email: "test@test.com",
@@ -120,7 +120,7 @@ test("company details step continues to availability", async () => {
 
   const app = renderRoute({
     route: {
-      pathname: `/request_consultation/${specialist.airtableId}/details`,
+      pathname: `/request_consultation/${specialist.id}/details`,
       state: {
         skill: "Testing",
       },
@@ -152,11 +152,11 @@ test("Company details step redirects back if no skill is in state", async () => 
 
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_SPECIALIST, { id: specialist.airtableId }, { specialist }),
+    mockQuery(GET_SPECIALIST, { id: specialist.id }, { specialist }),
   ];
 
   const app = renderRoute({
-    route: `/request_consultation/${specialist.airtableId}/details`,
+    route: `/request_consultation/${specialist.id}/details`,
     graphQLMocks,
   });
 
@@ -174,7 +174,7 @@ test("Topic step continues to the send step", async () => {
 
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_SPECIALIST, { id: specialist.airtableId }, { specialist }),
+    mockQuery(GET_SPECIALIST, { id: specialist.id }, { specialist }),
     mockQuery(GET_CONSULTATION, { id: consultation.id }, { consultation }),
     mockMutation(
       UPDATE_CONSULTATION,
@@ -193,7 +193,7 @@ test("Topic step continues to the send step", async () => {
 
   const app = renderRoute({
     route: {
-      pathname: `/request_consultation/${specialist.airtableId}/topic`,
+      pathname: `/request_consultation/${specialist.id}/topic`,
       state: {
         skill: "Testing",
         consultationId: consultation.id,
@@ -219,12 +219,12 @@ test("Topic step redirects back if there is no consultationId in route state", a
 
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_SPECIALIST, { id: specialist.airtableId }, { specialist }),
+    mockQuery(GET_SPECIALIST, { id: specialist.id }, { specialist }),
   ];
 
   const app = renderRoute({
     route: {
-      pathname: `/request_consultation/${specialist.airtableId}/topic`,
+      pathname: `/request_consultation/${specialist.id}/topic`,
       state: {
         skill: "Testing",
       },
@@ -246,7 +246,7 @@ test("Send step sends the consultation request", async () => {
 
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_SPECIALIST, { id: specialist.airtableId }, { specialist }),
+    mockQuery(GET_SPECIALIST, { id: specialist.id }, { specialist }),
     mockQuery(GET_CONSULTATION, { id: consultation.id }, { consultation }),
     mockMutation(
       SEND_CONSULTATION,
@@ -268,7 +268,7 @@ test("Send step sends the consultation request", async () => {
 
   const app = renderRoute({
     route: {
-      pathname: `/request_consultation/${specialist.airtableId}/send`,
+      pathname: `/request_consultation/${specialist.id}/send`,
       state: {
         skill: "Testing",
         consultationId: consultation.id,
@@ -296,12 +296,12 @@ test("Can link back to a particular consultation via query params", async () => 
 
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_SPECIALIST, { id: specialist.airtableId }, { specialist }),
+    mockQuery(GET_SPECIALIST, { id: specialist.id }, { specialist }),
     mockQuery(GET_CONSULTATION, { id: consultation.id }, { consultation }),
   ];
 
   const app = renderRoute({
-    route: `/request_consultation/${specialist.airtableId}?consultation=${consultation.id}`,
+    route: `/request_consultation/${specialist.id}?consultation=${consultation.id}`,
     graphQLMocks,
   });
 

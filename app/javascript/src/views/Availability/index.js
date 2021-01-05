@@ -28,67 +28,67 @@ const AvailabilityView = ({ match, notifications }) => {
       {loading ? (
         <Loading />
       ) : (
-        <Formik
-          onSubmit={async (values) => {
-            await updateAvailability({
-              variables: {
-                input: {
-                  id: data.user.airtableId,
-                  ...values,
+          <Formik
+            onSubmit={async (values) => {
+              await updateAvailability({
+                variables: {
+                  input: {
+                    id: data.user.id,
+                    ...values,
+                  },
                 },
-              },
-            });
+              });
 
-            notifications.notify("Your availability has been updated");
-          }}
-          initialValues={{
-            availability: data.user.availability,
-          }}
-        >
-          {(formik) => (
-            <Form onSubmit={formik.handleSubmit}>
-              <Header>
-                <Heading marginBottom="m">
-                  Availability for calls with specialists!
+              notifications.notify("Your availability has been updated");
+            }}
+            initialValues={{
+              availability: data.user.availability,
+            }}
+          >
+            {(formik) => (
+              <Form onSubmit={formik.handleSubmit}>
+                <Header>
+                  <Heading marginBottom="m">
+                    Availability for calls with specialists!
                 </Heading>
-                <TimeZoneSelect
-                  value={timeZone}
-                  onChange={(zone) => setTimeZone(zone)}
-                />
-              </Header>
-              <Body>
-                {sup ? (
-                  <AvailabilityInput
-                    maxHeight="100%"
-                    timezone={timeZone}
-                    value={formik.values.availability}
-                    onChange={(times) => {
-                      formik.setFieldValue("availability", times);
-                    }}
-                    events={data.user.interviews?.map((i) => ({
-                      time: i.startsAt,
-                      label: `Interview with ${i.specialist.firstName}`,
-                    }))}
+                  <TimeZoneSelect
+                    value={timeZone}
+                    onChange={(zone) => setTimeZone(zone)}
                   />
-                ) : (
-                  <Availability
-                    timezone={timeZone}
-                    value={formik.values.availability}
-                    onChange={(times) => {
-                      formik.setFieldValue("availability", times);
-                    }}
-                  />
-                )}
-              </Body>
-              <Footer>
-                <Button size="l" type="submit" isLoading={formik.isLoading}>
-                  Update Availability
+                </Header>
+                <Body>
+                  {sup ? (
+                    <AvailabilityInput
+                      maxHeight="100%"
+                      timezone={timeZone}
+                      value={formik.values.availability}
+                      onChange={(times) => {
+                        formik.setFieldValue("availability", times);
+                      }}
+                      events={data.user.interviews?.map((i) => ({
+                        time: i.startsAt,
+                        label: `Interview with ${i.specialist.firstName}`,
+                      }))}
+                    />
+                  ) : (
+                      <Availability
+                        timezone={timeZone}
+                        value={formik.values.availability}
+                        onChange={(times) => {
+                          formik.setFieldValue("availability", times);
+                        }}
+                      />
+                    )}
+                </Body>
+                <Footer>
+                  <Button size="l" type="submit" isLoading={formik.isLoading}>
+                    Update Availability
                 </Button>
-              </Footer>
-            </Form>
-          )}
-        </Formik>
-      )}
+                </Footer>
+              </Form>
+            )}
+          </Formik>
+        )}
     </Container>
   );
 };

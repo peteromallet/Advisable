@@ -17,7 +17,7 @@ const PendingConsultation = ({ data }) => {
     });
 
     const interview = response.data.acceptConsultation.interview;
-    history.push(`/interview_request/${interview.airtableId}`);
+    history.push(`/interview_request/${interview.id}`);
   };
 
   return (

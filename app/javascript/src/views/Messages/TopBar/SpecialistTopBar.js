@@ -49,7 +49,7 @@ const SpecialistTopBar = (props) => {
 
     if (get(application, "interview.status") === "Call Requested") {
       actionText = "Schedule Interview";
-      actionURL = `/interview_request/${application.interview.airtableId}`;
+      actionURL = `/interview_request/${application.interview.id}`;
     }
   }
 

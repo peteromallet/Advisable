@@ -81,65 +81,65 @@ const SpecialistModal = ({ modal, specialistId }) => {
           {!specialist ? (
             <Loading />
           ) : (
-            <Box>
-              <Box padding="l">
-                <Box mb="m">
-                  <Avatar
-                    size="l"
-                    name={specialist.name}
-                    url={specialist.avatar}
-                  />
-                </Box>
-                <Text
-                  mb="xxs"
-                  fontSize="xxl"
-                  color="neutral900"
-                  fontWeight="semibold"
-                  letterSpacing="-0.02rem"
-                >
-                  {specialist.name}
-                </Text>
-                <Text color="neutral600" fontSize="s" letterSpacing="-0.015rem">
-                  {specialist.location}
-                </Text>
-                <Attributes specialist={specialist} />
-                <Text
-                  mb="m"
-                  fontSize={15}
-                  fontWeight={400}
-                  color="neutral700"
-                  lineHeight={1.35}
-                  letterSpacing="-0.01rem"
-                >
-                  {specialist.bio}
-                </Text>
-                <TagCloud
-                  tags={specialist.skills}
-                  name={specialist.firstName}
-                />
-                {specialist.profileProjects.length > 0 && (
-                  <>
-                    <Text
-                      my="l"
-                      as="h4"
-                      fontSize="xl"
-                      color="blue900"
-                      fontWeight="medium"
-                      letterSpacing="-0.01rem"
-                    >
-                      Previous Projects
-                    </Text>
-                    <Box height={1} bg="neutral100" />
-                    <PreviousProjects
-                      showValidationStatus={false}
-                      specialistId={specialist.airtableId}
-                      previousProjects={specialist.profileProjects}
+              <Box>
+                <Box padding="l">
+                  <Box mb="m">
+                    <Avatar
+                      size="l"
+                      name={specialist.name}
+                      url={specialist.avatar}
                     />
-                  </>
-                )}
+                  </Box>
+                  <Text
+                    mb="xxs"
+                    fontSize="xxl"
+                    color="neutral900"
+                    fontWeight="semibold"
+                    letterSpacing="-0.02rem"
+                  >
+                    {specialist.name}
+                  </Text>
+                  <Text color="neutral600" fontSize="s" letterSpacing="-0.015rem">
+                    {specialist.location}
+                  </Text>
+                  <Attributes specialist={specialist} />
+                  <Text
+                    mb="m"
+                    fontSize={15}
+                    fontWeight={400}
+                    color="neutral700"
+                    lineHeight={1.35}
+                    letterSpacing="-0.01rem"
+                  >
+                    {specialist.bio}
+                  </Text>
+                  <TagCloud
+                    tags={specialist.skills}
+                    name={specialist.firstName}
+                  />
+                  {specialist.profileProjects.length > 0 && (
+                    <>
+                      <Text
+                        my="l"
+                        as="h4"
+                        fontSize="xl"
+                        color="blue900"
+                        fontWeight="medium"
+                        letterSpacing="-0.01rem"
+                      >
+                        Previous Projects
+                    </Text>
+                      <Box height={1} bg="neutral100" />
+                      <PreviousProjects
+                        showValidationStatus={false}
+                        specialistId={specialist.id}
+                        previousProjects={specialist.profileProjects}
+                      />
+                    </>
+                  )}
+                </Box>
               </Box>
-            </Box>
-          )}
+            )}
         </Scrollable>
       </Box>
     </Modal>
