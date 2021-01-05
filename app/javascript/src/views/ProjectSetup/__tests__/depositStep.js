@@ -16,7 +16,7 @@ test("User can complete deposit step", async () => {
   });
   let project = generateTypes.project({
     user: user,
-    airtableId: "rec1234",
+    id: "pro1234",
     status: "Brief Pending Confirmation",
     primarySkill: generateTypes.skill(),
     depositOwed: 25000,
@@ -25,7 +25,7 @@ test("User can complete deposit step", async () => {
   });
 
   const { findByText, findByLabelText } = renderRoute({
-    route: "/project_setup/rec1234/deposit",
+    route: "/project_setup/pro1234/deposit",
     graphQLMocks: [
       {
         request: {
@@ -41,7 +41,7 @@ test("User can complete deposit step", async () => {
         request: {
           query: GET_PROJECT,
           variables: {
-            id: "rec1234",
+            id: "pro1234",
           },
         },
         result: {
@@ -54,7 +54,7 @@ test("User can complete deposit step", async () => {
         request: {
           query: GET_PAYMENT_INTENT,
           variables: {
-            id: "rec1234",
+            id: "pro1234",
           },
         },
         result: {
@@ -68,7 +68,7 @@ test("User can complete deposit step", async () => {
         request: {
           query: GET_DEPOSIT,
           variables: {
-            id: "rec1234",
+            id: "pro1234",
           },
         },
         result: {
@@ -85,7 +85,7 @@ test("User can complete deposit step", async () => {
           query: CONFIRM_PROJECT,
           variables: {
             input: {
-              id: "rec1234",
+              id: "pro1234",
             },
           },
         },
@@ -108,7 +108,7 @@ test("User can complete deposit step", async () => {
         request: {
           query: VIEW_PROJECT,
           variables: {
-            id: "rec1234",
+            id: "pro1234",
           },
         },
         result: {
@@ -126,7 +126,7 @@ test("User can complete deposit step", async () => {
         request: {
           query: GET_MATCHES,
           variables: {
-            id: "rec1234",
+            id: "pro1234",
           },
         },
         result: {

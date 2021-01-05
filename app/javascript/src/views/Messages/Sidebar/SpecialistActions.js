@@ -54,7 +54,7 @@ const ClientActions = ({ application }) => {
           as={Link}
           width="100%"
           key="scheduleInterview"
-          to={`/interview_request/${application.interview.airtableId}`}
+          to={`/interview_request/${application.interview.id}`}
         >
           Schedule Interview
         </Button>,

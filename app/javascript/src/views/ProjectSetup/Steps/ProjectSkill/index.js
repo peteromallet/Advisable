@@ -22,7 +22,7 @@ export default function ProjectSkillsStep({ project }) {
   };
 
   if (project) {
-    initialValues.id = project.airtableId;
+    initialValues.id = project.id;
     initialValues.primarySkill = project.primarySkill?.name || "";
   }
 

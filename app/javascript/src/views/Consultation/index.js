@@ -33,7 +33,7 @@ const Consultation = () => {
     case "Accepted By Specialist": {
       content = (
         <Redirect
-          to={`/interview_request/${data.consultation.interview.airtableId}`}
+          to={`/interview_request/${data.consultation.interview.id}`}
         />
       );
       break;
