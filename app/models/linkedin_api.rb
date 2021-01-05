@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class LinkedinApi
-  API_ROOT = "https://api.linkedin.com/v2/".freeze
+  API_ROOT = "https://api.linkedin.com/v2/"
 
   attr_reader :token
 
