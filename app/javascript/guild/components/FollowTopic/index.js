@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { ArrowBack } from "@styled-icons/ionicons-outline";
 import { Plus, MinusCircle } from "@styled-icons/heroicons-outline";
-import { useNotifications } from "@advisable-main/components/Notifications";
 import { Box, Text, Link, Button, Card } from "@advisable/donut";
 import { GUILD_TOPIC_QUERY } from "./queries";
 import useFollows from "@guild/views/Follows/useFollows";
@@ -17,14 +16,10 @@ const FollowTopic = ({ topicId }) => {
   const { followTopic, unfollowTopic, followedTopics } = useFollows();
 
   const [followed, setFollowed] = useState(false);
-  const notifications = useNotifications();
 
   const onChangeFollow = async () => {
     setFollowed(!followed);
     followed ? await unfollowTopic(topicId) : await followTopic(topicId);
-    notifications.notify(
-      `${followed ? "Unfollowed" : "Followed"}: ${guildTopic?.name}`,
-    );
   };
 
   useEffect(() => {
