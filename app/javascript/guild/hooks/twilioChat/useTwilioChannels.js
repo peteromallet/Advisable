@@ -39,7 +39,7 @@ export const useTwilioChannels = () => {
     [viewer.id],
   );
 
-  const normalizedChannels = channels.map((c) => normalizeChannel(c));
+  const normalizedChannels = (channels || []).map((c) => normalizeChannel(c));
 
   return {
     loading,

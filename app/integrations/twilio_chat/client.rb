@@ -39,7 +39,7 @@ module Integrations
       friendly_name = message.truncate(MAX_FRIENDLY_NAME)
       @channel_sid = Digest::MD5.hexdigest([sender_uid, recipient_uid].sort.join)
       channel
-    rescue Twilio::REST::RestError
+    rescue Twilio::REST::RestError => e
       chat_service.channels.create(
         type: 'private',
         unique_name: channel_sid,
