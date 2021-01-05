@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useMemo, useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import * as Yup from "yup";
 import queryString from "query-string";
@@ -25,12 +25,16 @@ const validationSchema = Yup.object().shape({
 function StartApplication() {
   const [
     startClientApplication,
-    { error, data, client, called },
+    { error, data, client, called, loading },
   ] = useStartClientApplication();
   const location = useLocation();
   const history = useHistory();
   const isMobile = useBreakpoint("m");
   const [applicationId, setApplicationId] = useState();
+  const queryParams = useMemo(
+    () => queryString.parse(location.search, { decode: true }),
+    [location.search],
+  );
 
   const updateLocationState = useCallback(
     (params) => {
@@ -39,34 +43,47 @@ function StartApplication() {
     [history, location],
   );
 
+  const handleStartApplication = useCallback(
+    async function (values) {
+      updateLocationState({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+      });
+
+      return await startClientApplication({
+        variables: {
+          input: {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            rid: queryParams.rid || null,
+            utmMedium: queryParams.utm_medium || null,
+            utmSource: queryParams.utm_source || null,
+            utmCampaign: queryParams.utm_campaign || null,
+          },
+        },
+      });
+    },
+    [updateLocationState, startClientApplication, queryParams],
+  );
+
   // Check query params
   useEffect(() => {
-    const queryStringParams =
-      location.search && queryString.parse(location.search, { decode: true });
-    queryStringParams &&
-      !called &&
-      validationSchema
-        .validate(queryStringParams)
-        .then(() => {
-          // Valid query params. Start client application
-          startClientApplication({
-            variables: { input: { ...queryStringParams } },
-          });
-          updateLocationState({
-            firstName: queryStringParams.firstName,
-            lastName: queryStringParams.lastName,
-            email: queryStringParams.email,
-          });
-        })
-        .catch((err) => {
-          // Not valid query string params. Clear them
-          console.error("Your query params are not valid", err);
-          history.push(location.pathname);
-        });
-  }, [called, history, location, startClientApplication, updateLocationState]);
+    const { firstName, lastName, email } = queryParams;
+    if (!called && firstName && lastName && email) {
+      const valid = validationSchema.validateSync({
+        firstName,
+        lastName,
+        email,
+      });
+      if (!valid) return;
+      handleStartApplication(queryParams);
+    }
+  }, [queryParams, called, handleStartApplication]);
 
   // Handle mutation errors
-  const errorCodes = error?.graphQLErrors.map((err) => err.extensions?.code);
+  const errorCodes = error?.graphQLErrors?.map((err) => err.extensions?.code);
   const emailNotAllowed = errorCodes?.includes("emailNotAllowed");
   const existingAccount = errorCodes?.includes("existingAccount");
   useEffect(() => {
@@ -81,7 +98,7 @@ function StartApplication() {
     applicationId && prefetchNextStep(applicationId);
   }, [data, client]);
 
-  if (location.search)
+  if (loading)
     return (
       <motion.div exit>
         <Navigation
@@ -96,17 +113,13 @@ function StartApplication() {
 
   // Formik
   const initialValues = {
-    firstName: location.state?.firstName || "",
-    lastName: location.state?.lastName || "",
-    email: "",
+    firstName: location.state?.firstName || queryParams.firstName || "",
+    lastName: location.state?.lastName || queryParams.lastName || "",
+    email: queryParams.email || "",
   };
+
   const handleSubmit = (values) => {
-    updateLocationState({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-    });
-    startClientApplication({ variables: { input: { ...values } } });
+    handleStartApplication(values);
   };
 
   return (
