@@ -57,24 +57,20 @@ const App = () => {
                 <Route exact path="/posts/:postId" component={Post} />
                 <AuthenticatedRoute
                   exact
-                  path={"/messages/:conversationId?"}
+                  path="/messages/:conversationId?"
                   component={Messages}
                 />
                 <AuthenticatedRoute
                   exact
-                  path={"/your-posts"}
+                  path="/your-posts"
                   component={YourPosts}
                 />
                 <AuthenticatedRoute
                   exact
-                  path={"/topics/:topicId"}
+                  path="/topics/:topicId"
                   component={Feed}
                 />
-                <AuthenticatedRoute
-                  exact
-                  path={"/follows"}
-                  component={Follows}
-                />
+                <AuthenticatedRoute exact path="/follows" component={Follows} />
               </Switch>
             </Suspense>
           </TwilioProvider>
