@@ -58,9 +58,9 @@ function StartApplication() {
             lastName: values.lastName,
             email: values.email,
             rid: queryParams.rid || null,
-            utmMedium: queryParams.utmMedium || null,
-            utmSource: queryParams.utmSource || null,
-            utmCampaign: queryParams.utmCampaign || null,
+            utmMedium: queryParams.utm_medium || null,
+            utmSource: queryParams.utm_source || null,
+            utmCampaign: queryParams.utm_campaign || null,
           },
         },
       });
