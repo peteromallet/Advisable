@@ -14,6 +14,7 @@ import useViewer from "src/hooks/useViewer";
 export const TwilioContext = createContext();
 
 function getUnreadCountFromChannel(channel) {
+  if (!channel.lastMessage) return 0;
   return channel.lastMessage.index - channel.lastConsumedMessageIndex;
 }
 

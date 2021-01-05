@@ -196,6 +196,7 @@ function Composer({ onSubmit }) {
       <Textarea
         minRows="3"
         maxRows="5"
+        name="message"
         value={message}
         onKeyDown={handleKeyDown}
         disabled={!isConnected}
@@ -208,6 +209,7 @@ function Composer({ onSubmit }) {
         loading={loading}
         disabled={loading || !isConnected}
         onClick={handleSubmit}
+        data-testid="sendMessage"
       >
         Send
       </Button>
