@@ -27,11 +27,11 @@ const color = variant({
     // Temporary variants
     skill: {
       color: "#3A6FF9",
-      background: "#D9E6FF",
+      background: "#DEE9FF",
     },
     industry: {
       color: "#3CA3A8",
-      background: "#CEF0ED",
+      background: "#D3F2F0",
     },
   },
 });
