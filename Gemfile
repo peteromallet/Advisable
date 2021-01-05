@@ -29,6 +29,8 @@ gem "faraday"
 gem "sidekiq", "< 7"
 gem "rack-attack"
 
+gem "nokogiri"
+
 gem "bcrypt", "~> 3.1.7"
 
 gem "countries"
