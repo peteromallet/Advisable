@@ -5,11 +5,6 @@ RSpec.describe 'Guild feed', type: :system do
   let(:author) { create(:specialist, :guild) }
   let!(:post) { create(:guild_post, specialist: author) }
 
-  before do
-    # TODO: twilio-provider Remove once Specialist#guild_unread_messages is removed
-    allow(specialist).to receive(:guild_unread_messages).and_return(false)
-  end
-
   it 'viewer can message post author' do
     authenticate_as(specialist)
     visit "/guild/feed"

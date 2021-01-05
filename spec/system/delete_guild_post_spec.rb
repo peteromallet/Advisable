@@ -5,12 +5,6 @@ RSpec.describe 'Guild post delete action', type: :system do
   let(:author) { create(:specialist, :guild) }
   let!(:post) { create(:guild_post, specialist: author) }
 
-  before do
-    # TODO: twilio-provider Remove once Specialist#guild_unread_messages is removed
-    allow(author).to receive(:guild_unread_messages).and_return(false)
-    allow(specialist).to receive(:guild_unread_messages).and_return(false)
-  end
-
   it 'allows the author to delete their post' do
     authenticate_as(author)
     visit "/guild/posts/#{post.id}"
