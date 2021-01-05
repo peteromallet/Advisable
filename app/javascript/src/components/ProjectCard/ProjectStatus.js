@@ -50,7 +50,7 @@ const STATUSES = {
   Pending: {
     component: Status,
     variant: "yellow",
-    label: "Pending Verification",
+    label: "Pending Validation",
     icon: <RefreshCcw />,
   },
   "Validation Failed": {
