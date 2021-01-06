@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class Account < ApplicationRecord
   include Uid
   include Permissions
 
   has_logidze
 
-  has_one :user, dependent: :nullify # Change to :destroy
-  has_one :specialist, dependent: :nullify # Change to :destroy
+  has_one :user, dependent: :destroy
+  has_one :specialist, dependent: :destroy
   has_many :magic_links, dependent: :destroy
   has_many :auth_providers, dependent: :destroy
 
@@ -80,6 +82,7 @@ end
 #  confirmation_digest :string
 #  confirmation_token  :string
 #  confirmed_at        :datetime
+#  deleted_at          :datetime
 #  email               :citext
 #  first_name          :string
 #  last_name           :string
