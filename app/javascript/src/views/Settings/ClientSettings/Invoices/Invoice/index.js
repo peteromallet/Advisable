@@ -29,7 +29,7 @@ function Invoice() {
 
   const {
     amount,
-    createdAt,
+    issuedAt,
     customerAddress,
     customerName,
     description,
@@ -98,7 +98,7 @@ function Invoice() {
         <Box display="flex" alignItems="flex-start" justifyContent="flex-end">
           <Box mr="auto" mb="l">
             <Text fontSize="xl" color="blue800" mb="xxs" fontWeight="medium">
-              {formatTime(createdAt)}
+              {formatTime(issuedAt)}
             </Text>
             <Text
               color="neutral500"
