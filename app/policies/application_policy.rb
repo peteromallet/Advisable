@@ -7,11 +7,12 @@ class ApplicationPolicy < BasePolicy
     record.specialist == user
   end
 
-  def set_type_for_project?
+  def is_owner_or_manager?
     is_client_owner? || is_company_team_manager?
   end
-  alias stop_working? set_type_for_project?
-  alias start_working? set_type_for_project?
+  alias set_type_for_project? is_owner_or_manager?
+  alias stop_working? is_owner_or_manager?
+  alias start_working? is_owner_or_manager?
 
   def via_client?
     is_client_owner? || record_belongs_to_company?
