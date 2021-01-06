@@ -1,6 +1,6 @@
 class Types::InvoiceType < Types::BaseType
   field :id, ID, null: false
-  field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+  field :issued_at, GraphQL::Types::ISO8601DateTime, null: false
   field :due_date, GraphQL::Types::ISO8601DateTime, null: true
   field :number, String, null: false
   field :status, String, null: false
@@ -12,8 +12,9 @@ class Types::InvoiceType < Types::BaseType
   field :payment_url, String, null: true
   field :line_items, [Types::InvoiceLineItemType], null: false
 
-  def created_at
-    Time.at(object.created).utc.iso8601
+  def issued_at
+    timestamp = object.status_transitions&.finalized_at || object.created
+    Time.at(timestamp).utc.iso8601
   end
 
   def amount
@@ -22,6 +23,7 @@ class Types::InvoiceType < Types::BaseType
 
   def due_date
     return if object.due_date.nil?
+
     Time.at(object.due_date).utc.iso8601
   end
 
@@ -35,6 +37,7 @@ class Types::InvoiceType < Types::BaseType
 
   def customer_address
     return if object.customer_address.nil?
+
     {
       line1: object.customer_address.line1,
       line2: object.customer_address.line2,

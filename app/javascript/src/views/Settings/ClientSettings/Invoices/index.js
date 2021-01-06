@@ -62,7 +62,7 @@ function Invoices() {
         >
           <Box mr="auto">
             <Text color="blue900" fontSize="17px" mb="xxs" fontWeight="medium">
-              {formatTime(i.createdAt)}
+              {formatTime(i.issuedAt)}
             </Text>
             <Text color="neutral500" fontWeight="medium" fontSize="xs">
               #{i.number}
