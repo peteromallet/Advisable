@@ -19,7 +19,7 @@ function subText(status) {
   if (status === "Brief Pending Confirmation") {
     return "Once you've confirmed the details of this project, the Advisable team will immediately start identifying candidates for you.";
   }
-  return "Once you&apos;ve submitted this project, it&apos;ll be sent to the Advisable team for review.";
+  return "Once you've submitted this project, it'll be sent to the Advisable team for review.";
 }
 
 function buttonLabel(status) {
