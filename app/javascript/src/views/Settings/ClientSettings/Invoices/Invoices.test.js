@@ -33,7 +33,7 @@ const paidInvoice = mockQuery(
   {
     invoice: {
       amount: 250000,
-      createdAt: "2020-08-04T21:32:56Z",
+      issuedAt: "2020-08-04T21:32:56Z",
       customerAddress: null,
       customerName: "Dunder Mifflin",
       description: "This is an invoice memo.",
@@ -65,7 +65,7 @@ const openInvoice = mockQuery(
   {
     invoice: {
       amount: 400000,
-      createdAt: "2020-08-04T21:34:25Z",
+      issuedAt: "2020-08-04T21:34:25Z",
       customerAddress: null,
       customerName: "Dunder Mifflin",
       description: "This is the invoice description",
@@ -97,7 +97,7 @@ const dueInvoice = mockQuery(
   {
     invoice: {
       amount: 400000,
-      createdAt: "2020-08-04T21:34:25Z",
+      issuedAt: "2020-08-04T21:34:25Z",
       customerAddress: null,
       customerName: "Dunder Mifflin",
       description: "This is the invoice description",
