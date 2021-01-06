@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::DeleteSpecialist < Mutations::BaseMutation
   include Mutations::Helpers::Authentication
 
@@ -8,8 +10,8 @@ class Mutations::DeleteSpecialist < Mutations::BaseMutation
   end
 
   def resolve
+    current_user.account.update!(deleted_at: Time.zone.now, password: SecureRandom.hex)
     logout
-    current_user.destroy!
     {status: "ok"}
   end
 end
