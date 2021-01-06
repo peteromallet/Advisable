@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::DeleteSpecialist do
   let(:user) { create(:specialist) }
+  let(:account) { user.account }
   let(:context) { {current_user: user, session_manager: session_manager} }
   let(:session_manager) { instance_spy(SessionManager) }
   let(:query) do
@@ -16,11 +17,12 @@ RSpec.describe Mutations::DeleteSpecialist do
     GRAPHQL
   end
 
-  it "deletes the specialist" do
-    id = user.id
+  it "marks the specialist's account for deletion and deletes magic links" do
+    magic_link = create(:magic_link, account: account)
     response = AdvisableSchema.execute(query, context: context)
     expect(session_manager).to have_received(:logout)
-    expect(Specialist.where(id: id)).to be_empty
+    expect(account.deleted_at).not_to be_nil
+    expect(MagicLink.where(id: magic_link.id)).to be_empty
   end
 
   context "when clientuser" do
