@@ -11,6 +11,7 @@ class ApplicationPolicy < BasePolicy
     is_client_owner? || is_company_team_manager?
   end
   alias stop_working? set_type_for_project?
+  alias start_working? set_type_for_project?
 
   def via_client?
     is_client_owner? || record_belongs_to_company?
