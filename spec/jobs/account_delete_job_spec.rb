@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe AccountDeleteJob do
   it "deletes accounts marked for deletion in the past 14 days" do
+    allow_any_instance_of(Specialist).to receive(:remove_from_airtable)
     fresh = create(:specialist, account: create(:account, deleted_at: 13.days.ago))
     stale = create(:specialist, account: create(:account, deleted_at: 15.days.ago))
     described_class.perform_now
