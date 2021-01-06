@@ -8,7 +8,7 @@ export const QUERY_INVOICES = gql`
         invoices {
           id
           number
-          createdAt
+          issuedAt
           status
           amount
         }
@@ -23,7 +23,7 @@ export const GET_INVOICE = gql`
   query getInvoice($id: ID!) {
     invoice(id: $id) {
       # Head
-      createdAt
+      issuedAt
       number
       status
       # Billed to
