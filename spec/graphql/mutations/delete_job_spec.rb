@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe Mutations::DeleteTask do
+RSpec.describe Mutations::DeleteJob do
   let(:user) { create(:user) }
   let!(:project) { create(:project, user: user, status: "Draft") }
 
@@ -17,6 +19,8 @@ RSpec.describe Mutations::DeleteTask do
   end
 
   context 'when a user is signed in' do
+    before { allow_any_instance_of(Project).to receive(:remove_from_airtable) }
+
     it 'deletes the project' do
       expect {
         AdvisableSchema.execute(query, context: {current_user: user})
@@ -41,7 +45,7 @@ RSpec.describe Mutations::DeleteTask do
     end
   end
 
-  context 'wen the project status is not draft' do
+  context 'when the project status is not draft' do
     let(:project) { create(:project, user: user, status: 'Brief Confirmed') }
 
     it 'returns an error' do
