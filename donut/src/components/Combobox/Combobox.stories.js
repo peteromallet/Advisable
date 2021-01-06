@@ -3,10 +3,10 @@ import { sortBy } from "lodash-es";
 import Fuse from "fuse.js";
 import { withKnobs, select } from "@storybook/addon-knobs";
 import Card from "../Card";
-import Autocomplete from "./";
+import Autocomplete from ".";
 
 export default {
-  title: "Forms/New Autocomplete",
+  title: "Forms/Combobox",
   decorators: [withKnobs],
 };
 
