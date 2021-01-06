@@ -102,19 +102,19 @@ function PreviousProjects({ data, isOwner }) {
               sectionName="skills"
               sectionTags={state.skillsSection}
               onClick={switchSkillSelection}
-              color="#3A6FF9"
-              colorHover="#3A6FF9"
-              colorActive="#2350ED"
-              colorActiveHover={rgba("#2350ED", 0.85)}
+              color={theme.colors.blue400}
+              colorHover={theme.colors.blue400}
+              colorActive={theme.colors.blue500}
+              colorActiveHover={rgba(theme.colors.blue500, 0.85)}
               bg={theme.colors.neutral50}
-              bgHover="#F1F6FF"
-              bgActive="#DEE9FF"
-              bgActiveHover={rgba("#DEE9FF", 0.9)}
+              bgHover={theme.colors.blue50}
+              bgActive={theme.colors.blue100}
+              bgActiveHover={rgba(theme.colors.blue100, 0.9)}
               borderWidth="1px"
-              borderColor="#A5C3FF"
-              borderColorHover="#AAB4F5"
-              borderColorActive="#DEE9FF"
-              borderColorActiveHover={rgba("#DEE9FF", 0.9)}
+              borderColor={theme.colors.blue200}
+              borderColorHover={theme.colors.blue200}
+              borderColorActive={theme.colors.blue100}
+              borderColorActiveHover={rgba(theme.colors.blue100, 0.9)}
             />
           )}
           {state.hasIndustries && (
@@ -123,19 +123,19 @@ function PreviousProjects({ data, isOwner }) {
               sectionName="industries"
               sectionTags={state.industriesSection}
               onClick={switchIndustrySelection}
-              color="#3CA3A8"
-              colorHover="#3CA3A8"
-              colorActive="#25828F"
-              colorActiveHover={rgba("#25828F", 0.85)}
+              color={theme.colors.cyan600}
+              colorHover={theme.colors.cyan600}
+              colorActive={theme.colors.cyan700}
+              colorActiveHover={rgba(theme.colors.cyan700, 0.85)}
               bg={theme.colors.neutral50}
-              bgHover="#EDFAF9"
-              bgActive="#D3F2F0"
-              bgActiveHover={rgba("#D3F2F0", 0.9)}
+              bgHover={theme.colors.cyan50}
+              bgActive={theme.colors.cyan100}
+              bgActiveHover={rgba(theme.colors.cyan100, 0.9)}
               borderWidth="1px"
-              borderColor="#92DBD9"
-              borderColorHover="#92DBD9"
-              borderColorActive="#D3F2F0"
-              borderColorActiveHover={rgba("#D3F2F0", 0.9)}
+              borderColor={theme.colors.cyan300}
+              borderColorHover={theme.colors.cyan300}
+              borderColorActive={theme.colors.cyan100}
+              borderColorActiveHover={rgba(theme.colors.cyan100, 0.9)}
             />
           )}
         </Filter>
