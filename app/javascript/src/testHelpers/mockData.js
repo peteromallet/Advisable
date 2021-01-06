@@ -457,7 +457,7 @@ export const invoices = (fields = {}) => {
     [
       {
         amount: 60000,
-        createdAt: "2020-08-04T21:36:16Z",
+        issuedAt: "2020-08-04T21:36:16Z",
         id: "in_1HCXnwAs6WKG5DhfVqXDRMXM",
         number: "5F6791B5-0003",
         status: "paid",
@@ -465,7 +465,7 @@ export const invoices = (fields = {}) => {
       },
       {
         amount: 400000,
-        createdAt: "2020-08-04T21:34:25Z",
+        issuedAt: "2020-08-04T21:34:25Z",
         id: "in_1HCXm9As6WKG5DhfEDigWAeg",
         number: "5F6791B5-0002",
         status: "open",
@@ -473,7 +473,7 @@ export const invoices = (fields = {}) => {
       },
       {
         amount: 250000,
-        createdAt: "2020-08-04T21:32:56Z",
+        issuedAt: "2020-08-04T21:32:56Z",
         id: "in_1HCXkiAs6WKG5Dhf097gXx7b",
         number: "5F6791B5-0001",
         status: "paid",
@@ -481,7 +481,7 @@ export const invoices = (fields = {}) => {
       },
       {
         amount: 2890000,
-        createdAt: "2020-08-04T21:32:56Z",
+        issuedAt: "2020-08-04T21:32:56Z",
         id: "someid_123",
         number: "5F6791B5-0004",
         status: "due",
