@@ -19,7 +19,7 @@ import {
 import { Box, Button, useBreakpoint, theme } from "@advisable/donut";
 import NoFilteredProjects from "./NoFilteredProjects";
 import Masonry from "components/Masonry";
-import ProjectCard from "./ProjectCard";
+import ProjectCard from "src/components/ProjectCard";
 import Tags from "./Filter/Tags";
 import Filter from "./Filter";
 
