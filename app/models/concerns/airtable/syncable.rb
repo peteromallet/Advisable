@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Airtable::Syncable
   extend ActiveSupport::Concern
 
@@ -26,6 +28,8 @@ module Airtable::Syncable
   # Adds functionality to push a record to airtable. This should be included
   # as a concern for models that sync with airtable
   included do
+    before_destroy :remove_from_airtable
+
     # Updates or creates an airtable record for the instance
     def sync_to_airtable(additional_fields = {})
       airtable_class =
@@ -41,8 +45,9 @@ module Airtable::Syncable
     end
 
     def remove_from_airtable
-      airtable_class =
-        self.class.airtable || "Airtable::#{self.class}".constantize
+      return if airtable_id.blank?
+
+      airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
       airtable_class.find(airtable_id).destroy
     end
 
