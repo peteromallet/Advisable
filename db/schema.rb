@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_04_075601) do
+ActiveRecord::Schema.define(version: 2021_01_06_123252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -838,6 +838,14 @@ ActiveRecord::Schema.define(version: 2021_01_04_075601) do
     t.index ["uid"], name: "index_tasks_on_uid"
   end
 
+  create_table "unresponsiveness_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "application_id", null: false
+    t.text "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["application_id"], name: "index_unresponsiveness_reports_on_application_id"
+  end
+
   create_table "user_skills", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "skill_id", null: false
@@ -987,6 +995,7 @@ ActiveRecord::Schema.define(version: 2021_01_04_075601) do
   add_foreign_key "specialists", "accounts"
   add_foreign_key "specialists", "countries"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "unresponsiveness_reports", "applications"
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
   add_foreign_key "users", "accounts"
