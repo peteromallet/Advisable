@@ -31,10 +31,10 @@ export default function Tags({
 
   return (
     <Box>
-      <Tag suffix={SkillsSuffix} variant="skill" mr={1} mb={1.5} size="s">
+      <Tag suffix={SkillsSuffix} variant="blue" mr={1} mb={1.5} size="s">
         {skillTag}
       </Tag>
-      <Tag suffix={IndustrySuffix} variant="industry" size="s">
+      <Tag suffix={IndustrySuffix} variant="cyan" size="s">
         {industryTag}
       </Tag>
     </Box>

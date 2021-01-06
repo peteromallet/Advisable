@@ -13,7 +13,7 @@ const color = variant({
       background: theme.colors.blue900,
     },
     blue: {
-      color: theme.colors.blue900,
+      color: theme.colors.blue500,
       background: theme.colors.blue100,
     },
     orange: {
@@ -21,17 +21,8 @@ const color = variant({
       background: theme.colors.orange100,
     },
     cyan: {
-      color: theme.colors.cyan900,
+      color: theme.colors.cyan700,
       background: theme.colors.cyan100,
-    },
-    // Temporary variants
-    skill: {
-      color: "#3A6FF9",
-      background: "#DEE9FF",
-    },
-    industry: {
-      color: "#3CA3A8",
-      background: "#D3F2F0",
     },
   },
 });

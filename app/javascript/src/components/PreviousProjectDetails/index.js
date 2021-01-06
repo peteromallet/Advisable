@@ -112,7 +112,7 @@ function PreviousProjectDetails({ id }) {
           </Text>
           <Box>
             {project.skills.map((skill) => (
-              <Tag key={skill.id} mr="xxs" mb="xxs" variant="skill">
+              <Tag key={skill.id} mr="xxs" mb="xxs" variant="blue">
                 {skill.name}
               </Tag>
             ))}
@@ -130,7 +130,7 @@ function PreviousProjectDetails({ id }) {
           </Text>
           <Box>
             {project.industries.map((industry) => (
-              <Tag key={industry.id} mr="xxs" mb="xxs" variant="industry">
+              <Tag key={industry.id} mr="xxs" mb="xxs" variant="cyan">
                 {industry.name}
               </Tag>
             ))}
