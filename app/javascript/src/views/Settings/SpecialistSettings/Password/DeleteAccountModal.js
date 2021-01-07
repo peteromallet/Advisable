@@ -39,6 +39,7 @@ export default function DeleteAccountModal({ modal }) {
       <Text mb={2}>Please type &quot;DELETE&quot; to confirm.</Text>
       <Input
         size="sm"
+        name="confirm"
         value={inputValue}
         placeholder="DELETE"
         onChange={(e) => setInputValue(e.target.value)}
