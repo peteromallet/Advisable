@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :unresponsiveness_report do
     application
-    message { "This mofo does nothing. I tell you. Worst guy ever.g" }
+    user
+    message { "This mofo does nothing. I tell you. Worst guy ever." }
   end
 end
