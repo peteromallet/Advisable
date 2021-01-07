@@ -4,6 +4,64 @@ import { relativeDate } from "@guild/utils";
 import { Calendar } from "@styled-icons/ionicons-outline";
 import { Box, Avatar, Text, Link, Button } from "@advisable/donut";
 
+function contextMessage(type) {
+  switch (type) {
+    case "AdviceRequired":
+      return "has offered help for your post:";
+    default: {
+      return "wants to connect with you over your post:";
+    }
+  }
+}
+
+function MessageContext({ author, message }) {
+  if (!message.attributes?.calendlyLink) return null;
+  const { post, postType, postTitle } = message.attributes;
+  return (
+    <Box
+      mb={2}
+      padding={3}
+      pb={1}
+      border="1px solid"
+      borderRadius="12px"
+      borderColor="neutral200"
+    >
+      <Text lineHeight="1.2rem" mb={3}>
+        <Link
+          variant="dark"
+          fontWeight="medium"
+          to={`/freelancers/${author.id}`}
+        >
+          {author.name}
+        </Link>
+        {` ${contextMessage(postType)} `}
+        <Link
+          css={`
+            display: inline;
+          `}
+          variant="dark"
+          fontWeight="medium"
+          to={`/posts/${post}`}
+        >
+          {postTitle}
+        </Link>
+      </Text>
+
+      <Button
+        as="a"
+        href={message.attributes?.calendlyLink}
+        target="_blank"
+        rel="noreferrer noopener"
+        prefix={<Calendar />}
+        mb={2}
+        size="s"
+      >
+        Book a call with {author.firstName}
+      </Button>
+    </Box>
+  );
+}
+
 export default function Message({ message, author, isAuthor }) {
   return (
     <Box display="flex" justifyContent={isAuthor ? "flex-end" : "flex-start"}>
@@ -76,64 +134,6 @@ export default function Message({ message, author, isAuthor }) {
           </Box>
         ) : null}
       </Box>
-    </Box>
-  );
-}
-
-function contextMessage(type) {
-  switch (type) {
-    case "AdviceRequired":
-      return "has offered help for your post:";
-    default: {
-      return "wants to connect with you over your post:";
-    }
-  }
-}
-
-function MessageContext({ author, message }) {
-  if (!message.attributes?.calendlyLink) return null;
-  const { post, postType, postTitle } = message.attributes;
-  return (
-    <Box
-      mb={2}
-      padding={3}
-      pb={1}
-      border="1px solid"
-      borderRadius="12px"
-      borderColor="neutral200"
-    >
-      <Text lineHeight="1.2rem" mb={3}>
-        <Link
-          variant="dark"
-          fontWeight="medium"
-          to={`/freelancers/${author.id}`}
-        >
-          {author.name}
-        </Link>
-        {` ${contextMessage(postType)} `}
-        <Link
-          css={`
-            display: inline;
-          `}
-          variant="dark"
-          fontWeight="medium"
-          to={`/posts/${post}`}
-        >
-          {postTitle}
-        </Link>
-      </Text>
-
-      <Button
-        as="a"
-        href={message.attributes?.calendlyLink}
-        target="_blank"
-        rel="noreferrer noopener"
-        prefix={<Calendar />}
-        mb={2}
-        size="s"
-      >
-        Book a call with {author.firstName}
-      </Button>
     </Box>
   );
 }
