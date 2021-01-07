@@ -8,8 +8,8 @@ class UnresponsivenessReport < ApplicationRecord
 
   memoize def last_message_at
     messages = TalkjsApi.new.messages(application.uid)
-    last_message_from_specialist = messages.find { |m| m["senderId"] == application.specialist.uid }
-    Time.zone.at(last_message_from_specialist["createdAt"] / 1000)
+    specialist_message = messages.find { |m| m["senderId"] == application.specialist.uid }
+    Time.zone.at(specialist_message["createdAt"] / 1000) if specialist_message
   end
 end
 
