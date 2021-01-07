@@ -1,7 +1,16 @@
 # frozen_string_literal: true
 
 class UnresponsivenessReport < ApplicationRecord
+  extend Memoist
+
   belongs_to :application
+  belongs_to :user
+
+  memoize def last_message_at
+    messages = TalkjsApi.new.messages(application.uid)
+    last_message_from_specialist = messages.find { |m| m["senderId"] == application.specialist.uid }
+    Time.zone.at(last_message_from_specialist["createdAt"] / 1000)
+  end
 end
 
 # == Schema Information
@@ -13,12 +22,15 @@ end
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  application_id :bigint           not null
+#  user_id        :bigint           not null
 #
 # Indexes
 #
 #  index_unresponsiveness_reports_on_application_id  (application_id)
+#  index_unresponsiveness_reports_on_user_id         (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (application_id => applications.id)
+#  fk_rails_...  (user_id => users.id)
 #
