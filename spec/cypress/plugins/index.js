@@ -28,6 +28,27 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
   const participantFunctions = {
+    sendMessage: async ({ email, message }) => {
+      const browser = await puppeteer.launch({
+        headless: true,
+      });
+
+      try {
+        const page = await browser.newPage();
+        await page.goto(config.baseUrl + "/guild/messages");
+        await page.waitForSelector("input[name=email]");
+        await page.type("input[name=email]", email);
+        await page.type("input[type=password]", "testing123");
+        await page.click("[data-testid=loginButton]");
+        await page.waitForSelector("[name=message]");
+        await page.type("[name=message]", message);
+        await page.click("[data-testid=sendMessage]");
+        await delay(500);
+        return Promise.resolve(null);
+      } catch (err) {
+        console.log(err);
+      }
+    },
     addParticipant: async ({ email, url, color }) => {
       const args = [
         "--use-fake-ui-for-media-stream",

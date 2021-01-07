@@ -8,9 +8,6 @@ RSpec.describe 'Create post flow', type: :system do
   before do
     create(:skill, name: "Design")
     create(:skill, name: "Development")
-    create(:skill, name: "Marketing")
-    # TODO: twilio-provider Remove once Specialist#guild_unread_messages is removed
-    allow(specialist).to receive(:guild_unread_messages).and_return(false)
   end
 
   it 'allows specialist to create a post' do

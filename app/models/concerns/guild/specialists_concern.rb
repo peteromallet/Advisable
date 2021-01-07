@@ -37,18 +37,6 @@ module Guild::SpecialistsConcern
       update!(guild_notifications_last_read: Time.current)
     end
 
-    def guild_unread_messages
-      chat_client = TwilioChat::Client.new(identity: uid)
-      chat_client.has_unread_messages?
-    rescue Twilio::REST::RestError => e
-      # https://www.twilio.com/docs/api/errors/20404
-      if e.code == 20404
-        false
-      else
-        raise
-      end
-    end
-
     def guild_unread_notifications
       return false unless guild_activity.any?
 

@@ -45,6 +45,7 @@ export default function Message({ message, author, isAuthor }) {
               {author.name}
             </Text>
             <Text
+              data-message
               css={`
                 white-space: pre-wrap;
                 white-space: pre-line;

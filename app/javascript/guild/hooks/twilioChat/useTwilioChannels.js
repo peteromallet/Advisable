@@ -1,76 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
-import { useMutation } from "@apollo/client";
+import { useCallback } from "react";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { timestamp } from "@guild/utils";
-import { useTwilioClient } from "./useTwilioClient";
-import { UPDATE_CHAT_FRIENDLY_NAME } from "./mutations";
+import { useTwilioChat } from "../../components/TwilioProvider";
 
 /* 
   Fetch Twilio chat subscribed channels and handles events
 */
 export const useTwilioChannels = () => {
   const viewer = useViewer();
-  const { client } = useTwilioClient();
-
-  const [subscribedChannels, setSubscribedChannels] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const [updateChatFriendlyName] = useMutation(UPDATE_CHAT_FRIENDLY_NAME);
-
-  useEffect(() => {
-    if (!client) return;
-
-    const initializeChat = async () => {
-      try {
-        client.on("channelUpdated", onChannelUpdated);
-        await refreshSubscribedChannels();
-      } finally {
-        setLoading(false);
-      }
-    };
-    initializeChat();
-    return () => client && client.removeAllListeners();
-  }, [client, onChannelUpdated, refreshSubscribedChannels]);
-
-  /* Event handler focused on lastMessage and joined updates */
-  const onChannelUpdated = useCallback(
-    async (event) => {
-      const lastMessageUpdate = event.updateReasons.some(
-        (r) => r === "lastMessage",
-      );
-      if (lastMessageUpdate) {
-        await updateChatFriendlyName({
-          variables: {
-            input: {
-              channelSid: event.channel.sid,
-            },
-          },
-        });
-      }
-      client && refreshSubscribedChannels();
-    },
-    [refreshSubscribedChannels, client, updateChatFriendlyName],
-  );
-
-  /* Fetch private channels, members, and normalize channels */
-  const refreshSubscribedChannels = useCallback(async () => {
-    if (!client) return;
-
-    const resp = await client.getSubscribedChannels();
-    if (resp?.items?.length) {
-      const subscribed = resp.items.map((channel) => normalizeChannel(channel));
-      Promise.all(subscribed).then((channels) => {
-        const sortedChannels = channels.sort(
-          (a, b) => b.lastMessageDateTime - a.lastMessageDateTime,
-        );
-        setSubscribedChannels(sortedChannels);
-      });
-    }
-  }, [normalizeChannel, client]);
+  const { loading, channels, connectionState } = useTwilioChat();
 
   /* Normalize a chat channel as a guild 'conversations'*/
   const normalizeChannel = useCallback(
-    async (channel) => {
+    (channel) => {
       const {
         friendlyName,
         lastMessage,
@@ -97,18 +39,12 @@ export const useTwilioChannels = () => {
     [viewer.id],
   );
 
-  const sortChannels = ({ order = "desc" }) => {
-    setSubscribedChannels((prev) =>
-      order === "desc"
-        ? prev.sort((a, b) => b.lastMessageDateTime - a.lastMessageDateTime)
-        : prev.sort((a, b) => a.lastMessageDateTime - b.lastMessageDateTime),
-    );
-  };
+  const normalizedChannels = (channels || []).map((c) => normalizeChannel(c));
 
   return {
     loading,
-    subscribedChannels,
-    sortChannels,
+    connectionState,
+    subscribedChannels: normalizedChannels,
   };
 };
 

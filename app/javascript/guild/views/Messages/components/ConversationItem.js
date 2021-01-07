@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Box, Avatar, Text, Link } from "@advisable/donut";
+import { Box, Avatar, Text } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import { flex } from "@guild/styles";
 import { StyledConversationItem } from "../styles";
@@ -15,18 +15,13 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
   if (loading) return <Loading />;
   return (
     <StyledConversationItem
+      $hasUnread={conversation.unreadMessages > 0}
       onClick={() => setActive(conversation.sid)}
       active={isActive}
     >
       <Box alignItems="center" display="flex">
         <Box flexShrink={0}>
-          <Avatar
-            as={Link}
-            size={"s"}
-            name={other.name}
-            url={other.avatar}
-            to={`/freelancers/${other.id}`}
-          />
+          <Avatar size={"s"} name={other.name} url={other.avatar} />
         </Box>
         <Box flexGrow="1" ml={2} css={flex.flexTruncate}>
           <Box

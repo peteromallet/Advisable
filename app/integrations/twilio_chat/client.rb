@@ -25,30 +25,6 @@ module Integrations
       chat_service.channels(channel_sid).members(identity).fetch
     end
 
-    def has_unread_messages?
-      retries = 1
-      begin
-        member = chat_service.users(identity).fetch
-
-        member.user_channels.list.any? do |channel|
-          if channel&.unread_messages_count != 0
-            fetched_channel = chat_service.channels(channel.channel_sid).fetch
-            # Is the last message from the sender
-            last_message = fetched_channel.messages.list(limit: 1, order: 'desc').first
-            last_message&.from != identity
-          end
-        end
-      rescue Twilio::REST::RestError => e
-        if retries <= 2
-          retries += 1
-          sleep 2**retries
-          retry
-        else
-          raise
-        end
-      end
-    end
-
     def create_channel_member(channel, args)
       channel.members.create(args)
     end
@@ -63,7 +39,7 @@ module Integrations
       friendly_name = message.truncate(MAX_FRIENDLY_NAME)
       @channel_sid = Digest::MD5.hexdigest([sender_uid, recipient_uid].sort.join)
       channel
-    rescue Twilio::REST::RestError
+    rescue Twilio::REST::RestError => e
       chat_service.channels.create(
         type: 'private',
         unique_name: channel_sid,
