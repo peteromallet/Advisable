@@ -2,12 +2,12 @@
 
 class StaffMailerPreview < ActionMailer::Preview
   def unresponsive_specialist
-    StaffMailer.unresponsive_specialist(random_application, rand(30))
+    StaffMailer.unresponsive_specialist(random_report)
   end
 
   private
 
-  def random_application
-    Application.order(Arel.sql('RANDOM()')).first
+  def random_report
+    UnresponsivenessReport.order(Arel.sql('RANDOM()')).first
   end
 end

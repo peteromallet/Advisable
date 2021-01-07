@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # An application record represents a freelancers (Specialist) association to
 # a project. Similar to the Project model, the Application model was one of the
 # first models added to the app and has since out grown it's name. Initially
@@ -51,6 +53,7 @@ class Application < ApplicationRecord
   belongs_to :project
   has_many :interviews, dependent: :destroy
   has_many :tasks, dependent: :destroy
+  has_one :unresponsiveness_report, dependent: :destroy
   has_one :trial_task, -> { where(trial: true) }, class_name: "Task", inverse_of: :application
   # This previous project association represents a previous project that was created
   # from the application record after working with the client.
