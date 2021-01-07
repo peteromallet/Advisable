@@ -43,6 +43,28 @@ function ConnectionStatus() {
   );
 }
 
+const MobileBackConversations = ({ onBack }) => (
+  <Box
+    height="60px"
+    display="flex"
+    flexShrink={0}
+    alignItems="center"
+    width={"100%"}
+    onClick={onBack}
+    css={css`
+      cursor: pointer;
+      border-bottom: 1px solid ${theme.colors.ghostWhite};
+    `}
+  >
+    <GuildBox spaceChildrenHorizontal={16} display="flex" mx="l">
+      <ArrowBack size="18px" color="catalinaBlue100" />
+      <Text fontWeight="medium" size="l" color="catalinaBlue100">
+        Conversations
+      </Text>
+    </GuildBox>
+  </Box>
+);
+
 const Messages = () => {
   const height = use100vh();
   const history = useHistory();
@@ -159,27 +181,5 @@ const Messages = () => {
     </Box>
   );
 };
-
-const MobileBackConversations = ({ onBack }) => (
-  <Box
-    height="60px"
-    display="flex"
-    flexShrink={0}
-    alignItems="center"
-    width={"100%"}
-    onClick={onBack}
-    css={css`
-      cursor: pointer;
-      border-bottom: 1px solid ${theme.colors.ghostWhite};
-    `}
-  >
-    <GuildBox spaceChildrenHorizontal={16} display="flex" mx="l">
-      <ArrowBack size="18px" color="catalinaBlue100" />
-      <Text fontWeight="medium" size="l" color="catalinaBlue100">
-        Conversations
-      </Text>
-    </GuildBox>
-  </Box>
-);
 
 export default Messages;

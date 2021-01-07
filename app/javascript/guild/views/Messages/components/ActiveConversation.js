@@ -16,6 +16,53 @@ import { CHAT_PARTICIPANT_QUERY } from "../queries";
 import Message from "./Message";
 import { StyledComposer } from "../styles";
 
+function Composer({ onSubmit }) {
+  const { connectionState } = useTwilio();
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const isConnected = connectionState === "connected";
+
+  async function handleSubmit() {
+    if (loading) return;
+    setLoading(true);
+    await onSubmit(message);
+    setMessage("");
+    setLoading(false);
+  }
+
+  function handleKeyDown(e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  }
+
+  return (
+    <StyledComposer>
+      <Textarea
+        minRows="3"
+        maxRows="5"
+        name="message"
+        value={message}
+        onKeyDown={handleKeyDown}
+        disabled={!isConnected}
+        onChange={({ currentTarget }) => setMessage(currentTarget.value)}
+        placeholder="New Message ..."
+      ></Textarea>
+      <Button
+        size="s"
+        prefix={<Send />}
+        loading={loading}
+        disabled={loading || !isConnected}
+        onClick={handleSubmit}
+        data-testid="sendMessage"
+      >
+        Send
+      </Button>
+    </StyledComposer>
+  );
+}
+
 const ActiveConversation = ({ channelSid }) => {
   const viewer = useViewer();
   const topMessage = useRef(null);
@@ -169,52 +216,5 @@ const ActiveConversation = ({ channelSid }) => {
     )
   );
 };
-
-function Composer({ onSubmit }) {
-  const { connectionState } = useTwilio();
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const isConnected = connectionState === "connected";
-
-  async function handleSubmit() {
-    if (loading) return;
-    setLoading(true);
-    await onSubmit(message);
-    setMessage("");
-    setLoading(false);
-  }
-
-  function handleKeyDown(e) {
-    if (e.keyCode === 13 && !e.shiftKey) {
-      e.preventDefault();
-      handleSubmit();
-    }
-  }
-
-  return (
-    <StyledComposer>
-      <Textarea
-        minRows="3"
-        maxRows="5"
-        name="message"
-        value={message}
-        onKeyDown={handleKeyDown}
-        disabled={!isConnected}
-        onChange={({ currentTarget }) => setMessage(currentTarget.value)}
-        placeholder="New Message ..."
-      ></Textarea>
-      <Button
-        size="s"
-        prefix={<Send />}
-        loading={loading}
-        disabled={loading || !isConnected}
-        onClick={handleSubmit}
-        data-testid="sendMessage"
-      >
-        Send
-      </Button>
-    </StyledComposer>
-  );
-}
 
 export default ActiveConversation;
