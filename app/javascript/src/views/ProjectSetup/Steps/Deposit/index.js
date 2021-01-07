@@ -12,11 +12,11 @@ import PaymentPending from "./PaymentPending";
 import GET_PAYMENT_INTENT from "./getPaymentIntent";
 import { Total, Label, Amount } from "./styles";
 
-const Deposit = ({ project, history }) => {
+const Deposit = ({ project, _history }) => {
   const stripe = useStripe();
   const query = useQuery(GET_PAYMENT_INTENT, {
     variables: {
-      id: project.airtableId,
+      id: project.id,
     },
   });
   const [useNewCard, setUseNewCard] = React.useState(false);
@@ -32,7 +32,7 @@ const Deposit = ({ project, history }) => {
   if (query.loading) return <>loading...</>;
 
   if (pending) {
-    return <PaymentPending id={project.airtableId} />;
+    return <PaymentPending id={project.id} />;
   }
 
   const handleExistingPaymentMethod = async () => {
@@ -82,24 +82,24 @@ const Deposit = ({ project, history }) => {
         handleCardDetails={handleCardDetails}
       />
     ) : (
-      <>
-        <Box mb="xs">
-          <PaymentMethod paymentMethod={paymentMethod} />
-        </Box>
-        <Box mb="l">
-          <Button size="s" variant="subtle" onClick={() => setUseNewCard(true)}>
-            Update payment method
+        <>
+          <Box mb="xs">
+            <PaymentMethod paymentMethod={paymentMethod} />
+          </Box>
+          <Box mb="l">
+            <Button size="s" variant="subtle" onClick={() => setUseNewCard(true)}>
+              Update payment method
           </Button>
-        </Box>
-        <Button
-          size="l"
-          loading={loading}
-          onClick={handleExistingPaymentMethod}
-        >
-          Complete Setup
+          </Box>
+          <Button
+            size="l"
+            loading={loading}
+            onClick={handleExistingPaymentMethod}
+          >
+            Complete Setup
         </Button>
-      </>
-    );
+        </>
+      );
 
   return (
     <>

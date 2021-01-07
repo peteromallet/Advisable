@@ -59,7 +59,7 @@ const ClientActions = ({ application }) => {
           as={Link}
           width="100%"
           prefix={<FileText />}
-          to={`/projects/${application.project.airtableId}/applications/${application.id}/proposal`}
+          to={`/projects/${application.project.id}/applications/${application.id}/proposal`}
         >
           View Proposal
         </Button>
@@ -75,7 +75,7 @@ const ClientActions = ({ application }) => {
           width="100%"
           variant="subtle"
           prefix={<FileText />}
-          to={`/projects/${application.project.airtableId}/applications/${application.id}`}
+          to={`/projects/${application.project.id}/applications/${application.id}`}
         >
           View Application
         </Button>

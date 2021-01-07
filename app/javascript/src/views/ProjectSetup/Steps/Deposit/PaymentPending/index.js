@@ -25,7 +25,7 @@ const PaymentPending = ({ id }) => {
   const depositOwed = data?.project?.depositOwed;
 
   if (depositOwed === 0) {
-    const id = data.project.airtableId;
+    const id = data.project.id;
     return <Redirect to={`/project_setup/${id}/confirm`} />;
   }
 
