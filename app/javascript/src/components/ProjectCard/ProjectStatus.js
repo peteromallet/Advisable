@@ -18,7 +18,7 @@ function Review({ review }) {
       </Box>
       <Box>
         <Text fontSize="s" fontWeight="medium" color="neutral700" mb={0.5}>
-          Reviewed by {review.name}
+          Reviewed by {review.firstName}
         </Text>
         <Text fontSize="xs" color="neutral600">
           {role} {atCompany}

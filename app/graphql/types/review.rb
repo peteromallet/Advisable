@@ -8,6 +8,7 @@ class Types::Review < Types::BaseType
   field :type, String, null: true
   field :ratings, Types::Ratings, null: true
   field :name, String, null: true
+  field :first_name, String, null: true
   field :role, String, null: true
   field :specialist, Types::SpecialistType, null: false
   field :company_name, String, null: true
@@ -30,6 +31,14 @@ class Types::Review < Types::BaseType
     return nil if project.confidential?
 
     project.contact_name
+  end
+
+  def first_name
+    if project.is_a?(Project)
+      project.user.account.first_name
+    else
+      project&.contact_name&.split&.first
+    end
   end
 
   def role
