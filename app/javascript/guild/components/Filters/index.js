@@ -31,7 +31,7 @@ const Filters = ({ postTypeFilter, setPostTypeFilter, yourPosts }) => {
       variables: { postTypeFilter },
     });
 
-    const pageInfo = previous.guildPosts.pageInfo;
+    const { pageInfo, guildTopic } = previous.guildPosts;
 
     client.writeQuery({
       query: GUILD_POSTS_QUERY,
@@ -40,6 +40,7 @@ const Filters = ({ postTypeFilter, setPostTypeFilter, yourPosts }) => {
           __typename: previous.guildPosts.__typename,
           edges: [...previous.guildPosts.edges, { node: guildPost }],
           pageInfo,
+          guildTopic,
         },
       },
     });
