@@ -70,9 +70,17 @@ const Messages = () => {
   const history = useHistory();
   const { conversationId: paramsChannelSid } = useParams();
   const sUp = useBreakpoint("sUp");
-
   const { loading, subscribedChannels } = useTwilioChannels();
   const [activeChannelSid, setActiveChannelSid] = useState(null);
+
+  const handleSetActive = useCallback(
+    (channelSid) => {
+      setActiveChannelSid(channelSid);
+      const pathname = ["/messages", channelSid].filter((x) => x).join("/");
+      history.replace({ pathname });
+    },
+    [history],
+  );
 
   /* Set the initial channel */
   useEffect(() => {
@@ -86,15 +94,6 @@ const Messages = () => {
     paramsChannelSid,
     sUp,
   ]);
-
-  const handleSetActive = useCallback(
-    (channelSid) => {
-      setActiveChannelSid(channelSid);
-      const pathname = ["/messages", channelSid].filter((x) => x).join("/");
-      history.replace({ pathname });
-    },
-    [history],
-  );
 
   return (
     <Box height={height - 60} width="100%">
