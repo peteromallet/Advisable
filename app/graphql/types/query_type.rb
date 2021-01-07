@@ -273,22 +273,13 @@ class Types::QueryType < Types::BaseType
     query = Guild::Post.feed(current_user)
 
     if (topic_id = args[:topic_id].presence)
-      guild_topic = Guild::Topic.find_by(id: topic_id)
-      query.tagged_with(guild_topic, on: :guild_topics, any: true)
+      context[:guild_topic] = Guild::Topic.find_by(id: topic_id)
+      query.tagged_with(context[:guild_topic], on: :guild_topics, any: true)
     elsif (type = args[:type].presence) && type != 'For You'
       query.where(type: type)
     else
       query
     end
-  end
-
-  field :guild_topic, Types::Guild::TopicType, null: true do
-    argument :id, ID, required: true
-  end
-
-  def guild_topic(id:)
-    requires_guild_user!
-    Guild::Topic.find(id)
   end
 
   field :guild_activity,

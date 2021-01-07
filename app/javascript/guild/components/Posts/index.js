@@ -34,11 +34,12 @@ const Posts = () => {
   });
 
   const posts = data?.guildPosts.edges.map((e) => e.node) || [];
+  const topic = data?.guildPosts?.guildTopic;
 
   return (
     <>
-      {topicId ? (
-        <FollowTopic topicId={topicId} />
+      {topicId && topic ? (
+        <FollowTopic topic={topic} />
       ) : (
         <Filters
           postTypeFilter={postTypeFilter}
