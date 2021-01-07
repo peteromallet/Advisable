@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { GUILD_POSTS_QUERY } from "./queries";
-import { useBottomScrollListener } from "react-bottom-scroll-listener";
+import BottomScrollListener from "react-bottom-scroll-listener";
+
 import Post from "../Post";
 import LoadingPosts from "./Loading";
 import { GuildBox } from "@guild/styles";
@@ -27,14 +28,14 @@ const Posts = () => {
   const hasNextPage = data?.guildPosts.pageInfo.hasNextPage || false;
   const endCursor = data?.guildPosts.pageInfo.endCursor;
 
-  useBottomScrollListener(() => {
+  const posts = data?.guildPosts.edges.map((e) => e.node) || [];
+  const topic = data?.guildPosts?.guildTopic;
+
+  const onReachedBottom = () => {
     if (!loading && hasNextPage) {
       fetchMore({ variables: { cursor: endCursor } });
     }
-  });
-
-  const posts = data?.guildPosts.edges.map((e) => e.node) || [];
-  const topic = data?.guildPosts?.guildTopic;
+  };
 
   return (
     <>
@@ -46,6 +47,10 @@ const Posts = () => {
           setPostTypeFilter={setPostTypeFilter}
         />
       )}
+      <BottomScrollListener
+        onBottom={onReachedBottom}
+        offset={topicId ? 64 : 0}
+      />
 
       <Stack spacing="4">
         {posts.map((post) => (
