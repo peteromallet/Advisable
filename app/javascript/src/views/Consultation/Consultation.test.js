@@ -67,7 +67,7 @@ test("Accepting a consultation request", async () => {
     {
       request: {
         query: FETCH_INTERVIEW,
-        variables: { id: interview.airtableId },
+        variables: { id: interview.id },
       },
       result: {
         data: {
@@ -204,7 +204,7 @@ test("redirects to the interview when already accepted", async () => {
     {
       request: {
         query: FETCH_INTERVIEW,
-        variables: { id: interview.airtableId },
+        variables: { id: interview.id },
       },
       result: {
         data: {
