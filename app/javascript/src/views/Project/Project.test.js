@@ -60,7 +60,14 @@ function createTestData() {
           status: "Call Requested",
           startsAt: null,
         }),
-        previousProjects: [mockData.previousProject()],
+        previousProjects: [
+          mockData.previousProject({
+            skills: [mockData.skill()],
+            primarySkill: mockData.skill(),
+            industries: [mockData.industry()],
+            primaryIndustry: mockData.industry(),
+          }),
+        ],
         specialist: mockData.specialist({
           firstName: "Linda",
           name: "Linda Belcher",
@@ -302,9 +309,12 @@ test("user can view a candidate", async () => {
   await screen.getByText(project.candidates[0].specialist.reviews[0].comment, {
     exact: false,
   });
-  await screen.getByText(project.candidates[0].previousProjects[0].title, {
-    exact: false,
-  });
+  await screen.getByText(
+    `${project.candidates[0].previousProjects[0].primarySkill.name} project`,
+    {
+      exact: false,
+    },
+  );
 });
 
 test("if candidate status is 'Applied' redirects to matches stack", async () => {
