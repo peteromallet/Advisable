@@ -1,17 +1,47 @@
 import { css } from "styled-components";
+import { motion } from "framer-motion";
 import React, { useCallback, useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box, Text, theme, useBreakpoint } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import { ArrowBack } from "@styled-icons/ionicons-outline";
-import { useToggle } from "@guild/hooks/useToggle";
 import { useTwilioChannels } from "@guild/hooks/twilioChat/useTwilioChannels";
-import SortConversations from "@guild/components/ShowMore";
 import { GuildBox } from "@guild/styles";
+import useTwilio from "@guild/components/TwilioProvider/useTwilioChat";
 import ActiveConversation from "./components/ActiveConversation";
 import ConversationItem from "./components/ConversationItem";
 import MessageWithAction from "@guild/components/MessageWithAction";
 import { use100vh } from "react-div-100vh";
+
+const CONNECTION_MESSAGES = {
+  connecting: "Connecting...",
+  disconnected: "Lost connection, please refresh the page",
+};
+
+function ConnectionStatus() {
+  const { connectionState } = useTwilio();
+
+  const message = CONNECTION_MESSAGES[connectionState];
+
+  return (
+    <Box
+      bg="blue900"
+      borderRadius="12px"
+      py={3}
+      px={4}
+      color="white"
+      as={motion.div}
+      position="fixed"
+      right="20px"
+      bottom="20px"
+      fontSize="sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: message ? 1 : 0 }}
+    >
+      {message}
+    </Box>
+  );
+}
 
 const Messages = () => {
   const height = use100vh();
@@ -19,8 +49,7 @@ const Messages = () => {
   const { conversationId: paramsChannelSid } = useParams();
   const sUp = useBreakpoint("sUp");
 
-  const { loading, subscribedChannels, sortChannels } = useTwilioChannels();
-  const [sortConversations, toggleSortConversations] = useToggle();
+  const { loading, subscribedChannels } = useTwilioChannels();
   const [activeChannelSid, setActiveChannelSid] = useState(null);
 
   /* Set the initial channel */
@@ -44,12 +73,6 @@ const Messages = () => {
     },
     [history],
   );
-
-  const handleSortConversations = () => {
-    const order = sortConversations ? "desc" : "asc";
-    toggleSortConversations();
-    sortChannels({ order });
-  };
 
   return (
     <Box height={height - 60} width="100%">
@@ -86,11 +109,6 @@ const Messages = () => {
                     >
                       Inbox
                     </Text>
-                    <SortConversations
-                      showingMore={sortConversations}
-                      onToggle={handleSortConversations}
-                      text={{ more: "Sort", less: "Sort" }}
-                    />
                   </Box>
 
                   {/* Conversations Inbox List */}
@@ -125,6 +143,8 @@ const Messages = () => {
                   <ActiveConversation channelSid={activeChannelSid} />
                 </Box>
               )}
+
+              <ConnectionStatus />
             </>
           ) : (
             <MessageWithAction

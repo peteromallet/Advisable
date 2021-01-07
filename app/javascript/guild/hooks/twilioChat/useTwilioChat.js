@@ -1,23 +1,24 @@
 import { useState, useEffect, useCallback } from "react";
-import { useTwilioClient } from "@guild/hooks/twilioChat/useTwilioClient";
+import useTwilio from "../../components/TwilioProvider/useTwilioChat";
 
 export const useTwilioChat = ({ channelSid }) => {
-  const { client } = useTwilioClient();
+  const { client } = useTwilio();
   const [chatState, setChatState] = useState({
     messages: [],
-    initializing: false,
+    initializing: true,
     activeChannel: null,
     fetchingMoreMessages: false,
   });
 
   useEffect(() => {
     if (!client || !channelSid) return;
-    let channel;
-    const pageSize = 50;
-    setChatState((prev) => ({ ...prev, initializing: true }));
+    if (chatState.activeChannel?.sid === channelSid) return;
 
     const initializeChannel = async () => {
-      channel = await client.getChannelBySid(channelSid);
+      const pageSize = 50;
+      setChatState((prev) => ({ ...prev, initializing: true }));
+
+      const channel = await client.getChannelBySid(channelSid);
       const paginator = await channel.getMessages(pageSize);
       setChatState({
         activeChannel: channel,
@@ -25,19 +26,13 @@ export const useTwilioChat = ({ channelSid }) => {
         initializing: false,
         paginator,
       });
-      return channel;
     };
-    initializeChannel().then((channel) => {
-      channel.on(
-        "messageAdded",
-        async (message) => await onMessageAdded(message, channel),
-      );
-    });
 
-    return () => channel && channel.removeAllListeners();
-  }, [client, channelSid, onMessageAdded]);
+    initializeChannel();
+  }, [client, channelSid, chatState.activeChannel]);
 
   const onMessageAdded = useCallback(async (message) => {
+    await message.channel.setAllMessagesConsumed();
     setChatState((prev) => ({
       ...prev,
       initializing: false,
@@ -58,6 +53,15 @@ export const useTwilioChat = ({ channelSid }) => {
       fetchingMoreMessages: false,
     }));
   };
+
+  useEffect(() => {
+    if (chatState.activeChannel) {
+      chatState.activeChannel.on("messageAdded", onMessageAdded);
+      return () => {
+        chatState.activeChannel.removeListener("messageAdded", onMessageAdded);
+      };
+    }
+  }, [chatState.activeChannel, onMessageAdded]);
 
   return { ...chatState, onLoadPreviousMessages };
 };

@@ -12,6 +12,7 @@ import useHideIntercom from "src/hooks/useHideIntercom";
 import Feed from "./views/Feed";
 import Post from "./views/Post";
 import Messages from "./views/Messages";
+import TwilioProvider from "./components/TwilioProvider";
 const YourPosts = lazy(() => import("./views/YourPosts"));
 const FreelancerProfile = lazy(() =>
   import("@advisable-main/views/FreelancerProfile"),
@@ -34,36 +35,38 @@ const App = () => {
     <ApplicationProvider>
       <RootErrorBoundary>
         <NotificationsProvider>
-          <Header />
-          <Suspense fallback={<Loading />}>
-            <Switch>
-              <Route
-                path="/freelancers/:id"
-                component={GuildOrRedirectFreelancerProfile}
-              />
-              <AuthenticatedRoute
-                exact
-                path="/"
-                component={() => <Redirect to="/feed" />}
-              />
-              <AuthenticatedRoute
-                exact
-                path={["/feed", "/composer*"]}
-                component={Feed}
-              />
-              <Route exact path="/posts/:postId" component={Post} />
-              <AuthenticatedRoute
-                exact
-                path={"/messages/:conversationId?"}
-                component={Messages}
-              />
-              <AuthenticatedRoute
-                exact
-                path={"/your-posts"}
-                component={YourPosts}
-              />
-            </Switch>
-          </Suspense>
+          <TwilioProvider>
+            <Header />
+            <Suspense fallback={<Loading />}>
+              <Switch>
+                <Route
+                  path="/freelancers/:id"
+                  component={GuildOrRedirectFreelancerProfile}
+                />
+                <AuthenticatedRoute
+                  exact
+                  path="/"
+                  component={() => <Redirect to="/feed" />}
+                />
+                <AuthenticatedRoute
+                  exact
+                  path={["/feed", "/composer*"]}
+                  component={Feed}
+                />
+                <Route exact path="/posts/:postId" component={Post} />
+                <AuthenticatedRoute
+                  exact
+                  path={"/messages/:conversationId?"}
+                  component={Messages}
+                />
+                <AuthenticatedRoute
+                  exact
+                  path={"/your-posts"}
+                  component={YourPosts}
+                />
+              </Switch>
+            </Suspense>
+          </TwilioProvider>
         </NotificationsProvider>
       </RootErrorBoundary>
     </ApplicationProvider>

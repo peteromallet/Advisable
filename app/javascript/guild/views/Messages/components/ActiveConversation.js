@@ -9,6 +9,7 @@ import Loading from "src/components/Loading";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { useTwilioChat } from "@guild/hooks/twilioChat/useTwilioChat";
 import { GuildBox, flex } from "@guild/styles";
+import useTwilio from "@guild/components/TwilioProvider/useTwilioChat";
 import { ScrollToBottom } from "@guild/components/ScrollToBottom";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { CHAT_PARTICIPANT_QUERY } from "../queries";
@@ -32,9 +33,7 @@ const ActiveConversation = ({ channelSid }) => {
 
   useEffect(() => {
     if (!activeConversation) return;
-    const setAllMessagesConsumed = async () =>
-      await activeConversation.setAllMessagesConsumed();
-    setAllMessagesConsumed();
+    activeConversation.setAllMessagesConsumed();
   }, [activeConversation]);
 
   /* Get the other participant uid  */
@@ -60,6 +59,7 @@ const ActiveConversation = ({ channelSid }) => {
   const onSubmitNewMessage = async (message) => {
     if (!message?.length) return;
     await activeConversation.sendMessage(message);
+    activeConversation.updateFriendlyName(message.slice(0, 120));
   };
 
   /*
@@ -71,8 +71,10 @@ const ActiveConversation = ({ channelSid }) => {
   const scrollToBottom =
     !fetchingMoreMessages && (!paginator?.hasNextPage || hasUnreadMessages);
 
-  const messagesRef = useBottomScrollListener(async () => {
-    await activeConversation.setAllMessagesConsumed();
+  const messagesRef = useBottomScrollListener(() => {
+    if (activeConversation) {
+      activeConversation.setAllMessagesConsumed();
+    }
   });
 
   async function loadMoreMessages() {
@@ -169,10 +171,13 @@ const ActiveConversation = ({ channelSid }) => {
 };
 
 function Composer({ onSubmit }) {
+  const { connectionState } = useTwilio();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const isConnected = connectionState === "connected";
 
   async function handleSubmit() {
+    if (loading) return;
     setLoading(true);
     await onSubmit(message);
     setMessage("");
@@ -191,8 +196,10 @@ function Composer({ onSubmit }) {
       <Textarea
         minRows="3"
         maxRows="5"
+        name="message"
         value={message}
         onKeyDown={handleKeyDown}
+        disabled={!isConnected}
         onChange={({ currentTarget }) => setMessage(currentTarget.value)}
         placeholder="New Message ..."
       ></Textarea>
@@ -200,8 +207,9 @@ function Composer({ onSubmit }) {
         size="s"
         prefix={<Send />}
         loading={loading}
-        disabled={loading}
+        disabled={loading || !isConnected}
         onClick={handleSubmit}
+        data-testid="sendMessage"
       >
         Send
       </Button>
