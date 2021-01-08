@@ -13,6 +13,16 @@ class StaffMailer < ApplicationMailer
     mail(to: @sales_person.email_with_name, subject: "#{@client.account.name} is unresponsive on #{@project.name}")
   end
 
+  def problematic_specialist(flag)
+    @flag = flag
+    @project = @flag.application.project
+    @user = @flag.user
+    @specialist = @flag.application.specialist
+    @sales_person = sales_person_for(project: @project)
+
+    mail(to: @sales_person.email_with_name, subject: "#{@user.account.name} reported #{@specialist.account.name} as problematic on #{@project.name}")
+  end
+
   private
 
   def instance_variables_for_unresponsiveness_report(report)
