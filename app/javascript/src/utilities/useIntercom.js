@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import usePrevious from "./usePrevious";
 
 const bootIntercom = (viewer) => {
-  if (!window?.Intercom) return null;
-
   let data = {
     hide_default_launcher: window._hide_intercom || false,
     app_id: process.env.INTERCOM_APP_ID,
@@ -23,9 +21,10 @@ const useIntercom = (location, viewer) => {
   const previousViewer = usePrevious(viewer);
 
   useEffect(() => {
-    bootIntercom(viewer);
-
-    return () => window.Intercom("shutdown");
+    if (window?.Intercom) {
+      bootIntercom(viewer);
+      return () => window.Intercom("shutdown");
+    }
   }, [viewer]);
 
   useEffect(() => {
@@ -47,11 +46,11 @@ const useIntercom = (location, viewer) => {
   }, [previousViewer, viewer]);
 
   useEffect(() => {
-    if (!window.Intercom) return;
-
-    window.Intercom("update", {
-      last_request_at: parseInt(new Date().getTime() / 1000),
-    });
+    if (window.Intercom) {
+      window.Intercom("update", {
+        last_request_at: parseInt(new Date().getTime() / 1000),
+      });
+    }
   }, [location.pathname]);
 };
 
