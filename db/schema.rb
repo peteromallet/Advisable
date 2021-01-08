@@ -344,6 +344,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["guild_post_id"], name: "index_guild_post_engagements_on_guild_post_id"
     t.index ["specialist_id", "guild_post_id"], name: "index_guild_post_engagements_on_specialist_id_and_guild_post_id", unique: true
+    t.index ["specialist_id"], name: "index_guild_post_engagements_on_specialist_id"
   end
 
   create_table "guild_post_images", force: :cascade do |t|
@@ -639,8 +640,8 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.integer "candidate_count", default: 0
     t.integer "proposed_count", default: 0
     t.integer "hired_count", default: 0
-    t.bigint "sales_person_id"
     t.boolean "sourcing"
+    t.bigint "sales_person_id"
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
     t.jsonb "log_data"
@@ -772,13 +773,13 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.string "phone"
     t.boolean "guild", default: false
     t.string "community_status"
-    t.jsonb "guild_data"
     t.boolean "automated_invitations_subscription"
+    t.jsonb "guild_data"
+    t.bigint "account_id"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
-    t.bigint "account_id"
     t.integer "member_of_week_email"
     t.jsonb "log_data"
     t.index ["account_id"], name: "index_specialists_on_account_id"
@@ -796,7 +797,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.string "context", limit: 128
     t.datetime "created_at"
     t.index ["context"], name: "index_taggings_on_context"
-    t.index %w[tag_id taggable_id taggable_type context tagger_id tagger_type], name: "taggings_idx", unique: true
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
     t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
     t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
@@ -912,8 +913,8 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.datetime "application_rejected_at"
     t.datetime "application_reminder_at"
     t.bigint "account_id"
-    t.uuid "company_id"
     t.jsonb "log_data"
+    t.uuid "company_id"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["company_id"], name: "index_users_on_company_id"
