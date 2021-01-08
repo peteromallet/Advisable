@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::AssignTask < Mutations::BaseMutation
   argument :task, ID, required: true
 
@@ -7,7 +9,7 @@ class Mutations::AssignTask < Mutations::BaseMutation
   def authorized?(**args)
     task = Task.find_by_uid!(args[:task])
     policy = TaskPolicy.new(context[:current_user], task)
-    return true if policy.is_client_owner?
+    return true if policy.via_client?
 
     [false, {errors: [{code: 'not_authorized'}]}]
   end
