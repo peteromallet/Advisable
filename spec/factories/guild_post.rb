@@ -14,7 +14,6 @@ FactoryBot.define do
     end
   end
 
-
   factory :advice_required_guild_post, parent: :guild_post, class: 'Guild::Post::AdviceRequired' do
     type { "AdviceRequired" }
     need_help { false }

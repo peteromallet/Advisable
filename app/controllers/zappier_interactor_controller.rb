@@ -33,6 +33,16 @@ class ZappierInteractorController < ApplicationController
     render json: {error: "Account not found"}, status: :unprocessable_entity
   end
 
+  def boost_guild_post
+    post = Guild::Post.find(params[:post_id])
+    post.boost!
+    render json: {status: "OK."}
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "Post not found"}, status: :unprocessable_entity
+  rescue Guild::Post::BoostError => e
+    render json: {error: e.message}, status: :unprocessable_entity
+  end
+
   private
 
   def find_account_from_uid(uid)

@@ -141,20 +141,20 @@ RSpec.describe Guild::Post, type: :model do
       expect {
         post.draft!
         post.boost!
-      }.to raise_error("cannot boost if not published")
+      }.to raise_error(Guild::Post::BoostError, "Cannot boost unpublished post")
     end
 
     it "errors when there are no guild_topics" do
       expect {
         post.boost!
-      }.to raise_error("cannot boost with zero topics")
+      }.to raise_error(Guild::Post::BoostError, "Cannot boost a post with zero topics")
     end
 
     it "errors when it's already boosted" do
       expect {
         post.update(boosted_at: Time.current)
         post.boost!
-      }.to raise_error("is already boosted")
+      }.to raise_error(Guild::Post::BoostError, "Post is already boosted")
     end
 
     it "updates boosted_at and enqueues a job" do

@@ -125,4 +125,35 @@ RSpec.describe ZappierInteractorController, type: :request do
       expect(GuildAddFollowablesJob).to have_been_enqueued.with(specialist.id)
     end
   end
+
+  describe "POST /boost_guild_post" do
+    let(:guild_post) { create(:guild_post, status: "published", guild_topic_list: [create(:guild_topic)]) }
+    let(:post_id) { guild_post.id }
+    let(:params) { {post_id: post_id, key: key} }
+
+    context "when no key" do
+      let(:key) { '' }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/boost_guild_post", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context "when post does not satisfy requirements for boosting" do
+      let(:guild_post) { create(:guild_post) }
+
+      it "returns a descriptive error" do
+        post("/zappier_interactor/boost_guild_post", params: params)
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON[response.body]["error"]).to eq("Cannot boost a post with zero topics")
+      end
+    end
+
+    it "boosts post" do
+      post("/zappier_interactor/boost_guild_post", params: params)
+      expect(response).to have_http_status(:success)
+      expect(Guild::Post.find(post_id).boosted_at).to be_present
+    end
+  end
 end
