@@ -3,7 +3,7 @@ import { Text, Box, Tag } from "@advisable/donut";
 
 function TagSuffix({ children, color }) {
   return (
-    <Box bg="white" borderRadius={4} px={1} py={0.5} mr={1.5}>
+    <Box bg="white" borderRadius={4} px={1} py={0.5}>
       <Text color={color} fontSize="2xs">
         {children}
       </Text>
