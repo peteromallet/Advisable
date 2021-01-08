@@ -148,6 +148,21 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         }.to change { guild_post.guild_topics.count }.from(0).to(3)
       end
 
+      it "creates new topic names" do
+        input = {
+          guildPostId: guild_post.id,
+          guildTopicNames: ["the razor crest"]
+        }
+        query = mutation[input]
+
+        update_guild_post.call(query)
+        new_topic = guild_post.reload.guild_topics.first
+
+        expect(new_topic.name).to eq("the razor crest")
+        expect(new_topic.slug).to eq("the-razor-crest")
+        expect(new_topic.published).to eq(false)
+      end
+
       it "does not change the status to draft if removed" do
         guild_post.removed!
         input = {

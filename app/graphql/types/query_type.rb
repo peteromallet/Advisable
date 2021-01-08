@@ -224,7 +224,7 @@ module Types
 
       if (topic_id = args[:topic_id].presence)
         # TODO: Use only slugs to query
-        context[:guild_topic] = ::Guild::Topic.find_by_slug_or_id!(topic_id)
+        context[:guild_topic] = ::Guild::Topic.published.find_by_slug_or_id(topic_id)
         query.tagged_with(context[:guild_topic], on: :guild_topics, any: true)
       elsif (type = args[:type].presence) && type != 'For You'
         query.where(type: type)
@@ -254,7 +254,15 @@ module Types
     def guild_top_topics
       requires_guild_user!
 
-      ::Guild::Topic.most_used
+      ::Guild::Topic.published.most_used
+    end
+
+    field :guild_other_topics, [Types::Guild::TopicType], null: true do
+      description "Returns other guild topics that aren't related to skill, industry, or location"
+    end
+
+    def guild_other_topics
+      ::Guild::Topic.other
     end
 
     field :guild_featured_members, [Types::SpecialistType], null: true

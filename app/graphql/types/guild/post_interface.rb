@@ -114,6 +114,13 @@ module Types
       end
 
       field :guild_topics, [Types::Guild::TopicType], null: true
+      def guild_topics
+        if current_user == object.specialist
+          object.guild_topics
+        else
+          object.guild_topics.where(published: true)
+        end
+      end
 
       field :images, [Types::Guild::PostImageType], null: false
       def images

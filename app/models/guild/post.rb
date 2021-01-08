@@ -5,10 +5,11 @@ module Guild
     class BoostError < StandardError; end
     self.store_full_sti_class = false
 
+    # NOTE: Can't leverage scopes when inheriting from ActsAsTaggableOn::Tag
     acts_as_ordered_taggable_on :guild_topics
 
     POST_TYPES = %w[Post AdviceRequired CaseStudy Opportunity].freeze
-    AUDIENCE_TYPES = %w[skills industries locations none].freeze
+    AUDIENCE_TYPES = %w[skills industries locations none other].freeze
 
     belongs_to :specialist
     has_one :account, through: :specialist

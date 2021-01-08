@@ -1,1 +1,5 @@
-<%= field.to_s %>
+
+
+<% field.data.map do |topic| %>
+  <%= link_to(topic.name, admin_guild_topic_path(topic.id)) %>
+<% end %>
