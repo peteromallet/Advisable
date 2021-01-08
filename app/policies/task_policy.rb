@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A poicy to determin wether or not a given user has permission to carry out
 # an action. The TaskPolicy is a PORO that follows the rules set out by the
 # pundit gem.
@@ -62,5 +64,9 @@ class TaskPolicy < BasePolicy
 
   def changeable_stage?
     ['Not Assigned', 'Quote Requested', 'Quote Provided', 'Requested To Start'].include?(record.stage)
+  end
+
+  def company_of_record
+    record.application&.project&.user&.company
   end
 end
