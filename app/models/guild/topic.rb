@@ -22,6 +22,13 @@ module Guild
 
     validate :ensure_alias_root
 
+    scope :published, -> { where(published: true) }
+    scope :other, lambda {
+      where(topicable_id: nil).
+        published.
+        order(taggings_count: :desc)
+    }
+
     protected
 
     def ensure_alias_root
@@ -36,6 +43,7 @@ end
 #
 #  id             :uuid             not null, primary key
 #  name           :string
+#  published      :boolean          default(FALSE)
 #  slug           :string
 #  taggings_count :integer          default(0)
 #  topicable_type :string

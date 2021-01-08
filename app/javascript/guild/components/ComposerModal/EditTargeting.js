@@ -5,21 +5,20 @@ import useProgressSteps from "./useProgressSteps";
 import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
 import { Plus } from "@styled-icons/heroicons-outline";
 import { Formik, Form, ErrorMessage } from "formik";
-import { capitalize } from "@guild/utils";
 import pluralize from "pluralize";
 import { StyledTopicable } from "./styles";
-
 import {
   Box,
   Text,
   Label,
   Link,
   InputError,
-  Autocomplete,
   Button,
   Stack,
 } from "@advisable/donut";
+import Autocomplete from "@advisable/donut/components/Combobox";
 import { GuildBox } from "@guild/styles";
+import indefinite from "indefinite";
 
 export default function EditTargeting({ guildPost, selectDataQuery }) {
   const [updateGuildPost] = useUpdateGuildPostWriteCache();
@@ -27,12 +26,12 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
   const { progress } = useProgressSteps();
   const nextPath = `/composer/${guildPost.id}/review`;
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async ({ guildTopicNames }) => {
     await updateGuildPost({
       variables: {
         input: {
           guildPostId: guildPost.id,
-          ...values,
+          guildTopicNames: guildTopicNames.map((gt) => gt.label),
         },
       },
     });
@@ -45,7 +44,10 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
     formik.setFieldValue("guildTopicNames", [...prev, suggested]);
   };
 
-  const guildTopicNames = guildPost?.guildTopics.map((gt) => gt.name);
+  const guildTopicNames = guildPost?.guildTopics.map((gt) => ({
+    label: gt.name,
+    value: gt.name,
+  }));
 
   /*
     Setup formik guildTopic options based on the audienceType
@@ -54,22 +56,33 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
     selectDataQuery?.data[
       guildPost?.audienceType === "locations"
         ? "countries"
+        : guildPost?.audienceType === "other"
+        ? "guildOtherTopics"
         : guildPost?.audienceType
     ];
 
   /*
     Suggested topics for audienceType
   */
-  const suggestedTopicables = (guildPost?.audienceType === "skills"
-    ? selectDataQuery.data.popularSkills.nodes
-    : guildPost?.audienceType === "industries"
-    ? selectDataQuery.data?.industries.slice(0, 10)
-    : selectDataQuery.data?.popularGuildCountries
-  ).map((s) => s.label);
+  const suggestedTopicables =
+    guildPost?.audienceType === "skills"
+      ? selectDataQuery.data.popularSkills.nodes
+      : guildPost?.audienceType === "industries"
+      ? selectDataQuery.data?.industries.slice(0, 10)
+      : guildPost?.audienceType === "other"
+      ? selectDataQuery.data?.guildOtherTopics.slice(0, 10)
+      : selectDataQuery.data?.popularGuildCountries;
 
-  const singularAudience = capitalize(
-    pluralize.singular(guildPost.audienceType),
-  );
+  const searchPlaceholder = `Search for ${indefinite(
+    guildPost.audienceType === "other"
+      ? "topic or create one"
+      : pluralize.singular(guildPost.audienceType),
+  )}`;
+
+  const normalizedAudienceType =
+    guildPost.audienceType === "other"
+      ? "other topics"
+      : guildPost.audienceType;
 
   return (
     <Box display="flex">
@@ -95,23 +108,26 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                 color="blue900"
                 fontWeight="semibold"
               >
-                What {guildPost.audienceType} would you like to target ?
+                What {normalizedAudienceType} would you like to target ?
               </Text>
 
               <GuildBox spaceChildrenVertical={24}>
                 <Label lineHeight="20px" size="l" fontWeight="light" mb="s">
-                  What specific {guildPost.audienceType} would you like to
+                  What specific {normalizedAudienceType} would you like to
                   target - please select up to 5 and we’ll make sure these
                   people see your post.
+                  {guildPost.audienceType === "other" &&
+                    " You can optionally create a new topic."}
                 </Label>
-
                 <Autocomplete
                   multiple
+                  size="md"
+                  creatable={guildPost.audienceType === "other"}
                   max={5}
                   error={null}
                   name="guildTopicNames"
                   options={topicables}
-                  placeholder={`Search for a ${singularAudience}`}
+                  placeholder={searchPlaceholder}
                   value={formik.values.guildTopicNames}
                   onChange={(guildTopicNames) => {
                     formik.setFieldValue("guildTopicNames", guildTopicNames);
@@ -133,7 +149,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                       color="blue900"
                       fontWeight="semibold"
                     >
-                      Some common {guildPost.audienceType}
+                      Some common {normalizedAudienceType}
                     </Text>
                     <GuildBox
                       width="100%"
@@ -144,19 +160,24 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                       {/* Filter suggestions that have already been selected */}
                       {suggestedTopicables
                         .filter(
-                          (t) => !formik.values.guildTopicNames.includes(t),
+                          (st) =>
+                            !formik.values.guildTopicNames.find(
+                              (existing) => existing.label === st.label,
+                            ),
                         )
-                        .map((name, key) => (
+                        .map((suggested, key) => (
                           <StyledTopicable
                             selectable
                             type="button"
                             disabled={formik.values.guildTopicNames.length > 4}
-                            onClick={() => handleAddSuggested(name, formik)}
+                            onClick={() =>
+                              handleAddSuggested(suggested, formik)
+                            }
                             key={key}
                           >
                             <Plus size={16} color="#2B2D5F" strokeWidth={2} />
-                            <Text size="s" color="#2B2D5F">
-                              {name}
+                            <Text size="xs" color="#2B2D5F">
+                              {suggested.label}
                             </Text>
                           </StyledTopicable>
                         ))}

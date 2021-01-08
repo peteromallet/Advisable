@@ -146,7 +146,6 @@ end
 #  airtable_id                       :string
 #  company_id                        :uuid
 #  country_id                        :bigint
-#  sales_person_id                   :bigint
 #  stripe_customer_id                :string
 #  stripe_setup_intent_id            :string
 #

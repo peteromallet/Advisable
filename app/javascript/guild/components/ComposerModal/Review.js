@@ -52,7 +52,11 @@ export default function Review({ guildPost, onPublish }) {
           mb="s"
           fontSize="l"
           fontWeight="medium"
-          to={pathWithState(`/composer/${guildPost.id}/targeting`)}
+          to={pathWithState(
+            `/composer/${guildPost.id}/${
+              guildPost.audienceType !== "none" ? "targeting" : "audience"
+            }`,
+          )}
         >
           <Box display="inline-block" mr="xxs">
             <ArrowLeft size={20} strokeWidth={2} />
