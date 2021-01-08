@@ -9,6 +9,11 @@ class StaffMailerPreview < ActionMailer::Preview
     StaffMailer.unresponsive_client(random_report)
   end
 
+  def problematic_specialist
+    random_flag = ProblematicFlag.order(Arel.sql('RANDOM()')).first
+    StaffMailer.problematic_specialist(random_flag)
+  end
+
   private
 
   def random_report
