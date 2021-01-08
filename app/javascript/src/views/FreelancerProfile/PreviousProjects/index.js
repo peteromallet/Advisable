@@ -1,6 +1,5 @@
 import React, { useMemo, useReducer } from "react";
 import { every } from "lodash-es";
-import { rgba } from "polished";
 // Utils
 import createDispatcher from "src/utilities/createDispatcher";
 import {
@@ -16,7 +15,7 @@ import {
   SectionHeaderText,
   SectionHeaderWrapper,
 } from "../components/SectionHeader";
-import { Box, Button, useBreakpoint, theme } from "@advisable/donut";
+import { Box, Button, useBreakpoint } from "@advisable/donut";
 import NoFilteredProjects from "./NoFilteredProjects";
 import Masonry from "components/Masonry";
 import ProjectCard from "src/components/ProjectCard";
@@ -98,44 +97,20 @@ function PreviousProjects({ data, isOwner }) {
         >
           {state.hasSkills && (
             <Tags
+              variant="skill"
               key="skills-section"
               sectionName="skills"
               sectionTags={state.skillsSection}
               onClick={switchSkillSelection}
-              color={theme.colors.blue400}
-              colorHover={theme.colors.blue400}
-              colorActive={theme.colors.blue500}
-              colorActiveHover={rgba(theme.colors.blue500, 0.85)}
-              bg={theme.colors.neutral50}
-              bgHover={theme.colors.blue50}
-              bgActive={theme.colors.blue100}
-              bgActiveHover={rgba(theme.colors.blue100, 0.9)}
-              borderWidth="1px"
-              borderColor={theme.colors.blue200}
-              borderColorHover={theme.colors.blue200}
-              borderColorActive={theme.colors.blue100}
-              borderColorActiveHover={rgba(theme.colors.blue100, 0.9)}
             />
           )}
           {state.hasIndustries && (
             <Tags
+              variant="industry"
               key="industries-section"
               sectionName="industries"
               sectionTags={state.industriesSection}
               onClick={switchIndustrySelection}
-              color={theme.colors.cyan600}
-              colorHover={theme.colors.cyan600}
-              colorActive={theme.colors.cyan700}
-              colorActiveHover={rgba(theme.colors.cyan700, 0.85)}
-              bg={theme.colors.neutral50}
-              bgHover={theme.colors.cyan50}
-              bgActive={theme.colors.cyan100}
-              bgActiveHover={rgba(theme.colors.cyan100, 0.9)}
-              borderWidth="1px"
-              borderColor={theme.colors.cyan300}
-              borderColorHover={theme.colors.cyan300}
-              borderColorActive={theme.colors.cyan100}
-              borderColorActiveHover={rgba(theme.colors.cyan100, 0.9)}
             />
           )}
         </Filter>

@@ -1,61 +1,79 @@
 import React, { useEffect, useState } from "react";
-import { Text, Box, useBreakpoint } from "@advisable/donut";
-import { motion } from "framer-motion";
-import styled from "styled-components";
 import { isEmpty, truncate } from "lodash";
+import { rgba } from "polished";
+import { motion } from "framer-motion";
+import { variant } from "styled-system";
+import styled from "styled-components";
+import { Text, Box, useBreakpoint, theme } from "@advisable/donut";
+
+const tagVariants = variant({
+  variants: {
+    skill: {
+      bg: theme.colors.neutral50,
+      borderColor: theme.colors.blue200,
+      div: { color: theme.colors.blue400 },
+      "&:hover": {
+        bg: theme.colors.blue50,
+      },
+      "&[data-selected='true']": {
+        bg: theme.colors.blue100,
+        borderColor: theme.colors.blue100,
+        div: { color: theme.colors.blue500 },
+        "&:hover": {
+          bg: rgba(theme.colors.blue100, 0.9),
+          borderColor: rgba(theme.colors.blue100, 0.9),
+          div: { color: rgba(theme.colors.blue500, 0.85) },
+        },
+      },
+    },
+    industry: {
+      bg: theme.colors.neutral50,
+      borderColor: theme.colors.cyan300,
+      div: { color: theme.colors.cyan600 },
+      "&:hover": {
+        bg: theme.colors.cyan50,
+      },
+      "&[data-selected='true']": {
+        bg: theme.colors.cyan100,
+        borderColor: theme.colors.cyan100,
+        div: { color: theme.colors.cyan700 },
+        "&:hover": {
+          bg: rgba(theme.colors.cyan100, 0.9),
+          borderColor: rgba(theme.colors.cyan100, 0.9),
+          div: { color: rgba(theme.colors.cyan700, 0.85) },
+        },
+      },
+    },
+  },
+});
 
 const Wrapper = styled(Box)`
   position: relative;
   transition: opacity 0.1s;
 `;
 
-const StyledTagText = styled(Text)`
+const StyledTagText = styled.div`
+  font-size: 14px;
   transition: color 0.2s;
 `;
 
-const StyledTag = styled(Box)`
-  transition: background-color 0.2s, opacity 0.2s;
-  &:hover {
-    background-color: ${(props) => props.bgHover};
-    border-color: ${(props) => props.borderColorHover};
-  }
-  &:hover ${StyledTagText} {
-    color: ${(props) => props.colorHover};
-  }
+const StyledTag = styled.div`
+  ${tagVariants}
 
-  &[data-selected="true"] {
-    background-color: ${(props) => props.bgActive};
-    border-color: ${(props) => props.borderColorActive};
-  }
-  &[data-selected="true"] ${StyledTagText} {
-    color: ${(props) => props.colorActive};
-  }
-  &[data-selected="true"]:hover {
-    background-color: ${(props) => props.bgActiveHover};
-    border-color: ${(props) => props.borderColorActiveHover};
-  }
-  &[data-selected="true"]:hover ${StyledTagText} {
-    color: ${(props) => props.colorActiveHover};
-  }
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 12px;
+  user-select: none;
+  cursor: pointer;
+
+  transition: background-color 0.2s, opacity 0.2s;
 `;
 
 function Tags({
+  variant,
   sectionName,
   sectionTags,
   onClick,
-  bg,
-  bgHover,
-  bgActive,
-  bgActiveHover,
-  color,
-  colorHover,
-  colorActive,
-  colorActiveHover,
-  borderWidth = 0,
-  borderColor,
-  borderColorHover,
-  borderColorActive,
-  borderColorActiveHover,
   addSectionParams,
   layout = {},
   ...props
@@ -84,36 +102,14 @@ function Tags({
             style={{
               padding: `${item?.py}px ${item?.px}px`,
               margin: `${item?.my}px ${item?.mx}px`,
-              borderWidth: borderWidth,
             }}
-            data-testid={`${sectionName}-filter-tag-${tagKey}`}
-            colorHover={colorHover}
-            colorActive={colorActive}
-            colorActiveHover={colorActiveHover}
-            borderRadius="12px"
-            borderStyle="solid"
-            borderColor={borderColor}
-            borderColorHover={borderColorHover}
-            borderColorActive={borderColorActive}
-            borderColorActiveHover={borderColorActiveHover}
-            bg={bg}
-            bgHover={bgHover}
-            bgActive={bgActive}
-            bgActiveHover={bgActiveHover}
+            variant={variant}
             data-selected={selected}
-            css={`
-              user-select: none;
-              cursor: pointer;
-            `}
+            data-testid={`${sectionName}-filter-tag-${tagKey}`}
             onClick={() => onClick({ tag: tagKey })}
             {...props}
           >
-            <StyledTagText
-              color={color}
-              data-selected={selected}
-              fontSize="xs"
-              id={`${sectionName}-${tagKey}-text`}
-            >
+            <StyledTagText id={`${sectionName}-${tagKey}-text`}>
               {tagText}
             </StyledTagText>
           </StyledTag>
