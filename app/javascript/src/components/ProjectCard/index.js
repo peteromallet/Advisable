@@ -28,6 +28,7 @@ const StyledSpecialistProject = styled(StyledCard)`
 const StyledHoverDecoration = styled.div`
   position: absolute;
   display: flex;
+  z-index: 1;
   justify-content: center;
   align-items: flex-end;
   padding-bottom: 32px;
