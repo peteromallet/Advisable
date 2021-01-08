@@ -4,13 +4,17 @@ import Tags from "../Tags";
 import Card from "../Card";
 
 export default {
-  title: 'Content/Tags',
+  title: "Content/Tags",
   decorators: [withKnobs],
 };
 
 export const tags = () => {
   const size = select("size", ["s", "m"], "s");
-  const variant = select("variant", ["neutral", "dark"], "neutral");
+  const variant = select(
+    "variant",
+    ["neutral", "dark", "blue", "skill", "industry", "orange", "cyan"],
+    "neutral",
+  );
 
   return (
     <Card maxWidth="600px" mx="auto" my="60px" padding="xl">
