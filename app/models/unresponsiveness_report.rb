@@ -10,6 +10,8 @@ class UnresponsivenessReport < ApplicationRecord
     messages = TalkjsApi.new.messages(application.uid)
     specialist_message = messages.find { |m| m["senderId"] == application.specialist.uid }
     Time.zone.at(specialist_message["createdAt"] / 1000) if specialist_message
+  rescue ApiRequestError
+    nil
   end
 end
 
