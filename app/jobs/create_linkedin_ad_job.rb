@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLinkedinAdJob < ApplicationJob
   ACCOUNT_ID = 503157292
   CAMPAIGN_GROUP_ID = 612029303
@@ -105,7 +107,7 @@ class CreateLinkedinAdJob < ApplicationJob
 
   def activate_conversation_ad!
     params = {patch: {"$set": {status: "ACTIVE"}}}
-    response = api.post_request("adCreativesV2/#{creative_id}", params, expected_status: 204)
+    response = api.post_request_with_retries("adCreativesV2/#{creative_id}", params, expected_status: 204)
     Rails.logger.info("Creative Ad ACTIVATED: #{creative_id}")
   end
 
