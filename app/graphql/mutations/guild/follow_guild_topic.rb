@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::Guild::FollowGuildTopic < Mutations::BaseMutation
   graphql_name "FollowGuildTopic"
   argument :guild_topic_id, ID, required: true

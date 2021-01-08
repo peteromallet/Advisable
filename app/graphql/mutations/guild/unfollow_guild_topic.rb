@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::Guild::UnfollowGuildTopic < Mutations::BaseMutation
   graphql_name "UnfollowGuildTopic"
   argument :guild_topic_id, ID, required: true
