@@ -37,14 +37,27 @@ export const GET_APPLICATION = gql`
       previousProjects {
         id
         title
+        clientName
+        coverPhoto {
+          url
+        }
         excerpt
+        primaryIndustry {
+          id
+          name
+          color
+        }
+        primarySkill {
+          id
+          name
+        }
         skills {
           id
           name
         }
-        coverPhoto {
+        industries {
           id
-          url
+          name
         }
       }
       specialist {
