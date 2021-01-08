@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::Guild::PostInterfaceConnection < GraphQL::Types::Relay::BaseConnection
   field :guild_topic, Types::Guild::TopicType, null: true
 
