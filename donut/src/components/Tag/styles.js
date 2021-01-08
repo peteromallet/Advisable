@@ -27,37 +27,56 @@ const color = variant({
   },
 });
 
+export const StyledTagPrefix = styled.div``;
+export const StyledTagSuffix = styled.div``;
+
 const size = variant({
   prop: "size",
   variants: {
     s: {
+      height: "28px",
       borderRadius: 8,
+      paddingX: 2,
 
       span: {
         fontSize: 14,
         letterSpacing: "-0.01rem",
-        padding: "6px 8px",
+      },
+
+      [StyledTagPrefix]: {
+        marginRight: 2,
+      },
+
+      [StyledTagSuffix]: {
+        marginLeft: 2,
       },
 
       svg: {
         width: 16,
         height: 16,
-        marginRight: "2",
       },
     },
     m: {
+      height: "32px",
       borderRadius: 10,
+      paddingX: 3,
 
       span: {
         fontSize: 15,
         letterSpacing: "-0.02rem",
-        padding: "8px 16px",
+      },
+
+      [StyledTagPrefix]: {
+        marginRight: 2,
+      },
+
+      [StyledTagSuffix]: {
+        marginLeft: 2,
       },
 
       svg: {
         width: 20,
         height: 20,
-        marginRight: "2",
       },
     },
   },
