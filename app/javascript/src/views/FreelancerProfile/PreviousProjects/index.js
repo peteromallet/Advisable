@@ -1,6 +1,5 @@
 import React, { useMemo, useReducer } from "react";
 import { every } from "lodash-es";
-import { rgba } from "polished";
 // Utils
 import createDispatcher from "src/utilities/createDispatcher";
 import {
@@ -16,10 +15,10 @@ import {
   SectionHeaderText,
   SectionHeaderWrapper,
 } from "../components/SectionHeader";
-import { Box, Button, useBreakpoint, theme } from "@advisable/donut";
+import { Box, Button, useBreakpoint } from "@advisable/donut";
 import NoFilteredProjects from "./NoFilteredProjects";
 import Masonry from "components/Masonry";
-import ProjectCard from "./ProjectCard";
+import ProjectCard from "src/components/ProjectCard";
 import Tags from "./Filter/Tags";
 import Filter from "./Filter";
 
@@ -98,44 +97,20 @@ function PreviousProjects({ data, isOwner }) {
         >
           {state.hasSkills && (
             <Tags
+              variant="skill"
               key="skills-section"
               sectionName="skills"
               sectionTags={state.skillsSection}
               onClick={switchSkillSelection}
-              color={rgba("#234EE4", 0.85)}
-              colorHover="#234EE4"
-              colorActive={rgba("#1937A0", 0.85)}
-              colorActiveHover={rgba("#1937A0", 0.85)}
-              bg={theme.colors.neutral50}
-              bgHover={theme.colors.blue50}
-              bgActive="#CCD1F9"
-              bgActiveHover={rgba("#CCD1F9", 0.9)}
-              borderWidth="1px"
-              borderColor="#AAB4F5"
-              borderColorHover="#AAB4F5"
-              borderColorActive="#CCD1F9"
-              borderColorActiveHover={rgba("#CCD1F9", 0.9)}
             />
           )}
           {state.hasIndustries && (
             <Tags
+              variant="industry"
               key="industries-section"
               sectionName="industries"
               sectionTags={state.industriesSection}
               onClick={switchIndustrySelection}
-              color={rgba("#1B7A7D", 0.9)}
-              colorHover="#1B7A7D"
-              colorActive={rgba("#125153", 0.85)}
-              colorActiveHover={rgba("#125153", 0.85)}
-              bg={theme.colors.neutral50}
-              bgHover={theme.colors.cyan50}
-              bgActive="#C3E9EB"
-              bgActiveHover={rgba("#C3E9EB", 0.9)}
-              borderWidth="1px"
-              borderColor="#9DCDCE"
-              borderColorHover="#9DCDCE"
-              borderColorActive="#C3E9EB"
-              borderColorActiveHover={rgba("#C3E9EB", 0.9)}
             />
           )}
         </Filter>
