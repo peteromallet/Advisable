@@ -28,12 +28,17 @@ const GuildOrRedirectFreelancerProfile = () => {
     return (window.location.href = `/freelancers/${id}`);
   }
 };
-const App = () => {
-  useHideIntercom();
 
+function HideIntercom() {
+  useHideIntercom();
+  return null;
+}
+
+const App = () => {
   return (
     <ApplicationProvider>
       <RootErrorBoundary>
+        <HideIntercom />
         <NotificationsProvider>
           <TwilioProvider>
             <Header />
