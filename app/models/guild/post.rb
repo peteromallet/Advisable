@@ -2,6 +2,7 @@
 
 module Guild
   class Post < ApplicationRecord
+    class BoostError < StandardError; end
     self.store_full_sti_class = false
 
     acts_as_ordered_taggable_on :guild_topics
@@ -63,9 +64,9 @@ module Guild
     end
 
     def boost!
-      raise "is already boosted" if boosted_at.present?
-      raise "cannot boost if not published" unless published?
-      raise "cannot boost with zero topics" if guild_topics.empty?
+      raise BoostError.new("Post is already boosted") if boosted_at.present?
+      raise BoostError.new("Cannot boost unpublished post") unless published?
+      raise BoostError.new("Cannot boost a post with zero topics") if guild_topics.empty?
 
       update(boosted_at: Time.current)
       GuildPostBoostedJob.perform_later(id)

@@ -75,6 +75,7 @@ Rails.application.routes.draw do
   post 'zappier_interactor/attach_previous_project_image'
   post 'zappier_interactor/create_magic_link'
   post 'zappier_interactor/enable_guild'
+  post 'zappier_interactor/boost_guild_post'
 
   # match every other route to the frontend codebase
   root 'application#frontend'
