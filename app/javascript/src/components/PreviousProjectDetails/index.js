@@ -85,6 +85,11 @@ function PreviousProjectDetails({ id }) {
           </Text>
         </Box>
       </Box>
+      {!project.draft && project.validationStatus === "Pending" && (
+        <Box mb="m">
+          <ProjectValidationPrompt project={project} />
+        </Box>
+      )}
       <Box height={1} bg="neutral100" mb="l" />
       {project.description && (
         <>
@@ -101,7 +106,7 @@ function PreviousProjectDetails({ id }) {
         </>
       )}
       <Box display={["block", "flex"]}>
-        <Box width="100%" mb="xl">
+        <Box width="100%">
           <Text
             mb="xs"
             fontSize="lg"
@@ -119,7 +124,7 @@ function PreviousProjectDetails({ id }) {
             ))}
           </Box>
         </Box>
-        <Box width="100%" mb="xl">
+        <Box width="100%">
           <Text
             mb="xs"
             fontSize="lg"
@@ -144,11 +149,6 @@ function PreviousProjectDetails({ id }) {
           <Review review={project.reviews[0]} />
         </>
       ) : null}
-      {!project.draft && project.validationStatus === "Pending" && (
-        <Box mb="m">
-          <ProjectValidationPrompt project={project} />
-        </Box>
-      )}
     </>
   );
 }
