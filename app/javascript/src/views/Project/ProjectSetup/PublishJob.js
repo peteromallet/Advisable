@@ -19,7 +19,7 @@ function subText(status) {
   if (status === "Brief Pending Confirmation") {
     return "Once you've confirmed the details of this project, the Advisable team will immediately start identifying candidates for you.";
   }
-  return "Once you&apos;ve submitted this project, it&apos;ll be sent to the Advisable team for review.";
+  return "Once you've submitted this project, it'll be sent to the Advisable team for review.";
 }
 
 function buttonLabel(status) {
@@ -44,15 +44,20 @@ export default function PublishJob({ data }) {
   const industry = user.industry?.name;
   const companyType = user.companyType;
 
-  const nextStep = () => {
-    history.push(`/projects/${id}/setup/published`);
+  const nextStep = (step) => {
+    history.push(`/projects/${id}/setup${step}`);
   };
 
   const handlePublish = async () => {
     // If the project has already been published then just go to the next step.
     // The user is just making edits.
     if (project.publishedAt) {
-      nextStep();
+      nextStep("/published");
+      return;
+    }
+
+    if (project.deposit && !project.deposit.paid) {
+      nextStep("/deposit");
       return;
     }
 

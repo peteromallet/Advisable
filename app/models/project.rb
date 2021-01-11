@@ -61,6 +61,10 @@ class Project < ApplicationRecord
     [deposit - deposit_paid, 0].max
   end
 
+  def deposit_is_paid?
+    deposit == deposit_paid
+  end
+
   def characteristics
     self[:characteristics] || []
   end
@@ -113,6 +117,19 @@ class Project < ApplicationRecord
   # record so first check for it there before falling back to the project.
   def industry
     user.company&.industry&.name || self[:industry]
+  end
+
+  def deposit_payment_intent
+    @deposit_payment_intent ||= Stripe::PaymentIntent.create(
+      {
+        currency: 'usd',
+        amount: deposit_owed,
+        customer: user.stripe_customer_id,
+        setup_future_usage: 'off_session',
+        metadata: {payment_type: 'deposit', project: uid}
+      },
+      {idempotency_key: "deposit_#{deposit_owed}_#{uid}"}
+    )
   end
 
   private
