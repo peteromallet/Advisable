@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Account < ApplicationRecord
   include Uid
   include Permissions
@@ -8,6 +10,7 @@ class Account < ApplicationRecord
   has_one :specialist, dependent: :nullify # Change to :destroy
   has_many :magic_links, dependent: :destroy
   has_many :auth_providers, dependent: :destroy
+  has_many :unresponsiveness_reports, foreign_key: :reporter_id, dependent: :destroy, inverse_of: :reporter
 
   has_secure_password validations: false
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
