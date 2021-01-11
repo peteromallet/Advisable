@@ -64,6 +64,15 @@ class Account < ApplicationRecord
     AccountMailer.reset_password(id: id, token: token).deliver_later
   end
 
+  def disable!
+    self.deleted_at = Time.zone.now
+    self.password = SecureRandom.hex
+    self.email = "disabled+#{email.sub("@", "[at]")}@advisable.com"
+    magic_links.destroy_all
+    save!
+    specialist_or_user&.sync_to_airtable
+  end
+
   private
 
   def strip_email
