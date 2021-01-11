@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::ConfirmAccount < Mutations::BaseMutation
   include Mutations::Helpers::Authentication
   argument :email, String, required: true
@@ -18,6 +20,7 @@ class Mutations::ConfirmAccount < Mutations::BaseMutation
     Logidze.with_responsible(account.id) do
       account.save(validate: false)
     end
+
     login_as(account)
 
     {viewer: account.specialist_or_user}
