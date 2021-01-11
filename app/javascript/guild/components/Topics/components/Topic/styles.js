@@ -1,5 +1,4 @@
 import { theme } from "@advisable/donut";
-import { GuildBox } from "@guild/styles";
 import styled, { css } from "styled-components";
 
 export const activeTopicStyle = css`
@@ -11,7 +10,8 @@ export const activeTopicStyle = css`
   }
 `;
 
-export const StyledTopic = styled(GuildBox)`
+export const StyledTopic = styled.a`
+  display: flex;
   font-size: 1rem;
   overflow: hidden;
   padding: 10px 12px;
@@ -30,7 +30,9 @@ export const StyledTopic = styled(GuildBox)`
     color: ${theme.colors.neutral500};
   }
 
-  ${({ selected }) => selected && activeTopicStyle}
+  &.active {
+    ${activeTopicStyle};
+  }
 
   &:hover {
     cursor: pointer;

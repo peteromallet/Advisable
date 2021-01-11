@@ -71,6 +71,25 @@ const CurrentUser = () => {
               {(menuItemProps) => (
                 <StyledCurrentUserMenuItem
                   {...menuItemProps}
+                  as={Link}
+                  to="/follows"
+                  onClick={menu.hide}
+                >
+                  Followed topics
+                </StyledCurrentUserMenuItem>
+              )}
+            </MenuItem>
+            <MenuItem {...menu}>
+              {(menuItemProps) => (
+                <StyledCurrentUserMenuItem as="a" href="/" {...menuItemProps}>
+                  Back to Advisable
+                </StyledCurrentUserMenuItem>
+              )}
+            </MenuItem>
+            <MenuItem {...menu}>
+              {(menuItemProps) => (
+                <StyledCurrentUserMenuItem
+                  {...menuItemProps}
                   onClick={handleLogout}
                 >
                   Logout

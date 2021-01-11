@@ -17,6 +17,7 @@ const YourPosts = lazy(() => import("./views/YourPosts"));
 const FreelancerProfile = lazy(() =>
   import("@advisable-main/views/FreelancerProfile"),
 );
+const Follows = lazy(() => import("./views/Follows"));
 
 const GuildOrRedirectFreelancerProfile = () => {
   const { id } = useParams();
@@ -56,14 +57,20 @@ const App = () => {
                 <Route exact path="/posts/:postId" component={Post} />
                 <AuthenticatedRoute
                   exact
-                  path={"/messages/:conversationId?"}
+                  path="/messages/:conversationId?"
                   component={Messages}
                 />
                 <AuthenticatedRoute
                   exact
-                  path={"/your-posts"}
+                  path="/your-posts"
                   component={YourPosts}
                 />
+                <AuthenticatedRoute
+                  exact
+                  path="/topics/:topicId"
+                  component={Feed}
+                />
+                <AuthenticatedRoute exact path="/follows" component={Follows} />
               </Switch>
             </Suspense>
           </TwilioProvider>

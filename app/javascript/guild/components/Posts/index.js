@@ -1,45 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
+import { useParams } from "react-router-dom";
 import { GUILD_POSTS_QUERY } from "./queries";
-import { useBottomScrollListener } from "react-bottom-scroll-listener";
+import BottomScrollListener from "react-bottom-scroll-listener";
+
 import Post from "../Post";
 import LoadingPosts from "./Loading";
 import { GuildBox } from "@guild/styles";
-import { feedStore } from "@guild/stores/Feed";
 import { Stack, Box, Text } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
+import Filters from "@guild/components/Filters";
+import FollowTopic from "@guild/components/FollowTopic";
 
 const Posts = () => {
-  const [
-    selectedFilter,
-    selectedTopicsIds,
-    resetFilters,
-  ] = feedStore(({ selectedFilter, selectedTopicsIds, resetFilters }) => [
-    selectedFilter,
-    selectedTopicsIds,
-    resetFilters,
-  ]);
+  const [postTypeFilter, setPostTypeFilter] = useState("For You");
+  const clearFilters = () => setPostTypeFilter("For You");
+
+  const { topicId } = useParams();
 
   const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
     fetchPolicy: "cache-and-network",
     nextFetchPolicy: "cache-first",
     notifyOnNetworkStatusChange: true,
-    variables: { selectedFilter, selectedTopicsIds: selectedTopicsIds() },
+    variables: { topicId, type: postTypeFilter },
   });
 
   const hasNextPage = data?.guildPosts.pageInfo.hasNextPage || false;
   const endCursor = data?.guildPosts.pageInfo.endCursor;
 
-  useBottomScrollListener(() => {
+  const posts = data?.guildPosts.edges.map((e) => e.node) || [];
+  const topic = data?.guildPosts?.guildTopic;
+
+  const onReachedBottom = () => {
     if (!loading && hasNextPage) {
       fetchMore({ variables: { cursor: endCursor } });
     }
-  });
-
-  const posts = data?.guildPosts.edges.map((e) => e.node) || [];
+  };
 
   return (
     <>
+      {topicId && topic ? (
+        <FollowTopic topic={topic} />
+      ) : (
+        <Filters
+          postTypeFilter={postTypeFilter}
+          setPostTypeFilter={setPostTypeFilter}
+        />
+      )}
+      <BottomScrollListener
+        onBottom={onReachedBottom}
+        offset={topicId ? 64 : 0}
+      />
+
       <Stack spacing="4">
         {posts.map((post) => (
           <Post key={post.id} post={post} />
@@ -61,9 +73,11 @@ const Posts = () => {
           >
             No Results
           </Text>
-          <GuildTag button size="l" onClick={resetFilters}>
-            Clear All Filters
-          </GuildTag>
+          {!topicId && (
+            <GuildTag button size="l" onClick={clearFilters}>
+              Clear All Filters
+            </GuildTag>
+          )}
         </GuildBox>
       ) : null}
 

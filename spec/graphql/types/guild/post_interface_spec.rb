@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "guild posts query" do # rubocop:disable Rspec/DescribeClass
+RSpec.describe Types::Guild::PostInterface do
   let(:guild_specialist) { build(:specialist, :guild) }
   let(:response_keys) { %w[guildPosts nodes] }
   let(:query) do
@@ -86,7 +86,7 @@ RSpec.describe "guild posts query" do # rubocop:disable Rspec/DescribeClass
       end
     end
 
-    describe "when filtered by topic" do
+    describe "when filtered by a guild topic" do
       subject(:filtered_by_topic) {
         resp = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
         resp.dig("data", *response_keys)
@@ -97,7 +97,7 @@ RSpec.describe "guild posts query" do # rubocop:disable Rspec/DescribeClass
       let(:query) {
         <<-GRAPHQL
           {
-            guildPosts(first: 5, topicIds: ["#{guild_topics.first.id}"]) {
+            guildPosts(first: 5, topicId: "#{guild_topics.first.id}") {
               nodes {
                 guildTopics {
                   id
@@ -113,7 +113,7 @@ RSpec.describe "guild posts query" do # rubocop:disable Rspec/DescribeClass
         opportunity.save!
       end
 
-      it "filters by a guild topic" do
+      it "returns posts that are tagged with the topic" do
         topic_results = filtered_by_topic[0]["guildTopics"]
         expect(topic_results.size).to eq(1)
         expect(topic_results.size).not_to eq(Guild::Topic.count)

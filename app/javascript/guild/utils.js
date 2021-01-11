@@ -41,7 +41,7 @@ export const cursorLoadMore = ({ fetchMore, collectionKey, data }) => {
     },
     updateQuery: (previousResult, { fetchMoreResult }) => {
       const newNodes = fetchMoreResult[collectionKey].nodes;
-      const pageInfo = fetchMoreResult[collectionKey].pageInfo;
+      const { pageInfo, guildTopic } = fetchMoreResult[collectionKey];
 
       return newNodes.length
         ? {
@@ -49,6 +49,7 @@ export const cursorLoadMore = ({ fetchMore, collectionKey, data }) => {
               __typename: previousResult[collectionKey].__typename,
               nodes: [...previousResult[collectionKey].nodes, ...newNodes],
               pageInfo,
+              guildTopic,
             },
           }
         : previousResult;

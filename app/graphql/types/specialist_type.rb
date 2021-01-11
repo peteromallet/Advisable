@@ -116,7 +116,7 @@ class Types::SpecialistType < Types::BaseType
     end
   end
 
-  field :skills, [Types::SpecialistSkillType, null: true], null: true do
+  field :skills, [Types::SpecialistSkillType, {null: true}], null: true do
     description 'A list of skills that the specialist possesses'
     argument :project_skills, Boolean, required: false
     argument :limit, Int, required: false
