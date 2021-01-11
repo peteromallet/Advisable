@@ -6,10 +6,15 @@ class StripeEvents::PaymentIntentSucceeded < StripeEvents::BaseEvent
       project = Project.find_by_uid(payment_intent.metadata.project)
       # Mark the deposit as paid
       project.deposit_paid += payment_intent.amount
+      project.status = "Brief Confirmed"
+      project.published_at = Time.zone.now
+      project.sales_status = 'Open'
+      project.sourcing = true
 
       Logidze.with_responsible(project&.user&.account_id) do
         project.save(validate: false)
       end
+
       project.sync_to_airtable
 
       # Attach the payment method

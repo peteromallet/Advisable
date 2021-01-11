@@ -95,6 +95,7 @@ export const project = (fields = {}) => {
     id: uniqueId("project"),
     isOwner: true,
     airtableId: uniqueId("rec"),
+    deposit: null,
     name: "Project",
     currency: "USD",
     viewerCanAccess: true,
