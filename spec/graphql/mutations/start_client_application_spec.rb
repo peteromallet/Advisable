@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::StartClientApplication do
@@ -71,7 +73,7 @@ RSpec.describe Mutations::StartClientApplication do
       create(:blacklisted_domain, domain: 'gmail.com')
       response = AdvisableSchema.execute(query)
       error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('emailNotAllowed')
+      expect(error).to eq('nonCorporateEmail')
     end
   end
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Mutations::CreateUserForCompany < Mutations::BaseMutation
+  include Mutations::Helpers::BlacklistedEmail
+
   argument :email, String, required: true
   argument :first_name, String, required: false
   argument :last_name, String, required: false
@@ -13,10 +15,7 @@ class Mutations::CreateUserForCompany < Mutations::BaseMutation
   end
 
   def resolve(email:, **optional)
-    unless BlacklistedDomain.email_allowed?(email)
-      raise ApiError::InvalidRequest.new("nonCorporateEmail", "The email #{email} is not allowed")
-    end
-
+    email_blacklisted?(email)
     attributes = optional.slice(:first_name, :last_name)
     attributes[:permissions] = optional[:team_manager] ? [:team_manager] : []
     account = Account.new(email: email, **attributes)

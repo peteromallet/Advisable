@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Mutations::StartClientApplication < Mutations::BaseMutation
+  include Mutations::Helpers::BlacklistedEmail
+
   argument :first_name, String, required: true
   argument :last_name, String, required: false
   argument :email, String, required: true
@@ -67,15 +69,6 @@ class Mutations::StartClientApplication < Mutations::BaseMutation
     client = Client.create(domain: user.account.email.split('@').last)
     client.users << user
     client.reload.sync_to_airtable
-  end
-
-  def email_blacklisted?(email)
-    return if BlacklistedDomain.email_allowed?(email)
-
-    ApiError.invalid_request(
-      code: 'emailNotAllowed',
-      message: 'This email is not allowed'
-    )
   end
 
   def check_existing_specialist_account(email)

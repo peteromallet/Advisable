@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
+  include Mutations::Helpers::BlacklistedEmail
+
   argument :previous_project, ID, required: true
   argument :email, String, required: true
   argument :fid, String, required: true
@@ -20,13 +24,7 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
     project = PreviousProject.find_by_uid(previous_project)
     viewer = context[:oauth_viewer]
 
-    unless BlacklistedDomain.email_allowed?(email)
-      raise ApiError::InvalidRequest.new(
-              'nonCorporateEmail',
-              "The email #{email} is not allowed"
-            )
-    end
-
+    email_blacklisted?(email)
     account = Account.new(
       email: email,
       first_name: viewer.first_name,
