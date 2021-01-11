@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::UpdateTask do
@@ -113,7 +115,7 @@ RSpec.describe Mutations::UpdateTask do
     end
 
     it 'doesnt trigger a webhook' do
-      expect(WebhookEvent).not_to receive(:trigger) # rubocop:disable RSpec/MessageSpies
+      expect(WebhookEvent).not_to receive(:trigger)
       AdvisableSchema.execute(query, context: context)
     end
 

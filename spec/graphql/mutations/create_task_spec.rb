@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::CreateTask do
@@ -38,7 +40,7 @@ RSpec.describe Mutations::CreateTask do
     end
 
     it 'triggers a webhook' do
-      expect(WebhookEvent).to receive(:trigger).with('tasks.created', any_args) # rubocop:disable RSpec/MessageSpies
+      expect(WebhookEvent).to receive(:trigger).with('tasks.created', any_args)
       AdvisableSchema.execute(query, context: context)
     end
   end

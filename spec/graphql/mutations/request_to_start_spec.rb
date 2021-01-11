@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::RequestToStart do
@@ -35,7 +37,6 @@ RSpec.describe Mutations::RequestToStart do
     expect(stage).to eq('Requested To Start')
   end
 
-  # rubocop:disable RSpec/MessageSpies
   it 'triggers a webhook' do
     expect(WebhookEvent).to receive(:trigger).with(
       'tasks.requested_to_start',
@@ -43,7 +44,6 @@ RSpec.describe Mutations::RequestToStart do
     )
     AdvisableSchema.execute(query, context: context)
   end
-  # rubocop:enable RSpec/MessageSpies
 
   context 'when the task does not have a name' do
     let(:task) { create(:task, stage: 'Not Assigned', name: nil) }

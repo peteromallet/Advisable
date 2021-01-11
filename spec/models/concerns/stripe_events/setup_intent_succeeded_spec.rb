@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe StripeEvents::SetupIntentSucceeded do
@@ -27,7 +29,6 @@ RSpec.describe StripeEvents::SetupIntentSucceeded do
     }.from("pending").to("succeeded")
   end
 
-  # rubocop:disable RSpec/MessageSpies
   it "calls the attach payment method service" do
     expect(Users::AttachPaymentMethod).to receive(:call).with(
       user: instance_of(User),
@@ -35,7 +36,6 @@ RSpec.describe StripeEvents::SetupIntentSucceeded do
     )
     StripeEvents.process(event)
   end
-  # rubocop:enable RSpec/MessageSpies
 
   context "when the user cant be found" do
     it "returns true" do

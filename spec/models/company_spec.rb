@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Company, type: :model do
@@ -148,7 +150,7 @@ RSpec.describe Company, type: :model do
     end
   end
 
-  # rubocop:disable RSpec/VerifiedDoubles, RSpec/MessageSpies
+  # rubocop:disable RSpec/VerifiedDoubles
   describe '#payment_method' do
     it 'calls invoice_settings.default_payment_method on the stripe customer' do
       company = create(:company)
@@ -159,5 +161,5 @@ RSpec.describe Company, type: :model do
       company.payment_method
     end
   end
-  # rubocop:enable RSpec/VerifiedDoubles, RSpec/MessageSpies
+  # rubocop:enable RSpec/VerifiedDoubles
 end

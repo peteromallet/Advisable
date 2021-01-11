@@ -102,7 +102,6 @@ RSpec.describe Application do
     end
   end
 
-  # rubocop:disable RSpec/MessageSpies
   context 'when update_project_counts' do
     let!(:application) { create(:application, status: 'Applied') }
 
@@ -122,5 +121,4 @@ RSpec.describe Application do
       application.update introduction: 'Changed'
     end
   end
-  # rubocop:enable RSpec/MessageSpies
 end
