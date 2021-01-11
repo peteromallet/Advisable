@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Account, type: :model do
@@ -51,6 +53,31 @@ RSpec.describe Account, type: :model do
     it "returns false if the user doesn't have a given permission" do
       inst = build(:account, permissions: [])
       expect(inst).not_to be_admin
+    end
+  end
+
+  describe "#disable!" do
+    let(:account) { create(:account) }
+    let(:specialist) { create(:specialist, account: account) }
+
+    it "sets deleted_at, resets password, and changes email" do
+      email = account.email
+      password = account.password
+      account.disable!
+      expect(account.deleted_at).not_to be_nil
+      expect(account.password).not_to eq(password)
+      expect(account.email).to eq("disabled+#{email.sub("@", "[at]")}@advisable.com")
+    end
+
+    it "deletes magic links" do
+      magic_link = create(:magic_link, account: account)
+      account.disable!
+      expect(MagicLink.where(id: magic_link.id)).to be_empty
+    end
+
+    it "syncs to airtable" do
+      expect(specialist).to receive(:sync_to_airtable)
+      account.disable!
     end
   end
 end

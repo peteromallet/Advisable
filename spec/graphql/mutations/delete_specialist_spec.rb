@@ -17,12 +17,11 @@ RSpec.describe Mutations::DeleteSpecialist do
     GRAPHQL
   end
 
+  before { allow(user).to receive(:sync_to_airtable) }
+
   it "marks the specialist's account for deletion and deletes magic links" do
-    magic_link = create(:magic_link, account: account)
     response = AdvisableSchema.execute(query, context: context)
-    expect(session_manager).to have_received(:logout)
     expect(account.deleted_at).not_to be_nil
-    expect(MagicLink.where(id: magic_link.id)).to be_empty
   end
 
   context "when clientuser" do
