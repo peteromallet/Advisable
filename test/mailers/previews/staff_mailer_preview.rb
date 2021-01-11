@@ -5,6 +5,10 @@ class StaffMailerPreview < ActionMailer::Preview
     StaffMailer.unresponsive_specialist(random_report)
   end
 
+  def unresponsive_client
+    StaffMailer.unresponsive_client(random_report)
+  end
+
   private
 
   def random_report
