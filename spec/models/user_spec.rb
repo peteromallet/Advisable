@@ -54,4 +54,32 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "#invite_comember!" do
+    let(:user) { create(:user) }
+    let(:new_account) { create(:account) }
+
+    before { allow_any_instance_of(described_class).to receive(:sync_to_airtable) }
+
+    it "creates a user on the new account" do
+      expect(new_account.user).to be_nil
+      user.invite_comember!(new_account)
+      expect(new_account.user).not_to be_nil
+    end
+
+    it "copies all the stuff over" do
+      new_user = user.invite_comember!(new_account)
+      expect(user.attributes.slice("company_id", "company_name", "sales_person_id")).to match_array(new_user.attributes.slice("company_id", "company_name", "sales_person_id"))
+    end
+
+    it "sends the email" do
+      user.invite_comember!(new_account)
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_by_manager", "deliver_now", {args: [user, new_account.user]})
+    end
+
+    it "sync with airtable" do
+      expect_any_instance_of(described_class).to receive(:sync_to_airtable)
+      user.invite_comember!(new_account)
+    end
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A User specifically represents a client looking to hire a freelancer.
 # A freelancer account is represented by the Specialist model. Ideally these
 # two models will eventually be merged to be different types of users.
@@ -54,14 +56,14 @@ class User < ApplicationRecord
 
   # talent_quality indicates what qualit of talent the client is looking for.
   # This value is provided when they are applying.
-  TALENT_QUALITY_OPTIONS = %w[cheap budget good top world_class]
+  TALENT_QUALITY_OPTIONS = %w[cheap budget good top world_class].freeze
   validates :talent_quality,
             inclusion: {in: TALENT_QUALITY_OPTIONS}, allow_nil: true
 
   # number_of_freelancers represents the number of freelancers the client is
   # looking to hire over the next 6 months. This value is provided when they are
   # applying to Advisable.
-  NUMBER_OF_FREELANCERS_OPTIONS = %w[0 1-3 4-10 10+]
+  NUMBER_OF_FREELANCERS_OPTIONS = %w[0 1-3 4-10 10+].freeze
   validates :number_of_freelancers,
             inclusion: {in: NUMBER_OF_FREELANCERS_OPTIONS}, allow_nil: true
 
@@ -95,6 +97,19 @@ class User < ApplicationRecord
     return if availability.nil?
 
     self.availability = availability.select { |time| time > Time.zone.now }
+  end
+
+  def invite_comember!(account)
+    user = User.new(
+      account: account,
+      company_id: company_id,
+      company_name: company_name,
+      application_status: "Active",
+      sales_person_id: sales_person_id
+    )
+    user.save_and_sync_with_responsible!(account_id)
+    UserMailer.invited_by_manager(self, user).deliver_later
+    user
   end
 end
 
