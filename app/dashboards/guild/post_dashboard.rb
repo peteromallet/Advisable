@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "administrate/base_dashboard"
 
 module Guild
@@ -10,7 +12,8 @@ module Guild
     # on pages throughout the dashboard.
     ATTRIBUTE_TYPES = {
       specialist: SimpleBelongsToField,
-      guild_topic_list: Field::String.with_options(searchable: false),
+      guild_topics: ActsAsTaggableField,
+      # guild_topic_list: Field::String.with_options(searchable: false),
       images: Field::HasMany.with_options(class_name: "Guild::PostImage"),
       id: Field::String.with_options(searchable: false),
       type: Field::Select.with_options(searchable: false, collection: ->(_field) { Guild::Post::POST_TYPES }),
@@ -24,7 +27,7 @@ module Guild
       audience_notified_at: Field::DateTime,
       engagements_count: Field::Number,
       audience_type: Field::String.with_options(searchable: false, collection: ->(_field) { Guild::Post::AUDIENCE_TYPES }),
-      pinned: Field::Boolean
+      pinned: Field::Boolean,
     }.freeze
 
     # COLLECTION_ATTRIBUTES
@@ -43,13 +46,13 @@ module Guild
     SHOW_PAGE_ATTRIBUTES = %i[
       specialist
       title
+      guild_topics
       status
       type
       body
       created_at
       updated_at
       reactionable_count
-      guild_topic_list
       audience_type
       audience_notified_at
       pinned
@@ -60,13 +63,14 @@ module Guild
     # on the model's form (`new` and `edit`) pages.
     FORM_ATTRIBUTES = %i[
       specialist
-      reactionable_count
+      title
+      guild_topics
       type
       body
-      title
       status
       created_at
       updated_at
+      reactionable_count
       audience_notified_at
       pinned
     ].freeze

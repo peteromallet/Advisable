@@ -1,0 +1,14 @@
+<div class="field-unit__label">
+  <%= f.label field.attribute %>
+</div>
+<div class="field-unit__field field-acts-as-taggable">
+  <%= f.select(field.attribute, nil, {} , multiple: true) do %>
+    <%= options_for_select(field.tag_options, field.data.map(&:name)) %>
+  <%end %>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    $('.field-acts-as-taggable select').selectize()
+  })
+</script>
