@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe 'Manaing talent', type: :system do
+RSpec.describe 'Managing talent', type: :system do
   let(:application) { create(:application, status: 'Working') }
 
   before do
@@ -192,5 +194,16 @@ RSpec.describe 'Manaing talent', type: :system do
       end
       expect(page).to have_content('This project has been completed')
     end
+  end
+
+  it 'allows user to report an issue with the freelancer' do
+    visit "/manage/#{application.uid}"
+    click_on "Report Issue"
+    within "*[role=dialog]" do
+      fill_in "message", with: "This is the issue message"
+      click_on "Report Issue"
+    end
+
+    expect(page).to have_content("We have received your report")
   end
 end
