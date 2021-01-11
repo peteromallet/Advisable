@@ -11,10 +11,6 @@ class ActsAsTaggableField < Administrate::Field::Base
     data.map(&:name).join(", ")
   end
 
-  def context
-    options.fetch(:context, @attribute)
-  end
-
   def attribute
     context = super.to_s.singularize
     "#{context}_list"
