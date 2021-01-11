@@ -116,7 +116,7 @@ function PreviousProjectDetails({ id }) {
           >
             Skills Used
           </Text>
-          <Box>
+          <Box mb={["s", 0]}>
             {project.skills.map((skill) => (
               <Tag key={skill.id} mr="xxs" mb="xxs" variant="blue">
                 {skill.name}
@@ -145,7 +145,7 @@ function PreviousProjectDetails({ id }) {
       </Box>
       {project.reviews.length > 0 && project.reviews[0]?.comment ? (
         <>
-          <Box height={1} bg="neutral100" marginBottom="xl" />
+          <Box height={1} bg="neutral100" my="l" />
           <Review review={project.reviews[0]} />
         </>
       ) : null}
