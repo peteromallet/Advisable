@@ -1,11 +1,9 @@
-import { get } from "lodash-es";
 import { useEffect } from "react";
 import usePrevious from "./usePrevious";
 
 const bootIntercom = (viewer) => {
-  if (!window?.Intercom) return null;
-
   let data = {
+    hide_default_launcher: window._hide_intercom || false,
     app_id: process.env.INTERCOM_APP_ID,
   };
 
@@ -20,40 +18,38 @@ const bootIntercom = (viewer) => {
 };
 
 const useIntercom = (location, viewer) => {
-  if (!process.env.INTERCOM_APP_ID) return null;
-
-  const previousPath = usePrevious(location.pathname);
   const previousViewer = usePrevious(viewer);
 
   useEffect(() => {
-    bootIntercom(viewer);
-
-    return () => {
-      window.Intercom("shutdown");
-    };
-  }, []);
+    if (window?.Intercom) {
+      bootIntercom(viewer);
+      return () => window.Intercom("shutdown");
+    }
+  }, [viewer]);
 
   useEffect(() => {
     if (window.Intercom) {
       // If the user has just logged out. i.e there was a viewer and now there
       // isn't then do a reboot to clear conversations.
-      if (Boolean(previousViewer) && !viewer) {
+      if (previousViewer && !viewer) {
         window.Intercom("shutdown");
         bootIntercom(viewer);
         return;
       }
 
       // If the user has changed then reboot
-      if (viewer && get(previousViewer, "id") !== get(viewer, "id")) {
+      if (viewer && previousViewer?.id !== viewer?.id) {
         window.Intercom("shutdown");
         bootIntercom(viewer);
       }
     }
-  }, [viewer]);
+  }, [previousViewer, viewer]);
 
   useEffect(() => {
-    if (previousPath !== location.pathname && Boolean(window.Intercom)) {
-      window.Intercom("update");
+    if (window.Intercom) {
+      window.Intercom("update", {
+        last_request_at: parseInt(new Date().getTime() / 1000),
+      });
     }
   }, [location.pathname]);
 };
