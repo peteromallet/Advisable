@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::AssignTask do
@@ -33,12 +35,10 @@ RSpec.describe Mutations::AssignTask do
     expect(stage).to eq('Assigned')
   end
 
-  # rubocop:disable RSpec/MessageSpies
   it 'triggers a webhook' do
     expect(WebhookEvent).to receive(:trigger).with('tasks.assigned', any_args)
     AdvisableSchema.execute(query, context: context)
   end
-  # rubocop:enable RSpec/MessageSpies
 
   context 'when the task does not have a name' do
     let(:task) { create(:task, stage: 'Not Assigned', name: nil) }
