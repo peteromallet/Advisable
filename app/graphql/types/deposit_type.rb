@@ -5,7 +5,7 @@ module Types
     field :payment_intent, String, null: true
 
     def paid
-      object.deposit_is_paid
+      object.deposit_is_paid?
     end
 
     def amount

@@ -61,7 +61,7 @@ class Project < ApplicationRecord
     [deposit - deposit_paid, 0].max
   end
 
-  def deposit_is_paid
+  def deposit_is_paid?
     deposit == deposit_paid
   end
 
