@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::Login < Mutations::BaseMutation
   include Mutations::Helpers::Authentication
 
@@ -11,7 +13,6 @@ class Mutations::Login < Mutations::BaseMutation
     no_account_error unless account&.has_password?
     invalid_credentials unless account.authenticate(password)
     login_as(account)
-    context[:current_user] = account.specialist_or_user
     {viewer: account.specialist_or_user}
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 # Creates a new freelancer account
 class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
   include Mutations::Helpers::Authentication
@@ -95,7 +97,6 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
       specialist.send_confirmation_email
     end
 
-    context[:current_user] = specialist
     login_as(account)
 
     {viewer: specialist.reload}
