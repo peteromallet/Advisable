@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Class for syncing airtable client contacts to our local users table
 class Airtable::ClientContact < Airtable::Base
   self.table_name = 'Client Contacts'
@@ -87,7 +89,7 @@ class Airtable::ClientContact < Airtable::Base
     self['VAT Number'] = user.account.vat_number # TODO: Read this from Company
     self['Industry'] = [user.company.industry.try(:airtable_id)].compact
     self['Type of Company'] = user.company.kind
-
+    self['Owner'] = [user.sales_person&.airtable_id].compact
     self['PID'] = user.pid
     self['Campaign Name'] = user.campaign_name
     self['Campaign Source'] = user.campaign_source
