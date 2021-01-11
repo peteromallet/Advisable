@@ -165,8 +165,7 @@ class Types::ProjectType < Types::BaseType
   # In cases where there is no deposit we just return nil. Otherwise we pass
   # the project object to the DepositType.
   def deposit
-    return nil if object.deposit.blank?
-    return nil if object.deposit.zero?
+    return if object.deposit.blank? || object.deposit.zero?
 
     object
   end
