@@ -17,6 +17,7 @@ import TalkModal from "../../components/TalkModal";
 import ProjectTypeModal from "./ProjectTypeModal";
 import StopWorkingModal from "./StopWorkingModal";
 import useViewer from "src/hooks/useViewer";
+import ReportFreelancerProblem from "./ReportFreelancerProblem";
 import {
   HelpCircle,
   MessageCircle,
@@ -73,6 +74,9 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
             >
               Message {specialist.firstName}
             </DialogDisclosure>
+            <Box marginBottom={2}>
+              <ReportFreelancerProblem application={application} />
+            </Box>
             {canStopWorking && (
               <>
                 <Route path={`${match.path}/stop`}>
