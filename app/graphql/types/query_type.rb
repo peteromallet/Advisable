@@ -37,8 +37,6 @@ class Types::QueryType < Types::BaseType
 
   def user(id:)
     ::User.find_by_uid_or_airtable_id!(id)
-  rescue Airrecord::Error => er
-    GraphQL::ExecutionError.new("Could not find user #{id}")
   end
 
   field :current_company, Types::CompanyType, description: 'Get the current company', null: true
@@ -259,31 +257,29 @@ class Types::QueryType < Types::BaseType
   field :guild_posts,
         Types::Guild::PostInterface.connection_type,
         null: true, max_page_size: 5 do
-    description 'Returns a list of guild posts that match a given search criteria'
+    description 'Returns a list of guild posts for the feed'
 
     argument :type, String, required: false do
-      description 'Filters guild posts by type or a curated view'
+      description 'Filters guild posts by type'
     end
 
-    argument :topic_ids, [ID], required: false do
-      description 'Filters guild posts by guild topic tag ids'
+    argument :topic_id, ID, required: false do
+      description 'Filters guild posts by topic'
     end
   end
 
   def guild_posts(**args)
     requires_guild_user!
-    @query = Guild::Post.feed(current_user)
+    query = Guild::Post.feed(current_user)
 
-    if (type = args[:type].presence) && type != 'For You'
-      @query = @query.where(type: type)
+    if (topic_id = args[:topic_id].presence)
+      context[:guild_topic] = Guild::Topic.find_by(id: topic_id)
+      query.tagged_with(context[:guild_topic], on: :guild_topics, any: true)
+    elsif (type = args[:type].presence) && type != 'For You'
+      query.where(type: type)
+    else
+      query
     end
-
-    if args[:topic_ids]&.any?
-      guild_topics = Guild::Topic.find(args[:topic_ids])
-      @query = @query.tagged_with(guild_topics, on: :guild_topics, any: true)
-    end
-
-    @query.order(pinned: :desc, created_at: :desc)
   end
 
   field :guild_activity,
@@ -325,5 +321,14 @@ class Types::QueryType < Types::BaseType
   def guild_your_posts(**args)
     requires_guild_user!
     current_user.guild_posts.order(updated_at: :desc)
+  end
+
+  field :guild_followed_topics, [Types::Guild::TopicType], null: true do
+    description 'Returns the topics that the specialist follows'
+  end
+
+  def guild_followed_topics(**args)
+    requires_guild_user!
+    current_user.guild_followed_topics.order(created_at: :desc)
   end
 end

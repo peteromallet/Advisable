@@ -4,7 +4,6 @@ import Sticky from "react-stickynode";
 import Posts from "@guild/components/Posts";
 import Topics from "@guild/components/Topics";
 import FeaturedMembers from "@guild/components/FeaturedMembers";
-import Filters from "@guild/components/Filters";
 
 const Feed = () => {
   const lUp = useBreakpoint("lUp");
@@ -25,7 +24,6 @@ const Feed = () => {
         </Box>
       )}
       <Box width="100%" paddingX={{ _: null, l: "xl" }}>
-        <Filters />
         <Posts />
       </Box>
       {lUp && (
