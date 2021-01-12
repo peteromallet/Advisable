@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe GuildPostBoostedJob do
@@ -27,5 +29,14 @@ RSpec.describe GuildPostBoostedJob do
     expect {
       enqueued_job
     }.to have_enqueued_mail(Guild::PostBoostMailer, :new_post).twice
+  end
+
+  it "does not enqueue a mail for the author of the post" do
+    guild_topics.each { |gt| guild_post.specialist.follow(gt) }
+    expect(guild_post.specialist.follows.count).to eq(guild_topics.size)
+
+    expect {
+      enqueued_job
+    }.not_to have_enqueued_mail(Guild::PostBoostMailer, :new_post).with({post: guild_post, follower_id: guild_post.specialist.id})
   end
 end
