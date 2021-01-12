@@ -72,11 +72,6 @@ RSpec.describe User, type: :model do
       expect(user.attributes.slice("company_id", "company_name", "sales_person_id")).to match_array(new_user.attributes.slice("company_id", "company_name", "sales_person_id"))
     end
 
-    it "sends the email" do
-      user.invite_comember!(new_account)
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_by_manager", "deliver_now", {args: [user, new_account.user]})
-    end
-
     it "sync with airtable" do
       expect_any_instance_of(described_class).to receive(:sync_to_airtable)
       user.invite_comember!(new_account)

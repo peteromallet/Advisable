@@ -1,0 +1,15 @@
+p
+  | Hi #{@user.account.first_name},
+p
+  | Your teammate #{@inviter.account.first_name} has invited you to review applications for a #{@project.try(:name)} project on Advisable.
+p
+  ' We know you're excited to start using Advisable so all you have to do now is to
+  a href="#{magic_link(@user.account, set_password_url)}"
+     set a password
+  | .
+p
+  | If the above link does not work for you we recommend you get a new email client. But until then you can get around it by copy/pasting this in your browser:
+  br
+  = magic_link(@user.account, set_password_url)
+p
+  | We're looking forward to having you on board!
