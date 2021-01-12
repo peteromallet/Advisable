@@ -3,9 +3,13 @@ import { ArrowBack } from "@styled-icons/ionicons-outline";
 import { Plus, MinusCircle } from "@styled-icons/heroicons-outline";
 import { Box, Text, Link, Button, Card } from "@advisable/donut";
 import useFollows from "@guild/views/Follows/useFollows";
+import { lowerDashed } from "@guild/utils";
+import useScrollToTop from "@advisable-main/hooks/useScrollToTop";
 import { GuildBox } from "@guild/styles";
 
 const FollowTopic = ({ topic }) => {
+  useScrollToTop();
+
   const [followed, setFollowed] = useState(false);
   const { followTopic, unfollowTopic, followedTopics } = useFollows();
 
@@ -34,7 +38,7 @@ const FollowTopic = ({ topic }) => {
       <Card padding="m" borderRadius="12px">
         <GuildBox flexCenterBoth flexSpaceBetween>
           <Text fontWeight="500" size="l">
-            #{topic?.name}
+            #{lowerDashed(topic.name)}
           </Text>
           <Button
             prefix={followed ? <MinusCircle /> : <Plus />}
