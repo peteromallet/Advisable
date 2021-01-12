@@ -34,15 +34,15 @@ end
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  application_id :bigint           not null
-#  reporter_id    :bigint           not null
+#  user_id        :bigint           not null
 #
 # Indexes
 #
 #  index_unresponsiveness_reports_on_application_id  (application_id)
-#  index_unresponsiveness_reports_on_reporter_id     (reporter_id)
+#  index_unresponsiveness_reports_on_user_id         (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (application_id => applications.id)
-#  fk_rails_...  (reporter_id => accounts.id)
+#  fk_rails_...  (user_id => users.id)
 #
