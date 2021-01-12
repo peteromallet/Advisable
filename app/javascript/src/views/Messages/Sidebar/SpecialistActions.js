@@ -1,7 +1,8 @@
 import React from "react";
 import { get } from "lodash-es";
 import { Link } from "react-router-dom";
-import { Button } from "@advisable/donut";
+import { Stack, Button } from "@advisable/donut";
+import ReportUnresponsive from "./ReportUnresponsive";
 
 // Renders all of the available actions in the messages sidebar when viewed
 // by the specialist.
@@ -62,7 +63,15 @@ const ClientActions = ({ application }) => {
     }
   }
 
-  return actions;
+  actions.push(
+    <ReportUnresponsive
+      asClient
+      key="reportUnresponsive"
+      application={application}
+    />,
+  );
+
+  return <Stack spacing="sm">{actions}</Stack>;
 };
 
 export default ClientActions;
