@@ -43,18 +43,18 @@ export default function MatchMetaInfo({ match }) {
       <Box height="1px" bg="neutral200" mb={4} />
       <Stack spacing="xl" divider="neutral200" mb={4}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="sm" color="neutral700">
-            Hourly Rate
+          <Text fontSize="sm" color="blue900">
+            Hourly rate
           </Text>
-          <Text fontSize="sm" fontWeight="medium" color="neutral900">
+          <Text fontSize="sm" color="neutral700">
             ${match.rate}
           </Text>
         </Box>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="sm" color="neutral700">
+          <Text fontSize="sm" color="blue900">
             Available to start
           </Text>
-          <Text fontSize="sm" fontWeight="medium" color="neutral900">
+          <Text fontSize="sm" color="neutral700">
             {match.availability}
           </Text>
         </Box>
