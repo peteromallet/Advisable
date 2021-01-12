@@ -1,28 +1,33 @@
 # frozen_string_literal: true
 
-class Mutations::CreateUserForCompany < Mutations::BaseMutation
+class Mutations::InviteUserToReviewApplications < Mutations::BaseMutation
   include Mutations::Helpers::BlacklistedEmail
 
+  argument :project_id, ID, required: true
   argument :email, String, required: true
   argument :first_name, String, required: false
   argument :last_name, String, required: false
-  argument :team_manager, Boolean, required: false
 
   field :user, Types::User, null: true
 
-  def authorized?(**args)
-    requires_team_manager!
+  def authorized?(project_id:, **args)
+    requires_client!
+
+    project = Project.find_by!(uid: project_id)
+    return true if current_user == project.user
+
+    raise ApiError::InvalidRequest.new("invalidProject", "The project does not belong to signed in user.")
   end
 
-  def resolve(email:, **optional)
+  def resolve(project_id:, email:, **optional)
     email_blacklisted?(email)
     attributes = optional.slice(:first_name, :last_name)
-    attributes[:permissions] = optional[:team_manager] ? [:team_manager] : []
     account = Account.new(email: email, **attributes)
     account.save!
-
     new_user = current_user.invite_comember!(account)
-    UserMailer.invited_by_manager(current_user, new_user).deliver_later
+
+    project = Project.find_by!(uid: project_id)
+    UserMailer.invited_to_review_applications(current_user, new_user, project).deliver_later
 
     {user: new_user}
   rescue ActiveRecord::RecordInvalid
