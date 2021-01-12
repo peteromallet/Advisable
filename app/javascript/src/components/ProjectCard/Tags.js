@@ -34,7 +34,7 @@ export default function Tags({
       <Tag suffix={SkillsSuffix} variant="blue" mr={1} mb={1.5} size="s">
         {skillTag}
       </Tag>
-      <Tag suffix={IndustrySuffix} variant="cyan" size="s">
+      <Tag suffix={IndustrySuffix} variant="cyan" size="s" mb={1.5}>
         {industryTag}
       </Tag>
     </Box>

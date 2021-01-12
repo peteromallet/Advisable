@@ -1,13 +1,25 @@
 import React from "react";
 import { RefreshCcw, Edit2, AlertCircle } from "@styled-icons/feather";
 import { Box, Text, Avatar } from "@advisable/donut";
-import { StyledBadge, StyledBadgePrefix } from "./styles";
+import {
+  StyledBadge,
+  StyledBadgePrefix,
+  StyledMessage,
+  StyledTitle,
+} from "./styles";
 
 function Review({ review }) {
   const role = review.role;
   const atCompany = review.companyName && `at ${review.companyName}`;
   return (
-    <Box display="flex" py={3} alignItems="center">
+    <Box
+      display="flex"
+      px={6}
+      borderTop="1px solid"
+      borderTopColor="neutral100"
+      py={3}
+      alignItems="center"
+    >
       <Box mr={2}>
         <Avatar
           size="xs"
@@ -30,10 +42,15 @@ function Review({ review }) {
 
 function Status(props) {
   return (
-    <StyledBadge variant={props.variant} prefix={props.icon} width="100%">
-      <StyledBadgePrefix>{props.icon}</StyledBadgePrefix>
-      {props.label}
-    </StyledBadge>
+    <Box px={6} pb={6}>
+      <StyledBadge variant={props.variant} prefix={props.icon} width="100%">
+        <Box display="flex" alignItems="center" mb={1.5}>
+          <StyledBadgePrefix>{props.icon}</StyledBadgePrefix>
+          <StyledTitle>{props.label}</StyledTitle>
+        </Box>
+        <StyledMessage>{props.message}</StyledMessage>
+      </StyledBadge>
+    </Box>
   );
 }
 
@@ -45,18 +62,22 @@ const STATUSES = {
     component: Status,
     variant: "neutral",
     label: "Draft Project",
+    message: "This project is not visible to others",
     icon: <Edit2 />,
   },
   Pending: {
     component: Status,
     variant: "yellow",
     label: "Pending Validation",
+    message:
+      "This project will not be visible to others until it has been verified",
     icon: <RefreshCcw />,
   },
   "Validation Failed": {
     component: Status,
     variant: "red",
     label: "Validation Failed",
+    message: "Client rejected this project and it's not displaying",
     icon: <AlertCircle />,
   },
 };
@@ -65,11 +86,7 @@ function ProjectStatus({ project }) {
   const status = (project.draft && "Draft") || project.validationStatus;
   const config = STATUSES[status];
 
-  return (
-    <Box px={6} borderTop="1px solid" borderTopColor="neutral100">
-      <config.component {...config} review={project.reviews?.[0]} />
-    </Box>
-  );
+  return <config.component {...config} review={project.reviews?.[0]} />;
 }
 
 export default ProjectStatus;

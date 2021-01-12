@@ -1,5 +1,6 @@
 import React from "react";
 import { rgba } from "polished";
+import { variant } from "styled-system";
 import { Button, Box, Text, theme, StyledCard } from "@advisable/donut";
 import styled from "styled-components";
 import ActionBarModal from "src/views/Project/ActionBarModal";
@@ -9,20 +10,45 @@ import { Home, ArrowRight } from "@styled-icons/feather";
 import Tags from "./Tags";
 import ProjectStatus from "./ProjectStatus";
 
+const VARIANTS = variant({
+  variants: {
+    Validated: {
+      backgroundColor: theme.colors.white,
+      boxShadow: `0px 4px 12px -4px ${rgba(theme.colors.neutral900, 0.04)},
+    0px 4px 20px -4px ${rgba(theme.colors.neutral900, 0.08)}`,
+
+      "&:hover": {
+        boxShadow: `0px 12px 24px -12px ${rgba(theme.colors.neutral900, 0.08)},
+      0px 24px 40px -24px ${rgba(theme.colors.neutral900, 0.12)}`,
+      },
+    },
+    Draft: {
+      backgroundColor: "#FBFBFC",
+      border: "2px dashed",
+      borderColor: theme.colors.neutral300,
+    },
+    Pending: {
+      backgroundColor: "#FBFBFC",
+      border: "2px dashed",
+      borderColor: theme.colors.yellow300,
+    },
+    "Validation Failed": {
+      backgroundColor: "#FBFBFC",
+      border: "2px dashed",
+      borderColor: theme.colors.red200,
+    },
+  },
+});
+
 const StyledSpecialistProject = styled(StyledCard)`
+  ${VARIANTS}
+
   position: relative;
   overflow: hidden;
   cursor: pointer;
   user-select: none;
   transition: box-shadow 300ms;
   border-radius: 12px;
-  box-shadow: 0px 4px 12px -4px ${rgba(theme.colors.neutral900, 0.04)},
-    0px 4px 20px -4px ${rgba(theme.colors.neutral900, 0.08)};
-
-  &:hover {
-    box-shadow: 0px 12px 24px -12px ${rgba(theme.colors.neutral900, 0.08)},
-      0px 24px 40px -24px ${rgba(theme.colors.neutral900, 0.12)};
-  }
 `;
 
 const StyledHoverDecoration = styled.div`
@@ -57,6 +83,9 @@ function Project({ project }) {
   const extraSkills = project.skills.length - NUM_OF_SKILL_TAGS;
   let skillTags = project.skills.slice(0, NUM_OF_SKILL_TAGS).map((s) => s.name);
   extraSkills > 0 && skillTags.push(`+${extraSkills}`);
+
+  const status = (project.draft && "Draft") || project.validationStatus;
+
   return (
     <>
       <ActionBarModal
@@ -70,9 +99,10 @@ function Project({ project }) {
       <DialogDisclosure
         {...dialog}
         as={StyledSpecialistProject}
+        variant={status}
         data-testid="project-card"
       >
-        <Box padding={6} pb={4}>
+        <Box padding={6} pb={2.5}>
           <StyledHoverDecoration>
             <Button variant="subtle" suffix={<ArrowRight />}>
               View More
