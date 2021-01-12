@@ -2,6 +2,27 @@ import styled from "styled-components";
 import { margin, variant } from "styled-system";
 import { theme } from "@advisable/donut";
 
+export const StyledBadgePrefix = styled.div`
+  margin-right: 8px;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
+  }
+`;
+
+export const StyledTitle = styled.span`
+  padding-top: 2px;
+  font-size: 14px;
+  font-weight: 500;
+`;
+
+export const StyledMessage = styled.p`
+  font-size: 12px;
+  line-height: 118%;
+`;
+
 export const SIZES = variant({
   prop: "size",
   variants: {
@@ -26,13 +47,22 @@ export const SIZES = variant({
 export const VARIANTS = variant({
   variants: {
     neutral: {
-      color: theme.colors.neutral600,
+      backgroundColor: theme.colors.neutral100,
+      svg: { color: theme.colors.neutral500 },
+      [StyledTitle]: { color: theme.colors.neutral800 },
+      [StyledMessage]: { color: theme.colors.neutral600 },
     },
     yellow: {
-      color: theme.colors.yellow500,
+      backgroundColor: theme.colors.yellow100,
+      svg: { color: theme.colors.yellow600 },
+      [StyledTitle]: { color: theme.colors.yellow800 },
+      [StyledMessage]: { color: theme.colors.yellow700 },
     },
     red: {
-      color: theme.colors.red400,
+      backgroundColor: theme.colors.red100,
+      svg: { color: theme.colors.red400 },
+      [StyledTitle]: { color: theme.colors.red500 },
+      [StyledMessage]: { color: theme.colors.red500 },
     },
   },
 });
@@ -43,19 +73,8 @@ export const StyledBadge = styled.div`
   ${SIZES}
   
   font-weight: 400;
-  font-size: 15px;
-  padding: 16px 0px;
+  padding: 10px 14px;
+  border-radius: 12px;
   width: 100%;
   align-items: center;
-  display: inline-flex;
-`;
-
-export const StyledBadgePrefix = styled.div`
-  margin-right: 12px;
-
-  svg {
-    width: 16px;
-    height: 16px;
-    stroke-width: 2;
-  }
 `;
