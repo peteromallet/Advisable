@@ -43,7 +43,13 @@ function Review({ review }) {
 function Status(props) {
   return (
     <Box px={6} pb={6}>
-      <StyledBadge variant={props.variant} prefix={props.icon} width="100%">
+      <StyledBadge
+        variant={props.variant}
+        prefix={props.icon}
+        width="100%"
+        py={2.5}
+        px={3}
+      >
         <Box display="flex" alignItems="center" mb={1.5}>
           <StyledBadgePrefix>{props.icon}</StyledBadgePrefix>
           <StyledTitle>{props.label}</StyledTitle>
