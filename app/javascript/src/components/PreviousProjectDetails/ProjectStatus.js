@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@advisable/donut";
 import Review from "src/components/Review";
-import { RefreshCcw, Edit2, XOctagon } from "@styled-icons/feather";
+import { RefreshCcw, Edit3, XOctagon } from "@styled-icons/feather";
 import ProjectValidationPrompt from "src/components/ProjectValidationPrompt";
 import {
   StyledBadge,
@@ -12,10 +12,7 @@ import {
 
 function Validated({ project }) {
   return project.reviews.length > 0 && project.reviews[0]?.comment ? (
-    <>
-      <Box height={1} bg="neutral100" mb={6} />
-      <Review review={project.reviews[0]} />
-    </>
+    <Review review={project.reviews[0]} />
   ) : null;
 }
 
@@ -31,12 +28,10 @@ function Status(props) {
           <StyledBadgePrefix>{props.icon}</StyledBadgePrefix>
         </Box>
         <Box>
-          <StyledTitle fontSize="s" fontWeight="medium" mb="xxs">
+          <StyledTitle fontSize="s" fontWeight="medium" lineHeight="m">
             {props.label}
           </StyledTitle>
-          <StyledMessage fontSize="xs" lineHeight="s">
-            {props.message}
-          </StyledMessage>
+          <StyledMessage fontSize="xs">{props.message}</StyledMessage>
         </Box>
       </Box>
     </StyledBadge>
@@ -52,7 +47,7 @@ const STATUSES = {
     variant: "neutral",
     label: "Draft Project",
     message: "This project is not visible to others",
-    icon: <Edit2 />,
+    icon: <Edit3 />,
   },
   Pending: {
     component: Pending,
@@ -76,7 +71,7 @@ function ProjectStatus({ project }) {
   const config = STATUSES[status];
 
   return (
-    <Box mt={5}>
+    <Box mt={5} pt={6} pb={2} borderTop="1px solid" borderTopColor="neutral100">
       <config.component
         project={project}
         {...config}
