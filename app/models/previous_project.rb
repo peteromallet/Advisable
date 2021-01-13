@@ -85,17 +85,6 @@ class PreviousProject < ApplicationRecord
     )
   end
 
-  def client_display_name
-    return client_name if draft?
-    return industry_and_company_type if confidential?
-
-    client_name
-  end
-
-  def industry_and_company_type
-    [primary_industry&.name, company_type || "company"].compact.join(" ")
-  end
-
   private
 
   # Update the associated specialists project count
