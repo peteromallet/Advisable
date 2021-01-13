@@ -4,6 +4,7 @@ class Mutations::InviteUserToReviewApplications < Mutations::BaseMutation
   include Mutations::Helpers::BlacklistedEmail
 
   argument :project_id, ID, required: true
+  argument :application_id, ID, required: false
   argument :email, String, required: true
   argument :first_name, String, required: false
   argument :last_name, String, required: false
@@ -27,7 +28,7 @@ class Mutations::InviteUserToReviewApplications < Mutations::BaseMutation
     new_user = current_user.invite_comember!(account)
 
     project = Project.find_by!(uid: project_id)
-    UserMailer.invited_to_review_applications(current_user, new_user, project).deliver_later
+    UserMailer.invited_to_review_applications(current_user, new_user, project, application_id: optional[:application_id]).deliver_later
 
     {user: new_user}
   rescue ActiveRecord::RecordInvalid

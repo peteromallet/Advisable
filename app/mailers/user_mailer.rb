@@ -18,10 +18,15 @@ class UserMailer < ApplicationMailer
     mail(to: user.account.email, subject: "#{manager.account.first_name} invited you to Advisable")
   end
 
-  def invited_to_review_applications(inviter, user, project)
+  def invited_to_review_applications(inviter, user, project, application_id: nil)
     @inviter = inviter
     @user = user
     @project = project
+    @url = if application_id.present?
+             "#{default_url_options[:host]}/projects/#{@project.uid}/candidates/#{application_id}"
+           else
+             "#{default_url_options[:host]}/projects/#{@project.uid}/matches"
+           end
     mail(to: user.account.email, subject: "#{inviter.account.first_name} invited you to review applications for a #{@project.try(:name)} project on Advisable")
   end
 end
