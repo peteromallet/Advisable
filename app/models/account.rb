@@ -74,6 +74,14 @@ class Account < ApplicationRecord
     specialist_or_user&.sync_to_airtable
   end
 
+  def unsubscribed_from
+    super || []
+  end
+
+  def unsubscribed?(subscription)
+    unsubscribed_from.include?(subscription)
+  end
+
   private
 
   def strip_email

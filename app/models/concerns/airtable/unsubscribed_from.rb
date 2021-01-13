@@ -3,16 +3,16 @@
 module Airtable::UnsubscribedFrom
   PREFIX = "Unsubscribe - "
 
-  def sync_unsubscribed_from(user, fields)
+  def sync_unsubscribed_from(user)
     user.account.unsubscribed_from = fields.map do |k, v|
       k.sub(PREFIX, "") if k.start_with?(PREFIX) && v == "Yes"
     end.compact
     user.account.save!
   end
 
-  def push_unsubscribed_from(airtable, user)
+  def push_unsubscribed_from(user)
     user.account.unsubscribed_from.each do |k|
-      airtable[PREFIX + k] = "Yes"
+      self[PREFIX + k] = "Yes"
     end
   end
 end
