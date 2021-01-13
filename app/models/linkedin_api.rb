@@ -1,23 +1,7 @@
+# frozen_string_literal: true
+
 class LinkedinApi
-  class RequestError < StandardError
-    attr_reader :response_log, :backtrace
-
-    def initialize(response)
-      @response_log = {
-        status: response.status,
-        url: response.env.url,
-        request_body: JSON[response.env.request_body],
-        headers: response.headers,
-        body: response.body
-      }
-      @backtrace = caller
-
-      Rails.logger.error(response_log)
-      super("Something went wrong with the LinkedIn API request. Status #{response.status}")
-    end
-  end
-
-  API_ROOT = "https://api.linkedin.com/v2/".freeze
+  API_ROOT = "https://api.linkedin.com/v2/"
 
   attr_reader :token
 
@@ -32,7 +16,7 @@ class LinkedinApi
     if response.status == expected_status
       response
     else
-      raise RequestError.new(response)
+      raise ApiRequestError.new(response)
     end
   end
 
@@ -41,7 +25,7 @@ class LinkedinApi
     if response.status == expected_status
       response
     else
-      raise RequestError.new(response)
+      raise ApiRequestError.new(response)
     end
   end
 
@@ -51,7 +35,7 @@ class LinkedinApi
     if response.status == expected_status
       response
     else
-      raise RequestError.new(response)
+      raise ApiRequestError.new(response)
     end
   end
 
@@ -69,7 +53,7 @@ class LinkedinApi
     retries = 1
     begin
       yield
-    rescue RequestError => e
+    rescue ApiRequestError => e
       if retries <= max_retries
         retries += 1
         sleep 2**retries

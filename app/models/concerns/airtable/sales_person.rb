@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Airtable::SalesPerson < Airtable::Base
   self.table_name = 'Salespeople'
   self.base_key = ENV['AIRTABLE_DATABASE_KEY']
@@ -15,6 +17,9 @@ class Airtable::SalesPerson < Airtable::Base
     record.active = false if self['Active'] == 'No'
     record.out_of_office = true if self['Out of office'] == 'Yes'
     record.out_of_office = false if self['Out of office'] == 'No'
+  end
+
+  after_sync do |record|
     sync_image(record)
   end
 
