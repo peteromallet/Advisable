@@ -61,7 +61,7 @@ const STATUSES = {
     component: Status,
     variant: "red",
     label: "Validation Failed",
-    message: "Client rejected this project and it's not displaying",
+    message: "Client rejected this project and it's not publicly visible",
     icon: <XOctagon />,
   },
 };

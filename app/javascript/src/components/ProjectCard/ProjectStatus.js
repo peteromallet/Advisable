@@ -1,5 +1,5 @@
 import React from "react";
-import { RefreshCcw, Edit2, AlertCircle } from "@styled-icons/feather";
+import { RefreshCcw, Edit2, XOctagon } from "@styled-icons/feather";
 import { Box, Text, Avatar } from "@advisable/donut";
 import {
   StyledBadge,
@@ -83,8 +83,8 @@ const STATUSES = {
     component: Status,
     variant: "red",
     label: "Validation Failed",
-    message: "Client rejected this project and it's not displaying",
-    icon: <AlertCircle />,
+    message: "Client rejected this project and it's not publicly visible",
+    icon: <XOctagon />,
   },
 };
 
