@@ -19,11 +19,12 @@ export const StyledImageThumbnail = styled.div`
 
 export const StyledBadgePrefix = styled.div`
   margin-right: 8px;
+  padding-top: 2px;
 
   svg {
-    width: 24px;
-    height: 24px;
-    stroke-width: 2;
+    width: 32px;
+    height: 32px;
+    stroke-width: 1.25;
   }
 `;
 
@@ -41,7 +42,7 @@ export const VARIANTS = variant({
     red: {
       backgroundColor: theme.colors.red100,
       svg: { color: theme.colors.red400 },
-      [StyledTitle]: { color: theme.colors.red500 },
+      [StyledTitle]: { color: theme.colors.red600 },
       [StyledMessage]: { color: theme.colors.red500 },
     },
   },
