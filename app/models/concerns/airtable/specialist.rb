@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Airtable::Specialist < Airtable::Base
   self.table_name = 'Specialists'
 
@@ -144,11 +146,11 @@ class Airtable::Specialist < Airtable::Base
         Address.new(specialist.bank_holder_address).to_s
     end
 
-    if specialist.remote
-      self['Remote OK'] = "Yes, I'm happy to work remote"
-    else
-      self['Remote OK'] = 'No, I only work with clients in person'
-    end
+    self['Remote OK'] = if specialist.remote
+                          "Yes, I'm happy to work remote"
+                        else
+                          'No, I only work with clients in person'
+                        end
 
     if specialist.primarily_freelance == true
       self['Freelancing Status'] = 'Yes, freelancing is my primary occupation'
@@ -160,7 +162,7 @@ class Airtable::Specialist < Airtable::Base
 
     self['Freelancing Status'] = nil if specialist.primarily_freelance.nil?
 
-    if specialist.public_use != nil
+    unless specialist.public_use.nil?
       self['Okay To Use Publicly'] = specialist.public_use ? 'Yes' : 'No'
     end
 
