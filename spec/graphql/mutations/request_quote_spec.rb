@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::RequestQuote do
@@ -33,7 +35,6 @@ RSpec.describe Mutations::RequestQuote do
     expect(stage).to eq('Quote Requested')
   end
 
-  # rubocop:disable RSpec/MessageSpies
   it 'triggers a webhook' do
     expect(WebhookEvent).to receive(:trigger).with(
       'tasks.quote_requested',
@@ -41,7 +42,6 @@ RSpec.describe Mutations::RequestQuote do
     )
     AdvisableSchema.execute(query, context: context)
   end
-  # rubocop:enable RSpec/MessageSpies
 
   context 'when the task does not have a name' do
     let(:task) { create(:task, stage: 'Not Assigned', name: nil) }

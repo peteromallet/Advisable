@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-# rubocop:disable RSpec/MessageSpies
 RSpec.describe Users::AttachPaymentMethod do
   let(:company) { create(:company, stripe_customer_id: "cu_12345") }
   let(:user) { create(:user, company: company) }
@@ -33,4 +34,3 @@ RSpec.describe Users::AttachPaymentMethod do
     end
   end
 end
-# rubocop:enable RSpec/MessageSpies

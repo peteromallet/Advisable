@@ -68,6 +68,9 @@ RSpec/AnyInstance:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
+RSpec/MessageSpies:
+  Enabled: false
+
 # Let's discuss this one
 # I'd like to go double quotes everywhere, but am open to discussion
 # Style/StringLiterals:

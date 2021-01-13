@@ -1,37 +1,57 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe SendApplicationInformationJob do
   let!(:project) { create(:project) }
-  let!(:specialist1) { create(:specialist, automated_invitations_subscription: false, skills: [project.primary_skill]) }
-  let!(:specialist2) { create(:specialist, skills: [project.primary_skill]) }
-  let!(:specialist3) { create(:specialist, skills: []) }
-  let!(:specialist4) { create(:specialist, skills: [project.primary_skill], country: project.user.country) }
-  let!(:specialist5) { create(:specialist, country: project.user.country) }
+  let!(:unsubscribed) { create(:specialist, automated_invitations_subscription: false, skills: [project.primary_skill]) }
+  let!(:with_skill) { create(:specialist, skills: [project.primary_skill]) }
+  let!(:without_skill) { create(:specialist, skills: []) }
+  let!(:with_skill_in_country) { create(:specialist, skills: [project.primary_skill], country: project.user.country) }
+  let!(:without_skill_in_country) { create(:specialist, country: project.user.country) }
+  let!(:deleted_specialist) { create(:specialist, skills: [project.primary_skill], account: create(:account, deleted_at: 2.days.ago)) }
 
   before { allow_any_instance_of(Project).to receive(:sync_from_airtable) }
 
   it "invites specialists who have appropriate skills" do
-    SendApplicationInformationJob.perform_now(project)
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist2.id]})
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist4.id]})
-  end
+    described_class.perform_now(project)
 
-  context "location is important" do
-    let!(:project) { create(:project, location_importance: 2) }
+    [with_skill, with_skill_in_country].each do |specialist|
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
+    end
 
-    it "invites specialists who have appropriate skill in same country" do
-      SendApplicationInformationJob.perform_now(project)
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist4.id]})
+    [unsubscribed, without_skill, without_skill_in_country, deleted_specialist].each do |specialist|
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
     end
   end
 
-  context "application already exists" do
-    let!(:application) { create(:application, specialist: specialist2, project: project) }
+  context "when location is important" do
+    let!(:project) { create(:project, location_importance: 2) }
 
+    it "invites specialists who have appropriate skill in same country" do
+      described_class.perform_now(project)
+
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, with_skill_in_country.id]})
+
+      [unsubscribed, with_skill, without_skill, without_skill_in_country, deleted_specialist].each do |specialist|
+        expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
+      end
+    end
+  end
+
+  context "when application already exists" do
     it "invites only specialists without existing applications" do
-      SendApplicationInformationJob.perform_now(project)
-      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist2.id]})
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist4.id]})
+      create(:application, specialist: with_skill, project: project)
+
+      described_class.perform_now(project)
+
+      [with_skill_in_country].each do |specialist|
+        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
+      end
+
+      [unsubscribed, with_skill, without_skill, without_skill_in_country, deleted_specialist].each do |specialist|
+        expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
+      end
     end
   end
 end

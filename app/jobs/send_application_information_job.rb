@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open-uri'
 
 class SendApplicationInformationJob < ApplicationJob
@@ -10,6 +12,8 @@ class SendApplicationInformationJob < ApplicationJob
     project.sync_from_airtable if project.airtable_id
 
     specialists = Specialist.
+      joins(:account).
+      where(account: {deleted_at: nil}).
       where(automated_invitations_subscription: true).
       where(id: specialist_ids_by_skill).
       where.not(id: specialists_with_existing_applications)

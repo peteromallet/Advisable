@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::RejectProposal do
@@ -37,7 +39,6 @@ RSpec.describe Mutations::RejectProposal do
     expect(status).to eq('Application Rejected')
   end
 
-  # rubocop:disable RSpec/MessageSpies
   it 'triggers a webhook' do
     expect(WebhookEvent).to receive(:trigger).with(
       'applications.proposal_rejected',
@@ -46,7 +47,6 @@ RSpec.describe Mutations::RejectProposal do
 
     AdvisableSchema.execute(query, context: context)
   end
-  # rubocop:enable RSpec/MessageSpies
 
   it 'sets the rejection_reason' do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
