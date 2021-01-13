@@ -13,6 +13,11 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.invited_to_review_applications(User.first, User.last, random_project)
   end
 
+  def invited_to_review_applications_with_application
+    application = random_application
+    UserMailer.invited_to_review_applications(User.first, User.last, application.project, application_id: application.uid)
+  end
+
   private
 
   def random_interview
@@ -21,5 +26,9 @@ class UserMailerPreview < ActionMailer::Preview
 
   def random_project
     Project.order(Arel.sql('RANDOM()')).first
+  end
+
+  def random_application
+    Application.order(Arel.sql('RANDOM()')).first
   end
 end
