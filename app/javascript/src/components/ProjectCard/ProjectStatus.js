@@ -1,5 +1,5 @@
 import React from "react";
-import { RefreshCcw, Edit2, XOctagon } from "@styled-icons/feather";
+import { RefreshCcw, Edit3, XOctagon } from "@styled-icons/feather";
 import { Box, Text, Avatar } from "@advisable/donut";
 import {
   StyledBadge,
@@ -69,7 +69,7 @@ const STATUSES = {
     variant: "neutral",
     label: "Draft Project",
     message: "This project is not visible to others",
-    icon: <Edit2 />,
+    icon: <Edit3 />,
   },
   Pending: {
     component: Status,
