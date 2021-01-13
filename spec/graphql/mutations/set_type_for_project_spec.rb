@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::SetTypeForProject do
@@ -56,7 +58,6 @@ RSpec.describe Mutations::SetTypeForProject do
     end
   end
 
-  # rubocop:disable RSpec/MessageSpies
   context "when setting the project type to 'Flexible'" do
     let(:application) do
       create(:application, project_type: 'Fixed', monthly_limit: monthly_limit)
@@ -81,7 +82,6 @@ RSpec.describe Mutations::SetTypeForProject do
       AdvisableSchema.execute(query, context: context)
     end
   end
-  # rubocop:enable RSpec/MessageSpies
 
   context 'when the user is not the owner of the project' do
     let(:context) { {current_user: create(:user)} }

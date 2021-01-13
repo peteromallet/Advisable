@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::UpdateProjectPaymentMethod do
@@ -98,7 +100,6 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
     end
   end
 
-  # rubocop:disable RSpec/MessageSpies
   it "stores the VAT number in stripe" do
     expect(Stripe::Customer).to receive(:create_tax_id).with(
       user.company.stripe_customer_id,
@@ -112,5 +113,4 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
 
     response
   end
-  # rubocop:enable RSpec/MessageSpies
 end

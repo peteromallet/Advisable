@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -30,7 +32,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'sends the confirmation email' do
-      expect(mail).to receive(:deliver_later) # rubocop:disable RSpec/MessageSpies
+      expect(mail).to receive(:deliver_later)
       allow(UserMailer).to receive(:confirm).and_return(mail)
       user.send_confirmation_email
     end

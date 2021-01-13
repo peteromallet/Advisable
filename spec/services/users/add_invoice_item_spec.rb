@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-# rubocop:disable RSpec/MessageSpies, RSpec/VerifiedDoubles
+# rubocop:disable RSpec/VerifiedDoubles
 RSpec.describe Users::AddInvoiceItem do
   let(:user) { create(:user) }
 
@@ -38,4 +40,4 @@ RSpec.describe Users::AddInvoiceItem do
     end
   end
 end
-# rubocop:enable RSpec/MessageSpies, RSpec/VerifiedDoubles
+# rubocop:enable RSpec/VerifiedDoubles

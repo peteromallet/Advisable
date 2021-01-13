@@ -43,21 +43,21 @@ export default function ChangePasswordForm() {
       <Box maxWidth="400px">
         <FormField
           type="password"
+          marginBottom={6}
           name="currentPassword"
           label="Current password"
         />
-        <Box marginY="xl" height="1px" bg="neutral100" />
         <FormField
           type="password"
           name="password"
-          label="Password"
-          marginBottom="lg"
+          label="New password"
+          marginBottom={6}
         />
         <FormField
           type="password"
           label="Confirm password"
           name="passwordConfirmation"
-          marginBottom="xl"
+          marginBottom={6}
         />
         <SubmitButton disableUntilValid>Update password</SubmitButton>
       </Box>
