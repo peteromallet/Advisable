@@ -4,10 +4,9 @@ import { Modal, Avatar, Box, Text, Tag, Paragraph } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
 import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
-import Review from "src/components/Review";
-import ProjectValidationPrompt from "src/components/ProjectValidationPrompt";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
 import { StyledImageThumbnail } from "./styles";
+import ProjectStatus from "./ProjectStatus";
 
 function PreviousProjectDetails({ id }) {
   const gallery = useImageGallery();
@@ -85,11 +84,6 @@ function PreviousProjectDetails({ id }) {
           </Text>
         </Box>
       </Box>
-      {!project.draft && project.validationStatus === "Pending" && (
-        <Box mb="m">
-          <ProjectValidationPrompt project={project} />
-        </Box>
-      )}
       <Box height={1} bg="neutral100" mb="l" />
       {project.description && (
         <>
@@ -143,12 +137,7 @@ function PreviousProjectDetails({ id }) {
           </Box>
         </Box>
       </Box>
-      {project.reviews.length > 0 && project.reviews[0]?.comment ? (
-        <>
-          <Box height={1} bg="neutral100" my="l" />
-          <Review review={project.reviews[0]} />
-        </>
-      ) : null}
+      <ProjectStatus project={project} />
     </>
   );
 }
