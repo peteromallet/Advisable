@@ -60,7 +60,7 @@ class Airtable::ClientContact < Airtable::Base
     end
 
     sync_budget(user)
-    sync_unsubscribed_from(user, fields)
+    sync_unsubscribed_from(user)
   end
 
   def sync_budget(user)
@@ -115,6 +115,7 @@ class Airtable::ClientContact < Airtable::Base
       self['Estimated Annual Freelancer Spend (USD)'] = user.budget / 100.0
     end
 
-    push_unsubscribed_from(self, user)
+    # Don't enable until we have all the data in PG
+    # push_unsubscribed_from(user)
   end
 end

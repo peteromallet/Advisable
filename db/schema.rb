@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_080951) do
+ActiveRecord::Schema.define(version: 2021_01_13_090309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -772,7 +772,6 @@ ActiveRecord::Schema.define(version: 2021_01_13_080951) do
     t.string "phone"
     t.boolean "guild", default: false
     t.string "community_status"
-    t.boolean "automated_invitations_subscription"
     t.jsonb "guild_data"
     t.bigint "account_id"
     t.datetime "community_applied_at"

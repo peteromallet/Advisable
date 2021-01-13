@@ -4,7 +4,6 @@ require "rails_helper"
 
 RSpec.describe SendApplicationInformationJob do
   let!(:project) { create(:project) }
-  let!(:unsubscribed) { create(:specialist, automated_invitations_subscription: false, skills: [project.primary_skill]) }
   let!(:with_skill) { create(:specialist, skills: [project.primary_skill]) }
   let!(:without_skill) { create(:specialist, skills: []) }
   let!(:with_skill_in_country) { create(:specialist, skills: [project.primary_skill], country: project.user.country) }
@@ -20,7 +19,7 @@ RSpec.describe SendApplicationInformationJob do
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
     end
 
-    [unsubscribed, without_skill, without_skill_in_country, deleted_specialist].each do |specialist|
+    [without_skill, without_skill_in_country, deleted_specialist].each do |specialist|
       expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
     end
   end
@@ -33,7 +32,7 @@ RSpec.describe SendApplicationInformationJob do
 
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, with_skill_in_country.id]})
 
-      [unsubscribed, with_skill, without_skill, without_skill_in_country, deleted_specialist].each do |specialist|
+      [with_skill, without_skill, without_skill_in_country, deleted_specialist].each do |specialist|
         expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
       end
     end
@@ -49,7 +48,7 @@ RSpec.describe SendApplicationInformationJob do
         expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
       end
 
-      [unsubscribed, with_skill, without_skill, without_skill_in_country, deleted_specialist].each do |specialist|
+      [with_skill, without_skill, without_skill_in_country, deleted_specialist].each do |specialist|
         expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
       end
     end

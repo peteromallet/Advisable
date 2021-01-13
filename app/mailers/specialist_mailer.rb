@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SpecialistMailer < ApplicationMailer
   layout "styled_mailer"
 
@@ -23,6 +25,8 @@ class SpecialistMailer < ApplicationMailer
   def inform_about_project(project_id, specialist_id)
     @project = Project.find(project_id)
     @specialist = Specialist.find(specialist_id)
+    return if @specialist.account.unsubscribed?("Automated Invitations")
+
     mail(
       to: @specialist.account.email,
       subject: "New Freelance Opportunity: #{@project.primary_skill.name} with #{@project.industry} #{@project.company_type}"

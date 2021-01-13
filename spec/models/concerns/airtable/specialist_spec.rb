@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Airtable::Specialist do
+  let(:specialist) { create(:specialist) }
+
   include_examples "airtable syncing", fields: {"Email Address" => Faker::Internet.email}
   include_examples "sync airtable association", "Country", to: :country, fields: {"Email Address" => Faker::Internet.email}
 
@@ -14,33 +18,35 @@ RSpec.describe Airtable::Specialist do
     ]
   })
 
-  let(:specialist) { create(:specialist) }
-
   describe "syncing the application stage" do
     let(:specialist) { create(:specialist, application_stage: nil) }
-    let(:airtable) { Airtable::Specialist.new({
+    let(:airtable) {
+      described_class.new({
       "Email Address" => "test@airtable.com",
       "Application Stage" => "Applied",
       "Bank Holder Address" => "123 Bacon Street, Egg City, IE, 12345",
-    }, id: specialist.airtable_id) }
+    }, id: specialist.airtable_id)
+    }
 
     it 'triggers the application_stage_changed webhook event' do
       expect(WebhookEvent).to receive(:trigger).with(
         "specialists.application_stage_changed",
-        hash_including(:application_stage => "Applied")
+        hash_including(application_stage: "Applied")
       )
       airtable.sync
     end
 
     context "when the record is a new record" do
-      let(:airtable) { Airtable::Specialist.new({
+      let(:airtable) {
+        described_class.new({
         "Application Stage" => "Applied"
-      }, id: "rec_new") }
+      }, id: "rec_new")
+      }
 
       it "does not trigger a webhook" do
         expect(WebhookEvent).not_to receive(:trigger).with(
           "specialists.application_stage_changed",
-          hash_including(:application_stage => "Applied")
+          hash_including(application_stage: "Applied")
         )
         airtable.sync
       end
@@ -52,7 +58,7 @@ RSpec.describe Airtable::Specialist do
       it "does not trigger a webhook" do
         expect(WebhookEvent).not_to receive(:trigger).with(
           "specialists.application_stage_changed",
-          hash_including(:application_stage => "Applied")
+          hash_including(application_stage: "Applied")
         )
         airtable.sync
       end
@@ -61,10 +67,12 @@ RSpec.describe Airtable::Specialist do
 
   context "when 'Okay To Use Publicly' is Yes" do
     let(:specialist) { create(:specialist, public_use: nil) }
-    let(:airtable) { Airtable::Specialist.new({
+    let(:airtable) {
+      described_class.new({
       "Email Address" => "test@airtable.com",
       "Okay To Use Publicly" => "Yes",
-    }, id: specialist.airtable_id) }
+    }, id: specialist.airtable_id)
+    }
 
     it "sets the public_use column to true" do
       expect { airtable.sync }.to change {
@@ -75,10 +83,12 @@ RSpec.describe Airtable::Specialist do
 
   context "when 'Okay To Use Publicly' is No" do
     let(:specialist) { create(:specialist, public_use: nil) }
-    let(:airtable) { Airtable::Specialist.new({
+    let(:airtable) {
+      described_class.new({
       "Okay To Use Publicly" => "No",
       "Email Address" => "test@airtable.com",
-    }, id: specialist.airtable_id) }
+    }, id: specialist.airtable_id)
+    }
 
     it "sets the public_use column to false" do
       expect { airtable.sync }.to change {
@@ -89,10 +99,12 @@ RSpec.describe Airtable::Specialist do
 
   context "when there is a 'Typical Hourly Rate'" do
     let(:specialist) { create(:specialist, hourly_rate: nil) }
-    let(:airtable) { Airtable::Specialist.new({
+    let(:airtable) {
+      described_class.new({
       "Email Address" => "test@airtable.com",
       "Typical Hourly Rate" => 87,
-    }, id: specialist.airtable_id) }
+    }, id: specialist.airtable_id)
+    }
 
     it "stores it as a minor currency" do
       expect { airtable.sync }.to change {
@@ -105,15 +117,15 @@ RSpec.describe Airtable::Specialist do
     let(:skill_a) { create(:skill) }
     let(:skill_b) { create(:skill) }
     let(:airtable) {
-      Airtable::Specialist.new({
+      described_class.new({
         "Email Address" => "test@airtable.com",
         "Specialist Skills" => [skill_a.airtable_id, skill_b.airtable_id],
       }, id: specialist.airtable_id)
     }
 
     it "associates each skill to the specialist" do
-      expect(specialist.reload.skills).to_not include(skill_a)
-      expect(specialist.reload.skills).to_not include(skill_b)
+      expect(specialist.reload.skills).not_to include(skill_a)
+      expect(specialist.reload.skills).not_to include(skill_b)
       airtable.sync
       expect(specialist.reload.skills).to include(skill_a)
       expect(specialist.reload.skills).to include(skill_b)
@@ -121,15 +133,15 @@ RSpec.describe Airtable::Specialist do
 
     context 'when the skill has not already been synced' do
       let(:airtable) {
-        Airtable::Specialist.new({
+        described_class.new({
           "Email Address" => "test@airtable.com",
           "Specialist Skills" => ["recNewSkill"],
         }, id: specialist.airtable_id)
       }
 
       it 'syncs it first' do
-        airtable_skill = double(Airtable::Skill)
-        expect(Airtable::Skill).to receive(:find).with("recNewSkill").and_return(airtable_skill)
+        airtable_skill = instance_double(Airtable::Skill)
+        allow(Airtable::Skill).to receive(:find).with("recNewSkill").and_return(airtable_skill)
         expect(airtable_skill).to receive(:sync)
         airtable.sync
       end
@@ -138,12 +150,14 @@ RSpec.describe Airtable::Specialist do
 
   describe "value stripping" do
     let(:specialist) { create(:specialist) }
-    let(:airtable) { Airtable::Specialist.new({
+    let(:airtable) {
+      described_class.new({
       "Email Address" => " test@airtable.com ",
       "First Name" => " Dwight ",
       "Last Name" => " Schrute ",
       "VAT Number" => " 1234 "
-      }, id: specialist.airtable_id) }
+      }, id: specialist.airtable_id)
+    }
 
     it "strips email, name, and VAT" do
       airtable.sync
@@ -152,14 +166,43 @@ RSpec.describe Airtable::Specialist do
     end
   end
 
+  describe "unsubscriptions" do
+    let(:account) { create(:account) }
+    let(:specialist) { create(:specialist, account: account) }
+    let(:fields) { {"Email Address" => "test@airtable.com", "Unsubscribe - Marketing Emails" => "Yes", "Unsubscribe - Onboarding Emails" => "Yes"} }
+    let(:airtable) { described_class.new(fields, id: specialist.airtable_id) }
+
+    context "when syncing to airtable" do
+      it "syncs over unsubscribtions to account" do
+        expect(account.reload.unsubscribed_from).to eq([])
+        airtable.sync
+        expect(account.reload.unsubscribed_from).to match_array(["Marketing Emails", "Onboarding Emails"])
+      end
+    end
+
+    context "when syncing from airtable", skip: "Don't enable until we have all the data in PG" do
+      let(:account) { create(:account, unsubscribed_from: ["SMS Alerts"]) }
+
+      before { allow(airtable).to receive(:save) }
+
+      it "syncs over unsubscribtions to account" do
+        expect(airtable.fields['Unsubscribe - SMS Alerts']).to eq(nil)
+        airtable.push(specialist)
+        expect(airtable.fields['Unsubscribe - SMS Alerts']).to eq("Yes")
+      end
+    end
+  end
+
   describe "push_data" do
-    let(:specialist) { create(:specialist, {
+    let(:specialist) {
+      create(:specialist, {
       bio: "bio",
       city: "Dublin"
-    }) }
-    let(:airtable) { Airtable::Specialist.new({}, id: specialist.airtable_id) }
+    })
+    }
+    let(:airtable) { described_class.new({}, id: specialist.airtable_id) }
 
-    before :each do
+    before do
       allow(airtable).to receive(:save)
     end
 
@@ -192,7 +235,7 @@ RSpec.describe Airtable::Specialist do
     end
 
     context "when the 'primarily_freelance' column has been set" do
-      context "and is true" do
+      context "when it is true" do
         let(:specialist) { create(:specialist, primarily_freelance: true) }
 
         it "sets 'Freelancing Status' column to primarily freelance" do
@@ -202,7 +245,7 @@ RSpec.describe Airtable::Specialist do
         end
       end
 
-      context "and is false" do
+      context "when it is false" do
         let(:specialist) { create(:specialist, primarily_freelance: false) }
 
         it "sets 'Freelancing Status' column to part-time freelance" do
@@ -214,7 +257,7 @@ RSpec.describe Airtable::Specialist do
     end
 
     context "when the public_use column has been set" do
-      context "and is true" do
+      context "when it is true" do
         let(:specialist) { create(:specialist, public_use: true) }
 
         it "syncs 'Okay To Use Publicly' as Yes" do
@@ -224,7 +267,7 @@ RSpec.describe Airtable::Specialist do
         end
       end
 
-      context "and is false" do
+      context "when it is false" do
         let(:specialist) { create(:specialist, public_use: false) }
 
         it "syncs 'Okay To Use Publicly' as No" do
@@ -256,32 +299,32 @@ RSpec.describe Airtable::Specialist do
   end
 
   describe "Whe Airtable responds with an error" do
-    let(:airtable) { Airtable::Specialist.new({}, id: specialist.airtable_id) }
+    let(:airtable) { described_class.new({}, id: specialist.airtable_id) }
     let(:error) {
       Airrecord::Error.new("HTTP 422: ROW_DOES_NOT_EXIST: Record ID rec1234 does not exist")
     }
 
     it "raises and error" do
       error = Airrecord::Error.new("Some unrelated error")
-      expect(airtable).to receive(:save).and_raise(error)
+      allow(airtable).to receive(:save).and_raise(error)
       expect { airtable.push(specialist) }.to raise_error(error)
     end
 
-    context "and the error contains ROW_DOES_NOT_EXIST" do
-      context "and the id relates to a skill in postgres" do
-        let!(:skill) { create(:skill, airtable_id: "rec1234") }
+    context "when the error contains ROW_DOES_NOT_EXIST" do
+      context "when the id relates to a skill in postgres" do
+        before { create(:skill, airtable_id: "rec1234") }
 
         it "calls #handle_duplicate_skill" do
           # First time its called we raise the error as if airtable responded
           # with ROW_DOES_NOT_EXIST
-          expect(airtable).to receive(:save).and_raise(error)
+          allow(airtable).to receive(:save).and_raise(error)
           # Second time its called we allow it as if airtable responded 200
-          expect(airtable).to receive(:save).and_return(true)
-          expect(airtable).to receive(:handle_duplicate_skill).and_return(true)
+          allow(airtable).to receive(:save).and_return(true)
+          allow(airtable).to receive(:handle_duplicate_skill).and_return(true)
           airtable.push(specialist)
         end
 
-        context "and for some reason airtable keeps responding with 422" do
+        context "when for some reason airtable keeps responding with 422" do
           it "prevents going into an infinite loop by retrying 5 times then just raising the error" do
             expect(airtable).to receive(:save).exactly(6).times.and_raise(error)
             expect(airtable).to receive(:handle_duplicate_skill).exactly(5).times.and_return(true)
@@ -292,10 +335,10 @@ RSpec.describe Airtable::Specialist do
         end
       end
 
-      context "and the id does not relate to a skill in postgres" do
+      context "when the id does not relate to a skill in postgres" do
         it "does not call #handle_duplicate_skill and reraises the error" do
-          expect(airtable).to receive(:save).and_raise(error)
-          expect(airtable).to_not receive(:handle_duplicate_skill)
+          allow(airtable).to receive(:save).and_raise(error)
+          expect(airtable).not_to receive(:handle_duplicate_skill)
           expect {
             airtable.push(specialist)
           }.to raise_error(error)
@@ -306,9 +349,9 @@ RSpec.describe Airtable::Specialist do
 
   describe "#handle_duplicate_skills" do
     let(:skill) { create(:skill) }
-    let(:airtable) { Airtable::Specialist.new({}, id: specialist.airtable_id) }
+    let(:airtable) { described_class.new({}, id: specialist.airtable_id) }
 
-    before :each do
+    before do
       specialist.skills << skill
     end
 
@@ -333,7 +376,8 @@ RSpec.describe Airtable::Specialist do
 
     context "when multiple duplicates exist in postgres" do
       let!(:original) { create(:skill, name: skill.name, original: nil) }
-      let!(:skill_b) { create(:skill, name: skill.name, original: original) }
+
+      before { create(:skill, name: skill.name, original: original) }
 
       it "associates the duplicate to the original" do
         expect {
@@ -347,10 +391,11 @@ RSpec.describe Airtable::Specialist do
 
   describe "account handling" do
     let(:specialist) { create(:specialist) }
-    let(:airtable) { Airtable::Specialist.new({"Email Address" => email}, id: specialist.airtable_id) }
+    let(:airtable) { described_class.new({"Email Address" => email}, id: specialist.airtable_id) }
 
     context "when email is present" do
       let(:email) { "test@airtable.com" }
+
       it "creates the specialist" do
         specialist = airtable.sync
         expect(specialist.account).not_to be_nil

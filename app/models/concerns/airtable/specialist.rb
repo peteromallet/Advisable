@@ -84,8 +84,7 @@ class Airtable::Specialist < Airtable::Base
     end
     specialist.referrer = self['Referrer'].try(:first)
 
-    specialist.automated_invitations_subscription = (fields['Unsubscribe - Automated Invitations'] != "Yes")
-    sync_unsubscribed_from(specialist, fields)
+    sync_unsubscribed_from(specialist)
   end
 
   # After the syncing process has been complete
@@ -205,7 +204,8 @@ class Airtable::Specialist < Airtable::Base
       end
     end
 
-    push_unsubscribed_from(self, specialist)
+    # Don't enable until we have all the data in PG
+    # push_unsubscribed_from(specialist)
   end
 
   # handle_airtable_error is called when airtable responds with an error during
