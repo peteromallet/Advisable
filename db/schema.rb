@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_07_125423) do
+ActiveRecord::Schema.define(version: 2021_01_13_080951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2021_01_07_125423) do
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
     t.datetime "deleted_at"
+    t.jsonb "unsubscribed_from"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["uid"], name: "index_accounts_on_uid", unique: true
   end
