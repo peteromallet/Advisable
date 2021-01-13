@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Button, Modal, useModal } from "@advisable/donut";
+import { Stack, Box, Button, Modal, useModal } from "@advisable/donut";
 import { useNotifications } from "components/Notifications";
 import RejectApplicationForm from "components/RejectApplicationForm";
 import CreateBookingButton from "../../../components/CreateBookingButton";
+import ReportUnresponsive from "./ReportUnresponsive";
 import { FileText, Check } from "@styled-icons/feather";
 
 function RejectApplicationAction({ application }) {
@@ -54,32 +55,30 @@ const ClientActions = ({ application }) => {
 
   if (!isBooking && application.status === "Proposed") {
     actions.push(
-      <Box paddingBottom="xs" key="viewProposal">
-        <Button
-          as={Link}
-          width="100%"
-          prefix={<FileText />}
-          to={`/projects/${application.project.id}/applications/${application.id}/proposal`}
-        >
-          View Proposal
-        </Button>
-      </Box>,
+      <Button
+        as={Link}
+        width="100%"
+        prefix={<FileText />}
+        key="viewProposal"
+        to={`/projects/${application.project.id}/applications/${application.id}/proposal`}
+      >
+        View Proposal
+      </Button>,
     );
   }
 
   if (!isBooking) {
     actions.push(
-      <Box paddingBottom="xs" key="viewApplication">
-        <Button
-          as={Link}
-          width="100%"
-          variant="subtle"
-          prefix={<FileText />}
-          to={`/projects/${application.project.id}/applications/${application.id}`}
-        >
-          View Application
-        </Button>
-      </Box>,
+      <Button
+        as={Link}
+        width="100%"
+        variant="subtle"
+        prefix={<FileText />}
+        key="viewApplication"
+        to={`/projects/${application.project.id}/applications/${application.id}`}
+      >
+        View Application
+      </Button>,
     );
   }
 
@@ -103,7 +102,15 @@ const ClientActions = ({ application }) => {
     );
   }
 
-  return actions;
+  actions.push(
+    <ReportUnresponsive
+      asClient
+      key="reportUnresponsive"
+      application={application}
+    />,
+  );
+
+  return <Stack spacing="sm">{actions}</Stack>;
 };
 
 export default ClientActions;

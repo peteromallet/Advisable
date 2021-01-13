@@ -1,0 +1,40 @@
+# frozen_string_literal: true
+
+class StaffMailer < ApplicationMailer
+  def unresponsive_specialist(report)
+    instance_variables_for_unresponsiveness_report(report)
+
+    mail(to: @sales_person.email_with_name, subject: "#{@specialist.account.name} is unresponsive on #{@project.name}")
+  end
+
+  def unresponsive_client(report)
+    instance_variables_for_unresponsiveness_report(report)
+
+    mail(to: @sales_person.email_with_name, subject: "#{@client.account.name} is unresponsive on #{@project.name}")
+  end
+
+  def problematic_specialist(flag)
+    @flag = flag
+    @project = @flag.application.project
+    @user = @flag.user
+    @specialist = @flag.application.specialist
+    @sales_person = sales_person_for(project: @project)
+
+    mail(to: @sales_person.email_with_name, subject: "#{@user.account.name} reported #{@specialist.account.name} as problematic on #{@project.name}")
+  end
+
+  private
+
+  def instance_variables_for_unresponsiveness_report(report)
+    @report = report
+    @application = @report.application
+    @project = @application.project
+    @specialist = @application.specialist
+    @client = @project.user
+    @sales_person = sales_person_for(project: @project)
+  end
+
+  def sales_person_for(project:)
+    project.sales_person || project.user.sales_person
+  end
+end

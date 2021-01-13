@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_06_103656) do
+ActiveRecord::Schema.define(version: 2021_01_07_125423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -520,6 +520,16 @@ ActiveRecord::Schema.define(version: 2021_01_06_103656) do
     t.index ["off_platform_project_id"], name: "index_previous_project_images_on_off_platform_project_id"
   end
 
+  create_table "problematic_flags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "application_id", null: false
+    t.bigint "user_id", null: false
+    t.text "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["application_id"], name: "index_problematic_flags_on_application_id"
+    t.index ["user_id"], name: "index_problematic_flags_on_user_id"
+  end
+
   create_table "project_contents", force: :cascade do |t|
     t.string "airtable_id"
     t.string "project_id"
@@ -839,6 +849,16 @@ ActiveRecord::Schema.define(version: 2021_01_06_103656) do
     t.index ["uid"], name: "index_tasks_on_uid"
   end
 
+  create_table "unresponsiveness_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "application_id", null: false
+    t.bigint "reporter_id", null: false
+    t.text "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["application_id"], name: "index_unresponsiveness_reports_on_application_id"
+    t.index ["reporter_id"], name: "index_unresponsiveness_reports_on_reporter_id"
+  end
+
   create_table "user_skills", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "skill_id", null: false
@@ -974,6 +994,8 @@ ActiveRecord::Schema.define(version: 2021_01_06_103656) do
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "previous_project_images", "off_platform_projects"
+  add_foreign_key "problematic_flags", "applications"
+  add_foreign_key "problematic_flags", "users"
   add_foreign_key "project_industries", "industries"
   add_foreign_key "project_skills", "skills"
   add_foreign_key "projects", "clients"
@@ -988,6 +1010,8 @@ ActiveRecord::Schema.define(version: 2021_01_06_103656) do
   add_foreign_key "specialists", "accounts"
   add_foreign_key "specialists", "countries"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "unresponsiveness_reports", "accounts", column: "reporter_id"
+  add_foreign_key "unresponsiveness_reports", "applications"
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
   add_foreign_key "users", "accounts"
