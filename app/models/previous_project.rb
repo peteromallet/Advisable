@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A previous project represents previous work that a specialist has done with
 # a client. This project can be a project that was completed off of the
 # Advisable platform or one that was done on the advsiable platform.
@@ -81,6 +83,17 @@ class PreviousProject < ApplicationRecord
     project.applications.find_by_specialist_id(specialist.id).try(
       :previous_project
     )
+  end
+
+  def client_display_name
+    return client_name if draft?
+    return industry_and_company_type if confidential?
+
+    client_name
+  end
+
+  def industry_and_company_type
+    [primary_industry&.name, company_type || "company"].compact.join(" ")
   end
 
   private

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::PreviousProject < Types::BaseType
   field :id, ID, null: false
   field :title, String, null: false
@@ -86,17 +88,7 @@ class Types::PreviousProject < Types::BaseType
   end
 
   def client_name
-    return object.client_name if object.draft
-
-    if object.confidential
-      return(
-        "#{object.primary_industry.try(:name)} #{
-          object.company_type || 'company'
-        }"
-      )
-    end
-
-    object.client_name
+    object.client_display_name
   end
 
   # Only show the contact email if the validation status is in progress
