@@ -65,7 +65,7 @@ const ClientActions = ({ application }) => {
 
   actions.push(
     <ReportUnresponsive
-      asClient
+      asClient={false}
       key="reportUnresponsive"
       application={application}
     />,

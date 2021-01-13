@@ -23,6 +23,7 @@ export default gql`
         }
         user {
           id
+          firstName
           companyName
         }
       }
