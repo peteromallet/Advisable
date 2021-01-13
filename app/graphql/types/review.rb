@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Types::Review < Types::BaseType
+  include PreviousProjectHelper
   field :id, ID, null: false
   field :avatar, String, null: true
   field :comment, String, null: true
@@ -43,7 +44,7 @@ class Types::Review < Types::BaseType
     if project.is_a?(Project)
       project.user.company_name
     else
-      project.client_display_name
+      previous_project_company_name(project)
     end
   end
 

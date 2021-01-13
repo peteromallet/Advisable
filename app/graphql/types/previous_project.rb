@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Types::PreviousProject < Types::BaseType
+  include PreviousProjectHelper
   field :id, ID, null: false
   field :title, String, null: false
   field :goal, String, null: true
@@ -88,7 +89,7 @@ class Types::PreviousProject < Types::BaseType
   end
 
   def client_name
-    object.client_display_name
+    previous_project_company_name(object)
   end
 
   # Only show the contact email if the validation status is in progress
