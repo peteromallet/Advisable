@@ -13,7 +13,7 @@ const Review = ({ review }) => {
           bg="neutral100"
           marginRight="12px"
           url={review.avatar}
-          name={review.name}
+          name={name}
         />
         <Box>
           <Text color="neutral900" marginBottom="2px">
