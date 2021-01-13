@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Airtable::Specialist < Airtable::Base
+  include Airtable::UnsubscribedFrom
+
   self.table_name = 'Specialists'
 
   belongs_to :country, class: 'Airtable::Country', column: 'Country'
@@ -83,6 +85,7 @@ class Airtable::Specialist < Airtable::Base
     specialist.referrer = self['Referrer'].try(:first)
 
     specialist.automated_invitations_subscription = (fields['Unsubscribe - Automated Invitations'] != "Yes")
+    sync_unsubscribed_from(specialist, fields)
   end
 
   # After the syncing process has been complete
@@ -201,6 +204,8 @@ class Airtable::Specialist < Airtable::Base
         ]
       end
     end
+
+    push_unsubscribed_from(self, specialist)
   end
 
   # handle_airtable_error is called when airtable responds with an error during

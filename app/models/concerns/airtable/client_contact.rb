@@ -2,6 +2,8 @@
 
 # Class for syncing airtable client contacts to our local users table
 class Airtable::ClientContact < Airtable::Base
+  include Airtable::UnsubscribedFrom
+
   self.table_name = 'Client Contacts'
 
   sync_with ::User
@@ -58,6 +60,7 @@ class Airtable::ClientContact < Airtable::Base
     end
 
     sync_budget(user)
+    sync_unsubscribed_from(user, fields)
   end
 
   def sync_budget(user)
@@ -111,5 +114,7 @@ class Airtable::ClientContact < Airtable::Base
     if user.budget
       self['Estimated Annual Freelancer Spend (USD)'] = user.budget / 100.0
     end
+
+    push_unsubscribed_from(self, user)
   end
 end
