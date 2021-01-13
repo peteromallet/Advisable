@@ -23,9 +23,9 @@ const REPORT_UNRESPONSIVE = gql`
 function ReportUnresponsiveModal({ asClient, application, modal }) {
   const { notify, error } = useNotifications();
   const [report] = useMutation(REPORT_UNRESPONSIVE);
-  const speciaclistName = application.specialist?.firstName;
+  const specialistName = application.specialist?.firstName;
   const clientName = application.project?.user?.firstName;
-  const name = asClient ? speciaclistName : clientName;
+  const name = asClient ? specialistName : clientName;
 
   const handleSubmit = async (values) => {
     const { errors } = await report({
