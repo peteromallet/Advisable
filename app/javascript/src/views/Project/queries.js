@@ -49,6 +49,8 @@ const applicationDetails = gql`
       firstName
       avatar
       location
+      website
+      linkedin
       reviews {
         id
         name

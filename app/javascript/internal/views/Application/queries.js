@@ -67,6 +67,8 @@ export const GET_APPLICATION = gql`
         firstName
         avatar
         location
+        website
+        linkedin
         reviews {
           id
           name
