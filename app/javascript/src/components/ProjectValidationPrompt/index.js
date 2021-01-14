@@ -4,8 +4,7 @@ import { Box, Text } from "@advisable/donut";
 import CopyURL from "../CopyURL";
 
 const ProjectValidationPrompt = ({ project }) => {
-  let name = project.contactFirstName;
-  if (project.contactLastName) name += ` ${project.contactLastName}`;
+  const name = project.contactFirstName || project.contactJobTitle;
 
   return (
     <Box borderRadius={12} bg="orange50" padding="s">
