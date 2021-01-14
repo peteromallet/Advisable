@@ -33,9 +33,10 @@ class Airtable::Base < Airrecord::Table
     # the last day.
     def sync(
       report = nil,
-      filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 1"
+      filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 1",
+      view: nil
     )
-      records = all(filter: filter)
+      records = all(filter: filter, view: view)
       records.each do |r|
         r.sync(report)
       rescue StandardError => e
