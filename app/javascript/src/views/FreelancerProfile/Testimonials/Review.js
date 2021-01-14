@@ -2,8 +2,9 @@ import React from "react";
 import { Box, Text, Avatar, theme, useBreakpoint } from "@advisable/donut";
 
 function ClientText({ review }) {
-  const role = review.role;
-  const atCompany = review.companyName && `at ${review.companyName}`;
+  const { role, name, companyName } = review;
+  const title = name ? `${role} at ${companyName}` : companyName;
+
   return (
     <Box>
       <Text
@@ -12,10 +13,10 @@ function ClientText({ review }) {
         color="neutral900"
         mb="2xs"
       >
-        {review.name}&nbsp;
+        {name || role}
       </Text>
       <Text color="neutral600" fontSize={["m", "l"]}>
-        {role} {atCompany}
+        {title}
       </Text>
     </Box>
   );
