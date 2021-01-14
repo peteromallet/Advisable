@@ -78,11 +78,12 @@ gem "acts-as-taggable-on", github: "kvokka/acts-as-taggable-on", branch: "add-ra
 gem "acts_as_follower", github: "tcocca/acts_as_follower", branch: "master"
 gem "email_reply_parser"
 
+gem "pry"
+gem "pry-rails"
+gem "pry-doc"
+gem "pry-byebug"
+
 group :development, :test do
-  gem "pry"
-  gem "pry-doc"
-  gem "pry-rails"
-  gem "pry-byebug"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "cypress-on-rails", "~> 1.0"
