@@ -41,6 +41,15 @@ const applicationDetails = gql`
         id
         name
       }
+      reviews {
+        id
+        name
+        firstName
+        avatar
+        role
+        comment
+        companyName
+      }
     }
     specialist {
       id
