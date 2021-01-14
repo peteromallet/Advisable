@@ -6,6 +6,7 @@ import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
 import { StyledImageThumbnail } from "./styles";
+import ProjectActions from "./ProjectActions";
 import ProjectStatus from "./ProjectStatus";
 
 function PreviousProjectDetails({ id }) {
@@ -82,6 +83,9 @@ function PreviousProjectDetails({ id }) {
           <Text mt="1px" color="neutral500" fontSize="s">
             {project.specialist.location}
           </Text>
+        </Box>
+        <Box ml="auto">
+          <ProjectActions project={project} size="md" />
         </Box>
       </Box>
       <Box height={1} bg="neutral100" mb="l" />
