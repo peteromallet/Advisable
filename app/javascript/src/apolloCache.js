@@ -28,7 +28,8 @@ const createCache = () => {
     typePolicies: {
       Query: {
         fields: {
-          guildPosts: relayStylePagination(),
+          // https://www.apollographql.com/docs/react/pagination/key-args/
+          guildPosts: relayStylePagination(["type", "topicId"]),
         },
       },
       Specialist: {
