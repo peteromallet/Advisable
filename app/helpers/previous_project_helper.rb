@@ -2,8 +2,7 @@
 
 module PreviousProjectHelper
   def previous_project_company_name(project)
-    return project.client_name if project.draft?
-    return industry_and_company_type(project) if project.confidential?
+    return industry_and_company_type(project) if project.confidential? && !project.draft?
 
     project.client_name
   end
