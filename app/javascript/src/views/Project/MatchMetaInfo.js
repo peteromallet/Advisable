@@ -58,19 +58,19 @@ export default function MatchMetaInfo({ match }) {
             {match.availability}
           </Text>
         </Box>
-        {match.specialist.website && (
+        {match.specialist.website ? (
           <SocialLink href={match.specialist.website} icon={<Globe />}>
             Website
           </SocialLink>
-        )}
-        {match.specialist.linkedin && (
+        ) : null}
+        {match.specialist.linkedin ? (
           <SocialLink
             href={match.specialist.linkedin}
             icon={<LinkedinWithCircle />}
           >
             Linkedin
           </SocialLink>
-        )}
+        ) : null}
       </Stack>
     </>
   );
