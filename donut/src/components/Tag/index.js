@@ -2,7 +2,7 @@ import React from "react";
 import { Close } from "@styled-icons/ionicons-outline";
 import {
   StyledTag,
-  StyledTagText,
+  StyledTagLabel,
   StyledTagPrefix,
   StyledTagSuffix,
   StyledTagRemoveButton,
@@ -16,7 +16,7 @@ function Tag({ children, onRemove, icon: Icon, suffix, ...props }) {
           <Icon />
         </StyledTagPrefix>
       ) : null}
-      <StyledTagText>{children}</StyledTagText>
+      <StyledTagLabel>{children}</StyledTagLabel>
       {suffix ? <StyledTagSuffix>{suffix}</StyledTagSuffix> : null}
       {onRemove ? (
         <StyledTagRemoveButton onClick={onRemove}>
