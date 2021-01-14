@@ -23,17 +23,17 @@ const VARIANTS = variant({
       },
     },
     Draft: {
-      backgroundColor: "#FBFBFC",
+      backgroundColor: "rgba(255, 255, 255, 0.6)",
       border: "2px dashed",
       borderColor: theme.colors.neutral300,
     },
     Pending: {
-      backgroundColor: "#FBFBFC",
+      backgroundColor: "rgba(255, 255, 255, 0.6)",
       border: "2px dashed",
-      borderColor: theme.colors.yellow300,
+      borderColor: rgba(theme.colors.yellow500, 0.5),
     },
     "Validation Failed": {
-      backgroundColor: "#FBFBFC",
+      backgroundColor: "rgba(255, 255, 255, 0.6)",
       border: "2px dashed",
       borderColor: theme.colors.red200,
     },
