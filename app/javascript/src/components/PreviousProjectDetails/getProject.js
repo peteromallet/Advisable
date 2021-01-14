@@ -6,6 +6,9 @@ const getProject = gql`
       id
       title
       description
+      clientName
+      contactFirstName
+      contactJobTitle
       validationStatus
       draft
       images {
