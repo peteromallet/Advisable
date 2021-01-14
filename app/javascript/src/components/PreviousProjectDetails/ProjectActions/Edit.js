@@ -1,13 +1,9 @@
 import React from "react";
-import { Box, Tooltip } from "@advisable/donut";
+import { Box, Tooltip, DialogDisclosure } from "@advisable/donut";
 import { Pencil } from "@styled-icons/heroicons-outline";
 import CircularButton from "src/components/CircularButton";
 
-function Edit({ project, size }) {
-  const handleClick = () => {
-    console.log("edit project", project);
-  };
-
+function EditAction({ project, editModal, size }) {
   return (
     <Tooltip placement="top" content="Edit">
       <Box
@@ -15,16 +11,17 @@ function Edit({ project, size }) {
           outline: none;
         `}
       >
-        <CircularButton
+        <DialogDisclosure
+          as={CircularButton}
           size={size}
           bg="neutral100"
           color="neutral600"
           icon={<Pencil />}
-          onClick={handleClick}
+          {...editModal.atPath(`/previous_projects/${project.id}`)}
         />
       </Box>
     </Tooltip>
   );
 }
 
-export default Edit;
+export default EditAction;
