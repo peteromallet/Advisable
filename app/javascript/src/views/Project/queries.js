@@ -44,7 +44,6 @@ const applicationDetails = gql`
       reviews {
         id
         name
-        firstName
         avatar
         role
         comment

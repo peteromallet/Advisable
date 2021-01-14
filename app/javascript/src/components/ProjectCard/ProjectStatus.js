@@ -9,8 +9,10 @@ import {
 } from "./styles";
 
 function Review({ review }) {
-  const role = review.role;
-  const atCompany = review.companyName && `at ${review.companyName}`;
+  const { role, name, companyName } = review;
+  const displayName = name?.split(" ")[0] || role;
+  const title = name ? `${role} at ${companyName}` : companyName;
+
   return (
     <Box
       display="flex"
@@ -21,19 +23,14 @@ function Review({ review }) {
       alignItems="center"
     >
       <Box mr={2}>
-        <Avatar
-          size="xs"
-          bg="neutral100"
-          name={review.name}
-          url={review.avatar}
-        />
+        <Avatar size="xs" bg="neutral100" name={name} url={review.avatar} />
       </Box>
       <Box>
         <Text fontSize="s" fontWeight="medium" color="neutral700" mb={0.5}>
-          Reviewed by {review.firstName}
+          Reviewed by {displayName}
         </Text>
         <Text fontSize="xs" color="neutral600">
-          {role} {atCompany}
+          {title}
         </Text>
       </Box>
     </Box>
