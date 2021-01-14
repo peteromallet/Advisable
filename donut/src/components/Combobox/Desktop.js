@@ -48,7 +48,12 @@ export default function ComboboxDesktop({
       </div>
       <AnimatePresence>
         {isOpen && (
-          <Box width="100%" position="absolute" ref={listboxContainerRef}>
+          <Box
+            zIndex={999}
+            width="100%"
+            position="absolute"
+            ref={listboxContainerRef}
+          >
             <StyledAutocompleteMenu
               as={motion.div}
               transition={{ duration: 0.3 }}
