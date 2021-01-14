@@ -33,14 +33,6 @@ class Types::Review < Types::BaseType
     project.contact_name
   end
 
-  def first_name
-    if project.is_a?(Project)
-      project.user.account.first_name
-    else
-      project&.contact_name&.split&.first
-    end
-  end
-
   def role
     if project.is_a?(Project)
       project.user.title
