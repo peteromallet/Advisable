@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A previous project represents previous work that a specialist has done with
 # a client. This project can be a project that was completed off of the
 # Advisable platform or one that was done on the advsiable platform.

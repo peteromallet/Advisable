@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 class Types::Review < Types::BaseType
+  include PreviousProjectHelper
   field :id, ID, null: false
   field :avatar, String, null: true
   field :comment, String, null: true
@@ -23,11 +26,10 @@ class Types::Review < Types::BaseType
   end
 
   def name
-    if project.is_a?(Project)
-      project.user.account.name
-    else
-      project.try(:contact_name)
-    end
+    return project.user.account.name if project.is_a?(Project)
+    return nil if project.confidential?
+
+    project.contact_name
   end
 
   def role
@@ -42,7 +44,7 @@ class Types::Review < Types::BaseType
     if project.is_a?(Project)
       project.user.company_name
     else
-      project.try(:client_name)
+      previous_project_company_name(project)
     end
   end
 
