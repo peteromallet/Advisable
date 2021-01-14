@@ -10,6 +10,7 @@ module Guild
     AUDIENCE_TYPES = %w[skills industries locations none].freeze
 
     belongs_to :specialist
+    has_one :account, through: :specialist
     has_many :reactions, as: :reactionable, dependent: :destroy
 
     has_many :comments,

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Guild
   class Post::AdviceRequired < Post
     acts_as_ordered_taggable_on :guild_topics
 
     jsonb_accessor :data,
-      need_help: [:boolean, default: true]
+                   need_help: [:boolean, {default: true}]
   end
 end
 

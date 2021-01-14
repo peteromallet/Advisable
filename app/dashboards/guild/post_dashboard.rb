@@ -12,6 +12,10 @@ module Guild
     # on pages throughout the dashboard.
     ATTRIBUTE_TYPES = {
       specialist: SimpleBelongsToField,
+      account: Field::HasOne.with_options(
+        searchable: true,
+        searchable_fields: %w[first_name last_name email]
+      ),
       guild_topics: ActsAsTaggableField,
       # guild_topic_list: Field::String.with_options(searchable: false),
       images: Field::HasMany.with_options(class_name: "Guild::PostImage"),
@@ -37,8 +41,9 @@ module Guild
     # Feel free to add, remove, or rearrange items.
     COLLECTION_ATTRIBUTES = %i[
       title
-      specialist
       status
+      created_at
+      account
     ].freeze
 
     # SHOW_PAGE_ATTRIBUTES
@@ -85,7 +90,9 @@ module Guild
     #   COLLECTION_FILTERS = {
     #     open: ->(resources) { resources.where(open: true) }
     #   }.freeze
-    COLLECTION_FILTERS = {}.freeze
+    COLLECTION_FILTERS = {
+      published: ->(resources) { resources.published }
+    }.freeze
 
     # Overwrite this method to customize how posts are displayed
     # across all pages of the admin dashboard.
