@@ -1,4 +1,4 @@
-import { rgba, darken } from "polished";
+import { darken } from "polished";
 import { space, variant } from "styled-system";
 import theme from "../../theme";
 import styled from "styled-components";
@@ -42,6 +42,7 @@ const color = variant({
 
 export const StyledTagPrefix = styled.div``;
 export const StyledTagSuffix = styled.div``;
+export const StyledTagLabel = styled.span``;
 
 export const StyledTagRemoveButton = styled.div`
   height: 100%;
@@ -65,19 +66,19 @@ const size = variant({
     s: {
       height: "28px",
       borderRadius: 8,
-      paddingX: 2,
 
-      span: {
+      [StyledTagLabel]: {
+        paddingX: 2,
         fontSize: 14,
         letterSpacing: "-0.01rem",
       },
 
       [StyledTagPrefix]: {
-        marginRight: 2,
+        marginLeft: 2,
       },
 
       [StyledTagSuffix]: {
-        marginLeft: 2,
+        marginRight: 2,
       },
       [StyledTagRemoveButton]: {
         padding: "0 4px",
@@ -95,19 +96,19 @@ const size = variant({
     m: {
       height: "32px",
       borderRadius: 10,
-      paddingX: 3,
 
-      span: {
+      [StyledTagLabel]: {
+        paddingX: 3,
         fontSize: 15,
         letterSpacing: "-0.02rem",
       },
 
       [StyledTagPrefix]: {
-        marginRight: 2,
+        marginLeft: 3,
       },
 
       [StyledTagSuffix]: {
-        marginLeft: 2,
+        marginRight: 3,
       },
 
       [StyledTagRemoveButton]: {
@@ -132,10 +133,6 @@ export const StyledTag = styled.div`
   user-select: none;
   align-items: center;
   display: inline-flex;
-`;
-
-export const StyledTagText = styled.span`
-  font-weight: 400;
 `;
 
 export default StyledTag;
