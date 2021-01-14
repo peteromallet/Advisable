@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Guild
   # This is a light wrapper for `ActsAsTaggableOn::Tag` so that specialists
   #   can follow guild topics ( tags )
