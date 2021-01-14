@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A Specialist specifically represents a specialist account. A client account is
 # represented by the User model. Ideally these two models will eventually be
 # merged to be different types of users.
@@ -31,6 +33,7 @@ class Specialist < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :consultations, dependent: :destroy
   has_many :applications, dependent: :destroy
+  has_many :matches, dependent: :destroy
   has_many :projects, through: :applications
   # Successful applications are applications that are either working or stopped working
   has_many :successful_applications, -> { where(status: ['Working', 'Stopped Working']) }, class_name: 'Application', inverse_of: :specialist
