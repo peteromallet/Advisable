@@ -6,11 +6,17 @@ import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
 import { StyledImageThumbnail } from "./styles";
+import useViewer from "src/hooks/useViewer";
 import ProjectActions from "./ProjectActions";
 import ProjectStatus from "./ProjectStatus";
+import PreviousProjectFormModal, {
+  usePreviousProjectModal,
+} from "src/components/PreviousProjectFormModal";
 
 function PreviousProjectDetails({ id }) {
+  const viewer = useViewer();
   const gallery = useImageGallery();
+  const modal = usePreviousProjectModal("/previous_projects/new");
   const { loading, data, error } = useQuery(GET_PROJECT, {
     variables: {
       id: id,
@@ -27,6 +33,7 @@ function PreviousProjectDetails({ id }) {
 
   return (
     <>
+      <PreviousProjectFormModal modal={modal} specialistId={viewer.id} />
       <Box mb="m" width="80%">
         <Text
           as="h2"
@@ -85,7 +92,7 @@ function PreviousProjectDetails({ id }) {
           </Text>
         </Box>
         <Box ml="auto">
-          <ProjectActions project={project} size="md" />
+          <ProjectActions project={project} editModal={modal} size="md" />
         </Box>
       </Box>
       <Box height={1} bg="neutral100" mb="l" />
