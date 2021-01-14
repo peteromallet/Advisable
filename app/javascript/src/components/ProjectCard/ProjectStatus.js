@@ -1,5 +1,5 @@
 import React from "react";
-import { RefreshCcw, Edit3, XOctagon } from "@styled-icons/feather";
+import { Refresh, Pencil, Exclamation } from "@styled-icons/heroicons-outline";
 import { Box, Text, Avatar } from "@advisable/donut";
 import {
   StyledBadge,
@@ -65,23 +65,25 @@ const STATUSES = {
     component: Status,
     variant: "neutral",
     label: "Draft Project",
-    message: "This project is not visible to others",
-    icon: <Edit3 />,
+    message:
+      "This project will not be visible to others until it has been published.",
+    icon: <Pencil />,
   },
   Pending: {
     component: Status,
     variant: "yellow",
     label: "Pending Validation",
     message:
-      "This project will not be visible to others until it has been verified",
-    icon: <RefreshCcw />,
+      "This project will not be visible to others until it has been verified.",
+    icon: <Refresh />,
   },
   "Validation Failed": {
     component: Status,
     variant: "red",
     label: "Validation Failed",
-    message: "Client rejected this project and it's not publicly visible",
-    icon: <XOctagon />,
+    message:
+      "The client was unable to verify this project. It will not be visible to others.",
+    icon: <Exclamation />,
   },
 };
 
