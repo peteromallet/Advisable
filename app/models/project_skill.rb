@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProjectSkill < ApplicationRecord
   belongs_to :skill, counter_cache: :projects_count
   belongs_to :project, polymorphic: true
@@ -18,8 +20,8 @@ end
 #
 # Indexes
 #
-#  index_project_skills_on_project   (project_type,project_id)
-#  index_project_skills_on_skill_id  (skill_id)
+#  index_project_skills_on_project_type_and_project_id  (project_type,project_id)
+#  index_project_skills_on_skill_id                     (skill_id)
 #
 # Foreign Keys
 #

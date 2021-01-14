@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Guild
   class Post::CaseStudy < Post
     acts_as_ordered_taggable_on :guild_topics
