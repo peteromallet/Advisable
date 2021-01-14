@@ -6,7 +6,7 @@ export default function GoalsSummary({ project, children }) {
   const { t } = useTranslation();
 
   const { primarySkill, user } = project;
-  const industry = user.industry.name;
+  const industry = user.industry?.name;
   const companyType = user.companyType;
 
   let heading = "Project Skills";
