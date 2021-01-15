@@ -6,7 +6,6 @@ import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
 import { StyledImageThumbnail } from "./styles";
-import useViewer from "src/hooks/useViewer";
 import ProjectActions from "./ProjectActions";
 import ProjectStatus from "./ProjectStatus";
 import PreviousProjectFormModal, {
@@ -14,7 +13,6 @@ import PreviousProjectFormModal, {
 } from "src/components/PreviousProjectFormModal";
 
 function PreviousProjectDetails({ id }) {
-  const viewer = useViewer();
   const gallery = useImageGallery();
   const modal = usePreviousProjectModal("/previous_projects/new");
   const { loading, data, error } = useQuery(GET_PROJECT, {
@@ -33,7 +31,10 @@ function PreviousProjectDetails({ id }) {
 
   return (
     <>
-      <PreviousProjectFormModal modal={modal} specialistId={viewer.id} />
+      <PreviousProjectFormModal
+        modal={modal}
+        specialistId={project.specialist.id}
+      />
       <Box mb="m" width="80%">
         <Text
           as="h2"
