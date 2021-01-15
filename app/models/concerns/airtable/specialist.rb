@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class Airtable::Specialist < Airtable::Base
+  include Airtable::UnsubscribedFrom
+
   self.table_name = 'Specialists'
 
   belongs_to :country, class: 'Airtable::Country', column: 'Country'
@@ -80,7 +84,7 @@ class Airtable::Specialist < Airtable::Base
     end
     specialist.referrer = self['Referrer'].try(:first)
 
-    specialist.automated_invitations_subscription = (fields['Unsubscribe - Automated Invitations'] != "Yes")
+    sync_unsubscribed_from(specialist)
   end
 
   # After the syncing process has been complete
@@ -144,11 +148,11 @@ class Airtable::Specialist < Airtable::Base
         Address.new(specialist.bank_holder_address).to_s
     end
 
-    if specialist.remote
-      self['Remote OK'] = "Yes, I'm happy to work remote"
-    else
-      self['Remote OK'] = 'No, I only work with clients in person'
-    end
+    self['Remote OK'] = if specialist.remote
+                          "Yes, I'm happy to work remote"
+                        else
+                          'No, I only work with clients in person'
+                        end
 
     if specialist.primarily_freelance == true
       self['Freelancing Status'] = 'Yes, freelancing is my primary occupation'
@@ -160,7 +164,7 @@ class Airtable::Specialist < Airtable::Base
 
     self['Freelancing Status'] = nil if specialist.primarily_freelance.nil?
 
-    if specialist.public_use != nil
+    unless specialist.public_use.nil?
       self['Okay To Use Publicly'] = specialist.public_use ? 'Yes' : 'No'
     end
 
@@ -199,6 +203,9 @@ class Airtable::Specialist < Airtable::Base
         ]
       end
     end
+
+    # Don't enable until we have all the data in PG
+    # push_unsubscribed_from(specialist)
   end
 
   # handle_airtable_error is called when airtable responds with an error during
