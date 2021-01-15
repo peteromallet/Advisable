@@ -72,7 +72,7 @@ const Post = () => {
             </Box>
           ) : null}
 
-          <Box px={{ _: "s", s: "xxl" }} pt={10} pb={14}>
+          <Box px={{ _: 6, s: "xxl" }} pt={10} pb={14}>
             <Box mb={4}>
               <PostTypeTag post={post} />
             </Box>
