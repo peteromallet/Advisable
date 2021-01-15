@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A project is essentially a job posting. When a client (user) wants to hire
 # a freelancer, they create a new project that details what kind of freelancer
 # they are looking to hire. This model was one of the first models introduced
@@ -124,7 +126,7 @@ class Project < ApplicationRecord
       {
         currency: 'usd',
         amount: deposit_owed,
-        customer: user.stripe_customer_id,
+        customer: user.company.stripe_customer_id,
         setup_future_usage: 'off_session',
         metadata: {payment_type: 'deposit', project: uid}
       },
