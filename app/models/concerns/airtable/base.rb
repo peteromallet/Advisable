@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Classes that inherit from Airtable::Base are used to sync a table from aitable
 # to a local database table. The Airtable::Base class is backed by the airrecord
 # gem. This means that each subclass of Airtable::Base must define its
@@ -31,15 +33,14 @@ class Airtable::Base < Airrecord::Table
     # the last day.
     def sync(
       report = nil,
-      filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 1"
+      filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 1",
+      view: nil
     )
-      records = all(filter: filter)
+      records = all(filter: filter, view: view)
       records.each do |r|
-        begin
-          r.sync(report)
-        rescue StandardError => e
-          raise $!, "#{e.message} (#{r.class} with id #{r.id})", $!.backtrace
-        end
+        r.sync(report)
+      rescue StandardError => e
+        raise $!, "#{e.message} (#{r.class} with id #{r.id})", $!.backtrace
       end
     end
 

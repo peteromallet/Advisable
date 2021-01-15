@@ -83,48 +83,47 @@ end
 #
 # Table name: specialists
 #
-#  id                                 :bigint           not null, primary key
-#  application_stage                  :string
-#  automated_invitations_subscription :boolean
-#  average_score                      :decimal(, )
-#  bank_currency                      :string
-#  bank_holder_address                :jsonb
-#  bank_holder_name                   :string
-#  bio                                :text
-#  campaign_name                      :string
-#  campaign_source                    :string
-#  city                               :string
-#  community_accepted_at              :datetime
-#  community_applied_at               :datetime
-#  community_invited_to_call_at       :datetime
-#  community_score                    :integer
-#  community_status                   :string
-#  encrypted_phone_number             :string
-#  encrypted_phone_number_iv          :string
-#  guild                              :boolean          default(FALSE)
-#  guild_data                         :jsonb
-#  hourly_rate                        :integer
-#  image                              :jsonb
-#  linkedin                           :string
-#  member_of_week_email               :integer
-#  number_of_projects                 :string
-#  phone                              :string
-#  pid                                :string
-#  primarily_freelance                :boolean
-#  project_count                      :integer
-#  public_use                         :boolean
-#  ratings                            :jsonb
-#  referrer                           :string
-#  remote                             :boolean
-#  reviews_count                      :integer
-#  travel_availability                :string
-#  uid                                :string
-#  website                            :string
-#  created_at                         :datetime         not null
-#  updated_at                         :datetime         not null
-#  account_id                         :bigint
-#  airtable_id                        :string
-#  country_id                         :bigint
+#  id                           :bigint           not null, primary key
+#  application_stage            :string
+#  average_score                :decimal(, )
+#  bank_currency                :string
+#  bank_holder_address          :jsonb
+#  bank_holder_name             :string
+#  bio                          :text
+#  campaign_name                :string
+#  campaign_source              :string
+#  city                         :string
+#  community_accepted_at        :datetime
+#  community_applied_at         :datetime
+#  community_invited_to_call_at :datetime
+#  community_score              :integer
+#  community_status             :string
+#  encrypted_phone_number       :string
+#  encrypted_phone_number_iv    :string
+#  guild                        :boolean          default(FALSE)
+#  guild_data                   :jsonb
+#  hourly_rate                  :integer
+#  image                        :jsonb
+#  linkedin                     :string
+#  member_of_week_email         :integer
+#  number_of_projects           :string
+#  phone                        :string
+#  pid                          :string
+#  primarily_freelance          :boolean
+#  project_count                :integer
+#  public_use                   :boolean
+#  ratings                      :jsonb
+#  referrer                     :string
+#  remote                       :boolean
+#  reviews_count                :integer
+#  travel_availability          :string
+#  uid                          :string
+#  website                      :string
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#  account_id                   :bigint
+#  airtable_id                  :string
+#  country_id                   :bigint
 #
 # Indexes
 #

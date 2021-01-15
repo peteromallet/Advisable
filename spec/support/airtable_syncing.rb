@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples "airtable syncing" do |config = {}|
   let(:factory) { described_class.sync_model.to_s.underscore }
 
   it "has a table_name" do
-    expect(described_class.table_name).to_not be_nil
+    expect(described_class.table_name).not_to be_nil
   end
 
   it "has a sync_model" do
@@ -27,14 +29,22 @@ RSpec.shared_examples "airtable syncing" do |config = {}|
 
     it "can pass through a filter" do
       filter = "TEST"
-      expect(described_class).to receive(:all).with(filter: filter).and_return([])
+      allow(described_class).to receive(:all).and_return([])
       described_class.sync(filter: filter)
+      expect(described_class).to have_received(:all).with(filter: filter, view: nil)
+    end
+
+    it "can pass through a view" do
+      view = "TEST"
+      allow(described_class).to receive(:all).and_return([])
+      described_class.sync(view: view, filter: nil)
+      expect(described_class).to have_received(:all).with(filter: nil, view: view)
     end
 
     it "accepts a report object and passes it to each #sync call" do
       report = OpenStruct.new
       record = described_class.new({})
-      expect(described_class).to receive(:all).and_return([record])
+      allow(described_class).to receive(:all).and_return([record])
       expect(record).to receive(:sync).with(report)
       described_class.sync(report)
     end
@@ -131,7 +141,7 @@ RSpec.shared_examples "sync airtable association" do |column, config|
 
     expect(record.public_send(config[:to])).to be_nil
     airtable.sync
-    expect(record.reload.public_send(config[:to])).to_not be_nil
+    expect(record.reload.public_send(config[:to])).not_to be_nil
   end
 
   it "syncs the associated #{config[:to]} if it doesnt exist" do
@@ -140,8 +150,8 @@ RSpec.shared_examples "sync airtable association" do |column, config|
 
     reflection = described_class.sync_model.reflect_on_association(config[:to])
     association_airtable = "Airtable::#{reflection.class_name}".constantize
-    double = double(association_airtable)
-    expect(association_airtable).to receive(:find).and_return(double)
+    double = instance_double(association_airtable)
+    allow(association_airtable).to receive(:find).and_return(double)
     expect(double).to receive(:sync)
 
     fields = default_fields.merge(column => ["rec_12345"])

@@ -74,6 +74,14 @@ class Account < ApplicationRecord
     specialist_or_user&.sync_to_airtable
   end
 
+  def unsubscribed_from
+    super || []
+  end
+
+  def unsubscribed?(subscription)
+    unsubscribed_from.include?(subscription)
+  end
+
   private
 
   def strip_email
@@ -103,6 +111,7 @@ end
 #  reset_sent_at       :datetime
 #  test_account        :boolean
 #  uid                 :string
+#  unsubscribed_from   :jsonb
 #  vat_number          :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
