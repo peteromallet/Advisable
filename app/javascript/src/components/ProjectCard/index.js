@@ -94,7 +94,9 @@ function Project({ project }) {
         dialog={dialog}
         label={project.title}
       >
-        {dialog.visible && <ProjectDetails id={project.id} />}
+        {dialog.visible && (
+          <ProjectDetails detailsModal={dialog} id={project.id} />
+        )}
       </ActionBarModal>
       <DialogDisclosure
         {...dialog}
