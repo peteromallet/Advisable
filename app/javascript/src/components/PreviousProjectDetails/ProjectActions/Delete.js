@@ -1,19 +1,24 @@
 import React from "react";
+import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { Trash } from "@styled-icons/heroicons-outline";
 import { useNotifications } from "src/components/Notifications";
 import { Modal, Box, Tooltip, Button, Text, Paragraph } from "@advisable/donut";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import CircularButton from "src/components/CircularButton";
+import { DELETE_PREVIOUS_PROJECT } from "./mutations";
 
 function DeletePost({ project, size }) {
   const modal = useDialogState();
   const notifications = useNotifications();
   const history = useHistory();
-  const loading = false;
+
+  const [deletePreviousProject, { loading }] = useMutation(
+    DELETE_PREVIOUS_PROJECT,
+  );
 
   const handleDelete = async () => {
-    console.log("delete project", project);
+    await deletePreviousProject({ variables: { input: { id: project.id } } });
     notifications.notify("Deleted guild post");
     history.push(`/freelancers/${project.specialist.id}`);
     modal.hide();
