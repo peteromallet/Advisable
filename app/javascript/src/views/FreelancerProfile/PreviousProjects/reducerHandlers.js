@@ -42,7 +42,6 @@ export const init = (data) => {
   return {
     id: data.specialist.id,
     isExpand: false,
-    projects,
     hasSkills,
     skillsList,
     skillsSection,

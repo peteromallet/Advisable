@@ -4,7 +4,7 @@ import { Box } from "@advisable/donut";
 import Delete from "./Delete";
 import Edit from "./Edit";
 
-function Actions({ project, editModal, size, ...props }) {
+function Actions({ project, editModal, size, onDelete, ...props }) {
   const viewer = useViewer();
   const viewerIsOwner = project.specialist.id === viewer?.id;
 
@@ -16,7 +16,7 @@ function Actions({ project, editModal, size, ...props }) {
         <Edit project={project} editModal={editModal} size={size} />
       </Box>
       <Box ml={2}>
-        <Delete project={project} size={size} />
+        <Delete onDelete={onDelete} project={project} size={size} />
       </Box>
     </Box>
   );

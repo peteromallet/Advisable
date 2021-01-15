@@ -1,6 +1,5 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
-import { useHistory } from "react-router-dom";
+import { useApolloClient, useMutation } from "@apollo/client";
 import { Trash } from "@styled-icons/heroicons-outline";
 import { useNotifications } from "src/components/Notifications";
 import { Modal, Box, Tooltip, Button, Text, Paragraph } from "@advisable/donut";
@@ -8,10 +7,10 @@ import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import CircularButton from "src/components/CircularButton";
 import { DELETE_PREVIOUS_PROJECT } from "./mutations";
 
-function DeletePost({ project, size }) {
+function DeletePost({ project, size, onDelete = () => {} }) {
   const modal = useDialogState();
+  const client = useApolloClient();
   const { notify, error } = useNotifications();
-  const history = useHistory();
 
   const [deletePreviousProject, { loading }] = useMutation(
     DELETE_PREVIOUS_PROJECT,
@@ -26,7 +25,9 @@ function DeletePost({ project, size }) {
     } else {
       modal.hide();
       notify("Previous project has been deleted");
-      history.push(`/freelancers/${project.specialist.id}`);
+      client.cache.evict({ id: client.cache.identify(project) });
+      client.cache.gc();
+      onDelete();
     }
   };
 

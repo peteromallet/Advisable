@@ -12,7 +12,7 @@ import PreviousProjectFormModal, {
   usePreviousProjectModal,
 } from "src/components/PreviousProjectFormModal";
 
-function PreviousProjectDetails({ id }) {
+function PreviousProjectDetails({ detailsModal, id }) {
   const gallery = useImageGallery();
   const modal = usePreviousProjectModal("/previous_projects/new");
   const { loading, data, error } = useQuery(GET_PROJECT, {
@@ -93,7 +93,12 @@ function PreviousProjectDetails({ id }) {
           </Text>
         </Box>
         <Box ml="auto">
-          <ProjectActions project={project} editModal={modal} size="md" />
+          <ProjectActions
+            onDelete={detailsModal.hide}
+            project={project}
+            editModal={modal}
+            size="md"
+          />
         </Box>
       </Box>
       <Box height={1} bg="neutral100" mb="l" />
@@ -161,7 +166,7 @@ PreviousProjectDetails.Modal = function PreviousProjectDetailsModal({
 }) {
   return (
     <Modal modal={modal} width={800} padding="xl" {...props}>
-      <PreviousProjectDetails id={id} />
+      <PreviousProjectDetails detailsModal={modal} id={id} />
     </Modal>
   );
 };
