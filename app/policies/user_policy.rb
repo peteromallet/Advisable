@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Authorization logic for users. This policy is primarily used
 # inside of graphql queries and mutations, however, it is just a simple pundit
 # policy and can easily be used outside of graphql.
@@ -11,5 +13,9 @@ class UserPolicy < BasePolicy
   # projects
   def is_candidate_for_user_project
     user && user.projects.where(user: record).any?
+  end
+
+  def company_of_record
+    record.company
   end
 end

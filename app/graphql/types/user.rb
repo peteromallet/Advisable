@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::User < Types::BaseType
   implements Types::AccountInterface
   delegate :account, :company, to: :object
@@ -6,7 +8,7 @@ class Types::User < Types::BaseType
   field :airtable_id, String, null: true
 
   field :email, String, null: false do
-    authorize :is_admin, :is_user, :is_candidate_for_user_project, :is_team_manager?
+    authorize :is_admin, :is_user, :is_candidate_for_user_project, :record_belongs_to_company?
   end
 
   delegate :email, to: :account
