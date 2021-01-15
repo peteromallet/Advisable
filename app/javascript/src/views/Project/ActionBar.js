@@ -7,6 +7,7 @@ import { theme } from "@advisable/donut";
 import { Link } from "react-router-dom";
 import { CheckmarkCircle } from "@styled-icons/ionicons-solid";
 import MessageAction from "./MessageAction";
+import ShareApplication from "./ShareApplication";
 import AcceptApplication from "./AcceptApplication";
 import RejectApplication from "./RejectApplication";
 import { ActionBarContext } from "./ActionBarContainer";
@@ -160,6 +161,7 @@ function ActionBar({ application, project }) {
         <MessageAction application={application} />
       )}
       <RejectApplication application={application} />
+      <ShareApplication application={application} />
     </StyledActionBar>
   );
 }
