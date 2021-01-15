@@ -10,7 +10,7 @@ import { DELETE_PREVIOUS_PROJECT } from "./mutations";
 
 function DeletePost({ project, size }) {
   const modal = useDialogState();
-  const notifications = useNotifications();
+  const { notify, error } = useNotifications();
   const history = useHistory();
 
   const [deletePreviousProject, { loading }] = useMutation(
@@ -18,10 +18,16 @@ function DeletePost({ project, size }) {
   );
 
   const handleDelete = async () => {
-    await deletePreviousProject({ variables: { input: { id: project.id } } });
-    notifications.notify("Deleted guild post");
-    history.push(`/freelancers/${project.specialist.id}`);
-    modal.hide();
+    const { errors } = await deletePreviousProject({
+      variables: { input: { id: project.id } },
+    });
+    if (errors) {
+      error("Something went wrong, please try again.");
+    } else {
+      modal.hide();
+      notify("Previous project has been deleted");
+      history.push(`/freelancers/${project.specialist.id}`);
+    }
   };
 
   return (
