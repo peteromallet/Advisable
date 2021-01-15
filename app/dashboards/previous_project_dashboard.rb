@@ -1,4 +1,6 @@
-require 'administrate/base_dashboard'
+# frozen_string_literal: true
+
+require "administrate/base_dashboard"
 
 class PreviousProjectDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -9,14 +11,9 @@ class PreviousProjectDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     specialist: Field::BelongsTo,
-    reviews: Field::HasMany,
     project_skills: Field::HasMany,
     skills: Field::HasMany,
     primary_skill: Field::HasOne.with_options(class_name: 'Skill'),
-    project_industries: Field::HasMany,
-    industries: Field::HasMany,
-    primary_project_industry: Field::HasOne,
-    primary_industry: Field::HasOne.with_options(class_name: 'Industry'),
     id: Field::Number,
     airtable_id: Field::String,
     industry: Field::String,
@@ -47,7 +44,14 @@ class PreviousProjectDashboard < Administrate::BaseDashboard
     hide_from_profile: Field::Boolean,
     priority: Field::Number,
     advisable_score: Field::Number,
-    application_id: Field::Number
+    draft: Field::Boolean,
+    description_requires_update: Field::Boolean,
+    industry_relevance: Field::Number,
+    location_relevance: Field::Number,
+    cost_to_hire: Field::Number,
+    execution_cost: Field::Number,
+    pending_description: Field::String,
+    validation_failed_reason: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -61,13 +65,9 @@ class PreviousProjectDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     specialist
-    reviews
     project_skills
     skills
     primary_skill
-    project_industries
-    industries
-    primary_industry
     id
     airtable_id
     industry
@@ -79,7 +79,6 @@ class PreviousProjectDashboard < Administrate::BaseDashboard
     description
     requirements
     results
-    primary_skill
     confidential
     validated
     created_at
@@ -99,7 +98,14 @@ class PreviousProjectDashboard < Administrate::BaseDashboard
     hide_from_profile
     priority
     advisable_score
-    application_id
+    draft
+    description_requires_update
+    industry_relevance
+    location_relevance
+    cost_to_hire
+    execution_cost
+    pending_description
+    validation_failed_reason
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -107,15 +113,9 @@ class PreviousProjectDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     specialist
-    reviews
     project_skills
     skills
-    primary_project_skill
     primary_skill
-    project_industries
-    industries
-    primary_project_industry
-    primary_industry
     airtable_id
     industry
     contact_first_name
@@ -126,7 +126,6 @@ class PreviousProjectDashboard < Administrate::BaseDashboard
     description
     requirements
     results
-    primary_skill
     confidential
     validated
     can_contact
@@ -144,8 +143,32 @@ class PreviousProjectDashboard < Administrate::BaseDashboard
     hide_from_profile
     priority
     advisable_score
-    application_id
+    draft
+    description_requires_update
+    industry_relevance
+    location_relevance
+    cost_to_hire
+    execution_cost
+    pending_description
+    validation_failed_reason
   ].freeze
 
+  # COLLECTION_FILTERS
+  # a hash that defines filters that can be used while searching via the search
+  # field of the dashboard.
+  #
+  # For example to add an option to search for open resources by typing "open:"
+  # in the search field:
+  #
+  #   COLLECTION_FILTERS = {
+  #     open: ->(resources) { resources.where(open: true) }
+  #   }.freeze
   COLLECTION_FILTERS = {}.freeze
+
+  # Overwrite this method to customize how previous projects are displayed
+  # across all pages of the admin dashboard.
+  #
+  # def display_resource(previous_project)
+  #   "PreviousProject ##{previous_project.id}"
+  # end
 end
