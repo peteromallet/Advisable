@@ -23,7 +23,7 @@ const Feed = () => {
           </Sticky>
         </Box>
       )}
-      <Box width="100%" paddingX={{ _: null, l: "xl" }}>
+      <Box width="100%" paddingX={{ _: null, l: "xl" }} minWidth="0">
         <Posts />
       </Box>
       {lUp && (

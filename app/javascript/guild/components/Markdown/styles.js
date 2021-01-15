@@ -4,6 +4,7 @@ import { theme } from "@advisable/donut";
 export const StyledMarkdown = styled.div`
   font-size: 18px;
   line-height: 24px;
+  overflow-wrap: break-word;
   color: ${theme.colors.neutral800};
 
   h1 {
