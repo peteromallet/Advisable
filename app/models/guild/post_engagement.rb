@@ -13,11 +13,11 @@ end
 #
 # Table name: guild_post_engagements
 #
-#  id              :bigint           not null, primary key
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  guild_post_id   :uuid
-#  specialist_id   :bigint
+#  id            :bigint           not null, primary key
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  guild_post_id :uuid
+#  specialist_id :bigint
 #
 # Indexes
 #
