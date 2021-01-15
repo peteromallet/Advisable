@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Circle } from "@advisable/donut";
+import { Box, Circle, Button, DialogDisclosure } from "@advisable/donut";
 import Review from "src/components/Review";
 import { Pencil, Exclamation } from "@styled-icons/heroicons-outline";
 import ProjectValidationPrompt from "src/components/ProjectValidationPrompt";
@@ -15,7 +15,20 @@ function Pending({ project }) {
   return <ProjectValidationPrompt project={project} />;
 }
 
-function Status(props) {
+function DraftCTA({ project, modal }) {
+  return (
+    <DialogDisclosure
+      as={Button}
+      ml="auto"
+      variant="ghost"
+      {...modal.atPath(`/previous_projects/${project.id}`)}
+    >
+      Continue
+    </DialogDisclosure>
+  );
+}
+
+function Status({ CTA, ...props }) {
   return (
     <StyledBadge variant={props.variant} prefix={props.icon} p={3}>
       <Box display="flex">
@@ -28,6 +41,7 @@ function Status(props) {
           </StyledTitle>
           <StyledMessage fontSize="sm">{props.message}</StyledMessage>
         </Box>
+        {CTA && <CTA {...props} />}
       </Box>
     </StyledBadge>
   );
@@ -44,6 +58,7 @@ const STATUSES = {
     message:
       "This project will not be visible to others until it has been published",
     icon: <Pencil />,
+    CTA: DraftCTA,
   },
   Pending: {
     component: Pending,
@@ -58,7 +73,7 @@ const STATUSES = {
   },
 };
 
-function ProjectStatus({ project }) {
+function ProjectStatus({ project, modal }) {
   const status = (project.draft && "Draft") || project.validationStatus;
   const config = STATUSES[status];
 
@@ -66,8 +81,9 @@ function ProjectStatus({ project }) {
     <Box mt={5} pt={6} pb={2} borderTop="1px solid" borderTopColor="neutral100">
       <config.component
         project={project}
-        {...config}
+        modal={modal}
         review={project.reviews?.[0]}
+        {...config}
       />
     </Box>
   );

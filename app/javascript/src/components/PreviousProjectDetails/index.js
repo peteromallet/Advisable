@@ -149,7 +149,7 @@ function PreviousProjectDetails({ id }) {
           </Box>
         </Box>
       </Box>
-      <ProjectStatus project={project} />
+      <ProjectStatus project={project} modal={modal} />
     </>
   );
 }
