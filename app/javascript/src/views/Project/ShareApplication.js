@@ -1,11 +1,12 @@
 import { object, string } from "yup";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import ActionBar from "./ActionBar";
 import { Formik, Form } from "formik";
 import { useParams } from "react-router";
 import { Share } from "@styled-icons/ionicons-outline";
+import useViewer from "src/hooks/useViewer";
 import Loading from "src/components/Loading";
 import FormField from "src/components/FormField";
 import { useNotifications } from "src/components/Notifications";
@@ -81,6 +82,7 @@ function Member({ member, applicationId, projectId }) {
           variant="subtle"
           loading={loading}
           onClick={inviteMember}
+          aria-label={`Share with ${member.name}`}
         >
           Share
         </Button>
@@ -181,9 +183,16 @@ function InviteNewMember({ applicationId, projectId, onInvite }) {
 
 function ShareApplicationModal({ modal, application }) {
   const { id } = useParams();
+  const viewer = useViewer();
   const { loading, data } = useQuery(MEMBERS_LIST, {
     skip: !modal.visible,
   });
+
+  const members = useMemo(() => {
+    if (!data?.currentCompany.users) return [];
+
+    return data.currentCompany.users.filter((u) => u.id !== viewer.id);
+  }, [data?.currentCompany.users, viewer]);
 
   return (
     <Modal modal={modal}>
@@ -218,7 +227,7 @@ function ShareApplicationModal({ modal, application }) {
             />
           </Box>
           <MembersList
-            members={data.currentCompany.users}
+            members={members}
             projectId={id}
             applicationId={application.id}
           />
