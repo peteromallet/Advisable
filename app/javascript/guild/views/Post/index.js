@@ -34,14 +34,19 @@ const Post = () => {
 
   return post ? (
     <ErrorBoundary>
-      <Box pt={12} pb={20} mx="auto" maxWidth={["100%", "100%", "960px"]}>
+      <Box
+        pt={{ _: 0, l: 12 }}
+        pb={20}
+        mx="auto"
+        maxWidth={["100%", "100%", "960px"]}
+      >
         {post.images.length > 0 ? (
           <ImageGallery dialog={gallery} images={post.images} />
         ) : null}
         <Card>
           {post.coverImage && (
             <CoverImage
-              height="480px"
+              height={{ _: "260px", s: "340px", m: "480px" }}
               images={post.images}
               cover={post.coverImage.url}
               onClick={() => gallery.open(0)}

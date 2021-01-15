@@ -65,7 +65,10 @@ const Post = ({
         {post.coverImage && (
           <Box mb="6">
             <a href={url}>
-              <CoverImage cover={post.coverImage.url} />
+              <CoverImage
+                height={{ _: "200px", s: "320px" }}
+                cover={post.coverImage.url}
+              />
             </a>
           </Box>
         )}
