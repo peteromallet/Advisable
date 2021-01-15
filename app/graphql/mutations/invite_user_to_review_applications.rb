@@ -21,20 +21,23 @@ class Mutations::InviteUserToReviewApplications < Mutations::BaseMutation
   end
 
   def resolve(project_id:, email:, **optional)
-    email_blacklisted?(email)
-    attributes = optional.slice(:first_name, :last_name)
-    account = Account.new(email: email, **attributes)
-    account.save!
-    new_user = current_user.invite_comember!(account)
+    existing_acc = Account.find_by(email: email)
+    if existing_acc
+      invited_user = existing_acc.user
+    else
+      email_blacklisted?(email)
+      attributes = optional.slice(:first_name, :last_name)
+      account = Account.new(email: email, **attributes)
+      account.save!
+      invited_user = current_user.invite_comember!(account)
+    end
 
     project = Project.find_by!(uid: project_id)
-    UserMailer.invited_to_review_applications(current_user, new_user, project, application_id: optional[:application_id]).deliver_later
+    UserMailer.invited_to_review_applications(current_user, invited_user, project, application_id: optional[:application_id]).deliver_later
 
-    {user: new_user}
+    {user: invited_user}
   rescue ActiveRecord::RecordInvalid
-    if account.errors.added?(:email, :taken, value: email)
-      raise ApiError::InvalidRequest.new("emailTaken", "The email #{email} is already used by another account.")
-    elsif account.errors.added?(:email, :blank)
+    if account.errors.added?(:email, :blank)
       raise ApiError::InvalidRequest.new("emailBlank", "Email is required.")
     else
       raise

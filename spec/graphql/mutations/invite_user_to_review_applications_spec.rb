@@ -39,6 +39,17 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_to_review_applications", "deliver_now", {args: [user, created_user, project, {application_id: nil}]})
   end
 
+  context "when account already exists" do
+    let(:existing_user) { create(:user) }
+    let(:email) { existing_user.account.email }
+
+    it "sends an email to existing user" do
+      AdvisableSchema.execute(query, context: context)
+
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_to_review_applications", "deliver_now", {args: [user, existing_user, project, {application_id: nil}]})
+    end
+  end
+
   context "when given application ID" do
     let(:application) { create(:application, project: project) }
     let(:extra) { "applicationId: \"#{application.uid}\"" }
@@ -57,15 +68,6 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("nonCorporateEmail")
-    end
-  end
-
-  context "when provided an email that is already taken" do
-    it "returns an error" do
-      create(:user, account: create(:account, email: email))
-      response = AdvisableSchema.execute(query, context: context)
-      error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("emailTaken")
     end
   end
 
