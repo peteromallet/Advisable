@@ -27,7 +27,7 @@ const Post = ({
     <Sentry.ErrorBoundary>
       <Card
         position="relative"
-        padding="8"
+        padding={[4, 8]}
         borderRadius="12px"
         width="100%"
         border="2px solid"
@@ -49,7 +49,7 @@ const Post = ({
             <Link
               mb={0.5}
               variant="dark"
-              fontSize="l"
+              fontSize={["m", "l"]}
               color="neutral900"
               letterSpacing="-0.01rem"
               to={`/freelancers/${post.author.id}/guild`}
@@ -75,7 +75,7 @@ const Post = ({
 
         <Text
           mb="4"
-          fontSize="4xl"
+          fontSize={["2xl", "4xl"]}
           color="neutral900"
           as={Link.External}
           fontWeight="medium"
