@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # DEPRECATED
 # Webhook configurations have been deprecated and you should add a new
 # WebhookEvent instead.
@@ -8,9 +10,7 @@ class WebhookConfiguration < ApplicationRecord
   validate :valid_criteria
   serialize :criteria, Array
 
-  OPERATORS = [
-    "changes_to"
-  ]
+  OPERATORS = ["changes_to"].freeze
 
   # This is a hack to prevent rails path generators from loading for single
   # table inheritance. i.e allways use webhook_configuration_path
@@ -28,8 +28,7 @@ class WebhookConfiguration < ApplicationRecord
     end
     return unless matched_criteria.length == criteria.length
 
-    webhook = Webhook.create(url: url, data: data(entity))
-    webhook
+    Webhook.create(url: url, data: data(entity))
   end
 
   def data(entity)
@@ -45,8 +44,6 @@ class WebhookConfiguration < ApplicationRecord
 
     entity[attribute] =~ Regexp.new(value)
   end
-
-  private
 
   def valid_criteria
     errors.add(:criteria, "must have at least one criteria") if criteria.length.zero?
