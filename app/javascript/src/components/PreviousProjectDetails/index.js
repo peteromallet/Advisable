@@ -154,7 +154,11 @@ function PreviousProjectDetails({ detailsModal, id }) {
           </Box>
         </Box>
       </Box>
-      <ProjectStatus project={project} modal={modal} />
+      <ProjectStatus
+        project={project}
+        modal={modal}
+        onDelete={detailsModal.hide}
+      />
     </>
   );
 }
