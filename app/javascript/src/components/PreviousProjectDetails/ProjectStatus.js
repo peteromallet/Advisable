@@ -1,9 +1,15 @@
 import React from "react";
-import { Box, Circle, Button, DialogDisclosure } from "@advisable/donut";
+import { Box, Circle, DialogDisclosure } from "@advisable/donut";
 import Review from "src/components/Review";
 import { Pencil, Exclamation } from "@styled-icons/heroicons-outline";
 import ProjectValidationPrompt from "src/components/ProjectValidationPrompt";
-import { StyledBadge, StyledMessage, StyledTitle } from "./styles";
+import {
+  StyledBadge,
+  StyledMessage,
+  StyledTitle,
+  StyledButtonsPannel,
+  StyledButton,
+} from "./styles";
 
 function Validated({ project }) {
   return project.reviews.length > 0 && project.reviews[0]?.comment ? (
@@ -17,14 +23,14 @@ function Pending({ project }) {
 
 function DraftCTA({ project, modal }) {
   return (
-    <DialogDisclosure
-      as={Button}
-      ml="auto"
-      variant="ghost"
-      {...modal.atPath(`/previous_projects/${project.id}`)}
-    >
-      Continue
-    </DialogDisclosure>
+    <StyledButtonsPannel>
+      <DialogDisclosure
+        as={StyledButton}
+        {...modal.atPath(`/previous_projects/${project.id}`)}
+      >
+        Continue
+      </DialogDisclosure>
+    </StyledButtonsPannel>
   );
 }
 
@@ -49,8 +55,8 @@ function Status({ CTA, ...props }) {
           <StyledMessage fontSize="sm" lineHeight="xs">
             {props.message}
           </StyledMessage>
+          {CTA && <CTA {...props} />}
         </Box>
-        {CTA && <CTA {...props} />}
       </Box>
     </StyledBadge>
   );

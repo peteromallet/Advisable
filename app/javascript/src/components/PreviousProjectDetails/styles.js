@@ -1,4 +1,5 @@
 import React from "react";
+import { rgba } from "polished";
 import styled from "styled-components";
 import { layout, space, variant, padding } from "styled-system";
 import { theme, Text, StyledCircle, Box } from "@advisable/donut";
@@ -46,6 +47,14 @@ export const VARIANTS = variant({
       [StyledCircle]: { bg: "neutral200" },
       [StyledTitle]: { color: "neutral800" },
       [StyledMessage]: { color: "neutral600" },
+      [StyledButton]: {
+        color: rgba(theme.colors.neutral800, 0.85),
+        borderBottomColor: rgba(theme.colors.neutral400, 0.8),
+        "&:hover": {
+          color: "neutral800",
+          borderBottomColor: "neutral500",
+        },
+      },
     },
     red: {
       backgroundColor: "red100",
