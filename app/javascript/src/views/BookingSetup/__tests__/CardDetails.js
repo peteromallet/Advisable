@@ -1,20 +1,18 @@
-import { renderRoute } from "test-utils";
-import generateTypes from "../../../__mocks__/graphqlFields";
+import { renderRoute, mockData } from "test-utils";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_SETUP_DATA from "../getSetupData";
-import { GET_PAYMENT_METHOD } from "../CardDetails";
 import { CREATE_SETUP_INTENT } from "../../../components/UpdatePaymentMethod";
 
 test("Shows form to add card when user has no card", async () => {
-  let user = generateTypes.user({
+  let user = mockData.user({
     paymentsSetup: false,
-    projectPaymentMethod: "Card",
     paymentMethod: null,
+    company: mockData.company(),
   });
 
-  let project = generateTypes.project({ projectType: null, user });
-  let specialist = generateTypes.specialist({ firstName: "Dennis" });
-  let application = generateTypes.application({
+  let project = mockData.project({ projectType: null, user });
+  let specialist = mockData.specialist({ firstName: "Dennis" });
+  let application = mockData.application({
     status: "Applied",
     id: "rec1234",
     project,
@@ -22,7 +20,7 @@ test("Shows form to add card when user has no card", async () => {
   });
 
   const app = renderRoute({
-    route: "/book/rec1234/card_details",
+    route: "/book/rec1234",
     graphQLMocks: [
       {
         request: {
@@ -50,16 +48,6 @@ test("Shows form to add card when user has no card", async () => {
       },
       {
         request: {
-          query: GET_PAYMENT_METHOD,
-        },
-        result: {
-          data: {
-            viewer: user,
-          },
-        },
-      },
-      {
-        request: {
           query: CREATE_SETUP_INTENT,
         },
         result: {
@@ -75,7 +63,5 @@ test("Shows form to add card when user has no card", async () => {
     ],
   });
 
-  await app.findByText("Add payment method");
-  const cardHolder = await app.findByLabelText("Cardholder Name");
-  expect(cardHolder).toBeInTheDocument();
+  await app.findByLabelText("Cardholder Name");
 });
