@@ -48,6 +48,8 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
   end
 
   before do
+    payment_method = instance_double(Stripe::PaymentMethod)
+    allow(company).to receive(:payment_method).and_return(payment_method)
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     allow(Stripe::Customer).to receive(:update)
     allow(Stripe::Customer).to receive(:create_tax_id)
