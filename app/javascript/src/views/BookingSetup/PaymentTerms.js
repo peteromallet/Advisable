@@ -42,13 +42,13 @@ const PaymentTerms = ({ nextStep }) => {
   };
 
   return (
-    <Card p="l">
+    <Card p={8} borderRadius="12px">
       <Text
-        mb="xs"
-        fontSize="xxl"
-        color="neutral800"
-        fontWeight="bold"
-        letterSpacing="-0.02em"
+        mb={1}
+        fontSize="4xl"
+        color="neutral900"
+        fontWeight="medium"
+        letterSpacing="-0.04em"
       >
         Payment Terms
       </Text>
@@ -56,7 +56,7 @@ const PaymentTerms = ({ nextStep }) => {
         Please review and accept the payment terms outlined below.
       </Text>
 
-      <Text fontSize="s" color="neutral800" fontWeight="medium" mb="xxs">
+      <Text color="neutral900" fontWeight="medium" mb={1}>
         Fixed Projects
       </Text>
       <Text color="neutral700" size="s" lineHeight="s">
@@ -65,7 +65,7 @@ const PaymentTerms = ({ nextStep }) => {
         on the quote they have provided.
       </Text>
       <Box width="100%" height={1} my="l" bg="neutral100" />
-      <Text color="neutral800" fontSize="s" fontWeight="medium" mb="xxs">
+      <Text color="neutral900" fontWeight="medium" mb={1}>
         Flexible Projects
       </Text>
       <Text color="neutral700" size="s" lineHeight="s">

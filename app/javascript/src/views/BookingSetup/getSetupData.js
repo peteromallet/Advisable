@@ -5,9 +5,35 @@ export default gql`
     viewer {
       ... on User {
         id
+        name
+        email
         paymentsSetup
         projectPaymentMethod
         bankTransfersEnabled
+        invoiceSettings {
+          name
+          vatNumber
+          companyName
+          billingEmail
+          address {
+            line1
+            line2
+            city
+            state
+            country
+            postcode
+          }
+        }
+        paymentMethod {
+          last4
+          brand
+          expMonth
+          expYear
+        }
+        company {
+          id
+          name
+        }
       }
     }
     application(id: $id) {

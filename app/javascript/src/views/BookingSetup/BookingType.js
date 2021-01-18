@@ -39,16 +39,17 @@ const BookingType = ({ data }) => {
   };
 
   return (
-    <Card p="l">
+    <Card padding={8} borderRadius="12px">
       <Text
-        mb="l"
-        fontSize="xxl"
-        color="neutral800"
-        fontWeight="bold"
-        letterSpacing="-0.02em"
+        mb={1}
+        fontSize="4xl"
+        color="neutral900"
+        fontWeight="medium"
+        letterSpacing="-0.04em"
       >
-        How do you want to work with {firstName}?
+        Project type
       </Text>
+      <Text mb={6}>How would you like to work with {firstName}?</Text>
       <BookingTypeForm
         firstName={firstName}
         onSubmit={handleSubmit}
