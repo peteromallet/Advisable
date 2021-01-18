@@ -1,7 +1,7 @@
 p
   | Hi #{@user.account.first_name},
 p
-  | Your teammate #{@inviter.account.first_name} has invited you to join a #{@project.try(:name)} interview on Advisable.
+  | Your teammate #{@inviter.account.first_name} has invited you to join the #{@project.try(:name)} interview with #{@application.specialist.account.name} on Advisable.
 p
   ' All you have to do is
   a href="#{magic_link(@user.account, @url)}"

@@ -19,7 +19,7 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def invited_to_interview
-    UserMailer.invited_to_interview(User.first, User.last, random_project, random_application)
+    UserMailer.invited_to_interview(User.first, User.last, random_application)
   end
 
   private
