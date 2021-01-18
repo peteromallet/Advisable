@@ -30,11 +30,13 @@ function DraftCTA({ project, modal }) {
 
 function Status({ CTA, ...props }) {
   return (
-    <StyledBadge variant={props.variant} prefix={props.icon} p={3}>
-      <Box display="flex">
-        <Circle size={40} mr={3}>
-          {props.icon}
-        </Circle>
+    <StyledBadge variant={props.variant} prefix={props.icon}>
+      <Box display="flex" p={3}>
+        <Box>
+          <Circle size={40} mr={3}>
+            {props.icon}
+          </Circle>
+        </Box>
         <Box>
           <StyledTitle fontSize="md" fontWeight="medium" lineHeight="m">
             {props.label}
