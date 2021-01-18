@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_090309) do
+ActiveRecord::Schema.define(version: 2021_01_18_192307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["application_id"], name: "index_application_references_on_application_id"
-    t.index ["project_type", "project_id"], name: "index_application_references_on_project"
+    t.index ["project_type", "project_id"], name: "index_application_references_on_project_type_and_project_id"
     t.index ["uid"], name: "index_application_references_on_uid"
   end
 
@@ -259,6 +259,20 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.index ["specialist_id"], name: "index_consultations_on_specialist_id"
     t.index ["uid"], name: "index_consultations_on_uid"
     t.index ["user_id"], name: "index_consultations_on_user_id"
+  end
+
+  create_table "conversation_participants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "conversation_id", null: false
+    t.bigint "account_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_conversation_participants_on_account_id"
+    t.index ["conversation_id"], name: "index_conversation_participants_on_conversation_id"
+  end
+
+  create_table "conversations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "countries", force: :cascade do |t|
@@ -445,6 +459,16 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.index ["specialist_id"], name: "index_matches_on_specialist_id"
   end
 
+  create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "conversation_id", null: false
+    t.bigint "account_id", null: false
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_messages_on_account_id"
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+  end
+
   create_table "off_platform_projects", force: :cascade do |t|
     t.string "airtable_id"
     t.bigint "specialist_id"
@@ -584,7 +608,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "primary"
-    t.index ["project_type", "project_id"], name: "index_project_skills_on_project"
+    t.index ["project_type", "project_id"], name: "index_project_skills_on_project_type_and_project_id"
     t.index ["skill_id"], name: "index_project_skills_on_skill_id"
   end
 
@@ -639,8 +663,8 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.integer "candidate_count", default: 0
     t.integer "proposed_count", default: 0
     t.integer "hired_count", default: 0
-    t.boolean "sourcing"
     t.bigint "sales_person_id"
+    t.boolean "sourcing"
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
     t.jsonb "log_data"
@@ -670,8 +694,8 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.datetime "updated_at", null: false
     t.string "uid"
     t.index ["airtable_id"], name: "index_reviews_on_airtable_id"
-    t.index ["project_type", "project_id"], name: "index_reviews_on_project"
-    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
+    t.index ["project_type", "project_id"], name: "index_reviews_on_project_type_and_project_id"
+    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id"
     t.index ["specialist_id"], name: "index_reviews_on_specialist_id"
   end
 
@@ -773,11 +797,11 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.boolean "guild", default: false
     t.string "community_status"
     t.jsonb "guild_data"
-    t.bigint "account_id"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
     t.datetime "community_invited_to_call_at"
     t.integer "community_score"
+    t.bigint "account_id"
     t.integer "member_of_week_email"
     t.jsonb "log_data"
     t.index ["account_id"], name: "index_specialists_on_account_id"
@@ -813,6 +837,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.integer "taggings_count", default: 0
     t.string "topicable_type"
     t.bigint "topicable_id"
+    t.boolean "published", default: false
     t.index ["name"], name: "index_tags_on_name", unique: true
     t.index ["topicable_type", "topicable_id"], name: "index_tags_on_topicable_type_and_topicable_id"
   end
@@ -980,6 +1005,8 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
   add_foreign_key "consultations", "skills"
   add_foreign_key "consultations", "specialists"
   add_foreign_key "consultations", "users"
+  add_foreign_key "conversation_participants", "accounts"
+  add_foreign_key "conversation_participants", "conversations"
   add_foreign_key "guild_comments", "guild_posts", on_delete: :cascade
   add_foreign_key "guild_comments", "specialists", on_delete: :cascade
   add_foreign_key "guild_post_engagements", "guild_posts"
@@ -991,6 +1018,8 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
   add_foreign_key "interviews", "users"
   add_foreign_key "matches", "projects"
   add_foreign_key "matches", "specialists"
+  add_foreign_key "messages", "accounts"
+  add_foreign_key "messages", "conversations"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "previous_project_images", "off_platform_projects"
@@ -1296,25 +1325,25 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
   SQL
 
 
+  create_trigger :logidze_on_accounts, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_applications, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_applications BEFORE INSERT OR UPDATE ON public.applications FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_off_platform_projects, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_off_platform_projects BEFORE INSERT OR UPDATE ON public.off_platform_projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
   create_trigger :logidze_on_projects, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_projects BEFORE INSERT OR UPDATE ON public.projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_specialists, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_specialists BEFORE INSERT OR UPDATE ON public.specialists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
-  create_trigger :logidze_on_applications, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_applications BEFORE INSERT OR UPDATE ON public.applications FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_users, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_off_platform_projects, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_off_platform_projects BEFORE INSERT OR UPDATE ON public.off_platform_projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
   create_trigger :logidze_on_tasks, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_tasks BEFORE INSERT OR UPDATE ON public.tasks FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
-  create_trigger :logidze_on_accounts, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  create_trigger :logidze_on_users, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end

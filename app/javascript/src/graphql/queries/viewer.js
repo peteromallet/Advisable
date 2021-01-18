@@ -4,6 +4,7 @@ export const viewerFields = gql`
   fragment ViewerFields on ViewerUnion {
     ... on User {
       id
+      accountId
       email
       name
       isAdmin
@@ -24,6 +25,7 @@ export const viewerFields = gql`
     }
     ... on Specialist {
       id
+      accountId
       email
       name
       createdAt

@@ -34,6 +34,7 @@ end
 #
 #  id             :uuid             not null, primary key
 #  name           :string
+#  published      :boolean          default(FALSE)
 #  taggings_count :integer          default(0)
 #  topicable_type :string
 #  created_at     :datetime

@@ -11,6 +11,8 @@ class Account < ApplicationRecord
   has_many :magic_links, dependent: :destroy
   has_many :auth_providers, dependent: :destroy
   has_many :unresponsiveness_reports, foreign_key: :reporter_id, dependent: :destroy, inverse_of: :reporter
+  has_many :conversation_participants, dependent: :destroy
+  has_many :conversations, through: :conversation_participants
 
   has_secure_password validations: false
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true

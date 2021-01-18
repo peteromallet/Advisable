@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
@@ -78,5 +80,6 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = {:host => ENV["ORIGIN"]}
+  config.action_mailer.default_url_options = {host: ENV["ORIGIN"]}
+  config.action_cable.allowed_request_origins = [%r{http://*}, %r{https://*}, %r{file://*}, 'file://']
 end

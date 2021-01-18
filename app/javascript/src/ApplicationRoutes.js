@@ -20,7 +20,7 @@ const JobListing = lazy(() => import("./views/JobListing"));
 const JobOpportunity = lazy(() => import("./views/JobOpportunity"));
 const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
-const Messages = lazy(() => import("./views/Messages"));
+const Messages = lazy(() => import("./views/NewMessages"));
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication"),
@@ -61,7 +61,7 @@ const ApplicationRoutes = () => {
           <AuthenticatedRoute path="/set_password" component={SetPassword} />
           {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
           <Route path="/clients/signup" component={ClientSignup} />
-          <AuthenticatedRoute exact path="/messages" component={Messages} />
+          <AuthenticatedRoute path="/messages" component={Messages} />
           <Route path="/freelancers/:id" component={FreelancerProfile} />
           {/* Client routes */}
           <Route path="/project_setup/:projectID?" component={ProjectSetup} />

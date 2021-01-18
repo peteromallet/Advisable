@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require 'sidekiq/web'
 require 'admin_constraint'
 
 Rails.application.routes.draw do
   match "(*any)", to: redirect { |_, req| "https://app.advisable.com#{req.fullpath}" }, via: :all, constraints: {host: "advisable.herokuapp.com"}
+  mount ActionCable.server, at: '/cable'
 
   if Rails.env.development? || ENV["STAGING"]
     mount GraphqlPlayground::Rails::Engine, as: "graphql_playground", at: '/playground', graphql_path: '/graphql'

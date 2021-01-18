@@ -1,10 +1,13 @@
-import { ApolloClient, from, createHttpLink } from "@apollo/client";
+import { createConsumer } from "@rails/actioncable";
+import ActionCableLink from "graphql-ruby-client/dist/subscriptions/ActionCableLink";
+import { ApolloClient, ApolloLink, from, createHttpLink } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import createCache from "./apolloCache";
 import * as Sentry from "@sentry/react";
 
 const cache = createCache();
+const cable = createConsumer();
 
 const authLink = setContext((_, { headers }) => {
   const token =
@@ -21,8 +24,16 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const hasSubscriptionOperation = ({ query: { definitions } }) => {
+  return definitions.some(
+    ({ kind, operation }) =>
+      kind === "OperationDefinition" && operation === "subscription",
+  );
+};
+
 const httpLink = createHttpLink({
   uri: "/graphql",
+  credentials: "include",
 });
 
 const errorLink = onError(({ graphQLErrors, operation }) => {
@@ -56,9 +67,17 @@ const errorLink = onError(({ graphQLErrors, operation }) => {
   }
 });
 
+const subscriptionLink = ApolloLink.split(
+  hasSubscriptionOperation,
+  new ActionCableLink({ cable }),
+  httpLink,
+);
+
+const link = from([errorLink, authLink, subscriptionLink]);
+
 const client = new ApolloClient({
   cache,
-  link: from([errorLink, authLink, httpLink]),
+  link,
   defaultOptions: {
     mutate: {
       errorPolicy: "all",

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GraphqlController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :require_admin, only: :admin

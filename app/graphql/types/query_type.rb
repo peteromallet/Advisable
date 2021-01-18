@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::QueryType < Types::BaseType
   field :project, Types::ProjectType, null: true do
     argument :id, ID, required: true
@@ -330,5 +332,19 @@ class Types::QueryType < Types::BaseType
   def guild_followed_topics(**args)
     requires_guild_user!
     current_user.guild_followed_topics.order(created_at: :desc)
+  end
+
+  field :conversations, [Types::ConversationType], null: false
+
+  def conversations
+    current_user.account.conversations
+  end
+
+  field :conversation, Types::ConversationType, null: true do
+    argument :id, ID, required: true
+  end
+
+  def conversation(id:)
+    Conversation.find(id)
   end
 end

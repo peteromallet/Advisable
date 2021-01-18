@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types::AccountInterface
   include Types::BaseInterface
   delegate :account, to: :object
@@ -17,5 +19,11 @@ module Types::AccountInterface
 
   def confirmed
     account.confirmed_at.present?
+  end
+
+  field :account_id, String, null: true
+
+  def account_id
+    account.uid
   end
 end
