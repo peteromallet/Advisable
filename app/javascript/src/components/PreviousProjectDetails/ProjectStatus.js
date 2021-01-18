@@ -41,7 +41,9 @@ function Status({ CTA, ...props }) {
           <StyledTitle fontSize="md" fontWeight="medium" lineHeight="m">
             {props.label}
           </StyledTitle>
-          <StyledMessage fontSize="sm">{props.message}</StyledMessage>
+          <StyledMessage fontSize="sm" lineHeight="xs">
+            {props.message}
+          </StyledMessage>
         </Box>
         {CTA && <CTA {...props} />}
       </Box>
