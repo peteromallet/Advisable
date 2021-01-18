@@ -3,7 +3,7 @@
 module Mutations::Helpers::Account
   include Mutations::Helpers::BlacklistedEmail
 
-  def find_or_create_account_by_email!(email, attributes = {})
+  def find_or_create_user_by_email!(email, attributes = {})
     existing_acc = Account.find_by(email: email)
     if existing_acc
       existing_acc.user

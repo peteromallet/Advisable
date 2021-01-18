@@ -20,7 +20,7 @@ class Mutations::InviteUserToInterview < Mutations::BaseMutation
   end
 
   def resolve(application_id:, email:, **optional)
-    invited_user = find_or_create_account_by_email!(email, optional)
+    invited_user = find_or_create_user_by_email!(email, optional)
     application = Application.find_by!(uid: application_id)
     UserMailer.invited_to_interview(current_user, invited_user, application).deliver_later
     WebhookEvent.trigger("user.invited_to_interview", WebhookEvent::Application.data_with_user(application, invited_user))
