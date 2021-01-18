@@ -56,7 +56,7 @@ const STATUSES = {
     variant: "neutral",
     label: "Draft Project",
     message:
-      "This project will not be visible to others until it has been published",
+      "This project has not been published and will not be visible on your profile. Continue editing to post it to your profile.",
     icon: <Pencil />,
     CTA: DraftCTA,
   },
