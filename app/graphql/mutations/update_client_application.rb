@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::UpdateClientApplication < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :company_name, String, required: false
@@ -54,20 +56,5 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
   def update_skills(user, skills)
     records = Skill.where(name: skills)
     user.skill_ids = records.map(&:id)
-  end
-
-  def email_blacklisted?(email)
-    return if BlacklistedDomain.email_allowed?(email)
-
-    ApiError.invalid_request(
-      code: 'emailNotAllowed',
-      message: 'This email is not allowed'
-    )
-  end
-
-  def check_existing_account(email)
-    return if Account.where(email: email).none?
-
-    ApiError.invalid_request(code: 'existingAccount', message: 'This email belongs to an existing account')
   end
 end

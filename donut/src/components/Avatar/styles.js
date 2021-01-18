@@ -53,7 +53,7 @@ export const StyledAvatarInitials = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -1px;
   font-size: inherit;
   font-weight: 500;
   position: absolute;

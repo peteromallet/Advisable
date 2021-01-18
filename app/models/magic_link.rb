@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MagicLink < ApplicationRecord
   class Expired < StandardError; end
 
@@ -31,8 +33,7 @@ class MagicLink < ApplicationRecord
   end
 
   def valid_token(token)
-    return true if BCrypt::Password.new(digest).is_password?(token)
-    false
+    BCrypt::Password.new(digest).is_password?(token)
   rescue BCrypt::Errors::InvalidHash
     false
   end
