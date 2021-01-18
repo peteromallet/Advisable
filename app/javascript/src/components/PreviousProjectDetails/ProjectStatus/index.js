@@ -1,15 +1,10 @@
 import React from "react";
-import { Box, Circle, DialogDisclosure } from "@advisable/donut";
-import Review from "src/components/Review";
+import { Box } from "@advisable/donut";
+import Status from "./Status";
+import { DraftCTA, FailedCTA } from "./CTAs";
 import { Pencil, Exclamation } from "@styled-icons/heroicons-outline";
 import ProjectValidationPrompt from "src/components/ProjectValidationPrompt";
-import {
-  StyledBadge,
-  StyledMessage,
-  StyledTitle,
-  StyledButtonsPannel,
-  StyledButton,
-} from "./styles";
+import Review from "src/components/Review";
 
 function Validated({ project }) {
   return project.reviews.length > 0 && project.reviews[0]?.comment ? (
@@ -19,47 +14,6 @@ function Validated({ project }) {
 
 function Pending({ project }) {
   return <ProjectValidationPrompt project={project} />;
-}
-
-function DraftCTA({ project, modal }) {
-  return (
-    <StyledButtonsPannel>
-      <DialogDisclosure
-        as={StyledButton}
-        {...modal.atPath(`/previous_projects/${project.id}`)}
-      >
-        Continue
-      </DialogDisclosure>
-    </StyledButtonsPannel>
-  );
-}
-
-function Status({ CTA, ...props }) {
-  return (
-    <StyledBadge variant={props.variant} prefix={props.icon}>
-      <Box display="flex" p={3}>
-        <Box>
-          <Circle size={40} mr={3}>
-            {props.icon}
-          </Circle>
-        </Box>
-        <Box>
-          <StyledTitle
-            mb={0.5}
-            fontSize="md"
-            fontWeight="medium"
-            lineHeight="m"
-          >
-            {props.label}
-          </StyledTitle>
-          <StyledMessage fontSize="sm" lineHeight="xs">
-            {props.message}
-          </StyledMessage>
-          {CTA && <CTA {...props} />}
-        </Box>
-      </Box>
-    </StyledBadge>
-  );
 }
 
 const STATUSES = {
@@ -85,6 +39,7 @@ const STATUSES = {
     message:
       "Unfortunately the client was unable to verify this project. It will not be visible to others until it is validated. You can update the project and request validation again or remove the project.",
     icon: <Exclamation />,
+    CTA: FailedCTA,
   },
 };
 
