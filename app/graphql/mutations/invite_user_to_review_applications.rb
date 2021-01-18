@@ -21,7 +21,7 @@ class Mutations::InviteUserToReviewApplications < Mutations::BaseMutation
   end
 
   def resolve(project_id:, email:, **optional)
-    invited_user = find_or_create_account_by_email!(email, optional)
+    invited_user = find_or_create_user_by_email!(email, optional)
     project = Project.find_by!(uid: project_id)
     UserMailer.invited_to_review_applications(current_user, invited_user, project, application_id: optional[:application_id]).deliver_later
 
