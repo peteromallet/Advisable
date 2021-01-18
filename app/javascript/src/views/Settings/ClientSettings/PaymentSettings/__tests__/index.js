@@ -4,12 +4,10 @@ import mockData from "../../../../../__mocks__/graphqlFields";
 import VIEWER from "../../../../../graphql/queries/viewer";
 import { GET_DATA } from "../../../../../components/InvoiceSettingsFields";
 import GET_PAYMENT_SETTINGS from "../getPaymentSettings";
-import UPDATE_PAYMENT_SETTINGS from "../updateProjectPaymentMethod";
+import { UPDATE_INVOICE_SETTINGS } from "../queries";
 
 test("user can update invoice settings", async () => {
-  const user = mockData.user({
-    projectPaymentMethod: "Bank Transfer",
-  });
+  const user = mockData.user();
 
   const graphQLMocks = [
     {
@@ -44,23 +42,20 @@ test("user can update invoice settings", async () => {
     },
     {
       request: {
-        query: UPDATE_PAYMENT_SETTINGS,
+        query: UPDATE_INVOICE_SETTINGS,
         variables: {
           input: {
-            paymentMethod: "Bank Transfer",
-            invoiceSettings: {
-              name: "John Doe",
-              companyName: user.invoiceSettings.companyName,
-              billingEmail: user.invoiceSettings.billingEmail,
-              vatNumber: user.invoiceSettings.vatNumber,
-              address: {
-                line1: "",
-                line2: "",
-                city: "",
-                state: "",
-                country: 1,
-                postcode: "",
-              },
+            name: "John Doe",
+            companyName: user.invoiceSettings.companyName,
+            billingEmail: user.invoiceSettings.billingEmail,
+            vatNumber: user.invoiceSettings.vatNumber,
+            address: {
+              line1: "",
+              line2: "",
+              city: "",
+              state: "",
+              country: 1,
+              postcode: "",
             },
           },
         },
@@ -68,7 +63,7 @@ test("user can update invoice settings", async () => {
       result: {
         data: {
           __typename: "MutationPayload",
-          updateProjectPaymentMethod: {
+          updateInvoiceSettings: {
             __typename: "UpdateProjectPaymentMethodPayload",
             user,
           },
@@ -86,8 +81,5 @@ test("user can update invoice settings", async () => {
   fireEvent.change(name, { target: { value: "John Doe" } });
   const button = app.getByLabelText("Save Changes");
   fireEvent.click(button);
-  const notice = await app.findByText(
-    "Your payment preferences have been updated",
-  );
-  expect(notice).toBeInTheDocument();
+  await app.findByText("Your payment preferences have been updated");
 });

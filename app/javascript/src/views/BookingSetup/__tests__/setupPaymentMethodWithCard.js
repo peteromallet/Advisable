@@ -1,24 +1,26 @@
 import screenUser from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
+import { mockData } from "test-utils";
 import { renderRoute } from "../../../testHelpers/test-utils";
 import {
   mockViewer,
   mockQuery,
   mockMutation,
 } from "../../../testHelpers/apolloMocks";
-import generateTypes from "../../../__mocks__/graphqlFields";
 import GET_ACTIVE_APPLICATION from "../../Booking/getActiveApplication";
 import GET_SETUP_DATA from "../getSetupData";
-import { GET_PAYMENT_METHOD } from "../CardDetails";
 import { GET_DATA } from "../../../components/InvoiceSettingsFields";
-import UPDATE_PROJECT_PAYMENT_METHOD from "../updateProjectPaymentMethod";
+import {
+  UPDATE_INVOICE_SETTINGS,
+  ACCEPT_PROJECT_PAYMENT_TERMS,
+} from "../queries";
 import START_WORKING from "../startWorking";
 import graphqlFields from "../../../__mocks__/graphqlFields";
 
 test("User can complete booking setup", async () => {
-  let user = generateTypes.user({
+  let user = mockData.user({
     paymentsSetup: false,
-    projectPaymentMethod: null,
+    company: mockData.company(),
     paymentMethod: {
       __typename: "PaymentMethod",
       last4: "4444",
@@ -28,9 +30,9 @@ test("User can complete booking setup", async () => {
     },
   });
 
-  let project = generateTypes.project({ projectType: null, user });
-  let specialist = generateTypes.specialist({ firstName: "Dennis" });
-  let application = generateTypes.application({
+  let project = mockData.project({ projectType: null, user });
+  let specialist = mockData.specialist({ firstName: "Dennis" });
+  let application = mockData.application({
     status: "Applied",
     id: "rec1234",
     project,
@@ -46,20 +48,6 @@ test("User can complete booking setup", async () => {
         { id: "rec1234" },
         { viewer: user, application },
       ),
-      mockMutation(
-        UPDATE_PROJECT_PAYMENT_METHOD,
-        { paymentMethod: "Card" },
-        {
-          updateProjectPaymentMethod: {
-            __typename: "UpdateProjectPaymentMethodPayload",
-            user: {
-              ...user,
-              projectPaymentMethod: "Card",
-            },
-          },
-        },
-      ),
-      mockQuery(GET_PAYMENT_METHOD, {}, { viewer: user }),
       mockQuery(
         GET_DATA,
         {},
@@ -70,25 +58,23 @@ test("User can complete booking setup", async () => {
         },
       ),
       mockMutation(
-        UPDATE_PROJECT_PAYMENT_METHOD,
+        UPDATE_INVOICE_SETTINGS,
         {
-          invoiceSettings: {
-            name: "Test Account",
-            companyName: "Test Corp",
-            billingEmail: "test@test.com",
-            address: {
-              line1: "Bacon Street",
-              line2: "",
-              country: "IE",
-              city: "Test City",
-              state: "Test County",
-              postcode: "12345",
-            },
-            vatNumber: "12345",
+          name: "Test Account",
+          companyName: "Test Corp",
+          billingEmail: "test@test.com",
+          address: {
+            line1: "Bacon Street",
+            line2: "",
+            country: "IE",
+            city: "Test City",
+            state: "Test County",
+            postcode: "12345",
           },
+          vatNumber: "12345",
         },
         {
-          updateProjectPaymentMethod: {
+          updateInvoiceSettings: {
             __typename: "UpdateProjectPaymentMethodPayload",
             user: {
               ...user,
@@ -98,13 +84,12 @@ test("User can complete booking setup", async () => {
         },
       ),
       mockMutation(
-        UPDATE_PROJECT_PAYMENT_METHOD,
+        ACCEPT_PROJECT_PAYMENT_TERMS,
         {
-          acceptTerms: true,
           exceptionalTerms: "",
         },
         {
-          updateProjectPaymentMethod: {
+          acceptProjectPaymentTerms: {
             __typename: "UpdateProjectPaymentMethodPayload",
             user: {
               ...user,
@@ -154,12 +139,12 @@ test("User can complete booking setup", async () => {
     ],
   });
 
-  screenUser.click(await screen.findByLabelText(/payments with card/i));
-  screenUser.click(await screen.findByLabelText("Continue"));
-  screenUser.click(await screen.findByLabelText(/continue with this card/i));
   // invoice settings
+  screenUser.clear(await screen.findByLabelText(/full name/i));
   screenUser.type(await screen.findByLabelText(/full name/i), "Test Account");
+  screenUser.clear(await screen.findByLabelText(/company name/i));
   screenUser.type(await screen.findByLabelText(/company name/i), "Test Corp");
+  screenUser.clear(await screen.findByLabelText(/billing email/i));
   screenUser.type(
     await screen.findByLabelText(/billing email/i),
     "test@test.com",
@@ -172,6 +157,7 @@ test("User can complete booking setup", async () => {
   screenUser.type(await screen.findByPlaceholderText(/state/i), "Test County");
   screenUser.selectOptions(await screen.findByLabelText(/country/i), ["IE"]);
   screenUser.type(await screen.findByPlaceholderText(/postcode/i), "12345");
+  screenUser.clear(await screen.findByLabelText(/vat/i));
   screenUser.type(await screen.findByLabelText(/vat/i), "12345");
   screenUser.click(await screen.findByLabelText(/continue/i));
   // payment terms
