@@ -22,11 +22,25 @@ class UserMailer < ApplicationMailer
     @inviter = inviter
     @user = user
     @project = project
-    @url = if application_id.present?
-             "#{default_url_options[:host]}/projects/#{@project.uid}/candidates/#{application_id}"
-           else
-             "#{default_url_options[:host]}/projects/#{@project.uid}/matches"
-           end
+    @url = application_url(application_id)
     mail(to: user.account.email, subject: "#{inviter.account.first_name} invited you to review applications for a #{@project.try(:name)} project on Advisable")
+  end
+
+  def invited_to_interview(inviter, user, project, application_id)
+    @inviter = inviter
+    @user = user
+    @project = project
+    @url = application_url(application_id)
+    mail(to: user.account.email, subject: "#{inviter.account.first_name} invited you to join a #{@project.try(:name)} interview on Advisable")
+  end
+
+  private
+
+  def application_url(application_id)
+    if application_id.present?
+      "#{default_url_options[:host]}/projects/#{@project.uid}/candidates/#{application_id}"
+    else
+      "#{default_url_options[:host]}/projects/#{@project.uid}/matches"
+    end
   end
 end
