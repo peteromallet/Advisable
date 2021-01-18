@@ -38,7 +38,12 @@ function Status({ CTA, ...props }) {
           </Circle>
         </Box>
         <Box>
-          <StyledTitle fontSize="md" fontWeight="medium" lineHeight="m">
+          <StyledTitle
+            mb={0.5}
+            fontSize="md"
+            fontWeight="medium"
+            lineHeight="m"
+          >
             {props.label}
           </StyledTitle>
           <StyledMessage fontSize="sm" lineHeight="xs">
