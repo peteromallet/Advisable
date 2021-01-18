@@ -30,6 +30,7 @@ class PreviousProject < ApplicationRecord
   has_one_attached :contact_image
 
   belongs_to :specialist
+  has_one :account, through: :specialist
   # If the prpevious project belongs to an application then we know it is a
   # previous project that happened on Advisable.
   belongs_to :application, optional: true
