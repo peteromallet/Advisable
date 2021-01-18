@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::CompanyType < Types::BaseType
   field :id, ID, null: false
   field :name, String, null: true
@@ -6,7 +8,7 @@ class Types::CompanyType < Types::BaseType
   field :sales_person, Types::SalesPersonType, null: true
 
   field :users, [Types::User], null: true do
-    authorize :is_team_manager?
+    authorize :record_belongs_to_company?
   end
 
   field :created_at, GraphQL::Types::ISO8601DateTime, null: false
