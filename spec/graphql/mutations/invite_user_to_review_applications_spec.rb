@@ -50,6 +50,16 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
     end
   end
 
+  context "when provided project is not from the signed in user" do
+    let(:project) { create(:project) }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"].first["extensions"]["code"]
+      expect(error).to eq("invalidProject")
+    end
+  end
+
   context "when given application ID" do
     let(:application) { create(:application, project: project) }
     let(:extra) { "applicationId: \"#{application.uid}\"" }
