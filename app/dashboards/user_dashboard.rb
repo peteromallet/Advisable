@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'administrate/base_dashboard'
 
 class UserDashboard < Administrate::BaseDashboard
@@ -17,7 +19,6 @@ class UserDashboard < Administrate::BaseDashboard
     ),
     country: Field::BelongsTo,
     projects: Field::HasMany,
-    bank_transfers_enabled: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -36,7 +37,6 @@ class UserDashboard < Administrate::BaseDashboard
     account
     airtable_id
     country
-    bank_transfers_enabled
     projects
     created_at
     updated_at
@@ -48,7 +48,6 @@ class UserDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     airtable_id
     country
-    bank_transfers_enabled
   ].freeze
 
   # Overwrite this method to customize how users are displayed
