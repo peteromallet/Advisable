@@ -12,7 +12,7 @@ import {
   Textarea,
 } from "@advisable/donut";
 import FormField from "../../components/FormField";
-import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
+import { ACCEPT_PROJECT_PAYMENT_TERMS } from "./queries";
 
 const validationSchema = object().shape({
   acceptTerms: boolean().oneOf(
@@ -26,18 +26,21 @@ const validationSchema = object().shape({
 });
 
 const PaymentTerms = ({ nextStep }) => {
-  const [updatePaymentMethod] = useMutation(UPDATE_PAYMENT_METHOD);
+  const [acceptPaymentTerms] = useMutation(ACCEPT_PROJECT_PAYMENT_TERMS);
 
   const handleSubmit = async (values) => {
-    await updatePaymentMethod({
-      variables: { input: values },
+    await acceptPaymentTerms({
+      variables: {
+        input: {
+          exceptionalTerms: values.exceptionalTerms,
+        },
+      },
     });
 
     nextStep();
   };
 
   const initialValues = {
-    acceptTerms: null,
     exceptionalTerms: "",
   };
 

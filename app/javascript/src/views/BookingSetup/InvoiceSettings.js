@@ -4,30 +4,28 @@ import { useMutation } from "@apollo/client";
 import { Card, Text, Button } from "@advisable/donut";
 import { useHistory, useParams } from "react-router-dom";
 import InvoiceFields from "../../components/InvoiceSettingsFields";
-import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
+import { UPDATE_INVOICE_SETTINGS } from "./queries";
 
 const InvoiceSettings = ({ data }) => {
   const history = useHistory();
   const { applicationId } = useParams();
-  const [updatePaymentMethod] = useMutation(UPDATE_PAYMENT_METHOD);
+  const [updatePaymentMethod] = useMutation(UPDATE_INVOICE_SETTINGS);
   const { viewer } = data;
 
   const initialValues = {
-    invoiceSettings: {
-      name: viewer.invoiceSettings?.name || viewer.name || "",
-      companyName:
-        viewer.invoiceSettings?.companyName || viewer?.company?.name || "",
-      billingEmail: viewer.invoiceSettings.email || viewer.email || "",
-      address: {
-        line1: viewer.invoiceSettings?.address?.line1 || "",
-        line2: viewer.invoiceSettings?.address?.line2 || "",
-        city: viewer.invoiceSettings?.address?.city || "",
-        state: viewer.invoiceSettings?.address?.state || "",
-        country: viewer.invoiceSettings?.address?.country || "",
-        postcode: viewer.invoiceSettings?.address?.postcode || "",
-      },
-      vatNumber: viewer.invoiceSettings?.vatNumber || "",
+    name: viewer.invoiceSettings?.name || viewer.name || "",
+    companyName:
+      viewer.invoiceSettings?.companyName || viewer?.company?.name || "",
+    billingEmail: viewer.invoiceSettings.email || viewer.email || "",
+    address: {
+      line1: viewer.invoiceSettings?.address?.line1 || "",
+      line2: viewer.invoiceSettings?.address?.line2 || "",
+      city: viewer.invoiceSettings?.address?.city || "",
+      state: viewer.invoiceSettings?.address?.state || "",
+      country: viewer.invoiceSettings?.address?.country || "",
+      postcode: viewer.invoiceSettings?.address?.postcode || "",
     },
+    vatNumber: viewer.invoiceSettings?.vatNumber || "",
   };
 
   const handleSubmit = async (values) => {
