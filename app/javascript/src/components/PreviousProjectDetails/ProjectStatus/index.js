@@ -43,7 +43,7 @@ const STATUSES = {
   },
 };
 
-function ProjectStatus({ project, modal }) {
+function ProjectStatus({ project, modal, ...props }) {
   const status = (project.draft && "Draft") || project.validationStatus;
   const config = STATUSES[status];
 
@@ -54,6 +54,7 @@ function ProjectStatus({ project, modal }) {
         modal={modal}
         review={project.reviews?.[0]}
         {...config}
+        {...props}
       />
     </Box>
   );
