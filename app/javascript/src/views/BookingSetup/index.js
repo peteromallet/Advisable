@@ -13,7 +13,6 @@ import {
 } from "react-router-dom";
 import GET_SETUP_DATA from "./getSetupData";
 import Loading from "../../components/Loading";
-import PaymentMethod from "./PaymentMethod";
 import CardDetails from "./CardDetails";
 import InvoiceSettings from "./InvoiceSettings";
 import PaymentTerms from "./PaymentTerms";
@@ -24,15 +23,9 @@ import RequiresTeamManager from "./RequiresTeamManager";
 // The steps
 const STEPS = [
   {
-    path: "/book/:applicationId/payment_method",
-    component: PaymentMethod,
-    enabled: (data) => !data.viewer.paymentsSetup,
-  },
-  {
     path: "/book/:applicationId/card_details",
     component: CardDetails,
-    enabled: ({ viewer }) =>
-      !viewer.paymentsSetup && viewer.projectPaymentMethod === "Card",
+    enabled: ({ viewer }) => !viewer.paymentMethod,
   },
   {
     path: "/book/:applicationId/invoice_settings",

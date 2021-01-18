@@ -24,7 +24,7 @@ export const GET_SETUP_INTENT_STATUS = gql`
   }
 `;
 
-const UpdatePaymentMethod = ({ onSuccess }) => {
+const UpdatePaymentMethod = ({ onSuccess, buttonLabel = "Add Card" }) => {
   const client = useApolloClient();
   const [createSetupIntent] = useMutation(CREATE_SETUP_INTENT);
   let timer = React.useRef(null);
@@ -77,7 +77,7 @@ const UpdatePaymentMethod = ({ onSuccess }) => {
     <PaymentMethodForm
       handleCardDetails={handleCardDetails}
       userId={viewer.id}
-      buttonLabel="Add Card"
+      buttonLabel={buttonLabel}
     />
   );
 };

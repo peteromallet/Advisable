@@ -2,26 +2,31 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { Card, Text, Button } from "@advisable/donut";
+import { useHistory, useParams } from "react-router-dom";
 import InvoiceFields from "../../components/InvoiceSettingsFields";
 import UPDATE_PAYMENT_METHOD from "./updateProjectPaymentMethod";
 
-const InvoiceSettings = ({ nextStep }) => {
+const InvoiceSettings = ({ data }) => {
+  const history = useHistory();
+  const { applicationId } = useParams();
   const [updatePaymentMethod] = useMutation(UPDATE_PAYMENT_METHOD);
+  const { viewer } = data;
 
   const initialValues = {
     invoiceSettings: {
-      name: "",
-      companyName: "",
-      billingEmail: "",
+      name: viewer.invoiceSettings?.name || viewer.name || "",
+      companyName:
+        viewer.invoiceSettings?.companyName || viewer?.company?.name || "",
+      billingEmail: viewer.invoiceSettings.email || viewer.email || "",
       address: {
-        line1: "",
-        line2: "",
-        city: "",
-        state: "",
-        country: "",
-        postcode: "",
+        line1: viewer.invoiceSettings?.address?.line1 || "",
+        line2: viewer.invoiceSettings?.address?.line2 || "",
+        city: viewer.invoiceSettings?.address?.city || "",
+        state: viewer.invoiceSettings?.address?.state || "",
+        country: viewer.invoiceSettings?.address?.country || "",
+        postcode: viewer.invoiceSettings?.address?.postcode || "",
       },
-      vatNumber: "",
+      vatNumber: viewer.invoiceSettings?.vatNumber || "",
     },
   };
 
@@ -32,19 +37,19 @@ const InvoiceSettings = ({ nextStep }) => {
       },
     });
 
-    nextStep();
+    history.push(`/book/${applicationId}/payment_terms`);
   };
 
   return (
-    <Card padding="l">
+    <Card padding={8} borderRadius="12px">
       <Text
-        mb="xs"
-        fontSize="xxl"
-        color="neutral800"
-        fontWeight="bold"
-        letterSpacing="-0.02em"
+        mb={1}
+        fontSize="4xl"
+        color="neutral900"
+        fontWeight="medium"
+        letterSpacing="-0.04em"
       >
-        Invoice Settings
+        Invoice settings
       </Text>
       <Text fontSize="m" color="neutral700" lineHeight="s" mb="l">
         Please provide the following information which will appear on your
