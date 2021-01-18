@@ -10,14 +10,14 @@ import { useNotifications } from "../../../../components/Notifications";
 import UpdatePaymentMethod from "../../../../components/UpdatePaymentMethod";
 import InvoiceSettingsFields from "../../../../components/InvoiceSettingsFields";
 import CardPaymentSettings from "./CardPaymentSettings";
-import UPDATE_PAYMENT_INFO from "./updateProjectPaymentMethod";
 import GET_PAYMENT_SETTINGS from "./getPaymentSettings";
+import { UPDATE_INVOICE_SETTINGS } from "./queries";
 
 const PaymentSettings = () => {
   const viewer = useViewer();
   let notificaitons = useNotifications();
   const { data, loading, refetch } = useQuery(GET_PAYMENT_SETTINGS);
-  const [updateProjectPaymentMethod] = useMutation(UPDATE_PAYMENT_INFO);
+  const [updateInvoiceSettings] = useMutation(UPDATE_INVOICE_SETTINGS);
   const [paymentMethodModal, setPaymentMethodModal] = React.useState(false);
 
   if (!viewer.isTeamManager) {
@@ -25,7 +25,7 @@ const PaymentSettings = () => {
   }
 
   const handleSubmit = async (values, formik) => {
-    const { errors } = await updateProjectPaymentMethod({
+    const { errors } = await updateInvoiceSettings({
       variables: {
         input: values,
       },
@@ -34,10 +34,7 @@ const PaymentSettings = () => {
     if (errors) {
       const code = errors[0].extensions.code;
       if (code === "INVALID_VAT") {
-        formik.setFieldError(
-          "invoiceSettings.vatNumber",
-          "VAT number is invalid",
-        );
+        formik.setFieldError("vatNumber", "VAT number is invalid");
       }
     } else {
       notificaitons.notify("Your payment preferences have been updated");
@@ -45,27 +42,25 @@ const PaymentSettings = () => {
   };
 
   let initialValues = {
-    invoiceSettings: {
-      name: get(data, "viewer.invoiceSettings.name", get(data, "viewer.name")),
-      companyName: get(
+    name: get(data, "viewer.invoiceSettings.name", get(data, "viewer.name")),
+    companyName: get(
+      data,
+      "viewer.invoiceSettings.companyName",
+      get(data, "viewer.companyName"),
+    ),
+    billingEmail: get(data, "viewer.invoiceSettings.billingEmail") || "",
+    vatNumber: get(data, "viewer.invoiceSettings.vatNumber") || "",
+    address: {
+      line1: get(data, "viewer.invoiceSettings.address.line1") || "",
+      line2: get(data, "viewer.invoiceSettings.address.line2") || "",
+      city: get(data, "viewer.invoiceSettings.address.city") || "",
+      state: get(data, "viewer.invoiceSettings.address.state") || "",
+      country: get(
         data,
-        "viewer.invoiceSettings.companyName",
-        get(data, "viewer.companyName"),
+        "viewer.invoiceSettings.address.country",
+        get(data, "viewer.country.id"),
       ),
-      billingEmail: get(data, "viewer.invoiceSettings.billingEmail") || "",
-      vatNumber: get(data, "viewer.invoiceSettings.vatNumber") || "",
-      address: {
-        line1: get(data, "viewer.invoiceSettings.address.line1") || "",
-        line2: get(data, "viewer.invoiceSettings.address.line2") || "",
-        city: get(data, "viewer.invoiceSettings.address.city") || "",
-        state: get(data, "viewer.invoiceSettings.address.state") || "",
-        country: get(
-          data,
-          "viewer.invoiceSettings.address.country",
-          get(data, "viewer.country.id"),
-        ),
-        postcode: get(data, "viewer.invoiceSettings.address.postcode") || "",
-      },
+      postcode: get(data, "viewer.invoiceSettings.address.postcode") || "",
     },
   };
 
@@ -101,15 +96,15 @@ const PaymentSettings = () => {
             />
 
             <Text
+              mb={1}
               fontSize="l"
-              fontWeight="semibold"
-              color="neutral700"
-              mb="xxs"
-              letterSpacing="-0.01rem"
+              fontWeight="medium"
+              color="neutral900"
+              letterSpacing="-0.02rem"
             >
               Invoice Settings
             </Text>
-            <Text fontSize="s" color="neutral700" mb="s">
+            <Text fontSize="s" color="neutral700" mb={6}>
               The information below will be used to generate your invoice
             </Text>
 
