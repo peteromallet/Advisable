@@ -68,7 +68,7 @@ const STATUSES = {
     variant: "red",
     label: "Validation Failed",
     message:
-      "Unfortunately the client was unable to verify this project. It will not be visible to others.",
+      "Unfortunately the client was unable to verify this project. It will not be visible to others until it is validated. You can update the project and request validation again or remove the project.",
     icon: <Exclamation />,
   },
 };
