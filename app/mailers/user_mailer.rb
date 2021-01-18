@@ -23,15 +23,16 @@ class UserMailer < ApplicationMailer
     @user = user
     @project = project
     @url = application_url(application_id)
-    mail(to: user.account.email, subject: "#{inviter.account.first_name} invited you to review applications for a #{@project.try(:name)} project on Advisable")
+    mail(to: @user.account.email, subject: "#{@inviter.account.first_name} invited you to review applications for a #{@project.try(:name)} project on Advisable")
   end
 
-  def invited_to_interview(inviter, user, project, application_id)
+  def invited_to_interview(inviter, user, application)
     @inviter = inviter
     @user = user
-    @project = project
-    @url = application_url(application_id)
-    mail(to: user.account.email, subject: "#{inviter.account.first_name} invited you to join a #{@project.try(:name)} interview on Advisable")
+    @application = application
+    @project = @application.project
+    @url = application_url(@application.id)
+    mail(to: @user.account.email, subject: "#{@inviter.account.first_name} invited you to join the #{@project.try(:name)} interview with #{@application.specialist.account.name} on Advisable")
   end
 
   private
