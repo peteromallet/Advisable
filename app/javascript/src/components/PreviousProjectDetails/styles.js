@@ -1,6 +1,7 @@
+import React from "react";
 import styled from "styled-components";
 import { layout, space, variant, padding } from "styled-system";
-import { theme, Text, StyledCircle } from "@advisable/donut";
+import { theme, Text, StyledCircle, Box } from "@advisable/donut";
 
 export const StyledImageThumbnail = styled.div`
   ${layout};
@@ -19,6 +20,23 @@ export const StyledImageThumbnail = styled.div`
 
 export const StyledTitle = styled(Text)``;
 export const StyledMessage = styled(Text)``;
+
+export const StyledButton = styled.button`
+  border: 0px;
+  border-bottom: 2px solid;
+  margin-right: 20px;
+  font-family: TTHoves;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 4px 0;
+  cursor: pointer;
+  background: transparent;
+  transition: 0.2s border-color, 0.2s color;
+`;
+
+export const StyledButtonsPannel = (props) => (
+  <Box pt={3} pb={1.5} {...props} />
+);
 
 export const VARIANTS = variant({
   variants: {
