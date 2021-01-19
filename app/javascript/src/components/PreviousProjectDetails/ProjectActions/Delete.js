@@ -5,7 +5,7 @@ import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import CircularButton from "src/components/CircularButton";
 import DeleteProjectDialog from "./DeleteProjectDialog";
 
-function DeletePost({ project, size, onDelete = () => {} }) {
+function DeleteProject({ project, size, onDelete = () => {} }) {
   const modal = useDialogState();
 
   return (
@@ -41,4 +41,4 @@ function DeletePost({ project, size, onDelete = () => {} }) {
   );
 }
 
-export default DeletePost;
+export default DeleteProject;
