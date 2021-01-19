@@ -23,6 +23,15 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
 
   field :application, Types::ApplicationType, null: true
 
+  def authorized?(id:, **args)
+    requires_specialist!
+
+    application = Application.find_by!(uid: id)
+    return true if current_user == application.specialist
+
+    ApiError.invalid_request("invalidApplication", "The application does not belong to signed in user.")
+  end
+
   def resolve(**args)
     application = Applications::Update.call(id: args[:id], attributes: attributes(args), current_account_id: current_account_id)
     persist_bio(application.specialist, args[:introduction]) if args[:persist_bio]
