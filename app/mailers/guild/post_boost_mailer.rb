@@ -4,8 +4,10 @@ class Guild::PostBoostMailer < ApplicationMailer
   layout 'styled_mailer'
 
   def new_post(post:, follower_id:)
-    @guild_post = post
     @follower = Specialist.find(follower_id)
+    return if @follower.account.unsubscribed?("Advisable Guild")
+
+    @guild_post = post
     @author = @guild_post.specialist
     @followed_topic_names = (@guild_post.guild_topic_list & @follower.guild_followed_topics.pluck(:name)).join(', ')
 
