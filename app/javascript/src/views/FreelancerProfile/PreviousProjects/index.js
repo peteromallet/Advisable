@@ -79,11 +79,11 @@ function PreviousProjects({ data, isOwner }) {
     return 3;
   }, [isTablet, isMobile]);
 
-  const projectCards = state.projects
+  const projectCards = data.specialist.previousProjects.nodes
     .filter(filterProjects(state))
-    .filter((project) => !!project.excerpt)
-    .map((project) => {
-      return <ProjectCard key={project.id} project={project} />;
+    .filter((p) => !!p.excerpt || p.draft)
+    .map((p) => {
+      return <ProjectCard key={p.id} project={p} />;
     });
 
   return (

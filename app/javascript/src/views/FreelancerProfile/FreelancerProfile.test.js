@@ -25,6 +25,7 @@ const industries = [
 ].map((name) => mockData.industry({ name }));
 const country = mockData.country();
 const countries = [{ ...country, value: country.id, label: country.name }];
+const review = mockData.review();
 const profileProject = mockData.previousProject({
   primarySkill: skills[0],
   primaryIndustry: industries[0],
@@ -38,7 +39,6 @@ const profileProjectAlt = mockData.previousProject({
   industries: [industries[2]],
   clientName: "Test Tech",
 });
-const review = mockData.review();
 const specialist = mockData.specialist({
   name: "John Doe",
   projectSkills: {
@@ -47,14 +47,21 @@ const specialist = mockData.specialist({
   },
   industries,
   reviews: [review],
-  profileProjects: [profileProject, profileProjectAlt],
+  previousProjects: {
+    __typename: "PreviousProjectsConnection",
+    nodes: [profileProject, profileProjectAlt],
+  },
 });
 profileProject.specialist = specialist;
 
 test("can see top section", async () => {
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
 
   const app = renderRoute({
@@ -70,7 +77,11 @@ test("can see top section", async () => {
 test("can see skills and industries filter", async () => {
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
   const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
@@ -83,7 +94,11 @@ test("can see skills and industries filter", async () => {
 test("can filter previous projects by skill and clear filters", async () => {
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
   const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
@@ -107,7 +122,11 @@ test("can filter previous projects by skill and clear filters", async () => {
 test("no filtered projects to display", async () => {
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
   const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
@@ -131,7 +150,11 @@ test("no filtered projects to display", async () => {
 test("can filter previous projects by industry and clear filters", async () => {
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
   const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
@@ -156,7 +179,11 @@ test("can filter previous projects by industry and clear filters", async () => {
 test("can see previous project", async () => {
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
   const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
@@ -179,7 +206,11 @@ test("no previous projects to display", async () => {
   });
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
   const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
@@ -191,7 +222,11 @@ test("no previous projects to display", async () => {
 test("can open previous project's dialog window", async () => {
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
     mockQuery(
       GET_PROJECT,
       { id: profileProject.id },
@@ -214,7 +249,11 @@ test("can see wide review", async () => {
   mockBreakpoint("mUp");
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
   const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
@@ -229,7 +268,11 @@ test("can see tablet review", async () => {
   mockBreakpoint("sUp");
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
   const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
@@ -243,7 +286,11 @@ test("can see tablet review", async () => {
 test("can see mobile review", async () => {
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
   const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
@@ -257,7 +304,11 @@ test("can see mobile review", async () => {
 test("can see call to action card", async () => {
   const graphQLMocks = [
     mockViewer(null),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
   const app = renderRoute({
     route: `/freelancers/${specialist.id}`,
@@ -274,7 +325,11 @@ test("exceeded the suggested length of bio", async () => {
   const truncatedBio = truncate(newLongBio, { length: 280 });
   const graphQLMocks = [
     mockViewer(specialist),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: true },
+      { specialist },
+    ),
     mockQuery(GET_COUNTRIES, {}, { countries }),
     mockMutation(
       UPDATE_PROFILE,
@@ -320,7 +375,11 @@ test("exceeded the suggested length of bio", async () => {
 test("edit profile info", async () => {
   const graphQLMocks = [
     mockViewer(specialist),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: true },
+      { specialist },
+    ),
     mockQuery(GET_COUNTRIES, {}, { countries }),
     mockMutation(
       UPDATE_PROFILE,
@@ -364,7 +423,11 @@ test("edit profile info", async () => {
 test("render profile as a user viewer", async () => {
   const graphQLMocks = [
     mockViewer(user),
-    mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+    mockQuery(
+      GET_PROFILE,
+      { id: specialist.id, isOwner: false },
+      { specialist },
+    ),
   ];
 
   const app = renderRoute({
@@ -389,6 +452,7 @@ test("Renders 404 if the specialist isn't found", async () => {
         query: GET_PROFILE,
         variables: {
           id: "randomID",
+          isOwner: false,
         },
       },
       result: {
@@ -434,7 +498,11 @@ test("going to /profile when logged in redirects to their profile", async () => 
     route: "/profile",
     graphQLMocks: [
       mockViewer(specialist),
-      mockQuery(GET_PROFILE, { id: specialist.id }, { specialist }),
+      mockQuery(
+        GET_PROFILE,
+        { id: specialist.id, isOwner: true },
+        { specialist },
+      ),
       mockQuery(GET_COUNTRIES, {}, { countries }),
     ],
   });
