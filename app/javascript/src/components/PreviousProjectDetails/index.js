@@ -1,4 +1,5 @@
 import React from "react";
+import useViewer from "src/hooks/useViewer";
 import { useQuery } from "@apollo/client";
 import { Modal, Avatar, Box, Text, Tag, Paragraph } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
@@ -13,6 +14,7 @@ import PreviousProjectFormModal, {
 } from "src/components/PreviousProjectFormModal";
 
 function PreviousProjectDetails({ detailsModal, id }) {
+  const viewer = useViewer();
   const gallery = useImageGallery();
   const modal = usePreviousProjectModal("/previous_projects/new");
   const { loading, data, error } = useQuery(GET_PROJECT, {
@@ -25,6 +27,7 @@ function PreviousProjectDetails({ detailsModal, id }) {
   if (error) return <Text>Failed to load project, please try again.</Text>;
 
   const project = data.previousProject;
+  const viewerIsOwner = project.specialist.id === viewer?.id;
 
   const cover = project.images.find((i) => i.cover);
   const otherImages = project.images.filter((i) => !i.cover);
@@ -159,6 +162,26 @@ function PreviousProjectDetails({ detailsModal, id }) {
         modal={modal}
         onDelete={detailsModal.hide}
       />
+      {viewerIsOwner ? (
+        <>
+          <Box
+            mt={4}
+            mb={8}
+            height="1px"
+            width="200px"
+            mx="auto"
+            bg="neutral100"
+          />
+          <Box display="flex" justifyContent="center" pb={6}>
+            <ProjectActions
+              onDelete={detailsModal.hide}
+              project={project}
+              editModal={modal}
+              size={{ _: "lg", md: "xl" }}
+            />
+          </Box>
+        </>
+      ) : null}
     </>
   );
 }
