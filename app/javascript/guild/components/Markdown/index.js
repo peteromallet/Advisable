@@ -9,7 +9,7 @@ export default function Markdown({ children }) {
   const renderLinks = ({ href }) => {
     const uri = href.startsWith("http") ? href : `//${href}`;
     return (
-      <a href={uri} rel="nofollow">
+      <a href={uri} rel="noreferrer nofollow" target="_blank">
         {href}
       </a>
     );
@@ -17,11 +17,8 @@ export default function Markdown({ children }) {
 
   return (
     <StyledMarkdown>
-      <ReactMarkdown
-        source={formatLinks(children)}
-        renderers={{ link: renderLinks }}
-      >
-        {children}
+      <ReactMarkdown renderers={{ link: renderLinks }}>
+        {formatLinks(children)}
       </ReactMarkdown>
     </StyledMarkdown>
   );
