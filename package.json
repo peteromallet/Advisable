@@ -89,6 +89,7 @@
     "twilio-chat": "^4.0.0",
     "twilio-video": "^2.8.0",
     "typescript": "4.1.2",
+    "url-regex": "^5.0.0",
     "use-sound": "^1.0.2",
     "webpack-bundle-analyzer": "^4.1.0",
     "xstate": "^4.14.0",
