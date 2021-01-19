@@ -3,8 +3,5 @@ mutation deleteTask($input: DeleteTaskInput!) {
     task {
       id
     }
-    errors {
-      code
-    }
   }
 }

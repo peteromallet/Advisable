@@ -1,17 +1,18 @@
+# frozen_string_literal: true
+
 class Mutations::RejectProposal < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :reason, String, required: true
   argument :comment, String, required: false
 
   field :application, Types::ApplicationType, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     application = Application.find_by_uid_or_airtable_id!(args[:id])
     policy = ApplicationPolicy.new(context[:current_user], application)
     return true if policy.reject_proposal?
 
-    [false, {errors: [{code: "not_authorized"}]}]
+    ApiError.not_authorized("You do not have permission to reject this proposal")
   end
 
   def resolve(**args)
@@ -24,6 +25,6 @@ class Mutations::RejectProposal < Mutations::BaseMutation
     )
     {application: application}
   rescue Service::Error => e
-    {errors: [e]}
+    ApiError.service_error(e)
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::UpdateTask < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :name, String, required: false
@@ -9,7 +11,6 @@ class Mutations::UpdateTask < Mutations::BaseMutation
   argument :estimate_type, String, required: false
 
   field :task, Types::TaskType, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     requires_current_user!
@@ -38,6 +39,6 @@ class Mutations::UpdateTask < Mutations::BaseMutation
 
     {task: task}
   rescue Service::Error => e
-    {errors: [e]}
+    ApiError.service_error(e)
   end
 end

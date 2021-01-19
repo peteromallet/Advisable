@@ -4,8 +4,5 @@ mutation approveTask($input: ApproveTaskInput!) {
       id
       stage
     }
-    errors {
-      code
-    }
   }
 }

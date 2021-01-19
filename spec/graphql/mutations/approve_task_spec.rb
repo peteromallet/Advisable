@@ -15,9 +15,6 @@ RSpec.describe Mutations::ApproveTask do
             id
             stage
           }
-          errors {
-            code
-          }
         }
       }
     GRAPHQL
@@ -45,8 +42,8 @@ RSpec.describe Mutations::ApproveTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['approveTask']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq('notAuthorized')
     end
   end
 
@@ -55,8 +52,8 @@ RSpec.describe Mutations::ApproveTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['approveTask']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq('notAuthorized')
     end
   end
 
@@ -65,8 +62,8 @@ RSpec.describe Mutations::ApproveTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['approveTask']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq('notAuthorized')
     end
   end
 
@@ -75,8 +72,8 @@ RSpec.describe Mutations::ApproveTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['approveTask']['errors'][0]
-      expect(error['code']).to eq('tasks.statusNotSubmitted')
+      error = response['errors'][0]['message']
+      expect(error).to eq('tasks.statusNotSubmitted')
     end
   end
 end

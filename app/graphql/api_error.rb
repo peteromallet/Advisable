@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The ApiError should be used to throw errors in our graphql API. It ensures
 # that each error will have a CODE which clients can use to determine what to
 # do with the error.
@@ -33,6 +35,11 @@ class ApiError < GraphQL::ExecutionError
 
   def self.not_authenticated(extensions: {})
     raise ApiError::NotAuthenticated.new(extensions: extensions)
+  end
+
+  def self.service_error(error)
+    code = error.code.presence || SERVICE_ERROR
+    raise ApiError::InvalidRequest.new(code, error.message)
   end
 end
 

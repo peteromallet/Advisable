@@ -99,7 +99,6 @@ test("User can complete deposit step", async () => {
                 depositOwed: 0,
                 status: "Brief Confirmed",
               },
-              errors: null,
             },
           },
         },

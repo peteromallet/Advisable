@@ -19,9 +19,6 @@ RSpec.describe Mutations::RejectProposal do
           id
           status
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
@@ -67,8 +64,8 @@ RSpec.describe Mutations::RejectProposal do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      errors = response['data']['rejectProposal']['errors']
-      expect(errors[0]['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -77,8 +74,8 @@ RSpec.describe Mutations::RejectProposal do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      errors = response['data']['rejectProposal']['errors']
-      expect(errors[0]['code']).to eq('applications.notProposed')
+      error = response['errors'][0]
+      expect(error['message']).to eq('applications.notProposed')
     end
   end
 end

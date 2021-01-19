@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::Guild::UpdateLastRead do
@@ -33,18 +35,18 @@ RSpec.describe Mutations::Guild::UpdateLastRead do
     it "changes the notifications unread state" do
       create(:guild_comment, body: "test", post: guild_post)
 
-      expect { subject }.to change {
+      expect { update_last_read }.to change {
         specialist.reload.guild_unread_notifications
       }.from(true).to(false)
 
-      expect(subject['guildUnreadNotifications']).to eq(false)
+      expect(update_last_read['guildUnreadNotifications']).to eq(false)
     end
 
     it "changes the current time of the read event" do
       freeze_time do
-        expect { subject }.to change {
+        expect { update_last_read }.to change {
           specialist.reload.guild_notifications_last_read
-        }.from(Time.at(0)).to(Time.current)
+        }.from(Time.zone.at(0)).to(Time.current)
       end
     end
   end

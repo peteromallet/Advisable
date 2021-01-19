@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::MutationType < GraphQL::Schema::Object
   EXCLUDED_CLASSES = [:BaseMutation, :Helpers, :Guild].freeze
   (Mutations.constants - EXCLUDED_CLASSES).each do |klass|
@@ -6,7 +8,6 @@ class Types::MutationType < GraphQL::Schema::Object
 
   # Guild
   field :create_guild_comment, mutation: Mutations::Guild::CreateComment
-  field :delete_guild_comment, mutation: Mutations::Guild::DeleteComment
   field :guild_update_last_read, mutation: Mutations::Guild::UpdateLastRead
   field :guild_update_post_reactions, mutation: Mutations::Guild::UpdatePostReactions
   field :create_chat_direct_message, mutation: Mutations::Guild::CreateChatDirectMessage

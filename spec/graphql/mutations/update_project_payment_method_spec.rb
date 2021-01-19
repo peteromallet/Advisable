@@ -42,9 +42,6 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
             }
           }
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
@@ -84,9 +81,8 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
     let(:context) { {current_user: nil} }
 
     it 'returns an error' do
-      error =
-        response['errors'][0]['extensions']['code']
-      expect(error).to eq('notAuthenticated')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthenticated')
     end
   end
 
@@ -94,9 +90,8 @@ RSpec.describe Mutations::UpdateProjectPaymentMethod do
     let(:context) { {current_user: create(:specialist)} }
 
     it 'returns an error' do
-      error =
-        response['errors'][0]['extensions']['code']
-      expect(error).to eq('MUST_BE_USER')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('MUST_BE_USER')
     end
   end
 

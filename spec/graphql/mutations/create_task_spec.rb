@@ -22,9 +22,6 @@ RSpec.describe Mutations::CreateTask do
         task {
           id
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
@@ -57,8 +54,8 @@ RSpec.describe Mutations::CreateTask do
     let(:context) { {current_user: nil} }
 
     it 'responds with not_authorized error code' do
-      error = response['data']['createTask']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -66,8 +63,8 @@ RSpec.describe Mutations::CreateTask do
     let(:context) { {current_user: create(:user)} }
 
     it 'responds with not_authorized error code' do
-      error = response['data']['createTask']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -75,8 +72,8 @@ RSpec.describe Mutations::CreateTask do
     let(:context) { {current_user: create(:specialist)} }
 
     it 'responds with not_authorized error code' do
-      error = response['data']['createTask']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -87,8 +84,8 @@ RSpec.describe Mutations::CreateTask do
     end
 
     it 'returns an error' do
-      error = response['data']['createTask']['errors'][0]
-      expect(error['code']).to eq('service_error')
+      error = response['errors'][0]
+      expect(error['message']).to eq('service_error')
     end
   end
 end

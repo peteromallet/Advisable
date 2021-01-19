@@ -34,9 +34,6 @@ RSpec.describe Mutations::UpdateTask do
           stage
           name
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
@@ -143,7 +140,6 @@ RSpec.describe Mutations::UpdateTask do
         create(:task, name: nil, stage: 'Not Assigned', estimate: 8)
       end
 
-      # rubocop:disable RSpec/NestedGroups
       context 'when the user is the client' do
         let(:context) { {current_user: task.application.project.user} }
 
@@ -163,7 +159,6 @@ RSpec.describe Mutations::UpdateTask do
           }.not_to change { task.reload.estimate }
         end
       end
-      # rubocop:enable RSpec/NestedGroups
     end
   end
 
@@ -275,7 +270,6 @@ RSpec.describe Mutations::UpdateTask do
     end
   end
 
-  # rubocop:disable RSpec/NestedGroups
   context 'when the trial argument is passed' do
     let(:task) { create(:task, trial: false) }
     let(:input) do
@@ -313,8 +307,8 @@ RSpec.describe Mutations::UpdateTask do
 
         it 'Returns an error' do
           response = AdvisableSchema.execute(query, context: context)
-          error = response['data']['updateTask']['errors'][0]['code']
-          expect(error).to eq('tasks.applicationHasActiveTrialTask')
+          error = response['errors'][0]
+          expect(error['message']).to eq('tasks.applicationHasActiveTrialTask')
         end
       end
     end
@@ -323,11 +317,9 @@ RSpec.describe Mutations::UpdateTask do
       let(:context) { {current_user: task.application.project.user} }
 
       it 'does not set the trial' do
-        expect {
-          response = AdvisableSchema.execute(query, context: context)
-        }.not_to change { task.reload.trial }
+        AdvisableSchema.execute(query, context: context)
+        expect(task.reload.trial).to be_falsey
       end
     end
   end
-  # rubocop:enable RSpec/NestedGroups
 end

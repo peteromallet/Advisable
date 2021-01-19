@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::CreateTask < Mutations::BaseMutation
   argument :application, ID, required: true
   argument :id, String, required: false
@@ -10,28 +12,24 @@ class Mutations::CreateTask < Mutations::BaseMutation
   argument :repeat, String, required: false
 
   field :task, Types::TaskType, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     application = Application.find_by_uid_or_airtable_id!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
     return true if policy.create?
 
-    [false, {errors: [{code: 'not_authorized'}]}]
+    ApiError.not_authorized("You do not have permission to create a task")
   end
 
   def resolve(**args)
     application = Application.find_by_uid_or_airtable_id!(args[:application])
-
-    {
-      task:
-        Tasks::Create.call(
-          application: application,
-          attributes: args.except(:application, :id).merge({uid: args[:id]}),
-          responsible_id: current_account_id
-        )
-    }
+    task = Tasks::Create.call(
+      application: application,
+      attributes: args.except(:application, :id).merge({uid: args[:id]}),
+      responsible_id: current_account_id
+    )
+    {task: task}
   rescue Service::Error => e
-    {errors: [e]}
+    ApiError.service_error(e)
   end
 end

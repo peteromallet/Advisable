@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe Mutations::Guild::CreateChatDirectMessage do
+RSpec.describe Mutations::Guild::UpdateChatFriendlyName do
   let(:specialist) { create(:specialist, :guild) }
   let(:response_keys) { %w[updateChatFriendlyName chatChannel] }
   let(:channel_sid) { "channel-123" }
@@ -20,16 +22,16 @@ RSpec.describe Mutations::Guild::CreateChatDirectMessage do
   }
 
   context "with a guild specialist" do
+    subject(:update_chat_friendly_name) do
+      resp = AdvisableSchema.execute(query, context: {current_user: specialist})
+      resp.dig("data", *response_keys)
+    end
+
     let(:twilio_double) { instance_double(TwilioChat::Client, identity: "sender-123") }
 
     before do
       allow(TwilioChat::Client).to receive(:new).with(any_args) { twilio_double }
       allow(twilio_double).to receive(:update_friendly_name!)
-    end
-
-    subject(:update_chat_friendly_name) do
-      resp = AdvisableSchema.execute(query, context: {current_user: specialist})
-      resp.dig("data", *response_keys)
     end
 
     it "utilizes a service that uses twilio to update the channel friendly name" do
@@ -38,7 +40,7 @@ RSpec.describe Mutations::Guild::CreateChatDirectMessage do
           channel_sid: channel_sid,
           identity: specialist.uid
         })
-      subject
+      update_chat_friendly_name
     end
   end
 end

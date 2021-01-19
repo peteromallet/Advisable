@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 class Mutations::ScheduleInterview < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :starts_at, String, required: true
   argument :phone_number, String, required: false
 
   field :interview, Types::Interview, null: true
-  field :errors, [String], null: true
 
   ALLOWED_STATUES = [
     "Call Requested",

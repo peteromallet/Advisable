@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::Guild::UpdateGuildPost < Mutations::BaseMutation
   description "Updates a new guild post"
   graphql_name "UpdateGuildPost"
@@ -12,7 +14,6 @@ class Mutations::Guild::UpdateGuildPost < Mutations::BaseMutation
   argument :shareable, Boolean, required: false
 
   field :guild_post, Types::Guild::PostInterface, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     requires_guild_user!

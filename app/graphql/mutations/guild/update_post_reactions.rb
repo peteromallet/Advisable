@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::Guild::UpdatePostReactions < Mutations::BaseMutation
   class PostReactionType < Types::BaseEnum
     value "NONE"
@@ -11,7 +13,6 @@ class Mutations::Guild::UpdatePostReactions < Mutations::BaseMutation
   argument :reaction, PostReactionType, required: true
 
   field :guild_post, Types::Guild::PostInterface, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     requires_guild_user!

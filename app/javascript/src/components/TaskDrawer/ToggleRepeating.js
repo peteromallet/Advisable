@@ -11,9 +11,6 @@ const SET_TASK_REPEAT = gql`
         id
         repeat
       }
-      errors {
-        code
-      }
     }
   }
 `;
@@ -41,7 +38,6 @@ const ToggleRepeating = ({ isClient, task }) => {
             ...task,
             repeat,
           },
-          errors: null,
         },
       },
     });

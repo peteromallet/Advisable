@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::StartTask do
@@ -13,17 +15,14 @@ RSpec.describe Mutations::StartTask do
           id
           stage
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
   end
 
-  let(:context) { { current_user: task.application.specialist } }
+  let(:context) { {current_user: task.application.specialist} }
 
-  before :each do
+  before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
     allow(Tasks::CreateInvoiceItem).to receive(:call)
   end
@@ -44,8 +43,8 @@ RSpec.describe Mutations::StartTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['startTask']['errors'][0]
-      expect(error['code']).to eq('tasks.estimateRequired')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.estimateRequired')
     end
   end
 
@@ -54,38 +53,38 @@ RSpec.describe Mutations::StartTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['startTask']['errors'][0]
-      expect(error['code']).to eq('tasks.dueDateRequired')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.dueDateRequired')
     end
   end
 
   context "when the specialist doesn't have access to the project" do
-    let(:context) { { current_user: create(:specialist) } }
+    let(:context) { {current_user: create(:specialist)} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['startTask']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
   context 'when there is no user' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['startTask']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
   context 'when the client is logged in' do
-    let(:context) { { current_user: task.application.project.user } }
+    let(:context) { {current_user: task.application.project.user} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['startTask']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -94,8 +93,8 @@ RSpec.describe Mutations::StartTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['startTask']['errors'][0]
-      expect(error['code']).to eq('tasks.mustBeAssigned')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.mustBeAssigned')
     end
   end
 
@@ -104,8 +103,8 @@ RSpec.describe Mutations::StartTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['startTask']['errors'][0]
-      expect(error['code']).to eq('tasks.mustBeAssigned')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.mustBeAssigned')
     end
   end
 
@@ -114,8 +113,8 @@ RSpec.describe Mutations::StartTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['startTask']['errors'][0]
-      expect(error['code']).to eq('tasks.mustBeAssigned')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.mustBeAssigned')
     end
   end
 end

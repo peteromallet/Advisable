@@ -22,7 +22,7 @@ const ProjectType = ({ history, application }) => {
   const [updateApplication] = useMutation(UPDATE_APPLICATION);
 
   const handleSubmit = async (values) => {
-    const response = await updateApplication({
+    const { errors } = await updateApplication({
       variables: {
         input: {
           id: application.id,
@@ -33,8 +33,6 @@ const ProjectType = ({ history, application }) => {
         },
       },
     });
-
-    const { errors } = response.data.updateApplication;
 
     if (!errors) {
       const urlPrefix = `/applications/${application.id}/proposal`;

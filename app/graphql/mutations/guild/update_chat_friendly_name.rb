@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 class Mutations::Guild::UpdateChatFriendlyName < Mutations::BaseMutation
   description "Updates a 1:1 direct chat message channel friendly name"
 
   argument :channel_sid, String, required: true
 
   field :chat_channel, Types::ChatChannelType, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     requires_guild_user!
@@ -20,6 +21,6 @@ class Mutations::Guild::UpdateChatFriendlyName < Mutations::BaseMutation
 
     {chat_channel: channel}
   rescue Service::Error => e
-    {errors: [e]}
+    ApiError.service_error(e)
   end
 end

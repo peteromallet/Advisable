@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::UpdateApplication do
@@ -78,8 +80,8 @@ RSpec.describe Mutations::UpdateApplication do
             answer: "This is an answer"
           }]
         }) {
-          errors {
-            code
+          application {
+            id
           }
         }
       }
@@ -89,13 +91,7 @@ RSpec.describe Mutations::UpdateApplication do
     it 'updates the questions' do
       expect { AdvisableSchema.execute(query) }.to change {
         application.reload.questions
-      }.from([]).to(
-        [
-          {
-            'question' => 'This is a question?', 'answer' => 'This is an answer'
-          }
-        ]
-      )
+      }.from([]).to([{'question' => 'This is a question?', 'answer' => 'This is an answer'}])
     end
 
     context 'when an invalid question is passed' do
@@ -103,8 +99,8 @@ RSpec.describe Mutations::UpdateApplication do
 
       it 'returns an error' do
         response = AdvisableSchema.execute(query)
-        error = response['data']['updateApplication']['errors'][0]
-        expect(error['code']).to eq('invalid_question')
+        error = response['errors'][0]
+        expect(error['extensions']['code']).to eq('invalid_question')
       end
     end
   end
@@ -120,8 +116,8 @@ RSpec.describe Mutations::UpdateApplication do
             "#{previous_project.uid}",
             "#{previous_project2.uid}"]
         }) {
-          errors {
-            code
+          application {
+            id
           }
         }
       }
@@ -153,9 +149,6 @@ RSpec.describe Mutations::UpdateApplication do
           application {
             rate
           }
-          errors {
-            code
-          }
         }
       }
       GRAPHQL
@@ -179,9 +172,6 @@ RSpec.describe Mutations::UpdateApplication do
           application {
             acceptsFee
           }
-          errors {
-            code
-          }
         }
       }
       GRAPHQL
@@ -189,9 +179,8 @@ RSpec.describe Mutations::UpdateApplication do
 
     it 'updates accepts_fee attribute' do
       response = AdvisableSchema.execute(query)
-      acceptsFee =
-        response['data']['updateApplication']['application']['acceptsFee']
-      expect(acceptsFee).to be_truthy
+      accepts = response['data']['updateApplication']['application']['acceptsFee']
+      expect(accepts).to be_truthy
     end
   end
 
@@ -206,9 +195,6 @@ RSpec.describe Mutations::UpdateApplication do
           application {
             acceptsTerms
           }
-          errors {
-            code
-          }
         }
       }
       GRAPHQL
@@ -216,9 +202,8 @@ RSpec.describe Mutations::UpdateApplication do
 
     it 'updates accepts_fee attribute' do
       response = AdvisableSchema.execute(query)
-      acceptsTerms =
-        response['data']['updateApplication']['application']['acceptsTerms']
-      expect(acceptsTerms).to be_truthy
+      accepts = response['data']['updateApplication']['application']['acceptsTerms']
+      expect(accepts).to be_truthy
     end
   end
 end

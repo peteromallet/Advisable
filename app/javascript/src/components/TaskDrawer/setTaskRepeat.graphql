@@ -4,8 +4,5 @@ mutation setTaskRepeat($input: SetTaskRepeatInput!) {
       id
       repeat
     }
-    errors {
-      code
-    }
   }
 }

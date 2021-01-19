@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Due to how graphql-ruby expects classes to end in "Type" we have to use the
 # awkward name SetTypeForProject rather than SetProjectType. A better name might
 # be SetProjectTypeForAplication as we are actually modifying the application
@@ -8,20 +10,17 @@ class Mutations::SetTypeForProject < Mutations::BaseMutation
   argument :monthly_limit, Int, required: false
 
   field :application, Types::ApplicationType, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(application:, project_type:, monthly_limit:)
     ap = Application.find_by_uid_or_airtable_id!(application)
     policy = ApplicationPolicy.new(context[:current_user], ap)
     return true if policy.set_type_for_project?
 
-    [false, {errors: [{code: "not_authorized"}]}]
+    ApiError.not_authorized("You do not have permission to approve this task")
   end
 
   def resolve(application:, project_type:, monthly_limit:)
-    unless ['Fixed', 'Flexible'].include?(project_type)
-      return {errors: [{code: "invalidProjectType"}]}
-    end
+    ApiError.invalid_request(code: "invalidProjectType", message: "Project type is not valid.") if ['Fixed', 'Flexible'].exclude?(project_type)
 
     ap = Application.find_by_uid_or_airtable_id!(application)
     ap.update(project_type: project_type, monthly_limit: monthly_limit)
