@@ -188,6 +188,8 @@ GEM
     ffi (1.13.1)
     foreman (0.87.2)
     formatador (0.2.5)
+    friendly_id (5.4.2)
+      activerecord (>= 4.0.0)
     fx (0.6.1)
       activerecord (>= 4.0.0)
       railties (>= 4.0.0)
@@ -543,6 +545,7 @@ DEPENDENCIES
   faker!
   faraday
   foreman
+  friendly_id (~> 5.4.0)
   fx
   geocoder
   good_migrations

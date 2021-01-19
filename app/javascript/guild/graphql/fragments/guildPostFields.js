@@ -36,6 +36,7 @@ export default gql`
     guildTopics {
       id
       name
+      slug
     }
   }
 `;
