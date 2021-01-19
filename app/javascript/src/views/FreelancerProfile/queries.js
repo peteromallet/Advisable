@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
 
-const fields = gql`
+const projectFields = gql`
   fragment ProjectFields on PreviousProject {
     id
     title
@@ -38,7 +38,9 @@ const fields = gql`
       companyName
     }
   }
+`;
 
+const specialistFields = gql`
   fragment SpecialistFields on Specialist {
     id
     name
@@ -79,7 +81,9 @@ const fields = gql`
 `;
 
 export const GET_PROFILE = gql`
-  ${fields}
+  ${projectFields}
+  ${specialistFields}
+
   query getProfileData($id: ID!, $isOwner: Boolean!) {
     specialist(id: $id) {
       ...SpecialistFields
@@ -106,7 +110,8 @@ export const GET_COUNTRIES = gql`
 `;
 
 export const UPDATE_PROFILE = gql`
-  ${fields}
+  ${specialistFields}
+
   mutation UpdateProfile($input: UpdateProfileInput!) {
     updateProfile(input: $input) {
       specialist {
@@ -135,7 +140,8 @@ export const updateProfileOptimisticResponse = (specialist, values) => {
 };
 
 export const SET_COVER_PHOTO = gql`
-  ${fields}
+  ${specialistFields}
+
   mutation SetCoverPhoto($input: SetCoverPhotoInput!) {
     setCoverPhoto(input: $input) {
       specialist {
