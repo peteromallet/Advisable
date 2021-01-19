@@ -1,5 +1,4 @@
 import React from "react";
-import { relativeDate } from "@guild/utils";
 import { Box, Text, Avatar } from "@advisable/donut";
 import { StyledConversationItem } from "./styles";
 import useViewer from "src/hooks/useViewer";

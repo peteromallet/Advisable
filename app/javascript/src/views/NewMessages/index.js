@@ -53,6 +53,10 @@ export default function NewMessages() {
   React.useEffect(() => {
     subscribeToMore({
       document: NEW_MESSAGE,
+      onError: (e) => {
+        console.log("ERROR");
+        console.log(e);
+      },
       updateQuery: (prev, { subscriptionData }) => {
         const conversation =
           subscriptionData?.data?.newMessage?.message?.conversation;

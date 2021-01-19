@@ -65,6 +65,10 @@ export default function Conversation() {
   React.useEffect(() => {
     return subscribeToMore({
       document: NEW_MESSAGE,
+      onError: (e) => {
+        console.log("ERROR FETCHING NEW MESSAGES");
+        console.log(e);
+      },
       updateQuery: (prev, { subscriptionData }) => {
         const message = subscriptionData?.data?.newMessage?.message;
         if (!message || message.conversation.id !== id) return prev;
