@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::Guild::CreateGuildPost < Mutations::BaseMutation
   description "Creates a new guild post"
   graphql_name "CreateGuildPost"
@@ -7,7 +9,6 @@ class Mutations::Guild::CreateGuildPost < Mutations::BaseMutation
   argument :type, String, required: true
 
   field :guild_post, Types::Guild::PostInterface, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     requires_guild_user!

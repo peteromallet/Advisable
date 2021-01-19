@@ -20,9 +20,6 @@ RSpec.describe Mutations::SetTypeForProject do
         application {
           id
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
@@ -53,8 +50,8 @@ RSpec.describe Mutations::SetTypeForProject do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['setTypeForProject']['errors'][0]['code']
-      expect(error).to eq('invalidProjectType')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('invalidProjectType')
     end
   end
 
@@ -88,8 +85,8 @@ RSpec.describe Mutations::SetTypeForProject do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['setTypeForProject']['errors'][0]['code']
-      expect(error).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 end

@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class Mutations::CreateSetupIntent < Mutations::BaseMutation
   field :secret, String, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     requires_client!

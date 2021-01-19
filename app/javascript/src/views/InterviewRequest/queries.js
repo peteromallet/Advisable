@@ -31,7 +31,6 @@ export const SCHEDULE_INTERVIEW = gql`
         status
         startsAt
       }
-      errors
     }
   }
 `;

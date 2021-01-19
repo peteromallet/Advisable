@@ -9,9 +9,6 @@ export default gql`
       task {
         ...TaskDetailFields
       }
-      errors {
-        code
-      }
     }
   }
 `;

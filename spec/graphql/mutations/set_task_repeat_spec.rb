@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::SetTaskRepeat do
@@ -14,17 +16,14 @@ RSpec.describe Mutations::SetTaskRepeat do
           id
           repeat
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
   end
 
-  let(:context) { { current_user: task.application.project.user } }
+  let(:context) { {current_user: task.application.project.user} }
 
-  before :each do
+  before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
   end
 
@@ -35,12 +34,12 @@ RSpec.describe Mutations::SetTaskRepeat do
   end
 
   context 'when there is no user' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['setTaskRepeat']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 end

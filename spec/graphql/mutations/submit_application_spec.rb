@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::SubmitApplication do
@@ -13,9 +15,6 @@ RSpec.describe Mutations::SubmitApplication do
         application {
           id
           status
-        }
-        errors {
-          code
         }
       }
     }
@@ -51,8 +50,8 @@ RSpec.describe Mutations::SubmitApplication do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['submitApplication']['errors'][0]['code']
-      expect(error).to eq('projects.applicationsClosed')
+      error = response['errors'][0]
+      expect(error['message']).to eq('projects.applicationsClosed')
     end
   end
 
@@ -63,8 +62,8 @@ RSpec.describe Mutations::SubmitApplication do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['submitApplication']['errors'][0]['code']
-      expect(error).to eq('applications.cannotSubmit')
+      error = response['errors'][0]
+      expect(error['message']).to eq('applications.cannotSubmit')
     end
   end
 end

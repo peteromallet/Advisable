@@ -1,16 +1,17 @@
+# frozen_string_literal: true
+
 class Mutations::SetTaskRepeat < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :repeat, String, required: false
 
   field :task, Types::TaskType, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     task = Task.find_by_uid!(args[:id])
     policy = TaskPolicy.new(context[:current_user], task)
     return true if policy.set_repeating
 
-    [false, {errors: [{code: 'not_authorized'}]}]
+    ApiError.not_authorized("You do not have permission to set repeats on this task")
   end
 
   def resolve(**args)

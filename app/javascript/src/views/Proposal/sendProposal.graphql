@@ -6,8 +6,5 @@ mutation sendProposal($input: SendProposalInput!) {
       status
       proposalComment
     }
-    errors {
-      code
-    }
   }
 }

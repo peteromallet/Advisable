@@ -49,7 +49,6 @@ test("Overview step continues to the questions step", async () => {
       {
         updateApplication: {
           __typename: "UpdateApplicationPayload",
-          errors: null,
           application: {
             ...application,
             introduction: "This is an overview",
@@ -96,7 +95,6 @@ test("Questions step continues to the references step", async () => {
       {
         updateApplication: {
           __typename: "UpdateApplicationPayload",
-          errors: null,
           application: {
             ...application,
             questions: [
@@ -123,7 +121,6 @@ test("Questions step continues to the references step", async () => {
       {
         updateApplication: {
           __typename: "UpdateApplicationPayload",
-          errors: null,
           application: {
             ...application,
             questions: [
@@ -205,7 +202,6 @@ test("References continue to payment terms step", async () => {
       {
         updateApplication: {
           __typename: "UpdateApplicationPayload",
-          errors: null,
           application: application,
         },
       },

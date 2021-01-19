@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::DeleteTask do
@@ -14,9 +16,6 @@ RSpec.describe Mutations::DeleteTask do
       }) {
         task {
           id
-        }
-        errors {
-          code
         }
       }
     }
@@ -35,7 +34,8 @@ RSpec.describe Mutations::DeleteTask do
   context "when there is no user signed in" do
     it "responds with a not_authorized error code" do
       response = AdvisableSchema.execute(query, context: {current_user: nil})
-      expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHENTICATED")
+      error = response['errors'][0]
+      expect(error["extensions"]["type"]).to eq("NOT_AUTHENTICATED")
     end
   end
 
@@ -44,8 +44,8 @@ RSpec.describe Mutations::DeleteTask do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: {current_user: user})
-      errors = response['data']['deleteTask']['errors']
-      expect(errors[0]['code']).to eq('tasks.cantDeleteAssigned')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.cantDeleteAssigned')
     end
   end
 end

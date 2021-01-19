@@ -7,9 +7,6 @@ export default gql`
         id
         stage
       }
-      errors {
-        code
-      }
     }
   }
 `;

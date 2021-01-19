@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples "guild specialist" do
   describe "with a non guild specialist" do
     let(:non_guild_specialist) { create(:specialist) }
@@ -17,7 +19,7 @@ RSpec.shared_examples "guild specialist" do
     }
 
     it "does not return a null response" do
-      expect(response.dig('data', *response_keys)).to be
+      expect(response.dig('data', *response_keys)).not_to be_nil
     end
   end
 end

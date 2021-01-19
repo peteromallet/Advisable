@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Used to update an application record during the application process.
 class Mutations::UpdateApplication < Mutations::BaseMutation
   class ApplicationQuestionInputType < GraphQL::Schema::InputObject
@@ -19,24 +21,18 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
   argument :auto_apply, Boolean, required: false
 
   field :application, Types::ApplicationType, null: true
-  field :errors, [Types::Error], null: true
 
   def resolve(**args)
-    {application: Applications::Update.call(id: args[:id], attributes: attributes(args), current_account_id: current_account_id)}
+    application = Applications::Update.call(id: args[:id], attributes: attributes(args), current_account_id: current_account_id)
+    {application: application}
   rescue Service::Error => e
-    {errors: [e]}
+    ApiError.service_error(e)
   end
 
   private
 
   def attributes(args)
-    args.except(:id, :questions).merge(
-      {
-        questions:
-          (args[:questions] || []).map do |question|
-            {question: question.question, answer: question.answer}
-          end
-      }
-    )
+    questions = (args[:questions] || []).map { |qa| {question: qa.question, answer: qa.answer} }
+    args.except(:id, :questions).merge({questions: questions})
   end
 end

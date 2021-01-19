@@ -15,9 +15,6 @@ RSpec.describe Mutations::RequestQuote do
           id
           stage
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
@@ -48,8 +45,8 @@ RSpec.describe Mutations::RequestQuote do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestQuote']['errors'][0]
-      expect(error['code']).to eq('tasks.nameRequired')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.nameRequired')
     end
   end
 
@@ -58,8 +55,8 @@ RSpec.describe Mutations::RequestQuote do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestQuote']['errors'][0]
-      expect(error['code']).to eq('tasks.descriptionRequired')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.descriptionRequired')
     end
   end
 
@@ -68,8 +65,8 @@ RSpec.describe Mutations::RequestQuote do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestQuote']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -78,8 +75,8 @@ RSpec.describe Mutations::RequestQuote do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestQuote']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -88,8 +85,8 @@ RSpec.describe Mutations::RequestQuote do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestQuote']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -98,8 +95,8 @@ RSpec.describe Mutations::RequestQuote do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestQuote']['errors'][0]
-      expect(error['code']).to eq('tasks.cantRequestQuote')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.cantRequestQuote')
     end
   end
 
@@ -108,8 +105,8 @@ RSpec.describe Mutations::RequestQuote do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestQuote']['errors'][0]
-      expect(error['code']).to eq('tasks.cantRequestQuote')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.cantRequestQuote')
     end
   end
 
@@ -118,8 +115,8 @@ RSpec.describe Mutations::RequestQuote do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestQuote']['errors'][0]
-      expect(error['code']).to eq('tasks.cantRequestQuote')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.cantRequestQuote')
     end
   end
 end
