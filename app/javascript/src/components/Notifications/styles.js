@@ -16,26 +16,28 @@ const notificationType = variant({
 
 export const Container = styled.div`
   right: 0;
+  left: 0;
   bottom: 0;
+  margin: 0 auto;
   z-index: 100;
   position: fixed;
-  max-width: 350px;
+  max-width: 320px;
 
   @media (max-width: 500px) {
-    width: 100%;
+    width: 70%;
+    margin-left: 12px;
   }
 `;
 
 export const NotificationCard = styled.div`
   ${notificationType};
 
-  width: 320px;
+  width: 100%;
   padding: 12px 16px;
   color: white;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
-  margin-right: 20px;
   border-radius: 8px;
   box-shadow: 0 5px 10px -5px rgba(6, 24, 51, 0.15),
     0 0 50px 0 rgba(6, 24, 51, 0.15);
