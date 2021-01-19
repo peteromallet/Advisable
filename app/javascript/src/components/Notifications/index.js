@@ -44,12 +44,12 @@ export const NotificationsProvider = ({ children }) => {
   const variants = {
     initial: {
       opacity: 0,
-      x: 200,
+      y: 200,
       scale: 0.9,
     },
     animate: {
       opacity: 1,
-      x: 0,
+      y: 0,
       scale: 1,
     },
     exit: {
