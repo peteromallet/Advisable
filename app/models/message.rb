@@ -3,6 +3,10 @@
 class Message < ApplicationRecord
   belongs_to :conversation
   belongs_to :account
+
+  def read_by
+    self[:read_by] || []
+  end
 end
 
 # == Schema Information
@@ -11,6 +15,7 @@ end
 #
 #  id              :uuid             not null, primary key
 #  content         :string
+#  read_by         :jsonb
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  account_id      :bigint           not null

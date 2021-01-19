@@ -5,5 +5,5 @@ class Types::MessageType < Types::BaseType
   field :content, String, null: false
   field :account, Types::AccountType, null: false
   field :conversation, Types::ConversationType, null: false
-  field :created_at, GraphQL::Types::ISO8601Date, null: true
+  field :created_at, GraphQL::Types::ISO8601DateTime, null: true
 end

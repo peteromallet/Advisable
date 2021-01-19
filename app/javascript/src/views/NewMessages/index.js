@@ -17,6 +17,7 @@ const MESSAGES = gql`
       lastMessage {
         id
         content
+        createdAt
       }
     }
   }
@@ -37,6 +38,7 @@ const NEW_MESSAGE = gql`
           lastMessage {
             id
             content
+            createdAt
           }
         }
       }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_18_192307) do
+ActiveRecord::Schema.define(version: 2021_01_18_234623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -465,6 +465,7 @@ ActiveRecord::Schema.define(version: 2021_01_18_192307) do
     t.string "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "read_by"
     t.index ["account_id"], name: "index_messages_on_account_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
   end

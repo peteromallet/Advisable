@@ -1,4 +1,5 @@
 import React from "react";
+import { relativeDate } from "@guild/utils";
 import { Box, Text, Avatar } from "@advisable/donut";
 import { StyledConversationItem } from "./styles";
 import useViewer from "src/hooks/useViewer";
@@ -11,21 +12,25 @@ function ConversationListItem({ conversation, recipient }) {
           <Avatar size={"s"} name={recipient.name} />
         </Box>
         <Box flexGrow="1" ml={2}>
-          <Box
+          <Text mb={1} color="neutral900" fontWeight="medium">
+            {recipient.name}
+          </Text>
+          <Text
             mb={1}
-            display="flex"
-            alignItems="flex-end"
-            justifyContent="space-between"
+            size="sm"
+            color="neutral600"
+            css={`
+              flex-wrap: nowrap;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              min-width: 0;
+            `}
           >
-            <Text color="neutral900" fontWeight="medium">
-              {recipient.name}
-            </Text>
-            <Text size="xxs" color="darkGray">
-              recently
-            </Text>
-          </Box>
-          <Text size="sm" color="neutral600">
             {conversation.lastMessage?.content}
+          </Text>
+          <Text size="xxs" color="darkGray">
+            {conversation.lastMessage?.createdAt}
           </Text>
         </Box>
       </Box>
@@ -39,6 +44,14 @@ export default function ConversationsList({ conversations }) {
   const getRecipient = (conversation) => {
     return conversation.participants.find((p) => p.id !== viewer.accountId);
   };
+
+  const sorted = React.useMemo(() => {
+    return Array.from(conversations).sort(function (a, b) {
+      return (
+        new Date(b.lastMessage?.createdAt) - new Date(a.lastMessage?.createdAt)
+      );
+    });
+  }, [conversations]);
 
   return (
     <Box
@@ -76,7 +89,7 @@ export default function ConversationsList({ conversations }) {
         background="white"
         flexDirection="column"
       >
-        {conversations.map((c) => (
+        {sorted.map((c) => (
           <ConversationListItem
             key={c.id}
             conversation={c}
