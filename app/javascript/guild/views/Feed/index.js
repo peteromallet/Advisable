@@ -10,8 +10,8 @@ const Feed = () => {
 
   return (
     <Box
-      paddingX="6"
-      paddingY="2xl"
+      paddingX={[4, 6]}
+      paddingY={[6, 10]}
       marginX="auto"
       display="flex"
       maxWidth="1300px"
@@ -23,7 +23,7 @@ const Feed = () => {
           </Sticky>
         </Box>
       )}
-      <Box width="100%" paddingX={{ _: null, l: "xl" }}>
+      <Box width="100%" paddingX={{ _: null, l: "xl" }} minWidth="0">
         <Posts />
       </Box>
       {lUp && (
