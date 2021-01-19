@@ -9,6 +9,7 @@ import {
 } from "./styles";
 
 function Review({ review }) {
+  if (!review) return null;
   const { role, name, companyName } = review;
   const displayName = name?.split(" ")[0] || role;
   const title = name ? `${role} at ${companyName}` : companyName;
