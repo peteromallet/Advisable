@@ -4,7 +4,7 @@ import { StyledMarkdown } from "./styles";
 import urlRegex from "url-regex";
 
 export default function Markdown({ children }) {
-  const formatLinks = (source) => source.replace(urlRegex(), "[$&]($&)");
+  const formatLinks = (source) => source?.replace(urlRegex(), "[$&]($&)");
 
   const renderLinks = ({ href }) => {
     const uri = href.startsWith("http") ? href : `//${href}`;
