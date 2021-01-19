@@ -13,10 +13,10 @@ export default function MainProfile({ isOwner, data }) {
 
   return (
     <>
-      {data.specialist.profileProjects.length > 0 && (
+      {data.specialist.previousProjects.nodes.length > 0 && (
         <PreviousProjects data={data} isOwner={isOwner} />
       )}
-      {data.specialist.profileProjects.length === 0 && (
+      {data.specialist.previousProjects.nodes.length === 0 && (
         <NoProjects data={data} isOwner={isOwner} />
       )}
       {hasReviews && <Testimonials reviews={reviews} />}

@@ -1,15 +1,22 @@
 import React from "react";
+import useViewer from "src/hooks/useViewer";
 import { useQuery } from "@apollo/client";
 import { Modal, Avatar, Box, Text, Tag, Paragraph } from "@advisable/donut";
 import GET_PROJECT from "./getProject";
-import ImageGallery, { useImageGallery } from "components/ImageGallery";
+import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
-import Review from "components/Review";
 import ProjectDetailsLoading from "./ProjectDetailsLoading";
 import { StyledImageThumbnail } from "./styles";
+import ProjectActions from "./ProjectActions";
+import ProjectStatus from "./ProjectStatus";
+import PreviousProjectFormModal, {
+  usePreviousProjectModal,
+} from "src/components/PreviousProjectFormModal";
 
-function PreviousProjectDetails({ id }) {
+function PreviousProjectDetails({ detailsModal, id }) {
+  const viewer = useViewer();
   const gallery = useImageGallery();
+  const modal = usePreviousProjectModal("/previous_projects/new");
   const { loading, data, error } = useQuery(GET_PROJECT, {
     variables: {
       id: id,
@@ -20,12 +27,17 @@ function PreviousProjectDetails({ id }) {
   if (error) return <Text>Failed to load project, please try again.</Text>;
 
   const project = data.previousProject;
+  const viewerIsOwner = project.specialist.id === viewer?.id;
 
   const cover = project.images.find((i) => i.cover);
   const otherImages = project.images.filter((i) => !i.cover);
 
   return (
     <>
+      <PreviousProjectFormModal
+        modal={modal}
+        specialistId={project.specialist.id}
+      />
       <Box mb="m" width="80%">
         <Text
           as="h2"
@@ -83,6 +95,14 @@ function PreviousProjectDetails({ id }) {
             {project.specialist.location}
           </Text>
         </Box>
+        <Box ml="auto">
+          <ProjectActions
+            onDelete={detailsModal.hide}
+            project={project}
+            editModal={modal}
+            size="md"
+          />
+        </Box>
       </Box>
       <Box height={1} bg="neutral100" mb="l" />
       {project.description && (
@@ -100,7 +120,7 @@ function PreviousProjectDetails({ id }) {
         </>
       )}
       <Box display={["block", "flex"]}>
-        <Box width="100%" mb="xl">
+        <Box width="100%">
           <Text
             mb="xs"
             fontSize="lg"
@@ -110,7 +130,7 @@ function PreviousProjectDetails({ id }) {
           >
             Skills Used
           </Text>
-          <Box>
+          <Box mb={["s", 0]}>
             {project.skills.map((skill) => (
               <Tag key={skill.id} mr="xxs" mb="xxs" variant="blue">
                 {skill.name}
@@ -118,7 +138,7 @@ function PreviousProjectDetails({ id }) {
             ))}
           </Box>
         </Box>
-        <Box width="100%" mb="xl">
+        <Box width="100%">
           <Text
             mb="xs"
             fontSize="lg"
@@ -137,12 +157,31 @@ function PreviousProjectDetails({ id }) {
           </Box>
         </Box>
       </Box>
-      {project.reviews.length > 0 && project.reviews[0]?.comment && (
+      <ProjectStatus
+        project={project}
+        modal={modal}
+        onDelete={detailsModal.hide}
+      />
+      {viewerIsOwner ? (
         <>
-          <Box height={1} bg="neutral100" marginBottom="xl" />
-          <Review review={project.reviews[0]} />
+          <Box
+            mt={4}
+            mb={8}
+            height="1px"
+            width="200px"
+            mx="auto"
+            bg="neutral100"
+          />
+          <Box display="flex" justifyContent="center" pb={6}>
+            <ProjectActions
+              onDelete={detailsModal.hide}
+              project={project}
+              editModal={modal}
+              size={{ _: "lg", md: "xl" }}
+            />
+          </Box>
         </>
-      )}
+      ) : null}
     </>
   );
 }
@@ -154,7 +193,7 @@ PreviousProjectDetails.Modal = function PreviousProjectDetailsModal({
 }) {
   return (
     <Modal modal={modal} width={800} padding="xl" {...props}>
-      <PreviousProjectDetails id={id} />
+      <PreviousProjectDetails detailsModal={modal} id={id} />
     </Modal>
   );
 };

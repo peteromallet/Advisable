@@ -66,6 +66,7 @@ function createTestData() {
             primarySkill: mockData.skill(),
             industries: [mockData.industry()],
             primaryIndustry: mockData.industry(),
+            reviews: [mockData.review()],
           }),
         ],
         specialist: mockData.specialist({

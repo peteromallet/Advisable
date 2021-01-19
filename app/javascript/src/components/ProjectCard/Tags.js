@@ -17,8 +17,8 @@ export default function Tags({
   primaryIndustry,
   industries,
 }) {
-  const skillTag = primarySkill?.name || skills[0].name;
-  const industryTag = primaryIndustry?.name || industries[0].name;
+  const skillTag = primarySkill?.name || skills[0]?.name;
+  const industryTag = primaryIndustry?.name || industries[0]?.name;
   const numOfSkills = skills.length - 1;
   const numOfIndustries = industries.length - 1;
 
@@ -31,12 +31,27 @@ export default function Tags({
 
   return (
     <Box>
-      <Tag suffix={SkillsSuffix} variant="blue" mr={1} mb={1.5} size="s">
-        {skillTag}
-      </Tag>
-      <Tag suffix={IndustrySuffix} variant="cyan" size="s">
-        {industryTag}
-      </Tag>
+      {skillTag ? (
+        <Tag
+          suffix={numOfSkills > 0 ? SkillsSuffix : null}
+          variant="blue"
+          mr={1}
+          mb={1.5}
+          size="s"
+        >
+          {skillTag}
+        </Tag>
+      ) : null}
+      {industryTag ? (
+        <Tag
+          suffix={numOfIndustries > 0 ? IndustrySuffix : null}
+          variant="cyan"
+          size="s"
+          mb={1.5}
+        >
+          {industryTag}
+        </Tag>
+      ) : null}
     </Box>
   );
 }

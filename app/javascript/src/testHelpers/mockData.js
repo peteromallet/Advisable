@@ -388,6 +388,7 @@ export const review = (fields = {}) => {
       id: uniqueId("rev"),
       comment: "This is a review comment",
       name: "Jane Doe",
+      firstName: "Jane",
       role: "CEO",
       avatar: null,
       companyName: "Acme Inc",

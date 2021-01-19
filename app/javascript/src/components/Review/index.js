@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Avatar, Text } from "@advisable/donut";
+import { Box, Avatar, Text, Circle } from "@advisable/donut";
+import { CheckCircle } from "@styled-icons/feather";
 
 const Review = ({ review }) => {
   const { role, name, companyName } = review;
@@ -8,16 +9,17 @@ const Review = ({ review }) => {
   return (
     <Box>
       <Box display="flex" alignItems="center" marginBottom="s">
-        <Avatar
-          size="s"
-          bg="neutral100"
-          marginRight="12px"
-          url={review.avatar}
-          name={name}
-        />
+        <Box position="relative" mr={3}>
+          <Avatar size="s" bg="neutral100" url={review.avatar} name={name} />
+          <Box color="blue400" position="absolute" right="-4px" bottom="0">
+            <Circle bg="white" size={18}>
+              <CheckCircle size={16} strokeWidth={3} />
+            </Circle>
+          </Box>
+        </Box>
         <Box>
           <Text color="neutral900" marginBottom="2px">
-            {name || role}
+            Reviewed by {name || role}
           </Text>
           <Text fontSize="14px" color="neutral500">
             {title}

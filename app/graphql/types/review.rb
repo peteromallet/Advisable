@@ -8,6 +8,7 @@ class Types::Review < Types::BaseType
   field :type, String, null: true
   field :ratings, Types::Ratings, null: true
   field :name, String, null: true
+  field :first_name, String, null: true
   field :role, String, null: true
   field :specialist, Types::SpecialistType, null: false
   field :company_name, String, null: true
