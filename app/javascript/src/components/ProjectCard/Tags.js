@@ -31,7 +31,7 @@ export default function Tags({
 
   return (
     <Box>
-      {skillTag && (
+      {skillTag ? (
         <Tag
           suffix={numOfSkills > 0 ? SkillsSuffix : null}
           variant="blue"
@@ -41,8 +41,8 @@ export default function Tags({
         >
           {skillTag}
         </Tag>
-      )}
-      {industryTag && (
+      ) : null}
+      {industryTag ? (
         <Tag
           suffix={numOfIndustries > 0 ? IndustrySuffix : null}
           variant="cyan"
@@ -51,7 +51,7 @@ export default function Tags({
         >
           {industryTag}
         </Tag>
-      )}
+      ) : null}
     </Box>
   );
 }
