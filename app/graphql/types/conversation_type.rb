@@ -10,7 +10,11 @@ class Types::ConversationType < Types::BaseType
     object.accounts
   end
 
+  def messages
+    object.messages.includes(:account)
+  end
+
   def last_message
-    object.messages.order(created_at: :desc).first
+    messages.order(created_at: :desc).first
   end
 end
