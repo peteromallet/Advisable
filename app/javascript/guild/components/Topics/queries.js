@@ -6,6 +6,7 @@ export const GUILD_TOP_TOPICS_QUERY = gql`
       nodes {
         id
         name
+        slug
         topicable {
           __typename
           ... on Country {

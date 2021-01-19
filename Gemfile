@@ -77,6 +77,7 @@ gem "jsonb_accessor", "~> 1.1.0"
 gem "acts-as-taggable-on", github: "kvokka/acts-as-taggable-on", branch: "add-rails-6-1-support"
 gem "acts_as_follower", github: "tcocca/acts_as_follower", branch: "master"
 gem "email_reply_parser"
+gem 'friendly_id', '~> 5.4.0'
 
 gem "pry"
 gem "pry-rails"

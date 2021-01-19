@@ -99,10 +99,10 @@ RSpec.describe Types::Guild::PostInterface do
       let(:query) {
         <<-GRAPHQL
           {
-            guildPosts(first: 5, topicId: "#{guild_topics.first.id}") {
+            guildPosts(first: 5, topicId: "#{guild_topics.first.slug}") {
               nodes {
                 guildTopics {
-                  id
+                  slug
                 }
               }
             }
@@ -120,8 +120,25 @@ RSpec.describe Types::Guild::PostInterface do
         expect(topic_results.size).to eq(1)
         expect(topic_results.size).not_to eq(Guild::Topic.count)
         expect(topic_results[0]).to include({
-          "id" => guild_topics.first.id
+          "slug" => guild_topics.first.slug
         })
+      end
+
+      it "can filter by the guild topic id" do
+        query = <<-GRAPHQL
+          {
+            guildPosts(first: 5, topicId: "#{guild_topics.first.id}") {
+              nodes {
+                guildTopics {
+                  id
+                }
+              }
+            }
+          }
+        GRAPHQL
+        resp = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
+        topic_results = resp.dig("data", *response_keys)[0]["guildTopics"]
+        expect(topic_results[0]).to include({"id" => guild_topics.first.id})
       end
     end
   end
