@@ -79,7 +79,8 @@ const Post = ({
         )}
 
         <Text
-          mb="4"
+          pb={4}
+          display="block"
           fontSize={["2xl", "4xl"]}
           color="neutral900"
           fontWeight="medium"
@@ -91,13 +92,13 @@ const Post = ({
           {post.title}
         </Text>
 
-        <Box mb="4" onClick={handleOpen} style={{ cursor: "pointer" }}>
+        <Box mb={6} onClick={handleOpen} style={{ cursor: "pointer" }}>
           <Markdown>{post.excerpt}</Markdown>
         </Box>
 
         <Text
-          mb="8"
-          fontSize="s"
+          mb={6}
+          display="inline-block"
           color="blue700"
           as={LinkOrExternal}
           href={url}
