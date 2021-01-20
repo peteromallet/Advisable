@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Guild::SpecialistsConcern
   extend ActiveSupport::Concern
 
@@ -31,6 +33,8 @@ module Guild::SpecialistsConcern
                    guild_notifications_last_read: [:datetime, {default: Time.zone.at(0)}],
                    guild_calendly_link: [:string],
                    guild_featured_member_at: :datetime
+
+    register_tutorial 'GUILD'
 
     def touch_guild_notifications_last_read
       update!(guild_notifications_last_read: Time.current)

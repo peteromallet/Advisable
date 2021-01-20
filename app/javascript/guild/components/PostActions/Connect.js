@@ -42,6 +42,7 @@ function ConnectAction({ post, size }) {
             aria-label={label(firstName)}
             icon={<ChatbubbleEllipses />}
             onClick={handleConnect}
+            data-walkthrough={post.pinned ? "postConnect" : null}
           />
         </Box>
       </Tooltip>

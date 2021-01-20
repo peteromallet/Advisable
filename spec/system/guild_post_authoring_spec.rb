@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Create post flow', type: :system do
@@ -6,6 +8,8 @@ RSpec.describe 'Create post flow', type: :system do
   let(:content) { Faker::Lorem.sentence(word_count: 50) }
 
   before do
+    specialist.account.update!(completed_tutorials: ["GUILD"])
+
     create(:skill, name: "Design")
     create(:skill, name: "Development")
   end
