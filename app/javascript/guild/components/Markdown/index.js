@@ -6,10 +6,20 @@ import urlRegex from "url-regex";
 export default function Markdown({ children }) {
   const formatLinks = (source) => source.replace(urlRegex(), "[$&]($&)");
 
+  const linkClickHandler = (e) => {
+    e.stopPropagation();
+  };
+
   const renderLinks = ({ href }) => {
     const uri = href.startsWith("http") ? href : `//${href}`;
+
     return (
-      <a href={uri} rel="noreferrer nofollow" target="_blank">
+      <a
+        href={uri}
+        target="_blank"
+        rel="noreferrer nofollow"
+        onClick={linkClickHandler}
+      >
         {href}
       </a>
     );
