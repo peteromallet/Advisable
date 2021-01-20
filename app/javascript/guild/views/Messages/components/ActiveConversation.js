@@ -4,7 +4,15 @@ import { css } from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link as RouterLink } from "react-router-dom";
 import { Send, ArrowUp } from "@styled-icons/ionicons-solid";
-import { Box, Button, Link, Textarea, Avatar, theme } from "@advisable/donut";
+import {
+  Box,
+  Button,
+  Link,
+  Textarea,
+  Avatar,
+  theme,
+  useBreakpoint,
+} from "@advisable/donut";
 import Loading from "src/components/Loading";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { useTwilioChat } from "@guild/hooks/twilioChat/useTwilioChat";
@@ -21,6 +29,7 @@ function Composer({ onSubmit }) {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const isConnected = connectionState === "connected";
+  const isWidescreen = useBreakpoint("sUp");
 
   async function handleSubmit() {
     if (loading) return;
@@ -40,7 +49,7 @@ function Composer({ onSubmit }) {
   return (
     <StyledComposer>
       <Textarea
-        minRows="3"
+        minRows={isWidescreen ? "3" : "1"}
         maxRows="5"
         name="message"
         value={message}
