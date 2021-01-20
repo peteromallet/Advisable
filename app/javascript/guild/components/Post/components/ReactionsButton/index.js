@@ -85,6 +85,7 @@ const ReactionsButton = ({ size, post }) => {
           color={reacted ? "white" : "yellow700"}
           bg={reacted ? "yellow500" : "yellow100"}
           icon={reacted ? <BulbFilled /> : <Bulb />}
+          data-walkthrough={post.pinned ? "postReaction" : null}
         />
       </Tooltip>
     </>
