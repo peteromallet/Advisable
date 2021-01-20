@@ -20,25 +20,22 @@ class Mutations::StopWorking < Mutations::BaseMutation
   def authorized?(**args)
     application = Application.find_by_uid!(args[:application])
     policy = ApplicationPolicy.new(context[:current_user], application)
-    return true if policy.stop_working?
 
-    ApiError.not_authorized("You do not have permission to execute this mutation")
+    unless policy.stop_working?
+      ApiError.not_authorized("You do not have permission to execute this mutation")
+    end
+
+    if application.status != "Working"
+      ApiError.invalid_request("applicationStatusNotWorking", "The application status must be 'Working'.")
+    end
+
+    true
   end
 
   def resolve(**args)
     application = Application.find_by_uid!(args[:application])
 
-    if application.status != "Working"
-      ApiError.invalid_request(
-        "applicationStatusNotWorking",
-        "The application status must be 'Working'."
-      )
-    end
-
-    application.update(
-      status: "Stopped Working",
-      stopped_working_reason: args[:reason]
-    )
+    application.update(status: "Stopped Working", stopped_working_reason: args[:reason])
 
     application.sync_to_airtable
 
