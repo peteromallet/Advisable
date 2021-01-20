@@ -1,4 +1,5 @@
-import React, { useMemo, useReducer } from "react";
+import React, { useMemo, useReducer, useState } from "react";
+import { useApolloClient } from "@apollo/client";
 import { every } from "lodash-es";
 // Utils
 import createDispatcher from "src/utilities/createDispatcher";
@@ -10,17 +11,25 @@ import {
 } from "./reducerHandlers";
 // Hooks
 import useQueryStringFilter from "./useQueryStringFilter";
+import useViewer from "src/hooks/useViewer";
 // Components
+import PreviousProjectFormModal, {
+  usePreviousProjectModal,
+} from "src/components/PreviousProjectFormModal";
 import {
   SectionHeaderText,
   SectionHeaderWrapper,
 } from "../components/SectionHeader";
-import { Box, Button, useBreakpoint } from "@advisable/donut";
+import { Box, useBreakpoint, useModal } from "@advisable/donut";
+import AddPreviousProjectButton from "src/components/AddPreviousProjectButton";
 import NoFilteredProjects from "./NoFilteredProjects";
-import Masonry from "components/Masonry";
+import Masonry from "src/components/Masonry";
 import ProjectCard from "src/components/ProjectCard";
+import ValidationModal from "src/components/ManagePreviousProjects/ValidationModal";
 import Tags from "./Filter/Tags";
 import Filter from "./Filter";
+// Queries
+import { GET_PROFILE } from "../queries";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -56,6 +65,11 @@ const filterProjects = (state) => (project) => {
 
 function PreviousProjects({ data, isOwner }) {
   const [state, dispatch] = useReducer(reducer, data, init);
+  const [addedProject, setAddedProject] = useState(null);
+  const modal = usePreviousProjectModal("/previous_projects/new");
+  const validationModal = useModal();
+  const client = useApolloClient();
+  const viewer = useViewer();
 
   // Update state actions
   const createAction = useMemo(() => createDispatcher(dispatch), []);
@@ -85,6 +99,31 @@ function PreviousProjects({ data, isOwner }) {
     .map((p) => {
       return <ProjectCard key={p.id} project={p} />;
     });
+
+  const handleNewProject = (project) => {
+    const previous = client.readQuery({
+      query: GET_PROFILE,
+      variables: { id: viewer.id },
+    });
+    client.writeQuery({
+      query: GET_PROFILE,
+      variables: { id: viewer.id },
+      data: {
+        specialist: {
+          ...previous.specialist,
+          profileProjects: [
+            ...previous.specialist.previousProjects.nodes,
+            project,
+          ],
+        },
+      },
+    });
+  };
+
+  const handlePublish = (project) => {
+    setAddedProject(project);
+    validationModal.show();
+  };
 
   return (
     <Box mb="xxl">
@@ -118,20 +157,26 @@ function PreviousProjects({ data, isOwner }) {
       <Box>
         <SectionHeaderWrapper>
           <SectionHeaderText>Previous Projects</SectionHeaderText>
-          {isOwner && (
-            <Button
-              as="a"
-              size="xs"
-              variant="subtle"
-              ml="auto"
-              href="/settings/references"
-            >
-              Edit projects
-            </Button>
+          {addedProject && (
+            <ValidationModal
+              modal={validationModal}
+              previousProject={addedProject}
+            />
           )}
+          {isOwner ? (
+            <PreviousProjectFormModal
+              modal={modal}
+              specialistId={viewer.id}
+              onPublish={handlePublish}
+              onCreate={handleNewProject}
+            />
+          ) : null}
         </SectionHeaderWrapper>
         {projectCards.length ? (
-          <Masonry columns={numOfColumns}>{projectCards}</Masonry>
+          <Masonry columns={numOfColumns}>
+            {isOwner ? <AddPreviousProjectButton modal={modal} /> : null}
+            {projectCards}
+          </Masonry>
         ) : (
           <NoFilteredProjects firstName={data.specialist.firstName} />
         )}
