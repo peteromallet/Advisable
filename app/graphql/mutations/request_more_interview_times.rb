@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::RequestMoreInterviewTimes < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :availability_note, String, required: false
@@ -9,13 +11,13 @@ class Mutations::RequestMoreInterviewTimes < Mutations::BaseMutation
     'Client Requested Reschedule',
     'Need More Time Options',
     'More Time Options Added'
-  ]
+  ].freeze
 
   def resolve(**args)
     interview = Interview.find_by_uid_or_airtable_id!(args[:id])
 
     unless ALLOWED_STATUSES.include?(interview.status)
-      raise ApiError::InvalidRequest.new(
+      ApiError.invalid_request(
               'interview.notRequested',
               'Interview is not in a requested state'
             )

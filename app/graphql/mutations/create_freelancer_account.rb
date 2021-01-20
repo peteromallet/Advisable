@@ -55,7 +55,7 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
       args[:skills].map do |name|
         skill = Skill.find_by(name: name)
         if skill.nil?
-          raise ApiError::InvalidRequest.new(
+          ApiError.invalid_request(
                   'skillNotFound',
                   "Skill '#{name}' does not exist"
                 )
@@ -80,10 +80,10 @@ class Mutations::CreateFreelancerAccount < Mutations::BaseMutation
       referrer: args[:referrer]
     )
 
-    unless account.valid? && specialist.valid?
-      if account.errors.added?(:email, "has already been taken")
-        raise ApiError::InvalidRequest.new('emailTaken', 'This email is already being used by another account')
-      end
+    # frozen_string_literal: false
+    # Creates a new freelancer account
+    if !account.valid? && specialist.valid? && account.errors.added?(:email, "has already been taken")
+      ApiError.invalid_request('emailTaken', 'This email is already being used by another account')
     end
 
     specialist.skills = skills

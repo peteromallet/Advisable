@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::ResendInterviewRequest < Mutations::BaseMutation
   argument :id, ID, required: true
 
@@ -7,10 +9,10 @@ class Mutations::ResendInterviewRequest < Mutations::BaseMutation
     {
       interview:
         Interviews::ResendInterviewRequest.call(
-          interview: Interview.find_by_uid_or_airtable_id!(args[:id]),
+          interview: Interview.find_by_uid_or_airtable_id!(args[:id])
         )
     }
   rescue Service::Error => e
-    ApiError.invalid_request(code: "FAILED_TO_RESEND", message: e.message)
+    ApiError.invalid_request("FAILED_TO_RESEND", e.message)
   end
 end

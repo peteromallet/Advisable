@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::BaseType < GraphQL::Schema::Object
   field_class BaseField
 
@@ -17,6 +19,6 @@ class Types::BaseType < GraphQL::Schema::Object
     requires_current_user!
     return true if current_user.guild
 
-    ApiError.invalid_request(code: "invalidPermissions", message: "Not a guild user")
+    ApiError.invalid_request("invalidPermissions", "Not a guild user")
   end
 end

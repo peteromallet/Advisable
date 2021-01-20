@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::QueryType < Types::BaseType
   field :project, Types::ProjectType, null: true do
     argument :id, ID, required: true
@@ -202,19 +204,15 @@ class Types::QueryType < Types::BaseType
   end
 
   def invoice(id:)
-    unless current_user.try(:is_a?, User)
-      raise ApiError::NotAuthenticated
-    end
+    ApiError.not_authenticated unless current_user.try(:is_a?, User)
 
     invoice = Stripe::Invoice.retrieve(id)
 
-    if invoice.customer != current_user.company.stripe_customer_id
-      raise ApiError::NotAuthorized.new('You dont have access to this')
-    end
+    ApiError.not_authorized("You dont have access to this") if invoice.customer != current_user.company.stripe_customer_id
 
     invoice
   rescue Stripe::InvalidRequestError => e
-    raise ApiError::InvalidRequest.new('notFound', 'Invoice not found')
+    ApiError.invalid_request('notFound', 'Invoice not found')
   end
 
   field :questions, [Types::QuestionType], 'Returns a list of questions', null: true
@@ -249,7 +247,7 @@ class Types::QueryType < Types::BaseType
   def guild_post(id:)
     post = Guild::Post.find(id)
     policy = Guild::PostPolicy.new(current_user, post)
-    raise ApiError::NotAuthorized.new('You dont have access to this') unless policy.show
+    ApiError.not_authorized("You dont have access to this") unless policy.show
 
     post
   end

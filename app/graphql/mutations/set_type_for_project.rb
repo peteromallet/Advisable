@@ -20,7 +20,7 @@ class Mutations::SetTypeForProject < Mutations::BaseMutation
   end
 
   def resolve(application:, project_type:, monthly_limit:)
-    ApiError.invalid_request(code: "invalidProjectType", message: "Project type is not valid.") if ['Fixed', 'Flexible'].exclude?(project_type)
+    ApiError.invalid_request("invalidProjectType", "Project type is not valid.") if ['Fixed', 'Flexible'].exclude?(project_type)
 
     ap = Application.find_by_uid_or_airtable_id!(application)
     ap.update(project_type: project_type, monthly_limit: monthly_limit)

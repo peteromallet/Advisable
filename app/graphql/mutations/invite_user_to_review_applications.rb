@@ -17,7 +17,7 @@ class Mutations::InviteUserToReviewApplications < Mutations::BaseMutation
     project = Project.find_by!(uid: project_id)
     return true if current_user == project.user
 
-    raise ApiError::InvalidRequest.new("invalidProject", "The project does not belong to signed in user.")
+    ApiError.invalid_request("invalidProject", "The project does not belong to signed in user.")
   end
 
   def resolve(project_id:, email:, **optional)
@@ -38,7 +38,7 @@ class Mutations::InviteUserToReviewApplications < Mutations::BaseMutation
     {user: invited_user}
   rescue ActiveRecord::RecordInvalid
     if account.errors.added?(:email, :blank)
-      raise ApiError::InvalidRequest.new("emailBlank", "Email is required.")
+      ApiError.invalid_request("emailBlank", "Email is required.")
     else
       raise
     end

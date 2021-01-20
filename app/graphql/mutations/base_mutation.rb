@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
   def current_user
     context[:current_user]
@@ -21,41 +23,29 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
 
   def requires_client!
     requires_current_user!
-
     return true if current_user.is_a?(User)
 
-    ApiError.invalid_request(
-      code: "MUST_BE_USER",
-      message: "Current user must be a User."
-    )
+    ApiError.invalid_request("MUST_BE_USER", "Current user must be a User.")
   end
 
   def requires_specialist!
     requires_current_user!
-
     return true if current_user.is_a?(Specialist)
 
-    ApiError.invalid_request(
-      code: "MUST_BE_SPECIALIST",
-      message: "Current user must be a Specialist."
-    )
+    ApiError.invalid_request("MUST_BE_SPECIALIST", "Current user must be a Specialist.")
   end
 
   def requires_guild_user!
     requires_current_user!
     return true if current_user.guild
 
-    ApiError.invalid_request(code: "invalidPermissions", message: "Not a guild user")
+    ApiError.invalid_request("invalidPermissions", "Not a guild user")
   end
 
   def requires_team_manager!
     requires_client!
-
     return true if current_user.account.team_manager?
 
-    ApiError.invalid_request(
-      code: "MUST_BE_TEAM_MANAGER",
-      message: "Current user must have team management permission."
-    )
+    ApiError.invalid_request("MUST_BE_TEAM_MANAGER", "Current user must have team management permission.")
   end
 end

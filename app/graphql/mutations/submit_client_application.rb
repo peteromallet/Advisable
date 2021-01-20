@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::SubmitClientApplication < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :talent_quality, String, required: false
@@ -9,7 +11,7 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
   def authorized?(**args)
     user = User.find_by_uid_or_airtable_id!(args[:id])
     if user.application_status != "Application Started"
-      raise ApiError::InvalidRequest.new('alreadySubmitted', 'Application has already been submitted')
+      ApiError.invalid_request('alreadySubmitted', 'Application has already been submitted')
     end
 
     true
@@ -63,10 +65,8 @@ class Mutations::SubmitClientApplication < Mutations::BaseMutation
   def update_guarantee_terms(user, accept)
     return if accept.nil?
 
-    if accept
-      user.accepted_guarantee_terms_at = Time.zone.now
-    else
-      user.accepted_guarantee_terms_at = nil
-    end
+    user.accepted_guarantee_terms_at = if accept
+                                         Time.zone.now
+                                       end
   end
 end

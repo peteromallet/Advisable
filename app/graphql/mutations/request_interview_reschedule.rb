@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::RequestInterviewReschedule < Mutations::BaseMutation
   argument :interview, ID, required: true
   argument :note, String, required: false
@@ -9,10 +11,7 @@ class Mutations::RequestInterviewReschedule < Mutations::BaseMutation
 
     interview = Interview.find_by_uid_or_airtable_id!(args[:interview])
     if interview.status != "Call Scheduled"
-      ApiError.invalid_request(
-        code: "INTERVIEW_NOT_SCHEDULED",
-        message: "Interview is not in scheduled state."
-      )
+      ApiError.invalid_request("INTERVIEW_NOT_SCHEDULED", "Interview is not in scheduled state.")
     end
 
     true
@@ -34,10 +33,7 @@ class Mutations::RequestInterviewReschedule < Mutations::BaseMutation
       interview.save_and_sync!
       SpecialistMailer.interview_reschedule_request(interview).deliver_later
     else
-      ApiError.invalid_request(
-        code: "MUST_BE_CLIENT_OR_SPECIALIST",
-        message: "Current user must be a client or a specialist."
-      )
+      ApiError.invalid_request("MUST_BE_CLIENT_OR_SPECIALIST", "Current user must be a client or a specialist.")
     end
 
     {interview: interview}
