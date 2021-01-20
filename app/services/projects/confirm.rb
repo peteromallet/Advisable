@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Projects::Confirm < ApplicationService
   attr_reader :project
 
@@ -6,11 +8,13 @@ class Projects::Confirm < ApplicationService
   end
 
   def call
+    return project if project.status == 'Brief Confirmed'
+
     if project.status != 'Brief Pending Confirmation'
       raise Service::Error.new("project.not_pending_approval")
     end
 
-    if project.deposit_owed > 0
+    if project.deposit_owed.positive?
       raise Service::Error.new("project.deposit_not_paid")
     end
 

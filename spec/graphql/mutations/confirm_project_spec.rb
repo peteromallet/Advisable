@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::ConfirmProject do
@@ -20,7 +22,7 @@ RSpec.describe Mutations::ConfirmProject do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
 
@@ -31,7 +33,7 @@ RSpec.describe Mutations::ConfirmProject do
   end
 
   context "when the status is not 'Biref Pending confirmation'" do
-    let(:project) { create(:project, status: 'Brief Confirmed') }
+    let(:project) { create(:project, status: 'Draft') }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query)
