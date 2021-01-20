@@ -59,6 +59,12 @@ export const StyledComposer = styled(Box)`
     position: absolute;
   }
 
+  ${StyledTextarea} {
+    textarea {
+      padding-right: 114px;
+    }
+  }
+
   ${StyledTextarea}, ${StyledTextareaControl} {
     background: white;
     border-radius: 12px;
