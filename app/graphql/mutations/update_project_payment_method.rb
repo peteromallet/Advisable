@@ -56,6 +56,6 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
       {idempotency_key: "#{user.company.id}-#{user.company.vat_number}"}
     )
   rescue Stripe::InvalidRequestError
-    ApiError.invalid_request(code: "INVALID_VAT", message: "VAT number is invalid")
+    ApiError.invalid_request("INVALID_VAT", "VAT number is invalid")
   end
 end

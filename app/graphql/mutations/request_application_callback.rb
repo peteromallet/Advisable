@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::RequestApplicationCallback < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :phone_number, String, required: true
@@ -8,7 +10,7 @@ class Mutations::RequestApplicationCallback < Mutations::BaseMutation
     user = User.find_by_uid_or_airtable_id!(args[:id])
 
     if user.application_status != "Application Accepted"
-      raise ApiError::InvalidRequest.new(
+      ApiError.invalid_request(
               'notAccepted',
               'Must be accepted to request a callback'
             )

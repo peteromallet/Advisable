@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::DeleteJob < Mutations::BaseMutation
   argument :id, ID, required: true
   field :id, ID, null: true
@@ -12,7 +14,7 @@ class Mutations::DeleteJob < Mutations::BaseMutation
     end
 
     unless ["Draft", "Pending Advisable Confirmation"].include?(project.status)
-      ApiError.invalid_request(message: 'Project must be a draft')
+      ApiError.invalid_request("MUST_BE_DRAFT", "Project must be a draft")
     end
 
     true

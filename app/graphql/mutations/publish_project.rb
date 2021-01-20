@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::PublishProject < Mutations::BaseMutation
   argument :id, ID, required: true
 
@@ -17,14 +19,11 @@ class Mutations::PublishProject < Mutations::BaseMutation
     policy = ProjectPolicy.new(context[:current_user], project)
 
     unless policy.publish?
-      raise ApiError.not_authorized("You don't have access to this project")
+      ApiError.not_authorized("You don't have access to this project")
     end
 
     if ALLOWED_STATUSES.exclude?(project.status)
-      raise ApiError.invalid_request(
-        code: 'ALREADY_PUBLISHED',
-        message: 'This project is not a draft'
-      )
+      ApiError.invalid_request('ALREADY_PUBLISHED', 'This project is not a draft')
     end
 
     true

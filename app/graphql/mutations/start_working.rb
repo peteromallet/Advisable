@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::StartWorking < Mutations::BaseMutation
   argument :application, ID, required: true
   argument :project_type, String, required: true
@@ -10,7 +12,7 @@ class Mutations::StartWorking < Mutations::BaseMutation
     policy = ApplicationPolicy.new(context[:current_user], application)
     return true if policy.start_working?
 
-    raise ApiError::NotAuthorized.new("You do not have permission to execute this mutation")
+    ApiError.not_authorized("You do not have permission to execute this mutation")
   end
 
   def resolve(**args)

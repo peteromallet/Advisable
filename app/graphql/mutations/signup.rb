@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::Signup < Mutations::BaseMutation
   include Mutations::Helpers::Authentication
 
@@ -39,19 +41,19 @@ class Mutations::Signup < Mutations::BaseMutation
 
   def email_taken?(email)
     account = Account.find_by(email: email)
-    if account&.has_password?
-      ApiError.invalid_request(code: 'ACCOUNT_EXISTS', message: 'Account with this email already exists')
-    end
+    return unless account&.has_password?
+
+    ApiError.invalid_request('ACCOUNT_EXISTS', 'Account with this email already exists')
   end
 
   def valid_account_already_exists?(account)
-    if account.has_password?
-      ApiError.invalid_request(code: 'ACCOUNT_EXISTS', message: 'Account already exists')
-    end
+    return unless account.has_password?
+
+    ApiError.invalid_request('ACCOUNT_EXISTS', 'Account already exists')
   end
 
   def signup_failed(account)
     message = account.errors.full_messages.first
-    ApiError.invalid_request(code: 'SIGNUP_FAILED', message: message)
+    ApiError.invalid_request('SIGNUP_FAILED', message)
   end
 end

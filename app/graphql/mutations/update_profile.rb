@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Updates a specialists profile
 class Mutations::UpdateProfile < Mutations::BaseMutation
   argument :primarily_freelance, Boolean, required: false
@@ -20,12 +22,12 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
   field :specialist, Types::SpecialistType, null: true
 
   def authorized?(**args)
-    if !context[:current_user]
-      raise ApiError::NotAuthenticated.new('You are not logged in')
+    unless context[:current_user]
+      ApiError.not_authenticated('You are not logged in')
     end
 
     if context[:current_user].is_a?(User)
-      raise ApiError::NotAuthenticated.new('You are logged in as a user')
+      ApiError.not_authenticated('You are logged in as a user')
     end
 
     true
@@ -41,6 +43,6 @@ class Mutations::UpdateProfile < Mutations::BaseMutation
 
     {specialist: specialist}
   rescue Service::Error => e
-    raise ApiError::InvalidRequest.new('failedToUpdate', e.message)
+    ApiError.invalid_request('failedToUpdate', e.message)
   end
 end

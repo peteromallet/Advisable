@@ -22,17 +22,11 @@ class Mutations::ScheduleInterview < Mutations::BaseMutation
     interview = Interview.find_by_uid_or_airtable_id!(args[:id])
 
     unless ALLOWED_STATUES.include?(interview.status)
-      ApiError.invalid_request(
-        code: "INTERVIEW_IS_NOT_SCHEDULABLE",
-        message: "Interview is not in a schedulable state."
-      )
+      ApiError.invalid_request("INTERVIEW_IS_NOT_SCHEDULABLE", "Interview is not in a schedulable state.")
     end
 
     unless interview.user.availability.include?(args[:starts_at])
-      ApiError.invalid_request(
-        code: "STARTS_AT_NOT_AVAILABLE_ON_CLIENT",
-        message: "Argument `starts_at` is not inside of the client's availability."
-      )
+      ApiError.invalid_request("STARTS_AT_NOT_AVAILABLE_ON_CLIENT", "Argument `starts_at` is not inside of the client's availability.")
     end
 
     create_video_call(interview)
