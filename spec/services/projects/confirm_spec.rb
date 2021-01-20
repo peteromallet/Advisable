@@ -1,4 +1,4 @@
-# frozen_String_literal: true
+# frozen_string_literal: true
 
 require "rails_helper"
 
@@ -26,6 +26,15 @@ RSpec.describe Projects::Confirm do
     it 'syncs with airtable' do
       expect(project).to receive(:sync_to_airtable)
       described_class.call(project: project)
+    end
+  end
+
+  context "when the project status is 'Brief Confirmed'" do
+    let(:project) { build(:project, status: "Brief Confirmed") }
+
+    it "returns the project" do
+      response = described_class.call(project: project)
+      expect(response).to eq(project)
     end
   end
 

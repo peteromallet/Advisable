@@ -3,14 +3,14 @@
 class Projects::Confirm < ApplicationService
   attr_reader :project
 
-  ALLOWED_STATSUES = ["Brief Pending Confirmation", "Brief Confirmed"].freeze
-
   def initialize(project:)
     @project = project
   end
 
   def call
-    unless ALLOWED_STATSUES.include?(project.status)
+    return project if project.status == 'Brief Confirmed'
+
+    if project.status != 'Brief Pending Confirmation'
       raise Service::Error.new("project.not_pending_approval")
     end
 
