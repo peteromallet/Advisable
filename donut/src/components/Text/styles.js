@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { space, color, typography, system } from "styled-system";
+import { display, space, color, typography, system } from "styled-system";
 import theme from "../../theme";
 
 const textTransform = system({
@@ -15,6 +15,7 @@ const TextTruncated = css`
 export const Text = styled.div`
   ${space};
   ${color};
+  ${display};
   ${typography};
   ${textTransform};
 

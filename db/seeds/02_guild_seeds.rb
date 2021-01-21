@@ -39,7 +39,8 @@ Specialist.update_all(guild: true)
     title: Faker::Quote.yoda[0..149],
     body: body,
     type: random_post_type,
-    status: "published"
+    status: "published",
+    audience_type: "none"
   )
 
   if Guild::Topic.any?

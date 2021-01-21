@@ -26,23 +26,27 @@ const Filters = ({ postTypeFilter, setPostTypeFilter, yourPosts }) => {
   ];
 
   const handlePublishedGuildPost = (guildPost) => {
+    const variables = { type: postTypeFilter };
     const previous = client.readQuery({
       query: GUILD_POSTS_QUERY,
-      variables: { postTypeFilter },
+      variables,
     });
-
-    const { pageInfo, guildTopic } = previous.guildPosts;
+    const { pageInfo, guildTopic } = previous?.guildPosts;
 
     client.writeQuery({
       query: GUILD_POSTS_QUERY,
       data: {
         guildPosts: {
           __typename: previous.guildPosts.__typename,
-          edges: [...previous.guildPosts.edges, { node: guildPost }],
+          edges: [
+            { __typename: "PostInterfaceEdge", node: guildPost },
+            ...previous.guildPosts.edges,
+          ],
           pageInfo,
           guildTopic,
         },
       },
+      variables,
     });
   };
 
