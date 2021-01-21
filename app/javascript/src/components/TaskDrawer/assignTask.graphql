@@ -4,8 +4,5 @@ mutation assignTask($input: AssignTaskInput!) {
       id
       stage
     }
-    errors {
-      code
-    }
   }
 }

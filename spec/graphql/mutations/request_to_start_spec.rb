@@ -16,10 +16,6 @@ RSpec.describe Mutations::RequestToStart do
           id
           stage
         }
-        errors {
-          code
-          message
-        }
       }
     }
     GRAPHQL
@@ -38,10 +34,7 @@ RSpec.describe Mutations::RequestToStart do
   end
 
   it 'triggers a webhook' do
-    expect(WebhookEvent).to receive(:trigger).with(
-      'tasks.requested_to_start',
-      any_args
-    )
+    expect(WebhookEvent).to receive(:trigger).with('tasks.requested_to_start', any_args)
     AdvisableSchema.execute(query, context: context)
   end
 
@@ -50,8 +43,8 @@ RSpec.describe Mutations::RequestToStart do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestToStart']['errors'][0]
-      expect(error['code']).to eq('tasks.nameRequired')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.nameRequired')
     end
   end
 
@@ -60,8 +53,8 @@ RSpec.describe Mutations::RequestToStart do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestToStart']['errors'][0]
-      expect(error['code']).to eq('tasks.descriptionRequired')
+      error = response['errors'][0]
+      expect(error['message']).to eq('tasks.descriptionRequired')
     end
   end
 
@@ -70,8 +63,8 @@ RSpec.describe Mutations::RequestToStart do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestToStart']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -80,8 +73,8 @@ RSpec.describe Mutations::RequestToStart do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestToStart']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -90,8 +83,8 @@ RSpec.describe Mutations::RequestToStart do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestToStart']['errors'][0]
-      expect(error['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -100,8 +93,8 @@ RSpec.describe Mutations::RequestToStart do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestToStart']['errors'][0]
-      expect(error['code']).to eq('tasks.cantRequestToStart')
+      error = response['errors'][0]
+      expect(error['message']).to eq("Stage must be 'Not Assigned'")
     end
   end
 
@@ -110,8 +103,8 @@ RSpec.describe Mutations::RequestToStart do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestToStart']['errors'][0]
-      expect(error['code']).to eq('tasks.cantRequestToStart')
+      error = response['errors'][0]
+      expect(error['message']).to eq("Stage must be 'Not Assigned'")
     end
   end
 
@@ -120,8 +113,8 @@ RSpec.describe Mutations::RequestToStart do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestToStart']['errors'][0]
-      expect(error['code']).to eq('tasks.cantRequestToStart')
+      error = response['errors'][0]
+      expect(error['message']).to eq("Stage must be 'Not Assigned'")
     end
   end
 
@@ -130,7 +123,7 @@ RSpec.describe Mutations::RequestToStart do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['requestToStart']['errors'][0]
+      error = response['errors'][0]
       expect(error['message']).to eq("Application status is not 'Working'")
     end
   end

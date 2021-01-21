@@ -19,13 +19,9 @@ function RequestPasswordReset() {
   const history = useHistory();
   const [status, setStatus] = useState("REQUEST");
 
-  const handleRequest = (data) => {
-    if (data.requestPasswordReset.sent) {
-      setStatus(SENT);
-    }
-
-    if (data.requestPasswordReset.errors.length > 0) {
-      let error = data.requestPasswordReset.errors[0].code;
+  const handleRequest = ({ data, errors }) => {
+    if (errors) {
+      let error = errors[0]?.extensions?.code;
       if (error === "request_password_reset.application_required") {
         setStatus(APPLICATION_IN_PROCESS);
       }
@@ -33,6 +29,10 @@ function RequestPasswordReset() {
       if (error === "request_password_reset.account_not_found") {
         setStatus(NO_ACCOUNT);
       }
+    }
+
+    if (data.requestPasswordReset.sent) {
+      setStatus(SENT);
     }
   };
 

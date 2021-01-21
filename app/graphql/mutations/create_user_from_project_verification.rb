@@ -11,7 +11,7 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
 
   def authorized?(previous_project:, email:, fid:)
     unless context[:oauth_viewer]
-      raise ApiError::InvalidRequest.new(
+      ApiError.invalid_request(
               'notAuthenticated',
               'Not logged into Linkedin'
             )
@@ -53,9 +53,9 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
     {user: user}
   rescue ActiveRecord::RecordInvalid
     if account.errors.added?(:email, :taken, value: email)
-      raise ApiError::InvalidRequest.new("emailTaken", "The email #{email} is already used by another account.")
+      ApiError.invalid_request("emailTaken", "The email #{email} is already used by another account.")
     elsif account.errors.added?(:email, :blank)
-      raise ApiError::InvalidRequest.new("emailBlank", "Email is required.")
+      ApiError.invalid_request("emailBlank", "Email is required.")
     else
       raise
     end

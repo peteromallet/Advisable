@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The ApiError should be used to throw errors in our graphql API. It ensures
 # that each error will have a CODE which clients can use to determine what to
 # do with the error.
@@ -23,7 +25,7 @@ class ApiError < GraphQL::ExecutionError
     )
   end
 
-  def self.invalid_request(code: nil, message: '', extensions: {})
+  def self.invalid_request(code, message = "", extensions: {})
     raise ApiError::InvalidRequest.new(code, message, extensions: extensions)
   end
 
@@ -31,20 +33,25 @@ class ApiError < GraphQL::ExecutionError
     raise ApiError::NotAuthorized.new(message, extensions: extensions)
   end
 
-  def self.not_authenticated(extensions: {})
-    raise ApiError::NotAuthenticated.new(extensions: extensions)
+  def self.not_authenticated(message = "You are not logged in", extensions: {})
+    raise ApiError::NotAuthenticated.new(message, extensions: extensions)
+  end
+
+  def self.service_error(error, extensions: {})
+    code = error.code.presence || SERVICE_ERROR
+    raise ApiError::InvalidRequest.new(code, error.message, extensions: extensions)
   end
 end
 
 class ApiError::NotAuthenticated < ApiError
-  def initialize(message = 'You are not logged in', extensions: {})
-    super('NOT_AUTHENTICATED', 'notAuthenticated', message, extensions: extensions)
+  def initialize(message = "You are not logged in", extensions: {})
+    super("NOT_AUTHENTICATED", "notAuthenticated", message, extensions: extensions)
   end
 end
 
 class ApiError::NotAuthorized < ApiError
   def initialize(message, extensions: {})
-    super('NOT_AUTHORIZED', 'notAuthorized', message, extensions: extensions)
+    super("NOT_AUTHORIZED", "notAuthorized", message, extensions: extensions)
   end
 end
 
@@ -53,10 +60,10 @@ end
 # not complete for some reason.
 #
 # @example
-#   raise ApiError::InvalidRequest.new("applicationStatusNotWorking", "Application status must be 'Working'")
+#   raise ApiError::InvalidRequest.new("applicationStatusNotWorking", "Application status must be "Working"")
 #
 class ApiError::InvalidRequest < ApiError
   def initialize(code, message, extensions: {})
-    super('INVALID_REQUEST', code, message, extensions: extensions)
+    super("INVALID_REQUEST", code, message, extensions: extensions)
   end
 end

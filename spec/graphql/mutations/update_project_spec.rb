@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::UpdateProject do
@@ -33,9 +35,6 @@ RSpec.describe Mutations::UpdateProject do
             name
           }
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
@@ -43,7 +42,7 @@ RSpec.describe Mutations::UpdateProject do
 
   let(:response) { AdvisableSchema.execute(query) }
 
-  before :each do
+  before do
     create(:skill, name: 'Sales')
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
@@ -54,9 +53,8 @@ RSpec.describe Mutations::UpdateProject do
   end
 
   it 'sets the primarySkill' do
-    primarySkill =
-      response['data']['updateProject']['project']['primarySkill']['name']
-    expect(primarySkill).to eq('Sales')
+    skill = response['data']['updateProject']['project']['primarySkill']['name']
+    expect(skill).to eq('Sales')
   end
 
   it 'sets the description' do
@@ -65,20 +63,18 @@ RSpec.describe Mutations::UpdateProject do
   end
 
   it 'sets the serviceType' do
-    serviceType = response['data']['updateProject']['project']['serviceType']
-    expect(serviceType).to eq('Self-Service')
+    type = response['data']['updateProject']['project']['serviceType']
+    expect(type).to eq('Self-Service')
   end
 
   it 'sets the companyDescription' do
-    companyDescription =
-      response['data']['updateProject']['project']['companyDescription']
-    expect(companyDescription).to eq('company description')
+    description = response['data']['updateProject']['project']['companyDescription']
+    expect(description).to eq('company description')
   end
 
   it 'sets the specialistDescription' do
-    specialistDescription =
-      response['data']['updateProject']['project']['specialistDescription']
-    expect(specialistDescription).to eq('specialist description')
+    description = response['data']['updateProject']['project']['specialistDescription']
+    expect(description).to eq('specialist description')
   end
 
   it 'sets the questions' do
@@ -87,20 +83,17 @@ RSpec.describe Mutations::UpdateProject do
   end
 
   it 'sets the requiredCharacteristics' do
-    requiredCharacteristics =
-      response['data']['updateProject']['project']['requiredCharacteristics']
-    expect(requiredCharacteristics).to eq(%w[Required])
+    characteristic = response['data']['updateProject']['project']['requiredCharacteristics']
+    expect(characteristic).to eq(%w[Required])
   end
 
   it 'sets the optionalCharacteristics' do
-    optionalCharacteristics =
-      response['data']['updateProject']['project']['optionalCharacteristics']
-    expect(optionalCharacteristics).to eq(%w[Optional])
+    characteristic = response['data']['updateProject']['project']['optionalCharacteristics']
+    expect(characteristic).to eq(%w[Optional])
   end
 
   it 'accepts the terms' do
-    acceptedTerms =
-      response['data']['updateProject']['project']['acceptedTerms']
-    expect(acceptedTerms).to be_truthy
+    terms = response['data']['updateProject']['project']['acceptedTerms']
+    expect(terms).to be_truthy
   end
 end

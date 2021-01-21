@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Sets an application status to 'Stopped Working'. This is when the client
 # has decided to stop working with a freelancer.
 class Mutations::StopWorking < Mutations::BaseMutation
@@ -20,16 +22,14 @@ class Mutations::StopWorking < Mutations::BaseMutation
     policy = ApplicationPolicy.new(context[:current_user], application)
     return true if policy.stop_working?
 
-    raise ApiError::NotAuthorized.new(
-      "You do not have permission to execute this mutation"
-    )
+    ApiError.not_authorized("You do not have permission to execute this mutation")
   end
 
   def resolve(**args)
     application = Application.find_by_uid!(args[:application])
 
     if application.status != "Working"
-      raise ApiError::InvalidRequest.new(
+      ApiError.invalid_request(
         "applicationStatusNotWorking",
         "The application status must be 'Working'."
       )

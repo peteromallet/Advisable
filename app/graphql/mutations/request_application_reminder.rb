@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::RequestApplicationReminder < Mutations::BaseMutation
   argument :id, ID, required: true
 
@@ -6,7 +8,7 @@ class Mutations::RequestApplicationReminder < Mutations::BaseMutation
   def authorized?(id:)
     user = User.find_by_uid_or_airtable_id!(id)
     if user.application_status != "Application Rejected"
-      raise ApiError::InvalidRequest.new(
+      ApiError.invalid_request(
               'notRejected',
               'Application must be rejected to request reminder'
             )

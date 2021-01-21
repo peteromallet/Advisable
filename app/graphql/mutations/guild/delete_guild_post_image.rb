@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::Guild::DeleteGuildPostImage < Mutations::BaseMutation
   graphql_name "DeleteGuildPostImage"
 
@@ -13,7 +15,7 @@ class Mutations::Guild::DeleteGuildPostImage < Mutations::BaseMutation
     image = Guild::PostImage.find_by(uid: args[:guild_post_image_id])
 
     if image.post.specialist != current_user
-      raise ApiError::NotAuthorized.new('You dont have access to this')
+      ApiError.not_authorized('You dont have access to this')
     end
 
     image.destroy

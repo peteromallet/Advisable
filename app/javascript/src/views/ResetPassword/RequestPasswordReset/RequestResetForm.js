@@ -10,14 +10,14 @@ function RequestResetForm({ onSubmit }) {
   const [requestReset] = useMutation(REQUEST_PASSWORD_RESET);
 
   const handleSubmit = async (values, formikBag) => {
-    const { data } = await requestReset({
+    const response = await requestReset({
       variables: {
         input: values,
       },
     });
 
     formikBag.setSubmitting(false);
-    onSubmit(data);
+    onSubmit(response);
   };
 
   return (

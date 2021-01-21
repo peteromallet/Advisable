@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::CompleteTutorial do
@@ -16,9 +18,6 @@ RSpec.describe Mutations::CompleteTutorial do
             id
             completedTutorials
           }
-        }
-        errors {
-          code
         }
       }
     }

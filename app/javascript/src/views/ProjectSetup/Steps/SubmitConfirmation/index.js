@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import CONFIRM_PROJECT from "./confirmProject.graphql";
 import { Wrapper, Progress } from "./styles";
@@ -19,10 +19,10 @@ const SubmitConfirmation = ({ project }) => {
     if (project.depositOwed !== 0) {
       history.replace("deposit");
     }
-  }, []);
+  }, [history, project.acceptedTerms, project.depositOwed]);
 
-  const executeConfirmation = async () => {
-    const response = await confirm({
+  const executeConfirmation = useCallback(async () => {
+    const { errors } = await confirm({
       variables: {
         input: {
           id: params.projectID,
@@ -30,18 +30,16 @@ const SubmitConfirmation = ({ project }) => {
       },
     });
 
-    const { errors } = response.data.confirmProject;
     if (errors) {
-      console.log(errors);
       return;
     }
 
     history.push(`/projects/${params.projectID}`);
-  };
+  }, [confirm, history, params.projectID]);
 
   useEffect(() => {
     executeConfirmation();
-  }, []);
+  }, [executeConfirmation]);
 
   return (
     <Fragment>

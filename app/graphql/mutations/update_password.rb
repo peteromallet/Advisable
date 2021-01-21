@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::UpdatePassword < Mutations::BaseMutation
   description <<~HEREDOC
     Updates the logged in specialists/user password.
@@ -20,7 +22,7 @@ class Mutations::UpdatePassword < Mutations::BaseMutation
       account.update!(password: password)
       {viewer: current_user}
     else
-      ApiError.invalid_request(code: 'CAN_NOT_CHANGE_PASSWORD')
+      ApiError.invalid_request('CAN_NOT_CHANGE_PASSWORD')
     end
   end
 

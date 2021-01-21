@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::UpdateUser < Mutations::BaseMutation
   argument :industry, String, required: false
   argument :company_type, String, required: false
@@ -5,11 +7,9 @@ class Mutations::UpdateUser < Mutations::BaseMutation
   field :user, Types::User, null: true
 
   def authorized?(**args)
-    unless context[:current_user].is_a?(User)
-      raise ApiError::NotAuthenticated.new
-    end
+    return true if context[:current_user].is_a?(User)
 
-    true
+    ApiError.not_authenticated
   end
 
   def resolve(**args)

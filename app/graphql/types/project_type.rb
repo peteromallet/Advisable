@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::ProjectType < Types::BaseType
   field :id, ID, null: false
 
@@ -81,7 +83,7 @@ class Types::ProjectType < Types::BaseType
 
   # Returns the current 'candidates' for the project. This excludes any
   # applications in a working or finished working state.
-  field :applications, [Types::ApplicationType, null: true], null: true do
+  field :applications, [Types::ApplicationType, {null: true}], null: true do
     argument :status, [String], required: false
   end
 
@@ -149,10 +151,7 @@ class Types::ProjectType < Types::BaseType
       if object.user.account.has_password?
         ApiError.not_authenticated
       else
-        ApiError.invalid_request(code: "SIGNUP_REQUIRED", message: "Signup is required", extensions: {
-          url: "/signup/#{object.user.uid}",
-          email: object.user.account.email
-        })
+        ApiError.invalid_request("SIGNUP_REQUIRED", "Signup is required", extensions: {url: "/signup/#{object.user.uid}", email: object.user.account.email})
       end
     end
 

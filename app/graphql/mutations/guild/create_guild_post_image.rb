@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::Guild::CreateGuildPostImage < Mutations::BaseMutation
   description "Creates a new guild post image"
   graphql_name "CreateGuildPostImage"
@@ -18,7 +20,7 @@ class Mutations::Guild::CreateGuildPostImage < Mutations::BaseMutation
     guild_post = current_user.guild_posts.find_by(id: args[:guild_post_id])
 
     if guild_post&.specialist != current_user
-      raise ApiError::NotAuthorized.new('You dont have access to this')
+      ApiError.not_authorized('You dont have access to this')
     end
 
     image = guild_post.images.create(uid: args[:id], position: args[:position], cover: args[:cover])

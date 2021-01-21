@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::CreateSetupIntent do
@@ -9,9 +11,6 @@ RSpec.describe Mutations::CreateSetupIntent do
     mutation {
       createSetupIntent(input: {}) {
         secret
-        errors {
-          code
-        }
       }
     }
     GRAPHQL

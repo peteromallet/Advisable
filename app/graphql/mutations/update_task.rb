@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::UpdateTask < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :name, String, required: false
@@ -9,7 +11,6 @@ class Mutations::UpdateTask < Mutations::BaseMutation
   argument :estimate_type, String, required: false
 
   field :task, Types::TaskType, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     requires_current_user!
@@ -19,7 +20,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
     args.except(:id).each do |arg, _val|
       next if policy.public_send("update_#{arg}")
 
-      raise ApiError.not_authorized('You do not have access to update this task')
+      ApiError.not_authorized('You do not have access to update this task')
     end
 
     true
@@ -29,7 +30,7 @@ class Mutations::UpdateTask < Mutations::BaseMutation
     task = Task.find_by_uid!(args[:id])
 
     if task.application.status == "Stopped Working"
-      raise ApiError::InvalidRequest.new("applicationStatusNotWorking", "Application status is 'Stopped Working'")
+      ApiError.invalid_request("applicationStatusNotWorking", "Application status is 'Stopped Working'")
     end
 
     task = Tasks::Update.call(task: task, attributes: args.except(:id), user: context[:current_user], responsible_id: current_account_id)
@@ -38,6 +39,6 @@ class Mutations::UpdateTask < Mutations::BaseMutation
 
     {task: task}
   rescue Service::Error => e
-    {errors: [e]}
+    ApiError.service_error(e)
   end
 end

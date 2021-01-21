@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   argument :previous_project, ID, required: true
   argument :client_name, String, required: false
@@ -17,12 +19,12 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
 
   field :previous_project, Types::PreviousProject, null: true
 
-  ALLOWED_ARGS_WHEN_PUBLISHED = %i[previous_project description]
+  ALLOWED_ARGS_WHEN_PUBLISHED = %i[previous_project description].freeze
 
   def authorized?(**args)
     project = PreviousProject.find_by_uid(args[:previous_project])
     if project.draft == false && (args.keys - ALLOWED_ARGS_WHEN_PUBLISHED).any?
-      raise ApiError::InvalidRequest.new(
+      ApiError.invalid_request(
               'projectPublished',
               'Can not save changes because the project has been published'
             )

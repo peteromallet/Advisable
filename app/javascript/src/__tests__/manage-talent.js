@@ -239,7 +239,7 @@ test("The client can add a task", async () => {
         result: {
           data: {
             viewer,
-            application
+            application,
           },
         },
       },
@@ -262,7 +262,6 @@ test("The client can add a task", async () => {
                 id: "tas_abc",
                 application,
               }),
-              errors: null,
             },
           },
         },
