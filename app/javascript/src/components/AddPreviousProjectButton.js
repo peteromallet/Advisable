@@ -16,9 +16,10 @@ const StyledNewProject = styled.button`
   background: transparent;
   width: 100%;
   ${margin};
-  padding: 16px;
+  padding: 28px;
   outline: none;
   display: flex;
+  flex-direction: column;
   cursor: default;
   align-items: center;
   border-radius: 12px;
@@ -46,10 +47,12 @@ export default function AddPreviousProjectButton({ modal, ...props }) {
       {...props}
       aria-label="Add a previous project"
     >
-      <Circle size={40} bg="blue800" mr="s" color="white">
+      <Circle size={40} bg="blue800" mb={4} color="white">
         <Plus size={24} strokeWidth={2} />
       </Circle>
-      <Text color="blue700">Add a previous project</Text>
+      <Text color="blue700" fontWeight="medium">
+        Add a previous project
+      </Text>
     </DialogDisclosure>
   );
 }
