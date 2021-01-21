@@ -15,7 +15,7 @@ class Mutations::AcceptProjectPaymentTerms < Mutations::BaseMutation
       user.company.update accepted_project_payment_terms_at: Time.zone.now
     end
 
-    # TOOD: Move exceptional_project_payment_terms to company record
+    # TODO: Move exceptional_project_payment_terms to company record
     if args.key?(:exceptional_terms)
       user.exceptional_project_payment_terms = args[:exceptional_terms]
     end
