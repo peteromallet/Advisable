@@ -88,12 +88,9 @@ const STATUSES = {
   },
 };
 
-function ProjectStatus({ project }) {
-  const status =
-    (project.draft && "Draft") || project.validationStatus || "Validated";
+function ProjectStatus({ status, review }) {
   const config = STATUSES[status];
-
-  return <config.component {...config} review={project.reviews?.[0]} />;
+  return <config.component {...config} review={review} />;
 }
 
 export default ProjectStatus;
