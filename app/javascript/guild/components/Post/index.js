@@ -1,7 +1,7 @@
 import React from "react";
 import * as Sentry from "@sentry/react";
 import { Pin } from "@styled-icons/ionicons-solid";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import { Box, Card, Text, Avatar, Link, Notice } from "@advisable/donut";
 import Topics from "./components/Topics";
 import Markdown from "../Markdown";
@@ -16,12 +16,17 @@ const Post = ({
   showShare = false,
   showDelete = false,
 }) => {
-  const url = `/guild/posts/${post.id}`;
+  const isGuildPath = /^\/guild/.test(window.location.pathname);
+  const fullGuildPath = `/guild/posts/${post.id}`;
+  const url = isGuildPath ? `/posts/${post.id}` : fullGuildPath;
 
+  const history = useHistory();
   const handleOpen = () => {
     // We need to use an actual page load while the guild pack is separate.
-    window.location = url;
+    isGuildPath ? history.push(url) : (window.location = url);
   };
+
+  const LinkOrExternal = isGuildPath ? RouterLink : Link.External;
 
   return (
     <Sentry.ErrorBoundary>
@@ -64,7 +69,7 @@ const Post = ({
 
         {post.coverImage && (
           <Box mb="6">
-            <a href={url}>
+            <a href={fullGuildPath}>
               <CoverImage
                 height={{ _: "200px", s: "320px" }}
                 cover={post.coverImage.url}
@@ -74,22 +79,31 @@ const Post = ({
         )}
 
         <Text
-          mb="4"
+          pb={4}
+          display="block"
           fontSize={["2xl", "4xl"]}
           color="neutral900"
-          as={Link.External}
           fontWeight="medium"
           letterSpacing="-0.03rem"
+          as={LinkOrExternal}
+          to={url}
           href={url}
         >
           {post.title}
         </Text>
 
-        <Box mb="4" onClick={handleOpen} style={{ cursor: "pointer" }}>
+        <Box mb={6} onClick={handleOpen} style={{ cursor: "pointer" }}>
           <Markdown>{post.excerpt}</Markdown>
         </Box>
 
-        <Text mb="8" href={url} fontSize="s" color="blue700" as={Link.External}>
+        <Text
+          mb={6}
+          display="inline-block"
+          color="blue700"
+          as={LinkOrExternal}
+          href={url}
+          to={url}
+        >
           Read more
         </Text>
 
