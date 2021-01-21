@@ -88,3 +88,14 @@ export const StyledBadge = styled.div`
   width: 100%;
   align-items: center;
 `;
+
+export const StatusWrapper = (props) => (
+  <Box
+    mt={5}
+    pt={6}
+    pb={2}
+    borderTop="1px solid"
+    borderTopColor="neutral100"
+    {...props}
+  />
+);
