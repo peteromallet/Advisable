@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::AcceptConsultation do
@@ -17,7 +19,7 @@ RSpec.describe Mutations::AcceptConsultation do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Interview).to receive(:sync_to_airtable)
@@ -30,46 +32,28 @@ RSpec.describe Mutations::AcceptConsultation do
     }.from('Request Started').to('Accepted By Specialist')
   end
 
-  it 'creates a project' do
-    project = create(:project)
-    expect(project).to receive(:sync_to_airtable)
-    expect(Project).to receive(:create).with(
-      user: consultation.user,
-      skills: [consultation.skill],
-      sales_status: 'Open',
-      status: 'Project Created',
-      service_type: 'Consultation',
-      primary_skill: an_instance_of(Skill),
-      owner: ENV['CONSULTATION_PROJECT_OWNER'],
-      name: instance_of(String)
-    ).and_return(project)
-
-    AdvisableSchema.execute(query)
+  it "creates a project" do
+    response = AdvisableSchema.execute(query)
+    interview_id = response["data"]["acceptConsultation"]["interview"]["id"]
+    project = Interview.find_by(uid: interview_id).application.project
+    expect(project.attributes.slice("user_id", "sales_status", "status", "service_type", "owner", "name").values).to match_array([consultation.user_id, "Open", "Project Created", "Consultation", ENV["CONSULTATION_PROJECT_OWNER"], "#{consultation.user.company_name} - #{consultation.skill.name}"])
+    expect(project.primary_skill).to eq(consultation.skill)
   end
 
-  it 'creates an application record' do
-    application = create(:application)
-    expect(application).to receive(:sync_to_airtable)
-    expect(Application).to receive(:create).with(
-      project: instance_of(Project),
-      status: 'Applied',
-      score: 90,
-      specialist: consultation.specialist
-    ).and_return(application)
-
-    AdvisableSchema.execute(query)
+  it "creates an application" do
+    response = AdvisableSchema.execute(query)
+    interview_id = response["data"]["acceptConsultation"]["interview"]["id"]
+    application = Interview.find_by(uid: interview_id).application
+    expect(application.attributes.slice("status", "score", "specialist_id", "trial_program").values).to match_array(["Applied", 90, consultation.specialist.id, true])
   end
 
   context 'when the user already has a project with the skill' do
     let!(:project) do
-      create(
-        :project,
-        user: consultation.user, primary_skill: consultation.skill
-      )
+      create(:project, user: consultation.user, primary_skill: consultation.skill)
     end
 
     it 'doesnt create a new project' do
-      expect { AdvisableSchema.execute(query) }.to_not change { Project.count }
+      expect { AdvisableSchema.execute(query) }.not_to change(Project, :count)
     end
 
     it 'creates an application for that project' do
