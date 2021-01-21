@@ -1,19 +1,25 @@
 import React from "react";
-import { Box } from "@advisable/donut";
 import Status from "./Status";
 import { DraftCTA, FailedCTA } from "./CTAs";
 import { Pencil, Exclamation } from "@styled-icons/heroicons-outline";
 import ProjectValidationPrompt from "src/components/ProjectValidationPrompt";
 import Review from "src/components/Review";
+import { StatusWrapper } from "./styles";
 
 function Validated({ project }) {
   return project.reviews.length > 0 && project.reviews[0]?.comment ? (
-    <Review review={project.reviews[0]} />
+    <StatusWrapper>
+      <Review review={project.reviews[0]} />
+    </StatusWrapper>
   ) : null;
 }
 
 function Pending({ project }) {
-  return <ProjectValidationPrompt project={project} />;
+  return (
+    <StatusWrapper>
+      <ProjectValidationPrompt project={project} />
+    </StatusWrapper>
+  );
 }
 
 const STATUSES = {
@@ -48,15 +54,13 @@ function ProjectStatus({ project, modal, ...props }) {
   const config = STATUSES[status];
 
   return (
-    <Box mt={5} pt={6} pb={2} borderTop="1px solid" borderTopColor="neutral100">
-      <config.component
-        project={project}
-        modal={modal}
-        review={project.reviews?.[0]}
-        {...config}
-        {...props}
-      />
-    </Box>
+    <config.component
+      project={project}
+      modal={modal}
+      review={project.reviews?.[0]}
+      {...config}
+      {...props}
+    />
   );
 }
 
