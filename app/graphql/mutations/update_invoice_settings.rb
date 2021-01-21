@@ -30,7 +30,7 @@ class Mutations::UpdateInvoiceSettings < Mutations::BaseMutation
       )
     end
 
-    store_vat_number(company) if company.vat_number_changed?
+    store_vat_number(company) if company.saved_change_to_vat_number?
     company.update_payments_setup
 
     {user: current_user}

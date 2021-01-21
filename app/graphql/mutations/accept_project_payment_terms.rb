@@ -12,7 +12,7 @@ class Mutations::AcceptProjectPaymentTerms < Mutations::BaseMutation
   def resolve(**args)
     user = current_user
     if user.company.accepted_project_payment_terms_at.nil?
-      user.company.accepted_project_payment_terms_at = Time.zone.now
+      user.company.update accepted_project_payment_terms_at: Time.zone.now
     end
 
     # TOOD: Move exceptional_project_payment_terms to company record
