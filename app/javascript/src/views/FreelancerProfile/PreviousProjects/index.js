@@ -111,10 +111,10 @@ function PreviousProjects({ data, isOwner }) {
       data: {
         specialist: {
           ...previous.specialist,
-          profileProjects: [
-            ...previous.specialist.previousProjects.nodes,
-            project,
-          ],
+          previousProjects: {
+            ...previous.specialist.previousProjects,
+            nodes: [...previous.specialist.previousProjects.nodes, project],
+          },
         },
       },
     });
