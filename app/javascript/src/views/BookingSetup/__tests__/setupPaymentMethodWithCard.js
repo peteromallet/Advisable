@@ -75,7 +75,7 @@ test("User can complete booking setup", async () => {
         },
         {
           updateInvoiceSettings: {
-            __typename: "UpdateProjectPaymentMethodPayload",
+            __typename: "UpdateInvoiceSettingsPayload",
             user: {
               ...user,
               projectPaymentMethod: "Card",
@@ -90,7 +90,7 @@ test("User can complete booking setup", async () => {
         },
         {
           acceptProjectPaymentTerms: {
-            __typename: "UpdateProjectPaymentMethodPayload",
+            __typename: "AcceptProjectPaymentTermsPayload",
             user: {
               ...user,
               paymentsSetup: true,

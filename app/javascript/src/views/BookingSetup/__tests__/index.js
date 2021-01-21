@@ -1,11 +1,11 @@
-import { renderRoute } from "test-utils";
-import generateTypes from "../../../__mocks__/graphqlFields";
+import { renderRoute, mockData } from "test-utils";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_SETUP_DATA from "../getSetupData";
 
 test("Renders the project type step if payments are setup", async () => {
-  let user = generateTypes.user({
+  let user = mockData.user({
     paymentsSetup: true,
+    company: mockData.company(),
     projectPaymentMethod: "Card",
     paymentMethod: {
       __typename: "PaymentMethod",
@@ -16,9 +16,9 @@ test("Renders the project type step if payments are setup", async () => {
     },
   });
 
-  let project = generateTypes.project({ projectType: null, user });
-  let specialist = generateTypes.specialist({ firstName: "Dennis" });
-  let application = generateTypes.application({
+  let project = mockData.project({ projectType: null, user });
+  let specialist = mockData.specialist({ firstName: "Dennis" });
+  let application = mockData.application({
     status: "Applied",
     id: "rec1234",
     project,
@@ -55,6 +55,5 @@ test("Renders the project type step if payments are setup", async () => {
     ],
   });
 
-  let header = await app.findByText("How do you want to", { exact: false });
-  expect(header).toBeInTheDocument();
+  await app.findByText(/how would you like to work with/i);
 });
