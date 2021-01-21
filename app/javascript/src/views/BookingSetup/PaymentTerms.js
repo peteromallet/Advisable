@@ -41,6 +41,7 @@ const PaymentTerms = ({ nextStep }) => {
   };
 
   const initialValues = {
+    acceptTerms: undefined,
     exceptionalTerms: "",
   };
 
