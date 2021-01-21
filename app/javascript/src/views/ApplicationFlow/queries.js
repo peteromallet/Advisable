@@ -65,9 +65,6 @@ export const submitApplication = gql`
         id
         status
       }
-      errors {
-        code
-      }
     }
   }
 `;
@@ -77,9 +74,6 @@ export const updateApplication = gql`
     updateApplication(input: $input) {
       application {
         ...ApplicationFields
-      }
-      errors {
-        code
       }
     }
   }

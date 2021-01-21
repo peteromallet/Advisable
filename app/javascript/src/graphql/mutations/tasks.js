@@ -10,9 +10,6 @@ export const createTask = gql`
       task {
         ...TaskDetailFields
       }
-      errors {
-        code
-      }
     }
   }
 `;
@@ -32,9 +29,6 @@ export const updateTaskName = gql`
         estimate # changing the name can cause the estimate to be removed
         flexibleEstimate
       }
-      errors {
-        code
-      }
     }
   }
 `;
@@ -48,9 +42,6 @@ export const updateTaskDueDate = gql`
         stage # changing the due date can cause the stage to change
         estimate # changing the due date can cause the estimate to be removed
         flexibleEstimate
-      }
-      errors {
-        code
       }
     }
   }
@@ -66,9 +57,6 @@ export const updateTaskEstimate = gql`
         flexibleEstimate
         stage # changing the estimate can change the stage
       }
-      errors {
-        code
-      }
     }
   }
 `;
@@ -83,9 +71,6 @@ export const updateTaskDescription = gql`
         estimate # changing the description can change the estimate
         flexibleEstimate
       }
-      errors {
-        code
-      }
     }
   }
 `;
@@ -96,9 +81,6 @@ export const deleteTask = gql`
     deleteTask(input: $input) {
       task {
         id
-      }
-      errors {
-        code
       }
     }
   }

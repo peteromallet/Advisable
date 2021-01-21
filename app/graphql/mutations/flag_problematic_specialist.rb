@@ -12,7 +12,7 @@ class Mutations::FlagProblematicSpecialist < Mutations::BaseMutation
     application = Application.find_by!(uid: application_id)
     return true if current_user == application.project.user
 
-    raise ApiError::InvalidRequest.new("invalidApplication", "The application does not belong to signed in user.")
+    ApiError.invalid_request("invalidApplication", "The application does not belong to signed in user.")
   end
 
   def resolve(application_id:, message:)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The updateCustomer mutation is used to update the users Stripe customer data.
 class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
   argument :payment_method, String, required: false
@@ -6,7 +8,6 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
   argument :invoice_settings, Types::InvoiceSettingsInput, required: false
 
   field :user, Types::User, null: true
-  field :errors, [Types::Error], null: true
 
   def authorized?(**args)
     requires_team_manager!
@@ -55,6 +56,6 @@ class Mutations::UpdateProjectPaymentMethod < Mutations::BaseMutation
       {idempotency_key: "#{user.company.id}-#{user.company.vat_number}"}
     )
   rescue Stripe::InvalidRequestError
-    ApiError.invalid_request(code: "INVALID_VAT", message: "VAT number is invalid")
+    ApiError.invalid_request("INVALID_VAT", "VAT number is invalid")
   end
 end

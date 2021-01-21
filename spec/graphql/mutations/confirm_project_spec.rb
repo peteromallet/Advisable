@@ -14,9 +14,6 @@ RSpec.describe Mutations::ConfirmProject do
         project {
           status
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
@@ -37,8 +34,8 @@ RSpec.describe Mutations::ConfirmProject do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query)
-      error = response['data']['confirmProject']['errors'][0]
-      expect(error['code']).to eq('project.not_pending_approval')
+      error = response['errors'][0]
+      expect(error['message']).to eq('project.not_pending_approval')
     end
   end
 
@@ -49,8 +46,8 @@ RSpec.describe Mutations::ConfirmProject do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query)
-      error = response['data']['confirmProject']['errors'][0]
-      expect(error['code']).to eq('project.deposit_not_paid')
+      error = response['errors'][0]
+      expect(error['message']).to eq('project.deposit_not_paid')
     end
   end
 end

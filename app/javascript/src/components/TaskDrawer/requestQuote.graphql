@@ -4,8 +4,5 @@ mutation requestQuote($input: RequestQuoteInput!) {
       id
       stage
     }
-    errors {
-      code
-    }
   }
 }

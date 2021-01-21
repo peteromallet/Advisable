@@ -1,14 +1,14 @@
+# frozen_string_literal: true
+
 class Mutations::RequestPasswordReset < Mutations::BaseMutation
   argument :email, String, required: true
 
   field :sent, Boolean, null: true
-  field :errors, [Types::Error], null: true
 
-  def resolve(**args)
-    Accounts::RequestPasswordReset.call(args[:email])
-    { sent: true }
-
-    rescue Service::Error => e
-      { sent: false, errors: [e] }
+  def resolve(email:)
+    Accounts::RequestPasswordReset.call(email)
+    {sent: true}
+  rescue Service::Error => e
+    ApiError.service_error(e)
   end
 end

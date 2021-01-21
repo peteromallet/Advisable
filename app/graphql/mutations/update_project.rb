@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::UpdateProject < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :goals, [String], required: false
@@ -22,7 +24,6 @@ class Mutations::UpdateProject < Mutations::BaseMutation
   argument :likely_to_hire, Int, required: false
 
   field :project, Types::ProjectType, null: true
-  field :errors, [Types::Error], null: true
 
   def resolve(**args)
     project = Project.find_by_uid_or_airtable_id!(args[:id])

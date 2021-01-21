@@ -19,9 +19,6 @@ RSpec.describe Mutations::SendProposal do
           status
           proposalComment
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
@@ -65,8 +62,8 @@ RSpec.describe Mutations::SendProposal do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      errors = response['data']['sendProposal']['errors']
-      expect(errors[0]['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -75,8 +72,8 @@ RSpec.describe Mutations::SendProposal do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      errors = response['data']['sendProposal']['errors']
-      expect(errors[0]['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -85,8 +82,8 @@ RSpec.describe Mutations::SendProposal do
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      errors = response['data']['sendProposal']['errors']
-      expect(errors[0]['code']).to eq('not_authorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
 
@@ -95,8 +92,8 @@ RSpec.describe Mutations::SendProposal do
       error = Service::Error.new('service_error')
       allow(Proposals::Send).to receive(:call).and_raise(error)
       response = AdvisableSchema.execute(query, context: context)
-      errors = response['data']['sendProposal']['errors']
-      expect(errors[0]['code']).to eq('service_error')
+      error = response['errors'][0]
+      expect(error['message']).to eq('service_error')
     end
   end
 end

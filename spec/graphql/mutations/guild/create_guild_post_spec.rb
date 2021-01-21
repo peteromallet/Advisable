@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::Guild::CreateGuildPost do
@@ -41,19 +43,16 @@ RSpec.describe Mutations::Guild::CreateGuildPost do
 
   context "with a guild specialist" do
     subject(:create_guild_post) do
-      resp = AdvisableSchema.execute(
-        query,
-        context: {current_user: specialist}
-      )
+      resp = AdvisableSchema.execute(query, context: {current_user: specialist})
       resp.dig("data", *response_keys)
     end
 
     it "creates a new guild post" do
-      expect { subject }.to change {
+      expect { create_guild_post }.to change {
         Guild::Post.count
       }.by(1)
 
-      expect(subject).to include({
+      expect(create_guild_post).to include({
         "audienceType" => nil,
         "images" => [],
         "status" => "draft",

@@ -82,7 +82,6 @@ test("Freelancer can create a task", async () => {
                 id: "tas_abc",
                 application,
               }),
-              errors: null,
             },
           },
         },
@@ -106,7 +105,6 @@ test("Freelancer can create a task", async () => {
                 id: "tas_abc",
                 name: "Task name here",
               }),
-              errors: null,
             },
           },
         },
@@ -159,7 +157,6 @@ test("Freelancer can create a task", async () => {
                 estimate: 10,
                 flexibleEstimate: 20,
               }),
-              errors: null,
             },
           },
         },
@@ -273,7 +270,6 @@ test("Freelancer can mark a task as complete", async () => {
             __typename: "Mutation",
             submitTask: {
               __typename: "SubmitTaskPayload",
-              errors: null,
               task: {
                 ...task,
                 stage: "Submitted",

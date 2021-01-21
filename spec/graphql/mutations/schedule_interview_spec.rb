@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::ScheduleInterview do
@@ -23,13 +25,12 @@ RSpec.describe Mutations::ScheduleInterview do
             status
             startsAt
           }
-          errors
         }
       }
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Interview).to receive(:sync_to_airtable)
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
   end
@@ -68,13 +69,13 @@ RSpec.describe Mutations::ScheduleInterview do
   end
 
   it "creates a video call record" do
-    expect { request }.to(change { VideoCall.count }.by(1))
+    expect { request }.to(change(VideoCall, :count).by(1))
   end
 
   context "when a video call already exists for that interview" do
     it "doesnt create a video call record" do
       VideoCall.create(interview: interview)
-      expect { request }.not_to(change { VideoCall.count })
+      expect { request }.not_to(change(VideoCall, :count))
     end
   end
 
@@ -101,7 +102,7 @@ RSpec.describe Mutations::ScheduleInterview do
   end
 
   describe "has to be a specialist" do
-    context "specialist not logged in" do
+    context "when specialist not logged in" do
       let(:current_user) { nil }
 
       it "raises an error" do
@@ -110,7 +111,7 @@ RSpec.describe Mutations::ScheduleInterview do
       end
     end
 
-    context "logged in user not specialist" do
+    context "when logged in user not specialist" do
       let(:current_user) { user }
 
       it "raises an error" do

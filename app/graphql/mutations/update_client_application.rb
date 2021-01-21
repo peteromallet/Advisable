@@ -32,7 +32,7 @@ class Mutations::UpdateClientApplication < Mutations::BaseMutation
 
   def failed_to_save(user)
     message = user.errors.full_messages.first
-    raise ApiError::InvalidRequest.new('failedToSave', message)
+    ApiError.invalid_request('failedToSave', message)
   end
 
   # which attributes can just be simply assigned

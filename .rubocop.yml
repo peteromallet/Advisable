@@ -31,9 +31,6 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Enabled: false
 
-Style/RaiseArgs:
-  Enabled: false
-
 Style/NumericLiterals:
   Enabled: false
 

@@ -8,9 +8,6 @@ export default gql`
         stage
         finalCost
       }
-      errors {
-        code
-      }
     }
   }
 `;

@@ -4,8 +4,5 @@ mutation startTask($input: StartTaskInput!) {
       id
       stage
     }
-    errors {
-      code
-    }
   }
 }

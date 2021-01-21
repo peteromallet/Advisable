@@ -9,9 +9,6 @@ export default gql`
         projectType
         monthlyLimit
       }
-      errors {
-        code
-      }
     }
   }
 `;

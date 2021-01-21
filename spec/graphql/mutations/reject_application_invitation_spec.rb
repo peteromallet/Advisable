@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::RejectApplicationInvitation do
@@ -13,7 +15,6 @@ RSpec.describe Mutations::RejectApplicationInvitation do
         application {
           status
         }
-        errors
       }
     }
     GRAPHQL

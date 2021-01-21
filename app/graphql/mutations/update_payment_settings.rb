@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::UpdatePaymentSettings < Mutations::BaseMutation
   description <<~HEREDOC
     Updates the logged in specialists bank account information for payment.
@@ -20,12 +22,9 @@ class Mutations::UpdatePaymentSettings < Mutations::BaseMutation
   end
 
   field :specialist, Types::SpecialistType, null: true
-  field :errors, [Types::Error], null: true
 
-  # There must be a User logged in specialist ( not a User type )
   def authorized?(**args)
-    return true if context[:current_user].is_a?(Specialist)
-    [false, {errors: [{code: 'notAuthorized'}]}]
+    requires_specialist!
   end
 
   def resolve(**args)

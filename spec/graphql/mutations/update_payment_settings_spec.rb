@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::UpdatePaymentSettings do
   let(:specialist) { create(:specialist) }
+  let(:context) { {current_user: specialist} }
   let(:query) do
     <<-GRAPHQL
     mutation {
@@ -30,19 +33,14 @@ RSpec.describe Mutations::UpdatePaymentSettings do
             postcode
           }
         }
-        errors {
-          code
-        }
       }
     }
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
   end
-
-  let(:context) { { current_user: specialist } }
 
   it 'updates the specialists payment settings' do
     response = AdvisableSchema.execute(query, context: context)
@@ -64,22 +62,22 @@ RSpec.describe Mutations::UpdatePaymentSettings do
   end
 
   context 'when not logged in' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['updatePaymentSettings']['errors'][0]['code']
-      expect(error).to eq('notAuthorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('notAuthenticated')
     end
   end
 
   context 'when logged in as a User' do
-    let(:context) { { current_user: create(:user) } }
+    let(:context) { {current_user: create(:user)} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['data']['updatePaymentSettings']['errors'][0]['code']
-      expect(error).to eq('notAuthorized')
+      error = response['errors'][0]
+      expect(error['extensions']['code']).to eq('MUST_BE_SPECIALIST')
     end
   end
 end

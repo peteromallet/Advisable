@@ -98,7 +98,6 @@ const ToggleTrial = ({ onToggle, task, menu }) => {
             trialTask: trial ? task : null,
           },
         },
-        errors: null,
       },
     };
 
