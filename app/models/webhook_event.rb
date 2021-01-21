@@ -13,6 +13,9 @@
 #   )
 #
 class WebhookEvent < ApplicationRecord
+  class Error < StandardError
+  end
+
   EVENTS = [
     # specialists.forgotten_password_for_non_account is triggered when a forgotten
     #  password email is requested for a specialist who has not yet setup their
@@ -39,14 +42,11 @@ class WebhookEvent < ApplicationRecord
   # self.trigger is used to trigger a webhook event.
   # WebhookEvent.trigger("event_name")
   def self.trigger(event, data = {})
-    raise Error.new("#{event} is not a valid event") if EVENTS.exclude?(event)
+    raise Error, "#{event} is not a valid event" if EVENTS.exclude?(event)
 
     where(event: event).find_each do |webhook_event|
       Webhook.create(url: webhook_event.url, data: data)
     end
-  end
-
-  class Error < StandardError
   end
 end
 
