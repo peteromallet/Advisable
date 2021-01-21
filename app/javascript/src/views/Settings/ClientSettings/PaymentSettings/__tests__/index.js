@@ -64,7 +64,7 @@ test("user can update invoice settings", async () => {
         data: {
           __typename: "MutationPayload",
           updateInvoiceSettings: {
-            __typename: "UpdateProjectPaymentMethodPayload",
+            __typename: "UpdateInvoiceSettingsPayload",
             user,
           },
         },
