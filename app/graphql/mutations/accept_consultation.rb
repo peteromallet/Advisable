@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::AcceptConsultation < Mutations::BaseMutation
   argument :consultation, ID, required: true
 
@@ -50,10 +52,13 @@ class Mutations::AcceptConsultation < Mutations::BaseMutation
   end
 
   def create_application(project, specialist)
-    application =
-      Application.create(
-        project: project, status: 'Applied', score: 90, specialist: specialist
-      )
+    application = Application.create(
+      project: project,
+      status: 'Applied',
+      score: 90,
+      specialist: specialist,
+      trial_program: true
+    )
     application.sync_to_airtable({'Source' => 'consultation-request'})
     application
   end
