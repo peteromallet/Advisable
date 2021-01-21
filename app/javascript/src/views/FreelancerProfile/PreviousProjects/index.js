@@ -97,7 +97,9 @@ function PreviousProjects({ data, isOwner }) {
     .filter(filterProjects(state))
     .filter((p) => !!p.excerpt || p.draft)
     .map((p) => {
-      return <ProjectCard key={p.id} project={p} />;
+      // Masonry Layout can't track Project changes,
+      // so we include draft status in key param to trigger updates
+      return <ProjectCard key={`${p.id}-${p.draft}`} project={p} />;
     });
 
   const handleNewProject = (project) => {
