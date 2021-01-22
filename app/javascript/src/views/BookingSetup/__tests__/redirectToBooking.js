@@ -1,13 +1,13 @@
-import { renderRoute } from "test-utils";
-import generateTypes from "../../../__mocks__/graphqlFields";
+import { renderRoute, mockData } from "test-utils";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../../Booking/getActiveApplication";
 import GET_SETUP_DATA from "../getSetupData";
 
 test("User is redirected to booking step when application is already Working", async () => {
-  let user = generateTypes.user({
+  let user = mockData.user({
     paymentsSetup: false,
     projectPaymentMethod: null,
+    company: mockData.company(),
     paymentMethod: {
       __typename: "PaymentMethod",
       last4: "4444",
@@ -17,9 +17,9 @@ test("User is redirected to booking step when application is already Working", a
     },
   });
 
-  let project = generateTypes.project({ projectType: null, user });
-  let specialist = generateTypes.specialist({ firstName: "Dennis" });
-  let application = generateTypes.application({
+  let project = mockData.project({ projectType: null, user });
+  let specialist = mockData.specialist({ firstName: "Dennis" });
+  let application = mockData.application({
     status: "Working",
     id: "rec1234",
     project,

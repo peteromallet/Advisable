@@ -8,7 +8,6 @@ export default gql`
         projectPaymentMethod
         name
         companyName
-        bankTransfersEnabled
         country {
           id
         }

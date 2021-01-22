@@ -34,7 +34,7 @@ const emailValidation = string()
 const InvoiceSettingsFields = ({ formik }) => {
   const { data, loading } = useQuery(GET_DATA);
   let countries = get(data, "countries", []);
-  const countryValue = get(formik.values, "invoiceSettings.address.country");
+  const countryValue = get(formik.values, "address.country");
   const country = find(countries, (c) => {
     return c.code === countryValue || c.name === countryValue;
   });
@@ -53,48 +53,38 @@ const InvoiceSettingsFields = ({ formik }) => {
         marginBottom="s"
         label="Full Name"
         placeholder="Full Name"
-        name="invoiceSettings.name"
+        name="name"
         validate={required("Please provide your full name")}
-        error={touched.invoiceSettings?.name && errors.invoiceSettings?.name}
+        error={touched.name && errors.name}
       />
 
       <FormField
         marginBottom="s"
-        name="invoiceSettings.companyName"
+        name="companyName"
         validate={required("Please provide your company name")}
         label="Company Name"
         placeholder="Company Name"
-        error={
-          touched.invoiceSettings?.companyName &&
-          errors.invoiceSettings?.companyName
-        }
+        error={touched.companyName && errors.companyName}
       />
 
       <Box mb="s">
         <FormField
           label="Billing Email"
           placeholder="Billing Email"
-          name="invoiceSettings.billingEmail"
+          name="billingEmail"
           validate={runValidation(emailValidation)}
-          error={
-            touched.invoiceSettings?.billingEmail &&
-            errors.invoiceSettings?.billingEmail
-          }
+          error={touched.billingEmail && errors.billingEmail}
         />
       </Box>
 
       <Box mb="m">
-        <AddressFields
-          formik={formik}
-          label="Company Address"
-          name="invoiceSettings.address"
-        />
+        <AddressFields formik={formik} label="Company Address" name="address" />
       </Box>
 
       {country && country.eu && (
         <Box mb="m">
           <FormField
-            name="invoiceSettings.vatNumber"
+            name="vatNumber"
             validate={required("Please provide your VAT number")}
             label="VAT Number"
             placeholder="VAT Number"

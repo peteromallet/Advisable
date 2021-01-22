@@ -22,7 +22,6 @@ export const user = (fields = {}) => {
       createdAt: new Date().toISOString(),
       paymentMethod: null,
       paymentsSetup: true,
-      bankTransfersEnabled: true,
       companyType: "Startup",
       projectPaymentMethod: "Bank Transfer",
       interviews: [],

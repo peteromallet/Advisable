@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Company < ApplicationRecord
   belongs_to :sales_person, optional: true
   belongs_to :industry, optional: true
@@ -63,8 +65,7 @@ class Company < ApplicationRecord
   private
 
   def are_payments_setup
-    return false if project_payment_method.nil?
-    return false if project_payment_method == 'Card' && payment_method.nil?
+    return false if payment_method.nil?
     return false if invoice_settings[:name].nil?
     return false if accepted_project_payment_terms_at.nil?
 
