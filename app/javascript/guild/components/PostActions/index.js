@@ -13,6 +13,7 @@ export default function PostActions({
   showShare = true,
   showEdit = true,
   showDelete = true,
+  walkthrough = false,
   ...props
 }) {
   const viewer = useViewer();
@@ -26,10 +27,12 @@ export default function PostActions({
 
   return (
     <Box display="inline-flex" alignItems="center" {...props}>
-      {!viewerIsAuthor ? <ReactionsButton size={size} post={post} /> : null}
+      {!viewerIsAuthor ? (
+        <ReactionsButton size={size} post={post} walkthrough={walkthrough} />
+      ) : null}
       {!viewerIsAuthor ? (
         <Box ml="2">
-          <Connect post={post} size={size} />
+          <Connect post={post} size={size} walkthrough={walkthrough} />
         </Box>
       ) : null}
       {isShareable ? (

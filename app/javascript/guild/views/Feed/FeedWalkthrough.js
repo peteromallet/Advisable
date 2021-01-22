@@ -11,7 +11,7 @@ import useScrollToTop from "@advisable-main/hooks/useScrollToTop";
 const steps = [
   {
     width: 460,
-    component: function TutorialStart({ nextStep, end }) {
+    component: function TutorialStart({ nextStep }) {
       return (
         <Box padding="32px">
           <Text
@@ -32,9 +32,6 @@ const steps = [
             onClick={nextStep}
           >
             Next
-          </Button>
-          <Button variant="subtle" onClick={end}>
-            Skip
           </Button>
         </Box>
       );

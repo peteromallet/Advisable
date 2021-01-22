@@ -23,7 +23,7 @@ export const GUILD_UPDATE_POST_REACTIONS = gql`
 // to prevent it from being shown again.
 const LOCALSTORAGE_REACTION_MODAL = "guildReactionModal";
 
-const ReactionsButton = ({ size, post }) => {
+const ReactionsButton = ({ size, post, walkthrough = false }) => {
   const timer = useRef(null);
   const viewer = useViewer();
   const firstUseModal = useModal();
@@ -85,7 +85,7 @@ const ReactionsButton = ({ size, post }) => {
           color={reacted ? "white" : "yellow700"}
           bg={reacted ? "yellow500" : "yellow100"}
           icon={reacted ? <BulbFilled /> : <Bulb />}
-          data-walkthrough={post.pinned ? "postReaction" : null}
+          data-walkthrough={walkthrough ? "postReaction" : null}
         />
       </Tooltip>
     </>
