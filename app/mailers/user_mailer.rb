@@ -31,7 +31,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @application = application
     @project = @application.project
-    @url = application_url(@application.id)
+    @url = application_url(@application.uid)
     mail(to: @user.account.email, subject: "#{@inviter.account.first_name} invited you to join the #{@project.try(:name)} interview with #{@application.specialist.account.name} on Advisable")
   end
 
