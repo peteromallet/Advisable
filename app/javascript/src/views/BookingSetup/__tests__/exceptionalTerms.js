@@ -1,13 +1,14 @@
-import { renderRoute } from "test-utils";
-import { fireEvent } from "@testing-library/react";
-import generateTypes from "../../../__mocks__/graphqlFields";
+import { renderRoute, mockData } from "test-utils";
+import userEvent from "@testing-library/user-event";
+import { fireEvent, screen } from "@testing-library/react";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_SETUP_DATA from "../getSetupData";
-import UPDATE_PROJECT_PAYMENT_METHOD from "../updateProjectPaymentMethod";
+import { ACCEPT_PROJECT_PAYMENT_TERMS } from "../queries";
 
 test("User can request custom terms", async () => {
-  let user = generateTypes.user({
+  let user = mockData.user({
     paymentsSetup: false,
+    company: mockData.company(),
     projectPaymentMethod: null,
     paymentMethod: {
       __typename: "PaymentMethod",
@@ -18,16 +19,16 @@ test("User can request custom terms", async () => {
     },
   });
 
-  let project = generateTypes.project({ projectType: null, user });
-  let specialist = generateTypes.specialist({ firstName: "Dennis" });
-  let application = generateTypes.application({
+  let project = mockData.project({ projectType: null, user });
+  let specialist = mockData.specialist({ firstName: "Dennis" });
+  let application = mockData.application({
     status: "Applied",
     id: "rec1234",
     project,
     specialist,
   });
 
-  const app = renderRoute({
+  renderRoute({
     route: "/book/rec1234/payment_terms",
     graphQLMocks: [
       {
@@ -56,10 +57,9 @@ test("User can request custom terms", async () => {
       },
       {
         request: {
-          query: UPDATE_PROJECT_PAYMENT_METHOD,
+          query: ACCEPT_PROJECT_PAYMENT_TERMS,
           variables: {
             input: {
-              acceptTerms: false,
               exceptionalTerms: "Exceptional terms",
             },
           },
@@ -67,12 +67,11 @@ test("User can request custom terms", async () => {
         result: {
           data: {
             __typename: "Mutation",
-            updateProjectPaymentMethod: {
-              __typename: "UpdateProjectPaymentMethodPayload",
+            acceptProjectPaymentTerms: {
+              __typename: "AcceptProjectPaymentTermsPayload",
               user: {
                 ...user,
                 paymentsSetup: true,
-                projectPaymentMethod: "Card",
               },
             },
           },
@@ -81,21 +80,12 @@ test("User can request custom terms", async () => {
     ],
   });
 
-  await app.findByText("Payment Terms");
-  let accept = app.getByLabelText("exceptional payment terms", {
-    exact: false,
-  });
-  fireEvent.click(accept);
-  let exceptionalTerms = app.getByLabelText(
-    "What payment terms do you suggest?",
-  );
-  fireEvent.change(exceptionalTerms, {
-    target: { value: "Exceptional terms" },
-  });
-  let button = await app.findByLabelText("Continue");
+  await screen.findByText("Payment Terms");
+  let accept = screen.getByLabelText(/exceptional payment terms/i);
+  userEvent.click(accept);
+  let exceptionalTerms = screen.getByLabelText(/What payment terms do you/i);
+  userEvent.type(exceptionalTerms, "Exceptional terms");
+  let button = await screen.getByLabelText("Continue");
   fireEvent.click(button);
-  let header = await app.findByText("How do you want to work with", {
-    exact: false,
-  });
-  expect(header).toBeInTheDocument();
+  await screen.findByText(/how would you like to work with/i);
 });

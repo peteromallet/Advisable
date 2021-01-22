@@ -10,9 +10,9 @@ const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
           <Text
             mb="xxs"
             fontSize="l"
-            color="neutral700"
-            fontWeight="semibold"
-            letterSpacing="-0.01rem"
+            color="neutral900"
+            fontWeight="medium"
+            letterSpacing="-0.02rem"
           >
             Card Details
           </Text>
@@ -37,16 +37,16 @@ const CardPaymentSettings = ({ paymentMethod, openCardModal }) => {
           <Text
             mb="xxs"
             fontSize="l"
-            color="neutral700"
-            fontWeight="semibold"
-            letterSpacing="-0.01rem"
+            color="neutral900"
+            fontWeight="medium"
+            letterSpacing="-0.02rem"
           >
             Card Details
           </Text>
           <Text fontSize="s" color="neutral700" mb="s">
             You have not added any card details yet.
           </Text>
-          <Button type="button" variant="dark" onClick={openCardModal}>
+          <Button size="s" type="button" variant="dark" onClick={openCardModal}>
             Add a card
           </Button>
         </>

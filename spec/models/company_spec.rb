@@ -95,8 +95,11 @@ RSpec.describe Company, type: :model do
   end
 
   describe '#update_payments_setup' do
+    let(:payment_method) { instance_double(Stripe::PaymentMethod) }
+
     it "sets payments_setup to true" do
-      company = create(:company, project_payment_method: "Bank Transfer", payments_setup: nil, invoice_name: "Test", accepted_project_payment_terms_at: 2.hours.ago)
+      company = create(:company, payments_setup: nil, invoice_name: "Test", accepted_project_payment_terms_at: 2.hours.ago)
+      allow(company).to receive(:payment_method).and_return(payment_method)
       expect {
         company.update_payments_setup
       }.to change {
@@ -104,18 +107,7 @@ RSpec.describe Company, type: :model do
       }.from(nil).to(true)
     end
 
-    context 'when project_payment_method is nil' do
-      it 'sets the payments_setup to false' do
-        company = create(:company, project_payment_method: nil, payments_setup: nil)
-        expect {
-          company.update_payments_setup
-        }.to change {
-          company.reload.payments_setup
-        }.from(nil).to(false)
-      end
-    end
-
-    context "when the project payment method is Card and the payment_method is nil" do
+    context "when the payment_method is nil" do
       it "sets payments_setup to false" do
         company = create(:company, project_payment_method: "Card", payments_setup: nil)
         allow(company).to receive(:payment_method).and_return(nil)
@@ -130,6 +122,7 @@ RSpec.describe Company, type: :model do
     context 'when the invoice_name is nil' do
       it "sets payments_setup to false" do
         company = create(:company, project_payment_method: "Bank Transfer", payments_setup: nil, invoice_name: nil)
+        allow(company).to receive(:payment_method).and_return(payment_method)
         expect {
           company.update_payments_setup
         }.to change {
@@ -141,6 +134,7 @@ RSpec.describe Company, type: :model do
     context 'when accepted_project_payment_terms_at is nil' do
       it "sets payments_setup to false" do
         company = create(:company, project_payment_method: "Bank Transfer", payments_setup: nil, invoice_name: "Test", accepted_project_payment_terms_at: nil)
+        allow(company).to receive(:payment_method).and_return(payment_method)
         expect {
           company.update_payments_setup
         }.to change {

@@ -39,8 +39,6 @@ class Types::User < Types::BaseType
                'Exclude any times that conflict with scheduled interviews'
   end
 
-  field :bank_transfers_enabled, Boolean, null: true
-
   field :industry, Types::IndustryType, null: true
 
   # TODO: Teams - frontend should not query for user industry, instead it should

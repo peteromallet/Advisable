@@ -5,6 +5,10 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
     context[:current_user]
   end
 
+  def current_company
+    current_user&.company
+  end
+
   private
 
   def current_account_responsible_for(&block)
