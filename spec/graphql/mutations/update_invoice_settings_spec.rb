@@ -127,4 +127,17 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
       expect(error).to eq("notAuthenticated")
     end
   end
+
+  context "when syncing VAT with stripe returns an error" do
+    before do
+      error = Stripe::InvalidRequestError.new("message", "param")
+      allow(Stripe::Customer).to receive(:create_tax_id).and_raise(error)
+    end
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response['errors'][0]['extensions']['code']
+      expect(error).to eq("INVALID_VAT")
+    end
+  end
 end
