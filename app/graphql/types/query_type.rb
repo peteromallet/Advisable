@@ -95,7 +95,7 @@ class Types::QueryType < Types::BaseType
   end
 
   def previous_project(id:)
-    PreviousProject.find_by_uid_or_airtable_id!(id)
+    PreviousProject.find_by!(uid: id)
   end
 
   field :specialist, Types::SpecialistType, null: true do

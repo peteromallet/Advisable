@@ -23,7 +23,6 @@ class PreviousProject < ApplicationRecord
   self.table_name = 'off_platform_projects'
 
   include Uid
-  include Airtable::Syncable
 
   has_logidze
 
