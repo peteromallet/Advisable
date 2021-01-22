@@ -20,6 +20,8 @@
 # [Failed] The project validation has failed.
 #
 class PreviousProject < ApplicationRecord
+  self.ignored_columns = [:airtable_id]
+
   self.table_name = 'off_platform_projects'
 
   include Uid
