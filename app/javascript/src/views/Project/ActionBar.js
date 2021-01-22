@@ -17,6 +17,7 @@ const StyledActionBar = styled.div`
   height: 100px;
   display: flex;
   position: fixed;
+  z-index: 10;
   padding: 0 20px;
   border-radius: 40px;
   align-items: center;
