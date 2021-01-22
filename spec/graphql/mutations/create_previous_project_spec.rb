@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::CreatePreviousProject do
@@ -28,12 +30,8 @@ RSpec.describe Mutations::CreatePreviousProject do
           clientName
         }
       }
-    }  
+    }
   GRAPHQL
-  end
-
-  before :each do
-    allow_any_instance_of(PreviousProject).to receive(:sync_to_airtable)
   end
 
   it 'creates a new previous project for the specialist' do

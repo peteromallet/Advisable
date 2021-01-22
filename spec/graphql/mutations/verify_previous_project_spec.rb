@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::VerifyPreviousProject do
@@ -37,17 +39,13 @@ RSpec.describe Mutations::VerifyPreviousProject do
     GRAPHQL
   end
 
-  before :each do
-    allow_any_instance_of(PreviousProject).to receive(:sync_to_airtable)
-  end
-
   context "when the validation status is 'Pending'" do
     it "sets the validation status to 'Validated'" do
       expect {
         response =
           AdvisableSchema.execute(
             query,
-            context: { oauth_viewer: oauth_viewer }
+            context: {oauth_viewer: oauth_viewer}
           )
       }.to change { project.reload.validation_status }.from('Pending').to(
         'Validated'
