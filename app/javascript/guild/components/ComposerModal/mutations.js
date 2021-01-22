@@ -75,12 +75,7 @@ export const useUpdateGuildPostImage = (props) =>
 export const DELETE_GUILD_POST_IMAGE = gql`
   mutation deleteGuildPostImage($input: DeleteGuildPostImageInput!) {
     deleteGuildPostImage(input: $input) {
-      image {
-        id
-        url
-        cover
-        position
-      }
+      success
     }
   }
 `;

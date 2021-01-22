@@ -5,7 +5,7 @@ class Mutations::Guild::DeleteGuildPostImage < Mutations::BaseMutation
 
   argument :guild_post_image_id, ID, required: true
 
-  field :image, Types::Guild::PostImageType, null: true
+  field :success, Boolean, null: true
 
   def authorized?(**args)
     requires_guild_user!
@@ -13,15 +13,14 @@ class Mutations::Guild::DeleteGuildPostImage < Mutations::BaseMutation
 
   def resolve(**args)
     image = Guild::PostImage.find_by(uid: args[:guild_post_image_id])
+    return {success: false} if image.blank?
 
-    if image.present?
-      if image.post.specialist != current_user
-        ApiError.not_authorized('You dont have access to this')
-      end
-
-      image.destroy
+    if image.post.specialist != current_user
+      ApiError.not_authorized('You dont have access to this')
     end
 
-    {image: image}
+    image.destroy
+
+    {success: true}
   end
 end
