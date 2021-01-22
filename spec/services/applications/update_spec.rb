@@ -1,14 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Applications::Update do
   let(:specialist) { create(:specialist) }
   let(:project) { create(:project, questions: ['Is this a test?']) }
-  let(:previous_project) do
-    create(
-      :previous_project,
-      airtable_id: 'rec987654321', specialist: specialist
-    )
-  end
+  let(:previous_project) { create(:previous_project, specialist: specialist) }
 
   let(:original_attributes) do
     {
@@ -30,7 +27,7 @@ RSpec.describe Applications::Update do
       introduction: 'testing',
       availability: '3 Months',
       questions: [{question: 'Is this a test?', answer: "Yes it's a test"}],
-      references: [previous_project.airtable_id],
+      references: [previous_project.uid],
       rate: 90,
       accepts_fee: true,
       accepts_terms: true
