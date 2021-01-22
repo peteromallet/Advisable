@@ -14,37 +14,36 @@ class Mutations::UpdateInvoiceSettings < Mutations::BaseMutation
   end
 
   def resolve(**args)
-    company = current_user.company
-    company.invoice_name = args[:name]
-    company.invoice_company_name = args[:company_name]
-    company.billing_email = args[:billing_email] if args.key?(:billing_email)
-    company.vat_number = args[:vat_number] if args.key?(:vat_number)
-    company.address = args[:address].try(:to_h)
+    current_company.invoice_name = args[:name]
+    current_company.invoice_company_name = args[:company_name]
+    current_company.billing_email = args[:billing_email] if args.key?(:billing_email)
+    current_company.vat_number = args[:vat_number] if args.key?(:vat_number)
+    current_company.address = args[:address].try(:to_h)
 
-    if company.save
+    if current_company.save
       Stripe::Customer.update(
-        company.stripe_customer_id, {
-          name: company.invoice_company_name,
-          email: company.billing_email || current_user.account.email
+        current_company.stripe_customer_id, {
+          name: current_company.invoice_company_name,
+          email: current_company.billing_email || current_user.account.email
         }
       )
     end
 
-    store_vat_number(company) if company.saved_change_to_vat_number?
-    company.update_payments_setup
+    sync_vat_number_to_stripe if current_company.saved_change_to_vat_number?
+    current_company.update_payments_setup
 
     {user: current_user}
   end
 
   private
 
-  def store_vat_number(company)
-    return if company.vat_number.blank?
+  def sync_vat_number_to_stripe
+    return if current_company.vat_number.blank?
 
     Stripe::Customer.create_tax_id(
-      company.stripe_customer_id,
-      {type: "eu_vat", value: company.vat_number},
-      {idempotency_key: "#{company.id}-#{company.vat_number}"}
+      current_company.stripe_customer_id,
+      {type: "eu_vat", value: current_company.vat_number},
+      {idempotency_key: "#{current_company.id}-#{current_company.vat_number}"}
     )
   rescue Stripe::InvalidRequestError
     ApiError.invalid_request(code: "INVALID_VAT", message: "VAT number is invalid")

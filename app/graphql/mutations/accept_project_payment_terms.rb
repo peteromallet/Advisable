@@ -10,19 +10,18 @@ class Mutations::AcceptProjectPaymentTerms < Mutations::BaseMutation
   end
 
   def resolve(**args)
-    user = current_user
-    if user.company.accepted_project_payment_terms_at.nil?
-      user.company.update accepted_project_payment_terms_at: Time.zone.now
+    if current_company.accepted_project_payment_terms_at.nil?
+      current_company.update(accepted_project_payment_terms_at: Time.zone.now)
     end
 
     # TODO: Move exceptional_project_payment_terms to company record
     if args.key?(:exceptional_terms)
-      user.exceptional_project_payment_terms = args[:exceptional_terms]
+      current_user.exceptional_project_payment_terms = args[:exceptional_terms]
     end
 
-    user.save_and_sync_with_responsible!(current_account_id)
-    user.company.update_payments_setup
+    current_user.save_and_sync_with_responsible!(current_account_id)
+    current_company.update_payments_setup
 
-    {user: user}
+    {user: current_user}
   end
 end
