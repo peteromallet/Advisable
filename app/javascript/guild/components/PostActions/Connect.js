@@ -10,7 +10,7 @@ const LABELS = {
   default: (name) => `Connect with ${name}`,
 };
 
-function ConnectAction({ post, size }) {
+function ConnectAction({ post, size, walkthrough = false }) {
   const modal = useModal();
   const viewer = useViewer();
   const firstName = post.author.firstName;
@@ -42,7 +42,7 @@ function ConnectAction({ post, size }) {
             aria-label={label(firstName)}
             icon={<ChatbubbleEllipses />}
             onClick={handleConnect}
-            data-walkthrough={post.pinned ? "postConnect" : null}
+            data-walkthrough={walkthrough ? "postConnect" : null}
           />
         </Box>
       </Tooltip>
