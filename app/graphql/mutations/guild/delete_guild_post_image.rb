@@ -14,11 +14,13 @@ class Mutations::Guild::DeleteGuildPostImage < Mutations::BaseMutation
   def resolve(**args)
     image = Guild::PostImage.find_by(uid: args[:guild_post_image_id])
 
-    if image.post.specialist != current_user
-      ApiError.not_authorized('You dont have access to this')
-    end
+    if image.present?
+      if image.post.specialist != current_user
+        ApiError.not_authorized('You dont have access to this')
+      end
 
-    image.destroy
+      image.destroy
+    end
 
     {image: image}
   end
