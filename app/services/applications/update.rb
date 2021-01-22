@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Applications::Update < ApplicationService
   attr_reader :application, :attributes, :current_account_id
 
@@ -51,7 +53,7 @@ class Applications::Update < ApplicationService
                # Check that the passed quesion is in the projects questions array.
                application.project.questions || []
              ).include?(hash[:question])
-        raise Service::Error.new(:invalid_question)
+        raise Service::Error, :invalid_question
       end
 
       # Check if the question has already been answered
@@ -77,8 +79,8 @@ class Applications::Update < ApplicationService
     @reference_projects ||=
       begin
         attributes[:references].map do |id|
-          project = specialist.previous_projects.find_by_uid_or_airtable_id(id)
-          raise Service::Error.new(:invalid_reference) if project.blank?
+          project = specialist.previous_projects.find_by(uid: id)
+          raise Service::Error, :invalid_reference if project.blank?
 
           project
         end

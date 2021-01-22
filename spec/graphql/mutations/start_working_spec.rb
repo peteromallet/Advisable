@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::StartWorking do
@@ -20,7 +22,6 @@ RSpec.describe Mutations::StartWorking do
 
   before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
-    allow_any_instance_of(PreviousProject).to receive(:sync_to_airtable)
   end
 
   context 'when a user is signed in' do
