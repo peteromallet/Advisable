@@ -25,7 +25,9 @@ const AutocompleteOption = React.forwardRef(function AutocompleteOption(
           <Check size={16} />
         </Box>
       ) : null}
-      <span>{children}</span>
+      <Box letterSpacing="-0.02rem" fontSize={["l", "m"]}>
+        {children}
+      </Box>
     </StyledAutocompleteMenuItem>
   );
 });
