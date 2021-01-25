@@ -1,21 +1,23 @@
-class Proposals::Reject < ApplicationService
-  attr_reader :application, :reason, :comment, :current_account_id
+# frozen_string_literal: true
 
-  def initialize(application:, reason:, comment:, current_account_id: nil)
+class Proposals::Reject < ApplicationService
+  attr_reader :application, :reason, :feedback, :current_account_id
+
+  def initialize(application:, reason:, feedback:, current_account_id: nil)
     @application = application
     @reason = reason
-    @comment = comment
+    @feedback = feedback
     @current_account_id = current_account_id
   end
 
   def call
     if application.status != "Proposed"
-      raise Service::Error.new("applications.notProposed")
+      raise Service::Error, "applications.notProposed"
     end
 
     application.status = "Application Rejected"
     application.rejection_reason = reason
-    application.rejection_reason_comment = comment
+    application.rejection_feedback = feedback
 
     success = Logidze.with_responsible(current_account_id) do
       application.save
@@ -29,7 +31,7 @@ class Proposals::Reject < ApplicationService
       )
       application
     else
-      raise Service::Error.new(application.errors.full_messages.first)
+      raise Service::Error, application.errors.full_messages.first
     end
   end
 end
