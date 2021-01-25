@@ -7,11 +7,16 @@ import Review from "src/components/Review";
 import { StatusWrapper } from "./styles";
 
 function Validated({ project }) {
-  return project.reviews.length > 0 && project.reviews[0]?.comment ? (
+  const review = project.reviews?.[0];
+  const hasComment = review?.comment;
+
+  if (!hasComment) return null;
+
+  return (
     <StatusWrapper>
-      <Review review={project.reviews[0]} />
+      <Review review={review} />
     </StatusWrapper>
-  ) : null;
+  );
 }
 
 function Pending({ project }) {
