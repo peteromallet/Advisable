@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OffPlatformProject < PreviousProject; end
 
 # == Schema Information
@@ -42,7 +44,6 @@ class OffPlatformProject < PreviousProject; end
 #  validation_url              :string
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
-#  airtable_id                 :string
 #  application_id              :bigint
 #  reviewed_by_id              :bigint
 #  specialist_id               :bigint
