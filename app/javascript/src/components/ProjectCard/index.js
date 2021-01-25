@@ -85,7 +85,7 @@ function Project({ project }) {
   extraSkills > 0 && skillTags.push(`+${extraSkills}`);
 
   const { draft, validationStatus, reviews } = project;
-  const noReview = validationStatus === "Validated" && reviews.length === 0;
+  const hasReview = Boolean(reviews?.[0]?.comment);
   const status = (draft && "Draft") || validationStatus || "Validated";
 
   return (
@@ -106,7 +106,7 @@ function Project({ project }) {
         variant={status}
         data-testid="project-card"
       >
-        <Box padding={6} pb={noReview ? "1.125rem" : 2.5}>
+        <Box padding={6} pb={hasReview ? 2.5 : "1.125rem"}>
           <StyledHoverDecoration>
             <Button variant="subtle" suffix={<ArrowRight />}>
               View More
