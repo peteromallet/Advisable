@@ -31,8 +31,8 @@ const optionByValue = (value) => OPTIONS.find((o) => o.value === value);
 export default function RejectApplicationForm({
   id,
   firstName,
-  onReject = () => {},
-  onCancel = () => {},
+  onReject = () => { },
+  onCancel = () => { },
   mutationOptions,
 }) {
   const [rejectApplication] = useRejectApplication(mutationOptions);
@@ -56,7 +56,7 @@ export default function RejectApplicationForm({
 
   const initialValues = {
     reason: OPTIONS[0].value,
-    comment: "",
+    feedback: "",
   };
 
   return (
@@ -90,7 +90,7 @@ export default function RejectApplicationForm({
             minRows={3}
             as={Textarea}
             marginBottom="xl"
-            name="comment"
+            name="feedback"
             placeholder={optionByValue(formik.values.reason).placeholder}
           />
           <SubmitButton prefix={<Trash />} variant="dark" marginRight="12px">
