@@ -35,6 +35,9 @@ export { default as InputError } from "./components/InputError";
 export { default as Textarea } from "./components/Textarea";
 export * from "./components/Textarea/styles";
 
+export { default as Checkbox } from "./components/Checkbox";
+export * from "./components/Checkbox/styles";
+
 export { default as Label } from "./components/Label";
 export * from "./components/Label/styles";
 
@@ -64,7 +67,6 @@ export { StyledButton } from "./components/Button/styles";
 export { default as Tooltip } from "./components/Tooltip";
 export { default as Provider } from "./components/Provider";
 export { default as Skeleton } from "./components/Skeleton";
-export { default as Checkbox } from "./components/Checkbox";
 export { default as RadioGroup } from "./components/RadioGroup";
 export { default as NumberedList } from "./components/NumberedList";
 export { default as OrbitsSystem } from "./components/OrbitsSystem";

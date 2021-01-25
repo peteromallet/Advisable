@@ -2,16 +2,19 @@ import * as React from "react";
 import { ArrowRight } from "@styled-icons/feather";
 import { useMutation } from "@apollo/client";
 import { Formik, Form } from "formik";
-import { Box, Text, Textarea } from "@advisable/donut";
+import { Box, Text, Textarea, Checkbox } from "@advisable/donut";
+import useViewer from "src/hooks/useViewer";
 import { ChoiceList } from "../../../components";
-import FormField from "../../../components/FormField";
-import SubmitButton from "../../../components/SubmitButton";
+import FormField from "src/components/FormField";
+import SubmitButton from "src/components/SubmitButton";
 import { updateApplication as UPDATE_APPLICATION } from "../queries";
 import validationSchema from "./validationSchema";
 import StepCard from "../StepCard";
+import { StyledComposer } from "./styles";
 
 function Overview({ application, history, location }) {
   const { id } = application;
+  const viewer = useViewer();
   const [mutate] = useMutation(UPDATE_APPLICATION);
 
   const handleSubmit = async (values) => {
@@ -29,6 +32,7 @@ function Overview({ application, history, location }) {
 
   const initialValues = {
     introduction: application.introduction || application.specialist.bio || "",
+    persistBio: !viewer?.bio,
     availability: application.availability || "",
   };
 
@@ -52,15 +56,29 @@ function Overview({ application, history, location }) {
               >
                 Overview
               </Text>
-              <Box mb="m">
+              <StyledComposer mb="m">
                 <FormField
                   minRows={3}
                   as={Textarea}
                   name="introduction"
+                  rowPadding={56}
                   label="Give a 2-3 line description of your background as it related to this project."
                   placeholder="Give a 2-3 line description of your background as it related to this project."
                 />
-              </Box>
+                <Checkbox
+                  name="persistBio"
+                  checked={formik.values.persistBio}
+                  onChange={() =>
+                    formik.setFieldValue(
+                      "persistBio",
+                      !formik.values.persistBio,
+                    )
+                  }
+                >
+                  Save as my profile biography and persist for future
+                  applications
+                </Checkbox>
+              </StyledComposer>
               <ChoiceList
                 fullWidth
                 optionsPerRow={2}
