@@ -2,19 +2,36 @@ import * as React from "react";
 import { ArrowRight } from "@styled-icons/feather";
 import { useMutation } from "@apollo/client";
 import { Formik, Form } from "formik";
-import { Box, Text, Textarea, Checkbox } from "@advisable/donut";
+import { Box, Text, Checkbox, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
-import { ChoiceList } from "../../../components";
+import { ChoiceList } from "src/components";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { updateApplication as UPDATE_APPLICATION } from "../queries";
 import validationSchema from "./validationSchema";
 import StepCard from "../StepCard";
-import { StyledComposer } from "./styles";
+import { StyledIntroduction, StyledPersistBio } from "./styles";
+
+function PersistBioWidget({ formik }) {
+  return (
+    <StyledPersistBio>
+      <Checkbox
+        name="persistBio"
+        checked={formik.values.persistBio}
+        onChange={() =>
+          formik.setFieldValue("persistBio", !formik.values.persistBio)
+        }
+      >
+        Save as my profile biography and persist for future applications
+      </Checkbox>
+    </StyledPersistBio>
+  );
+}
 
 function Overview({ application, history, location }) {
   const { id } = application;
   const viewer = useViewer();
+  const isWidescreen = useBreakpoint("sUp");
   const [mutate] = useMutation(UPDATE_APPLICATION);
 
   const handleSubmit = async (values) => {
@@ -56,29 +73,19 @@ function Overview({ application, history, location }) {
               >
                 Overview
               </Text>
-              <StyledComposer mb="m">
+              <Box mb="m">
                 <FormField
-                  minRows={3}
-                  as={Textarea}
+                  minRows={4}
+                  as={StyledIntroduction}
                   name="introduction"
-                  rowPadding={56}
+                  widget={PersistBioWidget}
+                  formik={formik}
+                  rowPadding={isWidescreen ? 64 : 80}
+                  isWidescreen={isWidescreen}
                   label="Give a 2-3 line description of your background as it related to this project."
                   placeholder="Give a 2-3 line description of your background as it related to this project."
                 />
-                <Checkbox
-                  name="persistBio"
-                  checked={formik.values.persistBio}
-                  onChange={() =>
-                    formik.setFieldValue(
-                      "persistBio",
-                      !formik.values.persistBio,
-                    )
-                  }
-                >
-                  Save as my profile biography and persist for future
-                  applications
-                </Checkbox>
-              </StyledComposer>
+              </Box>
               <ChoiceList
                 fullWidth
                 optionsPerRow={2}

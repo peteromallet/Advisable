@@ -2,24 +2,17 @@ import styled from "styled-components";
 import {
   theme,
   Box,
-  StyledTextarea,
+  Textarea,
   StyledCheckbox,
   StyledCheckboxInner,
 } from "@advisable/donut";
 
-export const StyledComposer = styled(Box)`
-  position: relative;
-  ${StyledTextarea} {
-    textarea {
-      padding-bottom: 40px;
-    }
-  }
-
+export const StyledPersistBio = styled(Box)`
   ${StyledCheckbox} {
     position: absolute;
-    bottom: 16px;
-    left: 16px;
-    right: 16px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
     padding: 8px;
     border-radius: 8px;
     background: white;
@@ -38,4 +31,8 @@ export const StyledComposer = styled(Box)`
     padding: 0;
     margin: 0;
   }
+`;
+
+export const StyledIntroduction = styled(Textarea)`
+  padding-bottom: ${(props) => (props.isWidescreen ? "48px" : "64px")};
 `;
