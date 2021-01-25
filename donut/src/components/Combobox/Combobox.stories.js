@@ -1344,7 +1344,6 @@ export const async = () => {
         placeholder="Country"
         onChange={(v) => setValue(v)}
         loadOptions={searchCountries}
-        options={[]}
       />
     </Card>
   );
@@ -1382,12 +1381,6 @@ export const asyncAndCreatable = () => {
         placeholder="Country"
         loadOptions={searchCountries}
         onChange={(v) => setValue(v)}
-        options={sortBy(COUNTRIES, "name")
-          .slice(0, 5)
-          .map((country) => ({
-            label: country.name,
-            value: country.code,
-          }))}
       />
     </Card>
   );
