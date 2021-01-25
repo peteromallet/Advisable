@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::RejectApplication do
@@ -8,7 +10,7 @@ RSpec.describe Mutations::RejectApplication do
         rejectApplication(input: {
           id: "#{application.uid}",
           reason: "Too Expensive",
-          comment: "This is a comment"
+          feedback: "This is some feedback for Advisable"
         }) {
           application {
             id
@@ -19,9 +21,9 @@ RSpec.describe Mutations::RejectApplication do
     GRAPHQL
   end
 
-  let(:context) { { current_user: application.project.user } }
+  let(:context) { {current_user: application.project.user} }
 
-  before :each do
+  before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
   end
 
@@ -35,7 +37,7 @@ RSpec.describe Mutations::RejectApplication do
   end
 
   context 'when not logged in' do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it 'returns an error if the user is not logged in' do
       error = response['errors'][0]['extensions']['code']
@@ -44,7 +46,7 @@ RSpec.describe Mutations::RejectApplication do
   end
 
   context 'when logged in as a random user' do
-    let(:context) { { current_user: create(:user) } }
+    let(:context) { {current_user: create(:user)} }
 
     it 'returns an error if the user is not logged in' do
       error = response['errors'][0]['extensions']['code']

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Airtable::Application < Airtable::Base
   self.table_name = 'Applications'
 
@@ -10,7 +12,8 @@ class Airtable::Application < Airtable::Base
   sync_column 'One Line Overview', to: :introduction
   sync_column 'Advisable Comment', to: :comment
   sync_column 'Rejected Reason', to: :rejection_reason
-  sync_column 'Rejected Reason Comment', to: :rejection_reason_comment
+  # TODO: Decide if we'll sync :rejection_feedback
+  # sync_column 'Rejected Feedback', to: :rejection_feedback
   sync_column 'Proposal Comment', to: :proposal_comment
   sync_column 'Invitation Rejected Reason', to: :invitation_rejection_reason
   sync_column 'Applied At', to: :applied_at
@@ -143,7 +146,8 @@ class Airtable::Application < Airtable::Base
     self['Applied At'] = application.applied_at
     self['Rejected Reason'] = application.rejection_reason
     self['Proposal Comment'] = application.proposal_comment
-    self['Rejected Reason Comment'] = application.rejection_reason_comment
+    # TODO: Decide if we'll sync :rejection_feedback
+    # self['Rejected Feedback'] = application.rejection_feedback
     self['References Requested'] =
       application.references_requested ? 'Yes' : nil
     self['Project Type'] = application.project_type

@@ -25,8 +25,8 @@
 # invitation_rejection_reason collumn.
 #
 # [Application Rejected] The client has rejected a freelancers application.
-# The reason for rejection will be provided in the rejection_reason and
-# rejection_reason_comment columns.
+# The reason for rejection will be provided in the rejection_reason.
+# Feedback for Advisable will be in rejection_feedback.
 #
 # [Application Accepted] This is the first step of the hiring process. At this
 # point the client will have sent an interview request to the freelancer.
@@ -172,6 +172,7 @@ end
 #  questions                   :jsonb
 #  rate                        :decimal(, )
 #  references_requested        :boolean
+#  rejection_feedback          :text
 #  rejection_reason            :text
 #  rejection_reason_comment    :text
 #  score                       :decimal(, )
