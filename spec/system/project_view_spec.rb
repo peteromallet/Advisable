@@ -1,28 +1,24 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Project view', type: :system do
-  before :each do
+  before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Interview).to receive(:sync_to_airtable)
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
+    create(:full_application, status: 'Applied', score: 90, project: project)
   end
 
   let!(:project) { create(:project, status: 'Brief Confirmed') }
-  let!(:application1) do
-    create(:full_application, status: 'Applied', score: 90, project: project)
-  end
-  let!(:application2) do
-    create(:full_application, status: 'Applied', score: 85, project: project)
-  end
-  let!(:application3) do
-    create(:full_application, status: 'Applied', score: 80, project: project)
-  end
+  let!(:application85) { create(:full_application, status: 'Applied', score: 85, project: project) }
+  let!(:application80) { create(:full_application, status: 'Applied', score: 80, project: project) }
 
   it 'allows user to accept and reject matches' do
     project.user.complete_tutorial('RECOMMENDATIONS')
 
     monday = Date.parse('monday')
-    delta = monday > Date.today ? 0 : 7
+    delta = monday > Time.zone.today ? 0 : 7
     next_monday = monday + delta
 
     authenticate_as project.user
@@ -37,13 +33,13 @@ RSpec.describe 'Project view', type: :system do
     find("[aria-label='#{next_monday.strftime('%-d %b %Y, 12:00')}']").click
     find("[aria-label='#{next_monday.strftime('%-d %b %Y, 12:30')}']").click
     click_on 'Request Call'
-    expect(page).to have_content(application2.specialist.account.name)
+    expect(page).to have_content(application85.specialist.account.name)
 
     # Accept second match, no need to select availability because its stored
     # from the first time.
     click_on 'Accept'
     click_on 'Request Call'
-    expect(page).to have_content(application3.specialist.account.name)
+    expect(page).to have_content(application80.specialist.account.name)
 
     # Reject third match
     click_on 'Reject'
@@ -69,7 +65,7 @@ RSpec.describe 'Project view', type: :system do
   context 'when the user hasnt added a password' do
     it 'allows the user to signup' do
       allow_any_instance_of(User).to receive(:sync_to_airtable)
-      project.user.account.update_columns(password_digest: nil)
+      project.user.account.update_columns(password_digest: nil) # rubocop:disable Rails/SkipsModelValidations
       visit "/projects/#{project.uid}"
       fill_in 'password', with: 'testing123'
       fill_in 'passwordConfirmation', with: 'testing123'

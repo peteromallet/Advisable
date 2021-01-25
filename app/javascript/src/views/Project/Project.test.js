@@ -245,7 +245,7 @@ test("can reject a match", async () => {
         {
           id: project.matches[0].id,
           reason: "I want someone with more relevant experience",
-          comment: "",
+          feedback: "",
         },
         {
           rejectApplication: {
