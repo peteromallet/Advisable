@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types::Guild::ReactionInterface
   include Types::BaseInterface
   field_class BaseField

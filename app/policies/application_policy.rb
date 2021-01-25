@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationPolicy < BasePolicy
   def is_client_owner?
     record.project.user == user
