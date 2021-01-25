@@ -1,38 +1,52 @@
 import React from "react";
-import { use100vh } from "react-div-100vh";
-import { Box, Input } from "@advisable/donut";
+import { Box, Input, Button } from "@advisable/donut";
+import { Check } from "@styled-icons/heroicons-outline";
 import { ChevronDown } from "@styled-icons/ionicons-outline";
 import Tags from "./Tags";
-import { StyledAutocomplete } from "./styles";
+import Menu from "./Menu";
+import { StyledAutocomplete, StyledComboxMobileContainer } from "./styles";
 
 export default function ComboboxMobile({
   inputProps,
   containerProps,
   removeOption,
   isOpen,
+  menuProps,
   ...props
 }) {
-  const height = use100vh();
-
   return (
     <StyledAutocomplete {...containerProps}>
       <Input {...inputProps} suffix={<ChevronDown />} />
 
       {isOpen && (
-        <Box
+        <StyledComboxMobileContainer
           top="0"
           left="0"
-          position="fixed"
           bg="white"
           width="100%"
-          height={height || "100vh"}
+          display="flex"
+          position="fixed"
+          flexDirection="column"
         >
-          <Box padding={2}>
-            <Input autoFocus />
+          <Box
+            padding={2}
+            display="flex"
+            flexShrink={0}
+            flexGrow={0}
+            alignItems="center"
+          >
+            <Input autoFocus {...inputProps} />
+            <Box pl={2}>
+              <Button variant="subtle" onClick={props.close}>
+                <Check />
+              </Button>
+            </Box>
           </Box>
 
-          <button onClick={props.close}>x</button>
-        </Box>
+          <Box flexGrow={1} flexShrink={1} height={0}>
+            <Menu {...menuProps} />
+          </Box>
+        </StyledComboxMobileContainer>
       )}
 
       {props.multiple && props.value.length > 0 && (

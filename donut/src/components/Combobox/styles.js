@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Box } from "@advisable/donut";
 import theme from "../../theme";
 
 export const StyledAutocomplete = styled.div`
@@ -21,7 +22,11 @@ export const StyledAutocompleteMenuList = styled.ul`
   list-style: none;
   padding: 4px 0px;
   overflow-y: auto;
-  max-height: 300px;
+  height: 100%;
+
+  @media (min-width: ${theme.breakpoints.s}) {
+    max-height: 300px;
+  }
 `;
 
 export const StyledAutocompleteNoResults = styled.div`
@@ -54,14 +59,14 @@ export const StyledAutocompleteMenuItem = styled.li`
     margin-bottom: 4px;
   }
 
-  span {
-    display: block;
-    font-size: 14px;
-    color: ${theme.colors.neutral800};
-  }
-
   &[aria-selected="true"] {
     color: ${theme.colors.neutral900};
     background: ${theme.colors.neutral100};
   }
+`;
+
+export const StyledComboxMobileContainer = styled(Box)`
+  height: -moz-available; /* WebKit-based browsers will ignore this. */
+  height: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  height: fill-available;
 `;
