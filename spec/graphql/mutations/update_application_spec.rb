@@ -206,4 +206,41 @@ RSpec.describe Mutations::UpdateApplication do
       expect(accepts).to be_truthy
     end
   end
+
+  context "when passing persistBio" do
+    let(:specialist) { create(:specialist, bio: "Before") }
+    let(:persist_bio) { true }
+
+    let(:query) do
+      <<-GRAPHQL
+      mutation {
+        updateApplication(input: {
+          id: "#{application.uid}",
+          introduction: "After",
+          persistBio: #{persist_bio}
+        }) {
+          application {
+            id
+          }
+        }
+      }
+      GRAPHQL
+    end
+
+    it "saves the bio to the specialist record" do
+      expect {
+        AdvisableSchema.execute(query)
+      }.to change { specialist.reload.bio }.from("Before").to("After")
+    end
+
+    context "when persistBio is false" do
+      let(:persist_bio) { false }
+
+      it "does not save the bio to the specialist record" do
+        expect {
+          AdvisableSchema.execute(query)
+        }.not_to(change { specialist.reload.bio })
+      end
+    end
+  end
 end

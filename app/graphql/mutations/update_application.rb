@@ -19,17 +19,25 @@ class Mutations::UpdateApplication < Mutations::BaseMutation
   argument :monthly_limit, Int, required: false
   argument :trial_program, Boolean, required: false
   argument :auto_apply, Boolean, required: false
+  argument :persist_bio, Boolean, required: false
 
   field :application, Types::ApplicationType, null: true
 
   def resolve(**args)
     application = Applications::Update.call(id: args[:id], attributes: attributes(args), current_account_id: current_account_id)
+    persist_bio(application.specialist, args[:introduction]) if args[:persist_bio]
     {application: application}
   rescue Service::Error => e
     ApiError.service_error(e)
   end
 
   private
+
+  def persist_bio(specialist, bio)
+    return if bio.blank?
+
+    specialist.update(bio: bio)
+  end
 
   def attributes(args)
     questions = (args[:questions] || []).map { |qa| {question: qa.question, answer: qa.answer} }
