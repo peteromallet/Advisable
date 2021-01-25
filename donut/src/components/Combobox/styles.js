@@ -40,9 +40,11 @@ export const StyledAutocompleteLoading = styled.div`
 `;
 
 export const StyledAutocompleteMenuItem = styled.li`
-  padding: 0;
-  user-select: none;
+  display: flex;
   cursor: default;
+  user-select: none;
+  padding: 10px 10px;
+  align-items: center;
 
   &:first-child {
     margin-top: 4px;
@@ -55,11 +57,10 @@ export const StyledAutocompleteMenuItem = styled.li`
   span {
     display: block;
     font-size: 14px;
-    padding: 10px 10px;
     color: ${theme.colors.neutral800};
   }
 
-  &[aria-selected="true"] span {
+  &[aria-selected="true"] {
     color: ${theme.colors.neutral900};
     background: ${theme.colors.neutral100};
   }

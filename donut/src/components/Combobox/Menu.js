@@ -1,4 +1,6 @@
 import React from "react";
+import { Box } from "@advisable/donut";
+import { Check } from "@styled-icons/heroicons-outline";
 import {
   StyledAutocompleteLoading,
   StyledAutocompleteMenuList,
@@ -7,7 +9,7 @@ import {
 } from "./styles";
 
 const AutocompleteOption = React.forwardRef(function AutocompleteOption(
-  { children, selected, ...props },
+  { children, selected, isValue, ...props },
   ref,
 ) {
   return (
@@ -15,8 +17,14 @@ const AutocompleteOption = React.forwardRef(function AutocompleteOption(
       ref={ref}
       role="option"
       aria-selected={selected}
+      $isValue={isValue}
       {...props}
     >
+      {isValue ? (
+        <Box color="blue400" mr={1}>
+          <Check size={16} />
+        </Box>
+      ) : null}
       <span>{children}</span>
     </StyledAutocompleteMenuItem>
   );
