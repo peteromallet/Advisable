@@ -26,7 +26,7 @@ const FUSE_OPTIONS = {
 
 function initialState(options) {
   return {
-    options,
+    options: options || [],
     isOpen: false,
     isLoading: false,
     searchValue: "",
@@ -53,7 +53,7 @@ function reducer(state, action) {
         ...state,
         isLoading: false,
         selectionIndex: 0,
-        options: action.options,
+        options: action.options || [],
       };
     }
     case UPDATE_SEARCH: {
@@ -171,16 +171,18 @@ export default function useCombobox({
     searchDirectMatch,
   ]);
 
+  const hasOptions = useMemo(() => options?.length > 0, [options]);
+
   const reachedMax = max ? value.length === max : false;
 
   function isValue(index) {
     const option = filteredOptions[index];
 
     if (multiple) {
-      return value.some((v) => v.value === option.value);
+      return value?.some((v) => v.value === option.value);
     }
 
-    return value.value === option.value;
+    return value?.value === option.value;
   }
 
   function handleChange(option) {
@@ -232,7 +234,7 @@ export default function useCombobox({
   }
 
   function handleFocus(e) {
-    if (!state.isOpen) {
+    if (!state.isOpen && hasOptions) {
       handleOpen();
     }
     if (props.onFocus) props.onFocus(e);
@@ -257,7 +259,9 @@ export default function useCombobox({
   }
 
   function handleClick() {
-    handleOpen();
+    if (!state.isOpen && hasOptions) {
+      handleOpen();
+    }
   }
 
   function handleKeyDown(e) {
