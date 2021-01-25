@@ -19,7 +19,6 @@ class ApplicationPolicy < BasePolicy
   def via_client?
     is_client_owner? || record_belongs_to_company?
   end
-  alias reject_proposal? via_client?
 
   # Wether or not the user has access to read information about the application.
   def read?

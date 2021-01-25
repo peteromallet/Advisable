@@ -101,7 +101,6 @@ Layout/EmptyLinesAroundExceptionHandlingKeywords:
     - 'app/graphql/mutations/approve_task.rb'
     - 'app/graphql/mutations/confirm_project.rb'
     - 'app/graphql/mutations/delete_task.rb'
-    - 'app/graphql/mutations/reject_proposal.rb'
     - 'app/graphql/mutations/request_password_reset.rb'
     - 'app/graphql/mutations/request_quote.rb'
     - 'app/graphql/mutations/request_to_start.rb'
@@ -185,7 +184,6 @@ Layout/RescueEnsureAlignment:
   Exclude:
     - 'app/graphql/mutations/approve_task.rb'
     - 'app/graphql/mutations/confirm_project.rb'
-    - 'app/graphql/mutations/reject_proposal.rb'
     - 'app/graphql/mutations/request_password_reset.rb'
     - 'app/graphql/mutations/request_quote.rb'
     - 'app/graphql/mutations/request_to_start.rb'
