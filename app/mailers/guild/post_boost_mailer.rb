@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Guild::PostBoostMailer < ApplicationMailer
-  layout 'styled_mailer'
-
   def new_post(post:, follower_id:)
     @follower = Specialist.find(follower_id)
     return if @follower.account.unsubscribed?("Advisable Guild")
