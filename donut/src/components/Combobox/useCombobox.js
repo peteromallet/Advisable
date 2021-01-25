@@ -147,11 +147,6 @@ export default function useCombobox({
   const filteredOptions = useMemo(() => {
     let optionsArray = state.options;
 
-    if (multiple) {
-      const values = value.map((v) => v.value);
-      optionsArray = optionsArray.filter((o) => !values.includes(o.value));
-    }
-
     if (!loadOptions && state.searchValue.length > 0) {
       const fuse = new Fuse(optionsArray, FUSE_OPTIONS);
       optionsArray = fuse.search(state.searchValue).map((obj) => obj.item);
@@ -173,12 +168,20 @@ export default function useCombobox({
     state.options,
     loadOptions,
     creatable,
-    multiple,
-    value,
     searchDirectMatch,
   ]);
 
   const reachedMax = max ? value.length === max : false;
+
+  function isValue(index) {
+    const option = filteredOptions[index];
+
+    if (multiple) {
+      return value.some((v) => v.value === option.value);
+    }
+
+    return value.value === option.value;
+  }
 
   function handleChange(option) {
     if (multiple) {
@@ -188,11 +191,20 @@ export default function useCombobox({
     }
   }
 
+  function removeOption(optionValue) {
+    onChange(value.filter((v) => v.value !== optionValue));
+  }
+
   function selectOption(index) {
     const selectedOption = filteredOptions[index];
     if (!selectedOption) return;
 
     dispatch({ type: RESET });
+
+    if (multiple && isValue(index)) {
+      removeOption(selectedOption.value);
+      return;
+    }
 
     if (
       state.searchValue &&
@@ -207,10 +219,6 @@ export default function useCombobox({
     } else {
       handleChange(selectedOption);
     }
-  }
-
-  function removeOption(optionValue) {
-    onChange(value.filter((v) => v.value !== optionValue));
   }
 
   function handleOpen() {
@@ -243,7 +251,9 @@ export default function useCombobox({
   function handleInputChange(e) {
     handleOpen();
     dispatch({ type: UPDATE_SEARCH, searchValue: e.target.value });
-    listboxRef.current.scrollTop = 0;
+    if (listboxRef.current) {
+      listboxRef.current.scrollTop = 0;
+    }
   }
 
   function handleClick() {
@@ -331,6 +341,7 @@ export default function useCombobox({
     return {
       role: "option",
       id: `option_${index}`,
+      isValue: isValue(index),
       selected: state.selectionIndex === index,
       onClick: () => handleOptionClick(index),
       onMouseMove: () => handleOptionMouseMove(index),
@@ -339,6 +350,7 @@ export default function useCombobox({
   };
 
   const menuProps = {
+    max,
     id: listboxID,
     ref: listboxRef,
     role: "listbox",

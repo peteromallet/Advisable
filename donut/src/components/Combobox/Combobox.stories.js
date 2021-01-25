@@ -1275,7 +1275,6 @@ const fuse = new Fuse(COUNTRIES, {
 
 const searchCountries = (query) => {
   return new Promise((resolve) => {
-    console.log("SEARCHING");
     const options = fuse.search(query).map((obj) => ({
       value: obj.item.code,
       label: obj.item.name,
@@ -1345,12 +1344,7 @@ export const async = () => {
         placeholder="Country"
         onChange={(v) => setValue(v)}
         loadOptions={searchCountries}
-        options={sortBy(COUNTRIES, "name")
-          .slice(0, 5)
-          .map((country) => ({
-            label: country.name,
-            value: country.code,
-          }))}
+        options={[]}
       />
     </Card>
   );
