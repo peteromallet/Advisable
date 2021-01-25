@@ -288,7 +288,7 @@ export default function useCombobox({
       });
     }
 
-    if (e.keyCode === ENTER) {
+    if (e.keyCode === ENTER && state.isOpen) {
       e.preventDefault();
       selectOption(state.selectionIndex);
     }
