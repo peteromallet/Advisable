@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::StopWorking do
   let(:application) { create(:application, status: 'Working') }
-  let(:context) { { current_user: application.project.user } }
+  let(:context) { {current_user: application.project.user} }
   let(:query) do
     <<-GRAPHQL
     mutation {
       stopWorking(input: {
         application: "#{application.uid}",
-        reason: "Becuase"
+        reason: "Because"
       }) {
         application {
           id
@@ -19,28 +21,30 @@ RSpec.describe Mutations::StopWorking do
     GRAPHQL
   end
 
-  before :each do
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
+  before { allow_any_instance_of(Application).to receive(:sync_to_airtable) }
+
+  context "when logged in as the client" do
+    it "sets the status and reason" do
+      expect(application.reload.status).to eq("Working")
+      AdvisableSchema.execute(query, context: context)
+      expect(application.reload.status).to eq("Stopped Working")
+      expect(application.stopped_working_reason).to eq("Because")
+    end
   end
 
-  it "sets the status to 'Stopped Working'" do
-    expect {
-      response = AdvisableSchema.execute(query, context: context)
-    }.to change { application.reload.status }.from('Working').to(
-      'Stopped Working'
-    )
+  context "when logged in as the specialist" do
+    let(:context) { {current_user: application.specialist} }
+
+    it "sets the status and reason" do
+      expect(application.reload.status).to eq("Working")
+      AdvisableSchema.execute(query, context: context)
+      expect(application.reload.status).to eq("Stopped Working")
+      expect(application.stopped_working_reason).to eq("Because")
+    end
   end
 
-  it "sets the stopped_working_reason to 'Because'" do
-    expect {
-      response = AdvisableSchema.execute(query, context: context)
-    }.to change { application.reload.stopped_working_reason }.from(nil).to(
-      'Becuase'
-    )
-  end
-
-  context 'when logged in as a random user' do
-    let(:context) { { current_user: create(:user) } }
+  context 'when logged in as a random client' do
+    let(:context) { {current_user: create(:user)} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
@@ -49,8 +53,8 @@ RSpec.describe Mutations::StopWorking do
     end
   end
 
-  context 'when logged in as the specialist' do
-    let(:context) { { current_user: application.specialist } }
+  context 'when logged in as a random specialist' do
+    let(:context) { {current_user: create(:specialist)} }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
