@@ -9,7 +9,7 @@ import {
 } from "./styles";
 
 function Review({ review }) {
-  if (!review) return null;
+  if (!review?.comment) return null;
   const { role, name, companyName } = review;
   const displayName = name?.split(" ")[0] || role;
   const title = name ? `${role} at ${companyName}` : companyName;
@@ -88,12 +88,9 @@ const STATUSES = {
   },
 };
 
-function ProjectStatus({ project }) {
-  const status =
-    (project.draft && "Draft") || project.validationStatus || "Validated";
+function ProjectStatus({ status, review }) {
   const config = STATUSES[status];
-
-  return <config.component {...config} review={project.reviews?.[0]} />;
+  return <config.component {...config} review={review} />;
 }
 
 export default ProjectStatus;
