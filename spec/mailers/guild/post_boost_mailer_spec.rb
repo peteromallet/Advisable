@@ -13,7 +13,7 @@ RSpec.describe Guild::PostBoostMailer do
     let(:guild_post) { create(:guild_post, title: "This is a long title that should be truncated when sent as a subject line") }
 
     it "sends an email with a truncated title" do
-      expect(mail.subject).to eq("New Post - #{guild_post.title}".truncate(80))
+      expect(mail.subject).to eq("New Post - This is a long title that should be truncated when sent as a subje...")
     end
 
     it "does not send the email when unsubscribed" do
