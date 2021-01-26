@@ -38,7 +38,7 @@ function StopWorkingModal({ modal, clientName, applicationId }) {
 
     if (errors) {
       formik.setSubmitting(false);
-      formik.setStatus("It looks like something went wrong, please try agian.");
+      formik.setStatus("It looks like something went wrong, please try again.");
     }
   };
 
