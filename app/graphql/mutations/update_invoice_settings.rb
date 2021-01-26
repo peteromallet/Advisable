@@ -31,6 +31,10 @@ class Mutations::UpdateInvoiceSettings < Mutations::BaseMutation
       )
     end
 
+    # some user records that are stored on the company record need to be synced
+    # into airtable.
+    current_user.sync_to_airtable
+
     sync_vat_number_to_stripe if current_company.saved_change_to_vat_number?
     current_company.update_payments_setup
 

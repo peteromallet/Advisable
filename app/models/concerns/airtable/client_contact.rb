@@ -84,7 +84,7 @@ class Airtable::ClientContact < Airtable::Base
     self['First Name'] = user.account.first_name
     self['Last Name'] = user.account.last_name
     self['Country'] = [user.country.airtable_id] if user.country.present?
-    self['Project Payment Method'] = user.company.project_payment_method
+    self['Project Payment Method'] = user.company.project_payment_method || "Card"
     self['Exceptional Project Payment Terms'] =
       user.exceptional_project_payment_terms
     self['Invoice Name'] = user.company.invoice_name
