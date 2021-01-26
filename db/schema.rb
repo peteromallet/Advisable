@@ -374,6 +374,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.integer "engagements_count", default: 0
     t.boolean "shareable", default: false
     t.boolean "pinned", default: false
+    t.datetime "boosted_at"
     t.index ["data"], name: "index_guild_posts_on_data", using: :gin
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end
@@ -772,6 +773,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.string "phone"
     t.boolean "guild", default: false
     t.string "community_status"
+    t.boolean "automated_invitations_subscription"
     t.jsonb "guild_data"
     t.bigint "account_id"
     t.datetime "community_applied_at"
@@ -1294,7 +1296,6 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
         END;
       $function$
   SQL
-
 
   create_trigger :logidze_on_projects, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_projects BEFORE INSERT OR UPDATE ON public.projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')

@@ -88,18 +88,7 @@ class Types::SpecialistType < Types::BaseType
   end
 
   def avatar
-    if object.avatar.attached?
-      return(
-        Rails.application.routes.url_helpers.rails_blob_url(
-          object.avatar,
-          host:
-            ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-        )
-      )
-    end
-
-    # Fallback to the airtable image if they have not uploaded an avatar
-    object.image.try(:[], 'url')
+    object.avatar_or_image
   end
 
   field :cover_photo, String, null: true

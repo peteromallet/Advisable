@@ -12,6 +12,12 @@ module Admin
           transform_values { |v| read_param_value(v) }
       end
 
+      def boost_post
+        guild_post = ::Guild::Post.find(params["id"])
+        guild_post.boost!
+
+        redirect_to admin_guild_posts_path
+      end
       # Override this method to specify custom lookup behavior.
       # This will be used to set the resource for the `show`, `edit`, and `update`
       # actions.

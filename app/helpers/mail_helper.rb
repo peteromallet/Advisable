@@ -13,6 +13,15 @@ module MailHelper
     "#{app_host}/opportunities/#{project.uid}?utm_campaign=#{project.uid}"
   end
 
+  def magic_link_manage_guild_follows(account)
+    magic_link(account, "#{app_host}/guild/follows", expires_at: 1.day.from_now)
+  end
+
+  def magic_link_guild_post(guild_post, account)
+    url = "#{app_host}/guild/posts/#{guild_post.id}"
+    guild_post.shareable ? url : magic_link(account, url, expires_at: 1.day.from_now)
+  end
+
   def time_in_zone(timestamp, zone, format = "%d %B, %I:%M%P %Z")
     timestamp.in_time_zone(zone).strftime(format)
   end
