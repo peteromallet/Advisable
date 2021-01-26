@@ -16,6 +16,9 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   argument :location_relevance, Integer, required: false
   argument :cost_to_hire, Integer, required: false
   argument :execution_cost, Integer, required: false
+  argument :contact_name, String, required: false
+  argument :contact_job_title, String, required: false
+  argument :contact_relationship, String, required: false
 
   field :previous_project, Types::PreviousProject, null: true
 
