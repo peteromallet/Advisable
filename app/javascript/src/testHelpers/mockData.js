@@ -305,7 +305,6 @@ export const previousProject = (fields = {}) => {
       goal: "This was the project goal",
       excerpt: "This is the excerpt...",
       description: "This is the description",
-      pendingDescription: "",
       clientName: "Test Inc",
       companyType: "Startup",
       specialist: null,
