@@ -13,6 +13,7 @@ import {
 } from "@advisable/donut";
 import FormField from "../../components/FormField";
 import { ACCEPT_PROJECT_PAYMENT_TERMS } from "./queries";
+import { useHistory } from "react-router";
 
 const validationSchema = object().shape({
   acceptTerms: boolean().oneOf(
@@ -25,7 +26,8 @@ const validationSchema = object().shape({
   }),
 });
 
-const PaymentTerms = ({ nextStep }) => {
+const PaymentTerms = ({ data }) => {
+  const history = useHistory();
   const [acceptPaymentTerms] = useMutation(ACCEPT_PROJECT_PAYMENT_TERMS);
 
   const handleSubmit = async (values) => {
@@ -37,7 +39,7 @@ const PaymentTerms = ({ nextStep }) => {
       },
     });
 
-    nextStep();
+    history.push(`/book/${data.application.id}/booking_type`);
   };
 
   const initialValues = {

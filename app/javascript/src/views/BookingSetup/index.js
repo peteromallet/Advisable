@@ -8,7 +8,6 @@ import {
   Route,
   Redirect,
   useParams,
-  useHistory,
   generatePath,
 } from "react-router-dom";
 import GET_SETUP_DATA from "./getSetupData";
@@ -26,26 +25,25 @@ const STEPS = [
   {
     path: "/book/:applicationId/payment_method",
     component: PaymentMethod,
-    enabled: ({ viewer }) =>
+    isFirstStep: ({ viewer }) =>
       !viewer.paymentsSetup && viewer.bankTransfersEnabled,
   },
   {
     path: "/book/:applicationId/card_details",
     component: CardDetails,
-    enabled: ({ viewer }) => {
-      if (viewer.projectPaymentMethod === "Bank Transfer") return false;
+    isFirstStep: ({ viewer }) => {
       return !viewer.paymentsSetup && !viewer.paymentMethod;
     },
   },
   {
     path: "/book/:applicationId/invoice_settings",
     component: InvoiceSettings,
-    enabled: (data) => !data.viewer.paymentsSetup,
+    isFirstStep: (data) => !data.viewer.paymentsSetup,
   },
   {
     path: "/book/:applicationId/payment_terms",
     component: PaymentTerms,
-    enabled: (data) => !data.viewer.paymentsSetup,
+    isFirstStep: (data) => !data.viewer.paymentsSetup,
   },
   {
     path: "/book/:applicationId/booking_type",
@@ -56,7 +54,6 @@ const STEPS = [
 const BookingSetup = () => {
   const params = useParams();
   const viewer = useViewer();
-  const history = useHistory();
   const { data, loading } = useQuery(GET_SETUP_DATA, {
     variables: { id: params.applicationId },
   });
@@ -67,8 +64,8 @@ const BookingSetup = () => {
     return <Redirect to={`/manage/${data.application.id}`} />;
   }
 
-  const filteredSteps = STEPS.filter((step) => {
-    return step.enabled ? step.enabled(data) : true;
+  const firstStep = STEPS.find((step) => {
+    return step.isFirstStep ? step.isFirstStep(data) : true;
   });
 
   if (!viewer.isTeamManager) {
@@ -78,30 +75,18 @@ const BookingSetup = () => {
   return (
     <Box maxWidth={600} px="xs" mx="auto" mt="xxl" pb="l">
       <Switch>
-        {filteredSteps.map((step, i) => {
+        {STEPS.map((step) => {
           const Component = step.component;
 
           return (
             <Route
               key={step.path}
               path={step.path}
-              render={(route) => (
-                <Component
-                  {...route}
-                  data={data}
-                  nextStep={() => {
-                    const nextStep = filteredSteps[i + 1];
-                    const nextPath = generatePath(nextStep.path, params);
-                    if (nextStep) {
-                      history.push(nextPath);
-                    }
-                  }}
-                />
-              )}
+              render={(route) => <Component {...route} data={data} />}
             />
           );
         })}
-        <Redirect to={generatePath(filteredSteps[0].path, params)} />
+        <Redirect to={generatePath(firstStep.path, params)} />
       </Switch>
     </Box>
   );

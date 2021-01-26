@@ -59,6 +59,19 @@ test("User can complete booking setup", async () => {
       ),
       mockMutation(
         UPDATE_INVOICE_SETTINGS,
+        { paymentMethod: "Card" },
+        {
+          updateInvoiceSettings: {
+            __typename: "UpdateInvoiceSettingsPayload",
+            user: {
+              ...user,
+              projectPaymentMethod: "Card",
+            },
+          },
+        },
+      ),
+      mockMutation(
+        UPDATE_INVOICE_SETTINGS,
         {
           name: "Test Account",
           companyName: "Test Corp",
@@ -138,6 +151,10 @@ test("User can complete booking setup", async () => {
       },
     ],
   });
+
+  // payment method
+  screenUser.click(await screen.findByLabelText(/payments via card/i));
+  screenUser.click(await screen.findByLabelText("Continue"));
 
   // invoice settings
   screenUser.clear(await screen.findByLabelText(/full name/i));

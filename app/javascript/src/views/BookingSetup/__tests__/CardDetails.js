@@ -7,6 +7,7 @@ test("Shows form to add card when user has no card", async () => {
   let user = mockData.user({
     paymentsSetup: false,
     paymentMethod: null,
+    bankTransfersEnabled: false,
     company: mockData.company(),
   });
 
