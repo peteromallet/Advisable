@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Freelancer active project view', type: :system do
   let(:application) { create(:application, status: 'Working') }
 
   before do
+    allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
     application.specialist.complete_tutorial('fixedProjects')
     application.specialist.complete_tutorial('flexibleProjects')
@@ -128,5 +131,15 @@ RSpec.describe 'Freelancer active project view', type: :system do
       click_on 'Complete'
       expect(page).to have_content('SUBMITTED')
     end
+  end
+
+  it 'allows the freelancer to stop working with the client' do
+    visit "/clients/#{application.uid}"
+    click_on 'Stop Working'
+    within "*[data-dialog]" do
+      fill_in "reason", with: "Project has ended"
+      click_on "Stop Working"
+    end
+    expect(page).to have_content('You have stopped working with')
   end
 end
