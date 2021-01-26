@@ -21,6 +21,7 @@ class UserDashboard < Administrate::BaseDashboard
     projects: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    bank_transfers_enabled: Field::Boolean
   }.freeze
 
   # COLLECTION_ATTRIBUTES
