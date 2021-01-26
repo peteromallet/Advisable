@@ -34,7 +34,7 @@ const STEPS = [
     component: CardDetails,
     enabled: ({ viewer }) => {
       if (viewer.projectPaymentMethod === "Bank Transfer") return false;
-      return !viewer.paymentsSetup;
+      return !viewer.paymentsSetup && !viewer.paymentMethod;
     },
   },
   {
