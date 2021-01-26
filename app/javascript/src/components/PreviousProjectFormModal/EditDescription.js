@@ -38,7 +38,11 @@ function EditDescription({ data }) {
           provide as specific information as possible about the results of this
           project.
         </Text>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+        >
           {(formik) => (
             <Form>
               <Stack spacing="l">
@@ -49,7 +53,11 @@ function EditDescription({ data }) {
                   label="Project description"
                   description="Please describe the problem they had, an overview of the project, how you approached it and the results you achieved."
                 />
-                <SubmitButton type="button" loading={formik.isSubmitting}>
+                <SubmitButton
+                  type="button"
+                  disabled={!formik.dirty}
+                  loading={formik.isSubmitting}
+                >
                   Save Changes
                 </SubmitButton>
               </Stack>
