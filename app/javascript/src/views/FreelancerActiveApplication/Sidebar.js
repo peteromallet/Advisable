@@ -7,19 +7,21 @@ import Back from "../../components/Back";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
-import { Box, Button } from "@advisable/donut";
+import { Stack, Box, Button } from "@advisable/donut";
 import Heading from "../../components/Heading";
 import VideoButton from "../../components/VideoButton";
 import AttributeList from "../../components/AttributeList";
 import TalkModal from "../../components/TalkModal";
 import { useMobile } from "../../components/Breakpoint";
 import currency from "../../utilities/currency";
+import StopWorking from "./StopWorking";
 
 const Component = ({ data, tutorial, tutorialModal }) => {
   const isMobile = useMobile();
   const { t } = useTranslation();
   const dialog = useDialogState();
   const application = data.application;
+  const canStopWorking = application.status === "Working";
 
   return (
     <Layout.Sidebar>
@@ -34,7 +36,7 @@ const Component = ({ data, tutorial, tutorialModal }) => {
           conversationId={application.id}
           participants={[application.project.user]}
         />
-        <Box paddingTop="xl">
+        <Stack spacing="sm" paddingTop="xl">
           <DialogDisclosure
             as={Button}
             width="100%"
@@ -44,7 +46,13 @@ const Component = ({ data, tutorial, tutorialModal }) => {
           >
             Message {application.project.user.firstName}
           </DialogDisclosure>
-        </Box>
+          {canStopWorking && (
+            <StopWorking
+              clientName={application.project.user.companyName}
+              applicationId={application.id}
+            />
+          )}
+        </Stack>
         <Box paddingTop="l" paddingBottom="xl">
           <AttributeList>
             {Boolean(application.rate) && (
