@@ -35,7 +35,7 @@ RSpec.describe Guild::Topic, type: :model do
     end
   end
 
-  describe "friendly" do
+  describe "sluggable" do
     let(:new_topic) { build(:guild_topic, name: "Foo bar") }
 
     it "adds a slug on save" do

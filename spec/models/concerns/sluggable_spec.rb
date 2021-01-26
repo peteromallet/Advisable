@@ -1,0 +1,51 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+class Dummy
+  def self.exists?(_)
+    if @num_exists > 0
+      @num_exists -= 1
+      return true
+    end
+    false
+  end
+
+  def self.before_save(_); end
+
+  include Sluggable
+  slug_from :title
+
+  attr_reader :options
+
+  def initialize(num_exists, **options)
+    self.class.instance_variable_set(:@num_exists, num_exists)
+    @options = options
+  end
+
+  def method_missing(method, *_args, **_options, &_block)
+    return options[method] if respond_to_missing?(method)
+
+    super
+  end
+
+  def respond_to_missing?(method)
+    options.key?(method)
+  end
+end
+
+RSpec.describe Sluggable do
+  let(:dummy) { Dummy.new(0, title: "aa bb") }
+
+  it "sets the slug" do
+    expect(dummy.unique_slug).to eq("aa-bb")
+  end
+
+  context "when there are already instances with that slug" do
+    let(:dummy) { Dummy.new(3, title: "aa bb") }
+
+    it "sets the slug" do
+      expect(dummy.unique_slug).to eq("aa-bb-4")
+    end
+  end
+end

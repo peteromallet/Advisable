@@ -8,6 +8,10 @@ module Guild
   #   to something like Guild::Tag or Guild::Category without a migration
 
   class Topic < ActsAsTaggableOn::Tag
+    include Sluggable
+
+    slug_from :name
+
     acts_as_followable
 
     belongs_to :alias_tag, class_name: "Guild::Topic", optional: true
