@@ -113,7 +113,7 @@ RSpec.describe Guild::Post, type: :model do
       expect(guild_post.guild_topics.count).to eq(3)
       expect {
         guild_post.update!(audience_type: "industries")
-      }.to change { guild_post.guild_topics }.by([])
+      }.to change(guild_post, :guild_topics).by([])
     end
 
     it "does not reset the guild topics if the audience type does not change" do
@@ -131,6 +131,40 @@ RSpec.describe Guild::Post, type: :model do
         guild_post.update!(pinned: true)
         pinned_post.reload
       }.to change(pinned_post, :pinned).from(true).to(false)
+    end
+  end
+
+  describe "boost" do
+    let(:post) { create(:guild_post, status: "published") }
+
+    it "errors when it's not published" do
+      expect {
+        post.draft!
+        post.boost!
+      }.to raise_error(Guild::Post::BoostError, "Cannot boost unpublished post")
+    end
+
+    it "errors when there are no guild_topics" do
+      expect {
+        post.boost!
+      }.to raise_error(Guild::Post::BoostError, "Cannot boost a post with zero topics")
+    end
+
+    it "errors when it's already boosted" do
+      expect {
+        post.update(boosted_at: Time.current)
+        post.boost!
+      }.to raise_error(Guild::Post::BoostError, "Post is already boosted")
+    end
+
+    it "updates boosted_at and enqueues a job" do
+      post.guild_topic_list = ["foo"]
+      post.save
+
+      expect {
+        post.boost!
+      }.to change(post, :boosted_at)
+      expect(GuildPostBoostedJob).to have_been_enqueued.with(post.id)
     end
   end
 end

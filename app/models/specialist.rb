@@ -77,6 +77,21 @@ class Specialist < ApplicationRecord
     self.project_count = previous_projects.count
     save(validate: false)
   end
+
+  def avatar_or_image
+    if avatar.attached?
+      return(
+        Rails.application.routes.url_helpers.rails_blob_url(
+          avatar,
+          host:
+            ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+        )
+      )
+    end
+
+    # Fallback to the airtable image if they have not uploaded an avatar
+    image.try(:[], 'url')
+  end
 end
 
 # == Schema Information

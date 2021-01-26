@@ -2,6 +2,7 @@
 
 module Guild
   class Post < ApplicationRecord
+    class BoostError < StandardError; end
     self.store_full_sti_class = false
 
     acts_as_ordered_taggable_on :guild_topics
@@ -42,9 +43,7 @@ module Guild
     validates :title, length: {maximum: 250, minimum: 8}, allow_nil: true
     validates :body, length: {maximum: 10_000, minimum: 16}, allow_nil: true
     validates :audience_type, inclusion: {in: AUDIENCE_TYPES}, allow_nil: true
-    jsonb_accessor :data,
-                   audience_type: [:string],
-                   audience_notified_at: [:datetime]
+    jsonb_accessor :data, audience_type: [:string]
 
     before_validation :set_default_values
     before_save :reset_guild_topics, if: :guild_topics_resettable?
@@ -62,6 +61,15 @@ module Guild
 
     def cover_image
       images.find_by(cover: true)
+    end
+
+    def boost!
+      raise BoostError.new("Post is already boosted") if boosted_at.present?
+      raise BoostError.new("Cannot boost unpublished post") unless published?
+      raise BoostError.new("Cannot boost a post with zero topics") if guild_topics.empty?
+
+      update(boosted_at: Time.current)
+      GuildPostBoostedJob.perform_later(id)
     end
 
     protected
@@ -96,6 +104,7 @@ end
 #
 #  id                 :uuid             not null, primary key
 #  body               :text
+#  boosted_at         :datetime
 #  comments_count     :integer          default(0), not null
 #  data               :jsonb            not null
 #  engagements_count  :integer          default(0)

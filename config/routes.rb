@@ -34,7 +34,9 @@ Rails.application.routes.draw do
     resources :webhook_configurations
     resources :webhooks, only: %i[index show]
     namespace :guild do
-      resources :posts
+      resources :posts do
+        post 'boost_post', on: :member
+      end
       resources :posts, as: :post_opportunity
       resources :posts, as: :post_case_study
       resources :posts, as: :post_advice_required
@@ -73,6 +75,7 @@ Rails.application.routes.draw do
   post 'zappier_interactor/attach_previous_project_image'
   post 'zappier_interactor/create_magic_link'
   post 'zappier_interactor/enable_guild'
+  post 'zappier_interactor/boost_guild_post'
 
   # match every other route to the frontend codebase
   root 'application#frontend'
