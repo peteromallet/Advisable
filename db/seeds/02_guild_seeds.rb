@@ -6,6 +6,9 @@ require "faker"
 
 Rails.logger.info "Creating guild topics"
 
+# Need this because ActsAsTaggableOn does some magic 🤷‍♂️
+Guild::Topic.reset_column_information
+
 Skill.where(active: true, original: nil).find_each do |skill|
   Guild::Topic.create(name: skill.name, topicable: skill)
 end

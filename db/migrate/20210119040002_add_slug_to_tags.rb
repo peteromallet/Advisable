@@ -6,9 +6,6 @@ class AddSlugToTags < ActiveRecord::Migration[6.1]
   def up
     add_column :tags, :slug, :string
     add_index :tags, :slug, unique: true, algorithm: :concurrently
-
-    # Friendly_id will generate slugs on save
-    Guild::Topic.find_each(&:save)
   end
 
   def down
