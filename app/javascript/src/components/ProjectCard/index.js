@@ -84,7 +84,9 @@ function Project({ project }) {
   let skillTags = project.skills.slice(0, NUM_OF_SKILL_TAGS).map((s) => s.name);
   extraSkills > 0 && skillTags.push(`+${extraSkills}`);
 
-  const status = (project.draft && "Draft") || project.validationStatus;
+  const { draft, validationStatus, reviews } = project;
+  const hasReview = Boolean(reviews?.[0]?.comment);
+  const status = (draft && "Draft") || validationStatus || "Validated";
 
   return (
     <>
@@ -104,7 +106,7 @@ function Project({ project }) {
         variant={status}
         data-testid="project-card"
       >
-        <Box padding={6} pb={2.5}>
+        <Box padding={6} pb={hasReview ? 2.5 : "1.125rem"}>
           <StyledHoverDecoration>
             <Button variant="subtle" suffix={<ArrowRight />}>
               View More
@@ -167,7 +169,7 @@ function Project({ project }) {
             industries={project.industries}
           />
         </Box>
-        <ProjectStatus project={project} />
+        <ProjectStatus status={status} review={reviews?.[0]} />
       </DialogDisclosure>
     </>
   );
