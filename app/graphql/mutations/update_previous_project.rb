@@ -61,11 +61,7 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   def update_description(project, args)
     return if args[:description].blank?
 
-    if project.draft? || project.validation_status == 'Pending'
-      project.description = args[:description]
-    else
-      project.pending_description = args[:description]
-    end
+    project.description = args[:description]
   end
 
   def update_skills(project, args)
