@@ -13,7 +13,6 @@ class ApplicationPolicy < BasePolicy
     is_client_owner? || is_company_team_manager?
   end
   alias set_type_for_project? is_owner_or_manager?
-  alias stop_working? is_owner_or_manager?
   alias start_working? is_owner_or_manager?
 
   def via_client?
@@ -26,6 +25,10 @@ class ApplicationPolicy < BasePolicy
   end
   alias write? read?
   alias create? read?
+
+  def stop_working?
+    is_owner_or_manager? || is_specialist?
+  end
 
   private
 
