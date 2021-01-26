@@ -15,7 +15,7 @@ test("Submitting the overview step continues to the questions step", async () =>
   const app = renderRoute({
     route: "/invites/rec1234/apply",
     graphQLMocks: [
-      mockViewer(null),
+      mockViewer(generateTypes.specialist()),
       mockQuery(
         getApplication,
         { id: "rec1234" },
@@ -38,6 +38,7 @@ test("Submitting the overview step continues to the questions step", async () =>
         {
           id: "rec1234",
           introduction: "Introduction",
+          persistBio: false,
           availability: "2 - 4 weeks",
         },
         {

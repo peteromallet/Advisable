@@ -44,6 +44,7 @@ test("Overview step continues to the questions step", async () => {
       {
         id: application.id,
         introduction: "This is an overview",
+        persistBio: false,
         availability: "2 - 4 weeks",
       },
       {
@@ -70,6 +71,103 @@ test("Overview step continues to the questions step", async () => {
   fireEvent.change(overview, { target: { value: "This is an overview" } });
   const availability = app.getByText("2 - 4 weeks");
   fireEvent.click(availability);
+  const button = app.getByLabelText("Next");
+  fireEvent.click(button);
+  await app.findByText("Question one");
+});
+
+test("Persist bio by default if specialist bio is null", async () => {
+  const { specialist, application } = setupData({ specialist: { bio: null } });
+  const graphQLMocks = [
+    mockViewer(specialist),
+    mockQuery(GET_APPLICATION, { id: application.id }, { application }),
+    mockMutation(
+      UPDATE,
+      {
+        id: application.id,
+        introduction: "This is an overview",
+        persistBio: true,
+        availability: "2 - 4 weeks",
+      },
+      {
+        updateApplication: {
+          __typename: "UpdateApplicationPayload",
+          application: {
+            ...application,
+            introduction: "This is an overview",
+            availability: "2 - 4 weeks",
+            specialist: {
+              ...application.specialist,
+              bio: "This is an overview",
+            },
+          },
+        },
+      },
+    ),
+  ];
+
+  const app = renderRoute({
+    route: `/invites/${application.id}/apply`,
+    graphQLMocks,
+  });
+
+  const overview = await app.findByLabelText("Give a 2-3 line description", {
+    exact: false,
+  });
+  fireEvent.change(overview, { target: { value: "This is an overview" } });
+  const availability = app.getByText("2 - 4 weeks");
+  fireEvent.click(availability);
+  const button = app.getByLabelText("Next");
+  fireEvent.click(button);
+  await app.findByText("Question one");
+});
+
+test("Persist overview for future applications", async () => {
+  const { specialist, application } = setupData();
+  const graphQLMocks = [
+    mockViewer(specialist),
+    mockQuery(GET_APPLICATION, { id: application.id }, { application }),
+    mockMutation(
+      UPDATE,
+      {
+        id: application.id,
+        introduction: "This is an overview",
+        persistBio: true,
+        availability: "2 - 4 weeks",
+      },
+      {
+        updateApplication: {
+          __typename: "UpdateApplicationPayload",
+          application: {
+            ...application,
+            introduction: "This is an overview",
+            availability: "2 - 4 weeks",
+            specialist: {
+              ...application.specialist,
+              bio: "This is an overview",
+            },
+          },
+        },
+      },
+    ),
+  ];
+
+  const app = renderRoute({
+    route: `/invites/${application.id}/apply`,
+    graphQLMocks,
+  });
+
+  const overview = await app.findByLabelText("Give a 2-3 line description", {
+    exact: false,
+  });
+  fireEvent.change(overview, { target: { value: "This is an overview" } });
+  const availability = app.getByText("2 - 4 weeks");
+  fireEvent.click(availability);
+  fireEvent.click(
+    app.getByText(
+      "Save as my profile biography and persist for future applications",
+    ),
+  );
   const button = app.getByLabelText("Next");
   fireEvent.click(button);
   await app.findByText("Question one");
