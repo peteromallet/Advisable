@@ -9,6 +9,7 @@ export default gql`
         email
         paymentsSetup
         projectPaymentMethod
+        bankTransfersEnabled
         invoiceSettings {
           name
           vatNumber

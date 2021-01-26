@@ -6,6 +6,7 @@ export default gql`
       ... on User {
         id
         projectPaymentMethod
+        bankTransfersEnabled
         name
         companyName
         country {

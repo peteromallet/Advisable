@@ -14,6 +14,7 @@ class Airtable::ClientContact < Airtable::Base
   sync_column_to_association 'VAT Number', association: :account, to: :vat_number
   sync_column_to_association 'VAT Number', association: :company, to: :vat_number
   sync_column_to_association 'Type of Company', association: :company, to: :kind
+  sync_column_to_association 'Project Payment Method', association: :company, to: :project_payment_method
   sync_column_to_association 'Invoice Name', association: :company, to: :invoice_name
   sync_column_to_association 'Invoice Company Name', association: :company, to: :invoice_company_name
 
@@ -83,6 +84,7 @@ class Airtable::ClientContact < Airtable::Base
     self['First Name'] = user.account.first_name
     self['Last Name'] = user.account.last_name
     self['Country'] = [user.country.airtable_id] if user.country.present?
+    self['Project Payment Method'] = user.company.project_payment_method
     self['Exceptional Project Payment Terms'] =
       user.exceptional_project_payment_terms
     self['Invoice Name'] = user.company.invoice_name

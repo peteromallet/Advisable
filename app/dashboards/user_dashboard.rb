@@ -20,7 +20,7 @@ class UserDashboard < Administrate::BaseDashboard
     country: Field::BelongsTo,
     projects: Field::HasMany,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime
+    updated_at: Field::DateTime,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -48,6 +48,7 @@ class UserDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     airtable_id
     country
+    bank_transfers_enabled
   ].freeze
 
   # Overwrite this method to customize how users are displayed
