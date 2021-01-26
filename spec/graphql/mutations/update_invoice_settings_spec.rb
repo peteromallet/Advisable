@@ -45,6 +45,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
   let(:context) { {current_user: current_user} }
 
   before do
+    allow_any_instance_of(User).to receive(:sync_to_airtable)
     allow(Stripe::Customer).to receive(:update).with("cus_123", {
       name: "company name",
       email: "billing@test.com"

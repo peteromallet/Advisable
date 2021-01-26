@@ -136,6 +136,8 @@ class Types::User < Types::BaseType
     company.stripe_customer
   end
 
+  field :bank_transfers_enabled, Boolean, null: true
+
   # The paymentMethod field returns the users default payment method from stripe.
   field :payment_method, Types::PaymentMethodType, null: true do
     authorize :is_user
