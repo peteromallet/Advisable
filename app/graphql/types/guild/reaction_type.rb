@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::Guild::ReactionType < Types::BaseType
   include ActionView::Helpers::DateHelper
 
