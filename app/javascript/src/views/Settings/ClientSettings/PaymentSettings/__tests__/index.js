@@ -7,7 +7,9 @@ import GET_PAYMENT_SETTINGS from "../getPaymentSettings";
 import { UPDATE_INVOICE_SETTINGS } from "../queries";
 
 test("user can update invoice settings", async () => {
-  const user = mockData.user();
+  const user = mockData.user({
+    projectPaymentMethod: "Card",
+  });
 
   const graphQLMocks = [
     {
@@ -46,6 +48,7 @@ test("user can update invoice settings", async () => {
         variables: {
           input: {
             name: "John Doe",
+            paymentMethod: "Card",
             companyName: user.invoiceSettings.companyName,
             billingEmail: user.invoiceSettings.billingEmail,
             vatNumber: user.invoiceSettings.vatNumber,

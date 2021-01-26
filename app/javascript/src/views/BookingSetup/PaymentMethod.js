@@ -10,6 +10,7 @@ const PaymentMethod = ({ data }) => {
   const history = useHistory();
   const { application } = data;
   const [updateInvoiceSettings] = useMutation(UPDATE_INVOICE_SETTINGS);
+  const hasPaymentMethod = data.viewer.paymentMethod;
 
   const initialValues = {
     paymentMethod: data.viewer.projectPaymentMethod || "Card",
@@ -24,7 +25,7 @@ const PaymentMethod = ({ data }) => {
       },
     });
 
-    if (values.paymentMethod === "Bank Transfer") {
+    if (values.paymentMethod === "Bank Transfer" || hasPaymentMethod) {
       history.push(`/book/${data.application.id}/invoice_settings`);
       return;
     }
