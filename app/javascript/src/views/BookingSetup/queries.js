@@ -6,6 +6,7 @@ export const UPDATE_INVOICE_SETTINGS = gql`
       user {
         id
         paymentsSetup
+        projectPaymentMethod
         invoiceSettings {
           name
           vatNumber
