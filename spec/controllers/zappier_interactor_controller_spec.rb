@@ -1,7 +1,66 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe ZappierInteractorController, type: :request do
   let(:key) { ENV["ACCOUNTS_CREATE_KEY"] }
+
+  describe "POST /create_application" do
+    let(:specialist) { create(:specialist) }
+    let(:project) { create(:project) }
+    let(:application_params) { {comment: "This is a comment"} }
+    let(:extra_application_params) { {} }
+    let(:extra_params) { {specialist_id: specialist.uid, project_id: project.uid} }
+    let(:params) { {application: application_params.merge(extra_application_params), key: key}.merge(extra_params) }
+
+    it "creates the application and returns its uid" do
+      post("/zappier_interactor/create_application", params: params)
+      expect(response).to have_http_status(:success)
+      uid = JSON[response.body]["uid"]
+      expect(uid).to be_present
+      expect(Application).to exist(uid: uid)
+    end
+
+    context "when specialist is missing" do
+      let(:extra_params) { {project_id: project.uid} }
+
+      it "returns error" do
+        post("/zappier_interactor/create_application", params: params)
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON[response.body]["message"]).to eq("Couldn't find Specialist")
+      end
+    end
+
+    context "when project is missing" do
+      let(:extra_params) { {specialist_id: specialist.uid} }
+
+      it "returns error" do
+        post("/zappier_interactor/create_application", params: params)
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON[response.body]["message"]).to eq("Couldn't find Project")
+      end
+    end
+
+    context "when given unpermitted params" do
+      let(:extra_application_params) { {airtable_id: "1234"} }
+
+      it "ignores the param" do
+        post("/zappier_interactor/create_application", params: params)
+        uid = JSON[response.body]["uid"]
+        application = Application.find_by(uid: uid)
+        expect(application.airtable_id).not_to eq("1234")
+      end
+    end
+
+    context "when no key" do
+      let(:key) { '' }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/create_application", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 
   describe "POST /attach_previous_project_image" do
     let(:previous_project) { create(:previous_project) }
