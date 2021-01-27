@@ -64,9 +64,9 @@ module Guild
     end
 
     def boost!
-      raise BoostError.new("Post is already boosted") if boosted_at.present?
-      raise BoostError.new("Cannot boost unpublished post") unless published?
-      raise BoostError.new("Cannot boost a post with zero topics") if guild_topics.empty?
+      raise BoostError, "Post is already boosted" if boosted_at.present?
+      raise BoostError, "Cannot boost unpublished post" unless published?
+      raise BoostError, "Cannot boost a post with zero topics" if guild_topics.empty?
 
       update(boosted_at: Time.current)
       GuildPostBoostedJob.perform_later(id)
@@ -94,6 +94,11 @@ module Guild
 
     def set_default_values
       self.status = 'draft' if status.blank?
+    end
+
+    # As per instructions in https://github.com/mbleigh/acts-as-taggable-on/blob/master/lib/acts_as_taggable_on/taggable/core.rb#L300-L321
+    def find_or_create_tags_from_list_with_context(tag_list, _)
+      Guild::Topic.find_or_create_all_with_like_by_name(tag_list)
     end
   end
 end
