@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Request consultation', type: :system do
+RSpec.describe 'Consultations', type: :system do
   let(:specialist) { create(:specialist) }
 
   before do
@@ -12,6 +12,8 @@ RSpec.describe 'Request consultation', type: :system do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Client).to receive(:sync_to_airtable)
     allow_any_instance_of(Consultation).to receive(:sync_to_airtable)
+    allow_any_instance_of(Project).to receive(:sync_to_airtable)
+    allow_any_instance_of(Interview).to receive(:sync_to_airtable)
   end
 
   it 'allows client to request a consultation with a freelancer' do
@@ -41,5 +43,25 @@ RSpec.describe 'Request consultation', type: :system do
     click_on "Request Consultation"
 
     expect(page).to have_content("Check your email")
+  end
+
+  context 'when a consultation request has been sent' do
+    let(:consultation) { create(:consultation, specialist: specialist) }
+
+    it 'allows the specialist to accept ' do
+      authenticate_as(specialist)
+      visit "/consultations/#{consultation.uid}"
+      click_on "Accept Request"
+      expect(page).to have_content("select an available day")
+    end
+
+    it 'allows the specialist to decline ' do
+      authenticate_as(specialist)
+      visit "/consultations/#{consultation.uid}"
+      click_on "Decline Request"
+      fill_in "reason", with: "No thanks"
+      click_on "Decline Consultation"
+      expect(page).to have_content("You have declined this consultation")
+    end
   end
 end
