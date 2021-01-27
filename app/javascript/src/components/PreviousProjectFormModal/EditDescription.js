@@ -1,17 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { LockClosed, Refresh } from "@styled-icons/heroicons-solid";
-import {
-  Box,
-  Text,
-  Textarea,
-  Button,
-  Stack,
-  Modal,
-  Circle,
-  useModal,
-  Notice,
-} from "@advisable/donut";
+import { Box, Text, Textarea, Stack } from "@advisable/donut";
 import FormField from "../../components/FormField";
 import SubmitButton from "../../components/SubmitButton";
 import { useNotifications } from "../../components/Notifications";
@@ -19,19 +8,11 @@ import Helper from "./Helper";
 import { useUpdatePreviousProject } from "./queries";
 
 function EditDescription({ data }) {
-  const modal = useModal();
   const notifications = useNotifications();
   const [updateProject] = useUpdatePreviousProject();
-  const {
-    id,
-    pendingDescription,
-    description,
-    validationStatus,
-  } = data.previousProject;
+  const { id, description } = data.previousProject;
 
-  const initialValues = {
-    description: pendingDescription || description,
-  };
+  const initialValues = { description };
 
   const handleSubmit = async (values) => {
     await updateProject({
@@ -43,18 +24,7 @@ function EditDescription({ data }) {
       },
     });
 
-    modal.hide();
-    notifications.notify("Your changes have been saved");
-  };
-
-  const handleSaveChanges = (formik) => (e) => {
-    if (validationStatus === "Pending") {
-      formik.submitForm();
-      e.preventDefault();
-      return null;
-    } else {
-      modal.show();
-    }
+    notifications.notify("The project description has been updated");
   };
 
   return (
@@ -68,33 +38,13 @@ function EditDescription({ data }) {
           provide as specific information as possible about the results of this
           project.
         </Text>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+        >
           {(formik) => (
             <Form>
-              <Modal modal={modal} padding="l" label="Approve changes">
-                <Box textAlign="center">
-                  <Circle size={50} bg="orange200" color="orange900" mb="m">
-                    <LockClosed size={24} />
-                  </Circle>
-                  <Text
-                    mb="xs"
-                    fontSize="xl"
-                    color="blue900"
-                    fontWeight="semibold"
-                  >
-                    Requires approval
-                  </Text>
-                  <Text color="neutral700" lineHeight="s" mb="l">
-                    The details of this project have already been reviewed. The
-                    Advisable team will need to review and approve these
-                    changes.
-                  </Text>
-                  <SubmitButton mr="xxs">Save Changes</SubmitButton>
-                  <Button ml="xxs" onClick={modal.hide} variant="secondary">
-                    Cancel
-                  </Button>
-                </Box>
-              </Modal>
               <Stack spacing="l">
                 <FormField
                   minRows={8}
@@ -103,18 +53,13 @@ function EditDescription({ data }) {
                   label="Project description"
                   description="Please describe the problem they had, an overview of the project, how you approached it and the results you achieved."
                 />
-                {pendingDescription ? (
-                  <Notice title="Pending approval" icon={<Refresh />}>
-                    The advisable team are reviewing your requested changes
-                  </Notice>
-                ) : null}
-                <Button
+                <SubmitButton
                   type="button"
+                  disabled={!formik.dirty}
                   loading={formik.isSubmitting}
-                  onClick={handleSaveChanges(formik)}
                 >
                   Save Changes
-                </Button>
+                </SubmitButton>
               </Stack>
             </Form>
           )}
