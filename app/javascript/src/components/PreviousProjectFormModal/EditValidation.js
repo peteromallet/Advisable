@@ -1,11 +1,11 @@
 import React from "react";
 import { Formik, Form } from "formik";
 // Components
-import { Box, Text, Select, Stack, Button } from "@advisable/donut";
-import { useNotifications } from "src/components/Notifications";
+import { Box, Text, Select, Stack, Button, useModal } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import { verificationValidationSchema } from "./validationSchemas";
 import Helper from "./Helper";
+import ValidationModal from "src/components/ManagePreviousProjects/ValidationModal";
 // Queries
 import { useUpdatePreviousProject } from "./queries";
 
@@ -17,7 +17,12 @@ const RELATIONSHIPS = [
 
 export default function EditValidation({ data }) {
   const [updatePreviousProject] = useUpdatePreviousProject();
-  const notifications = useNotifications();
+  const validationModal = useModal();
+  const {
+    contactName,
+    contactJobTitle,
+    contactRelationship,
+  } = data.previousProject;
 
   const handleSaveChanges = async (values) => {
     await updatePreviousProject({
@@ -29,18 +34,23 @@ export default function EditValidation({ data }) {
       },
     });
 
-    notifications.notify("Your changes have been saved");
+    validationModal.show();
   };
 
   const initialValues = {
-    contactName: data.previousProject.contactName || "",
-    contactJobTitle: data.previousProject.contactJobTitle || "",
-    contactRelationship:
-      data.previousProject.contactRelationship || RELATIONSHIPS[0],
+    contactName: contactName || "",
+    contactJobTitle: contactJobTitle || "",
+    contactRelationship: contactRelationship || RELATIONSHIPS[0],
   };
 
   return (
     <Box display="flex">
+      <ValidationModal
+        modal={validationModal}
+        previousProject={data.previousProject}
+        title="Contact details successfully updated!"
+        description={`To validate this project, please share this link with ${contactName}`}
+      />
       <Box flexGrow={1} width="100%">
         <Formik
           enableReinitialize
