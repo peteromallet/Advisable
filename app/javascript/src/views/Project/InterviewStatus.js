@@ -1,3 +1,4 @@
+import { darken } from "polished";
 import { object, string } from "yup";
 import React, { useCallback, useMemo, useState } from "react";
 import { DateTime } from "luxon";
@@ -62,6 +63,11 @@ export const StyledButton = styled.button`
   background: transparent;
   color: ${theme.colors.blue800};
   transition: 0.2s border-color, 0.2s color;
+
+  &:hover {
+    color: ${theme.colors.blue900};
+    border-color: ${darken(0.1, theme.colors.blue200)};
+  }
 `;
 
 function Member({ member, applicationId, onInvite, invited }) {
