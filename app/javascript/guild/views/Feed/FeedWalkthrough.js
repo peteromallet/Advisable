@@ -23,7 +23,8 @@ const steps = [
             Welcome to Advisable Guild!
           </Text>
           <Paragraph size="md" marginBottom="32px">
-            We would like to take a quick minute to show you around.
+            We’d like to give you a quick tour of the feed to show you around
+            and help you get the most out of Advisable Guild.
           </Paragraph>
           <Button
             marginRight="sm"
@@ -138,8 +139,8 @@ const steps = [
             That’s it!
           </Text>
           <Paragraph marginBottom="24px">
-            That’s some of the important things you need to know about the feed.
-            We’ll let you take it from here
+            That’s everything you need to know about the feed. If you’ve got
+            feedback or questions for us, don’t hesitate to reach out!
           </Paragraph>
           <Button variant="dark" onClick={nextStep}>
             Okay
