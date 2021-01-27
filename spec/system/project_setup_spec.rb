@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'project setup flow', type: :system do
@@ -190,6 +192,24 @@ RSpec.describe 'project setup flow', type: :system do
         visit "/project_setup/#{project.airtable_id}/deposit"
         expect(page).to have_content('Terms')
       end
+    end
+  end
+
+  context 'when the project is a draft' do
+    let(:project) { create(:project, status: "Draft") }
+
+    it 'allows the user to delete the project' do
+      allow_any_instance_of(Project).to receive(:remove_from_airtable)
+      project_name = project.primary_skill.name
+      authenticate_as project.user
+      visit "/projects"
+      click_on project_name
+      click_on "Delete"
+      within "*[role=dialog]" do
+        click_on "Delete"
+      end
+      expect(page).to have_current_path("/projects")
+      expect(page).not_to have_content(project_name)
     end
   end
 end
