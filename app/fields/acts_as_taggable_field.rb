@@ -8,7 +8,10 @@ class ActsAsTaggableField < Administrate::Field::Base
   end
 
   def delimited
-    data.map(&:name).join(", ")
+    if data.any?
+      followers_count = Follow.where(followable_id: data.map(&:id), followable_type: "ActsAsTaggableOn::Tag").distinct.count(:follower_id)
+      data.map(&:name).join(", ").concat(" - (#{followers_count})")
+    end
   end
 
   def attribute
