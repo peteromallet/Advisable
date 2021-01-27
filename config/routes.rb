@@ -8,8 +8,8 @@ Rails.application.routes.draw do
 
   if Rails.env.development? || ENV["STAGING"]
     mount GraphqlPlayground::Rails::Engine, as: "graphql_playground", at: '/playground', graphql_path: '/graphql'
-    mount GraphqlPlayground::Rails::Engine, as: "admin_graphql_playground", at: '/admin_playground', graphql_path: '/admin_graphql'
-    post '/admin_graphql', to: 'graphql#admin'
+    mount GraphqlPlayground::Rails::Engine, as: "toby_playground", at: '/toby_playground', graphql_path: '/toby_graphql'
+    post '/toby_graphql', to: 'graphql#toby'
     get "/advisatable", to: "application#advisatable"
     get "/advisatable/*admin", to: "application#advisatable"
   end

@@ -8,6 +8,8 @@ module SpecialistOrUser
     belongs_to :account, dependent: :destroy
   end
 
+  delegate :email, :first_name, :last_name, :name, to: :account
+
   [:find_by_email, :find_by_remember_token].each do |method|
     define_singleton_method(method) do |param|
       Account.public_send(method, param)&.specialist_or_user
