@@ -1,8 +1,29 @@
+# frozen_string_literal: true
+
 class ZappierInteractorController < ApplicationController
   include MagicLinkHelper
 
   skip_before_action :verify_authenticity_token
   before_action :verify_key!
+
+  def create_application
+    specialist = Specialist.find_by!(uid: params[:specialist_id])
+    project = Project.find_by!(uid: params[:project_id])
+    application = Application.create!(application_params.merge({specialist_id: specialist.id, project_id: project.id}))
+    render json: {status: "OK.", uid: application.uid}
+  rescue ActiveRecord::RecordNotFound => e
+    render json: {error: "Record not found", message: e.message}, status: :unprocessable_entity
+  rescue ActiveRecord::RecordInvalid => e
+    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
+  end
+
+  def update_application
+    application = Application.find_by!(uid: params[:uid])
+    application.update!(application_params)
+    render json: {status: "OK."}
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "Application not found"}, status: :unprocessable_entity
+  end
 
   def attach_previous_project_image
     previous_project = PreviousProject.find_by!(uid: params[:uid])
@@ -44,6 +65,10 @@ class ZappierInteractorController < ApplicationController
   end
 
   private
+
+  def application_params
+    params.require(:application).permit(:comment)
+  end
 
   def find_account_from_uid(uid)
     klass = case uid
