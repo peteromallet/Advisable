@@ -322,55 +322,11 @@ function InterviewScheduled({ application }) {
   );
 }
 
-function MoreTimeOptionsRequested({ application }) {
-  const interview = application.interview;
-  const firstName = application.specialist.firstName;
-
-  return (
-    <Box
-      mb={8}
-      padding={6}
-      borderRadius="16px"
-      bg="blue100"
-      display="flex"
-      css={`
-        background: linear-gradient(86.14deg, #dbe7ff -4.38%, #e1e0f9 104.37%);
-      `}
-    >
-      <Circle size="40px" bg="blue200" color="blue800" flexShrink={0}>
-        <Calendar size={24} />
-      </Circle>
-      <Box pl={5}>
-        <Text color="blue900" fontWeight="medium" fontSize="l" mb={1}>
-          More time options needed
-        </Text>
-        <Text lineHeight="1.3" color="neutral800" mb={4}>
-          Unfortunately none of your existing availability suits {firstName}.
-          Please update your availability to schedule an interview with{" "}
-          {firstName}.
-        </Text>
-        <StyledButton
-          as="a"
-          href={`/interviews/${interview.id}`}
-          size="s"
-          variant="subtle"
-        >
-          Update Availability
-        </StyledButton>
-      </Box>
-    </Box>
-  );
-}
-
 export default function InterviewStatus({ application }) {
   const status = application.interview?.status;
 
   if (status === "Call Scheduled") {
     return <InterviewScheduled application={application} />;
-  }
-
-  if (status === "Need More Time Options") {
-    return <MoreTimeOptionsRequested application={application} />;
   }
 
   return null;
