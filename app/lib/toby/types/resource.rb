@@ -1,8 +1,8 @@
-class Advisatable::Types::Resource < GraphQL::Schema::Object
+class Toby::Types::Resource < GraphQL::Schema::Object
   field :name, String, null: false
+  # field :index_query_name, String, null: false
   # field :friendly_name, String, null: false
   # field :resource_type, String, null: false
-  # field :index_query_name, String, null: false
   # field :show_query_name, String, null: false
   # field :create_mutation_name, String, null: false
   # field :update_mutation_name, String, null: false

@@ -1,6 +1,6 @@
-module Advisatable
-  module Columns
-    class String < Base
+module Toby
+  module Attributes
+    class String < BaseAttribute
       def type
         GraphQL::Types::String
       end

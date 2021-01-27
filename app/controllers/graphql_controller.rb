@@ -26,20 +26,13 @@ class GraphqlController < ApplicationController
     render json: result
   end
 
-  def admin
-    variables = ensure_hash(params[:variables])
-    query = params[:query]
-    operation_name = params[:operationName]
-    context = {
-      session_manager: session_manager,
-    }
-
-    result =
-      AdminSchema.execute(
-        query,
-        variables: variables, context: context, operation_name: operation_name
-      )
-    render json: result
+  def toby
+    render json: Toby::Schema.execute(
+      params[:query],
+      variables: ensure_hash(params[:variables]),
+      context: {session_manager: session_manager},
+      operation_name: params[:operationName]
+    )
   end
 
   private
