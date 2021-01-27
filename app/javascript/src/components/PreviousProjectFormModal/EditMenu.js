@@ -1,8 +1,13 @@
 import React from "react";
-import { Collection, MenuAlt2 } from "@styled-icons/heroicons-solid";
+import {
+  Collection,
+  MenuAlt2,
+  CheckCircle,
+} from "@styled-icons/heroicons-solid";
 import NavigationMenu from "../../components/NavigationMenu";
 
-const EditMenu = React.memo(function EditMenu({ urlPrefix }) {
+const EditMenu = React.memo(function EditMenu({ urlPrefix, previousProject }) {
+  const isValidated = previousProject.validationStatus === "Validated";
   return (
     <NavigationMenu>
       <NavigationMenu.Item to={`${urlPrefix}/description`} icon={<MenuAlt2 />}>
@@ -11,6 +16,14 @@ const EditMenu = React.memo(function EditMenu({ urlPrefix }) {
       <NavigationMenu.Item to={`${urlPrefix}/images`} icon={<Collection />}>
         Images
       </NavigationMenu.Item>
+      {!isValidated ? (
+        <NavigationMenu.Item
+          to={`${urlPrefix}/edit-validation`}
+          icon={<CheckCircle />}
+        >
+          Validation
+        </NavigationMenu.Item>
+      ) : null}
     </NavigationMenu>
   );
 });
