@@ -7,7 +7,6 @@ class Types::PreviousProject < Types::BaseType
   field :goal, String, null: true
   field :excerpt, String, null: true
   field :description, String, null: true
-  field :pending_description, String, null: true
   field :client_name, String, null: false
   field :company_type, String, null: false
   field :specialist, Types::SpecialistType, null: false
@@ -34,6 +33,8 @@ class Types::PreviousProject < Types::BaseType
   field :cost_to_hire, Integer, null: true
   field :execution_cost, Integer, null: true
   field :similar_specialists, [Types::SpecialistType], null: false
+
+  field :pending_description, String, null: true, deprecation_reason: "Descriptions dont need to be approved anymore"
 
   def images
     object.images.order(position: :asc)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::UpdatePreviousProject do
@@ -53,7 +55,7 @@ RSpec.describe Mutations::UpdatePreviousProject do
           id
         }
       }
-    }  
+    }
   GRAPHQL
   end
 
@@ -63,7 +65,7 @@ RSpec.describe Mutations::UpdatePreviousProject do
     response = AdvisableSchema.execute(query)
     expect(project.reload.skills).to include(marketing)
     expect(project.reload.skills).to include(design)
-    expect(project.reload.skills).to_not include(other)
+    expect(project.reload.skills).not_to include(other)
   end
 
   context 'when project is not a draft' do
@@ -103,7 +105,7 @@ RSpec.describe Mutations::UpdatePreviousProject do
     response = AdvisableSchema.execute(query)
     expect(project.reload.industries).to include(industry1)
     expect(project.reload.industries).to include(industry2)
-    expect(project.reload.industries).to_not include(other)
+    expect(project.reload.industries).not_to include(other)
   end
 
   it 'sets the primary industry' do
@@ -132,112 +134,10 @@ RSpec.describe Mutations::UpdatePreviousProject do
     }.from('Corporation').to('Startup')
   end
 
-  describe 'Updating the description' do
-    context 'when the project is a draft' do
-      let(:draft) { true }
-
-      it 'sets the description' do
-        expect { AdvisableSchema.execute(query) }.to change {
-          project.reload.description
-        }.from('Description').to('Testing')
-      end
-    end
-
-    context 'when the project is not a draft' do
-      let(:draft) { false }
-
-      context 'and the validation status is Pending' do
-        let(:validation_status) { 'Pending' }
-
-        it 'sets the description' do
-          query = <<~GRAPHQL
-            mutation {
-              updatePreviousProject(input: {
-                previousProject: "#{project.uid}",
-                description: "Testing"
-              }) {
-                previousProject {
-                  id
-                }
-              }
-            }
-          GRAPHQL
-
-          expect { AdvisableSchema.execute(query) }.to change {
-            project.reload.description
-          }.from('Description').to('Testing')
-        end
-      end
-
-      context 'and the validation status is In Progres' do
-        let(:validation_status) { 'In Progress' }
-
-        it 'sets pending_description column' do
-          query = <<~GRAPHQL
-            mutation {
-              updatePreviousProject(input: {
-                previousProject: "#{project.uid}",
-                description: "Testing"
-              }) {
-                previousProject {
-                  id
-                }
-              }
-            }
-          GRAPHQL
-
-          expect { AdvisableSchema.execute(query) }.to change {
-            project.reload.pending_description
-          }.from(nil).to('Testing')
-        end
-      end
-
-      context 'and the validation status is Validated' do
-        let(:validation_status) { 'Validated' }
-
-        it 'sets pending_description column' do
-          query = <<~GRAPHQL
-            mutation {
-              updatePreviousProject(input: {
-                previousProject: "#{project.uid}",
-                description: "Testing"
-              }) {
-                previousProject {
-                  id
-                }
-              }
-            }
-          GRAPHQL
-
-          expect { AdvisableSchema.execute(query) }.to change {
-            project.reload.pending_description
-          }.from(nil).to('Testing')
-        end
-      end
-
-      context 'and the validation status is Validation Failed' do
-        let(:validation_status) { 'Validation Failed' }
-
-        it 'sets pending_description column' do
-          query = <<~GRAPHQL
-            mutation {
-              updatePreviousProject(input: {
-                previousProject: "#{project.uid}",
-                description: "Testing"
-              }) {
-                previousProject {
-                  id
-                }
-              }
-            }
-          GRAPHQL
-
-          expect { AdvisableSchema.execute(query) }.to change {
-            project.reload.pending_description
-          }.from(nil).to('Testing')
-        end
-      end
-    end
+  it 'sets the description' do
+    expect { AdvisableSchema.execute(query) }.to change {
+      project.reload.description
+    }.from('Description').to('Testing')
   end
 
   it 'sets the goal' do

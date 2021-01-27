@@ -268,7 +268,7 @@ test("can edit the description", async () => {
           __typename: "UpdatePreviousProjectPayload",
           previousProject: {
             ...previousProject,
-            pendingDescription: "Description updated",
+            description: "Description updated",
           },
         },
       },
@@ -285,9 +285,5 @@ test("can edit the description", async () => {
     target: { value: "Description updated" },
   });
   fireEvent.click(screen.getByLabelText("Save Changes"));
-  screen.getByText(/Requires approval/i);
-  fireEvent.click(screen.getAllByLabelText("Save Changes")[1]);
-
-  const notice = await screen.findByText(/Pending approval/i);
-  expect(notice).toBeInTheDocument();
+  await screen.findByText(/the project description has been updated/i);
 });
