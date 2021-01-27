@@ -114,6 +114,7 @@ export const GET_CANDIDATES = gql`
         availability
         interview {
           id
+          status
           startsAt
         }
         specialist {
@@ -141,6 +142,7 @@ export const GET_CANDIDATE = gql`
 
       interview {
         id
+        status
         startsAt
       }
     }
