@@ -9,8 +9,9 @@ export default function ValidationModal({
   description,
 }) {
   const { clientName, contactName, id } = previousProject;
-  const defaultTitle = "Project Validation";
-  const defaultDescription = `Thanks for adding the details of your project with ${clientName}! To validate this project, please share this link with ${contactName}`;
+  const DEFAULT_TITLE = "Project Validation";
+  const DEFAULT_DESCRIPTION = `Thanks for adding the details of your project with ${clientName}! To validate this project, please share this link with ${contactName}`;
+
   return (
     <Modal modal={modal} padding="l">
       <Text
@@ -21,10 +22,10 @@ export default function ValidationModal({
         fontWeight="medium"
         letterSpacing="-0.02em"
       >
-        {title || defaultTitle}
+        {title || DEFAULT_TITLE}
       </Text>
       <Text lineHeight="24px" color="neutral900" mb="l">
-        {description || defaultDescription}
+        {description || DEFAULT_DESCRIPTION}
       </Text>
       <CopyURL>{`${location.origin}/verify_project/${id}`}</CopyURL>
       <Button mt="l" size="l" onClick={modal.hide}>
