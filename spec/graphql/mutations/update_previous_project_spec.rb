@@ -151,4 +151,55 @@ RSpec.describe Mutations::UpdatePreviousProject do
       project.reload.public_use
     }.from(true).to(false)
   end
+
+  describe "updating contact details" do
+    let(:validation_status) { "Pending" }
+    let(:project) {
+      create(:previous_project, {
+        validation_status: validation_status.to_s,
+        draft: false,
+        contact_name: "Jane Doe",
+        contact_job_title: "Janitor",
+        contact_relationship: "Good friend"
+      })
+    }
+    let(:query) do
+      <<~GRAPHQL
+      mutation {
+        updatePreviousProject(input: {
+          previousProject: "#{project.uid}",
+          contactName: "John Doe",
+          contactJobTitle: "CEO",
+          contactRelationship: "They managed the project"
+        }) {
+          previousProject {
+            id
+          }
+        }
+      }
+    GRAPHQL
+    end
+
+    it "updates contact details" do
+      expect(project.contact_name).to eq("Jane Doe")
+      expect(project.contact_job_title).to eq("Janitor")
+      expect(project.contact_relationship).to eq("Good friend")
+      AdvisableSchema.execute(query)
+      project.reload
+      expect(project.contact_name).to eq("John Doe")
+      expect(project.contact_job_title).to eq("CEO")
+      expect(project.contact_relationship).to eq("They managed the project")
+    end
+
+    context "when the project has been validated" do
+      let(:validation_status) { "Validated" }
+
+      it "returns an error" do
+        response = AdvisableSchema.execute(query)
+        error = response["errors"][0]["extensions"]["code"]
+        expect(error).to eq("PROJECT_VALIDATED")
+        expect(project.contact_name).not_to eq("John Doe")
+      end
+    end
+  end
 end

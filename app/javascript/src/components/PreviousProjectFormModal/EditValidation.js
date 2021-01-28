@@ -1,18 +1,26 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { ArrowLeft } from "@styled-icons/feather";
-import { Box, Text, Select, Stack, Link, Button } from "@advisable/donut";
-import Helper from "./Helper";
-import { usePublishPreviousProject } from "./queries";
+// Components
+import { Box, Text, Select, Stack, Button, useModal } from "@advisable/donut";
+import FormField from "src/components/FormField";
 import { verificationValidationSchema } from "./validationSchemas";
-import FormField from "../../components/FormField";
+import Helper from "./Helper";
+import ValidationModal from "src/components/ManagePreviousProjects/ValidationModal";
+// Queries
+import { useUpdatePreviousProject } from "./queries";
 import { RELATIONSHIPS } from "./data";
 
-export default function Validation({ data, modal, onPublish }) {
-  const [publishPreviousProject] = usePublishPreviousProject();
+export default function EditValidation({ data }) {
+  const [updatePreviousProject] = useUpdatePreviousProject();
+  const validationModal = useModal();
+  const {
+    contactName,
+    contactJobTitle,
+    contactRelationship,
+  } = data.previousProject;
 
-  const handleSubmit = async (values) => {
-    const response = await publishPreviousProject({
+  const handleSaveChanges = async (values) => {
+    await updatePreviousProject({
       variables: {
         input: {
           previousProject: data.previousProject.id,
@@ -21,42 +29,32 @@ export default function Validation({ data, modal, onPublish }) {
       },
     });
 
-    const project = response.data?.publishPreviousProject.previousProject;
-    if (onPublish) {
-      onPublish(project);
-    }
-
-    modal.hide();
+    validationModal.show();
   };
 
   const initialValues = {
-    contactName: data.previousProject.contactName || "",
-    contactJobTitle: data.previousProject.contactJobTitle || "",
-    contactRelationship:
-      data.previousProject.contactRelationship || RELATIONSHIPS[0],
+    contactName: contactName || "",
+    contactJobTitle: contactJobTitle || "",
+    contactRelationship: contactRelationship || RELATIONSHIPS[0],
   };
 
   return (
     <Box display="flex">
+      <ValidationModal
+        modal={validationModal}
+        previousProject={data.previousProject}
+        title="Contact details successfully updated!"
+        description={`To validate this project, please share this link with ${contactName}`}
+      />
       <Box flexGrow={1} width="100%">
         <Formik
+          enableReinitialize
           initialValues={initialValues}
-          onSubmit={handleSubmit}
+          onSubmit={handleSaveChanges}
           validationSchema={verificationValidationSchema}
         >
           {(formik) => (
             <Form>
-              <Link
-                mb="s"
-                fontSize="l"
-                fontWeight="medium"
-                to={`${modal.returnPath}/previous_projects/${data.previousProject.id}/more`}
-              >
-                <Box display="inline-block" mr="xxs">
-                  <ArrowLeft size={20} strokeWidth={2} />
-                </Box>
-                Back
-              </Link>
               <Text
                 mb="xs"
                 fontSize="28px"
@@ -93,8 +91,13 @@ export default function Validation({ data, modal, onPublish }) {
                 </FormField>
               </Stack>
 
-              <Button size="l" type="submit" loading={formik.isSubmitting}>
-                Submit Project
+              <Button
+                size="l"
+                type="submit"
+                disabled={!formik.dirty}
+                loading={formik.isSubmitting}
+              >
+                Save Changes
               </Button>
             </Form>
           )}
