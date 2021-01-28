@@ -44,13 +44,15 @@ export default function RejectApplication({ application }) {
         data-walkthrough="actionBarReject"
       />
       <ActionBarModal dialog={dialog} label={`Reject ${firstName}`}>
-        <RejectApplicationForm
-          id={application.id}
-          firstName={firstName}
-          onReject={handleReject}
-          onCancel={dialog.hide}
-          mutationOptions={{ update: onRejectUpdate }}
-        />
+        {dialog.visible && (
+          <RejectApplicationForm
+            id={application.id}
+            firstName={firstName}
+            onReject={handleReject}
+            onCancel={dialog.hide}
+            mutationOptions={{ update: onRejectUpdate }}
+          />
+        )}
       </ActionBarModal>
     </>
   );
