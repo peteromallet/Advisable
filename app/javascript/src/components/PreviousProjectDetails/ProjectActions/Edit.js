@@ -17,6 +17,7 @@ function EditAction({ project, editModal, size }) {
           bg="neutral100"
           color="neutral600"
           icon={<Pencil />}
+          aria-label="Edit project"
           {...editModal.atPath(`/previous_projects/${project.id}`)}
         />
       </Box>

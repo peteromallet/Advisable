@@ -8,6 +8,7 @@ import ExtraInformation from "./ExtraInformation";
 import UpdateClientDetails from "./UpdateClientDetails";
 import CreatePreviousProject from "./CreatePreviousProject";
 import EditImages from "./EditImages";
+import EditValidation from "./EditValidation";
 
 function RedirectToStep({ step }) {
   const location = useLocation();
@@ -44,6 +45,9 @@ function Routes({
       </Route>
       <Route path="*previous_projects/:id/images">
         <EditImages data={data} />
+      </Route>
+      <Route path="*previous_projects/:id/edit-validation">
+        <EditValidation data={data} />
       </Route>
       <Route path="*previous_projects/:id/client">
         <UpdateClientDetails

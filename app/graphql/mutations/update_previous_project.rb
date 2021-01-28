@@ -16,10 +16,13 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
   argument :location_relevance, Integer, required: false
   argument :cost_to_hire, Integer, required: false
   argument :execution_cost, Integer, required: false
+  argument :contact_name, String, required: false
+  argument :contact_job_title, String, required: false
+  argument :contact_relationship, String, required: false
 
   field :previous_project, Types::PreviousProject, null: true
 
-  ALLOWED_ARGS_WHEN_PUBLISHED = %i[previous_project description].freeze
+  ALLOWED_ARGS_WHEN_PUBLISHED = %i[previous_project description contact_name contact_job_title contact_relationship].freeze
 
   def authorized?(**args)
     project = PreviousProject.find_by_uid(args[:previous_project])
@@ -38,6 +41,7 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
     update_description(project, args)
     update_skills(project, args)
     update_industries(project, args)
+    update_contact_details(project, args)
     current_account_responsible_for { project.save }
     {previous_project: project}
   end
@@ -90,5 +94,14 @@ class Mutations::UpdatePreviousProject < Mutations::BaseMutation
       project.project_industries.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
       project.project_industries.find_or_create_by(industry: primary_industry).update(primary: true)
     end
+  end
+
+  def update_contact_details(project, args)
+    return if args[:contact_name].blank? || args[:contact_job_title].blank? || args[:contact_relationship].blank?
+
+    ApiError.invalid_request("PROJECT_VALIDATED", "Project has already been validated") if project.validation_status == "Validated"
+    project.contact_name = args[:contact_name] if args.key?(:contact_name)
+    project.contact_job_title = args[:contact_job_title] if args.key?(:contact_job_title)
+    project.contact_relationship = args[:contact_relationship] if args.key?(:contact_relationship)
   end
 end
