@@ -8,6 +8,10 @@ module Guild
   #   to something like Guild::Tag or Guild::Category without a migration
 
   class Topic < ActsAsTaggableOn::Tag
+    include Sluggable
+
+    slug_from :name
+
     acts_as_followable
 
     belongs_to :alias_tag, class_name: "Guild::Topic", optional: true
@@ -34,6 +38,7 @@ end
 #
 #  id             :uuid             not null, primary key
 #  name           :string
+#  slug           :string
 #  taggings_count :integer          default(0)
 #  topicable_type :string
 #  created_at     :datetime
@@ -44,5 +49,6 @@ end
 # Indexes
 #
 #  index_tags_on_name                             (name) UNIQUE
+#  index_tags_on_slug                             (slug) UNIQUE
 #  index_tags_on_topicable_type_and_topicable_id  (topicable_type,topicable_id)
 #

@@ -1,12 +1,11 @@
 import React from "react";
 import { Text } from "@advisable/donut";
-import { lowerDashed } from "@guild/utils";
 import { css } from "styled-components";
 import { useHistory } from "react-router-dom";
 
 const Topic = ({ topic }) => {
   const history = useHistory();
-  const handleClick = () => history.push(`/topics/${topic.id}`);
+  const handleClick = () => history.push(`/topics/${topic.slug}`);
 
   return (
     <Text
@@ -21,7 +20,7 @@ const Topic = ({ topic }) => {
         }
       `}
     >
-      #{lowerDashed(topic.name)}
+      #{topic.slug}
     </Text>
   );
 };
