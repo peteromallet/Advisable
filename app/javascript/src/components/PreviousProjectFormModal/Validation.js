@@ -6,12 +6,7 @@ import Helper from "./Helper";
 import { usePublishPreviousProject } from "./queries";
 import { verificationValidationSchema } from "./validationSchemas";
 import FormField from "../../components/FormField";
-
-const RELATIONSHIPS = [
-  "They managed the project",
-  "They worked on the project with me",
-  "They worked at the company but not the project",
-];
+import { RELATIONSHIPS } from "./data";
 
 export default function Validation({ data, modal, onPublish }) {
   const [publishPreviousProject] = usePublishPreviousProject();

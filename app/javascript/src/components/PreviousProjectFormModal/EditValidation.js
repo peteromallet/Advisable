@@ -8,12 +8,7 @@ import Helper from "./Helper";
 import ValidationModal from "src/components/ManagePreviousProjects/ValidationModal";
 // Queries
 import { useUpdatePreviousProject } from "./queries";
-
-const RELATIONSHIPS = [
-  "They managed the project",
-  "They worked on the project with me",
-  "They worked at the company but not the project",
-];
+import { RELATIONSHIPS } from "./data";
 
 export default function EditValidation({ data }) {
   const [updatePreviousProject] = useUpdatePreviousProject();
