@@ -161,6 +161,7 @@ function PreviousProjectDetails({ detailsModal, id }) {
         project={project}
         modal={modal}
         onDelete={detailsModal.hide}
+        viewerIsOwner={viewerIsOwner}
       />
       {viewerIsOwner ? (
         <>
