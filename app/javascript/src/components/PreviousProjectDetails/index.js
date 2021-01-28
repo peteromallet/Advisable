@@ -157,13 +157,13 @@ function PreviousProjectDetails({ detailsModal, id }) {
           </Box>
         </Box>
       </Box>
-      <ProjectStatus
-        project={project}
-        modal={modal}
-        onDelete={detailsModal.hide}
-      />
       {viewerIsOwner ? (
         <>
+          <ProjectStatus
+            project={project}
+            modal={modal}
+            onDelete={detailsModal.hide}
+          />
           <Box
             mt={4}
             mb={8}
