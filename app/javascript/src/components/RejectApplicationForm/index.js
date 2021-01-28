@@ -1,48 +1,44 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { Text, Select, Button, Textarea } from "@advisable/donut";
-import FormField from "components/FormField";
-import SubmitButton from "components/SubmitButton";
+import Loading from "src/components/Loading";
+import FormField from "src/components/FormField";
+import SubmitButton from "src/components/SubmitButton";
 import { Trash } from "@styled-icons/ionicons-solid";
-import { useRejectApplication } from "./queries";
+import { useRejectApplication, useApplication } from "./queries";
 
-const OPTIONS = [
-  {
-    value: "I want someone with more relevant experience",
-    placeholder: "In what way would their experience be different?",
-  },
-  {
-    value: "I want someone cheaper",
-    placeholder: "Please describe what price range you had in mind",
-  },
-  {
-    value: "I didn't like their answers",
-    placeholder:
-      "Please describe information you felt was missing in these answers.",
-  },
-  {
-    value: "They just don't seem like a good fit",
-    placeholder: "Please describe what a better candidate would look like.",
-  },
+const OTHER = "__OTHER";
+
+const PRE_INTERVIEW_REASONS = [
+  "The application is too general",
+  "Answers don't demonstrate the experience I'm looking for",
+  "There aren't enough relevant projects that demonstrate their previous work",
 ];
 
-const optionByValue = (value) => OPTIONS.find((o) => o.value === value);
+const POST_INTERVIEW_REASONS = [
+  "They didn't communicate their expertise well in the interview",
+  "They don't seem to be a good fit for this project",
+  "Their pricing expectations aren't in line with our budget",
+  "They don't seem like a perfect culture fit",
+];
 
 export default function RejectApplicationForm({
   id,
-  firstName,
-  onReject = () => { },
-  onCancel = () => { },
+  onReject = () => {},
+  onCancel = () => {},
   mutationOptions,
 }) {
+  const { loading, data } = useApplication({ variables: { id } });
   const [rejectApplication] = useRejectApplication(mutationOptions);
 
   const handleSubmit = async (values, formik) => {
+    console.log(values);
     const response = await rejectApplication({
       variables: {
         input: {
           id,
-          ...values,
+          reason: values.otherReason || values.reason,
+          feedback: values.feedback,
         },
       },
     });
@@ -55,44 +51,90 @@ export default function RejectApplicationForm({
   };
 
   const initialValues = {
-    reason: OPTIONS[0].value,
+    reason: "",
+    otherReason: "",
     feedback: "",
   };
+
+  const firstName = data?.application?.specialist?.firstName;
+  const interviewStatus = data?.application?.interview?.status;
+  const postInterview = interviewStatus === "Call Completed";
+
+  const handleReasonChange = (formik) => (e) => {
+    if (e.target.value === OTHER) {
+      formik.setFieldValue("reason", "");
+    } else {
+      formik.setFieldValue("otherReason", "");
+    }
+
+    formik.handleChange(e);
+  };
+
+  if (loading) return <Loading />;
 
   return (
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
       {(formik) => (
         <Form>
           <Text
-            fontSize="24px"
-            fontWeight="medium"
+            fontSize="4xl"
+            marginBottom={1}
             color="neutral900"
-            marginBottom="8px"
-            letterSpacing="-0.04em"
+            fontWeight="medium"
+            letterSpacing="-0.02em"
           >
             Reject {firstName}
           </Text>
-          <Text color="neutral700" lineHeight="20px" marginBottom="l">
-            Please provide feedback to our recruitment team to help us find you
-            a better candidate.
+          <Text
+            color="neutral700"
+            fontSize="l"
+            lineHeight="1.2"
+            marginBottom={6}
+          >
+            Please provide feedback to help us find you a better candidate.
           </Text>
           <FormField
             as={Select}
-            label="Reason for rejection"
+            placeholder="Select reason"
+            label={`What feedback do you have for ${firstName}?`}
             marginBottom="xs"
             name="reason"
+            onChange={handleReasonChange(formik)}
           >
-            {OPTIONS.map((o) => (
-              <option key={o.value}>{o.value}</option>
+            {(postInterview
+              ? POST_INTERVIEW_REASONS
+              : PRE_INTERVIEW_REASONS
+            ).map((o) => (
+              <option key={o}>{o}</option>
             ))}
+            <option value={OTHER}>Other</option>
           </FormField>
+          {formik.values.reason === OTHER && (
+            <FormField
+              autoFocus
+              as={Textarea}
+              name="otherReason"
+              minRows={2}
+              marginBottom={2}
+              placeholder=""
+            />
+          )}
+          <Text fontSize="xs" color="neutral700" lineHeight="1.3" mb={6}>
+            This feedback will be shared with {firstName} to help them improve
+            their future applications.
+          </Text>
           <FormField
-            minRows={3}
+            minRows={5}
             as={Textarea}
-            marginBottom="xl"
+            marginBottom={2}
+            label="What feedback do you have for us, to help us you find a better candidate?"
             name="feedback"
-            placeholder={optionByValue(formik.values.reason).placeholder}
           />
+          <Text fontSize="xs" color="neutral700" lineHeight="1.3" mb={6}>
+            Please be as honest as possible.{" "}
+            <b>This won&apos;t be shared with {firstName}</b> and will be used
+            by us to propose you a better candidate.
+          </Text>
           <SubmitButton prefix={<Trash />} variant="dark" marginRight="12px">
             Reject
           </SubmitButton>

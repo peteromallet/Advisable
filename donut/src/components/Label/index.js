@@ -10,6 +10,7 @@ Label.defaultProps = {
   color: "neutral800",
   fontWeight: "medium",
   fontSize: "md",
+  lineHeight: "1.2",
   letterSpacing: "-0.01em",
 };
 
