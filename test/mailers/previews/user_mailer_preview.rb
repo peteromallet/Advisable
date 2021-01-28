@@ -18,6 +18,10 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.invited_to_review_applications(User.first, User.last, application.project, application_id: application.uid)
   end
 
+  def invited_to_interview
+    UserMailer.invited_to_interview(User.first, User.last, random_application)
+  end
+
   private
 
   def random_interview

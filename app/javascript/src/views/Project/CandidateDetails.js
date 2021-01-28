@@ -9,6 +9,7 @@ import Proposal from "./Proposal";
 import ApplicationDetails from "./ApplicationDetails";
 import { useCandidate } from "./queries";
 import ActionBar from "./ActionBar";
+import InterviewStatus from "./InterviewStatus";
 import ActionBarContainer from "./ActionBarContainer";
 import ApplicationStatus from "./ApplicationStatus";
 
@@ -62,6 +63,7 @@ export default function CandidateDetails({ project }) {
               <Proposal />
             </Route>
             <Route path="/projects/:id/candidates/:applicationId">
+              <InterviewStatus application={application} />
               <ApplicationDetails application={application} project={project} />
             </Route>
           </Switch>
