@@ -27,46 +27,60 @@ function Pending({ project }) {
   );
 }
 
-const STATUSES = {
-  Validated: {
-    component: Validated,
-  },
-  Draft: {
-    component: Status,
-    variant: "neutral",
-    label: "Draft Project",
-    message:
-      "This project has not been published and will not be visible on your profile. Continue editing to post it to your profile.",
-    icon: <Pencil />,
-    CTA: DraftCTA,
-  },
-  Pending: {
-    component: Pending,
-  },
-  "Validation Failed": {
-    component: Status,
-    variant: "red",
-    label: "Validation Failed",
-    message:
-      "Unfortunately the client was unable to verify this project. It will not be visible to others until it is validated. You can update the project and request validation again or remove the project.",
-    icon: <Exclamation />,
-    CTA: FailedCTA,
-  },
-};
-
-function ProjectStatus({ project, modal, ...props }) {
-  const status = (project.draft && "Draft") || project.validationStatus;
-  const config = STATUSES[status];
-
+function Draft({ project, modal, ...props }) {
   return (
-    <config.component
+    <Status
+      variant="neutral"
+      icon={<Pencil />}
+      CTA={DraftCTA}
+      label="Draft Project"
+      message="This project has not been published and will not be visible on your profile. Continue editing to post it to your profile."
       project={project}
       modal={modal}
-      review={project.reviews?.[0]}
-      {...config}
       {...props}
     />
   );
+}
+
+function ValidationFailed({ project, modal, ...props }) {
+  return (
+    <Status
+      variant="red"
+      icon={<Exclamation />}
+      CTA={FailedCTA}
+      label="Validation Failed"
+      message="
+Unfortunately the client was unable to verify this project. It will not be visible to others until it is validated. You can update the project and request validation again or remove the project."
+      project={project}
+      modal={modal}
+      {...props}
+    />
+  );
+}
+
+function ProjectStatus({ project, modal, viewerIsOwner, ...props }) {
+  const status = (project.draft && "Draft") || project.validationStatus;
+
+  switch (status) {
+    case "Validated": {
+      return <Validated project={project} />;
+    }
+    case "Pending": {
+      if (!viewerIsOwner) return null;
+      return <Pending project={project} />;
+    }
+    case "Draft": {
+      if (!viewerIsOwner) return null;
+      return <Draft project={project} modal={modal} {...props} />;
+    }
+    case "Validation Failed": {
+      if (!viewerIsOwner) return null;
+      return <ValidationFailed project={project} modal={modal} {...props} />;
+    }
+    default: {
+      return null;
+    }
+  }
 }
 
 export default ProjectStatus;
