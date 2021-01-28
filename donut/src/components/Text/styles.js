@@ -19,6 +19,10 @@ export const Text = styled.div`
   ${typography};
   ${textTransform};
 
+  b {
+    font-weight: 500;
+  }
+
   .linkified {
     color: ${theme.colors.blue700};
     text-decoration: none;

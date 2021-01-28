@@ -2,24 +2,23 @@
 
 require "rails_helper"
 
-RSpec.describe Mutations::InviteUserToReviewApplications do
+RSpec.describe Mutations::InviteUserToInterview do
   let(:user) { create(:user, :team_manager) }
   let(:context) { {current_user: user} }
   let(:email) { Faker::Internet.email }
   let(:first_name) { Faker::Name.first_name }
   let(:last_name) { Faker::Name.last_name }
   let(:project) { create(:project, user: user) }
-  let(:extra) { "" }
+  let(:application) { create(:application, project: project) }
 
   let(:query) do
     <<-GRAPHQL
     mutation {
-      inviteUserToReviewApplications(input: {
-        projectId: "#{project.uid}",
+      inviteUserToInterview(input: {
+        applicationId: "#{application.uid}",
         email: "#{email}",
         firstName: "#{first_name}",
         lastName: "#{last_name}",
-        #{extra}
       }) {
         user {
           id
@@ -31,42 +30,37 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
 
   before { allow_any_instance_of(User).to receive(:sync_to_airtable) }
 
-  it "creates a new user on the company and sends an email to new user" do
+  it "creates a new user on the company, sends an email to new user, and triggers a webhook" do
+    expect(WebhookEvent).to receive(:trigger).with("user.invited_to_interview", hash_including(application: hash_including("uid" => application.uid), user: hash_including(email: email)))
+
     response = AdvisableSchema.execute(query, context: context)
-    uid = response["data"]["inviteUserToReviewApplications"]["user"]["id"]
+
+    uid = response["data"]["inviteUserToInterview"]["user"]["id"]
     created_user = User.find_by(uid: uid)
     expect(created_user.account.attributes.slice("email", "first_name", "last_name").values).to match_array([email, first_name, last_name])
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_to_review_applications", "deliver_now", {args: [user, created_user, project, {application_id: nil}]})
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_to_interview", "deliver_now", {args: [user, created_user, application]})
   end
 
   context "when account already exists" do
     let(:existing_user) { create(:user) }
     let(:email) { existing_user.account.email }
 
-    it "sends an email to existing user" do
+    it "sends an email to existing user and triggers a webhook" do
+      expect(WebhookEvent).to receive(:trigger).with("user.invited_to_interview", hash_including(application: hash_including("uid" => application.uid), user: hash_including(email: email)))
+
       AdvisableSchema.execute(query, context: context)
 
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_to_review_applications", "deliver_now", {args: [user, existing_user, project, {application_id: nil}]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_to_interview", "deliver_now", {args: [user, existing_user, application]})
     end
   end
 
-  context "when provided project is not from the signed in user" do
-    let(:project) { create(:project) }
+  context "when provided application is not from the signed in user" do
+    let(:application) { create(:application) }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("invalidProject")
-    end
-  end
-
-  context "when given application ID" do
-    let(:application) { create(:application, project: project) }
-    let(:extra) { "applicationId: \"#{application.uid}\"" }
-
-    it "includes the application_id in the mail" do
-      response = AdvisableSchema.execute(query, context: context)
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_to_review_applications", "deliver_now", {args: array_including({application_id: application.uid})})
+      expect(error).to eq("invalidApplication")
     end
   end
 
