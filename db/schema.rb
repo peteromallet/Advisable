@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_090309) do
+ActiveRecord::Schema.define(version: 2021_01_26_101803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -814,7 +814,9 @@ ActiveRecord::Schema.define(version: 2021_01_13_090309) do
     t.integer "taggings_count", default: 0
     t.string "topicable_type"
     t.bigint "topicable_id"
+    t.string "slug"
     t.index ["name"], name: "index_tags_on_name", unique: true
+    t.index ["slug"], name: "index_tags_on_slug", unique: true
     t.index ["topicable_type", "topicable_id"], name: "index_tags_on_topicable_type_and_topicable_id"
   end
 

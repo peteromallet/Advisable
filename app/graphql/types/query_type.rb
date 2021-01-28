@@ -271,7 +271,8 @@ class Types::QueryType < Types::BaseType
     query = Guild::Post.feed(current_user)
 
     if (topic_id = args[:topic_id].presence)
-      context[:guild_topic] = Guild::Topic.find_by(id: topic_id)
+      # TODO: Use only slugs to query
+      context[:guild_topic] = Guild::Topic.find_by_slug_or_id!(topic_id)
       query.tagged_with(context[:guild_topic], on: :guild_topics, any: true)
     elsif (type = args[:type].presence) && type != 'For You'
       query.where(type: type)
