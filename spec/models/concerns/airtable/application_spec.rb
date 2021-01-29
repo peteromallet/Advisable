@@ -123,6 +123,16 @@ RSpec.describe Airtable::Application do
         expect { airtable.sync }.to change { application.reload.questions }.from([]).to([{'question' => 'Question', 'answer' => 'Answer'}])
       end
     end
+
+    it "syncs meta fields" do
+      application = create(:application)
+      meta = {}
+      ::Application::META_FIELDS.each do |field|
+        meta[field] = Faker::TvShows::TheITCrowd.quote
+      end
+      airtable = described_class.new(meta, id: application.airtable_id)
+      expect { airtable.sync }.to change { application.reload.meta_fields }.from({}).to(meta)
+    end
   end
 
   describe '#push_data' do
@@ -230,6 +240,17 @@ RSpec.describe Airtable::Application do
       application.applied_at = Time.zone.now
       application.save
       expect { airtable.push(application) }.to change { airtable.fields['Applied At'] }.from(nil).to(application.applied_at)
+    end
+
+    it "syncs meta fields" do
+      meta = {}
+      ::Application::META_FIELDS.each do |field|
+        meta[field] = Faker::TvShows::TheITCrowd.quote
+      end
+      application.meta_fields = meta
+      application.save
+      airtable.push(application)
+      expect(airtable.fields).to include(meta)
     end
   end
 end
