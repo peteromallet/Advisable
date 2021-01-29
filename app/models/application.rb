@@ -116,10 +116,6 @@ class Application < ApplicationRecord
     find_by_uid_or_airtable_id(id) || raise(ActiveRecord::RecordNotFound)
   end
 
-  def questions
-    self[:questions] || []
-  end
-
   # Returns the application rate as cents
   def invoice_rate
     return 0 if rate.nil?
@@ -133,6 +129,14 @@ class Application < ApplicationRecord
 
   def referral_url
     "#{project.client_referral_url}&rid=#{specialist.uid}&referrer_firstname=#{specialist.account.first_name}&referrer_lastname=#{specialist.account.last_name}"
+  end
+
+  def questions
+    super || []
+  end
+
+  def meta_fields
+    super || {}
   end
 
   private
