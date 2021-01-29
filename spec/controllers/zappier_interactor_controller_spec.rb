@@ -18,7 +18,8 @@ RSpec.describe ZappierInteractorController, type: :request do
       expect(response).to have_http_status(:success)
       uid = JSON[response.body]["uid"]
       expect(uid).to be_present
-      expect(Application).to exist(uid: uid)
+      application = Application.find_by(uid: uid)
+      expect(application.comment).to eq("This is a comment")
     end
 
     context "when specialist is missing" do
@@ -57,6 +58,37 @@ RSpec.describe ZappierInteractorController, type: :request do
 
       it "is unauthorized" do
         post("/zappier_interactor/create_application", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
+  describe "POST /update_application" do
+    let(:application) { create(:application) }
+    let(:application_params) { {comment: "This is a comment"} }
+    let(:extra_application_params) { {} }
+    let(:params) { {application: application_params.merge(extra_application_params), uid: application.uid, key: key} }
+
+    it "creates the application and returns its uid" do
+      post("/zappier_interactor/update_application", params: params)
+      expect(response).to have_http_status(:success)
+      expect(application.reload.comment).to eq("This is a comment")
+    end
+
+    context "when given unpermitted params" do
+      let(:extra_application_params) { {airtable_id: "1234"} }
+
+      it "ignores the param" do
+        post("/zappier_interactor/update_application", params: params)
+        expect(application.reload.airtable_id).not_to eq("1234")
+      end
+    end
+
+    context "when no key" do
+      let(:key) { '' }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/update_application", params: params)
         expect(response).to have_http_status(:unauthorized)
       end
     end

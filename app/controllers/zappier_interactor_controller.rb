@@ -20,9 +20,11 @@ class ZappierInteractorController < ApplicationController
   def update_application
     application = Application.find_by!(uid: params[:uid])
     application.update!(application_params)
-    render json: {status: "OK."}
+    render json: {status: "OK.", uid: application.uid}
   rescue ActiveRecord::RecordNotFound
     render json: {error: "Application not found"}, status: :unprocessable_entity
+  rescue ActiveRecord::RecordInvalid => e
+    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
   end
 
   def attach_previous_project_image
@@ -67,7 +69,7 @@ class ZappierInteractorController < ApplicationController
   private
 
   def application_params
-    params.require(:application).permit(:comment)
+    params.require(:application).permit(:comment, :featured, :hidden, :hide_from_profile, :introduction, :references_requested, :rejection_reason, :rejection_reason_comment, :score, :started_working_at, :status, :stopped_working_reason)
   end
 
   def find_account_from_uid(uid)
