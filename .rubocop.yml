@@ -1,5 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
 require:
   - rubocop-rails
   - rubocop-performance
@@ -24,6 +22,9 @@ Layout/DotPosition:
   Enabled: true
   EnforcedStyle: trailing
 
+Layout/LineLength:
+  Enabled: false
+
 Metrics/BlockLength:
   Enabled: false
 
@@ -31,6 +32,9 @@ Metrics/ClassLength:
   Enabled: false
 
 Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
   Enabled: false
 
 Style/NumericLiterals:
@@ -48,6 +52,15 @@ Style/StringLiteralsInInterpolation:
 
 Style/AsciiComments:
   Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+# Let's discuss this one
+# I'd like to go double quotes everywhere, but am open to discussion
+Style/StringLiterals:
+  Enabled: false
+  EnforcedStyle: double_quotes
 
 Rails/DynamicFindBy:
   Enabled: false
@@ -72,9 +85,3 @@ RSpec/MessageSpies:
 
 RSpec/NestedGroups:
   Enabled: false
-
-# Let's discuss this one
-# I'd like to go double quotes everywhere, but am open to discussion
-# Style/StringLiterals:
-#   Enabled: true
-#   EnforcedStyle: double_quotes
