@@ -2,7 +2,7 @@ import React from "react";
 import { StyledTagSelect, StyledTagSelectTag } from "./styles";
 
 const TagSelect = ({ tags, multiple, onChange, selected, ...props }) => {
-  const isSelected = tag => {
+  const isSelected = (tag) => {
     if (multiple) {
       return selected.indexOf(tag) > -1;
     }
@@ -10,10 +10,10 @@ const TagSelect = ({ tags, multiple, onChange, selected, ...props }) => {
     return selected === tag;
   };
 
-  const handleSelect = tag => () => {
+  const handleSelect = (tag) => () => {
     if (multiple) {
       if (isSelected(tag)) {
-        onChange(selected.filter(t => t !== tag));
+        onChange(selected.filter((t) => t !== tag));
       } else {
         onChange([...selected, tag]);
       }
@@ -26,11 +26,12 @@ const TagSelect = ({ tags, multiple, onChange, selected, ...props }) => {
 
   return (
     <StyledTagSelect {...props}>
-      {tags.map(tag => (
+      {tags.map((tag) => (
         <StyledTagSelectTag
           key={tag}
           selected={isSelected(tag)}
           onClick={handleSelect(tag)}
+          aria-label={tag}
         >
           {isSelected(tag) ? (
             <svg width={12} height={12} fill="none">
