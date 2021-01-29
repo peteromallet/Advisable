@@ -8,8 +8,8 @@ export default function ComboboxTags({ value, removeOption }) {
         <Tag
           size="s"
           key={v.value}
-          marginRight="2xs"
-          marginBottom="2xs"
+          marginRight={2}
+          marginBottom={2}
           onRemove={() => removeOption(v.value)}
         >
           {v.label}

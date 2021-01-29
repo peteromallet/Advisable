@@ -3,7 +3,7 @@ import { sortBy } from "lodash-es";
 import Fuse from "fuse.js";
 import { withKnobs, select } from "@storybook/addon-knobs";
 import Card from "../Card";
-import Autocomplete from ".";
+import Combobox from ".";
 
 export default {
   title: "Forms/Combobox",
@@ -1286,15 +1286,16 @@ const searchCountries = (query) => {
   });
 };
 
-export const singleSelect = () => {
+export const SingleSelect = () => {
   const [value, setValue] = React.useState("");
   const size = select("Size", ["sm", "md", "lg"], "md");
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">
-      <Autocomplete
+      <Combobox
         size={size}
         value={value}
+        name="country"
         label="Choose a country"
         placeholder="Country"
         onChange={(v) => setValue(v)}
@@ -1307,7 +1308,7 @@ export const singleSelect = () => {
   );
 };
 
-export const existingValue = () => {
+export const ExistingValue = () => {
   const [value, setValue] = React.useState({
     label: "Ireland",
     value: "IE",
@@ -1316,7 +1317,7 @@ export const existingValue = () => {
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">
-      <Autocomplete
+      <Combobox
         size={size}
         value={value}
         label="Choose a country"
@@ -1331,13 +1332,13 @@ export const existingValue = () => {
   );
 };
 
-export const async = () => {
+export const Async = () => {
   const [value, setValue] = React.useState("");
   const size = select("Size", ["sm", "md", "lg"], "md");
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">
-      <Autocomplete
+      <Combobox
         size={size}
         value={value}
         label="Choose a country"
@@ -1349,12 +1350,12 @@ export const async = () => {
   );
 };
 
-export const createable = () => {
+export const Createable = () => {
   const [value, setValue] = React.useState(null);
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">
-      <Autocomplete
+      <Combobox
         creatable
         value={value}
         label="Choose a country"
@@ -1369,12 +1370,12 @@ export const createable = () => {
   );
 };
 
-export const asyncAndCreatable = () => {
+export const AsyncAndCreatable = () => {
   const [value, setValue] = React.useState(null);
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">
-      <Autocomplete
+      <Combobox
         creatable
         value={value}
         label="Choose a country"
@@ -1386,7 +1387,7 @@ export const asyncAndCreatable = () => {
   );
 };
 
-export const multiple = () => {
+export const Multiple = () => {
   const [value, setValue] = React.useState([
     { label: "Ireland", value: "IE" },
     { label: "Germany", value: "DE" },
@@ -1396,7 +1397,7 @@ export const multiple = () => {
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">
-      <Autocomplete
+      <Combobox
         multiple
         value={value}
         label="Choose countries"
@@ -1411,7 +1412,7 @@ export const multiple = () => {
   );
 };
 
-export const multipleWithMax = () => {
+export const MultipleWithMax = () => {
   const [value, setValue] = React.useState([
     { label: "Ireland", value: "IE" },
     { label: "Germany", value: "DE" },
@@ -1421,7 +1422,7 @@ export const multipleWithMax = () => {
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">
-      <Autocomplete
+      <Combobox
         multiple
         max={4}
         value={value}
@@ -1437,12 +1438,12 @@ export const multipleWithMax = () => {
   );
 };
 
-export const multipleAndCreatable = () => {
+export const MultipleAndCreatable = () => {
   const [value, setValue] = React.useState([]);
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">
-      <Autocomplete
+      <Combobox
         multiple
         creatable
         value={value}
@@ -1458,12 +1459,12 @@ export const multipleAndCreatable = () => {
   );
 };
 
-export const multipleCreatableAndAsync = () => {
+export const MultipleCreatableAndAsync = () => {
   const [value, setValue] = React.useState([]);
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">
-      <Autocomplete
+      <Combobox
         multiple
         creatable
         value={value}
