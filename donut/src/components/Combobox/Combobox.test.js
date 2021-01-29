@@ -13,39 +13,36 @@ const OPTIONS = [
 ];
 
 test("selecting an option", async () => {
-  let value = "";
-
-  function onChange(newValue) {
-    value = newValue;
-  }
+  const changeHandler = jest.fn();
 
   render(
     <Autocomplete
-      value={value}
-      onChange={onChange}
+      value=""
+      onChange={changeHandler}
       options={OPTIONS}
       placeholder="Select option"
     />,
   );
 
   const input = screen.getByPlaceholderText(/select option/i);
-  userEvent.type(input, "Ji");
+  fireEvent.change(input, { target: { value: "Mich" } });
   fireEvent.keyDown(input, { key: "ArrowDown", keyCode: 40 });
-  userEvent.type(input, "{enter}");
-  expect(value).toBe("1");
+  fireEvent.keyDown(input, { key: "Return", keyCode: 13 });
+  expect(changeHandler).toHaveBeenCalledWith(
+    expect.objectContaining({
+      label: "Michael",
+      value: "4",
+    }),
+  );
 });
 
 test("selecting option with mouse", async () => {
-  let value = "";
-
-  function onChange(newValue) {
-    value = newValue;
-  }
+  const changeHandler = jest.fn();
 
   render(
     <Autocomplete
-      value={value}
-      onChange={onChange}
+      value=""
+      onChange={changeHandler}
       options={OPTIONS}
       placeholder="Select option"
     />,
@@ -53,7 +50,110 @@ test("selecting option with mouse", async () => {
 
   const input = screen.getByPlaceholderText(/select option/i);
   userEvent.type(input, "Mich");
-  const option = screen.getByText(/michael/i);
-  userEvent.click(option);
-  expect(value).toBe("4");
+  const option = screen.getByRole("option", { name: /michael/i });
+  fireEvent.click(option);
+  expect(changeHandler).toHaveBeenCalled();
+});
+
+test("can take a preselected value", async () => {
+  const changeHandler = jest.fn();
+  render(
+    <Autocomplete
+      value={{ label: "Toby", value: "5" }}
+      onChange={changeHandler}
+      options={OPTIONS}
+      placeholder="Select option"
+    />,
+  );
+
+  const input = screen.getByDisplayValue("Toby");
+  expect(input).toBeInTheDocument();
+});
+
+test("Selecting multiple values", async () => {
+  let values = [{ label: "Dwight", value: "2" }];
+
+  function onChange(newValues) {
+    values = newValues;
+  }
+
+  render(
+    <Autocomplete
+      value={values}
+      multiple
+      onChange={onChange}
+      options={OPTIONS}
+      placeholder="Select option"
+    />,
+  );
+
+  const input = screen.getByPlaceholderText(/select option/i);
+  fireEvent.change(input, { target: { value: "Hol" } });
+  fireEvent.keyDown(input, { key: "ArrowDown", keyCode: 40 });
+  fireEvent.keyDown(input, { key: "Return", keyCode: 13 });
+
+  expect(values[0].label).toEqual("Dwight");
+  expect(values[1].label).toEqual("Holly");
+});
+
+test("Creating a new record", async () => {
+  const changeHandler = jest.fn();
+
+  render(
+    <Autocomplete
+      creatable
+      value={null}
+      onChange={changeHandler}
+      options={OPTIONS}
+      placeholder="Select option"
+    />,
+  );
+
+  const input = screen.getByPlaceholderText(/select option/i);
+  fireEvent.change(input, { target: { value: "New Person" } });
+  const option = screen.getByRole("option", { name: /new person/i });
+  fireEvent.click(option);
+  expect(changeHandler).toHaveBeenCalledWith(
+    expect.objectContaining({
+      label: "New Person",
+      value: "New Person",
+    }),
+  );
+});
+
+test("Async options", async () => {
+  const changeHandler = jest.fn();
+  const searchOptions = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([
+          { label: "One", value: "1" },
+          { label: "Two", value: "2" },
+          { label: "Three", value: "3" },
+        ]);
+      }, 100);
+    });
+  };
+
+  render(
+    <Autocomplete
+      value={null}
+      options={OPTIONS}
+      onChange={changeHandler}
+      placeholder="Select option"
+      loadOptions={searchOptions}
+    />,
+  );
+
+  const input = screen.getByPlaceholderText(/select option/i);
+  fireEvent.change(input, { target: { value: "Two" } });
+  screen.getByText(/loading/i);
+  const option = await screen.findByRole("option", { name: /two/i });
+  fireEvent.click(option);
+  expect(changeHandler).toHaveBeenCalledWith(
+    expect.objectContaining({
+      label: "Two",
+      value: "2",
+    }),
+  );
 });

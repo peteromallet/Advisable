@@ -3,6 +3,22 @@ import { space, variant } from "styled-system";
 import theme from "../../theme";
 import styled from "styled-components";
 
+export const StyledTagRemoveButton = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: ${theme.colors.neutral200};
+
+  &:hover {
+    background: ${theme.colors.neutral300};
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
 const color = variant({
   variants: {
     neutral: {
@@ -43,22 +59,6 @@ const color = variant({
 export const StyledTagPrefix = styled.div``;
 export const StyledTagSuffix = styled.div``;
 export const StyledTagLabel = styled.span``;
-
-export const StyledTagRemoveButton = styled.div`
-  height: 100%;
-  display: flex;
-  align-items: center;
-  background: ${theme.colors.neutral200};
-
-  &:hover {
-    background: ${theme.colors.neutral300};
-  }
-
-  svg {
-    width: 16px;
-    height: 16px;
-  }
-`;
 
 const size = variant({
   prop: "size",
