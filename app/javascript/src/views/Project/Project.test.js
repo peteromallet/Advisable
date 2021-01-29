@@ -10,7 +10,10 @@ import {
   mockBreakpoint,
 } from "../../testHelpers/test-utils";
 import * as queries from "./queries";
-import { REJECT_APPLICATION } from "components/RejectApplicationForm/queries";
+import {
+  REJECT_APPLICATION,
+  GET_APPLICATION,
+} from "components/RejectApplicationForm/queries";
 
 // Its always 27th may 2020 at midday
 Settings.now = () => new Date(2020, 4, 27, 12, 0, 0, 0).valueOf();
@@ -240,12 +243,19 @@ test("can reject a match", async () => {
           },
         },
       ),
+      mockQuery(
+        GET_APPLICATION,
+        { id: project.matches[0].id },
+        {
+          application: project.matches[0],
+        },
+      ),
       mockMutation(
         REJECT_APPLICATION,
         {
           id: project.matches[0].id,
-          reason: "I want someone with more relevant experience",
-          feedback: "",
+          reason: "Answers don't demonstrate the experience I'm looking for",
+          feedback: "Feedback",
         },
         {
           rejectApplication: {
@@ -257,6 +267,15 @@ test("can reject a match", async () => {
           },
         },
       ),
+      // Rejecting candidate brings up the next one and so we need to prefetch
+      // the reject modal for that.
+      mockQuery(
+        GET_APPLICATION,
+        { id: project.matches[1].id },
+        {
+          application: project.matches[1],
+        },
+      ),
     ],
   });
 
@@ -264,6 +283,15 @@ test("can reject a match", async () => {
   const actionBar = await screen.findByTestId("actionBar");
   userEvent.click(await within(actionBar).findByLabelText(/reject/i));
   await screen.findByText(/please provide feedback to/i);
+  userEvent.selectOptions(
+    screen.getByRole("combobox", { name: /what feedback do you have/i }),
+    ["Answers don't demonstrate the experience I'm looking for"],
+  );
+
+  userEvent.type(
+    screen.getByRole("textbox", { name: /hat feedback do you have for us/i }),
+    "Feedback",
+  );
   const modal = await screen.findByLabelText(/reject bob/i);
   const rejectBtn = await within(modal).findByRole("button", {
     name: /reject/i,
