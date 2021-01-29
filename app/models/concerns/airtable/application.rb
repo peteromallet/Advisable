@@ -63,11 +63,10 @@ module Airtable
       questions << {question: fields['Question 2'], answer: fields['Answer 2']} if fields['Answer 2']
       application.questions = questions if (application.questions || []) != questions
 
-      meta = {}
+      application.meta_fields = {}
       ::Application::META_FIELDS.each do |field|
-        meta[field] = self[field]
+        application.meta_fields[field] = self[field]
       end
-      application.meta_fields = meta
     end
 
     def status_to_sync
