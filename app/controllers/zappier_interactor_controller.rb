@@ -69,7 +69,13 @@ class ZappierInteractorController < ApplicationController
   private
 
   def application_params
-    params.require(:application).permit(:comment, :featured, :hidden, :hide_from_profile, :introduction, :references_requested, :rejection_reason, :rejection_reason_comment, :score, :started_working_at, :status, :stopped_working_reason)
+    application_fields = %i[comment featured hidden hide_from_profile introduction references_requested rejection_reason rejection_reason_comment score started_working_at status stopped_working_reason source]
+    attrs = params.require(:application).permit(application_fields + Application::META_FIELDS).to_h
+    attrs[:meta_fields] = {}
+    Application::META_FIELDS.each do |field|
+      attrs[:meta_fields][field] = attrs.delete(field)
+    end
+    attrs
   end
 
   def find_account_from_uid(uid)

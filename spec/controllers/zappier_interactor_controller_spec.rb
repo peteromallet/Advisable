@@ -16,10 +16,19 @@ RSpec.describe ZappierInteractorController, type: :request do
     it "creates the application and returns its uid" do
       post("/zappier_interactor/create_application", params: params)
       expect(response).to have_http_status(:success)
-      uid = JSON[response.body]["uid"]
-      expect(uid).to be_present
-      application = Application.find_by(uid: uid)
+      application = Application.find_by(uid: JSON[response.body]["uid"])
       expect(application.comment).to eq("This is a comment")
+    end
+
+    context "when sending meta fields" do
+      let(:extra_application_params) { {"Working - 5 Days In - Client Feedback" => "No feedback"} }
+
+      it "updates them" do
+        post("/zappier_interactor/create_application", params: params)
+        expect(response).to have_http_status(:success)
+        application = Application.find_by(uid: JSON[response.body]["uid"])
+        expect(application.meta_fields["Working - 5 Days In - Client Feedback"]).to eq("No feedback")
+      end
     end
 
     context "when specialist is missing" do
@@ -65,14 +74,27 @@ RSpec.describe ZappierInteractorController, type: :request do
 
   describe "POST /update_application" do
     let(:application) { create(:application) }
-    let(:application_params) { {comment: "This is a comment"} }
+    let(:application_params) { {comment: "This is a comment", source: "And this is the source"} }
     let(:extra_application_params) { {} }
     let(:params) { {application: application_params.merge(extra_application_params), uid: application.uid, key: key} }
 
     it "creates the application and returns its uid" do
       post("/zappier_interactor/update_application", params: params)
       expect(response).to have_http_status(:success)
-      expect(application.reload.comment).to eq("This is a comment")
+      application.reload
+      expect(application.comment).to eq("This is a comment")
+      expect(application.source).to eq("And this is the source")
+    end
+
+    context "when sending meta fields" do
+      let(:extra_application_params) { {"Working - 5 Days In - Client Feedback" => "No feedback"} }
+
+      it "updates them" do
+        post("/zappier_interactor/update_application", params: params)
+        expect(response).to have_http_status(:success)
+        application.reload
+        expect(application.meta_fields["Working - 5 Days In - Client Feedback"]).to eq("No feedback")
+      end
     end
 
     context "when given unpermitted params" do
