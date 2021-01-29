@@ -66,7 +66,7 @@ export const START_CLIENT_APPLICATION = gql`
 `;
 
 export const useStartClientApplication = () =>
-  useMutation(START_CLIENT_APPLICATION, { onError: () => { } });
+  useMutation(START_CLIENT_APPLICATION, { onError: () => {} });
 
 /* 2 Step. About Company */
 
@@ -313,11 +313,8 @@ export const useCoutryCode = () => {
   });
 };
 
-
 export const CREATE_USER_FOR_COMPANY = gql`
-  mutation createUserForCompany(
-    $input: CreateUserForCompanyInput!
-  ) {
+  mutation createUserForCompany($input: CreateUserForCompanyInput!) {
     createUserForCompany(input: $input) {
       user {
         id
@@ -338,11 +335,8 @@ export function useCreateUserForCompany() {
   return useMutation(CREATE_USER_FOR_COMPANY);
 }
 
-
 export const TOGGLE_TEAM_MANAGER = gql`
-  mutation toggleTeamManager(
-    $input: ToggleTeamManagerInput!
-  ) {
+  mutation toggleTeamManager($input: ToggleTeamManagerInput!) {
     toggleTeamManager(input: $input) {
       user {
         id
@@ -353,4 +347,46 @@ export const TOGGLE_TEAM_MANAGER = gql`
 
 export function useToggleTeamManager() {
   return useMutation(TOGGLE_TEAM_MANAGER);
+}
+
+/* Try application again */
+
+export const RESET_CLIENT_APPLICATION = gql`
+  ${clientApplicationFragment}
+  mutation ResetClientApplication($input: ResetClientApplicationInput!) {
+    resetClientApplication(input: $input) {
+      clientApplication {
+        ...Application
+      }
+    }
+  }
+`;
+
+export function useResetClientApplication({ id, firstName, lastName }) {
+  return useMutation(RESET_CLIENT_APPLICATION, {
+    variables: { input: { id } },
+    optimisticResponse: {
+      __typename: "Mutation",
+      resetClientApplication: {
+        __typename: "ResetClientApplicationPayload",
+        clientApplication: {
+          __typename: "ClientApplication",
+          id,
+          firstName,
+          lastName,
+          acceptedGuaranteeTerms: false,
+          budget: null,
+          companyName: null,
+          companyType: null,
+          industry: null,
+          localityImportance: null,
+          numberOfFreelancers: null,
+          rejectionReason: null,
+          skills: [],
+          status: "Application Started",
+          talentQuality: null,
+        },
+      },
+    },
+  });
 }
