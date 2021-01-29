@@ -13,30 +13,22 @@ module Airtable
     sync_column 'One Line Overview', to: :introduction
     sync_column 'Advisable Comment', to: :comment
     sync_column 'Rejected Reason', to: :rejection_reason
-    sync_column 'Rejected Feedback', to: :rejection_feedback
+    sync_column 'Rejected Reason Comment', to: :rejection_reason_comment
     sync_column 'Proposal Comment', to: :proposal_comment
     sync_column 'Invitation Rejected Reason', to: :invitation_rejection_reason
     sync_column 'Applied At', to: :applied_at
     sync_column 'Project Type', to: :project_type
     sync_column 'Monthly Limit', to: :monthly_limit
     sync_column 'Stopped Working Reason', to: :stopped_working_reason
-    sync_column 'Application Status - Invited To Apply - Timestamp',
-                to: :invited_to_apply_at
-    sync_column 'Application Status - Invitation Rejected - Timestamp',
-                to: :invitation_rejected_at
-    sync_column 'Application Status - Application Rejected - Timestamp',
-                to: :application_rejected_at
-    sync_column 'Application Status - Application Accepted - Timestamp',
-                to: :application_accepted_at
-    sync_column 'Application Status - Interview Scheduled - Timestamp',
-                to: :interview_scheduled_at
-    sync_column 'Application Status - Interview Completed - Timestamp',
-                to: :interview_completed_at
+    sync_column 'Application Status - Invited To Apply - Timestamp', to: :invited_to_apply_at
+    sync_column 'Application Status - Invitation Rejected - Timestamp', to: :invitation_rejected_at
+    sync_column 'Application Status - Application Rejected - Timestamp', to: :application_rejected_at
+    sync_column 'Application Status - Application Accepted - Timestamp', to: :application_accepted_at
+    sync_column 'Application Status - Interview Scheduled - Timestamp', to: :interview_scheduled_at
+    sync_column 'Application Status - Interview Completed - Timestamp', to: :interview_completed_at
     sync_column 'Application Status - Proposed - Timestamp', to: :proposal_sent_at
-    sync_column 'Application Status - Working - Timestamp',
-                to: :started_working_at
-    sync_column 'Application Status - Stopped Working - Timestamp',
-                to: :stopped_working_at
+    sync_column 'Application Status - Working - Timestamp', to: :started_working_at
+    sync_column 'Application Status - Stopped Working - Timestamp', to: :stopped_working_at
 
     sync_data do |application|
       application.status = status_to_sync
@@ -46,11 +38,9 @@ module Airtable
       application.references_requested = fields['References Requested'] == 'Yes'
       application.hidden = fields['Application Hidden'] == 'Yes'
       application.hide_from_profile = fields['Hide From Profile'] == 'Yes'
-
       application.trial_program = self['Trial Program'].include?('Yes') if self['Trial Program']
 
       specialist_id = fields['Expert'].try(:first)
-
       if specialist_id
         specialist = ::Specialist.find_by_uid_or_airtable_id(specialist_id)
         specialist = Airtable::Specialist.find(specialist_id).sync if specialist.nil?
@@ -58,7 +48,6 @@ module Airtable
       end
 
       project_id = fields['Client Project'].try(:first)
-
       if project_id
         project = ::Project.find_by_uid_or_airtable_id(project_id)
         project = Airtable::Project.find(project_id).sync if project.nil?
@@ -66,10 +55,11 @@ module Airtable
       end
 
       # Build the questions array
-      # If the application questions is not equal to the questions array then set it to the questions variable
       questions = []
       questions << {question: fields['Question 1'], answer: fields['Answer 1']} if fields['Answer 1']
       questions << {question: fields['Question 2'], answer: fields['Answer 2']} if fields['Answer 2']
+
+      # If the application questions is not equal to the questions array then set it to the questions variable
       application.questions = questions if (application.questions || []) != questions
 
       application.auto_apply = self['Auto Apply'].try(:include?, 'Yes')
@@ -106,8 +96,7 @@ module Airtable
       self['Rejected Reason'] = application.rejection_reason
       self['Proposal Comment'] = application.proposal_comment
       self['Rejected Feedback'] = application.rejection_feedback
-      self['References Requested'] =
-        application.references_requested ? 'Yes' : nil
+      self['References Requested'] = application.references_requested ? 'Yes' : nil
       self['Project Type'] = application.project_type
       self['Monthly Limit'] = application.monthly_limit
       self['Stopped Working Reason'] = application.stopped_working_reason
