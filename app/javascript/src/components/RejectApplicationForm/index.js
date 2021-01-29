@@ -32,7 +32,6 @@ export default function RejectApplicationForm({
   const [rejectApplication] = useRejectApplication(mutationOptions);
 
   const handleSubmit = async (values, formik) => {
-    console.log(values);
     const response = await rejectApplication({
       variables: {
         input: {
@@ -43,11 +42,11 @@ export default function RejectApplicationForm({
       },
     });
 
-    if (!response.errors) {
+    if (response.errors) {
       formik.resetForm();
+    } else {
+      onReject(response);
     }
-
-    onReject(response);
   };
 
   const initialValues = {

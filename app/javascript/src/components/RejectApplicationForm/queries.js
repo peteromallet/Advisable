@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 
-const GET_APPLICATION = gql`
+export const GET_APPLICATION = gql`
   query getApplication($id: ID!) {
     application(id: $id) {
       id

@@ -195,7 +195,7 @@ function ShareApplicationModal({ modal, application }) {
   }, [data?.currentCompany.users, viewer]);
 
   return (
-    <Modal modal={modal}>
+    <Modal modal={modal} label="Share application">
       {loading ? <Loading /> : null}
 
       {!loading && data ? (
