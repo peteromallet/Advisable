@@ -20,6 +20,7 @@ module Airtable
     sync_column 'Project Type', to: :project_type
     sync_column 'Monthly Limit', to: :monthly_limit
     sync_column 'Stopped Working Reason', to: :stopped_working_reason
+    sync_column 'Source', to: :source
     sync_column 'Application Status - Invited To Apply - Timestamp', to: :invited_to_apply_at
     sync_column 'Application Status - Invitation Rejected - Timestamp', to: :invitation_rejected_at
     sync_column 'Application Status - Application Rejected - Timestamp', to: :application_rejected_at
@@ -39,6 +40,7 @@ module Airtable
       application.hidden = fields['Application Hidden'] == 'Yes'
       application.hide_from_profile = fields['Hide From Profile'] == 'Yes'
       application.trial_program = self['Trial Program'].include?('Yes') if self['Trial Program']
+      application.auto_apply = self['Auto Apply'].try(:include?, 'Yes')
 
       specialist_id = fields['Expert'].try(:first)
       if specialist_id
@@ -55,14 +57,17 @@ module Airtable
       end
 
       # Build the questions array
+      # If the application questions is not equal to the questions array then set it to the questions variable
       questions = []
       questions << {question: fields['Question 1'], answer: fields['Answer 1']} if fields['Answer 1']
       questions << {question: fields['Question 2'], answer: fields['Answer 2']} if fields['Answer 2']
-
-      # If the application questions is not equal to the questions array then set it to the questions variable
       application.questions = questions if (application.questions || []) != questions
 
-      application.auto_apply = self['Auto Apply'].try(:include?, 'Yes')
+      meta = {}
+      ::Application::META_FIELDS.each do |field|
+        meta[field] = self[field]
+      end
+      application.meta_fields = meta
     end
 
     def status_to_sync
@@ -105,6 +110,11 @@ module Airtable
       self['Auto Apply'] = 'Yes' if application.auto_apply
       self['Auto Apply'] = 'No' if application.auto_apply == false
       self['Score'] = application.score.try(:to_i)
+      self['Source'] = application.source
+
+      ::Application::META_FIELDS.each do |field|
+        self[field] = application.meta_fields[field]
+      end
     end
   end
 end
