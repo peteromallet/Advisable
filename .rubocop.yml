@@ -8,7 +8,9 @@ require:
 AllCops:
   NewCops: enable
   Exclude:
-    - 'db/schema.rb'
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
 
 Layout/SpaceInsideHashLiteralBraces:
   Enabled: true
