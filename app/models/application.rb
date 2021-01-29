@@ -48,6 +48,13 @@ class Application < ApplicationRecord
 
   ACTIVE_STATUSES = ['Application Accepted', 'Interview Scheduled', 'Interview Completed', 'Proposed'].freeze
   HIRED_STATUSES = ['Working', 'Stopped Working'].freeze
+  META_FIELDS = [
+    "Working - 5 Days In - Client Happy", "Working - 10 Days In - Client Happy", "Working - 15 Days In - Client Happy",
+    "Working - 5 Days In - Client Feedback", "Working - 10 Days In - Client Feedback", "Working - 15 Days In - Client Feedback",
+    "Working - 5 Days In - Specialist Happy", "Working - 10 Days In - Specialist Happy", "Working - 15 Days In - Specialist Happy",
+    "Working - 5 Days In - Specialist Feedback", "Working - 10 Days In - Specialist Feedback", "Working - 15 Days In - Specialist Feedback",
+    "Client Wants To More Forward", "Likelihood To Hire", "Freelancer - Post Interview Next Steps", "Client Ready To Hire Now", "Client Needs From Freelancer", "Better Freelancer Feedback"
+  ].freeze
 
   belongs_to :specialist
   belongs_to :project
@@ -165,6 +172,7 @@ end
 #  invitation_rejected_at      :datetime
 #  invitation_rejection_reason :string
 #  invited_to_apply_at         :datetime
+#  meta_fields                 :jsonb
 #  monthly_limit               :integer
 #  project_type                :string
 #  proposal_comment            :string
@@ -176,6 +184,7 @@ end
 #  rejection_reason            :text
 #  rejection_reason_comment    :text
 #  score                       :decimal(, )
+#  source                      :string
 #  started_working_at          :datetime
 #  status                      :string
 #  stopped_working_at          :datetime
