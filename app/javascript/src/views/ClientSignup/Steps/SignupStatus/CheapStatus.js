@@ -21,7 +21,7 @@ function CheapStatus() {
           mb={2}
           mr={2}
         >
-          Go To Upword
+          Go To Upwork
         </Link.External>
         <TryAgainButton width={[1, "auto"]} />
       </Box>
