@@ -18,12 +18,15 @@ export const StyledRadioInput = styled.input`
 `;
 
 export const StyledRadioToggle = styled.div`
+  top: 50%;
+  left: 12px;
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  position: relative;
+  position: absolute;
   border-radius: 6px;
   box-sizing: border-box;
+  transform: translateY(-50%);
   background: ${theme.colors.neutral100};
   border: 2px solid ${theme.colors.neutral400};
   transition: background 200ms;
@@ -43,10 +46,6 @@ export const StyledRadioToggle = styled.div`
   }
 `;
 
-export const StyledRadioContent = styled.div`
-  padding-left: 12px;
-`;
-
 const disabledStyles = css`
   cursor: default;
 
@@ -58,21 +57,17 @@ const disabledStyles = css`
 const notDisabledStyles = css`
   cursor: pointer;
 
-  &:hover ${StyledRadioInput}:not(:checked) + ${StyledRadioToggle} {
+  &:hover + ${StyledRadioToggle} {
     background: ${darken(0.015, theme.colors.neutral100)};
     border: 2px solid ${darken(0.025, theme.colors.neutral300)};
   }
 
-  ${StyledRadioInput}:checked + ${StyledRadioToggle} {
+  &[data-checked="true"] ${StyledRadioToggle} {
     border-color: ${theme.colors.blue500};
 
     &:before {
       transform: scale(1);
     }
-  }
-
-  &:hover ${StyledRadioInput}:checked + ${StyledRadioToggle} {
-    border-color: ${theme.colors.blue600};
   }
 `;
 
@@ -82,6 +77,8 @@ export const StyledRadio = styled.label`
   user-select: none;
   border-radius: 8px;
   align-items: center;
+  position: relative;
+  padding-left: 40px;
   background: ${theme.colors.neutral100};
 
   ${(props) => (props.disabled ? disabledStyles : notDisabledStyles)};

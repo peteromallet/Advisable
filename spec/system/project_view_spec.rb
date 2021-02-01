@@ -44,6 +44,9 @@ RSpec.describe 'Project view', type: :system do
     # Reject third match
     click_on 'Reject'
     within '*[role=dialog]' do
+      choose "The application is too general", allow_label_click: true
+      click_on "Continue"
+      fill_in "feedback", with: "Meh"
       click_on 'Reject'
     end
 
@@ -57,6 +60,9 @@ RSpec.describe 'Project view', type: :system do
     visit "/projects/#{project.uid}/candidates/#{candidate.uid}"
     click_on 'Reject'
     within '*[role=dialog]' do
+      choose "The application is too general", allow_label_click: true
+      click_on "Continue"
+      fill_in "feedback", with: "Meh"
       click_on 'Reject'
     end
     expect(page).to have_content('No Candidates')
