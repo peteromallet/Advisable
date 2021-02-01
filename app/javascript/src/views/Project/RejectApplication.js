@@ -43,7 +43,11 @@ export default function RejectApplication({ application }) {
         icon={<Trash />}
         data-walkthrough="actionBarReject"
       />
-      <ActionBarModal dialog={dialog} label={`Reject ${firstName}`}>
+      <ActionBarModal
+        padding={[4, 6, 8]}
+        dialog={dialog}
+        label={`Reject ${firstName}`}
+      >
         {dialog.visible && (
           <RejectApplicationForm
             id={application.id}
