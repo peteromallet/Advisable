@@ -62,6 +62,11 @@ Style/StringLiterals:
   Enabled: false
   EnforcedStyle: double_quotes
 
+# TODO: need to discuss before enabling since the app is a mixture of both
+# enforced style options
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 Rails/DynamicFindBy:
   Enabled: false
 
