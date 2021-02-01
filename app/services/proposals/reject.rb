@@ -1,37 +1,36 @@
 # frozen_string_literal: true
 
-class Proposals::Reject < ApplicationService
-  attr_reader :application, :reason, :feedback, :current_account_id
+class Proposals
+  class Reject < ApplicationService
+    attr_reader :application, :reason, :feedback, :current_account_id
 
-  def initialize(application:, reason:, feedback:, current_account_id: nil)
-    @application = application
-    @reason = reason
-    @feedback = feedback
-    @current_account_id = current_account_id
-  end
-
-  def call
-    if application.status != "Proposed"
-      raise Service::Error, "applications.notProposed"
+    def initialize(application:, reason:, feedback:, current_account_id: nil)
+      super
+      @application = application
+      @reason = reason
+      @feedback = feedback
+      @current_account_id = current_account_id
     end
 
-    application.status = "Application Rejected"
-    application.rejection_reason = reason
-    application.rejection_feedback = feedback
+    def call
+      raise Service::Error, "applications.notProposed" if application.status != "Proposed"
 
-    success = Logidze.with_responsible(current_account_id) do
-      application.save
-    end
+      application.status = "Application Rejected"
+      application.rejection_reason = reason
+      application.rejection_feedback = feedback
 
-    if success
+      success = Logidze.with_responsible(current_account_id) do
+        application.save
+      end
+
+      raise Service::Error, application.errors.full_messages.first unless success
+
       application.sync_to_airtable
       WebhookEvent.trigger(
         "applications.proposal_rejected",
         WebhookEvent::Application.data(application)
       )
       application
-    else
-      raise Service::Error, application.errors.full_messages.first
     end
   end
 end
