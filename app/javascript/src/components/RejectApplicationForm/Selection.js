@@ -1,23 +1,28 @@
-import React from "react";
-import {
-  StyledRadio,
-  StyledRadioInput,
-  StyledRadioToggle,
-  StyledRadioContent,
-} from "./styles";
+import { uniqueId } from "lodash-es";
+import React, { useMemo } from "react";
+import { StyledRadio, StyledRadioInput, StyledRadioToggle } from "./styles";
 
 const Selection = ({ children, ...props }) => {
+  const id = useMemo(() => props.id || uniqueId("selection"), [props.id]);
+
   return (
-    <StyledRadio disabled={props.disabled}>
+    <>
       <StyledRadioInput
         {...props}
         role="radio"
         type="radio"
+        id={id}
         aria-checked={props.checked}
       />
-      <StyledRadioToggle aria-hidden="true" />
-      <StyledRadioContent>{children}</StyledRadioContent>
-    </StyledRadio>
+      <StyledRadio
+        htmlFor={id}
+        data-checked={props.checked}
+        disabled={props.disabled}
+      >
+        <StyledRadioToggle aria-hidden="true" />
+        {children}
+      </StyledRadio>
+    </>
   );
 };
 

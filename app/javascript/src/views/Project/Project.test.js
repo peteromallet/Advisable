@@ -283,10 +283,8 @@ test("can reject a match", async () => {
   const actionBar = await screen.findByTestId("actionBar");
   userEvent.click(await within(actionBar).findByLabelText(/reject/i));
   await screen.findByText(/please provide feedback to/i);
-  userEvent.selectOptions(
-    screen.getByRole("combobox", { name: /what feedback do you have/i }),
-    ["Answers don't demonstrate the experience I'm looking for"],
-  );
+  userEvent.click(screen.getByDisplayValue(/demonstrate the experience/i));
+  userEvent.click(screen.getByLabelText(/continue/i));
 
   userEvent.type(
     screen.getByRole("textbox", { name: /hat feedback do you have for us/i }),
