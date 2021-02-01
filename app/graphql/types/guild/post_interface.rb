@@ -120,13 +120,16 @@ module Types::Guild::PostInterface
 
   field :pinned, Boolean, null: true
 
+  field :resolved, Boolean, null: true
+  def resolved
+    !!object.resolved_at
+  end
+
   definition_methods do
-    def resolve_type(object, context)
-      if Guild::Post::POST_TYPES.include?(object.type)
-        "Types::Guild::Post::#{object.type}Type".constantize
-      else
-        raise "Unexpected Post Type: #{object.inspect}"
-      end
+    def resolve_type(object, _context)
+      raise "Unexpected Post Type: #{object.inspect}" unless Guild::Post::POST_TYPES.include?(object.type)
+
+      "Types::Guild::Post::#{object.type}Type".constantize
     end
   end
 end

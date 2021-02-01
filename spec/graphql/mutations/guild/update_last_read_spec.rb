@@ -3,12 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::Guild::UpdateLastRead do
-  include ActiveSupport::Testing::TimeHelpers
-
   let(:specialist) { create(:specialist, :guild) }
   let(:guild_post) { create(:guild_post, specialist: specialist) }
   let(:response_keys) { %w[guildUpdateLastRead viewer] }
-  let(:query) {
+  let(:query) do
     <<-GRAPHQL
     mutation {
       guildUpdateLastRead(input: {
@@ -22,7 +20,7 @@ RSpec.describe Mutations::Guild::UpdateLastRead do
       }
     }
     GRAPHQL
-  }
+  end
 
   it_behaves_like "guild specialist"
 

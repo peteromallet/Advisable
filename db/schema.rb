@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_26_101803) do
+ActiveRecord::Schema.define(version: 2021_02_01_211400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -262,21 +262,6 @@ ActiveRecord::Schema.define(version: 2021_01_26_101803) do
     t.index ["user_id"], name: "index_consultations_on_user_id"
   end
 
-  create_table "conversation_participants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "conversation_id", null: false
-    t.bigint "account_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "last_read_at"
-    t.index ["account_id"], name: "index_conversation_participants_on_account_id"
-    t.index ["conversation_id"], name: "index_conversation_participants_on_conversation_id"
-  end
-
-  create_table "conversations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "countries", force: :cascade do |t|
     t.string "name"
     t.string "currency"
@@ -391,6 +376,7 @@ ActiveRecord::Schema.define(version: 2021_01_26_101803) do
     t.boolean "shareable", default: false
     t.boolean "pinned", default: false
     t.datetime "boosted_at"
+    t.datetime "resolved_at"
     t.index ["data"], name: "index_guild_posts_on_data", using: :gin
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end
@@ -460,16 +446,6 @@ ActiveRecord::Schema.define(version: 2021_01_26_101803) do
     t.string "status"
     t.index ["project_id"], name: "index_matches_on_project_id"
     t.index ["specialist_id"], name: "index_matches_on_specialist_id"
-  end
-
-  create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "conversation_id", null: false
-    t.bigint "account_id", null: false
-    t.string "content"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["account_id"], name: "index_messages_on_account_id"
-    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
   end
 
   create_table "off_platform_projects", force: :cascade do |t|
@@ -1009,8 +985,6 @@ ActiveRecord::Schema.define(version: 2021_01_26_101803) do
   add_foreign_key "consultations", "skills"
   add_foreign_key "consultations", "specialists"
   add_foreign_key "consultations", "users"
-  add_foreign_key "conversation_participants", "accounts"
-  add_foreign_key "conversation_participants", "conversations"
   add_foreign_key "guild_comments", "guild_posts", on_delete: :cascade
   add_foreign_key "guild_comments", "specialists", on_delete: :cascade
   add_foreign_key "guild_post_engagements", "guild_posts"
@@ -1022,8 +996,6 @@ ActiveRecord::Schema.define(version: 2021_01_26_101803) do
   add_foreign_key "interviews", "users"
   add_foreign_key "matches", "projects"
   add_foreign_key "matches", "specialists"
-  add_foreign_key "messages", "accounts"
-  add_foreign_key "messages", "conversations"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "previous_project_images", "off_platform_projects"

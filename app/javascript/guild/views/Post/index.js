@@ -6,6 +6,7 @@ import Loading from "@advisable-main/components/Loading";
 import NotFound from "@advisable-main/components/PreviousProjectFormModal/NotFound";
 import { GUILD_POST_QUERY } from "./queries";
 import Topics from "@guild/components/Post/components/Topics";
+import ResolvedNotice from "@guild/components/Post/components/ResolvedNotice";
 import { CoverImage } from "@guild/components/CoverImage";
 import useViewer from "@advisable-main/hooks/useViewer";
 import Markdown from "@guild/components/Markdown";
@@ -120,6 +121,10 @@ const Post = () => {
             <Box mb={8}>
               <Markdown>{post.body}</Markdown>
             </Box>
+
+            {post.resolved ? (
+              <ResolvedNotice authorName={post.author.firstName} />
+            ) : null}
 
             <Topics topics={post.guildTopics} />
 
