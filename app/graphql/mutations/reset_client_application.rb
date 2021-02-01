@@ -11,8 +11,10 @@ class Mutations::ResetClientApplication < Mutations::BaseMutation
     user.application_status = "Application Started"
     user.accepted_guarantee_terms_at = false
     user.budget = nil
-    user.company.update(kind: nil, industry: nil)
-    reset_company_name(user)
+    user.company_name = nil
+    user.company.update(kind: nil, industry: nil, name: nil)
+    user.client&.update(name: nil)
+    user.client&.sync_to_airtable
     user.skill_ids = []
     user.locality_importance = nil
     user.number_of_freelancers = nil
@@ -22,14 +24,5 @@ class Mutations::ResetClientApplication < Mutations::BaseMutation
     user.sync_to_airtable
 
     {clientApplication: user}
-  end
-
-  private
-
-  def reset_company_name(user)
-    user.company_name = nil
-    user.company.name = nil
-    user.client&.update(name: nil)
-    user.client&.sync_to_airtable
   end
 end
