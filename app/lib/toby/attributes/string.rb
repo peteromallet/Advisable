@@ -1,6 +1,8 @@
 module Toby
   module Attributes
     class String < BaseAttribute
+      filter :contains, GraphQL::Types::String
+
       def type
         GraphQL::Types::String
       end

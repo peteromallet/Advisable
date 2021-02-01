@@ -66,6 +66,22 @@ module Toby
             end
           end
         end
+
+        def filter_type
+          @filter_type ||= define_filter_type
+        end
+
+        def define_filter_type
+          root = self
+          Class.new(GraphQL::Schema::InputObject) do
+            graphql_name("#{root.model.name}Filter")
+            root.attributes.each do |attribute|
+              next unless attribute.class.filter_type
+
+              argument attribute.name, attribute.class.filter_type, required: false
+            end
+          end
+        end
       end
     end
   end

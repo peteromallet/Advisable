@@ -71,22 +71,12 @@ module Toby
           end
         end
 
-        def column_type
-          @column_type ||= begin
+        def attribute_type
+          @attribute_type ||= begin
             root = self
             Class.new(GraphQL::Schema::Object) do
-              graphql_name("#{root.name.split('::').last}Column")
+              graphql_name("#{root.name.split('::').last}Attribute")
               field :name, GraphQL::Types::String, null: false
-              field :field, GraphQL::Types::String, null: false
-              field :readonly, GraphQL::Types::Boolean, null: false
-
-              (root.option_fields || []).each do |option, type|
-                field option, type, null: true
-
-                define_method option do
-                  object.options.fetch(option, nil)&.to_s&.camelize(:lower)
-                end
-              end
             end
           end
         end
