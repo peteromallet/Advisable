@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Types::MutationType < GraphQL::Schema::Object
-  EXCLUDED_CLASSES = [:BaseMutation, :Helpers, :Guild].freeze
+  EXCLUDED_CLASSES = %i[BaseMutation Helpers Guild].freeze
   (Mutations.constants - EXCLUDED_CLASSES).each do |klass|
     public_send(:field, klass.to_s.underscore, mutation: "Mutations::#{klass}".constantize)
   end
@@ -19,4 +19,5 @@ class Types::MutationType < GraphQL::Schema::Object
   field :delete_guild_post, mutation: Mutations::Guild::DeleteGuildPost
   field :follow_guild_topic, mutation: Mutations::Guild::FollowGuildTopic
   field :unfollow_guild_topic, mutation: Mutations::Guild::UnfollowGuildTopic
+  field :resolve_guild_post, mutation: Mutations::Guild::ResolveGuildPost
 end

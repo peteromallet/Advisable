@@ -31,6 +31,10 @@ const color = variant({
         },
       },
     },
+    quartz: {
+      color: theme.colors.blue900,
+      background: "#DDDDE8",
+    },
     dark: {
       color: theme.colors.white,
       background: theme.colors.blue900,
