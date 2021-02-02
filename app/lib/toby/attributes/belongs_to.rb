@@ -1,6 +1,7 @@
 module Toby
   module Attributes
     class BelongsTo < BaseAttribute
+      filter :one_of, [Toby::Filters::OneOf]
       # option_field :labeled_by, GraphQL::Types::String
 
       def type
