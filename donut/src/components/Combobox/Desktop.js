@@ -44,7 +44,7 @@ export default function ComboboxDesktop({
   return (
     <StyledAutocomplete {...containerProps}>
       <div ref={inputConatinerRef}>
-        <Input {...inputProps} suffix={<ChevronDown />} />
+        <Input {...inputProps()} suffix={<ChevronDown />} />
       </div>
       <AnimatePresence>
         {isOpen && (

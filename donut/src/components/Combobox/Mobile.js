@@ -16,7 +16,7 @@ export default function ComboboxMobile({
 }) {
   return (
     <StyledAutocomplete {...containerProps}>
-      <Input {...inputProps} suffix={<ChevronDown />} />
+      <Input {...inputProps({ blur: false })} suffix={<ChevronDown />} />
 
       {isOpen && (
         <StyledComboxMobileContainer
@@ -35,7 +35,7 @@ export default function ComboboxMobile({
             flexGrow={0}
             alignItems="center"
           >
-            <Input autoFocus {...inputProps} />
+            <Input autoFocus {...inputProps()} />
             <Box pl={2}>
               <Button variant="subtle" onClick={props.close}>
                 <Check />
