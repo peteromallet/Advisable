@@ -83,10 +83,10 @@ const steps = [
             Bye, vanity metrics 👋
           </Text>
           <Paragraph size="sm" marginBottom="24px">
-            Guild isn‘t about racking up likes, shares and follows, but if you‘d
-            like to give a freelancer a little nudge to say &quot;Hey, nice one
-            - this post is interesting&quot;, here‘s where you can do that. You
-            might just find you spark some fascinating connections.
+            If you’d like to give a freelancer a little nudge to say &apos;Hey,
+            nice one - this post is interesting&apos;, here’s where you can do
+            that. But Guild isn’t about racking up likes, share and follows, so
+            only the post’s author will see who’s clicked this button.
           </Paragraph>
           <Button suffix={<ArrowForward />} variant="dark" onClick={nextStep}>
             Next
