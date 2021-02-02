@@ -2,6 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { useQuery } from "@apollo/client";
 import { Switch, Route, Redirect } from "react-router-dom";
+import useViewer from "src/hooks/useViewer";
 import NotFound from "../NotFound";
 import { Loading } from "../../components";
 import ApplicationFlow from "./ApplicationFlow";
@@ -11,6 +12,7 @@ import ApplicationsClosed from "../ApplicationsClosed";
 
 // Renders the application flow
 function ApplicationFlowContainer(props) {
+  const viewer = useViewer();
   const { applicationId } = props.match.params;
   const locationState = props.location.state || {};
 
@@ -33,6 +35,7 @@ function ApplicationFlowContainer(props) {
 
   const application = query.data?.application;
   if (!application) return <NotFound />;
+  if (application.specialist?.id !== viewer.id) return <NotFound />;
 
   const open = application?.project.applicationsOpen;
   if (!open) return <ApplicationsClosed />;
