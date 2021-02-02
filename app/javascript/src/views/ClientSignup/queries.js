@@ -362,7 +362,14 @@ export const RESET_CLIENT_APPLICATION = gql`
   }
 `;
 
-export function useResetClientApplication({ id, firstName, lastName }) {
+export function useResetClientApplication({
+  id,
+  firstName,
+  lastName,
+  companyName,
+  companyType,
+  industry,
+}) {
   return useMutation(RESET_CLIENT_APPLICATION, {
     variables: { input: { id } },
     optimisticResponse: {
@@ -374,11 +381,11 @@ export function useResetClientApplication({ id, firstName, lastName }) {
           id,
           firstName,
           lastName,
+          companyName,
+          companyType,
+          industry,
           acceptedGuaranteeTerms: false,
           budget: null,
-          companyName: null,
-          companyType: null,
-          industry: null,
           localityImportance: null,
           numberOfFreelancers: null,
           rejectionReason: null,
