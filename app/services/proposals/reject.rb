@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Proposals
+module Proposals
   class Reject < ApplicationService
     attr_reader :application, :reason, :feedback, :current_account_id
 
