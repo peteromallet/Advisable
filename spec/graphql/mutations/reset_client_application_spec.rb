@@ -52,7 +52,6 @@ RSpec.describe Mutations::ResetClientApplication do
     expect(user.company.name).to eq(nil)
     expect(user.company.kind).to eq(nil)
     expect(user.company.industry).to eq(nil)
-    expect(user.company.industry).to eq(nil)
     expect(user.budget).to eq(nil)
     expect(user.number_of_freelancers).to eq(nil)
     expect(user.skills).to eq([])
