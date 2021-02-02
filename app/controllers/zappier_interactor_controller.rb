@@ -69,11 +69,12 @@ class ZappierInteractorController < ApplicationController
   private
 
   def application_params
-    application_fields = %i[comment featured hidden hide_from_profile introduction references_requested rejection_reason rejection_reason_comment score started_working_at status stopped_working_reason source]
-    attrs = params.require(:application).permit(application_fields + Application::META_FIELDS).to_h
+    application_fields = %i[comment featured hidden hide_from_profile introduction references_requested rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source]
+    meta_fields = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }
+    attrs = params.require(:application).permit(application_fields + meta_fields.keys).to_h
     attrs[:meta_fields] = {}
-    Application::META_FIELDS.each do |field|
-      attrs[:meta_fields][field] = attrs.delete(field)
+    meta_fields.each do |param, field|
+      attrs[:meta_fields][field] = attrs.delete(param)
     end
     attrs
   end
