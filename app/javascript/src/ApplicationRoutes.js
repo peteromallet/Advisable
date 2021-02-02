@@ -129,7 +129,8 @@ const ApplicationRoutes = () => {
             path="/opportunities/:projectId"
             component={JobOpportunity}
           />
-          <Route
+          <AuthenticatedRoute
+            specialistOnly
             path="/invites/:applicationId/apply"
             component={ApplicationFlow}
           />
