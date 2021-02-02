@@ -245,7 +245,6 @@ export default function useCombobox({
     const clickContained = listboxEl?.contains(e.relatedTarget);
     if (clickContained) return;
 
-    // setOptions(defaultOptions);
     dispatch({ type: RESET });
     if (props.onBlur) props.onBlur(e);
   }
@@ -259,12 +258,14 @@ export default function useCombobox({
   }
 
   function handleClick() {
-    if (!state.isOpen && hasOptions) {
+    if (hasOptions) {
       handleOpen();
     }
   }
 
   function handleKeyDown(e) {
+    handleOpen();
+
     shouldScroll.current = true;
 
     if (e.keyCode === ARROW_DOWN) {
@@ -323,11 +324,11 @@ export default function useCombobox({
     "aria-haspopup": "listbox",
   };
 
-  const inputProps = {
+  const inputProps = (opts = { blur: true }) => ({
     ref: inputRef,
     role: "combobox",
     autoComplete: "off",
-    onBlur: handleBlur,
+    onBlur: opts.blur ? handleBlur : undefined,
     onClick: handleClick,
     onFocus: handleFocus,
     onKeyDown: handleKeyDown,
@@ -339,7 +340,7 @@ export default function useCombobox({
     "aria-controls": state.isOpen ? listboxID : null,
     value: state.isOpen ? state.searchValue : value?.label || "",
     ...props,
-  };
+  });
 
   const propsForOption = (index) => {
     return {
