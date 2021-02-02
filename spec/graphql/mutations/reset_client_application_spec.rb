@@ -26,8 +26,10 @@ RSpec.describe Mutations::ResetClientApplication do
            budget: 100,
            number_of_freelancers: 0,
            skills: [skill],
-           accepted_guarantee_terms_at: false,
-           locality_importance: 1)
+           accepted_guarantee_terms_at: 1.day.ago,
+           locality_importance: 1,
+           rejection_reason: "not_hiring",
+           talent_quality: "cheap")
   end
 
   let(:query) do
@@ -48,14 +50,12 @@ RSpec.describe Mutations::ResetClientApplication do
     expect { AdvisableSchema.execute(query) }.to change {
       user.reload.application_status
     }.from('Application Rejected').to('Application Started')
-    expect(user.company_name).to eq(nil)
-    expect(user.company.name).to eq(nil)
-    expect(user.company.kind).to eq(nil)
-    expect(user.company.industry).to eq(nil)
     expect(user.budget).to eq(nil)
     expect(user.number_of_freelancers).to eq(nil)
     expect(user.skills).to eq([])
     expect(user.accepted_guarantee_terms_at).to eq(nil)
     expect(user.locality_importance).to eq(nil)
+    expect(user.rejection_reason).to eq(nil)
+    expect(user.talent_quality).to eq(nil)
   end
 end
