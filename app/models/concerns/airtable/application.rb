@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Airtable
+module Airtable
   class Application < Airtable::Base
     self.table_name = 'Applications'
 
