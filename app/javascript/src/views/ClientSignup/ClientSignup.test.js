@@ -665,6 +665,135 @@ test("Cheap talents client application rejection flow", async () => {
   await screen.findByLabelText(/upwork/i);
 });
 
+test("Reset Cheap Talents rejected flow", async () => {
+  renderRoute({
+    route: "/clients/signup",
+    graphQLMocks: [
+      ...graphQLMocks,
+      mockMutation(
+        RESET_CLIENT_APPLICATION,
+        {
+          id: clientApplication.id,
+        },
+        {
+          resetClientApplication: {
+            __typename: "ResetClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              firstName: clientApplication.firstName,
+              lastName: clientApplication.lastName,
+              status: "Application Started",
+              companyName: null,
+              companyType: null,
+              industry: null,
+              budget: null,
+              numberOfFreelancers: null,
+              skills: [],
+              acceptedGuaranteeTerms: false,
+              localityImportance: null,
+              rejectionReason: null,
+              talentQuality: null,
+            },
+          },
+        },
+      ),
+      mockMutation(
+        ABOUT_REQUIREMENTS_UPDATE,
+        {
+          id: clientApplication.id,
+          skills: [skill.name],
+          numberOfFreelancers: "1-3",
+          budget: Number(budget) * 100,
+        },
+        {
+          updateClientApplication: {
+            __typename: "UpdateClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              skills: [skill],
+              numberOfFreelancers: "1-3",
+              budget,
+            },
+          },
+        },
+      ),
+      mockMutation(
+        SUBMIT_CLIENT_APPLICATION,
+        {
+          id: clientApplication.id,
+          localityImportance,
+          acceptedGuaranteeTerms,
+          talentQuality: "CHEAP",
+        },
+        {
+          submitClientApplication: {
+            __typename: "SubmitClientApplicationPayload",
+            clientApplication: {
+              __typename: "ClientApplication",
+              id: clientApplication.id,
+              localityImportance,
+              acceptedGuaranteeTerms,
+              talentQuality: "CHEAP",
+              status: "Application Rejected",
+              rejectionReason: "CHEAP_TALENT",
+            },
+          },
+        },
+      ),
+    ],
+  });
+
+  // 0 Step. Start application
+  fireEvent.change(await screen.findByPlaceholderText(/first name/i), {
+    target: { value: clientApplication.firstName },
+  });
+  fireEvent.change(await screen.findByPlaceholderText(/last name/i), {
+    target: { value: clientApplication.lastName },
+  });
+  const emailInput = await screen.findByPlaceholderText(/name@company.com/i);
+  fireEvent.change(emailInput, { target: { value: email } });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 1 Step. About Your Company
+  await screen.findByText("About Your Company");
+  fireEvent.change(screen.getByPlaceholderText(/company name/i), {
+    target: { value: companyName },
+  });
+  const industryInput = await screen.findByPlaceholderText(/company industry/i);
+  fireEvent.click(industryInput);
+  fireEvent.keyDown(industryInput, { key: "ArrowDown" });
+  fireEvent.keyDown(industryInput, { key: "Enter" });
+  fireEvent.change(screen.getByTestId("companyType"), {
+    target: { value: companyType },
+  });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 2 Step. About Your Requirements
+  await screen.findByText("About Your Requirements");
+  const skillsInput = await screen.findByPlaceholderText(/select the skills/i);
+  fireEvent.click(skillsInput);
+  fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
+  fireEvent.keyDown(skillsInput, { key: "Enter" });
+  fireEvent.click(screen.getByLabelText("1–3"));
+  fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 3 Step. About Your Preferences
+  await screen.findByText("About Your Preferences");
+  fireEvent.click(screen.getByLabelText("Not Sure"));
+  fireEvent.click(screen.getByLabelText("No"));
+  fireEvent.click(screen.getByLabelText(/cheap/i));
+  fireEvent.click(screen.getByLabelText("Continue"));
+
+  // 4 Step. Unfortunately, we're not a good fit
+  await screen.findByText(/unfortunately/i);
+  await screen.findByLabelText(/upwork/i);
+  fireEvent.click(screen.getByLabelText(/try again/i));
+  await screen.findByText(/about your company/i);
+});
+
 test("Not hiring client application rejection flow", async () => {
   renderRoute({
     route: "/clients/signup",
