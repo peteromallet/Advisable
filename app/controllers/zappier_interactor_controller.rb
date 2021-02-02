@@ -19,7 +19,7 @@ class ZappierInteractorController < ApplicationController
 
   def update_application
     application = Application.find_by!(uid: params[:uid])
-    application.update!(application_params)
+    application.update!(application_params(application.meta_fields))
     render json: {status: "OK.", uid: application.uid}
   rescue ActiveRecord::RecordNotFound
     render json: {error: "Application not found"}, status: :unprocessable_entity
@@ -68,13 +68,13 @@ class ZappierInteractorController < ApplicationController
 
   private
 
-  def application_params
+  def application_params(existng_meta_fields = {})
     application_fields = %i[comment featured hidden hide_from_profile introduction references_requested rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source]
     meta_fields = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }
     attrs = params.require(:application).permit(application_fields + meta_fields.keys).to_h
-    attrs[:meta_fields] = {}
+    attrs[:meta_fields] = existng_meta_fields
     meta_fields.each do |param, field|
-      attrs[:meta_fields][field] = attrs.delete(param)
+      attrs[:meta_fields][field] = attrs.delete(param) if attrs.key?(param)
     end
     attrs
   end
