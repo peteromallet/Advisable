@@ -21,7 +21,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     end
 
     context "when sending meta fields" do
-      let(:extra_application_params) { {"Working - 5 Days In - Client Feedback" => "No feedback"} }
+      let(:extra_application_params) { {working_5_days_in_client_feedback: "No feedback"} }
 
       it "updates them" do
         post("/zappier_interactor/create_application", params: params)
@@ -87,7 +87,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     end
 
     context "when sending meta fields" do
-      let(:extra_application_params) { {"Working - 5 Days In - Client Feedback" => "No feedback"} }
+      let(:extra_application_params) { {"working_5_days_in_client_feedback" => "No feedback"} }
 
       it "updates them" do
         post("/zappier_interactor/update_application", params: params)
