@@ -97,6 +97,20 @@ RSpec.describe ZappierInteractorController, type: :request do
       end
     end
 
+    context "when application has existing meta fields" do
+      let(:application) { create(:application, meta_fields: {"Working - 5 Days In - Specialist Feedback" => "Not great. Not terrible.", "Working - 5 Days In - Client Feedback" => "Overwrite me."}) }
+
+      let(:extra_application_params) { {"working_5_days_in_client_feedback" => "No feedback"} }
+
+      it "does not overwrite them" do
+        post("/zappier_interactor/update_application", params: params)
+        expect(response).to have_http_status(:success)
+        application.reload
+        expect(application.meta_fields["Working - 5 Days In - Specialist Feedback"]).to eq("Not great. Not terrible.")
+        expect(application.meta_fields["Working - 5 Days In - Client Feedback"]).to eq("No feedback")
+      end
+    end
+
     context "when given unpermitted params" do
       let(:extra_application_params) { {airtable_id: "1234"} }
 
