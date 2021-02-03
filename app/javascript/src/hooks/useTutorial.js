@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { useState } from "react";
-import { useApolloClient } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import useViewer from "./useViewer";
 
 const COMPLETE_TUTORIAL = gql`
@@ -22,7 +22,8 @@ const COMPLETE_TUTORIAL = gql`
 
 const useTutorial = (name, opts = {}) => {
   const viewer = useViewer();
-  const client = useApolloClient();
+  const [completeTutorial] = useMutation(COMPLETE_TUTORIAL);
+
   const isComplete = viewer.completedTutorials.indexOf(name) > -1;
   const autoStart = opts.autoStart || false;
   const initialActive = autoStart ? !isComplete : false;
@@ -31,10 +32,9 @@ const useTutorial = (name, opts = {}) => {
   const start = () => setActive(true);
   const stop = () => setActive(false);
 
-  const complete = () => {
+  const complete = async () => {
     if (!isComplete) {
-      client.mutate({
-        mutation: COMPLETE_TUTORIAL,
+      await completeTutorial({
         variables: {
           input: {
             tutorial: name,
