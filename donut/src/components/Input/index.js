@@ -37,7 +37,7 @@ const Input = React.forwardRef(function Input(
     props.onBlur(e);
   };
 
-  function handleDecorationClick(e) {
+  function handleDecorationClick() {
     containerRef.current.querySelector("input").focus();
   }
 
@@ -56,22 +56,22 @@ const Input = React.forwardRef(function Input(
       marginBottom={marginBottom}
       marginLeft={marginLeft}
     >
-      {prefix && (
+      {prefix ? (
         <StyledInputDecoration onClick={handleDecorationClick}>
           {prefix}
         </StyledInputDecoration>
-      )}
+      ) : null}
       <StyledInputControl
         {...props}
         ref={ref}
         onBlur={handleBlur}
         onFocus={handleFocus}
       />
-      {suffix && (
+      {suffix ? (
         <StyledInputDecoration onClick={handleDecorationClick}>
           {suffix}
         </StyledInputDecoration>
-      )}
+      ) : null}
     </StyledInput>
   );
 });
