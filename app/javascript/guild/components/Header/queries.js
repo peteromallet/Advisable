@@ -4,6 +4,7 @@ export const GUILD_LAST_READ_QUERY = gql`
   {
     viewer {
       ... on Specialist {
+        id
         guildUnreadNotifications
       }
     }
