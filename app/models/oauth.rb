@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 class Oauth < SimpleDelegator
-  def identifiers
-    @identifiers ||= {provider: provider, uid: uid}
+  extend Memoist
+
+  memoize def identifiers
+    {provider: provider, uid: uid}
   end
 
-  def identifiers_with_blob
-    @identifiers_with_blob ||= identifiers.merge(blob: self)
+  memoize def identifiers_with_blob
+    identifiers.merge(blob: self)
   end
 
-  def identifiers_with_blob_and_token
-    @identifiers_with_blob_and_token ||= identifiers_with_blob.merge(
+  memoize def identifiers_with_blob_and_token
+    identifiers_with_blob.merge(
       token: token,
       refresh_token: refresh_token,
       expires_at: Time.zone.at(expires_at)
