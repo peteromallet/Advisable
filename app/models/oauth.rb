@@ -13,11 +13,11 @@ class Oauth < SimpleDelegator
     @identifiers_with_blob_and_token ||= identifiers_with_blob.merge(
       token: token,
       refresh_token: refresh_token,
-      expires_at: Time.at(expires_at)
+      expires_at: Time.zone.at(expires_at)
     )
   end
 
-  %i[first_name last_name].each do |info|
+  %i[first_name last_name email].each do |info|
     define_method(info) { dig(:info, info) }
   end
 

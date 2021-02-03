@@ -63,6 +63,10 @@ const Login = ({ location }) => {
     });
   };
 
+  const csrf = document
+    .querySelector("meta[name=csrf-token]")
+    ?.getAttribute("content");
+
   return (
     <Box
       pb="6"
@@ -156,9 +160,11 @@ const Login = ({ location }) => {
       </Text>
       <SignupLinks>
         <SignupLink to="/clients/signup">Apply to be a client</SignupLink>
-        <SignupLink to="/freelancers/signup">
-          Apply to be a specialist
-        </SignupLink>
+        <SignupLink to="/freelancers/signup">Apply to be a specialist</SignupLink>
+        <form action="/auth/google_oauth2" method="POST">
+          <input type="hidden" name="authenticity_token" value={csrf} />
+          <button type="submit">Login with Google</button>
+        </form>
       </SignupLinks>
     </Box>
   );
