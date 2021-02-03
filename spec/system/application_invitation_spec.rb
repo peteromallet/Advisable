@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Application invitation view', type: :system do
@@ -15,12 +17,14 @@ RSpec.describe 'Application invitation view', type: :system do
     end
 
     it 'allows the user to appy' do
+      authenticate_as(application.specialist)
       visit "/invites/#{application.uid}"
       click_on 'Apply'
       expect(page).to have_content(project.primary_skill.name)
     end
 
     it 'allows the user to decline the invitation' do
+      authenticate_as(application.specialist)
       visit "/invites/#{application.uid}"
       click_on 'Reject Invitation'
       select 'No availability currently', from: 'reason'
@@ -37,6 +41,7 @@ RSpec.describe 'Application invitation view', type: :system do
     end
 
     it 'allows the user to update their application' do
+      authenticate_as(application.specialist)
       visit "/invites/#{application.uid}"
       click_on 'Update Application'
       expect(page).to have_content(project.primary_skill.name)
@@ -49,6 +54,7 @@ RSpec.describe 'Application invitation view', type: :system do
     end
 
     it 'allows the user to change their mind and apply' do
+      authenticate_as(application.specialist)
       visit "/invites/#{application.uid}"
       click_on 'Apply Now'
       expect(page).to have_content(project.primary_skill.name)
@@ -61,6 +67,7 @@ RSpec.describe 'Application invitation view', type: :system do
     end
 
     it 'allows the user to re-apply' do
+      authenticate_as(application.specialist)
       visit "/invites/#{application.uid}"
       click_on 'Apply Now'
       expect(page).to have_content(project.primary_skill.name)

@@ -4,17 +4,25 @@ require 'rails_helper'
 
 RSpec.describe Mutations::UpdateApplication do
   let(:specialist) { create(:specialist) }
+  let(:context) { {current_user: specialist} }
   let(:project) { create(:project, questions: ['This is a question?']) }
-  let(:application) do
-    create(
-      :application,
-      {
-        specialist: specialist,
-        introduction: false,
-        project: project,
-        questions: []
+  let(:application) { create(:application, {specialist: specialist, introduction: false, project: project, questions: []}) }
+  let(:extra) { "" }
+  let(:response_fields) { "" }
+  let(:query) do
+    <<-GRAPHQL
+    mutation {
+      updateApplication(input: {
+        id: "#{application.uid}",
+        #{extra}
+      }) {
+        application {
+          id
+          #{response_fields}
+        }
       }
-    )
+    }
+    GRAPHQL
   end
 
   before do
@@ -22,47 +30,22 @@ RSpec.describe Mutations::UpdateApplication do
   end
 
   context 'when updating the introduction' do
-    let(:query) do
-      <<-GRAPHQL
-      mutation {
-        updateApplication(input: {
-          id: "#{application.uid}",
-          introduction: "This is the intro"
-        }) {
-          application {
-            introduction
-          }
-        }
-      }
-      GRAPHQL
-    end
+    let(:extra) { "introduction: \"This is the intro\"" }
+    let(:response_fields) { "introduction" }
 
     it 'updates the introduction' do
-      response = AdvisableSchema.execute(query)
-      intro =
-        response['data']['updateApplication']['application']['introduction']
+      response = AdvisableSchema.execute(query, context: context)
+      intro = response['data']['updateApplication']['application']['introduction']
       expect(intro).to eq('This is the intro')
     end
   end
 
   context 'when updating the availability' do
-    let(:query) do
-      <<-GRAPHQL
-      mutation {
-        updateApplication(input: {
-          id: "#{application.uid}",
-          availability: "2 Weeks"
-        }) {
-          application {
-            availability
-          }
-        }
-      }
-      GRAPHQL
-    end
+    let(:extra) { "availability: \"2 Weeks\"" }
+    let(:response_fields) { "availability" }
 
     it 'updates the availability' do
-      response = AdvisableSchema.execute(query)
+      response = AdvisableSchema.execute(query, context: context)
       availability =
         response['data']['updateApplication']['application']['availability']
       expect(availability).to eq('2 Weeks')
@@ -89,7 +72,7 @@ RSpec.describe Mutations::UpdateApplication do
     end
 
     it 'updates the questions' do
-      expect { AdvisableSchema.execute(query) }.to change {
+      expect { AdvisableSchema.execute(query, context: context) }.to change {
         application.reload.questions
       }.from([]).to([{'question' => 'This is a question?', 'answer' => 'This is an answer'}])
     end
@@ -98,7 +81,7 @@ RSpec.describe Mutations::UpdateApplication do
       let(:question) { 'Not a question?' }
 
       it 'returns an error' do
-        response = AdvisableSchema.execute(query)
+        response = AdvisableSchema.execute(query, context: context)
         error = response['errors'][0]
         expect(error['extensions']['code']).to eq('invalid_question')
       end
@@ -132,7 +115,7 @@ RSpec.describe Mutations::UpdateApplication do
     end
 
     it 'adds the references' do
-      expect { AdvisableSchema.execute(query) }.to change {
+      expect { AdvisableSchema.execute(query, context: context) }.to change {
         application.reload.references.count
       }.by(2)
     end
@@ -155,7 +138,7 @@ RSpec.describe Mutations::UpdateApplication do
     end
 
     it 'updates the rate' do
-      response = AdvisableSchema.execute(query)
+      response = AdvisableSchema.execute(query, context: context)
       rate = response['data']['updateApplication']['application']['rate']
       expect(rate).to eq('100.0')
     end
@@ -178,7 +161,7 @@ RSpec.describe Mutations::UpdateApplication do
     end
 
     it 'updates accepts_fee attribute' do
-      response = AdvisableSchema.execute(query)
+      response = AdvisableSchema.execute(query, context: context)
       accepts = response['data']['updateApplication']['application']['acceptsFee']
       expect(accepts).to be_truthy
     end
@@ -201,7 +184,7 @@ RSpec.describe Mutations::UpdateApplication do
     end
 
     it 'updates accepts_fee attribute' do
-      response = AdvisableSchema.execute(query)
+      response = AdvisableSchema.execute(query, context: context)
       accepts = response['data']['updateApplication']['application']['acceptsTerms']
       expect(accepts).to be_truthy
     end
@@ -229,7 +212,7 @@ RSpec.describe Mutations::UpdateApplication do
 
     it "saves the bio to the specialist record" do
       expect {
-        AdvisableSchema.execute(query)
+        AdvisableSchema.execute(query, context: context)
       }.to change { specialist.reload.bio }.from("Before").to("After")
     end
 
@@ -241,6 +224,16 @@ RSpec.describe Mutations::UpdateApplication do
           AdvisableSchema.execute(query)
         }.not_to(change { specialist.reload.bio })
       end
+    end
+  end
+
+  context "when provided application is not from the signed in user" do
+    let(:application) { create(:application) }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"].first["extensions"]["code"]
+      expect(error).to eq("invalidApplication")
     end
   end
 end
