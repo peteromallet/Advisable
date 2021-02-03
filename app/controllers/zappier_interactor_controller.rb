@@ -3,6 +3,9 @@
 class ZappierInteractorController < ApplicationController
   include MagicLinkHelper
 
+  ALLOWED_APPLICATION_FIELDS = %i[comment featured hidden hide_from_profile introduction references_requested rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source].freeze
+  PARAMETRIZED_APPLICATION_META_FIELDS = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }.freeze
+
   skip_before_action :verify_authenticity_token
   before_action :verify_key!
 
@@ -69,11 +72,9 @@ class ZappierInteractorController < ApplicationController
   private
 
   def application_params(existng_meta_fields = {})
-    application_fields = %i[comment featured hidden hide_from_profile introduction references_requested rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source]
-    meta_fields = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }
-    attrs = params.require(:application).permit(application_fields + meta_fields.keys).to_h
+    attrs = params.require(:application).permit(ALLOWED_APPLICATION_FIELDS + PARAMETRIZED_APPLICATION_META_FIELDS.keys).to_h
     attrs[:meta_fields] = existng_meta_fields
-    meta_fields.each do |param, field|
+    PARAMETRIZED_APPLICATION_META_FIELDS.each do |param, field|
       attrs[:meta_fields][field] = attrs.delete(param) if attrs.key?(param)
     end
     attrs

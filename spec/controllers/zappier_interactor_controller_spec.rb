@@ -63,7 +63,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     end
 
     context "when no key" do
-      let(:key) { '' }
+      let(:key) { "" }
 
       it "is unauthorized" do
         post("/zappier_interactor/create_application", params: params)
@@ -78,7 +78,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     let(:extra_application_params) { {} }
     let(:params) { {application: application_params.merge(extra_application_params), uid: application.uid, key: key} }
 
-    it "creates the application and returns its uid" do
+    it "updates the application" do
       post("/zappier_interactor/update_application", params: params)
       expect(response).to have_http_status(:success)
       application.reload
@@ -121,7 +121,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     end
 
     context "when no key" do
-      let(:key) { '' }
+      let(:key) { "" }
 
       it "is unauthorized" do
         post("/zappier_interactor/update_application", params: params)
@@ -142,7 +142,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     end
 
     context "when no key" do
-      let(:key) { '' }
+      let(:key) { "" }
 
       it "is unauthorized" do
         post("/zappier_interactor/attach_previous_project_image", params: params)
@@ -177,7 +177,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     let(:params) { {uid: user.uid, url: url, key: key} }
 
     context "when no key" do
-      let(:key) { '' }
+      let(:key) { "" }
 
       it "is unauthorized" do
         post("/zappier_interactor/create_magic_link", params: params)
@@ -237,7 +237,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     let(:params) { {uid: specialist.uid, key: key} }
 
     context "when no key" do
-      let(:key) { '' }
+      let(:key) { "" }
 
       it "is unauthorized" do
         post("/zappier_interactor/enable_guild", params: params)
@@ -259,7 +259,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     let(:params) { {post_id: post_id, key: key} }
 
     context "when no key" do
-      let(:key) { '' }
+      let(:key) { "" }
 
       it "is unauthorized" do
         post("/zappier_interactor/boost_guild_post", params: params)
