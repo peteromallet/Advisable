@@ -15,6 +15,7 @@ const Post = ({
   showEdit = false,
   showShare = false,
   showDelete = false,
+  walkthrough = false,
 }) => {
   const isGuildPath = /^\/guild/.test(window.location.pathname);
   const fullGuildPath = `/guild/posts/${post.id}`;
@@ -114,6 +115,7 @@ const Post = ({
             showEdit={showEdit}
             showShare={showShare}
             showDelete={showDelete}
+            walkthrough={walkthrough}
           />
           <ConnectionsCount post={post} />
         </Box>

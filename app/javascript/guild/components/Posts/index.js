@@ -60,8 +60,8 @@ const Posts = () => {
       />
 
       <Stack spacing="4">
-        {posts.map((post) => (
-          <Post key={post.id} post={post} />
+        {posts.map((post, idx) => (
+          <Post walkthrough={idx === 0} key={post.id} post={post} />
         ))}
       </Stack>
       {loading ? <LoadingPosts skeletonPosts={hasNextPage ? 1 : 3} /> : null}

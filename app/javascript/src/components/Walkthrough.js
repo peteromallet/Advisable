@@ -70,6 +70,22 @@ const StyledBackdrop = styled.div`
   color: ${rgba("#F8F8F9", 0.75)};
 `;
 
+const isInViewport = (el) => {
+  const bounding = el.getBoundingClientRect();
+  return (
+    bounding.top >= 0 &&
+    bounding.left >= 0 &&
+    bounding.bottom <= window.innerHeight &&
+    bounding.right <= window.innerWidth
+  );
+};
+
+const scrollIfNeeded = (el) => {
+  if (!isInViewport(el)) {
+    el.scrollIntoView({ block: "center", inline: "center" });
+  }
+};
+
 export function useWalkthrough(steps, opts = {}) {
   const [visible, setVisible] = React.useState(opts.visible || false);
   const [currentStepIndex, setCurrentStepIndex] = React.useState(0);
@@ -124,7 +140,7 @@ function getWindowSize() {
   return { width: window.innerWidth, height: window.innerHeight };
 }
 
-function Backdrop({ highlight }) {
+function Backdrop({ highlight, clipPadding }) {
   const [size, setSize] = React.useState(getWindowSize());
 
   const handleResize = React.useCallback(() => {
@@ -143,22 +159,24 @@ function Backdrop({ highlight }) {
 
   const maskDimensions = React.useMemo(() => {
     if (highlight) {
+      scrollIfNeeded(highlight);
       const dimensions = highlight.getBoundingClientRect();
+
       return {
-        x: dimensions.x - CLIP_PADDING,
-        y: dimensions.y - CLIP_PADDING,
-        width: dimensions.width + CLIP_PADDING * 2,
-        height: dimensions.height + CLIP_PADDING * 2,
+        x: dimensions.x - clipPadding,
+        y: dimensions.y - clipPadding,
+        width: dimensions.width + clipPadding * 2,
+        height: dimensions.height + clipPadding * 2,
       };
     }
 
     return null;
-  }, [highlight]);
+  }, [highlight, clipPadding]);
 
   return (
     <StyledBackdrop
       as={motion.div}
-      initial={{ opacitgy: 0 }}
+      initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
       <svg width={width} height={height}>
@@ -261,6 +279,8 @@ export function Walkthrough({ currentStep, visible, steps, ...props }) {
     return getByDataWalkthough(currentStep.highlight);
   }, [currentStep]);
 
+  const key = steps.indexOf(currentStep);
+
   React.useLayoutEffect(() => {
     if (anchor || highlight) {
       const popper = createPopper(anchor || highlight, stepRef.current, {
@@ -279,9 +299,11 @@ export function Walkthrough({ currentStep, visible, steps, ...props }) {
     }
   }, [anchor, highlight, currentStep.placement]);
 
-  if (!visible) return null;
+  React.useLayoutEffect(() => {
+    if (visible && anchor) return scrollIfNeeded(anchor);
+  }, [visible, anchor]);
 
-  const key = steps.indexOf(currentStep);
+  if (!visible) return null;
 
   return (
     <Portal>
@@ -293,7 +315,12 @@ export function Walkthrough({ currentStep, visible, steps, ...props }) {
           <currentStep.component {...props} />
         </StyledStepCard>
       </StyledStep>
-      {(!anchor || highlight) && <Backdrop highlight={highlight} />}
+      {(!anchor || highlight) && (
+        <Backdrop
+          highlight={highlight}
+          clipPadding={currentStep.clipPadding ?? CLIP_PADDING}
+        />
+      )}
     </Portal>
   );
 }
