@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   StyledInput,
   StyledInputControl,
@@ -20,11 +20,11 @@ const Input = React.forwardRef(function Input(
     marginLeft,
     marginX,
     marginY,
-    validate,
     ...props
   },
   ref,
 ) {
+  const containerRef = useRef(null);
   const [focused, setFocused] = useState(false);
 
   const handleFocus = (e) => {
@@ -37,8 +37,13 @@ const Input = React.forwardRef(function Input(
     props.onBlur(e);
   };
 
+  function handleDecorationClick() {
+    containerRef.current.querySelector("input").focus();
+  }
+
   return (
     <StyledInput
+      ref={containerRef}
       $focused={focused}
       $error={error}
       $disabled={props.disabled}
@@ -51,14 +56,22 @@ const Input = React.forwardRef(function Input(
       marginBottom={marginBottom}
       marginLeft={marginLeft}
     >
-      {prefix && <StyledInputDecoration>{prefix}</StyledInputDecoration>}
+      {prefix ? (
+        <StyledInputDecoration onClick={handleDecorationClick}>
+          {prefix}
+        </StyledInputDecoration>
+      ) : null}
       <StyledInputControl
         {...props}
         ref={ref}
         onBlur={handleBlur}
         onFocus={handleFocus}
       />
-      {suffix && <StyledInputDecoration>{suffix}</StyledInputDecoration>}
+      {suffix ? (
+        <StyledInputDecoration onClick={handleDecorationClick}>
+          {suffix}
+        </StyledInputDecoration>
+      ) : null}
     </StyledInput>
   );
 });
