@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::ApplicationType < Types::BaseType
   field :id, ID, null: false
   field :rate, String, null: true
@@ -13,10 +15,10 @@ class Types::ApplicationType < Types::BaseType
   field :comment, String, null: true
   field :introduction, String, null: true
   field :rejection_reason, String, null: true
-  field :rejection_reason_comment, String, null: true
+  field :rejection_feedback, String, null: true
   field :project_type, String, null: true
   field :monthly_limit, Int, null: true
-  field :questions, [Types::ApplicationQuestionType, null: true], null: true
+  field :questions, [Types::ApplicationQuestionType, {null: true}], null: true
   field :project, Types::ProjectType, null: false
   field :referral_url, String, null: true
   field :accepts_fee, Boolean, null: true

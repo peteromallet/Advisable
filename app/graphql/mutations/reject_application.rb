@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Mutations::RejectApplication < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :reason, String, required: true
-  argument :comment, String, required: true
+  argument :feedback, String, required: false
 
   field :application, Types::ApplicationType, null: true
 
@@ -11,7 +13,7 @@ class Mutations::RejectApplication < Mutations::BaseMutation
     policy = ApplicationPolicy.new(current_user, application)
     return true if policy.write?
 
-    ApiError.not_authorized('You do not have access to this')
+    ApiError.not_authorized("You can not reject this application")
   end
 
   def resolve(**args)
@@ -20,7 +22,7 @@ class Mutations::RejectApplication < Mutations::BaseMutation
       {
         status: 'Application Rejected',
         rejection_reason: args[:reason],
-        rejection_reason_comment: args[:comment]
+        rejection_feedback: args[:feedback]
       }
     )
 
