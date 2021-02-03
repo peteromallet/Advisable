@@ -285,19 +285,15 @@ const spin = keyframes`
 `;
 
 export const SavingIndicator = styled.div`
-  right: 20px;
   z-index: 9;
-  bottom: 20px;
-  padding: 6px 8px;
-  position: fixed;
+  padding: 6px 12px;
   display: flex;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   align-items: center;
   border-radius: 6px;
   justify-content: center;
-  color: ${theme.colors.blue800};
-  background-color: ${theme.colors.blue100};
+  color: ${theme.colors.blue700};
 
   svg {
     margin-right: 4px;
