@@ -1,12 +1,14 @@
 import React from "react";
+import { Close } from "@styled-icons/ionicons-outline";
 import {
   StyledTag,
-  StyledTagText,
+  StyledTagLabel,
   StyledTagPrefix,
   StyledTagSuffix,
+  StyledTagRemoveButton,
 } from "./styles";
 
-function Tag({ children, icon: Icon, suffix, ...props }) {
+function Tag({ children, onRemove, icon: Icon, suffix, ...props }) {
   return (
     <StyledTag {...props}>
       {Icon ? (
@@ -14,8 +16,13 @@ function Tag({ children, icon: Icon, suffix, ...props }) {
           <Icon />
         </StyledTagPrefix>
       ) : null}
-      <StyledTagText>{children}</StyledTagText>
+      <StyledTagLabel>{children}</StyledTagLabel>
       {suffix ? <StyledTagSuffix>{suffix}</StyledTagSuffix> : null}
+      {onRemove ? (
+        <StyledTagRemoveButton onClick={onRemove}>
+          <Close />
+        </StyledTagRemoveButton>
+      ) : null}
     </StyledTag>
   );
 }
