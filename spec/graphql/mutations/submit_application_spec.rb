@@ -3,9 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::SubmitApplication do
-  let(:application) do
-    create(:application, applied_at: nil, status: 'Invited To Apply')
-  end
+  let(:specialist) { create(:specialist) }
+  let(:project) { create(:project) }
+  let(:status) { "Invited To Apply" }
+  let(:application) { create(:application, specialist: specialist, project: project, status: status, applied_at: nil) }
+  let(:context) { {current_user: specialist} }
+
   let(:query) do
     <<-GRAPHQL
     mutation {
@@ -20,8 +23,6 @@ RSpec.describe Mutations::SubmitApplication do
     }
     GRAPHQL
   end
-
-  let(:context) { {current_user: application.specialist} }
 
   before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
@@ -41,12 +42,6 @@ RSpec.describe Mutations::SubmitApplication do
 
   context 'when applications are closed' do
     let(:project) { create(:project, sales_status: 'Lost') }
-    let(:application) do
-      create(
-        :application,
-        project: project, applied_at: nil, status: 'Invited To Apply'
-      )
-    end
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
@@ -56,14 +51,22 @@ RSpec.describe Mutations::SubmitApplication do
   end
 
   context 'when the status is Applied' do
-    let(:application) do
-      create(:application, applied_at: nil, status: 'Applied')
-    end
+    let(:status) { "Applied" }
 
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
       error = response['errors'][0]
       expect(error['message']).to eq('applications.cannotSubmit')
+    end
+  end
+
+  context "when provided application is not from the signed in user" do
+    let(:application) { create(:application) }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"].first["extensions"]["code"]
+      expect(error).to eq("invalidApplication")
     end
   end
 end
