@@ -4,3 +4,7 @@ jest-coverage/
 coverage/
 app/javascript/*.test.js
 donut/*.test.js
+.vscode
+.circleci
+docs
+
