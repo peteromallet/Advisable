@@ -25,4 +25,18 @@ RSpec.describe "Previous projects", type: :system do
 
     expect(page).to have_content("Contact details successfully updated!")
   end
+
+  it 'specialist can delete a previous project' do
+    project = create(:previous_project, specialist: specialist, draft: false, validation_status: "Validated")
+    project.primary_skill = create(:skill, name: "Testing")
+    project.save
+    authenticate_as(specialist)
+    visit("/freelancers/#{specialist.uid}")
+    find("*[data-testid='project-card']").click
+    within("*[role='dialog']") do
+      first("*[aria-label='Delete project']").click
+    end
+    click_on "Confirm"
+    expect(page).to have_content("project has been deleted")
+  end
 end
