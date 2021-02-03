@@ -150,6 +150,7 @@ const Filters = ({ postTypeFilter, setPostTypeFilter, yourPosts }) => {
                 as={GuildTag}
                 {...composerModal}
                 aria-label="Create a Post"
+                data-walkthrough="createPost"
               >
                 <AddIcon size={20} />
                 {yourPosts && sUp && "New Post"}

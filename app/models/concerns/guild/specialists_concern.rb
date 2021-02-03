@@ -34,6 +34,8 @@ module Guild::SpecialistsConcern
                    guild_calendly_link: [:string],
                    guild_featured_member_at: :datetime
 
+    register_tutorial 'GUILD'
+
     def touch_guild_notifications_last_read
       update!(guild_notifications_last_read: Time.current)
     end

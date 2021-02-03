@@ -4,6 +4,7 @@ import Sticky from "react-stickynode";
 import Posts from "@guild/components/Posts";
 import Topics from "@guild/components/Topics";
 import FeaturedMembers from "@guild/components/FeaturedMembers";
+import FeedWalkthrough from "./FeedWalkthrough";
 
 const Feed = () => {
   const lUp = useBreakpoint("lUp");
@@ -17,11 +18,14 @@ const Feed = () => {
       maxWidth="1300px"
     >
       {lUp && (
-        <Box width="200px" flexShrink="0">
-          <Sticky top={98} enabled>
-            <Topics />
-          </Sticky>
-        </Box>
+        <>
+          <FeedWalkthrough />
+          <Box width="200px" flexShrink="0">
+            <Sticky top={98} enabled>
+              <Topics />
+            </Sticky>
+          </Box>
+        </>
       )}
       <Box width="100%" paddingX={{ _: null, l: "xl" }} minWidth="0">
         <Posts />

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Guild feed', type: :system do
@@ -6,6 +8,7 @@ RSpec.describe 'Guild feed', type: :system do
   let!(:post) { create(:guild_post, specialist: author) }
 
   it 'viewer can message post author' do
+    specialist.account.update!(completed_tutorials: ["GUILD"])
     authenticate_as(specialist)
     visit "/guild/feed"
     expect(page).to have_content(post.title)
