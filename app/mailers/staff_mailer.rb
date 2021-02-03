@@ -18,7 +18,7 @@ class StaffMailer < ApplicationMailer
     @project = @flag.application.project
     @user = @flag.user
     @specialist = @flag.application.specialist
-    @sales_person = sales_person_for(project: @project)
+    @sales_person = @project.user.company.sales_person
 
     mail(to: @sales_person.email_with_name, subject: "#{@user.account.name} reported #{@specialist.account.name} as problematic on #{@project.name}")
   end
@@ -31,10 +31,6 @@ class StaffMailer < ApplicationMailer
     @project = @application.project
     @specialist = @application.specialist
     @client = @project.user
-    @sales_person = sales_person_for(project: @project)
-  end
-
-  def sales_person_for(project:)
-    project.sales_person || project.user.sales_person
+    @sales_person = @project.user.company.sales_person
   end
 end

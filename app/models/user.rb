@@ -4,14 +4,16 @@
 # A freelancer account is represented by the Specialist model. Ideally these
 # two models will eventually be merged to be different types of users.
 class User < ApplicationRecord
+  self.ignored_columns = ["sales_person_id"]
+
   include Uid
   include SpecialistOrUser
   include Airtable::Syncable
 
   # WIP Company migration 👇️
-  self.ignored_columns = [:invoice_name, :invoice_company_name, :billing_email, :address, :payments_setup, :project_payment_method, :accepted_project_payment_terms_at, :industry_id, :company_type]
+  self.ignored_columns = %i[invoice_name invoice_company_name billing_email address payments_setup project_payment_method accepted_project_payment_terms_at industry_id company_type]
 
-  [:stripe_customer_id, :stripe_customer, :invoice_name, :invoice_company_name, :billing_email, :address, :payments_setup, :project_payment_method, :accepted_project_payment_terms_at, :invoice_settings, :industry].each do |method|
+  %i[stripe_customer_id stripe_customer invoice_name invoice_company_name billing_email address payments_setup project_payment_method accepted_project_payment_terms_at invoice_settings industry sales_person].each do |method|
     define_method(method) do
       Raven.capture_message("Method ##{method} called on User that was meant for Company", backtrace: caller, level: 'debug')
       company.public_send(method)
@@ -40,7 +42,6 @@ class User < ApplicationRecord
   has_one :client, through: :client_user
 
   belongs_to :company
-  belongs_to :sales_person, optional: true
   belongs_to :country, optional: true
 
   serialize :available_payment_methods, Array
@@ -104,8 +105,7 @@ class User < ApplicationRecord
       account: account,
       company_id: company_id,
       company_name: company_name,
-      application_status: "Active",
-      sales_person_id: sales_person_id
+      application_status: "Active"
     )
     user.save_and_sync_with_responsible!(account_id)
     user

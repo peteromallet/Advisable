@@ -10,6 +10,8 @@
 # record. See the app/modals/application.rb for more details.
 #
 class Project < ApplicationRecord
+  self.ignored_columns = ["sales_person_id"]
+
   include Uid
   include Airtable::Syncable
   include Project::Constants
@@ -27,7 +29,6 @@ class Project < ApplicationRecord
   has_one :primary_skill, through: :primary_project_skill, source: :skill
 
   belongs_to :user, optional: true
-  belongs_to :sales_person, optional: true
 
   validates :service_type, inclusion: {in: SERVICE_TYPES}, allow_nil: true
   validates :industry_experience_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
@@ -132,6 +133,11 @@ class Project < ApplicationRecord
       },
       {idempotency_key: "deposit_#{deposit_owed}_#{uid}"}
     )
+  end
+
+  def sales_person
+    Raven.capture_message("#sales_person called on Project that was meant for Company", backtrace: caller, level: 'debug')
+    user.company.sales_person
   end
 
   private
