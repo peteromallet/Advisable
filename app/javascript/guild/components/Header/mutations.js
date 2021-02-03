@@ -5,6 +5,7 @@ export const GUILD_UPDATE_LAST_READ = gql`
     guildUpdateLastRead(input: $input) {
       viewer {
         ... on Specialist {
+          id
           guildUnreadNotifications
         }
       }
