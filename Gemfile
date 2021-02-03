@@ -106,6 +106,7 @@ group :development do
   gem "guard"
   gem "guard-rspec", require: false
   gem "letter_opener"
+  gem "brakeman"
 end
 
 group :test do
