@@ -107,6 +107,7 @@ const TaskDrawer = ({
           : !readOnly && (
               <DrawerActions
                 isClient={isClient}
+                isSaving={isSaving}
                 task={task}
                 onDelete={() => setPrompt(DELETE_PROMPT)}
               />
@@ -181,7 +182,6 @@ const TaskDrawer = ({
           {!query.loading && (
             <EditTask
               task={task}
-              isSaving={isSaving}
               readOnly={readOnly}
               isClient={isClient}
               onSave={handleSave}
