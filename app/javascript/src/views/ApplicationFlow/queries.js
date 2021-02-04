@@ -79,3 +79,14 @@ export const updateApplication = gql`
   }
   ${applicationFields}
 `;
+
+export const updateProfile = gql`
+  mutation UpdateProfile($input: UpdateProfileInput!) {
+    updateProfile(input: $input) {
+      specialist {
+        id
+        linkedin
+      }
+    }
+  }
+`;

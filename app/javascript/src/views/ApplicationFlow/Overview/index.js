@@ -7,7 +7,10 @@ import useViewer from "src/hooks/useViewer";
 import { ChoiceList } from "src/components";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import { updateApplication as UPDATE_APPLICATION } from "../queries";
+import {
+  updateApplication as UPDATE_APPLICATION,
+  updateProfile as UPDATE_PROFILE,
+} from "../queries";
 import validationSchema from "./validationSchema";
 import StepCard from "../StepCard";
 import { StyledIntroduction, StyledPersistBio } from "./styles";
@@ -31,15 +34,40 @@ function PersistBioWidget({ formik }) {
 function Overview({ application, history, location }) {
   const { id } = application;
   const viewer = useViewer();
+  const [displayLinkedInInput] = React.useState(!viewer?.linkedin);
   const isWidescreen = useBreakpoint("sUp");
-  const [mutate] = useMutation(UPDATE_APPLICATION);
+  const [submitLinkedin] = useMutation(UPDATE_PROFILE);
+  const [updateApplication] = useMutation(UPDATE_APPLICATION);
 
-  const handleSubmit = async (values) => {
-    await mutate({
-      variables: {
-        input: {
-          id: id,
-          ...values,
+  const handleSubmit = (values) => {
+    values.linkedin &&
+      submitLinkedin({
+        variables: { input: { linkedin: values.linkedin } },
+        optimisticResponse: {
+          __typename: "Mutation",
+          updateProfile: {
+            __typename: "UpdateProfilePayload",
+            specialist: {
+              __typename: "Specialist",
+              id: viewer.id,
+              linkedin: values.linkedin,
+            },
+          },
+        },
+      });
+    delete values.linkedin;
+
+    updateApplication({
+      variables: { input: { id: id, ...values } },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateApplication: {
+          __typename: "UpdateApplicationPayload",
+          application: {
+            __typename: "Application",
+            ...application,
+            ...values,
+          },
         },
       },
     });
@@ -49,6 +77,7 @@ function Overview({ application, history, location }) {
 
   const initialValues = {
     introduction: application.introduction || application.specialist.bio || "",
+    linkedin: "",
     persistBio: !viewer?.bio,
     availability: application.availability || "",
   };
@@ -86,6 +115,15 @@ function Overview({ application, history, location }) {
                   placeholder="Give a 2-3 line description of your background as it related to this project."
                 />
               </Box>
+              {displayLinkedInInput ? (
+                <Box mb="m">
+                  <FormField
+                    name="linkedin"
+                    label="Your LinkedIn Profile"
+                    placeholder="https://www.linkedin.com/in/your-name/"
+                  />
+                </Box>
+              ) : null}
               <ChoiceList
                 fullWidth
                 optionsPerRow={2}
