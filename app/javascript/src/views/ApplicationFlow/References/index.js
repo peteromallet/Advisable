@@ -39,15 +39,21 @@ const References = ({
       return;
     }
 
-    await submit(values);
+    submit(values);
   };
 
-  const submit = async (values) => {
-    await updateApplication({
-      variables: {
-        input: {
-          ...values,
-          id: applicationId,
+  const submit = (values) => {
+    updateApplication({
+      variables: { input: { ...values, id: applicationId } },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateApplication: {
+          __typename: "UpdateApplicationPayload",
+          application: {
+            __typename: "Application",
+            ...application,
+            ...values,
+          },
         },
       },
     });
