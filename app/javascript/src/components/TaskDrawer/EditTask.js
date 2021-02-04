@@ -1,5 +1,4 @@
 import * as React from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import Div100vh from "react-div-100vh";
 import { Box, Button } from "@advisable/donut";
 import TaskStatus from "../TaskStatus";
@@ -13,12 +12,7 @@ import QuoteInput from "./QuoteInput";
 import Description from "./Description";
 import MarkAsTrial from "./MarkAsTrial.js";
 import TaskDetailRows from "./TaskDetailRows";
-import {
-  TaskDetails,
-  Confirmation,
-  ConfirmationContainer,
-  SavingIndicator,
-} from "./styles";
+import { TaskDetails, Confirmation, ConfirmationContainer } from "./styles";
 import StageDescription from "./StageDescription";
 
 const READ = "READ";
@@ -80,7 +74,6 @@ const EditTask = ({
   hideStatus,
   onSave,
   isClient,
-  isSaving,
   setPrompt,
   projectType,
   showStatusNotice,
@@ -254,27 +247,6 @@ const EditTask = ({
                 />
               )}
             </Box>
-            <AnimatePresence>
-              {isSaving && (
-                <SavingIndicator
-                  as={motion.div}
-                  initial={{ opacity: 0, x: 40 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 40 }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    fill="none"
-                    viewBox="0 0 14 14"
-                  >
-                    <path stroke="currentColor" d="M13 7a6 6 0 11-6-6" />
-                  </svg>
-                  Saving...
-                </SavingIndicator>
-              )}
-            </AnimatePresence>
           </VerticalLayout.Footer>
         </VerticalLayout>
       </Div100vh>
