@@ -165,7 +165,6 @@ end
 #  invitation_rejected_at      :datetime
 #  invitation_rejection_reason :string
 #  invited_to_apply_at         :datetime
-#  meta_fields                 :jsonb
 #  monthly_limit               :integer
 #  project_type                :string
 #  proposal_comment            :string
@@ -177,7 +176,6 @@ end
 #  rejection_reason            :text
 #  rejection_reason_comment    :text
 #  score                       :decimal(, )
-#  source                      :string
 #  started_working_at          :datetime
 #  status                      :string
 #  stopped_working_at          :datetime

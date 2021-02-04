@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_03_112352) do
+ActiveRecord::Schema.define(version: 2021_01_26_101803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -144,8 +144,6 @@ ActiveRecord::Schema.define(version: 2021_02_03_112352) do
     t.boolean "auto_apply"
     t.boolean "hide_from_profile"
     t.jsonb "log_data"
-    t.jsonb "meta_fields"
-    t.string "source"
     t.text "rejection_feedback"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
