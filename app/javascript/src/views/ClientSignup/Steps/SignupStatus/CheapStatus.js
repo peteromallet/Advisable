@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Link } from "@advisable/donut";
+import { Button, Link, Box } from "@advisable/donut";
 import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";
+import TryAgainButton from "./TryAgainButton";
 
 function CheapStatus() {
   return (
@@ -12,9 +13,18 @@ function CheapStatus() {
         cheap talent, we recommend{" "}
         <Link.External href="https://www.upwork.com/">Upwork.com</Link.External>
       </Description>
-      <Link.External href="https://www.upwork.com/">
-        <Button width={[1, "auto"]}>Go To Upwork</Button>
-      </Link.External>
+      <Box display="flex" flexDirection={["column", "row"]}>
+        <Link.External
+          href="https://www.upwork.com/"
+          as={Button}
+          width={[1, "auto"]}
+          mb={2}
+          mr={2}
+        >
+          Go To Upwork
+        </Link.External>
+        <TryAgainButton width={[1, "auto"]} />
+      </Box>
     </MotionStack>
   );
 }
