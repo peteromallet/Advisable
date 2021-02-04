@@ -40,20 +40,23 @@ module Airtable
     sync_data do |project|
       project.currency = fields['Currency'].try(:first)
 
-      # Sync the project owner username
-      owner_id = fields['Owner'].try(:first)
-      if owner_id
-        owner = Airtable::SalesPerson.find(owner_id)
-        project.user.company.sales_person = owner
-        project.owner = owner['Username']
-      end
-
       user_id = fields['Client Contacts'].try(:first)
 
       if user_id
         user = ::User.find_by_uid_or_airtable_id(user_id)
         user = Airtable::ClientContact.find(user_id).sync if user.nil?
         project.user = user
+      end
+
+      sales_person_airtable_id = fields['Owner'].try(:first)
+      if sales_person_airtable_id
+        sales_person = ::SalesPerson.find_by(airtable_id: sales_person_airtable_id)
+        if sales_person.nil?
+          airtable_sp = Airtable::SalesPerson.find(sales_person_airtable_id)
+          sales_person = airtable_sp.sync
+        end
+        user.company.update(sales_person: sales_person)
+        project.owner = sales_person.username
       end
 
       required_skills = fields['Skills Required'] || []

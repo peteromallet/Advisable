@@ -36,8 +36,12 @@ module Airtable
 
       sales_person_airtable_id = fields['Owner'].try(:first)
       if sales_person_airtable_id
-        sales_person = Airtable::SalesPerson.find(sales_person_airtable_id)
-        user.company.sales_person = sales_person
+        sales_person = ::SalesPerson.find_by(airtable_id: sales_person_airtable_id)
+        if sales_person.nil?
+          airtable_sp = Airtable::SalesPerson.find(sales_person_airtable_id)
+          sales_person = airtable_sp.sync
+        end
+        user.company.update(sales_person: sales_person)
       end
 
       user.company_name = self['Company Name'].try(:first) # WIP Company migration
@@ -45,7 +49,7 @@ module Airtable
       user.company.name = self['Company Name'].try(:first)
       industry_id = self['Industry'].try(:first)
       if industry_id
-        industry = Industry.find_by_airtable_id(industry_id)
+        industry = ::Industry.find_by_airtable_id(industry_id)
         industry = Airtable::Industry.find(industry_id).sync if industry.nil?
         user.company.industry = industry
       end
