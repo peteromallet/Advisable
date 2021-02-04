@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@advisable/donut";
+import { Button, Box } from "@advisable/donut";
 import {
   useRequestApplicationReminder,
   useLocationState,
@@ -8,6 +8,7 @@ import {
 import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";
 import Navigation from "../Navigation";
+import TryAgainButton from "./TryAgainButton";
 
 function NotHiringStatus() {
   const locationState = useLocationState();
@@ -32,9 +33,17 @@ function NotHiringStatus() {
           next while. We&apos;ll be happy to send you a reminder in six months
           if you click the button below.
         </Description>
-        <Button width={[1, "auto"]} onClick={requestApplicationReminder}>
-          Remind Me
-        </Button>
+        <Box display="flex" flexDirection={["column", "row"]}>
+          <Button
+            mb={2}
+            mr={2}
+            width={[1, "auto"]}
+            onClick={requestApplicationReminder}
+          >
+            Remind Me
+          </Button>
+          <TryAgainButton width={[1, "auto"]} />
+        </Box>
       </MotionStack>
     </>
   );
