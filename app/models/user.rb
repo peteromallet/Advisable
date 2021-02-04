@@ -9,10 +9,11 @@ class User < ApplicationRecord
   include ResizedImage
   include Airtable::Syncable
 
-  self.ignored_columns = %i[sales_person_id invoice_name invoice_company_name billing_email address payments_setup project_payment_method accepted_project_payment_terms_at industry_id company_type]
+  TALENT_QUALITY_OPTIONS = %w[cheap budget good top world_class].freeze
+  NUMBER_OF_FREELANCERS_OPTIONS = %w[0 1-3 4-10 10+].freeze
 
   # WIP Company migration 👇️
-  %i[stripe_customer_id stripe_customer invoice_name invoice_company_name billing_email address payments_setup project_payment_method accepted_project_payment_terms_at invoice_settings industry sales_person].each do |method|
+  %i[stripe_customer_id stripe_customer invoice_name invoice_company_name billing_email address payments_setup project_payment_method accepted_project_payment_terms_at invoice_settings industry].each do |method|
     define_method(method) do
       Raven.capture_message("Method ##{method} called on User that was meant for Company", backtrace: caller, level: 'debug')
       company.public_send(method)
@@ -46,7 +47,7 @@ class User < ApplicationRecord
   has_one :client_user, dependent: :destroy
   has_one :client, through: :client_user
 
-  belongs_to :company
+  belongs_to :company, optional: true
   belongs_to :country, optional: true
 
   serialize :available_payment_methods, Array
@@ -58,26 +59,13 @@ class User < ApplicationRecord
   has_one_attached :avatar
   resize avatar: {resize_to_limit: [400, 400]}
 
-  validates :rejection_reason,
-            inclusion: {in: %w[cheap_talent not_hiring]}, allow_nil: true
-
-  # talent_quality indicates what qualit of talent the client is looking for.
-  # This value is provided when they are applying.
-  TALENT_QUALITY_OPTIONS = %w[cheap budget good top world_class].freeze
-  validates :talent_quality,
-            inclusion: {in: TALENT_QUALITY_OPTIONS}, allow_nil: true
-
-  # number_of_freelancers represents the number of freelancers the client is
-  # looking to hire over the next 6 months. This value is provided when they are
-  # applying to Advisable.
-  NUMBER_OF_FREELANCERS_OPTIONS = %w[0 1-3 4-10 10+].freeze
-  validates :number_of_freelancers,
-            inclusion: {in: NUMBER_OF_FREELANCERS_OPTIONS}, allow_nil: true
+  validates :company, presence: {unless: :disabled?}
+  validates :rejection_reason, inclusion: {in: %w[cheap_talent not_hiring]}, allow_nil: true
+  validates :talent_quality, inclusion: {in: TALENT_QUALITY_OPTIONS}, allow_nil: true
+  validates :number_of_freelancers, inclusion: {in: NUMBER_OF_FREELANCERS_OPTIONS}, allow_nil: true
 
   register_tutorial 'fixedProjects'
   register_tutorial 'flexibleProjects'
-  # The recommenations tutorial is used to show the recommendations product
-  # walkthrough.
   register_tutorial 'RECOMMENDATIONS'
 
   alias_attribute :application_status, :contact_status
@@ -115,6 +103,10 @@ class User < ApplicationRecord
     )
     user.save_and_sync_with_responsible!(account_id)
     user
+  end
+
+  def disabled?
+    application_status == "Disabled"
   end
 end
 
