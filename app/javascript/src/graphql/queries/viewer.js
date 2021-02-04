@@ -27,6 +27,7 @@ export const viewerFields = gql`
       email
       name
       bio
+      linkedin
       createdAt
       airtableId
       firstName
