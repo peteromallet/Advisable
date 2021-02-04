@@ -68,7 +68,10 @@ const ConfirmationModal = ({
             variant="dark"
             type="button"
             loading={loading}
-            onClick={onSubmit}
+            onClick={() => {
+              modal.hide();
+              onSubmit();
+            }}
           >
             {noOfSelectedProjects === 0
               ? "Continue Without References"
