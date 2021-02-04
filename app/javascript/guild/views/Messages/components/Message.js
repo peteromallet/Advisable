@@ -94,6 +94,7 @@ export default function Message({ message, author, isAuthor }) {
             flexShrink="1"
             marginBottom={2}
             color="neutral800"
+            maxWidth={["250px", "280px", "360px", "520px", "640px"]}
             lineHeight="1.2rem"
             borderRadius="12px"
             bg={isAuthor ? "blue200" : "white"}
@@ -105,8 +106,8 @@ export default function Message({ message, author, isAuthor }) {
             <Text
               data-message
               css={`
-                white-space: pre-wrap;
                 white-space: pre-line;
+                overflow-wrap: break-word;
               `}
             >
               {message.body}
