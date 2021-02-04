@@ -55,8 +55,7 @@ module Airtable
           airtable_sp = Airtable::SalesPerson.find(sales_person_airtable_id)
           sales_person = airtable_sp.sync
         end
-        user.company.update(sales_person: sales_person)
-        project.owner = sales_person.username
+        project.user.company.update(sales_person: sales_person)
       end
 
       required_skills = fields['Skills Required'] || []
@@ -119,11 +118,7 @@ module Airtable
       self['Company Type Experience Required'] = 'Yes' if project.company_type_experience_required
       self['Company Type Experience Required'] = 'No' if project.company_type_experience_required == false
       self['Project Status'] = project.sales_status
-
-      if project.owner
-        owner = SalesPerson.find_by_username(project.owner)
-        self['Owner'] = [owner.try(:airtable_id)].compact
-      end
+      self['Owner'] = [project.user.company.sales_person.airtable_id].compact if project.user.company.sales_person
     end
 
     private
