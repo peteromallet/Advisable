@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { theme } from "@advisable/donut";
+import { theme, StyledButton } from "@advisable/donut";
 
 export const Container = styled.div`
   width: 96%;
@@ -54,5 +54,19 @@ export const SignupLink = styled(Link)`
   &:hover {
     color: ${theme.colors.neutral800};
     border-color: ${theme.colors.neutral300};
+  }
+`;
+
+export const StyledLoginWithGoogle = styled(StyledButton)`
+  width: 100%;
+  background: ${theme.colors.neutral800};
+
+  &:not(:disabled):hover {
+    background: ${theme.colors.neutral900};
+  }
+
+  svg {
+    width: 20px;
+    margin-right: 12px;
   }
 `;
