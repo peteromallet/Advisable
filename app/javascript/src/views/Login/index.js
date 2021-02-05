@@ -1,5 +1,6 @@
 // Renders the login page
 import React from "react";
+import Divider from "src/components/Divider";
 import queryString from "query-string";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
@@ -7,13 +8,14 @@ import { useTranslation } from "react-i18next";
 import FormField from "components/FormField";
 import SubmitButton from "components/SubmitButton";
 import { useMutation, useApolloClient } from "@apollo/client";
-import { Box, Card, Text, Link, theme } from "@advisable/donut";
+import { Stack, Box, Card, Text, Link, theme } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import useScrollRestore from "../../utilities/useScrollRestore";
 import VIEWER from "../../graphql/queries/viewer";
 import validationSchema from "./validationSchema";
 import { SignupLinks, SignupLink } from "./styles";
 import LOGIN from "./login";
+import LoginWithGoogle from "./LoginWithGoogle";
 
 const Login = ({ location }) => {
   useScrollRestore();
@@ -63,10 +65,6 @@ const Login = ({ location }) => {
     });
   };
 
-  const csrf = document
-    .querySelector("meta[name=csrf-token]")
-    ?.getAttribute("content");
-
   return (
     <Box
       pb="6"
@@ -98,10 +96,17 @@ const Login = ({ location }) => {
           color="neutral900"
           fontWeight="medium"
           letterSpacing="-0.04rem"
+          textAlign="center"
         >
           Welcome Back!
         </Text>
-        <Text fontSize="l" color="neutral700" mb="6" letterSpacing="-0.01rem">
+        <Text
+          fontSize="l"
+          color="neutral700"
+          mb="6"
+          letterSpacing="-0.01rem"
+          textAlign="center"
+        >
           Please sign in to your account
         </Text>
         <Formik
@@ -113,23 +118,35 @@ const Login = ({ location }) => {
             <Form>
               <FormField
                 name="email"
-                marginBottom="6"
+                marginBottom={2}
                 placeholder="Email"
-                label="Email Address"
+                aria-label="Email Address"
               />
               <FormField
                 type="password"
                 name="password"
-                label="Password"
-                marginBottom="8"
+                marginBottom={4}
+                aria-label="Password"
                 placeholder="Password"
-                labelHint={
-                  <Link to="/reset_password">Forgot your password?</Link>
-                }
               />
-              <SubmitButton data-testid="loginButton" size="l" width="100%">
+              <SubmitButton
+                marginBottom={2}
+                data-testid="loginButton"
+                size="l"
+                width="100%"
+              >
                 Login
               </SubmitButton>
+              <Box textAlign="center">
+                <Link
+                  variant="dark"
+                  fontSize="xs"
+                  marginBottom={2}
+                  to="/reset_password"
+                >
+                  Forgot your password?
+                </Link>
+              </Box>
               {formik.status && (
                 <Box
                   mt="3"
@@ -145,6 +162,10 @@ const Login = ({ location }) => {
             </Form>
           )}
         </Formik>
+        <Divider py={5}>Or</Divider>
+        <Stack marginTop={2}>
+          <LoginWithGoogle />
+        </Stack>
       </Card>
 
       <Text
@@ -160,11 +181,9 @@ const Login = ({ location }) => {
       </Text>
       <SignupLinks>
         <SignupLink to="/clients/signup">Apply to be a client</SignupLink>
-        <SignupLink to="/freelancers/signup">Apply to be a specialist</SignupLink>
-        <form action="/auth/google_oauth2" method="POST">
-          <input type="hidden" name="authenticity_token" value={csrf} />
-          <button type="submit">Login with Google</button>
-        </form>
+        <SignupLink to="/freelancers/signup">
+          Apply to be a specialist
+        </SignupLink>
       </SignupLinks>
     </Box>
   );
