@@ -22,6 +22,7 @@ class Types::SpecialistType < Types::BaseType
       object.nodes.size
     end
   end
+
   description <<~HEREDOC
     Represents a freelancer. The Specialist type is also a type of viewer. It
     will be returned for the viewer query when the freelancer is logged in.
@@ -50,9 +51,9 @@ class Types::SpecialistType < Types::BaseType
     HEREDOC
   end
 
-    field :travel_availability, String, null: true do
-      description 'Wether or not the specialist is willing to travel for work'
-    end
+  field :travel_availability, String, null: true do
+    description 'Wether or not the specialist is willing to travel for work'
+  end
 
   field :linkedin, String, null: true do
     description 'The specialists linkedin URL'
@@ -374,10 +375,10 @@ class Types::SpecialistType < Types::BaseType
     HEREDOC
   end
 
-    def similar_previous_projects
-      ::PreviousProject.left_outer_joins(:skills).where(
-        validation_status: 'Validated', skills: {id: object.skill_ids}
-      ).where.not(specialist_id: object.id).limit(3)
+  def similar_previous_projects
+    ::PreviousProject.left_outer_joins(:skills).where(
+      validation_status: 'Validated', skills: {id: object.skill_ids}
+    ).where.not(specialist_id: object.id).limit(3)
   end
 end
 
