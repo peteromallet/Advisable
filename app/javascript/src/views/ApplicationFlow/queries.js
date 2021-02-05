@@ -21,7 +21,6 @@ export const applicationFields = gql`
       id
       bio
       linkedin
-      airtableId
       previousProjects(includeDrafts: true) {
         nodes {
           id
@@ -35,7 +34,6 @@ export const applicationFields = gql`
       id
       currency
       questions
-      airtableId
       primarySkill {
         id
         name

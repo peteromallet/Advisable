@@ -17,7 +17,6 @@ const getConsultation = gql`
       }
       interview {
         id
-        airtableId
       }
     }
   }

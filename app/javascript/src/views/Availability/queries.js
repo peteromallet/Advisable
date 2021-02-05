@@ -4,7 +4,6 @@ export const GET_AVAILABILITY = gql`
   query client($id: ID!) {
     user(id: $id) {
       id
-      airtableId
       availability
       interviews {
         id
