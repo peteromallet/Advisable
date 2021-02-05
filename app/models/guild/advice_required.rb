@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 module Guild
-  class Post::Opportunity < Post
+  class AdviceRequired < Post
     acts_as_ordered_taggable_on :guild_topics
-
-    # jsonb_accessor :data,
-    #   foo: [:string, default: "bar"]
   end
 end
 
