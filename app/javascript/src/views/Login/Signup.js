@@ -1,5 +1,6 @@
 import React from "react";
 import { Link as RouteLink } from "react-router-dom";
+import Flash from "src/components/Flash";
 import { Box, Button, Card, Text, Link, theme } from "@advisable/donut";
 
 export default function Signup() {
@@ -49,6 +50,7 @@ export default function Signup() {
         >
           Would you like to signup as a client or a specialist?
         </Text>
+        <Flash name="notice" variant="orange" marginBottom={4} />
         <Button
           as={RouteLink}
           to="/clients/signup"
