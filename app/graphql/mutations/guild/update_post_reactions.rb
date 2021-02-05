@@ -14,7 +14,7 @@ class Mutations::Guild::UpdatePostReactions < Mutations::BaseMutation
 
   field :guild_post, Types::Guild::PostInterface, null: true
 
-  def authorized?(**args)
+  def authorized?(**_args)
     requires_guild_user!
   end
 

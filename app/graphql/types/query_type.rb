@@ -285,5 +285,16 @@ module Types
       requires_guild_user!
       current_user.guild_followed_topics.order(created_at: :desc)
     end
+
+    field :guild_notifications,
+          Types::NotificationInterface.connection_type,
+          null: true, max_page_size: 20 do
+      description "Returns a list of guild notifications"
+    end
+
+    def guild_notifications
+      requires_guild_user!
+      current_user.guild_notifications
+    end
   end
 end
