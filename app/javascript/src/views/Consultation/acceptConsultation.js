@@ -5,7 +5,6 @@ const acceptConsultation = gql`
     acceptConsultation(input: $input) {
       interview {
         id
-        airtableId
       }
     }
   }

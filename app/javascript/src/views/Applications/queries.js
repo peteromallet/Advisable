@@ -6,7 +6,6 @@ export const GET_APPLICATIONS = gql`
       ... on Specialist {
         id
         email
-        airtableId
         applicationStage
         applications(
           status: [
@@ -38,7 +37,6 @@ export const GET_APPLICATIONS = gql`
           }
           interview {
             id
-            airtableId
             status
             startsAt
             timeZone

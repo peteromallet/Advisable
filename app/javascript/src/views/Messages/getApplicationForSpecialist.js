@@ -11,12 +11,10 @@ export default gql`
       projectType
       interview {
         id
-        airtableId
         status
       }
       project {
         id
-        airtableId
         primarySkill {
           id
           name
