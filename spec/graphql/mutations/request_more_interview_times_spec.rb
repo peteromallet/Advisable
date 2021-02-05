@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::RequestMoreInterviewTimes do
@@ -7,7 +9,7 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
     <<-GRAPHQL
     mutation {
       requestMoreInterviewTimes(input: {
-        id: "#{interview.airtable_id}", 
+        id: "#{interview.uid}",
         availabilityNote: "This is a note",
       }) {
         interview {
@@ -20,7 +22,7 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
 
   let(:response) { AdvisableSchema.execute(query) }
 
-  before :each do
+  before do
     allow_any_instance_of(Interview).to receive(:sync_to_airtable)
   end
 

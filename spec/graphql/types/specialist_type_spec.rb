@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Types::SpecialistType do
@@ -26,7 +28,7 @@ RSpec.describe Types::SpecialistType do
     let(:query) do
       <<-GRAPHQL
       {
-        specialist(id: "#{specialist.airtable_id}") {
+        specialist(id: "#{specialist.uid}") {
           applications(status: ["Applied", "Invited To Apply"], salesStatus: ["Open"]) {
             id
           }

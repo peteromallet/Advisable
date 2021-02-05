@@ -8,7 +8,7 @@ RSpec.describe Mutations::UpdateProject do
     <<-GRAPHQL
     mutation {
       updateProject(input: {
-        id: "#{project.airtable_id}",
+        id: "#{project.uid}",
         goals: ["This is a goal"],
         primarySkill: "Sales",
         description: "This is the description",
