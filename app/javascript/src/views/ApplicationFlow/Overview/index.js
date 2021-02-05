@@ -39,23 +39,18 @@ function Overview({ application, history, location }) {
   const [submitLinkedin] = useMutation(UPDATE_PROFILE);
   const [updateApplication] = useMutation(UPDATE_APPLICATION);
 
-  const handleSubmit = (values) => {
-    values.linkedin &&
+  const handleSubmit = ({ linkedin, ...values }) => {
+    linkedin &&
       submitLinkedin({
-        variables: { input: { linkedin: values.linkedin } },
+        variables: { input: { linkedin } },
         optimisticResponse: {
           __typename: "Mutation",
           updateProfile: {
             __typename: "UpdateProfilePayload",
-            specialist: {
-              __typename: "Specialist",
-              id: viewer.id,
-              linkedin: values.linkedin,
-            },
+            specialist: { __typename: "Specialist", id: viewer.id, linkedin },
           },
         },
       });
-    delete values.linkedin;
 
     updateApplication({
       variables: { input: { id: id, ...values } },
@@ -63,11 +58,7 @@ function Overview({ application, history, location }) {
         __typename: "Mutation",
         updateApplication: {
           __typename: "UpdateApplicationPayload",
-          application: {
-            __typename: "Application",
-            ...application,
-            ...values,
-          },
+          application: { __typename: "Application", ...application, ...values },
         },
       },
     });
