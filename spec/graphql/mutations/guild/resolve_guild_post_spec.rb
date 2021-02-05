@@ -39,7 +39,6 @@ RSpec.describe Mutations::Guild::ResolveGuildPost do
     end
 
     it "includes if it was successful" do
-      puts resolve_post.inspect
       expect(resolve_post.dig("data", "resolveGuildPost", "success")).to eq(true)
     end
   end

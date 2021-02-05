@@ -165,9 +165,6 @@ export const GET_GUILD_POSTS = gql`
         edges {
           node {
             ...GuildPostFields
-            ... on GuildPostAdviceRequired {
-              needHelp
-            }
             author {
               id
               bio

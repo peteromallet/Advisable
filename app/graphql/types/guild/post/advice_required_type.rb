@@ -1,12 +1,13 @@
-class Types::Guild::Post::AdviceRequiredType < Types::BaseType
-  implements Types::Guild::PostInterface
+# frozen_string_literal: true
 
-  graphql_name "GuildPostAdviceRequired"
+module Types
+  module Guild
+    module Post
+      class AdviceRequiredType < Types::BaseType
+        implements Types::Guild::PostInterface
 
-  field :need_help, Boolean, null: true do
-    description "Whether the guild post has been flagged as needing help"
-  end
-  def need_help
-    object.data["need_help"]
+        graphql_name "GuildPostAdviceRequired"
+      end
+    end
   end
 end
