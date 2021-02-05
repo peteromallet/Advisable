@@ -39,7 +39,7 @@ export default function Signup() {
           letterSpacing="-0.06rem"
           textAlign="center"
         >
-          Create an Account
+          Apply to Advisable
         </Text>
         <Text
           mb="6"
