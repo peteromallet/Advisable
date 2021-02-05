@@ -41,7 +41,7 @@ class AuthProvidersController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     # Set a flash message or something to communicate account doesn't exist
     # From the ticket: If there isn't already an email associated with the account they're trying to sign in to, we should redirect them to request an account/sign up.
-    redirect_to "/freelancers/signup"
+    redirect_to "/login/signup"
   end
 
   private
