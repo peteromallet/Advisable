@@ -115,32 +115,32 @@ function Overview({ application, history, location }) {
                   placeholder="Give a 2-3 line description of your background as it related to this project."
                 />
               </Box>
+              <Box mb={1.5}>
+                <ChoiceList
+                  fullWidth
+                  optionsPerRow={2}
+                  name="availability"
+                  onChange={formik.handleChange}
+                  value={formik.values.availability}
+                  error={
+                    formik.touched.availability && formik.errors.availability
+                  }
+                  label="When are you available to start a new project?"
+                  options={[
+                    "Immediately",
+                    "1 - 2 weeks",
+                    "2 - 4 weeks",
+                    "1 Month+",
+                  ]}
+                />
+              </Box>
               {displayLinkedInInput ? (
-                <Box mb="m">
-                  <FormField
-                    name="linkedin"
-                    label="Your LinkedIn Profile"
-                    placeholder="https://www.linkedin.com/in/your-name/"
-                  />
-                </Box>
+                <FormField
+                  name="linkedin"
+                  label="LinkedIn Profile URL"
+                  placeholder="https://www.linkedin.com/in/your-name/"
+                />
               ) : null}
-              <ChoiceList
-                fullWidth
-                optionsPerRow={2}
-                name="availability"
-                onChange={formik.handleChange}
-                value={formik.values.availability}
-                error={
-                  formik.touched.availability && formik.errors.availability
-                }
-                label="When are you available to start a new project?"
-                options={[
-                  "Immediately",
-                  "1 - 2 weeks",
-                  "2 - 4 weeks",
-                  "1 Month+",
-                ]}
-              />
               <SubmitButton mt="l" size="l" suffix={<ArrowRight />}>
                 Next
               </SubmitButton>
