@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe SpecialistOrUser do
@@ -5,21 +7,21 @@ RSpec.describe SpecialistOrUser do
     context "when passed a user uid" do
       it "returns the user" do
         user = create(:user)
-        expect(SpecialistOrUser.find_by_uid(user.uid)).to eq(user)
+        expect(described_class.find_by_uid(user.uid)).to eq(user)
       end
     end
 
     context "when passed a specialist uid" do
       it "returns the specialist" do
-        user = create(:user)
+        create(:user)
         specialist = create(:specialist)
-        expect(SpecialistOrUser.find_by_uid(specialist.uid)).to eq(specialist)
+        expect(described_class.find_by_uid(specialist.uid)).to eq(specialist)
       end
     end
 
     context "when there is no match" do
       it "returns nil" do
-        expect(SpecialistOrUser.find_by_uid("nope")).to be_nil
+        expect(described_class.find_by_uid("nope")).to be_nil
       end
     end
   end
@@ -28,15 +30,15 @@ RSpec.describe SpecialistOrUser do
     context "when the account exists" do
       it "returns the account" do
         user = create(:user)
-        expect(SpecialistOrUser.find_by_uid!(user.uid)).to eq(user)
+        expect(described_class.find_by_uid!(user.uid)).to eq(user)
       end
     end
 
     context "when the account doesnt exist" do
       it "raises an error" do
-        expect {
-          SpecialistOrUser.find_by_uid!("doesntexist")
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        expect do
+          described_class.find_by_uid!("doesntexist")
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
@@ -45,20 +47,20 @@ RSpec.describe SpecialistOrUser do
     context "when passed a user email" do
       it 'returns the user' do
         user = create(:user)
-        expect(SpecialistOrUser.find_by_email(user.account.email)).to eq(user)
+        expect(described_class.find_by_email(user.account.email)).to eq(user)
       end
     end
 
     context "when passed a specialist email" do
       it 'returns the specialist' do
         specialist = create(:specialist)
-        expect(SpecialistOrUser.find_by_email(specialist.account.email)).to eq(specialist)
+        expect(described_class.find_by_email(specialist.account.email)).to eq(specialist)
       end
     end
 
     context "when there is no match" do
       it "returns nil" do
-        expect(SpecialistOrUser.find_by_email("nope")).to be_nil
+        expect(described_class.find_by_email("nope")).to be_nil
       end
     end
   end
@@ -67,15 +69,15 @@ RSpec.describe SpecialistOrUser do
     context "when the account exists" do
       it "returns the account" do
         user = create(:user)
-        expect(SpecialistOrUser.find_by_email!(user.account.email)).to eq(user)
+        expect(described_class.find_by_email!(user.account.email)).to eq(user)
       end
     end
 
     context "when the account doesnt exist" do
       it "raises an error" do
-        expect {
-          SpecialistOrUser.find_by_email!("doesntexist")
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        expect do
+          described_class.find_by_email!("doesntexist")
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
@@ -84,21 +86,21 @@ RSpec.describe SpecialistOrUser do
     context "when passed a user airtable_id" do
       it "returns the user" do
         user = create(:user)
-        expect(SpecialistOrUser.find_by_airtable_id(user.airtable_id)).to eq(user)
+        expect(described_class.find_by_airtable_id(user.airtable_id)).to eq(user)
       end
     end
 
     context "when passed a specialist airtable_id" do
       it "returns the specialist" do
-        user = create(:user)
+        create(:user)
         specialist = create(:specialist)
-        expect(SpecialistOrUser.find_by_airtable_id(specialist.airtable_id)).to eq(specialist)
+        expect(described_class.find_by_airtable_id(specialist.airtable_id)).to eq(specialist)
       end
     end
 
     context "when there is no match" do
       it "returns nil" do
-        expect(SpecialistOrUser.find_by_airtable_id("nope")).to be_nil
+        expect(described_class.find_by_airtable_id("nope")).to be_nil
       end
     end
   end
@@ -107,15 +109,15 @@ RSpec.describe SpecialistOrUser do
     context "when the account exists" do
       it "returns the account" do
         user = create(:user)
-        expect(SpecialistOrUser.find_by_airtable_id!(user.airtable_id)).to eq(user)
+        expect(described_class.find_by_airtable_id!(user.airtable_id)).to eq(user)
       end
     end
 
     context "when the account doesnt exist" do
       it "raises an error" do
-        expect {
-          SpecialistOrUser.find_by_airtable_id!("doesntexist")
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        expect do
+          described_class.find_by_airtable_id!("doesntexist")
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

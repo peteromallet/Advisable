@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::ResendInterviewRequest do
@@ -8,7 +10,7 @@ RSpec.describe Mutations::ResendInterviewRequest do
     <<-GRAPHQL
     mutation {
       resendInterviewRequest(input: {
-        id: "#{interview.airtable_id}",
+        id: "#{interview.uid}",
       }) {
         interview {
           status
@@ -22,7 +24,7 @@ RSpec.describe Mutations::ResendInterviewRequest do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Interview).to receive(:sync_to_airtable)
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Types::PreviousProject do
@@ -59,7 +61,7 @@ RSpec.describe Types::PreviousProject do
     end
   end
 
-  context 'when confidential is false' do
+  context 'when confidential is true' do
     let(:previous_project) { create(:previous_project, confidential: true) }
 
     it 'hides the company name in the title' do
@@ -170,13 +172,13 @@ RSpec.describe Types::PreviousProject do
 
   it 'returns the primary skill' do
     expect(response['data']['previousProject']['primarySkill']['id']).to eq(
-      previous_project.primary_skill.airtable_id
+      previous_project.primary_skill.uid
     )
   end
 
   it 'returns the skills' do
     expect(response['data']['previousProject']['skills']).to include(
-      { 'id' => previous_project.primary_skill.airtable_id }
+      {'id' => previous_project.primary_skill.uid}
     )
   end
 
@@ -188,7 +190,7 @@ RSpec.describe Types::PreviousProject do
 
   it 'returns the industries' do
     expect(response['data']['previousProject']['industries']).to include(
-      { 'id' => previous_project.primary_industry.uid }
+      {'id' => previous_project.primary_industry.uid}
     )
   end
 end

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::Signup do
   let(:account) { create(:account, password: nil) }
   let(:user) { create(:user, account: account) }
-  let(:id) { user.airtable_id }
+  let(:id) { user.uid }
   let(:email) { account.email }
   let(:password) { 'testing123' }
   let(:session_manager) do
@@ -32,7 +34,7 @@ RSpec.describe Mutations::Signup do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow(session_manager).to receive(:login)
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
@@ -77,7 +79,7 @@ RSpec.describe Mutations::Signup do
     end
 
     it 'doesnt login the user' do
-      expect(session_manager).to_not receive(:login)
+      expect(session_manager).not_to receive(:login)
       response
     end
   end

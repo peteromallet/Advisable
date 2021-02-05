@@ -9,7 +9,7 @@ RSpec.describe Mutations::ConfirmProject do
     <<-GRAPHQL
     mutation {
       confirmProject(input: {
-        id: "#{project.airtable_id}",
+        id: "#{project.uid}",
       }) {
         project {
           status

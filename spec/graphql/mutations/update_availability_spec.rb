@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::UpdateAvailability do
@@ -8,7 +10,7 @@ RSpec.describe Mutations::UpdateAvailability do
     <<-GRAPHQL
     mutation {
       updateAvailability(input: {
-        id: "#{user.airtable_id}",
+        id: "#{user.uid}",
         availability: ["#{time}"]
       }) {
         user {
