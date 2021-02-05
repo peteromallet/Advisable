@@ -67,6 +67,7 @@ module Types
       argument :local, Boolean, required: false
     end
 
+    # TODO: How are we gonna move away from this, Thomas?
     def skills(local: false)
       return ::Skill.where(active: true, original: nil) if local
 
