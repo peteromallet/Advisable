@@ -1,4 +1,11 @@
 <div id='js-modal-root'></div>
+
+<% if flash.any? %>
+  <script>
+    window.flash = JSON.parse('<%== flash.to_hash.to_json %>')
+  </script>
+<% end %>
+
 <%= javascript_packs_with_chunks_tag "application" %>
 
 <%= render "noscript" %>

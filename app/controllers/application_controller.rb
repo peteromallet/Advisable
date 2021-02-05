@@ -1,17 +1,19 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include CurrentUser
 
   before_action :set_sentry_context
-  before_action :authenticate_with_magic_link, only: [:frontend, :guild]
+  before_action :authenticate_with_magic_link, only: %i[frontend guild]
 
   def frontend
+    flash[:notice] = "No account with that email found, please sign up."
     respond_to(&:html)
   rescue ActionController::UnknownFormat
     render status: :not_found, json: {error: 'Not Found'}
   end
 
-  def guild
-  end
+  def guild; end
 
   def internal
     return if current_account&.admin?
