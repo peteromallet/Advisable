@@ -394,6 +394,7 @@ ActiveRecord::Schema.define(version: 2021_02_10_124607) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["reactionable_type", "reactionable_id"], name: "index_guild_reactions_on_reactionable_type_and_reactionable_id"
+    t.index ["specialist_id", "reactionable_type", "reactionable_id"], name: "index_guild_reactions_on_specialist_reactionable", unique: true
     t.index ["specialist_id"], name: "index_guild_reactions_on_specialist_id"
   end
 
@@ -449,6 +450,20 @@ ActiveRecord::Schema.define(version: 2021_02_10_124607) do
     t.string "status"
     t.index ["project_id"], name: "index_matches_on_project_id"
     t.index ["specialist_id"], name: "index_matches_on_specialist_id"
+  end
+
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "actor_id"
+    t.string "action", null: false
+    t.string "notifiable_type", null: false
+    t.uuid "notifiable_id", null: false
+    t.datetime "read_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_notifications_on_account_id"
+    t.index ["actor_id"], name: "index_notifications_on_actor_id"
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
   end
 
   create_table "off_platform_projects", force: :cascade do |t|
@@ -815,7 +830,6 @@ ActiveRecord::Schema.define(version: 2021_02_10_124607) do
     t.string "topicable_type"
     t.bigint "topicable_id"
     t.string "slug"
-    t.boolean "published", default: false
     t.index ["name"], name: "index_tags_on_name", unique: true
     t.index ["slug"], name: "index_tags_on_slug", unique: true
     t.index ["topicable_type", "topicable_id"], name: "index_tags_on_topicable_type_and_topicable_id"
@@ -983,6 +997,8 @@ ActiveRecord::Schema.define(version: 2021_02_10_124607) do
   add_foreign_key "interviews", "users"
   add_foreign_key "matches", "projects"
   add_foreign_key "matches", "specialists"
+  add_foreign_key "notifications", "accounts"
+  add_foreign_key "notifications", "accounts", column: "actor_id"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "previous_project_images", "off_platform_projects"

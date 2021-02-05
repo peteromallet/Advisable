@@ -12,7 +12,7 @@ RSpec.describe Mutations::Guild::UpdatePostReactions do
   let(:guild_post) { create(:guild_post) }
   let(:response_keys) { %w[guildUpdatePostReactions guildPost] }
   let(:reaction) { "THANK" }
-  let(:query) {
+  let(:query) do
     <<-GRAPHQL
     mutation {
       guildUpdatePostReactions(input: {
@@ -26,7 +26,7 @@ RSpec.describe Mutations::Guild::UpdatePostReactions do
       }
     }
     GRAPHQL
-  }
+  end
 
   it_behaves_like "guild specialist"
 
@@ -34,18 +34,18 @@ RSpec.describe Mutations::Guild::UpdatePostReactions do
     it "creates a new thanks reaction for a post" do
       expect { guild_update_post_reactions }.to change { guild_post.reload.reactionable_count }.from(0).to(1)
       expect(guild_update_post_reactions).to include({
-        "reacted" => true,
-        "reactionsCount" => 1
-      })
+                                                       "reacted" => true,
+                                                       "reactionsCount" => 1
+                                                     })
     end
 
     it "is idempotent" do
       guild_post.reactions.create(specialist: specialist)
       expect { guild_update_post_reactions }.not_to(change { guild_post.reload.reactionable_count })
       expect(guild_update_post_reactions).to include({
-        "reacted" => true,
-        "reactionsCount" => 1
-      })
+                                                       "reacted" => true,
+                                                       "reactionsCount" => 1
+                                                     })
     end
   end
 
@@ -57,32 +57,57 @@ RSpec.describe Mutations::Guild::UpdatePostReactions do
       expect(guild_post.reactionable_count).to eq(1)
       expect { guild_update_post_reactions }.to change { guild_post.reload.reactionable_count }.from(1).to(0)
       expect(guild_update_post_reactions).to include({
-        "reacted" => false,
-        "reactionsCount" => 0
-      })
+                                                       "reacted" => false,
+                                                       "reactionsCount" => 0
+                                                     })
     end
 
     it "is idempotent" do
       expect { guild_update_post_reactions }.not_to(change { guild_post.reload.reactionable_count })
       expect(guild_update_post_reactions).to include({
-        "reacted" => false,
-        "reactionsCount" => 0
-      })
+                                                       "reacted" => false,
+                                                       "reactionsCount" => 0
+                                                     })
     end
   end
 
-  describe "notifications" do
-    it "only updates the post reaction for the current_user" do
-      specialists = create_list(:specialist, 5, :guild)
-      specialists.each { |s| guild_post.reactions.create(specialist: s) }
-      expect(guild_post.reactionable_count).to eq(5)
+  it "only updates the post reaction for the current_user" do
+    specialists = create_list(:specialist, 5, :guild)
+    specialists.each { |s| guild_post.reactions.create(specialist: s) }
+    expect(guild_post.reactionable_count).to eq(5)
 
-      expect { guild_update_post_reactions }.to change { guild_post.reload.reactionable_count }.from(5).to(6)
-      expect(guild_post.reload.reactions.where(specialist: specialist).count).to eq(1)
-      expect(guild_update_post_reactions).to include({
-        "reacted" => true,
-        "reactionsCount" => 6
-      })
+    expect { guild_update_post_reactions }.to change { guild_post.reload.reactionable_count }.from(5).to(6)
+    expect(guild_post.reload.reactions.where(specialist: specialist).count).to eq(1)
+    expect(guild_update_post_reactions).to include({
+                                                     "reacted" => true,
+                                                     "reactionsCount" => 6
+                                                   })
+  end
+
+  describe "notifications" do
+    subject(:post_reaction) do
+      guild_post.reactions.create(specialist: specialist)
+    end
+
+    it "creates a post_reaction notification when created" do
+      expect do
+        post_reaction
+      end.to change(Notification, :count).from(0).to(1)
+
+      notification = guild_post.specialist.account.notifications.first
+      expect(notification).to have_attributes({
+                                                account: guild_post.account,
+                                                actor: specialist.account,
+                                                action: "post_reaction",
+                                                notifiable: post_reaction
+                                              })
+    end
+
+    it "does not create duplicate notifications" do
+      expect do
+        post_reaction
+        post_reaction
+      end.to change(Notification, :count).from(0).to(1)
     end
   end
 end

@@ -6,13 +6,14 @@ import Loading from "@advisable-main/components/Loading";
 import { Box, Avatar, Text, Link, Stack } from "@advisable/donut";
 import { NotificationItem } from "./styles";
 import { GuildBox } from "@guild/styles";
+import { relativeDate } from "@guild/utils";
 
 const Notifications = ({ open, closeNotifications }) => {
   const { data, loading, refetch } = useQuery(GUILD_NOTIFICATIONS_QUERY, {
     fetchPolicy: "cache-and-network",
     skip: !open,
   });
-  const notificationItems = data?.guildActivity?.nodes;
+  const notificationItems = data?.guildNotifications?.nodes;
 
   useEffect(() => {
     if (open) {
@@ -52,13 +53,15 @@ const Notifications = ({ open, closeNotifications }) => {
 function NotificationsList({ notifications, closeNotifications }) {
   return (
     <Stack spacing={4}>
-      {notifications.map((notification, key) => (
-        <ReactionNotification
-          key={key}
-          closeNotifications={closeNotifications}
-          {...notification}
-        />
-      ))}
+      {notifications.map((notification, key) => {
+        return (
+          <Notification
+            key={key}
+            closeNotifications={closeNotifications}
+            {...notification}
+          />
+        );
+      })}
     </Stack>
   );
 }
@@ -69,46 +72,59 @@ const AuthorDetails = ({ author }) => (
   </GuildBox>
 );
 
-const ReactionNotification = ({
+const Notification = ({
+  createdAt,
+  guildPost,
+  specialist,
   closeNotifications,
-  author,
-  reactionable,
-  createdAtTimeAgo,
-}) => (
-  <NotificationItem>
-    <Box mr={4}>
-      <AuthorDetails author={author} createdAt={createdAtTimeAgo} />
-    </Box>
-    <Box flex={1}>
-      <Text size="s" color="neutral600" mb={1} lineHeight="1.1rem">
-        <Link
-          to={`/freelancers/${author.id}/guild`}
-          fontWeight="medium"
-          variant="dark"
-          onClick={closeNotifications}
+  __typename: type,
+}) => {
+  const messageTypes = {
+    PostReactionNotification: " found your post interesting: ",
+    SuggestedPostNotification: "You have a new suggested Post: ",
+  };
+  const message = messageTypes[type];
+
+  return (
+    <NotificationItem>
+      <Box mr={4}>
+        <AuthorDetails author={specialist} />
+      </Box>
+      <Box flex={1}>
+        <Text size="s" color="neutral600" mb={1} lineHeight="1.1rem">
+          {type === "PostReactionNotification" ? (
+            <Link
+              to={`/freelancers/${specialist.id}/guild`}
+              fontWeight="medium"
+              variant="dark"
+              onClick={closeNotifications}
+            >
+              {specialist.name}
+            </Link>
+          ) : null}
+
+          {message}
+
+          <Link
+            to={`/posts/${guildPost?.id}`}
+            fontWeight="medium"
+            variant="dark"
+            onClick={closeNotifications}
+          >
+            {truncate(guildPost?.title, { length: 100 })}
+          </Link>
+        </Text>
+        <Text
+          fontSize="xxs"
+          fontWeight="light"
+          letterSpacing="-0.01em"
+          color="darkGrey"
         >
-          {author.name}
-        </Link>
-        {" found your post interesting: "}
-        <Link
-          to={`/posts/${reactionable?.id}`}
-          fontWeight="medium"
-          variant="dark"
-          onClick={closeNotifications}
-        >
-          {truncate(reactionable.title, { length: 100 })}
-        </Link>
-      </Text>
-      <Text
-        fontSize="xxs"
-        fontWeight="light"
-        letterSpacing="-0.01em"
-        color="darkGrey"
-      >
-        {createdAtTimeAgo} ago
-      </Text>
-    </Box>
-  </NotificationItem>
-);
+          {relativeDate(createdAt)} ago
+        </Text>
+      </Box>
+    </NotificationItem>
+  );
+};
 
 export default Notifications;

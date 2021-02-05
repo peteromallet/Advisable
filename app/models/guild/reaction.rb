@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Guild
   class Reaction < ApplicationRecord
     belongs_to :reactionable, polymorphic: true, counter_cache: :reactionable_count
@@ -15,6 +16,18 @@ module Guild
       scope: %i[reactionable_type reactionable_id],
       message: "has already created a reaction for reactionable_type"
     }
+
+    after_create :create_notification!
+
+    def create_notification!(read_at: nil)
+      Notification.create!(
+        account: reactionable.specialist.account,
+        actor: specialist.account,
+        action: "post_reaction",
+        notifiable: self,
+        read_at: read_at
+      )
+    end
   end
 end
 
@@ -36,6 +49,7 @@ end
 #
 #  index_guild_reactions_on_reactionable_type_and_reactionable_id  (reactionable_type,reactionable_id)
 #  index_guild_reactions_on_specialist_id                          (specialist_id)
+#  index_guild_reactions_on_specialist_reactionable                (specialist_id,reactionable_type,reactionable_id) UNIQUE
 #
 # Foreign Keys
 #

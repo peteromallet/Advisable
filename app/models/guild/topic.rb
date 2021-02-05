@@ -43,7 +43,6 @@ end
 #
 #  id             :uuid             not null, primary key
 #  name           :string
-#  published      :boolean          default(FALSE)
 #  slug           :string
 #  taggings_count :integer          default(0)
 #  topicable_type :string

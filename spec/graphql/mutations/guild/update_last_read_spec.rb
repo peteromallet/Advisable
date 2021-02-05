@@ -25,26 +25,24 @@ RSpec.describe Mutations::Guild::UpdateLastRead do
   it_behaves_like "guild specialist"
 
   describe "notifications" do
-    subject(:update_last_read) do
+    subject(:touch_read_at) do
       resp = AdvisableSchema.execute(query, context: {current_user: specialist})
       resp.dig("data", *response_keys)
     end
 
-    it "changes the notifications unread state" do
-      create(:guild_comment, body: "test", post: guild_post)
+    let(:other) { create(:specialist, :guild) }
 
-      expect { update_last_read }.to change {
-        specialist.reload.guild_unread_notifications
-      }.from(true).to(false)
+    it "updates guild unread notifications as read" do
+      guild_post.reactions.create(specialist: other)
+      unread_notification = guild_post.specialist.guild_notifications.first
 
-      expect(update_last_read['guildUnreadNotifications']).to eq(false)
-    end
-
-    it "changes the current time of the read event" do
       freeze_time do
-        expect { update_last_read }.to change {
-          specialist.reload.guild_notifications_last_read
-        }.from(Time.zone.at(0)).to(Time.current)
+        expect { touch_read_at }.to change {
+          specialist.reload.guild_unread_notifications
+        }.from(true).to(false)
+
+        expect(unread_notification.reload.read_at).to eq(Time.current)
+        expect(touch_read_at['guildUnreadNotifications']).to eq(false)
       end
     end
   end
