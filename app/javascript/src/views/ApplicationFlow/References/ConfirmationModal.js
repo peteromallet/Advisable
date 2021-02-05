@@ -56,10 +56,6 @@ const ConfirmationModal = ({
               mb="xs"
               type="button"
               {...newProjectModal}
-              onClick={() => {
-                newProjectModal.show();
-                modal.hide();
-              }}
             >
               Add Another Project
             </DialogDisclosure>
