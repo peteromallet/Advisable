@@ -7,7 +7,6 @@ module Types
     field :goal_placeholder, String, null: true
     field :characteristic_placeholder, String, null: true
 
-    # TODO: Can we just return uid here, Thomas?
     def id
       object.uid
     end
