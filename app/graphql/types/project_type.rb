@@ -8,7 +8,7 @@ module Types
       object.uid
     end
 
-    field :airtable_id, String, null: true
+    field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
     field :name, String, null: false
 
     def name

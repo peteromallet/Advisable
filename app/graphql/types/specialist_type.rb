@@ -6,6 +6,27 @@ module Types
 
     implements Types::AccountInterface
 
+    module Types
+      module SpecialistType
+        class EdgeType < GraphQL::Types::Relay::BaseEdge
+          node_type(Types::SpecialistType)
+        end
+      end
+    end
+
+    module Types
+      module SpecialistType
+        class ConnectionType < GraphQL::Types::Relay::BaseConnection
+          edge_type(Types::SpecialistType::EdgeType)
+
+          field :total_count, Integer, null: false
+
+          def total_count
+            object.nodes.size
+          end
+        end
+      end
+    end
     description <<~HEREDOC
       Represents a freelancer. The Specialist type is also a type of viewer. It
       will be returned for the viewer query when the freelancer is logged in.
@@ -19,7 +40,7 @@ module Types
       object.uid
     end
 
-    field :airtable_id, String, null: true do
+    field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs." do
       description 'The airtable ID for the specialist'
     end
 
