@@ -10,6 +10,8 @@ export default function Signup() {
       px={["6", "0"]}
       pt={["10", "80px"]}
       maxWidth={["100%", 460]}
+      position="relative"
+      zIndex={2}
     >
       <Box textAlign={["left", "center"]} mb={8}>
         <svg className="Logo" width={120} height={22} fill="none">
