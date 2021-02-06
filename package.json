@@ -87,7 +87,7 @@
     "use-sound": "^1.0.2",
     "webpack-bundle-analyzer": "^4.4.0",
     "xstate": "^4.16.1",
-    "yup": "^0.29.3",
+    "yup": "^0.32.8",
     "zustand": "^3.3.1"
   },
   "devDependencies": {
