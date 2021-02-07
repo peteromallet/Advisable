@@ -5,20 +5,21 @@ import { getType } from "../utilities/schema";
 import { getColumnRenderComponent } from "./index";
 
 export default {
-  render: function RenderBelongsTo({ record, column }) {
-    const resources = useResources();
-    const schema = useSchemaIntrospection();
-    const type = getType(schema, record.__typename);
-    const field = type.fields.find((c) => c.name === column.field);
+  render: function RenderBelongsTo({ record, field }) {
+    return record[field.name].id;
+    // const resources = useResources();
+    // const schema = useSchemaIntrospection();
+    // const type = getType(schema, record.__typename);
+    // const field = type.fields.find((c) => c.name === column.field);
 
-    const columnConfig = getResourceColumn(
-      resources,
-      field.type.name,
-      column.labeledBy || "id",
-    );
+    // const columnConfig = getResourceColumn(
+    //   resources,
+    //   field.type.name,
+    //   column.labeledBy || "id",
+    // );
 
-    const Component = getColumnRenderComponent(columnConfig);
-    return <Component record={record[column.field]} column={columnConfig} />;
+    // const Component = getColumnRenderComponent(columnConfig);
+    // return <Component record={record[column.field]} column={columnConfig} />;
   },
   input: function BelongsToInput() {
     return <>div</>;

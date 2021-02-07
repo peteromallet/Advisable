@@ -77,6 +77,10 @@ module Toby
             Class.new(GraphQL::Schema::Object) do
               graphql_name("#{root.name.split('::').last}Attribute")
               field :name, GraphQL::Types::String, null: false
+
+              def name
+                object.name.to_s.camelize(:lower)
+              end
             end
           end
         end

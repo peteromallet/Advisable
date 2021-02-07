@@ -5,17 +5,16 @@ import { Provider as DonutProvider } from "@advisable/donut";
 import client from "./apolloClient";
 import Routes from "./Routes";
 import Schema from "./components/schema";
-import Resources from "./components/resources";
+import Navigation from "./components/Navigation";
 
 const Root = () => {
   return (
     <ApolloProvider client={client}>
-      <BrowserRouter basename="/advisatable">
+      <BrowserRouter basename="/toby">
         <DonutProvider>
           <Schema>
-            <Resources>
-              <Routes />
-            </Resources>
+            <Navigation />
+            <Routes />
           </Schema>
         </DonutProvider>
       </BrowserRouter>

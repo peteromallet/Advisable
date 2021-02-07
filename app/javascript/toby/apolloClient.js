@@ -21,7 +21,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: "/admin_graphql",
+  uri: "/toby_graphql",
 });
 
 const client = new ApolloClient({
