@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     redirect_to "/"
   end
 
-  def advisatable
+  def toby
     return if current_account&.admin?
 
     redirect_to "/"

@@ -10,8 +10,8 @@ Rails.application.routes.draw do
     mount GraphqlPlayground::Rails::Engine, as: "graphql_playground", at: '/playground', graphql_path: '/graphql'
     mount GraphqlPlayground::Rails::Engine, as: "toby_playground", at: '/toby_playground', graphql_path: '/toby_graphql'
     post '/toby_graphql', to: 'graphql#toby'
-    get "/advisatable", to: "application#advisatable"
-    get "/advisatable/*admin", to: "application#advisatable"
+    get "/toby", to: "application#toby"
+    get "/toby/*toby", to: "application#toby"
   end
 
   namespace :admin do

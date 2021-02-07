@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
 import { jsonToGraphQLQuery, VariableType } from "json-to-graphql-query";
-import { getType } from "./schema";
 import { getResourceByType } from "../components/resources";
 
 export function generateResourcesQuery(schema) {
@@ -151,3 +150,9 @@ export function generateUpdateQuery(resource, resources, schema) {
 
   return gql(jsonToGraphQLQuery(queryObject));
 }
+
+export function getType(schema, type) {
+  return schema.types.find((t) => t.name === type);
+}
+
+export function getFieldAttributeType(resource, fieldName) {}
