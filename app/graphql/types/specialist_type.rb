@@ -365,7 +365,7 @@ module Types
     end
 
     def similar_previous_projects
-      PreviousProject.left_outer_joins(:skills).where(
+      ::PreviousProject.left_outer_joins(:skills).where(
         validation_status: 'Validated', skills: {id: object.skill_ids}
       ).where.not(specialist_id: object.id).limit(3)
     end
