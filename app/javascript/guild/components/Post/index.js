@@ -9,12 +9,14 @@ import PostTypeTag from "@guild/components/PostTypeTag";
 import PostActions from "@guild/components/PostActions";
 import { CoverImage } from "@guild/components/CoverImage";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
+import ResolvedNotice from "./components/ResolvedNotice";
 
 const Post = ({
   post,
   showEdit = false,
   showShare = false,
   showDelete = false,
+  showResolve = false,
   walkthrough = false,
 }) => {
   const isGuildPath = /^\/guild/.test(window.location.pathname);
@@ -108,17 +110,22 @@ const Post = ({
           Read more
         </Text>
 
-        <Box display="flex" alignItems="center" marginBottom={5}>
-          <PostActions
-            mr={3}
-            post={post}
-            showEdit={showEdit}
-            showShare={showShare}
-            showDelete={showDelete}
-            walkthrough={walkthrough}
-          />
-          <ConnectionsCount post={post} />
-        </Box>
+        {post.resolved ? (
+          <ResolvedNotice authorName={post.author.firstName} />
+        ) : (
+          <Box display="flex" alignItems="center" marginBottom={5}>
+            <PostActions
+              mr={3}
+              post={post}
+              showEdit={showEdit}
+              showShare={showShare}
+              showDelete={showDelete}
+              showResolve={showResolve}
+              walkthrough={walkthrough}
+            />
+            <ConnectionsCount post={post} />
+          </Box>
+        )}
 
         <Topics topics={post.guildTopics} />
 

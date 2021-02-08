@@ -16,9 +16,6 @@ export const GUILD_POSTS_QUERY = gql`
       edges {
         node {
           ...GuildPostFields
-          ... on GuildPostAdviceRequired {
-            needHelp
-          }
           author {
             location
             id

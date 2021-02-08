@@ -25,9 +25,7 @@ module Guild
     protected
 
     def ensure_alias_root
-      if alias_tag&.alias_tag_id
-        errors.add(:base, "Cannot alias another aliased topic")
-      end
+      errors.add(:base, "Cannot alias another aliased topic") if alias_tag&.alias_tag_id
     end
   end
 end

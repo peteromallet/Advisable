@@ -6,9 +6,6 @@ export const GUILD_POST_QUERY = gql`
   query guildPost($id: ID!) {
     guildPost(id: $id) {
       ...GuildPostFields
-      ... on GuildPostAdviceRequired {
-        needHelp
-      }
       author {
         location
         id

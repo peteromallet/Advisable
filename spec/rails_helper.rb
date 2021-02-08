@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
@@ -27,9 +29,7 @@ require 'rspec/rails'
 ActiveRecord::Migration.maintain_test_schema!
 
 # If there is a specific chromedriver version specified then use that
-if ENV["CHROMEDRIVER_VERSION"]
-  Webdrivers::Chromedriver.required_version = ENV["CHROMEDRIVER_VERSION"]
-end
+Webdrivers::Chromedriver.required_version = ENV["CHROMEDRIVER_VERSION"] if ENV["CHROMEDRIVER_VERSION"]
 
 # configure shoulda matchers
 Shoulda::Matchers.configure do |config|
@@ -45,6 +45,7 @@ Capybara.enable_aria_label = true
 
 RSpec.configure do |config|
   config.include ActiveJob::TestHelper
+  config.include ActiveSupport::Testing::TimeHelpers
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -76,6 +77,6 @@ RSpec.configure do |config|
 
   # Delete any files uploaded during tests
   config.after(:suite) do
-    FileUtils.rm_rf("#{Rails.root}/tmp/storage")
+    FileUtils.rm_rf(Rails.root.join("tmp/storage").to_s)
   end
 end

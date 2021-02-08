@@ -16,16 +16,15 @@ FactoryBot.define do
     end
   end
 
-  factory :advice_required_guild_post, parent: :guild_post, class: 'Guild::Post::AdviceRequired' do
+  factory :advice_required_guild_post, parent: :guild_post, class: 'Guild::AdviceRequired' do
     type { "AdviceRequired" }
-    need_help { false }
   end
 
-  factory :opportunity_guild_post, parent: :guild_post, class: 'Guild::Post::Opportunity' do
+  factory :opportunity_guild_post, parent: :guild_post, class: 'Guild::Opportunity' do
     type { "Opportunity" }
   end
 
-  factory :case_study_guild_post, parent: :guild_post, class: 'Guild::Post::CaseStudy' do
+  factory :case_study_guild_post, parent: :guild_post, class: 'Guild::CaseStudy' do
     type { "CaseStudy" }
   end
 end
