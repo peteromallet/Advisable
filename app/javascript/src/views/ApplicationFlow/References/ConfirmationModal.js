@@ -56,10 +56,6 @@ const ConfirmationModal = ({
               mb="xs"
               type="button"
               {...newProjectModal}
-              onClick={() => {
-                newProjectModal.show();
-                modal.hide();
-              }}
             >
               Add Another Project
             </DialogDisclosure>
@@ -68,7 +64,10 @@ const ConfirmationModal = ({
             variant="dark"
             type="button"
             loading={loading}
-            onClick={onSubmit}
+            onClick={() => {
+              modal.hide();
+              onSubmit();
+            }}
           >
             {noOfSelectedProjects === 0
               ? "Continue Without References"

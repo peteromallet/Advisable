@@ -20,6 +20,7 @@ export const applicationFields = gql`
     specialist {
       id
       bio
+      linkedin
       airtableId
       previousProjects(includeDrafts: true) {
         nodes {
@@ -78,4 +79,15 @@ export const updateApplication = gql`
     }
   }
   ${applicationFields}
+`;
+
+export const updateProfile = gql`
+  mutation UpdateProfile($input: UpdateProfileInput!) {
+    updateProfile(input: $input) {
+      specialist {
+        id
+        linkedin
+      }
+    }
+  }
 `;
