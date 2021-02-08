@@ -6,7 +6,7 @@ const ResolvedNotice = ({ authorName }) => (
     <Box display="flex" alignItems="center">
       <Tag variant="quartz">Resolved</Tag>
       <Text marginLeft="sm" fontSize="14px" color="#8E8EA1">
-        {authorName} is no longer looking for connections on this post
+        {authorName} found the connection they were looking for from this post.
       </Text>
     </Box>
   </Notice>
