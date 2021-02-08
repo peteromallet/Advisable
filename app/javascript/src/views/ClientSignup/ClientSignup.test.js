@@ -246,7 +246,7 @@ test("Successful client application flow and ASAP call", async () => {
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
-  fireEvent.click(screen.getByLabelText("1–3"));
+  fireEvent.click(screen.getByLabelText("One to three"));
   fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
@@ -352,7 +352,7 @@ test("hide 'Call Me ASAP' button outside working hours", async () => {
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
-  fireEvent.click(screen.getByLabelText("1–3"));
+  fireEvent.click(screen.getByLabelText("One to three"));
   fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
@@ -441,7 +441,7 @@ test("Successful client application flow via query string params", async () => {
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
-  fireEvent.click(screen.getByLabelText("1–3"));
+  fireEvent.click(screen.getByLabelText("One to three"));
   fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
@@ -649,7 +649,7 @@ test("Cheap talents client application rejection flow", async () => {
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
-  fireEvent.click(screen.getByLabelText("1–3"));
+  fireEvent.click(screen.getByLabelText("One to three"));
   fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
@@ -776,7 +776,7 @@ test("Reset Cheap Talents rejected flow", async () => {
   fireEvent.click(skillsInput);
   fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
   fireEvent.keyDown(skillsInput, { key: "Enter" });
-  fireEvent.click(screen.getByLabelText("1–3"));
+  fireEvent.click(screen.getByLabelText("One to three"));
   fireEvent.change(screen.getByTestId("budget"), { target: { value: budget } });
   fireEvent.click(screen.getByLabelText("Continue"));
 
