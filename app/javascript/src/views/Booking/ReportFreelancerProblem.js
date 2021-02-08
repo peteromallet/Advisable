@@ -51,7 +51,7 @@ function ReportFreelancerProblemModal({ modal, application }) {
   };
 
   return (
-    <Modal modal={modal}>
+    <Modal modal={modal} label="Report an issue">
       <Text
         fontSize="4xl"
         fontWeight="medium"
