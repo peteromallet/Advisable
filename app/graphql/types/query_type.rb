@@ -7,7 +7,7 @@ module Types
     end
 
     def project(id:)
-      Project.find_by_uid_or_airtable_id!(id)
+      ::Project.find_by_uid_or_airtable_id!(id)
     end
 
     field :application,
@@ -18,7 +18,7 @@ module Types
     end
 
     def application(id:)
-      Application.find_by_uid_or_airtable_id!(id)
+      ::Application.find_by_uid_or_airtable_id!(id)
     end
 
     field :interview,
@@ -29,7 +29,7 @@ module Types
     end
 
     def interview(id:)
-      Interview.find_by_uid_or_airtable_id!(id)
+      ::Interview.find_by_uid_or_airtable_id!(id)
     end
 
     field :user,
@@ -60,7 +60,7 @@ module Types
           null: false
 
     def countries
-      Country.all.order(name: :asc)
+      ::Country.all.order(name: :asc)
     end
 
     field :skills, [Types::Skill], 'Returns a list of skills', null: false do
@@ -68,7 +68,7 @@ module Types
     end
 
     def skills(local: false)
-      return Skill.where(active: true, original: nil) if local
+      return ::Skill.where(active: true, original: nil) if local
 
       Rails.cache.fetch('airtable_active_skills', expires_in: 10.minutes) do
         Airtable::Skill.active.map do |s|
@@ -80,7 +80,7 @@ module Types
     field :popular_skills, Types::Skill.connection_type, null: false
 
     def popular_skills
-      Skill.where(active: true, original: nil).popular
+      ::Skill.where(active: true, original: nil).popular
     end
 
     field :popular_guild_countries, [Types::CountryType], null: false
@@ -96,7 +96,7 @@ module Types
     end
 
     def previous_project(id:)
-      PreviousProject.find_by!(uid: id)
+      ::PreviousProject.find_by!(uid: id)
     end
 
     field :specialist, Types::SpecialistType, null: true do
@@ -104,13 +104,13 @@ module Types
     end
 
     def specialist(id:)
-      Specialist.find_by_uid_or_airtable_id!(id)
+      ::Specialist.find_by_uid_or_airtable_id!(id)
     end
 
     field :industries, [Types::IndustryType], null: false
 
     def industries
-      Industry.active.order(name: :asc)
+      ::Industry.active.order(name: :asc)
     end
 
     field :task, Types::TaskType, null: true do
@@ -118,7 +118,7 @@ module Types
     end
 
     def task(id:)
-      Task.find_by_uid!(id)
+      ::Task.find_by_uid!(id)
     end
 
     field :currencies, [Types::CurrencyType], null: false do
@@ -134,7 +134,7 @@ module Types
     end
 
     def consultation(id:)
-      Consultation.find_by_uid_or_airtable_id!(id)
+      ::Consultation.find_by_uid_or_airtable_id!(id)
     end
 
     field :oauth_viewer, Types::OauthViewer, null: true
@@ -148,7 +148,7 @@ module Types
     end
 
     def client_application(id:)
-      User.find_by_uid_or_airtable_id!(id)
+      ::User.find_by_uid_or_airtable_id!(id)
     end
 
     field :invoice, Types::InvoiceType, null: true do
@@ -170,7 +170,7 @@ module Types
     field :questions, [Types::QuestionType], 'Returns a list of questions', null: true
 
     def questions
-      Question.all
+      ::Question.all
     end
 
     field :video_call, Types::VideoCallType, null: true do
@@ -178,7 +178,7 @@ module Types
     end
 
     def video_call(id:)
-      VideoCall.find_by_uid!(id)
+      ::VideoCall.find_by_uid!(id)
     end
 
     # Guild
@@ -197,8 +197,8 @@ module Types
     end
 
     def guild_post(id:)
-      post = Guild::Post.find(id)
-      policy = Guild::PostPolicy.new(current_user, post)
+      post = ::Guild::Post.find(id)
+      policy = ::Guild::PostPolicy.new(current_user, post)
       ApiError.not_authorized("You dont have access to this") unless policy.show
 
       post
@@ -220,11 +220,11 @@ module Types
 
     def guild_posts(**args)
       requires_guild_user!
-      query = Guild::Post.feed(current_user)
+      query = ::Guild::Post.feed(current_user)
 
       if (topic_id = args[:topic_id].presence)
         # TODO: Use only slugs to query
-        context[:guild_topic] = Guild::Topic.find_by_slug_or_id!(topic_id)
+        context[:guild_topic] = ::Guild::Topic.find_by_slug_or_id!(topic_id)
         query.tagged_with(context[:guild_topic], on: :guild_topics, any: true)
       elsif (type = args[:type].presence) && type != 'For You'
         query.where(type: type)
@@ -254,13 +254,13 @@ module Types
     def guild_top_topics
       requires_guild_user!
 
-      Guild::Topic.most_used
+      ::Guild::Topic.most_used
     end
 
     field :guild_featured_members, [Types::SpecialistType], null: true
 
     def guild_featured_members
-      Specialist.guild_featured_members.limit(6)
+      ::Specialist.guild_featured_members.limit(6)
     end
 
     field :guild_your_posts,
