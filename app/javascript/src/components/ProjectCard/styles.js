@@ -33,7 +33,7 @@ export const VARIANTS = variant({
     },
     yellow: {
       backgroundColor: theme.colors.yellow100,
-      svg: { color: theme.colors.yellow700 },
+      svg: { color: theme.colors.yellow800 },
       [StyledTitle]: { color: theme.colors.yellow900 },
       [StyledMessage]: { color: theme.colors.yellow900 },
     },
