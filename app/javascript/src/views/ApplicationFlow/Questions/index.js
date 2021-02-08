@@ -81,8 +81,22 @@ const Questions = ({
     );
   }
 
-  const handleSubmit = async (values, formikBag) => {
-    await updateApplication({
+  const handleSubmit = (values, formikBag) => {
+    const optimisticQuestions = (answer) => {
+      const answered = { __typename: "ApplicationQuestion", answer, question };
+      const index = application.questions.findIndex(
+        (q) => q.question === question,
+      );
+      let questions = [...application.questions];
+      if (index !== -1) {
+        questions[index] = answered;
+      } else {
+        questions = [...questions, answered];
+      }
+      return questions;
+    };
+
+    updateApplication({
       variables: {
         input: {
           id: applicationId,
@@ -92,6 +106,17 @@ const Questions = ({
               answer: values.answer,
             },
           ],
+        },
+      },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateApplication: {
+          __typename: "UpdateApplicationPayload",
+          application: {
+            __typename: "Application",
+            ...application,
+            questions: optimisticQuestions(values.answer),
+          },
         },
       },
     });

@@ -29,7 +29,10 @@ const ConfirmationModal = ({ modal, formik, loading, numOfWords }) => {
             variant="subtle"
             type="button"
             loading={loading}
-            onClick={formik.submitForm}
+            onClick={() => {
+              modal.hide();
+              formik.submitForm();
+            }}
             mr={["0", "m"]}
             mb={["m", "0"]}
           >
