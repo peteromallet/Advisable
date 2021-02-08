@@ -40,6 +40,7 @@ RSpec.describe 'Consultations', type: :system do
     fill_in "topic", with: "This is the topic"
     click_on "Continue"
 
+    click_on "Likely"
     click_on "Request Consultation"
 
     expect(page).to have_content("Check your email")
