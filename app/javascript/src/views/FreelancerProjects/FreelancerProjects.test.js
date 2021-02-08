@@ -1,5 +1,4 @@
-import user from "@testing-library/user-event";
-import { screen } from "@testing-library/react";
+import { screen, fireEvent } from "@testing-library/react";
 import { renderRoute, mockViewer, mockData, mockQuery } from "test-utils";
 import GET_PROJECTS from "./fetchData";
 
@@ -43,7 +42,7 @@ test("render empty state", async () => {
   await screen.findByText(/no active projects/i);
 });
 
-test("Shows the freelancers active projects", async () => {
+test("Shows the freelancers stopped projects", async () => {
   const freelancer = mockData.specialist({
     applications: [
       mockData.application({
@@ -65,7 +64,8 @@ test("Shows the freelancers active projects", async () => {
     ],
   });
 
-  expect(screen.queryByText(/test project/i)).toBeNull();
-  user.click(await screen.findByLabelText(/finished/i));
-  screen.findByText(/test project/i);
+  expect(screen.queryByText(/test project/i)).not.toBeInTheDocument();
+  const tab = await screen.findByLabelText(/finished/i);
+  fireEvent.click(tab);
+  await screen.findByText(/test project/i);
 });
