@@ -1,5 +1,6 @@
 import React from "react";
-import { Refresh, Pencil, Exclamation } from "@styled-icons/heroicons-outline";
+import { Refresh, Exclamation } from "@styled-icons/heroicons-outline";
+import { EyeOff } from "@styled-icons/ionicons-outline";
 import { Box, Text, Avatar } from "@advisable/donut";
 import {
   StyledBadge,
@@ -68,7 +69,7 @@ const STATUSES = {
     label: "Draft Project",
     message:
       "This project will not be visible to others until it has been published.",
-    icon: <Pencil />,
+    icon: <EyeOff />,
   },
   Pending: {
     component: Status,
