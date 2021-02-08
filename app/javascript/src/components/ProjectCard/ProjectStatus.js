@@ -1,5 +1,5 @@
 import React from "react";
-import { Refresh, Exclamation } from "@styled-icons/heroicons-outline";
+import { Exclamation } from "@styled-icons/heroicons-outline";
 import { EyeOff } from "@styled-icons/ionicons-outline";
 import { Box, Text, Avatar } from "@advisable/donut";
 import {
@@ -77,7 +77,7 @@ const STATUSES = {
     label: "Pending Validation",
     message:
       "This project will not be visible to others until it has been verified.",
-    icon: <Refresh />,
+    icon: <EyeOff />,
   },
   "Validation Failed": {
     component: Status,
