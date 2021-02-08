@@ -34,7 +34,7 @@ function PersistBioWidget({ formik }) {
 function Overview({ application, history, location }) {
   const { id } = application;
   const viewer = useViewer();
-  const [displayLinkedInInput] = React.useState(!viewer?.linkedin);
+  const displayLinkedInInput = !application.specialist.linkedin;
   const isWidescreen = useBreakpoint("sUp");
   const [submitLinkedin] = useMutation(UPDATE_PROFILE);
   const [updateApplication] = useMutation(UPDATE_APPLICATION);

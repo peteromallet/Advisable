@@ -20,6 +20,7 @@ export const applicationFields = gql`
     specialist {
       id
       bio
+      linkedin
       airtableId
       previousProjects(includeDrafts: true) {
         nodes {
