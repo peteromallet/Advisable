@@ -27,7 +27,7 @@ export const VARIANTS = variant({
   variants: {
     neutral: {
       backgroundColor: theme.colors.neutral100,
-      svg: { color: theme.colors.neutral500 },
+      svg: { color: theme.colors.neutral600 },
       [StyledTitle]: { color: theme.colors.neutral900 },
       [StyledMessage]: { color: theme.colors.neutral700 },
     },
