@@ -4,6 +4,7 @@ import Share from "./Share";
 import Edit from "./Edit";
 import Connect from "./Connect";
 import Delete from "./Delete";
+import Resolve from "./Resolve";
 import ReactionsButton from "../Post/components/ReactionsButton";
 import useViewer from "src/hooks/useViewer";
 
@@ -13,6 +14,7 @@ export default function PostActions({
   showShare = true,
   showEdit = true,
   showDelete = true,
+  showResolve = true,
   walkthrough = false,
   ...props
 }) {
@@ -21,8 +23,19 @@ export default function PostActions({
   const isShareable = showShare && post.shareable;
   const isEditable = showEdit && viewerIsAuthor;
   const isDeleteable = showDelete && viewerIsAuthor;
+  const isResolvable =
+    showResolve &&
+    viewerIsAuthor &&
+    !post.resolved &&
+    /Advice\sRequired|Opportunity/.test(post.type);
 
-  if (viewerIsAuthor && !isShareable && !isEditable && !isDeleteable)
+  if (
+    viewerIsAuthor &&
+    !isShareable &&
+    !isEditable &&
+    !isDeleteable &&
+    !isResolvable
+  )
     return null;
 
   return (
@@ -48,6 +61,11 @@ export default function PostActions({
       {isDeleteable ? (
         <Box ml={2}>
           <Delete post={post} size={size} />
+        </Box>
+      ) : null}
+      {isResolvable ? (
+        <Box ml={2}>
+          <Resolve post={post} size={size} />
         </Box>
       ) : null}
     </Box>

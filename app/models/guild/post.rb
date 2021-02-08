@@ -115,6 +115,7 @@ end
 #  engagements_count  :integer          default(0)
 #  pinned             :boolean          default(FALSE)
 #  reactionable_count :integer          default(0), not null
+#  resolved_at        :datetime
 #  shareable          :boolean          default(FALSE)
 #  status             :integer          default("draft"), not null
 #  title              :string

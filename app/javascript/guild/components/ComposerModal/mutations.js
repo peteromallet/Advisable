@@ -7,9 +7,6 @@ export const CREATE_GUILD_POST = gql`
     createGuildPost(input: $input) {
       guildPost {
         ...GuildPostFields
-        ... on GuildPostAdviceRequired {
-          needHelp
-        }
         author {
           location
           id
@@ -28,9 +25,6 @@ export const UPDATE_GUILD_POST = gql`
     updateGuildPost(input: $input) {
       guildPost {
         ...GuildPostFields
-        ... on GuildPostAdviceRequired {
-          needHelp
-        }
         author {
           location
           id

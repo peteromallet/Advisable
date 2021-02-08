@@ -18,6 +18,7 @@ export default gql`
     audienceType
     shareable
     pinned
+    resolved
     images {
       id
       url

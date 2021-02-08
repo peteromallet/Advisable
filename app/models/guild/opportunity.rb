@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 module Guild
-  class Post::CaseStudy < Post
+  class Opportunity < Post
     acts_as_ordered_taggable_on :guild_topics
-
-    # jsonb_accessor :data,
-    #   foo: [:string, default: "bar"]
   end
 end
 
@@ -21,6 +18,7 @@ end
 #  engagements_count  :integer          default(0)
 #  pinned             :boolean          default(FALSE)
 #  reactionable_count :integer          default(0), not null
+#  resolved_at        :datetime
 #  shareable          :boolean          default(FALSE)
 #  status             :integer          default("draft"), not null
 #  title              :string

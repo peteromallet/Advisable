@@ -9,3 +9,11 @@ export const DELETE_GUILD_POST = gql`
     }
   }
 `;
+
+export const RESOLVE_GUILD_POST = gql`
+  mutation deleteGuildPost($input: ResolveGuildPostInput!) {
+    resolveGuildPost(input: $input) {
+      success
+    }
+  }
+`;
