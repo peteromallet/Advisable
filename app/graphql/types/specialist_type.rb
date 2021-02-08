@@ -35,7 +35,7 @@ module Types
     end
 
     field :travel_availability, String, null: true do
-      description 'Wether or not the specailist is willing to travel for work'
+      description 'Wether or not the specialist is willing to travel for work'
     end
 
     field :linkedin, String, null: true do
