@@ -28,6 +28,6 @@ RSpec.describe 'Guild feed', type: :system do
     post.update(type: "Opportunity", resolved_at: Time.current)
 
     visit "/guild/feed"
-    expect(page).to have_content("#{author_name} is no longer looking for connections on this post")
+    expect(page).to have_content("#{author_name} found the connection they were looking for from this post.")
   end
 end
