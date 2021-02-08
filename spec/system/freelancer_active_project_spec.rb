@@ -142,4 +142,31 @@ RSpec.describe 'Freelancer active project view', type: :system do
     end
     expect(page).to have_content('You have stopped working with')
   end
+
+  context "when the project is fixed and task stage is 'Not Assigned'" do
+    let(:application) { create(:application, status: 'Working', project_type: "Fixed") }
+
+    before do
+      create(:task, stage: "Not Assigned", name: "Test task", application: application)
+    end
+
+    it 'allows the freelancer to request to start working' do
+      visit("/clients/#{application.uid}")
+      find("h5", text: "Test task").click
+      click_on("Request to Start Working")
+      expect(page).to have_content("You have requested to start working")
+    end
+  end
+
+  it 'the specialist can make toggle task repeating' do
+    create(:task, stage: "Not Assigned", name: "Test task", application: application)
+    visit("/clients/#{application.uid}")
+    find("h5", text: "Test task").click
+    click_on("Open task actions menu")
+    click_on("Create repeating task")
+    expect(page).to have_content("This is a repeating task")
+    click_on("Open task actions menu")
+    click_on("Remove task repeat")
+    expect(page).not_to have_content("This is a repeating task")
+  end
 end
