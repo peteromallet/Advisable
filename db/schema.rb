@@ -145,6 +145,8 @@ ActiveRecord::Schema.define(version: 2021_02_01_211400) do
     t.boolean "hide_from_profile"
     t.jsonb "log_data"
     t.text "rejection_feedback"
+    t.jsonb "meta_fields"
+    t.string "source"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
     t.index ["uid"], name: "index_applications_on_uid"
