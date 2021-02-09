@@ -12,7 +12,7 @@ import {
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
-const FileUpload = ({ label, onChange, preview }) => {
+const FileUpload = ({ label, onChange, preview, accept }) => {
   const [file, setFile] = React.useState(null);
   const [uploading, setUploading] = React.useState(false);
   const [percentage, setPercentage] = React.useState(0);
@@ -64,7 +64,7 @@ const FileUpload = ({ label, onChange, preview }) => {
           <MainText>{mainText}</MainText>
           <SubText>png, jpg. 500x500px</SubText>
         </Info>
-        <input type="file" accept=".png,.jpg,.jpeg" onChange={handleChange} />
+        <input type="file" accept={accept} onChange={handleChange} />
         {uploading && <ProgressBar percentage={percentage} />}
       </FileUploader>
     </FileUploadStyles>

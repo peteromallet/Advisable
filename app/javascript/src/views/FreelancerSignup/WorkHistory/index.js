@@ -2,8 +2,8 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { Button, Text, Box } from "@advisable/donut";
 import { useMutation } from "@apollo/client";
-import FileUpload from "../../../components/FileUpload";
-import FormField from "components/FormField";
+import FileUpload from "src/components/FileUpload";
+import FormField from "src/components/FormField";
 import UPDATE_PROFILE from "../updateProfile";
 import COMPLETE_SETUP from "../completeSetup";
 import validationSchema from "./validationSchema";
@@ -76,6 +76,7 @@ const WorkHistory = ({ specialist, history }) => {
               onChange={(blob) => {
                 formik.setFieldValue("resume", blob.signed_id);
               }}
+              accept=".pdf"
             />
             {formik.errors.resume && (
               <Text size="xs" color="red500" mt="xs">
