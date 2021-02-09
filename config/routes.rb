@@ -45,9 +45,7 @@ Rails.application.routes.draw do
     post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']
     get 'login/:gid', to: 'application#login_as', as: :login_as
 
-    if ENV['STAGING'] || Rails.env.development?
-      post 'reset_test', to: 'application#reset_test', as: :reset_test
-    end
+    post 'reset_test', to: 'application#reset_test', as: :reset_test if ENV['STAGING'] || Rails.env.development?
 
     root to: 'applications#index'
   end
@@ -79,7 +77,5 @@ Rails.application.routes.draw do
 
   # match every other route to the frontend codebase
   root 'application#frontend'
-  get '*path',
-      to: 'application#frontend',
-      constraints: ->(req) { req.path.exclude?('rails/') }
+  get '*path', to: 'application#frontend', constraints: ->(req) { req.path.exclude?('rails/') }
 end

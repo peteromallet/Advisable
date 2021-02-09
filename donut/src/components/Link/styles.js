@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
+import { rgba } from "polished";
 import { space, typography, variant, color } from "styled-system";
 import theme from "../../theme";
 
@@ -22,6 +23,21 @@ const variants = variant({
       color: theme.colors.neutral700,
       "&:hover": {
         color: theme.colors.blue600,
+      },
+    },
+    underlined: {
+      color: theme.colors.blue700,
+
+      "&::after": {
+        height: "2px",
+        width: "100%",
+        bottom: "-4px",
+        position: "absolute",
+        background: rgba(theme.colors.blue800, 0.1),
+      },
+
+      "&:hover": {
+        color: theme.colors.blue500,
       },
     },
   },
