@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_09_123242) do
+ActiveRecord::Schema.define(version: 2021_02_09_123507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -616,7 +616,6 @@ ActiveRecord::Schema.define(version: 2021_02_09_123242) do
     t.boolean "remote"
     t.string "sales_status"
     t.string "deposit_payment_intent_id"
-    t.string "owner"
     t.string "campaign_source"
     t.datetime "brief_pending_confirmation_at"
     t.datetime "brief_confirmed_at"
@@ -643,12 +642,10 @@ ActiveRecord::Schema.define(version: 2021_02_09_123242) do
     t.integer "proposed_count", default: 0
     t.integer "hired_count", default: 0
     t.boolean "sourcing"
-    t.bigint "sales_person_id"
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
     t.jsonb "log_data"
     t.index ["client_id"], name: "index_projects_on_client_id"
-    t.index ["sales_person_id"], name: "index_projects_on_sales_person_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -1005,7 +1002,6 @@ ActiveRecord::Schema.define(version: 2021_02_09_123242) do
   add_foreign_key "project_industries", "industries"
   add_foreign_key "project_skills", "skills"
   add_foreign_key "projects", "clients"
-  add_foreign_key "projects", "sales_people"
   add_foreign_key "projects", "users"
   add_foreign_key "reviews", "specialists"
   add_foreign_key "searches", "off_platform_projects", column: "manually_recommended_project_id"
