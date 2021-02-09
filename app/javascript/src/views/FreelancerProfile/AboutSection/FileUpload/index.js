@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Text, theme } from "@advisable/donut";
+import { useNotifications } from "src/components/Notifications";
 import { rgba } from "polished";
 import { DirectUpload } from "@rails/activestorage";
 import { Camera } from "@styled-icons/feather";
@@ -83,6 +84,7 @@ const FileUpload = ({ onChange, updated }) => {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [processing, setProcessing] = useState(false);
+  const { error } = useNotifications();
 
   const progressHandler = {
     directUploadWillStoreFileWithXHR(request) {
@@ -111,8 +113,18 @@ const FileUpload = ({ onChange, updated }) => {
 
   const handleChange = (e) => {
     if (!e.target?.value) return false;
+    const files = Array.from(e.target.files);
+
+    // Check file size
+    const MAX_FILE_SIZE = 1048576; // 1 MB
+    const isExceededSize = files.some(({ size }) => size > MAX_FILE_SIZE);
+    if (isExceededSize) {
+      error("The size of the file is more than 1 MB");
+      return false;
+    }
+
     setUploading(true);
-    Array.from(e.target.files).forEach((file) => upload(file));
+    files.forEach((file) => upload(file));
   };
 
   const progress =
