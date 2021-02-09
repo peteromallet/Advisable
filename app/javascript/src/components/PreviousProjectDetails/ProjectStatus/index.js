@@ -1,7 +1,8 @@
 import React from "react";
 import Status from "./Status";
 import { DraftCTA, FailedCTA } from "./CTAs";
-import { Pencil, Exclamation } from "@styled-icons/heroicons-outline";
+import { Exclamation } from "@styled-icons/heroicons-outline";
+import { EyeOff } from "@styled-icons/ionicons-outline";
 import ProjectValidationPrompt from "src/components/ProjectValidationPrompt";
 import Review from "src/components/Review";
 import { StatusWrapper } from "./styles";
@@ -31,7 +32,7 @@ function Draft({ project, modal, ...props }) {
   return (
     <Status
       variant="neutral"
-      icon={<Pencil />}
+      icon={<EyeOff />}
       CTA={DraftCTA}
       label="Draft Project"
       message="This project has not been published and will not be visible on your profile. Continue editing to post it to your profile."
