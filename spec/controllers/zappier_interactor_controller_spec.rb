@@ -1,7 +1,134 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe ZappierInteractorController, type: :request do
   let(:key) { ENV["ACCOUNTS_CREATE_KEY"] }
+
+  describe "POST /create_application" do
+    let(:specialist) { create(:specialist) }
+    let(:project) { create(:project) }
+    let(:application_params) { {comment: "This is a comment"} }
+    let(:extra_application_params) { {} }
+    let(:extra_params) { {specialist_id: specialist.uid, project_id: project.uid} }
+    let(:params) { {application: application_params.merge(extra_application_params), key: key}.merge(extra_params) }
+
+    it "creates the application and returns its uid" do
+      post("/zappier_interactor/create_application", params: params)
+      expect(response).to have_http_status(:success)
+      application = Application.find_by(uid: JSON[response.body]["uid"])
+      expect(application.comment).to eq("This is a comment")
+    end
+
+    context "when sending meta fields" do
+      let(:extra_application_params) { {working_5_days_in_client_feedback: "No feedback"} }
+
+      it "updates them" do
+        post("/zappier_interactor/create_application", params: params)
+        expect(response).to have_http_status(:success)
+        application = Application.find_by(uid: JSON[response.body]["uid"])
+        expect(application.meta_fields["Working - 5 Days In - Client Feedback"]).to eq("No feedback")
+      end
+    end
+
+    context "when specialist is missing" do
+      let(:extra_params) { {project_id: project.uid} }
+
+      it "returns error" do
+        post("/zappier_interactor/create_application", params: params)
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON[response.body]["message"]).to eq("Couldn't find Specialist")
+      end
+    end
+
+    context "when project is missing" do
+      let(:extra_params) { {specialist_id: specialist.uid} }
+
+      it "returns error" do
+        post("/zappier_interactor/create_application", params: params)
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON[response.body]["message"]).to eq("Couldn't find Project")
+      end
+    end
+
+    context "when given unpermitted params" do
+      let(:extra_application_params) { {airtable_id: "1234"} }
+
+      it "ignores the param" do
+        post("/zappier_interactor/create_application", params: params)
+        uid = JSON[response.body]["uid"]
+        application = Application.find_by(uid: uid)
+        expect(application.airtable_id).not_to eq("1234")
+      end
+    end
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/create_application", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
+  describe "POST /update_application" do
+    let(:application) { create(:application) }
+    let(:application_params) { {comment: "This is a comment", source: "And this is the source"} }
+    let(:extra_application_params) { {} }
+    let(:params) { {application: application_params.merge(extra_application_params), uid: application.uid, key: key} }
+
+    it "updates the application" do
+      post("/zappier_interactor/update_application", params: params)
+      expect(response).to have_http_status(:success)
+      application.reload
+      expect(application.comment).to eq("This is a comment")
+      expect(application.source).to eq("And this is the source")
+    end
+
+    context "when sending meta fields" do
+      let(:extra_application_params) { {"working_5_days_in_client_feedback" => "No feedback"} }
+
+      it "updates them" do
+        post("/zappier_interactor/update_application", params: params)
+        expect(response).to have_http_status(:success)
+        application.reload
+        expect(application.meta_fields["Working - 5 Days In - Client Feedback"]).to eq("No feedback")
+      end
+    end
+
+    context "when application has existing meta fields" do
+      let(:application) { create(:application, meta_fields: {"Working - 5 Days In - Specialist Feedback" => "Not great. Not terrible.", "Working - 5 Days In - Client Feedback" => "Overwrite me."}) }
+
+      let(:extra_application_params) { {"working_5_days_in_client_feedback" => "No feedback"} }
+
+      it "does not overwrite them" do
+        post("/zappier_interactor/update_application", params: params)
+        expect(response).to have_http_status(:success)
+        application.reload
+        expect(application.meta_fields["Working - 5 Days In - Specialist Feedback"]).to eq("Not great. Not terrible.")
+        expect(application.meta_fields["Working - 5 Days In - Client Feedback"]).to eq("No feedback")
+      end
+    end
+
+    context "when given unpermitted params" do
+      let(:extra_application_params) { {airtable_id: "1234"} }
+
+      it "ignores the param" do
+        post("/zappier_interactor/update_application", params: params)
+        expect(application.reload.airtable_id).not_to eq("1234")
+      end
+    end
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/update_application", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 
   describe "POST /attach_previous_project_image" do
     let(:previous_project) { create(:previous_project) }
@@ -15,7 +142,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     end
 
     context "when no key" do
-      let(:key) { '' }
+      let(:key) { "" }
 
       it "is unauthorized" do
         post("/zappier_interactor/attach_previous_project_image", params: params)
@@ -50,7 +177,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     let(:params) { {uid: user.uid, url: url, key: key} }
 
     context "when no key" do
-      let(:key) { '' }
+      let(:key) { "" }
 
       it "is unauthorized" do
         post("/zappier_interactor/create_magic_link", params: params)
@@ -110,7 +237,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     let(:params) { {uid: specialist.uid, key: key} }
 
     context "when no key" do
-      let(:key) { '' }
+      let(:key) { "" }
 
       it "is unauthorized" do
         post("/zappier_interactor/enable_guild", params: params)
@@ -132,7 +259,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     let(:params) { {post_id: post_id, key: key} }
 
     context "when no key" do
-      let(:key) { '' }
+      let(:key) { "" }
 
       it "is unauthorized" do
         post("/zappier_interactor/boost_guild_post", params: params)

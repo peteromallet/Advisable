@@ -48,6 +48,13 @@ class Application < ApplicationRecord
 
   ACTIVE_STATUSES = ['Application Accepted', 'Interview Scheduled', 'Interview Completed', 'Proposed'].freeze
   HIRED_STATUSES = ['Working', 'Stopped Working'].freeze
+  META_FIELDS = [
+    "Working - 5 Days In - Client Happy", "Working - 10 Days In - Client Happy", "Working - 15 Days In - Client Happy",
+    "Working - 5 Days In - Client Feedback", "Working - 10 Days In - Client Feedback", "Working - 15 Days In - Client Feedback",
+    "Working - 5 Days In - Specialist Happy", "Working - 10 Days In - Specialist Happy", "Working - 15 Days In - Specialist Happy",
+    "Working - 5 Days In - Specialist Feedback", "Working - 10 Days In - Specialist Feedback", "Working - 15 Days In - Specialist Feedback",
+    "Client Wants To More Forward", "Likelihood To Hire", "Freelancer - Post Interview Next Steps", "Client Ready To Hire Now", "Client Needs From Freelancer", "Better Freelancer Feedback"
+  ].freeze
 
   belongs_to :specialist
   belongs_to :project
@@ -109,10 +116,6 @@ class Application < ApplicationRecord
     find_by_uid_or_airtable_id(id) || raise(ActiveRecord::RecordNotFound)
   end
 
-  def questions
-    self[:questions] || []
-  end
-
   # Returns the application rate as cents
   def invoice_rate
     return 0 if rate.nil?
@@ -126,6 +129,14 @@ class Application < ApplicationRecord
 
   def referral_url
     "#{project.client_referral_url}&rid=#{specialist.uid}&referrer_firstname=#{specialist.account.first_name}&referrer_lastname=#{specialist.account.last_name}"
+  end
+
+  def questions
+    super || []
+  end
+
+  def meta_fields
+    super || {}
   end
 
   private
@@ -165,6 +176,7 @@ end
 #  invitation_rejected_at      :datetime
 #  invitation_rejection_reason :string
 #  invited_to_apply_at         :datetime
+#  meta_fields                 :jsonb
 #  monthly_limit               :integer
 #  project_type                :string
 #  proposal_comment            :string
@@ -176,6 +188,7 @@ end
 #  rejection_reason            :text
 #  rejection_reason_comment    :text
 #  score                       :decimal(, )
+#  source                      :string
 #  started_working_at          :datetime
 #  status                      :string
 #  stopped_working_at          :datetime
