@@ -114,9 +114,9 @@ function AboutRequirements() {
                   label="How many freelancers would you like to hire over the next 6 months?"
                   options={[
                     { label: "0", value: "0" },
-                    { label: "1–3", value: "1-3" },
-                    { label: "4–10", value: "4-10" },
-                    { label: "10+", value: "10+" },
+                    { label: "1–3", value: "1-3", ariaLabel: "One to three" },
+                    { label: "4–10", value: "4-10", ariaLabel: "Four to ten" },
+                    { label: "10+", value: "10+", ariaLabel: "More than 10" },
                   ]}
                   value={formik.values.numberOfFreelancers}
                 />

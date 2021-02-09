@@ -3,12 +3,14 @@ import { useLocation, useParams, useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { Card, Box, Text, Button } from "@advisable/donut";
 import ScaleInput from "../../components/ScaleInput";
+import { useNotifications } from "src/components/Notifications";
 import { useSendConsultation } from "./queries";
 
 function Send({ data }) {
   const params = useParams();
   const history = useHistory();
   const location = useLocation();
+  const { error } = useNotifications();
   const [send] = useSendConsultation();
 
   const initialValues = {
@@ -16,7 +18,7 @@ function Send({ data }) {
   };
 
   const handleSubmit = async (values) => {
-    await send({
+    const { errors } = await send({
       variables: {
         input: {
           consultation: location.state.consultationId,
@@ -25,13 +27,17 @@ function Send({ data }) {
       },
     });
 
-    history.push({
-      pathname: `/request_consultation/${params.specialistId}/sent`,
-      state: {
-        ...location.state,
-        completed: [...(location?.state?.completed || []), "SEND"],
-      },
-    });
+    if (errors) {
+      error("Something went wrong, please try again");
+    } else {
+      history.push({
+        pathname: `/request_consultation/${params.specialistId}/sent`,
+        state: {
+          ...location.state,
+          completed: [...(location?.state?.completed || []), "SEND"],
+        },
+      });
+    }
   };
 
   return (
