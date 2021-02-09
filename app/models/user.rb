@@ -153,19 +153,15 @@ end
 #
 # Indexes
 #
-#  index_users_on_account_id       (account_id)
-#  index_users_on_airtable_id      (airtable_id)
-#  index_users_on_company_id       (company_id)
-#  index_users_on_country_id       (country_id)
-#  index_users_on_industry_id      (industry_id)
-#  index_users_on_sales_person_id  (sales_person_id)
-#  index_users_on_uid              (uid)
+#  index_users_on_account_id   (account_id)
+#  index_users_on_airtable_id  (airtable_id)
+#  index_users_on_company_id   (company_id)
+#  index_users_on_country_id   (country_id)
+#  index_users_on_uid          (uid)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (company_id => companies.id)
 #  fk_rails_...  (country_id => countries.id)
-#  fk_rails_...  (industry_id => industries.id)
-#  fk_rails_...  (sales_person_id => sales_people.id)
 #
