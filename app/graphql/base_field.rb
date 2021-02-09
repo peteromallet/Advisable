@@ -36,8 +36,10 @@ class BaseField < GraphQL::Schema::Field
       "Deprecated #{name} (#{original_name}) requested on #{owner_type}",
       backtrace: caller,
       level: 'debug',
-      query: context&.query&.query_string,
-      deprecation_reason: deprecation_reason
+      extra: {
+        query: context&.query&.query_string,
+        deprecation_reason: deprecation_reason
+      }
     )
   end
 end
