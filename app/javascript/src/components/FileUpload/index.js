@@ -12,7 +12,7 @@ import {
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
-const FileUpload = ({ label, onChange, preview }) => {
+const FileUpload = ({ label, onChange, preview, accept }) => {
   const [file, setFile] = React.useState(null);
   const [uploading, setUploading] = React.useState(false);
   const [percentage, setPercentage] = React.useState(0);
@@ -32,7 +32,7 @@ const FileUpload = ({ label, onChange, preview }) => {
 
     u.create((error, blob) => {
       if (error) {
-        console.log("error", error);
+        console.error(error);
       } else {
         setPercentage(0);
         setUploading(false);
@@ -64,7 +64,7 @@ const FileUpload = ({ label, onChange, preview }) => {
           <MainText>{mainText}</MainText>
           <SubText>png, jpg. 500x500px</SubText>
         </Info>
-        <input type="file" onChange={handleChange} />
+        <input type="file" accept={accept} onChange={handleChange} />
         {uploading && <ProgressBar percentage={percentage} />}
       </FileUploader>
     </FileUploadStyles>
