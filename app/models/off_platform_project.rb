@@ -50,7 +50,6 @@ class OffPlatformProject < PreviousProject; end
 #
 # Indexes
 #
-#  index_off_platform_projects_on_airtable_id     (airtable_id)
 #  index_off_platform_projects_on_application_id  (application_id)
 #  index_off_platform_projects_on_reviewed_by_id  (reviewed_by_id)
 #  index_off_platform_projects_on_specialist_id   (specialist_id)
