@@ -34,12 +34,12 @@ Rails.application.routes.draw do
     resources :webhook_configurations
     resources :webhooks, only: %i[index show]
     namespace :guild do
+      resources :posts, as: :opportunity
+      resources :posts, as: :case_study
+      resources :posts, as: :advice_required
       resources :posts do
         post 'boost_post', on: :member
       end
-      resources :posts, as: :post_opportunity
-      resources :posts, as: :post_case_study
-      resources :posts, as: :post_advice_required
     end
 
     post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']
