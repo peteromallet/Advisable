@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   module Guild
     class PostsController < Admin::ApplicationController
@@ -6,7 +8,7 @@ module Admin
       # Create uses guild_post
       #
       def resource_params
-        resource_key = request.request_method == "POST" || requested_resource.type == "Post" ? "guild_post" : "guild_post_#{requested_resource.type.underscore}"
+        resource_key = request.request_method == "POST" || requested_resource.type == "Post" ? "guild_post" : "guild_#{requested_resource.type.underscore}"
         params.require(resource_key).
           permit(dashboard.permitted_attributes).
           transform_values { |v| read_param_value(v) }
