@@ -14,8 +14,8 @@ import {
   Avatar,
 } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/client";
-import FormField from "components/FormField";
-import FileUpload from "../../../components/FileUpload";
+import FormField from "src/components/FormField";
+import FileUpload from "src/components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
 import { ArrowRight } from "@styled-icons/feather";
@@ -94,6 +94,7 @@ const BuildProfile = ({ history, specialist }) => {
                 );
               }}
               label="Upload a profile photo"
+              accept=".png, .jpg, .jpeg"
             />
           </Box>
           <FormField
