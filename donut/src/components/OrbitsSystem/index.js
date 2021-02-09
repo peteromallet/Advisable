@@ -43,6 +43,7 @@ export function Orbit({
   fill,
   index,
   path,
+  strokeWidth,
   transition = { duration: 0.5 },
 }) {
   const [state, setState] = useSharedOrbits();
@@ -61,6 +62,7 @@ export function Orbit({
       initial={initial}
       animate={animate}
       transition={transition}
+      strokeWidth={strokeWidth}
       vectorEffect="non-scaling-stroke"
     />
   );
@@ -90,6 +92,7 @@ export default function OrbitsSystem({
   x = 0,
   y = 0,
   stroke = "black",
+  strokeWidth,
   fill = "transparent",
   startSize = 0,
   offsetX = 0,
@@ -122,6 +125,7 @@ export default function OrbitsSystem({
       index: i,
       path,
       transition,
+      strokeWidth: child.props.strokeWidth || strokeWidth,
       stroke: child.props.stroke || stroke,
       fill: child.props.fill || fill,
     });

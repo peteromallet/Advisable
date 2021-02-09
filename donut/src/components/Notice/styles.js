@@ -28,9 +28,9 @@ export const StyledNoticeHeader = styled(StyledText)`
 `;
 
 export const StyledNoticeContent = styled(StyledText)`
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.3em;
-  color: ${theme.colors.neutral700};
+  color: ${theme.colors.neutral900};
 `;
 
 const noticeTypes = variant({
@@ -39,6 +39,9 @@ const noticeTypes = variant({
       background: theme.colors.orange50,
       [StyledNoticeIcon]: {
         color: theme.colors.orange700,
+      },
+      [StyledNoticeContent]: {
+        color: theme.colors.orange900,
       },
     },
     neutral: {

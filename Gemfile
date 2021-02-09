@@ -38,6 +38,7 @@ gem "money"
 gem "sentry-raven"
 gem "omniauth"
 gem "omniauth-linkedin-oauth2", github: "decioferreira/omniauth-linkedin-oauth2", branch: "master"
+gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection", "~> 0.1"
 
 # Use ActiveStorage variant
@@ -105,6 +106,7 @@ group :development do
   gem "guard"
   gem "guard-rspec", require: false
   gem "letter_opener"
+  gem "brakeman"
 end
 
 group :test do

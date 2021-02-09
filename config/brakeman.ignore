@@ -1,33 +1,13 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Mass Assignment",
-      "warning_code": 70,
-      "fingerprint": "146e5565142e96113ab287fb8db4331c5a3966aa7168856120bbe7dd257b67cc",
-      "check_name": "MassAssignment",
-      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
-      "file": "app/controllers/admin/application_controller.rb",
-      "line": 37,
-      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
-      "code": "params.permit!",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Admin::ApplicationController",
-        "method": "redirect_without_magic_link_params"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
       "warning_type": "Format Validation",
       "warning_code": 30,
       "fingerprint": "1eb8cf36a789d5b0dcca3a2d5259106cc1b8d024eff80ea6a7467aa196c95527",
       "check_name": "ValidationRegex",
       "message": "Insufficient validation for `email` using `/@/`. Use `\\A` and `\\z` as anchors",
       "file": "app/models/account.rb",
-      "line": 15,
+      "line": 17,
       "link": "https://brakemanscanner.org/docs/warning_types/format_validation/",
       "code": null,
       "render_path": null,
@@ -40,42 +20,22 @@
       "note": ""
     },
     {
-      "warning_type": "Redirect",
-      "warning_code": 18,
-      "fingerprint": "35ce6c47a28ffd722c839a9c217758360e06d0ec99921899905f463b10034077",
-      "check_name": "Redirect",
-      "message": "Possible unprotected redirect",
-      "file": "app/controllers/admin/application_controller.rb",
-      "line": 37,
-      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
-      "code": "redirect_to(params.permit!.except(:mlt, :mluid))",
+      "warning_type": "Dangerous Send",
+      "warning_code": 23,
+      "fingerprint": "8442cb3db768d9885735ade7557f6ad69155a7655513bd4c61b7c7d33ef2069d",
+      "check_name": "Send",
+      "message": "User controlled method execution",
+      "file": "app/controllers/auth_providers_controller.rb",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
+      "code": "public_send(params[:provider].to_sym)",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "Admin::ApplicationController",
-        "method": "redirect_without_magic_link_params"
+        "class": "AuthProvidersController",
+        "method": "create"
       },
-      "user_input": "params.permit!.except(:mlt, :mluid)",
-      "confidence": "High",
-      "note": ""
-    },
-    {
-      "warning_type": "Redirect",
-      "warning_code": 18,
-      "fingerprint": "6c71f8bae985d9fad7dc8e38682b599093118fd0f286e9ff52b9591538b5a234",
-      "check_name": "Redirect",
-      "message": "Possible unprotected redirect",
-      "file": "app/controllers/application_controller.rb",
-      "line": 37,
-      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
-      "code": "redirect_to(params.permit!.except(:mlt, :mluid))",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ApplicationController",
-        "method": "redirect_without_magic_link_params"
-      },
-      "user_input": "params.permit!.except(:mlt, :mluid)",
+      "user_input": "params[:provider].to_sym",
       "confidence": "High",
       "note": ""
     },
@@ -86,7 +46,7 @@
       "check_name": "MassAssignment",
       "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/controllers/concerns/current_user.rb",
-      "line": 37,
+      "line": 40,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
       "render_path": null,
@@ -100,33 +60,13 @@
       "note": ""
     },
     {
-      "warning_type": "Mass Assignment",
-      "warning_code": 70,
-      "fingerprint": "bb31f15cbb5c690c29ff313cd3c9c824258bef0fa6b392e6631a3df42f53202a",
-      "check_name": "MassAssignment",
-      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
-      "file": "app/controllers/application_controller.rb",
-      "line": 37,
-      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
-      "code": "params.permit!",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ApplicationController",
-        "method": "redirect_without_magic_link_params"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
       "warning_type": "Redirect",
       "warning_code": 18,
       "fingerprint": "cdff841e7067cd67384b040bce796c7a00db6d468f24f10d74efb58d0bfdacfb",
       "check_name": "Redirect",
       "message": "Possible unprotected redirect",
       "file": "app/controllers/concerns/current_user.rb",
-      "line": 37,
+      "line": 40,
       "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
       "code": "redirect_to(params.permit!.except(:mlt, :mluid))",
       "render_path": null,
@@ -160,6 +100,6 @@
       "note": ""
     }
   ],
-  "updated": "2020-10-22 10:21:18 +0200",
-  "brakeman_version": "4.10.0"
+  "updated": "2021-02-03 09:54:00 +0100",
+  "brakeman_version": "5.0.0"
 }

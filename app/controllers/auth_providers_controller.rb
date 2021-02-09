@@ -1,13 +1,13 @@
+# frozen_string_literal: true
+
 class AuthProvidersController < ApplicationController
-  PROVIDERS = [:linkedin, :linkedin_ads].freeze
+  PROVIDERS = %i[linkedin linkedin_ads google_oauth2].freeze
 
   def create
     provider = params[:provider].to_sym
-    if PROVIDERS.include?(provider)
-      self.public_send(provider)
-    else
-      raise ActionController::RoutingError.new('Unknown provider')
-    end
+    raise ActionController::RoutingError, 'Unknown provider' if PROVIDERS.exclude?(provider)
+
+    public_send(provider)
   end
 
   def linkedin
@@ -29,6 +29,18 @@ class AuthProvidersController < ApplicationController
     auth_provider.update!(oauth.identifiers_with_blob_and_token)
 
     redirect_to admin_applications_path
+  end
+
+  def google_oauth2
+    account = Account.find_by!(email: oauth.email)
+    auth_provider = account.auth_providers.find_or_initialize_by(provider: 'google_oauth2')
+    auth_provider.update!(oauth.identifiers_with_blob_and_token)
+    session_manager.start_session(account)
+
+    redirect_to "/"
+  rescue ActiveRecord::RecordNotFound
+    flash[:notice] = "No account with that email found, please sign up."
+    redirect_to "/login/signup"
   end
 
   private
