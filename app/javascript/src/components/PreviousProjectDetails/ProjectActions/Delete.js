@@ -29,8 +29,8 @@ function DeleteProject({ project, size, onDelete = () => {} }) {
                 size={size}
                 bg="neutral100"
                 color="neutral600"
-                aria-label="Delete post"
-                data-testid="deletePost"
+                aria-label="Delete project"
+                data-testid="deleteProject"
                 icon={<Trash />}
               />
             )}

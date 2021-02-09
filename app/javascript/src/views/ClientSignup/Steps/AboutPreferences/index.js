@@ -90,7 +90,7 @@ function AboutPreferences() {
 
   return (
     <>
-      <Navigation called={called} status={status} delay={called ? 5000 : 0} />
+      <Navigation called={called} status={status} delay={called ? 3000 : 0} />
       <Formik
         validationSchema={validationSchema}
         initialValues={initialValues}

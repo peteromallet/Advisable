@@ -32,7 +32,7 @@ function TilesInput({ onChange, value, options, importanceScale, alignWidth }) {
             key={option.value}
             type="button"
             data-selected={value === option.value}
-            aria-label={option.label}
+            aria-label={option.ariaLabel || option.label}
             onClick={createClickHandler(option.value)}
           >
             {option.icon && (
