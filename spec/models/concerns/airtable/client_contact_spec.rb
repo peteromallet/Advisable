@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Airtable::ClientContact do
   include_examples("sync airtable columns to association", {
-    association: :account,
-    columns: [
-      {from: "Email Address", to: :email, with: "test@airtable.com"},
-      {from: "First Name", to: :first_name, with: "John"},
-      {from: "Last Name", to: :last_name, with: "Snow"},
-      {from: "VAT Number", to: :vat_number, with: "BeyondTheWall123"}
-    ]
-  })
+                     association: :account,
+                     columns: [
+                       {from: "Email Address", to: :email, with: "test@airtable.com"},
+                       {from: "First Name", to: :first_name, with: "John"},
+                       {from: "Last Name", to: :last_name, with: "Snow"},
+                       {from: "VAT Number", to: :vat_number, with: "BeyondTheWall123"}
+                     ]
+                   })
 
   describe "sync_data" do
     describe "syncs title column" do
@@ -26,9 +28,8 @@ RSpec.describe Airtable::ClientContact do
       let!(:user) { create(:user, company: company) }
       let(:airtable) { described_class.new({"Email Address" => "test@airtable.com", "Type of Company" => "Hyper Mega Company"}, id: user.airtable_id) }
 
-      it "sync the company type to User and Company" do
+      it "sync the company type to Company" do
         airtable.sync
-        expect(user.reload.company_type).to eq("Hyper Mega Company")
         expect(company.reload.kind).to eq("Hyper Mega Company")
       end
     end
@@ -38,9 +39,9 @@ RSpec.describe Airtable::ClientContact do
         user = create(:user, client: nil)
         client = create(:client)
         airtable = described_class.new({
-          "Client" => [client.airtable_id],
-          "Email Address" => "test@airtable.com"
-        }, id: user.airtable_id)
+                                         "Client" => [client.airtable_id],
+                                         "Email Address" => "test@airtable.com"
+                                       }, id: user.airtable_id)
         expect { airtable.sync }.to change {
           user.reload.client
         }.from(nil).to(client)
@@ -50,14 +51,14 @@ RSpec.describe Airtable::ClientContact do
 
   describe "value stripping" do
     let(:user) { create(:user) }
-    let(:airtable) {
+    let(:airtable) do
       described_class.new({
-      "Email Address" => " test@airtable.com ",
-      "First Name" => " Dwight ",
-      "Last Name" => " Schrute ",
-      "VAT Number" => " 1234 "
-      }, id: user.airtable_id)
-    }
+                            "Email Address" => " test@airtable.com ",
+                            "First Name" => " Dwight ",
+                            "Last Name" => " Schrute ",
+                            "VAT Number" => " 1234 "
+                          }, id: user.airtable_id)
+    end
 
     it "strips email, name, and VAT" do
       airtable.sync
