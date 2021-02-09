@@ -40,6 +40,7 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
           <input
             type="file"
             name="upload-image"
+            accept=".png,.jpg,.jpeg"
             onChange={handleChange}
             multiple
           />

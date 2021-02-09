@@ -80,7 +80,6 @@ const FileUploader = styled.div`
 `;
 
 const FileUpload = ({ onChange, updated }) => {
-  const [file, setFile] = React.useState(null);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [processing, setProcessing] = useState(false);
@@ -95,12 +94,11 @@ const FileUpload = ({ onChange, updated }) => {
   };
 
   const upload = (file) => {
-    setFile(file);
     const u = new DirectUpload(file, DIRECT_UPLOAD_URL, progressHandler);
 
     u.create(async (error, blob) => {
       if (error) {
-        console.log("error", error);
+        console.error(error);
       } else {
         setProcessing(true);
         setUploading(false);
@@ -158,7 +156,7 @@ const FileUpload = ({ onChange, updated }) => {
       </AnimatePresence>
       <FileUploader>
         <Camera size={20} strokeWidth={2} />
-        <input type="file" onChange={handleChange} />
+        <input type="file" accept=".png,.jpg,.jpeg" onChange={handleChange} />
       </FileUploader>
     </Wrapper>
   );

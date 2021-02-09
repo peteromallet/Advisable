@@ -150,7 +150,7 @@ function useUpload(file, config = {}) {
 
     upload.create((error, blob) => {
       if (error) {
-        console.log("error", error);
+        console.error(error);
       } else {
         success(blob);
       }
@@ -162,6 +162,7 @@ function useUpload(file, config = {}) {
     };
 
     reader.readAsDataURL(file);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { percentage, preview: preview.current };
@@ -364,8 +365,9 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
         <input
           type="file"
           name="upload-image"
-          multiple
+          accept=".png,.jpg,.jpeg"
           onChange={handleChange}
+          multiple
         />
       </StyledNewImageTile>
     </StyledImageTiles>
