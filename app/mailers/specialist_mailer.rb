@@ -38,7 +38,7 @@ class SpecialistMailer < ApplicationMailer
 
     @project = project
     @application = application
-    @sales_person = @project.user.sales_person || @project.sales_person
+    @sales_person = @project.user.company.sales_person
     mail(
       from: @sales_person.email_with_name,
       to: @application.specialist.account.email,
@@ -50,8 +50,9 @@ class SpecialistMailer < ApplicationMailer
 
   def interview_reschedule_request(interview)
     @interview = interview
+    @sales_person = interview.user.company.sales_person
     mail(
-      from: interview.user.sales_person.email_with_name,
+      from: @sales_person.email_with_name,
       to: interview.specialist.account.email,
       subject: 'Interview Reschedule Request'
     ) do |format|

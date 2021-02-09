@@ -10,6 +10,8 @@
 # record. See the app/modals/application.rb for more details.
 #
 class Project < ApplicationRecord
+  self.ignored_columns = %w[sales_person_id owner]
+
   include Uid
   include Airtable::Syncable
   include Project::Constants
@@ -27,7 +29,6 @@ class Project < ApplicationRecord
   has_one :primary_skill, through: :primary_project_skill, source: :skill
 
   belongs_to :user, optional: true
-  belongs_to :sales_person, optional: true
 
   validates :service_type, inclusion: {in: SERVICE_TYPES}, allow_nil: true
   validates :industry_experience_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
@@ -134,6 +135,16 @@ class Project < ApplicationRecord
     )
   end
 
+  def sales_person
+    Raven.capture_message("#sales_person called on Project that was meant for Company", backtrace: caller, level: 'debug')
+    user.company.sales_person
+  end
+
+  def owner
+    Raven.capture_message("#owner called on Project that was meant for Company", backtrace: caller, level: 'debug')
+    user.company.sales_person.username
+  end
+
   private
 
   def send_paused_emails
@@ -180,7 +191,6 @@ end
 #  location_importance              :integer
 #  lost_at                          :datetime
 #  name                             :string
-#  owner                            :string
 #  proposal_received_at             :datetime
 #  proposed_count                   :integer          default(0)
 #  published_at                     :datetime
@@ -200,7 +210,6 @@ end
 #  client_id                        :bigint
 #  deposit_payment_intent_id        :string
 #  linkedin_campaign_id             :bigint
-#  sales_person_id                  :bigint
 #  user_id                          :bigint
 #
 # Indexes
