@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_08_101504) do
+ActiveRecord::Schema.define(version: 2021_02_09_123242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -451,7 +451,6 @@ ActiveRecord::Schema.define(version: 2021_02_08_101504) do
   end
 
   create_table "off_platform_projects", force: :cascade do |t|
-    t.string "airtable_id"
     t.bigint "specialist_id"
     t.string "industry"
     t.string "contact_first_name"
@@ -493,7 +492,6 @@ ActiveRecord::Schema.define(version: 2021_02_08_101504) do
     t.string "validation_failed_reason"
     t.bigint "reviewed_by_id"
     t.jsonb "log_data"
-    t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
     t.index ["reviewed_by_id"], name: "index_off_platform_projects_on_reviewed_by_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
