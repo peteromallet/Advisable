@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-class DummyImage
+class ResizedDummyImage
   def variant(_options)
     OpenStruct.new(processed?: true, hello: "World")
   end
 end
 
-class Dummy
+class ResizedDummy
   include ResizedImage
 
   resize avatar: {resize_to_limit: [400, 400]}, cover_photo: {resize_to_limit: [2000, 2000]}
@@ -18,12 +18,12 @@ class Dummy
   end
 
   def avatar
-    DummyImage.new
+    ResizedDummyImage.new
   end
 end
 
 RSpec.describe ResizedImage do
-  let(:dummy) { Dummy.new }
+  let(:dummy) { ResizedDummy.new }
   let(:specialist) { create(:specialist) }
   let(:file) { Rails.root.join("spec/support/01.jpg") }
   let(:avatar) { ActiveStorage::Blob.create_and_upload!(io: File.open(file), filename: "01.jpg", content_type: "image/jpeg").signed_id }
