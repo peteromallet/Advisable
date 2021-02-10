@@ -168,7 +168,7 @@ const FileUpload = ({ onChange, updated }) => {
       </AnimatePresence>
       <FileUploader>
         <Camera size={20} strokeWidth={2} />
-        <input type="file" accept=".png,.jpg,.jpeg" onChange={handleChange} />
+        <input type="file" accept=".png, .jpg, .jpeg" onChange={handleChange} />
       </FileUploader>
     </Wrapper>
   );
