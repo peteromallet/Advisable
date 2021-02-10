@@ -85,13 +85,9 @@ RSpec.describe Mutations::Guild::UpdatePostReactions do
   end
 
   describe "notifications" do
-    subject(:post_reaction) do
-      guild_post.reactions.create(specialist: specialist)
-    end
-
     it "creates a post_reaction notification when created" do
       expect do
-        post_reaction
+        guild_update_post_reactions
       end.to change(Notification, :count).from(0).to(1)
 
       notification = guild_post.specialist.account.notifications.first
@@ -99,14 +95,14 @@ RSpec.describe Mutations::Guild::UpdatePostReactions do
                                                 account: guild_post.account,
                                                 actor: specialist.account,
                                                 action: "post_reaction",
-                                                notifiable: post_reaction
+                                                notifiable: Guild::Reaction.first
                                               })
     end
 
     it "does not create duplicate notifications" do
       expect do
-        post_reaction
-        post_reaction
+        guild_update_post_reactions
+        guild_update_post_reactions
       end.to change(Notification, :count).from(0).to(1)
     end
   end
