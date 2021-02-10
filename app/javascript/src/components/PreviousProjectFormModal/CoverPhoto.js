@@ -1,11 +1,13 @@
+import React from "react";
 import { find } from "lodash-es";
 import { Box, Text } from "@advisable/donut";
-import React from "react";
+import { useNotifications } from "src/components/Notifications";
 import { StyledCoverPhoto, StyledCoverPhotoTag } from "./styles";
 
 function CoverPhoto({ images, dispatch, resourceName = "project" }) {
   const cover = find(images, { cover: true });
   const [background, setBackground] = React.useState(cover?.url);
+  const { error } = useNotifications();
 
   React.useEffect(() => {
     if (cover?.uploading) {
@@ -22,7 +24,23 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
   }, [cover]);
 
   const handleChange = (e) => {
-    Array.from(e.target.files).forEach((file, i) => {
+    if (!e.target?.value) return false;
+    const files = Array.from(e.target.files);
+
+    // Check file size
+    const MAX_SIZE_IN_MB = 3;
+    const maxSizeInBytes = MAX_SIZE_IN_MB * 1048576;
+    const isExceededSize = files.some(({ size }) => size > maxSizeInBytes);
+    if (isExceededSize) {
+      error(
+        files.length > 1
+          ? `The size of some file is more than ${MAX_SIZE_IN_MB} MB`
+          : `The size of the file is more than ${MAX_SIZE_IN_MB} MB`,
+      );
+      return false;
+    }
+
+    files.forEach((file, i) => {
       dispatch({
         type: "NEW_UPLOAD",
         file,
@@ -40,7 +58,7 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
           <input
             type="file"
             name="upload-image"
-            accept=".png,.jpg,.jpeg"
+            accept=".png, .jpg, .jpeg"
             onChange={handleChange}
             multiple
           />
