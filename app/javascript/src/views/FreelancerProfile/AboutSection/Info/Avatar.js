@@ -76,7 +76,9 @@ function Avatar({ avatar, isOwner }) {
         ml={{ _: "10px", s: "24px", l: "24px" }}
         borderRadius={16}
       >
-        {isOwner && <FileUpload onChange={submit} updated={updated} />}
+        {isOwner && (
+          <FileUpload onChange={submit} updated={updated} maxSizeInMB={1} />
+        )}
         {avatar && (
           <StyledAvatarImage
             as="img"

@@ -81,7 +81,7 @@ const FileUploader = styled.div`
   }
 `;
 
-const FileUpload = ({ onChange, updated }) => {
+const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [processing, setProcessing] = useState(false);
@@ -117,9 +117,8 @@ const FileUpload = ({ onChange, updated }) => {
     const files = Array.from(e.target.files);
 
     // Check file size
-    const MAX_SIZE_IN_MB = 1;
-    if (filesExceedLimit(files, MAX_SIZE_IN_MB)) {
-      error(`File size cannot exceed ${MAX_SIZE_IN_MB} MB`);
+    if (filesExceedLimit(files, maxSizeInMB)) {
+      error(`File size cannot exceed ${maxSizeInMB} MB`);
       return false;
     }
 
