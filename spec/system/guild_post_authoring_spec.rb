@@ -57,7 +57,7 @@ RSpec.describe 'Create post flow', type: :system do
     choose 'Target by skill'
 
     # audience settings
-    skills = find_field('Search for a Skill')
+    skills = find_field('Search for a skill')
     skills.send_keys 'Develop', :down, :enter
     skills.send_keys 'Desi', :down, :enter
     click_on 'Continue'

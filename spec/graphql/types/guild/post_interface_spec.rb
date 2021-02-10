@@ -314,4 +314,30 @@ RSpec.describe Types::Guild::PostInterface do
       end
     end
   end
+
+  context "with unpublished topics" do
+    subject(:guild_post_query) do
+      resp = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
+      resp["data"]["guildPosts"]["nodes"][0]
+    end
+
+    let(:unpublished_topic) { create(:guild_topic, name: "Nothing here to see", published: false) }
+    let!(:guild_post) { create(:guild_post) }
+
+    before do
+      guild_post.guild_topic_list.add(unpublished_topic)
+      guild_post.save!
+    end
+
+    it "does not include unpublished topics" do
+      expect(guild_post.guild_topics.count).to eq(1)
+      expect(guild_post_query["guildTopics"].size).to eq(0)
+    end
+
+    it "includes unpublished topics if the author is current_user" do
+      guild_post.update! specialist: guild_specialist
+      expect(guild_post.guild_topics.count).to eq(1)
+      expect(guild_post_query["guildTopics"].size).to eq(1)
+    end
+  end
 end
