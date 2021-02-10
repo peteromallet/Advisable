@@ -1,25 +1,23 @@
-import * as React from "react";
+import React, { useCallback } from "react";
 
 const LineClamp = ({ children, maxHeight, character = "…" }) => {
   const ref = React.useRef(null);
   const [min, setMin] = React.useState(0);
-  const [max, setMax] = React.useState(Boolean(children) ? children.length : 0);
-
-  if (!Boolean(children)) return null;
+  const [max, setMax] = React.useState(children ? children.length : 0);
 
   const midPoint = Math.floor((min + max) / 2);
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     setMin(0);
     setMax(children.length);
-  };
+  }, [children]);
 
   React.useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [handleResize]);
 
   React.useLayoutEffect(() => {
     if (min >= max) return;
@@ -29,7 +27,9 @@ const LineClamp = ({ children, maxHeight, character = "…" }) => {
     } else {
       setMax(midPoint);
     }
-  }, [midPoint]);
+  }, [midPoint, max, maxHeight, min]);
+
+  if (!children) return null;
 
   const text = `${children.slice(0, midPoint)}${character}`;
 

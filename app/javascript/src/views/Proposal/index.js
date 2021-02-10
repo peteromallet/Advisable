@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { useQuery } from "@apollo/client";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "../../components/Layout";
