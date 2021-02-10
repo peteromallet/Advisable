@@ -1,7 +1,7 @@
-import * as React from "react";
+import React from "react";
 import { Title } from "./styles";
 
-export default ({ value, ...props }) => {
+export default function TaskDrawerTitle({ value, ...props }) {
   const ref = React.useRef(null);
   const [rows, setRows] = React.useState(1);
 
@@ -20,7 +20,7 @@ export default ({ value, ...props }) => {
     setRows(currentRows);
   };
 
-  React.useLayoutEffect(calculateRows, [ref.current]);
+  React.useLayoutEffect(calculateRows, []);
 
   React.useLayoutEffect(() => {
     if (props.isFocused) {
@@ -36,7 +36,7 @@ export default ({ value, ...props }) => {
         }
       }, 50);
     }
-  }, [ref.current]);
+  }, [value]);
 
   const handleChange = (e) => {
     calculateRows();
@@ -64,4 +64,4 @@ export default ({ value, ...props }) => {
       placeholder="Add a task name..."
     />
   );
-};
+}

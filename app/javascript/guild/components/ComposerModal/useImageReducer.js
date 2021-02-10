@@ -1,6 +1,6 @@
 import { useReducer } from "react";
 import { find } from "lodash-es";
-import generateID from "@advisable-main/utilities/generateID.ts";
+import generateID from "@advisable-main/utilities/generateID";
 
 // We manage all of the photos inside of a state reducer. This is to make the UX when managing
 // images a little better. e.g Allow users to change cover photos before the photos finish

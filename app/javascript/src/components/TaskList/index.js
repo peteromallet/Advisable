@@ -1,26 +1,9 @@
 // Renders a list of given tasks.
-import * as React from "react";
+import React from "react";
 import { TaskList as Container, Row } from "./styles";
 import Task from "./Task";
 
-type Task = {
-  id: string;
-  stage: string;
-  name?: string;
-  createdAt: string;
-};
-
-type Props = {
-  tasks: Task[];
-  hideStatus?: boolean;
-  lastRow?: React.ReactNode;
-  isClient?: boolean;
-  notice: (task: Task) => {};
-  onClickTask: (task: Task) => void;
-  showPromptForTask?: (task: Task) => boolean;
-};
-
-const TaskList = (props: Props) => {
+const TaskList = (props) => {
   const tasks = props.tasks;
 
   const sorted = tasks.slice().sort((a, b) => {

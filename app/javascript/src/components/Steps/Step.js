@@ -1,27 +1,8 @@
-import * as React from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { Step as Wrapper, Number } from "./styles";
 
-interface Props {
-  number: number;
-  children: React.ReactNode;
-  to?: {
-    pathname: string;
-    state?: object;
-  };
-  exact?: boolean;
-  isDisabled?: boolean;
-  isComplete?: boolean;
-}
-
-const Step = ({
-  number,
-  exact,
-  children,
-  to,
-  isComplete,
-  isDisabled,
-}: Props) => {
+const Step = ({ number, exact, children, to, isComplete, isDisabled }) => {
   const Component = isDisabled ? "div" : NavLink;
   return (
     <Wrapper isDisabled={isDisabled} isComplete={isComplete}>
