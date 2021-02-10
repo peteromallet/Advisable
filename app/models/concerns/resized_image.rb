@@ -9,11 +9,11 @@ module ResizedImage
     def resize(attachments)
       attachments.each do |name, options|
         define_method "resized_#{name}" do
-          resized_image(name, options)
+          get_resized_image(name, options)
         end
 
         define_method "resized_#{name}_url" do
-          resized_image_url(name, options)
+          get_resized_image_url(name, options)
         end
       end
     end
@@ -21,7 +21,7 @@ module ResizedImage
 
   private
 
-  def resized_image(name, options)
+  def get_resized_image(name, options)
     image = public_send(name)
     return if image.blank?
 
@@ -33,8 +33,8 @@ module ResizedImage
     end
   end
 
-  def resized_image_url(name, options)
-    image = resized_image(name, options)
+  def get_resized_image_url(name, options)
+    image = get_resized_image(name, options)
     return if image.blank?
 
     if image.respond_to?(:variation)
