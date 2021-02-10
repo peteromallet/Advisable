@@ -26,6 +26,12 @@ class User < ApplicationRecord
   end
   # WIP Company migration 👆️
 
+  self.ignored_columns += %i[bank_transfers_enabled]
+  def bank_transfers_enabled
+    Raven.capture_message("Method #bank_transfers_enabled called on User that was meant for Company", backtrace: caller, level: 'debug')
+    company.bank_transfers_enabled
+  end
+
   has_logidze
 
   airtable_class Airtable::ClientContact
@@ -122,7 +128,6 @@ end
 #  application_rejected_at           :datetime
 #  application_reminder_at           :datetime
 #  availability                      :text
-#  bank_transfers_enabled            :boolean          default(FALSE)
 #  budget                            :bigint
 #  campaign_medium                   :string
 #  campaign_name                     :string

@@ -24,9 +24,9 @@ class Company < ApplicationRecord
 
   def stripe_customer
     Stripe::Customer.retrieve({
-      id: stripe_customer_id,
-      expand: %w[invoice_settings.default_payment_method]
-    })
+                                id: stripe_customer_id,
+                                expand: %w[invoice_settings.default_payment_method]
+                              })
   end
 
   def stripe_customer_id
@@ -80,6 +80,7 @@ end
 #  id                                :uuid             not null, primary key
 #  accepted_project_payment_terms_at :datetime
 #  address                           :jsonb
+#  bank_transfers_enabled            :boolean          default(FALSE)
 #  billing_email                     :string
 #  invoice_company_name              :string
 #  invoice_name                      :string
