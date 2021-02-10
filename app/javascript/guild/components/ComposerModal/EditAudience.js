@@ -4,13 +4,21 @@ import {
   Business,
   ColorFilter,
   Location,
-  HelpCircle,
+  Search,
 } from "@styled-icons/ionicons-outline";
 import React from "react";
 import { useUpdateGuildPostWriteCache } from "./mutations";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
 import { ArrowLeft } from "@styled-icons/feather";
-import { Circle, Box, Text, Link, Paragraph } from "@advisable/donut";
+import {
+  Circle,
+  Box,
+  Text,
+  Link,
+  Paragraph,
+  Button,
+  Stack,
+} from "@advisable/donut";
 import RadioOption from "./RadioOption";
 
 /*
@@ -38,10 +46,10 @@ const TYPES = [
     description: "Target other Guild members by location",
   },
   {
-    value: "none",
-    icon: HelpCircle,
-    title: "Not Sure",
-    description: "Not sure how to target this post",
+    value: "other",
+    icon: Search,
+    title: "Other",
+    description: "Explore other topics or create your own",
   },
 ];
 
@@ -78,6 +86,10 @@ export default function EditAudience({ guildPost }) {
     }
   };
 
+  const handleSkip = () => {
+    handleSubmit({ audienceType: "none" });
+  };
+
   return (
     <Box display="flex">
       <Box flexGrow={1}>
@@ -106,59 +118,64 @@ export default function EditAudience({ guildPost }) {
           make sure it reaches the right people.
         </Paragraph>
 
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {(formik) => (
-            <Form>
-              <Box
-                display="grid"
-                gridGap="24px"
-                gridTemplateColumns={{
-                  _: "1fr",
-                  m: "1fr 1fr",
-                  xl: "1fr 1fr 1fr 1fr",
-                }}
-              >
-                {TYPES.map((type) => (
-                  <Field
-                    name="audienceType"
-                    type="radio"
-                    as={RadioOption}
-                    key={type.value}
-                    value={type.value}
-                    aria-label={type.title}
-                    onChange={(e) => handleChange(formik, e)}
-                    onClick={(e) => handleClick(formik, e)}
-                  >
-                    <Circle
-                      size={64}
-                      bg="white"
-                      color="blue900"
-                      marginBottom="lg"
+        <Stack spacing="l">
+          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            {(formik) => (
+              <Form>
+                <Box
+                  display="grid"
+                  gridGap="24px"
+                  gridTemplateColumns={{
+                    _: "1fr",
+                    m: "1fr 1fr",
+                    xl: "1fr 1fr 1fr 1fr",
+                  }}
+                >
+                  {TYPES.map((type) => (
+                    <Field
+                      name="audienceType"
+                      type="radio"
+                      as={RadioOption}
+                      key={type.value}
+                      value={type.value}
+                      aria-label={type.title}
+                      onChange={(e) => handleChange(formik, e)}
+                      onClick={(e) => handleClick(formik, e)}
                     >
-                      {formik.isSubmitting &&
-                      formik.values.audienceType === type.value ? (
-                        <Loader color="blue900" />
-                      ) : (
-                        <type.icon size={32} />
-                      )}
-                    </Circle>
-                    <Text
-                      fontSize="l"
-                      letterSpacing="-0.02rem"
-                      fontWeight="medium"
-                      marginBottom="2xs"
-                    >
-                      {type.title}
-                    </Text>
-                    <Text lineHeight="16px" fontSize="xs" color="neutral700">
-                      {type.description}
-                    </Text>
-                  </Field>
-                ))}
-              </Box>
-            </Form>
-          )}
-        </Formik>
+                      <Circle
+                        size={64}
+                        bg="white"
+                        color="blue900"
+                        marginBottom="lg"
+                      >
+                        {formik.isSubmitting &&
+                        formik.values.audienceType === type.value ? (
+                          <Loader color="blue900" />
+                        ) : (
+                          <type.icon size={32} />
+                        )}
+                      </Circle>
+                      <Text
+                        fontSize="l"
+                        letterSpacing="-0.02rem"
+                        fontWeight="medium"
+                        marginBottom="2xs"
+                      >
+                        {type.title}
+                      </Text>
+                      <Text lineHeight="16px" fontSize="xs" color="neutral700">
+                        {type.description}
+                      </Text>
+                    </Field>
+                  ))}
+                </Box>
+              </Form>
+            )}
+          </Formik>
+          <Button onClick={handleSkip} variant="subtle" size="l">
+            Skip
+          </Button>
+        </Stack>
       </Box>
     </Box>
   );

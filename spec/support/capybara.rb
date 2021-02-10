@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'capybara'
 require 'capybara/rspec'
 
-Capybara.server = :puma, { Silent: true }
+Capybara.server = :puma, {Silent: true}
 Capybara.enable_aria_label = true
 Capybara.default_max_wait_time = 5
 

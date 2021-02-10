@@ -44,6 +44,7 @@ module Guild
       status
       created_at
       account
+      guild_topics
     ].freeze
 
     # SHOW_PAGE_ATTRIBUTES
@@ -61,6 +62,7 @@ module Guild
       boosted_at
       audience_type
       pinned
+      guild_topics
     ].freeze
 
     # FORM_ATTRIBUTES

@@ -26,8 +26,7 @@ class Mutations::Guild::UpdateGuildPost < Mutations::BaseMutation
     guild_post.assign_attributes(assignable)
 
     if (guild_topic_names = args[:guild_topic_names].presence)
-      guild_topics = Guild::Topic.where(name: guild_topic_names)
-      guild_post.guild_topic_list = guild_topics
+      guild_post.guild_topic_list = guild_topic_names
     end
 
     # - A removed post cannot be published

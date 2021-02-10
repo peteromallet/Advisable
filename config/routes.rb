@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       resources :posts do
         post 'boost_post', on: :member
       end
+      resources :topics
     end
 
     post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']
