@@ -345,13 +345,14 @@ function ImageTiles({ images, dispatch, guildPostId }) {
     const files = Array.from(e.target.files);
 
     // Check file size
-    const MAX_FILE_SIZE = 3145728; // 3 MB
-    const isExceededSize = files.some(({ size }) => size > MAX_FILE_SIZE);
+    const MAX_SIZE_IN_MB = 3;
+    const maxSizeInBytes = MAX_SIZE_IN_MB * 1048576;
+    const isExceededSize = files.some(({ size }) => size > maxSizeInBytes);
     if (isExceededSize) {
       error(
         files.length > 1
-          ? "The size of one of the files is more than 3 MB"
-          : "The size of the file is more than 3 MB",
+          ? `The size of some file is more than ${MAX_SIZE_IN_MB} MB`
+          : `The size of the file is more than ${MAX_SIZE_IN_MB} MB`,
       );
       return false;
     }
