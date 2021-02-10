@@ -63,7 +63,7 @@ gem "pundit"
 gem "nanoid"
 
 gem "aws-sdk-s3", "~> 1"
-gem "image_processing", "~> 1.0"
+gem "image_processing"
 gem "faker", git: "https://github.com/faker-ruby/faker.git", branch: "master"
 gem "twilio-ruby"
 gem "graphql_playground-rails"

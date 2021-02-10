@@ -84,13 +84,7 @@ module Types
     field :cover_photo, String, null: true
 
     def cover_photo
-      return nil unless  object.cover_photo.attached?
-
-      Rails.application.routes.url_helpers.rails_blob_url(
-        object.cover_photo,
-        host:
-          ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-      )
+      object.resized_cover_photo_url
     end
 
     field :skills, [Types::SpecialistSkillType, {null: true}], null: true do
@@ -220,7 +214,7 @@ module Types
       description 'Wether or not the specialist has created their account yet'
     end
 
-    def has_account # rubocop:disable Naming/PredicateName
+    def has_account
       object.account.has_password?
     end
 

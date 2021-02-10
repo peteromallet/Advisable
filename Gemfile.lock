@@ -186,7 +186,7 @@ GEM
     faraday (1.1.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
-    ffi (1.13.1)
+    ffi (1.14.2)
     foreman (0.87.2)
     formatador (0.2.5)
     fx (0.6.1)
@@ -559,7 +559,7 @@ DEPENDENCIES
   graphql_playground-rails
   guard
   guard-rspec
-  image_processing (~> 1.0)
+  image_processing
   jsonb_accessor (~> 1.1.0)
   letter_opener
   listen (~> 3.2)

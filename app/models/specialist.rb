@@ -23,6 +23,7 @@
 class Specialist < ApplicationRecord
   include Uid
   include SpecialistOrUser
+  include ResizedImage
   include Airtable::Syncable
   include Guild::SpecialistsConcern
 
@@ -51,6 +52,7 @@ class Specialist < ApplicationRecord
   has_one_attached :avatar
   has_one_attached :resume
   has_one_attached :cover_photo
+  resize avatar: {resize_to_limit: [400, 400]}, cover_photo: {resize_to_limit: [2000, 2000]}
 
   # DEPRECATED IN FAVOUR OF phone column
   attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
@@ -67,7 +69,7 @@ class Specialist < ApplicationRecord
 
   # Wether or not the specialist has provided payment information. Returns true
   # if enough payment information has been provided.
-  def has_setup_payments
+  def has_setup_payments # rubocop:disable Naming/PredicateName
     bank_holder_name.present? &&
       bank_holder_address.present? &&
       bank_currency.present?
@@ -78,18 +80,10 @@ class Specialist < ApplicationRecord
     save(validate: false)
   end
 
+  # Fallback to the airtable image if they have not uploaded an avatar
   def avatar_or_image
-    if avatar.attached?
-      return(
-        Rails.application.routes.url_helpers.rails_blob_url(
-          avatar,
-          host:
-            ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-        )
-      )
-    end
+    return resized_avatar_url if avatar.attached?
 
-    # Fallback to the airtable image if they have not uploaded an avatar
     image.try(:[], 'url')
   end
 end
