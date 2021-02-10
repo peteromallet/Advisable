@@ -53,7 +53,7 @@ const FileUpload = ({ label, onChange, preview, accept, maxSizeInMB = 2 }) => {
     if (isExceededSize) {
       error(
         files.length > 1
-          ? `The size of one of the files is more than ${maxSizeInMB} MB`
+          ? `The size of some file is more than ${maxSizeInMB} MB`
           : `The size of the file is more than ${maxSizeInMB} MB`,
       );
       return false;
