@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-class Dummy
+class SluggableDummy
   def self.exists?(_)
     if @num_exists > 0
       @num_exists -= 1
@@ -35,14 +35,14 @@ class Dummy
 end
 
 RSpec.describe Sluggable do
-  let(:dummy) { Dummy.new(0, title: "aa bb") }
+  let(:dummy) { SluggableDummy.new(0, title: "aa bb") }
 
   it "sets the slug" do
     expect(dummy.unique_slug).to eq("aa-bb")
   end
 
   context "when there are already instances with that slug" do
-    let(:dummy) { Dummy.new(3, title: "aa bb") }
+    let(:dummy) { SluggableDummy.new(3, title: "aa bb") }
 
     it "sets the slug" do
       expect(dummy.unique_slug).to eq("aa-bb-4")

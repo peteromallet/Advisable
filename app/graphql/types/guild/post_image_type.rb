@@ -1,23 +1,26 @@
-class Types::Guild::PostImageType < Types::BaseType
-  graphql_name 'GuildPostImage'
+# frozen_string_literal: true
 
-  field :id, ID, null: false
-  field :url, String, null: false
-  field :cover, Boolean, null: false
-  field :position, Integer, null: false
+module Types
+  module Guild
+    class PostImageType < Types::BaseType
+      graphql_name 'GuildPostImage'
 
-  def id
-    object.uid
-  end
+      field :id, ID, null: false
+      field :url, String, null: false
+      field :cover, Boolean, null: false
+      field :position, Integer, null: false
 
-  def cover
-    object.cover || false
-  end
+      def id
+        object.uid
+      end
 
-  def url
-    Rails.application.routes.url_helpers.rails_blob_url(
-      object.image,
-      host: ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-    )
+      def cover
+        object.cover || false
+      end
+
+      def url
+        object.resized_image_url
+      end
+    end
   end
 end

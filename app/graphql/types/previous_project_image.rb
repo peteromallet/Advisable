@@ -1,20 +1,21 @@
-class Types::PreviousProjectImage < Types::BaseType
-  field :id, ID, null: false
-  field :url, String, null: false
-  field :cover, Boolean, null: false
+# frozen_string_literal: true
 
-  def id
-    object.uid
-  end
+module Types
+  class PreviousProjectImage < Types::BaseType
+    field :id, ID, null: false
+    field :url, String, null: false
+    field :cover, Boolean, null: false
 
-  def cover
-    object.cover || false
-  end
+    def id
+      object.uid
+    end
 
-  def url
-    Rails.application.routes.url_helpers.rails_blob_url(
-      object.image,
-      host: ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-    )
+    def cover
+      object.cover || false
+    end
+
+    def url
+      object.resized_image_url
+    end
   end
 end
