@@ -8,6 +8,7 @@ import { theme } from "@advisable/donut";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { DirectUpload } from "@rails/activestorage";
 import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
+import { useNotifications } from "src/components/Notifications";
 import {
   useUpdateGuildPostImage,
   useDeleteGuildPostImage,
@@ -289,6 +290,7 @@ const PortfolioImage = React.memo(function PortfolioImage({
 function ImageTiles({ images, dispatch, guildPostId }) {
   const client = useApolloClient();
   const cover = find(images, { cover: true });
+  const { error } = useNotifications();
 
   const handleSetCover = (image) => () => {
     if (image.cover) return;
@@ -339,8 +341,23 @@ function ImageTiles({ images, dispatch, guildPostId }) {
   });
 
   const handleChange = (e) => {
+    if (!e.target?.value) return false;
+    const files = Array.from(e.target.files);
+
+    // Check file size
+    const MAX_FILE_SIZE = 3145728; // 3 MB
+    const isExceededSize = files.some(({ size }) => size > MAX_FILE_SIZE);
+    if (isExceededSize) {
+      error(
+        files.length > 1
+          ? "The size of one of the files is more than 3 MB"
+          : "The size of the file is more than 3 MB",
+      );
+      return false;
+    }
+
     const cover = find(images, { cover: true });
-    Array.from(e.target.files).forEach((file, i) => {
+    files.forEach((file, i) => {
       dispatch({
         type: "NEW_UPLOAD",
         file,
@@ -358,7 +375,7 @@ function ImageTiles({ images, dispatch, guildPostId }) {
         <input
           type="file"
           name="upload-image"
-          accept=".png,.jpg,.jpeg"
+          accept=".png, .jpg, .jpeg"
           onChange={handleChange}
           multiple
         />
