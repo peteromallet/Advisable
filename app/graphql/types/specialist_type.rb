@@ -84,15 +84,7 @@ module Types
     field :cover_photo, String, null: true
 
     def cover_photo
-      return nil unless object.cover_photo.attached?
-
-      host = ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-      if object.cover_photo.variant(Specialist::COVER_PHOTO_SIZE).processed?
-        Rails.application.routes.url_helpers.rails_representation_url(object.cover_photo.variant(Specialist::COVER_PHOTO_SIZE), host: host)
-      else
-        ResizeImageJob.perform_later(object, :cover_photo, Specialist::COVER_PHOTO_SIZE)
-        Rails.application.routes.url_helpers.rails_blob_url(object.cover_photo, host: host)
-      end
+      object.resized_cover_photo_url
     end
 
     field :skills, [Types::SpecialistSkillType, {null: true}], null: true do
