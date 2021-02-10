@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
 class PreviousProjectImage < ApplicationRecord
+  include ResizedImage
   include Uid
   uid_prefix 'ppi'
 
   belongs_to :previous_project, class_name: 'PreviousProject', foreign_key: 'off_platform_project_id', inverse_of: :images
   has_one_attached :image
+  resize image: {resize_to_limit: [1600, 1600]}
 
   after_destroy :set_first_to_cover, if: :cover
   after_destroy :reduce_positions
