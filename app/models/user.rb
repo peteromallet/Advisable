@@ -6,6 +6,7 @@
 class User < ApplicationRecord
   include Uid
   include SpecialistOrUser
+  include ResizedImage
   include Airtable::Syncable
 
   self.ignored_columns = %i[sales_person_id invoice_name invoice_company_name billing_email address payments_setup project_payment_method accepted_project_payment_terms_at industry_id company_type]
@@ -49,6 +50,7 @@ class User < ApplicationRecord
   attribute :availability, :datetime, default: [], array: true
 
   has_one_attached :avatar
+  resize avatar: {resize_to_limit: [400, 400]}
 
   validates :rejection_reason,
             inclusion: {in: %w[cheap_talent not_hiring]}, allow_nil: true

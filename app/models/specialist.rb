@@ -27,8 +27,6 @@ class Specialist < ApplicationRecord
   include Airtable::Syncable
   include Guild::SpecialistsConcern
 
-  resize avatar: {resize_to_limit: [400, 400]}, cover_photo: {resize_to_limit: [2000, 2000]}
-
   has_logidze
 
   belongs_to :country, optional: true
@@ -54,6 +52,7 @@ class Specialist < ApplicationRecord
   has_one_attached :avatar
   has_one_attached :resume
   has_one_attached :cover_photo
+  resize avatar: {resize_to_limit: [400, 400]}, cover_photo: {resize_to_limit: [2000, 2000]}
 
   # DEPRECATED IN FAVOUR OF phone column
   attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
