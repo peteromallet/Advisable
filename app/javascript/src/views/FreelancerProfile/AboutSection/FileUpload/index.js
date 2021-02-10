@@ -116,10 +116,11 @@ const FileUpload = ({ onChange, updated }) => {
     const files = Array.from(e.target.files);
 
     // Check file size
-    const MAX_FILE_SIZE = 1048576; // 1 MB
-    const isExceededSize = files.some(({ size }) => size > MAX_FILE_SIZE);
+    const MAX_SIZE_IN_MB = 1;
+    const maxSizeInBytes = MAX_SIZE_IN_MB * 1048576;
+    const isExceededSize = files.some(({ size }) => size > maxSizeInBytes);
     if (isExceededSize) {
-      error("The size of the file is more than 1 MB");
+      error(`The size of the file is more than ${MAX_SIZE_IN_MB} MB`);
       return false;
     }
 
