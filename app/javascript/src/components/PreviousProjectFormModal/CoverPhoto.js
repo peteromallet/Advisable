@@ -3,6 +3,7 @@ import { find } from "lodash-es";
 import { Box, Text } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import { StyledCoverPhoto, StyledCoverPhotoTag } from "./styles";
+import filesExceedLimit from "src/utilities/filesExceedLimit";
 
 function CoverPhoto({ images, dispatch, resourceName = "project" }) {
   const cover = find(images, { cover: true });
@@ -29,14 +30,8 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
 
     // Check file size
     const MAX_SIZE_IN_MB = 5;
-    const maxSizeInBytes = MAX_SIZE_IN_MB * 1048576;
-    const isExceededSize = files.some(({ size }) => size > maxSizeInBytes);
-    if (isExceededSize) {
-      error(
-        files.length > 1
-          ? `The size of some file is more than ${MAX_SIZE_IN_MB} MB`
-          : `The size of the file is more than ${MAX_SIZE_IN_MB} MB`,
-      );
+    if (filesExceedLimit(files, MAX_SIZE_IN_MB)) {
+      error(`File size cannot exceed ${MAX_SIZE_IN_MB} MB`);
       return false;
     }
 

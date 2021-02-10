@@ -8,6 +8,7 @@ import { theme } from "@advisable/donut";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { DirectUpload } from "@rails/activestorage";
 import { useNotifications } from "src/components/Notifications";
+import filesExceedLimit from "src/utilities/filesExceedLimit";
 import {
   GET_PREVIOUS_PROJECT,
   useUpdatePreviousProjectImage,
@@ -353,14 +354,8 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
 
     // Check file size
     const MAX_SIZE_IN_MB = 5;
-    const maxSizeInBytes = MAX_SIZE_IN_MB * 1048576;
-    const isExceededSize = files.some(({ size }) => size > maxSizeInBytes);
-    if (isExceededSize) {
-      error(
-        files.length > 1
-          ? `The size of some file is more than ${MAX_SIZE_IN_MB} MB`
-          : `The size of the file is more than ${MAX_SIZE_IN_MB} MB`,
-      );
+    if (filesExceedLimit(files, MAX_SIZE_IN_MB)) {
+      error(`File size cannot exceed ${MAX_SIZE_IN_MB} MB`);
       return false;
     }
 

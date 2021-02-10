@@ -10,6 +10,7 @@ import {
   ProgressBar,
 } from "./styles";
 import { useNotifications } from "src/components/Notifications";
+import filesExceedLimit from "src/utilities/filesExceedLimit";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
@@ -48,14 +49,8 @@ const FileUpload = ({ label, onChange, preview, accept, maxSizeInMB = 2 }) => {
     const files = Array.from(e.target.files);
 
     // Check file size
-    const maxSizeInBytes = maxSizeInMB * 1048576;
-    const isExceededSize = files.some(({ size }) => size > maxSizeInBytes);
-    if (isExceededSize) {
-      error(
-        files.length > 1
-          ? `The size of some file is more than ${maxSizeInMB} MB`
-          : `The size of the file is more than ${maxSizeInMB} MB`,
-      );
+    if (filesExceedLimit(files, maxSizeInMB)) {
+      error(`File size cannot exceed ${maxSizeInMB} MB`);
       return false;
     }
 
