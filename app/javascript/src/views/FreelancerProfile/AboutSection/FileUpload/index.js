@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Box, Text, theme } from "@advisable/donut";
+import { useNotifications } from "src/components/Notifications";
 import { rgba } from "polished";
 import { DirectUpload } from "@rails/activestorage";
 import { Camera } from "@styled-icons/feather";
 import { AnimatePresence, motion } from "framer-motion";
 import styled, { keyframes } from "styled-components";
+import filesExceedLimit from "src/utilities/filesExceedLimit";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
@@ -79,10 +81,11 @@ const FileUploader = styled.div`
   }
 `;
 
-const FileUpload = ({ onChange, updated }) => {
+const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [processing, setProcessing] = useState(false);
+  const { error } = useNotifications();
 
   const progressHandler = {
     directUploadWillStoreFileWithXHR(request) {
@@ -111,8 +114,16 @@ const FileUpload = ({ onChange, updated }) => {
 
   const handleChange = (e) => {
     if (!e.target?.value) return false;
+    const files = Array.from(e.target.files);
+
+    // Check file size
+    if (filesExceedLimit(files, maxSizeInMB)) {
+      error(`File size cannot exceed ${maxSizeInMB} MB`);
+      return false;
+    }
+
     setUploading(true);
-    Array.from(e.target.files).forEach((file) => upload(file));
+    files.forEach((file) => upload(file));
   };
 
   const progress =
@@ -156,7 +167,7 @@ const FileUpload = ({ onChange, updated }) => {
       </AnimatePresence>
       <FileUploader>
         <Camera size={20} strokeWidth={2} />
-        <input type="file" accept=".png,.jpg,.jpeg" onChange={handleChange} />
+        <input type="file" accept=".png, .jpg, .jpeg" onChange={handleChange} />
       </FileUploader>
     </Wrapper>
   );

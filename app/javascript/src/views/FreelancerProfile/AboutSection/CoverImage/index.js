@@ -24,7 +24,9 @@ function CoverImage({ coverPhoto, isOwner }) {
 
   return (
     <CoverImageWrapper id="cover-img-wrapper">
-      {isOwner && <FileUpload onChange={submit} updated={updated} />}
+      {isOwner && (
+        <FileUpload onChange={submit} updated={updated} maxSizeInMB={5} />
+      )}
       <StyledCoverImage src={image} loaded={loaded} />
     </CoverImageWrapper>
   );

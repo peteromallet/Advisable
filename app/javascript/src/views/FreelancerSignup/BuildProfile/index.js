@@ -95,6 +95,7 @@ const BuildProfile = ({ history, specialist }) => {
               }}
               label="Upload a profile photo"
               accept=".png, .jpg, .jpeg"
+              maxSizeInMB={1}
             />
           </Box>
           <FormField

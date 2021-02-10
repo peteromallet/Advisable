@@ -7,6 +7,8 @@ import styled, { css } from "styled-components";
 import { theme } from "@advisable/donut";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { DirectUpload } from "@rails/activestorage";
+import { useNotifications } from "src/components/Notifications";
+import filesExceedLimit from "src/utilities/filesExceedLimit";
 import {
   GET_PREVIOUS_PROJECT,
   useUpdatePreviousProjectImage,
@@ -296,6 +298,7 @@ const PortfolioImage = React.memo(function PortfolioImage({
 function ImageTiles({ images, dispatch, previousProjectId }) {
   const client = useApolloClient();
   const cover = find(images, { cover: true });
+  const { error } = useNotifications();
 
   const handleSetCover = (image) => () => {
     if (image.cover) return;
@@ -346,8 +349,18 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
   });
 
   const handleChange = (e) => {
+    if (!e.target?.value) return false;
+    const files = Array.from(e.target.files);
+
+    // Check file size
+    const MAX_SIZE_IN_MB = 5;
+    if (filesExceedLimit(files, MAX_SIZE_IN_MB)) {
+      error(`File size cannot exceed ${MAX_SIZE_IN_MB} MB`);
+      return false;
+    }
+
     const cover = find(images, { cover: true });
-    Array.from(e.target.files).forEach((file, i) => {
+    files.forEach((file, i) => {
       dispatch({
         type: "NEW_UPLOAD",
         file,
@@ -365,7 +378,7 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
         <input
           type="file"
           name="upload-image"
-          accept=".png,.jpg,.jpeg"
+          accept=".png, .jpg, .jpeg"
           onChange={handleChange}
           multiple
         />
