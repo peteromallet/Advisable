@@ -3,6 +3,8 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.8",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.12.13",
     "@popperjs/core": "^2.6.0",
