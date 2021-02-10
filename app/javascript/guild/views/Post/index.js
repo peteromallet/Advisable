@@ -28,6 +28,7 @@ const Post = () => {
   });
   const post = data?.guildPost;
   const guildViewer = viewer?.guild;
+  const isAuthor = viewer?.id === post?.author?.id;
 
   if (loading) return <Loading />;
 
@@ -134,10 +135,11 @@ const Post = () => {
             {!guildViewer ? (
               <JoinGuild />
             ) : (
-              /* TODO */
-              <Box display="flex" justifyContent="center">
-                <PostActions size={{ _: "lg", md: "xl" }} post={post} />
-              </Box>
+              (isAuthor || !post.resolved) && (
+                <Box display="flex" justifyContent="center">
+                  <PostActions size={{ _: "lg", md: "xl" }} post={post} />
+                </Box>
+              )
             )}
           </Box>
         </Card>
