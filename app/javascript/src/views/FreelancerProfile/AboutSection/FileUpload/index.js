@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Text, theme } from "@advisable/donut";
+import { Box, Text, Tooltip, theme } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import { rgba } from "polished";
 import { DirectUpload } from "@rails/activestorage";
@@ -132,6 +132,15 @@ const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
     (updated === false && 100) ||
     0;
 
+  const TooltipContent = (
+    <Box>
+      <Text color="blue100">Upload Photo</Text>
+      <Text color="blue200" size="2xs">
+        PNG or JPEG | {maxSizeInMB} MB
+      </Text>
+    </Box>
+  );
+
   return (
     <Wrapper>
       <AnimatePresence>
@@ -165,10 +174,16 @@ const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
           </BluredBackground>
         )}
       </AnimatePresence>
-      <FileUploader>
-        <Camera size={20} strokeWidth={2} />
-        <input type="file" accept=".png, .jpg, .jpeg" onChange={handleChange} />
-      </FileUploader>
+      <Tooltip placement="top" content={TooltipContent}>
+        <FileUploader>
+          <Camera size={20} strokeWidth={2} />
+          <input
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            onChange={handleChange}
+          />
+        </FileUploader>
+      </Tooltip>
     </Wrapper>
   );
 };
