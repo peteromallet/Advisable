@@ -28,7 +28,7 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
     const files = Array.from(e.target.files);
 
     // Check file size
-    const MAX_SIZE_IN_MB = 3;
+    const MAX_SIZE_IN_MB = 5;
     const maxSizeInBytes = MAX_SIZE_IN_MB * 1048576;
     const isExceededSize = files.some(({ size }) => size > maxSizeInBytes);
     if (isExceededSize) {
