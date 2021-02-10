@@ -77,6 +77,7 @@ const WorkHistory = ({ specialist, history }) => {
                 formik.setFieldValue("resume", blob.signed_id);
               }}
               accept=".pdf"
+              maxSizeInMB={5}
             />
             {formik.errors.resume && (
               <Text size="xs" color="red500" mt="xs">
