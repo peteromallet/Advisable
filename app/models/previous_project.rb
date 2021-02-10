@@ -25,10 +25,12 @@ class PreviousProject < ApplicationRecord
   self.table_name = 'off_platform_projects'
 
   include Uid
+  include ResizedImage
 
   has_logidze
 
   has_one_attached :contact_image
+  resize contact_image: {resize_to_limit: [400, 400]}
 
   belongs_to :specialist
   has_one :account, through: :specialist

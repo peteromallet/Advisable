@@ -20,10 +20,8 @@ module Types
 
     def avatar
       return unless project.is_a?(PreviousProject)
-      return unless project.contact_image.attached?
 
-      host = ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-      Rails.application.routes.url_helpers.rails_blob_url(project.contact_image, host: host)
+      project.resized_contact_image_url
     end
 
     def name

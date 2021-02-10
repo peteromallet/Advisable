@@ -3,8 +3,12 @@
 class SalesPerson < ApplicationRecord
   include Uid
   include Airtable::Syncable
+  include ResizedImage
+
   has_many :companies, dependent: :nullify
+
   has_one_attached :image
+  resize image: {resize_to_limit: [400, 400]}
 
   def name
     "#{first_name} #{last_name}"
