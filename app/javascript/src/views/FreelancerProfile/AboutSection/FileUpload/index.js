@@ -6,6 +6,7 @@ import { DirectUpload } from "@rails/activestorage";
 import { Camera } from "@styled-icons/feather";
 import { AnimatePresence, motion } from "framer-motion";
 import styled, { keyframes } from "styled-components";
+import filesExceedLimit from "src/utilities/filesExceedLimit";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
@@ -117,10 +118,8 @@ const FileUpload = ({ onChange, updated }) => {
 
     // Check file size
     const MAX_SIZE_IN_MB = 1;
-    const maxSizeInBytes = MAX_SIZE_IN_MB * 1048576;
-    const isExceededSize = files.some(({ size }) => size > maxSizeInBytes);
-    if (isExceededSize) {
-      error(`The size of the file is more than ${MAX_SIZE_IN_MB} MB`);
+    if (filesExceedLimit(files, MAX_SIZE_IN_MB)) {
+      error(`File size cannot exceed ${MAX_SIZE_IN_MB} MB`);
       return false;
     }
 

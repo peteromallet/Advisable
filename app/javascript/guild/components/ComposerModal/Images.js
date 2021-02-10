@@ -8,6 +8,7 @@ import { theme } from "@advisable/donut";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { DirectUpload } from "@rails/activestorage";
 import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
+import filesExceedLimit from "src/utilities/filesExceedLimit";
 import { useNotifications } from "src/components/Notifications";
 import {
   useUpdateGuildPostImage,
@@ -346,14 +347,8 @@ function ImageTiles({ images, dispatch, guildPostId }) {
 
     // Check file size
     const MAX_SIZE_IN_MB = 5;
-    const maxSizeInBytes = MAX_SIZE_IN_MB * 1048576;
-    const isExceededSize = files.some(({ size }) => size > maxSizeInBytes);
-    if (isExceededSize) {
-      error(
-        files.length > 1
-          ? `The size of some file is more than ${MAX_SIZE_IN_MB} MB`
-          : `The size of the file is more than ${MAX_SIZE_IN_MB} MB`,
-      );
+    if (filesExceedLimit(files, MAX_SIZE_IN_MB)) {
+      error(`File size cannot exceed ${MAX_SIZE_IN_MB} MB`);
       return false;
     }
 
