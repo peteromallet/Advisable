@@ -10,7 +10,5 @@ class CreateNotifications < ActiveRecord::Migration[6.1]
       t.datetime :read_at
       t.timestamps
     end
-
-    Guild::Reaction.order(:created_at).find_each { |r| r.create_notification!(read_at: Time.current) }
   end
 end

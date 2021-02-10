@@ -40,9 +40,7 @@ module Guild
       def touch_guild_notifications_read_at
         return unless guild_unread_notifications
 
-        guild_notifications.unread.find_each do |notification|
-          notification.update!(read_at: Time.current)
-        end
+        guild_notifications.unread.each(&:mark_as_read)
       end
 
       def guild_unread_notifications

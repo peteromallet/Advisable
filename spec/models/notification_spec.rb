@@ -32,4 +32,33 @@ RSpec.describe Notification, type: :model do
       end.to raise_error(ActiveRecord::RecordInvalid).with_message(/Action is not included in the list/)
     end
   end
+
+  context "with notifiables" do
+    it "is destroyed with the post" do
+      notification.save!
+      expect do
+        guild_post.destroy
+      end.to change(described_class, :count).from(1).to(0)
+    end
+
+    it "is destroyed with the reaction" do
+      reaction = create(:guild_reaction, reactionable: guild_post)
+      reaction.create_notification!
+
+      expect do
+        guild_post.destroy
+      end.to change(described_class, :count).from(1).to(0)
+    end
+
+    it "is destroyed with the actor" do
+      # bypass unmockable http request from before_destroy in Syncable
+      notification.actor.specialist.update!(airtable_id: nil)
+
+      notification.save!
+
+      expect do
+        notification.actor.destroy
+      end.to change(described_class, :count).from(1).to(0)
+    end
+  end
 end

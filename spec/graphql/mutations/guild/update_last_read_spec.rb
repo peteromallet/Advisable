@@ -32,8 +32,12 @@ RSpec.describe Mutations::Guild::UpdateLastRead do
 
     let(:other) { create(:specialist, :guild) }
 
+    before do
+      reaction = guild_post.reactions.create(specialist: other)
+      reaction.create_notification!
+    end
+
     it "updates guild unread notifications as read" do
-      guild_post.reactions.create(specialist: other)
       unread_notification = guild_post.specialist.guild_notifications.first
 
       freeze_time do

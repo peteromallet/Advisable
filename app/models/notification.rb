@@ -1,19 +1,25 @@
 # frozen_string_literal: true
 
 class Notification < ApplicationRecord
-  ACTION_TYPES = %w[post_reaction suggested_post].freeze
+  GUILD_ACTION_TYPES = %w[post_reaction suggested_post].freeze
+
+  ACTION_TYPES = [*GUILD_ACTION_TYPES].freeze
 
   belongs_to :account
   belongs_to :actor, class_name: "Account", optional: true
   belongs_to :notifiable, polymorphic: true
 
   scope :guild, lambda {
-    where(action: %w[post_reaction suggested_post]).
+    where(action: GUILD_ACTION_TYPES).
       order(created_at: :desc)
   }
   scope :unread, lambda {
     where(read_at: nil)
   }
+
+  def mark_as_read
+    update!(read_at: Time.current)
+  end
 
   validates :action, inclusion: {in: ACTION_TYPES}
 end

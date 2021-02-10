@@ -10,7 +10,8 @@ RSpec.describe 'Guild notifications', type: :system do
 
   before do
     specialist.account.update!(completed_tutorials: ["GUILD"])
-    post.reactions.create!(specialist: other_specialist)
+    reaction = post.reactions.create!(specialist: other_specialist)
+    reaction.create_notification!
     authenticate_as(specialist)
   end
 
