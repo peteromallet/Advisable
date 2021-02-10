@@ -47,7 +47,7 @@ function StopWorkingModal({ modal, clientName, applicationId }) {
   };
 
   return (
-    <Modal modal={modal}>
+    <Modal modal={modal} label="Stop working">
       <Text mb={1} fontSize="5xl" fontWeight="medium" letterSpacing="-0.03rem">
         Stop working
       </Text>

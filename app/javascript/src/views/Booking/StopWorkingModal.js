@@ -41,7 +41,7 @@ const StopWorkingModal = ({ isOpen, onClose, application }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} label="Stop working">
       <Box padding="l">
         <Text
           pr="s"
