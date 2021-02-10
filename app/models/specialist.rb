@@ -21,6 +21,9 @@
 # [Accepted] Their application has been successfull.
 #
 class Specialist < ApplicationRecord
+  AVATAR_SIZE = {resize_to_limit: [400, 400]}.freeze
+  COVER_PHOTO_SIZE = {resize_to_limit: [2000, 2000]}.freeze
+
   include Uid
   include SpecialistOrUser
   include Airtable::Syncable
@@ -67,7 +70,7 @@ class Specialist < ApplicationRecord
 
   # Wether or not the specialist has provided payment information. Returns true
   # if enough payment information has been provided.
-  def has_setup_payments
+  def has_setup_payments # rubocop:disable Naming/PredicateName
     bank_holder_name.present? &&
       bank_holder_address.present? &&
       bank_currency.present?
@@ -80,17 +83,17 @@ class Specialist < ApplicationRecord
 
   def avatar_or_image
     if avatar.attached?
-      return(
-        Rails.application.routes.url_helpers.rails_blob_url(
-          avatar,
-          host:
-            ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-        )
-      )
+      host = ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+      if avatar.variant(AVATAR_SIZE).processed?
+        Rails.application.routes.url_helpers.rails_representation_url(avatar.variant(AVATAR_SIZE), host: host)
+      else
+        ResizeImageJob.perform_later(self, :avatar, AVATAR_SIZE)
+        Rails.application.routes.url_helpers.rails_blob_url(avatar, host: host)
+      end
+    else
+      # Fallback to the airtable image if they have not uploaded an avatar
+      image.try(:[], 'url')
     end
-
-    # Fallback to the airtable image if they have not uploaded an avatar
-    image.try(:[], 'url')
   end
 end
 

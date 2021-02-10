@@ -84,13 +84,15 @@ module Types
     field :cover_photo, String, null: true
 
     def cover_photo
-      return nil unless  object.cover_photo.attached?
+      return nil unless object.cover_photo.attached?
 
-      Rails.application.routes.url_helpers.rails_blob_url(
-        object.cover_photo,
-        host:
-          ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-      )
+      host = ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+      if object.cover_photo.variant(Specialist::COVER_PHOTO_SIZE).processed?
+        Rails.application.routes.url_helpers.rails_representation_url(object.cover_photo.variant(Specialist::COVER_PHOTO_SIZE), host: host)
+      else
+        ResizeImageJob.perform_later(object, :cover_photo, Specialist::COVER_PHOTO_SIZE)
+        Rails.application.routes.url_helpers.rails_blob_url(object.cover_photo, host: host)
+      end
     end
 
     field :skills, [Types::SpecialistSkillType, {null: true}], null: true do
@@ -220,7 +222,7 @@ module Types
       description 'Wether or not the specialist has created their account yet'
     end
 
-    def has_account # rubocop:disable Naming/PredicateName
+    def has_account
       object.account.has_password?
     end
 
