@@ -98,7 +98,6 @@ function Reason({ data, formik, onNext, onCancel }) {
       )}
       <Box marginTop={8}>
         <Button
-          type="button"
           variant="dark"
           marginRight={3}
           onClick={onNext}

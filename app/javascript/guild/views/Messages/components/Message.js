@@ -120,7 +120,7 @@ export default function Message({ message, author, isAuthor }) {
             mr={isAuthor ? 1 : null}
             textAlign={isAuthor ? "right" : "left"}
           >
-            {relativeDate(message.dateCreated)}
+            {relativeDate(message.dateCreated)} ago
           </Text>
         </Box>
         {isAuthor ? (
