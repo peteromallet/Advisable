@@ -1,7 +1,7 @@
-import * as React from "react";
+import React from "react";
 import { Description } from "./styles";
 
-export default props => {
+export default function TaskDrawerDescription(props) {
   const ref = React.useRef(null);
   const [rows, setRows] = React.useState(1);
 
@@ -28,7 +28,7 @@ export default props => {
     }
   }, [props.isFocused]);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     props.onChange(e.target.value);
   };
 
@@ -44,4 +44,4 @@ export default props => {
       placeholder={props.readOnly ? "No Description" : "Add a description..."}
     />
   );
-};
+}

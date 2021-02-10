@@ -25,8 +25,8 @@ module.exports = {
   coverageReporters: ["html"],
   coverageDirectory: "<rootDir>/jest-coverage",
   collectCoverageFrom: [
-    "<rootDir>/app/javascript/src/**/*.{js,tsx,ts}",
-    "<rootDir>/donut/src/**/*.{js,tsx,ts}",
+    "<rootDir>/app/javascript/src/**/*.{js}",
+    "<rootDir>/donut/src/**/*.{js}",
     "!<rootDir>/app/javascript/src/**/*.stories.js",
   ],
   coverageThreshold: {

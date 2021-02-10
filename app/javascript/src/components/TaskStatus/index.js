@@ -1,12 +1,6 @@
-import * as React from "react";
+import React from "react";
 import Status from "../Status";
 import { Lock } from "@styled-icons/feather";
-
-interface Props {
-  children: string;
-  isClient?: boolean;
-  showIcon?: boolean;
-}
 
 const ICONS = {
   "Quote Provided": <Lock />,
@@ -16,11 +10,11 @@ const ICONS = {
   Approved: <Lock />,
 };
 
-export default ({ children }: Props) => {
+export default function TaskStatus({ children }) {
   return (
     <Status>
       {ICONS[children] && ICONS[children]}
       {children}
     </Status>
   );
-};
+}

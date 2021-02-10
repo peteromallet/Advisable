@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { X } from "@styled-icons/feather";
 import { useMobile } from "../../components/Breakpoint";
 import useMessageCount from "../../hooks/useMessageCount";
