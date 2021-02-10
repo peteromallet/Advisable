@@ -24,7 +24,7 @@ export const hasCompleteTasksStep = (application) => {
   // Filter tasks to see if there are any tasks that still need a name or
   // description.
   const incompleteTasks = application.tasks.filter((t) => {
-    return !Boolean(t.name) || !Boolean(t.description);
+    return !t.name || !t.description;
   });
   return hasAddedTasks && incompleteTasks.length === 0;
 };
