@@ -23,6 +23,15 @@ RSpec.describe 'Create post flow', type: :system do
     choose 'Looking for advice'
 
     # Post content
+    expect(page).to have_content('Please add a title for this post')
+    expect(page).to have_content('Please add some content for this post')
+
+    # Form Validation
+    fill_in :title, with: 'foo'
+    expect(page).to have_content('title must be at least 8 characters')
+    find('.public-DraftEditor-content').base.send_keys('bar')
+    expect(page).to have_content('body must be at least 16 characters')
+
     fill_in :title, with: title
     find('.public-DraftEditor-content').base.send_keys(content)
     click_on 'Continue'
