@@ -1,15 +1,26 @@
-class Toby::Resolvers::Collection < GraphQL::Schema::Resolver
-  def resolve(lookahead:, filter: nil)
-    values = field.model.all
-    return values if filter.nil?
+# frozen_string_literal: true
 
-    filter.each do |name, filters|
-      filters.arguments.argument_values.each do |_method, argument|
-        type = argument.definition.type_class.type
-        filter_class = type.respond_to?(:of_type) ? type.of_type.of_type : type
-        values = filter_class.apply(values, name, argument.value)
+module Toby
+  module Resolvers
+    class Collection < GraphQL::Schema::Resolver
+      def resolve(filters: [])
+        records = field.resource.model.all
+
+        filters.each do |filter|
+          args = filter.arguments.argument_values.transform_values(&:value)
+          name = args["attribute"].underscore.to_sym
+          attribute = field.resource.attributes.find { |attr| attr.name == name }
+          next if attribute.nil?
+
+          filter_class = attribute.class.filters[args["type"].to_sym]
+          next if filter_class.nil?
+
+          value = args["value"].presence || args["values"].presence
+          records = filter_class.apply(records, name, value)
+        end
+
+        records
       end
     end
-    values
   end
 end

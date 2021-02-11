@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Toby
   module Attributes
     class BaseAttribute
@@ -36,7 +38,7 @@ module Toby
         resource.public_send("#{name}=", value)
       end
 
-      def filter(records, filters)
+      def filter(records, _filters)
         records
       end
 
@@ -55,20 +57,6 @@ module Toby
 
         def filters
           @filters || {}
-        end
-
-        def filter_type
-          return nil if filters.empty?
-
-          @filter_type ||= begin
-            root = self
-            Class.new(GraphQL::Schema::InputObject) do
-              graphql_name("#{root.name.split('::').last}Filter")
-              root.filters.each do |filter, type|
-                argument filter, type, required: false
-              end
-            end
-          end
         end
 
         def attribute_type

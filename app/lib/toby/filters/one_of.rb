@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Toby
   module Filters
-    class OneOf < GraphQL::Types::String
-      def self.apply(records, name, value)
-        records.where({name.to_s.underscore => value})
+    class OneOf
+      def self.apply(records, name, values)
+        records.where(name => values)
       end
     end
   end
