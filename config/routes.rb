@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'auth_providers#create'
 
   get '/guild', to: 'application#guild', as: :guild_root
-  get '/guild/posts/:guild_post_id', to: 'application#guild', as: :guild_post
+  get '/guild/posts/:id', to: 'application#guild_post', as: :guild_post
   get '/guild/*guild_path', to: 'application#guild'
 
   post '/webhooks/twilio_chat', to: 'webhooks#twilio_chat'
