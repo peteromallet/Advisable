@@ -59,7 +59,7 @@ export const GET_JOB = gql`
   ${projectFields}
 
   query getJob($id: ID!) {
-    skills(local: true) {
+    skills {
       id
       name
     }
