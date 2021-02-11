@@ -1,4 +1,4 @@
-# frozen_stirng_literal: true
+# frozen_string_literal: true
 
 # Removes node_modules after compiling the assets to reduce heroku slug size
 # Adapted from https://blog.saeloun.com/2020/05/04/how-to-reduce-heroku-slug-size.html
