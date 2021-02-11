@@ -28,6 +28,7 @@ const Post = () => {
   });
   const post = data?.guildPost;
   const guildViewer = viewer?.guild;
+  const isAuthor = viewer?.id === post?.author?.id;
 
   if (loading) return <Loading />;
 
@@ -86,6 +87,10 @@ const Post = () => {
               {post.title}
             </Text>
 
+            {post.resolved ? (
+              <ResolvedNotice authorName={post.author.firstName} />
+            ) : null}
+
             <Box mb={10} display="flex" justifyContent="space-between">
               <Box display="flex" alignItems="center">
                 <Avatar
@@ -112,19 +117,17 @@ const Post = () => {
                 </Box>
               </Box>
 
-              <Box display={{ _: "none", s: "flex" }} alignItems="center">
-                <ConnectionsCount mr={3} post={post} />
-                <PostActions post={post} />
-              </Box>
+              {!post.resolved ? (
+                <Box display={{ _: "none", s: "flex" }} alignItems="center">
+                  <ConnectionsCount mr={3} post={post} />
+                  <PostActions post={post} />
+                </Box>
+              ) : null}
             </Box>
 
             <Box mb={8}>
               <Markdown>{post.body}</Markdown>
             </Box>
-
-            {post.resolved ? (
-              <ResolvedNotice authorName={post.author.firstName} />
-            ) : null}
 
             <Topics topics={post.guildTopics} />
 
@@ -132,9 +135,11 @@ const Post = () => {
             {!guildViewer ? (
               <JoinGuild />
             ) : (
-              <Box display="flex" justifyContent="center">
-                <PostActions size={{ _: "lg", md: "xl" }} post={post} />
-              </Box>
+              (isAuthor || !post.resolved) && (
+                <Box display="flex" justifyContent="center">
+                  <PostActions size={{ _: "lg", md: "xl" }} post={post} />
+                </Box>
+              )
             )}
           </Box>
         </Card>
