@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_sentry_context
   before_action :authenticate_with_magic_link, only: %i[frontend guild]
+  before_action :set_guild_post, only: [:guild], if: -> { params[:guild_post_id] }
 
   def frontend
     respond_to(&:html)
@@ -41,5 +42,9 @@ class ApplicationController < ActionController::Base
     else
       Raven.user_context(nil)
     end
+  end
+
+  def set_guild_post
+    @guild_post = Guild::Post.published.find_by(shareable: true, id: params[:guild_post_id])
   end
 end
