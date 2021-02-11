@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
-import { Box, Link } from "@advisable/donut";
+import { Box, Link, InputError } from "@advisable/donut";
 import SubmitButton from "@advisable-main/components/SubmitButton";
 import { yourPostValidationSchema } from "./validationSchemas";
 import PostTitle from "./PostTitle";
@@ -10,12 +10,6 @@ import RichTextEditor from "../RichTextEditor";
 
 const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
   const { pathWithState } = useLocationStages();
-
-  const yourPostInitialValues = {
-    title: "",
-    body: "",
-    ...initialValues,
-  };
 
   const handleSubmit = async (values, actions) => {
     const { errors } = await onSubmit(values);
@@ -49,7 +43,7 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
         <Formik
           validateOnMount
           onSubmit={handleSubmit}
-          initialValues={yourPostInitialValues}
+          initialValues={initialValues}
           validationSchema={yourPostValidationSchema}
         >
           {(formik) => (
@@ -61,11 +55,17 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
                 placeholder="Post title"
                 autoFocus
               />
+              {formik.errors.title && (
+                <InputError mt="2">{formik.errors.title}</InputError>
+              )}
               <Box height="1px" bg="neutral100" marginY="xl" />
               <RichTextEditor
                 value={formik.values.body}
                 onChange={(raw) => formik.setFieldValue("body", raw)}
               />
+              {formik.errors.body && (
+                <InputError mt="2">{formik.errors.body}</InputError>
+              )}
               <SubmitButton
                 size="l"
                 marginY="3xl"
