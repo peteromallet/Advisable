@@ -9,6 +9,12 @@ export function pluralizeType(type) {
   return pluralize(type.toLowerCase());
 }
 
+export function useResourceData() {
+  const { resource } = useParams();
+  const schemaData = useSchema();
+  return getResourceByParam(schemaData.resources, resource);
+}
+
 // Assumes that there is a resource param in the URL. e.g /accounts
 export function useResources() {
   const { resource } = useParams();
@@ -17,6 +23,7 @@ export function useResources() {
   const query = generateCollectionQuery(schemaData, resourceData);
   const response = useQuery(query, {
     notifyOnNetworkStatusChange: true,
+    variables: {},
   });
   return {
     ...response,
@@ -47,11 +54,13 @@ function generateCollectionQuery(schemaData, resourceData) {
     query: {
       __variables: {
         cursor: "String",
+        filters: "[Filter!]",
       },
       records: {
         __args: {
           first: 100,
           after: new VariableType("cursor"),
+          filters: new VariableType("filters"),
         },
         __aliasFor: resourceData.queryNameCollection,
         pageInfo: {
@@ -65,7 +74,13 @@ function generateCollectionQuery(schemaData, resourceData) {
     },
   };
 
-  return gql(jsonToGraphQLQuery(queryObject));
+  let queryString = jsonToGraphQLQuery(queryObject);
+  queryString =
+    queryString.substr(0, 6) +
+    `${resourceData.type}Collection` +
+    queryString.substr(6);
+
+  return gql(queryString);
 }
 
 export function getType(schema, type) {
