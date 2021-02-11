@@ -13,7 +13,11 @@ RSpec.describe ZappierInteractorController, type: :request do
     let(:extra_params) { {specialist_id: specialist.uid, project_id: project.uid} }
     let(:params) { {application: application_params.merge(extra_application_params), key: key}.merge(extra_params) }
 
-    it "creates the application and returns its uid" do
+    before { allow_any_instance_of(Application).to receive(:sync_to_airtable) }
+
+    it "creates the application, syncs to airtable, and returns its uid" do
+      expect_any_instance_of(Application).to receive(:sync_to_airtable)
+
       post("/zappier_interactor/create_application", params: params)
       expect(response).to have_http_status(:success)
       application = Application.find_by(uid: JSON[response.body]["uid"])
@@ -78,7 +82,10 @@ RSpec.describe ZappierInteractorController, type: :request do
     let(:extra_application_params) { {} }
     let(:params) { {application: application_params.merge(extra_application_params), uid: application.uid, key: key} }
 
-    it "updates the application" do
+    before { allow_any_instance_of(Application).to receive(:sync_to_airtable) }
+
+    it "updates the application and syncs to airtable" do
+      expect_any_instance_of(Application).to receive(:sync_to_airtable)
       post("/zappier_interactor/update_application", params: params)
       expect(response).to have_http_status(:success)
       application.reload
