@@ -46,8 +46,10 @@ export default function Filters({
               <option key={field}>{field}</option>
             ))}
           </select>
-          <select>
+          <select onChange={handleChange(filter.id, "type")}>
             <option>contains</option>
+            <option value="is_empty">Is Empty</option>
+            <option value="not_empty">Is Not Empty</option>
           </select>
           <input onChange={handleChange(filter.id, "value")} type="text" />
           <button onClick={() => removeFilter(filter.id)}>x</button>
