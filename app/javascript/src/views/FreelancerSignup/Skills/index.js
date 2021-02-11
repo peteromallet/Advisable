@@ -11,7 +11,7 @@ import { ArrowRight } from "@styled-icons/feather";
 
 export const GET_SKILLS = gql`
   query {
-    skills(local: true) {
+    skills {
       value: name
       label: name
     }
