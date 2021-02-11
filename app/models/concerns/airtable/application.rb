@@ -99,6 +99,8 @@ module Airtable
       self['Applied At'] = application.applied_at
       self['Rejected Reason'] = application.rejection_reason
       self['Proposal Comment'] = application.proposal_comment
+      self['Advisable Comment'] = application.comment
+      self['Rejected Reason Comment'] = application.rejection_reason_comment
       self['Rejected Feedback'] = application.rejection_feedback
       self['References Requested'] = application.references_requested ? 'Yes' : nil
       self['Project Type'] = application.project_type
