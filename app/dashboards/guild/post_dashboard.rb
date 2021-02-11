@@ -31,7 +31,8 @@ module Guild
       boosted_at: Field::DateTime,
       engagements_count: Field::Number,
       audience_type: Field::String.with_options(searchable: false, collection: ->(_field) { Guild::Post::AUDIENCE_TYPES }),
-      pinned: Field::Boolean
+      pinned: Field::Boolean,
+      resolved_at: Field::DateTime
     }.freeze
 
     # COLLECTION_ATTRIBUTES
@@ -63,6 +64,7 @@ module Guild
       audience_type
       pinned
       guild_topics
+      resolved_at
     ].freeze
 
     # FORM_ATTRIBUTES
@@ -79,6 +81,7 @@ module Guild
       updated_at
       reactionable_count
       pinned
+      resolved_at
     ].freeze
 
     # COLLECTION_FILTERS
