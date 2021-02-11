@@ -4,6 +4,8 @@ import { useResources } from "../../utilities";
 import StringAttribute from "../../attributes/string";
 import BelongsToAttribute from "../../attributes/belongsTo";
 import { StyledRow, StyledCell } from "../../styles";
+import useFilters from "./useFilters";
+import Filters from "./Filters";
 
 const ATTRIBUTES = {
   StringAttribute,
@@ -16,7 +18,8 @@ function renderField(record, field) {
 }
 
 export default function Resource() {
-  const { loading, data, resource, fetchMore, error } = useResources();
+  const filterState = useFilters();
+  const { loading, data, resource, fetchMore, refetch, error } = useResources();
 
   const hasNextPage = data?.records.pageInfo.hasNextPage;
   const endCursor = data?.records.pageInfo.endCursor;
@@ -28,8 +31,13 @@ export default function Resource() {
 
   const edges = data?.records.edges || [];
 
+  if (error) {
+    return <>Failed to load {resource.type}</>;
+  }
+
   return (
     <>
+      <Filters {...filterState} refetch={refetch} />
       <StyledRow>
         <StyledCell>id</StyledCell>
         {resource.attributes.map((attr) => (
