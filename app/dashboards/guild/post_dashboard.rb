@@ -17,7 +17,6 @@ module Guild
         searchable_fields: %w[first_name last_name email]
       ),
       guild_topics: ActsAsTaggableField,
-      # guild_topic_list: Field::String.with_options(searchable: false),
       images: Field::HasMany.with_options(class_name: "Guild::PostImage"),
       id: Field::String.with_options(searchable: false),
       type: Field::Select.with_options(searchable: false, collection: ->(_field) { Guild::Post::POST_TYPES }),
@@ -63,7 +62,6 @@ module Guild
       boosted_at
       audience_type
       pinned
-      guild_topics
       resolved_at
     ].freeze
 
