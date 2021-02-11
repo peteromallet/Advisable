@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Toby
   module Types
     class QueryType < GraphQL::Schema::Object
@@ -10,9 +12,9 @@ module Toby
       end
 
       Resources.resource_classes.each do |resource|
-        field resource.query_name_collection, resource.type.connection_type, null: false, extras: [:lookahead], resolver: Toby::Resolvers::Collection do
-          argument :filter, resource.filter_type, required: false
-          model_class resource.model
+        field resource.query_name_collection, resource.type.connection_type, null: false, resolver: Toby::Resolvers::Collection do
+          argument :filters, [Filter], required: false
+          resource_class resource
         end
 
         define_method resource.query_name_collection do |**args|
