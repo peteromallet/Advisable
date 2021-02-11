@@ -13,6 +13,7 @@ class ZappierInteractorController < ApplicationController
     specialist = Specialist.find_by!(uid: params[:specialist_id])
     project = Project.find_by!(uid: params[:project_id])
     application = Application.create!(application_params.merge({specialist_id: specialist.id, project_id: project.id}))
+    application.sync_to_airtable
     render json: {status: "OK.", uid: application.uid}
   rescue ActiveRecord::RecordNotFound => e
     render json: {error: "Record not found", message: e.message}, status: :unprocessable_entity
@@ -23,6 +24,7 @@ class ZappierInteractorController < ApplicationController
   def update_application
     application = Application.find_by!(uid: params[:uid])
     application.update!(application_params(application.meta_fields))
+    application.sync_to_airtable
     render json: {status: "OK.", uid: application.uid}
   rescue ActiveRecord::RecordNotFound
     render json: {error: "Application not found"}, status: :unprocessable_entity
