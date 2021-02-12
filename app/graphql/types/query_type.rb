@@ -156,7 +156,7 @@ module Types
     end
 
     def invoice(id:)
-      ApiError.not_authenticated unless current_user.try(:is_a?, User)
+      ApiError.not_authenticated unless current_user.is_a?(::User)
 
       invoice = Stripe::Invoice.retrieve(id)
 
