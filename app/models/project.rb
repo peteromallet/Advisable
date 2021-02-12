@@ -10,8 +10,6 @@
 # record. See the app/modals/application.rb for more details.
 #
 class Project < ApplicationRecord
-  self.ignored_columns = %w[sales_person_id owner]
-
   include Uid
   include Airtable::Syncable
   include Project::Constants
@@ -214,13 +212,11 @@ end
 #
 # Indexes
 #
-#  index_projects_on_client_id        (client_id)
-#  index_projects_on_sales_person_id  (sales_person_id)
-#  index_projects_on_user_id          (user_id)
+#  index_projects_on_client_id  (client_id)
+#  index_projects_on_user_id    (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (client_id => clients.id)
-#  fk_rails_...  (sales_person_id => sales_people.id)
 #  fk_rails_...  (user_id => users.id)
 #
