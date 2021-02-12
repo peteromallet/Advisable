@@ -66,7 +66,7 @@ RSpec.describe Account, type: :model do
       account.disable!
       expect(account.deleted_at).not_to be_nil
       expect(account.password).not_to eq(password)
-      expect(account.email).to eq("disabled+#{email.sub("@", "[at]")}@advisable.com")
+      expect(account.email).to eq("disabled+#{email.sub("@", ".at.")}@advisable.com")
     end
 
     it "deletes magic links" do
