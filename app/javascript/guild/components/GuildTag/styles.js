@@ -29,10 +29,6 @@ const color = variant({
       background: colors.lavender,
       ...colorDefaults,
     },
-    needHelp: {
-      background: colors.sunglow,
-      ...colorDefaults,
-    },
   },
 });
 
