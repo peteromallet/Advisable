@@ -28,7 +28,7 @@ class Account < ApplicationRecord
     @name ||= [first_name, last_name].select(&:present?).join(" ")
   end
 
-  def has_password?
+  def has_password? # rubocop:disable Naming/PredicateName
     password_digest.present?
   end
 
@@ -68,7 +68,7 @@ class Account < ApplicationRecord
   def disable!
     self.deleted_at = Time.zone.now
     self.password = SecureRandom.hex
-    self.email = "disabled+#{email.sub("@", "[at]")}@advisable.com"
+    self.email = "disabled+#{email.sub("@", ".at.")}@advisable.com"
     magic_links.destroy_all
     save!
     specialist_or_user&.sync_to_airtable
