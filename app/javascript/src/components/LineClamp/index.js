@@ -8,6 +8,7 @@ const LineClamp = ({ children, maxHeight, character = "…" }) => {
   const midPoint = Math.floor((min + max) / 2);
 
   const handleResize = useCallback(() => {
+    if (!children) return null;
     setMin(0);
     setMax(children.length);
   }, [children]);
