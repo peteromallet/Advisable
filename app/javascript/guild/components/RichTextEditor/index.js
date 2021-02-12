@@ -9,7 +9,7 @@ import { StyledMarkdown } from "../Markdown/styles";
 import { StyledEditor, StyledToolbar, StyledToolbarButton } from "./styles";
 import "draft-js/dist/Draft.css";
 
-export default function RichTextEditor({ value, onChange }) {
+export default function RichTextEditor({ value, onChange, onBlur }) {
   const editor = useRef(null);
   const [editorState, setEditorState] = useState(() => {
     if (!value) return EditorState.createEmpty();
@@ -169,6 +169,7 @@ export default function RichTextEditor({ value, onChange }) {
           ref={editor}
           stripPastedStyles
           onChange={handleChange}
+          onBlur={onBlur}
           editorState={editorState}
           placeholder="Write your post..."
           handleKeyCommand={handleKeyCommand}

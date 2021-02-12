@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
 import { Box, Link, InputError } from "@advisable/donut";
@@ -55,17 +55,18 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
                 placeholder="Post title"
                 autoFocus
               />
-              {formik.errors.title && (
-                <InputError mt="2">{formik.errors.title}</InputError>
-              )}
+              <ErrorMessage component={InputError} name="title" mt="2" />
               <Box height="1px" bg="neutral100" marginY="xl" />
               <RichTextEditor
                 value={formik.values.body}
-                onChange={(raw) => formik.setFieldValue("body", raw)}
+                onBlur={() => {
+                  formik.setFieldTouched("body", true);
+                }}
+                onChange={(raw) => {
+                  formik.setFieldValue("body", raw);
+                }}
               />
-              {formik.errors.body && (
-                <InputError mt="2">{formik.errors.body}</InputError>
-              )}
+              <ErrorMessage component={InputError} name="body" mt="2" />
               <SubmitButton
                 size="l"
                 marginY="3xl"
