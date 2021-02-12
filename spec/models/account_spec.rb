@@ -60,13 +60,18 @@ RSpec.describe Account, type: :model do
     let(:account) { create(:account) }
     let(:specialist) { create(:specialist, account: account) }
 
-    it "sets deleted_at, resets password, and changes email" do
+    it "resets password and changes email, but does not set deleted_at" do
       email = account.email
       password = account.password
       account.disable!
-      expect(account.deleted_at).not_to be_nil
+      expect(account.deleted_at).to be_nil
       expect(account.password).not_to eq(password)
       expect(account.email).to eq("disabled+#{email.sub("@", ".at.")}@advisable.com")
+    end
+
+    it "sets deleted_at when delete: true" do
+      account.disable!(delete: true)
+      expect(account.deleted_at).not_to be_nil
     end
 
     it "deletes magic links" do
@@ -78,6 +83,15 @@ RSpec.describe Account, type: :model do
     it "syncs to airtable" do
       expect(specialist).to receive(:sync_to_airtable)
       account.disable!
+    end
+
+    context "when user" do
+      let(:user) { create(:user, account: account) }
+
+      it "syncs to airtable" do
+        expect(user).to receive(:sync_to_airtable)
+        account.disable!
+      end
     end
   end
 end

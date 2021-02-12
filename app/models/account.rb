@@ -68,8 +68,9 @@ class Account < ApplicationRecord
     AccountMailer.reset_password(id: id, token: token).deliver_later
   end
 
-  def disable!
-    self.deleted_at = Time.zone.now
+  def disable!(delete: false)
+    self.remember_token = nil
+    self.deleted_at = Time.zone.now if delete
     self.password = SecureRandom.hex
     self.email = "disabled+#{email.sub("@", ".at.")}@advisable.com"
     magic_links.destroy_all

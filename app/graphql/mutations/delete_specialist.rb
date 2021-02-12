@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
-class Mutations::DeleteSpecialist < Mutations::BaseMutation
-  include Mutations::Helpers::Authentication
+module Mutations
+  class DeleteSpecialist < Mutations::BaseMutation
+    include Mutations::Helpers::Authentication
 
-  field :status, String, null: true
+    field :status, String, null: true
 
-  def authorized?
-    requires_specialist!
-  end
+    def authorized?
+      requires_specialist!
+    end
 
-  def resolve
-    current_user.account.disable!
-    logout
-    {status: "ok"}
+    def resolve
+      current_user.account.disable!(delete: true)
+      logout
+      {status: "ok"}
+    end
   end
 end

@@ -5,7 +5,8 @@ require "rails_helper"
 RSpec.describe Mutations::RemoveUserFromCompany do
   let(:user) { create(:user, :team_manager) }
   let(:context) { {current_user: user} }
-  let(:dummy_user) { create(:user, company_id: user.company_id) }
+  let(:dummy_account) { create(:account, remember_token: "aaa") }
+  let(:dummy_user) { create(:user, company_id: user.company_id, account: dummy_account) }
   let(:email) { Faker::Internet.email }
   let(:first_name) { Faker::Name.first_name }
   let(:last_name) { Faker::Name.last_name }
@@ -32,7 +33,8 @@ RSpec.describe Mutations::RemoveUserFromCompany do
 
     dummy_user.reload
     expect(dummy_user).to be_disabled
-    expect(dummy_user.company_id).to be_nil
+    expect(dummy_user.account.remember_token).to be_nil
+    expect(dummy_user.account.deleted_at).to be_nil
   end
 
   context "when no team manager permission" do
