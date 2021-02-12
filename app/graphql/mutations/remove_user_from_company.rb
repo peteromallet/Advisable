@@ -21,7 +21,9 @@ module Mutations
 
     def resolve(user_id:)
       user = User.find_by!(uid: user_id)
-      user.update!(company_id: nil, application_status: "Disabled")
+      user.update!(application_status: "Disabled")
+      user.account.disable!
+
       {success: true}
     end
   end
