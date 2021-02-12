@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_08_101504) do
+ActiveRecord::Schema.define(version: 2021_02_09_123824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -451,7 +451,6 @@ ActiveRecord::Schema.define(version: 2021_02_08_101504) do
   end
 
   create_table "off_platform_projects", force: :cascade do |t|
-    t.string "airtable_id"
     t.bigint "specialist_id"
     t.string "industry"
     t.string "contact_first_name"
@@ -493,7 +492,6 @@ ActiveRecord::Schema.define(version: 2021_02_08_101504) do
     t.string "validation_failed_reason"
     t.bigint "reviewed_by_id"
     t.jsonb "log_data"
-    t.index ["airtable_id"], name: "index_off_platform_projects_on_airtable_id"
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
     t.index ["reviewed_by_id"], name: "index_off_platform_projects_on_reviewed_by_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
@@ -618,7 +616,6 @@ ActiveRecord::Schema.define(version: 2021_02_08_101504) do
     t.boolean "remote"
     t.string "sales_status"
     t.string "deposit_payment_intent_id"
-    t.string "owner"
     t.string "campaign_source"
     t.datetime "brief_pending_confirmation_at"
     t.datetime "brief_confirmed_at"
@@ -645,12 +642,10 @@ ActiveRecord::Schema.define(version: 2021_02_08_101504) do
     t.integer "proposed_count", default: 0
     t.integer "hired_count", default: 0
     t.boolean "sourcing"
-    t.bigint "sales_person_id"
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
     t.jsonb "log_data"
     t.index ["client_id"], name: "index_projects_on_client_id"
-    t.index ["sales_person_id"], name: "index_projects_on_sales_person_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -886,27 +881,17 @@ ActiveRecord::Schema.define(version: 2021_02_08_101504) do
     t.string "company_name"
     t.string "title"
     t.string "stripe_customer_id"
-    t.string "project_payment_method"
-    t.string "invoice_name"
-    t.string "invoice_company_name"
-    t.jsonb "address"
-    t.datetime "accepted_project_payment_terms_at"
     t.string "exceptional_project_payment_terms"
     t.string "stripe_setup_intent_id"
     t.string "setup_intent_status"
-    t.string "company_type"
-    t.bigint "industry_id"
     t.string "campaign_name"
     t.string "campaign_source"
     t.string "pid"
     t.string "rid"
     t.string "gclid"
     t.boolean "bank_transfers_enabled", default: false
-    t.string "billing_email"
-    t.boolean "payments_setup", default: false
     t.string "time_zone"
     t.string "campaign_medium"
-    t.bigint "sales_person_id"
     t.string "contact_status"
     t.string "fid"
     t.bigint "budget"
@@ -925,8 +910,6 @@ ActiveRecord::Schema.define(version: 2021_02_08_101504) do
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["country_id"], name: "index_users_on_country_id"
-    t.index ["industry_id"], name: "index_users_on_industry_id"
-    t.index ["sales_person_id"], name: "index_users_on_sales_person_id"
     t.index ["uid"], name: "index_users_on_uid"
   end
 
@@ -1007,7 +990,6 @@ ActiveRecord::Schema.define(version: 2021_02_08_101504) do
   add_foreign_key "project_industries", "industries"
   add_foreign_key "project_skills", "skills"
   add_foreign_key "projects", "clients"
-  add_foreign_key "projects", "sales_people"
   add_foreign_key "projects", "users"
   add_foreign_key "reviews", "specialists"
   add_foreign_key "searches", "off_platform_projects", column: "manually_recommended_project_id"
@@ -1025,8 +1007,6 @@ ActiveRecord::Schema.define(version: 2021_02_08_101504) do
   add_foreign_key "users", "accounts"
   add_foreign_key "users", "companies"
   add_foreign_key "users", "countries"
-  add_foreign_key "users", "industries"
-  add_foreign_key "users", "sales_people"
   add_foreign_key "video_calls", "interviews"
   create_function :logidze_logger, sql_definition: <<-SQL
       CREATE OR REPLACE FUNCTION public.logidze_logger()
