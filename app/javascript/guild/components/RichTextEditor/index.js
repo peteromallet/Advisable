@@ -75,8 +75,14 @@ export default function RichTextEditor({ value, onChange }) {
     .getBlockForKey(selection.getStartKey())
     .getType();
 
+  const focusEditor = () => {
+    if (document.activeElement !== editor.current?.editor) {
+      editor.current?.focus();
+    }
+  };
+
   return (
-    <StyledMarkdown>
+    <StyledMarkdown onClick={focusEditor}>
       <Sticky enabled zIndex={100} offset={-51}>
         <StyledToolbar>
           <StyledToolbarButton
