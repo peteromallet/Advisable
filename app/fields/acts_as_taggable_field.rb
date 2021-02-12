@@ -8,15 +8,14 @@ class ActsAsTaggableField < Administrate::Field::Base
   end
 
   def delimited
-    if data.any?
-      followers_count = Follow.where(followable_id: data.map(&:id), followable_type: "ActsAsTaggableOn::Tag").distinct.count(:follower_id)
-      data.map(&:name).join(", ").concat(" - (#{followers_count})")
-    end
+    data.map(&:name)&.join(", ")
   end
 
   def attribute
     context = super.to_s.singularize
-    "#{context}_list"
+    followers_count = Follow.where(followable_id: data.map(&:id), followable_type: "ActsAsTaggableOn::Tag").distinct.count(:follower_id) if data.any?
+
+    "#{context}_list (#{followers_count || 0})"
   end
 
   def self.permitted_attribute(attr)
