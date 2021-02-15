@@ -1,8 +1,8 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
-import { Box, Link } from "@advisable/donut";
+import { Box, Link, InputError } from "@advisable/donut";
 import SubmitButton from "@advisable-main/components/SubmitButton";
 import { yourPostValidationSchema } from "./validationSchemas";
 import PostTitle from "./PostTitle";
@@ -10,12 +10,6 @@ import RichTextEditor from "../RichTextEditor";
 
 const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
   const { pathWithState } = useLocationStages();
-
-  const yourPostInitialValues = {
-    title: "",
-    body: "",
-    ...initialValues,
-  };
 
   const handleSubmit = async (values, actions) => {
     const { errors } = await onSubmit(values);
@@ -49,7 +43,7 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
         <Formik
           validateOnMount
           onSubmit={handleSubmit}
-          initialValues={yourPostInitialValues}
+          initialValues={initialValues}
           validationSchema={yourPostValidationSchema}
         >
           {(formik) => (
@@ -61,11 +55,18 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
                 placeholder="Post title"
                 autoFocus
               />
+              <ErrorMessage component={InputError} name="title" mt="2" />
               <Box height="1px" bg="neutral100" marginY="xl" />
               <RichTextEditor
                 value={formik.values.body}
-                onChange={(raw) => formik.setFieldValue("body", raw)}
+                onBlur={() => {
+                  formik.setFieldTouched("body", true);
+                }}
+                onChange={(raw) => {
+                  formik.setFieldValue("body", raw);
+                }}
               />
+              <ErrorMessage component={InputError} name="body" mt="2" />
               <SubmitButton
                 size="l"
                 marginY="3xl"
