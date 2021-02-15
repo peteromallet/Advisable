@@ -9,6 +9,7 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
   const cover = find(images, { cover: true });
   const [background, setBackground] = React.useState(cover?.url);
   const { error } = useNotifications();
+  const MAX_SIZE_IN_MB = 5;
 
   React.useEffect(() => {
     if (cover?.uploading) {
@@ -29,7 +30,6 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
     const files = Array.from(e.target.files);
 
     // Check file size
-    const MAX_SIZE_IN_MB = 5;
     if (filesExceedLimit(files, MAX_SIZE_IN_MB)) {
       error(`File size cannot exceed ${MAX_SIZE_IN_MB} MB`);
       return false;
@@ -57,11 +57,12 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
             onChange={handleChange}
             multiple
           />
-          <Text color="blue900" mb="xxs" className="title">
+          <Text color="blue900" mb={1.5} className="title">
             Add images to this {resourceName}
           </Text>
-          <Text fontSize="s" color="neutral500" className="subtext">
-            Upload images to support this {resourceName}
+
+          <Text fontSize="xs" color="neutral500" className="subtext">
+            PNG or JPG files | {MAX_SIZE_IN_MB} MB each
           </Text>
         </Box>
       )}
