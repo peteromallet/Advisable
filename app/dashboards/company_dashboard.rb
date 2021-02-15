@@ -11,6 +11,10 @@ class CompanyDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     users: Field::HasMany,
+    accounts: Field::HasMany.with_options(
+      searchable: true,
+      searchable_fields: %w[first_name last_name email]
+    ),
     projects: Field::HasMany,
     id: Field::String.with_options(searchable: false),
     name: Field::String,
