@@ -47,45 +47,41 @@ class CompanyDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-    users
-    projects
     id
     name
+    users
+    projects
     kind
     created_at
     updated_at
     stripe_customer_id
-    stripe_setup_intent_id
-    setup_intent_status
     payments_setup
+    bank_transfers_enabled
     project_payment_method
-    accepted_project_payment_terms_at
     invoice_name
     invoice_company_name
     billing_email
     vat_number
-    bank_transfers_enabled
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
+    name
     users
     projects
-    name
     kind
+    created_at
+    updated_at
     stripe_customer_id
-    stripe_setup_intent_id
-    setup_intent_status
     payments_setup
+    bank_transfers_enabled
     project_payment_method
-    accepted_project_payment_terms_at
     invoice_name
     invoice_company_name
     billing_email
     vat_number
-    bank_transfers_enabled
   ].freeze
 
   # COLLECTION_FILTERS
