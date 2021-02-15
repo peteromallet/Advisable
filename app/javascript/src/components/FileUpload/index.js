@@ -74,7 +74,9 @@ const FileUpload = ({ label, onChange, preview, accept, maxSizeInMB = 2 }) => {
         {preview && <Preview>{preview(file)}</Preview>}
         <Info uploading={uploading}>
           <MainText>{mainText}</MainText>
-          <SubText>png, jpg. 500x500px</SubText>
+          <SubText>
+            {accept} | {maxSizeInMB} MB
+          </SubText>
         </Info>
         <input type="file" accept={accept} onChange={handleChange} />
         {uploading && <ProgressBar percentage={percentage} />}
