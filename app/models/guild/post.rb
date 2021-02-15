@@ -52,6 +52,10 @@ module Guild
       images.find_by(cover: true)
     end
 
+    def excerpt
+      body&.truncate(300)
+    end
+
     def boost!
       raise BoostError, "Post is already boosted" if boosted_at.present?
       raise BoostError, "Cannot boost unpublished post" unless published?
