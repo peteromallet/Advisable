@@ -38,8 +38,10 @@ export default function RichTextEditor({ value, onChange, onBlur }) {
         }
         return null;
       }
+      const binding = getDefaultKeyBinding(e);
 
-      return getDefaultKeyBinding(e);
+      // ignore bindings that arent supported by react markdown
+      return /italic|underline/.test(binding) ? null : binding;
     },
     [editorState, setEditorState],
   );
