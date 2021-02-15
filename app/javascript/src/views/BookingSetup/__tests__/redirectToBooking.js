@@ -4,10 +4,12 @@ import GET_ACTIVE_APPLICATION from "../../Booking/getActiveApplication";
 import GET_SETUP_DATA from "../getSetupData";
 
 test("User is redirected to booking step when application is already Working", async () => {
+  const company = mockData.company();
+
   let user = mockData.user({
     paymentsSetup: false,
     projectPaymentMethod: null,
-    company: mockData.company(),
+    company,
     paymentMethod: {
       __typename: "PaymentMethod",
       last4: "4444",
@@ -50,6 +52,7 @@ test("User is redirected to booking step when application is already Working", a
           data: {
             viewer: user,
             application,
+            currentCompany: company,
           },
         },
       },

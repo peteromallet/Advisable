@@ -7,7 +7,10 @@ module Types
     field :kind, String, null: true
     field :industry, Types::IndustryType, null: true
     field :sales_person, Types::SalesPersonType, null: true
-    field :bank_transfers_enabled, Boolean, null: true
+
+    field :bank_transfers_enabled, Boolean, null: true do
+      authorize :record_belongs_to_company?
+    end
 
     field :users, [Types::User], null: true do
       authorize :record_belongs_to_company?
