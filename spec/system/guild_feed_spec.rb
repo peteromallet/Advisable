@@ -30,4 +30,11 @@ RSpec.describe 'Guild feed', type: :system do
     visit "/guild/feed"
     expect(page).to have_content("#{author_name} found the connection they were looking for from this post.")
   end
+
+  it 'displays text to copy a referral link' do
+    visit "/guild/feed"
+    expect(page).to have_content("Share your personal referral link with them to apply")
+    find(:xpath, '//div[text() = "Copy Link"]').click
+    expect(page).to have_content("Copied to clipboard")
+  end
 end
