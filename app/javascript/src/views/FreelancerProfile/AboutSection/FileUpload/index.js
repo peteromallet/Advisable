@@ -136,7 +136,7 @@ const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
     <Box>
       <Text color="blue100">Upload Photo</Text>
       <Text color="blue200" size="2xs">
-        PNG or JPEG | {maxSizeInMB} MB
+        PNG or JPG | {maxSizeInMB} MB
       </Text>
     </Box>
   );
