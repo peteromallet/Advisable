@@ -66,7 +66,7 @@ const PaymentMethod = ({ data }) => {
               value="Bank Transfer"
               name="paymentMethod"
               label="Payments via bank transfer"
-              disabled={!data.viewer.bankTransfersEnabled}
+              disabled={!data.currentCompany.bankTransfersEnabled}
               description="We will collect payment by sending you an invoice"
             />
           </RadioGroup>

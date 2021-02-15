@@ -18,9 +18,13 @@ import START_WORKING from "../startWorking";
 import graphqlFields from "../../../__mocks__/graphqlFields";
 
 test("User can complete booking setup", async () => {
+  const company = mockData.company({
+    bankTransfersEnabled: true,
+  });
+
   let user = mockData.user({
+    company,
     paymentsSetup: false,
-    company: mockData.company(),
     paymentMethod: {
       __typename: "PaymentMethod",
       last4: "4444",
@@ -46,7 +50,11 @@ test("User can complete booking setup", async () => {
       mockQuery(
         GET_SETUP_DATA,
         { id: "rec1234" },
-        { viewer: user, application },
+        {
+          viewer: user,
+          application,
+          currentCompany: company,
+        },
       ),
       mockQuery(
         GET_DATA,
