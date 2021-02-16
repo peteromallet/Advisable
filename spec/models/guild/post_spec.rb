@@ -111,15 +111,15 @@ RSpec.describe Guild::Post, type: :model do
 
     it "resets the guild topics when the audience type changes" do
       expect(guild_post.guild_topics.count).to eq(3)
-      expect {
+      expect do
         guild_post.update!(audience_type: "industries")
-      }.to change(guild_post, :guild_topics).by([])
+      end.to change(guild_post, :guild_topics).by([])
     end
 
     it "does not reset the guild topics if the audience type does not change" do
-      expect {
+      expect do
         guild_post.update!(audience_type: guild_post.audience_type, title: "some other title")
-      }.not_to change(guild_post.reload, :guild_topics)
+      end.not_to change(guild_post.reload, :guild_topics)
     end
   end
 
@@ -127,10 +127,10 @@ RSpec.describe Guild::Post, type: :model do
     let(:pinned_post) { create(:guild_post, pinned: true) }
 
     it "will change the previously pinned post" do
-      expect {
+      expect do
         guild_post.update!(pinned: true)
         pinned_post.reload
-      }.to change(pinned_post, :pinned).from(true).to(false)
+      end.to change(pinned_post, :pinned).from(true).to(false)
     end
   end
 
@@ -138,33 +138,72 @@ RSpec.describe Guild::Post, type: :model do
     let(:post) { create(:guild_post, status: "published") }
 
     it "errors when it's not published" do
-      expect {
+      expect do
         post.draft!
         post.boost!
-      }.to raise_error(Guild::Post::BoostError, "Cannot boost unpublished post")
+      end.to raise_error(Guild::Post::BoostError, "Cannot boost unpublished post")
     end
 
     it "errors when there are no guild_topics" do
-      expect {
+      expect do
         post.boost!
-      }.to raise_error(Guild::Post::BoostError, "Cannot boost a post with zero topics")
+      end.to raise_error(Guild::Post::BoostError, "Cannot boost a post with zero topics")
     end
 
     it "errors when it's already boosted" do
-      expect {
+      expect do
         post.update(boosted_at: Time.current)
         post.boost!
-      }.to raise_error(Guild::Post::BoostError, "Post is already boosted")
+      end.to raise_error(Guild::Post::BoostError, "Post is already boosted")
     end
 
     it "updates boosted_at and enqueues a job" do
       post.guild_topic_list = ["foo"]
       post.save
 
-      expect {
+      expect do
         post.boost!
-      }.to change(post, :boosted_at)
+      end.to change(post, :boosted_at)
       expect(GuildPostBoostedJob).to have_been_enqueued.with(post.id)
+    end
+  end
+
+  describe "popular posts" do
+    subject(:popular_posts) { described_class.popular }
+
+    let!(:post_a) do
+      create(:guild_post, engagements_count: 0, reactionable_count: 1)
+    end
+
+    let!(:post_b) do
+      create(:guild_post, engagements_count: 1, reactionable_count: 2)
+    end
+
+    it "orders by the sum of reactions and engagements" do
+      expect(popular_posts.map(&:rank)).to eq([
+                                                post_b.engagements_count + post_b.reactionable_count,
+                                                post_a.engagements_count + post_a.reactionable_count
+                                              ])
+
+      post_a.update!(reactionable_count: 99)
+      post_a.reload
+      expect(described_class.popular.first).to eq(post_a)
+    end
+
+    it "does not include unpublished" do
+      unpublished = create(:guild_post, status: "draft", engagements_count: 100, reactionable_count: 100)
+      expect(popular_posts).not_to include(unpublished)
+      expect(popular_posts).to eq([post_b, post_a])
+    end
+
+    it "does not include posts older than one week" do
+      post_b.update!(created_at: 2.weeks.ago)
+      expect(popular_posts).not_to include(post_b)
+    end
+
+    it "does not include unresolved posts" do
+      post_a.update!(resolved_at: 1.day.ago)
+      expect(popular_posts).not_to include(post_a)
     end
   end
 end

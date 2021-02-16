@@ -138,7 +138,12 @@ const Filters = ({ postTypeFilter, setPostTypeFilter, yourPosts }) => {
               flexSpaceBetween
             >
               {!yourPosts && (
-                <GuildTag button size="s" onClick={toggleExpanded}>
+                <GuildTag
+                  button
+                  size="s"
+                  aria-label="Toggle post filters"
+                  onClick={toggleExpanded}
+                >
                   <FilterIcon size={24} />
                 </GuildTag>
               )}

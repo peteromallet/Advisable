@@ -228,6 +228,12 @@ module Types
       end
     end
 
+    field :guild_popular_posts, [Types::Guild::PostInterface], null: true
+
+    def guild_popular_posts(**_args)
+      ::Guild::Post.popular
+    end
+
     field :guild_activity,
           Types::Guild::ActivityUnion.connection_type,
           deprecation_reason: "Use guildNotifications query instead",
