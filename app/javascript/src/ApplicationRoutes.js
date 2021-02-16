@@ -12,6 +12,9 @@ const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
 const Applications = lazy(() => import("./views/Applications"));
 const ClientSignup = lazy(() => import("./views/ClientSignup"));
+const FreelancerApplication = lazy(() =>
+  import("./views/FreelancerApplication"),
+);
 const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
 const Projects = lazy(() => import("./views/Projects"));
 const Project = lazy(() => import("./views/Project"));
@@ -61,6 +64,10 @@ const ApplicationRoutes = () => {
           {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
           <Route path="/clients/signup" component={ClientSignup} />
           <AuthenticatedRoute exact path="/messages" component={Messages} />
+          <AuthenticatedRoute
+            path="/freelancers/apply"
+            component={FreelancerApplication}
+          />
           <Route path="/freelancers/:id" component={FreelancerProfile} />
           {/* Client routes */}
           <Redirect
