@@ -211,7 +211,7 @@ module Airtable
       if err.message.include?('ROW_DOES_NOT_EXIST')
         id = err.message[/(rec\w*)/, 1]
 
-        skill = Skill.find_by_airtable_id(id)
+        skill = ::Skill.find_by_airtable_id(id)
 
         return handle_duplicate_skill(skill, record) if skill.present?
 
@@ -228,7 +228,7 @@ module Airtable
     # will handle duplicate skills before retrying to sync the record
     def handle_duplicate_skill(skill, record)
       other =
-        Skill.where.not(id: skill.id).where(original: nil).find_by_name(
+        ::Skill.where.not(id: skill.id).where(original: nil).find_by_name(
           skill.name
         )
 
