@@ -25,8 +25,8 @@ const STEPS = [
   {
     path: "/book/:applicationId/payment_method",
     component: PaymentMethod,
-    isFirstStep: ({ viewer }) =>
-      !viewer.paymentsSetup && viewer.bankTransfersEnabled,
+    isFirstStep: ({ viewer, currentCompany }) =>
+      !viewer.paymentsSetup && currentCompany.bankTransfersEnabled,
   },
   {
     path: "/book/:applicationId/card_details",

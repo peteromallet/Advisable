@@ -2,11 +2,14 @@ import { gql } from "@apollo/client";
 
 export default gql`
   query getPaymentSettings {
+    currentCompany {
+      id
+      bankTransfersEnabled
+    }
     viewer {
       ... on User {
         id
         projectPaymentMethod
-        bankTransfersEnabled
         name
         companyName
         country {

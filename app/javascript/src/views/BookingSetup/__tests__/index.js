@@ -49,6 +49,7 @@ test("Renders the project type step if payments are setup", async () => {
           data: {
             viewer: user,
             application,
+            currentCompany: mockData.company(),
           },
         },
       },

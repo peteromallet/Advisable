@@ -6,9 +6,11 @@ import GET_SETUP_DATA from "../getSetupData";
 import { ACCEPT_PROJECT_PAYMENT_TERMS } from "../queries";
 
 test("User can request custom terms", async () => {
+  const company = mockData.company();
+
   let user = mockData.user({
+    company,
     paymentsSetup: false,
-    company: mockData.company(),
     projectPaymentMethod: null,
     paymentMethod: {
       __typename: "PaymentMethod",
@@ -50,6 +52,7 @@ test("User can request custom terms", async () => {
         },
         result: {
           data: {
+            currentCompany: company,
             viewer: user,
             application,
           },
