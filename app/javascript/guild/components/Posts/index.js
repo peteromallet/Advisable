@@ -11,18 +11,20 @@ import { Stack, Box, Text } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
 import Filters from "@guild/components/Filters";
 import FollowTopic from "@guild/components/FollowTopic";
+import PopularPosts from "@guild/components/PopularPosts";
 
 const Posts = () => {
   const location = useLocation();
   const { topicId } = useParams();
   const history = useHistory();
   const historyPopped = history.action === "POP";
+  const defaultFilter = "For You";
 
   const postTypeFilter = feedStore((store) => store.postTypeFilter);
   const setPostTypeFilter = (postTypeFilter) => {
     feedStore.setState({ postTypeFilter });
   };
-  const clearFilters = () => setPostTypeFilter("For You");
+  const clearFilters = () => setPostTypeFilter(defaultFilter);
 
   const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
     fetchPolicy: historyPopped ? "cache-first" : "network-only",
@@ -40,7 +42,12 @@ const Posts = () => {
   const hasNextPage = data?.guildPosts.pageInfo.hasNextPage || false;
   const endCursor = data?.guildPosts.pageInfo.endCursor;
 
+  const isDefaultView = postTypeFilter === defaultFilter && !topicId;
+
   const posts = data?.guildPosts.edges.map((e) => e.node) || [];
+  const [firstResult, ...rest] = posts;
+  const latestPosts = isDefaultView && firstResult?.pinned ? rest : posts;
+
   const topic = data?.guildPosts?.guildTopic;
 
   const onReachedBottom = () => {
@@ -65,9 +72,45 @@ const Posts = () => {
         debounce={0}
       />
 
+      {isDefaultView ? (
+        <>
+          {firstResult?.pinned ? (
+            <Box marginBottom="12">
+              <Post walkthrough key={firstResult.id} post={firstResult} />
+            </Box>
+          ) : null}
+          <Box marginBottom="12">
+            <Text
+              fontSize="xs"
+              marginBottom="4"
+              color="neutral600"
+              fontWeight="medium"
+              textTransform="uppercase"
+            >
+              Popular Posts
+            </Text>
+            <PopularPosts />
+          </Box>
+
+          <Text
+            fontSize="xs"
+            marginBottom="4"
+            color="neutral600"
+            fontWeight="medium"
+            textTransform="uppercase"
+          >
+            Latest Posts
+          </Text>
+        </>
+      ) : null}
+
       <Stack spacing="4">
-        {posts.map((post, idx) => (
-          <Post walkthrough={idx === 0} key={post.id} post={post} />
+        {latestPosts.map((post, idx) => (
+          <Post
+            walkthrough={idx === 0 && !firstResult?.pinned}
+            key={post.id}
+            post={post}
+          />
         ))}
       </Stack>
       {loading ? <LoadingPosts skeletonPosts={hasNextPage ? 1 : 3} /> : null}
