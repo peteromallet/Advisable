@@ -37,7 +37,7 @@ RSpec.describe 'project setup flow', type: :system do
   describe 'company overview step' do
     it 'progresses to the next step' do
       authenticate_as project.user
-      visit "/project_setup/#{project.airtable_id}/company_overview"
+      visit "/project_setup/#{project.uid}/company_overview"
       content = 'This is the company description'
       fill_in 'companyDescription', with: content
       click_button 'Continue'
@@ -48,7 +48,7 @@ RSpec.describe 'project setup flow', type: :system do
   describe 'project overview step' do
     it 'progresses to the next step' do
       authenticate_as project.user
-      visit "/project_setup/#{project.airtable_id}/project_overview"
+      visit "/project_setup/#{project.uid}/project_overview"
       content = 'This is the project description'
       fill_in 'description', with: content
       click_button 'Continue'
@@ -59,7 +59,7 @@ RSpec.describe 'project setup flow', type: :system do
       it 'redirects to the company overview step' do
         project.update(company_description: nil)
         authenticate_as project.user
-        visit "/project_setup/#{project.airtable_id}/project_overview"
+        visit "/project_setup/#{project.uid}/project_overview"
         expect(page).to have_content('Company Overview')
       end
     end
@@ -68,7 +68,7 @@ RSpec.describe 'project setup flow', type: :system do
   describe 'project goals steps' do
     it 'progresses to the next step' do
       authenticate_as project.user
-      visit "/project_setup/#{project.airtable_id}/goals"
+      visit "/project_setup/#{project.uid}/goals"
       fill_in 'goals[0]', with: 'This is a project goal'
       click_button 'Continue'
       expect(page).to have_content('Specialist Overview')
@@ -78,7 +78,7 @@ RSpec.describe 'project setup flow', type: :system do
       it 'redirects to the project overview step' do
         project.update(description: nil)
         authenticate_as project.user
-        visit "/project_setup/#{project.airtable_id}/goals"
+        visit "/project_setup/#{project.uid}/goals"
         expect(page).to have_content('Project Overview')
       end
     end
@@ -87,7 +87,7 @@ RSpec.describe 'project setup flow', type: :system do
   describe 'specialist overview step' do
     it 'progresses to the next step' do
       authenticate_as project.user
-      visit "/project_setup/#{project.airtable_id}/specialist_overview"
+      visit "/project_setup/#{project.uid}/specialist_overview"
       fill_in 'specialistDescription',
               with: 'This is the specialist description'
       click_button 'Continue'
@@ -98,7 +98,7 @@ RSpec.describe 'project setup flow', type: :system do
       it 'redirects to the goals step' do
         project.update(goals: [])
         authenticate_as project.user
-        visit "/project_setup/#{project.airtable_id}/specialist_overview"
+        visit "/project_setup/#{project.uid}/specialist_overview"
         expect(page).to have_content('Goals')
       end
     end
@@ -107,7 +107,7 @@ RSpec.describe 'project setup flow', type: :system do
   describe 'must have characteristics step' do
     it 'progresses to the next step' do
       authenticate_as project.user
-      visit "/project_setup/#{project.airtable_id}/must_have"
+      visit "/project_setup/#{project.uid}/must_have"
       fill_in 'requiredCharacteristics[0]', with: 'characteristic'
       click_button 'Continue'
       expect(page).to have_content('Nice-to-have Characteristics')
@@ -117,7 +117,7 @@ RSpec.describe 'project setup flow', type: :system do
       it 'redirects to the specialist overview step' do
         project.update(specialist_description: nil)
         authenticate_as project.user
-        visit "/project_setup/#{project.airtable_id}/must_have"
+        visit "/project_setup/#{project.uid}/must_have"
         expect(page).to have_content('Specialist Overview')
       end
     end
@@ -126,7 +126,7 @@ RSpec.describe 'project setup flow', type: :system do
   describe 'nice-to-have characteristics step' do
     it 'progresses to the next step' do
       authenticate_as project.user
-      visit "/project_setup/#{project.airtable_id}/nice_to_have"
+      visit "/project_setup/#{project.uid}/nice_to_have"
       fill_in 'optionalCharacteristics[0]', with: 'characteristic'
       click_button 'Continue'
       expect(page).to have_content('Questions')
@@ -136,7 +136,7 @@ RSpec.describe 'project setup flow', type: :system do
       it 'redirects to the specialist overview step' do
         project.update(required_characteristics: [])
         authenticate_as project.user
-        visit "/project_setup/#{project.airtable_id}/nice_to_have"
+        visit "/project_setup/#{project.uid}/nice_to_have"
         expect(page).to have_content('Must-have Characteristics')
       end
     end
@@ -145,7 +145,7 @@ RSpec.describe 'project setup flow', type: :system do
   describe 'questions step' do
     it 'progresses to the next step' do
       authenticate_as project.user
-      visit "/project_setup/#{project.airtable_id}/questions"
+      visit "/project_setup/#{project.uid}/questions"
       fill_in 'questions[0]', with: 'This is a question?'
       click_button 'Continue'
       expect(page).to have_content('Terms')
@@ -155,7 +155,7 @@ RSpec.describe 'project setup flow', type: :system do
       it 'redirects to the specialist overview step' do
         project.update(required_characteristics: [])
         authenticate_as project.user
-        visit "/project_setup/#{project.airtable_id}/nice_to_have"
+        visit "/project_setup/#{project.uid}/nice_to_have"
         expect(page).to have_content('Must-have Characteristics')
       end
     end
@@ -164,7 +164,7 @@ RSpec.describe 'project setup flow', type: :system do
   describe 'terms and conditions step' do
     it 'progresses to the deposit step' do
       authenticate_as project.user
-      visit "/project_setup/#{project.airtable_id}/terms"
+      visit "/project_setup/#{project.uid}/terms"
       check 'acceptedTerms'
       click_button 'Continue'
       expect(page).to have_content('Deposit')
@@ -174,11 +174,11 @@ RSpec.describe 'project setup flow', type: :system do
       it 'progresses to the confirm step' do
         project.update(deposit: 0)
         authenticate_as project.user
-        visit "/project_setup/#{project.airtable_id}/terms"
+        visit "/project_setup/#{project.uid}/terms"
         check 'acceptedTerms'
         click_button 'Continue'
         expect(page).to have_current_path(
-          "/projects/#{project.airtable_id}/matches"
+          "/projects/#{project.uid}/matches"
         )
       end
     end
@@ -189,7 +189,7 @@ RSpec.describe 'project setup flow', type: :system do
       it 'redirects to the terms' do
         project.update(accepted_terms: false)
         authenticate_as project.user
-        visit "/project_setup/#{project.airtable_id}/deposit"
+        visit "/project_setup/#{project.uid}/deposit"
         expect(page).to have_content('Terms')
       end
     end

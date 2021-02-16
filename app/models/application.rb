@@ -104,18 +104,6 @@ class Application < ApplicationRecord
   # Returns the top 3 candidates
   scope :top_three_applied, -> { applied.where('score > ?', 65.0).order(score: :desc).limit(3) }
 
-  # TODO: Part of airtable_id deprecation
-  def self.find_by_uid_or_airtable_id(id)
-    return find_by(uid: id) unless is_airtable_id(id)
-
-    Raven.capture_message("#find_by_uid_or_airtable_id called on Application with an airtable id!", backtrace: caller, level: 'debug')
-    find_by(airtable_id: id)
-  end
-
-  def self.find_by_uid_or_airtable_id!(id)
-    find_by_uid_or_airtable_id(id) || raise(ActiveRecord::RecordNotFound)
-  end
-
   # Returns the application rate as cents
   def invoice_rate
     return 0 if rate.nil?

@@ -19,7 +19,7 @@ module Types
       object.uid
     end
 
-    field :airtable_id, String, null: true do
+    field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs." do
       description 'The airtable ID for the specialist'
     end
 

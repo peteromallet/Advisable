@@ -64,17 +64,12 @@ module Types
     end
 
     field :skills, [Types::Skill], 'Returns a list of skills', null: false do
+      # TODO: Remove local arg now that it is not being used
       argument :local, Boolean, required: false
     end
 
-    def skills(local: false)
-      return ::Skill.where(active: true, original: nil) if local
-
-      Rails.cache.fetch('airtable_active_skills', expires_in: 10.minutes) do
-        Airtable::Skill.active.map do |s|
-          OpenStruct.new(airtable_id: s.id, name: s.fields['Name'])
-        end
-      end
+    def skills(*)
+      ::Skill.where(active: true, original: nil)
     end
 
     field :popular_skills, Types::Skill.connection_type, null: false

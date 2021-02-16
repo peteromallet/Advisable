@@ -8,7 +8,6 @@ export default gql`
         id
         name
       }
-      airtableId
       goals
       status
       questions

@@ -8,7 +8,6 @@ export const viewerFields = gql`
       name
       isAdmin
       isTeamManager
-      airtableId
       firstName
       lastName
       confirmed
@@ -28,7 +27,6 @@ export const viewerFields = gql`
       name
       bio
       createdAt
-      airtableId
       firstName
       lastName
       confirmed

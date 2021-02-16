@@ -11,7 +11,6 @@ export default gql`
       projectType
       project {
         id
-        airtableId
       }
       specialist {
         id

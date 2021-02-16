@@ -16,7 +16,7 @@ RSpec.describe Mutations::ScheduleInterview do
     <<-GRAPHQL
       mutation {
         scheduleInterview(input: {
-          id: "#{interview.airtable_id}",
+          id: "#{interview.uid}",
           startsAt: "#{starts_at}",
           phoneNumber: "0123456789"
         }) {
@@ -40,25 +40,25 @@ RSpec.describe Mutations::ScheduleInterview do
   end
 
   it 'sets the interview status to Call Scheduled' do
-    expect {
+    expect do
       request
-    }.to change {
+    end.to change {
       interview.reload.status
     }.from("Call Requested").to("Call Scheduled")
   end
 
   it 'sets the startsAt attribute' do
-    expect {
+    expect do
       request
-    }.to change {
+    end.to change {
       interview.reload.starts_at
     }.from(nil).to(user.availability.first)
   end
 
   it 'sets the specialist phone number' do
-    expect {
+    expect do
       request
-    }.to change {
+    end.to change {
       specialist.reload.phone
     }.from(nil).to('0123456789')
   end

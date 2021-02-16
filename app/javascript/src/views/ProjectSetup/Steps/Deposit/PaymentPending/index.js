@@ -9,7 +9,6 @@ export const GET_DEPOSIT = gql`
   query getProject($id: ID!) {
     project(id: $id) {
       id
-      airtableId
       depositOwed
     }
   }

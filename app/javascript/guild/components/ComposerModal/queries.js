@@ -6,7 +6,7 @@ export const SELECT_DATA = gql`
       label: name
       value: name
     }
-    skills(local: true) {
+    skills {
       label: name
       value: name
     }
