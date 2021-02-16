@@ -44,14 +44,14 @@ module Airtable
 
       specialist_id = fields['Expert'].try(:first)
       if specialist_id
-        specialist = ::Specialist.find_by_uid_or_airtable_id(specialist_id)
+        specialist = ::Specialist.find_by_airtable_id(specialist_id)
         specialist = Airtable::Specialist.find(specialist_id).sync if specialist.nil?
         application.specialist = specialist
       end
 
       project_id = fields['Client Project'].try(:first)
       if project_id
-        project = ::Project.find_by_uid_or_airtable_id(project_id)
+        project = ::Project.find_by_airtable_id(project_id)
         project = Airtable::Project.find(project_id).sync if project.nil?
         application.project = project
       end
