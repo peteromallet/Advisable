@@ -20,7 +20,7 @@ export const GET_DATA = gql`
   ${fields}
 
   query getData {
-    skills(local: true) {
+    skills {
       value: name
       label: name
     }

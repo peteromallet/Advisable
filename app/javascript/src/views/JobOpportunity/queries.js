@@ -3,7 +3,6 @@ import { gql } from "@apollo/client";
 const fields = gql`
   fragment ProjectFields on Project {
     id
-    airtableId
     name
     applicationsOpen
     description

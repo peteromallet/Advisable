@@ -1,14 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe 'project root query' do
+RSpec.describe 'project root query', type: :system do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
   let(:query) do
     <<-GRAPHQL
     {
-      project(id: "#{project.airtable_id}") {
+      project(id: "#{project.uid}") {
         id
-        airtableId
         viewerCanAccess
       }
     }
@@ -18,12 +19,10 @@ RSpec.describe 'project root query' do
   context 'when a user is logged in' do
     it 'returns the project' do
       response = AdvisableSchema.execute(query, context: {current_user: user})
-      expect(response['data']['project']['airtableId']).to eq(
-        project.airtable_id
-      )
+      expect(response['data']['project']['id']).to eq(project.uid)
     end
 
-    context 'and does not own the project' do
+    context 'when they do not own the project' do
       it 'returns viewerCanAccess false' do
         another_user = create(:user)
         response =
@@ -37,7 +36,7 @@ RSpec.describe 'project root query' do
   end
 
   context 'when there is no user logged in' do
-    context 'and the project user has an account' do
+    context 'when the project user has an account' do
       it "returns 'authenticationRequired' error" do
         response =
           AdvisableSchema.execute(query, context: {current_user: nil})
@@ -46,7 +45,7 @@ RSpec.describe 'project root query' do
       end
     end
 
-    context 'and the project user does not have an account' do
+    context 'when the project user does not have an account' do
       let(:user) { create(:user, account: create(:account, password: nil)) }
 
       it "returns 'authenticationRequired' error" do

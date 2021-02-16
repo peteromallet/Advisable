@@ -6,7 +6,7 @@ module Types
     delegate :account, :company, to: :object
 
     field :id, ID, null: false
-    field :airtable_id, String, null: true
+    field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
 
     field :email, String, null: false do
       authorize :is_admin, :is_user, :is_candidate_for_user_project, :record_belongs_to_company?

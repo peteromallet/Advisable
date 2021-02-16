@@ -21,7 +21,7 @@ RSpec.describe 'Interviews', type: :system do
   it 'allows the client to request to reschedule a call' do
     interview = create(:interview, status: "Call Scheduled", starts_at: 2.days.from_now, user: user)
     authenticate_as interview.user
-    visit "/interviews/#{interview.airtable_id}"
+    visit "/interviews/#{interview.uid}"
     click_on "Request To Reschedule"
     date = Time.zone.now.next_weekday.beginning_of_day
     find("[aria-label='#{date.strftime('%-d %b %Y, 10:00')}']").click
@@ -50,7 +50,7 @@ RSpec.describe 'Interviews', type: :system do
   it 'allows the specialist to request to reschedule a call' do
     interview = create(:interview, status: "Call Scheduled", starts_at: 2.days.from_now, user: user)
     authenticate_as interview.specialist
-    visit "/interviews/#{interview.airtable_id}"
+    visit "/interviews/#{interview.uid}"
     click_on "Request To Reschedule"
     fill_in "note", with: "No can do"
     click_on "Reschedule"
@@ -61,7 +61,7 @@ RSpec.describe 'Interviews', type: :system do
     it 'the client can update their availability' do
       interview = create(:interview, status: "Specialist Requested Reschedule", starts_at: 2.days.from_now, user: user)
       authenticate_as interview.user
-      visit "/interviews/#{interview.airtable_id}"
+      visit "/interviews/#{interview.uid}"
       date = Time.zone.now.next_weekday.beginning_of_day
       find("[aria-label='#{date.strftime('%-d %b %Y, 10:00')}']").click
       find("[aria-label='#{date.strftime('%-d %b %Y, 10:30')}']").click

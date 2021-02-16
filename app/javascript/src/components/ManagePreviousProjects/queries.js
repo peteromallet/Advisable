@@ -6,7 +6,6 @@ export const FETCH_PROJECTS = gql`
     viewer {
       ... on Specialist {
         id
-        airtableId
         previousProjects(includeValidationFailed: true, includeDrafts: true) {
           nodes {
             id

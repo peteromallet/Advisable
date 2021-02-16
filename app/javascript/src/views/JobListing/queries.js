@@ -12,7 +12,6 @@ export const GET_APPLICATION = gql`
       }
       project {
         id
-        airtableId
         name
         applicationsOpen
         description

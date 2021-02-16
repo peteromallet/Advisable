@@ -12,7 +12,6 @@ export const GET_PROJECTS = gql`
         }
         projects {
           id
-          airtableId
           primarySkill {
             id
             name
@@ -41,7 +40,6 @@ export const CREATE_JOB = gql`
     createJob(input: $input) {
       project {
         id
-        airtableId
         primarySkill {
           id
           name

@@ -52,8 +52,6 @@ export const useClientApplicationQuery = () => {
   });
 };
 
-/* 0 Step. Start Client Application */
-
 export const START_CLIENT_APPLICATION = gql`
   ${clientApplicationFragment}
   mutation StartClientApplication($input: StartClientApplicationInput!) {
@@ -78,7 +76,7 @@ export const ABOUT_COMPANY_QUERY = gql`
       label: name
       value: name
     }
-    skills(local: true) {
+    skills {
       id
       label: name
       value: name
@@ -137,7 +135,7 @@ export const getAboutCompanyOptimisticReponse = (id, values) => ({
 export const ABOUT_REQUIREMENTS_QUERY = gql`
   ${clientApplicationFragment}
   query AboutRequirementsQuery($id: ID!) {
-    skills(local: true) {
+    skills {
       label: name
       value: name
     }

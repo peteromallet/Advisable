@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe WebhookConfiguration::Application do
@@ -5,13 +7,15 @@ RSpec.describe WebhookConfiguration::Application do
     let(:application) { create(:application) }
 
     it "outputs the attributes hash for a given application" do
-      config = WebhookConfiguration::Application.new
-      expect(config.data(application)).to eq({
-        project_id: application.project.airtable_id,
-        application_id: application.airtable_id,
-        specialist_id: application.specialist.airtable_id,
-        reason: application.rejection_reason.try(:reason)
-      })
+      config = described_class.new
+      expect(config.data(application)).to eq(
+        {
+          project_id: application.project.uid,
+          application_id: application.uid,
+          specialist_id: application.specialist.uid,
+          reason: application.rejection_reason.try(:reason)
+        }
+      )
     end
   end
 end
