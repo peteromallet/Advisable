@@ -1,12 +1,14 @@
 import { fireEvent } from "@testing-library/react";
-import { renderRoute } from "test-utils";
-import mockData from "../../../../../__mocks__/graphqlFields";
+import { renderRoute, mockData } from "test-utils";
 import VIEWER from "../../../../../graphql/queries/viewer";
 import { GET_DATA } from "../../../../../components/InvoiceSettingsFields";
 import GET_PAYMENT_SETTINGS from "../getPaymentSettings";
 import { UPDATE_INVOICE_SETTINGS } from "../queries";
 
 test("user can update invoice settings", async () => {
+  const company = mockData.company();
+  const country = mockData.country();
+
   const user = mockData.user({
     projectPaymentMethod: "Card",
   });
@@ -28,6 +30,7 @@ test("user can update invoice settings", async () => {
       },
       result: {
         data: {
+          currentCompany: company,
           viewer: user,
         },
       },
@@ -38,7 +41,7 @@ test("user can update invoice settings", async () => {
       },
       result: {
         data: {
-          countries: [mockData.country()],
+          countries: [country],
         },
       },
     },
@@ -57,7 +60,7 @@ test("user can update invoice settings", async () => {
               line2: "",
               city: "",
               state: "",
-              country: 1,
+              country: country.id,
               postcode: "",
             },
           },

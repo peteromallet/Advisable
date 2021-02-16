@@ -4,11 +4,12 @@ import GET_SETUP_DATA from "../getSetupData";
 import { CREATE_SETUP_INTENT } from "../../../components/UpdatePaymentMethod";
 
 test("Shows form to add card when user has no card", async () => {
+  const company = mockData.company();
+
   let user = mockData.user({
     paymentsSetup: false,
     paymentMethod: null,
-    bankTransfersEnabled: false,
-    company: mockData.company(),
+    company,
   });
 
   let project = mockData.project({ projectType: null, user });
@@ -44,6 +45,7 @@ test("Shows form to add card when user has no card", async () => {
           data: {
             viewer: user,
             application,
+            currentCompany: company,
           },
         },
       },

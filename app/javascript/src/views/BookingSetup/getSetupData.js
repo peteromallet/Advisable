@@ -2,6 +2,10 @@ import { gql } from "@apollo/client";
 
 export default gql`
   query bookingSetup($id: ID!) {
+    currentCompany {
+      id
+      bankTransfersEnabled
+    }
     viewer {
       ... on User {
         id
@@ -9,7 +13,6 @@ export default gql`
         email
         paymentsSetup
         projectPaymentMethod
-        bankTransfersEnabled
         invoiceSettings {
           name
           vatNumber

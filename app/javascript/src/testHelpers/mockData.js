@@ -7,6 +7,7 @@ export const company = (fields = {}) => {
       id: uniqueId("company"),
       name: "Test",
       users: [],
+      bankTransfersEnabled: false,
     },
     fields,
   );

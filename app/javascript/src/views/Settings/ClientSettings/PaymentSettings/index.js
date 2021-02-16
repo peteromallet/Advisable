@@ -28,7 +28,7 @@ const PaymentSettings = () => {
   const [updateInvoiceSettings] = useMutation(UPDATE_INVOICE_SETTINGS);
   const [paymentMethodModal, setPaymentMethodModal] = React.useState(false);
 
-  const bankTransfersEnabled = data?.viewer?.bankTransfersEnabled;
+  const bankTransfersEnabled = data?.currentCompany?.bankTransfersEnabled;
 
   if (!viewer.isTeamManager) {
     return <Redirect to="/settings" />;
@@ -130,7 +130,6 @@ const PaymentSettings = () => {
                     value="Bank Transfer"
                     name="paymentMethod"
                     label="Payments via bank transfer"
-                    disabled={!data.viewer.bankTransfersEnabled}
                     description="We will collect payment by sending you an invoice"
                   />
                 </RadioGroup>
