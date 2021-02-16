@@ -24,7 +24,7 @@ module Airtable
       self['Availability - Rating'] = review.ratings['availability']
       self['Communication - Rating'] = review.ratings['communication']
 
-      self['Previous Project UID'] = review.project.uid if review.project.present? && review.project.is_a?(PreviousProject)
+      self['Previous Project UID'] = review.project.uid if review.project.present? && review.project.is_a?(::PreviousProject)
     end
 
     private
