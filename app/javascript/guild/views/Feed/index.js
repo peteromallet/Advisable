@@ -5,6 +5,7 @@ import Posts from "@guild/components/Posts";
 import Topics from "@guild/components/Topics";
 import FeaturedMembers from "@guild/components/FeaturedMembers";
 import FeedWalkthrough from "./FeedWalkthrough";
+import Referral from "@guild/components/Referral";
 
 const Feed = () => {
   const lUp = useBreakpoint("lUp");
@@ -34,6 +35,7 @@ const Feed = () => {
         <Box width="260px" flexShrink="0">
           <Sticky top={98} enabled>
             <FeaturedMembers />
+            <Referral />
           </Sticky>
         </Box>
       )}
