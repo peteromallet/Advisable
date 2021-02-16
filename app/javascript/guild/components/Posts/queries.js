@@ -27,3 +27,20 @@ export const GUILD_POSTS_QUERY = gql`
     }
   }
 `;
+
+export const GUILD_POPULAR_POSTS_QUERY = gql`
+  ${GuildPostFields}
+  query guildPopularPosts {
+    guildPopularPosts {
+      ...GuildPostFields
+      ... on PostInterface {
+        author {
+          id
+          bio
+          location
+          firstName
+        }
+      }
+    }
+  }
+`;
