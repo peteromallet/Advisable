@@ -19,19 +19,20 @@ module Types
     end
 
     def avatar
-      return unless project.is_a?(PreviousProject)
+      return unless project.is_a?(::PreviousProject)
 
       project.resized_contact_image_url
     end
 
     def name
-      return project.user.account.name if project.is_a?(Project)
+      return project.user.account.name if project.is_a?(::Project)
+      return nil if project&.confidential?
 
-      project.contact_name if project&.confidential?
+      project.contact_name
     end
 
     def role
-      if project.is_a?(Project)
+      if project.is_a?(::Project)
         project.user.title
       else
         project.try(:contact_job_title)
@@ -39,7 +40,7 @@ module Types
     end
 
     def company_name
-      if project.is_a?(Project)
+      if project.is_a?(::Project)
         project.user.company_name
       else
         previous_project_company_name(project)
