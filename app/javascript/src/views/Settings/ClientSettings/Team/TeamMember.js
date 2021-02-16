@@ -3,6 +3,7 @@ import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
 import { Box, Text, Toggle } from "@advisable/donut";
 import { useToggleTeamManager } from "./queries";
+import RemoveTeamMember from "./RemoveTeamMember";
 
 export default function TeamMember({ member }) {
   const viewer = useViewer();
@@ -51,18 +52,22 @@ export default function TeamMember({ member }) {
             {member.email}
           </Text>
         </Box>
-        <Text fontSize="sm" color="neutral800">
-          <Toggle
-            label={
-              member.isTeamManager
-                ? `Demote ${member.name}`
-                : `Promote ${member.name} to manager`
-            }
-            value={member.isTeamManager}
-            onChange={handleToggleManager}
-            disabled={member.id === viewer.id}
-          />
-        </Text>
+        {member.id !== viewer.id && (
+          <Box display="flex" alignItems="center">
+            <Toggle
+              label={
+                member.isTeamManager
+                  ? `Demote ${member.name}`
+                  : `Promote ${member.name} to manager`
+              }
+              value={member.isTeamManager}
+              onChange={handleToggleManager}
+            />
+            <Box ml={2}>
+              <RemoveTeamMember member={member} />
+            </Box>
+          </Box>
+        )}
       </Box>
       <Box height="1px" bg="neutral100" />
     </>

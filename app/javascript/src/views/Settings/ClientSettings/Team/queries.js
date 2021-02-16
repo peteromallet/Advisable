@@ -77,3 +77,37 @@ export const TOGGLE_TEAM_MANAGER = gql`
 export function useToggleTeamManager() {
   return useMutation(TOGGLE_TEAM_MANAGER);
 }
+
+export const REMOVE_MEMBER = gql`
+  mutation removeUserFromCompany($id: ID!) {
+    removeUserFromCompany(input: { userId: $id }) {
+      success
+    }
+  }
+`;
+
+export function useRemoveUserFromCompany(id) {
+  return useMutation(REMOVE_MEMBER, {
+    variables: { id },
+    update(cache, { errors }) {
+      if (errors) return;
+
+      const teamMemberData = cache.readQuery({
+        query: GET_TEAM_MEMBERS,
+      });
+
+      cache.writeQuery({
+        query: GET_TEAM_MEMBERS,
+        data: {
+          ...teamMemberData,
+          currentCompany: {
+            ...teamMemberData.currentCompany,
+            users: teamMemberData.currentCompany.users.filter((u) => {
+              return u.id !== id;
+            }),
+          },
+        },
+      });
+    },
+  });
+}
