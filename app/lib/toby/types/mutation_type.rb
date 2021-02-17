@@ -1,5 +1,11 @@
-class Admin::Types::MutationType < GraphQL::Schema::Object
-  Advisatable::Resources.resource_classes.each do |admin|
-    field admin.update_mutation_name, mutation: admin.update_mutation
+# frozen_string_literal: true
+
+module Toby
+  module Types
+    class MutationType < GraphQL::Schema::Object
+      Advisatable::Resources.resource_classes.each do |admin|
+        field admin.update_mutation_name, mutation: admin.update_mutation
+      end
+    end
   end
 end

@@ -8,6 +8,6 @@ module Toby
       lazy_resolve(Toby::Lazy.const_get(klass), :record)
     end
 
-    # mutation Admin::Types::MutationType
+    # mutation Toby::Types::MutationType
   end
 end
