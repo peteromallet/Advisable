@@ -3,8 +3,8 @@
 module Toby
   module Filters
     class OneOf
-      def self.apply(records, name, values)
-        records.where(name => values)
+      def self.apply(records, name, contents)
+        records.where(name => contents)
       end
     end
   end

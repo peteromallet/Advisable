@@ -15,8 +15,8 @@ module Toby
           filter_class = attribute.class.filters[args["type"].to_sym]
           next if filter_class.nil?
 
-          value = args["value"].presence || args["values"].presence
-          records = filter_class.apply(records, name, value)
+          contents = args["content"].presence || args["contents"].presence
+          records = filter_class.apply(records, name, contents)
         end
 
         records

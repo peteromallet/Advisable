@@ -5,8 +5,8 @@ module Toby
     class Filter < GraphQL::Schema::InputObject
       argument :attribute, String, required: true
       argument :type, String, required: true
-      argument :value, String, required: false
-      argument :values, [String], required: false
+      argument :content, String, required: false
+      argument :contents, [String], required: false
     end
   end
 end
