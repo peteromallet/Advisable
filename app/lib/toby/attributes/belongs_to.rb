@@ -7,16 +7,24 @@ module Toby
       filter :is_empty, Filters::CheckNil
       filter :not_empty, Filters::CheckNotNil
 
+      def to
+        options.fetch(:to)
+      end
+
+      def via
+        options.fetch(:via)
+      end
+
       def type
-        options.fetch(:resource).type
+        Toby::Resources.const_get(to).type
       end
 
       def input_type
         GraphQL::Types::ID
       end
 
-      def lazy_read(context, resource)
-        Toby::LazyAccount.new(context, resource.public_send("#{name}_id"))
+      def lazy_read(resource, context)
+        Toby::Lazy.const_get(to).new(context, to, resource.public_send(via))
       end
     end
   end

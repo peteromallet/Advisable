@@ -31,7 +31,7 @@ module Toby
       end
 
       # Placeholder for lazy_loading
-      def lazy_read(_context, _resource)
+      def lazy_read(_resource, _context)
         nil
       end
 
