@@ -91,20 +91,28 @@ export default function UpdateAvailability({ application, dialog, onUpdate }) {
               events={events}
             />
           )}
-          <Box marginTop="24px">
-            {availability.length >= 6 ? (
-              <Button
-                variant="dark"
-                onClick={handleContinue}
-                loading={requestIntroResponse.loading}
-              >
-                Request Call
-              </Button>
-            ) : (
+          <Box
+            mt={6}
+            display="flex"
+            flexDirection={["column", "row"]}
+            alignItems="center"
+          >
+            <Button
+              variant="dark"
+              onClick={handleContinue}
+              loading={requestIntroResponse.loading}
+              disabled={availability.length < 6}
+              width={["100%", "auto"]}
+              mr={[0, 4]}
+              mb={[3, 0]}
+            >
+              Request Call
+            </Button>
+            {availability.length < 6 ? (
               <Text fontSize="15px" color="neutral700">
                 Please select at least 6 available times
               </Text>
-            )}
+            ) : null}
           </Box>
         </>
       )}
