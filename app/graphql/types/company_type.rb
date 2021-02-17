@@ -16,6 +16,10 @@ module Types
       authorize :record_belongs_to_company?
     end
 
+    def users
+      object.users.active
+    end
+
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end

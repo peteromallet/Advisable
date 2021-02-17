@@ -50,7 +50,7 @@ class User < ApplicationRecord
   belongs_to :company, optional: true
   belongs_to :country, optional: true
 
-  scope :active, -> { where.not(application_status: "Disabled") }
+  scope :active, -> { where.not(application_status: "Disabled").or(User.where(application_status: nil)) }
 
   serialize :available_payment_methods, Array
 

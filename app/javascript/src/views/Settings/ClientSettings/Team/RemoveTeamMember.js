@@ -24,7 +24,7 @@ export default function RemoveTeamMember({ member }) {
         >
           Are you sure you want to remove {member.name}?
         </Text>
-        <Text mb={6} lineHeight="1.2" color="neutral700">
+        <Text mb={6} lineHeight="1.3" color="neutral800">
           Their account will be disabled and they will no longer be able to
           login to Advisable.
         </Text>
