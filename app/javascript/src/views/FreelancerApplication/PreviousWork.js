@@ -1,13 +1,14 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
-import { Card, Box, Textarea } from "@advisable/donut";
+import { Box, Textarea } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import StepNumber from "./StepNumber";
 import { Description, Header } from "./components";
 import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
+import AnimatedCard from "./components/AnimatedCard";
 
 const validationSchema = object().shape({
   projectDescription: string().required(),
@@ -27,7 +28,7 @@ export default function PreviousWork() {
   };
 
   return (
-    <Card padding={10} borderRadius="12px">
+    <AnimatedCard>
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -63,6 +64,6 @@ export default function PreviousWork() {
           <SubmitButton suffix={<ArrowRight />}>Continue</SubmitButton>
         </Form>
       </Formik>
-    </Card>
+    </AnimatedCard>
   );
 }

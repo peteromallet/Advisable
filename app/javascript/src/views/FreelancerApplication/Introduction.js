@@ -1,8 +1,9 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { gql } from "@apollo/client";
+import { Formik, Form } from "formik";
+import { useHistory } from "react-router-dom";
+import { useQuery, gql } from "@apollo/client";
+import { ArrowRight } from "@styled-icons/feather";
 import {
-  Card,
   Box,
   Text,
   Textarea,
@@ -15,11 +16,10 @@ import {
 import SubmitButton from "src/components/SubmitButton";
 import FileUpload from "src/components/FileUpload";
 import FormField from "src/components/FormField";
-import StepNumber from "./StepNumber";
 import BioLengthWidget from "./BioLengthWiget";
-import { Formik, Form } from "formik";
-import { useHistory } from "react-router-dom";
-import { ArrowRight } from "@styled-icons/feather";
+import StepNumber from "./StepNumber";
+import { motion } from "framer-motion";
+import AnimatedCard from "./components/AnimatedCard";
 import { Description, Header } from "./components";
 
 export const GET_COUNTRIES = gql`
@@ -48,10 +48,10 @@ export default function Introduction(specialist) {
     history.push("/freelancers/apply/overview");
   };
 
-  if (loading) return <div>loading...</div>;
+  if (loading) return <motion.div exit>loading...</motion.div>;
 
   return (
-    <Card padding={10} borderRadius="12px">
+    <AnimatedCard>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(formik) => (
           <Form>
@@ -138,6 +138,6 @@ export default function Introduction(specialist) {
           </Form>
         )}
       </Formik>
-    </Card>
+    </AnimatedCard>
   );
 }
