@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Box, Text } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import StepNumber from "./StepNumber";
+import StepNumber from "./components/StepNumber";
 import FileUpload from "src/components/FileUpload";
 import { Description, Header } from "./components";
 import { object, string } from "yup";

@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import { Box, Textarea } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import StepNumber from "./StepNumber";
+import StepNumber from "./components/StepNumber";
 import { Description, Header } from "./components";
 import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
