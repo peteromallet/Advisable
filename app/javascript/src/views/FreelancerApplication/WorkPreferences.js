@@ -101,8 +101,14 @@ export default function WorkPreferences() {
                 }
                 label="What is your availability for freelance work?"
                 options={[
-                  "I am a fulltime freelancer",
-                  "No, I freelance alongside a full-time job.",
+                  {
+                    value: "I am a fulltime freelancer",
+                    label: "Full-time freelancer",
+                  },
+                  {
+                    value: "No, I freelancer alongside a full-time job",
+                    label: "Part-time freelancer",
+                  },
                 ]}
               />
             </Box>
