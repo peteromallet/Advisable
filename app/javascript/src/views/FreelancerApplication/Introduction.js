@@ -63,8 +63,8 @@ export default function Introduction(specialist) {
               portfolio. Tell us about one of your previous projects that you
               are most proud of and why.
             </Description>
-            <Box mb="m">
-              <Text color="neutral900" mb="xs" fontWeight="medium">
+            <Box mb={6}>
+              <Text color="neutral900" mb={2} fontWeight="medium">
                 Add your profile photo
               </Text>
               <FileUpload
@@ -90,19 +90,18 @@ export default function Introduction(specialist) {
                 maxSizeInMB={1}
               />
             </Box>
-            <Box mb="l">
-              <FormField
-                as={Textarea}
-                name="bio"
-                minRows={5}
-                label="About me"
-                description="Add a short 2 - 3 sentence bio to describe who you are. A well structured bio demonstrates your experience and expertise by referencing past projects and achievements, including notable clients or numeric results. You will have a chance to customize this each time you apply for a project."
-                placeholder="Add a short 2 - 3 sentence bio to describe who you are."
-                widget={BioLengthWidget}
-              />
-            </Box>
+            <FormField
+              as={Textarea}
+              name="bio"
+              minRows={5}
+              label="Add a short bio"
+              marginBottom={6}
+              description="This will be shown on your public Advisable profile and shown to clients when you apply to projects. You can always update this later."
+              placeholder="Tell us about yourself..."
+              widget={BioLengthWidget}
+            />
             <Label marginBottom="xs">Where are you based?</Label>
-            <Box mb="m" display="flex">
+            <Box mb={8} display="flex">
               <Box flex={1} pr="xxs">
                 <FormField
                   as={Input}
@@ -130,8 +129,13 @@ export default function Introduction(specialist) {
             </Box>
             <Box mb="l">
               <FormField as={Checkbox} type="checkbox" name="publicUse">
-                I’m okay with Advisable using my profile to promote me publicly
-                on advisable.com
+                <Text mb={0.5} fontWeight="medium">
+                  I’m okay with Advisable using my profile to promote me
+                  publicly on Advisable
+                </Text>
+                <Text fontSize="s" color="neutral700">
+                  You can always change this later in your settings
+                </Text>
               </FormField>
             </Box>
             <SubmitButton suffix={<ArrowRight />}>Continue</SubmitButton>
