@@ -8,7 +8,8 @@ module Toby
       attribute :uid, Attributes::String
       attribute :email, Attributes::String
       attribute :bio, Attributes::String
-      attribute :account, Attributes::BelongsTo, to: :Account, via: :account_id
+      attribute :account, Attributes::BelongsTo
+      attribute :country, Attributes::BelongsTo
     end
   end
 end

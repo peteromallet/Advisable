@@ -7,12 +7,14 @@ module Toby
       filter :is_empty, Filters::CheckNil
       filter :not_empty, Filters::CheckNotNil
 
+      # to is optional for when we don't follow the class == resource convention
       def to
-        options.fetch(:to)
+        options.fetch(:to) { name.capitalize }
       end
 
+      # via is optional for when we don't follow the resource_id convention
       def via
-        options.fetch(:via)
+        options.fetch(:via) { :"#{to.downcase}_id" }
       end
 
       def type
