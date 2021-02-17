@@ -44,7 +44,7 @@ const Input = React.forwardRef(function Input(
   return (
     <StyledInput
       ref={containerRef}
-      $focused={focused}
+      data-focused={focused}
       $error={error}
       $disabled={props.disabled}
       size={size}
