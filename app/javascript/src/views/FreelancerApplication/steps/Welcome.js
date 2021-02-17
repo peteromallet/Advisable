@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text, Link, Button } from "@advisable/donut";
-import image from "./images/welcome-illustration.png";
-import AnimatedCard from "./components/AnimatedCard";
+import image from "../images/welcome-illustration.png";
+import AnimatedCard from "../components/AnimatedCard";
 
 export default function Welcome() {
   return (

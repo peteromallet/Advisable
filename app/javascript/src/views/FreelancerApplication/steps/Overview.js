@@ -1,15 +1,15 @@
 import React from "react";
+import { object, string } from "yup";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
+import { ArrowRight, UploadCloud } from "@styled-icons/feather";
 import { Box, Text } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import StepNumber from "./components/StepNumber";
 import FileUpload from "src/components/FileUpload";
-import { Description, Header } from "./components";
-import { object, string } from "yup";
-import { ArrowRight, UploadCloud } from "@styled-icons/feather";
-import AnimatedCard from "./components/AnimatedCard";
+import AnimatedCard from "../components/AnimatedCard";
+import { Description, Header } from "../components";
+import StepNumber from "../components/StepNumber";
 
 const validationSchema = object().shape({
   linkedin: string().url("Please provide a valid LinkedIn URL"),

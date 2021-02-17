@@ -1,14 +1,14 @@
 import React from "react";
-import { Box, Container, useBreakpoint } from "@advisable/donut";
-import Sidebar from "./Sidebar";
-import Welcome from "./Welcome";
-import Introduction from "./Introduction";
-import Overview from "./Overview";
-import PreviousWork from "./PreviousWork";
-import WorkPreferences from "./WorkPreferences";
-import IdealProject from "./IdealProject";
-import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import { Box, Container, useBreakpoint } from "@advisable/donut";
+import Sidebar from "./components/Sidebar";
+import Welcome from "./steps/Welcome";
+import Introduction from "./steps/Introduction";
+import Overview from "./steps/Overview";
+import PreviousWork from "./steps/PreviousWork";
+import WorkPreferences from "./steps/WorkPreferences";
+import IdealProject from "./steps/IdealProject";
 
 export default function FreelancerApplication() {
   const location = useLocation();
