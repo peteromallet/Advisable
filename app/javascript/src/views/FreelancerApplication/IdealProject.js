@@ -1,12 +1,13 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Card, Box, Textarea } from "@advisable/donut";
+import { Box, Textarea } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import StepNumber from "./StepNumber";
 import { Description, Header } from "./components";
 import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
+import AnimatedCard from "./components/AnimatedCard";
 
 const validationSchema = object().shape({
   idealProject: string().required(),
@@ -20,7 +21,7 @@ export default function IdealProject() {
   const handleSubmit = () => {};
 
   return (
-    <Card padding={10} borderRadius="12px">
+    <AnimatedCard>
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -47,6 +48,6 @@ export default function IdealProject() {
           <SubmitButton suffix={<ArrowRight />}>Submit</SubmitButton>
         </Form>
       </Formik>
-    </Card>
+    </AnimatedCard>
   );
 }

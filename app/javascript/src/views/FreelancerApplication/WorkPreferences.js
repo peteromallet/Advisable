@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { useQuery, gql } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { Card, Box, Autocomplete } from "@advisable/donut";
+import { Box, Autocomplete } from "@advisable/donut";
 import { ChoiceList } from "src/components";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
@@ -10,6 +10,8 @@ import StepNumber from "./StepNumber";
 import { Description, Header } from "./components";
 import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
+import AnimatedCard from "./components/AnimatedCard";
+import { motion } from "framer-motion";
 
 export const GET_DATA = gql`
   {
@@ -44,10 +46,10 @@ export default function WorkPreferences() {
     history.push("/freelancers/apply/ideal_project");
   };
 
-  if (loading) return <Box>loading...</Box>;
+  if (loading) return <motion.div exit>loading...</motion.div>;
 
   return (
-    <Card padding={10} borderRadius="12px">
+    <AnimatedCard>
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -108,6 +110,6 @@ export default function WorkPreferences() {
           </Form>
         )}
       </Formik>
-    </Card>
+    </AnimatedCard>
   );
 }

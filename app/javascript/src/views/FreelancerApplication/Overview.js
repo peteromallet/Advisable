@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
-import { Card, Box, Text } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import StepNumber from "./StepNumber";
@@ -9,6 +9,7 @@ import FileUpload from "src/components/FileUpload";
 import { Description, Header } from "./components";
 import { object, string } from "yup";
 import { ArrowRight, UploadCloud } from "@styled-icons/feather";
+import AnimatedCard from "./components/AnimatedCard";
 
 const validationSchema = object().shape({
   linkedin: string().url("Please provide a valid LinkedIn URL"),
@@ -25,7 +26,7 @@ export default function Ovewview() {
   };
 
   return (
-    <Card padding={10} borderRadius="12px">
+    <AnimatedCard>
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -33,7 +34,7 @@ export default function Ovewview() {
       >
         {(formik) => (
           <Form>
-            <StepNumber>Step 1 of 5</StepNumber>
+            <StepNumber>Step 2 of 5</StepNumber>
             <Header>Overview</Header>
             <Description>
               Every freelancer has that one project that stands out in there
@@ -84,6 +85,6 @@ export default function Ovewview() {
           </Form>
         )}
       </Formik>
-    </Card>
+    </AnimatedCard>
   );
 }

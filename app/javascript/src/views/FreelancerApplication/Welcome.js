@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Text, Card, Link, Button } from "@advisable/donut";
+import { Box, Text, Link, Button } from "@advisable/donut";
 import image from "./images/welcome-illustration.png";
+import AnimatedCard from "./components/AnimatedCard";
 
 export default function Welcome() {
   return (
-    <Card px={10} pt={12} pb={16} borderRadius="12px">
+    <AnimatedCard>
       <Box textAlign="center">
         <Box as="img" src={image} width="352px" marginBottom={6} />
         <Text
@@ -24,6 +25,6 @@ export default function Welcome() {
           Get Started
         </Button>
       </Box>
-    </Card>
+    </AnimatedCard>
   );
 }
