@@ -17,7 +17,7 @@ import SubmitButton from "src/components/SubmitButton";
 import FileUpload from "src/components/FileUpload";
 import FormField from "src/components/FormField";
 import BioLengthWidget from "./BioLengthWiget";
-import StepNumber from "./StepNumber";
+import StepNumber from "./components/StepNumber";
 import { motion } from "framer-motion";
 import AnimatedCard from "./components/AnimatedCard";
 import { Description, Header } from "./components";
