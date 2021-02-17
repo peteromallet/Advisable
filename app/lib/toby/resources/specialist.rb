@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Toby
   module Resources
     class Specialist < BaseResource
@@ -6,7 +8,7 @@ module Toby
       attribute :uid, Attributes::String
       attribute :email, Attributes::String
       attribute :bio, Attributes::String
-      attribute :account, Attributes::BelongsTo, resource: Account
+      attribute :account, Attributes::BelongsTo, to: :Account, via: :account_id
     end
   end
 end

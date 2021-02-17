@@ -42,15 +42,6 @@ module Toby
           @attributes << type.new(name, **args)
         end
 
-        def all(**args)
-          # TODO: Figure out how to do includes with meta prog
-          if args[:lookahead].selection(:edges).selection(:node).selects?(:account)
-            model.includes(:account).all
-          else
-            model.all
-          end
-        end
-
         def type
           @type ||= define_type
         end
@@ -65,7 +56,7 @@ module Toby
               field attribute.name, attribute.type, null: true
               # Forward all of the getters for each attribute to the attribute instance.
               define_method(attribute.name) do
-                attribute.lazy_read(context, object) || attribute.read(object)
+                attribute.lazy_read(object, context) || attribute.read(object)
               end
             end
           end

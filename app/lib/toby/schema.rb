@@ -4,7 +4,9 @@ module Toby
   class Schema < GraphQL::Schema
     query Toby::Types::QueryType
 
-    lazy_resolve(Toby::LazyAccount, :account)
+    (Toby::Lazy.constants - [:Base]).each do |klass|
+      lazy_resolve(Toby::Lazy.const_get(klass), :record)
+    end
 
     # mutation Admin::Types::MutationType
   end
