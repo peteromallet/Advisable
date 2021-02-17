@@ -40,8 +40,7 @@ export const StyledBulletPointInputItem = styled.div`
     margin: 0;
     outline: none;
 
-    &:focus {
-      background: transparent;
+    &[data-focused="true"] {
       border-color: transparent;
     }
   }
