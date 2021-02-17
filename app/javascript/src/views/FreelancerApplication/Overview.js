@@ -6,7 +6,7 @@ import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import StepNumber from "./StepNumber";
 import FileUpload from "src/components/FileUpload";
-import { Description, Header } from "./styles";
+import { Description, Header } from "./components";
 import { object, string } from "yup";
 import { ArrowRight, UploadCloud } from "@styled-icons/feather";
 

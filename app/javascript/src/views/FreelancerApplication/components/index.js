@@ -14,5 +14,5 @@ export const Header = (props) => (
 );
 
 export const Description = (props) => (
-  <Text color="neutral700" mb={4} lineHeight="s" {...props} />
+  <Text color="neutral700" mb={6} lineHeight="s" {...props} />
 );

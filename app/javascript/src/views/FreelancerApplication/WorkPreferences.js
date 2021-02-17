@@ -7,7 +7,7 @@ import { ChoiceList } from "src/components";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import StepNumber from "./StepNumber";
-import { Description, Header } from "./styles";
+import { Description, Header } from "./components";
 import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
 
