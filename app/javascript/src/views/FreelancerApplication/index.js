@@ -20,7 +20,7 @@ export default function FreelancerApplication() {
     <>
       <Sidebar />
       <Box paddingLeft="300px">
-        <Container paddingTop={6} maxWidth="750px">
+        <Container paddingY={10} maxWidth="750px">
           <AnimatePresence
             initial={false}
             custom={{ largeScreen, forwards }}
