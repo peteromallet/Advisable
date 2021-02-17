@@ -20,6 +20,7 @@ import BioLengthWidget from "./BioLengthWiget";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather";
+import { Description, Header } from "./components";
 
 export const GET_COUNTRIES = gql`
   {
@@ -55,22 +56,13 @@ export default function Introduction(specialist) {
         {(formik) => (
           <Form>
             <StepNumber>Step 1 of 5</StepNumber>
-            <Text
-              as="h1"
-              fontSize="5xl"
-              color="cyan700"
-              fontWeight="medium"
-              letterSpacing="-0.03rem"
-              mb={2.5}
-            >
-              Introduction
-            </Text>
-            <Text color="neutral700" mb={4} lineHeight="s">
+            <Header>Introduction</Header>
+            <Description>
               Every freelancer has that one project that stands out in there
               mind. The one that you were so excited to complete and add to your
               portfolio. Tell us about one of your previous projects that you
               are most proud of and why.
-            </Text>
+            </Description>
             <Box mb="m">
               <Text color="neutral900" mb="xs" fontWeight="medium">
                 Add your profile photo
