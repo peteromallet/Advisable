@@ -30,6 +30,11 @@ module Toby
         options.fetch(:readonly, false)
       end
 
+      # Placeholder for lazy_loading
+      def lazy_read(_context, _resource)
+        nil
+      end
+
       def read(resource)
         resource.public_send(name)
       end

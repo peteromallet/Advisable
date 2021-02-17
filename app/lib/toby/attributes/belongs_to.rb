@@ -15,8 +15,8 @@ module Toby
         GraphQL::Types::ID
       end
 
-      def read(resource)
-        resource.public_send(name)
+      def lazy_read(context, resource)
+        Toby::LazyAccount.new(context, resource.public_send("#{name}_id"))
       end
     end
   end
