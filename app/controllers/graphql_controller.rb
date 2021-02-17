@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 class GraphqlController < ApplicationController
   protect_from_forgery with: :null_session
-  before_action :require_admin, only: :admin
-  skip_before_action :verify_authenticity_token,
-                     if: -> { Rails.env.development? }
+  before_action :require_admin, only: :toby
+  skip_before_action :verify_authenticity_token, if: -> { Rails.env.development? }
 
   def execute
     variables = ensure_hash(params[:variables])

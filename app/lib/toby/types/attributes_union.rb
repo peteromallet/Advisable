@@ -1,7 +1,13 @@
-class Toby::Types::AttributesUnion < GraphQL::Schema::Union
-  possible_types(*Toby::Attributes.attribute_classes.map(&:attribute_type))
+# frozen_string_literal: true
 
-  def self.resolve_type(object, context)
-    object.class.attribute_type
+module Toby
+  module Types
+    class AttributesUnion < GraphQL::Schema::Union
+      possible_types(*Toby::Attributes.attribute_classes.map(&:attribute_type))
+
+      def self.resolve_type(object, _context)
+        object.class.attribute_type
+      end
+    end
   end
 end
