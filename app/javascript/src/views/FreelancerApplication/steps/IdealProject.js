@@ -1,13 +1,13 @@
 import React from "react";
+import { object, string } from "yup";
 import { Formik, Form } from "formik";
 import { Box, Textarea } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import StepNumber from "./components/StepNumber";
-import { Description, Header } from "./components";
-import { object, string } from "yup";
 import { ArrowRight } from "@styled-icons/feather";
-import AnimatedCard from "./components/AnimatedCard";
+import StepNumber from "../components/StepNumber";
+import { Description, Header } from "../components";
+import AnimatedCard from "../components/AnimatedCard";
 
 const validationSchema = object().shape({
   idealProject: string().required(),
