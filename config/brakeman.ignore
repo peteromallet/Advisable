@@ -20,6 +20,26 @@
       "note": ""
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "685af3bed9c17f01d63d920b3478f4078497668b2fea6997042a07eca151208f",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/toby/filters/string_contains.rb",
+      "line": 7,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "records.where(\"#{name.to_s.underscore} ilike ?\", \"%#{value}%\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Toby::Filters::StringContains",
+        "method": "s(:self).apply"
+      },
+      "user_input": "name.to_s.underscore",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
       "warning_type": "Dangerous Send",
       "warning_code": 23,
       "fingerprint": "8442cb3db768d9885735ade7557f6ad69155a7655513bd4c61b7c7d33ef2069d",
@@ -100,6 +120,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-02-03 09:54:00 +0100",
+  "updated": "2021-02-17 14:06:13 +0100",
   "brakeman_version": "5.0.0"
 }
