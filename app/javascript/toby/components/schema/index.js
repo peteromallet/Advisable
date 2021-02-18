@@ -35,12 +35,24 @@ const SCHEMA_INTROSPECTION = gql`
       attributes {
         ... on IdAttribute {
           name
+          filters {
+            name
+            type
+          }
         }
         ... on StringAttribute {
           name
+          filters {
+            name
+            type
+          }
         }
         ... on BelongsToAttribute {
           name
+          filters {
+            name
+            type
+          }
         }
       }
     }
