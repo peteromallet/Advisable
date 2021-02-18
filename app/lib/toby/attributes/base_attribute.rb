@@ -48,13 +48,6 @@ module Toby
       end
 
       class << self
-        attr_reader :option_fields
-
-        def option_field(option, type)
-          @option_fields ||= {}
-          @option_fields[option] = type
-        end
-
         def filter(name, type)
           @filters ||= {}
           @filters[name] = type
@@ -62,6 +55,15 @@ module Toby
 
         def filters
           @filters || {}
+        end
+
+        def extension_field(name, type)
+          @extension_fields ||= {}
+          @extension_fields[name] = type
+        end
+
+        def extension_fields
+          @extension_fields || []
         end
 
         def attribute_type
@@ -80,6 +82,14 @@ module Toby
               def filters
                 object.class.filters.map do |k, v|
                   {name: k, type: v.name.demodulize}
+                end
+              end
+
+              root.extension_fields.each do |name, type|
+                field name, type, null: false
+
+                define_method name do
+                  object.instance_variable_get("@options")[name]
                 end
               end
             end
