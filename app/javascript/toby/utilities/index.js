@@ -41,7 +41,7 @@ function getResourceByParam(resources, param) {
 
 // Generates a graphql a collection query for a resource
 function generateCollectionQuery(schemaData, resourceData) {
-  const node = { id: true };
+  const node = {};
   resourceData.attributes.forEach((attr) => {
     node[attr.name] = selectionForField(
       schemaData.schema,
