@@ -115,9 +115,7 @@ module Airtable
       self['Application Rejected Timestamp'] = user.application_rejected_at
       self['How many freelancers do you plan on hiring over the next 6 months?'] = user.number_of_freelancers
       self['Estimated Annual Freelancer Spend (USD)'] = user.budget / 100.0 if user.budget
-
-      # Don't enable until we have all the data in PG
-      # push_unsubscribed_from(user)
+      push_unsubscribed_from(user)
     end
   end
 end
