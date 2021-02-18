@@ -40,6 +40,14 @@ const SCHEMA_INTROSPECTION = gql`
             type
           }
         }
+        ... on SelectAttribute {
+          name
+          options
+          filters {
+            name
+            type
+          }
+        }
         ... on StringAttribute {
           name
           filters {
