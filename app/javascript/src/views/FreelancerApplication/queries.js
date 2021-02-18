@@ -19,8 +19,6 @@ export const GET_SPECIALIST = gql`
       resume {
         id
         filename
-        size
-        type
         url
       }
       # Previous work step
@@ -74,8 +72,6 @@ export const UPDATE_OVERVIEW = gql`
         resume {
           id
           filename
-          size
-          type
           url
         }
       }

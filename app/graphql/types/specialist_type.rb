@@ -124,13 +124,15 @@ module Types
       object.previous_project_skills.uniq
     end
 
-    field :industries, [Types::IndustryType], null: false do
+    field :industries, [Types::IndustryType], null: false
+
+    field :project_industries, [Types::IndustryType], null: false do
       description 'Returns a list of all the industries the specialist has worked in'
     end
 
     # TODO: This should eventually be updated to include multiple industries associated with an on
     # platform project
-    def industries
+    def project_industries
       object.previous_project_industries.uniq
     end
 

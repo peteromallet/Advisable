@@ -49,27 +49,28 @@ export default function WorkPreferences({ specialist }) {
   };
 
   const handleSubmit = async (values) => {
-    update({
+    await update({
       variables: {
         input: {
           skills: values.skills.map((s) => s.label),
+          industries: values.industries.map((i) => i.label),
           primarilyFreelance: values.primarilyFreelance === "full",
         },
       },
-      optimisticResponse: {
-        __typename: "Mutation",
-        updateProfile: {
-          __typename: "UpdateProfilePayload",
-          specialist: {
-            __typename: "Specialist",
-            id: specialist.id,
-            ...values,
-            primarilyFreelance:
-              values.primarilyFreelance === "full" ||
-              (values.primarilyFreelance === "part" ? false : null),
-          },
-        },
-      },
+      // optimisticResponse: {
+      //   __typename: "Mutation",
+      //   updateProfile: {
+      //     __typename: "UpdateProfilePayload",
+      //     specialist: {
+      //       __typename: "Specialist",
+      //       id: specialist.id,
+      //       ...values,
+      //       primarilyFreelance:
+      //         values.primarilyFreelance === "full" ||
+      //         (values.primarilyFreelance === "part" ? false : null),
+      //     },
+      //   },
+      // },
     });
 
     history.push("/freelancers/apply/ideal_project");
