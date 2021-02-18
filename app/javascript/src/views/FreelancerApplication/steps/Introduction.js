@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather";
 import {
   Box,
@@ -10,7 +10,6 @@ import {
   Textarea,
   Avatar,
   Label,
-  Input,
   Checkbox,
   Select,
 } from "@advisable/donut";
@@ -21,30 +20,55 @@ import BioLengthWidget from "./BioLengthWiget";
 import StepNumber from "../components/StepNumber";
 import AnimatedCard from "../components/AnimatedCard";
 import { Description, Header } from "../components";
+import { UPDATE_INTRODUCTION } from "../queries";
 
 export const GET_COUNTRIES = gql`
   {
     countries {
-      value: id
-      label: name
+      id
+      name
+      __typename
     }
   }
 `;
 
-export default function Introduction(specialist) {
+export default function Introduction({ specialist }) {
   const history = useHistory();
   const [profilePhoto, setProfilePhoto] = React.useState(specialist?.avatar);
   const { data, loading } = useQuery(GET_COUNTRIES);
+  const [update] = useMutation(UPDATE_INTRODUCTION);
 
   const initialValues = {
     avatar: undefined,
-    bio: "",
-    city: "",
-    country: "",
-    publicUse: "",
+    bio: specialist.bio || "",
+    city: specialist.city || "",
+    country: specialist.country?.id || "",
+    publicUse: specialist.publicUse === null ? true : specialist.publicUse,
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async ({ avatar, ...values }) => {
+    if (avatar) {
+      values.avatar = avatar;
+      await update({ variables: { input: values } });
+    } else {
+      update({
+        variables: { input: values },
+        optimisticResponse: {
+          __typename: "Mutation",
+          updateProfile: {
+            __typename: "UpdateProfilePayload",
+            specialist: {
+              __typename: "Specialist",
+              id: specialist.id,
+              ...values,
+              avatar: specialist.avatar,
+              country: data.countries.find((c) => c.id === values.country),
+            },
+          },
+        },
+      });
+    }
+
     history.push("/freelancers/apply/overview");
   };
 
@@ -101,27 +125,15 @@ export default function Introduction(specialist) {
               widget={BioLengthWidget}
             />
             <Label marginBottom="xs">Where are you based?</Label>
-            <Box mb={8} display="flex">
-              <Box flex={1} pr="xxs">
-                <FormField
-                  as={Input}
-                  name="city"
-                  placeholder="City"
-                  error={formik.touched.city && formik.errors.city}
-                />
+            <Box display={["block", "flex"]} mb="l">
+              <Box mr={[0, 3]} mb={[6, 0]} width="100%">
+                <FormField name="city" width="100%" placeholder="City" />
               </Box>
-              <Box flex={1} pl="xxs">
-                <FormField
-                  as={Select}
-                  name="country"
-                  placeholder="Country"
-                  data-testid="country"
-                  options={data.countries}
-                  error={formik.touched.country && formik.errors.country}
-                >
+              <Box width="100%">
+                <FormField as={Select} name="country" placeholder="Country">
                   {data.countries.map((c) => (
-                    <option key={c.value} value={c.value}>
-                      {c.label}
+                    <option key={c.id} value={c.id}>
+                      {c.name}
                     </option>
                   ))}
                 </FormField>

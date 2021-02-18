@@ -37,3 +37,40 @@ export const useGetSpecialist = (id) => {
   const response = useQuery(GET_SPECIALIST, { variables: { id } });
   return response;
 };
+
+export const UPDATE_INTRODUCTION = gql`
+  mutation UpdateIntroduction($input: UpdateProfileInput!) {
+    updateProfile(input: $input) {
+      specialist {
+        id
+        avatar
+        bio
+        city
+        country {
+          id
+          name
+        }
+        publicUse
+      }
+    }
+  }
+`;
+
+export const UPDATE_OVERVIEW = gql`
+  mutation UpdateIntroduction($input: UpdateProfileInput!) {
+    updateProfile(input: $input) {
+      specialist {
+        id
+        linkedin
+        website
+        resume {
+          id
+          filename
+          size
+          type
+          url
+        }
+      }
+    }
+  }
+`;
