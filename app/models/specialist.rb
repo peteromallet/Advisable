@@ -48,6 +48,8 @@ class Specialist < ApplicationRecord
   has_many :previous_project_industries, through: :previous_projects, source: :industries
   has_many :specialist_skills, dependent: :destroy
   has_many :skills, through: :specialist_skills
+  has_many :specialist_industries, dependent: :destroy
+  has_many :industries, through: :specialist_industries
   has_many :answers, dependent: :destroy
   has_many :event_attendees, dependent: :destroy
 
