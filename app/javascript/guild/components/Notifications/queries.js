@@ -1,49 +1,30 @@
 import { gql } from "@apollo/client";
 
 export const GUILD_NOTIFICATIONS_QUERY = gql`
-  query guildActivity {
-    guildActivity(first: 10) {
+  query guildNotifications {
+    guildNotifications(first: 20) {
       nodes {
         __typename
-        ... on GuildComment {
-          id
-          body
-          author {
-            name
-            firstName
-            lastName
-            avatar
-          }
-          createdAtTimeAgo
-          post {
-            title
+        id
+        createdAt
+        ... on SuggestedPostNotification {
+          specialist {
             id
+            name
+          }
+          guildPost {
+            id
+            title
           }
         }
-        ... on GuildReaction {
-          id
-          author {
-            name
-            firstName
-            lastName
+        ... on PostReactionNotification {
+          specialist {
             id
-            avatar
+            name
           }
-          kind
-          createdAtTimeAgo
-          reactionable {
-            __typename
-            ... on GuildPostGeneral {
-              title
-              id
-            }
-            ... on GuildComment {
-              id
-              post {
-                id
-                title
-              }
-            }
+          guildPost {
+            id
+            title
           }
         }
       }

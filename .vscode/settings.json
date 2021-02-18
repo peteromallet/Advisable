@@ -2,5 +2,12 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.enable": true,
   "editor.formatOnSave": true,
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "ruby.format": "rubocop",
+  "ruby.lint": {
+    "rubocop": {
+      "useBundler": true,
+      "forceExclusion": true
+    }
+  }
 }
