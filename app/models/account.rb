@@ -72,7 +72,7 @@ class Account < ApplicationRecord
     self.remember_token = nil
     self.deleted_at = Time.zone.now if delete
     self.password = SecureRandom.hex
-    self.email = "disabled+#{email.sub("@", ".at.")}@advisable.com"
+    self.email = "disabled+#{email.sub("@", ".at.")}@advisable.com" unless email.starts_with?("disabled+")
     magic_links.destroy_all
     save!
     specialist_or_user&.sync_to_airtable

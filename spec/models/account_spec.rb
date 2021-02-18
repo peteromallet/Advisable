@@ -69,6 +69,14 @@ RSpec.describe Account, type: :model do
       expect(account.email).to eq("disabled+#{email.sub("@", ".at.")}@advisable.com")
     end
 
+    it "only changes email once" do
+      email = account.email
+      account.disable!
+      account.disable!
+      account.disable!
+      expect(account.email).to eq("disabled+#{email.sub("@", ".at.")}@advisable.com")
+    end
+
     it "sets deleted_at when delete: true" do
       account.disable!(delete: true)
       expect(account.deleted_at).not_to be_nil
