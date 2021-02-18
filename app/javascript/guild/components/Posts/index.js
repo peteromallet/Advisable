@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { GUILD_POSTS_QUERY } from "./queries";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { feedStore } from "@guild/views/Feed/store";
@@ -13,6 +13,7 @@ import Filters from "@guild/components/Filters";
 import FollowTopic from "@guild/components/FollowTopic";
 
 const Posts = () => {
+  const location = useLocation();
   const { topicId } = useParams();
   const history = useHistory();
   const historyPopped = history.action === "POP";
@@ -23,14 +24,13 @@ const Posts = () => {
   };
   const clearFilters = () => setPostTypeFilter("For You");
 
-  const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
+  const { data, loading, fetchMore, error } = useQuery(GUILD_POSTS_QUERY, {
     fetchPolicy: historyPopped ? "cache-first" : "network-only",
     nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
     notifyOnNetworkStatusChange: true,
     variables: { topicId, type: postTypeFilter },
     pollInterval: 300000, // 5 minutes
   });
-
   const hasNextPage = data?.guildPosts.pageInfo.hasNextPage || false;
   const endCursor = data?.guildPosts.pageInfo.endCursor;
 
@@ -42,6 +42,11 @@ const Posts = () => {
       fetchMore({ variables: { cursor: endCursor } });
     }
   };
+
+  if (error?.message === "You are not logged in") {
+    const path = encodeURIComponent(`/guild${location.pathname}`);
+    window.location = `/login?redirect=${path}`;
+  }
 
   return (
     <>
