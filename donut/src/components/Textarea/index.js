@@ -43,11 +43,17 @@ const Textarea = React.forwardRef(function Textarea(
     textarea.current.rows = rows;
   }
 
-  React.useLayoutEffect(calculateRows, [props.value]);
+  React.useLayoutEffect(calculateRows, [
+    props.value,
+    props.lineHeight,
+    props.maxRows,
+    props.minRows,
+    props.rowPadding,
+  ]);
 
   return (
     <StyledTextarea
-      $focused={focused}
+      data-focused={focused}
       $error={error}
       $disabled={props.disabled}
       size={size}
