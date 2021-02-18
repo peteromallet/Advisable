@@ -3,6 +3,8 @@
 # The base field class that should be used for all grapql fields.
 # This includes some additional functionality arround authorization for fields.
 class BaseField < GraphQL::Schema::Field
+  argument_class(Types::BaseArgument)
+
   attr_reader :authorize_methods
 
   # Allows authorization to be configured inside the field block rather
