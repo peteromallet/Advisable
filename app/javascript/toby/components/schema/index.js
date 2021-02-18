@@ -33,6 +33,9 @@ const SCHEMA_INTROSPECTION = gql`
       type
       queryNameCollection
       attributes {
+        ... on IdAttribute {
+          name
+        }
         ... on StringAttribute {
           name
         }

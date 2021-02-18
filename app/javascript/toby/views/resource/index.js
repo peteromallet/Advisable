@@ -1,6 +1,7 @@
 import React from "react";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useResources } from "../../utilities";
+import IdAttribute from "../../attributes/id";
 import StringAttribute from "../../attributes/string";
 import BelongsToAttribute from "../../attributes/belongsTo";
 import { StyledRow, StyledCell } from "../../styles";
@@ -8,6 +9,7 @@ import useFilters from "./useFilters";
 import Filters from "./Filters";
 
 const ATTRIBUTES = {
+  IdAttribute,
   StringAttribute,
   BelongsToAttribute,
 };
@@ -39,14 +41,12 @@ export default function Resource() {
     <>
       <Filters {...filterState} refetch={refetch} />
       <StyledRow>
-        <StyledCell>id</StyledCell>
         {resource.attributes.map((attr) => (
           <StyledCell key={attr.name}>{attr.name}</StyledCell>
         ))}
       </StyledRow>
       {edges.map(({ node }) => (
         <StyledRow key={node.id}>
-          <StyledCell>{node.id}</StyledCell>
           {resource.attributes.map((attr) => (
             <StyledCell key={attr.name}>{renderField(node, attr)}</StyledCell>
           ))}
