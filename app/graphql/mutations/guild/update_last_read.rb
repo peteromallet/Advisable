@@ -1,21 +1,25 @@
 # frozen_string_literal: true
 
-class Mutations::Guild::UpdateLastRead < Mutations::BaseMutation
-  description "Updates the guild last read time for a notifications read event"
-  graphql_name "GuildUpdateLastRead"
+module Mutations
+  module Guild
+    class UpdateLastRead < Mutations::BaseMutation
+      description "Updates any unread guild notifications to read"
+      graphql_name "GuildUpdateLastRead"
 
-  argument :read_notifications, Boolean, required: true
+      argument :read_notifications, Boolean, required: true
 
-  field :viewer, Types::ViewerUnion, null: true
+      field :viewer, Types::ViewerUnion, null: true
 
-  def authorized?(**args)
-    requires_guild_user!
-  end
+      def authorized?(**_args)
+        requires_guild_user!
+      end
 
-  def resolve(**args)
-    viewer = context[:current_user]
-    viewer.touch_guild_notifications_last_read
+      def resolve(**_args)
+        viewer = context[:current_user]
+        viewer.touch_guild_notifications_read_at
 
-    {viewer: viewer}
+        {viewer: viewer}
+      end
+    end
   end
 end

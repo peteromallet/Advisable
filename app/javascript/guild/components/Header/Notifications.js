@@ -38,7 +38,11 @@ export default function NotificationsMenu({ hasUnread }) {
     <>
       <PopoverDisclosure {...popover}>
         {(props) => (
-          <NavIcon {...props} unread={hasUnread}>
+          <NavIcon
+            {...props}
+            unread={hasUnread}
+            data-testid={hasUnread ? "unreadNotifications" : "notifications"}
+          >
             <NotificationIcon />
           </NavIcon>
         )}

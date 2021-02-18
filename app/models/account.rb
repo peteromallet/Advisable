@@ -11,6 +11,9 @@ class Account < ApplicationRecord
   has_many :magic_links, dependent: :destroy
   has_many :auth_providers, dependent: :destroy
   has_many :unresponsiveness_reports, foreign_key: :reporter_id, dependent: :destroy, inverse_of: :reporter
+  has_many :notifications, dependent: :destroy
+
+  has_many :actor_notifications, class_name: "Notification", foreign_key: :actor_id, dependent: :destroy, inverse_of: :actor
 
   has_secure_password validations: false
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true

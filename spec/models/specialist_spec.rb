@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Specialist do
@@ -24,17 +26,17 @@ RSpec.describe Specialist do
 
     it 'returns true if they have provided all payment info' do
       specialist = build(:specialist, {
-        bank_currency: "EUR",
-        bank_holder_name: "Test Account",
-        bank_holder_address: {
-          "line1" => "line1",
-          "line2" => "line2",
-          "city" => "city",
-          "state" => "state",
-          "country" => "country",
-          "postcode" => "postcode",
-        }
-      })
+                           bank_currency: "EUR",
+                           bank_holder_name: "Test Account",
+                           bank_holder_address: {
+                             "line1" => "line1",
+                             "line2" => "line2",
+                             "city" => "city",
+                             "state" => "state",
+                             "country" => "country",
+                             "postcode" => "postcode"
+                           }
+                         })
       expect(specialist.has_setup_payments).to be_truthy
     end
   end
@@ -44,17 +46,17 @@ RSpec.describe Specialist do
 
     describe "guild_joined_callbacks" do
       it "sets a date when a specialist joins the guild" do
-        expect {
+        expect do
           specialist.update!(guild: true)
           specialist.reload
-        }.to change(specialist, :guild_joined_date)
+        end.to change(specialist, :guild_joined_date)
       end
 
       it "does not overwrite the original date" do
         specialist.update!(guild: true)
-        expect {
+        expect do
           specialist.update!(guild: false)
-        }.not_to change(specialist.reload, :guild_joined_date)
+        end.not_to change(specialist.reload, :guild_joined_date)
       end
 
       it "adds guild followables" do
@@ -64,9 +66,9 @@ RSpec.describe Specialist do
     end
 
     describe "guild_featured_member_at" do
-      subject(:guild_feature_members) {
+      subject(:guild_feature_members) do
         described_class.guild_featured_members
-      }
+      end
 
       let!(:spe_featured) { create(:specialist, :guild, guild_featured_member_at: Time.current) }
       let(:spe_not_featured) { create(:specialist, :guild) }

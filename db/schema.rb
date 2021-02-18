@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_10_124607) do
+ActiveRecord::Schema.define(version: 2021_02_17_200148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -394,6 +394,7 @@ ActiveRecord::Schema.define(version: 2021_02_10_124607) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["reactionable_type", "reactionable_id"], name: "index_guild_reactions_on_reactionable_type_and_reactionable_id"
+    t.index ["specialist_id", "reactionable_type", "reactionable_id"], name: "index_guild_reactions_on_specialist_reactionable", unique: true
     t.index ["specialist_id"], name: "index_guild_reactions_on_specialist_id"
   end
 
@@ -449,6 +450,20 @@ ActiveRecord::Schema.define(version: 2021_02_10_124607) do
     t.string "status"
     t.index ["project_id"], name: "index_matches_on_project_id"
     t.index ["specialist_id"], name: "index_matches_on_specialist_id"
+  end
+
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "actor_id"
+    t.string "action", null: false
+    t.string "notifiable_type", null: false
+    t.uuid "notifiable_id", null: false
+    t.datetime "read_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_notifications_on_account_id"
+    t.index ["actor_id"], name: "index_notifications_on_actor_id"
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
   end
 
   create_table "off_platform_projects", force: :cascade do |t|
@@ -983,6 +998,8 @@ ActiveRecord::Schema.define(version: 2021_02_10_124607) do
   add_foreign_key "interviews", "users"
   add_foreign_key "matches", "projects"
   add_foreign_key "matches", "specialists"
+  add_foreign_key "notifications", "accounts"
+  add_foreign_key "notifications", "accounts", column: "actor_id"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "previous_project_images", "off_platform_projects"
@@ -1285,25 +1302,25 @@ ActiveRecord::Schema.define(version: 2021_02_10_124607) do
   SQL
 
 
+  create_trigger :logidze_on_accounts, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_applications, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_applications BEFORE INSERT OR UPDATE ON public.applications FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_off_platform_projects, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_off_platform_projects BEFORE INSERT OR UPDATE ON public.off_platform_projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
   create_trigger :logidze_on_projects, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_projects BEFORE INSERT OR UPDATE ON public.projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_specialists, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_specialists BEFORE INSERT OR UPDATE ON public.specialists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
-  create_trigger :logidze_on_applications, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_applications BEFORE INSERT OR UPDATE ON public.applications FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_users, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_off_platform_projects, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_off_platform_projects BEFORE INSERT OR UPDATE ON public.off_platform_projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
   create_trigger :logidze_on_tasks, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_tasks BEFORE INSERT OR UPDATE ON public.tasks FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
-  create_trigger :logidze_on_accounts, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  create_trigger :logidze_on_users, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
