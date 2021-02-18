@@ -230,6 +230,7 @@ module Types
 
     field :guild_activity,
           Types::Guild::ActivityUnion.connection_type,
+          deprecation_reason: "Use guildNotifications query instead",
           null: true, max_page_size: 20 do
       description 'Returns a list of guild activity notifications'
     end
