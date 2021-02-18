@@ -74,6 +74,14 @@ module Toby
               def name
                 object.name.to_s.camelize(:lower)
               end
+
+              field :filters, [Toby::Types::ResourceFilterType], null: false
+
+              def filters
+                object.class.filters.map do |k, v|
+                  {name: k, type: v.name.demodulize}
+                end
+              end
             end
           end
         end

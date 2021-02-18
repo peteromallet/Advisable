@@ -15,7 +15,7 @@ export default function Filters({
     addFilter({
       attribute: fields[0],
       type: "contains",
-      value: "",
+      content: "",
     });
   }, [addFilter, fields]);
 
@@ -28,7 +28,7 @@ export default function Filters({
       filters: filters.map((f) => ({
         attribute: f.attribute,
         type: f.type,
-        value: f.value,
+        content: f.content,
       })),
     });
   }, [refetch, filters]);
@@ -51,7 +51,7 @@ export default function Filters({
             <option value="is_empty">Is Empty</option>
             <option value="not_empty">Is Not Empty</option>
           </select>
-          <input onChange={handleChange(filter.id, "value")} type="text" />
+          <input onChange={handleChange(filter.id, "content")} type="text" />
           <button onClick={() => removeFilter(filter.id)}>x</button>
         </div>
       ))}
