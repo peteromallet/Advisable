@@ -22,7 +22,8 @@ export default function BulletPointInput({
 
     // backspace
     if (e.keyCode === 8 && inputValue.length === 0) {
-      if (!nextInput) {
+      if (previousInput) {
+        e.preventDefault();
         previousInput.querySelector("textarea").focus();
       }
 

@@ -79,11 +79,6 @@ const StyledInput_Error = css`
   }
 `;
 
-const StyledInput_Focused = css`
-  background-color: #eff0f3;
-  border-color: ${theme.colors.blue900};
-`;
-
 const StyledInput_Disabled = css`
   cursor: not-allowed;
   border-color: ${lighten(0.024, "#eff0f3")};
@@ -164,8 +159,12 @@ export const StyledInput = styled.div`
   border-radius: ${BORDER_RADIUS}px;
   background: #eff0f3;
   ${(props) => props.$error && StyledInput_Error};
-  ${(props) => props.$focused && StyledInput_Focused};
   ${(props) => props.$disabled && StyledInput_Disabled};
+
+  &[data-focused="true"] {
+    background-color: #eff0f3;
+    border-color: ${theme.colors.blue900};
+  }
 
   ${size}
   ${margin};
