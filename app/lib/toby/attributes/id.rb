@@ -3,7 +3,7 @@
 module Toby
   module Attributes
     class Id < BaseAttribute
-      filter :contains, Filters::OneOf
+      filter :one_of, Filters::OneOf
 
       def type
         GraphQL::Schema::Object::ID
