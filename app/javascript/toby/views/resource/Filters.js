@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useResourceData } from "../../utilities";
+import FiltersRenderer from "../../filters";
 
 export default function Filters({
   refetch,
@@ -9,18 +10,18 @@ export default function Filters({
   updateFilter,
 }) {
   const resource = useResourceData();
-  const fields = resource.attributes.map((attr) => attr.name);
+  const fieldsWithFilters = resource.attributes.filter((a) => a.filters.length);
 
   const newFilter = useCallback(() => {
     addFilter({
-      attribute: fields[0],
-      type: "contains",
+      attribute: fieldsWithFilters[0].name,
+      type: fieldsWithFilters[0].filters[0].name,
       content: "",
     });
-  }, [addFilter, fields]);
+  }, [addFilter, fieldsWithFilters]);
 
-  const handleChange = (id, attribute) => (e) => {
-    updateFilter(id, attribute, e.target.value);
+  const handleChange = (id, attribute) => (value) => {
+    updateFilter(id, attribute, value);
   };
 
   useEffect(() => {
@@ -33,6 +34,24 @@ export default function Filters({
     });
   }, [refetch, filters]);
 
+  function filtersForField(field) {
+    return fieldsWithFilters.find((f) => f.name === field).filters;
+  }
+
+  function renderFilter(filter) {
+    const field = fieldsWithFilters.find((f) => f.name === filter.attribute);
+    const fieldFilter = field.filters.find((f) => f.name === filter.type);
+    const Component = FiltersRenderer[fieldFilter.type];
+    if (!Component) return null;
+
+    return (
+      <Component
+        filter={filter}
+        onChange={handleChange(filter.id, "content")}
+      />
+    );
+  }
+
   return (
     <div>
       {filters.map((filter) => (
@@ -40,18 +59,22 @@ export default function Filters({
           Where
           <select
             value={filter.attribute}
-            onChange={handleChange(filter.id, "attribute")}
+            onChange={(e) =>
+              handleChange(filter.id, "attribute")(e.target.value)
+            }
           >
-            {fields.map((field) => (
-              <option key={field}>{field}</option>
+            {fieldsWithFilters.map((field) => (
+              <option key={field.name}>{field.name}</option>
             ))}
           </select>
-          <select onChange={handleChange(filter.id, "type")}>
-            <option>contains</option>
-            <option value="is_empty">Is Empty</option>
-            <option value="not_empty">Is Not Empty</option>
+          <select
+            onChange={(e) => handleChange(filter.id, "type")(e.target.value)}
+          >
+            {filtersForField(filter.attribute).map((filter) => (
+              <option key={filter.name}>{filter.name}</option>
+            ))}
           </select>
-          <input onChange={handleChange(filter.id, "content")} type="text" />
+          {renderFilter(filter)}
           <button onClick={() => removeFilter(filter.id)}>x</button>
         </div>
       ))}
