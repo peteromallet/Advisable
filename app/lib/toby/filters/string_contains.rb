@@ -3,8 +3,8 @@
 module Toby
   module Filters
     class StringContains
-      def self.apply(records, name, value)
-        records.where("#{name.to_s.underscore} ilike ?", "%#{value}%")
+      def self.apply(records, name, contents = [])
+        records.where("#{name.to_s.underscore} ilike ?", "%#{contents.first}%")
       end
     end
   end
