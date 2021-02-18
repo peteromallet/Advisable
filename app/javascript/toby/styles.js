@@ -13,9 +13,12 @@ export const StyledRow = styled.div`
 
 export const StyledCell = styled.div`
   width: 200px;
-  padding: 10px;
+  height: 40px;
+  display: flex;
+  padding: 0 10px;
   overflow: hidden;
   white-space: nowrap;
+  align-items: center;
   border-right: 1px solid #ccc;
 `;
 

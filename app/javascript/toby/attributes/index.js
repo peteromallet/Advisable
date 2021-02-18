@@ -1,6 +1,5 @@
 import id from "./id";
 import string from "./string";
-import singleSelect from "./singleSelect";
 import belongsTo from "./belongsTo";
 import number from "./number";
 
@@ -9,7 +8,6 @@ const attributes = {
   StringColumn: string,
   NumberColumn: number,
   BelongsToColumn: belongsTo,
-  SingleSelectColumn: singleSelect,
 };
 
 export function getColumnHandler(type) {

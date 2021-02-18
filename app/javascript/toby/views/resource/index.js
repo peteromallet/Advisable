@@ -3,6 +3,7 @@ import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useResources } from "../../utilities";
 import IdAttribute from "../../attributes/id";
 import StringAttribute from "../../attributes/string";
+import SelectAttribute from "../../attributes/select";
 import BelongsToAttribute from "../../attributes/belongsTo";
 import { StyledRow, StyledCell } from "../../styles";
 import useFilters from "./useFilters";
@@ -12,6 +13,7 @@ const ATTRIBUTES = {
   IdAttribute,
   StringAttribute,
   BelongsToAttribute,
+  SelectAttribute,
 };
 
 function renderField(record, field) {

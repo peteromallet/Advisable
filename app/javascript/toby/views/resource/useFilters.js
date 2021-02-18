@@ -18,13 +18,13 @@ export default function useFilters() {
     setFilters((existing) => existing.filter((f) => f.id !== id));
   }, []);
 
-  const updateFilter = useCallback((id, key, value) => {
+  const updateFilter = useCallback((id, values) => {
     setFilters((existing) => {
       return existing.map((filter) => {
         if (filter.id !== id) return filter;
         return {
           ...filter,
-          [key]: value,
+          ...values,
         };
       });
     });

@@ -21,7 +21,7 @@ export default function Filters({
   }, [addFilter, fieldsWithFilters]);
 
   const handleChange = (id, attribute) => (value) => {
-    updateFilter(id, attribute, value);
+    updateFilter(id, { [attribute]: value });
   };
 
   useEffect(() => {
@@ -36,6 +36,16 @@ export default function Filters({
 
   function filtersForField(field) {
     return fieldsWithFilters.find((f) => f.name === field).filters;
+  }
+
+  function handleChangeFilterAttribute(filter) {
+    return (e) => {
+      const filters = filtersForField(e.target.value);
+      updateFilter(filter.id, {
+        attribute: e.target.value,
+        type: filters[0].name,
+      });
+    };
   }
 
   function renderFilter(filter) {
@@ -59,16 +69,14 @@ export default function Filters({
           Where
           <select
             value={filter.attribute}
-            onChange={(e) =>
-              handleChange(filter.id, "attribute")(e.target.value)
-            }
+            onChange={handleChangeFilterAttribute(filter)}
           >
             {fieldsWithFilters.map((field) => (
               <option key={field.name}>{field.name}</option>
             ))}
           </select>
           <select
-            onChange={(e) => handleChange(filter.id, "type")(e.target.value)}
+            onChange={(e) => updateFilter(filter.id, { type: e.target.value })}
           >
             {filtersForField(filter.attribute).map((filter) => (
               <option key={filter.name}>{filter.name}</option>
