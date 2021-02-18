@@ -193,8 +193,7 @@ module Airtable
         end
       end
 
-      # Don't enable until we have all the data in PG
-      # push_unsubscribed_from(specialist)
+      push_unsubscribed_from(specialist)
     end
 
     # handle_airtable_error is called when airtable responds with an error during
