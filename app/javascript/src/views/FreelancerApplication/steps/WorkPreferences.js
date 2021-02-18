@@ -1,10 +1,11 @@
 import React from "react";
-import { object, string } from "yup";
+import Combobox from "@advisable/donut/components/Combobox";
+import { array, object, string } from "yup";
 import { Formik, Form } from "formik";
 import { motion } from "framer-motion";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { Box, Autocomplete } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 import { ChoiceList } from "src/components";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
@@ -12,6 +13,7 @@ import { ArrowRight } from "@styled-icons/feather";
 import StepNumber from "../components/StepNumber";
 import { Description, Header } from "../components";
 import AnimatedCard from "../components/AnimatedCard";
+import { UPDATE_WORK_PREFERENCES } from "../queries";
 
 export const GET_DATA = gql`
   {
@@ -27,22 +29,49 @@ export const GET_DATA = gql`
 `;
 
 const validationSchema = object().shape({
-  skills: string().required(),
-  industries: string().required(),
-  availability: string().required(),
+  skills: array(),
+  industries: array(),
+  primarilyFreelance: string().required(),
 });
 
-export default function WorkPreferences() {
+export default function WorkPreferences({ specialist }) {
+  const [update] = useMutation(UPDATE_WORK_PREFERENCES);
   const { data, loading } = useQuery(GET_DATA);
   const history = useHistory();
 
   const initialValues = {
-    skills: "",
-    industries: "",
-    availability: "",
+    skills: specialist.skills || [],
+    industries: specialist.industries || [],
+    primarilyFreelance:
+      (specialist.primarilyFreelance && "full") ||
+      (specialist.primarilyFreelance === false && "part") ||
+      undefined,
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (values) => {
+    update({
+      variables: {
+        input: {
+          skills: values.skills.map((s) => s.label),
+          primarilyFreelance: values.primarilyFreelance === "full",
+        },
+      },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateProfile: {
+          __typename: "UpdateProfilePayload",
+          specialist: {
+            __typename: "Specialist",
+            id: specialist.id,
+            ...values,
+            primarilyFreelance:
+              values.primarilyFreelance === "full" ||
+              (values.primarilyFreelance === "part" ? false : null),
+          },
+        },
+      },
+    });
+
     history.push("/freelancers/apply/ideal_project");
   };
 
@@ -67,46 +96,47 @@ export default function WorkPreferences() {
             </Description>
             <Box mb={6}>
               <FormField
-                as={Autocomplete}
+                as={Combobox}
                 multiple
+                value={formik.values.skills}
                 name="skills"
+                onChange={(s) => formik.setFieldValue("skills", s)}
                 label="What are the main skills you specialise in?"
                 placeholder="e.g Facebook marketing"
                 options={data.skills}
-                onChange={(skill) => formik.setFieldValue("skills", skill)}
               />
             </Box>
             <Box mb={6}>
               <FormField
-                as={Autocomplete}
+                as={Combobox}
                 multiple
+                value={formik.values.industries}
                 name="industries"
+                onChange={(i) => formik.setFieldValue("industries", i)}
                 label="Which industries do you work in?"
                 placeholder="e.g Financial services"
                 options={data.industries}
-                onChange={(industry) =>
-                  formik.setFieldValue("industries", industry)
-                }
               />
             </Box>
             <Box mb={3}>
               <ChoiceList
                 fullWidth
                 optionsPerRow={2}
-                name="availability"
+                name="primarilyFreelance"
                 onChange={formik.handleChange}
-                value={formik.values.availability}
+                value={formik.values.primarilyFreelance}
                 error={
-                  formik.touched.availability && formik.errors.availability
+                  formik.touched.primarilyFreelance &&
+                  formik.errors.primarilyFreelance
                 }
                 label="What is your availability for freelance work?"
                 options={[
                   {
-                    value: "I am a fulltime freelancer",
+                    value: "full",
                     label: "Full-time freelancer",
                   },
                   {
-                    value: "No, I freelancer alongside a full-time job",
+                    value: "part",
                     label: "Part-time freelancer",
                   },
                 ]}

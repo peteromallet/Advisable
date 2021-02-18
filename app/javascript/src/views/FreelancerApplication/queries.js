@@ -26,7 +26,15 @@ export const GET_SPECIALIST = gql`
       # Previous work step
       # ...
       # Work preferences step
-      # ...
+      skills {
+        value: id
+        label: name
+      }
+      industries {
+        value: id
+        label: name
+      }
+      primarilyFreelance
       # Ideal project step
       # ...
     }
@@ -70,6 +78,25 @@ export const UPDATE_OVERVIEW = gql`
           type
           url
         }
+      }
+    }
+  }
+`;
+
+export const UPDATE_WORK_PREFERENCES = gql`
+  mutation UpdateWorkPreferences($input: UpdateProfileInput!) {
+    updateProfile(input: $input) {
+      specialist {
+        id
+        skills {
+          value: id
+          label: name
+        }
+        industries {
+          value: id
+          label: name
+        }
+        primarilyFreelance
       }
     }
   }
