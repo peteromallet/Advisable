@@ -38,7 +38,7 @@ module Toby
         end
 
         def attribute(name, type, **args)
-          @attributes ||= []
+          @attributes ||= [Attributes::Id.new(:id)]
           @attributes << type.new(name, **args)
         end
 
@@ -50,7 +50,6 @@ module Toby
           root = self
           Class.new(GraphQL::Schema::Object) do
             graphql_name(root.model.name)
-            field :id, GraphQL::Schema::Object::ID, null: false
             root.attributes.each do |attribute|
               # define a field for each attribute
               field attribute.name, attribute.type, null: true
