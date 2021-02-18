@@ -10,18 +10,47 @@ import FileUpload from "src/components/FileUpload";
 import AnimatedCard from "../components/AnimatedCard";
 import { Description, Header } from "../components";
 import StepNumber from "../components/StepNumber";
+import { useMutation } from "@apollo/client";
+import { UPDATE_OVERVIEW } from "../queries";
 
 const validationSchema = object().shape({
   linkedin: string().url("Please provide a valid LinkedIn URL"),
   website: string().url("Please provide a valid website URL"),
+  resume: string(),
 });
 
-export default function Ovewview() {
+export default function Overview({ specialist }) {
   const history = useHistory();
+  const [update] = useMutation(UPDATE_OVERVIEW);
 
-  const initialValues = { linkedin: "", website: "", resume: null };
+  const initialValues = {
+    linkedin: specialist.linkedin || "",
+    website: specialist.website || "",
+    resume: "",
+  };
 
-  const handleSubmit = () => {
+  const handleSubmit = async ({ resume, ...values }) => {
+    if (resume) {
+      values.resume = resume;
+      await update({ variables: { input: values } });
+    } else {
+      update({
+        variables: { input: values },
+        optimisticResponse: {
+          __typename: "Mutation",
+          updateProfile: {
+            __typename: "UpdateProfilePayload",
+            specialist: {
+              __typename: "Specialist",
+              id: specialist.id,
+              ...values,
+              resume: specialist.resume,
+            },
+          },
+        },
+      });
+    }
+
     history.push("/freelancers/apply/experience");
   };
 

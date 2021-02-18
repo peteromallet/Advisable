@@ -74,3 +74,13 @@ export const UPDATE_OVERVIEW = gql`
     }
   }
 `;
+
+export const COMPLETE_SETUP = gql`
+  mutation CompleteSetup($input: CompleteSetupInput!) {
+    completeSetup(input: $input) {
+      specialist {
+        id
+      }
+    }
+  }
+`;
