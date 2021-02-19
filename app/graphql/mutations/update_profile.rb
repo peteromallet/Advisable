@@ -21,6 +21,10 @@ module Mutations
     argument :resume, String, required: false
     argument :public_use, Boolean, required: false
 
+    argument :previous_work_description, String, required: false
+    argument :previous_work_results, String, required: false
+    argument :ideal_project, String, required: false
+
     field :specialist, Types::SpecialistType, null: true
 
     def authorized?(**_args)

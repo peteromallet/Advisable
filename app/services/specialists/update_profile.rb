@@ -47,7 +47,10 @@ module Specialists
         :public_use,
         :hourly_rate,
         :number_of_projects,
-        :primarily_freelance
+        :primarily_freelance,
+        :previous_work_description,
+        :previous_work_results,
+        :ideal_project
       )
     end
 

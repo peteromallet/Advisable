@@ -116,12 +116,15 @@ end
 #  guild                        :boolean          default(FALSE)
 #  guild_data                   :jsonb
 #  hourly_rate                  :integer
+#  ideal_project                :string
 #  image                        :jsonb
 #  linkedin                     :string
 #  member_of_week_email         :integer
 #  number_of_projects           :string
 #  phone                        :string
 #  pid                          :string
+#  previous_work_description    :string
+#  previous_work_results        :string
 #  primarily_freelance          :boolean
 #  project_count                :integer
 #  public_use                   :boolean
