@@ -11,17 +11,24 @@ import AnimatedCard from "../components/AnimatedCard";
 import { Description, Header } from "../components";
 import StepNumber from "../components/StepNumber";
 import { useMutation } from "@apollo/client";
-import { UPDATE_OVERVIEW } from "../queries";
+import { UPDATE_PROFILE } from "../queries";
 
 const validationSchema = object().shape({
-  linkedin: string().url("Please provide a valid LinkedIn URL"),
-  website: string().url("Please provide a valid website URL"),
-  resume: string().nullable(),
+  linkedin: string().nullable().url("Please provide a valid URL"),
+  website: string().nullable().url("Please provide a valid URL"),
+  resume: string()
+    .nullable()
+    .when(["linkedin", "website"], {
+      is: (linkedin, website) => !linkedin && !website,
+      then: string().required(
+        "Please provide at least one of the above so that we can see your work history.",
+      ),
+    }),
 });
 
 export default function Overview({ specialist }) {
   const history = useHistory();
-  const [update] = useMutation(UPDATE_OVERVIEW);
+  const [update] = useMutation(UPDATE_PROFILE);
 
   const initialValues = {
     linkedin: specialist.linkedin || "",
@@ -37,8 +44,7 @@ export default function Overview({ specialist }) {
         updateProfile: {
           __typename: "UpdateProfilePayload",
           specialist: {
-            __typename: "Specialist",
-            id: specialist.id,
+            ...specialist,
             ...values,
             resume: null,
           },
