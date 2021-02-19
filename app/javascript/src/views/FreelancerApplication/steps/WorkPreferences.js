@@ -57,20 +57,20 @@ export default function WorkPreferences({ specialist }) {
           primarilyFreelance: values.primarilyFreelance === "full",
         },
       },
-      // optimisticResponse: {
-      //   __typename: "Mutation",
-      //   updateProfile: {
-      //     __typename: "UpdateProfilePayload",
-      //     specialist: {
-      //       __typename: "Specialist",
-      //       id: specialist.id,
-      //       ...values,
-      //       primarilyFreelance:
-      //         values.primarilyFreelance === "full" ||
-      //         (values.primarilyFreelance === "part" ? false : null),
-      //     },
-      //   },
-      // },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateProfile: {
+          __typename: "UpdateProfilePayload",
+          specialist: {
+            __typename: "Specialist",
+            id: specialist.id,
+            ...values,
+            primarilyFreelance:
+              values.primarilyFreelance === "full" ||
+              (values.primarilyFreelance === "part" ? false : null),
+          },
+        },
+      },
     });
 
     history.push("/freelancers/apply/ideal_project");

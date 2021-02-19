@@ -16,7 +16,7 @@ import { UPDATE_OVERVIEW } from "../queries";
 const validationSchema = object().shape({
   linkedin: string().url("Please provide a valid LinkedIn URL"),
   website: string().url("Please provide a valid website URL"),
-  resume: string(),
+  resume: string().nullable(),
 });
 
 export default function Overview({ specialist }) {
@@ -26,30 +26,25 @@ export default function Overview({ specialist }) {
   const initialValues = {
     linkedin: specialist.linkedin || "",
     website: specialist.website || "",
-    resume: "",
+    resume: null,
   };
 
-  const handleSubmit = async ({ resume, ...values }) => {
-    if (resume) {
-      values.resume = resume;
-      await update({ variables: { input: values } });
-    } else {
-      update({
-        variables: { input: values },
-        optimisticResponse: {
-          __typename: "Mutation",
-          updateProfile: {
-            __typename: "UpdateProfilePayload",
-            specialist: {
-              __typename: "Specialist",
-              id: specialist.id,
-              ...values,
-              resume: specialist.resume,
-            },
+  const handleSubmit = async (values) => {
+    update({
+      variables: { input: values },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateProfile: {
+          __typename: "UpdateProfilePayload",
+          specialist: {
+            __typename: "Specialist",
+            id: specialist.id,
+            ...values,
+            resume: null,
           },
         },
-      });
-    }
+      },
+    });
 
     history.push("/freelancers/apply/experience");
   };
