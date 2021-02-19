@@ -3,10 +3,10 @@
 module Toby
   module Filters
     class StringContains
-      def self.apply(records, name, contents = [])
-        return records if contents.empty?
+      def self.apply(records, name, value = [])
+        return records if value.empty?
 
-        records.where("#{name.to_s.underscore} ilike ?", "%#{contents.first}%")
+        records.where("#{name.to_s.underscore} ilike ?", "%#{value.first}%")
       end
     end
   end
