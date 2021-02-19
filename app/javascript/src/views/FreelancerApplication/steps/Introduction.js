@@ -39,35 +39,30 @@ export default function Introduction({ specialist }) {
   const [update] = useMutation(UPDATE_INTRODUCTION);
 
   const initialValues = {
-    avatar: undefined,
+    avatar: null,
     bio: specialist.bio || "",
     city: specialist.city || "",
     country: specialist.country?.id || "",
     publicUse: specialist.publicUse === null ? true : specialist.publicUse,
   };
 
-  const handleSubmit = async ({ avatar, ...values }) => {
-    if (avatar) {
-      values.avatar = avatar;
-      await update({ variables: { input: values } });
-    } else {
-      update({
-        variables: { input: values },
-        optimisticResponse: {
-          __typename: "Mutation",
-          updateProfile: {
-            __typename: "UpdateProfilePayload",
-            specialist: {
-              __typename: "Specialist",
-              id: specialist.id,
-              ...values,
-              avatar: specialist.avatar,
-              country: data.countries.find((c) => c.id === values.country),
-            },
+  const handleSubmit = async (values) => {
+    update({
+      variables: { input: values },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateProfile: {
+          __typename: "UpdateProfilePayload",
+          specialist: {
+            __typename: "Specialist",
+            id: specialist.id,
+            ...values,
+            avatar: null,
+            country: data.countries.find((c) => c.id === values.country),
           },
         },
-      });
-    }
+      },
+    });
 
     history.push("/freelancers/apply/overview");
   };
