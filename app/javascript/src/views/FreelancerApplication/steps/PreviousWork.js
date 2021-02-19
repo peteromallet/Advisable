@@ -11,16 +11,16 @@ import StepNumber from "../components/StepNumber";
 import AnimatedCard from "../components/AnimatedCard";
 
 const validationSchema = object().shape({
-  projectDescription: string().required(),
-  proud: string().required(),
+  previousWorkDescription: string().required(),
+  previousWorkResults: string().required(),
 });
 
 export default function PreviousWork() {
   const history = useHistory();
 
   const initialValues = {
-    projectDescription: "",
-    proud: "",
+    previousWorkDescription: "",
+    previousWorkResults: "",
   };
 
   const handleSubmit = () => {
@@ -46,7 +46,7 @@ export default function PreviousWork() {
           <Box mb="l">
             <FormField
               as={Textarea}
-              name="projectDescription"
+              name="previousWorkDescription"
               minRows={5}
               label="Please provide a brief description of a project you’re proud of"
               placeholder="What were the goals of this project? What type of work was involved?"
@@ -55,7 +55,7 @@ export default function PreviousWork() {
           <Box mb="l">
             <FormField
               as={Textarea}
-              name="proud"
+              name="previousWorkResults"
               minRows={5}
               label="Why are you proud of this project?"
               placeholder="What were the results of this project? Why does it stand out to you?"

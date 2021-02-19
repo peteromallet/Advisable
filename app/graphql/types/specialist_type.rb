@@ -364,5 +364,8 @@ module Types
     end
 
     field :unavailable_until, GraphQL::Types::ISO8601DateTime, null: true
+    field :previous_work_description, String, null: true
+    field :previous_work_results, String, null: true
+    field :ideal_project, String, null: true
   end
 end
