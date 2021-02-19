@@ -9,21 +9,38 @@ import { ArrowRight } from "@styled-icons/feather";
 import { Description, Header } from "../components";
 import StepNumber from "../components/StepNumber";
 import AnimatedCard from "../components/AnimatedCard";
+import { useMutation } from "@apollo/client";
+import { UPDATE_PROFILE } from "../queries";
 
 const validationSchema = object().shape({
   previousWorkDescription: string().required(),
   previousWorkResults: string().required(),
 });
 
-export default function PreviousWork() {
+export default function PreviousWork({ specialist }) {
   const history = useHistory();
+  const [update] = useMutation(UPDATE_PROFILE);
 
   const initialValues = {
-    previousWorkDescription: "",
-    previousWorkResults: "",
+    previousWorkDescription: specialist.previousWorkDescription || "",
+    previousWorkResults: specialist.previousWorkResults || "",
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (values) => {
+    update({
+      variables: { input: values },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateProfile: {
+          __typename: "UpdateProfilePayload",
+          specialist: {
+            ...specialist,
+            ...values,
+          },
+        },
+      },
+    });
+
     history.push("/freelancers/apply/preferences");
   };
 
@@ -45,6 +62,7 @@ export default function PreviousWork() {
           </Description>
           <Box mb="l">
             <FormField
+              isRequired
               as={Textarea}
               name="previousWorkDescription"
               minRows={5}
@@ -54,6 +72,7 @@ export default function PreviousWork() {
           </Box>
           <Box mb="l">
             <FormField
+              isRequired
               as={Textarea}
               name="previousWorkResults"
               minRows={5}

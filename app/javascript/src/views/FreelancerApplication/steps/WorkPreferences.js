@@ -13,7 +13,7 @@ import { ArrowRight } from "@styled-icons/feather";
 import StepNumber from "../components/StepNumber";
 import { Description, Header } from "../components";
 import AnimatedCard from "../components/AnimatedCard";
-import { UPDATE_WORK_PREFERENCES } from "../queries";
+import { UPDATE_PROFILE } from "../queries";
 
 export const GET_DATA = gql`
   {
@@ -35,7 +35,7 @@ const validationSchema = object().shape({
 });
 
 export default function WorkPreferences({ specialist }) {
-  const [update] = useMutation(UPDATE_WORK_PREFERENCES);
+  const [update] = useMutation(UPDATE_PROFILE);
   const { data, loading } = useQuery(GET_DATA);
   const history = useHistory();
 
@@ -49,7 +49,7 @@ export default function WorkPreferences({ specialist }) {
   };
 
   const handleSubmit = async (values) => {
-    await update({
+    update({
       variables: {
         input: {
           skills: values.skills.map((s) => s.label),
@@ -62,8 +62,7 @@ export default function WorkPreferences({ specialist }) {
         updateProfile: {
           __typename: "UpdateProfilePayload",
           specialist: {
-            __typename: "Specialist",
-            id: specialist.id,
+            ...specialist,
             ...values,
             primarilyFreelance:
               values.primarilyFreelance === "full" ||
@@ -97,6 +96,7 @@ export default function WorkPreferences({ specialist }) {
             </Description>
             <Box mb={6}>
               <FormField
+                isRequired
                 as={Combobox}
                 multiple
                 value={formik.values.skills}
@@ -109,6 +109,7 @@ export default function WorkPreferences({ specialist }) {
             </Box>
             <Box mb={6}>
               <FormField
+                isRequired
                 as={Combobox}
                 multiple
                 value={formik.values.industries}
@@ -120,7 +121,9 @@ export default function WorkPreferences({ specialist }) {
               />
             </Box>
             <Box mb={3}>
-              <ChoiceList
+              <FormField
+                isRequired
+                as={ChoiceList}
                 fullWidth
                 optionsPerRow={2}
                 name="primarilyFreelance"

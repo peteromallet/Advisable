@@ -20,7 +20,8 @@ import BioLengthWidget from "./BioLengthWiget";
 import StepNumber from "../components/StepNumber";
 import AnimatedCard from "../components/AnimatedCard";
 import { Description, Header } from "../components";
-import { UPDATE_INTRODUCTION } from "../queries";
+import { UPDATE_PROFILE } from "../queries";
+import { boolean, object, string } from "yup";
 
 export const GET_COUNTRIES = gql`
   {
@@ -32,11 +33,19 @@ export const GET_COUNTRIES = gql`
   }
 `;
 
+const validationSchema = object().shape({
+  avatar: string().nullable(),
+  bio: string().required(),
+  city: string().required(),
+  country: string().required(),
+  publicUse: boolean(),
+});
+
 export default function Introduction({ specialist }) {
   const history = useHistory();
   const [profilePhoto, setProfilePhoto] = React.useState(specialist?.avatar);
   const { data, loading } = useQuery(GET_COUNTRIES);
-  const [update] = useMutation(UPDATE_INTRODUCTION);
+  const [update] = useMutation(UPDATE_PROFILE);
 
   const initialValues = {
     avatar: null,
@@ -54,8 +63,7 @@ export default function Introduction({ specialist }) {
         updateProfile: {
           __typename: "UpdateProfilePayload",
           specialist: {
-            __typename: "Specialist",
-            id: specialist.id,
+            ...specialist,
             ...values,
             avatar: null,
             country: data.countries.find((c) => c.id === values.country),
@@ -71,7 +79,11 @@ export default function Introduction({ specialist }) {
 
   return (
     <AnimatedCard>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
         {(formik) => (
           <Form>
             <StepNumber>Step 1 of 5</StepNumber>

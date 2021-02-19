@@ -1,40 +1,49 @@
 import { gql, useQuery } from "@apollo/client";
 
+const specialistFields = gql`
+  fragment SpecialistFields on Specialist {
+    id
+    # Introduction step
+    avatar
+    bio
+    city
+    country {
+      id
+      name
+    }
+    publicUse
+    # Overview step
+    linkedin
+    website
+    resume {
+      id
+      filename
+      url
+    }
+    # Previous work step
+    previousWorkDescription
+    previousWorkResults
+    # Work preferences step
+    skills {
+      value: id
+      label: name
+    }
+    industries {
+      value: id
+      label: name
+    }
+    primarilyFreelance
+    # Ideal project step
+    idealProject
+    applicationStage
+  }
+`;
+
 export const GET_SPECIALIST = gql`
+  ${specialistFields}
   query Specialist($id: ID!) {
     specialist(id: $id) {
-      id
-      # Introduction step
-      avatar
-      bio
-      city
-      country {
-        id
-        name
-      }
-      publicUse
-      # Overview step
-      linkedin
-      website
-      resume {
-        id
-        filename
-        url
-      }
-      # Previous work step
-      # ...
-      # Work preferences step
-      skills {
-        value: id
-        label: name
-      }
-      industries {
-        value: id
-        label: name
-      }
-      primarilyFreelance
-      # Ideal project step
-      # ...
+      ...SpecialistFields
     }
   }
 `;
@@ -44,65 +53,23 @@ export const useGetSpecialist = (id) => {
   return response;
 };
 
-export const UPDATE_INTRODUCTION = gql`
-  mutation UpdateIntroduction($input: UpdateProfileInput!) {
+export const UPDATE_PROFILE = gql`
+  ${specialistFields}
+  mutation UpdateProfile($input: UpdateProfileInput!) {
     updateProfile(input: $input) {
       specialist {
-        id
-        avatar
-        bio
-        city
-        country {
-          id
-          name
-        }
-        publicUse
-      }
-    }
-  }
-`;
-
-export const UPDATE_OVERVIEW = gql`
-  mutation UpdateIntroduction($input: UpdateProfileInput!) {
-    updateProfile(input: $input) {
-      specialist {
-        id
-        linkedin
-        website
-        resume {
-          id
-          filename
-          url
-        }
-      }
-    }
-  }
-`;
-
-export const UPDATE_WORK_PREFERENCES = gql`
-  mutation UpdateWorkPreferences($input: UpdateProfileInput!) {
-    updateProfile(input: $input) {
-      specialist {
-        id
-        skills {
-          value: id
-          label: name
-        }
-        industries {
-          value: id
-          label: name
-        }
-        primarilyFreelance
+        ...SpecialistFields
       }
     }
   }
 `;
 
 export const COMPLETE_SETUP = gql`
+  ${specialistFields}
   mutation CompleteSetup($input: CompleteSetupInput!) {
     completeSetup(input: $input) {
       specialist {
-        id
+        ...SpecialistFields
       }
     }
   }

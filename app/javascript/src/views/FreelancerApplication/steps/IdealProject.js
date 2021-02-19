@@ -8,17 +8,29 @@ import { ArrowRight } from "@styled-icons/feather";
 import StepNumber from "../components/StepNumber";
 import { Description, Header } from "../components";
 import AnimatedCard from "../components/AnimatedCard";
+import { useMutation } from "@apollo/client";
+import { COMPLETE_SETUP, UPDATE_PROFILE } from "../queries";
+import { useHistory } from "react-router-dom";
 
 const validationSchema = object().shape({
   idealProject: string().required(),
 });
 
-export default function IdealProject() {
+export default function IdealProject({ specialist }) {
+  const [update] = useMutation(UPDATE_PROFILE);
+  const [complete] = useMutation(COMPLETE_SETUP);
+  const history = useHistory();
+
   const initialValues = {
-    idealProject: "",
+    idealProject: specialist.idealProject || "",
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (values) => {
+    await update({ variables: { input: values } });
+    await complete({ variables: { input: {} } });
+
+    history.push("/");
+  };
 
   return (
     <AnimatedCard>
