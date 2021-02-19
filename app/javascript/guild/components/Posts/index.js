@@ -24,12 +24,18 @@ const Posts = () => {
   };
   const clearFilters = () => setPostTypeFilter("For You");
 
-  const { data, loading, fetchMore, error } = useQuery(GUILD_POSTS_QUERY, {
+  const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
     fetchPolicy: historyPopped ? "cache-first" : "network-only",
     nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
     notifyOnNetworkStatusChange: true,
     variables: { topicId, type: postTypeFilter },
-    pollInterval: 300000, // 5 minutes
+    errorPolicy: "none",
+    onError(err) {
+      if (err?.graphQLErrors?.[0]?.extensions?.type === "NOT_AUTHENTICATED") {
+        const path = encodeURIComponent(`/guild${location.pathname}`);
+        window.location = `/login?redirect=${path}`;
+      }
+    },
   });
   const hasNextPage = data?.guildPosts.pageInfo.hasNextPage || false;
   const endCursor = data?.guildPosts.pageInfo.endCursor;
@@ -42,11 +48,6 @@ const Posts = () => {
       fetchMore({ variables: { cursor: endCursor } });
     }
   };
-
-  if (error?.message === "You are not logged in") {
-    const path = encodeURIComponent(`/guild${location.pathname}`);
-    window.location = `/login?redirect=${path}`;
-  }
 
   return (
     <>

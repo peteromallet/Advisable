@@ -201,7 +201,7 @@ module Types
 
     field :guild_posts,
           Types::Guild::PostInterface.connection_type,
-          null: false, max_page_size: 5 do
+          null: true, max_page_size: 5 do
       description 'Returns a list of guild posts for the feed'
 
       argument :type, String, required: false do
