@@ -1,13 +1,33 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "1853fb4080f4728b6e99890802c7c53444b8cf76f74825665aeaa456222fc3ee",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/toby/filters/string_contains.rb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "records.where(\"#{name.to_s.underscore} ilike ?\", \"%#{value.first}%\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Toby::Filters::StringContains",
+        "method": "s(:self).apply"
+      },
+      "user_input": "name.to_s.underscore",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
       "warning_type": "Format Validation",
       "warning_code": 30,
       "fingerprint": "1eb8cf36a789d5b0dcca3a2d5259106cc1b8d024eff80ea6a7467aa196c95527",
       "check_name": "ValidationRegex",
       "message": "Insufficient validation for `email` using `/@/`. Use `\\A` and `\\z` as anchors",
       "file": "app/models/account.rb",
-      "line": 17,
+      "line": 20,
       "link": "https://brakemanscanner.org/docs/warning_types/format_validation/",
       "code": null,
       "render_path": null,
@@ -17,26 +37,6 @@
       },
       "user_input": null,
       "confidence": "High",
-      "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "685af3bed9c17f01d63d920b3478f4078497668b2fea6997042a07eca151208f",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/lib/toby/filters/string_contains.rb",
-      "line": 7,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "records.where(\"#{name.to_s.underscore} ilike ?\", \"%#{value}%\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Toby::Filters::StringContains",
-        "method": "s(:self).apply"
-      },
-      "user_input": "name.to_s.underscore",
-      "confidence": "Weak",
       "note": ""
     },
     {
@@ -120,6 +120,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-02-17 14:06:13 +0100",
+  "updated": "2021-02-19 13:56:15 +0100",
   "brakeman_version": "5.0.0"
 }
