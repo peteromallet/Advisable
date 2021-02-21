@@ -104,6 +104,7 @@ export default function Message({ message, author, isAuthor }) {
               {author.name}
             </Text>
             <Text
+              autoLink
               data-message
               css={`
                 white-space: pre-line;
