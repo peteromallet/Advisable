@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Text, Avatar, Link, Box } from "@advisable/donut";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
 import NotFound from "@advisable-main/components/PreviousProjectFormModal/NotFound";
@@ -16,23 +16,30 @@ import ErrorBoundary from "@guild/components/ErrorBoundary";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 import JoinGuild from "./JoinGuild";
+import { hasGqlError, loginWithRedirectPath } from "@guild/utils";
 import { StyledImageThumbnail } from "./styles";
 
 const Post = () => {
   const { postId } = useParams();
   const viewer = useViewer();
   const gallery = useImageGallery();
+  const location = useLocation();
 
   const { data, loading } = useQuery(GUILD_POST_QUERY, {
     variables: { id: postId },
+    onError: (errors) => {
+      if (!viewer && hasGqlError("notAuthorized", errors)) {
+        loginWithRedirectPath(location.pathname);
+      }
+    },
   });
   const post = data?.guildPost;
   const guildViewer = viewer?.guild;
   const isAuthor = viewer?.id === post?.author?.id;
+  const otherImages = (post?.images || []).filter((p) => p.cover === false);
 
   if (loading) return <Loading />;
-
-  const otherImages = (post?.images || []).filter((p) => p.cover === false);
+  if (viewer && !post) return <NotFound resource="Post" id={postId} />;
 
   return post ? (
     <ErrorBoundary>
@@ -145,9 +152,7 @@ const Post = () => {
         </Card>
       </Box>
     </ErrorBoundary>
-  ) : (
-    <NotFound resource="Post" id={postId} />
-  );
+  ) : null;
 };
 
 export default Post;
