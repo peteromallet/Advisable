@@ -327,6 +327,29 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
     t.index ["specialist_id"], name: "index_guild_comments_on_specialist_id"
   end
 
+  create_table "guild_event_attendees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "guild_event_id"
+    t.bigint "specialist_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["guild_event_id"], name: "index_guild_event_attendees_on_guild_event_id"
+    t.index ["specialist_id", "guild_event_id"], name: "index_guild_event_attendees_on_specialist_id_and_guild_event_id", unique: true
+    t.index ["specialist_id"], name: "index_guild_event_attendees_on_specialist_id"
+  end
+
+  create_table "guild_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description", null: false
+    t.bigint "host_id"
+    t.integer "attendees_count", default: 0
+    t.boolean "published", default: false
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["host_id"], name: "index_guild_events_on_host_id"
+  end
+
   create_table "guild_post_engagements", force: :cascade do |t|
     t.bigint "specialist_id"
     t.uuid "guild_post_id"
@@ -1018,6 +1041,9 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
   add_foreign_key "consultations", "users"
   add_foreign_key "guild_comments", "guild_posts", on_delete: :cascade
   add_foreign_key "guild_comments", "specialists", on_delete: :cascade
+  add_foreign_key "guild_event_attendees", "guild_events"
+  add_foreign_key "guild_event_attendees", "specialists"
+  add_foreign_key "guild_events", "specialists", column: "host_id"
   add_foreign_key "guild_post_engagements", "guild_posts"
   add_foreign_key "guild_post_engagements", "specialists"
   add_foreign_key "guild_post_images", "guild_posts", on_delete: :cascade

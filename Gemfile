@@ -52,6 +52,9 @@ gem "graphql_playground-rails"
 gem "jsonb_accessor", "~> 1.1.0"
 gem "acts-as-taggable-on"
 gem "email_reply_parser"
+gem 'administrate-field-active_storage'
+gem 'administrate-field-simple_markdown'
+gem 'redcarpet'
 
 gem "pry"
 gem "pry-rails"

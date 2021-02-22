@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Home, Chat } from "@styled-icons/heroicons-solid";
+import { Calendar } from "@styled-icons/heroicons-outline";
 import { useQuery } from "@apollo/client";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { Box, useBreakpoint } from "@advisable/donut";
@@ -70,6 +71,10 @@ const Header = () => {
                   <StyledHeaderBadge top="4px" left="32px" />
                 ) : null}
                 Messages
+              </StyledHeaderLink>
+              <StyledHeaderLink exact as={NavLink} to="/events">
+                <Calendar />
+                Events
               </StyledHeaderLink>
             </Box>
           ) : null}

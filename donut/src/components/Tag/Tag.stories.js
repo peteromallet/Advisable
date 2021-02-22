@@ -12,7 +12,16 @@ export const tags = () => {
   const size = select("size", ["s", "m"], "s");
   const variant = select(
     "variant",
-    ["neutral", "dark", "blue", "skill", "industry", "orange", "cyan"],
+    [
+      "neutral",
+      "dark",
+      "blue",
+      "skill",
+      "industry",
+      "orange",
+      "cyan",
+      "purple",
+    ],
     "neutral",
   );
 
