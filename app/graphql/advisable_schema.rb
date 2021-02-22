@@ -4,7 +4,6 @@ class AdvisableSchema < GraphQL::Schema
   max_depth 15
   query Types::QueryType
   mutation Types::MutationType
-  use GraphQL::Pagination::Connections
 
   rescue_from(ActiveRecord::RecordNotFound) do
     ApiError.invalid_request("notFound", "Resouce was not found")
