@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { GUILD_POSTS_QUERY } from "./queries";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { feedStore } from "@guild/views/Feed/store";
@@ -13,6 +13,7 @@ import Filters from "@guild/components/Filters";
 import FollowTopic from "@guild/components/FollowTopic";
 
 const Posts = () => {
+  const location = useLocation();
   const { topicId } = useParams();
   const history = useHistory();
   const historyPopped = history.action === "POP";
@@ -28,9 +29,14 @@ const Posts = () => {
     nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
     notifyOnNetworkStatusChange: true,
     variables: { topicId, type: postTypeFilter },
-    pollInterval: 300000, // 5 minutes
+    errorPolicy: "none",
+    onError(err) {
+      if (err?.graphQLErrors?.[0]?.extensions?.type === "NOT_AUTHENTICATED") {
+        const path = encodeURIComponent(`/guild${location.pathname}`);
+        window.location = `/login?redirect=${path}`;
+      }
+    },
   });
-
   const hasNextPage = data?.guildPosts.pageInfo.hasNextPage || false;
   const endCursor = data?.guildPosts.pageInfo.endCursor;
 
