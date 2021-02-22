@@ -87,19 +87,5 @@ RSpec.describe Account, type: :model do
       account.disable!
       expect(MagicLink.where(id: magic_link.id)).to be_empty
     end
-
-    it "syncs to airtable" do
-      expect(specialist).to receive(:sync_to_airtable)
-      account.disable!
-    end
-
-    context "when user" do
-      let(:user) { create(:user, account: account) }
-
-      it "syncs to airtable" do
-        expect(user).to receive(:sync_to_airtable)
-        account.disable!
-      end
-    end
   end
 end
