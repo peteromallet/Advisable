@@ -107,14 +107,23 @@ class User < ApplicationRecord
     user
   end
 
+  def disabled?
+    application_status == "Disabled"
+  end
+
   def disable!(responsible_id = nil)
     self.application_status = "Disabled"
     account.disable!
+    leave_talkjs_conversations!
     save_and_sync_with_responsible!(responsible_id)
   end
 
-  def disabled?
-    application_status == "Disabled"
+  def leave_talkjs_conversations!
+    talkjs_api = TalkjsApi.new
+    conversations = talkjs_api.conversations_by(uid)
+    conversations.each do |conversation|
+      talkjs_api.leave_conversation(conversation["id"], uid)
+    end
   end
 end
 
