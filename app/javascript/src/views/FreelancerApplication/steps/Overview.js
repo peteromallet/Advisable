@@ -13,7 +13,7 @@ import StepNumber from "../components/StepNumber";
 import { useMutation } from "@apollo/client";
 import { UPDATE_PROFILE } from "../queries";
 
-const validationSchema = object().shape({
+export const validationSchema = object().shape({
   linkedin: string().nullable().url("Please provide a valid URL"),
   website: string().nullable().url("Please provide a valid URL"),
   resume: string()

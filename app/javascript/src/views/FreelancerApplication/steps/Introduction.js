@@ -33,7 +33,7 @@ export const GET_COUNTRIES = gql`
   }
 `;
 
-const validationSchema = object().shape({
+export const validationSchema = object().shape({
   avatar: string().nullable(),
   bio: string().required(),
   city: string().required(),

@@ -12,7 +12,7 @@ import AnimatedCard from "../components/AnimatedCard";
 import { useMutation } from "@apollo/client";
 import { UPDATE_PROFILE } from "../queries";
 
-const validationSchema = object().shape({
+export const validationSchema = object().shape({
   previousWorkDescription: string().required(),
   previousWorkResults: string().required(),
 });

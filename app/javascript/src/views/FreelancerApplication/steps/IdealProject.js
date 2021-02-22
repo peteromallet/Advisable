@@ -12,7 +12,7 @@ import { useMutation } from "@apollo/client";
 import { COMPLETE_SETUP, UPDATE_PROFILE } from "../queries";
 import { useHistory } from "react-router-dom";
 
-const validationSchema = object().shape({
+export const validationSchema = object().shape({
   idealProject: string().required(),
 });
 

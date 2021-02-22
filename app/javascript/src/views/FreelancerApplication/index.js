@@ -32,7 +32,7 @@ export default function FreelancerApplication() {
 
   return (
     <div>
-      {largeScreen ? <Sidebar /> : null}
+      {largeScreen ? <Sidebar specialist={specialist} /> : null}
       <Box paddingLeft={{ l: "300px" }}>
         <Container paddingY={10} maxWidth="750px">
           <AnimatePresence

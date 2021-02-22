@@ -28,7 +28,7 @@ export const GET_DATA = gql`
   }
 `;
 
-const validationSchema = object().shape({
+export const validationSchema = object().shape({
   skills: array(),
   industries: array(),
   primarilyFreelance: string().required(),
