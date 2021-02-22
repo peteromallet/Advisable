@@ -60,11 +60,12 @@ RSpec.describe Account, type: :model do
     let(:account) { create(:account) }
     let(:specialist) { create(:specialist, account: account) }
 
-    it "resets password and changes email, but does not set deleted_at" do
+    it "resets password and changes email, and sets disabled_at timestamp" do
       email = account.email
       password = account.password
       account.disable!
       expect(account.deleted_at).to be_nil
+      expect(account.disabled_at).not_to be_nil
       expect(account.password).not_to eq(password)
       expect(account.email).to eq("disabled+#{email.sub("@", ".at.")}@advisable.com")
     end
@@ -77,8 +78,9 @@ RSpec.describe Account, type: :model do
       expect(account.email).to eq("disabled+#{email.sub("@", ".at.")}@advisable.com")
     end
 
-    it "sets deleted_at when delete: true" do
+    it "sets deleted_at and disabled_at when delete: true" do
       account.disable!(delete: true)
+      expect(account.disabled_at).not_to be_nil
       expect(account.deleted_at).not_to be_nil
     end
 
