@@ -24,7 +24,10 @@ RSpec.describe Mutations::RemoveUserFromCompany do
     GRAPHQL
   end
 
-  before { allow_any_instance_of(User).to receive(:sync_to_airtable) }
+  before do
+    allow_any_instance_of(User).to receive(:sync_to_airtable)
+    allow_any_instance_of(TalkjsApi).to receive(:conversations_by).and_return([])
+  end
 
   it "removes the user from the company" do
     response = AdvisableSchema.execute(query, context: context)
