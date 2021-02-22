@@ -70,6 +70,7 @@ class Account < ApplicationRecord
 
   def disable!(delete: false)
     self.remember_token = nil
+    self.disabled_at = Time.zone.now
     self.deleted_at = Time.zone.now if delete
     self.password = SecureRandom.hex
     self.email = "disabled+#{email.sub("@", ".at.")}@advisable.com" unless email.starts_with?("disabled+")
@@ -104,6 +105,7 @@ end
 #  confirmation_token  :string
 #  confirmed_at        :datetime
 #  deleted_at          :datetime
+#  disabled_at         :datetime
 #  email               :citext
 #  first_name          :string
 #  last_name           :string
