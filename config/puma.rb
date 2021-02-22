@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 require 'barnes'
+
+nakayoshi_fork
 
 workers Integer(ENV['WEB_CONCURRENCY'] || 2)
 threads_count = Integer(ENV['RAILS_MAX_THREADS'] || 5)
@@ -25,7 +29,7 @@ before_fork do
 end
 
 # Specifies the `pidfile` that Puma will use.
-pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
+pidfile ENV.fetch("PIDFILE", "tmp/pids/server.pid")
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
