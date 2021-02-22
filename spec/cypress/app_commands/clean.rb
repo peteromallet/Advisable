@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # cleaning the database using database_cleaner
-DatabaseCleaner.strategy = :truncation
-DatabaseCleaner.clean
+DatabaseCleaner[:active_record].strategy = :truncation
+DatabaseCleaner[:active_record].clean
