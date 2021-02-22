@@ -75,7 +75,6 @@ class Account < ApplicationRecord
     self.email = "disabled+#{email.sub("@", ".at.")}@advisable.com" unless email.starts_with?("disabled+")
     magic_links.destroy_all
     save!
-    specialist_or_user&.sync_to_airtable
   end
 
   def unsubscribed_from

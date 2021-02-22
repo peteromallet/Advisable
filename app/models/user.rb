@@ -107,6 +107,12 @@ class User < ApplicationRecord
     user
   end
 
+  def disable!(responsible_id = nil)
+    self.application_status = "Disabled"
+    account.disable!
+    save_and_sync_with_responsible!(responsible_id)
+  end
+
   def disabled?
     application_status == "Disabled"
   end
