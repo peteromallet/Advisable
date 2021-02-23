@@ -5,6 +5,7 @@ import IdAttribute from "../../attributes/id";
 import StringAttribute from "../../attributes/string";
 import SelectAttribute from "../../attributes/select";
 import HasManyAttribute from "../../attributes/hasMany";
+import TextArrayAttribute from "../../attributes/textArray";
 import BelongsToAttribute from "../../attributes/belongsTo";
 import { StyledRow, StyledCell } from "../../styles";
 import useFilters from "./useFilters";
@@ -12,6 +13,7 @@ import Filters from "./Filters";
 
 const ATTRIBUTES = {
   IdAttribute,
+  TextArrayAttribute,
   StringAttribute,
   BelongsToAttribute,
   HasManyAttribute,

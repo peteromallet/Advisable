@@ -69,6 +69,13 @@ const SCHEMA_INTROSPECTION = gql`
             type
           }
         }
+        ... on TextArrayAttribute {
+          name
+          filters {
+            name
+            type
+          }
+        }
       }
     }
   }
@@ -121,6 +128,10 @@ const SCHEMA_INTROSPECTION = gql`
     ofType {
       kind
       name
+      ofType {
+        kind
+        name
+      }
     }
   }
 `;
