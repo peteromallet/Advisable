@@ -224,7 +224,7 @@ module Types
       elsif (type = args[:type].presence) && type != 'For You'
         query.where(type: type)
       else
-        query - query.unscoped.popular
+        query
       end
     end
 
