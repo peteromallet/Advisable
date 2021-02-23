@@ -94,6 +94,14 @@ function selectionForField(schema, resourceType, fieldName) {
   const field = type.fields.find((f) => f.name === fieldName);
   // if its a scalar type just return true
   if (field.type.kind === "SCALAR") return true;
+
+  // handle specialist case when we might have a list of SCALAR types
+  if (field.type.kind === "LIST") {
+    if (field.type.ofType.ofType?.kind === "SCALAR") {
+      return true;
+    }
+  }
+
   const query = { id: true };
   return query;
 }
