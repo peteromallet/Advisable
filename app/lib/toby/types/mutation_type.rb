@@ -3,8 +3,8 @@
 module Toby
   module Types
     class MutationType < GraphQL::Schema::Object
-      Toby::Resources.resource_classes.each do |admin|
-        # field admin.update_mutation_name, mutation: admin.update_mutation
+      Toby::Resources.resource_classes.each do |resource|
+        field resource.query_name_update, mutation: resource.update_mutation
       end
     end
   end

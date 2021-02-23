@@ -25,6 +25,10 @@ module Toby
         GraphQL::Types::ID
       end
 
+      def write(resource, value)
+        resource.public_send("#{via}=", value)
+      end
+
       def lazy_read(resource, context)
         Toby::Lazy.const_get(to).new(context, to, resource.public_send(via))
       end
