@@ -4,6 +4,7 @@ import { useResources } from "../../utilities";
 import IdAttribute from "../../attributes/id";
 import StringAttribute from "../../attributes/string";
 import SelectAttribute from "../../attributes/select";
+import HasManyAttribute from "../../attributes/hasMany";
 import BelongsToAttribute from "../../attributes/belongsTo";
 import { StyledRow, StyledCell } from "../../styles";
 import useFilters from "./useFilters";
@@ -13,6 +14,7 @@ const ATTRIBUTES = {
   IdAttribute,
   StringAttribute,
   BelongsToAttribute,
+  HasManyAttribute,
   SelectAttribute,
 };
 

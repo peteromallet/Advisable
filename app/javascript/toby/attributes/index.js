@@ -1,12 +1,14 @@
 import id from "./id";
 import string from "./string";
 import belongsTo from "./belongsTo";
+import hasMany from "./hasMany";
 import number from "./number";
 
 const attributes = {
   IdColumn: id,
   StringColumn: string,
   NumberColumn: number,
+  HasManyColumn: hasMany,
   BelongsToColumn: belongsTo,
 };
 

@@ -62,6 +62,13 @@ const SCHEMA_INTROSPECTION = gql`
             type
           }
         }
+        ... on HasManyAttribute {
+          name
+          filters {
+            name
+            type
+          }
+        }
       }
     }
   }

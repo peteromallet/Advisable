@@ -18,7 +18,7 @@ module Toby
       end
 
       def type
-        Toby::Resources.const_get(to).type
+        @type ||= Toby::Resources.const_get(to).type
       end
 
       def input_type
