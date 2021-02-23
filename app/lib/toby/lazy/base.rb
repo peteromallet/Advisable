@@ -23,8 +23,12 @@ module Toby
         state[:loaded_ids][id]
       end
 
-      def load_records(_ids)
-        raise NotImplementedError, "Implement this in your Lazy subclass"
+      # Override this method when class does not follow .where(id: ids) convention
+      def load_records(ids)
+        klass = "::#{self.class.name.demodulize}".constantize
+        klass.where(id: ids).each do |record|
+          state[:loaded_ids][record.id] = record
+        end
       end
     end
   end
