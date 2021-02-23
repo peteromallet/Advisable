@@ -34,11 +34,11 @@ export default function Sidebar({ specialist }) {
       borderRadius="0px"
     >
       <Text
-        color="neutral500"
+        color="neutral400"
         textTransform="uppercase"
         fontWeight="medium"
         fontSize="2xs"
-        mb={5}
+        mb={4}
         mt={6}
       >
         Application

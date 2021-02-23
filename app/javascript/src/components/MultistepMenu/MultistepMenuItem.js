@@ -1,6 +1,7 @@
 import React from "react";
 import { matchPath, useLocation, NavLink } from "react-router-dom";
 import { motion, transform } from "framer-motion";
+import { LockClosed } from "@styled-icons/ionicons-solid";
 import {
   StyledNavigationMenuItem,
   StyledNavigationMenuLink,
@@ -112,7 +113,9 @@ export default function MultistepMenuItem({
         {isComplete !== undefined && (
           <StyledNavigationMenuItemNumber>
             {steps.length > 0 && <ProgressCircle steps={steps} />}
-            <Check />
+            {isComplete ? <Check /> : null}
+            {!isComplete && !isDisabled ? <Check /> : null}
+            {isDisabled ? <LockClosed width={14} /> : null}
           </StyledNavigationMenuItemNumber>
         )}
       </StyledNavigationMenuLink>
