@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { useParams, useHistory, useLocation } from "react-router-dom";
-import { GUILD_POSTS_QUERY, GUILD_POPULAR_POSTS_QUERY } from "./queries";
+import { GUILD_POSTS_QUERY } from "./queries";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { feedStore } from "@guild/views/Feed/store";
 import Post from "../Post";
@@ -26,14 +26,10 @@ const Posts = () => {
   };
   const clearFilters = () => setPostTypeFilter(defaultFilter);
 
-  const queryConfig = {
+  const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
     fetchPolicy: historyPopped ? "cache-first" : "network-only",
     nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
     notifyOnNetworkStatusChange: true,
-  };
-
-  const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
-    ...queryConfig,
     variables: { topicId, type: postTypeFilter },
     errorPolicy: "none",
     onError(err) {
@@ -42,10 +38,6 @@ const Posts = () => {
         window.location = `/login?redirect=${path}`;
       }
     },
-  });
-
-  const { data: popularData } = useQuery(GUILD_POPULAR_POSTS_QUERY, {
-    ...queryConfig,
   });
 
   const hasNextPage = data?.guildPosts.pageInfo.hasNextPage || false;
