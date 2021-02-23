@@ -1,4 +1,3 @@
-import { rgba } from "polished";
 import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
 import { theme } from "@advisable/donut";
@@ -17,19 +16,17 @@ export const StyledNavigationMenuItemNumber = styled.div`
   border-radius: 50%;
   align-items: center;
   justify-content: center;
-  color: #c6c6d0;
-  background: #f2f2f6;
+  color: ${theme.colors.neutral300};
+  border: 2px solid ${theme.colors.neutral300};
 `;
 
 export const StyledNavigationMenuLink = styled(NavLink)`
-  height: 40px;
+  height: 44px;
   display: flex;
   color: inherit;
   font-size: 16px;
   border-radius: 20px;
   align-items: center;
-  padding-left: 16px;
-  padding-right: 12px;
   letter-spacing: -0.03rem;
   justify-content: space-between;
 `;
@@ -45,10 +42,15 @@ const StyledNavigationMenuItem_Complete = css`
 `;
 
 const StyledNavigationMenuItem_Disabled = css`
-  color: #bbbcc9;
+  color: ${theme.colors.neutral400};
 
   ${StyledNavigationMenuLink} {
     cursor: default;
+    ${StyledNavigationMenuItemNumber} {
+      color: ${theme.colors.neutral300};
+      background: transparent;
+      border: 2px solid ${theme.colors.neutral300};
+    }
   }
 `;
 
@@ -57,41 +59,43 @@ const StyledNavigationMenuItem_Enabled = css`
 
   &:hover {
     ${StyledNavigationMenuLink} {
-      color: #1e234e;
-      background: ${rgba("#f5f5f8", 0.5)};
+      color: ${theme.colors.blue900};
     }
   }
 
   ${StyledNavigationMenuLink} {
     &.active {
-      color: #1e234e;
-      background: #f5f5f8;
+      color: ${theme.colors.blue900};
 
       ${StyledNavigationProgress} {
         opacity: 1;
       }
 
       ${StyledNavigationMenuItemNumber} {
-        color: #c6c6d0;
-        background: transparent;
-        border: 2px solid ${theme.colors.neutral200};
+        color: ${theme.colors.neutral300};
+        border: 2px solid ${theme.colors.neutral300};
       }
     }
   }
 `;
 
 export const StyledNavigationMenuItem = styled.div`
+  border-bottom: 1px solid ${theme.colors.neutral100};
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: 4px;
+  padding-bottom: 2px;
+  padding-top: 2px;
   position: relative;
   user-select: none;
   color: ${theme.colors.neutral500};
-  margin-left: -8px;
 
   ${(props) => props.isDisabled && StyledNavigationMenuItem_Disabled};
   ${(props) => !props.isDisabled && StyledNavigationMenuItem_Enabled};
   ${(props) => props.isComplete && StyledNavigationMenuItem_Complete};
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
 export const StyledNavigationMenuItemSteps = styled.div`
