@@ -19,7 +19,6 @@ const Post = ({
   showDelete = false,
   showResolve = false,
   walkthrough = false,
-  popular = false,
 }) => {
   const history = useHistory();
   const url = guildPostUrl(post.id);
@@ -69,7 +68,7 @@ const Post = ({
           </Box>
         </Box>
 
-        {post.coverImage && !popular && (
+        {post.coverImage && (
           <Box mb="6">
             <a href={`/guild/posts/${post.id}`}>
               <CoverImage
