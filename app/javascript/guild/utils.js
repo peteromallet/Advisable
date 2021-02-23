@@ -47,17 +47,17 @@ export const cursorLoadMore = ({ fetchMore, collectionKey, data }) => {
   });
 };
 
+export const isGuildPath = /^\/guild/.test(window.location.pathname);
+
+export const guildPostUrl = (postId) => {
+  const fullGuildPath = `/guild/posts/${postId}`;
+  return isGuildPath ? `/posts/${postId}` : fullGuildPath;
+};
+
 export const hasGqlError = (code, errors) =>
   errors?.graphQLErrors?.[0]?.extensions?.code === code;
 
 export const loginWithRedirectPath = (path) => {
   const redirect = encodeURIComponent(`/guild${path}`);
   window.location = `/login?redirect=${redirect}`;
-};
-
-export const isGuildPath = /^\/guild/.test(window.location.pathname);
-
-export const guildPostUrl = (postId) => {
-  const fullGuildPath = `/guild/posts/${postId}`;
-  return isGuildPath ? `/posts/${postId}` : fullGuildPath;
 };
