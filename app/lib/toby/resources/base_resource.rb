@@ -76,6 +76,35 @@ module Toby
             end
           end
         end
+
+        def input_type
+          @input_type ||= define_input_type
+        end
+
+        def define_input_type
+          root = self
+          Class.new(GraphQL::Schema::InputObject) do
+            graphql_name("#{root.model.name}Attributes")
+            root.attributes.each do |attribute|
+              argument attribute.name, attribute.input_type, required: false
+            end
+          end
+        end
+
+        def update_mutation
+          @update_mutation ||= define_update_mutation
+        end
+
+        def define_update_mutation
+          root = self
+          Class.new(Toby::Mutations::Update) do
+            self.resource = root
+            graphql_name "Update#{root.model.name}"
+            argument :id, GraphQL::Schema::Object::ID, required: true
+            argument :attributes, root.input_type, required: true
+            field :resource, root.type, null: true
+          end
+        end
       end
     end
   end
