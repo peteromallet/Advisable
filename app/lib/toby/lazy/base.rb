@@ -11,7 +11,11 @@ module Toby
           loaded_ids: {}
         }
         @id = id
-        state[:pending_ids] << id
+        if id.is_a?(Array)
+          id.each { |i| state[:pending_ids] << i }
+        else
+          state[:pending_ids] << id
+        end
       end
 
       def record

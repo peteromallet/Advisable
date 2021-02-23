@@ -16,7 +16,7 @@ export default function Filters({
     addFilter({
       attribute: fieldsWithFilters[0].name,
       type: fieldsWithFilters[0].filters[0].name,
-      contents: [],
+      value: [],
     });
   }, [addFilter, fieldsWithFilters]);
 
@@ -29,7 +29,7 @@ export default function Filters({
       filters: filters.map((f) => ({
         attribute: f.attribute,
         type: f.type,
-        contents: f.contents,
+        value: f.value,
       })),
     });
   }, [refetch, filters]);
@@ -55,10 +55,7 @@ export default function Filters({
     if (!Component) return null;
 
     return (
-      <Component
-        filter={filter}
-        onChange={handleChange(filter.id, "contents")}
-      />
+      <Component filter={filter} onChange={handleChange(filter.id, "value")} />
     );
   }
 
