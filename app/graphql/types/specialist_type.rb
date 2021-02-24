@@ -44,7 +44,7 @@ module Types
 
     def linkedin
       url = object.linkedin
-      return nil if url.nil?
+      return nil if url.blank?
 
       url.starts_with?('http') ? url : "https://#{url}"
     end
