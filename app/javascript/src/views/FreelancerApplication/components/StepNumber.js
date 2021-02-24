@@ -8,6 +8,7 @@ export default function StepNumber({ children }) {
       textTransform="uppercase"
       fontWeight="medium"
       fontSize="2xs"
+      mb={1.5}
     >
       {children}
     </Text>
