@@ -11,6 +11,7 @@ import Overview from "./steps/Overview";
 import PreviousWork from "./steps/PreviousWork";
 import WorkPreferences from "./steps/WorkPreferences";
 import IdealProject from "./steps/IdealProject";
+import Loading from "src/components/Loading";
 import { useGetSpecialist } from "./queries";
 
 export default function FreelancerApplication() {
@@ -27,8 +28,8 @@ export default function FreelancerApplication() {
   }
 
   const { data, loading } = useGetSpecialist(viewer.id);
-  if (loading) return <div>loading...</div>;
-  const { specialist } = data;
+  if (loading) return <Loading />;
+  const { specialist, countries, skills, industries } = data;
 
   return (
     <div>
@@ -42,7 +43,7 @@ export default function FreelancerApplication() {
           >
             <Switch location={location} key={location.pathname}>
               <Route path="/freelancers/apply/introduction">
-                <Introduction specialist={specialist} />
+                <Introduction specialist={specialist} countries={countries} />
               </Route>
               <Route path="/freelancers/apply/overview">
                 <Overview specialist={specialist} />
@@ -51,7 +52,11 @@ export default function FreelancerApplication() {
                 <PreviousWork specialist={specialist} />
               </Route>
               <Route path="/freelancers/apply/preferences">
-                <WorkPreferences specialist={specialist} />
+                <WorkPreferences
+                  skills={skills}
+                  industries={industries}
+                  specialist={specialist}
+                />
               </Route>
               <Route path="/freelancers/apply/ideal_project">
                 <IdealProject specialist={specialist} />

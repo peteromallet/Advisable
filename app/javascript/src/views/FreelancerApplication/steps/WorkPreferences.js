@@ -2,8 +2,7 @@ import React from "react";
 import Combobox from "@advisable/donut/components/Combobox";
 import { array, object, string } from "yup";
 import { Formik, Form } from "formik";
-import { motion } from "framer-motion";
-import { useQuery, gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { Box } from "@advisable/donut";
 import { ChoiceList } from "src/components";
@@ -15,28 +14,14 @@ import { Description, Header } from "../components";
 import AnimatedCard from "../components/AnimatedCard";
 import { UPDATE_PROFILE } from "../queries";
 
-export const GET_DATA = gql`
-  {
-    skills {
-      value: id
-      label: name
-    }
-    industries {
-      value: id
-      label: name
-    }
-  }
-`;
-
 export const validationSchema = object().shape({
   skills: array(),
   industries: array(),
   primarilyFreelance: string().required(),
 });
 
-export default function WorkPreferences({ specialist }) {
+export default function WorkPreferences({ specialist, skills, industries }) {
   const [update] = useMutation(UPDATE_PROFILE);
-  const { data, loading } = useQuery(GET_DATA);
   const history = useHistory();
 
   const initialValues = {
@@ -75,8 +60,6 @@ export default function WorkPreferences({ specialist }) {
     history.push("/freelancers/apply/ideal_project");
   };
 
-  if (loading) return <motion.div exit>loading...</motion.div>;
-
   return (
     <AnimatedCard>
       <Formik
@@ -104,7 +87,7 @@ export default function WorkPreferences({ specialist }) {
                 onChange={(s) => formik.setFieldValue("skills", s)}
                 label="What are the main skills you specialise in?"
                 placeholder="e.g Facebook marketing"
-                options={data.skills}
+                options={skills}
               />
             </Box>
             <Box mb={6}>
@@ -117,7 +100,7 @@ export default function WorkPreferences({ specialist }) {
                 onChange={(i) => formik.setFieldValue("industries", i)}
                 label="Which industries do you work in?"
                 placeholder="e.g Financial services"
-                options={data.industries}
+                options={industries}
               />
             </Box>
             <Box mb={3}>
