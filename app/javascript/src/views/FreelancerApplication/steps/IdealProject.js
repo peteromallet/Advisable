@@ -57,7 +57,9 @@ export default function IdealProject({ specialist }) {
               placeholder="What kind of projects most excite you? What kind of companies do you prefer working with?"
             />
           </Box>
-          <SubmitButton suffix={<ArrowRight />}>Submit</SubmitButton>
+          <SubmitButton suffix={<ArrowRight />} variant="gradient">
+            Submit
+          </SubmitButton>
         </Form>
       </Formik>
     </AnimatedCard>

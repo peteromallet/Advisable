@@ -80,7 +80,9 @@ export default function PreviousWork({ specialist }) {
               placeholder="What were the results of this project? Why does it stand out to you?"
             />
           </Box>
-          <SubmitButton suffix={<ArrowRight />}>Continue</SubmitButton>
+          <SubmitButton suffix={<ArrowRight />} variant="gradient">
+            Continue
+          </SubmitButton>
         </Form>
       </Formik>
     </AnimatedCard>

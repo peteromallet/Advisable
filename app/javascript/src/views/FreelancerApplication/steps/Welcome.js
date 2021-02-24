@@ -28,7 +28,11 @@ export default function Welcome() {
           projects. Once you are accepted into the Advisable network we will
           begin matching you with projects where you can choose to apply or not.
         </Text>
-        <Button as={Link} to="/freelancers/apply/introduction">
+        <Button
+          as={Link}
+          to="/freelancers/apply/introduction"
+          variant="gradient"
+        >
           Get Started
         </Button>
       </Box>
