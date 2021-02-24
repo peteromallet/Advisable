@@ -58,7 +58,7 @@ gem "email_reply_parser"
 gem "pry"
 gem "pry-rails"
 gem "pry-doc"
-gem "pry-byebug"
+gem "pry-byebug", ">= 3.9.0"
 
 group :development, :test do
   gem "dotenv-rails"
