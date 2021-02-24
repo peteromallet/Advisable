@@ -8,10 +8,10 @@ import {
   Box,
   Text,
   Textarea,
-  Avatar,
   Label,
   Checkbox,
   Select,
+  Avatar,
 } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FileUpload from "src/components/FileUpload";
@@ -22,6 +22,7 @@ import AnimatedCard from "../components/AnimatedCard";
 import { Description, Header } from "../components";
 import { UPDATE_PROFILE } from "../queries";
 import { boolean, object, string } from "yup";
+import DefaultAvatarIcon from "../components/DefaultAvatarIcon";
 
 export const GET_COUNTRIES = gql`
   {
@@ -108,13 +109,16 @@ export default function Introduction({ specialist }) {
                     reader.onload = (e) => setProfilePhoto(e.target.result);
                     reader.readAsDataURL(file);
                   }
-                  return (
-                    <Avatar
-                      name={specialist.name}
-                      url={profilePhoto}
-                      size="m"
-                    />
-                  );
+                  if (profilePhoto) {
+                    return (
+                      <Avatar
+                        name={specialist.name}
+                        url={profilePhoto}
+                        size="s"
+                      />
+                    );
+                  }
+                  return <DefaultAvatarIcon />;
                 }}
                 label="Upload a profile photo"
                 accept=".png, .jpg, .jpeg"

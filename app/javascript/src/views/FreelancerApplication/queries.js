@@ -4,6 +4,7 @@ const specialistFields = gql`
   fragment SpecialistFields on Specialist {
     id
     # Introduction step
+    name
     avatar
     bio
     city
