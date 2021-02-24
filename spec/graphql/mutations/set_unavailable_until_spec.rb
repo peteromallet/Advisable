@@ -13,24 +13,24 @@ RSpec.describe Mutations::SetUnavailableUntil do
       setUnavailableUntil(input: {
         #{params}
       }) {
-        success
+        specialist {
+          id
+        }
       }
     }
     GRAPHQL
   end
 
   it "clears the date" do
-    response = AdvisableSchema.execute(query, context: context)
-    expect(response["data"]["setUnavailableUntil"]["success"]).to be_truthy
+    AdvisableSchema.execute(query, context: context)
     expect(Specialist.find(current_user.id).unavailable_until).to be_nil
   end
 
   context "when date in the future" do
     let(:params) { "date: \"#{4.days.from_now.strftime('%Y-%m-%d')}\"" }
 
-    it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
-      expect(response["data"]["setUnavailableUntil"]["success"]).to be_truthy
+    it "Update the specialists unavailable_until date" do
+      AdvisableSchema.execute(query, context: context)
       expect(Specialist.find(current_user.id).unavailable_until).to eq(4.days.from_now.to_date)
     end
   end
