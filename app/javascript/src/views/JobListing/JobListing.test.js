@@ -61,7 +61,7 @@ test("specialist can reject the invitation", async () => {
         REJECT_INVITATION,
         {
           id: application.id,
-          reason: "No availability currently",
+          reason: "Doesn’t seem like a good fit",
         },
         {
           rejectApplicationInvitation: {
@@ -79,7 +79,7 @@ test("specialist can reject the invitation", async () => {
   const reject = await screen.findByRole("button", { name: /reject/i });
   user.click(reject);
   const reason = screen.getByRole("combobox", { name: /why are you/i });
-  user.selectOptions(reason, "No availability currently");
+  user.selectOptions(reason, "Doesn’t seem like a good fit");
   const modal = within(screen.getByRole("dialog", /reject application/i));
   user.click(modal.getByRole("button", { name: /reject/i }));
   await screen.findByText(/do you know anyone/i);
