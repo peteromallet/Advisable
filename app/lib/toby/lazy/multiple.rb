@@ -2,7 +2,7 @@
 
 module Toby
   module Lazy
-    class Base
+    class Multiple
       attr_reader :id, :to, :state, :column
 
       def initialize(context, to, id, column: :id)
@@ -18,12 +18,6 @@ module Toby
         else
           state[:pending_ids] << id
         end
-      end
-
-      def record
-        # records.first
-        # TEMP FIX - only works for has_many atm
-        records
       end
 
       def records

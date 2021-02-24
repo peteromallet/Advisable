@@ -30,7 +30,7 @@ module Toby
       end
 
       def lazy_read(resource, context)
-        Toby::Lazy.const_get(to).new(context, to, resource.public_send(via))
+        Toby::Lazy::Single.new(context, to, resource.public_send(via))
       end
     end
   end
