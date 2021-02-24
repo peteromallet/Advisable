@@ -13,7 +13,7 @@ export const StyledInputDecoration = styled.div`
   justify-content: center;
   background-color: transparent;
   color: ${theme.colors.neutral900};
-  font-family: system-ui, poppins, sans-serif;
+  font-family: system-ui, TTHoves, sans-serif;
   transition: background-color 200ms, color 200ms;
 
   svg {
@@ -49,7 +49,7 @@ export const StyledInputControl = styled.input`
   padding-bottom: 0;
   border-radius: 0px;
   color: ${theme.colors.neutral900};
-  font-family: system-ui, poppins, sans-serif;
+  font-family: system-ui, TTHoves, sans-serif;
 
   &::placeholder {
     color: ${theme.colors.neutral400};

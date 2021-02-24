@@ -1,9 +1,9 @@
 import * as React from "react";
 import { DateTime } from "luxon";
 import { Info } from "@styled-icons/feather";
-import { Box, Text, Link } from "@advisable/donut";
+import { Box, Text, Link, Card } from "@advisable/donut";
 import ApplicationStatus from "../../../components/ApplicationStatus";
-import { Card, Notice } from "./styles";
+import { Notice } from "./styles";
 
 const INFORMATION = {
   Applied: function ApplicationApplied({ application }) {
@@ -26,10 +26,7 @@ const INFORMATION = {
           Your proposal has been sent to {application.project.user.companyName}.
           We will let you know when they respond.
         </Text>
-        <Link
-          target="_blank"
-          to={`/applications/${application.id}/proposal`}
-        >
+        <Link target="_blank" to={`/applications/${application.id}/proposal`}>
           Update Proposal
         </Link>
       </React.Fragment>
@@ -46,10 +43,7 @@ const INFORMATION = {
             complete. We will let you know when they respond. In the mean time
             you can send them a proposal.
           </Text>
-          <Link
-            target="_blank"
-            to={`/applications/${application.id}/proposal`}
-          >
+          <Link target="_blank" to={`/applications/${application.id}/proposal`}>
             Send Proposal
           </Link>
         </React.Fragment>
@@ -63,10 +57,7 @@ const INFORMATION = {
             {application.project.user.companyName} has requested an interview
             with you
           </Text>
-          <Link
-            target="_blank"
-            to={`/interview_request/${interview.id}`}
-          >
+          <Link target="_blank" to={`/interview_request/${interview.id}`}>
             Schedule Interview
           </Link>
         </React.Fragment>
@@ -98,34 +89,32 @@ const Application = ({ application }) => {
   const { project } = application;
 
   return (
-    <Card elevation="m">
-      <Box padding="m">
-        <Text weight="semibold" colour="blue900">
-          {application.project.primarySkill?.name}
+    <Card padding={6} borderRadius="12px" position="relative">
+      <Text fontSize="xl" fontWeight="medium" colour="neutral900">
+        {application.project.primarySkill?.name}
+      </Text>
+      <Text mt={1} fontSize="sm" color="neutral800">
+        <Text as="span">
+          {project.industry} {project.companyType}
         </Text>
-        {(project.industry || project.companyType) && (
-          <Text mt="xxs" fontSize="xs" color="neutral700">
-            {project.industry} {project.companyType}
-          </Text>
-        )}
-        <Text size="xxs" color="neutral600" mt="xs">
-          {application.appliedAt && (
-            <span>
-              Applied {DateTime.fromISO(application.appliedAt).toRelative()}
-            </span>
-          )}
-          {!application.appliedAt && "-"}
+        <Box as="span" px={2}>
+          &bull;
+        </Box>
+        <Text as="span">
+          Applied {DateTime.fromISO(application.appliedAt).toRelative()}
         </Text>
+      </Text>
+      <Box position="absolute" top="24px" right="24px">
         <ApplicationStatus>{application.status}</ApplicationStatus>
-        {InfoComponent && (
-          <Box paddingTop="m">
-            <Notice>
-              <Info size={24} strokeWidth={2} />
-              <InfoComponent application={application} />
-            </Notice>
-          </Box>
-        )}
       </Box>
+      {InfoComponent && (
+        <Box paddingTop="m">
+          <Notice>
+            <Info size={24} strokeWidth={2} />
+            <InfoComponent application={application} />
+          </Notice>
+        </Box>
+      )}
     </Card>
   );
 };

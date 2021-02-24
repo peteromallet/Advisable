@@ -10,6 +10,7 @@ const StyledProject = styled(StyledCard)`
   width: 100%;
   height: 300px;
   position: relative;
+  border-radius: 12px;
   transition: box-shadow 0.3s, transform 0.2s;
   box-shadow: 0px 8px 24px -8px ${rgba(theme.colors.blue900, 0.12)};
 
@@ -31,10 +32,10 @@ export default function Project({ project }) {
     <StyledProject as={Link} to={url} padding="l">
       <Text
         mb="4px"
-        fontSize="2xl"
+        fontSize="3xl"
         color="neutral900"
         fontWeight="medium"
-        letterSpacing="-0.05rem"
+        letterSpacing="-0.03rem"
       >
         {project.primarySkill?.name || "New Project"}
       </Text>
