@@ -4,8 +4,6 @@ module Toby
   class Schema < GraphQL::Schema
     query Toby::Types::QueryType
     mutation Toby::Types::MutationType
-
-    lazy_resolve(Toby::Lazy::Single, :record)
-    lazy_resolve(Toby::Lazy::Multiple, :records)
+    lazy_resolve(Toby::Lazy::Loader, :resolve)
   end
 end

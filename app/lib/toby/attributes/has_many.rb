@@ -25,7 +25,7 @@ module Toby
       end
 
       def lazy_read(resource, context)
-        Toby::Lazy::Multiple.new(context, from, resource.id, column: via)
+        Toby::Lazy::Loader.new(context, from, resource.id, column: via)
       end
     end
   end
