@@ -34,9 +34,8 @@ module Toby
         options.fetch(:readonly, false)
       end
 
-      # Placeholder for lazy_loading
       def lazy_read(_resource, _context)
-        nil
+        # Placeholder for lazy_loading
       end
 
       def read(resource)
