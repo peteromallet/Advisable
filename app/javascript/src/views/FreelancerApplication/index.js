@@ -4,6 +4,7 @@ import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import { Box, Container, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
+import OrbitsBackground from "./components/OrbitsBackground";
 import Sidebar from "./components/Sidebar";
 import Welcome from "./steps/Welcome";
 import Introduction from "./steps/Introduction";
@@ -33,6 +34,7 @@ export default function FreelancerApplication() {
 
   return (
     <div>
+      <OrbitsBackground />
       {largeScreen ? <Sidebar specialist={specialist} /> : null}
       <Box paddingLeft={{ l: "300px" }}>
         <Container paddingY={10} maxWidth="750px">
