@@ -11,6 +11,7 @@ module Toby
       attribute :account, Attributes::BelongsTo
       attribute :country, Attributes::BelongsTo
       attribute :applications, Attributes::HasMany
+      attribute :reviews, Attributes::HasMany
     end
   end
 end
