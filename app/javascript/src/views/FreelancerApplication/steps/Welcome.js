@@ -6,8 +6,15 @@ import AnimatedCard from "../components/AnimatedCard";
 export default function Welcome() {
   return (
     <AnimatedCard>
-      <Box textAlign="center">
-        <Box as="img" src={image} width="352px" marginBottom={6} />
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        textAlign="center"
+      >
+        <Box width="352px" height="248px" marginBottom={6}>
+          <Box as="img" src={image} width="100%" />
+        </Box>
         <Text
           color="#00404E"
           fontSize="5xl"
