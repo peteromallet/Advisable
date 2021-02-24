@@ -147,7 +147,9 @@ export default function Introduction({ specialist, countries }) {
                 </Text>
               </FormField>
             </Box>
-            <SubmitButton suffix={<ArrowRight />}>Continue</SubmitButton>
+            <SubmitButton suffix={<ArrowRight />} variant="gradient">
+              Continue
+            </SubmitButton>
           </Form>
         )}
       </Formik>

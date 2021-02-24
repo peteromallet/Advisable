@@ -129,7 +129,9 @@ export default function WorkPreferences({ specialist, skills, industries }) {
                 ]}
               />
             </Box>
-            <SubmitButton suffix={<ArrowRight />}>Continue</SubmitButton>
+            <SubmitButton suffix={<ArrowRight />} variant="gradient">
+              Continue
+            </SubmitButton>
           </Form>
         )}
       </Formik>

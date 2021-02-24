@@ -111,7 +111,9 @@ export default function Overview({ specialist }) {
                 </Text>
               )}
             </Box>
-            <SubmitButton suffix={<ArrowRight />}>Continue</SubmitButton>
+            <SubmitButton suffix={<ArrowRight />} variant="gradient">
+              Continue
+            </SubmitButton>
           </Form>
         )}
       </Formik>
