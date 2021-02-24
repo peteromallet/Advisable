@@ -68,13 +68,14 @@ class Account < ApplicationRecord
     AccountMailer.reset_password(id: id, token: token).deliver_later
   end
 
-  def disable!
-    self.deleted_at = Time.zone.now
+  def disable!(delete: false)
+    self.remember_token = nil
+    self.disabled_at = Time.zone.now
+    self.deleted_at = Time.zone.now if delete
     self.password = SecureRandom.hex
-    self.email = "disabled+#{email.sub("@", ".at.")}@advisable.com"
+    self.email = "disabled+#{email.sub("@", ".at.")}@advisable.com" unless email.starts_with?("disabled+")
     magic_links.destroy_all
     save!
-    specialist_or_user&.sync_to_airtable
   end
 
   def unsubscribed_from
@@ -104,6 +105,7 @@ end
 #  confirmation_token  :string
 #  confirmed_at        :datetime
 #  deleted_at          :datetime
+#  disabled_at         :datetime
 #  email               :citext
 #  first_name          :string
 #  last_name           :string

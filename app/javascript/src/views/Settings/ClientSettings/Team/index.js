@@ -13,7 +13,7 @@ export default function Team() {
   }
 
   return (
-    <Card padding="10">
+    <Card padding={10} borderRadius="12px">
       <Text
         marginBottom={5}
         fontSize="3xl"
