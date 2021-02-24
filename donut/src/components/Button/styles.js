@@ -220,7 +220,7 @@ export const StyledButton = styled.button`
   letter-spacing: -0.01em;
   background: transparent;
   transition: background 100ms;
-  font-family: TTHoves, poppins, sans-serif;
+  font-family: TTHoves, sans-serif;
   ${(props) => props.align === "left" && { justifyContent: "flex-start" }}
 
   svg {

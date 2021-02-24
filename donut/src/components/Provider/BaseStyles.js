@@ -24,15 +24,32 @@ const BaseStyles = createGlobalStyle`
   @font-face {
     font-family: "TTHoves";
     font-weight: 400;
-    src: url("/fonts/TTHoves-Regular/font.woff2") format("woff2"),
+    src: url('/fonts/TTHovesVariable/font.woff2') format('woff2 supports variations'),
+      url('/fonts/TTHovesVariable/font.woff2') format('woff2-variations'),
+      url("/fonts/TTHoves-Regular/font.woff2") format("woff2"),
       url("/fonts/TTHoves-Regular/font.woff") format("woff");
   }
 
   @font-face {
     font-family: "TTHoves";
     font-weight: 500;
-    src: url("/fonts/TTHoves-Medium/font.woff2") format("woff2"),
+    src: url('/fonts/TTHovesVariable/font.woff2') format('woff2 supports variations'),
+      url('/fonts/TTHovesVariable/font.woff2') format('woff2-variations'),
+      url("/fonts/TTHoves-Medium/font.woff2") format("woff2"),
       url("/fonts/TTHoves-Medium/font.woff") format("woff");
+  }
+
+  @supports (font-variation-settings: normal) {
+    @font-face {
+      font-family: 'TTHoves';
+      src: url('/fonts/TTHovesVariable/font.woff2') format('woff2 supports variations'),
+        url('/fonts/TTHovesVariable/font.woff2') format('woff2-variations');
+      font-weight: 100 800;
+    }
+
+    .super-bold {
+      font-weight: 1000;
+    }
   }
 
 
@@ -56,7 +73,7 @@ const BaseStyles = createGlobalStyle`
     font: inherit;
     box-sizing: border-box;
     vertical-align: baseline;
-    font-family: TTHoves, poppins, sans-serif;
+    font-family: TTHoves, sans-serif;
   }
 
   /* HTML5 display-role reset for older browsers */

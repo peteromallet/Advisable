@@ -46,7 +46,7 @@ const StyledPrimarySkillOption = styled.label`
   position: relative;
   letter-spacing: -0.03rem;
   border: 2px solid transparent;
-  font-family: poppins, sans-serif;
+  font-family: TTHoves, sans-serif;
   ${(props) => props.$selected && StyledPrimarySkillOption_Selected};
 
   &:hover {

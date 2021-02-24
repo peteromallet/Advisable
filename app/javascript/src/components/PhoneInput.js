@@ -19,7 +19,7 @@ const StyledPhoneInput = styled(ReactPhoneInput)`
     padding-bottom: 1px;
     border-radius: 0px;
     color: ${theme.colors.neutra900};
-    font-family: system-ui, poppins, sans-serif;
+    font-family: TTHoves, sans-serif;
     border: 2px solid transparent;
     transition: border-color 200ms;
   }

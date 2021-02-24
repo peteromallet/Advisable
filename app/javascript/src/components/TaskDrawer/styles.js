@@ -43,7 +43,7 @@ export const Title = styled.textarea`
   border-radius: 6px;
   margin-bottom: 8px;
   letter-spacing: -0.035rem;
-  font-family: poppins, sans-serif;
+  font-family: TTHoves, sans-serif;
   color: ${theme.colors.neutral900};
   border: 2px solid transparent;
   transition: border-color 200ms;
@@ -205,7 +205,7 @@ export const Description = styled.textarea`
   border-radius: 6px;
   background: transparent;
   border: 2px solid transparent;
-  font-family: poppins, sans-serif;
+  font-family: TTHoves, sans-serif;
   transition: border-color 200ms;
   ${placeholderColor(theme.colors.neutral500)}
 
