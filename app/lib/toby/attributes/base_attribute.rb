@@ -26,6 +26,10 @@ module Toby
         name.to_s.camelize(:lower)
       end
 
+      def parent
+        options[:parent]
+      end
+
       def readonly
         options.fetch(:readonly, false)
       end

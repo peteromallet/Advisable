@@ -39,6 +39,8 @@ module Toby
 
         def attribute(name, type, **args)
           @attributes ||= [Attributes::Id.new(:id)]
+
+          args[:parent] = self.name unless args.key?(:parent)
           @attributes << type.new(name, **args)
         end
 
