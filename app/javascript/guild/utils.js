@@ -1,7 +1,4 @@
-import dayjs from "dayjs";
 import { DateTime } from "luxon";
-import relativeTime from "dayjs/plugin/relativeTime";
-dayjs.extend(relativeTime);
 
 export const lowerDashed = (str) => str.replace(/\s+/g, "-").toLowerCase();
 
@@ -10,7 +7,10 @@ export function timestamp(date) {
   return asLuxon.toFormat("dd LLL");
 }
 
-export const relativeDate = (date) => dayjs().from(date, true);
+export const relativeDate = (date) => {
+  const asLuxon = DateTime.fromISO(date);
+  return asLuxon.toRelative();
+};
 
 export const capitalize = (s) => {
   if (typeof s !== "string") return "";
