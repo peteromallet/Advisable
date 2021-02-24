@@ -43,6 +43,19 @@ const specialistFields = gql`
 export const GET_SPECIALIST = gql`
   ${specialistFields}
   query Specialist($id: ID!) {
+    countries {
+      id
+      name
+      __typename
+    }
+    skills {
+      value: id
+      label: name
+    }
+    industries {
+      value: id
+      label: name
+    }
     specialist(id: $id) {
       ...SpecialistFields
     }

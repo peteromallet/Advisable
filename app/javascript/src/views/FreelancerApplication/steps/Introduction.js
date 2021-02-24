@@ -1,8 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
-import { useQuery, gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather";
 import {
   Box,
@@ -24,16 +23,6 @@ import { UPDATE_PROFILE } from "../queries";
 import { boolean, object, string } from "yup";
 import DefaultAvatarIcon from "../components/DefaultAvatarIcon";
 
-export const GET_COUNTRIES = gql`
-  {
-    countries {
-      id
-      name
-      __typename
-    }
-  }
-`;
-
 export const validationSchema = object().shape({
   avatar: string().nullable(),
   bio: string().required(),
@@ -42,10 +31,9 @@ export const validationSchema = object().shape({
   publicUse: boolean(),
 });
 
-export default function Introduction({ specialist }) {
+export default function Introduction({ specialist, countries }) {
   const history = useHistory();
   const [profilePhoto, setProfilePhoto] = React.useState(specialist?.avatar);
-  const { data, loading } = useQuery(GET_COUNTRIES);
   const [update] = useMutation(UPDATE_PROFILE);
 
   const initialValues = {
@@ -67,7 +55,7 @@ export default function Introduction({ specialist }) {
             ...specialist,
             ...values,
             avatar: null,
-            country: data.countries.find((c) => c.id === values.country),
+            country: countries.find((c) => c.id === values.country),
           },
         },
       },
@@ -75,8 +63,6 @@ export default function Introduction({ specialist }) {
 
     history.push("/freelancers/apply/overview");
   };
-
-  if (loading) return <motion.div exit>loading...</motion.div>;
 
   return (
     <AnimatedCard>
@@ -142,7 +128,7 @@ export default function Introduction({ specialist }) {
               </Box>
               <Box width="100%">
                 <FormField as={Select} name="country" placeholder="Country">
-                  {data.countries.map((c) => (
+                  {countries.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
                     </option>
