@@ -48,7 +48,7 @@ module Toby
 
         def define_type
           root = self
-          Class.new(GraphQL::Schema::Object) do
+          type_class = Class.new(GraphQL::Schema::Object) do
             graphql_name(root.model.name)
             root.attributes.each do |attribute|
               # define a field for each attribute
@@ -59,6 +59,8 @@ module Toby
               end
             end
           end
+
+          Toby::Types.const_set(name.demodulize, type_class)
         end
 
         def filter_type
