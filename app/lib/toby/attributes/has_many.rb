@@ -11,9 +11,9 @@ module Toby
         options.fetch(:from) { name.to_s.singularize.capitalize }
       end
 
-      # via is optional for when we don't follow the resource_id convention
+      # via is optional for when we don't follow the parent_id convention
       def via
-        options.fetch(:via) { :"#{from.downcase}_ids" }
+        options.fetch(:via) { :"#{parent.demodulize.downcase}_id" }
       end
 
       def type
@@ -24,9 +24,9 @@ module Toby
         [GraphQL::Types::ID]
       end
 
-      # def lazy_read(resource, context)
-      #   Toby::Lazy.const_get(from).new(context, from, resource.public_send(via))
-      # end
+      def lazy_read(resource, context)
+        Toby::Lazy::Application.new(context, from, resource.id, column: via)
+      end
     end
   end
 end
