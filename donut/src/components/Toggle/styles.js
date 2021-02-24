@@ -81,7 +81,7 @@ export const StyledToggle = styled.label`
   ${size};
   user-select: none;
   position: relative;
-  display: inline-block;
+  display: inline-flex;
 
   &:not([data-disabled="true"]):hover ${StyledToggleBackground} {
     background: ${theme.colors.neutral300};

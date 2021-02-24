@@ -77,4 +77,20 @@ RSpec.describe User, type: :model do
       user.invite_comember!(new_account)
     end
   end
+
+  describe "#disable!" do
+    let(:user) { create(:user) }
+    let(:actor) { create(:account) }
+
+    it "sets the status to disabled and syncs" do
+      allow_any_instance_of(TalkjsApi).to receive(:conversations_by).and_return([])
+      expect(user).to receive(:sync_to_airtable)
+
+      user.disable!(actor.id)
+      user.reload
+      expect(user.account.deleted_at).to be_nil
+      expect(user.application_status).to eq("Disabled")
+      expect(user.reload_log_data.responsible_id).to eq(actor.id)
+    end
+  end
 end

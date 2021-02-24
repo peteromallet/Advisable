@@ -17,10 +17,9 @@ RSpec.describe Mutations::DeleteSpecialist do
     GRAPHQL
   end
 
-  before { allow(user).to receive(:sync_to_airtable) }
-
   it "marks the specialist's account for deletion and deletes magic links" do
-    response = AdvisableSchema.execute(query, context: context)
+    expect(user).to receive(:sync_to_airtable)
+    AdvisableSchema.execute(query, context: context)
     expect(account.deleted_at).not_to be_nil
   end
 

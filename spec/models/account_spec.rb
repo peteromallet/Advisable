@@ -60,24 +60,34 @@ RSpec.describe Account, type: :model do
     let(:account) { create(:account) }
     let(:specialist) { create(:specialist, account: account) }
 
-    it "sets deleted_at, resets password, and changes email" do
+    it "resets password and changes email, and sets disabled_at timestamp" do
       email = account.email
       password = account.password
       account.disable!
-      expect(account.deleted_at).not_to be_nil
+      expect(account.deleted_at).to be_nil
+      expect(account.disabled_at).not_to be_nil
       expect(account.password).not_to eq(password)
       expect(account.email).to eq("disabled+#{email.sub("@", ".at.")}@advisable.com")
+    end
+
+    it "only changes email once" do
+      email = account.email
+      account.disable!
+      account.disable!
+      account.disable!
+      expect(account.email).to eq("disabled+#{email.sub("@", ".at.")}@advisable.com")
+    end
+
+    it "sets deleted_at and disabled_at when delete: true" do
+      account.disable!(delete: true)
+      expect(account.disabled_at).not_to be_nil
+      expect(account.deleted_at).not_to be_nil
     end
 
     it "deletes magic links" do
       magic_link = create(:magic_link, account: account)
       account.disable!
       expect(MagicLink.where(id: magic_link.id)).to be_empty
-    end
-
-    it "syncs to airtable" do
-      expect(specialist).to receive(:sync_to_airtable)
-      account.disable!
     end
   end
 end
