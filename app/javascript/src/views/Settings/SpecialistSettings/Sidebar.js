@@ -6,6 +6,7 @@ import {
   Card,
   Copy,
   LockClosed,
+  Calendar,
 } from "@styled-icons/ionicons-outline";
 import NavigationMenu from "../../../components/NavigationMenu";
 import styled from "styled-components";
@@ -73,6 +74,9 @@ const SettingsSidebar = () => {
         <NavigationMenu title="Settings">
           <NavigationMenu.Item to="/settings/general" icon={<PersonCircle />}>
             General
+          </NavigationMenu.Item>
+          <NavigationMenu.Item to="/settings/availability" icon={<Calendar />}>
+            Availability
           </NavigationMenu.Item>
           <NavigationMenu.Item to="/settings/references" icon={<Copy />}>
             Previous Projects

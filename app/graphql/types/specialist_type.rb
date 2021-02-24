@@ -363,5 +363,7 @@ module Types
         validation_status: 'Validated', skills: {id: object.skill_ids}
       ).where.not(specialist_id: object.id).limit(3)
     end
+
+    field :unavailable_until, GraphQL::Types::ISO8601DateTime, null: true
   end
 end
