@@ -27,10 +27,9 @@ module Mutations
       end
       raise ApiError.invalid_request(task.errors.full_messages.first) unless updated
 
+      task.create_invoice_item
       task.sync_to_airtable
       {task: task}
-    rescue Service::Error => e
-      ApiError.service_error(e)
     end
   end
 end

@@ -33,6 +33,7 @@ class Task < ApplicationRecord
   validates :estimate_type, inclusion: {in: %w[Hourly Fixed]}, allow_nil: true
 
   belongs_to :application
+  has_many :line_items, class_name: "InvoiceLineItem", dependent: :destroy
 
   scope :active, -> { where.not(stage: "Deleted") }
 
@@ -51,6 +52,16 @@ class Task < ApplicationRecord
 
   def fixed_estimate?
     estimate_type == 'Fixed'
+  end
+
+  def create_invoice_item
+    invoice = application.invoices.draft.first_or_create! do |i|
+      i.company = application.project.user.company # Not a fan of this 😅
+    end
+    invoice.line_items.create!(task: self, name: name)
+    # These invoice and invoice_line_item records should also be created inside of Stripe.
+    # Eventually we can move away from this and only create them inside of stripe at the moment they are approved by the freelancer.
+    # These invoices should not be automatically charged against the client by setting the autoadvance to false.
   end
 end
 

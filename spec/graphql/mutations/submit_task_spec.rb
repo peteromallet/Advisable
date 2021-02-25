@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Mutations::SubmitTask do
   let(:application) { create(:application, status: 'Working') }
-  let(:task) { create(:task, stage: 'Working', application: application) }
+  let(:task) { create(:task, stage: 'Working', application: application, name: "Harder, Better, Faster, Stronger.") }
 
   let(:query) do
     <<-GRAPHQL
@@ -31,6 +31,16 @@ RSpec.describe Mutations::SubmitTask do
     response = AdvisableSchema.execute(query, context: context)
     stage = response['data']['submitTask']['task']['stage']
     expect(stage).to eq('Submitted')
+  end
+
+  it "creates an invoice line item" do
+    AdvisableSchema.execute(query, context: context)
+    invoice = application.invoices.draft.first
+    expect(invoice).not_to be_nil
+    line_item = invoice.line_items.first
+    expect(line_item).not_to be_nil
+    expect(line_item.task_id).to eq(task.id)
+    expect(line_item.name).to eq("Harder, Better, Faster, Stronger.")
   end
 
   context "when the specialist doesn't have access to the project" do

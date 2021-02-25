@@ -8,6 +8,7 @@ class Company < ApplicationRecord
   belongs_to :industry, optional: true
   has_many :users, dependent: :nullify
   has_many :accounts, through: :users
+  has_many :invoices, dependent: :nullify
 
   # WIP Company migration 👇️
   has_many :projects, through: :users

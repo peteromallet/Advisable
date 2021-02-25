@@ -6,6 +6,8 @@ class Invoice < ApplicationRecord
   belongs_to :company
   belongs_to :application
   delegate :specialist, to: :application
+
+  has_many :line_items, class_name: "InvoiceLineItem", dependent: :destroy
 end
 
 # == Schema Information
