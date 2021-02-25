@@ -3,19 +3,18 @@
 module Toby
   module Lazy
     class Base
-      attr_reader :state, :model, :id, :column, :single
+      attr_reader :state, :model, :id, :column
 
-      def initialize(context, model, id, column: :id, single: false)
+      def initialize(context, model, id, column: :id)
         @state = context[:"lazy_load_#{model}"] ||= {pending: Set.new, loaded: {}}
         @model = "::#{model}".constantize
         @id = id
         @column = column
-        @single = single
         state[:pending] << id
       end
 
       def resolve
-        single ? records.first : records
+        records
       end
 
       private
