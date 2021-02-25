@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, useBreakpoint } from "@advisable/donut";
+import React, { useEffect } from "react";
+import { Card, useBreakpoint, useTheme } from "@advisable/donut";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 
@@ -29,9 +29,19 @@ const cardAnimations = {
 };
 
 const AnimatedCard = (props) => {
+  const theme = useTheme();
   const history = useHistory();
   const largeScreen = useBreakpoint("lUp");
   const forwards = history.action === "PUSH";
+  const isMobile = useBreakpoint("s");
+
+  useEffect(() => {
+    theme.updateTheme({
+      background: isMobile ? "white" : "default",
+    });
+    return () => theme.updateTheme({ background: "default" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile]);
 
   return (
     <Card
@@ -41,14 +51,14 @@ const AnimatedCard = (props) => {
       initial="enter"
       animate="center"
       exit="exit"
-      key="100"
-      px={10}
-      pt={12}
-      pb={16}
+      px={[0, 10]}
+      pt={[0, 10]}
+      pb={[0, 16]}
+      elevation={["none", "m"]}
+      variant={["transparent", "default"]}
       borderRadius="12px"
       {...props}
     />
   );
 };
-
 export default AnimatedCard;
