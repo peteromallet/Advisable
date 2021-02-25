@@ -6,7 +6,7 @@ module Toby
       model_name ::Application
       attribute :uid, Attributes::String
       attribute :status, Attributes::Select, options: ["Applied"] + ::Application::ACTIVE_STATUSES
-      attribute :specialist, Attributes::BelongsTo
+      attribute :specialist, Attributes::BelongsTo, labelled_by: :account
     end
   end
 end

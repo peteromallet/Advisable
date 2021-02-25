@@ -1,12 +1,33 @@
 import React from "react";
-import { useSchemaIntrospection } from "../components/schema";
-import { useResources, getResourceColumn } from "../components/resources";
-import { getType } from "../utilities/schema";
-import { getColumnRenderComponent } from "./index";
+import { Tag } from "@advisable/donut";
+import { useSchema } from "../components/schema";
+import { resourceByType, resourceAttribute } from "../utilities";
+
+function resolveFieldLabel(schemaData, record, field, iteration = 1) {
+  if (field.labelledBy) {
+    const value = record[field.name];
+    const resource = resourceByType(schemaData, value.__typename);
+    const attribute = resourceAttribute(resource, field.labelledBy);
+    return resolveFieldLabel(
+      schemaData,
+      record[field.name],
+      attribute,
+      iteration + 1,
+    );
+  } else {
+    const result = record[field.name || "id"];
+    if (typeof result === "object") {
+      return result.id;
+    }
+
+    return result;
+  }
+}
 
 export default {
   render: function RenderBelongsTo({ record, field }) {
-    return record[field.name].id;
+    const schemaData = useSchema();
+    return <Tag>{resolveFieldLabel(schemaData, record, field)}</Tag>;
     // const resources = useResources();
     // const schema = useSchemaIntrospection();
     // const type = getType(schema, record.__typename);

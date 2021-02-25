@@ -22,7 +22,7 @@ const ATTRIBUTES = {
 
 function renderField(record, field) {
   const renderer = ATTRIBUTES[field.__typename];
-  return renderer.render({ record, field });
+  return <renderer.render record={record} field={field} />;
 }
 
 export default function Resource() {

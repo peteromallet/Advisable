@@ -43,11 +43,7 @@ function getResourceByParam(resources, param) {
 function generateCollectionQuery(schemaData, resourceData) {
   const node = {};
   resourceData.attributes.forEach((attr) => {
-    node[attr.name] = selectionForField(
-      schemaData.schema,
-      resourceData.type,
-      attr.name,
-    );
+    node[attr.name] = selectionForField(schemaData, resourceData, attr.name);
   });
 
   const queryObject = {
@@ -87,10 +83,18 @@ export function getType(schema, type) {
   return schema.types.find((t) => t.name === type);
 }
 
+export function resourceByType(schemaData, type) {
+  return schemaData.resources.find((r) => r.type === type);
+}
+
+export function resourceAttribute(resourceData, attributeName) {
+  return resourceData.attributes.find((a) => a.name === attributeName);
+}
+
 // Returns the query selection for a given field. If the field is a scalar type
 // we just return true which the json-to-graphql package will use to query for.
-function selectionForField(schema, resourceType, fieldName) {
-  const type = getType(schema, resourceType);
+function selectionForField(schemaData, resourceData, fieldName) {
+  const type = getType(schemaData.schema, resourceData.type);
   const field = type.fields.find((f) => f.name === fieldName);
   // if its a scalar type just return true
   if (field.type.kind === "SCALAR") return true;
@@ -102,6 +106,20 @@ function selectionForField(schema, resourceType, fieldName) {
     }
   }
 
-  const query = { id: true };
+  const attribute = resourceAttribute(resourceData, fieldName);
+
+  const query = {
+    id: true,
+  };
+
+  if (attribute.labelledBy) {
+    const fieldResource = resourceByType(schemaData, field.type.name);
+    query[attribute.labelledBy] = selectionForField(
+      schemaData,
+      fieldResource,
+      attribute.labelledBy,
+    );
+  }
+
   return query;
 }

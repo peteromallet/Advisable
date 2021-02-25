@@ -6,10 +6,9 @@ module Toby
       model_name ::Specialist
       # query_names collection: :accounts
       attribute :uid, Attributes::String
-      attribute :email, Attributes::String
+      attribute :account, Attributes::BelongsTo, labelled_by: :email
       attribute :bio, Attributes::String
-      attribute :account, Attributes::BelongsTo
-      attribute :country, Attributes::BelongsTo
+      attribute :country, Attributes::BelongsTo, labelled_by: :name
       attribute :applications, Attributes::HasMany
       attribute :skills, Attributes::HasMany, through: :specialist_skills
       attribute :reviews, Attributes::HasMany
