@@ -1,10 +1,11 @@
 import React from "react";
-import { Text } from "@advisable/donut";
+import { Text, theme } from "@advisable/donut";
+import { rgba } from "polished";
 
 export default function StepNumber({ children }) {
   return (
     <Text
-      color="cyan800"
+      color={rgba(theme.colors.cyan900, 0.55)}
       textTransform="uppercase"
       fontWeight="medium"
       fontSize="2xs"
