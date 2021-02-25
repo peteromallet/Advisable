@@ -10,14 +10,24 @@ module Mutations
     def authorized?(**args)
       task = Task.find_by_uid!(args[:task])
       policy = TaskPolicy.new(current_user, task)
-      return true if policy.submit?
+      ApiError.not_authorized("You do not have permission to approve this task") unless policy.submit?
+      ApiError.invalid_request("tasks.notSubmittable", "Application status is not 'Working'") if task.application.status != "Working"
 
-      ApiError.not_authorized("You do not have permission to approve this task")
+      stages = %w[Working]
+      stages << "Not Assigned" if task.application.project_type == "Flexible"
+      ApiError.invalid_request("tasks.notSubmittable") unless stages.include?(task.stage)
+
+      true
     end
 
     def resolve(**args)
       task = Task.find_by_uid!(args[:task])
-      task = Tasks::Submit.call(task: task, final_cost: args[:final_cost], responsible_id: current_account_id)
+      updated = Logidze.with_responsible(current_account_id) do
+        task.update(stage: "Submitted", final_cost: args[:final_cost], submitted_at: Time.zone.now)
+      end
+      raise ApiError.invalid_request(task.errors.full_messages.first) unless updated
+
+      task.sync_to_airtable
       {task: task}
     rescue Service::Error => e
       ApiError.service_error(e)
