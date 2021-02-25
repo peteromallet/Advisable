@@ -1,17 +1,21 @@
 import React from "react";
-import { Tag } from "@advisable/donut";
+import { useSchema } from "../components/schema";
+import { resourceByType, resourceAttribute } from "../utilities";
+import { Attribute } from "./index";
 
 export default {
   render: function RenderHasMany({ record, field }) {
-    return (
-      <>
-        {record[field.name].map((r) => (
-          <Tag key={r.id} mr={2}>
-            {r.id}
-          </Tag>
-        ))}
-      </>
-    );
+    const schemaData = useSchema();
+
+    const items = record[field.name].map((r) => {
+      const resource = resourceByType(schemaData, r.__typename);
+      const attribute = resourceAttribute(resource, field.labelledBy || "id");
+      return <Attribute key={r.id} record={r} attribute={attribute} />;
+    });
+
+    return items.map((item, i) => {
+      return [i > 0 && ", ", item];
+    });
   },
   input: function BelongsToInput() {
     return <>div</>;
