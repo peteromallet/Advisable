@@ -15,7 +15,6 @@ import {
 import SubmitButton from "src/components/SubmitButton";
 import FileUpload from "src/components/FileUpload";
 import FormField from "src/components/FormField";
-import BioLengthWidget from "./BioLengthWiget";
 import StepNumber from "../components/StepNumber";
 import AnimatedCard from "../components/AnimatedCard";
 import { Description, Header } from "../components";
@@ -119,7 +118,7 @@ export default function Introduction({ specialist, countries }) {
               marginBottom={6}
               description="This will be shown on your public Advisable profile and shown to clients when you apply to projects. You can always update this later."
               placeholder="Tell us about yourself..."
-              widget={BioLengthWidget}
+              charLimit={280}
             />
             <Label marginBottom="xs">Where are you based?</Label>
             <Box display={["block", "flex"]} mb="l">

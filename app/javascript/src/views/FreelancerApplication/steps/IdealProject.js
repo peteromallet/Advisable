@@ -53,6 +53,7 @@ export default function IdealProject({ specialist }) {
               as={Textarea}
               name="idealProject"
               minRows={5}
+              charLimit={300}
               label="How would you describe an ideal project for you?"
               placeholder="What kind of projects most excite you? What kind of companies do you prefer working with?"
             />
