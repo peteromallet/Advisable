@@ -3,7 +3,13 @@ import { Orbit, OrbitsSystem, Box } from "@advisable/donut";
 
 export default function OrbitsBackground() {
   return (
-    <Box height="100vh" width="100%" position="absolute" zIndex="-1">
+    <Box
+      display={["none", "block"]}
+      height="100vh"
+      width="100%"
+      position="absolute"
+      zIndex="-1"
+    >
       <OrbitsSystem
         startSize={400}
         increment={200}
