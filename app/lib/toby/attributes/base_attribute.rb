@@ -89,7 +89,7 @@ module Toby
               end
 
               root.extension_fields.each do |name, type|
-                field name, type, null: false
+                field name, type, null: true
 
                 define_method name do
                   object.instance_variable_get("@options")[name]
