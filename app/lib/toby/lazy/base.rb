@@ -2,7 +2,7 @@
 
 module Toby
   module Lazy
-    class Loader
+    class Base
       attr_reader :state, :model, :id, :column, :single
 
       def initialize(context, model, id, column: :id, single: false)
