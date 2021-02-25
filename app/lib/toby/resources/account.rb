@@ -7,6 +7,7 @@ module Toby
       attribute :uid, Attributes::String
       attribute :first_name, Attributes::String
       attribute :last_name, Attributes::String
+      attribute :name, Attributes::String
       attribute :email, Attributes::String
     end
   end

@@ -1,32 +1,23 @@
-import id from "./id";
-import string from "./string";
-import belongsTo from "./belongsTo";
-import hasMany from "./hasMany";
-import number from "./number";
+import React from "react";
+import IdAttribute from "./id";
+import StringAttribute from "./string";
+import SelectAttribute from "./select";
+import HasManyAttribute from "./hasMany";
+import TextArrayAttribute from "./textArray";
+import BelongsToAttribute from "./belongsTo";
 
-const attributes = {
-  IdColumn: id,
-  StringColumn: string,
-  NumberColumn: number,
-  HasManyColumn: hasMany,
-  BelongsToColumn: belongsTo,
+const ATTRIBUTES = {
+  IdAttribute,
+  TextArrayAttribute,
+  StringAttribute,
+  BelongsToAttribute,
+  HasManyAttribute,
+  SelectAttribute,
 };
 
-export function getColumnHandler(type) {
-  return attributes[type];
+export function Attribute({ record, attribute }) {
+  const handler = ATTRIBUTES[attribute.__typename];
+  return <handler.render record={record} field={attribute} />;
 }
 
-export function getColumnRenderComponent(column) {
-  return attributes[column.__typename].render;
-}
-
-export function getColumnInputComponent(column) {
-  if (column.readonly) return getColumnRenderComponent(column);
-  return attributes[column.__typename].input;
-}
-
-export function getColumnInputValue(record, column) {
-  return record[column.field];
-}
-
-export default attributes;
+export default ATTRIBUTES;
