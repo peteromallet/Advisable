@@ -74,19 +74,7 @@ module Toby
             root = self
             Class.new(GraphQL::Schema::Object) do
               graphql_name("#{root.name.split('::').last}Attribute")
-              field :name, GraphQL::Types::String, null: false
-
-              def name
-                object.name.to_s.camelize(:lower)
-              end
-
-              field :filters, [Toby::Types::ResourceFilterType], null: false
-
-              def filters
-                object.class.filters.map do |k, v|
-                  {name: k, type: v.name.demodulize}
-                end
-              end
+              implements(Types::AttributeInterface)
 
               root.extension_fields.each do |name, type|
                 field name, type, null: true
