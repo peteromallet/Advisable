@@ -18,6 +18,11 @@ module Toby
         options.fetch(:source_id_column, :id)
       end
 
+      # optional constraint to support polymorphic or similar
+      def constraint
+        options[:constraint]
+      end
+
       def lazy_read_class
         Toby::Lazy::Through
       end
