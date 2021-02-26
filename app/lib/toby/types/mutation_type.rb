@@ -6,6 +6,7 @@ module Toby
       Toby::Resources.resource_classes.each do |resource|
         field resource.query_name_update, mutation: resource.update_mutation
         field resource.query_name_create, mutation: resource.create_mutation
+        field resource.query_name_delete, mutation: resource.delete_mutation
       end
     end
   end
