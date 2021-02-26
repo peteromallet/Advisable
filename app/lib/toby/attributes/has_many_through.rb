@@ -18,8 +18,8 @@ module Toby
         options.fetch(:source_id_column, :id)
       end
 
-      def lazy_read(resource, context)
-        Toby::Lazy::Through.new(self, context, resource.id)
+      def lazy_read_class
+        Toby::Lazy::Through
       end
     end
   end

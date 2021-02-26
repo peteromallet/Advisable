@@ -31,8 +31,8 @@ module Toby
         [GraphQL::Types::ID]
       end
 
-      def lazy_read(resource, context)
-        Toby::Lazy::Base.new(self, context, resource.public_send(via))
+      def lazy_read_class
+        Toby::Lazy::Base
       end
     end
   end

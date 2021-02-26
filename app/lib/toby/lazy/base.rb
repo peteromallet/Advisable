@@ -9,9 +9,9 @@ module Toby
 
       def_delegators :attribute, :column
 
-      def initialize(attribute, context, id)
+      def initialize(attribute, context, resource)
         @attribute = attribute
-        @id = id
+        @id = resource.public_send(attribute.via)
         @context = context
         state[:pending] << id
       end
