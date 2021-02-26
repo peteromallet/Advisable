@@ -8,6 +8,8 @@ module Toby
 
         filters.each do |filter|
           args = filter.arguments.argument_values.transform_values(&:value)
+          next unless args.key?(:attribute)
+
           name = args[:attribute].underscore.to_sym
           attribute = field.resource.attributes.find { |attr| attr.name == name }
           next if attribute.nil?
