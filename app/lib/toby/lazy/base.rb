@@ -7,11 +7,11 @@ module Toby
 
       attr_reader :attribute, :id, :context
 
-      def_delegators :attribute, :column
+      def_delegators :attribute, :column, :via
 
       def initialize(attribute, context, resource)
         @attribute = attribute
-        @id = resource.public_send(attribute.via)
+        @id = resource.public_send(via)
         @context = context
         state[:pending] << id
       end
