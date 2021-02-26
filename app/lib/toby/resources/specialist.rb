@@ -10,7 +10,7 @@ module Toby
       attribute :bio, Attributes::String
       attribute :country, Attributes::BelongsTo, labeled_by: :name
       attribute :applications, Attributes::HasMany
-      attribute :skills, Attributes::HasMany, through: :specialist_skills
+      attribute :skills, Attributes::HasManyThrough
       attribute :reviews, Attributes::HasMany
     end
   end

@@ -17,7 +17,6 @@ module Toby
       end
 
       field :filters, [Toby::Types::ResourceFilterType], null: false
-
       def filters
         object.class.filters.map do |k, v|
           {name: k, type: v.name.demodulize}
@@ -26,7 +25,7 @@ module Toby
 
       field :readonly, GraphQL::Types::Boolean, null: false
       def readonly
-        object.options[:readonly] || false
+        object.options.fetch(:readonly, false)
       end
 
       definition_methods do
