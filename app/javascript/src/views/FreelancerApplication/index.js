@@ -64,7 +64,7 @@ export default function FreelancerApplication() {
                 <IdealProject specialist={specialist} />
               </Route>
               <Route>
-                <Welcome />
+                <Welcome specialist={specialist} />
               </Route>
             </Switch>
           </AnimatePresence>
