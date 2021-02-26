@@ -33,50 +33,19 @@ const SCHEMA_INTROSPECTION = gql`
       type
       queryNameCollection
       attributes {
-        ... on IdAttribute {
+        name
+        filters {
           name
-          filters {
-            name
-            type
-          }
+          type
         }
         ... on SelectAttribute {
-          name
           options
-          filters {
-            name
-            type
-          }
-        }
-        ... on StringAttribute {
-          name
-          filters {
-            name
-            type
-          }
         }
         ... on BelongsToAttribute {
-          name
           labeledBy
-          filters {
-            name
-            type
-          }
         }
         ... on HasManyAttribute {
-          name
           labeledBy
-          filters {
-            name
-            type
-          }
-        }
-        ... on TextArrayAttribute {
-          name
-          filters {
-            name
-            type
-          }
         }
       }
     }
