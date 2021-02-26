@@ -33,8 +33,8 @@ module Toby
           @query_name_update || "update#{model_s.camelize}"
         end
 
-        def query_name_destroy
-          @query_name_destroy || "destroy#{model_s.camelize}"
+        def query_name_delete
+          @query_name_delete || "delete#{model_s.camelize}"
         end
 
         def attribute(name, type, **args)
@@ -121,6 +121,20 @@ module Toby
             graphql_name "Create#{root.model.name}"
             argument :attributes, root.input_type, required: true
             field :resource, root.type, null: true
+          end
+        end
+
+        def delete_mutation
+          @delete_mutation ||= define_delete_mutation
+        end
+
+        def define_delete_mutation
+          root = self
+          Class.new(Toby::Mutations::Delete) do
+            self.resource = root
+            graphql_name "Delete#{root.model.name}"
+            argument :id, GraphQL::Schema::Object::ID, required: true
+            field :success, GraphQL::Types::Boolean, null: true
           end
         end
       end
