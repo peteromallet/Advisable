@@ -24,9 +24,9 @@ import DefaultAvatarIcon from "../components/DefaultAvatarIcon";
 
 export const validationSchema = object().shape({
   avatar: string().nullable(),
-  bio: string().required(),
-  city: string().required(),
-  country: string().required(),
+  bio: string().required("Please provide your short biography"),
+  city: string().required("Please enter your city"),
+  country: string().required("Please enter you country"),
   publicUse: boolean(),
 });
 
