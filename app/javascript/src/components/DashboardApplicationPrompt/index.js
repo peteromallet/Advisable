@@ -63,12 +63,70 @@ const ApplicationSubmitted = ({ updateApplication, updateProfile }) => (
   </>
 );
 
+const InvitedToInterview = () => (
+  <>
+    <Header>Invited To Interview</Header>
+    <Description>
+      Great news! We have reviewed your application and would like to invite you
+      to interview. Please click the link below to schedule your interview at
+      one of our available times.
+    </Description>
+    <Button variant="gradient" suffix={<ArrowRight />}>
+      Schedule Interview
+    </Button>
+  </>
+);
+
+const InterviewScheduled = () => (
+  <>
+    <Header>Interview Scheduled</Header>
+    <Description>
+      Your interview with Annie is scheduled for 10:00am on Friday, 5th
+      February. You should have also received a calendar invite by now.
+    </Description>
+    <Button variant="subtle">Reschedule</Button>
+  </>
+);
+
+const InterviewCompleted = () => (
+  <>
+    <Header>Interview Completed</Header>
+    <Description>
+      Thank you for joining your call with Annie. We are reviewing your
+      application and you should here from us within the next 2 working days.
+    </Description>
+  </>
+);
+
+const MoreDetailsRequired = () => (
+  <>
+    <Header>More Details Required</Header>
+    <Description>
+      We have reviewed your application and would like to get some more details
+      on some of your past work. Please add at least 3 projects to your profile.
+      Once you have added and verified at least 3 projects we will revisit your
+      application.{" "}
+    </Description>
+    <Button variant="gradient" suffix={<ArrowRight />}>
+      UpdateProfile
+    </Button>
+  </>
+);
+
 const promptContentFromStage = (stage) => {
   switch (stage) {
     case "Started":
       return AccountCreated;
     case "Application Submitted":
       return ApplicationSubmitted;
+    case "Invited To Interview":
+      return InvitedToInterview;
+    case "Interview Scheduled":
+      return InterviewScheduled;
+    case "Interview Completed":
+      return InterviewCompleted;
+    case "More Details Required":
+      return MoreDetailsRequired;
     default:
       return null;
   }
