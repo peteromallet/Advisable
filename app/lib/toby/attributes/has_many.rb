@@ -6,7 +6,7 @@ module Toby
       filter :includes, Filters::Includes
       # filter :not_empty, Filters::CheckNotNil
 
-      extension_field :labelled_by, GraphQL::Types::String
+      extension_field :labeled_by, GraphQL::Types::String
 
       # optional for when we don't follow the class == resource convention
       def from

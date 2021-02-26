@@ -8,7 +8,7 @@ export default {
     const schemaData = useSchema();
     const value = record[field.name];
     const resource = resourceByType(schemaData, value.__typename);
-    const attribute = resourceAttribute(resource, field.labelledBy || "id");
+    const attribute = resourceAttribute(resource, field.labeledBy || "id");
     return <Attribute record={value} attribute={attribute} />;
   },
   input: function BelongsToInput() {

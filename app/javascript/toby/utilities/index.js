@@ -112,17 +112,17 @@ function selectionForField(schemaData, resourceData, fieldName) {
     id: true,
   };
 
-  if (attribute.labelledBy) {
+  if (attribute.labeledBy) {
     let fieldResource;
     if (attribute.__typename === "HasManyAttribute") {
       fieldResource = resourceByType(schemaData, field.type.ofType.ofType.name);
     } else {
       fieldResource = resourceByType(schemaData, field.type.name);
     }
-    query[attribute.labelledBy] = selectionForField(
+    query[attribute.labeledBy] = selectionForField(
       schemaData,
       fieldResource,
-      attribute.labelledBy,
+      attribute.labeledBy,
     );
   }
 
