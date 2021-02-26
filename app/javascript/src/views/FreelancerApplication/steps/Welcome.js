@@ -44,7 +44,7 @@ export default function Welcome({ specialist }) {
 
     if (prevIsValid && !curIsValid) return step.path;
     return acc;
-  });
+  }, null);
 
   if (actualStepPathname)
     return (
@@ -52,7 +52,6 @@ export default function Welcome({ specialist }) {
         <Redirect to={actualStepPathname} />
       </motion.div>
     );
-
 
   return (
     <AnimatedCard>
