@@ -16,7 +16,7 @@ module Toby
           attribute.write(model, value)
         end
 
-        model.save
+        model.save!
 
         {resource: model}
       end
