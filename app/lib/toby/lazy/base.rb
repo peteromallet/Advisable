@@ -3,13 +3,16 @@
 module Toby
   module Lazy
     class Base
-      attr_reader :state, :model, :id, :column
+      extend Forwardable
 
-      def initialize(context, model, id, column: :id)
-        @state = context[:"lazy_load_#{model}"] ||= {pending: Set.new, loaded: {}}
-        @model = "::#{model}".constantize
+      attr_reader :attribute, :id, :context
+
+      def_delegators :attribute, :column
+
+      def initialize(attribute, context, id)
+        @attribute = attribute
         @id = id
-        @column = column
+        @context = context
         state[:pending] << id
       end
 
@@ -18,6 +21,14 @@ module Toby
       end
 
       private
+
+      def model
+        @model ||= "::#{attribute.model}".constantize
+      end
+
+      def state
+        context[:"lazy_load_#{attribute}"] ||= {pending: Set.new, loaded: {}}
+      end
 
       def records
         load_records unless state[:loaded].key?(id)
