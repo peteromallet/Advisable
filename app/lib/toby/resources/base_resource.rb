@@ -65,22 +65,6 @@ module Toby
           Toby::Types.const_set(name.demodulize, type_class)
         end
 
-        def filter_type
-          @filter_type ||= define_filter_type
-        end
-
-        def define_filter_type
-          root = self
-          Class.new(GraphQL::Schema::InputObject) do
-            graphql_name("#{root.model.name}Filter")
-            root.attributes.each do |attribute|
-              next unless attribute.class.filter_type
-
-              argument attribute.name, attribute.class.filter_type, required: false
-            end
-          end
-        end
-
         def input_type
           @input_type ||= define_input_type
         end
@@ -90,16 +74,14 @@ module Toby
           Class.new(GraphQL::Schema::InputObject) do
             graphql_name("#{root.model.name}Attributes")
             root.attributes.each do |attribute|
+              next if attribute.options[:readonly]
+
               argument attribute.name, attribute.input_type, required: false
             end
           end
         end
 
         def update_mutation
-          @update_mutation ||= define_update_mutation
-        end
-
-        def define_update_mutation
           root = self
           Class.new(Toby::Mutations::Update) do
             self.resource = root
@@ -111,10 +93,6 @@ module Toby
         end
 
         def create_mutation
-          @create_mutation ||= define_create_mutation
-        end
-
-        def define_create_mutation
           root = self
           Class.new(Toby::Mutations::Create) do
             self.resource = root
@@ -125,10 +103,6 @@ module Toby
         end
 
         def delete_mutation
-          @delete_mutation ||= define_delete_mutation
-        end
-
-        def define_delete_mutation
           root = self
           Class.new(Toby::Mutations::Delete) do
             self.resource = root
