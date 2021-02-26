@@ -1,10 +1,16 @@
 import React from "react";
-import { Text } from "@advisable/donut";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useResources } from "../../utilities";
-import { StyledRow, StyledCell } from "../../styles";
+import {
+  StyledHeader,
+  StyledHeaderRow,
+  StyledHeaderCell,
+  StyledRow,
+  StyledCell,
+} from "../../styles";
 import useFilters from "./useFilters";
 import Filters from "./Filters";
+import Navigation from "../../components/Navigation";
 import { Attribute } from "../../attributes";
 
 export default function Resource() {
@@ -27,14 +33,15 @@ export default function Resource() {
 
   return (
     <>
-      <Filters {...filterState} refetch={refetch} />
-      <StyledRow>
-        {resource.attributes.map((attr) => (
-          <StyledCell key={attr.name}>
-            <Text fontWeight="500">{attr.name}</Text>
-          </StyledCell>
-        ))}
-      </StyledRow>
+      <StyledHeader>
+        <Navigation />
+        <Filters {...filterState} refetch={refetch} />
+        <StyledHeaderRow>
+          {resource.attributes.map((attr) => (
+            <StyledHeaderCell key={attr.name}>{attr.name}</StyledHeaderCell>
+          ))}
+        </StyledHeaderRow>
+      </StyledHeader>
       {edges.map(({ node }) => (
         <StyledRow key={node.id}>
           {resource.attributes.map((attr) => (
