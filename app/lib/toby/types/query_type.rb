@@ -21,13 +21,13 @@ module Toby
           resource.all(args)
         end
 
-        # field resource.show_query_name, resource.type, null: true do
-        #   argument :id, ID, required: true
-        # end
+        field resource.query_name_item, resource.type, null: true do
+          argument :id, ID, required: true
+        end
 
-        # define_method resource.show_query_name do |args|
-        #   resource.show(args)
-        # end
+        define_method resource.query_name_item do |args|
+          resource.model.find(args[:id])
+        end
       end
     end
   end
