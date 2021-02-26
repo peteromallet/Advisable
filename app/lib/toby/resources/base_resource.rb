@@ -109,100 +109,21 @@ module Toby
             field :resource, root.type, null: true
           end
         end
+
+        def create_mutation
+          @create_mutation ||= define_create_mutation
+        end
+
+        def define_create_mutation
+          root = self
+          Class.new(Toby::Mutations::Create) do
+            self.resource = root
+            graphql_name "Create#{root.model.name}"
+            argument :attributes, root.input_type, required: true
+            field :resource, root.type, null: true
+          end
+        end
       end
     end
   end
 end
-
-#       def column(attribute, type, **args)
-#         @columns ||= [Advisatable::Columns::Id.new(:id)]
-#         @columns << type.new(attribute, **args)
-#       end
-
-#       def get_column(attribute)
-#         @columns.find { |c| c.attribute == attribute }
-#       end
-
-#       def show_query_name
-#         model.to_s.camelize(:lower)
-#       end
-
-#       def update_mutation_name
-#         "update_#{model}".camelize(:lower)
-#       end
-
-#       def create_mutation_name
-#         "create_#{model}".camelize(:lower)
-#       end
-
-#       def destroy_mutation_name
-#         "destroy_#{model}".camelize(:lower)
-#       end
-
-#       def input_type
-#         @input_type ||= define_input_type
-#       end
-
-#       def filter_type
-#         @filter_type ||= define_filter_type
-#       end
-
-#       def update_mutation
-#         @update_mutation ||= define_update_mutation
-#       end
-
-#       def create_mutation
-#         @create_mutation ||= define_create_mutation
-#       end
-
-#       def show(id:)
-#         model.find(id)
-#       end
-
-#       def define_input_type
-#         root = self
-#         Class.new(GraphQL::Schema::InputObject) do
-#           graphql_name("#{root.model.name}Attributes")
-#           root.columns.each do |column|
-#             next if column.readonly
-
-#             argument column.attribute, column.input_type, required: false
-#           end
-#         end
-#       end
-
-#       def define_filter_type
-#         root = self
-#         Class.new(GraphQL::Schema::InputObject) do
-#           graphql_name("#{root.model.name}Filter")
-#           root.columns.each do |column|
-#             next if column.class.filter_type.blank?
-
-#             argument column.attribute, column.class.filter_type, required: false
-#           end
-#         end
-#       end
-
-#       def define_update_mutation
-#         root = self
-#         Class.new(Advisatable::Mutations::Update) do
-#           self.resource = root
-#           graphql_name "Update#{root.model.name}"
-#           argument :id, GraphQL::Schema::Object::ID, required: true
-#           argument :attributes, root.input_type, required: true
-#           field :resource, root.type, null: true
-#         end
-#       end
-
-#       def define_create_mutation
-#         root = self
-#         Class.new(Advisatable::Mutations::Create) do
-#           self.resource = root
-#           graphql_name "Create#{root.model.name}"
-#           argument :attributes, root.input_type, required: true
-#           field :resource, root.type, null: true
-#         end
-#       end
-#     end
-#   end
-# end
