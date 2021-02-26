@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Redirect } from "react-router-dom";
 import { Box, Text, Link, Button } from "@advisable/donut";
+import { useNotifications } from "src/components/Notifications";
 import image from "../images/welcome-illustration.png";
 import AnimatedCard from "../components/AnimatedCard";
 import { validationSchema as introductionValidationSchema } from "./Introduction";
@@ -34,6 +35,8 @@ const stepsMeta = [
 ];
 
 export default function Welcome({ specialist }) {
+  const { notify } = useNotifications();
+
   // Check if some of the steps were previously filled and redirect there
   // to continue the flow
   const actualStepPathname = stepsMeta.reduce((acc, step, index, array) => {
@@ -53,6 +56,18 @@ export default function Welcome({ specialist }) {
       </motion.div>
     );
 
+  // Redirect to dashboard if all steps were filled previously
+  const isCompleted = stepsMeta.every((step) =>
+    step.validationSchema.isValidSync(specialist),
+  );
+  if (isCompleted) {
+    notify("You already applied");
+    return (
+      <motion.div exit>
+        <Redirect to="/" />
+      </motion.div>
+    );
+  }
 
   return (
     <AnimatedCard>
