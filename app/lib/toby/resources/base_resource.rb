@@ -40,7 +40,7 @@ module Toby
         def attribute(name, type, **args)
           @attributes ||= [Attributes::Id.new(:id)]
 
-          args[:parent] = self.name unless args.key?(:parent)
+          args[:parent] = self.name.demodulize unless args.key?(:parent)
           @attributes << type.new(name, **args)
         end
 
