@@ -57,7 +57,7 @@ const SCHEMA_INTROSPECTION = gql`
         }
         ... on BelongsToAttribute {
           name
-          labelledBy
+          labeledBy
           filters {
             name
             type
@@ -65,7 +65,7 @@ const SCHEMA_INTROSPECTION = gql`
         }
         ... on HasManyAttribute {
           name
-          labelledBy
+          labeledBy
           filters {
             name
             type

@@ -9,7 +9,7 @@ export default {
 
     const items = record[field.name].map((r) => {
       const resource = resourceByType(schemaData, r.__typename);
-      const attribute = resourceAttribute(resource, field.labelledBy || "id");
+      const attribute = resourceAttribute(resource, field.labeledBy || "id");
       return <Attribute key={r.id} record={r} attribute={attribute} />;
     });
 
