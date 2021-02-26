@@ -9,17 +9,22 @@ module Toby
       extension_field :labeled_by, GraphQL::Types::String
 
       # optional for when we don't follow the class == resource convention
-      def from
-        options.fetch(:from) { name.to_s.singularize.capitalize }
+      def model
+        options.fetch(:model) { name.to_s.singularize.capitalize }
       end
 
       # optional for when we don't follow the parent_id convention
+      def column
+        options.fetch(:column) { :"#{parent.downcase}_id" }
+      end
+
+      # optional for when we don't follow the id convention
       def via
-        options.fetch(:via) { :"#{parent.downcase}_id" }
+        options.fetch(:column, :id)
       end
 
       def type
-        ["Toby::Types::#{from}"]
+        ["Toby::Types::#{model}"]
       end
 
       def input_type
@@ -27,7 +32,7 @@ module Toby
       end
 
       def lazy_read(resource, context)
-        Toby::Lazy::Base.new(context, from, resource.id, column: via)
+        Toby::Lazy::Base.new(self, context, resource.public_send(via))
       end
     end
   end

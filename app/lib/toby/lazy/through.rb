@@ -1,27 +1,14 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ParameterLists
 module Toby
   module Lazy
     class Through < Base
-      attr_reader :through, :through_column, :source_id_column
-
-      def initialize(context, model, through, id, column:, through_column:, source_id_column:)
-        super(context, model, id, column: column)
-        @through = ActiveSupport::Inflector.classify(through).constantize
-        @through_column = through_column
-        @source_id_column = source_id_column
-      end
-
-      def resolve
-        records
-      end
+      def_delegators :attribute, :through_column, :source_id_column
 
       private
 
-      def records
-        load_records unless state[:loaded].key?(id)
-        state[:loaded][id] || []
+      def through
+        @through ||= ActiveSupport::Inflector.classify(attribute.through).constantize
       end
 
       def load_records
@@ -35,4 +22,3 @@ module Toby
     end
   end
 end
-# rubocop:enable Metrics/ParameterLists
