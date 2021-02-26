@@ -57,7 +57,11 @@ module Toby
               field attribute.name, attribute.type, null: true
               # Forward all of the getters for each attribute to the attribute instance.
               define_method(attribute.name) do
-                attribute.lazy_read(object, context) || attribute.read(object)
+                if attribute.respond_to?(:lazy_read_class)
+                  attribute.lazy_read_class.new(attribute, context, object)
+                else
+                  attribute.read(object)
+                end
               end
             end
           end

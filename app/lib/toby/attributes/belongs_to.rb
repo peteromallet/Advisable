@@ -36,8 +36,8 @@ module Toby
         resource.public_send("#{column}=", value)
       end
 
-      def lazy_read(resource, context)
-        Toby::Lazy::Single.new(self, context, resource.public_send(via))
+      def lazy_read_class
+        Toby::Lazy::Single
       end
     end
   end
