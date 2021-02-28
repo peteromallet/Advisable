@@ -5,16 +5,6 @@ dayjs.extend(relativeTime);
 
 export const lowerDashed = (str) => str.replace(/\s+/g, "-").toLowerCase();
 
-export const getUrlParams = (search) => {
-  const query = new URLSearchParams(search);
-  return Object.fromEntries(query.entries());
-};
-
-export const omit = (obj, ...omit) =>
-  Object.fromEntries(
-    Object.entries(obj).filter(([key]) => !omit.includes(key)),
-  );
-
 export function timestamp(date) {
   const asLuxon = DateTime.fromJSDate(date);
   return asLuxon.toFormat("dd LLL");
