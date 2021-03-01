@@ -29,8 +29,6 @@ gem "slim"
 gem "bootsnap", require: false
 
 gem "omniauth"
-# This gem is deprecated and poorly written. We should fork it.
-gem "omniauth-linkedin-oauth2", github: "decioferreira/omniauth-linkedin-oauth2", branch: "master"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 
