@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/decioferreira/omniauth-linkedin-oauth2.git
-  revision: fe10f041ab98b5032f79883c89ad32143fa7404d
-  branch: master
-  specs:
-    omniauth-linkedin-oauth2 (1.0.0)
-      omniauth-oauth2
-
-GIT
   remote: https://github.com/tcocca/acts_as_follower.git
   revision: c5ac7b9601c4af01eb4d9112330b27be4d694ecc
   branch: master
@@ -584,7 +576,6 @@ DEPENDENCIES
   niceql
   omniauth
   omniauth-google-oauth2
-  omniauth-linkedin-oauth2!
   omniauth-rails_csrf_protection
   parser
   pg (>= 0.18, < 2.0)
