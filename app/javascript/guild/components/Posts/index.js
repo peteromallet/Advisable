@@ -23,12 +23,13 @@ const Posts = () => {
     feedStore.setState({ postTypeFilter });
   };
   const clearFilters = () => setPostTypeFilter(defaultFilter);
+  const isDefaultView = postTypeFilter === defaultFilter;
 
   const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
     fetchPolicy: historyPopped ? "cache-first" : "network-only",
     nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
     notifyOnNetworkStatusChange: true,
-    variables: { type: postTypeFilter },
+    variables: { type: postTypeFilter, withPopularPosts: isDefaultView },
     errorPolicy: "none",
     onError(err) {
       if (err?.graphQLErrors?.[0]?.extensions?.type === "NOT_AUTHENTICATED") {
@@ -43,7 +44,6 @@ const Posts = () => {
 
   const posts = data?.guildPosts.edges.map((e) => e.node) || [];
   const [firstResult, ...rest] = posts;
-  const isDefaultView = postTypeFilter === defaultFilter;
   const latestPosts = isDefaultView && firstResult?.pinned ? rest : posts;
 
   const onReachedBottom = () => {

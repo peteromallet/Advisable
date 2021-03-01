@@ -103,7 +103,7 @@ RSpec.describe Types::Guild::PostInterface do
     describe "when filtered by a guild topic" do
       subject(:filtered_by_topic) do
         resp = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
-        resp.dig("data", *response_keys)
+        resp.dig("data", "guildTopicPosts", "nodes")
       end
 
       let(:guild_topics) { create_list(:guild_topic, 2) }
@@ -111,7 +111,7 @@ RSpec.describe Types::Guild::PostInterface do
       let(:query) do
         <<-GRAPHQL
           {
-            guildPosts(first: 5, topicId: "#{guild_topics.first.slug}") {
+            guildTopicPosts(first: 5, topicId: "#{guild_topics.first.slug}") {
               nodes {
                 guildTopics {
                   slug
@@ -134,23 +134,6 @@ RSpec.describe Types::Guild::PostInterface do
         expect(topic_results[0]).to include({
                                               "slug" => guild_topics.first.slug
                                             })
-      end
-
-      it "can filter by the guild topic id" do
-        query = <<-GRAPHQL
-          {
-            guildPosts(first: 5, topicId: "#{guild_topics.first.id}") {
-              nodes {
-                guildTopics {
-                  id
-                }
-              }
-            }
-          }
-        GRAPHQL
-        resp = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
-        topic_results = resp.dig("data", *response_keys)[0]["guildTopics"]
-        expect(topic_results[0]).to include({"id" => guild_topics.first.id})
       end
     end
   end
