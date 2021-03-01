@@ -5,6 +5,9 @@ export default function OneOf({ onChange }) {
 
   const handleChange = (e) => {
     setValue(e.target.value);
+  };
+
+  const handleBlur = (e) => {
     const values = e.target.value
       .split(",")
       .map((v) => v.trim())
@@ -12,5 +15,12 @@ export default function OneOf({ onChange }) {
     onChange(values);
   };
 
-  return <input value={value} onChange={handleChange} type="text" />;
+  return (
+    <input
+      value={value}
+      onBlur={handleBlur}
+      onChange={handleChange}
+      type="text"
+    />
+  );
 }

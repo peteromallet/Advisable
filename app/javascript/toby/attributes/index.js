@@ -12,11 +12,18 @@ const ATTRIBUTES = {
   StringAttribute,
   BelongsToAttribute,
   HasManyAttribute,
+  HasManyThroughAttribute: HasManyAttribute,
   SelectAttribute,
 };
 
 export function Attribute({ record, attribute }) {
   const handler = ATTRIBUTES[attribute.__typename];
+
+  if (!handler) {
+    console.error("No attribute handler found", attribute);
+    return null;
+  }
+
   return <handler.render record={record} field={attribute} />;
 }
 

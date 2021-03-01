@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useResourceData } from "../../utilities";
-import FiltersRenderer from "../../filters";
+import Filter from "../../filters";
 
 export default function Filters({
   refetch,
@@ -49,13 +49,12 @@ export default function Filters({
   }
 
   function renderFilter(filter) {
-    const field = fieldsWithFilters.find((f) => f.name === filter.attribute);
-    const fieldFilter = field.filters.find((f) => f.name === filter.type);
-    const Component = FiltersRenderer[fieldFilter.type];
-    if (!Component) return null;
-
     return (
-      <Component filter={filter} onChange={handleChange(filter.id, "value")} />
+      <Filter
+        filter={filter}
+        resource={resource}
+        onChange={handleChange(filter.id, "value")}
+      />
     );
   }
 
