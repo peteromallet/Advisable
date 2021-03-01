@@ -1,9 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { ArrowRight } from "@styled-icons/feather";
 import { Text, Button } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
-import { ArrowRight } from "@styled-icons/feather";
 import PromptCard from "./PromptCard";
-import { useHistory } from "react-router-dom";
+import ProgressLine from "./ProgressLine";
 
 const Header = (props) => (
   <Text
@@ -116,17 +117,17 @@ const MoreDetailsRequired = () => (
 const promptContentFromStage = (stage) => {
   switch (stage) {
     case "Started":
-      return AccountCreated;
+      return { component: AccountCreated, progress: 0 };
     case "Application Submitted":
-      return ApplicationSubmitted;
+      return { component: ApplicationSubmitted, progress: 1 };
     case "Invited To Interview":
-      return InvitedToInterview;
+      return { component: InvitedToInterview, progress: 2 };
     case "Interview Scheduled":
-      return InterviewScheduled;
+      return { component: InterviewScheduled, progress: 3 };
     case "Interview Completed":
-      return InterviewCompleted;
+      return { component: InterviewCompleted, progress: 4 };
     case "More Details Required":
-      return MoreDetailsRequired;
+      return { component: MoreDetailsRequired, progress: 5 };
     default:
       return null;
   }
@@ -143,11 +144,13 @@ export default function DashboardApplicationPrompt() {
     updateProfile: () => history.push("/profile"),
   };
 
-  const PromptContextComponent = promptContentFromStage(applicationStage);
+  const context = promptContentFromStage(applicationStage);
+  if (!context) return null;
 
   return (
     <PromptCard mb={10}>
-      <PromptContextComponent {...actions} />
+      <ProgressLine progress={context.progress} />
+      <context.component {...actions} />
     </PromptCard>
   );
 }
