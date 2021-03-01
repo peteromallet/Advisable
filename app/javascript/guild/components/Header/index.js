@@ -94,7 +94,6 @@ const Header = () => {
         </Box>
       </StyledHeader>
       <Box height="58px" />
-      {/* <Mask isOpen={maskOpen} toggler={safeToggleMask} /> */}
     </>
   );
 };
