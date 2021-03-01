@@ -3,23 +3,32 @@ import { theme } from "@advisable/donut";
 import { rgba } from "polished";
 import styled, { createGlobalStyle } from "styled-components";
 
-const HEADER_HEIGHT = 105;
-
 export const BaseStyles = createGlobalStyle`
   body {
     background: white !important;
-    padding-top: ${HEADER_HEIGHT}px;
-    overscroll-behavior-y: none;
   }
 `;
 
+export const StyledLayout = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StyledLayoutBody = styled.div`
+  height: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow-y: scroll;
+  overscroll-behavior-y: none;
+`;
+
 export const StyledHeader = styled.div`
-  top: 0;
-  left: 0;
+  z-index: 10;
+  flex-grow: 0;
+  flex-shrink: 0;
   min-width: 100vw;
-  position: fixed;
   background: white;
-  height: ${HEADER_HEIGHT}px;
   box-shadow: 0 2px 4px ${rgba(theme.colors.neutral900, 0.16)},
     0 1px 2px ${rgba(theme.colors.neutral900, 0.08)};
 `;
@@ -33,6 +42,7 @@ export const StyledHeaderCell = styled.div`
   width: 200px;
   height: 36px;
   display: flex;
+  flex-shrink: 0;
   padding: 0 10px;
   font-size: 15px;
   overflow: hidden;
