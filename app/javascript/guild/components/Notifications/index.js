@@ -64,7 +64,7 @@ const Notification = ({
             letterSpacing="-0.01em"
             color="darkGrey"
           >
-            {relativeDate(createdAt)} ago
+            {relativeDate(createdAt)}
           </Text>
         </Box>
       </NotificationItem>
