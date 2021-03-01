@@ -6,6 +6,7 @@ export const UNFOLLOW_GUILD_TOPIC = gql`
       guildTopic {
         id
         name
+        slug
       }
     }
   }
@@ -17,6 +18,7 @@ export const FOLLOW_GUILD_TOPIC = gql`
       guildTopic {
         id
         name
+        slug
       }
     }
   }
