@@ -86,8 +86,7 @@ const fontWeights = {
 };
 
 const fonts = {
-  body: "TTHoves, poppins, sans-serif",
-  heading: "TTNormsPro, poppins, sans-serif",
+  body: "TTHoves, sans-serif",
 };
 
 // Line heights

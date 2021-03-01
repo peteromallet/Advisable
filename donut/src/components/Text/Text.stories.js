@@ -1,12 +1,10 @@
 import React from "react";
-import { Info, Check, AlertTriangle } from "@styled-icons/feather";
 import { withKnobs, text, select } from "@storybook/addon-knobs";
 import Text from "./";
 import Card from "../Card";
-import Box from "../Box";
 
 export default {
-  title: 'Content/Text',
+  title: "Content/Text",
   decorators: [withKnobs],
 };
 

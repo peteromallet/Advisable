@@ -39,9 +39,6 @@ export const Text = styled.div`
   ${(p) => p.$truncate && TextTruncated};
 `;
 
-Text.defaultProps = {
-  color: "neutral900",
-  fontSize: "md",
-};
+Text.defaultProps = {};
 
 export default Text;

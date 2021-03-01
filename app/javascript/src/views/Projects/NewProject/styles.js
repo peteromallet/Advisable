@@ -87,6 +87,7 @@ export const StyledNewProject = styled(StyledCard)`
   flex-direction: column;
   justify-content: center;
   letter-spacing: -0.01em;
+  border-radius: 12px;
   color: ${theme.colors.neutral800};
   box-shadow: ${theme.shadows.m};
   transition: box-shadow 200ms;

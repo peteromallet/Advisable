@@ -12,7 +12,7 @@ export const StyledMenu = styled(ReakitMenu)`
   position: absolute;
   white-space: normal;
   border-radius: 12px;
-  font-family: poppins, sans-serif;
+  font-family: TTHoves, sans-serif;
   background: ${theme.colors.neutral800};
   width: ${(props) => props.width || "250px"};
   box-shadow: 0px 4px 40px ${rgba(theme.colors.neutral800, 0.2)};
@@ -32,7 +32,7 @@ export const StyledMenuItem = styled(ReakitMenuItem)`
   padding: 6px 12px;
   border-radius: 8px;
   background: transparent;
-  font-family: poppins, sans-serif;
+  font-family: TTHoves, sans-serif;
 
   &:focus {
     background: ${theme.colors.neutral600};
