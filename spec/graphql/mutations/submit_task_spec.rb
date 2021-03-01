@@ -25,7 +25,10 @@ RSpec.describe Mutations::SubmitTask do
 
   before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
+    StripeMock.start
   end
+
+  after { StripeMock.stop }
 
   it "sets the stage to 'Submitted'" do
     response = AdvisableSchema.execute(query, context: context)
