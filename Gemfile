@@ -29,6 +29,7 @@ gem "slim"
 gem "bootsnap", require: false
 
 gem "omniauth"
+# This gem is deprecated and poorly written. We should fork it.
 gem "omniauth-linkedin-oauth2", github: "decioferreira/omniauth-linkedin-oauth2", branch: "master"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
@@ -45,13 +46,14 @@ gem "nanoid"
 
 gem "aws-sdk-s3", "~> 1"
 gem "image_processing"
-gem "faker", git: "https://github.com/faker-ruby/faker.git", branch: "master"
+gem "faker"
 gem "twilio-ruby"
 gem "graphql_playground-rails"
 
 # Guild
 gem "jsonb_accessor", "~> 1.1.0"
 gem "acts-as-taggable-on"
+# This gem is deprecated. We should fork it or replace it with our own logic.
 gem "acts_as_follower", github: "tcocca/acts_as_follower", branch: "master"
 gem "email_reply_parser"
 
