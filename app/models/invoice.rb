@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Invoice < ApplicationRecord
+  DAYS_DUE = 30
+
   enum status: {draft: 0, open: 1, paid: 2, paid_out: 3, void: 4}
 
   belongs_to :company
@@ -8,6 +10,18 @@ class Invoice < ApplicationRecord
   delegate :specialist, to: :application
 
   has_many :line_items, class_name: "InvoiceLineItem", dependent: :destroy
+
+  def create_in_stripe!
+    return if stripe_invoice_id.present?
+
+    response = Stripe::Invoice.create({
+      auto_advance: false,
+      customer: company.stripe_customer_id,
+      collection_method: "send_invoice",
+      days_until_due: DAYS_DUE
+    })
+    update!(stripe_invoice_id: response.id)
+  end
 end
 
 # == Schema Information

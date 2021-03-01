@@ -58,10 +58,9 @@ class Task < ApplicationRecord
     invoice = application.invoices.draft.first_or_create! do |i|
       i.company = application.project.user.company # Not a fan of this 😅
     end
-    invoice.line_items.create!(task: self, name: name)
-    # These invoice and invoice_line_item records should also be created inside of Stripe.
-    # Eventually we can move away from this and only create them inside of stripe at the moment they are approved by the freelancer.
-    # These invoices should not be automatically charged against the client by setting the autoadvance to false.
+    line_item = invoice.line_items.create!(task: self, name: name)
+    line_item.create_in_stripe!
+    invoice.create_in_stripe!
   end
 end
 
