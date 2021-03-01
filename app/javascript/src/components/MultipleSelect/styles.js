@@ -24,7 +24,7 @@ export const StyledMultipleSelect = styled(StyledInput).attrs(() => ({
     line-height: 1;
     font-weight: 500;
     background: transparent;
-    font-family: poppins, sans-serif;
+    font-family: TTHoves, sans-serif;
 
     &::placeholder {
       color: ${theme.colors.neutral600};

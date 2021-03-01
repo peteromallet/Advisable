@@ -43,14 +43,14 @@ const Projects = () => {
       <AccountConfirmationPrompt />
 
       <Text
-        mb="l"
+        mb={5}
         as="h2"
-        fontSize="28px"
+        fontSize="4xl"
         color="neutral900"
         fontWeight="medium"
         letterSpacing="-0.04rem"
       >
-        Projects
+        Your Projects
       </Text>
 
       {!loading && (

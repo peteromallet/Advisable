@@ -5,14 +5,15 @@ function NameLocation({ specialist }) {
   return (
     <Box>
       <Text
-        fontSize={{ _: "4xl", l: "5xl" }}
+        fontSize="4xl"
         fontWeight="medium"
+        letterSpacing="-0.03rem"
         color="neutral900"
-        mb="xxs"
+        mb={0.5}
       >
         {specialist.name}
       </Text>
-      <Text color="neutral600" fontSize="l" mb="xs" lineHeight="140%">
+      <Text color="neutral600" fontSize="l" mb="xs" lineHeight="1.4">
         {specialist.location}
       </Text>
     </Box>
