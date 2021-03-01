@@ -1,10 +1,8 @@
 import * as React from "react";
-import { Box, Card, Button } from "@advisable/donut";
+import { Box, Card, Button, Text } from "@advisable/donut";
 import { useApolloClient } from "@apollo/client";
 import { matchPath } from "react-router";
-import Text from "components/Text";
 import Modal from "components/Modal";
-import Heading from "components/Heading";
 import NewTask from "components/NewTask";
 import TaskList from "components/TaskList";
 import TaskDrawer from "components/TaskDrawer";
@@ -89,12 +87,18 @@ const Tasks = ({ application, match, location, history }) => {
   };
 
   return (
-    <Card>
-      <Box padding="l">
-        <Box paddingBottom="s">
-          <Heading level={3}>Project Tasks</Heading>
-        </Box>
-        <Text size="s">
+    <Card borderRadius="12px">
+      <Box padding={8}>
+        <Text
+          as="h2"
+          fontSize="4xl"
+          marginBottom={2}
+          fontWeight="medium"
+          letterSpacing="-0.03rem"
+        >
+          Project tasks
+        </Text>
+        <Text color="neutral800" lineHeight="1.2">
           Tasks allow you and {application.project.user.companyName} to easily
           define and track the work that you would be doing throughout this
           project. Add at least one task that you would suggest for this
@@ -117,16 +121,14 @@ const Tasks = ({ application, match, location, history }) => {
       />
       <Modal isOpen={confirmModal} onClose={() => setConfirmModal(false)}>
         <Box padding="l">
-          <Box paddingBottom="s">
-            <Heading level={3}>You haven&apos;t proposed a trial task</Heading>
-          </Box>
-          <Box paddingBottom="m">
-            <Text size="s">
-              Proposing a guaranteed trial task increases your chance of closing
-              a client. To set one of your tasks as a trial task, click into the
-              task and click &quot;Set as trial task&quot;
-            </Text>
-          </Box>
+          <Text fontSize="2xl" fontWeight="medium" as="h3" marginBottom={2}>
+            You haven&apos;t proposed a trial task
+          </Text>
+          <Text marginBottom={6} lineHeight="1.2">
+            Proposing a guaranteed trial task increases your chance of closing a
+            client. To set one of your tasks as a trial task, click into the
+            task and click &quot;Set as trial task&quot;
+          </Text>
           <Button type="button" onClick={nextStep} mr="xs">
             Continue without trial task
           </Button>
