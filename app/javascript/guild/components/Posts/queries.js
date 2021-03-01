@@ -3,8 +3,12 @@ import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
 
 export const GUILD_POSTS_QUERY = gql`
   ${GuildPostFields}
-  query guildPosts($cursor: String, $type: String) {
-    guildPopularPosts {
+  query guildPosts(
+    $cursor: String
+    $type: String
+    $withPopularPosts: Boolean = true
+  ) {
+    guildPopularPosts @include(if: $withPopularPosts) {
       ...GuildPostFields
       ... on PostInterface {
         author {
