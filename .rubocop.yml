@@ -7,6 +7,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - "db/schema.rb"
+    - "db/migrate/20210129142307_init_schema.rb"
     - "Gemfile"
     - "bin/*"
 
