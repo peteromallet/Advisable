@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function StringContains({ filter, onChange }) {
+  const [value, setValue] = useState(filter.value[0] || "");
+
   const handleChange = (e) => {
-    onChange([e.target.value]);
+    setValue(e.target.value);
   };
-  return <input value={filter.value[0]} onChange={handleChange} type="text" />;
+
+  const handleBlur = () => {
+    onChange([value]);
+  };
+
+  return (
+    <input
+      value={value}
+      onBlur={handleBlur}
+      onChange={handleChange}
+      type="text"
+    />
+  );
 }
