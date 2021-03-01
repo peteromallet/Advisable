@@ -3,34 +3,33 @@
 module OmniAuth
   module Strategies
     class LinkedIn < OmniAuth::Strategies::OAuth2
-      option :name, 'linkedin'
+      FIELDS_MAPPING = {"first-name" => "firstName", "last-name" => "lastName", "picture-url" => "profilePicture(displayImage~:playableStreams)"}.freeze
+
+      option :name, "linkedin"
 
       option :client_options, {
-        site: 'https://api.linkedin.com',
-        authorize_url: 'https://www.linkedin.com/oauth/v2/authorization?response_type=code',
-        token_url: 'https://www.linkedin.com/oauth/v2/accessToken'
+        site: "https://api.linkedin.com",
+        authorize_url: "https://www.linkedin.com/oauth/v2/authorization?response_type=code",
+        token_url: "https://www.linkedin.com/oauth/v2/accessToken"
       }
 
-      option :scope, 'r_liteprofile r_emailaddress'
-      option :fields, %w[id first-name last-name picture-url email-address]
+      option :scope, "r_liteprofile"
+      option :fields, %w[id first-name last-name picture-url]
 
       uid do
-        raw_info['id']
+        raw_info["id"]
       end
 
       info do
         {
-          email: email_address,
-          first_name: localized_field('firstName'),
-          last_name: localized_field('lastName'),
+          first_name: localized_field("firstName"),
+          last_name: localized_field("lastName"),
           picture_url: picture_url
         }
       end
 
       extra do
-        {
-          'raw_info' => raw_info
-        }
+        {"raw_info" => raw_info}
       end
 
       def callback_url
@@ -53,74 +52,29 @@ module OmniAuth
 
       private
 
-      def email_address
-        return unless options.fields.include?("email-address")
-
-        @email_address_response ||= access_token.get(email_address_endpoint).parsed
-        parse_email_address
-      end
-
-      def parse_email_address
-        return unless email_address_available?
-
-        @email_address_response['elements'].first['handle~']['emailAddress']
-      end
-
-      def email_address_available?
-        @email_address_response['elements'].is_a?(Array) &&
-          @email_address_response['elements']&.first &&
-          @email_address_response['elements'].first['handle~']
-      end
-
-      def fields_mapping
-        {
-          'id' => 'id',
-          'first-name' => 'firstName',
-          'last-name' => 'lastName',
-          'picture-url' => 'profilePicture(displayImage~:playableStreams)'
-        }
-      end
-
       def fields
-        options.fields.each.with_object([]) do |field, result|
-          result << fields_mapping[field] if fields_mapping.key? field
-        end
+        @fields ||= options.fields.map { |f| FIELDS_MAPPING[f] || f }
       end
 
       def localized_field(field_name)
-        raw_info.dig(field_name, 'localized', field_locale(field_name))
+        raw_info.dig(field_name, "localized", field_locale(field_name))
       end
 
       def field_locale(field_name)
-        "#{raw_info[field_name]['preferredLocale']['language']}_" \
-          "#{raw_info[field_name]['preferredLocale']['country']}"
+        pref = raw_info.dig(field_name, "preferredLocale")
+        [pref["language"], pref["country"]].join("_")
       end
 
       def picture_url
-        return unless picture_available?
-
-        picture_references.last['identifiers'].first['identifier']
-      end
-
-      def picture_available?
-        raw_info['profilePicture'] &&
-          raw_info['profilePicture']['displayImage~'] &&
-          picture_references
-      end
-
-      def picture_references
-        raw_info['profilePicture']['displayImage~']['elements']
-      end
-
-      def email_address_endpoint
-        '/v2/emailAddress?q=members&projection=(elements*(handle~))'
+        elements = raw_info.dig("profilePicture", "displayImage~", "elements")
+        elements.last["identifiers"].first["identifier"] if elements
       end
 
       def profile_endpoint
-        "/v2/me?projection=(#{fields.join(',')})"
+        "/v2/me?projection=(#{fields.join(",")})"
       end
     end
   end
 end
 
-OmniAuth.config.add_camelization 'linkedin', 'LinkedIn'
+OmniAuth.config.add_camelization("linkedin", "LinkedIn")
