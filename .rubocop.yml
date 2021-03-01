@@ -25,6 +25,9 @@ Layout/DotPosition:
 Layout/LineLength:
   Enabled: false
 
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
 Naming/PredicateName:
   Exclude:
     - "app/graphql/**/*"
