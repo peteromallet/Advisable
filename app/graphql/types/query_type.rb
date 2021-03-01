@@ -207,25 +207,31 @@ module Types
       argument :type, String, required: false do
         description 'Filters guild posts by type'
       end
-
-      argument :topic_id, ID, required: false do
-        description 'Filters guild posts by topic'
-      end
     end
 
     def guild_posts(**args)
       requires_guild_user!
       query = ::Guild::Post.feed(current_user)
 
-      if (topic_id = args[:topic_id].presence)
-        # TODO: Use only slugs to query
-        context[:guild_topic] = ::Guild::Topic.published.find_by_slug_or_id(topic_id)
-        query.tagged_with(context[:guild_topic], on: :guild_topics, any: true)
-      elsif (type = args[:type].presence) && type != 'For You'
+      if (type = args[:type].presence) && type != 'For You'
         query.where(type: type)
       else
         query
       end
+    end
+
+    field :guild_topic_posts,
+          Types::Guild::PostInterface.connection_type,
+          null: true, max_page_size: 5 do
+            argument :topic_id, ID, required: true
+          end
+
+    def guild_topic_posts(topic_id:)
+      requires_guild_user!
+      query = ::Guild::Post.feed(current_user)
+
+      guild_topic = ::Guild::Topic.published.find_by_slug_or_id(topic_id)
+      query.tagged_with(guild_topic, on: :guild_topics, any: true)
     end
 
     field :guild_popular_posts, [Types::Guild::PostInterface], null: true
