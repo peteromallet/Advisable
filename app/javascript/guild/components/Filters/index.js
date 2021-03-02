@@ -146,14 +146,14 @@ const Filters = ({ postTypeFilter, setPostTypeFilter, yourPosts }) => {
               <DialogDisclosure
                 button
                 variant="cta"
-                size="s"
+                size="m"
                 as={GuildTag}
                 {...composerModal}
                 aria-label="Create a Post"
                 data-walkthrough="createPost"
               >
-                <AddIcon size={20} />
-                {yourPosts && sUp && "New Post"}
+                <AddIcon size={22} />
+                {!expanded ? "Write a Post" : null}
               </DialogDisclosure>
             </GuildBox>
           </GuildBox>
