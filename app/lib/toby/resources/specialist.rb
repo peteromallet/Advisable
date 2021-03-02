@@ -4,7 +4,6 @@ module Toby
   module Resources
     class Specialist < BaseResource
       model_name ::Specialist
-      # query_names collection: :accounts
       attribute :uid, Attributes::String, readonly: true
       attribute :application_stage, Attributes::Select, options: []
       attribute :account, Attributes::BelongsTo, labeled_by: :name

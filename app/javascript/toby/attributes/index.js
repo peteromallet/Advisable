@@ -5,6 +5,7 @@ import SelectAttribute from "./select";
 import HasManyAttribute from "./hasMany";
 import HasOneAttribute from "./hasOne";
 import DateAttribute from "./date";
+import BooleanAttribute from "./boolean";
 import DateTimeAttribute from "./dateTime";
 import CurrencyAttribute from "./currency";
 import TextArrayAttribute from "./textArray";
@@ -20,6 +21,7 @@ const ATTRIBUTES = {
   HasOneAttribute,
   DateAttribute,
   DateTimeAttribute,
+  BooleanAttribute,
   HasManyThroughAttribute: HasManyAttribute,
   SelectAttribute,
 };
