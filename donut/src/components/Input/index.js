@@ -34,7 +34,9 @@ const Input = React.forwardRef(function Input(
 
   const handleBlur = (e) => {
     setFocused(false);
-    props.onBlur(e);
+    if (props.onBlur) {
+      props.onBlur(e);
+    }
   };
 
   function handleDecorationClick() {

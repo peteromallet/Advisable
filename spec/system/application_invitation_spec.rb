@@ -27,7 +27,7 @@ RSpec.describe 'Application invitation view', type: :system do
       authenticate_as(application.specialist)
       visit "/invites/#{application.uid}"
       click_on 'Reject Invitation'
-      select 'No availability currently', from: 'reason'
+      select 'Doesn’t seem like a good fit', from: 'reason'
       click_on 'Reject Invite'
       expect(page).to have_content(
         'Do you know anyone that would suit this project'
