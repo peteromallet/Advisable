@@ -81,7 +81,7 @@ const Posts = () => {
             >
               Popular Posts
             </Text>
-            <PopularPosts posts={data?.guildPopularPosts} />
+            <PopularPosts loading={loading} posts={data?.guildPopularPosts} />
           </Box>
 
           <Text

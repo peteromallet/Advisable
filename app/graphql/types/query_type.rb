@@ -207,6 +207,8 @@ module Types
       argument :type, String, required: false do
         description 'Filters guild posts by type'
       end
+
+      argument :topic_id, ID, required: false, deprecation_reason: "Topics are no longer included with the post interface"
     end
 
     def guild_posts(**args)
