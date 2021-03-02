@@ -1,5 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import calendly from "src/utilities/calendly";
 import { ArrowRight } from "@styled-icons/feather";
 import { Text, Button } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
@@ -21,8 +22,9 @@ const Description = (props) => (
   <Text color="#0C1214" lineHeight="m" mb={6} {...props} />
 );
 
-const AccountCreated = ({ continueApplication }) => (
+const AccountCreated = () => (
   <>
+    <ProgressLine progress={0} />
     <Header>Account Created</Header>
     <Description>
       In order to be accepted to the Advisable network you must complete your
@@ -30,17 +32,19 @@ const AccountCreated = ({ continueApplication }) => (
       should hear from us within 2 working days.
     </Description>
     <Button
+      as={Link}
       variant="gradient"
       suffix={<ArrowRight />}
-      onClick={continueApplication}
+      to="/freelancers/apply"
     >
       Continue Application
     </Button>
   </>
 );
 
-const ApplicationSubmitted = ({ updateApplication, updateProfile }) => (
+const ApplicationSubmitted = () => (
   <>
+    <ProgressLine progress={1} />
     <Header>Application Submitted</Header>
     <Description>
       Your application to Advisable has been is being reviewed by our team. You
@@ -49,48 +53,68 @@ const ApplicationSubmitted = ({ updateApplication, updateProfile }) => (
       accepted
     </Description>
     <Button
+      as={Link}
       variant="gradient"
       suffix={<ArrowRight />}
       mr={[0, 3]}
       mb={[3, 0]}
       width={["100%", "auto"]}
-      onClick={updateApplication}
+      to="/freelancers/apply/introduction"
     >
       Update Application
     </Button>
-    <Button variant="subtle" width={["100%", "auto"]} onClick={updateProfile}>
-      Update Profile
-    </Button>
   </>
 );
 
-const InvitedToInterview = () => (
-  <>
-    <Header>Invited To Interview</Header>
-    <Description>
-      Great news! We have reviewed your application and would like to invite you
-      to interview. Please click the link below to schedule your interview at
-      one of our available times.
-    </Description>
-    <Button variant="gradient" suffix={<ArrowRight />}>
-      Schedule Interview
-    </Button>
-  </>
-);
+const InvitedToInterview = () => {
+  const handleScheduled = () => {
+    calendly("https://calendly.com/something", {
+      payload: "payload",
+    });
+  };
+  return (
+    <>
+      <ProgressLine progress={2} />
+      <Header>Invited To Interview</Header>
+      <Description>
+        Great news! We have reviewed your application and would like to invite
+        you to interview. Please click the link below to schedule your interview
+        at one of our available times.
+      </Description>
+      <Button
+        variant="gradient"
+        suffix={<ArrowRight />}
+        onClick={handleScheduled}
+      >
+        Schedule Interview
+      </Button>
+    </>
+  );
+};
 
-const InterviewScheduled = () => (
-  <>
-    <Header>Interview Scheduled</Header>
-    <Description>
-      Your interview with Annie is scheduled for 10:00am on Friday, 5th
-      February. You should have also received a calendar invite by now.
-    </Description>
-    <Button variant="subtle">Reschedule</Button>
-  </>
-);
+const InterviewScheduled = () => {
+  const handleReschedule = () => {
+    calendly("https://calendly.com/reschedule", {});
+  };
+
+  return (
+    <>
+      <ProgressLine progress={3} />
+      <Header>Interview Scheduled</Header>
+      <Description>
+        Your interview with Annie is scheduled for 10:00am on Friday, 5th
+        February. You should have also received a calendar invite by now.
+      </Description>
+      <Button variant="subtle" onClick={handleReschedule}>
+        Reschedule
+      </Button>
+    </>
+  );
+};
 
 const InterviewCompleted = () => (
   <>
+    <ProgressLine progress={4} />
     <Header>Interview Completed</Header>
     <Description>
       Thank you for joining your call with Annie. We are reviewing your
@@ -99,35 +123,18 @@ const InterviewCompleted = () => (
   </>
 );
 
-const MoreDetailsRequired = () => (
-  <>
-    <Header>More Details Required</Header>
-    <Description>
-      We have reviewed your application and would like to get some more details
-      on some of your past work. Please add at least 3 projects to your profile.
-      Once you have added and verified at least 3 projects we will revisit your
-      application.{" "}
-    </Description>
-    <Button variant="gradient" suffix={<ArrowRight />}>
-      UpdateProfile
-    </Button>
-  </>
-);
-
-const promptContentFromStage = (stage) => {
+const ApplicationStage = ({ stage }) => {
   switch (stage) {
     case "Started":
-      return { component: AccountCreated, progress: 0 };
+      return <AccountCreated />;
     case "Application Submitted":
-      return { component: ApplicationSubmitted, progress: 1 };
+      return <ApplicationSubmitted />;
     case "Invited To Interview":
-      return { component: InvitedToInterview, progress: 2 };
+      return <InvitedToInterview />;
     case "Interview Scheduled":
-      return { component: InterviewScheduled, progress: 3 };
+      return <InterviewScheduled />;
     case "Interview Completed":
-      return { component: InterviewCompleted, progress: 4 };
-    case "More Details Required":
-      return { component: MoreDetailsRequired, progress: 5 };
+      return <InterviewCompleted />;
     default:
       return null;
   }
@@ -135,22 +142,11 @@ const promptContentFromStage = (stage) => {
 
 export default function DashboardApplicationPrompt() {
   const viewer = useViewer();
-  const history = useHistory();
   const applicationStage = viewer?.applicationStage;
-
-  const actions = {
-    continueApplication: () => history.push("/freelancers/apply/"),
-    updateApplication: () => history.push("/freelancers/apply/introduction"),
-    updateProfile: () => history.push("/profile"),
-  };
-
-  const context = promptContentFromStage(applicationStage);
-  if (!context) return null;
 
   return (
     <PromptCard mb={10}>
-      <ProgressLine progress={context.progress} />
-      <context.component {...actions} />
+      <ApplicationStage stage={applicationStage} />
     </PromptCard>
   );
 }
