@@ -72,7 +72,12 @@ export default function Welcome({ specialist }) {
         >
           Welcome to Advisable
         </Text>
-        <Text fontSize="lg" color="neutral800" marginBottom={10}>
+        <Text
+          fontSize="lg"
+          color="neutral800"
+          marginBottom={10}
+          lineHeight="1.2"
+        >
           We need to know a little more about you before we can find you some
           projects. Once you are accepted into the Advisable network we will
           begin matching you with projects where you can choose to apply or not.
