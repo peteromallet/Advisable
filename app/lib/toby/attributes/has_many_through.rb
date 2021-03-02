@@ -3,6 +3,8 @@
 module Toby
   module Attributes
     class HasManyThrough < HasMany
+      extension_field :labeled_by, GraphQL::Types::String
+
       # optional when has_many through: does not follow parent_model plural convention
       def through
         options.fetch(:through) { [parent.downcase, model.downcase].join("_").pluralize }
