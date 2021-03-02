@@ -24,7 +24,12 @@ import DefaultAvatarIcon from "../components/DefaultAvatarIcon";
 
 export const validationSchema = object().shape({
   avatar: string().nullable(),
-  bio: string().required("Please provide your short biography"),
+  bio: string()
+    .max(
+      280,
+      "Please keep your biography simple. It must be at most 280 characters",
+    )
+    .required("Please provide your short biography"),
   city: string().required("Please enter your city"),
   country: string().required("Please enter you country"),
   publicUse: boolean(),
