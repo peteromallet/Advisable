@@ -10,7 +10,8 @@ import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { ArrowRight } from "@styled-icons/feather";
 import StepNumber from "../components/StepNumber";
-import { Description, Header } from "../components";
+import Header from "../components/Header";
+import Description from "../components/Description";
 import AnimatedCard from "../components/AnimatedCard";
 import { UPDATE_PROFILE } from "../queries";
 
