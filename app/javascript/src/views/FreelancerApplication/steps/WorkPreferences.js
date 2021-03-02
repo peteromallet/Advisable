@@ -15,9 +15,9 @@ import AnimatedCard from "../components/AnimatedCard";
 import { UPDATE_PROFILE } from "../queries";
 
 export const validationSchema = object().shape({
-  skills: array(),
-  industries: array(),
-  primarilyFreelance: string().required(),
+  skills: array().min(1).required(),
+  industries: array().min(1).required(),
+  primarilyFreelance: string().required("Please set your availability"),
 });
 
 export default function WorkPreferences({ specialist, skills, industries }) {

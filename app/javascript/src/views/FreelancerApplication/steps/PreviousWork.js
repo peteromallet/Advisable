@@ -13,8 +13,15 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_PROFILE } from "../queries";
 
 export const validationSchema = object().shape({
-  previousWorkDescription: string().required(),
-  previousWorkResults: string().required(),
+  previousWorkDescription: string()
+    .max(
+      300,
+      "Please keep the description simple. It must be at most 300 characters",
+    )
+    .required(),
+  previousWorkResults: string()
+    .max(300, "Please keep the text simple. It must be at most 300 characters")
+    .required(),
 });
 
 export default function PreviousWork({ specialist }) {

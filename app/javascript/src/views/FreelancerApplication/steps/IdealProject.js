@@ -13,7 +13,7 @@ import { COMPLETE_SETUP, UPDATE_PROFILE } from "../queries";
 import { useHistory } from "react-router-dom";
 
 export const validationSchema = object().shape({
-  idealProject: string().required(),
+  idealProject: string().max(300).required(),
 });
 
 export default function IdealProject({ specialist }) {
