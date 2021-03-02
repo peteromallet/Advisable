@@ -4,11 +4,13 @@ import StringAttribute from "./string";
 import SelectAttribute from "./select";
 import HasManyAttribute from "./hasMany";
 import HasOneAttribute from "./hasOne";
+import CurrencyAttribute from "./currency";
 import TextArrayAttribute from "./textArray";
 import BelongsToAttribute from "./belongsTo";
 
 const ATTRIBUTES = {
   IdAttribute,
+  CurrencyAttribute,
   TextArrayAttribute,
   StringAttribute,
   BelongsToAttribute,
