@@ -34,6 +34,7 @@ const SCHEMA_INTROSPECTION = gql`
       queryNameCollection
       attributes {
         name
+        columnLabel
         filters {
           name
           type
