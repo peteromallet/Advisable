@@ -24,13 +24,7 @@ export default function NotificationsMenu({ hasUnread }) {
 
   useEffect(() => {
     if (popover.visible && hasUnread) {
-      guildUpdateLastRead({
-        variables: {
-          input: {
-            readNotifications: true,
-          },
-        },
-      });
+      guildUpdateLastRead();
     }
   }, [hasUnread, popover.visible, guildUpdateLastRead]);
 

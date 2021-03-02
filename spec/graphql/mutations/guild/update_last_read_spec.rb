@@ -9,9 +9,7 @@ RSpec.describe Mutations::Guild::UpdateLastRead do
   let(:query) do
     <<-GRAPHQL
     mutation {
-      guildUpdateLastRead(input: {
-        readNotifications: true
-      }) {
+      guildUpdateLastRead(input: {}) {
         viewer {
           ... on Specialist {
             guildUnreadNotifications

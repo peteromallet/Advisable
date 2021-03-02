@@ -5,8 +5,7 @@ module Mutations
     class UpdateLastRead < Mutations::BaseMutation
       description "Updates any unread guild notifications to read"
       graphql_name "GuildUpdateLastRead"
-
-      argument :read_notifications, Boolean, required: true
+      argument :read_notifications, Boolean, required: false, deprecation_reason: "Last read is automatically updated"
 
       field :viewer, Types::ViewerUnion, null: true
 

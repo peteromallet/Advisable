@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GUILD_UPDATE_LAST_READ = gql`
-  mutation guildUpdateLastRead($input: GuildUpdateLastReadInput!) {
-    guildUpdateLastRead(input: $input) {
+  mutation guildUpdateLastRead {
+    guildUpdateLastRead(input: {}) {
       viewer {
         ... on Specialist {
           id
