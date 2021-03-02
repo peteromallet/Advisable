@@ -40,7 +40,9 @@ export default function Resource() {
         <Filters {...filterState} refetch={refetch} />
         <StyledHeaderRow>
           {resource.attributes.map((attr) => (
-            <StyledHeaderCell key={attr.name}>{attr.name}</StyledHeaderCell>
+            <StyledHeaderCell key={attr.name}>
+              {attr.columnLabel}
+            </StyledHeaderCell>
           ))}
         </StyledHeaderRow>
       </StyledHeader>
