@@ -112,10 +112,7 @@ export default function WorkPreferences({ specialist, skills, industries }) {
                 name="primarilyFreelance"
                 onChange={formik.handleChange}
                 value={formik.values.primarilyFreelance}
-                error={
-                  formik.touched.primarilyFreelance &&
-                  formik.errors.primarilyFreelance
-                }
+                error={false}
                 label="What is your availability for freelance work?"
                 options={[
                   {
