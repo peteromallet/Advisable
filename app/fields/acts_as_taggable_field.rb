@@ -22,7 +22,7 @@ class ActsAsTaggableField < Administrate::Field::Base
     "#{context}_list"
   end
 
-  def self.permitted_attribute(attr)
+  def self.permitted_attribute(attr, _options = nil)
     context = super.to_s.singularize
     {"#{context}_list" => []}
   end
