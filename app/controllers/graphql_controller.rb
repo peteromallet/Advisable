@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 class GraphqlController < ApplicationController
   protect_from_forgery with: :null_session
-  before_action :require_admin, only: :admin
-  skip_before_action :verify_authenticity_token,
-                     if: -> { Rails.env.development? }
+  before_action :require_admin, only: :toby
+  skip_before_action :verify_authenticity_token, if: -> { Rails.env.development? }
 
   def execute
     variables = ensure_hash(params[:variables])
@@ -26,20 +27,13 @@ class GraphqlController < ApplicationController
     render json: result
   end
 
-  def admin
-    variables = ensure_hash(params[:variables])
-    query = params[:query]
-    operation_name = params[:operationName]
-    context = {
-      session_manager: session_manager,
-    }
-
-    result =
-      AdminSchema.execute(
-        query,
-        variables: variables, context: context, operation_name: operation_name
-      )
-    render json: result
+  def toby
+    render json: Toby::Schema.execute(
+      params[:query],
+      variables: ensure_hash(params[:variables]),
+      context: {session_manager: session_manager},
+      operation_name: params[:operationName]
+    )
   end
 
   private
