@@ -32,10 +32,6 @@ RSpec.describe Applications::StartWorking do
   end
 
   context "when project type is 'Flexible" do
-    before do
-      allow(Applications::FlexibleInvoice).to receive(:call)
-    end
-
     it 'sets the monthly limit' do
       expect do
         described_class.call(
@@ -45,16 +41,6 @@ RSpec.describe Applications::StartWorking do
         )
       end.to change { application.reload.monthly_limit }.from(nil).to(
         monthly_limit
-      )
-    end
-
-    it 'calls the FlexibleInvoice service' do
-      expect(Applications::FlexibleInvoice).to receive(:call)
-
-      described_class.call(
-        application: application,
-        project_type: 'Flexible',
-        monthly_limit: monthly_limit
       )
     end
   end
@@ -69,7 +55,7 @@ RSpec.describe Applications::StartWorking do
   end
 
   it 'creates a previous project' do
-    previous_project = double(PreviousProject) # rubocop:disable RSpec/VerifiedDoubles
+    previous_project = instance_double(PreviousProject)
     allow_any_instance_of(Application).to receive(:create_previous_project).and_return(previous_project)
     described_class.call(
       application: application,

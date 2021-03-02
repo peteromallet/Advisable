@@ -12,7 +12,7 @@ module Mutations
 
     field :application, Types::ApplicationType, null: true
 
-    def authorized?(application:, project_type:, monthly_limit:)
+    def authorized?(application:, **_args)
       ap = Application.find_by_uid_or_airtable_id!(application)
       policy = ApplicationPolicy.new(current_user, ap)
       return true if policy.set_type_for_project?
@@ -25,8 +25,6 @@ module Mutations
 
       ap = Application.find_by_uid_or_airtable_id!(application)
       ap.update(project_type: project_type, monthly_limit: monthly_limit)
-
-      Applications::FlexibleInvoice.call(application: ap) if project_type == "Flexible" && (ap.saved_change_to_project_type? || ap.saved_change_to_monthly_limit?)
 
       ap.sync_to_airtable
       {application: ap}

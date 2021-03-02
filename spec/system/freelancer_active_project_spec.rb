@@ -102,7 +102,6 @@ RSpec.describe 'Freelancer active project view', type: :system do
     end
 
     it 'enables the freelancer to start working on the task' do
-      allow(Tasks::CreateInvoiceItem).to receive(:call)
       visit "/clients/#{application.uid}"
       find('h5', text: 'This is an existing task').click
       click_on 'Start Working'

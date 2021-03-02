@@ -17,20 +17,10 @@ module Tasks
 
       updated = Logidze.with_responsible(responsible_id) { task.update(stage: 'Working', started_working_at: Time.zone.now) }
       if updated
-        add_invoice_item if task.application.project_type == 'Fixed'
         task.sync_to_airtable
       end
 
       task
-    end
-
-    private
-
-    def add_invoice_item
-      Tasks::CreateInvoiceItem.call(task: task, responsible_id: responsible_id)
-    rescue Stripe::StripeError => e
-      # Still log the error in sentry
-      Sentry.capture_exception(e)
     end
   end
 end

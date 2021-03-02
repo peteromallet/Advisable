@@ -24,7 +24,6 @@ RSpec.describe Mutations::StartTask do
 
   before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
-    allow(Tasks::CreateInvoiceItem).to receive(:call)
   end
 
   it "sets the stage to 'Working'" do
