@@ -4,7 +4,7 @@ import { resourceByType, resourceAttribute } from "../utilities";
 import { Attribute } from "./index";
 
 export default {
-  render: function RenderBelongsTo({ record, field }) {
+  render: function RenderHasOne({ record, field }) {
     const schemaData = useSchema();
     const value = record[field.name];
     if (!value) return null;
@@ -12,7 +12,7 @@ export default {
     const attribute = resourceAttribute(resource, field.labeledBy || "id");
     return <Attribute record={value} attribute={attribute} />;
   },
-  input: function BelongsToInput() {
+  input: function HasOneInput() {
     return <>div</>;
   },
 };

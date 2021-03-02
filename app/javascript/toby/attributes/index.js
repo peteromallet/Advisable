@@ -3,6 +3,7 @@ import IdAttribute from "./id";
 import StringAttribute from "./string";
 import SelectAttribute from "./select";
 import HasManyAttribute from "./hasMany";
+import HasOneAttribute from "./hasOne";
 import TextArrayAttribute from "./textArray";
 import BelongsToAttribute from "./belongsTo";
 
@@ -12,6 +13,7 @@ const ATTRIBUTES = {
   StringAttribute,
   BelongsToAttribute,
   HasManyAttribute,
+  HasOneAttribute,
   HasManyThroughAttribute: HasManyAttribute,
   SelectAttribute,
 };
