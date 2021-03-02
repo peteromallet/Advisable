@@ -8,9 +8,10 @@ import { validationSchema as previousWorkValidationSchema } from "../steps/Previ
 import { validationSchema as WorkPreferencesValidationSchema } from "../steps/WorkPreferences";
 
 export default function Sidebar({ specialist }) {
-  const introductionComplete = introductionValidationSchema.isValidSync(
-    specialist,
-  );
+  const introductionComplete = introductionValidationSchema.isValidSync({
+    ...specialist,
+    country: specialist.country?.id,
+  });
   const overviewComplete = overviewValidationSchema.isValidSync(specialist);
   const previousWorkComplete = previousWorkValidationSchema.isValidSync(
     specialist,
