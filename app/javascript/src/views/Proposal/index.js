@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { Switch, Route, Redirect } from "react-router-dom";
+import useViewer from "src/hooks/useViewer";
 import Layout from "../../components/Layout";
 import Rate from "./Rate";
 import Send from "./Send";
@@ -13,6 +14,7 @@ import FETCH_APPLICATION from "./fetchApplication";
 import Notfound from "../NotFound";
 
 const Proposals = ({ match }) => {
+  const viewer = useViewer();
   const { loading, data } = useQuery(FETCH_APPLICATION, {
     variables: {
       id: match.params.applicationId,
@@ -24,7 +26,8 @@ const Proposals = ({ match }) => {
   }
 
   const application = data.application;
-  if (!application) return <Notfound />;
+  const isSpecialist = viewer.id === application?.specialist?.id;
+  if (!application || !isSpecialist) return <Notfound />;
   const urlPrefix = `/applications/:applicationId/proposal`;
 
   return (
