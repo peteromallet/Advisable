@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "@advisable/donut";
 import { Phone } from "@styled-icons/feather/Phone";
-import calendly from "../../../../utilities/calendly";
+import calendly from "src/utilities/calendly";
 
 const RequestCallButton = ({ children, ...props }) => {
   const handleSubmit = () => {
