@@ -2,10 +2,10 @@ import * as React from "react";
 import { Formik, Form } from "formik";
 import { Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { Box, Card, Button, Textarea } from "@advisable/donut";
-import Heading from "../../components/Heading";
-import FormField from "../../components/FormField";
+import { Text, Card, Textarea } from "@advisable/donut";
+import FormField from "src/components/FormField";
 import SEND_PROPOSAL from "./sendProposal.graphql";
+import SubmitButton from "src/components/SubmitButton";
 import { hasCompleteTasksStep } from "./validationSchema";
 
 const Send = ({ application, history }) => {
@@ -30,31 +30,31 @@ const Send = ({ application, history }) => {
   };
 
   return (
-    <Card>
-      <Box padding="l">
-        <Box paddingBottom="l">
-          <Heading level={3}>Send Proposal</Heading>
-        </Box>
-        <Formik
-          onSubmit={handleSubmit}
-          initialValues={{ proposalComment: application.proposalComment || "" }}
-        >
-          {(formik) => (
-            <Form>
-              <FormField
-                as={Textarea}
-                marginBottom="l"
-                name="proposalComment"
-                label="Include a short message"
-                placeholder="Add a message..."
-              />
-              <Button type="submit" loading={formik.isSubmitting}>
-                Send Proposal
-              </Button>
-            </Form>
-          )}
-        </Formik>
-      </Box>
+    <Card borderRadius="12px" padding={8}>
+      <Text
+        as="h2"
+        fontSize="4xl"
+        marginBottom={4}
+        fontWeight="medium"
+        letterSpacing="-0.03rem"
+      >
+        Send Proposal
+      </Text>
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={{ proposalComment: application.proposalComment || "" }}
+      >
+        <Form>
+          <FormField
+            as={Textarea}
+            marginBottom="l"
+            name="proposalComment"
+            label="Include a short message"
+            placeholder="Add a message..."
+          />
+          <SubmitButton>Send Proposal</SubmitButton>
+        </Form>
+      </Formik>
     </Card>
   );
 };

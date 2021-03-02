@@ -1,12 +1,11 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
-import { Box, Button, Card } from "@advisable/donut";
-import Text from "../../components/Text";
-import Heading from "../../components/Heading";
-import FormField from "../../components/FormField";
-import CurrencyInput from "../../components/CurrencyInput";
-import currency from "../../utilities/currency";
+import { Card, Text } from "@advisable/donut";
+import FormField from "src/components/FormField";
+import currency from "src/utilities/currency";
+import SubmitButton from "src/components/SubmitButton";
+import CurrencyInput from "src/components/CurrencyInput";
 import { rateValidationSchema } from "./validationSchema";
 import UPDATE_APPLICATION from "./updateApplication.js";
 
@@ -39,7 +38,7 @@ const Rate = ({ history, application }) => {
   };
 
   return (
-    <Card>
+    <Card borderRadius="12px" padding={8}>
       <Formik
         validateOnMount
         onSubmit={handleSubmit}
@@ -48,40 +47,35 @@ const Rate = ({ history, application }) => {
       >
         {(formik) => (
           <Form>
-            <Box padding="l">
-              <Box paddingBottom="s">
-                <Heading level={3}>
-                  What is your hourly rate for this project?
-                </Heading>
-              </Box>
-              <Box paddingBottom="l">
-                <Text size="s">
-                  Advisable charge a fee of 20% of the price you charge. Please
-                  remember to account for this in your hourly rate.
-                </Text>
-              </Box>
-              <FormField
-                labelHidden
-                prefix="$"
-                name="rate"
-                marginBottom="xl"
-                label="Hourly Rate"
-                placeholder="$0.00"
-                as={CurrencyInput}
-                caption={
-                  Number(formik.values.rate) > 0 &&
-                  `You would earn ${calculateRate(formik.values.rate)} per hour`
-                }
-              />
-              <Button
-                type="submit"
-                disabled={!formik.isValid}
-                aria-label="Continue"
-                loading={formik.isSubmitting ? true : undefined}
-              >
-                Continue
-              </Button>
-            </Box>
+            <Text
+              as="h2"
+              fontSize="4xl"
+              marginBottom={2}
+              fontWeight="medium"
+              letterSpacing="-0.03rem"
+            >
+              What is your hourly rate for this project?
+            </Text>
+            <Text color="neutral800" mb={6}>
+              Advisable charge a fee of 20% of the price you charge. Please
+              remember to account for this in your hourly rate.
+            </Text>
+            <FormField
+              labelHidden
+              prefix="$"
+              name="rate"
+              marginBottom="xl"
+              label="Hourly Rate"
+              placeholder="$0.00"
+              as={CurrencyInput}
+              caption={
+                Number(formik.values.rate) > 0 &&
+                `You would earn ${calculateRate(formik.values.rate)} per hour`
+              }
+            />
+            <SubmitButton disableUntilValid aria-label="Continue">
+              Continue
+            </SubmitButton>
           </Form>
         )}
       </Formik>
