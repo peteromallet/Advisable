@@ -4,6 +4,8 @@ import StringAttribute from "./string";
 import SelectAttribute from "./select";
 import HasManyAttribute from "./hasMany";
 import HasOneAttribute from "./hasOne";
+import DateAttribute from "./date";
+import DateTimeAttribute from "./dateTime";
 import CurrencyAttribute from "./currency";
 import TextArrayAttribute from "./textArray";
 import BelongsToAttribute from "./belongsTo";
@@ -16,6 +18,8 @@ const ATTRIBUTES = {
   BelongsToAttribute,
   HasManyAttribute,
   HasOneAttribute,
+  DateAttribute,
+  DateTimeAttribute,
   HasManyThroughAttribute: HasManyAttribute,
   SelectAttribute,
 };
