@@ -11,7 +11,7 @@ module Toby
 
       # optional for when we don't follow the class == resource convention
       def model
-        options.fetch(:model) { name.capitalize }
+        options.fetch(:model) { name.to_s.camelize }
       end
 
       # optional for when we don't follow the id convention
@@ -21,7 +21,7 @@ module Toby
 
       # optional for when we don't follow the resource_id convention
       def via
-        options.fetch(:column) { :"#{model.downcase}_id" }
+        options.fetch(:column) { :"#{name}_id" }
       end
 
       def type
