@@ -48,6 +48,9 @@ const SCHEMA_INTROSPECTION = gql`
         ... on HasManyAttribute {
           labeledBy
         }
+        ... on HasManyThroughAttribute {
+          labeledBy
+        }
         ... on HasOneAttribute {
           labeledBy
         }

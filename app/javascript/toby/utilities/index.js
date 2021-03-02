@@ -114,7 +114,7 @@ function selectionForField(schemaData, resourceData, fieldName) {
 
   if (attribute.labeledBy) {
     let fieldResource;
-    if (attribute.__typename === "HasManyAttribute") {
+    if (attribute.__typename.includes("HasMany")) {
       fieldResource = resourceByType(schemaData, field.type.ofType.ofType.name);
     } else {
       fieldResource = resourceByType(schemaData, field.type.name);

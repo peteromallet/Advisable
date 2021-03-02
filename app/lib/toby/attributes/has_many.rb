@@ -10,7 +10,7 @@ module Toby
 
       # optional for when we don't follow the class == resource convention
       def model
-        options.fetch(:model) { name.to_s.singularize.capitalize }
+        options.fetch(:model) { name.to_s.singularize.camelize }
       end
 
       # optional for when we don't follow the parent_id convention
