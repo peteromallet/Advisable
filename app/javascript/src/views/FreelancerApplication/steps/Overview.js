@@ -20,9 +20,11 @@ export const validationSchema = object().shape({
     .nullable()
     .when(["linkedin", "website"], {
       is: (linkedin, website) => !linkedin && !website,
-      then: string().required(
-        "Please provide at least one of the above so that we can see your work history.",
-      ),
+      then: string()
+        .nullable()
+        .required(
+          "Please provide at least one of the above so that we can see your work history.",
+        ),
     }),
 });
 
