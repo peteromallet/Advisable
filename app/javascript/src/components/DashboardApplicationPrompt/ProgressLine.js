@@ -23,7 +23,7 @@ const LineBase = styled.div`
   position: relative;
   background: #e9d8cb;
   height: 4px;
-  margin: 12px;
+  margin: 8px;
   border-radius: 2px;
 `;
 
@@ -60,6 +60,7 @@ export default function ProgressLine({ progress }) {
       borderRadius="16px"
       flexWrap="nowrap"
       p="5px"
+      mb={5}
     >
       <CheckPoint active={progress > 0} />
       <Line width={(progress == 2 && "50%") || (progress > 2 && "100%")} />
