@@ -3,14 +3,13 @@ import { StyledPopularPosts } from "./styles";
 import LoadingPosts from "@guild/components/Posts/Loading";
 import PopularPost from "./components/PopularPost";
 
-const PopularPosts = ({ posts }) => {
+const PopularPosts = ({ posts, loading }) => {
   return (
     <StyledPopularPosts>
-      {posts?.length ? (
-        posts?.map((post) => <PopularPost key={post.id} post={post} />)
-      ) : (
-        <LoadingPosts skeletonPosts={1} />
-      )}
+      {loading ? <LoadingPosts skeletonPosts={1} /> : null}
+      {posts?.map((post) => (
+        <PopularPost key={post.id} post={post} />
+      ))}
     </StyledPopularPosts>
   );
 };
