@@ -797,6 +797,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_104724) do
     t.integer "community_score"
     t.integer "member_of_week_email"
     t.jsonb "log_data"
+    t.date "unavailable_until"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"

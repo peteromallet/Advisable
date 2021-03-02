@@ -127,6 +127,7 @@ end
 #  reviews_count                :integer
 #  travel_availability          :string
 #  uid                          :string
+#  unavailable_until            :date
 #  website                      :string
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null

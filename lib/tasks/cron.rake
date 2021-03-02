@@ -26,6 +26,10 @@ def permanently_delete_soft_deleted_accounts
   AccountDeleteJob.perform_now
 end
 
+def clear_unavailable_until_today
+  Specialist.where("unavailable_until < ?", Time.zone.today).update_all(unavailable_until: nil) # rubocop:disable Rails/SkipsModelValidations
+end
+
 namespace :cron do
   task hourly: :environment do
     airtable_sync
@@ -36,5 +40,6 @@ namespace :cron do
     trigger_webhooks_for_past_due_date
     trigger_webhooks_for_upcoming_due_date
     permanently_delete_soft_deleted_accounts
+    clear_unavailable_until_today
   end
 end
