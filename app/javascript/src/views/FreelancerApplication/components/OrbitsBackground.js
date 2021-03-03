@@ -4,10 +4,12 @@ import { Orbit, OrbitsSystem, Box } from "@advisable/donut";
 export default function OrbitsBackground() {
   return (
     <Box
+      position="absolute"
+      left="0"
+      top="0"
       display={["none", "block"]}
       height="100vh"
       width="100%"
-      position="absolute"
       zIndex="-1"
     >
       <OrbitsSystem
