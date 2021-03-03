@@ -11,8 +11,8 @@ import generateID from "@advisable-main/utilities/generateID";
 // - url: The url for the image. This will be null for images that are uploading.
 // - file: The original file for the image. This will only be set for images that have just been
 // .       uploaded and will be null for any images that are returned from the API on initial load.
-// - uploading: Wether or not the image is currently uploading.
-// - cover: Wether or not the image is the cover photo.
+// - uploading: Whether or not the image is currently uploading.
+// - cover: Whether or not the image is the cover photo.
 function reducer(state, action) {
   switch (action.type) {
     case "NEW_UPLOAD": {

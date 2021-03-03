@@ -16,7 +16,7 @@ module Types
     end
 
     field :primary_skill, Types::Skill, null: true
-    # Wether or not we are actively searching for candidates
+    # Whether or not we are actively searching for candidates
     field :sourcing, Boolean, null: true
 
     field :sales_person, Types::SalesPersonType, null: true

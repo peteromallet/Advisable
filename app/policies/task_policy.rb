@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# A poicy to determin wether or not a given user has permission to carry out
+# A poicy to determin whether or not a given user has permission to carry out
 # an action. The TaskPolicy is a PORO that follows the rules set out by the
 # pundit gem.
 class TaskPolicy < BasePolicy
@@ -28,7 +28,7 @@ class TaskPolicy < BasePolicy
   alias update_description update_name
   alias delete update_name
 
-  # Wether or not the current user has permission to update the due date for
+  # Whether or not the current user has permission to update the due date for
   # a task.
   def update_due_date
     return false if user.nil?
@@ -39,7 +39,7 @@ class TaskPolicy < BasePolicy
     false
   end
 
-  # Wether or not the current user has permission to update the estimate for a
+  # Whether or not the current user has permission to update the estimate for a
   # task.
   def update_estimate
     return false if user.nil?

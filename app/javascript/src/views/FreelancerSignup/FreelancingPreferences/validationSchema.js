@@ -4,7 +4,7 @@ const validationSchema = object().shape({
   primarilyFreelance: boolean()
     .nullable()
     .required(
-      "Please specify wether or not freelancing is your primary occupation.",
+      "Please specify whether or not freelancing is your primary occupation.",
     ),
   numberOfProjects: string()
     .nullable()
