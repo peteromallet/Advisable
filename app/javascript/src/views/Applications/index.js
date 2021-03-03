@@ -22,6 +22,7 @@ const Applications = () => {
   const viewer = data.viewer;
   const onHold = viewer.applicationStage === "On Hold";
   const fullApplicationPending = viewer.applicationStage === "Full Application";
+  const isAccepted = viewer.applicationStage === "Accepted";
 
   const invitations = viewer.applications.filter(
     (a) => a.status === "Invited To Apply",
@@ -70,7 +71,9 @@ const Applications = () => {
         onViewInvitation={handleViewInvitation}
         applications={loading ? [] : invitations}
       />
-      {!loading && !hasApplications && !hasInvitations && <Empty />}
+      {!loading && !hasApplications && !hasInvitations && isAccepted && (
+        <Empty />
+      )}
       <OpenApplications
         onHold={onHold}
         loading={loading}
