@@ -26,7 +26,7 @@ const Sidebar = ({ data, history, tutorialModal }) => {
   const { t } = useTranslation();
   const application = data.application;
   const { specialist, project } = application;
-  const [projectTypeModal, setProjectTypeModal] = React.useState(false);
+  const projectTypeModal = useDialogState();
   const isOwnerOrManager = project.isOwner || viewer.isTeamManager;
   const canStopWorking = application.status === "Working" && isOwnerOrManager;
 
@@ -78,6 +78,11 @@ const Sidebar = ({ data, history, tutorialModal }) => {
             )}
           </Box>
           <Box paddingY="xl">
+            <ProjectTypeModal
+              modal={projectTypeModal}
+              application={application}
+            />
+
             <AttributeList>
               {Boolean(application.rate) && (
                 <AttributeList.Item
@@ -90,37 +95,30 @@ const Sidebar = ({ data, history, tutorialModal }) => {
                 <AttributeList.Item
                   label="Monthly Limit"
                   action={
-                    <Button
-                      size="s"
-                      variant="subtle"
-                      onClick={() => setProjectTypeModal(true)}
-                    >
-                      <Edit />
-                    </Button>
+                    <DialogDisclosure {...projectTypeModal}>
+                      {(disclosure) => (
+                        <Button size="s" variant="subtle" {...disclosure}>
+                          <Edit />
+                        </Button>
+                      )}
+                    </DialogDisclosure>
                   }
                 >
                   {application.monthlyLimit} hours
                 </AttributeList.Item>
               )}
 
-              <ProjectTypeModal
-                isOpen={projectTypeModal}
-                application={application}
-                onClose={() => setProjectTypeModal(false)}
-              />
-
               {isOwnerOrManager ? (
                 <AttributeList.Item
                   label="Project Type"
                   action={
-                    <Button
-                      size="s"
-                      variant="subtle"
-                      aria-label="Edit project type"
-                      onClick={() => setProjectTypeModal(true)}
-                    >
-                      <Edit />
-                    </Button>
+                    <DialogDisclosure {...projectTypeModal}>
+                      {(disclosure) => (
+                        <Button size="s" variant="subtle" {...disclosure}>
+                          <Edit />
+                        </Button>
+                      )}
+                    </DialogDisclosure>
                   }
                 >
                   <Tooltip
