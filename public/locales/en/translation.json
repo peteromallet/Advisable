@@ -23,7 +23,7 @@
     },
     "Interview Completed": {
       "title": "Call Completed",
-      "description": "Now that you have spoken with {{specialistName}} you can decide wether to work together or not."
+      "description": "Now that you have spoken with {{specialistName}} you can decide whether to work together or not."
     },
     "Proposed": {
       "title": "{{specialistName}} sent a proposal",

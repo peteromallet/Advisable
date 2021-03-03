@@ -67,7 +67,7 @@ class Specialist < ApplicationRecord
     SpecialistMailer.confirm(uid: uid, token: token).deliver_later
   end
 
-  # Wether or not the specialist has provided payment information. Returns true
+  # Whether or not the specialist has provided payment information. Returns true
   # if enough payment information has been provided.
   def has_setup_payments # rubocop:disable Naming/PredicateName
     bank_holder_name.present? &&

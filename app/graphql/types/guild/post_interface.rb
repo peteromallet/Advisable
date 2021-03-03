@@ -98,7 +98,7 @@ module Types
       end
 
       field :engaged, Boolean, null: false do
-        description "Wether or not the current user has engaged with this post"
+        description "Whether or not the current user has engaged with this post"
       end
 
       def engaged

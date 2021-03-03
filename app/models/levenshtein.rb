@@ -1,4 +1,4 @@
-# Used to compare two strings. This is used to determine wether or not
+# Used to compare two strings. This is used to determine whether or not
 # an OauthViewer can validate a project based on their similarity to the projects
 # contact_name
 class Levenshtein

@@ -35,7 +35,7 @@ module Types
     end
 
     field :travel_availability, String, null: true do
-      description 'Wether or not the specialist is willing to travel for work'
+      description 'Whether or not the specialist is willing to travel for work'
     end
 
     field :linkedin, String, null: true do
@@ -155,7 +155,7 @@ module Types
     end
 
     field :remote, Boolean, null: true do
-      description 'Wether or not the specialist will work remotely'
+      description 'Whether or not the specialist will work remotely'
     end
 
     field :answers, [Types::AnswerType], null: true do
@@ -211,7 +211,7 @@ module Types
 
     # TODO: AccountMigration - Rename for consistency
     field :has_account, Boolean, null: false do
-      description 'Wether or not the specialist has created their account yet'
+      description 'Whether or not the specialist has created their account yet'
     end
 
     def has_account
@@ -284,7 +284,7 @@ module Types
     field :has_setup_payments, Boolean, null: true do
       authorize :is_specialist?, :is_admin
       description <<~HEREDOC
-        Wether or not the specialist has provided their bank information so that
+        Whether or not the specialist has provided their bank information so that
         they can be paid.
       HEREDOC
     end
@@ -322,7 +322,7 @@ module Types
     end
 
     field :primarily_freelance, Boolean, null: true do
-      description 'Wether or not the freelancers occupation is primarily freelancing'
+      description 'Whether or not the freelancers occupation is primarily freelancing'
     end
 
     field :number_of_projects, String, null: true do
@@ -334,7 +334,7 @@ module Types
     end
 
     field :public_use, Boolean, null: true do
-      description 'Wether or not the specialist is ok with being used publicly'
+      description 'Whether or not the specialist is ok with being used publicly'
     end
 
     field :application_stage, String, null: true do
