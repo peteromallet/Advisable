@@ -61,7 +61,7 @@ const StyledTooltip = styled(ExtractedReakitTooltip)`
   cursor: default;
   z-index: 999999;
   visibility: hidden;
-  display: block !important;
+  display: block;
 
   ${(props) => props.visible && openStyling};
   ${(props) => props.interactable && interactableStyling}
