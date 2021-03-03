@@ -36,7 +36,8 @@ function UnavailableDate() {
   const isDayDisabled = (day) => {
     const now = new Date();
     now.setHours(0, 0, 0, 0);
-    return day < now;
+    day.setHours(0, 0, 0, 0);
+    return day <= now;
   };
 
   return (
