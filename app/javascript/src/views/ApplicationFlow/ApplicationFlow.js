@@ -57,7 +57,7 @@ const ApplicationFlow = ({ application, match }) => {
   const [skipped, setSkipped] = React.useState([]);
   const skipStep = (step) => setSkipped([...skipped, step.name]);
 
-  // Various parts of this flow need to act differently based on wether the user
+  // Various parts of this flow need to act differently based on whether the user
   // is applying or updating an existing application.
   const isApplying = application.status === "Invited To Apply";
 

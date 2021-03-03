@@ -10,7 +10,7 @@ class SpecialistPolicy < BasePolicy
     record == user
   end
 
-  # checks wether the specialist has applied to any of the current user company's projects
+  # checks whether the specialist has applied to any of the current user company's projects
   def is_applicant_of_company_projects # rubocop:disable Naming/PredicateName
     user.is_a?(::User) && user.company.projects.joins(:applications).exists?(applications: {specialist_id: record.id})
   end

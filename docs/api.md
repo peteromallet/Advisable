@@ -11,7 +11,7 @@ Graphql requests are authorized using pundit policies. The logic for this can
 be seen in the `BaseField` class.
 
 The following will call the ProjectPolicy "is_user?" method to
-determin wether or not the email can be accessed. If authorization fails
+determin whether or not the email can be accessed. If authorization fails
 null willl be returned for the email.
 
 ```rb

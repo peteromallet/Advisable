@@ -1,6 +1,6 @@
 // Used to render a talkjs conversation inside of a modal window. TalkModal
 // takes four props.
-// - isOpen (boolean): Wether or not the modal should be shown. This is passed
+// - isOpen (boolean): Whether or not the modal should be shown. This is passed
 // directly through to the Modal component. Modals are always controlled
 // components and they do not hold their own state.
 // - onClose (function): A function that when called will set the isOpen prop
