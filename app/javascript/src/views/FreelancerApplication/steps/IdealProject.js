@@ -14,7 +14,12 @@ import { COMPLETE_SETUP, UPDATE_PROFILE } from "../queries";
 import { useHistory } from "react-router-dom";
 
 export const validationSchema = object().shape({
-  idealProject: string().max(300).required(),
+  idealProject: string()
+    .max(
+      300,
+      "Please keep the description simple. It must be at most 300 characters",
+    )
+    .required("Please describe an ideal project for you"),
 });
 
 export default function IdealProject({ specialist }) {

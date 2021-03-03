@@ -19,10 +19,10 @@ export const validationSchema = object().shape({
       300,
       "Please keep the description simple. It must be at most 300 characters",
     )
-    .required(),
+    .required("Please share your description with us"),
   previousWorkResults: string()
     .max(300, "Please keep the text simple. It must be at most 300 characters")
-    .required(),
+    .required("Please tell us why you proud of it"),
 });
 
 export default function PreviousWork({ specialist }) {
