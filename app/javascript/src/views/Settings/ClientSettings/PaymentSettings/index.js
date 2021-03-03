@@ -1,6 +1,7 @@
 import React from "react";
 import { get } from "lodash-es";
 import { Redirect } from "react-router-dom";
+import { useDialogState } from "reakit/Dialog";
 import { useQuery, useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import {
@@ -10,9 +11,9 @@ import {
   Button,
   Skeleton,
   Radio,
+  Modal,
   RadioGroup,
 } from "@advisable/donut";
-import Modal from "../../../../components/Modal";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "../../../../components/Notifications";
 import UpdatePaymentMethod from "../../../../components/UpdatePaymentMethod";
@@ -23,10 +24,10 @@ import { UPDATE_INVOICE_SETTINGS } from "./queries";
 
 const PaymentSettings = () => {
   const viewer = useViewer();
-  let notificaitons = useNotifications();
+  const notificaitons = useNotifications();
+  const paymentMethodModal = useDialogState();
   const { data, loading, refetch } = useQuery(GET_PAYMENT_SETTINGS);
   const [updateInvoiceSettings] = useMutation(UPDATE_INVOICE_SETTINGS);
-  const [paymentMethodModal, setPaymentMethodModal] = React.useState(false);
 
   const bankTransfersEnabled = data?.currentCompany?.bankTransfersEnabled;
 
@@ -140,7 +141,7 @@ const PaymentSettings = () => {
             {formik.values.paymentMethod != "Bank Transfer" ? (
               <CardPaymentSettings
                 paymentMethod={data.viewer.paymentMethod}
-                openCardModal={() => setPaymentMethodModal(true)}
+                openCardModal={paymentMethodModal.show}
               />
             ) : null}
 
@@ -164,14 +165,11 @@ const PaymentSettings = () => {
         )}
       </Formik>
 
-      <Modal
-        isOpen={paymentMethodModal}
-        onClose={() => setPaymentMethodModal(false)}
-      >
+      <Modal modal={paymentMethodModal} padding={2}>
         <Box p="l">
           <UpdatePaymentMethod
             onSuccess={() => {
-              setPaymentMethodModal(false);
+              paymentMethodModal.hide();
               refetch();
             }}
           />
