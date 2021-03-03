@@ -19,7 +19,7 @@ class ApplicationPolicy < BasePolicy
     is_client_owner? || record_belongs_to_company?
   end
 
-  # Wether or not the user has access to read information about the application.
+  # Whether or not the user has access to read information about the application.
   def read?
     is_specialist? || via_client? || is_admin
   end

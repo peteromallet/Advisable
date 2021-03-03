@@ -70,7 +70,7 @@ class Types::ApplicationType < Types::BaseType
     projects
   end
 
-  # Wether or not the candidate has more previous projects than the ones they
+  # Whether or not the candidate has more previous projects than the ones they
   # have included in their application
   def has_more_projects
     return false if object.references.empty?

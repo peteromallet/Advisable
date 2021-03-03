@@ -44,7 +44,7 @@ class Project < ApplicationRecord
     accepted_terms_at.present?
   end
 
-  # Returns wether or not the project is accepting new applications.
+  # Returns whether or not the project is accepting new applications.
   def applications_open
     %w[Won Lost].exclude?(sales_status)
   end

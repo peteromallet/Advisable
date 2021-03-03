@@ -5,7 +5,7 @@ import Mobile from "./Mobile";
 import useBreakpoint from "../../hooks/useBreakpoint";
 
 const Autocomplete = ({ options: selectOptions, size, value, ...rest }) => {
-  // Wether or not we are on mobile
+  // Whether or not we are on mobile
   const isMobile = useBreakpoint("s");
 
   // We need to store the options in state and create a unique key for each item

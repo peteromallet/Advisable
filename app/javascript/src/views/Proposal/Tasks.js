@@ -69,7 +69,7 @@ const Tasks = ({ application, match, location, history }) => {
     history.push("send");
   };
 
-  // Wether or not the continue button should be visible
+  // Whether or not the continue button should be visible
   const canContinue = hasCompleteTasksStep(application);
 
   const showPromptForTask = (task) => {

@@ -28,7 +28,7 @@ function useLocationStages() {
     });
   };
 
-  // Takes a name and return wether or not its inside the skipped location state array.
+  // Takes a name and return whether or not its inside the skipped location state array.
   const skipped = (name) => {
     return (location.state?.skipped || []).indexOf(name) > -1;
   };

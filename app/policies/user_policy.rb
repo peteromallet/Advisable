@@ -4,7 +4,7 @@
 # inside of graphql queries and mutations, however, it is just a simple pundit
 # policy and can easily be used outside of graphql.
 class UserPolicy < BasePolicy
-  # wether or not the user is the current user
+  # whether or not the user is the current user
   def is_user
     record == user
   end

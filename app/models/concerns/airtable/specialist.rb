@@ -92,7 +92,7 @@ module Airtable
       end
 
       specialist.saved_change_to_application_stage
-      # Deteremine wether or not the specialist record was just created for the
+      # Deteremine whether or not the specialist record was just created for the
       #  first time.
       new_record = specialist.created_at == specialist.updated_at
 
