@@ -24,7 +24,7 @@ import { UPDATE_INVOICE_SETTINGS } from "./queries";
 
 const PaymentSettings = () => {
   const viewer = useViewer();
-  const notificaitons = useNotifications();
+  const { notify } = useNotifications();
   const paymentMethodModal = useDialogState();
   const { data, loading, refetch } = useQuery(GET_PAYMENT_SETTINGS);
   const [updateInvoiceSettings] = useMutation(UPDATE_INVOICE_SETTINGS);
@@ -48,7 +48,7 @@ const PaymentSettings = () => {
         formik.setFieldError("vatNumber", "VAT number is invalid");
       }
     } else {
-      notificaitons.notify("Your payment preferences have been updated");
+      notify("Your payment preferences have been updated");
     }
   };
 
