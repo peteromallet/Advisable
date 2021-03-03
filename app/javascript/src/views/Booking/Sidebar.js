@@ -3,7 +3,7 @@ import { get } from "lodash-es";
 import { motion } from "framer-motion";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Button, Tooltip, Box, Avatar, Text } from "@advisable/donut";
-import { withRouter, Route } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "../../components/Sticky";
 import Layout from "../../components/Layout";
@@ -17,14 +17,9 @@ import ProjectTypeModal from "./ProjectTypeModal";
 import StopWorkingModal from "./StopWorkingModal";
 import useViewer from "src/hooks/useViewer";
 import ReportFreelancerProblem from "./ReportFreelancerProblem";
-import {
-  HelpCircle,
-  MessageCircle,
-  PauseCircle,
-  Edit,
-} from "@styled-icons/feather";
+import { HelpCircle, MessageCircle, Edit } from "@styled-icons/feather";
 
-const Sidebar = ({ data, history, tutorialModal, match }) => {
+const Sidebar = ({ data, history, tutorialModal }) => {
   const viewer = useViewer();
   const isMobile = useMobile();
   const dialog = useDialogState();
@@ -78,23 +73,7 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
             </Box>
             {canStopWorking && (
               <>
-                <Route path={`${match.path}/stop`}>
-                  <StopWorkingModal
-                    isOpen
-                    application={application}
-                    onClose={() => history.replace(match.url)}
-                  />
-                </Route>
-                <Button
-                  width="100%"
-                  align="left"
-                  prefix={<PauseCircle />}
-                  aria-label="Stop Working"
-                  variant="subtle"
-                  onClick={() => history.replace(`${match.url}/stop`)}
-                >
-                  Stop Working
-                </Button>
+                <StopWorkingModal application={application} />
               </>
             )}
           </Box>
