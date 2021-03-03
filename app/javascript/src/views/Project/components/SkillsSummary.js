@@ -11,7 +11,7 @@ export default function GoalsSummary({ project, children }) {
 
   let heading = "Project Skills";
 
-  if (project.industryExperienceImportance) {
+  if (project.industryExperienceImportance && primarySkill) {
     heading = t(
       `industryExperienceImportance.${project.industryExperienceImportance}`,
       {
