@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import calendly from "src/utilities/calendly";
 import { ArrowRight } from "@styled-icons/feather";
@@ -67,11 +67,38 @@ const ApplicationSubmitted = () => (
 );
 
 const InvitedToInterview = () => {
+  const { firstName, lastName, email } = useViewer();
+  const fullName = `${firstName} ${lastName}`;
+
   const handleScheduled = () => {
-    calendly("https://calendly.com/something", {
-      payload: "payload",
-    });
+    calendly(
+      "https://calendly.com/d/c9sf-mhb/an-introduction-to-advisable-guild",
+      { full_name: fullName, email },
+    );
   };
+
+  // Listen calendly notifications:
+  // https://calendly.stoplight.io/docs/embed-api-docs/docs/C-Notifying-the-parent-window.md
+  useEffect(() => {
+    const isCalendlyEvent = (e) =>
+      e.data.event && e.data.event.indexOf("calendly") === 0;
+
+    const handleCalendly = (e) => {
+      if (!isCalendlyEvent(e)) return null;
+
+      if (e.data.event === "calendly.event_scheduled") {
+        // URI example:
+        // https://api.calendly.com/scheduled_events/AEQZY6BZ7BGPC6EZ
+        const url = new URL(e.data.payload.event.uri);
+        const eventId = url.pathname.split("/")[2];
+        return eventId;
+      }
+    };
+
+    window.addEventListener("message", handleCalendly);
+    return () => window.addEventListener("message", handleCalendly);
+  }, []);
+
   return (
     <>
       <ProgressLine progress={2} />
@@ -94,7 +121,10 @@ const InvitedToInterview = () => {
 
 const InterviewScheduled = () => {
   const handleReschedule = () => {
-    calendly("https://calendly.com/reschedule", {});
+    calendly(
+      "https://calendly.com/d/c9sf-mhb/an-introduction-to-advisable-guild",
+      {},
+    );
   };
 
   return (
