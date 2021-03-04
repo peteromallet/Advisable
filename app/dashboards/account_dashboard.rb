@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "administrate/base_dashboard"
 
 class AccountDashboard < Administrate::BaseDashboard
@@ -14,11 +16,10 @@ class AccountDashboard < Administrate::BaseDashboard
     email: Field::String,
     permissions: PermissionsField,
     completed_tutorials: UserTutorialsField,
-    vat_number: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     user: Field::BelongsTo,
-    specialist: Field::BelongsTo,
+    specialist: Field::BelongsTo
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -43,7 +44,6 @@ class AccountDashboard < Administrate::BaseDashboard
     specialist
     permissions
     completed_tutorials
-    vat_number
     created_at
     updated_at
   ].freeze
@@ -57,7 +57,6 @@ class AccountDashboard < Administrate::BaseDashboard
     email
     permissions
     completed_tutorials
-    vat_number
   ].freeze
 
   # COLLECTION_FILTERS

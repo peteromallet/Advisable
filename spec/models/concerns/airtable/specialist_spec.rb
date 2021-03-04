@@ -9,23 +9,22 @@ RSpec.describe Airtable::Specialist do
   include_examples "sync airtable association", "Country", to: :country, fields: {"Email Address" => Faker::Internet.email}
 
   include_examples("sync airtable columns to association", {
-                     association: :account,
-                     columns: [
-                       {from: "Email Address", to: :email, with: "test@test.com"},
-                       {from: "First Name", to: :first_name, with: "John"},
-                       {from: "Last Name", to: :last_name, with: "Snow"},
-                       {from: "VAT Number", to: :vat_number, with: "BeyondTheWall123"}
-                     ]
-                   })
+    association: :account,
+    columns: [
+      {from: "Email Address", to: :email, with: "test@test.com"},
+      {from: "First Name", to: :first_name, with: "John"},
+      {from: "Last Name", to: :last_name, with: "Snow"}
+    ]
+  })
 
   describe "syncing the application stage" do
     let(:specialist) { create(:specialist, application_stage: nil) }
     let(:airtable) do
       described_class.new({
-                            "Email Address" => "test@airtable.com",
-                            "Application Stage" => "Applied",
-                            "Bank Holder Address" => "123 Bacon Street, Egg City, IE, 12345"
-                          }, id: specialist.airtable_id)
+        "Email Address" => "test@airtable.com",
+        "Application Stage" => "Applied",
+        "Bank Holder Address" => "123 Bacon Street, Egg City, IE, 12345"
+      }, id: specialist.airtable_id)
     end
 
     it 'triggers the application_stage_changed webhook event' do
@@ -39,8 +38,8 @@ RSpec.describe Airtable::Specialist do
     context "when the record is a new record" do
       let(:airtable) do
         described_class.new({
-                              "Application Stage" => "Applied"
-                            }, id: "rec_new")
+          "Application Stage" => "Applied"
+        }, id: "rec_new")
       end
 
       it "does not trigger a webhook" do
@@ -69,9 +68,9 @@ RSpec.describe Airtable::Specialist do
     let(:specialist) { create(:specialist, public_use: nil) }
     let(:airtable) do
       described_class.new({
-                            "Email Address" => "test@airtable.com",
-                            "Okay To Use Publicly" => "Yes"
-                          }, id: specialist.airtable_id)
+        "Email Address" => "test@airtable.com",
+        "Okay To Use Publicly" => "Yes"
+      }, id: specialist.airtable_id)
     end
 
     it "sets the public_use column to true" do
@@ -85,9 +84,9 @@ RSpec.describe Airtable::Specialist do
     let(:specialist) { create(:specialist, public_use: nil) }
     let(:airtable) do
       described_class.new({
-                            "Okay To Use Publicly" => "No",
-                            "Email Address" => "test@airtable.com"
-                          }, id: specialist.airtable_id)
+        "Okay To Use Publicly" => "No",
+        "Email Address" => "test@airtable.com"
+      }, id: specialist.airtable_id)
     end
 
     it "sets the public_use column to false" do
@@ -101,9 +100,9 @@ RSpec.describe Airtable::Specialist do
     let(:specialist) { create(:specialist, hourly_rate: nil) }
     let(:airtable) do
       described_class.new({
-                            "Email Address" => "test@airtable.com",
-                            "Typical Hourly Rate" => 87
-                          }, id: specialist.airtable_id)
+        "Email Address" => "test@airtable.com",
+        "Typical Hourly Rate" => 87
+      }, id: specialist.airtable_id)
     end
 
     it "stores it as a minor currency" do
@@ -118,9 +117,9 @@ RSpec.describe Airtable::Specialist do
     let(:skill_b) { create(:skill) }
     let(:airtable) do
       described_class.new({
-                            "Email Address" => "test@airtable.com",
-                            "Specialist Skills" => [skill_a.airtable_id, skill_b.airtable_id]
-                          }, id: specialist.airtable_id)
+        "Email Address" => "test@airtable.com",
+        "Specialist Skills" => [skill_a.airtable_id, skill_b.airtable_id]
+      }, id: specialist.airtable_id)
     end
 
     it "associates each skill to the specialist" do
@@ -134,9 +133,9 @@ RSpec.describe Airtable::Specialist do
     context 'when the skill has not already been synced' do
       let(:airtable) do
         described_class.new({
-                              "Email Address" => "test@airtable.com",
-                              "Specialist Skills" => ["recNewSkill"]
-                            }, id: specialist.airtable_id)
+          "Email Address" => "test@airtable.com",
+          "Specialist Skills" => ["recNewSkill"]
+        }, id: specialist.airtable_id)
       end
 
       it 'syncs it first' do
@@ -152,17 +151,19 @@ RSpec.describe Airtable::Specialist do
     let(:specialist) { create(:specialist) }
     let(:airtable) do
       described_class.new({
-                            "Email Address" => " test@airtable.com ",
-                            "First Name" => " Dwight ",
-                            "Last Name" => " Schrute ",
-                            "VAT Number" => " 1234 "
-                          }, id: specialist.airtable_id)
+        "Email Address" => " test@airtable.com ",
+        "First Name" => " Dwight ",
+        "Last Name" => " Schrute ",
+        "VAT Number" => " 1234 "
+      }, id: specialist.airtable_id)
     end
 
-    it "strips email, name, and VAT" do
+    it "strips association attributes" do
       airtable.sync
-      attributes = specialist.account.reload.attributes.slice("email", "first_name", "last_name", "vat_number").map(&:second)
-      expect(attributes).to match_array(["1234", "Dwight", "Schrute", "test@airtable.com"])
+      specialist.reload
+      expect(specialist.vat_number).to eq(" 1234 ")
+      attributes = specialist.account.attributes.slice("email", "first_name", "last_name").map(&:second)
+      expect(attributes).to match_array(["Dwight", "Schrute", "test@airtable.com"])
     end
   end
 
@@ -196,9 +197,9 @@ RSpec.describe Airtable::Specialist do
   describe "push_data" do
     let(:specialist) do
       create(:specialist, {
-               bio: "bio",
-               city: "Dublin"
-             })
+        bio: "bio",
+        city: "Dublin"
+      })
     end
     let(:airtable) { described_class.new({}, id: specialist.airtable_id) }
 

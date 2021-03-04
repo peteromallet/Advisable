@@ -14,8 +14,8 @@ module Airtable
     sync_column_to_association 'Email Address', association: :account, to: :email
     sync_column_to_association 'First Name', association: :account, to: :first_name
     sync_column_to_association 'Last Name', association: :account, to: :last_name
-    sync_column_to_association 'VAT Number', association: :account, to: :vat_number
 
+    sync_column 'VAT Number', to: :vat_number
     sync_column 'Phone Number', to: :phone
     sync_column 'Can Travel', to: :travel_availability
     sync_column 'City', to: :city
@@ -126,7 +126,7 @@ module Airtable
       self['Phone Number'] = specialist.phone
       self['Bank Holder Name'] = specialist.bank_holder_name
       self['Bank Currency'] = specialist.bank_currency
-      self['VAT Number'] = specialist.account.vat_number
+      self['VAT Number'] = specialist.vat_number
       self['Estimated Number of Freelance Projects'] =
         specialist.number_of_projects
       self['Application Stage'] = specialist.application_stage

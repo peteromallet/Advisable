@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'administrate/base_dashboard'
 
 class SpecialistDashboard < Administrate::BaseDashboard
@@ -24,6 +26,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     guild_calendly_link: Field::String.with_options(searchable: false),
     guild_featured_member_at: Field::DateTime,
     airtable_id: Field::String,
+    vat_number: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -49,6 +52,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     guild_calendly_link
     guild_featured_member_at
     airtable_id
+    vat_number
     created_at
     updated_at
     skills
@@ -59,6 +63,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     airtable_id
+    vat_number
     skills
     linkedin
     travel_availability
