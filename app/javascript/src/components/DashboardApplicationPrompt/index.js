@@ -144,7 +144,7 @@ const InterviewScheduled = () => {
 
 const InterviewCompleted = () => (
   <PromptCard mb={10}>
-    <ProgressLine progress={4} />
+    <ProgressLine progress={3} />
     <Header>Interview Completed</Header>
     <Description>
       Thank you for joining your call with Annie. We are reviewing your

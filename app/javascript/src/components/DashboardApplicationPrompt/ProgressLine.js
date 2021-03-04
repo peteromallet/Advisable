@@ -63,10 +63,10 @@ export default function ProgressLine({ progress }) {
       mb={5}
     >
       <CheckPoint active={progress > 0} />
-      <Line width={(progress == 2 && "50%") || (progress > 2 && "100%")} />
-      <CheckPoint active={progress >= 3} />
-      <Line width={(progress == 4 && "50%") || (progress > 4 && "100%")} />
-      <CheckPoint active={progress === 5} />
+      <Line width={(progress == 1 && "50%") || (progress > 1 && "100%")} />
+      <CheckPoint active={progress > 2} />
+      <Line width={progress == 3 && "50%"} />
+      <CheckPoint />
     </Box>
   );
 }
