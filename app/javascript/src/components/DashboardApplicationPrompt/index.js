@@ -12,8 +12,9 @@ const Header = (props) => (
     zIndex="2"
     mb={2}
     fontSize="4xl"
-    fontWeight="medium"
-    color="#003846"
+    fontWeight="500"
+    color="neutral900"
+    letterSpacing="-0.04rem"
     {...props}
   />
 );
@@ -45,7 +46,7 @@ const AccountCreated = () => (
 const ApplicationSubmitted = () => (
   <PromptCard mb={10}>
     <ProgressLine progress={1} />
-    <Header>Application Submitted</Header>
+    <Header>We are reviewing your application</Header>
     <Description>
       Your application to Advisable has been is being reviewed by our team. You
       should hear from us within the next 2 working days. In the mean time you
@@ -91,6 +92,7 @@ const InvitedToInterview = () => {
         // https://api.calendly.com/scheduled_events/AEQZY6BZ7BGPC6EZ
         const url = new URL(e.data.payload.event.uri);
         const eventId = url.pathname.split("/")[2];
+        console.log({ url, eventId });
         return eventId;
       }
     };
@@ -130,10 +132,10 @@ const InterviewScheduled = () => {
   return (
     <PromptCard mb={10}>
       <ProgressLine progress={3} />
-      <Header>Interview Scheduled</Header>
+      <Header>Call Scheduled</Header>
       <Description>
-        Your interview with Annie is scheduled for 10:00am on Friday, 5th
-        February. You should have also received a calendar invite by now.
+        Your introductory call has been scheduled. You should have also received
+        a calendar invite by now.
       </Description>
       <Button variant="subtle" onClick={handleReschedule}>
         Reschedule
