@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useResourceData } from "../../utilities";
 import Filter from "../../filters";
 
 export default function Filters({
-  refetch,
   filters,
   addFilter,
   removeFilter,
@@ -24,16 +23,6 @@ export default function Filters({
     updateFilter(id, { [attribute]: value });
   };
 
-  useEffect(() => {
-    refetch({
-      filters: filters.map((f) => ({
-        attribute: f.attribute,
-        type: f.type,
-        value: f.value,
-      })),
-    });
-  }, [refetch, filters]);
-
   function filtersForField(field) {
     return fieldsWithFilters.find((f) => f.name === field).filters;
   }
@@ -46,16 +35,6 @@ export default function Filters({
         type: filters[0].name,
       });
     };
-  }
-
-  function renderFilter(filter) {
-    return (
-      <Filter
-        filter={filter}
-        resource={resource}
-        onChange={handleChange(filter.id, "value")}
-      />
-    );
   }
 
   return (
@@ -78,7 +57,11 @@ export default function Filters({
               <option key={filter.name}>{filter.name}</option>
             ))}
           </select>
-          {renderFilter(filter)}
+          <Filter
+            filter={filter}
+            resource={resource}
+            onChange={handleChange(filter.id, "value")}
+          />
           <button onClick={() => removeFilter(filter.id)}>x</button>
         </div>
       ))}

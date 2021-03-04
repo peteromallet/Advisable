@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import { useSchema } from "../components/schema";
+import { getType } from "../utilities";
 
-export default function OneOf({ onChange }) {
+export default function OneOf({ resource, filter, onChange }) {
+  const schemaData = useSchema();
+  const resourceType = getType(schemaData.schema, resource.type);
+  const field = resourceType.fields.find((f) => f.name === filter.attribute);
+  const isScalar = field.type.kind === "SCALAR";
   const [value, setValue] = useState("");
 
   const handleChange = (e) => {
@@ -15,12 +21,16 @@ export default function OneOf({ onChange }) {
     onChange(values);
   };
 
-  return (
-    <input
-      value={value}
-      onBlur={handleBlur}
-      onChange={handleChange}
-      type="text"
-    />
-  );
+  if (isScalar) {
+    return (
+      <input
+        value={value}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        type="text"
+      />
+    );
+  }
+
+  return null;
 }
