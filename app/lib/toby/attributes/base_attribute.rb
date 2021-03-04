@@ -3,10 +3,11 @@
 module Toby
   module Attributes
     class BaseAttribute
-      attr_reader :name, :options
+      attr_reader :name, :resource, :options
 
-      def initialize(name, **options)
+      def initialize(name, resource, **options)
         @name = name
+        @resource = resource
         @options = options
       end
 
@@ -20,6 +21,10 @@ module Toby
 
       def humanized_name
         name.to_s.humanize
+      end
+
+      def reflection
+        resource.model.reflect_on_association(name)
       end
 
       def field
