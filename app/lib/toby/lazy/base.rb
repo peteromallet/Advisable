@@ -7,11 +7,11 @@ module Toby
 
       attr_reader :attribute, :id, :context
 
-      def_delegators :attribute, :column, :via
+      def_delegators :attribute, :reflection
 
       def initialize(attribute, context, resource)
         @attribute = attribute
-        @id = resource.public_send(via)
+        @id = resource.public_send(reflection.active_record_primary_key)
         @context = context
         state[:pending] << id
       end
@@ -21,10 +21,6 @@ module Toby
       end
 
       private
-
-      def model
-        @model ||= "::#{attribute.model}".constantize
-      end
 
       def state
         context[:"lazy_load_#{attribute}"] ||= {pending: Set.new, loaded: {}}
@@ -36,9 +32,9 @@ module Toby
       end
 
       def load_records
-        model.where(column => state[:pending]).each do |record|
-          state[:loaded][record.public_send(column)] ||= []
-          state[:loaded][record.public_send(column)] << record
+        reflection.klass.where(reflection.association_primary_key => state[:pending]).each do |record|
+          state[:loaded][record.public_send(reflection.association_primary_key)] ||= []
+          state[:loaded][record.public_send(reflection.association_primary_key)] << record
         end
         state[:pending].clear
       end

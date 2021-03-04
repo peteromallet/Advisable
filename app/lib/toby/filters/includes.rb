@@ -8,12 +8,13 @@ module Toby
 
         reflection = attribute.reflection
 
-        if attribute.respond_to?(:through)
+        if attribute.is_a?(HasManyThrough)
+          # This might be broken now
           through = reflection.options[:through]
           association_id = reflection.source_reflection.association_primary_key
           records.includes(through => reflection.source_reflection.name).where(through => {reflection.name => {association_id => value}})
         else
-          records.joins(attribute.name).where(attribute.name => {attribute.via => value}).distinct
+          records.joins(attribute.name).where(attribute.name => {reflection.active_record_primary_key => value}).distinct
         end
       end
     end
