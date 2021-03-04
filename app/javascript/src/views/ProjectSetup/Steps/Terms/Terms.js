@@ -73,7 +73,12 @@ const Terms = ({ project, formik }) => {
   } else {
     terms = (
       <>
-        <Text fontSize="sm" weight="bold" colour="dark" marginBottom="xs">
+        <Text
+          fontSize="sm"
+          fontWeight="500"
+          color="neutral900"
+          marginBottom="xs"
+        >
           Freelancer payment
         </Text>
         <Text fontSize="sm" marginBottom="l">
