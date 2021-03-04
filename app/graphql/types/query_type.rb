@@ -232,7 +232,7 @@ module Types
       requires_guild_user!
       query = ::Guild::Post.feed(current_user)
 
-      guild_topic = ::Guild::Topic.published.find_by_slug_or_id(topic_id)
+      guild_topic = ::Guild::Topic.published.find_by_slug_or_id!(topic_id)
       query.tagged_with(guild_topic, on: :guild_topics, any: true)
     end
 
