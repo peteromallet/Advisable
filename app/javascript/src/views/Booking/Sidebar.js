@@ -114,7 +114,12 @@ const Sidebar = ({ data, history, tutorialModal }) => {
                   action={
                     <DialogDisclosure {...projectTypeModal}>
                       {(disclosure) => (
-                        <Button size="s" variant="subtle" {...disclosure}>
+                        <Button
+                          size="s"
+                          aria-label="Edit project type"
+                          variant="subtle"
+                          {...disclosure}
+                        >
                           <Edit />
                         </Button>
                       )}
