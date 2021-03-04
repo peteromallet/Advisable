@@ -23,7 +23,7 @@ const Description = (props) => (
 );
 
 const AccountCreated = () => (
-  <>
+  <PromptCard mb={10}>
     <ProgressLine progress={0} />
     <Header>Account Created</Header>
     <Description>
@@ -39,11 +39,11 @@ const AccountCreated = () => (
     >
       Continue Application
     </Button>
-  </>
+  </PromptCard>
 );
 
 const ApplicationSubmitted = () => (
-  <>
+  <PromptCard mb={10}>
     <ProgressLine progress={1} />
     <Header>Application Submitted</Header>
     <Description>
@@ -63,7 +63,7 @@ const ApplicationSubmitted = () => (
     >
       Update Application
     </Button>
-  </>
+  </PromptCard>
 );
 
 const InvitedToInterview = () => {
@@ -71,10 +71,10 @@ const InvitedToInterview = () => {
   const fullName = `${firstName} ${lastName}`;
 
   const handleScheduled = () => {
-    calendly(
-      "https://calendly.com/d/c9sf-mhb/an-introduction-to-advisable-guild",
-      { full_name: fullName, email },
-    );
+    calendly("https://calendly.com/guandjoy/15min", {
+      full_name: fullName,
+      email,
+    });
   };
 
   // Listen calendly notifications:
@@ -100,7 +100,7 @@ const InvitedToInterview = () => {
   }, []);
 
   return (
-    <>
+    <PromptCard mb={10}>
       <ProgressLine progress={2} />
       <Header>Invited To Interview</Header>
       <Description>
@@ -115,7 +115,7 @@ const InvitedToInterview = () => {
       >
         Schedule Interview
       </Button>
-    </>
+    </PromptCard>
   );
 };
 
@@ -128,7 +128,7 @@ const InterviewScheduled = () => {
   };
 
   return (
-    <>
+    <PromptCard mb={10}>
       <ProgressLine progress={3} />
       <Header>Interview Scheduled</Header>
       <Description>
@@ -138,19 +138,19 @@ const InterviewScheduled = () => {
       <Button variant="subtle" onClick={handleReschedule}>
         Reschedule
       </Button>
-    </>
+    </PromptCard>
   );
 };
 
 const InterviewCompleted = () => (
-  <>
+  <PromptCard mb={10}>
     <ProgressLine progress={4} />
     <Header>Interview Completed</Header>
     <Description>
       Thank you for joining your call with Annie. We are reviewing your
       application and you should here from us within the next 2 working days.
     </Description>
-  </>
+  </PromptCard>
 );
 
 const ApplicationStage = ({ stage }) => {
@@ -174,9 +174,5 @@ export default function DashboardApplicationPrompt() {
   const viewer = useViewer();
   const applicationStage = viewer?.applicationStage;
 
-  return (
-    <PromptCard mb={10}>
-      <ApplicationStage stage={applicationStage} />
-    </PromptCard>
-  );
+  return <ApplicationStage stage={applicationStage} />;
 }
