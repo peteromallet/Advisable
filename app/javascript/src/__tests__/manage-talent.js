@@ -153,6 +153,7 @@ test("The client can change the project type", async () => {
             projectType: "Fixed",
             tasks: [generateType.task({ name: "This is a test task" })],
             project: generateType.project({
+              isOwner: true,
               user: generateType.user(),
             }),
             specialist: generateType.specialist(),

@@ -34,7 +34,7 @@ const ProjectTypeModal = ({ modal, application }) => {
 
   return (
     <>
-      <Modal modal={modal} padding={8}>
+      <Modal modal={modal} padding={8} label="Update project type">
         <Text
           mb={6}
           as="h4"
