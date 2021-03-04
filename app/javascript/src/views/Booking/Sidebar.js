@@ -2,11 +2,10 @@ import React from "react";
 import { get } from "lodash-es";
 import { motion } from "framer-motion";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
-import { Button, Tooltip, Box, Avatar } from "@advisable/donut";
+import { Button, Tooltip, Box, Avatar, Text } from "@advisable/donut";
 import { withRouter, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "../../components/Sticky";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Heading from "../../components/Heading";
 import currency from "../../utilities/currency";
@@ -52,7 +51,7 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
             />
           </Box>
           <Heading level={3}>{specialist.name}</Heading>
-          <Text size="xs">
+          <Text fontSize="xs">
             {specialist.city}
             {specialist.country && `, ${specialist.country.name}`}
           </Text>

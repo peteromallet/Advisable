@@ -1,4 +1,3 @@
-export { default as Text } from "./Text";
 export { default as List } from "./List";
 export { default as Modal } from "./Modal";
 export { default as Layout } from "./Layout";
