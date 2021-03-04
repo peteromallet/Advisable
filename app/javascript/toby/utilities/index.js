@@ -1,6 +1,7 @@
+import { useEffect, useState, useCallback } from "react";
 import pluralize from "pluralize";
-import { gql } from "@apollo/client";
-import { useQuery } from "@apollo/client";
+import { gql, useApolloClient } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { jsonToGraphQLQuery, VariableType } from "json-to-graphql-query";
 import { useSchema } from "../components/schema";
@@ -15,20 +16,100 @@ export function useResourceData() {
   return getResourceByParam(schemaData.resources, resource);
 }
 
-// Assumes that there is a resource param in the URL. e.g /accounts
-export function useResources() {
+async function convertFilterToIDs(client, filter, schemaData) {
+  const resourceData = getResourceByParam(
+    schemaData.resources,
+    filter.resource,
+  );
+  const query = generateFilterQuery(schemaData, resourceData);
+  const filterValue = await resolveFilterValue(
+    client,
+    filter.value,
+    schemaData,
+  );
+  const response = await client.query({
+    query,
+    fetchPolicy: "network-only",
+    variables: {
+      filters: [
+        {
+          attribute: filter.attribute,
+          type: filter.type,
+          value: filterValue,
+        },
+      ],
+    },
+  });
+
+  return response.data.records.nodes.map((n) => n.id);
+}
+
+async function resolveFilterValue(client, value, schemaData) {
+  if (Array.isArray(value)) {
+    return Promise.resolve(value);
+  }
+
+  return convertFilterToIDs(client, value, schemaData);
+}
+
+async function convertFilters(client, filters, schemaData) {
+  if (!filters.length) return [];
+
+  const promises = filters.map(async (f) => ({
+    attribute: f.attribute,
+    type: f.type,
+    value: await resolveFilterValue(client, f.value, schemaData),
+  }));
+
+  return Promise.all(promises);
+}
+
+export function useFetchResources(filters) {
+  const client = useApolloClient();
+  const [loading, setLoading] = useState(true);
   const { resource } = useParams();
   const schemaData = useSchema();
   const resourceData = getResourceByParam(schemaData.resources, resource);
   const query = generateCollectionQuery(schemaData, resourceData);
-  const response = useQuery(query, {
+  const [fetch, queryState] = useLazyQuery(query, {
     notifyOnNetworkStatusChange: true,
-    variables: {},
+    fetchPolicy: "cache-and-network",
+    onCompleted() {
+      setLoading(false);
+    },
   });
+
+  const fetchRecords = useCallback(
+    async function fetchRecords() {
+      const resolvedFilters = await convertFilters(client, filters, schemaData);
+      fetch({
+        variables: {
+          filters: resolvedFilters,
+        },
+      });
+    },
+    [schemaData, fetch, client, filters],
+  );
+
+  useEffect(() => {
+    fetchRecords();
+  }, [fetchRecords]);
+
   return {
-    ...response,
+    ...queryState,
     resource: resourceData,
+    loading,
   };
+}
+
+export function convertFiltersToVariable(filters) {
+  if (!filters.length) return [];
+
+  return filters.map((f) => ({
+    attribute: f.attribute,
+    type: f.type,
+    value: f.value,
+  }));
 }
 
 // Takes the resources data and returns a matching resource bassed on the
@@ -76,6 +157,34 @@ function generateCollectionQuery(schemaData, resourceData) {
     `${resourceData.type}Collection` +
     queryString.substr(6);
 
+  return gql(queryString);
+}
+
+// Genreates a graphql query used for filtering an association down to an array
+// of ID's.
+function generateFilterQuery(schemaData, resourceData) {
+  const queryObject = {
+    query: {
+      __variables: {
+        filters: "[Filter!]",
+      },
+      records: {
+        __args: {
+          filters: new VariableType("filters"),
+        },
+        __aliasFor: resourceData.queryNameCollection,
+        pageInfo: {
+          hasNextPage: true,
+          endCursor: true,
+        },
+        nodes: {
+          id: true,
+        },
+      },
+    },
+  };
+
+  const queryString = jsonToGraphQLQuery(queryObject);
   return gql(queryString);
 }
 

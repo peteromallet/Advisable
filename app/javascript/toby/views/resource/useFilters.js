@@ -1,8 +1,8 @@
 import { uniqueId } from "lodash-es";
 import { useState, useCallback } from "react";
 
-export default function useFilters() {
-  const [filters, setFilters] = useState([]);
+export default function useFilters(initialFilters = []) {
+  const [filters, setFilters] = useState(initialFilters);
 
   const addFilter = useCallback((filter) => {
     setFilters((existing) => [

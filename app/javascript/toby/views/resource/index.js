@@ -1,6 +1,6 @@
 import React from "react";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
-import { useResources } from "../../utilities";
+import { useFetchResources } from "../../utilities";
 import {
   StyledLayout,
   StyledLayoutBody,
@@ -17,8 +17,31 @@ import { Attribute } from "../../attributes";
 
 export default function Resource() {
   const filterState = useFilters();
-  const { loading, data, resource, fetchMore, refetch, error } = useResources();
-
+  const { loading, data, resource, fetchMore, error } = useFetchResources(
+    filterState.filters,
+  );
+  // [
+  //   {
+  //     attribute: "id",
+  //     type: "one_of",
+  //     value: ["2", "3", "5", "7"],
+  //   },
+  //   {
+  //     attribute: "user",
+  //     type: "one_of",
+  //     value: {
+  //       resource: "users",
+  //       attribute: "account",
+  //       type: "one_of",
+  //       value: {
+  //         resource: "accounts",
+  //         attribute: "lastName",
+  //         type: "contains",
+  //         value: ["Cull"],
+  //       },
+  //     },
+  //   },
+  // ],
   const hasNextPage = data?.records.pageInfo.hasNextPage;
   const endCursor = data?.records.pageInfo.endCursor;
 
@@ -37,7 +60,7 @@ export default function Resource() {
     <StyledLayout>
       <StyledHeader>
         <Navigation />
-        <Filters {...filterState} refetch={refetch} />
+        <Filters {...filterState} />
         <StyledHeaderRow>
           {resource.attributes.map((attr) => (
             <StyledHeaderCell key={attr.name}>
