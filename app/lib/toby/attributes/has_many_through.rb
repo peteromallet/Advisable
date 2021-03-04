@@ -3,6 +3,7 @@
 module Toby
   module Attributes
     class HasManyThrough < HasMany
+      filter :has_none, Filters::HasNone
       extension_field :labeled_by, GraphQL::Types::String
 
       # optional when has_many through: does not follow parent_model plural convention
