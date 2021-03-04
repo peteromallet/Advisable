@@ -3,7 +3,8 @@
 class AddApplicationInterviewStartsAt < ActiveRecord::Migration[6.1]
   def change
     safety_assured do
-      change_table :specialists do |t|
+      change_table :specialists, bulk: true do |t|
+        t.string :application_interview_calendly_id
         t.datetime :application_interview_starts_at
       end
     end
