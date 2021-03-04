@@ -3,24 +3,22 @@
 module Toby
   module Lazy
     class Through < Base
-      def_delegators :attribute, :through_column, :source_id_column, :constraint
-
       private
 
-      def through
-        @through ||= ActiveSupport::Inflector.classify(attribute.through).constantize
+      # There has to be a better way to do this
+      def polymorphic_constraint
+        return unless reflection.through_reflection.type
+
+        {reflection.through_reflection.type => reflection.through_reflection.inverse_of.source_reflection.class_name}
       end
 
       def load_records
-        # look into attribute thingy
-        # attribute.reflection
+        mapping = reflection.source_reflection.active_record.where(reflection.through_reflection.foreign_key => state[:pending])
+        mapping = mapping.where(polymorphic_constraint) if polymorphic_constraint
+        mapping = mapping.pluck(reflection.foreign_key, reflection.through_reflection.foreign_key).group_by(&:shift).transform_values(&:flatten)
 
-        mapping = through.where(column => state[:pending])
-        mapping = mapping.where(constraint) if constraint
-        mapping = mapping.pluck(through_column, column).group_by(&:shift).transform_values(&:flatten)
-
-        model.where(source_id_column => mapping.keys).each do |record|
-          mapping[record.public_send(source_id_column)].each do |r|
+        reflection.klass.where(reflection.association_primary_key => mapping.keys).each do |record|
+          mapping[record.public_send(reflection.association_primary_key)].each do |r|
             state[:loaded][r] ||= []
             state[:loaded][r] << record
           end

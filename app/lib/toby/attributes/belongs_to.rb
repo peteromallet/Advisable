@@ -14,16 +14,6 @@ module Toby
         options.fetch(:model) { name.to_s.camelize }
       end
 
-      # optional for when we don't follow the id convention
-      def column
-        options.fetch(:column, :id)
-      end
-
-      # optional for when we don't follow the resource_id convention
-      def via
-        options.fetch(:column) { :"#{name}_id" }
-      end
-
       def type
         "Toby::Types::#{model}"
       end

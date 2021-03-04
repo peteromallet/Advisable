@@ -14,16 +14,6 @@ module Toby
         options.fetch(:model) { name.to_s.singularize.camelize }
       end
 
-      # optional for when we don't follow the parent_id convention
-      def column
-        options.fetch(:column) { :"#{parent.downcase}_id" }
-      end
-
-      # optional for when we don't follow the id convention
-      def via
-        options.fetch(:column, :id)
-      end
-
       def type
         ["Toby::Types::#{model}"]
       end
