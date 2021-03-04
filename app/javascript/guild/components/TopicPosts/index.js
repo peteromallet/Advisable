@@ -13,19 +13,22 @@ const TopicPosts = ({ topicId }) => {
   const history = useHistory();
   const historyPopped = history.action === "POP";
 
-  const { data, loading, fetchMore } = useQuery(GUILD_TOPIC_POSTS_QUERY, {
-    fetchPolicy: historyPopped ? "cache-first" : "network-only",
-    nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
-    notifyOnNetworkStatusChange: true,
-    variables: { topicId },
-    errorPolicy: "none",
-    onError(err) {
-      if (err?.graphQLErrors?.[0]?.extensions?.type === "NOT_AUTHENTICATED") {
-        const path = encodeURIComponent(`/guild${location.pathname}`);
-        window.location = `/login?redirect=${path}`;
-      }
+  const { data, loading, error, fetchMore } = useQuery(
+    GUILD_TOPIC_POSTS_QUERY,
+    {
+      fetchPolicy: historyPopped ? "cache-first" : "network-only",
+      nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
+      notifyOnNetworkStatusChange: true,
+      variables: { topicId },
+      errorPolicy: "none",
+      onError(err) {
+        if (err?.graphQLErrors?.[0]?.extensions?.type === "NOT_AUTHENTICATED") {
+          const path = encodeURIComponent(`/guild${location.pathname}`);
+          window.location = `/login?redirect=${path}`;
+        }
+      },
     },
-  });
+  );
 
   const hasNextPage = data?.guildTopicPosts.pageInfo.hasNextPage || false;
   const endCursor = data?.guildTopicPosts.pageInfo.endCursor;
@@ -44,7 +47,9 @@ const TopicPosts = ({ topicId }) => {
         offset={64}
         debounce={0}
       />
-      <FollowTopic topicId={topicId} />
+      {!loading && error?.message !== "Resouce was not found" ? (
+        <FollowTopic topicId={topicId} />
+      ) : null}
       <Stack spacing="4">
         {posts.map((post) => (
           <Post key={post.id} post={post} />

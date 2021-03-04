@@ -94,9 +94,9 @@ RSpec.describe Types::Guild::PostInterface do
         expect(filtered_by_type.size).to eq(1)
         expect(filtered_by_type.size).not_to eq(Guild::Post.count)
         expect(filtered_by_type.first).to include({
-                                                    "type" => "Opportunity",
-                                                    "id" => opportunity.id
-                                                  })
+          "type" => "Opportunity",
+          "id" => opportunity.id
+        })
       end
     end
 
@@ -122,18 +122,35 @@ RSpec.describe Types::Guild::PostInterface do
         GRAPHQL
       end
 
-      before do
-        opportunity.guild_topic_list.add(guild_topics.first)
-        opportunity.save!
+      let(:not_found_query) do
+        <<-GRAPHQL
+          {
+            guildTopicPosts(first: 5, topicId: "nothing-here") {
+              nodes {
+                guildTopics {
+                  slug
+                }
+              }
+            }
+          }
+        GRAPHQL
       end
 
       it "returns posts that are tagged with the topic" do
+        opportunity.guild_topic_list.add(guild_topics.first)
+        opportunity.save!
+
         topic_results = filtered_by_topic[0]["guildTopics"]
         expect(topic_results.size).to eq(1)
         expect(topic_results.size).not_to eq(Guild::Topic.count)
         expect(topic_results[0]).to include({
-                                              "slug" => guild_topics.first.slug
-                                            })
+          "slug" => guild_topics.first.slug
+        })
+      end
+
+      it "returns a not found error" do
+        resp = AdvisableSchema.execute(not_found_query, context: {current_user: guild_specialist})
+        expect(resp["errors"][0]["extensions"]).to eq({"type" => "INVALID_REQUEST", "code" => "notFound"})
       end
     end
   end
