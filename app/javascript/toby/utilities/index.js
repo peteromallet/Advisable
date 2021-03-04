@@ -16,15 +16,12 @@ export function useResourceData() {
   return getResourceByParam(schemaData.resources, resource);
 }
 
-async function convertFilterToIDs(client, filter, schemaData) {
-  const resourceData = getResourceByParam(
-    schemaData.resources,
-    filter.resource,
-  );
-  const query = generateFilterQuery(schemaData, resourceData);
+async function convertFilterToIDs(resource, client, filter, schemaData) {
+  const query = generateFilterQuery(schemaData, resource);
   const filterValue = await resolveFilterValue(
+    resource,
     client,
-    filter.value,
+    filter,
     schemaData,
   );
   const response = await client.query({
@@ -44,21 +41,24 @@ async function convertFilterToIDs(client, filter, schemaData) {
   return response.data.records.nodes.map((n) => n.id);
 }
 
-async function resolveFilterValue(client, value, schemaData) {
-  if (Array.isArray(value)) {
-    return Promise.resolve(value);
+async function resolveFilterValue(resource, client, filter, schemaData) {
+  if (Array.isArray(filter.value)) {
+    return Promise.resolve(filter.value);
   }
 
-  return convertFilterToIDs(client, value, schemaData);
+  const type = getType(schemaData.schema, resource.type);
+  const field = type.fields.find((f) => f.name === filter.attribute);
+  const nextResource = getResource(schemaData.resources, field.type.name);
+  return convertFilterToIDs(nextResource, client, filter.value, schemaData);
 }
 
-async function convertFilters(client, filters, schemaData) {
+async function convertFilters(resourceData, client, filters, schemaData) {
   if (!filters.length) return [];
 
   const promises = filters.map(async (f) => ({
     attribute: f.attribute,
     type: f.type,
-    value: await resolveFilterValue(client, f.value, schemaData),
+    value: await resolveFilterValue(resourceData, client, f, schemaData),
   }));
 
   return Promise.all(promises);
@@ -81,14 +81,19 @@ export function useFetchResources(filters) {
 
   const fetchRecords = useCallback(
     async function fetchRecords() {
-      const resolvedFilters = await convertFilters(client, filters, schemaData);
+      const resolvedFilters = await convertFilters(
+        resourceData,
+        client,
+        filters,
+        schemaData,
+      );
       fetch({
         variables: {
           filters: resolvedFilters,
         },
       });
     },
-    [schemaData, fetch, client, filters],
+    [resourceData, schemaData, fetch, client, filters],
   );
 
   useEffect(() => {
@@ -110,6 +115,10 @@ export function convertFiltersToVariable(filters) {
     type: f.type,
     value: f.value,
   }));
+}
+
+export function getResource(resources, name) {
+  return resources.find((resource) => resource.type === name);
 }
 
 // Takes the resources data and returns a matching resource bassed on the
