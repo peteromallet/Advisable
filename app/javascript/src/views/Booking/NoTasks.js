@@ -1,7 +1,6 @@
 import * as React from "react";
 import { get } from "lodash-es";
-import { Box, Card } from "@advisable/donut";
-import Text from "../../components/Text";
+import { Box, Text, Card } from "@advisable/donut";
 import NewTask from "../../components/NewTask";
 import illustration from "./no_tasks.png";
 
@@ -17,14 +16,8 @@ export default function NoTasks({ onNewTask, application }) {
             No active projects
           </Text>
         </Box>
-        <Box paddingBottom="l">
-          <Text
-            size="s"
-            style={{
-              maxWidth: "300px",
-              margin: "0 auto",
-            }}
-          >
+        <Box paddingBottom="l" maxWidth="300px" margin="0 auto">
+          <Text fontSize="sm">
             You must now assign a project in order for {firstName} to start
             work.
           </Text>

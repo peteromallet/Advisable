@@ -1,8 +1,7 @@
 import React from "react";
 import { Field } from "formik";
-import Text from "src/components/Text";
 import Link from "src/components/Link";
-import { Box, Checkbox } from "@advisable/donut";
+import { Box, Checkbox, Text } from "@advisable/donut";
 
 const Terms = ({ project, formik }) => {
   const hasDeposit = project.depositOwed > 0;
@@ -15,19 +14,29 @@ const Terms = ({ project, formik }) => {
   if (hasDeposit) {
     terms = (
       <>
-        <Text size="s" weight="bold" colour="dark" marginBottom="xs">
+        <Text
+          fontSize="sm"
+          fontWeight="600"
+          color="neutral900"
+          marginBottom="xs"
+        >
           Freelancer payment
         </Text>
-        <Text size="s" marginBottom="l">
+        <Text fontSize="sm" marginBottom="l">
           Advisable earns fees from our freelancers for finding them projects.
           If you hire one of Advisable’s freelancers, all payments to these
           freelancers must be made via the Advisable platform.
         </Text>
 
-        <Text size="s" weight="bold" colour="dark" marginBottom="xs">
+        <Text
+          fontSize="sm"
+          fontWeight="600"
+          color="neutral900"
+          marginBottom="xs"
+        >
           Refundable deposit
         </Text>
-        <Text size="s" marginBottom="l">
+        <Text fontSize="sm" marginBottom="l">
           To start the recruitment process, we charge a {depositAmount} deposit.
           This deposit is 100% refundable should you decide not to hire a
           freelancer, or credited against their first payment if you do hire
@@ -36,10 +45,15 @@ const Terms = ({ project, formik }) => {
           matching process.
         </Text>
 
-        <Text size="s" weight="bold" colour="dark" marginBottom="xs">
+        <Text
+          fontSize="sm"
+          fontWeight="600"
+          color="neutral900"
+          marginBottom="xs"
+        >
           Engage with the process
         </Text>
-        <Text size="s" marginBottom="l">
+        <Text fontSize="sm" marginBottom="l">
           Our freelancers are in high-demand. In submitting this brief, you
           commit to engaging with the recruitment process in a professional
           manner and adhering to the{" "}
@@ -59,19 +73,24 @@ const Terms = ({ project, formik }) => {
   } else {
     terms = (
       <>
-        <Text size="s" weight="bold" colour="dark" marginBottom="xs">
+        <Text fontSize="sm" weight="bold" colour="dark" marginBottom="xs">
           Freelancer payment
         </Text>
-        <Text size="s" marginBottom="l">
+        <Text fontSize="sm" marginBottom="l">
           Advisable earns fees from our freelancers for finding them projects.
           If you hire one of Advisable’s freelancers, all payments to these
           freelancers must be made via the Advisable platform.
         </Text>
 
-        <Text size="s" weight="bold" colour="dark" marginBottom="xs">
+        <Text
+          fontSize="sm"
+          fontWeight="500"
+          color="neutral900"
+          marginBottom="xs"
+        >
           Engage with the process
         </Text>
-        <Text size="s" marginBottom="l">
+        <Text fontSize="sm" marginBottom="l">
           Our freelancers are in high-demand. In submitting this brief, you
           commit to engaging with the recruitment process in a professional
           manner and adhering to the{" "}
@@ -90,7 +109,7 @@ const Terms = ({ project, formik }) => {
 
   return (
     <>
-      <Text size="s" marginBottom="l">
+      <Text fontSize="sm" marginBottom="l">
         By submitting this brief, you agree to the terms (including but not
         limited to freelancer performance, payments, dispute resolution, and
         full-time hires) outlined in{" "}
@@ -98,14 +117,14 @@ const Terms = ({ project, formik }) => {
           Advisable’s Client Agreement
         </Link>
       </Text>
-      <Text size="s" marginBottom="l">
+      <Text fontSize="sm" marginBottom="l">
         Key terms include:
       </Text>
       {terms}
-      <Text size="s" weight="bold" colour="dark" marginBottom="xs">
+      <Text fontSize="sm" fontWeight="500" color="neutral900" marginBottom="xs">
         Advisable Risk-Free Trial Programme
       </Text>
-      <Text size="s" marginBottom="xl">
+      <Text fontSize="sm" marginBottom="xl">
         Advisable offers clients a risk-free trial period of up to 8 hours when
         working with a new freelancer. If you&apos;re not entirely satisfied
         during this period, you will not be charged for any work completed and

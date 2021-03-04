@@ -1,8 +1,7 @@
 import * as React from "react";
 import Div100vh from "react-div-100vh";
-import { Box, Button } from "@advisable/donut";
+import { Box, Button, Text } from "@advisable/donut";
 import TaskStatus from "../TaskStatus";
-import Text from "../Text";
 import Scrollable from "../Scrollable";
 import VerticalLayout from "../VerticalLayout";
 import Title from "./Title";
@@ -163,7 +162,7 @@ const EditTask = ({
         <Confirmation>
           <ConfirmationContainer>
             <Box paddingBottom="l">
-              <Text size="s">
+              <Text fontSize="sm" lineHeight="1.2">
                 Editing this task will remove the quote that has been provided.
                 Are you sure you want to continue?
               </Text>

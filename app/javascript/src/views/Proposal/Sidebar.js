@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Box } from "@advisable/donut";
-import Text from "../../components/Text";
+import { Box, Text } from "@advisable/donut";
 import Back from "../../components/Back";
 import Steps from "../../components/Steps";
 import Layout from "../../components/Layout";
@@ -34,7 +33,7 @@ let SideBar = (props) => {
         </Heading>
       </Box>
       <Box paddingBottom="l">
-        <Text size="s">
+        <Text fontSize="sm">
           Send {application.project.user.companyName} a proposal to start
           working together.
         </Text>

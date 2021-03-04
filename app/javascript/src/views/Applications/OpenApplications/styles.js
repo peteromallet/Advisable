@@ -1,6 +1,5 @@
 import styled, { keyframes } from "styled-components";
 import { StyledCard } from "@advisable/donut";
-import Text from "../../../components/Text";
 import { Status } from "../../../components/Status/styles";
 
 export const Card = styled(StyledCard)`
@@ -34,10 +33,6 @@ export const Notice = styled.div`
     color: #a7adc1;
     position: absolute;
     transform: translateY(-50%);
-  }
-
-  ${Text} {
-    margin-bottom: 2px;
   }
 `;
 
