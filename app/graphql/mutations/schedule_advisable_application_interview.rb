@@ -9,7 +9,7 @@ module Mutations
 
     # The scheduleAdvisableApplicationInterview mutation
     # requires a specalist to be logged in.
-    def authorized?
+    def authorized(*)
       requires_specialist!
 
       if current_user.application_stage != "Invited To Interview"
@@ -27,7 +27,7 @@ module Mutations
       current_user.application_interview_calendly_id = event_id
       current_user.save_and_sync_with_responsible!(current_account_id)
 
-      {specialist: specialist}
+      {specialist: current_user}
     end
   end
 end
