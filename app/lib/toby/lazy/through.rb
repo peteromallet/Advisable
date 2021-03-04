@@ -12,13 +12,19 @@ module Toby
       end
 
       def load_records
+        # TODO: Miha clear this up!
+        # as a comment to look into attribute thingy
+        # attribute.reflection
+
         mapping = through.where(column => state[:pending])
         mapping = mapping.where(constraint) if constraint
-        mapping = mapping.pluck(through_column, column).to_h
+        mapping = mapping.pluck(through_column, column).group_by(&:first)
 
         model.where(source_id_column => mapping.keys).each do |record|
-          state[:loaded][mapping[record.public_send(source_id_column)]] ||= []
-          state[:loaded][mapping[record.public_send(source_id_column)]] << record
+          mapping[record.public_send(source_id_column)].map(&:second).each do |r|
+            state[:loaded][r] ||= []
+            state[:loaded][r] << record
+          end
         end
         state[:pending].clear
       end
