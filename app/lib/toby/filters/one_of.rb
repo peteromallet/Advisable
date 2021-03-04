@@ -3,10 +3,10 @@
 module Toby
   module Filters
     class OneOf
-      def self.apply(records, name, value = [])
+      def self.apply(records, attribute, value: [], **_opts)
         return records if value.empty?
 
-        records.where(name => value)
+        records.where(attribute.name => value)
       end
     end
   end

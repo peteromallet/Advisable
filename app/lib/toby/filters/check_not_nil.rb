@@ -3,8 +3,8 @@
 module Toby
   module Filters
     class CheckNotNil
-      def self.apply(records, name, _)
-        records.where.not(name => nil)
+      def self.apply(records, attribute, **_opts)
+        records.where.not(attribute.name => nil)
       end
     end
   end

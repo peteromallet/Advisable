@@ -20,28 +20,7 @@ export default function Resource() {
   const { loading, data, resource, fetchMore, error } = useFetchResources(
     filterState.filters,
   );
-  // [
-  //   {
-  //     attribute: "id",
-  //     type: "one_of",
-  //     value: ["2", "3", "5", "7"],
-  //   },
-  //   {
-  //     attribute: "user",
-  //     type: "one_of",
-  //     value: {
-  //       resource: "users",
-  //       attribute: "account",
-  //       type: "one_of",
-  //       value: {
-  //         resource: "accounts",
-  //         attribute: "lastName",
-  //         type: "contains",
-  //         value: ["Cull"],
-  //       },
-  //     },
-  //   },
-  // ],
+
   const hasNextPage = data?.records.pageInfo.hasNextPage;
   const endCursor = data?.records.pageInfo.endCursor;
 

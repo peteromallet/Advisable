@@ -17,7 +17,7 @@ module Toby
           filter_class = attribute.class.filters[args[:type].to_sym]
           next if filter_class.nil?
 
-          records = filter_class.apply(records, name, args[:value])
+          records = filter_class.apply(records, attribute, value: args[:value])
         end
 
         records

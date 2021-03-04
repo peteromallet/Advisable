@@ -4,6 +4,7 @@ module Toby
   module Attributes
     class HasMany < BaseAttribute
       filter :includes, Filters::Includes
+      filter :has_none, Filters::HasNone
       # filter :not_empty, Filters::CheckNotNil
 
       extension_field :labeled_by, GraphQL::Types::String
