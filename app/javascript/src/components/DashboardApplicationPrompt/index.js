@@ -6,6 +6,8 @@ import { Text, Button } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import PromptCard from "./PromptCard";
 import ProgressLine from "./ProgressLine";
+import { useMutation } from "@apollo/client";
+import { SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW } from "./queries";
 
 const Header = (props) => (
   <Text
@@ -71,6 +73,8 @@ const InvitedToInterview = () => {
   const { firstName, lastName, email } = useViewer();
   const fullName = `${firstName} ${lastName}`;
 
+  const [schedule] = useMutation(SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW);
+
   const handleScheduled = () => {
     calendly("https://calendly.com/guandjoy/15min", {
       full_name: fullName,
@@ -92,8 +96,7 @@ const InvitedToInterview = () => {
         // https://api.calendly.com/scheduled_events/AEQZY6BZ7BGPC6EZ
         const url = new URL(e.data.payload.event.uri);
         const eventId = url.pathname.split("/")[2];
-        console.log({ url, eventId });
-        return eventId;
+        schedule({ variables: { input: { eventId } } });
       }
     };
 
