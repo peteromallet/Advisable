@@ -8,8 +8,7 @@ module Toby
 
         reflection = attribute.reflection
 
-        if attribute.is_a?(HasManyThrough)
-          # This might be broken now
+        if attribute.is_a?(Toby::Attributes::HasManyThrough)
           through = reflection.options[:through]
           association_id = reflection.source_reflection.association_primary_key
           records.includes(through => reflection.source_reflection.name).where(through => {reflection.name => {association_id => value}})

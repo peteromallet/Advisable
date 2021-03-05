@@ -14,6 +14,14 @@ module Toby
         options.fetch(:model) { name.to_s.singularize.camelize }
       end
 
+      def column
+        reflection.inverse_of.association_foreign_key
+      end
+
+      def via
+        reflection.active_record_primary_key
+      end
+
       def type
         ["Toby::Types::#{model}"]
       end

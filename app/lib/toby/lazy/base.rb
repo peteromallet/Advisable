@@ -7,11 +7,11 @@ module Toby
 
       attr_reader :attribute, :id, :context
 
-      def_delegators :attribute, :reflection
+      def_delegators :attribute, :reflection, :column, :via
 
       def initialize(attribute, context, resource)
         @attribute = attribute
-        @id = resource.public_send(reflection.active_record_primary_key)
+        @id = resource.public_send(via)
         @context = context
         state[:pending] << id
       end
@@ -32,9 +32,9 @@ module Toby
       end
 
       def load_records
-        reflection.klass.where(reflection.association_primary_key => state[:pending]).each do |record|
-          state[:loaded][record.public_send(reflection.association_primary_key)] ||= []
-          state[:loaded][record.public_send(reflection.association_primary_key)] << record
+        reflection.klass.where(column => state[:pending]).each do |record|
+          state[:loaded][record.public_send(column)] ||= []
+          state[:loaded][record.public_send(column)] << record
         end
         state[:pending].clear
       end
