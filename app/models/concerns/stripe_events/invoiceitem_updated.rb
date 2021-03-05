@@ -3,7 +3,13 @@
 module StripeEvents
   class InvoiceitemUpdated < StripeEvents::BaseEvent
     def process
-      Rails.logger.debug "INVOICE ITEM UPDATED"
+      line_item = InvoiceLineItem.find_or_initialize_by(stripe_invoice_line_item_id: event.data.object.invoice)
+      invoice = Invoice.find_by!(stripe_invoice_id: event.data.object.invoice)
+      line_item.update!(
+        invoice: invoice,
+        amount: event.data.object.amount,
+        name: event.data.object.description
+      )
     end
   end
 end
