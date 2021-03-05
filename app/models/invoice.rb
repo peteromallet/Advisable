@@ -14,13 +14,7 @@ class Invoice < ApplicationRecord
   def create_in_stripe!
     return if stripe_invoice_id.present?
 
-    response = Stripe::Invoice.create({
-      auto_advance: false,
-      customer: company.stripe_customer_id,
-      collection_method: "send_invoice",
-      days_until_due: DAYS_DUE
-    })
-    update!(stripe_invoice_id: response.id)
+    Stripe::CreateInvoice.perform_later(self)
   end
 end
 

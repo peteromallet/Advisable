@@ -121,10 +121,7 @@ RSpec.describe 'Freelancer active project view', type: :system do
           description: 'This is the task description'
         }
       )
-      StripeMock.start
     end
-
-    after { StripeMock.stop }
 
     it 'enables the freelancer to submit the task for approval' do
       visit "/clients/#{application.uid}"

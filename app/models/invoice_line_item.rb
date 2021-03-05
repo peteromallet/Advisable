@@ -9,16 +9,7 @@ class InvoiceLineItem < ApplicationRecord
   def create_in_stripe!
     return if stripe_invoice_line_item_id.present?
 
-    attrs = {
-      customer: invoice.company.stripe_customer_id,
-      amount: amount,
-      currency: CURRENCY,
-      description: name
-    }
-    attrs[:invoice] = invoice.stripe_invoice_id if invoice.stripe_invoice_id.present?
-
-    response = Stripe::InvoiceItem.create(attrs)
-    update!(stripe_invoice_line_item_id: response.id)
+    Stripe::CreateInvoiceLineItem.perform_later(self)
   end
 end
 

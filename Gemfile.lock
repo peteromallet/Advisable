@@ -136,7 +136,6 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    dante (0.2.0)
     database_cleaner-active_record (2.0.1)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
@@ -483,10 +482,6 @@ GEM
       sprockets (>= 3.0.0)
     statsd-ruby (1.5.0)
     stripe (5.35.0)
-    stripe-ruby-mock (3.0.1)
-      dante (>= 0.2.0)
-      multi_json (~> 1.0)
-      stripe (> 5, < 6)
     strong_migrations (0.7.7)
       activerecord (>= 5)
     temple (0.8.2)
@@ -603,7 +598,6 @@ DEPENDENCIES
   simplecov
   slim
   stripe
-  stripe-ruby-mock
   strong_migrations
   timecop
   twilio-ruby
