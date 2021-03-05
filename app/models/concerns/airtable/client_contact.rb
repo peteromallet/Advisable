@@ -12,7 +12,6 @@ module Airtable
     sync_column_to_association 'Email Address', association: :account, to: :email
     sync_column_to_association 'First Name', association: :account, to: :first_name
     sync_column_to_association 'Last Name', association: :account, to: :last_name
-    sync_column_to_association 'VAT Number', association: :account, to: :vat_number
     sync_column_to_association 'VAT Number', association: :company, to: :vat_number
     sync_column_to_association 'Type of Company', association: :company, to: :kind
     sync_column_to_association 'Project Payment Method', association: :company, to: :project_payment_method
@@ -94,7 +93,7 @@ module Airtable
       self['Exceptional Project Payment Terms'] = user.exceptional_project_payment_terms
       self['Invoice Name'] = user.company.invoice_name
       self['Invoice Company Name'] = user.company.invoice_company_name
-      self['VAT Number'] = user.account.vat_number # TODO: Read this from Company
+      self['VAT Number'] = user.company.vat_number
       self['Industry'] = [user.company.industry.try(:airtable_id)].compact
       self['Type of Company'] = user.company.kind
       self['Owner'] = [user.company.sales_person&.airtable_id].compact

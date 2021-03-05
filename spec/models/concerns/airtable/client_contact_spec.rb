@@ -4,14 +4,13 @@ require "rails_helper"
 
 RSpec.describe Airtable::ClientContact do
   include_examples("sync airtable columns to association", {
-                     association: :account,
-                     columns: [
-                       {from: "Email Address", to: :email, with: "test@airtable.com"},
-                       {from: "First Name", to: :first_name, with: "John"},
-                       {from: "Last Name", to: :last_name, with: "Snow"},
-                       {from: "VAT Number", to: :vat_number, with: "BeyondTheWall123"}
-                     ]
-                   })
+    association: :account,
+    columns: [
+      {from: "Email Address", to: :email, with: "test@airtable.com"},
+      {from: "First Name", to: :first_name, with: "John"},
+      {from: "Last Name", to: :last_name, with: "Snow"}
+    ]
+  })
 
   describe "sync_data" do
     describe "syncs title column" do
@@ -39,9 +38,9 @@ RSpec.describe Airtable::ClientContact do
         user = create(:user, client: nil)
         client = create(:client)
         airtable = described_class.new({
-                                         "Client" => [client.airtable_id],
-                                         "Email Address" => "test@airtable.com"
-                                       }, id: user.airtable_id)
+          "Client" => [client.airtable_id],
+          "Email Address" => "test@airtable.com"
+        }, id: user.airtable_id)
         expect { airtable.sync }.to change {
           user.reload.client
         }.from(nil).to(client)
@@ -53,17 +52,19 @@ RSpec.describe Airtable::ClientContact do
     let(:user) { create(:user) }
     let(:airtable) do
       described_class.new({
-                            "Email Address" => " test@airtable.com ",
-                            "First Name" => " Dwight ",
-                            "Last Name" => " Schrute ",
-                            "VAT Number" => " 1234 "
-                          }, id: user.airtable_id)
+        "Email Address" => " test@airtable.com ",
+        "First Name" => " Dwight ",
+        "Last Name" => " Schrute ",
+        "VAT Number" => " 1234 "
+      }, id: user.airtable_id)
     end
 
-    it "strips email, name, and VAT" do
+    it "strips association attributes" do
       airtable.sync
-      attributes = user.account.reload.attributes.slice("email", "first_name", "last_name", "vat_number").map(&:second)
-      expect(attributes).to match_array(["1234", "Dwight", "Schrute", "test@airtable.com"])
+      user.reload
+      expect(user.company.vat_number).to eq("1234")
+      attributes = user.account.attributes.slice("email", "first_name", "last_name").map(&:second)
+      expect(attributes).to match_array(["Dwight", "Schrute", "test@airtable.com"])
     end
   end
 

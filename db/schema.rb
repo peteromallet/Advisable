@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_22_104724) do
+ActiveRecord::Schema.define(version: 2021_03_02_103819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -798,6 +798,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_104724) do
     t.integer "member_of_week_email"
     t.jsonb "log_data"
     t.date "unavailable_until"
+    t.string "vat_number"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
