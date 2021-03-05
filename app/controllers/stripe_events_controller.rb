@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 class StripeEventsController < ApplicationController
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
 
   def create
-    begin
-      StripeEvents.process(stripe_event)
-      head :no_content, status: 200
-    rescue Stripe::SignatureVerificationError => e
-      render json: {error: "Invalid signature"}, status: 400
-    rescue JSON::ParserError => e
-      render json: {error: "Invalid JSON"}, status: 400
-    end
+    StripeEvents.process(stripe_event)
+    head :no_content, status: 200
+  rescue Stripe::SignatureVerificationError => e
+    Sentry.capture_exception(e)
+    render json: {error: "Invalid signature"}, status: :bad_request
+  rescue JSON::ParserError => e
+    Sentry.capture_exception(e)
+    render json: {error: "Invalid JSON"}, status: :bad_request
   end
 
   private
