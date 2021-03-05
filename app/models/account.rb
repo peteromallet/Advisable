@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Account < ApplicationRecord
+  self.ignored_columns = ["vat_number"]
+
   include Uid
   include Permissions
 
@@ -117,7 +119,6 @@ end
 #  test_account        :boolean
 #  uid                 :string
 #  unsubscribed_from   :jsonb
-#  vat_number          :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #

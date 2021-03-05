@@ -317,10 +317,6 @@ module Types
       HEREDOC
     end
 
-    def vat_number
-      object.account.vat_number
-    end
-
     field :primarily_freelance, Boolean, null: true do
       description 'Whether or not the freelancers occupation is primarily freelancing'
     end
