@@ -1,18 +1,17 @@
 import styled, { css } from "styled-components";
 
 export const Choices = styled.div`
-  display: flex;
-  margin-left: -10px;
+  display: grid;
+  grid-template-columns: repeat(${(props) => props.optionsPerRow || 1}, auto);
+  column-gap: 10px;
+  row-gap: 10px;
 
   ${(props) =>
     props.optionsPerRow &&
     css`
-      flex-wrap: wrap;
-
       ${Choice} {
-        flex-grow: 1;
-        margin-bottom: 10px;
-        width: calc(100% / ${props.optionsPerRow} - 10px);
+        margin-left: 0;
+        justify-self: stretch;
       }
     `}
 `;
