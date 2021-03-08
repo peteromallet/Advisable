@@ -76,7 +76,7 @@ const Availability = () => {
   };
 
   return (
-    <Card padding={["m", "l"]}>
+    <Card padding={[4, 6, 8]} borderRadius="12px">
       <Box
         height={[height - 58, "auto"]}
         display={["flex", "block"]}
@@ -93,16 +93,16 @@ const Availability = () => {
             <Form>
               <Box pb="m" flexShrink={1} paddingBottom="s">
                 <Text
-                  mb="xs"
+                  mb={2}
                   as="h2"
-                  fontSize="xxl"
-                  fontWeight="semibold"
-                  color="blue900"
-                  letterSpacing="-0.025em"
+                  fontSize="4xl"
+                  fontWeight="600"
+                  color="neutral900"
+                  letterSpacing="-0.05rem"
                 >
                   Availability
                 </Text>
-                <Text color="neutral800" lineHeight="s" mb="m">
+                <Text color="neutral800" lineHeight="1.3" mb={8}>
                   Select the times you will be available for a consultation with{" "}
                   {specialist.name}. The more times you select, the easier
                   it&apos;ll be for us to find a time that suits them.
