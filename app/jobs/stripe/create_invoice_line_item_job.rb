@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Stripe
-  class CreateInvoiceLineItem < ApplicationJob
+  class CreateInvoiceLineItemJob < ApplicationJob
     queue_as :default
 
     def perform(line_item)

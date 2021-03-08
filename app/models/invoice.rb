@@ -14,7 +14,7 @@ class Invoice < ApplicationRecord
   def create_in_stripe!
     return if stripe_invoice_id.present?
 
-    Stripe::CreateInvoice.perform_later(self)
+    Stripe::CreateInvoiceJob.perform_later(self)
   end
 end
 

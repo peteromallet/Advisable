@@ -9,7 +9,7 @@ class InvoiceLineItem < ApplicationRecord
   def create_in_stripe!
     return if stripe_invoice_line_item_id.present?
 
-    Stripe::CreateInvoiceLineItem.perform_later(self)
+    Stripe::CreateInvoiceLineItemJob.perform_later(self)
   end
 end
 

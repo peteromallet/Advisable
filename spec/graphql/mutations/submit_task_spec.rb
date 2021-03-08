@@ -35,6 +35,7 @@ RSpec.describe Mutations::SubmitTask do
 
   it "creates an invoice line item" do
     AdvisableSchema.execute(query, context: context)
+    expect(Stripe::CreateInvoiceLineItemJob).to have_been_enqueued
     invoice = application.invoices.draft.first
     expect(invoice).not_to be_nil
     line_item = invoice.line_items.first
