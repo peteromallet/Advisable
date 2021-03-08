@@ -70,7 +70,8 @@ export default function EditValidation({ data }) {
               <Stack mb="xl" spacing="l">
                 <FormField
                   name="contactName"
-                  label="Contact Name"
+                  label="Contact Name in LinkedIn"
+                  description="The client will authenticate with a LinkedIn account, so the full name should match"
                   placeholder="Contact Name"
                   autoComplete="off"
                 />
