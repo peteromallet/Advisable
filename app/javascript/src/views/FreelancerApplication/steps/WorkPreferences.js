@@ -104,7 +104,7 @@ export default function WorkPreferences({ specialist, skills, industries }) {
                 options={industries}
               />
             </Box>
-            <Box mb={3}>
+            <Box mb={8}>
               <FormField
                 isRequired
                 as={ChoiceList}
@@ -127,7 +127,7 @@ export default function WorkPreferences({ specialist, skills, industries }) {
                 ]}
               />
             </Box>
-            <SubmitButton suffix={<ArrowRight />} variant="gradient">
+            <SubmitButton suffix={<ArrowRight />} variant="gradient" size="l">
               Continue
             </SubmitButton>
           </Form>
