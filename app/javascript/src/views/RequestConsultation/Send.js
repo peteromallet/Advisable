@@ -41,14 +41,14 @@ function Send({ data }) {
   };
 
   return (
-    <Card padding={["m", "l"]}>
+    <Card borderRadius="12px" padding={[4, 6, 8]}>
       <Text
-        mb="l"
+        mb={6}
         as="h2"
-        fontSize="xxl"
-        fontWeight="semibold"
-        color="blue800"
-        letterSpacing="-0.025em"
+        fontSize="4xl"
+        fontWeight="600"
+        color="neutral900"
+        letterSpacing="-0.05rem"
       >
         If you&apos;re impressed by {data.specialist.firstName}, how likely are
         you to hire them as a freelancer?

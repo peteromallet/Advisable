@@ -52,18 +52,18 @@ const RequestConsultationSkills = ({ data }) => {
   };
 
   return (
-    <Card padding={["m", "l"]}>
+    <Card borderRadius="12px" padding={[4, 6, 8]}>
       <Text
-        mb="xs"
+        mb={2}
         as="h2"
-        fontSize="xxl"
-        color="blue900"
-        fontWeight="semibold"
-        letterSpacing="-0.025em"
+        fontSize="4xl"
+        fontWeight="600"
+        color="neutral900"
+        letterSpacing="-0.05rem"
       >
         Which of {specialist.firstName}’s skills are you interested in?
       </Text>
-      <Text color="neutral800" lineHeight="s" mb="l">
+      <Text color="neutral800" lineHeight="1.3" mb={8}>
         Please select which skill you are interested in talking to{" "}
         {specialist.firstName} about in a 30 minute consultation.
       </Text>
