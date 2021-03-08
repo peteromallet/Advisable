@@ -70,7 +70,6 @@ end
 group :development do
   gem "web-console", ">= 3.3.0"
   gem "listen", "~> 3.2"
-  gem "niceql"
   gem "graphql-rails_logger"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
@@ -82,7 +81,6 @@ group :development do
   gem "guard-rspec", require: false
   gem "letter_opener"
   gem "brakeman"
-  gem "solargraph"
 end
 
 group :test do
