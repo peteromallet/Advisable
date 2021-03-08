@@ -282,8 +282,7 @@ test("Send step sends the consultation request", async () => {
   fireEvent.click(rating);
   const btn = app.getByLabelText("Request Consultation");
   fireEvent.click(btn);
-  const header = await app.findByText("Check your email", { exact: false });
-  expect(header).toBeInTheDocument();
+  await app.findByText(/we have sent your request/i);
 });
 
 test("Can link back to a particular consultation via query params", async () => {
