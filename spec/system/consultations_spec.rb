@@ -43,7 +43,7 @@ RSpec.describe 'Consultations', type: :system do
     click_on "Likely"
     click_on "Request Consultation"
 
-    expect(page).to have_content("Check your email")
+    expect(page).to have_content("We have sent your request")
   end
 
   context 'when a consultation request has been sent' do
