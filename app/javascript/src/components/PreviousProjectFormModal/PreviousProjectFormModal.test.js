@@ -205,7 +205,7 @@ test("Adding a new project", async () => {
   continueBtn = await screen.findByLabelText("Skip");
   fireEvent.click(continueBtn);
 
-  fireEvent.change(screen.getByLabelText("Contact Name"), {
+  fireEvent.change(screen.getByLabelText("Contact Name in LinkedIn"), {
     target: { value: "John Doe" },
   });
   fireEvent.change(screen.getByLabelText("Contact Job Title"), {
