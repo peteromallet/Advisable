@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'administrate/base_dashboard'
 
 class ProjectDashboard < Administrate::BaseDashboard
@@ -24,7 +26,7 @@ class ProjectDashboard < Administrate::BaseDashboard
     industry_experience_importance: LabelledSelectField.with_options({collection: Project::INDUSTRY_EXPERIENCE_IMPORTANCE}),
     location_importance: LabelledSelectField.with_options({collection: Project::LOCATION_IMPORTANCE}),
     likely_to_hire: LabelledSelectField.with_options({collection: Project::LIKELY_TO_HIRE}),
-    primary_skill: Field::HasOne.with_options(class_name: Skill),
+    primary_skill: Field::HasOne.with_options(class_name: "Skill"),
     required_characteristics: TextArrayField,
     characteristics: TextArrayField,
     company_description: Field::Text,
