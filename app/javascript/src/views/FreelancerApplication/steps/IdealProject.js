@@ -54,7 +54,7 @@ export default function IdealProject({ specialist }) {
             portfolio. Tell us about one of your previous projects that you are
             most proud of and why.
           </Description>
-          <Box mb={10}>
+          <Box mb={8}>
             <FormField
               as={Textarea}
               name="idealProject"
@@ -64,7 +64,7 @@ export default function IdealProject({ specialist }) {
               placeholder="What kind of projects most excite you? What kind of companies do you prefer working with?"
             />
           </Box>
-          <SubmitButton suffix={<ArrowRight />} variant="gradient">
+          <SubmitButton suffix={<ArrowRight />} variant="gradient" size="l">
             Submit
           </SubmitButton>
         </Form>

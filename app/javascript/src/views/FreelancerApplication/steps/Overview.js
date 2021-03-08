@@ -89,7 +89,7 @@ export default function Overview({ specialist }) {
                 placeholder="https://"
               />
             </Box>
-            <Box mb="l">
+            <Box mb={8}>
               <Text fontWeight="medium" color="neutral800" mb={2}>
                 Upload Resume
               </Text>
@@ -114,7 +114,7 @@ export default function Overview({ specialist }) {
                 </Text>
               )}
             </Box>
-            <SubmitButton suffix={<ArrowRight />} variant="gradient">
+            <SubmitButton suffix={<ArrowRight />} variant="gradient" size="l">
               Continue
             </SubmitButton>
           </Form>

@@ -68,7 +68,7 @@ export default function PreviousWork({ specialist }) {
             portfolio. Tell us about one of your previous projects that you are
             most proud of and why.
           </Description>
-          <Box mb="l">
+          <Box mb={6}>
             <FormField
               isRequired
               as={Textarea}
@@ -79,7 +79,7 @@ export default function PreviousWork({ specialist }) {
               placeholder="What were the goals of this project? What type of work was involved?"
             />
           </Box>
-          <Box mb="l">
+          <Box mb={8}>
             <FormField
               isRequired
               as={Textarea}
@@ -90,7 +90,7 @@ export default function PreviousWork({ specialist }) {
               placeholder="What were the results of this project? Why does it stand out to you?"
             />
           </Box>
-          <SubmitButton suffix={<ArrowRight />} variant="gradient">
+          <SubmitButton suffix={<ArrowRight />} variant="gradient" size="l">
             Continue
           </SubmitButton>
         </Form>

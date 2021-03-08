@@ -53,7 +53,7 @@ const AnimatedCard = (props) => {
       exit="exit"
       px={[0, 10]}
       pt={[0, 10]}
-      pb={[0, 16]}
+      pb={[0, 12]}
       elevation={["none", "m"]}
       variant={["transparent", "default"]}
       borderRadius="12px"

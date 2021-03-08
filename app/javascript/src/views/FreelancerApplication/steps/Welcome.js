@@ -86,6 +86,7 @@ export default function Welcome({ specialist }) {
           as={Link}
           to="/freelancers/apply/introduction"
           variant="gradient"
+          size="l"
         >
           Get Started
         </Button>

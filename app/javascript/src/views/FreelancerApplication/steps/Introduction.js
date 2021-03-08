@@ -141,7 +141,7 @@ export default function Introduction({ specialist, countries }) {
                 </FormField>
               </Box>
             </Box>
-            <Box mb="l">
+            <Box mb={8}>
               <FormField as={Checkbox} type="checkbox" name="publicUse">
                 <Text mb={0.5} fontWeight="medium">
                   I’m okay with Advisable using my profile to promote me
@@ -152,7 +152,7 @@ export default function Introduction({ specialist, countries }) {
                 </Text>
               </FormField>
             </Box>
-            <SubmitButton suffix={<ArrowRight />} variant="gradient">
+            <SubmitButton suffix={<ArrowRight />} variant="gradient" size="l">
               Continue
             </SubmitButton>
           </Form>
