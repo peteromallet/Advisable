@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { GUILD_POSTS_QUERY } from "./queries";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { feedStore } from "@guild/views/Feed/store";
@@ -10,27 +10,26 @@ import { GuildBox } from "@guild/styles";
 import { Stack, Box, Text } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
 import Filters from "@guild/components/Filters";
-import FollowTopic from "@guild/components/FollowTopic";
 import PopularPosts from "@guild/components/PopularPosts";
 
 const Posts = () => {
   const location = useLocation();
-  const { topicId } = useParams();
   const history = useHistory();
   const historyPopped = history.action === "POP";
-  const defaultFilter = "For You";
 
+  const defaultFilter = "For You";
   const postTypeFilter = feedStore((store) => store.postTypeFilter);
   const setPostTypeFilter = (postTypeFilter) => {
     feedStore.setState({ postTypeFilter });
   };
   const clearFilters = () => setPostTypeFilter(defaultFilter);
+  const isDefaultView = postTypeFilter === defaultFilter;
 
   const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
     fetchPolicy: historyPopped ? "cache-first" : "network-only",
     nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
     notifyOnNetworkStatusChange: true,
-    variables: { topicId, type: postTypeFilter },
+    variables: { type: postTypeFilter, withPopularPosts: isDefaultView },
     errorPolicy: "none",
     onError(err) {
       if (err?.graphQLErrors?.[0]?.extensions?.type === "NOT_AUTHENTICATED") {
@@ -39,16 +38,13 @@ const Posts = () => {
       }
     },
   });
+
   const hasNextPage = data?.guildPosts.pageInfo.hasNextPage || false;
   const endCursor = data?.guildPosts.pageInfo.endCursor;
-
-  const isDefaultView = postTypeFilter === defaultFilter && !topicId;
 
   const posts = data?.guildPosts.edges.map((e) => e.node) || [];
   const [firstResult, ...rest] = posts;
   const latestPosts = isDefaultView && firstResult?.pinned ? rest : posts;
-
-  const topic = data?.guildPosts?.guildTopic;
 
   const onReachedBottom = () => {
     if (!loading && hasNextPage) {
@@ -58,17 +54,13 @@ const Posts = () => {
 
   return (
     <>
-      {topicId && topic ? (
-        <FollowTopic topic={topic} />
-      ) : (
-        <Filters
-          postTypeFilter={postTypeFilter}
-          setPostTypeFilter={setPostTypeFilter}
-        />
-      )}
+      <Filters
+        postTypeFilter={postTypeFilter}
+        setPostTypeFilter={setPostTypeFilter}
+      />
       <BottomScrollListener
         onBottom={onReachedBottom}
-        offset={topicId ? 64 : 58}
+        offset={58}
         debounce={0}
       />
 
@@ -89,7 +81,7 @@ const Posts = () => {
             >
               Popular Posts
             </Text>
-            <PopularPosts />
+            <PopularPosts loading={loading} posts={data?.guildPopularPosts} />
           </Box>
 
           <Text
@@ -129,11 +121,9 @@ const Posts = () => {
           >
             No Results
           </Text>
-          {!topicId && (
-            <GuildTag button size="l" onClick={clearFilters}>
-              Clear All Filters
-            </GuildTag>
-          )}
+          <GuildTag button size="l" onClick={clearFilters}>
+            Clear All Filters
+          </GuildTag>
         </GuildBox>
       ) : null}
 
