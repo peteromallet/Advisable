@@ -122,25 +122,51 @@ RSpec.describe Mutations::UpdateApplication do
   end
 
   context 'when updating the rate' do
-    let(:query) do
-      <<-GRAPHQL
-      mutation {
-        updateApplication(input: {
-          id: "#{application.uid}",
-          rate: 100
-        }) {
-          application {
-            rate
+    context "with rate" do
+      let(:query) do
+        <<-GRAPHQL
+        mutation {
+          updateApplication(input: {
+            id: "#{application.uid}",
+            rate: 100
+          }) {
+            application {
+              rate
+            }
           }
         }
-      }
-      GRAPHQL
+        GRAPHQL
+      end
+
+      it 'updates the rate' do
+        response = AdvisableSchema.execute(query, context: context)
+        rate = response['data']['updateApplication']['application']['rate']
+        expect(rate).to eq('100.0')
+      end
     end
 
-    it 'updates the rate' do
-      response = AdvisableSchema.execute(query, context: context)
-      rate = response['data']['updateApplication']['application']['rate']
-      expect(rate).to eq('100.0')
+    context "with invoice_rate" do
+      let(:query) do
+        <<-GRAPHQL
+        mutation {
+          updateApplication(input: {
+            id: "#{application.uid}",
+            invoiceRate: 10000
+          }) {
+            application {
+              invoiceRate
+            }
+          }
+        }
+        GRAPHQL
+      end
+
+      it 'updates the rate' do
+        response = AdvisableSchema.execute(query, context: context)
+        pp response
+        rate = response['data']['updateApplication']['application']['invoiceRate']
+        expect(rate).to eq(10000)
+      end
     end
   end
 
@@ -211,18 +237,18 @@ RSpec.describe Mutations::UpdateApplication do
     end
 
     it "saves the bio to the specialist record" do
-      expect {
+      expect do
         AdvisableSchema.execute(query, context: context)
-      }.to change { specialist.reload.bio }.from("Before").to("After")
+      end.to change { specialist.reload.bio }.from("Before").to("After")
     end
 
     context "when persistBio is false" do
       let(:persist_bio) { false }
 
       it "does not save the bio to the specialist record" do
-        expect {
+        expect do
           AdvisableSchema.execute(query)
-        }.not_to(change { specialist.reload.bio })
+        end.not_to(change { specialist.reload.bio })
       end
     end
   end

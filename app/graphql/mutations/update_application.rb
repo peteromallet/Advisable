@@ -13,7 +13,8 @@ module Mutations
     argument :availability, String, required: false
     argument :questions, [ApplicationQuestionInputType], required: false
     argument :references, [ID], required: false
-    argument :rate, Float, required: false
+    argument :invoice_rate, Int, required: false, deprecation_reason: "Supply invoice_rate in cents instead"
+    argument :rate, Float, required: false, deprecation_reason: "Supply invoice_rate in cents instead"
     argument :accepts_fee, Boolean, required: false
     argument :accepts_terms, Boolean, required: false
     argument :project_type, String, required: false
@@ -51,7 +52,9 @@ module Mutations
 
     def attributes(args)
       questions = (args[:questions] || []).map { |qa| {question: qa.question, answer: qa.answer} }
-      args.except(:id, :questions).merge({questions: questions})
+      args = args.except(:id, :questions).merge({questions: questions})
+      args[:invoice_rate] = ((args.delete(:rate).presence || 0) * 100).ceil if args.key?(:rate)
+      args
     end
   end
 end
