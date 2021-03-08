@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Task
 #
 # Inside of the UI tasks are referred to as specialist projects. They are what
@@ -43,8 +45,12 @@ class Task < ApplicationRecord
   end
 
   # Returns the cost of the task
+
   def cost
     quote = flexible_estimate || estimate
+
+    # TODO: It says we return cents in documentation above, but rate is not in cents 🤔
+    # quote * application.invoice_rate
     quote * application.rate
   end
 

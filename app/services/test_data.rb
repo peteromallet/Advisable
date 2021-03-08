@@ -95,7 +95,7 @@ class TestData
       )
 
     application.status = attrs.fetch(:status)
-    application.rate = 100
+    application.invoice_rate = 10000
     application.availability = ['2-4 Weeks', 'Immediately'].sample
     application.introduction = attrs.fetch(:specialist).bio
     application.score = [70, 75, 80, 85, 90, 95].sample

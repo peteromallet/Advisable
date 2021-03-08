@@ -41,6 +41,8 @@
 # be set back to Working.
 #
 class Application < ApplicationRecord
+  self.ignored_columns += %i[rate]
+
   include Uid
   include Airtable::Syncable
 
@@ -104,11 +106,10 @@ class Application < ApplicationRecord
   # Returns the top 3 candidates
   scope :top_three_applied, -> { applied.where('score > ?', 65.0).order(score: :desc).limit(3) }
 
-  # Returns the application rate as cents
-  def invoice_rate
-    return 0 if rate.nil?
-
-    (rate * 100).ceil
+  # WIP while migrating
+  def rate
+    Raven.capture_message("rate called on Application instead of invoice_rate", backtrace: caller, level: 'debug')
+    invoice_rate.to_d / 100
   end
 
   def create_previous_project
@@ -164,13 +165,13 @@ end
 #  invitation_rejected_at      :datetime
 #  invitation_rejection_reason :string
 #  invited_to_apply_at         :datetime
+#  invoice_rate                :integer
 #  meta_fields                 :jsonb
 #  monthly_limit               :integer
 #  project_type                :string
 #  proposal_comment            :string
 #  proposal_sent_at            :datetime
 #  questions                   :jsonb
-#  rate                        :decimal(, )
 #  references_requested        :boolean
 #  rejection_feedback          :text
 #  rejection_reason            :text

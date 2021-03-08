@@ -14,7 +14,7 @@ RSpec.describe Applications::Update do
       introduction: '...',
       availability: '1 Month',
       questions: [],
-      rate: '',
+      invoice_rate: '',
       accepts_fee: nil,
       accepts_terms: nil
     }
@@ -28,7 +28,7 @@ RSpec.describe Applications::Update do
       availability: '3 Months',
       questions: [{question: 'Is this a test?', answer: "Yes it's a test"}],
       references: [previous_project.uid],
-      rate: 90,
+      invoice_rate: 9000,
       accepts_fee: true,
       accepts_terms: true
     }
@@ -48,9 +48,9 @@ RSpec.describe Applications::Update do
   end
 
   it "raises an error if the application doesn't exist" do
-    expect {
+    expect do
       described_class.call(id: 'nope', attributes: attributes)
-    }.to raise_error(ActiveRecord::RecordNotFound)
+    end.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   it 'updates the availability' do
@@ -70,7 +70,7 @@ RSpec.describe Applications::Update do
 
     context 'when passing a question that does not exist' do
       it 'raises an error' do
-        expect {
+        expect do
           described_class.call(
             id: application.uid,
             attributes:
@@ -80,18 +80,18 @@ RSpec.describe Applications::Update do
                 }
               )
           )
-        }.to raise_error(Service::Error, 'invalid_question')
+        end.to raise_error(Service::Error, 'invalid_question')
       end
     end
   end
 
   describe 'assigning references' do
     it 'creates a new application_reference' do
-      expect {
+      expect do
         described_class.call(
           id: application.uid, attributes: attributes
         )
-      }.to change { application.references.count }.by(1)
+      end.to change { application.references.count }.by(1)
     end
 
     it 'overrides any existing references' do
@@ -107,12 +107,12 @@ RSpec.describe Applications::Update do
 
     context 'when an invalid ID is passed' do
       it 'raises and error' do
-        expect {
+        expect do
           described_class.call(
             id: application.uid,
             attributes: attributes.merge({references: %w[oasindfoaoinsdfo]})
           )
-        }.to raise_error(Service::Error, 'invalid_reference')
+        end.to raise_error(Service::Error, 'invalid_reference')
       end
     end
   end
@@ -121,7 +121,7 @@ RSpec.describe Applications::Update do
     described_class.call(
       id: application.uid, attributes: attributes
     )
-    expect(application.reload.rate).to eq(attributes[:rate])
+    expect(application.reload.invoice_rate).to eq(attributes[:rate])
   end
 
   it 'updates accepts_fee' do
