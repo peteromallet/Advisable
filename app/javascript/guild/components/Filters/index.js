@@ -26,12 +26,13 @@ const Filters = ({ postTypeFilter, setPostTypeFilter, yourPosts }) => {
   ];
 
   const handlePublishedGuildPost = (guildPost) => {
-    const variables = { type: postTypeFilter };
+    const variables = { type: postTypeFilter, withPopularPosts: true };
     const previous = client.readQuery({
       query: GUILD_POSTS_QUERY,
       variables,
     });
-    const { pageInfo, guildTopic } = previous?.guildPosts;
+    const { pageInfo } = previous?.guildPosts;
+    const guildPopularPosts = previous?.guildPopularPosts;
 
     client.writeQuery({
       query: GUILD_POSTS_QUERY,
@@ -43,8 +44,8 @@ const Filters = ({ postTypeFilter, setPostTypeFilter, yourPosts }) => {
             ...previous.guildPosts.edges,
           ],
           pageInfo,
-          guildTopic,
         },
+        guildPopularPosts,
       },
       variables,
     });
@@ -138,7 +139,12 @@ const Filters = ({ postTypeFilter, setPostTypeFilter, yourPosts }) => {
               flexSpaceBetween
             >
               {!yourPosts && (
-                <GuildTag button size="s" onClick={toggleExpanded}>
+                <GuildTag
+                  button
+                  size="s"
+                  aria-label="Toggle post filters"
+                  onClick={toggleExpanded}
+                >
                   <FilterIcon size={24} />
                 </GuildTag>
               )}

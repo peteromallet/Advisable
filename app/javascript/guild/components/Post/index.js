@@ -10,6 +10,7 @@ import PostActions from "@guild/components/PostActions";
 import { CoverImage } from "@guild/components/CoverImage";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ResolvedNotice from "./components/ResolvedNotice";
+import { guildPostUrl, isGuildPath } from "@guild/utils";
 
 const Post = ({
   post,
@@ -19,16 +20,12 @@ const Post = ({
   showResolve = false,
   walkthrough = false,
 }) => {
-  const isGuildPath = /^\/guild/.test(window.location.pathname);
-  const fullGuildPath = `/guild/posts/${post.id}`;
-  const url = isGuildPath ? `/posts/${post.id}` : fullGuildPath;
-
   const history = useHistory();
+  const url = guildPostUrl(post.id);
   const handleOpen = () => {
     // We need to use an actual page load while the guild pack is separate.
     isGuildPath ? history.push(url) : (window.location = url);
   };
-
   const LinkOrExternal = isGuildPath ? RouterLink : Link.External;
 
   return (
@@ -40,6 +37,7 @@ const Post = ({
         width="100%"
         border="2px solid"
         borderColor={post.pinned ? "neutral400" : "white"}
+        data-testid="post"
       >
         <Box position="absolute" right="4" top="4">
           <PostTypeTag post={post} />
@@ -72,7 +70,7 @@ const Post = ({
 
         {post.coverImage && (
           <Box mb="6">
-            <a href={fullGuildPath}>
+            <a href={`/guild/posts/${post.id}`}>
               <CoverImage
                 height={{ _: "200px", s: "320px" }}
                 cover={post.coverImage.url}
@@ -95,37 +93,39 @@ const Post = ({
           {post.title}
         </Text>
 
-        <Box mb={6} onClick={handleOpen} style={{ cursor: "pointer" }}>
-          <Markdown>{post.excerpt}</Markdown>
-        </Box>
-
-        <Text
-          mb={6}
-          display="inline-block"
-          color="blue700"
-          as={LinkOrExternal}
-          href={url}
-          to={url}
-        >
-          Read more
-        </Text>
-
-        {post.resolved ? (
-          <ResolvedNotice authorName={post.author.firstName} />
-        ) : (
-          <Box display="flex" alignItems="center" marginBottom={5}>
-            <PostActions
-              mr={3}
-              post={post}
-              showEdit={showEdit}
-              showShare={showShare}
-              showDelete={showDelete}
-              showResolve={showResolve}
-              walkthrough={walkthrough}
-            />
-            <ConnectionsCount post={post} />
+        <>
+          <Box mb={6} onClick={handleOpen} style={{ cursor: "pointer" }}>
+            <Markdown>{post.excerpt}</Markdown>
           </Box>
-        )}
+
+          <Text
+            mb={6}
+            display="inline-block"
+            color="blue700"
+            as={LinkOrExternal}
+            href={url}
+            to={url}
+          >
+            Read more
+          </Text>
+
+          {post.resolved ? (
+            <ResolvedNotice authorName={post.author.firstName} />
+          ) : (
+            <Box display="flex" alignItems="center" marginBottom={5}>
+              <PostActions
+                mr={3}
+                post={post}
+                showEdit={showEdit}
+                showShare={showShare}
+                showDelete={showDelete}
+                showResolve={showResolve}
+                walkthrough={walkthrough}
+              />
+              <ConnectionsCount post={post} />
+            </Box>
+          )}
+        </>
 
         <Topics topics={post.guildTopics} />
 

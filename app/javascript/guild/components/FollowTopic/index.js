@@ -3,11 +3,10 @@ import { ArrowBack } from "@styled-icons/ionicons-outline";
 import { Plus, MinusCircle } from "@styled-icons/heroicons-outline";
 import { Box, Text, Link, Button, Card } from "@advisable/donut";
 import useFollows from "@guild/views/Follows/useFollows";
-import { lowerDashed } from "@guild/utils";
 import useScrollToTop from "@advisable-main/hooks/useScrollToTop";
 import { GuildBox } from "@guild/styles";
 
-const FollowTopic = ({ topic }) => {
+const FollowTopic = ({ topicId }) => {
   useScrollToTop();
 
   const [followed, setFollowed] = useState(false);
@@ -15,13 +14,13 @@ const FollowTopic = ({ topic }) => {
 
   const onChangeFollow = async () => {
     setFollowed(!followed);
-    followed ? await unfollowTopic(topic.id) : await followTopic(topic.id);
+    followed ? await unfollowTopic(topicId) : await followTopic(topicId);
   };
 
   useEffect(() => {
-    const isFollowed = followedTopics?.some((t) => t.id === topic.id);
+    const isFollowed = followedTopics?.some((t) => t.slug === topicId);
     setFollowed(isFollowed);
-  }, [followedTopics, topic]);
+  }, [followedTopics, topicId]);
 
   return (
     <Box marginBottom="lg">
@@ -38,7 +37,7 @@ const FollowTopic = ({ topic }) => {
       <Card padding="m" borderRadius="12px">
         <GuildBox flexCenterBoth flexSpaceBetween>
           <Text fontWeight="500" size="l">
-            #{lowerDashed(topic.name)}
+            #{topicId}
           </Text>
           <Button
             prefix={followed ? <MinusCircle /> : <Plus />}

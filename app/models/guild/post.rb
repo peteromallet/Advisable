@@ -27,6 +27,15 @@ module Guild
         order(pinned: :desc, created_at: :desc)
     }
 
+    scope :popular, lambda {
+      published.
+        includes(:specialist).
+        where(created_at: 1.week.ago..Time.current, resolved_at: nil, pinned: false).
+        select("guild_posts.*, reactionable_count + engagements_count AS rank").
+        order("rank DESC").
+        limit(3)
+    }
+
     enum status: {draft: 0, published: 1, removed: 2}
 
     validates :type, :status, presence: true
