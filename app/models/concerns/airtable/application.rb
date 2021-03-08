@@ -8,7 +8,6 @@ module Airtable
 
     sync_with ::Application
     sync_column 'Score', to: :score
-    sync_column 'Hourly Rate For Project', to: :rate
     sync_column 'Available To Start', to: :availability
     sync_column 'One Line Overview', to: :introduction
     sync_column 'Advisable Comment', to: :comment
@@ -32,6 +31,7 @@ module Airtable
     sync_column 'Application Status - Stopped Working - Timestamp', to: :stopped_working_at
 
     sync_data do |application|
+      application.invoice_rate = ((fields["Hourly Rate For Project"].presence || 0) * 100).ceil
       application.status = status_to_sync
       application.accepts_fee = fields['Accepts Fee'] == 'Yes'
       application.accepts_terms = fields['Accepts Terms'] == 'Yes'
@@ -89,7 +89,7 @@ module Airtable
       self['Question 1'] = application.questions.try(:first).try(:[], 'question') if application.saved_change_to_questions?
       self['Question 2'] = application.questions.try(:second).try(:[], 'question') if application.saved_change_to_questions?
       self['Trial Program'] = application.trial_program ? 'Yes' : 'No'
-      self['Hourly Rate For Project'] = application.rate.try(:to_f) if application.saved_change_to_rate?
+      self['Hourly Rate For Project'] = (application.invoice_rate.to_d / 100).to_f if application.saved_change_to_invoice_rate?
       self['Accepts Terms'] = nil if application.accepts_terms.nil?
       self['Accepts Terms'] = 'Yes' if application.accepts_terms == true
       self['Accepts Terms'] = 'No' if application.accepts_terms == false
