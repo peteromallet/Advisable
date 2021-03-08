@@ -2,18 +2,6 @@
 
 module Types
   module Guild
-    class PostInterfaceConnection < GraphQL::Types::Relay::BaseConnection
-      field :guild_topic, Types::Guild::TopicType, null: true
-
-      def guild_topic
-        context[:guild_topic]
-      end
-    end
-  end
-end
-
-module Types
-  module Guild
     module PostInterface
       include Types::BaseInterface
       include ActionView::Helpers::DateHelper
@@ -27,8 +15,6 @@ module Types
                    Types::Guild::Post::AdviceRequiredType,
                    Types::Guild::Post::CaseStudyType,
                    Types::Guild::Post::OpportunityType
-
-      connection_type_class Types::Guild::PostInterfaceConnection
 
       field :id, ID, null: false do
         description 'The unique ID for the guild post'
