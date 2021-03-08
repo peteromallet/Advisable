@@ -26,4 +26,16 @@ RSpec.describe StripeEvents::InvoiceitemCreated do
     expect(line_item.amount).to eq(3000)
     expect(line_item.name).to eq("I'm mr. invoice line item, look at me!")
   end
+
+  context "when it already exists" do
+    let(:line_item) { create(:invoice_line_item, stripe_invoice_line_item_id: "ii_4567", invoice: invoice, name: "Test") }
+
+    it "updates invoice line item" do
+      expect(line_item.name).to eq("Test")
+      StripeEvents.process(event)
+      line_item.reload
+      expect(line_item.amount).to eq(3000)
+      expect(line_item.name).to eq("I'm mr. invoice line item, look at me!")
+    end
+  end
 end
