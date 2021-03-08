@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Box, Card, Button, Text } from "@advisable/donut";
+import { Box, Card, Button, Text, Modal } from "@advisable/donut";
 import { useApolloClient } from "@apollo/client";
 import { matchPath } from "react-router";
-import Modal from "components/Modal";
+import { useDialogState } from "reakit/Dialog";
 import NewTask from "components/NewTask";
 import TaskList from "components/TaskList";
 import TaskDrawer from "components/TaskDrawer";
@@ -11,7 +11,7 @@ import { hasCompleteTasksStep } from "./validationSchema";
 
 const Tasks = ({ application, match, location, history }) => {
   const client = useApolloClient();
-  const [confirmModal, setConfirmModal] = React.useState(false);
+  const trialModal = useDialogState();
   const onSelectTask = (task) => {
     history.push(`${match.url}/${task.id}`);
   };
@@ -59,7 +59,7 @@ const Tasks = ({ application, match, location, history }) => {
 
   const handleContinue = () => {
     if (application.trialProgram && !application.trialTask) {
-      setConfirmModal(true);
+      trialModal.show();
     } else {
       nextStep();
     }
@@ -119,27 +119,21 @@ const Tasks = ({ application, match, location, history }) => {
         taskId={taskMatch ? taskMatch.params.taskId : null}
         onDeleteTask={handleDeleteTask}
       />
-      <Modal isOpen={confirmModal} onClose={() => setConfirmModal(false)}>
-        <Box padding="l">
-          <Text fontSize="2xl" fontWeight="medium" as="h3" marginBottom={2}>
-            You haven&apos;t proposed a trial task
-          </Text>
-          <Text marginBottom={6} lineHeight="1.2">
-            Proposing a guaranteed trial task increases your chance of closing a
-            client. To set one of your tasks as a trial task, click into the
-            task and click &quot;Set as trial task&quot;
-          </Text>
-          <Button type="button" onClick={nextStep} mr="xs">
-            Continue without trial task
-          </Button>
-          <Button
-            type="button"
-            variant="subtle"
-            onClick={() => setConfirmModal(false)}
-          >
-            Cancel
-          </Button>
-        </Box>
+      <Modal modal={trialModal} padding={8}>
+        <Text fontSize="3xl" fontWeight="500" as="h3" marginBottom={2}>
+          You haven&apos;t proposed a trial task
+        </Text>
+        <Text marginBottom={6} lineHeight="1.2">
+          Proposing a guaranteed trial task increases your chance of closing a
+          client. To set one of your tasks as a trial task, click into the task
+          and click &quot;Set as trial task&quot;
+        </Text>
+        <Button type="button" onClick={nextStep} mr="xs">
+          Continue without trial task
+        </Button>
+        <Button type="button" variant="subtle" onClick={trialModal.hide}>
+          Cancel
+        </Button>
       </Modal>
       <Box padding="l">
         <Button type="button" onClick={handleContinue} disabled={!canContinue}>

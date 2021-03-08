@@ -1,8 +1,8 @@
 import React from "react";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
-import { Box, Text, Button } from "@advisable/donut";
-import Modal from "../../components/Modal";
+import { DialogDisclosure, useDialogState } from "reakit/Dialog";
+import { Box, Text, Button, Modal } from "@advisable/donut";
 
 export const RESUME_WORKING = gql`
   mutation startWorking($input: StartWorkingInput!) {
@@ -16,7 +16,7 @@ export const RESUME_WORKING = gql`
 `;
 
 export default function StoppedWorkingNotice({ firstName, application }) {
-  const [modal, setModal] = React.useState(false);
+  const modal = useDialogState();
   const [loading, setLoading] = React.useState(false);
   const [resumeWorking] = useMutation(RESUME_WORKING);
 
@@ -34,23 +34,21 @@ export default function StoppedWorkingNotice({ firstName, application }) {
 
   return (
     <>
-      <Modal isOpen={modal}>
-        <Box padding="l">
-          <Text size="l" lineHeight="l" mb="m">
-            Are you sure you want to resume working with {firstName}?
-          </Text>
-          <Button
-            mr="xs"
-            loading={loading}
-            onClick={handleResume}
-            aria-label="Resume Project"
-          >
-            Resume Project
-          </Button>
-          <Button variant="subtle" onClick={() => setModal(false)}>
-            Cancel
-          </Button>
-        </Box>
+      <Modal modal={modal} padding={8}>
+        <Text fontSize="3xl" fontWeight="500" lineHeight="1.2" mb={6}>
+          Are you sure you want to resume working with {firstName}?
+        </Text>
+        <Button
+          mr={2}
+          loading={loading}
+          onClick={handleResume}
+          aria-label="Resume Project"
+        >
+          Resume Project
+        </Button>
+        <Button variant="subtle" onClick={modal.hide}>
+          Cancel
+        </Button>
       </Modal>
       <Box bg="orange100" padding="l" borderRadius="12px">
         <Text fontSize="l" fontWeight="medium" color="orange900" mb="xs">
@@ -61,14 +59,18 @@ export default function StoppedWorkingNotice({ firstName, application }) {
           action any more tasks for this project until you start working with
           them again.
         </Text>
-        <Button
-          type="button"
-          variant="dark"
-          aria-label="Resume Project"
-          onClick={() => setModal(true)}
-        >
-          Resume Project
-        </Button>
+        <DialogDisclosure {...modal}>
+          {(disclosure) => (
+            <Button
+              {...disclosure}
+              type="button"
+              variant="dark"
+              aria-label="Resume Project"
+            >
+              Resume Project
+            </Button>
+          )}
+        </DialogDisclosure>
       </Box>
     </>
   );

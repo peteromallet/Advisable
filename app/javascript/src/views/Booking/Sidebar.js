@@ -3,7 +3,7 @@ import { get } from "lodash-es";
 import { motion } from "framer-motion";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Button, Tooltip, Box, Avatar, Text } from "@advisable/donut";
-import { withRouter, Route } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "../../components/Sticky";
 import Layout from "../../components/Layout";
@@ -17,21 +17,16 @@ import ProjectTypeModal from "./ProjectTypeModal";
 import StopWorkingModal from "./StopWorkingModal";
 import useViewer from "src/hooks/useViewer";
 import ReportFreelancerProblem from "./ReportFreelancerProblem";
-import {
-  HelpCircle,
-  MessageCircle,
-  PauseCircle,
-  Edit,
-} from "@styled-icons/feather";
+import { HelpCircle, MessageCircle, Edit } from "@styled-icons/feather";
 
-const Sidebar = ({ data, history, tutorialModal, match }) => {
+const Sidebar = ({ data, history, tutorialModal }) => {
   const viewer = useViewer();
   const isMobile = useMobile();
   const dialog = useDialogState();
   const { t } = useTranslation();
   const application = data.application;
   const { specialist, project } = application;
-  const [projectTypeModal, setProjectTypeModal] = React.useState(false);
+  const projectTypeModal = useDialogState();
   const isOwnerOrManager = project.isOwner || viewer.isTeamManager;
   const canStopWorking = application.status === "Working" && isOwnerOrManager;
 
@@ -78,27 +73,16 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
             </Box>
             {canStopWorking && (
               <>
-                <Route path={`${match.path}/stop`}>
-                  <StopWorkingModal
-                    isOpen
-                    application={application}
-                    onClose={() => history.replace(match.url)}
-                  />
-                </Route>
-                <Button
-                  width="100%"
-                  align="left"
-                  prefix={<PauseCircle />}
-                  aria-label="Stop Working"
-                  variant="subtle"
-                  onClick={() => history.replace(`${match.url}/stop`)}
-                >
-                  Stop Working
-                </Button>
+                <StopWorkingModal application={application} />
               </>
             )}
           </Box>
           <Box paddingY="xl">
+            <ProjectTypeModal
+              modal={projectTypeModal}
+              application={application}
+            />
+
             <AttributeList>
               {Boolean(application.rate) && (
                 <AttributeList.Item
@@ -111,37 +95,35 @@ const Sidebar = ({ data, history, tutorialModal, match }) => {
                 <AttributeList.Item
                   label="Monthly Limit"
                   action={
-                    <Button
-                      size="s"
-                      variant="subtle"
-                      onClick={() => setProjectTypeModal(true)}
-                    >
-                      <Edit />
-                    </Button>
+                    <DialogDisclosure {...projectTypeModal}>
+                      {(disclosure) => (
+                        <Button size="s" variant="subtle" {...disclosure}>
+                          <Edit />
+                        </Button>
+                      )}
+                    </DialogDisclosure>
                   }
                 >
                   {application.monthlyLimit} hours
                 </AttributeList.Item>
               )}
 
-              <ProjectTypeModal
-                isOpen={projectTypeModal}
-                application={application}
-                onClose={() => setProjectTypeModal(false)}
-              />
-
               {isOwnerOrManager ? (
                 <AttributeList.Item
                   label="Project Type"
                   action={
-                    <Button
-                      size="s"
-                      variant="subtle"
-                      aria-label="Edit project type"
-                      onClick={() => setProjectTypeModal(true)}
-                    >
-                      <Edit />
-                    </Button>
+                    <DialogDisclosure {...projectTypeModal}>
+                      {(disclosure) => (
+                        <Button
+                          size="s"
+                          aria-label="Edit project type"
+                          variant="subtle"
+                          {...disclosure}
+                        >
+                          <Edit />
+                        </Button>
+                      )}
+                    </DialogDisclosure>
                   }
                 >
                   <Tooltip
