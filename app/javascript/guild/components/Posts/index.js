@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { GUILD_POSTS_QUERY } from "./queries";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { feedStore } from "@guild/views/Feed/store";
@@ -10,25 +10,26 @@ import { GuildBox } from "@guild/styles";
 import { Stack, Box, Text } from "@advisable/donut";
 import GuildTag from "@guild/components/GuildTag";
 import Filters from "@guild/components/Filters";
-import FollowTopic from "@guild/components/FollowTopic";
+import PopularPosts from "@guild/components/PopularPosts";
 
 const Posts = () => {
   const location = useLocation();
-  const { topicId } = useParams();
   const history = useHistory();
   const historyPopped = history.action === "POP";
 
+  const defaultFilter = "For You";
   const postTypeFilter = feedStore((store) => store.postTypeFilter);
   const setPostTypeFilter = (postTypeFilter) => {
     feedStore.setState({ postTypeFilter });
   };
-  const clearFilters = () => setPostTypeFilter("For You");
+  const clearFilters = () => setPostTypeFilter(defaultFilter);
+  const isDefaultView = postTypeFilter === defaultFilter;
 
   const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
     fetchPolicy: historyPopped ? "cache-first" : "network-only",
     nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
     notifyOnNetworkStatusChange: true,
-    variables: { topicId, type: postTypeFilter },
+    variables: { type: postTypeFilter, withPopularPosts: isDefaultView },
     errorPolicy: "none",
     onError(err) {
       if (err?.graphQLErrors?.[0]?.extensions?.type === "NOT_AUTHENTICATED") {
@@ -37,11 +38,13 @@ const Posts = () => {
       }
     },
   });
+
   const hasNextPage = data?.guildPosts.pageInfo.hasNextPage || false;
   const endCursor = data?.guildPosts.pageInfo.endCursor;
 
   const posts = data?.guildPosts.edges.map((e) => e.node) || [];
-  const topic = data?.guildPosts?.guildTopic;
+  const [firstResult, ...rest] = posts;
+  const latestPosts = isDefaultView && firstResult?.pinned ? rest : posts;
 
   const onReachedBottom = () => {
     if (!loading && hasNextPage) {
@@ -51,23 +54,55 @@ const Posts = () => {
 
   return (
     <>
-      {topicId && topic ? (
-        <FollowTopic topic={topic} />
-      ) : (
-        <Filters
-          postTypeFilter={postTypeFilter}
-          setPostTypeFilter={setPostTypeFilter}
-        />
-      )}
+      <Filters
+        postTypeFilter={postTypeFilter}
+        setPostTypeFilter={setPostTypeFilter}
+      />
       <BottomScrollListener
         onBottom={onReachedBottom}
-        offset={topicId ? 64 : 58}
+        offset={58}
         debounce={0}
       />
 
+      {isDefaultView ? (
+        <>
+          {firstResult?.pinned ? (
+            <Box marginBottom="12">
+              <Post walkthrough key={firstResult.id} post={firstResult} />
+            </Box>
+          ) : null}
+          <Box marginBottom="12">
+            <Text
+              fontSize="xs"
+              marginBottom="4"
+              color="neutral600"
+              fontWeight="medium"
+              textTransform="uppercase"
+            >
+              Popular Posts
+            </Text>
+            <PopularPosts loading={loading} posts={data?.guildPopularPosts} />
+          </Box>
+
+          <Text
+            fontSize="xs"
+            marginBottom="4"
+            color="neutral600"
+            fontWeight="medium"
+            textTransform="uppercase"
+          >
+            Latest Posts
+          </Text>
+        </>
+      ) : null}
+
       <Stack spacing="4">
-        {posts.map((post, idx) => (
-          <Post walkthrough={idx === 0} key={post.id} post={post} />
+        {latestPosts.map((post, idx) => (
+          <Post
+            walkthrough={idx === 0 && !firstResult?.pinned}
+            key={post.id}
+            post={post}
+          />
         ))}
       </Stack>
       {loading ? <LoadingPosts skeletonPosts={hasNextPage ? 1 : 3} /> : null}
@@ -86,11 +121,9 @@ const Posts = () => {
           >
             No Results
           </Text>
-          {!topicId && (
-            <GuildTag button size="l" onClick={clearFilters}>
-              Clear All Filters
-            </GuildTag>
-          )}
+          <GuildTag button size="l" onClick={clearFilters}>
+            Clear All Filters
+          </GuildTag>
         </GuildBox>
       ) : null}
 

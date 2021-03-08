@@ -10,15 +10,15 @@ Rails.logger.info "Creating guild topics"
 Guild::Topic.reset_column_information
 
 Skill.where(active: true, original: nil).find_each do |skill|
-  Guild::Topic.create(name: skill.name, topicable: skill)
+  Guild::Topic.create(name: skill.name, topicable: skill, published: true)
 end
 
 Industry.active.order(name: :asc).find_each do |industry|
-  Guild::Topic.create(name: industry.name, topicable: industry)
+  Guild::Topic.create(name: industry.name, topicable: industry, published: true)
 end
 
 Country.find_each do |country|
-  Guild::Topic.create(name: country.name, topicable: country)
+  Guild::Topic.create(name: country.name, topicable: country, published: true)
 end
 
 Rails.logger.info "Creating guild posts"
