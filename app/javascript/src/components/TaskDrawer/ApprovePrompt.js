@@ -1,8 +1,7 @@
 // Displays the prompt for when a client approves a task.
 import React from "react";
 import { useMutation } from "@apollo/client";
-import Text from "../Text";
-import { Button, Box } from "@advisable/donut";
+import { Button, Box, Text } from "@advisable/donut";
 import { Confirmation, ConfirmationContainer } from "./styles";
 import APPROVE_TASK from "./approveTask.graphql";
 
@@ -27,12 +26,12 @@ const ApprovePrompt = ({ task, onClose, onApprove }) => {
     <Confirmation>
       <ConfirmationContainer>
         <Box paddingBottom="s">
-          <Text weight="semibold" colour="dark">
+          <Text fontWeight="500" color="neutral900">
             Approve Work
           </Text>
         </Box>
         <Box paddingBottom="l">
-          <Text size="s">
+          <Text fontSize="s" lineHeight="1.2">
             Once you approve the work, the freelancer will be paid for this
             task. If you have any issues, please make sure to resolve them in
             advance.

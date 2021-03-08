@@ -3,8 +3,7 @@ import React from "react";
 import { rgba } from "polished";
 import styled from "styled-components";
 import { ActiveProject } from "./styles";
-import { Box, StyledCard, theme } from "@advisable/donut";
-import Text from "../../../components/Text";
+import { Box, StyledCard, Text, theme } from "@advisable/donut";
 import Status from "../../../components/Status";
 import Heading from "../../../components/Heading";
 import pluralize from "../../../utilities/pluralize";
@@ -27,7 +26,7 @@ const Component = ({ onClick, application }) => {
         <Box padding="l">
           <Heading level={4}>{application.project.primarySkill?.name}</Heading>
           <Box paddingBottom="m">
-            <Text size="s">{application.project.user.companyName}</Text>
+            <Text fontSize="sm">{application.project.user.companyName}</Text>
           </Box>
           <Status>
             {pluralize(application.tasks.length, "Task", "Tasks")}

@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { Formik, Field } from "formik";
-import Text from "src/components/Text";
-import { Button, Textarea } from "@advisable/donut";
+import { Button, Textarea, Text } from "@advisable/donut";
 import validationSchema from "./validationSchema";
 import UPDATE_PROJECT from "../../updateProject.graphql";
 
