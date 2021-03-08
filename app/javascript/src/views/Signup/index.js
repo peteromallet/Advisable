@@ -3,10 +3,9 @@ import React from "react";
 import { Formik } from "formik";
 import queryString from "query-string";
 import { Redirect, useParams, useLocation, useHistory } from "react-router-dom";
-import { Button } from "@advisable/donut";
+import { Button, Text } from "@advisable/donut";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
-import Text from "src/components/Text";
 import Link from "src/components/Link";
 import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
@@ -75,7 +74,7 @@ const Signup = () => {
         <Heading center marginBottom="xs">
           Create your Account
         </Heading>
-        <Text size="s" marginBottom="xl" center>
+        <Text fontSize="s" marginBottom="xl" textAlign="center">
           {notice && t(notice)}
         </Text>
         <Formik
@@ -120,7 +119,7 @@ const Signup = () => {
         </Formik>
       </Card>
 
-      <Text size="s" center paddingTop="xl">
+      <Text fontSize="s" textAlign="center" paddingTop="xl">
         Already have an account? <Link to="/login">Login</Link>
       </Text>
     </Container>

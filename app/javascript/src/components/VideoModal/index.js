@@ -1,17 +1,16 @@
 import React from "react";
-import Text from "../Text";
-import { Box, Button } from "@advisable/donut";
+import { Box, Button, Text } from "@advisable/donut";
 
 const VideoModal = ({ heading, summary, url, buttonLabel, onDismiss }) => {
   return (
     <>
       <Box padding="l" css="text-align: center;">
         <Box paddingBottom="xs">
-          <Text size="l" weight="bold">
+          <Text fontSize="lg" fontWeight="600">
             {heading}
           </Text>
         </Box>
-        <Text size="s">{summary}</Text>
+        <Text fontSize="sm">{summary}</Text>
       </Box>
       <iframe
         width="100%"

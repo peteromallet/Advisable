@@ -1,8 +1,7 @@
 // Renders the prompt to submit a task
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { Box, Columns, Button } from "@advisable/donut";
-import Text from "../Text";
+import { Box, Columns, Button, Text } from "@advisable/donut";
 import Slider from "../Slider";
 import Heading from "../Heading";
 import SUBMIT_TASK from "./submitTask";
@@ -61,12 +60,12 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
         {step === CONFIRM_APPROVED && (
           <>
             <Box paddingBottom="s">
-              <Text weight="semibold" colour="dark">
+              <Text fontWeight="500" color="neutral900">
                 Is the work approved?
               </Text>
             </Box>
             <Box paddingBottom="l">
-              <Text size="s">
+              <Text fontSize="sm" lineHeight="1.2">
                 Before you mark this as complete, please make sure that
                 you&apos;ve completed this batch of work and the client has
                 already approved it.
@@ -91,7 +90,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
         {step === HOURS_WORKED && (
           <>
             <Box paddingBottom="s">
-              <Text weight="semibold" colour="dark">
+              <Text fontWeight="500" color="neutral900">
                 {isFixedPricing ? (
                   <>How much did this project cost?</>
                 ) : (
@@ -100,7 +99,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
               </Text>
             </Box>
             <Box paddingBottom="l">
-              <Text size="s">
+              <Text fontSize="sm">
                 {isFixedPricing ? (
                   <>
                     This task had a flexible estimate, how much did it end up

@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Card } from "@advisable/donut";
-import Text from "../../components/Text";
+import { Box, Card, Text } from "@advisable/donut";
 import NewTask from "../../components/NewTask";
 import illustration from "../../illustrations/relax.png";
 
@@ -14,14 +13,8 @@ export default function NoTasks({ onNewTask, application }) {
             No active tasks
           </Text>
         </Box>
-        <Box paddingBottom="l">
-          <Text
-            size="s"
-            style={{
-              maxWidth: "300px",
-              margin: "0 auto",
-            }}
-          >
+        <Box paddingBottom="l" maxWidth="300px" margin="0 auto">
+          <Text fontSize="sm">
             You have no active tasks with {application.project.user.companyName}
             .
           </Text>
