@@ -1,26 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import OneOf from "./OneOf";
 
-export default function Includes({ onChange }) {
-  const [value, setValue] = useState("");
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
-  const handleBlur = (e) => {
-    const values = e.target.value
-      .split(",")
-      .map((v) => v.trim())
-      .filter(Boolean);
-    onChange(values);
-  };
-
-  return (
-    <input
-      value={value}
-      onBlur={handleBlur}
-      onChange={handleChange}
-      type="text"
-    />
-  );
+export default function Includes(props) {
+  return <OneOf {...props} />;
 }

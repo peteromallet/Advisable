@@ -38,7 +38,9 @@ export default function OneOf({ resource, filter, attribute, onChange }) {
   const isNested = !Array.isArray(filter.value);
   const [value, setValue] = useState("");
 
-  const nextResource = getResource(schemaData.resources, field.type.name);
+  const nextFieldType = field.type.name || field.type.ofType?.ofType?.name;
+
+  const nextResource = getResource(schemaData.resources, nextFieldType);
   const nextFieldsWithFilters = nextResource?.attributes.filter(
     (a) => a.filters.length,
   );
