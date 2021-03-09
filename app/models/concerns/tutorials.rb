@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Users and specialists have a completed_tutorials attribute which tracks the
 # various product tutorials that they have complete.
 module Tutorials
@@ -6,12 +8,9 @@ module Tutorials
   class_methods do
     attr_accessor :tutorials
 
-    # Tutorials must be registered on the User or Specialist model first using
-    # the register_tutorial method. The name of the tutorial should be a unique
-    # string.
-    def register_tutorial(name)
+    def register_tutorials(*tutorials)
       @tutorials ||= []
-      @tutorials << name
+      @tutorials += tutorials.map(&:to_s)
     end
   end
 
@@ -30,10 +29,11 @@ module Tutorials
     # Adds a given tutorial to the completed_tutorials array
     def complete_tutorial(tutorial)
       return true if completed_tutorials.include?(tutorial)
+
       account.update(completed_tutorials: completed_tutorials + [tutorial])
     end
 
-    def has_completed_tutorial?(tutorial)
+    def completed_tutorial?(tutorial)
       completed_tutorials.include?(tutorial)
     end
 
@@ -42,6 +42,7 @@ module Tutorials
     def valid_tutorials
       completed_tutorials.each do |tutorial|
         next if self.class.tutorials.include?(tutorial)
+
         errors.add(
           :completed_tutorials,
           "#{tutorial} is not a registered tutorial"

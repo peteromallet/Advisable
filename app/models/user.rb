@@ -66,9 +66,7 @@ class User < ApplicationRecord
   validates :talent_quality, inclusion: {in: TALENT_QUALITY_OPTIONS}, allow_nil: true
   validates :number_of_freelancers, inclusion: {in: NUMBER_OF_FREELANCERS_OPTIONS}, allow_nil: true
 
-  register_tutorial 'fixedProjects'
-  register_tutorial 'flexibleProjects'
-  register_tutorial 'RECOMMENDATIONS'
+  register_tutorials :fixedProjects, :flexibleProjects, :RECOMMENDATIONS
 
   alias_attribute :application_status, :contact_status
 

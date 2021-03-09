@@ -77,7 +77,7 @@ module Types
     end
 
     def has_completed_tutorial(tutorial:)
-      object.has_completed_tutorial?(tutorial)
+      object.completed_tutorial?(tutorial)
     end
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: true do

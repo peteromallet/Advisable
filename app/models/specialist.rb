@@ -59,8 +59,7 @@ class Specialist < ApplicationRecord
 
   validates :number_of_projects, inclusion: {in: %w[1-5 5-20 20+ None], message: 'is invalid'}, allow_nil: true
 
-  register_tutorial 'fixedProjects'
-  register_tutorial 'flexibleProjects'
+  register_tutorials :fixedProjects, :flexibleProjects
 
   def send_confirmation_email
     token = account.create_confirmation_token
