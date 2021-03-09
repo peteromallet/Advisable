@@ -71,7 +71,7 @@ export default function EditValidation({ data }) {
                 <FormField
                   name="contactName"
                   label="Contact Name in LinkedIn"
-                  description="The client will authenticate with a LinkedIn account, so the full name should match"
+                  description="The client will authenticate with a LinkedIn account, so their full name should match"
                   placeholder="Contact Name"
                   autoComplete="off"
                 />
