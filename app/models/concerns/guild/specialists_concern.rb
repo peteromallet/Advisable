@@ -35,7 +35,7 @@ module Guild
                      guild_calendly_link: [:string],
                      guild_featured_member_at: :datetime
 
-      register_tutorials :GUILD
+      register_tutorials :guild
 
       def touch_guild_notifications_read_at
         return unless guild_unread_notifications

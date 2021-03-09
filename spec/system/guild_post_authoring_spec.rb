@@ -8,7 +8,7 @@ RSpec.describe 'Create post flow', type: :system do
   let(:content) { Faker::Lorem.sentence(word_count: 50) }
 
   before do
-    specialist.account.update!(completed_tutorials: ["GUILD"])
+    specialist.account.update!(completed_tutorials: ["guild"])
 
     create(:skill, name: "Design")
     create(:skill, name: "Development")

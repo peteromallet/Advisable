@@ -189,7 +189,7 @@ export const GET_MATCHES = gql`
     viewer {
       ... on User {
         id
-        walkthroughComplete: hasCompletedTutorial(tutorial: "RECOMMENDATIONS")
+        walkthroughComplete: hasCompletedTutorial(tutorial: "recommendations")
       }
     }
     project(id: $id) {
@@ -394,7 +394,7 @@ export const COMPLETE_TUTORIAL = gql`
       viewer {
         ... on User {
           id
-          walkthroughComplete: hasCompletedTutorial(tutorial: "RECOMMENDATIONS")
+          walkthroughComplete: hasCompletedTutorial(tutorial: "recommendations")
         }
       }
     }

@@ -5,7 +5,7 @@ import useTutorial from "../../hooks/useTutorial";
 
 const FixedProjectTutorial = ({ modal, isClient }) => {
   const { t } = useTranslation();
-  const tutorial = useTutorial("fixedProjects");
+  const tutorial = useTutorial("fixed_projects");
 
   let summary = isClient ? "clientSummary" : "freelancerSummary";
   let videoId = "bWeHGq9Asl0";
@@ -23,8 +23,8 @@ const FixedProjectTutorial = ({ modal, isClient }) => {
     <VideoModal
       url={url}
       onDismiss={handleDismiss}
-      heading={t(`tutorials.fixedProjects.heading`)}
-      summary={t(`tutorials.fixedProjects.${summary}`)}
+      heading={t(`tutorials.fixed_projects.heading`)}
+      summary={t(`tutorials.fixed_projects.${summary}`)}
     />
   );
 };

@@ -5,7 +5,7 @@ import useTutorial from "../../hooks/useTutorial";
 
 const FlexibleProjectTutorial = ({ modal, isClient = false }) => {
   const { t } = useTranslation();
-  const tutorial = useTutorial("flexibleProjects");
+  const tutorial = useTutorial("flexible_projects");
 
   let summary = isClient ? "clientSummary" : "freelancerSummary";
   // default to the freelancer video
@@ -25,8 +25,8 @@ const FlexibleProjectTutorial = ({ modal, isClient = false }) => {
     <VideoModal
       url={url}
       onDismiss={handleDismiss}
-      heading={t(`tutorials.flexibleProjects.heading`)}
-      summary={t(`tutorials.flexibleProjects.${summary}`)}
+      heading={t(`tutorials.flexible_projects.heading`)}
+      summary={t(`tutorials.flexible_projects.${summary}`)}
     />
   );
 };

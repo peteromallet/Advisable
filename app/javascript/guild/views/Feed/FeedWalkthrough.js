@@ -153,7 +153,7 @@ const steps = [
 
 const FeedWalkthrough = () => {
   useScrollToTop();
-  const tutorial = useTutorial("GUILD");
+  const tutorial = useTutorial("guild");
   const walkthrough = useWalkthrough(steps, {
     visible: !tutorial.isComplete,
     onComplete: async () => {
