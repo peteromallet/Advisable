@@ -141,9 +141,11 @@ const InterviewScheduled = () => {
         Your introductory call has been scheduled. You should have also received
         a calendar invite by now.
       </Description>
-      <Button variant="subtle" onClick={handleReschedule}>
-        Reschedule
-      </Button>
+      {eventId ? (
+        <Button variant="subtle" onClick={handleReschedule}>
+          Reschedule
+        </Button>
+      ) : null}
     </PromptCard>
   );
 };
