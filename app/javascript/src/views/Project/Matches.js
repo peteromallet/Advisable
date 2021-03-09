@@ -176,7 +176,7 @@ export default function Matches({ data, project }) {
       completeTutorial({
         variables: {
           input: {
-            tutorial: "RECOMMENDATIONS",
+            tutorial: "recommendations",
           },
         },
       });

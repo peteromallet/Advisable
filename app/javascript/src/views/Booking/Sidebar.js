@@ -164,7 +164,7 @@ const Sidebar = ({ data, history, tutorialModal }) => {
           <Box paddingBottom="xl">
             {application.projectType === "Flexible" && (
               <DialogDisclosure as={VideoButton} {...tutorialModal}>
-                {t(`tutorials.flexibleProjects.prompt`)}
+                {t(`tutorials.flexible_projects.prompt`)}
               </DialogDisclosure>
             )}
           </Box>

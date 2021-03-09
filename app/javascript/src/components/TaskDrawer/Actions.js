@@ -15,7 +15,7 @@ function AssignButton({ projectType, ...props }) {
   const viewer = useViewer();
   const showArrow =
     projectType === "Fixed" &&
-    viewer.completedTutorials.indexOf("fixedProjects") === -1;
+    viewer.completedTutorials.indexOf("fixed_projects") === -1;
 
   return (
     <Box position="relative">

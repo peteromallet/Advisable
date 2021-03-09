@@ -11,7 +11,7 @@ RSpec.describe Mutations::CompleteTutorial do
     <<-GRAPHQL
     mutation {
       completeTutorial(input: {
-        tutorial: "fixedProjects",
+        tutorial: "fixed_projects",
       }) {
         viewer {
           ... on User {
@@ -27,8 +27,8 @@ RSpec.describe Mutations::CompleteTutorial do
   it 'marks the project as complete' do
     response = AdvisableSchema.execute(query, context: context)
     data = response['data']['completeTutorial']['viewer']['completedTutorials']
-    expect(data).to eq(%w[fixedProjects])
-    expect(user.reload.completed_tutorials).to include('fixedProjects')
+    expect(data).to eq(%w[fixed_projects])
+    expect(user.reload.completed_tutorials).to include('fixed_projects')
   end
 
   context 'when there is no user logged in' do
