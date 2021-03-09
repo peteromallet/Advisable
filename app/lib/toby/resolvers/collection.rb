@@ -14,7 +14,7 @@ module Toby
           attribute = field.resource.attributes.find { |attr| attr.name == name }
           next if attribute.nil?
 
-          filter_class = attribute.class.filters[args[:type].to_sym]
+          filter_class = attribute.class.filters[args[:type]]
           next if filter_class.nil?
 
           records = filter_class.apply(records, attribute, value: args[:value])

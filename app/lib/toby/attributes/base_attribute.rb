@@ -58,7 +58,7 @@ module Toby
       class << self
         def filter(name, type)
           @filters ||= {}
-          @filters[name] = type
+          @filters[name.to_s.camelize(:lower)] = type
         end
 
         def filters
