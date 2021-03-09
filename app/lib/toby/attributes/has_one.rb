@@ -3,6 +3,9 @@
 module Toby
   module Attributes
     class HasOne < HasMany
+      filter :includes, Filters::Includes
+      filter :has_none, Filters::HasNone
+
       extension_field :labeled_by, GraphQL::Types::String
 
       def type

@@ -8,7 +8,7 @@ module Toby
       attribute :status, Attributes::Select, options: ["Applied"] + ::Application::ACTIVE_STATUSES
       attribute :specialist, Attributes::BelongsTo, labeled_by: :account
       attribute :project, Attributes::BelongsTo, labeled_by: :name
-      attribute :interviews, Attributes::HasOne, labeled_by: :status
+      attribute :interview, Attributes::HasOne, labeled_by: :status
       attribute :introduction, Attributes::String
       attribute :hidden, Attributes::Boolean
       attribute :score, Attributes::Integer
