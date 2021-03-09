@@ -129,6 +129,7 @@ end
 #  application_rejected_at           :datetime
 #  application_reminder_at           :datetime
 #  availability                      :text
+#  bank_transfers_enabled            :boolean          default(FALSE)
 #  budget                            :bigint
 #  campaign_medium                   :string
 #  campaign_name                     :string
