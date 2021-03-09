@@ -136,6 +136,7 @@ end
 #  travel_availability               :string
 #  uid                               :string
 #  unavailable_until                 :date
+#  vat_number                        :string
 #  website                           :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
