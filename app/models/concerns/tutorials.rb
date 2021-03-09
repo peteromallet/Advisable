@@ -33,7 +33,7 @@ module Tutorials
       account.update(completed_tutorials: completed_tutorials + [tutorial])
     end
 
-    def has_completed_tutorial?(tutorial)
+    def completed_tutorial?(tutorial)
       completed_tutorials.include?(tutorial)
     end
 
