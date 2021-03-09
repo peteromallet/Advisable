@@ -239,6 +239,10 @@ module Types
       description 'The time for an initial application interview'
     end
 
+    field :application_interview_calendly_id, String, null: true do
+      description 'Calendly event id of initial application interview'
+    end
+
     # Eventually the applications field should be updated to support pagination
     # using a connection type. By default we use the 'by_sales_status' scope
     # to only fetch applications where the associated project sales_status is
