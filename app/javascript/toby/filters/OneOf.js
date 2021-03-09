@@ -1,9 +1,36 @@
 import React, { useState } from "react";
+import { Combobox } from "@advisable/donut";
 import { useSchema } from "../components/schema";
 import { getType, getResource } from "../utilities";
 import { FiltersFilter } from "../views/resource/Filters";
 
-export default function OneOf({ resource, filter, onChange }) {
+function OneOfSelection({ attribute, onChange }) {
+  const [values, setValues] = useState([]);
+
+  const options = attribute.options.map((opt) => ({
+    label: opt,
+    value: opt,
+  }));
+
+  const handleChange = (nextValues) => {
+    setValues(nextValues);
+    onChange(nextValues.map((v) => v.value));
+  };
+
+  return (
+    <div>
+      <Combobox
+        multiple
+        size="sm"
+        value={values}
+        options={options}
+        onChange={handleChange}
+      />
+    </div>
+  );
+}
+
+export default function OneOf({ resource, filter, attribute, onChange }) {
   const schemaData = useSchema();
   const resourceType = getType(schemaData.schema, resource.type);
   const field = resourceType.fields.find((f) => f.name === filter.attribute);
@@ -16,9 +43,16 @@ export default function OneOf({ resource, filter, onChange }) {
     (a) => a.filters.length,
   );
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
+  if (attribute.options?.length > 0) {
+    return (
+      <OneOfSelection
+        resource={resource}
+        filter={filter}
+        attribute={attribute}
+        onChange={onChange}
+      />
+    );
+  }
 
   const handleBlur = (e) => {
     const values = e.target.value
@@ -26,6 +60,10 @@ export default function OneOf({ resource, filter, onChange }) {
       .map((v) => v.trim())
       .filter(Boolean);
     onChange(values);
+  };
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
   };
 
   const handleCreateNested = () => {

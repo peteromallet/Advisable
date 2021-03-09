@@ -38,6 +38,9 @@ export * from "./components/Textarea/styles";
 export { default as Checkbox } from "./components/Checkbox";
 export * from "./components/Checkbox/styles";
 
+export { default as Combobox } from "./components/Combobox";
+export * from "./components/Combobox/styles";
+
 export { default as Label } from "./components/Label";
 export * from "./components/Label/styles";
 
