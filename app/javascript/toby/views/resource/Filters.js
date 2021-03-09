@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { Box } from "@advisable/donut";
 import { useResourceData } from "../../utilities";
 import Filter from "../../filters";
 
@@ -27,11 +28,13 @@ export function FiltersFilter({
           <option key={filter.name}>{filter.name}</option>
         ))}
       </select>
-      <Filter
-        filter={filter}
-        resource={resource}
-        onChange={onChangeFilterValue}
-      />
+      <Box display="inline-flex">
+        <Filter
+          filter={filter}
+          resource={resource}
+          onChange={onChangeFilterValue}
+        />
+      </Box>
     </>
   );
 }
