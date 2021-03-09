@@ -1,10 +1,12 @@
 import React from "react";
 import OneOf from "./OneOf";
+import Equals from "./Equals";
 import Includes from "./Includes";
 import StringContains from "./StringContains";
 
 const FILTERS = {
   OneOf,
+  Equals,
   Includes,
   StringContains,
 };
