@@ -89,14 +89,19 @@ const InvitedToInterview = () => {
 
     const handleCalendly = (e) => {
       if (!isCalendlyEvent(e)) return null;
+
       if (e.data.event === "calendly.event_scheduled") {
-        schedule({ variables: { input: {} } });
+        // URI example:
+        // https://api.calendly.com/scheduled_events/AEQZY6BZ7BGPC6EZ
+        const url = new URL(e.data.payload.event.uri);
+        const eventId = url.pathname.split("/")[2];
+        schedule({ variables: { input: { eventId } } });
       }
     };
 
     window.addEventListener("message", handleCalendly);
     return () => window.addEventListener("message", handleCalendly);
-  }, [schedule]);
+  }, []);
 
   return (
     <PromptCard mb={10}>
