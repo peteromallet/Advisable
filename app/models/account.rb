@@ -117,6 +117,7 @@ end
 #  test_account        :boolean
 #  uid                 :string
 #  unsubscribed_from   :jsonb
+#  vat_number          :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
