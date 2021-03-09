@@ -157,7 +157,7 @@ const ApplicationStage = ({ stage }) => {
   switch (stage) {
     case "Started":
       return <AccountCreated />;
-    case "Application Submitted":
+    case "Submitted":
       return <ApplicationSubmitted />;
     case "Invited To Interview":
       return <InvitedToInterview />;
