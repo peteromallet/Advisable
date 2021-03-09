@@ -22,7 +22,7 @@ RSpec.describe Airtable::Specialist do
     let(:airtable) do
       described_class.new({
         "Email Address" => "test@airtable.com",
-        "Application Stage" => "Applied",
+        "Application Stage" => "Started",
         "Bank Holder Address" => "123 Bacon Street, Egg City, IE, 12345"
       }, id: specialist.airtable_id)
     end
@@ -30,7 +30,7 @@ RSpec.describe Airtable::Specialist do
     it 'triggers the application_stage_changed webhook event' do
       expect(WebhookEvent).to receive(:trigger).with(
         "specialists.application_stage_changed",
-        hash_including(application_stage: "Applied")
+        hash_including(application_stage: "Started")
       )
       airtable.sync
     end
@@ -38,26 +38,26 @@ RSpec.describe Airtable::Specialist do
     context "when the record is a new record" do
       let(:airtable) do
         described_class.new({
-          "Application Stage" => "Applied"
+          "Application Stage" => "Started"
         }, id: "rec_new")
       end
 
       it "does not trigger a webhook" do
         expect(WebhookEvent).not_to receive(:trigger).with(
           "specialists.application_stage_changed",
-          hash_including(application_stage: "Applied")
+          hash_including(application_stage: "Started")
         )
         airtable.sync
       end
     end
 
     context "when there is no change to the application_stage" do
-      let(:specialist) { create(:specialist, application_stage: "Applied") }
+      let(:specialist) { create(:specialist, application_stage: "Started") }
 
       it "does not trigger a webhook" do
         expect(WebhookEvent).not_to receive(:trigger).with(
           "specialists.application_stage_changed",
-          hash_including(application_stage: "Applied")
+          hash_including(application_stage: "Started")
         )
         airtable.sync
       end
