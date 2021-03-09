@@ -27,6 +27,8 @@ class Specialist < ApplicationRecord
   include Airtable::Syncable
   include Guild::SpecialistsConcern
 
+  VALID_APPLICATION_STAGES = ["Started", "Full Application", "On Hold", "Completed", "Accepted", "Rejected By Us", "Rejected By Them", "References Requested", "References Provided", "References Validated", "Kicked Off"].freeze
+
   has_logidze
 
   belongs_to :country, optional: true
@@ -58,6 +60,7 @@ class Specialist < ApplicationRecord
   attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
 
   validates :number_of_projects, inclusion: {in: %w[1-5 5-20 20+ None], message: 'is invalid'}, allow_nil: true
+  validates :application_stage, inclusion: {in: VALID_APPLICATION_STAGES}, allow_blank: true
 
   register_tutorials :fixedProjects, :flexibleProjects
 
