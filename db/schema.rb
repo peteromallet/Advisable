@@ -815,7 +815,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_072900) do
     t.string "previous_work_description"
     t.string "previous_work_results"
     t.string "ideal_project"
-    t.string "vat_number"
+    t.string "application_interview_calendly_id"
     t.datetime "application_interview_starts_at"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
