@@ -7,7 +7,10 @@ import useViewer from "src/hooks/useViewer";
 import PromptCard from "./PromptCard";
 import ProgressLine from "./ProgressLine";
 import { useMutation } from "@apollo/client";
-import { SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW } from "./queries";
+import {
+  SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW,
+  useGetSpecialistEventId,
+} from "./queries";
 
 const Header = (props) => (
   <Text
@@ -124,11 +127,10 @@ const InvitedToInterview = () => {
 };
 
 const InterviewScheduled = () => {
+  const eventId = useGetSpecialistEventId();
+  console.log("eventid", eventId);
   const handleReschedule = () => {
-    calendly(
-      "https://calendly.com/d/c9sf-mhb/an-introduction-to-advisable-guild",
-      {},
-    );
+    calendly(`https://calendly.com/reschedulings/${eventId}`);
   };
 
   return (
