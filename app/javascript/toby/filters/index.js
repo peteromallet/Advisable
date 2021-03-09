@@ -16,8 +16,12 @@ export default function Filter({ resource, filter, ...props }) {
     (f) => f.name === filter.attribute,
   );
   const attributeFilter = attribute.filters.find((f) => f.name === filter.type);
-  const Component = FILTERS[attributeFilter.type];
-  if (!Component) return null;
+  let Component = FILTERS[attributeFilter.type];
+
+  if (!Component) {
+    console.error("No filter handler found. Falling back to equals", filter);
+    Component = Equals;
+  }
 
   return (
     <Component

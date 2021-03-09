@@ -5,6 +5,7 @@ module Toby
     class GreaterThan
       def self.apply(records, attribute, value: [], **_opts)
         return records if value.empty?
+        return records if value.first.blank?
 
         records.where("#{attribute.name} > ? ", value.first)
       end
