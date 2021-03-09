@@ -2,19 +2,19 @@
 
 module Toby
   module Attributes
-    class Select < BaseAttribute
-      filter :one_of, Filters::OneOf
+    class Integer < BaseAttribute
+      filter :is, Filters::Equals
+      filter :less_than, Filters::LessThan
+      filter :greater_than, Filters::GreaterThan
       filter :is_empty, Filters::CheckNil
       filter :not_empty, Filters::CheckNotNil
 
-      extension_field :options, [GraphQL::Types::String]
-
       def type
-        GraphQL::Types::String
+        GraphQL::Types::Int
       end
 
       def input_type
-        GraphQL::Types::String
+        GraphQL::Types::Int
       end
     end
   end
