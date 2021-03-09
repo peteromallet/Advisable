@@ -72,7 +72,7 @@ export default function PreviousWork({ specialist }) {
             <FormField
               isRequired
               as={Textarea}
-              charLimit={300}
+              charLimit={800}
               name="previousWorkDescription"
               minRows={5}
               label="Please provide a brief description of a project you’re proud of"
@@ -83,7 +83,7 @@ export default function PreviousWork({ specialist }) {
             <FormField
               isRequired
               as={Textarea}
-              charLimit={300}
+              charLimit={800}
               name="previousWorkResults"
               minRows={5}
               label="Why are you proud of this project?"
