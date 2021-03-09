@@ -26,17 +26,17 @@ RSpec.describe Specialist do
 
     it 'returns true if they have provided all payment info' do
       specialist = build(:specialist, {
-                           bank_currency: "EUR",
-                           bank_holder_name: "Test Account",
-                           bank_holder_address: {
-                             "line1" => "line1",
-                             "line2" => "line2",
-                             "city" => "city",
-                             "state" => "state",
-                             "country" => "country",
-                             "postcode" => "postcode"
-                           }
-                         })
+        bank_currency: "EUR",
+        bank_holder_name: "Test Account",
+        bank_holder_address: {
+          "line1" => "line1",
+          "line2" => "line2",
+          "city" => "city",
+          "state" => "state",
+          "country" => "country",
+          "postcode" => "postcode"
+        }
+      })
       expect(specialist.has_setup_payments).to be_truthy
     end
   end
@@ -78,6 +78,16 @@ RSpec.describe Specialist do
         expect(guild_feature_members.count).to eq(1)
         expect(guild_feature_members).to include(spe_featured)
       end
+    end
+  end
+
+  describe "application stages" do
+    let!(:specialist) { create(:specialist) }
+
+    it "validates it" do
+      update = specialist.update(application_stage: "NOT A VALID STATE")
+      expect(update).to be_falsey
+      expect(specialist.errors).to be_added(:application_stage, :inclusion, value: "NOT A VALID STATE")
     end
   end
 end
