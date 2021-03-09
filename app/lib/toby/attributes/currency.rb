@@ -3,6 +3,9 @@
 module Toby
   module Attributes
     class Currency < BaseAttribute
+      filter :is, Filters::Equals
+      filter :less_than, Filters::LessThan
+      filter :greater_than, Filters::GreaterThan
       filter :is_empty, Filters::CheckNil
       filter :not_empty, Filters::CheckNotNil
 
