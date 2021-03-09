@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Account < ApplicationRecord
-  self.ignored_columns = ["vat_number"]
-
   include Uid
   include Permissions
 
