@@ -33,7 +33,9 @@ export default function IdealProject({ specialist }) {
 
   const handleSubmit = async (values) => {
     await update({ variables: { input: values } });
-    await complete({ variables: { input: {} } });
+
+    specialist.applicationStage === "Started" &&
+      (await complete({ variables: { input: {} } }));
 
     history.push("/");
   };
