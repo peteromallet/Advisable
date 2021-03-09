@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_02_103819) do
+ActiveRecord::Schema.define(version: 2021_03_08_134453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 2021_03_02_103819) do
     t.datetime "reset_sent_at"
     t.jsonb "permissions", default: []
     t.jsonb "completed_tutorials", default: []
-    t.string "vat_number"
     t.string "confirmation_token"
     t.boolean "test_account"
     t.string "remember_token"
@@ -908,7 +907,6 @@ ActiveRecord::Schema.define(version: 2021_03_02_103819) do
     t.string "pid"
     t.string "rid"
     t.string "gclid"
-    t.boolean "bank_transfers_enabled", default: false
     t.string "time_zone"
     t.string "campaign_medium"
     t.string "contact_status"

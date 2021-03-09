@@ -141,8 +141,6 @@ module Types
       company.stripe_customer
     end
 
-    field :bank_transfers_enabled, Boolean, null: true, deprecation_reason: "bank_transfers_enabled has moved to Company"
-
     # The paymentMethod field returns the users default payment method from stripe.
     field :payment_method, Types::PaymentMethodType, null: true do
       authorize :is_user
