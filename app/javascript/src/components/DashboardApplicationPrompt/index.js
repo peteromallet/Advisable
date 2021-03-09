@@ -52,8 +52,7 @@ const ApplicationSubmitted = () => (
     <Description>
       Your application to Advisable has been is being reviewed by our team. You
       should hear from us within the next 2 working days. In the mean time you
-      can update application or profile to increase your chances of being
-      accepted
+      can update your application.
     </Description>
     <Button
       as={Link}
@@ -147,8 +146,8 @@ const InterviewCompleted = () => (
     <ProgressLine progress={3} />
     <Header>Interview Completed</Header>
     <Description>
-      Thank you for joining your call with Annie. We are reviewing your
-      application and you should here from us within the next 2 working days.
+      Thank you for joining the call! We are reviewing the final details of your
+      application and you should hear from us within the next 2 working days.
     </Description>
   </PromptCard>
 );
