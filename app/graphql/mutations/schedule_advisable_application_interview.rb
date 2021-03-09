@@ -3,13 +3,11 @@
 # Takes calendly's eventID and fetch interview details
 module Mutations
   class ScheduleAdvisableApplicationInterview < BaseMutation
-    argument :event_id, String, required: true
-
     field :specialist, Types::SpecialistType, null: true
 
     # The scheduleAdvisableApplicationInterview mutation
     # requires a specalist to be logged in.
-    def authorized(*)
+    def authorized
       requires_specialist!
 
       if current_user.application_stage != "Invited To Interview"
@@ -22,9 +20,8 @@ module Mutations
       true
     end
 
-    def resolve(event_id:)
+    def resolve
       current_user.application_stage = 'Interview Scheduled'
-      current_user.application_interview_calendly_id = event_id
       current_user.save_and_sync_with_responsible!(current_account_id)
 
       {specialist: current_user}
