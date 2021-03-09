@@ -101,7 +101,7 @@ const InvitedToInterview = () => {
 
     window.addEventListener("message", handleCalendly);
     return () => window.addEventListener("message", handleCalendly);
-  }, []);
+  }, [schedule]);
 
   return (
     <PromptCard mb={10}>
