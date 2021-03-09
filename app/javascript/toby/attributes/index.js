@@ -10,6 +10,7 @@ import DateTimeAttribute from "./dateTime";
 import CurrencyAttribute from "./currency";
 import TextArrayAttribute from "./textArray";
 import BelongsToAttribute from "./belongsTo";
+import IntegerAttribute from "./integer";
 
 const ATTRIBUTES = {
   IdAttribute,
@@ -22,6 +23,7 @@ const ATTRIBUTES = {
   DateAttribute,
   DateTimeAttribute,
   BooleanAttribute,
+  IntegerAttribute,
   HasManyThroughAttribute: HasManyAttribute,
   SelectAttribute,
 };
@@ -31,7 +33,7 @@ export function Attribute({ record, attribute }) {
 
   if (!handler) {
     console.error("No attribute handler found", attribute);
-    return null;
+    return <div>{record[attribute.name]}</div>;
   }
 
   return <handler.render record={record} field={attribute} />;
