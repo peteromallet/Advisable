@@ -13,6 +13,8 @@ module Toby
       attribute :skills, Attributes::HasManyThrough, labeled_by: :name
       attribute :estimated_budget, Attributes::String
       attribute :goals, Attributes::TextArray
+      attribute :created_at, Attributes::DateTime, readonly: true
+      attribute :updated_at, Attributes::DateTime, readonly: true
     end
   end
 end
