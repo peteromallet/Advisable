@@ -3,6 +3,9 @@
 module Toby
   module Attributes
     class Date < BaseAttribute
+      filter :is, Filters::DateEquals
+      filter :is_after, Filters::DateAfter
+      filter :is_before, Filters::DateBefore
       filter :is_empty, Filters::CheckNil
       filter :not_empty, Filters::CheckNotNil
 
