@@ -48,7 +48,10 @@ async function resolveFilterValue(resource, client, filter, schemaData) {
 
   const type = getType(schemaData.schema, resource.type);
   const field = type.fields.find((f) => f.name === filter.attribute);
-  const nextResource = getResource(schemaData.resources, field.type.name);
+  const nextResource = getResource(
+    schemaData.resources,
+    field.type.name || field.type.ofType?.ofType?.name,
+  );
   return convertFilterToIDs(nextResource, client, filter.value, schemaData);
 }
 

@@ -17,7 +17,6 @@ export function FiltersFilter({
 
   return (
     <>
-      Where
       <select value={filter.attribute} onChange={onChangeFilterAttribute}>
         {fieldsWithFilters.map((field) => (
           <option key={field.name}>{field.name}</option>
@@ -75,6 +74,7 @@ export default function Filters({
     <div>
       {filters.map((filter) => (
         <div key={filter.id}>
+          Where
           <FiltersFilter
             filter={filter}
             resource={resource}
