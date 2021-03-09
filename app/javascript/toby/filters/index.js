@@ -17,5 +17,12 @@ export default function Filter({ resource, filter, ...props }) {
   const Component = FILTERS[attributeFilter.type];
   if (!Component) return null;
 
-  return <Component resource={resource} filter={filter} {...props} />;
+  return (
+    <Component
+      resource={resource}
+      filter={filter}
+      attribute={attribute}
+      {...props}
+    />
+  );
 }

@@ -3,6 +3,7 @@
 module Toby
   module Attributes
     class Select < BaseAttribute
+      filter :is, Filters::Equals
       filter :one_of, Filters::OneOf
       filter :is_empty, Filters::CheckNil
       filter :not_empty, Filters::CheckNotNil
