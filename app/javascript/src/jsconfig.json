@@ -1,0 +1,11 @@
+{
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "jsx": "react",
+    "paths": {
+      "src/*": ["./*"],
+      "@advisable/donut": ["../../../donut/src/index"]
+    }
+  }
+}
