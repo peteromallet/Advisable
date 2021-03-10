@@ -209,7 +209,7 @@ test("Freelancer can mark a task as complete", async () => {
     project,
     specialist,
     tasks: [task],
-    rate: 50,
+    invoiceRate: 5000,
   });
   task.application = application;
 
