@@ -3,9 +3,6 @@ process.env.NODE_ENV = process.env.NODE_ENV || "development";
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const environment = require("./environment");
 const WebpackBar = require("webpackbar");
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-
-const smp = new SpeedMeasurePlugin();
 
 // webpacker includes CaseSensitivePaths plugin and its slow.
 environment.plugins.delete("CaseSensitivePaths");
@@ -44,4 +41,3 @@ if (process.env.REACT_REFRESH === "true" && process.env.RAILS_ENV !== "test") {
 }
 
 module.exports = environment.toWebpackConfig();
-// module.exports = smp.wrap(environment.toWebpackConfig());

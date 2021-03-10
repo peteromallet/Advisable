@@ -1,8 +1,0 @@
-mutation setTaskRepeat($input: SetTaskRepeatInput!) {
-  setTaskRepeat(input: $input) {
-    task {
-      id
-      repeat
-    }
-  }
-}

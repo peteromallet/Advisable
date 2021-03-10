@@ -1,5 +1,4 @@
 import styled, { keyframes } from "styled-components";
-import { Icon } from "../Icon/styles";
 import { Status } from "../Status/styles";
 import { theme } from "@advisable/donut";
 
@@ -28,10 +27,6 @@ export const Detail = styled.div`
 
   strong {
     color: #363a4c;
-  }
-
-  ${Icon} {
-    color: #747a93;
   }
 `;
 
