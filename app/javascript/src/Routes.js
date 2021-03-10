@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
 
 import Loading from "src/components/Loading";
@@ -12,7 +12,6 @@ const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const VerifyProject = lazy(() => import("./views/VerifyProject"));
 const Availability = lazy(() => import("./views/Availability"));
-const FreelancerSignup = lazy(() => import("./views/FreelancerSignup"));
 const FreelancerJoin = lazy(() => import("./views/FreelancerJoin"));
 const VideoCall = lazy(() => import("./views/VideoCall"));
 
@@ -37,7 +36,7 @@ const Routes = () => {
           component={Availability}
         />
         <AuthenticatedRoute path="/calls/:id" component={VideoCall} />
-        <Route path="/freelancers/signup" component={FreelancerSignup} />
+        <Redirect from="/freelancers/signup" to="/freelancers/join" />
         <Route path="/freelancers/join" component={FreelancerJoin} />
         <Route path="/verify_project/:id" component={VerifyProject} />
         <Route component={ApplicationRoutes} />
