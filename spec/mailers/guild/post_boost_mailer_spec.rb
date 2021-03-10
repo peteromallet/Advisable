@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe Guild::PostBoostMailer do
   describe '#new_post' do
-    subject(:mail) {
-      described_class.new_post(post: guild_post, follower_id: specialist.id)
-    }
+    subject(:mail) do
+      described_class.new_post(post: guild_post, subscriber_id: specialist.id)
+    end
 
     let(:account)    { create(:account) }
     let(:specialist) { create(:specialist, account: account) }

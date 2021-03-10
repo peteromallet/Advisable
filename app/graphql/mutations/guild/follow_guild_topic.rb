@@ -14,8 +14,7 @@ module Mutations
 
       def resolve(guild_topic_id:)
         guild_topic = ::Guild::Topic.published.find_by_slug_or_id(guild_topic_id)
-
-        current_user.follow(guild_topic) unless current_user.following?(guild_topic)
+        current_user.subscribe_to!(guild_topic)
 
         {guild_topic: guild_topic}
       end

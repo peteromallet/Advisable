@@ -3,15 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::Guild::FollowGuildTopic do
-  subject(:follow_guild_topic) {
+  subject(:follow_guild_topic) do
     resp = AdvisableSchema.execute(query, context: {current_user: specialist})
     resp.dig("data", "followGuildTopic", "guildTopic")
-  }
+  end
 
   let!(:guild_topic) { create(:guild_topic) }
   let(:specialist) { create(:specialist, :guild) }
 
-  let(:query) {
+  let(:query) do
     <<-GRAPHQL
     mutation {
       followGuildTopic(input: {
@@ -24,23 +24,23 @@ RSpec.describe Mutations::Guild::FollowGuildTopic do
       }
     }
     GRAPHQL
-  }
+  end
 
-  it "adds a guild_topic to the specialist's follows" do
-    expect {
+  it "adds a guild_topic to the specialist's subscriptions" do
+    expect do
       follow_guild_topic
       specialist.reload
-    }.to change(Follow, :count).from(0).to(1).
-      and change(specialist.follows, :count).from(0).to(1)
-    expect(specialist.guild_followed_topics.first).to eq(guild_topic)
+    end.to change(Subscription, :count).from(0).to(1).
+      and change(specialist.subscriptions, :count).from(0).to(1)
+    expect(specialist.guild_subscribed_topics.first).to eq(guild_topic)
   end
 
   it "does not follow a topic thats already followed" do
-    specialist.follow(guild_topic)
+    specialist.subscribe_to!(guild_topic)
 
-    expect {
+    expect do
       follow_guild_topic
       specialist.reload
-    }.not_to change(specialist.follows, :count)
+    end.not_to change(specialist.subscriptions, :count)
   end
 end

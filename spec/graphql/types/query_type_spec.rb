@@ -17,22 +17,22 @@ RSpec.describe Types::QueryType do
     end
 
     describe "guild topics follows" do
-      subject(:guild_followed_topics) {
+      subject(:guild_followed_topics) do
         context = {
           current_user: specialist
         }
         resp = AdvisableSchema.execute(query, context: context)
         resp.dig("data", "guildFollowedTopics")
-      }
+      end
 
       let(:guild_topics) { create_list(:guild_topic, 3) }
 
       before do
-        guild_topics.each { |topic| specialist.follow(topic) }
+        guild_topics.each { |topic| specialist.subscribe_to!(topic) }
       end
 
       it "returns the guild topics that the specialist follows" do
-        expect(guild_followed_topics).to eq(guild_topics.reverse.as_json(only: [:id, :name]))
+        expect(guild_followed_topics).to eq(guild_topics.reverse.as_json(only: %i[id name]))
       end
     end
   end
