@@ -52,19 +52,19 @@ const Topic = ({ data }) => {
   };
 
   return (
-    <Card padding={["m", "l"]}>
+    <Card borderRadius="12px" padding={[4, 6, 8]}>
       <Text
-        mb="xs"
+        mb={2}
         as="h2"
-        fontSize="xxl"
-        fontWeight="semibold"
-        color="blue800"
-        letterSpacing="-0.025em"
+        fontSize="4xl"
+        fontWeight="600"
+        color="neutral900"
+        letterSpacing="-0.05rem"
       >
         What would you like to cover with {data.specialist.firstName} during
         this consultation?
       </Text>
-      <Text color="neutral800" lineHeight="s" mb="l">
+      <Text color="neutral800" lineHeight="1.3" mb={8}>
         Please describe briefly what you&apos;d like to cover in a 30-minute
         consultation with {data.specialist.firstName}. This is for us to share
         with {data.specialist.firstName} when requesting their time.

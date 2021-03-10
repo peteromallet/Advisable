@@ -1,62 +1,37 @@
 import React from "react";
 import { Mail } from "@styled-icons/feather";
 import { motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
-import { Card, Text, Link, Box } from "@advisable/donut";
+import { Card, Text, Circle, Box } from "@advisable/donut";
 
-const Complete = () => {
-  const location = useLocation();
-  const email = location.state.email;
+const Complete = ({ data }) => {
+  const name = data?.specialist?.firstName;
 
   return (
-    <Card>
-      <Box textAlign="center" maxWidth={500} mx="auto" py="xxl">
+    <Card borderRadius="12px">
+      <Box textAlign="center" maxWidth={500} mx="auto" py={12}>
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.15 }}
         >
-          <Box
-            mb="m"
-            width={60}
-            height={60}
-            bg="blue100"
-            borderRadius="50%"
-            display="inline-flex"
-            alignItems="center"
-            justifyContent="center"
-            color="blue500"
-          >
+          <Circle bg="cyan100" color="cyan800" mb={6}>
             <Mail size={24} strokeWidth={1.5} />
-          </Box>
+          </Circle>
         </motion.div>
         <Text
-          mb="xs"
+          mb={3}
           as="h2"
-          fontSize="xxl"
-          fontWeight="semibold"
-          color="blue800"
-          letterSpacing="-0.025em"
+          fontSize="4xl"
+          fontWeight="600"
+          color="neutral900"
+          letterSpacing="-0.04rem"
         >
-          Check your email to confirm your request
+          Consultation request sent
         </Text>
-        <Text color="neutral700" lineHeight="s" mb="s">
-          To confirm your request, please click on the link we sent to{" "}
-          <Text as="span" fontWeight="medium">
-            {email}
-          </Text>
-        </Text>
-        <Text color="neutral700" lineHeight="s" mb="s" fontSize="s">
-          If you can&apos;t find it in your inbox in the next 5 minutes, please
-          check your spam folder as emails can occasionally get incorrectly
-          flagged.
-        </Text>
-        <Text color="neutral700" lineHeight="s" fontSize="s">
-          If you can&apos;t find it, email{" "}
-          <Link.External href="mailto:hello@advisable.com">
-            hello@advisable.com
-          </Link.External>{" "}
-          and we&apos;ll help ASAP.
+        <Text fontSize="l" lineHeight="1.3" color="neutral800">
+          Thank&apos;s for submitting your consultation request. We have sent
+          your request to {name} and we&apos;ll work to get a response from them
+          ASAP.
         </Text>
       </Box>
     </Card>
