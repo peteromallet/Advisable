@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-class Subscribe < ApplicationRecord
+class Subscription < ApplicationRecord
   belongs_to :specialist
   belongs_to :tag, class_name: "ActsAsTaggableOn::Tag"
 
-  validates :specialist, uniqueness: {scope: [:tag]}
+  validates :tag, uniqueness: {scope: [:specialist]}
 end
 
 # == Schema Information
 #
-# Table name: subscribes
+# Table name: subscriptions
 #
 #  id            :uuid             not null, primary key
 #  created_at    :datetime         not null
@@ -19,9 +19,9 @@ end
 #
 # Indexes
 #
-#  index_subscribes_on_specialist_id             (specialist_id)
-#  index_subscribes_on_specialist_id_and_tag_id  (specialist_id,tag_id) UNIQUE
-#  index_subscribes_on_tag_id                    (tag_id)
+#  index_subscriptions_on_specialist_id             (specialist_id)
+#  index_subscriptions_on_specialist_id_and_tag_id  (specialist_id,tag_id) UNIQUE
+#  index_subscriptions_on_tag_id                    (tag_id)
 #
 # Foreign Keys
 #
