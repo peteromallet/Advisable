@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "administrate/base_dashboard"
 
 class ApplicationDashboard < Administrate::BaseDashboard
@@ -12,7 +14,7 @@ class ApplicationDashboard < Administrate::BaseDashboard
     specialist: SimpleBelongsToField,
     project: Field::BelongsTo,
     id: Field::Number,
-    rate: Field::Number,
+    invoice_rate: Field::Number,
     availability: Field::String,
     status: Field::String,
     score: Field::Number,
@@ -20,7 +22,7 @@ class ApplicationDashboard < Administrate::BaseDashboard
     questions: Field::String.with_options(searchable: false),
     airtable_id: Field::String,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -28,39 +30,39 @@ class ApplicationDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = [
-    :project,
-    :specialist,
-    :status
+  COLLECTION_ATTRIBUTES = %i[
+    project
+    specialist
+    status
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :specialist,
-    :project,
-    :id,
-    :rate,
-    :score,
-    :availability,
-    :status,
-    :introduction,
-    :questions,
-    :airtable_id,
-    :created_at,
-    :updated_at,
+  SHOW_PAGE_ATTRIBUTES = %i[
+    specialist
+    project
+    id
+    invoice_rate
+    score
+    availability
+    status
+    introduction
+    questions
+    airtable_id
+    created_at
+    updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = [
-    :rate,
-    :score,
-    :availability,
-    :status,
-    :introduction,
-    :airtable_id,
+  FORM_ATTRIBUTES = %i[
+    invoice_rate
+    score
+    availability
+    status
+    introduction
+    airtable_id
   ].freeze
 
   # Overwrite this method to customize how applications are displayed
