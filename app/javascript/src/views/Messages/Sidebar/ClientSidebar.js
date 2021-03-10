@@ -83,10 +83,10 @@ const ClientSidebar = (props) => {
       <Box paddingBottom="l">
         {application.status === "Working" ? (
           <AttributeList>
-            {Boolean(application.rate) && (
+            {application.invoiceRate && (
               <AttributeList.Item
                 label="Hourly Rate"
-                value={currency(parseFloat(application.rate) * 100.0)}
+                value={currency(application.invoiceRate)}
               />
             )}
 

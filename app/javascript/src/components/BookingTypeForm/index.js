@@ -31,8 +31,6 @@ const BookingTypeForm = ({
   onSubmit,
   buttonLabel,
 }) => {
-  const rate = hourlyRate ? parseFloat(hourlyRate) : null;
-
   const initial = {
     projectType: "",
     monthlyLimit: undefined,
@@ -42,12 +40,12 @@ const BookingTypeForm = ({
   };
 
   const calculateCost = (formik) => {
-    if (!rate) return null;
+    if (!hourlyRate) return null;
     if (!formik.values.monthlyLimit) return null;
     if (formik.values.monthlyLimit > 200) return null;
-    const cost = ((rate * formik.values.monthlyLimit) / 2) * 100;
+    const cost = (hourlyRate * formik.values.monthlyLimit) / 2;
     return `${firstName} chrages ${currency(
-      rate * 100,
+      hourlyRate,
     )} per hour. You will be charged ${currency(cost)}`;
   };
 

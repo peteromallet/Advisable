@@ -31,7 +31,7 @@ const Component = ({ application, onCreate }) => {
         __typename: "Application",
         id: application.id,
         trialProgram: application.trialProgram || false,
-        rate: "0",
+        invoiceRate: 0,
         status: application.status,
         trialTask: application.trialTask || null,
         projectType: application.projectType,

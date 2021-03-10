@@ -53,7 +53,7 @@ const BookingType = ({ data }) => {
       <BookingTypeForm
         firstName={firstName}
         onSubmit={handleSubmit}
-        hourlyRate={data.application.rate}
+        hourlyRate={data.application.invoiceRate}
       />
     </Card>
   );

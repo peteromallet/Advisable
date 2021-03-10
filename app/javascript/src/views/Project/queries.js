@@ -4,7 +4,7 @@ import { gql, useQuery, useMutation, useApolloClient } from "@apollo/client";
 const applicationDetails = gql`
   fragment ApplicationDetails on Application {
     id
-    rate
+    invoiceRate
     comment
     score
     status
@@ -108,7 +108,7 @@ export const GET_CANDIDATES = gql`
         ]
       ) {
         id
-        rate
+        invoiceRate
         score
         status
         availability

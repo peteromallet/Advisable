@@ -17,7 +17,7 @@ let SideBar = (props) => {
   const tasksPath = `${urlPrefix}/tasks`;
   const sendPath = `${urlPrefix}/send`;
 
-  const hasRate = Boolean(application.rate);
+  const hasRate = Boolean(application.invoiceRate);
   const hasProjectType = Boolean(application.projectType);
   const isSent = application.status === "Proposed";
 

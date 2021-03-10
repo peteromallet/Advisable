@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import { Card, Text } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import currency from "src/utilities/currency";
+import priceInputProps from "src/utilities/priceInputProps";
 import SubmitButton from "src/components/SubmitButton";
 import CurrencyInput from "src/components/CurrencyInput";
 import { rateValidationSchema } from "./validationSchema";
@@ -17,7 +18,7 @@ const Rate = ({ history, application }) => {
       variables: {
         input: {
           id: application.id,
-          rate: parseFloat(values.rate),
+          invoiceRate: values.invoiceRate,
         },
       },
     });
@@ -29,12 +30,12 @@ const Rate = ({ history, application }) => {
   };
 
   const initialValues = {
-    rate: application.rate || "",
+    invoiceRate: application.invoiceRate || "",
   };
 
   const calculateRate = (amount) => {
     const rate = (amount * 0.8).toFixed(2);
-    return currency(parseFloat(rate) * 100.0);
+    return currency(rate);
   };
 
   return (
@@ -69,9 +70,12 @@ const Rate = ({ history, application }) => {
               placeholder="$0.00"
               as={CurrencyInput}
               caption={
-                Number(formik.values.rate) > 0 &&
-                `You would earn ${calculateRate(formik.values.rate)} per hour`
+                Number(formik.values.invoiceRate) > 0 &&
+                `You would earn ${calculateRate(
+                  formik.values.invoiceRate,
+                )} per hour`
               }
+              {...priceInputProps(formik, "invoiceRate")}
             />
             <SubmitButton disableUntilValid aria-label="Continue">
               Continue
