@@ -1,4 +1,5 @@
 import React from "react";
+import currency from "src/utilities/currency";
 import { Globe } from "@styled-icons/ionicons-outline";
 import { LinkedinWithCircle } from "@styled-icons/entypo-social";
 import { Stack, Box, Text, Link } from "@advisable/donut";
@@ -47,7 +48,7 @@ export default function MatchMetaInfo({ match }) {
             Hourly rate
           </Text>
           <Text fontSize="sm" color="neutral700">
-            ${match.rate}
+            {currency(match.invoiceRate)}
           </Text>
         </Box>
         <Box display="flex" justifyContent="space-between">

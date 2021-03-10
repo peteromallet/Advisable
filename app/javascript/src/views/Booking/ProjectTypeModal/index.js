@@ -48,7 +48,7 @@ const ProjectTypeModal = ({ modal, application }) => {
         <BookingTypeForm
           initialValues={initialValues}
           firstName={application.specialist.firstName}
-          hourlyRate={application.rate}
+          hourlyRate={application.invoiceRate}
           buttonLabel="Update Project Type"
           onSubmit={handleSubmit}
         />

@@ -4,7 +4,7 @@ export const applicationFields = gql`
   fragment ApplicationFields on Application {
     id
     status
-    rate
+    invoiceRate
     acceptsFee
     acceptsTerms
     introduction
