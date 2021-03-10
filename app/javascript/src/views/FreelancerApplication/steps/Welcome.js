@@ -20,10 +20,6 @@ const stepsMeta = [
     path: "/freelancers/apply/overview",
   },
   {
-    validationSchema: idealProjectValidationSchema,
-    path: "/freelancers/apply/ideal_project",
-  },
-  {
     validationSchema: previousWorkValidationSchema,
     path: "/freelancers/apply/experience",
   },
@@ -31,25 +27,26 @@ const stepsMeta = [
     validationSchema: workPreferencesValidationSchema,
     path: "/freelancers/apply/preferences",
   },
+  {
+    validationSchema: idealProjectValidationSchema,
+    path: "/freelancers/apply/ideal_project",
+  },
 ];
 
 export default function Welcome({ specialist }) {
-  // Check if some of the steps were previously filled and redirect there
-  // to continue the flow
-  const actualStepPathname = stepsMeta.reduce((acc, step, index, array) => {
-    const prevIsValid = array[index - 1]?.validationSchema.isValidSync(
-      specialist,
-    );
-    const curIsValid = step.validationSchema.isValidSync(specialist);
+  // Looking for a first non-filled step to redirect there
+  const actualStep = stepsMeta.find(
+    (step) =>
+      !step.validationSchema.isValidSync({
+        ...specialist,
+        country: specialist.country.name,
+      }),
+  );
 
-    if (prevIsValid && !curIsValid) return step.path;
-    return acc;
-  }, null);
-
-  if (actualStepPathname)
+  if (actualStep)
     return (
       <motion.div exit>
-        <Redirect to={actualStepPathname} />
+        <Redirect to={actualStep.path} />
       </motion.div>
     );
 
