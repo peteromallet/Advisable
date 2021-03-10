@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class MigrateFollowsToSubscribes < ActiveRecord::Migration[6.1]
+class MigrateFollowsToSubscriptions < ActiveRecord::Migration[6.1]
   class MigrationFollow < ApplicationRecord
     self.table_name = :follows
   end
 
-  class MigrationSubscribe < ApplicationRecord
-    self.table_name = :subscribes
+  class MigrationSubscription < ApplicationRecord
+    self.table_name = :subscriptions
   end
 
   def up
@@ -21,7 +21,7 @@ class MigrateFollowsToSubscribes < ActiveRecord::Migration[6.1]
         }
       end
 
-      MigrationSubscribe.upsert_all(subs, unique_by: :index_subscribes_on_specialist_id_and_tag_id)
+      MigrationSubscription.upsert_all(subs, unique_by: :index_subscriptions_on_specialist_id_and_tag_id)
     end
   end
 

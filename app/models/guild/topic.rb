@@ -14,11 +14,10 @@ module Guild
 
     acts_as_followable
 
+    belongs_to :topicable, polymorphic: true, optional: true
     belongs_to :alias_tag, class_name: "Guild::Topic", optional: true
     has_many :aliased_tags, class_name: "Guild::Topic", foreign_key: "alias_tag_id", dependent: :nullify, inverse_of: 'alias_tag'
-
-    # Associated skills or industries
-    belongs_to :topicable, polymorphic: true, optional: true
+    has_many :subscriptions, foreign_key: :tag_id, inverse_of: :tag, dependent: :destroy
 
     validate :ensure_alias_root
 
