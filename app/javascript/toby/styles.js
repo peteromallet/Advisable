@@ -3,6 +3,8 @@ import { theme } from "@advisable/donut";
 import { rgba } from "polished";
 import styled, { createGlobalStyle } from "styled-components";
 
+const HEADER_HEIGHT = 100;
+
 export const BaseStyles = createGlobalStyle`
   body {
     background: white !important;
@@ -10,38 +12,43 @@ export const BaseStyles = createGlobalStyle`
 `;
 
 export const StyledLayout = styled.div`
+  width: 100vw;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  overflow: auto;
+  position: relative;
 `;
 
-export const StyledLayoutBody = styled.div`
-  height: 0;
-  flex-grow: 1;
-  flex-shrink: 1;
-  overflow-y: scroll;
-  overscroll-behavior-y: none;
-`;
+export const StyledLayoutBody = styled.div``;
 
 export const StyledHeader = styled.div`
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 10;
   flex-grow: 0;
   flex-shrink: 0;
   min-width: 100vw;
+  position: sticky;
+  height: ${HEADER_HEIGHT}px;
   background: white;
-  box-shadow: 0 2px 4px ${rgba(theme.colors.neutral900, 0.16)},
-    0 1px 2px ${rgba(theme.colors.neutral900, 0.08)};
+  box-shadow: 0 1px 2px ${rgba(theme.colors.neutral900, 0.16)};
 `;
 
 export const StyledHeaderRow = styled.div`
+  top: ${HEADER_HEIGHT}px;
   display: flex;
+  position: sticky;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   background-color: ${theme.colors.neutral50};
+  box-shadow: 0 2px 4px ${rgba(theme.colors.neutral900, 0.16)},
+    0 1px 2px ${rgba(theme.colors.neutral900, 0.08)};
 `;
 
 export const StyledHeaderCell = styled.div`
   width: 200px;
   height: 36px;
-  display: flex;
+  display: inline-flex;
   flex-shrink: 0;
   padding: 0 10px;
   font-size: 15px;
