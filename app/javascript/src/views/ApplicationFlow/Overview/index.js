@@ -102,6 +102,7 @@ function Overview({ application, history, location }) {
                   formik={formik}
                   rowPadding={isWidescreen ? 64 : 80}
                   isWidescreen={isWidescreen}
+                  charLimit={280}
                   label="Give a 2-3 line description of your background as it related to this project."
                   placeholder="Give a 2-3 line description of your background as it related to this project."
                 />
