@@ -72,7 +72,8 @@ export default function Validation({ data, modal, onPublish }) {
               <Stack mb="xl" spacing="l">
                 <FormField
                   name="contactName"
-                  label="Contact Name"
+                  label="Contact Name in LinkedIn"
+                  description="We will ask the client to login with LinkedIn to confirm their identity when validating this project. Please ensure the name you provide matches their name on LinkedIn."
                   placeholder="Contact Name"
                   autoComplete="off"
                 />
