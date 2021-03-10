@@ -36,19 +36,19 @@ export default function Resource() {
   }
 
   return (
-    <StyledLayout>
+    <StyledLayout ref={scrollRef}>
       <StyledHeader>
         <Navigation />
         <Filters {...filterState} />
-        <StyledHeaderRow>
-          {resource.attributes.map((attr) => (
-            <StyledHeaderCell key={attr.name}>
-              {attr.columnLabel}
-            </StyledHeaderCell>
-          ))}
-        </StyledHeaderRow>
       </StyledHeader>
-      <StyledLayoutBody ref={scrollRef}>
+      <StyledHeaderRow style={{ width: 200 * resource.attributes.length }}>
+        {resource.attributes.map((attr) => (
+          <StyledHeaderCell key={attr.name}>
+            {attr.columnLabel}
+          </StyledHeaderCell>
+        ))}
+      </StyledHeaderRow>
+      <StyledLayoutBody style={{ width: 200 * resource.attributes.length }}>
         {edges.map(({ node }) => (
           <StyledRow key={node.id}>
             {resource.attributes.map((attr) => (
