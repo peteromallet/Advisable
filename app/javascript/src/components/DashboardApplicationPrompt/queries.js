@@ -1,19 +1,21 @@
 import { gql, useQuery } from "@apollo/client";
 import useViewer from "src/hooks/useViewer";
 
-export const GET_EVENT_ID = gql`
-  query specialistEventId($id: ID!) {
+export const GET_INTERVIEW_TIME = gql`
+  query specialistInterviewTime($id: ID!) {
     specialist(id: $id) {
       id
-      applicationInterviewCalendlyId
+      applicationInterviewStartsAt
     }
   }
 `;
 
-export const useGetSpecialistEventId = () => {
+export const useGetInterviewTime = () => {
   const viewer = useViewer();
-  const { data } = useQuery(GET_EVENT_ID, { variables: { id: viewer?.id } });
-  return data?.specialist.applicationInterviewCalendlyId;
+  const { data } = useQuery(GET_INTERVIEW_TIME, {
+    variables: { id: viewer?.id },
+  });
+  return data?.specialist.applicationInterviewStartsAt;
 };
 
 export const SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW = gql`

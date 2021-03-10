@@ -9,7 +9,7 @@ import ProgressLine from "./ProgressLine";
 import { useMutation } from "@apollo/client";
 import {
   SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW,
-  useGetSpecialistEventId,
+  useGetInterviewTime,
 } from "./queries";
 
 const Header = (props) => (
@@ -78,7 +78,7 @@ const InvitedToInterview = () => {
   const [schedule] = useMutation(SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW);
 
   const handleScheduled = () => {
-    calendly("https://calendly.com/guandjoy/15min", {
+    calendly("https://calendly.com/yurko-turskiy/15min", {
       full_name: fullName,
       email,
     });
@@ -127,25 +127,17 @@ const InvitedToInterview = () => {
 };
 
 const InterviewScheduled = () => {
-  const eventId = useGetSpecialistEventId();
-  console.log("eventid", eventId);
-  const handleReschedule = () => {
-    calendly(`https://calendly.com/reschedulings/${eventId}`);
-  };
+  const interviewTime = useGetInterviewTime();
 
   return (
     <PromptCard mb={10}>
       <ProgressLine progress={3} />
       <Header>Call Scheduled</Header>
       <Description>
-        Your introductory call has been scheduled. You should have also received
-        a calendar invite by now.
+        Your introductory call has been scheduled
+        {interviewTime && ` for ${interviewTime}`}. You should have also
+        received a calendar invite by now where you able to reschedule it.
       </Description>
-      {eventId ? (
-        <Button variant="subtle" onClick={handleReschedule}>
-          Reschedule
-        </Button>
-      ) : null}
     </PromptCard>
   );
 };
