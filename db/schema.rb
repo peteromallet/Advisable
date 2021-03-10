@@ -805,6 +805,16 @@ ActiveRecord::Schema.define(version: 2021_03_11_083447) do
     t.index ["uid"], name: "index_specialists_on_uid"
   end
 
+  create_table "subscribes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "specialist_id", null: false
+    t.uuid "tag_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["specialist_id", "tag_id"], name: "index_subscribes_on_specialist_id_and_tag_id", unique: true
+    t.index ["specialist_id"], name: "index_subscribes_on_specialist_id"
+    t.index ["tag_id"], name: "index_subscribes_on_tag_id"
+  end
+
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.uuid "tag_id"
     t.string "taggable_type"
@@ -1019,6 +1029,8 @@ ActiveRecord::Schema.define(version: 2021_03_11_083447) do
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "accounts"
   add_foreign_key "specialists", "countries"
+  add_foreign_key "subscribes", "specialists"
+  add_foreign_key "subscribes", "tags"
   add_foreign_key "taggings", "tags"
   add_foreign_key "unresponsiveness_reports", "accounts", column: "reporter_id"
   add_foreign_key "unresponsiveness_reports", "applications"
