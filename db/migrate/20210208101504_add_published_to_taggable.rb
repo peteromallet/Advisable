@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 class AddPublishedToTaggable < ActiveRecord::Migration[6.1]
+  class MigrationTopic < ApplicationRecord
+    self.table_name = :tags
+  end
+
   def up
     add_column ActsAsTaggableOn.tags_table, :published, :boolean, default: false
 
-    Guild::Topic.find_each do |topic|
+    MigrationTopic.find_each do |topic|
       topic.published = true
       topic.save(touch: false, validate: false)
     end

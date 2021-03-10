@@ -76,6 +76,10 @@ Style/StringLiterals:
   Enabled: false
   EnforcedStyle: double_quotes
 
+Rails/SkipsModelValidations:
+  Exclude:
+    - "db/migrate/*"
+
 Rails/DynamicFindBy:
   Enabled: false
 
