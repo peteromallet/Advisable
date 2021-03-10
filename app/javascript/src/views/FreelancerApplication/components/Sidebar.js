@@ -54,28 +54,28 @@ export default function Sidebar({ specialist }) {
         <MultistepMenu.Item
           to="/freelancers/apply/overview"
           isComplete={overviewComplete}
-          isDisabled={!introductionComplete}
+          isDisabled={!introductionComplete && !overviewComplete}
         >
           Overview
         </MultistepMenu.Item>
         <MultistepMenu.Item
           to="/freelancers/apply/experience"
           isComplete={previousWorkComplete}
-          isDisabled={!overviewComplete}
+          isDisabled={!overviewComplete && !previousWorkComplete}
         >
           Previous work
         </MultistepMenu.Item>
         <MultistepMenu.Item
           to="/freelancers/apply/preferences"
           isComplete={workPreferencesComplete}
-          isDisabled={!previousWorkComplete}
+          isDisabled={!previousWorkComplete && !workPreferencesComplete}
         >
           Work preferences
         </MultistepMenu.Item>
         <MultistepMenu.Item
           to="/freelancers/apply/ideal_project"
           isComplete={idealProjectComplete}
-          isDisabled={!workPreferencesComplete}
+          isDisabled={!workPreferencesComplete && !idealProjectComplete}
         >
           Ideal project
         </MultistepMenu.Item>
