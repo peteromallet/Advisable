@@ -27,6 +27,7 @@ export const viewerFields = gql`
       name
       bio
       createdAt
+      acceptedAt
       firstName
       lastName
       confirmed
