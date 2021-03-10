@@ -27,11 +27,11 @@ export const hoursDisplay = (task) => {
 };
 
 export const hoursCost = (task) => {
-  const rate = task.application.rate;
-  let output = currency(rate * task.estimate * 100);
+  const rate = task.application.invoiceRate;
+  let output = currency(rate * task.estimate);
 
   if (task.flexibleEstimate) {
-    output += ` - ${currency(rate * task.flexibleEstimate * 100)}`;
+    output += ` - ${currency(rate * task.flexibleEstimate)}`;
   }
 
   return output;

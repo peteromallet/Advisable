@@ -54,10 +54,10 @@ const Component = ({ data, tutorial, tutorialModal }) => {
         </Stack>
         <Box paddingTop="l" paddingBottom="xl">
           <AttributeList>
-            {Boolean(application.rate) && (
+            {application.invoiceRate && (
               <AttributeList.Item
                 label="Hourly Rate"
-                value={currency(parseFloat(application.rate) * 100.0)}
+                value={currency(application.invoiceRate)}
               />
             )}
             {Boolean(application.projectType === "Flexible") && (

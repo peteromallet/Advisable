@@ -10,7 +10,7 @@ const QuoteInputPriceCalculation = ({
 }) => {
   if (estimateType === "Fixed") return null;
   if (!estimate) return null;
-  const rate = parseFloat(task.application.rate) * 100.0;
+  const rate = task.application.invoiceRate;
   const earnings = calculateEarnings(estimate, rate);
   const flexibleEarnings = calculateEarnings(flexibleEstimate, rate);
 

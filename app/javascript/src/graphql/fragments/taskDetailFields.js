@@ -8,7 +8,7 @@ export default gql`
     ...TaskFields
     application {
       id
-      rate
+      invoiceRate
       status
       projectType
       trialProgram

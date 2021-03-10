@@ -187,7 +187,7 @@ RSpec.describe Airtable::Application do
     context 'when saved changes to rate' do
       it "syncs the 'Hourly Rate For Project'" do
         application.reload
-        application.rate = 100
+        application.invoice_rate = 10000
         application.save
         expect { airtable.push(application) }.to change { airtable.fields['Hourly Rate For Project'] }.from(nil).to(100)
       end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_08_134453) do
+ActiveRecord::Schema.define(version: 2021_03_08_135356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 2021_03_08_134453) do
     t.text "rejection_feedback"
     t.jsonb "meta_fields"
     t.string "source"
+    t.integer "invoice_rate"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
     t.index ["uid"], name: "index_applications_on_uid"

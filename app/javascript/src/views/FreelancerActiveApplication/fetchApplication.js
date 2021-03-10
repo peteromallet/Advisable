@@ -8,7 +8,7 @@ export default gql`
     application(id: $id) {
       id
       status
-      rate
+      invoiceRate
       projectType
       monthlyLimit
       trialProgram

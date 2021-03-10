@@ -137,7 +137,7 @@ export const application = (fields = {}) => {
     {
       __typename: "Application",
       id: uniqueId("application"),
-      rate: "75",
+      invoiceRate: 7500,
       score: 90,
       currency: "USD",
       status: "Working",

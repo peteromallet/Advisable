@@ -104,7 +104,7 @@ const ApplicationFlow = ({ application, match }) => {
       isComplete:
         !isApplying ||
         Boolean(
-          application.rate &&
+          application.invoiceRate &&
             application.acceptsFee &&
             application.acceptsTerms,
         ),

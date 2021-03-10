@@ -76,7 +76,7 @@ const SpecialistSidebar = (props) => {
         <AttributeList>
           <AttributeList.Item
             label="Hourly Rate"
-            value={currency(parseFloat(application.rate) * 100.0)}
+            value={currency(application.invoiceRate)}
           />
 
           {application.projectType === "Flexible" && (

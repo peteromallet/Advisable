@@ -39,7 +39,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
     let finalCost = Number(estimate);
 
     if (!isFixedPricing) {
-      finalCost = task.application.rate * Number(estimate) * 100;
+      finalCost = task.application.invoiceRate * Number(estimate);
     }
 
     const response = await submitTask({

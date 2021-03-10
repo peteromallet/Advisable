@@ -6,6 +6,7 @@ import { Box, Link, Text, Tooltip, Checkbox } from "@advisable/donut";
 import FormField from "components/FormField";
 import CurrencyInput from "components/CurrencyInput";
 import SubmitButton from "../../../components/SubmitButton";
+import priceInputProps from "src/utilities/priceInputProps";
 import {
   submitApplication as SUBMIT_APPLICATION,
   updateApplication as UPDATE_APPLICATION,
@@ -25,7 +26,7 @@ function Terms({ match, history, application, location }) {
       variables: {
         input: {
           ...values,
-          rate: parseFloat(values.rate),
+          invoiceRate: values.invoiceRate,
           id: applicationId,
         },
       },
@@ -46,9 +47,9 @@ function Terms({ match, history, application, location }) {
   };
 
   const initialValues = {
-    rate: parseFloat(application.rate) || "",
-    acceptsFee: application.acceptsFee,
-    acceptsTerms: application.acceptsTerms,
+    invoiceRate: application.invoiceRate || "",
+    acceptsFee: application.acceptsFee || "",
+    acceptsTerms: application.acceptsTerms || "",
     trialProgram: application.trialProgram || false,
     autoApply: false,
   };
@@ -76,12 +77,11 @@ function Terms({ match, history, application, location }) {
               </Text>
               <Box mb="l">
                 <FormField
-                  prefix="$"
-                  name="rate"
+                  name="invoiceRate"
                   as={CurrencyInput}
-                  error={formik.touched.rate && formik.errors.rate}
                   label="Including Advisable's fee, what's your estimated hourly rate for projects like this?"
                   placeholder="0"
+                  {...priceInputProps(formik, "invoiceRate")}
                 />
               </Box>
               <Field as={Checkbox} type="checkbox" name="autoApply" mb="m">

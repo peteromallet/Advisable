@@ -8,10 +8,10 @@ import AttributeList from "../AttributeList";
 const CandidateAttributeList = ({ application }) => {
   return (
     <AttributeList>
-      {Boolean(application.rate) && (
+      {application.invoiceRate && (
         <AttributeList.Item
           label="Hourly Rate"
-          value={currency(parseFloat(application.rate) * 100.0)}
+          value={currency(application.invoiceRate)}
         />
       )}
       <AttributeList.Item label="Available" value={application.availability} />

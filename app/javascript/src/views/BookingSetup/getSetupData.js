@@ -41,7 +41,7 @@ export default gql`
     }
     application(id: $id) {
       id
-      rate
+      invoiceRate
       status
       project {
         id

@@ -4,7 +4,7 @@ const defaultOptions = {
   format: "$0,0",
 };
 
-export default (amount = 0, options = {}) => {
+export default function currency(amount = 0, options = {}) {
   // Dinero expects an int not a float. There are rare cases when a float may
   // be passed in. (e.g an old application rate from airtable). In these cases
   // we want to round up the decimal.
@@ -13,7 +13,7 @@ export default (amount = 0, options = {}) => {
   const dinero = new Dinero({ currency: "USD", amount: asNumber });
   const opts = { ...defaultOptions, ...options };
   return dinero.toFormat(opts.format);
-};
+}
 
 // Takes a string (usually from an input) and converts it to a currency in the smallest unit
 // e.g "35.50" = 3500
