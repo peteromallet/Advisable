@@ -298,7 +298,7 @@ module Types
 
     def guild_followed_topics(**_args)
       requires_guild_user!
-      current_user.guild_followed_topics.order(created_at: :desc)
+      current_user.guild_subscribed_topics.order(created_at: :desc)
     end
 
     field :guild_notifications,

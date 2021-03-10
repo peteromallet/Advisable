@@ -174,7 +174,7 @@ RSpec.describe Airtable::Specialist do
     let(:airtable) { described_class.new(fields, id: specialist.airtable_id) }
 
     context "when syncing to airtable" do
-      it "syncs over unsubscribtions to account" do
+      it "syncs over unsubscriptions to account" do
         expect(account.reload.unsubscribed_from).to eq([])
         airtable.sync
         expect(account.reload.unsubscribed_from).to match_array(["Marketing Emails", "Onboarding Emails"])
@@ -186,7 +186,7 @@ RSpec.describe Airtable::Specialist do
 
       before { allow(airtable).to receive(:save) }
 
-      it "syncs over unsubscribtions to account" do
+      it "syncs over unsubscriptions to account" do
         expect(airtable.fields['Unsubscribe - SMS Alerts']).to eq(nil)
         airtable.push(specialist)
         expect(airtable.fields['Unsubscribe - SMS Alerts']).to eq("Yes")

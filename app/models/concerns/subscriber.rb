@@ -8,6 +8,8 @@ module Subscriber
   end
 
   def subscribe_to!(tag)
+    return if subscribed_to?(tag)
+
     subscriptions.create!(tag: tag)
   end
 

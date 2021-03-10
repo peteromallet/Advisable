@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
-class Guild::PostBoostMailer < ApplicationMailer
-  def new_post(post:, follower_id:)
-    @follower = Specialist.find(follower_id)
-    return if @follower.account.unsubscribed?("Advisable Guild")
+module Guild
+  class PostBoostMailer < ApplicationMailer
+    def new_post(post:, subscriber_id:)
+      @subscriber = Specialist.find(subscriber_id)
+      return if @subscriber.account.unsubscribed?("Advisable Guild")
 
-    @guild_post = post
-    @author = @guild_post.specialist
-    @followed_topic_names = (@guild_post.guild_topic_list & @follower.guild_followed_topics.pluck(:name)).join(', ')
+      @guild_post = post
+      @author = @guild_post.specialist
+      subscribed_topic_names = Guild::Topic.where(id: @subscriber.subscriptions.pluck(:tag_id)).pluck(:name)
+      @followed_topic_names = (@guild_post.guild_topic_list & subscribed_topic_names).join(', ')
 
-    mail(
-      to: @follower.account.email,
-      subject: "New Post - #{@guild_post.title}".truncate(80)
-    )
+      mail(
+        to: @subscriber.account.email,
+        subject: "New Post - #{@guild_post.title}".truncate(80)
+      )
+    end
   end
 end
