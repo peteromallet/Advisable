@@ -13,6 +13,7 @@ module Toby
       attribute :specialist, Attributes::HasOne, labeled_by: :uid
       attribute :permissions, Attributes::TextArray
       attribute :unsubscribed_from, Attributes::TextArray
+      attribute :confirmed_at, Attributes::DateTime
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
     end

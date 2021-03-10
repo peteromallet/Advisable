@@ -74,7 +74,7 @@ export function useFetchResources(filters) {
   const schemaData = useSchema();
   const resourceData = getResourceByParam(schemaData.resources, resource);
   const query = generateCollectionQuery(schemaData, resourceData);
-  const [fetch, queryState] = useLazyQuery(query, {
+  const [fetch, { fetchMore, ...queryState }] = useLazyQuery(query, {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
     onCompleted() {
@@ -99,6 +99,14 @@ export function useFetchResources(filters) {
     [resourceData, schemaData, fetch, client, filters],
   );
 
+  const fetchMoreRecords = useCallback(
+    (opts) => {
+      setLoading(true);
+      return fetchMore(opts);
+    },
+    [fetchMore],
+  );
+
   useEffect(() => {
     fetchRecords();
   }, [fetchRecords]);
@@ -106,6 +114,7 @@ export function useFetchResources(filters) {
   return {
     ...queryState,
     resource: resourceData,
+    fetchMore: fetchMoreRecords,
     loading,
   };
 }
