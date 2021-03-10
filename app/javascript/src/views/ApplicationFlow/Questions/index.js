@@ -163,7 +163,7 @@ const Questions = ({
             <Box>
               <Text
                 fontSize="30px"
-                mb="s"
+                mb={3}
                 as="h1"
                 color="blue900"
                 fontWeight="semibold"
@@ -172,7 +172,7 @@ const Questions = ({
                 Application Questions
               </Text>
               <Text
-                mb="l"
+                mb={6}
                 as="h6"
                 fontSize="xxs"
                 color="neutral700"
@@ -181,7 +181,7 @@ const Questions = ({
               >
                 Question {number} of {questions.length}
               </Text>
-              <Box mb="m">
+              <Box mb={4}>
                 <Box position="relative">
                   <FormField
                     name="answer"
@@ -197,14 +197,14 @@ const Questions = ({
                 </Box>
               </Box>
               {numOfWords >= 100 || !formik.isValid || !formik.dirty ? (
-                <SubmitButton mt="m" size="l" suffix={<ArrowRight />}>
+                <SubmitButton mt={4} size="l" suffix={<ArrowRight />}>
                   Next
                 </SubmitButton>
               ) : (
                 <DialogDisclosure
                   as={Button}
                   suffix={<ArrowRight />}
-                  mt="m"
+                  mt={4}
                   size="l"
                   {...confirmationModal}
                 >
