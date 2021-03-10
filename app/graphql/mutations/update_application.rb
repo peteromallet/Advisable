@@ -13,7 +13,7 @@ module Mutations
     argument :availability, String, required: false
     argument :questions, [ApplicationQuestionInputType], required: false
     argument :references, [ID], required: false
-    argument :invoice_rate, Int, required: false, deprecation_reason: "Supply invoice_rate in cents instead"
+    argument :invoice_rate, Int, required: false
     argument :rate, Float, required: false, deprecation_reason: "Supply invoice_rate in cents instead"
     argument :accepts_fee, Boolean, required: false
     argument :accepts_terms, Boolean, required: false

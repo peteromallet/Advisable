@@ -44,16 +44,6 @@ class Task < ApplicationRecord
     )
   end
 
-  # Returns the cost of the task
-
-  def cost
-    quote = flexible_estimate || estimate
-
-    # TODO: It says we return cents in documentation above, but rate is not in cents 🤔
-    # quote * application.invoice_rate
-    quote * application.rate
-  end
-
   # Returns the amount of hours that should be invoiced for the task
   def invoice_hours
     (flexible_estimate || estimate).ceil

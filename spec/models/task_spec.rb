@@ -11,26 +11,6 @@ RSpec.describe Task do
     expect(task).to be_valid
   end
 
-  describe '#cost' do
-    it 'returns the cost for the task based on the estimate' do
-      application = create(:application, invoice_rate: 1000)
-      task = create(:task, estimate: 5, application: application)
-      expect(task.cost).to eq(10 * 5)
-    end
-
-    context 'when the task has a flexible estimate' do
-      it 'returns the cost based on the flexible estimate' do
-        application = create(:application, invoice_rate: 1000)
-        task =
-          create(
-            :task,
-            flexible_estimate: 10, estimate: 5, application: application
-          )
-        expect(task.cost).to eq(10 * 10)
-      end
-    end
-  end
-
   describe '#invoice_hours' do
     it 'returns the estimate' do
       task = build(:task, estimate: 5)
