@@ -243,6 +243,10 @@ module Types
       description 'Calendly event id of initial application interview'
     end
 
+    field :accepted_at, GraphQL::Types::ISO8601DateTime, null: true do
+      authorize :is_specialist?, :is_admin
+    end
+
     # Eventually the applications field should be updated to support pagination
     # using a connection type. By default we use the 'by_sales_status' scope
     # to only fetch applications where the associated project sales_status is

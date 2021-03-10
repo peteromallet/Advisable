@@ -28,6 +28,8 @@ const Header = () => {
   const [logout] = useMutation(LOGOUT, { variables: { input: {} } });
   const [navOpen, setNavOpen] = React.useState(false);
   const logoURL = useLogoURL();
+  const specialistAccepted =
+    viewer?.isSpecialist && Boolean(viewer?.acceptedAt);
 
   const handleLogout = async () => {
     await logout();
@@ -54,7 +56,7 @@ const Header = () => {
               onLogout={() => handleLogout()}
             />
           )}
-          {viewer && viewer.isSpecialist && (
+          {viewer && viewer.isSpecialist && specialistAccepted && (
             <FreelancerNavigation
               navOpen={navOpen}
               onLogout={() => handleLogout()}
@@ -73,12 +75,12 @@ const Header = () => {
             display="flex"
             alignItems="center"
           >
-            {viewer && isMedium && viewer.guild ? (
+            {viewer && isMedium && viewer.guild && specialistAccepted ? (
               <GuildToggle url="/guild" mr={3}>
                 Switch to guild
               </GuildToggle>
             ) : null}
-            {viewer && !isMobile && (
+            {viewer && !isMobile && specialistAccepted && (
               <CurrentUser user={viewer} onLogout={() => handleLogout()} />
             )}
             {!viewer && !isMobile && <Login to="/login">Login</Login>}
