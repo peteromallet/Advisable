@@ -4,7 +4,7 @@ export const GET_APPLICATION = gql`
   query getApplication($id: ID!) {
     application(id: $id) {
       id
-      rate
+      invoiceRate
       comment
       score
       status

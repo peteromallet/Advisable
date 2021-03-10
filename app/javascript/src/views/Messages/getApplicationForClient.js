@@ -4,7 +4,7 @@ export default gql`
   query application($id: ID!) {
     application(id: $id) {
       id
-      rate
+      invoiceRate
       status
       availability
       monthlyLimit

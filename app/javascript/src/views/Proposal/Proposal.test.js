@@ -32,13 +32,13 @@ test("Rate step continues to the project type step", async () => {
       mockQuery(GET_APPLICATION, { id: "rec123" }, { application }),
       mockMutation(
         UPDATE_APPLICATION,
-        { id: "rec123", rate: 75 },
+        { id: "rec123", invoiceRate: 7500 },
         {
           updateApplication: {
             __typename: "UpdateApplicationPayload",
             application: {
               ...application,
-              rate: "75",
+              invoiceRate: 7500,
             },
           },
         },

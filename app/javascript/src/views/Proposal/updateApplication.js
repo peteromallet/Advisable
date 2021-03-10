@@ -5,7 +5,7 @@ export default gql`
     updateApplication(input: $input) {
       application {
         id
-        rate
+        invoiceRate
         projectType
         monthlyLimit
       }

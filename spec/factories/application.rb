@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :application do
     specialist
     project
     score { 90 }
     status { 'Applied' }
-    rate { 240 }
+    invoice_rate { 24000 }
     project_type { 'Fixed' }
     availability { '2 Weeks' }
     introduction { 'Hi there' }
@@ -14,7 +16,7 @@ FactoryBot.define do
     factory :full_application do
       introduction { Faker::Lorem.sentence(word_count: 40) }
 
-      after :create do |application, options|
+      after :create do |application, _options|
         project = create(:previous_project, specialist: application.specialist)
         application.previous_projects << project
         create(

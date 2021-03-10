@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Task
 #
 # Inside of the UI tasks are referred to as specialist projects. They are what
@@ -40,12 +42,6 @@ class Task < ApplicationRecord
       'due_date <= ?',
       date.end_of_day
     )
-  end
-
-  # Returns the cost of the task
-  def cost
-    quote = flexible_estimate || estimate
-    quote * application.rate
   end
 
   # Returns the amount of hours that should be invoiced for the task

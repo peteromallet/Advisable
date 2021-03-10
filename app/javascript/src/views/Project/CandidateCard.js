@@ -71,7 +71,7 @@ export default function CandidateCard({ application }) {
       </Text>
       <Box my="12px" height="1px" bg="neutral100" />
       <Attribute label="Hourly rate">
-        {currency(application.rate * 100)}
+        {currency(application.invoiceRate)}
       </Attribute>
       <Box my="12px" height="1px" bg="neutral100" />
       <Attribute label="Available to start">
