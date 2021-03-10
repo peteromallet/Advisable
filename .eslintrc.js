@@ -16,6 +16,7 @@ module.exports = {
     },
   },
   globals: {
+    require: "readonly",
     process: "readonly",
     global: "readonly",
     Atomics: "readonly",
