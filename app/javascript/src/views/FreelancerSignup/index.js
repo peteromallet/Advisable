@@ -1,7 +1,6 @@
 // Renders the freelancer signup flow.
 import React from "react";
 import { get } from "lodash-es";
-import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { useTheme, Box } from "@advisable/donut";
 import { Switch, Route, Redirect, matchPath } from "react-router-dom";
@@ -61,16 +60,11 @@ const FreelancerSignup = ({ location }) => {
   const { updateTheme } = useTheme();
   const { loading, data } = useQuery(GET_SPECIALIST);
 
-  // IMPORTANT! We redirect to the new join flow from here.
-  const history = useHistory();
-  history.replace("/freelancers/join");
-
   // Throughout this flow we want the background to be completely white. We
   // can achieve this by updating the theme using a React effect.
   React.useLayoutEffect(() => {
     updateTheme({ background: "white" });
     return () => updateTheme({ background: "default" });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) return <Loading />;
