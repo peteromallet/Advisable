@@ -176,7 +176,7 @@ end
 #  rejection_feedback          :text
 #  rejection_reason            :text
 #  rejection_reason_comment    :text
-#  score                       :decimal(, )
+#  score                       :integer
 #  source                      :string
 #  started_working_at          :datetime
 #  status                      :string

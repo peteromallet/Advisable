@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_09_091037) do
+ActiveRecord::Schema.define(version: 2021_03_11_083447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 2021_03_09_091037) do
     t.string "status"
     t.text "introduction"
     t.jsonb "questions"
-    t.decimal "score"
+    t.integer "score"
     t.bigint "specialist_id"
     t.bigint "project_id"
     t.string "airtable_id"
