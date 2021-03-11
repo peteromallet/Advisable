@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { DateTime } from "luxon";
 import useViewer from "src/hooks/useViewer";
 
 export const GET_INTERVIEW_TIME = gql`
@@ -10,12 +11,26 @@ export const GET_INTERVIEW_TIME = gql`
   }
 `;
 
-export const useGetInterviewTime = () => {
+export const useInterviewTime = () => {
   const viewer = useViewer();
   const { data } = useQuery(GET_INTERVIEW_TIME, {
     variables: { id: viewer?.id },
   });
-  return data?.specialist.applicationInterviewStartsAt;
+
+  // format time
+  const datetime = data?.specialist.applicationInterviewStartsAt;
+  const date = DateTime.fromISO(datetime).toLocaleString({
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }); //=> '12 March 2021'
+  const time = DateTime.fromISO(datetime).toLocaleString({
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  }); //=> '02:30 pm'
+  const formatted = `${date} at ${time}`; //=> '12 March 2021 at 02:30 pm'
+  return formatted;
 };
 
 export const SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW = gql`

@@ -9,7 +9,7 @@ import ProgressLine from "./ProgressLine";
 import { useMutation } from "@apollo/client";
 import {
   SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW,
-  useGetInterviewTime,
+  useInterviewTime,
 } from "./queries";
 
 const Header = (props) => (
@@ -127,7 +127,7 @@ const InvitedToInterview = () => {
 };
 
 const InterviewScheduled = () => {
-  const interviewTime = useGetInterviewTime();
+  const interviewTime = useInterviewTime();
 
   return (
     <PromptCard mb={10}>
