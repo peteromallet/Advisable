@@ -78,7 +78,11 @@ const ApplicationRoutes = () => {
             to="/interviews/:interviewID"
           />
           <AuthenticatedRoute path="/interviews/:id" component={Interview} />
-          <Route path="/projects/:id" component={Project} />
+          <AuthenticatedRoute
+            clientOnly
+            path="/projects/:id"
+            component={Project}
+          />
           <AuthenticatedRoute
             clientOnly
             path="/projects"
