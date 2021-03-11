@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Skill < ApplicationRecord
   include Uid
   include Airtable::Syncable
@@ -6,14 +8,12 @@ class Skill < ApplicationRecord
   has_many :specialists, through: :specialist_skills
   has_many :user_skills, dependent: :destroy
   has_many :users, through: :user_skills
-  belongs_to :original, class_name: 'Skill', optional: true
-  has_one :guild_topic, as: :topicable, class_name: 'Guild::Topic', required: false, dependent: :nullify
   has_many :duplicates, foreign_key: 'original_id', class_name: 'Skill', dependent: :destroy, inverse_of: :original
   has_many :project_skills, dependent: :destroy
-  has_many :previous_projects,
-           through: :project_skills,
-           source: :project,
-           source_type: 'PreviousProject'
+  has_many :previous_projects, through: :project_skills, source: :project, source_type: 'PreviousProject'
+  has_one :label, required: false, dependent: :nullify
+  has_one :guild_topic, as: :topicable, class_name: 'Guild::Topic', required: false, dependent: :nullify
+  belongs_to :original, class_name: 'Skill', optional: true
 
   validates :name, presence: true
   validates :airtable_id, presence: true
