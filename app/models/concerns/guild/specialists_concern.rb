@@ -5,8 +5,6 @@ module Guild
     extend ActiveSupport::Concern
 
     included do
-      acts_as_tagger
-
       has_many :guild_posts, class_name: 'Guild::Post', dependent: :destroy, inverse_of: :specialist
       has_many :guild_comments, class_name: 'Guild::Comment', dependent: :destroy
       has_many :guild_post_comments, -> { published.order(created_at: :desc) }, through: :guild_posts, source: :comments
