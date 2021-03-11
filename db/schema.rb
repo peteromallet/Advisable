@@ -418,6 +418,22 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
     t.index ["user_id"], name: "index_interviews_on_user_id"
   end
 
+  create_table "labels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.datetime "published_at"
+    t.integer "labelings_count"
+    t.bigint "country_id"
+    t.bigint "industry_id"
+    t.bigint "skill_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_labels_on_country_id", unique: true
+    t.index ["industry_id"], name: "index_labels_on_industry_id", unique: true
+    t.index ["skill_id"], name: "index_labels_on_skill_id", unique: true
+    t.index ["slug"], name: "index_labels_on_slug", unique: true
+  end
+
   create_table "magic_links", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.string "path"
@@ -996,6 +1012,9 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
   add_foreign_key "guild_reactions", "specialists", on_delete: :cascade
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
+  add_foreign_key "labels", "countries"
+  add_foreign_key "labels", "industries"
+  add_foreign_key "labels", "skills"
   add_foreign_key "matches", "projects"
   add_foreign_key "matches", "specialists"
   add_foreign_key "notifications", "accounts"
