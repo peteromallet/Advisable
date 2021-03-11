@@ -21,10 +21,19 @@ function ButtonsBar({ isOwner, specialist }) {
       mr={{ l: "m", s: "s" }}
     >
       {specialist.linkedin && (
-        <IconLink url={specialist.linkedin} Icon={LinkedinIn} />
+        <IconLink
+          title="LinkedIn"
+          url={specialist.linkedin}
+          Icon={LinkedinIn}
+        />
       )}
       {specialist.website && (
-        <IconLink url={specialist.website} Icon={Globe} strokeWidth={2} />
+        <IconLink
+          title="Website"
+          url={specialist.website}
+          Icon={Globe}
+          strokeWidth={2}
+        />
       )}
       {isOwner && <EditInfo specialist={specialist}>Edit Info</EditInfo>}
       {!isOwner && !viewerIsGuild && (

@@ -1,5 +1,12 @@
 import React from "react";
-import { Link, Circle, theme, useBreakpoint } from "@advisable/donut";
+import {
+  Link,
+  Text,
+  Circle,
+  Tooltip,
+  theme,
+  useBreakpoint,
+} from "@advisable/donut";
 import { rgba } from "polished";
 import styled from "styled-components";
 
@@ -13,13 +20,17 @@ const StyledCircle = styled(Circle)`
   }
 `;
 
-function IconLink({ Icon, url, strokeWidth }) {
+function IconLink({ title, Icon, url, strokeWidth }) {
   const isTablet = useBreakpoint("l");
+  const TooltipContent = <Text color="blue100">{title}</Text>;
+
   return (
     <Link.External href={url} mx={{ _: "2px", l: "xxs" }} target="_blank">
-      <StyledCircle size={[42, 42, 35, 42]}>
-        <Icon size={isTablet ? 20 : 24} strokeWidth={strokeWidth} />
-      </StyledCircle>
+      <Tooltip placement="top" content={TooltipContent}>
+        <StyledCircle size={[42, 42, 35, 42]}>
+          <Icon size={isTablet ? 20 : 24} strokeWidth={strokeWidth} />
+        </StyledCircle>
+      </Tooltip>
     </Link.External>
   );
 }
