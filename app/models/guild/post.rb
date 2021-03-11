@@ -19,6 +19,7 @@ module Guild
     has_many :images, class_name: 'Guild::PostImage', foreign_key: 'guild_post_id', inverse_of: 'post', dependent: :destroy
     has_many :engagements, class_name: 'Guild::PostEngagement', foreign_key: 'guild_post_id', dependent: :destroy, inverse_of: 'post'
     has_many :notifications, inverse_of: 'notifiable', foreign_key: 'notifiable_id', dependent: :destroy
+    has_many :labelings, foreign_key: :guild_post_id, inverse_of: :guild_post, dependent: :destroy
 
     scope :feed, lambda { |specialist|
       published.
