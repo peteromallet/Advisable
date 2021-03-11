@@ -936,6 +936,7 @@ ActiveRecord::Schema.define(version: 2021_07_06_072105) do
     t.string "vat_number"
     t.string "application_interview_calendly_id"
     t.datetime "application_interview_starts_at"
+    t.string "iban"
     t.datetime "guild_joined_date"
     t.datetime "guild_featured_member_at"
     t.string "guild_calendly_link"
