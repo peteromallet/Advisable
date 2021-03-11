@@ -7,16 +7,16 @@ import {
   theme,
   useBreakpoint,
 } from "@advisable/donut";
-import { rgba } from "polished";
+import { lighten } from "polished";
 import styled from "styled-components";
 
 const StyledCircle = styled(Circle)`
   transition: color 0.2s, background 0.2s;
-  color: ${rgba(theme.colors.neutral700, 0.9)};
-  background: ${rgba(theme.colors.neutral200, 0.9)};
+  color: ${lighten(0.06, theme.colors.neutral700)};
+  background: ${lighten(0.01, theme.colors.neutral200)};
   &:hover {
-    background: ${rgba(theme.colors.neutral200, 0.8)};
-    color: ${rgba(theme.colors.neutral700, 0.7)};
+    background: ${lighten(0.02, theme.colors.neutral200)};
+    color: ${lighten(0.14, theme.colors.neutral700)};
   }
 `;
 
