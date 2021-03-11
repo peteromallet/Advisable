@@ -17,6 +17,7 @@ const authLink = setContext((_, { headers }) => {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
       "X-CSRF-Token": csrf,
+      "X-RELEASE": process.env.RELEASE,
     },
   };
 });

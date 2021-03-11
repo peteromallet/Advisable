@@ -28,6 +28,7 @@ end
 if ENV['SENTRY_API_DSN']
   Raven.configure do |config|
     config.dsn = ENV['SENTRY_API_DSN']
+    config.release = File.read(".release") if File.file?(".release")
     config.current_environment = ENV['SENTRY_ENVIRONMENT']
     config.processors -= [Raven::Processor::PostData]
     config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)

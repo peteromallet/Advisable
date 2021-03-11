@@ -1,4 +1,6 @@
+const fs = require("fs");
 const path = require("path");
+const { DateTime } = require("luxon");
 const { environment } = require("@rails/webpacker");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
@@ -7,6 +9,13 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 
 dotenv.config({ silent: true });
+
+process.env.RELEASE = DateTime.now().toISO();
+fs.writeFile(".release", process.env.RELEASE, function (err) {
+  if (err) {
+    console.error("Failed to write version");
+  }
+});
 
 process.env.BUILD_TIME = version;
 
