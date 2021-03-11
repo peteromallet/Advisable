@@ -11,7 +11,7 @@ import {
   StyledCell,
 } from "../../styles";
 import useFilters from "./useFilters";
-import Filters from "./Filters";
+import FilterMenu from "./FilterMenu";
 import Navigation from "../../components/Navigation";
 import { Attribute } from "../../attributes";
 
@@ -39,7 +39,7 @@ export default function Resource() {
     <StyledLayout ref={scrollRef}>
       <StyledHeader>
         <Navigation />
-        <Filters {...filterState} />
+        <FilterMenu resource={resource} {...filterState} />
       </StyledHeader>
       <StyledHeaderRow style={{ width: 200 * resource.attributes.length }}>
         {resource.attributes.map((attr) => (

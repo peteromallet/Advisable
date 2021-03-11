@@ -3,7 +3,7 @@
 module Toby
   module Attributes
     class BelongsTo < BaseAttribute
-      filter :one_of, Filters::OneOf
+      filter :one_of, Filters::OneOf, nested: true
       filter :is_empty, Filters::CheckNil
       filter :not_empty, Filters::CheckNotNil
 
