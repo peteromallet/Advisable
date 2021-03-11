@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 class PopulateInvoiceRateOnApplication < ActiveRecord::Migration[6.1]
+  class MigrationApplication < ApplicationRecord
+    self.table_name = :applications
+  end
+
   def up
-    rates = Application.pluck(:id, :rate).to_h
-    Application.find_each do |app|
+    rates = MigrationApplication.pluck(:id, :rate).to_h
+    MigrationApplication.find_each do |app|
       invoice_rate = ((rates[app.id].presence || 0) * 100).ceil
-      app.update_columns(invoice_rate: invoice_rate) # rubocop:disable Rails/SkipsModelValidations
+      app.update_columns(invoice_rate: invoice_rate)
     end
   end
 
