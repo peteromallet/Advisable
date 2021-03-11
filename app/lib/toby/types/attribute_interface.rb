@@ -17,10 +17,9 @@ module Toby
       end
 
       field :filters, [Toby::Types::ResourceFilterType], null: false
+
       def filters
-        object.class.filters.map do |k, v|
-          {name: k, type: v[:type].name.demodulize, nested: v[:nested]}
-        end
+        object.class.filters
       end
 
       field :readonly, GraphQL::Types::Boolean, null: false

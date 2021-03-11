@@ -2,8 +2,8 @@
 
 module Toby
   module Filters
-    class DateBefore
-      def self.apply(records, attribute, value: [], **_opts)
+    class DateBefore < BaseFilter
+      def apply(records, attribute, value: [], **_opts)
         return records if value.empty?
         return records if value.first.blank?
 
