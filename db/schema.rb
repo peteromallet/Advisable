@@ -822,6 +822,9 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
     t.uuid "tag_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "label_id"
+    t.index ["label_id"], name: "index_subscriptions_on_label_id"
+    t.index ["specialist_id", "label_id"], name: "index_subscriptions_on_specialist_id_and_label_id", unique: true
     t.index ["specialist_id", "tag_id"], name: "index_subscriptions_on_specialist_id_and_tag_id", unique: true
     t.index ["specialist_id"], name: "index_subscriptions_on_specialist_id"
     t.index ["tag_id"], name: "index_subscriptions_on_tag_id"
@@ -1048,6 +1051,7 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "accounts"
   add_foreign_key "specialists", "countries"
+  add_foreign_key "subscriptions", "labels"
   add_foreign_key "subscriptions", "specialists"
   add_foreign_key "subscriptions", "tags"
   add_foreign_key "taggings", "tags"
