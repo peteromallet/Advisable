@@ -5,26 +5,38 @@ require 'csv'
 class GenerateFinanceCsvJob < ApplicationJob
   queue_as :default
 
-  AMOUNT_CURRENCY = "USD"
   SOURCE_CURRENCY = "EUR"
-  WISE_PAYMENT_TYPE = "EMAIL"
 
   def perform
-    headers = %w[name recipientEmail paymentReference receiverType amountCurrency amount sourceCurrency targetCurrency type]
+    headers = %w[name recipientEmail paymentReference receiverType amountCurrency amount sourceCurrency targetCurrency IBAN type]
     csv_string = CSV.generate(write_headers: true, headers: headers) do |csv|
-      # @thomas how should this work exactly? what's the source? paid invoices? completed task line items?
-      InvoiceLineItem.find_each do |li|
-        specialist = li.invoice.specialist
+      Invoice.draft.each do |invoice|
+        specialist = invoice.specialist
+
+        type = email = iban = nil
+        if specialist.iban.present?
+          iban = specialist.iban
+        else
+          type = "EMAIL"
+          email = specialist.account.email
+        end
+
+        amount_currency = "USD" # TODO: Apparently not always
+        amount = Invoice.draft.first.line_items.sum(:amount)
+        # TODO: Remove advisable fee
+        # TODO: Do currency conversion on amount
+
         csv << [
           specialist.account.name,
-          specialist.account.email,
-          "🤷‍♂️",
+          email,
+          "invoice##{invoice.id}",
           "PRIVATE",
-          AMOUNT_CURRENCY,
-          li.amount,
+          amount_currency,
+          amount,
           SOURCE_CURRENCY,
           specialist.bank_currency.presence || SOURCE_CURRENCY,
-          WISE_PAYMENT_TYPE
+          iban,
+          type
         ]
       end
     end
