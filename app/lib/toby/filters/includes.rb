@@ -2,8 +2,8 @@
 
 module Toby
   module Filters
-    class Includes
-      def self.apply(records, attribute, value: [], **_opts)
+    class Includes < BaseFilter
+      def apply(records, attribute, value: [], **_opts)
         return records if value.empty?
 
         reflection = attribute.reflection

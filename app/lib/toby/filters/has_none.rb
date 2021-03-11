@@ -2,8 +2,8 @@
 
 module Toby
   module Filters
-    class HasNone
-      def self.apply(records, attribute, **_opts)
+    class HasNone < BaseFilter
+      def apply(records, attribute, **_opts)
         records.where.missing(attribute.name)
       end
     end
