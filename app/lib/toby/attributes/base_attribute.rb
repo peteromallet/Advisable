@@ -56,9 +56,12 @@ module Toby
       end
 
       class << self
-        def filter(name, type)
+        def filter(name, type, nested: false)
           @filters ||= {}
-          @filters[name.to_s.camelize(:lower)] = type
+          @filters[name.to_s.camelize(:lower)] = {
+            type: type,
+            nested: nested
+          }
         end
 
         def filters

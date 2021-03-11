@@ -38,6 +38,7 @@ const SCHEMA_INTROSPECTION = gql`
         filters {
           name
           type
+          nested
         }
         ... on SelectAttribute {
           options

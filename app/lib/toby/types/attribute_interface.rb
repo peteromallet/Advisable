@@ -19,7 +19,7 @@ module Toby
       field :filters, [Toby::Types::ResourceFilterType], null: false
       def filters
         object.class.filters.map do |k, v|
-          {name: k, type: v.name.demodulize}
+          {name: k, type: v[:type].name.demodulize, nested: v[:nested]}
         end
       end
 
