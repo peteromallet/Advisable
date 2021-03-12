@@ -6,7 +6,6 @@ import * as Sentry from "@sentry/react";
 
 if (process.env.SENTRY_FRONTEND_DSN) {
   Sentry.init({
-    release: process.env.RELEASE,
     dsn: `${process.env.SENTRY_FRONTEND_DSN}`,
     environment: process.env.SENTRY_ENVIRONMENT,
   });
