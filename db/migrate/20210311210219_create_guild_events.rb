@@ -2,9 +2,11 @@
 
 class CreateGuildEvents < ActiveRecord::Migration[6.1]
   def change
-    create_table :guild_events, id: :uuid do |t|
+    create_table :guild_events do |t|
+      t.string :uid, null: false
       t.string :title, null: false
       t.text :description, null: false
+      t.string :url
       t.references :host, index: true, foreign_key: {to_table: :specialists}
       t.integer :attendees_count, default: 0
       t.boolean :published, default: false

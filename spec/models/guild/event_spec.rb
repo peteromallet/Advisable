@@ -13,6 +13,8 @@ RSpec.describe Guild::Event, type: :model do
     it { expect(guild_event).to have_db_column :starts_at }
     it { expect(guild_event).to have_db_column :ends_at }
     it { expect(guild_event).to have_db_column :attendees_count }
+    it { expect(guild_event).to have_db_column :published }
+    it { expect(guild_event).to have_db_column :url }
   end
 
   describe "relationships" do

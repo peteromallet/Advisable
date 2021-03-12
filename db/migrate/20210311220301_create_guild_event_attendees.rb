@@ -2,8 +2,8 @@
 
 class CreateGuildEventAttendees < ActiveRecord::Migration[6.1]
   def change
-    create_table :guild_event_attendees, id: :uuid do |t|
-      t.references :guild_event, foreign_key: true, type: :uuid
+    create_table :guild_event_attendees do |t|
+      t.references :guild_event, foreign_key: true
       t.references :specialist, foreign_key: true
       t.timestamps
     end

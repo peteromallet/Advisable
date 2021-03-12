@@ -15,7 +15,7 @@ RSpec.describe Mutations::Guild::UnregisterGuildEvent do
     <<-GRAPHQL
     mutation {
       unregisterGuildEvent(input: {
-        guildEventId: "#{guild_event.id}"
+        guildEventId: "#{guild_event.uid}"
       }) {
         guildEvent {
           attending

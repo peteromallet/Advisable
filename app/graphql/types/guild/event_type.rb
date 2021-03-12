@@ -17,6 +17,12 @@ module Types
       field :attendees_count, Integer, null: false
       field :attendees, Types::SpecialistType.connection_type, null: false
 
+      field :id, ID, null: false
+
+      def id
+        object.uid
+      end
+
       field :excerpt, String, null: false
 
       def excerpt

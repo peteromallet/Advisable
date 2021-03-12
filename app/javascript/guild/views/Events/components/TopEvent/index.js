@@ -20,7 +20,7 @@ export default function TopEvent({ event }) {
           <Box
             as={Link}
             to={eventLink}
-            maxWidth={{ _: "100%", m: "417px" }}
+            minWidth={{ _: "100%", m: "33%", l: "417px" }}
             display="flex"
           >
             <CoverImage
@@ -34,7 +34,7 @@ export default function TopEvent({ event }) {
         )}
         <Box marginLeft={{ _: 0, m: "8" }}>
           <Box marginTop={{ _: "5", m: 0 }}>
-            <StartsAtTag startsAt={event.startsAt} />
+            <StartsAtTag event={event} />
           </Box>
           <Box marginTop="5">
             <Link to={eventLink}>
@@ -59,10 +59,12 @@ export default function TopEvent({ event }) {
               {truncate(event.excerpt, { length: 180 })}
             </Text>
             <HostDetails host={event.host} />
-            <AttendeesStack
-              attendees={attendees}
-              attendeesCount={event.attendeesCount}
-            />
+            {event.attendeesCount > 0 ? (
+              <AttendeesStack
+                attendees={attendees}
+                attendeesCount={event.attendeesCount}
+              />
+            ) : null}
           </Stack>
         </Box>
       </Box>

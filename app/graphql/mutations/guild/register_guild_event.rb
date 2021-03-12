@@ -11,7 +11,7 @@ module Mutations
       end
 
       def resolve(guild_event_id:)
-        guild_event = ::Guild::Event.find(guild_event_id)
+        guild_event = ::Guild::Event.find_by_uid!(guild_event_id)
         guild_event.event_attendees.create!(attendee: current_user)
 
         {guild_event: guild_event.reload}

@@ -201,7 +201,7 @@ module Types
 
     def guild_event(id:)
       requires_guild_user!
-      ::Guild::Event.find(id)
+      ::Guild::Event.find_by_uid!(id)
     end
 
     field :guild_post, Types::Guild::PostInterface, null: true do

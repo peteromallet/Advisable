@@ -15,7 +15,7 @@ RSpec.describe Mutations::Guild::RegisterGuildEvent do
     <<-GRAPHQL
     mutation {
       registerGuildEvent(input: {
-        guildEventId: "#{guild_event.id}"
+        guildEventId: "#{guild_event.uid}"
       }) {
         guildEvent {
           id
@@ -47,7 +47,7 @@ RSpec.describe Mutations::Guild::RegisterGuildEvent do
     resp = register_guild_event
     expect(resp["guildEvent"]).to include({
       "attending" => true,
-      "id" => guild_event.id
+      "id" => guild_event.uid
     })
   end
 end
