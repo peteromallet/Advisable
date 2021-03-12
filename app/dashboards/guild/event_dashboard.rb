@@ -7,11 +7,13 @@ module Guild
     ATTRIBUTE_TYPES = {
       id: Field::String.with_options(searchable: false),
       title: Field::String,
+      url: Field::String,
+      uid: Field::String,
       host: Field::BelongsTo.with_options(class_name: 'Specialist'),
       starts_at: Field::DateTime,
       ends_at: Field::DateTime,
       published: Field::Boolean,
-      cover_photo: Field::ActiveStorage,
+      cover_photo: Field::ActiveStorage.with_options(direct_upload: true),
       attendees_count: Field::Number,
       attendees: Field::HasMany.with_options(class_name: 'Specialist'),
       created_at: Field::DateTime,
@@ -40,6 +42,7 @@ module Guild
       starts_at
       ends_at
       attendees_count
+      uid
     ].freeze
 
     SHOW_PAGE_ATTRIBUTES = %i[
@@ -53,6 +56,8 @@ module Guild
       attendees
       cover_photo
       published
+      url
+      uid
     ].freeze
 
     FORM_ATTRIBUTES = %i[
@@ -62,6 +67,8 @@ module Guild
       ends_at
       cover_photo
       published
+      url
+      host
     ].freeze
 
     COLLECTION_FILTERS = {}.freeze

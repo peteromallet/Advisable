@@ -40,12 +40,6 @@ def random_specialist
   Specialist.order(Arel.sql("RANDOM()")).first
 end
 
-def attach_random_cover_photo(event)
-  file = open('https://picsum.photos/1800/1800.jpg')
-  event.cover_photo.attach(io: file, filename: "cover.jpg", content_type: 'image/jpg')
-  event.save!
-end
-
 Specialist.update_all(guild: true)
 
 5.times do |num|
@@ -82,7 +76,7 @@ end
 
 Rails.logger.info "Creating guild events"
 
-9.times do |num|
+10.times do |num|
   host = Specialist.order(Arel.sql("RANDOM()")).first
   starts_at = rand(1..10).days.from_now
   event = Guild::Event.create(
@@ -101,7 +95,7 @@ Rails.logger.info "Creating guild events"
 
   # Attach random picsum image without being rate limited
   sleep(0.3)
-  file = open('https://picsum.photos/1800/1800.jpg')
+  file = URI.open('https://picsum.photos/1800/1800.jpg')
   event.cover_photo.attach(io: file, filename: "cover.jpg", content_type: 'image/jpg')
   event.save!
 end

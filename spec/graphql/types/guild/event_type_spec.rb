@@ -15,7 +15,7 @@ RSpec.describe Types::Guild::EventType do
     let(:query) do
       <<-GRAPHQL
         {
-          guildEvent(id: "#{guild_event.id}") {
+          guildEvent(id: "#{guild_event.uid}") {
             id
             title
             description
@@ -28,7 +28,7 @@ RSpec.describe Types::Guild::EventType do
     end
 
     it "returns an event" do
-      expect(event_query).to include(guild_event.slice("id", "title", "description"))
+      expect(event_query["id"]).to eq(guild_event.uid)
     end
 
     it "includes the start and end time" do
@@ -68,7 +68,7 @@ RSpec.describe Types::Guild::EventType do
     end
 
     it "includes a list of upcoming guild events" do
-      expect(events_query.flat_map(&:values)).to eq(Guild::Event.upcoming.pluck(:id))
+      expect(events_query.flat_map(&:values)).to eq(Guild::Event.upcoming.pluck(:uid))
     end
 
     it "does not include events older than now" do

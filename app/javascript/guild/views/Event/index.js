@@ -1,9 +1,8 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import { Text, Box, Button, useTheme } from "@advisable/donut";
+import { Text, Box, useTheme, useBreakpoint } from "@advisable/donut";
 import useViewer from "@advisable-main/hooks/useViewer";
-import { Calendar } from "@styled-icons/heroicons-outline";
 import NotFound from "@advisable-main/components/PreviousProjectFormModal/NotFound";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
 import useScrollToTop from "@advisable-main/hooks/useScrollToTop";
@@ -17,8 +16,9 @@ import OrbitsBackground from "@guild/components/Event/OrbitsBackground";
 import { StyledLineClamp } from "@guild/views/Events/styles";
 import HourDateTag from "./components/HourDateTag";
 import DurationDate from "./components/DurationDate";
-import HostBioDetail from "./components/HostBioDetail";
-import Share from "./components/Share";
+import HostBio from "./components/HostBio";
+import DetailsAside from "./components/DetailsAside";
+import RegisterButton from "./components/RegisterButton";
 
 const Event = () => {
   useScrollToTop();
@@ -26,6 +26,7 @@ const Event = () => {
   const { eventId } = useParams();
   const viewer = useViewer();
   const theme = useTheme();
+  const sUp = useBreakpoint("sUp");
 
   const { data, loading } = useQuery(GUILD_EVENT_QUERY, {
     variables: { id: eventId },
@@ -40,6 +41,7 @@ const Event = () => {
   const [unregister, { loading: unregisterLoading }] = useMutation(
     UNREGISTER_GUILD_EVENT,
   );
+  const registerMutationsLoading = registerLoading || unregisterLoading;
 
   const handleEventRegistration = () => {
     const variables = {
@@ -65,18 +67,18 @@ const Event = () => {
     <ErrorBoundary>
       {event.coverPhotoUrl ? (
         <OrbitsBackground
-          height="400px"
+          height={["300px", "400px"]}
           color="purple"
           zIndex="-1"
           orbits={10}
         />
       ) : null}
 
-      <Box pb={20} mt="14" paddingX={{ _: "3", m: 0 }}>
+      <Box pb={20} mt="14" paddingX="3">
         <Box
           mx="auto"
-          maxWidth={["100%", "100%", "960px"]}
-          marginTop={event.coverPhotoUrl ? "-400px" : 0}
+          maxWidth={["100%", "960px"]}
+          marginTop={event.coverPhotoUrl ? (sUp ? "-400px" : "-300px") : 0}
         >
           <HourDateTag mb="2" date={event.startsAt} />
           <StyledLineClamp
@@ -86,13 +88,13 @@ const Event = () => {
             lineHeight="120%"
             fontWeight="semibold"
             letterSpacing="-0.02em"
-            mb={7}
+            mb="7"
           >
             {event.title}
           </StyledLineClamp>
 
           {event.coverPhotoUrl ? (
-            <Box height="466px" mb="10">
+            <Box height={["175px", "466px"]} mb="10">
               <CoverImage
                 height="100%"
                 overflow="hidden"
@@ -102,8 +104,17 @@ const Event = () => {
             </Box>
           ) : null}
 
-          <Box display="flex" justifyContent="space-between">
-            <Box display="flex" width="70%" flexDirection="column" mb={15}>
+          <Box
+            display="flex"
+            flexDirection={["column", "row"]}
+            justifyContent={["flex-start", "space-between"]}
+          >
+            <Box
+              display="flex"
+              width={["100%", "70%"]}
+              flexDirection="column"
+              mb={["0", "15"]}
+            >
               <Text
                 color="blue900"
                 letterSpacing="-0.03em"
@@ -116,57 +127,69 @@ const Event = () => {
               <Markdown>{event.description}</Markdown>
             </Box>
 
-            <Box mt="12" width="260px" display="flex" flexDirection="column">
-              <DurationDate
-                mb="4"
-                startsAt={event.startsAt}
-                endsAt={event.endsAt}
-              />
-              {!isHost && (
-                <Button
-                  mb="3"
-                  prefix={<Calendar />}
-                  onClick={handleEventRegistration}
-                  disabled={registerLoading || unregisterLoading}
-                  css={`
-                    background-color: #234ee4;
-                  `}
-                >
-                  {event.attending ? "Unregister" : "Register for event"}
-                </Button>
-              )}
-              <Share
-                mb="8"
-                event={event}
-                width="100%"
-                css={`
-                  color: #234ee4;
-                  background-color: #edeffd;
-                  &:hover {
-                    background-color: #edeffd !important;
-                  }
-                `}
-              />
-              <HostBioDetail host={event.host} />
+            <Box
+              mt={["4", "12"]}
+              width={["100%", "30%"]}
+              marginLeft={["0", "5", "15"]}
+              display="flex"
+              flexDirection="column"
+            >
+              {sUp ? (
+                <DetailsAside
+                  event={event}
+                  handleEventRegistration={handleEventRegistration}
+                  registerDisabled={isHost || registerMutationsLoading}
+                />
+              ) : null}
+              <HostBio host={event.host} />
             </Box>
           </Box>
 
-          <Box width="100%">
-            <Text
-              color="blue900"
-              letterSpacing="-0.03em"
-              lineHeight="l"
-              fontSize="2xl"
-              mb="5"
-            >
-              Attendees
-            </Text>
-            <EventAttendees
-              attendees={attendees}
-              attendeesCount={event.attendeesCount}
-            />
-          </Box>
+          {event.attendeesCount > 0 ? (
+            <Box marginY={["12", "0"]} width="100%">
+              <Text
+                color="blue900"
+                letterSpacing="-0.03em"
+                lineHeight="l"
+                fontSize="2xl"
+                mb="5"
+              >
+                Attendees
+              </Text>
+              <EventAttendees
+                attendees={attendees}
+                attendeesCount={event.attendeesCount}
+              />
+            </Box>
+          ) : null}
         </Box>
+
+        {!sUp ? (
+          <Box
+            position="fixed"
+            bottom="0"
+            marginX="-12px"
+            background="white"
+            width="100%"
+            borderTop="solid 1px #F1F1F3"
+          >
+            <Box
+              padding="4"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <DurationDate startsAt={event.startsAt} endsAt={event.endsAt} />
+              <RegisterButton
+                width="50%"
+                mb="0"
+                attending={event.attending}
+                disabled={isHost || registerMutationsLoading}
+                onClick={handleEventRegistration}
+              />
+            </Box>
+          </Box>
+        ) : null}
       </Box>
     </ErrorBoundary>
   ) : null;

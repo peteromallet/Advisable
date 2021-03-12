@@ -39,7 +39,7 @@ const Events = () => {
       <BottomScrollListener
         onBottom={onReachedBottom}
         debounce={0}
-        offset={64}
+        offset={80}
       />
 
       <Box
@@ -49,7 +49,6 @@ const Events = () => {
         maxWidth={["100%", "100%", "1056px"]}
       >
         <Stack spacing="xl">
-          {/* Header */}
           <Box
             display="flex"
             alignItems="center"
@@ -72,12 +71,12 @@ const Events = () => {
             </Button>
           </Box>
 
-          {loading ? <Loading /> : null}
+          {loading && !events.length ? <Loading /> : null}
           {topEvent && <TopEvent event={topEvent} />}
           <EventsList events={events} />
         </Stack>
 
-        {events.length > 0 && !hasNextPage ? (
+        {!loading && events.length > 0 && !hasNextPage ? (
           <Box py="12" textAlign="center">
             <Text color="neutral500">
               You have reached the end of the events list.

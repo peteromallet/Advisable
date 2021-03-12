@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Check } from "@styled-icons/heroicons-outline";
-import { Card, Box, Stack, Tag } from "@advisable/donut";
+import { Card, Box, Stack } from "@advisable/donut";
 import { CoverImage } from "@guild/components/CoverImage";
 import StartsAtTag from "@guild/components/Event/StartsAtTag";
 import HostDetails from "@guild/components/Event/HostDetails";
@@ -34,20 +33,7 @@ export default function Event({ event }) {
         )}
       </Link>
       <Box padding="5">
-        <Box display="flex">
-          <StartsAtTag variant={variant} startsAt={event.startsAt} />
-          {event.attending ? (
-            <Tag
-              icon={Check}
-              marginLeft="2"
-              size={["s", "m"]}
-              variant={variant}
-              opacity="0.8"
-            >
-              Attending
-            </Tag>
-          ) : null}
-        </Box>
+        <StartsAtTag variant={variant} event={event} />
         <Stack spacing="4">
           <Link to={eventLink}>
             <StyledLineClamp

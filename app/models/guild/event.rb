@@ -2,8 +2,10 @@
 
 module Guild
   class Event < ApplicationRecord
+    include Uid
     include ResizedImage
 
+    uid_prefix 'eve'
     acts_as_ordered_taggable_on :guild_topics
 
     has_many :event_attendees, class_name: 'Guild::EventAttendee', foreign_key: 'guild_event_id', inverse_of: :guild_event, dependent: :destroy
@@ -36,13 +38,15 @@ end
 #
 # Table name: guild_events
 #
-#  id              :uuid             not null, primary key
+#  id              :bigint           not null, primary key
 #  attendees_count :integer          default(0)
 #  description     :text             not null
 #  ends_at         :datetime
 #  published       :boolean          default(FALSE)
 #  starts_at       :datetime
 #  title           :string           not null
+#  uid             :string           not null
+#  url             :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  host_id         :bigint

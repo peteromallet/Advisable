@@ -3,7 +3,7 @@ import { Box, Link, Text } from "@advisable/donut";
 import HostAvatar from "@guild/components/Event/HostAvatar";
 import { StyledLineClamp } from "@guild/views/Events/styles";
 
-export default function HostBioDetail({ host }) {
+export default function HostBio({ host }) {
   return (
     <Box background="#F2EFFC" padding="4" borderRadius="12px">
       <HostAvatar mb="4" variant="purple" host={host} />

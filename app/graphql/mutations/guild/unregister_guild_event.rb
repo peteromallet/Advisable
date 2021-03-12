@@ -11,7 +11,7 @@ module Mutations
       end
 
       def resolve(guild_event_id:)
-        guild_event = ::Guild::Event.find(guild_event_id)
+        guild_event = ::Guild::Event.find_by_uid!(guild_event_id)
         event_attendee = guild_event.event_attendees.find_by(attendee: current_user)
         event_attendee.destroy
 

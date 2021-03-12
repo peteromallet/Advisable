@@ -16,10 +16,10 @@ end
 #
 # Table name: guild_event_attendees
 #
-#  id             :uuid             not null, primary key
+#  id             :bigint           not null, primary key
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  guild_event_id :uuid
+#  guild_event_id :bigint
 #  specialist_id  :bigint
 #
 # Indexes

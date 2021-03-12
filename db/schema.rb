@@ -327,8 +327,8 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
     t.index ["specialist_id"], name: "index_guild_comments_on_specialist_id"
   end
 
-  create_table "guild_event_attendees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "guild_event_id"
+  create_table "guild_event_attendees", force: :cascade do |t|
+    t.bigint "guild_event_id"
     t.bigint "specialist_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -337,9 +337,11 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
     t.index ["specialist_id"], name: "index_guild_event_attendees_on_specialist_id"
   end
 
-  create_table "guild_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "guild_events", force: :cascade do |t|
+    t.string "uid", null: false
     t.string "title", null: false
     t.text "description", null: false
+    t.string "url"
     t.bigint "host_id"
     t.integer "attendees_count", default: 0
     t.boolean "published", default: false
