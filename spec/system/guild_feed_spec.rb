@@ -10,7 +10,7 @@ RSpec.describe 'Guild feed', type: :system do
 
   before do
     create_list(:guild_post, 6, engagements_count: 1)
-    specialist.account.update!(completed_tutorials: ["GUILD"])
+    specialist.account.update!(completed_tutorials: ["guild"])
     authenticate_as(specialist)
   end
 

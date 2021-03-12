@@ -16,8 +16,8 @@ import useViewer from "src/hooks/useViewer";
 import TASK_FIELDS from "../../graphql/fragments/task";
 
 const tutorials = {
-  Fixed: "fixedProjects",
-  Flexible: "flexibleProjects",
+  Fixed: "fixed_projects",
+  Flexible: "flexible_projects",
 };
 
 const ActiveApplication = ({ location, history, match, data, client }) => {
@@ -83,7 +83,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
         showCloseButton={false}
         label="Project tutorial"
       >
-        {tutorial === "flexibleProjects" ? (
+        {tutorial === "flexible_projects" ? (
           <FlexibleTutorial modal={tutorialModal} />
         ) : (
           <FixedTutorial modal={tutorialModal} />

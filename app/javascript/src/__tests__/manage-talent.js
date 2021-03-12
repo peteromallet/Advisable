@@ -82,12 +82,12 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
     ],
   });
 
-  await findByText(/flexibleProjects.heading/i);
+  await findByText(/flexible_projects.heading/i);
 });
 
 test("Does not render a tutorial video if the user has completed it", async () => {
   const viewer = generateType.user({
-    completedTutorials: ["flexibleProjects"],
+    completedTutorials: ["flexible_projects"],
   });
 
   const { findByText, queryByText } = renderRoute({
@@ -129,12 +129,12 @@ test("Does not render a tutorial video if the user has completed it", async () =
   });
 
   await findByText("Active Projects"); // wait for page to load
-  expect(queryByText("tutorials.flexibleProjects.heading")).toBeNull();
+  expect(queryByText("tutorials.flexible_projects.heading")).toBeNull();
 });
 
 test("The client can change the project type", async () => {
   const viewer = generateType.user({
-    completedTutorials: ["fixedProjects"],
+    completedTutorials: ["fixed_projects"],
   });
 
   const app = renderRoute({
