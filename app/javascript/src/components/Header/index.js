@@ -6,7 +6,8 @@ import {
   Spacer,
   Logo,
   Hamburger,
-  ActionLink,
+  Login,
+  Logout,
 } from "./styles";
 import logo from "./logo.svg";
 import CurrentUser from "./CurrentUser";
@@ -89,9 +90,9 @@ const Header = () => {
             {viewer && !isMobile && specialistAccepted && (
               <CurrentUser user={viewer} onLogout={handleLogout} />
             )}
-            {!viewer && !isMobile && <ActionLink to="/login">Login</ActionLink>}
+            {!viewer && !isMobile && <Login to="/login">Login</Login>}
             {!isMobile && !specialistAccepted && (
-              <ActionLink onClick={handleLogout}>Logout</ActionLink>
+              <Logout onClick={handleLogout}>Logout</Logout>
             )}
           </Box>
         </React.Fragment>
