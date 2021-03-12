@@ -39,7 +39,7 @@ export default function Welcome({ specialist }) {
     (step) =>
       !step.validationSchema.isValidSync({
         ...specialist,
-        country: specialist.country.name,
+        country: specialist.country?.name,
       }),
   );
 
