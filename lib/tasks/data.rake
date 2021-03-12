@@ -1,3 +1,78 @@
+# frozen_string_literal: true
+
+require_relative "../../app/models/application_record"
+
+class MigrationTag < ApplicationRecord
+  self.table_name = :tags
+end
+
+class MigrationTagging < ApplicationRecord
+  self.table_name = :taggings
+end
+
+class TagsMigration
+  def migrate
+    @migration_time = Time.zone.now
+    migrate_tags
+    create_id_mapping
+    migrate_taggings
+  end
+
+  private
+
+  def migrate_tags
+    p "Migrating tags"
+    MigrationTag.find_in_batches do |batch|
+      labels = batch.map do |t|
+        published_at = t.published? ? @migration_time : nil
+        hash = {
+          name: t.name,
+          slug: t.slug,
+          published_at: published_at,
+          labelings_count: t.taggings_count,
+          country_id: nil,
+          industry_id: nil,
+          skill_id: nil,
+          updated_at: @migration_time,
+          created_at: @migration_time
+        }
+        hash["#{t.topicable_type.downcase}_id".to_sym] = t.topicable_id
+        hash
+      end
+
+      Label.upsert_all(labels, unique_by: :index_labels_on_slug)
+    end
+  end
+
+  def create_id_mapping
+    p "Creating mapping"
+
+    tag_slugs = MigrationTag.pluck(:slug, :id)
+    label_slugs = Label.pluck(:slug, :id).to_h
+
+    @mapping = tag_slugs.map do |slug, id|
+      [id, label_slugs[slug]]
+    end.to_h
+  end
+
+  def migrate_taggings
+    p "Migrating taggings"
+
+    MigrationTagging.find_in_batches do |batch|
+      labelings = batch.map do |t|
+        {
+          label_id: @mapping[t.tag_id],
+          guild_post_id: t.taggable_id,
+          updated_at: @migration_time,
+          created_at: @migration_time
+        }
+      end
+
+      Labeling.upsert_all(labelings, unique_by: :index_labelings_on_label_id_and_guild_post_id)
+    end
+  end
+end
+
 namespace :data do
   task industries: :environment do
     industries_file = Rails.root.join('lib', 'tasks', 'data', 'industries.txt')
@@ -25,5 +100,9 @@ namespace :data do
       )
 
     projects.find_each(&:update_application_counts)
+  end
+
+  task migrate_tags: :environment do
+    TagsMigration.new.migrate
   end
 end
