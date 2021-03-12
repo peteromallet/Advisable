@@ -250,7 +250,7 @@ export const CurrentUserDropdown = styled.div`
   }
 `;
 
-export const Login = styled(Link)`
+export const ActionLink = styled(Link)`
   color: white;
   cursor: pointer;
   border-radius: 6px;

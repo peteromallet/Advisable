@@ -1,7 +1,13 @@
 // Renders the primary header for the app
 import React, { Fragment } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Header as Wrapper, Spacer, Logo, Hamburger, Login } from "./styles";
+import {
+  Header as Wrapper,
+  Spacer,
+  Logo,
+  Hamburger,
+  ActionLink,
+} from "./styles";
 import logo from "./logo.svg";
 import CurrentUser from "./CurrentUser";
 import { Box, useBreakpoint } from "@advisable/donut";
@@ -53,13 +59,13 @@ const Header = () => {
             <ClientNavigation
               navOpen={navOpen}
               onCloseNav={() => setNavOpen(false)}
-              onLogout={() => handleLogout()}
+              onLogout={handleLogout}
             />
           )}
           {viewer && viewer.isSpecialist && specialistAccepted && (
             <FreelancerNavigation
               navOpen={navOpen}
-              onLogout={() => handleLogout()}
+              onLogout={handleLogout}
               onCloseNav={() => setNavOpen(false)}
             />
           )}
@@ -81,9 +87,12 @@ const Header = () => {
               </GuildToggle>
             ) : null}
             {viewer && !isMobile && specialistAccepted && (
-              <CurrentUser user={viewer} onLogout={() => handleLogout()} />
+              <CurrentUser user={viewer} onLogout={handleLogout} />
             )}
-            {!viewer && !isMobile && <Login to="/login">Login</Login>}
+            {!viewer && !isMobile && <ActionLink to="/login">Login</ActionLink>}
+            {!isMobile && !specialistAccepted && (
+              <ActionLink onClick={handleLogout}>Logout</ActionLink>
+            )}
           </Box>
         </React.Fragment>
       </Wrapper>
