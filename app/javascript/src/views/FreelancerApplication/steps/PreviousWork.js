@@ -16,12 +16,12 @@ import { UPDATE_PROFILE } from "../queries";
 export const validationSchema = object().shape({
   previousWorkDescription: string()
     .max(
-      300,
+      800,
       "Please keep the description simple. It must be at most 300 characters",
     )
     .required("Please share your description with us"),
   previousWorkResults: string()
-    .max(300, "Please keep the text simple. It must be at most 300 characters")
+    .max(800, "Please keep the text simple. It must be at most 300 characters")
     .required("Please tell us why you proud of it"),
 });
 
