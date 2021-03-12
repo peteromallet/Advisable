@@ -8,6 +8,7 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 
 dotenv.config({ silent: true });
 
+process.env.RELEASED_AT = new Date().toISOString();
 process.env.BUILD_TIME = version;
 
 if (process.env.ANALYSE_BUNDLE === "true") {
