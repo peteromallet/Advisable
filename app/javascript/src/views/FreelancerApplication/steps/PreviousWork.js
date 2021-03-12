@@ -13,15 +13,20 @@ import AnimatedCard from "../components/AnimatedCard";
 import { useMutation } from "@apollo/client";
 import { UPDATE_PROFILE } from "../queries";
 
+const CHAR_LIMIT = 800;
+
 export const validationSchema = object().shape({
   previousWorkDescription: string()
     .max(
-      800,
-      "Please keep the description simple. It must be at most 300 characters",
+      CHAR_LIMIT,
+      `Please keep the description simple. It must be at most ${CHAR_LIMIT} characters`,
     )
     .required("Please share your description with us"),
   previousWorkResults: string()
-    .max(800, "Please keep the text simple. It must be at most 300 characters")
+    .max(
+      CHAR_LIMIT,
+      `Please keep the text simple. It must be at most ${CHAR_LIMIT} characters`,
+    )
     .required("Please tell us why you proud of it"),
 });
 
@@ -72,7 +77,7 @@ export default function PreviousWork({ specialist }) {
             <FormField
               isRequired
               as={Textarea}
-              charLimit={800}
+              charLimit={CHAR_LIMIT}
               name="previousWorkDescription"
               minRows={5}
               label="Please provide a brief description of a project you’re proud of"
@@ -83,7 +88,7 @@ export default function PreviousWork({ specialist }) {
             <FormField
               isRequired
               as={Textarea}
-              charLimit={800}
+              charLimit={CHAR_LIMIT}
               name="previousWorkResults"
               minRows={5}
               label="Why are you proud of this project?"
