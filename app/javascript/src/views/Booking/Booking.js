@@ -25,15 +25,15 @@ export default function Booking({ data, match }) {
   const history = useHistory();
   const { applicationId } = useParams();
   const tutorialModal = useModal({
-    visible: viewer.completedTutorials.indexOf("flexibleProjects") === -1,
+    visible: viewer.completedTutorials.indexOf("flexible_projects") === -1,
   });
 
-  // For fixed projects, if they haven't completed tthe fixedProjects tutorial then
+  // For fixed projects, if they haven't completed tthe fixed_projects tutorial then
   // we show the first task.
   React.useEffect(() => {
     if (data.application.projectType !== "Fixed") return;
     const completedFixedTutorial =
-      viewer.completedTutorials.indexOf("fixedProjects") > -1;
+      viewer.completedTutorials.indexOf("fixed_projects") > -1;
     if (completedFixedTutorial) return;
     const tasks = filter(
       data.application.tasks,

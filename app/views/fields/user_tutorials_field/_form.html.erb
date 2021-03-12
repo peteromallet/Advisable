@@ -2,13 +2,13 @@
   <%= f.label field.attribute %>
 </div>
 <div class="field-unit__field">
-  <%= f.hidden_field "#{field.attribute}[]", value: '' %>
-  <%= f.check_box field.attribute, { multiple: true }, 'fixedProjects', false %>
-  Fixed Projects
-  <br />
-  <%= f.check_box field.attribute, { multiple: true }, 'flexibleProjects', false %>
-  Flexible Projects
-  <br />
-  <%= f.check_box field.attribute, { multiple: true }, 'RECOMMENDATIONS', false %>
-  Recommendations
+  <%= f.hidden_field "#{field.attribute}[]" , value: '' %>
+    <%= f.check_box field.attribute, { multiple: true }, 'fixed_projects' , false %>
+      Fixed Projects
+      <br />
+      <%= f.check_box field.attribute, { multiple: true }, 'flexible_projects' , false %>
+        Flexible Projects
+        <br />
+        <%= f.check_box field.attribute, { multiple: true }, 'recommendations' , false %>
+          Recommendations
 </div>
