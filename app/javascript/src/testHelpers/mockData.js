@@ -206,6 +206,7 @@ export const specialist = (fields = {}) => {
       needsToSetAPassword: false,
       phoneNumber: null,
       createdAt: new Date().toISOString(),
+      acceptedAt: new Date().toISOString(),
       city: "Dublin",
       reviewsCount: 0,
       hasSetupPayments: true,
