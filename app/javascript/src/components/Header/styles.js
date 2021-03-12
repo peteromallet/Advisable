@@ -250,7 +250,7 @@ export const CurrentUserDropdown = styled.div`
   }
 `;
 
-export const ActionLink = styled(Link)`
+export const Login = styled(Link)`
   color: white;
   cursor: pointer;
   border-radius: 6px;
@@ -264,4 +264,8 @@ export const ActionLink = styled(Link)`
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
   }
+`;
+
+export const Logout = styled(Login)`
+  font-weight: 500;
 `;
