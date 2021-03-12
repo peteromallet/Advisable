@@ -48,8 +48,8 @@ function Terms({ match, history, application, location }) {
 
   const initialValues = {
     invoiceRate: application.invoiceRate || "",
-    acceptsFee: application.acceptsFee || "",
-    acceptsTerms: application.acceptsTerms || "",
+    acceptsFee: application.acceptsFee || false,
+    acceptsTerms: application.acceptsTerms || false,
     trialProgram: application.trialProgram || false,
     autoApply: false,
   };
