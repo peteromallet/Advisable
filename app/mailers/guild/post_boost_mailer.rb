@@ -8,8 +8,8 @@ module Guild
 
       @guild_post = post
       @author = @guild_post.specialist
-      subscribed_topic_names = Guild::Topic.where(id: @subscriber.subscriptions.pluck(:tag_id)).pluck(:name)
-      @followed_topic_names = (@guild_post.guild_topic_list & subscribed_topic_names).join(', ')
+      subscriber_topic_names = @subscriber.guild_subscribed_topics.pluck(:name)
+      @subscribed_topic_names = (@guild_post.guild_topic_list & subscriber_topic_names).join(', ')
 
       mail(
         to: @subscriber.account.email,
