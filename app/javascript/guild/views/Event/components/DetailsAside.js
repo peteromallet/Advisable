@@ -6,13 +6,13 @@ import RegisterButton from "./RegisterButton";
 export default function DetailsAside({
   event,
   handleEventRegistration,
-  registerDisabled,
+  unregisterable,
 }) {
   return (
     <>
       <DurationDate mb="4" startsAt={event.startsAt} endsAt={event.endsAt} />
       <RegisterButton
-        disabled={registerDisabled}
+        disabled={unregisterable}
         attending={event.attending}
         onClick={handleEventRegistration}
       />

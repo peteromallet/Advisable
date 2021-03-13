@@ -1,23 +1,26 @@
 import React from "react";
-import { Box, Card, Skeleton } from "@advisable/donut";
+import { Box, Card, Skeleton, Stack } from "@advisable/donut";
 
 function SkeletonEvent() {
   return (
-    <Card padding="8" borderRadius="12px">
-      <Box display="flex" alignItems="center" mb="6">
-        <Skeleton width="40px" height="40px" borderRadius="50%" mr="3" />
-        <Box>
-          <Skeleton mb="1" height="16px" width="170px" />
-          <Skeleton height="13px" width="120px" />
+    <Card flex="auto" minHeight="380px" borderRadius="12px">
+      <Skeleton width="100%" height="160px" borderRadius="12px 12px 0 0" />
+      <Box display="flex" flexDirection="column" padding="5">
+        <Box display="flex" height="32px">
+          <Skeleton borderRadius="8px" width="100px" />
         </Box>
+        <Stack mt="3" spacing="s">
+          <Skeleton width="100%" height="26px" />
+          <Skeleton width="90%" height="26px" />
+          <Box width="100%" display="flex" alignItems="center">
+            <Skeleton borderRadius="50%" height="50px" width="50px" />
+            <Box ml="3" display="flex" flexDirection="column">
+              <Skeleton width="120px" height="18px" />
+              <Skeleton mt="2" width="160px" height="18px" />
+            </Box>
+          </Box>
+        </Stack>
       </Box>
-
-      <Skeleton width="100%" height="24px" mb="2" />
-      <Skeleton width="60%" height="24px" mb="8" />
-
-      <Skeleton width="100%" height="15px" mb="2" />
-      <Skeleton width="100%" height="15px" mb="2" />
-      <Skeleton width="80%" height="15px" mb="2" />
     </Card>
   );
 }
@@ -30,7 +33,7 @@ export default function Loading({ skeletonEvents = 6 }) {
   return (
     <Box
       width="100%"
-      gridGap="20px"
+      gridGap="40px"
       display="grid"
       gridTemplateColumns={{ _: "1fr", s: "1fr 1fr", l: "1fr 1fr 1fr" }}
     >

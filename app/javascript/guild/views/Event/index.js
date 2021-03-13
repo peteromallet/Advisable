@@ -138,7 +138,7 @@ const Event = () => {
                 <DetailsAside
                   event={event}
                   handleEventRegistration={handleEventRegistration}
-                  registerDisabled={isHost || registerMutationsLoading}
+                  unregisterable={isHost || registerMutationsLoading}
                 />
               ) : null}
               <HostBio host={event.host} />

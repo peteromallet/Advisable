@@ -78,7 +78,7 @@ Rails.logger.info "Creating guild events"
 
 10.times do |num|
   host = Specialist.order(Arel.sql("RANDOM()")).first
-  starts_at = rand(1..10).days.from_now
+  starts_at = rand(5..90).days.from_now
   event = Guild::Event.create(
     host: host, 
     title: Faker::Quote.yoda[0..149], 
