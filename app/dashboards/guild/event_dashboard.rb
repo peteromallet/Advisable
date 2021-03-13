@@ -4,14 +4,15 @@ require "administrate/base_dashboard"
 
 module Guild
   class EventDashboard < Administrate::BaseDashboard
+    DATETIME_OPTIONS = {format: "%d %b at %l:%m%P %Z", timezone: "America/Los_Angeles"}.freeze
     ATTRIBUTE_TYPES = {
       id: Field::String.with_options(searchable: false),
       title: Field::String,
       url: Field::String,
       uid: Field::String,
       host: Field::BelongsTo.with_options(class_name: 'Specialist'),
-      starts_at: Field::DateTime,
-      ends_at: Field::DateTime,
+      starts_at: Field::DateTime.with_options(DATETIME_OPTIONS),
+      ends_at: Field::DateTime.with_options(DATETIME_OPTIONS),
       published: Field::Boolean,
       cover_photo: Field::ActiveStorage.with_options(direct_upload: true),
       attendees_count: Field::Number,
