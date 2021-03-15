@@ -5,6 +5,8 @@ module Subscriber
 
   included do
     has_many :subscriptions, dependent: :destroy
+    has_many :guild_subscribed_topics, through: :subscriptions, source: :tag
+    has_many :subscribed_labels, through: :subscriptions, source: :label
   end
 
   def subscribe_to!(tag)
