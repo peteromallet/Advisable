@@ -12,7 +12,6 @@ end
 
 class TagsMigration
   def migrate
-    @migration_time = Time.zone.now
     migrate_tags
     create_id_mapping
     migrate_taggings
@@ -25,7 +24,7 @@ class TagsMigration
     p "Migrating tags"
     MigrationTag.find_in_batches do |batch|
       labels = batch.map do |t|
-        published_at = t.published? ? @migration_time : nil
+        published_at = t.published ? t.created_at : nil
         hash = {
           name: t.name,
           slug: t.slug,
@@ -34,8 +33,8 @@ class TagsMigration
           country_id: nil,
           industry_id: nil,
           skill_id: nil,
-          updated_at: @migration_time,
-          created_at: @migration_time
+          updated_at: t.updated_at,
+          created_at: t.created_at
         }
         hash["#{t.topicable_type.downcase}_id".to_sym] = t.topicable_id
         hash
@@ -64,8 +63,8 @@ class TagsMigration
         {
           label_id: @mapping[t.tag_id],
           guild_post_id: t.taggable_id,
-          updated_at: @migration_time,
-          created_at: @migration_time
+          updated_at: t.created_at,
+          created_at: t.created_at
         }
       end
 
@@ -81,8 +80,8 @@ class TagsMigration
         {
           specialist_id: s.specialist_id,
           label_id: @mapping[s.tag_id],
-          updated_at: @migration_time,
-          created_at: @migration_time
+          updated_at: s.updated_at,
+          created_at: s.created_at
         }
       end
 
