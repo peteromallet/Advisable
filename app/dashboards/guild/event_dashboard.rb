@@ -18,24 +18,7 @@ module Guild
       attendees_count: Field::Number,
       attendees: Field::HasMany.with_options(class_name: 'Specialist'),
       created_at: Field::DateTime,
-      description: Field::SimpleMarkdown.with_options({
-        safe_links_only: true,
-        filter_html: true,
-        with_toc_data: false,
-        hard_wrap: true,
-        link_attributes: {rel: 'follow'},
-        autolink: true,
-        tables: false,
-        no_intra_emphasis: true,
-        strikethrough: false,
-        highlight: false,
-        space_after_headers: true,
-        easymde_options: {
-          placeholder: 'Type here...',
-          spell_checker: true,
-          hide_icons: %w[guide heading link image]
-        }
-      })
+      description: Field::Text
     }.freeze
 
     COLLECTION_ATTRIBUTES = %i[

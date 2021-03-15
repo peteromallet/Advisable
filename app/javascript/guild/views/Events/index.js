@@ -56,11 +56,11 @@ const Events = () => {
             justifyContent="space-between"
             width="100%"
           >
-            <Text fontSize="3xl" color="neutral900">
+            <Text fontSize="4xl" color="neutral900">
               Events
             </Text>
             <Button
-              size="l"
+              fontWeight="medium"
               prefix={<Plus />}
               aria-label="Create Event"
               onClick={handleCreateEvent}
@@ -68,7 +68,7 @@ const Events = () => {
                 background-color: #234ee4;
               `}
             >
-              <Text fontSize="xl">Create Event</Text>
+              Create Event
             </Button>
           </Box>
 

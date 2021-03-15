@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import { StyledMarkdown } from "./styles";
 import urlRegex from "url-regex";
 
-export default function Markdown({ children }) {
+export default function Markdown({ children, ...props }) {
   const formatLinks = (source) => source?.replace(urlRegex(), "[$&]($&)");
 
   const linkClickHandler = (e) => {
@@ -26,7 +26,7 @@ export default function Markdown({ children }) {
   };
 
   return (
-    <StyledMarkdown>
+    <StyledMarkdown {...props}>
       <ReactMarkdown renderers={{ link: renderLinks }}>
         {formatLinks(children)}
       </ReactMarkdown>
