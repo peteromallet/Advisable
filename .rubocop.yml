@@ -79,6 +79,7 @@ Style/StringLiterals:
 Rails/SkipsModelValidations:
   Exclude:
     - "db/migrate/*"
+    - "lib/tasks/*"
 
 Rails/DynamicFindBy:
   Enabled: false
