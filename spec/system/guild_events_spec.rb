@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Guild events view', type: :system do
-  let(:account)    { create(:account, completed_tutorials: ["GUILD"]) }
+  let(:account)    { create(:account, completed_tutorials: ["guild"]) }
   let(:specialist) { create(:specialist, :guild, account: account) }
   let(:host)       { create(:specialist, :guild) }
   let!(:event)     { create(:guild_event, host: host) }
