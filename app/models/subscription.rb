@@ -2,7 +2,7 @@
 
 class Subscription < ApplicationRecord
   belongs_to :specialist
-  belongs_to :tag, class_name: "ActsAsTaggableOn::Tag", optional: true
+  belongs_to :tag, class_name: "Guild::Topic", optional: true
   belongs_to :label, optional: true
 
   validates :tag, uniqueness: {scope: :specialist, allow_blank: true}
