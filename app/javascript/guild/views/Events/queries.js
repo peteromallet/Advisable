@@ -1,18 +1,18 @@
 import { gql } from "@apollo/client";
-import GuildEventFields from "@guild/graphql/fragments/guildEventFields";
+import EventFields from "@guild/graphql/fragments/eventFields";
 
-export const GUILD_EVENTS_QUERY = gql`
-  ${GuildEventFields}
+export const EVENTS_QUERY = gql`
+  ${EventFields}
 
-  query guildEvents($cursor: String) {
-    guildEvents(first: 7, after: $cursor) {
+  query events($cursor: String) {
+    events(first: 7, after: $cursor) {
       pageInfo {
         endCursor
         hasNextPage
       }
       edges {
         node {
-          ...GuildEventFields
+          ...EventFields
           attendees(first: 6) {
             edges {
               node {

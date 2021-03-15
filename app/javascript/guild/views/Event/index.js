@@ -6,8 +6,8 @@ import useViewer from "@advisable-main/hooks/useViewer";
 import NotFound from "src/views/NotFound";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
 import useScrollToTop from "@advisable-main/hooks/useScrollToTop";
-import { GUILD_EVENT_QUERY } from "./queries.js";
-import { REGISTER_GUILD_EVENT, UNREGISTER_GUILD_EVENT } from "./mutations.js";
+import { EVENT_QUERY } from "./queries.js";
+import { UPDATE_EVENT_REGISTRATION } from "./mutations.js";
 import Markdown from "@guild/components/Markdown";
 import EventAttendees from "./components/EventAttendees";
 import Loading from "@advisable-main/components/Loading";
@@ -28,28 +28,25 @@ const Event = () => {
   const theme = useTheme();
   const sUp = useBreakpoint("sUp");
 
-  const { data, loading } = useQuery(GUILD_EVENT_QUERY, {
+  const { data, loading } = useQuery(EVENT_QUERY, {
     variables: { id: eventId },
     skip: !eventId,
   });
-  const event = data?.guildEvent;
+  const event = data?.event;
   const isHost = viewer?.id === event?.host?.id;
 
-  const [register, { loading: registerLoading }] = useMutation(
-    REGISTER_GUILD_EVENT,
+  const [updateRegistration, { loading: loadingRegistration }] = useMutation(
+    UPDATE_EVENT_REGISTRATION,
   );
-  const [unregister, { loading: unregisterLoading }] = useMutation(
-    UNREGISTER_GUILD_EVENT,
-  );
-  const registerMutationsLoading = registerLoading || unregisterLoading;
 
   const handleEventRegistration = () => {
     const variables = {
       input: {
-        guildEventId: eventId,
+        eventId: eventId,
+        actionType: event?.attending ? "UNREGISTER" : "REGISTER",
       },
     };
-    event.attending ? unregister({ variables }) : register({ variables });
+    updateRegistration({ variables });
   };
 
   React.useLayoutEffect(() => {
@@ -138,7 +135,7 @@ const Event = () => {
                 <DetailsAside
                   event={event}
                   handleEventRegistration={handleEventRegistration}
-                  unregisterable={isHost || registerMutationsLoading}
+                  unregisterable={isHost || loadingRegistration}
                 />
               ) : null}
               <HostBio host={event.host} />
@@ -184,7 +181,7 @@ const Event = () => {
                 width="50%"
                 mb="0"
                 attending={event.attending}
-                disabled={isHost || registerMutationsLoading}
+                disabled={loadingRegistration}
                 onClick={handleEventRegistration}
               />
             </Box>

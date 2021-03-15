@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Guild event view', type: :system do
+RSpec.describe 'Event view', type: :system do
   let(:account)    { create(:account, completed_tutorials: ["guild"]) }
   let(:specialist) { create(:specialist, :guild, account: account) }
   let(:host)       { create(:specialist, :guild) }
-  let!(:event)     { create(:guild_event, host: host) }
+  let!(:event)     { create(:event, host: host) }
 
   before do
     authenticate_as(specialist)

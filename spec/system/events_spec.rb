@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Guild events view', type: :system do
+RSpec.describe 'Events view', type: :system do
   let(:account)    { create(:account, completed_tutorials: ["guild"]) }
   let(:specialist) { create(:specialist, :guild, account: account) }
   let(:host)       { create(:specialist, :guild) }
-  let!(:event)     { create(:guild_event, host: host) }
+  let!(:event)     { create(:event, host: host) }
 
   before do
     authenticate_as(specialist)
@@ -14,7 +14,7 @@ RSpec.describe 'Guild events view', type: :system do
 
   context "when viewing the events list" do
     it "displays a message if there are no events" do
-      allow(Guild::Event).to receive(:upcoming).and_return([])
+      allow(Event).to receive(:upcoming).and_return([])
 
       visit "/guild/events"
       expect(page).to have_content("There are no upcoming Events")

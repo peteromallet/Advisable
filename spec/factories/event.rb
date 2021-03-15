@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :guild_event, class: 'Guild::Event' do
+  factory :event do
     title       { Faker::Quote.yoda[0..149] }
     description { Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false) }
     url         { "http://www.google.com" }
