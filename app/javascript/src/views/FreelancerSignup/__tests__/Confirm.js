@@ -49,7 +49,6 @@ test("Continues to the freelancer preferences step", async () => {
             confirmAccount: {
               __typename: "ConfirmAccountPayload",
               viewer,
-              token: "authToken1234",
               errors: [],
             },
           },
