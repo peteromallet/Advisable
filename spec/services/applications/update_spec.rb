@@ -122,7 +122,6 @@ RSpec.describe Applications::Update do
       id: application.uid, attributes: attributes
     )
     expect(application.reload.invoice_rate).to eq(attributes[:invoice_rate])
-    expect(application.reload.rate).to eq(attributes[:invoice_rate].to_d / 100)
   end
 
   it 'updates accepts_fee' do

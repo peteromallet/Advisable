@@ -121,27 +121,27 @@ RSpec.describe Mutations::UpdateApplication do
     end
   end
 
-  context 'when updating the rate' do
+  context "when updating the rate" do
     context "with rate" do
       let(:query) do
         <<-GRAPHQL
         mutation {
           updateApplication(input: {
             id: "#{application.uid}",
-            rate: 100
+            invoiceRate: 10000
           }) {
             application {
-              rate
+              invoiceRate
             }
           }
         }
         GRAPHQL
       end
 
-      it 'updates the rate' do
+      it "updates the rate" do
         response = AdvisableSchema.execute(query, context: context)
-        rate = response['data']['updateApplication']['application']['rate']
-        expect(rate).to eq('100.0')
+        invoice_rate = response["data"]["updateApplication"]["application"]["invoiceRate"]
+        expect(invoice_rate).to eq(10000)
       end
     end
 
@@ -163,7 +163,6 @@ RSpec.describe Mutations::UpdateApplication do
 
       it 'updates the rate' do
         response = AdvisableSchema.execute(query, context: context)
-        pp response
         rate = response['data']['updateApplication']['application']['invoiceRate']
         expect(rate).to eq(10000)
       end
