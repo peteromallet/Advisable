@@ -20,16 +20,32 @@ module Guild
     validate :ensure_alias_root
 
     scope :published, -> { where(published: true) }
-    scope :other, lambda {
-      where(topicable_id: nil).
-        published.
-        order(taggings_count: :desc)
-    }
+    scope :other, -> { where(topicable_id: nil).published.order(taggings_count: :desc) }
 
-    protected
+    before_create :create_label_mirror
+
+    def label_mirror
+      attrs = {slug: slug}.merge(topicable_attr)
+      Label.find_by!(attrs)
+    rescue ActiveRecord::RecordNotFound
+      create_label_mirror
+    end
+
+    private
 
     def ensure_alias_root
       errors.add(:base, "Cannot alias another aliased topic") if alias_tag&.alias_tag_id
+    end
+
+    def create_label_mirror
+      attrs = {name: name, slug: slug}.merge(topicable_attr)
+      Label.create(attrs)
+    end
+
+    def topicable_attr
+      return {} if topicable.blank?
+
+      {"#{topicable.class.name.downcase}_id" => topicable_id}
     end
   end
 end

@@ -32,15 +32,17 @@ RSpec.describe Mutations::Guild::UnfollowGuildTopic do
     expect do
       unfollow_guild_topic
       specialist.reload
-    end.to change(Subscription, :count).from(1).to(0).
-      and change(specialist.subscriptions, :count).from(1).to(0)
+    end.to change(Subscription, :count).from(2).to(0).
+      and change(specialist.subscriptions.on_tag, :count).from(1).to(0).
+      and change(specialist.subscriptions.on_label, :count).from(1).to(0)
     expect(specialist.subscriptions).to be_empty
   end
 
   it "does not unfollow a guild_topic that is not followed" do
     new_topic = create(:guild_topic, name: "new-topic")
     specialist.subscribe_to!(new_topic)
-    expect(specialist.subscriptions.count).to eq(1)
+    expect(specialist.subscriptions.on_tag.count).to eq(1)
+    expect(specialist.subscriptions.on_label.count).to eq(1)
 
     expect do
       unfollow_guild_topic

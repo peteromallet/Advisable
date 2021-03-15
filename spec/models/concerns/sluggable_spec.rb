@@ -13,6 +13,8 @@ class SluggableDummy
 
   def self.before_save(_); end
 
+  def self.validates(*_args); end
+
   include Sluggable
   slug_from :title
 

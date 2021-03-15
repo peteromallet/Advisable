@@ -16,7 +16,9 @@ RSpec.describe GuildAddFollowablesJob do
     expect do
       enqueued_job
       specialist.reload
-    end.to change { specialist.subscriptions.count }.from(0).to(1)
-    expect(specialist.subscriptions.first.tag).to eq(guild_topic)
+    end.to change { specialist.subscriptions.on_tag.count }.from(0).to(1).
+      and change { specialist.subscriptions.on_label.count }.from(0).to(1)
+    expect(specialist.subscriptions.on_tag.first.tag).to eq(guild_topic)
+    expect(specialist.subscriptions.on_label.first.label).to eq(guild_topic.label_mirror)
   end
 end

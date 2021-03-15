@@ -11,6 +11,7 @@ module Subscriber
     return if subscribed_to?(tag)
 
     subscriptions.create!(tag: tag)
+    subscriptions.create!(label: tag.label_mirror)
   end
 
   def subscribed_to?(tag)
@@ -21,5 +22,6 @@ module Subscriber
     return unless subscribed_to?(tag)
 
     subscriptions.find_by(tag: tag).destroy!
+    subscriptions.find_by!(label: tag.label_mirror).destroy!
   end
 end
