@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class CreateGuildEvents < ActiveRecord::Migration[6.1]
+class CreateEvents < ActiveRecord::Migration[6.1]
   def change
-    create_table :guild_events do |t|
+    create_table :events do |t|
       t.string :uid, null: false
       t.string :title, null: false
       t.text :description, null: false

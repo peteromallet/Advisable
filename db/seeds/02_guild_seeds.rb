@@ -3,6 +3,7 @@
 # $> rake db:seed:02_guild_seeds
 
 require "faker"
+require "open-uri"
 
 Rails.logger.info "Creating guild topics"
 
@@ -79,7 +80,7 @@ Rails.logger.info "Creating guild events"
 10.times do |num|
   host = Specialist.order(Arel.sql("RANDOM()")).first
   starts_at = rand(5..90).days.from_now
-  event = Guild::Event.create(
+  event = Event.create(
     host: host, 
     title: Faker::Quote.yoda[0..149], 
     description: Faker::Lorem.paragraph_by_chars(number: 4256, supplemental: false),

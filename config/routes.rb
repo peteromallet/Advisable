@@ -43,9 +43,9 @@ Rails.application.routes.draw do
         post 'boost_post', on: :member
       end
       resources :topics
-      resources :events do
-        delete :cover_photo, on: :member, action: :destroy_cover_photo
-      end
+    end
+    resources :events do
+      delete :cover_photo, on: :member, action: :destroy_cover_photo
     end
     resources :labels
 

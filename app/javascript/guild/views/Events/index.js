@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Text, Box, Button, Stack } from "@advisable/donut";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { Plus } from "@styled-icons/heroicons-outline";
-import { GUILD_EVENTS_QUERY } from "./queries.js";
+import { EVENTS_QUERY } from "./queries.js";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
 import TopEvent from "./components/TopEvent";
 import EventsList from "./components/EventsList";
@@ -15,16 +15,16 @@ const Events = () => {
   const history = useHistory();
   const historyPopped = history.action === "POP";
 
-  const { data, loading, fetchMore } = useQuery(GUILD_EVENTS_QUERY, {
+  const { data, loading, fetchMore } = useQuery(EVENTS_QUERY, {
     fetchPolicy: historyPopped ? "cache-first" : "network-only",
     nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
     notifyOnNetworkStatusChange: true,
   });
-  const hasNextPage = data?.guildEvents.pageInfo.hasNextPage || false;
-  const endCursor = data?.guildEvents.pageInfo.endCursor;
-  const guildEvents = data?.guildEvents.edges.map((e) => e.node) || [];
+  const hasNextPage = data?.events.pageInfo.hasNextPage || false;
+  const endCursor = data?.events.pageInfo.endCursor;
+  const events = data?.events.edges.map((e) => e.node) || [];
 
-  const [topEvent, ...events] = guildEvents;
+  const [topEvent, ...latestEvents] = events;
 
   const onReachedBottom = () => {
     if (!loading && hasNextPage) {
@@ -72,12 +72,12 @@ const Events = () => {
             </Button>
           </Box>
 
-          {loading && !guildEvents.length ? <Loading /> : null}
+          {loading && !events.length ? <Loading /> : null}
           {topEvent && <TopEvent event={topEvent} />}
-          <EventsList events={events} />
+          <EventsList events={latestEvents} />
         </Stack>
 
-        {!loading && guildEvents.length > 0 && !hasNextPage ? (
+        {!loading && events.length > 0 && !hasNextPage ? (
           <Box py="12" textAlign="center">
             <Text color="neutral500">
               You have reached the end of the events list.
@@ -85,7 +85,7 @@ const Events = () => {
           </Box>
         ) : null}
 
-        {!loading && guildEvents.length === 0 && (
+        {!loading && events.length === 0 && (
           <NoResults message="There are no upcoming Events" />
         )}
       </Box>

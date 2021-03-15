@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export default gql`
-  fragment GuildEventFields on GuildEventType {
+  fragment EventFields on Event {
     id
     title
     description

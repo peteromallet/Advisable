@@ -21,7 +21,7 @@ module Types
     field :follow_guild_topic, mutation: Mutations::Guild::FollowGuildTopic
     field :unfollow_guild_topic, mutation: Mutations::Guild::UnfollowGuildTopic
     field :resolve_guild_post, mutation: Mutations::Guild::ResolveGuildPost
-    field :register_guild_event, mutation: Mutations::Guild::RegisterGuildEvent
-    field :unregister_guild_event, mutation: Mutations::Guild::UnregisterGuildEvent
+
+    field :update_event_registration, mutation: Mutations::UpdateEventRegistration
   end
 end

@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
-module Guild
-  class EventAttendee < ApplicationRecord
-    belongs_to :guild_event, class_name: 'Guild::Event', counter_cache: :attendees_count
-    belongs_to :attendee, class_name: 'Specialist', foreign_key: 'specialist_id', inverse_of: :event_attendees
+class EventAttendee < ApplicationRecord
+  belongs_to :event, counter_cache: :attendees_count
+  belongs_to :attendee, class_name: 'Specialist', foreign_key: 'specialist_id', inverse_of: :event_attendees
 
-    validates :attendee, uniqueness: {
-      scope: :guild_event,
-      message: "has already registered for this event"
-    }
-  end
+  validates :attendee, uniqueness: {
+    scope: :event,
+    message: "has already registered for this event"
+  }
 end
 
 # == Schema Information

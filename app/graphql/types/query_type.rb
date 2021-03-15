@@ -188,20 +188,20 @@ module Types
     end
 
     # We'll likely add an argument after v1, 'filter', which can have a default_value of 'upcoming'
-    field :guild_events, Types::Guild::EventType.connection_type, null: true
+    field :events, Types::EventType.connection_type, null: true
 
-    def guild_events
+    def events
       requires_guild_user!
-      ::Guild::Event.upcoming
+      ::Event.upcoming
     end
 
-    field :guild_event, Types::Guild::EventType, null: true do
+    field :event, Types::EventType, null: true do
       argument :id, ID, required: true
     end
 
-    def guild_event(id:)
+    def event(id:)
       requires_guild_user!
-      ::Guild::Event.find_by_uid!(id)
+      ::Event.find_by_uid!(id)
     end
 
     field :guild_post, Types::Guild::PostInterface, null: true do

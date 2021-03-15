@@ -1,11 +1,11 @@
 import { gql } from "@apollo/client";
-import GuildEventFields from "@guild/graphql/fragments/guildEventFields";
+import EventFields from "@guild/graphql/fragments/eventFields";
 
-export const GUILD_EVENT_QUERY = gql`
-  ${GuildEventFields}
-  query guildEvent($id: ID!) {
-    guildEvent(id: $id) {
-      ...GuildEventFields
+export const EVENT_QUERY = gql`
+  ${EventFields}
+  query event($id: ID!) {
+    event(id: $id) {
+      ...EventFields
       attendees(first: 20) {
         edges {
           node {
