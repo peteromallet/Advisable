@@ -7,6 +7,9 @@ class Subscription < ApplicationRecord
 
   validates :tag, uniqueness: {scope: :specialist, allow_blank: true}
   validates :label, uniqueness: {scope: :specialist, allow_blank: true}
+
+  scope :on_tag, -> { where.not(tag_id: nil) }
+  scope :on_label, -> { where.not(label_id: nil) }
 end
 
 # == Schema Information

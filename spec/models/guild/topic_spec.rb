@@ -39,10 +39,10 @@ RSpec.describe Guild::Topic, type: :model do
     let(:new_topic) { build(:guild_topic, name: "Foo bar") }
 
     it "adds a slug on save" do
-      expect {
+      expect do
         new_topic.save!
         new_topic.reload
-      }.to change(new_topic, :slug).from(nil).to("foo-bar")
+      end.to change(new_topic, :slug).from(nil).to("foo-bar")
     end
   end
 end

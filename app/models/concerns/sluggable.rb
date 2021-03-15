@@ -21,6 +21,7 @@ module Sluggable
 
   included do
     before_save :set_slug
+    validates :slug, uniqueness: true
   end
 
   def set_slug
