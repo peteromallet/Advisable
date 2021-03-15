@@ -89,5 +89,6 @@ end
 #
 #  index_tasks_on_airtable_id     (airtable_id)
 #  index_tasks_on_application_id  (application_id)
+#  index_tasks_on_stage           (stage)
 #  index_tasks_on_uid             (uid)
 #
