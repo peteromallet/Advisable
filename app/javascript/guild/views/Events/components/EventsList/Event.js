@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Card, Box, Stack } from "@advisable/donut";
 import { CoverImage } from "@guild/components/CoverImage";
@@ -6,14 +6,9 @@ import StartsAtTag from "@guild/components/Event/StartsAtTag";
 import HostDetails from "@guild/components/Event/HostDetails";
 import OrbitsBackground from "@guild/components/Event/OrbitsBackground";
 import Markdown from "@guild/components/Markdown";
-import { colorVariants } from "./Colors";
 import { StyledLineClamp } from "@guild/views/Events/styles";
 
 export default function Event({ event }) {
-  const variant = useMemo(
-    () => colorVariants[Math.floor(Math.random() * colorVariants.length)],
-    [],
-  );
   const eventLink = `/events/${event.id}`;
 
   return (
@@ -28,14 +23,14 @@ export default function Event({ event }) {
         ) : (
           <OrbitsBackground
             height="200px"
-            color={variant}
+            color={event.color}
             borderRadius="12px 12px 0 0"
           />
         )}
       </Link>
       <Box padding="5">
         <StartsAtTag
-          variant={variant}
+          variant={event.color}
           startsAt={event.startsAt}
           attending={event.attending}
         />
@@ -61,7 +56,7 @@ export default function Event({ event }) {
             </Markdown>
           </Link>
 
-          <HostDetails variant={variant} host={event.host} />
+          <HostDetails variant={event.color} host={event.host} />
         </Stack>
       </Box>
     </Card>
