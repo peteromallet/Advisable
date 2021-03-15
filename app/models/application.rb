@@ -194,6 +194,7 @@ end
 #
 #  index_applications_on_project_id     (project_id)
 #  index_applications_on_specialist_id  (specialist_id)
+#  index_applications_on_status         (status)
 #  index_applications_on_uid            (uid)
 #
 # Foreign Keys

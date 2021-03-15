@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_11_083447) do
+ActiveRecord::Schema.define(version: 2021_03_15_081524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_083447) do
     t.integer "invoice_rate"
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
+    t.index ["status"], name: "index_applications_on_status"
     t.index ["uid"], name: "index_applications_on_uid"
   end
 
@@ -663,6 +664,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_083447) do
     t.datetime "published_at"
     t.jsonb "log_data"
     t.index ["client_id"], name: "index_projects_on_client_id"
+    t.index ["sales_status"], name: "index_projects_on_sales_status"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -868,6 +870,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_083447) do
     t.jsonb "log_data"
     t.index ["airtable_id"], name: "index_tasks_on_airtable_id"
     t.index ["application_id"], name: "index_tasks_on_application_id"
+    t.index ["stage"], name: "index_tasks_on_stage"
     t.index ["uid"], name: "index_tasks_on_uid"
   end
 

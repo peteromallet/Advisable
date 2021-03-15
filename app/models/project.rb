@@ -212,8 +212,9 @@ end
 #
 # Indexes
 #
-#  index_projects_on_client_id  (client_id)
-#  index_projects_on_user_id    (user_id)
+#  index_projects_on_client_id     (client_id)
+#  index_projects_on_sales_status  (sales_status)
+#  index_projects_on_user_id       (user_id)
 #
 # Foreign Keys
 #
