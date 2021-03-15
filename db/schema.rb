@@ -105,7 +105,6 @@ ActiveRecord::Schema.define(version: 2021_03_15_081524) do
   end
 
   create_table "applications", force: :cascade do |t|
-    t.decimal "rate"
     t.string "availability"
     t.string "status"
     t.text "introduction"

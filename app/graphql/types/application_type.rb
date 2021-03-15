@@ -4,7 +4,6 @@ module Types
   class ApplicationType < Types::BaseType
     field :id, ID, null: false
     field :invoice_rate, Int, null: true
-    field :rate, String, null: true, deprecation_reason: "rate has been replaced by invoice_rate which is in cents"
     field :applied_at, String, null: true
     field :proposed_at, GraphQL::Types::ISO8601DateTime, null: true, method: :proposal_sent_at
     field :featured, Boolean, null: true
