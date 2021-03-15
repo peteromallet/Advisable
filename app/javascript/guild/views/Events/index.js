@@ -6,7 +6,7 @@ import BottomScrollListener from "react-bottom-scroll-listener";
 import { Plus } from "@styled-icons/heroicons-outline";
 import { EVENTS_QUERY } from "./queries.js";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
-import TopEvent from "./components/TopEvent";
+import FeaturedEvent from "./components/FeaturedEvent";
 import EventsList from "./components/EventsList";
 import Loading from "./components/Loading";
 import NoResults from "@guild/components/NoResults";
@@ -24,7 +24,7 @@ const Events = () => {
   const endCursor = data?.events.pageInfo.endCursor;
   const events = data?.events.edges.map((e) => e.node) || [];
 
-  const [topEvent, ...latestEvents] = events;
+  const [featuredEvent, ...latestEvents] = events;
 
   const onReachedBottom = () => {
     if (!loading && hasNextPage) {
@@ -73,7 +73,7 @@ const Events = () => {
           </Box>
 
           {loading && !events.length ? <Loading /> : null}
-          {topEvent && <TopEvent event={topEvent} />}
+          {featuredEvent && <FeaturedEvent event={featuredEvent} />}
           <EventsList events={latestEvents} />
         </Stack>
 

@@ -12,22 +12,22 @@ end
 
 # == Schema Information
 #
-# Table name: guild_event_attendees
+# Table name: event_attendees
 #
-#  id             :bigint           not null, primary key
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  guild_event_id :bigint
-#  specialist_id  :bigint
+#  id            :bigint           not null, primary key
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  event_id      :bigint
+#  specialist_id :bigint
 #
 # Indexes
 #
-#  index_guild_event_attendees_on_guild_event_id                    (guild_event_id)
-#  index_guild_event_attendees_on_specialist_id                     (specialist_id)
-#  index_guild_event_attendees_on_specialist_id_and_guild_event_id  (specialist_id,guild_event_id) UNIQUE
+#  index_event_attendees_on_event_id                    (event_id)
+#  index_event_attendees_on_specialist_id               (specialist_id)
+#  index_event_attendees_on_specialist_id_and_event_id  (specialist_id,event_id) UNIQUE
 #
 # Foreign Keys
 #
-#  fk_rails_...  (guild_event_id => guild_events.id)
+#  fk_rails_...  (event_id => events.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #

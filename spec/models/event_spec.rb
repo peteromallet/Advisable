@@ -15,6 +15,7 @@ RSpec.describe Event, type: :model do
     it { expect(event).to have_db_column :attendees_count }
     it { expect(event).to have_db_column :published }
     it { expect(event).to have_db_column :url }
+    it { expect(event).to have_db_column :featured }
   end
 
   describe "relationships" do
@@ -49,6 +50,22 @@ RSpec.describe Event, type: :model do
     it "does not include events older than now" do
       expect(described_class.upcoming).to eq(upcoming)
       expect(described_class.upcoming).not_to include(old_event)
+    end
+
+    it "includes the featured event at the beginning if there is one" do
+      featured = create(:event, starts_at: 12.hours.from_now, ends_at: 13.hours.from_now, featured: true)
+      expect(described_class.upcoming.first).to eq(featured)
+    end
+  end
+
+  describe "with a featured event" do
+    let(:featured_event) { create(:event, featured: true) }
+
+    it "will change the previously featured event" do
+      expect do
+        event.update!(featured: true)
+        featured_event.reload
+      end.to change(featured_event, :featured).from(true).to(false)
     end
   end
 end

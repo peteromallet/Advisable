@@ -295,6 +295,7 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
     t.bigint "host_id"
     t.integer "attendees_count", default: 0
     t.boolean "published", default: false
+    t.boolean "featured", default: false
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
