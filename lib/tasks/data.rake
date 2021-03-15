@@ -16,6 +16,7 @@ class TagsMigration
     migrate_tags
     create_id_mapping
     migrate_taggings
+    migrate_subscriptions
   end
 
   private
@@ -69,6 +70,23 @@ class TagsMigration
       end
 
       Labeling.upsert_all(labelings, unique_by: :index_labelings_on_label_id_and_guild_post_id)
+    end
+  end
+
+  def migrate_subscriptions
+    p "Migrating subscriptions"
+
+    Subscription.on_tag.find_in_batches do |batch|
+      subscriptions = batch.map do |s|
+        {
+          specialist_id: s.specialist_id,
+          label_id: @mapping[s.tag_id],
+          updated_at: @migration_time,
+          created_at: @migration_time
+        }
+      end
+
+      Subscription.upsert_all(subscriptions, unique_by: :index_subscriptions_on_specialist_id_and_label_id)
     end
   end
 end
