@@ -7,6 +7,7 @@ export default function RegisterButton({ attending, ...props }) {
   return (
     <Button
       mb="3"
+      aria-label="Event registration"
       prefix={sUp ? <Calendar /> : null}
       css={`
         background-color: #234ee4;

@@ -2,13 +2,6 @@
 
 require 'rails_helper'
 
-# Can't stub browser system time with capybara
-def local_offset(date)
-  offset = Time.now.getlocal.gmt_offset
-  zone = ActiveSupport::TimeZone[offset].name
-  date.in_time_zone(zone)
-end
-
 RSpec.describe 'Guild event view', type: :system do
   let(:account)    { create(:account, completed_tutorials: ["GUILD"]) }
   let(:specialist) { create(:specialist, :guild, account: account) }
@@ -20,17 +13,24 @@ RSpec.describe 'Guild event view', type: :system do
   end
 
   context "when viewing an event" do
-    it "displays the event details" do
-      visit "/guild/events/#{event.uid}"
-      expect(page).to have_content(event.title)
-      expect(page).to have_content(event.description)
-      starts_at = local_offset(event.starts_at).strftime("%d %b at%l:%M%P")
-      expect(page).to have_content(starts_at)
-      expect(page).to have_text(event.host.name)
+    it "displays the event details in the users timezone" do
+      override_tz = "America/New_York"
+      ENV['TZ'] = override_tz
+      Capybara.using_session(override_tz) do
+        Time.use_zone(override_tz) do
+          visit "/guild/events/#{event.uid}"
+          expect(page).to have_content(event.title)
+          expect(page).to have_content(event.description)
 
-      time_start = local_offset(event.starts_at).strftime("%l:%M%P").lstrip
-      time_end = local_offset(event.ends_at).strftime("%l:%M%P %Z").lstrip
-      expect(page).to have_text("#{time_start} - #{time_end}")
+          starts_at = event.starts_at.strftime("%d %b at %-l:%M%P")
+          expect(page).to have_content(starts_at)
+          expect(page).to have_text(event.host.name)
+
+          time_start = event.starts_at.strftime("%-l:%M%P")
+          time_end = event.ends_at.strftime("%-l:%M%P %Z")
+          expect(page).to have_text(/#{time_start} - #{time_end}/)
+        end
+      end
     end
 
     it 'can be registered or unregistered for' do

@@ -74,7 +74,7 @@ const Event = () => {
         />
       ) : null}
 
-      <Box pb={20} mt="14" paddingX="3">
+      <Box pb="20" mt="14" paddingX="3">
         <Box
           mx="auto"
           maxWidth={["100%", "960px"]}

@@ -47,8 +47,8 @@ export default function Event({ event }) {
             </StyledLineClamp>
 
             <StyledLineClamp
-              marginTop="3"
               lines={3}
+              marginTop="3"
               color="#6F7386"
               lineHeight="l"
             >

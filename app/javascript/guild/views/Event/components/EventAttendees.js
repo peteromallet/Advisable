@@ -36,7 +36,7 @@ export default function EventAttendees({ attendees = [], attendeesCount = 0 }) {
             url={attendee.avatar}
             to={`/freelancers/${attendee.id}`}
           />
-          <Text fontSize="xs" mt={3}>
+          <Text fontSize="xs" mt="3">
             {attendee.firstName}
           </Text>
         </Box>
