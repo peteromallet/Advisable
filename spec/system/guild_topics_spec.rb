@@ -18,7 +18,7 @@ RSpec.describe "Guild topics", type: :system do
   end
 
   it "users can unfollow guild topics" do
-    specialist.follow(topic)
+    specialist.subscribe_to!(topic)
     authenticate_as(specialist)
     visit("/guild/topics/test-topic")
     click_on("Unfollow")

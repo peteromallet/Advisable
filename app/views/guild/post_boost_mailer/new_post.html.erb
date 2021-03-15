@@ -13,7 +13,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600" rel="stylesheet">
 
-		
+
 
 		<title></title>
 		<style type="text/css">
@@ -111,11 +111,11 @@
 
 
 <div style="padding-left: 20px; padding-top: 20px; padding-bottom: 20px;">
-Hi <%= @follower.account.first_name %>,<br><br>
+Hi <%= @subscriber.account.first_name %>,<br><br>
 
 We have a new post on Guild that matches your profile.<br><br>
 
-You can check it out  <a clicktracking="off" target="_blank" href="<%= magic_link_guild_post(@guild_post, @follower.account) %>">here</a> and see a snapshot below!<br><br>
+You can check it out  <a clicktracking="off" target="_blank" href="<%= magic_link_guild_post(@guild_post, @subscriber.account) %>">here</a> and see a snapshot below!<br><br>
 
 Thanks,<br><br>
 
@@ -165,16 +165,16 @@ Advisable Guild<br><br>
 																		</td>
 																	</tr>
 																</table>
-																
+
 															</td>
 														</tr>
 													</table>
 												</td>
 											</tr>
 
-											
+
 										</table>
-										
+
 									</td>
 								</tr>
 
@@ -191,7 +191,7 @@ Advisable Guild<br><br>
 								</tr>
 								<tr>
 									<td align="left" valign="top" class="link" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #15259b;font-weight: 400;line-height: 21px;font-size: 14px;padding: 20px 0;">
-										<a clicktracking="off" href="<%= magic_link_guild_post(@guild_post, @follower.account) %>" target="_blank" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;">Read More</a>
+										<a clicktracking="off" href="<%= magic_link_guild_post(@guild_post, @subscriber.account) %>" target="_blank" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;">Read More</a>
 									</td>
 								</tr>
 							</table>
@@ -203,9 +203,9 @@ Advisable Guild<br><br>
 
 					<tr>
 						<td align="center" valign="top" style="padding: 10px; font-size: 12px; font-weight: 400; color: #666666;">
-							You're receiving this email because you follow Guild topics related to this Post: <%= @followed_topic_names %>. You can manage your followed topics <a style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;" clicktracking=off href="<%= magic_link_manage_guild_follows(@follower.account) %>">here</a>.<br><br>
+							You're receiving this email because you follow Guild topics related to this Post: <%= @subscribed_topic_names %>. You can manage your followed topics <a style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;" clicktracking=off href="<%= magic_link_manage_guild_follows(@subscriber.account) %>">here</a>.<br><br>
 
-							No longer want to receive emails about Advisable Guild? You can unsubscribe <a style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;" clicktracking="off" href="<%= specialist_unsubscribe_url(@follower) %>&field75977585=Advisable%20Guild">here</a>.
+							No longer want to receive emails about Advisable Guild? You can unsubscribe <a style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;" clicktracking="off" href="<%= specialist_unsubscribe_url(@subscriber) %>&field75977585=Advisable%20Guild">here</a>.
 						</td>
 					</tr>
 				</table>

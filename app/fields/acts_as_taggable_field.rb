@@ -13,8 +13,8 @@ class ActsAsTaggableField < Administrate::Field::Base
 
   def name
     context = super
-    followers_count = Follow.where(followable_id: data.map(&:id), followable_type: "ActsAsTaggableOn::Tag").distinct.count(:follower_id) if data.any?
-    "#{context} (#{followers_count || 0})"
+    count = Subscription.where(tag_id: data.pluck(:id)).distinct.count(:specialist_id)
+    "#{context} (#{count})"
   end
 
   def attribute

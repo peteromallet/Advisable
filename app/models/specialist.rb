@@ -23,6 +23,7 @@
 class Specialist < ApplicationRecord
   include Uid
   include SpecialistOrUser
+  include Subscriber
   include ResizedImage
   include Airtable::Syncable
   include Guild::SpecialistsConcern
@@ -72,9 +73,7 @@ class Specialist < ApplicationRecord
   # Whether or not the specialist has provided payment information. Returns true
   # if enough payment information has been provided.
   def has_setup_payments # rubocop:disable Naming/PredicateName
-    bank_holder_name.present? &&
-      bank_holder_address.present? &&
-      bank_currency.present?
+    bank_holder_name.present? && bank_holder_address.present? && bank_currency.present?
   end
 
   def update_project_count
