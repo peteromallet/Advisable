@@ -7,15 +7,12 @@ import * as Sentry from "@sentry/react";
 const cache = createCache();
 
 const authLink = setContext((_, { headers }) => {
-  const token =
-    sessionStorage?.getItem("authToken") || localStorage?.getItem("authToken");
   const csrfElement = document.querySelector("meta[name=csrf-token]");
   const csrf = csrfElement?.getAttribute("content");
 
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
       "X-CSRF-Token": csrf,
       "X-RELEASED-AT": process.env.RELEASED_AT,
     },
