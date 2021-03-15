@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe GuildAddFollowablesJob do
-  subject(:enqueued_job) {
+  subject(:enqueued_job) do
     described_class.perform_now(specialist.id)
-  }
+  end
 
   let(:skill) { create(:skill, name: 'Marketing') }
   let(:specialist) { create(:specialist, skills: [skill]) }
@@ -11,10 +13,10 @@ RSpec.describe GuildAddFollowablesJob do
   it "creates guild topic followables for the specialist" do
     guild_topic = create(:guild_topic, topicable: skill, name: skill.name)
 
-    expect {
+    expect do
       enqueued_job
       specialist.reload
-    }.to change { specialist.follows.count }.from(0).to(1)
-    expect(specialist.follows.first.followable).to eq(guild_topic)
+    end.to change { specialist.subscriptions.count }.from(0).to(1)
+    expect(specialist.subscriptions.first.tag).to eq(guild_topic)
   end
 end
