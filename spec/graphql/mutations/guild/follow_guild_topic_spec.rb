@@ -30,9 +30,11 @@ RSpec.describe Mutations::Guild::FollowGuildTopic do
     expect do
       follow_guild_topic
       specialist.reload
-    end.to change(Subscription, :count).from(0).to(1).
-      and change(specialist.subscriptions, :count).from(0).to(1)
+    end.to change(Subscription, :count).from(0).to(2).
+      and change(specialist.subscriptions.on_tag, :count).from(0).to(1).
+      and change(specialist.subscriptions.on_label, :count).from(0).to(1)
     expect(specialist.guild_subscribed_topics.first).to eq(guild_topic)
+    expect(specialist.subscribed_labels.first).to eq(guild_topic.label_mirror)
   end
 
   it "does not follow a topic thats already followed" do

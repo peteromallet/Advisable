@@ -301,6 +301,15 @@ module Types
       current_user.guild_subscribed_topics.order(created_at: :desc)
     end
 
+    field :followed_labels, [Types::LabelType], null: true do
+      description 'Returns the labels that the specialists follows'
+    end
+
+    def followed_labels(**_args)
+      requires_specialist!
+      current_user.subscribed_labels.order(created_at: :desc)
+    end
+
     field :guild_notifications,
           Types::NotificationInterface.connection_type,
           null: true, max_page_size: 20 do
