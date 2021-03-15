@@ -4,7 +4,7 @@ export default gql`
   fragment GuildEventFields on GuildEventType {
     id
     title
-    excerpt
+    description
     startsAt
     endsAt
     createdAt
@@ -17,10 +17,6 @@ export default gql`
       avatar
       location
       bio
-    }
-    guildTopics {
-      id
-      slug
     }
   }
 `;

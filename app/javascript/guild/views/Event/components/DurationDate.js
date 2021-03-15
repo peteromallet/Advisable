@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Box, theme } from "@advisable/donut";
+import { Text, Box } from "@advisable/donut";
 import { DateTime } from "luxon";
 
 export default function DurationDate({ startsAt, endsAt, ...props }) {
@@ -13,7 +13,8 @@ export default function DurationDate({ startsAt, endsAt, ...props }) {
   return (
     <Box
       borderRadius="12px"
-      border={["none", `1px solid ${theme.colors.neutral900}`]}
+      border={["none", "1px solid"]}
+      borderColor="neutral900"
       padding={["0", "12px"]}
       display="flex"
       jutifyContent="center"

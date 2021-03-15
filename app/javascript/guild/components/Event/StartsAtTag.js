@@ -3,13 +3,17 @@ import { Tag, Box } from "@advisable/donut";
 import { Calendar, Check } from "@styled-icons/heroicons-outline";
 import { shortDate } from "@guild/utils";
 
-export default function StartsAtTag({ event, variant = "orange" }) {
-  return event?.startsAt ? (
+export default function StartsAtTag({
+  startsAt,
+  attending,
+  variant = "orange",
+}) {
+  return startsAt ? (
     <Box display="flex">
       <Tag size={["s", "m"]} icon={Calendar} variant={variant}>
-        {shortDate(event.startsAt)}
+        {shortDate(startsAt)}
       </Tag>
-      {event.attending ? (
+      {attending ? (
         <Tag
           icon={Check}
           marginLeft="2"

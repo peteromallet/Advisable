@@ -1,13 +1,13 @@
 import React from "react";
-import { Card, Text, Box, Stack } from "@advisable/donut";
+import { Card, Box, Stack } from "@advisable/donut";
 import { Link } from "react-router-dom";
-import { truncate } from "lodash-es";
 import { CoverImage } from "@guild/components/CoverImage";
 import StartsAtTag from "@guild/components/Event/StartsAtTag";
 import HostDetails from "@guild/components/Event/HostDetails";
 import AttendeesStack from "@guild/components/Event/AttendeesStack";
 import { StyledLineClamp } from "@guild/views/Events/styles";
 import OrbitsBackground from "@guild/components/Event/OrbitsBackground";
+import Markdown from "@guild/components/Markdown";
 
 export default function TopEvent({ event }) {
   const attendees = event.attendees.edges.map((e) => e.node) || [];
@@ -34,7 +34,10 @@ export default function TopEvent({ event }) {
         )}
         <Box marginLeft={{ _: 0, m: "8" }}>
           <Box marginTop={{ _: "5", m: 0 }}>
-            <StartsAtTag event={event} />
+            <StartsAtTag
+              startsAt={event.startsAt}
+              attending={event.attending}
+            />
           </Box>
           <Box marginTop="5">
             <Link to={eventLink}>
@@ -49,15 +52,17 @@ export default function TopEvent({ event }) {
             </Link>
           </Box>
           <Stack marginTop="3" spacing="8">
-            <Text
-              as={Link}
-              to={eventLink}
-              size="l"
-              lineHeight="l"
-              color="neutral900"
-            >
-              {truncate(event.excerpt, { length: 180 })}
-            </Text>
+            <Link to={eventLink}>
+              <Markdown
+                as={StyledLineClamp}
+                size="l"
+                lineHeight="l"
+                color="neutral900"
+                lines={3}
+              >
+                {event.description}
+              </Markdown>
+            </Link>
             <HostDetails host={event.host} />
             {event.attendeesCount > 0 ? (
               <AttendeesStack

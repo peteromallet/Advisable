@@ -5,6 +5,7 @@ import { CoverImage } from "@guild/components/CoverImage";
 import StartsAtTag from "@guild/components/Event/StartsAtTag";
 import HostDetails from "@guild/components/Event/HostDetails";
 import OrbitsBackground from "@guild/components/Event/OrbitsBackground";
+import Markdown from "@guild/components/Markdown";
 import { colorVariants } from "./Colors";
 import { StyledLineClamp } from "@guild/views/Events/styles";
 
@@ -33,7 +34,11 @@ export default function Event({ event }) {
         )}
       </Link>
       <Box padding="5">
-        <StartsAtTag variant={variant} event={event} />
+        <StartsAtTag
+          variant={variant}
+          startsAt={event.startsAt}
+          attending={event.attending}
+        />
         <Stack spacing="4">
           <Link to={eventLink}>
             <StyledLineClamp
@@ -45,15 +50,15 @@ export default function Event({ event }) {
             >
               {event.title}
             </StyledLineClamp>
-
-            <StyledLineClamp
+            <Markdown
               lines={3}
-              marginTop="3"
               color="#6F7386"
+              marginTop="3"
               lineHeight="l"
+              as={StyledLineClamp}
             >
-              {event.excerpt}
-            </StyledLineClamp>
+              {event.description}
+            </Markdown>
           </Link>
 
           <HostDetails variant={variant} host={event.host} />

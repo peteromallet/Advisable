@@ -6,7 +6,6 @@ module Guild
     include ResizedImage
 
     uid_prefix 'eve'
-    acts_as_ordered_taggable_on :guild_topics
 
     has_many :event_attendees, class_name: 'Guild::EventAttendee', foreign_key: 'guild_event_id', inverse_of: :guild_event, dependent: :destroy
     has_many :attendees, through: :event_attendees
@@ -23,7 +22,7 @@ module Guild
     scope :published, -> { where(published: true) }
 
     scope :upcoming, lambda {
-      published.where("starts_at >= ?", Time.current).order(starts_at: :asc)
+      published.where("starts_at >= ?", Time.zone.now).order(starts_at: :asc)
     }
 
     protected

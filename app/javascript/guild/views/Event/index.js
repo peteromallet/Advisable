@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { Text, Box, useTheme, useBreakpoint } from "@advisable/donut";
 import useViewer from "@advisable-main/hooks/useViewer";
-import NotFound from "@advisable-main/components/PreviousProjectFormModal/NotFound";
+import NotFound from "src/views/NotFound";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
 import useScrollToTop from "@advisable-main/hooks/useScrollToTop";
 import { GUILD_EVENT_QUERY } from "./queries.js";

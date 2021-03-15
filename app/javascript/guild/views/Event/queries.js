@@ -6,7 +6,6 @@ export const GUILD_EVENT_QUERY = gql`
   query guildEvent($id: ID!) {
     guildEvent(id: $id) {
       ...GuildEventFields
-      description
       attendees(first: 20) {
         edges {
           node {
