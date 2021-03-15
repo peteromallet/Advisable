@@ -3,7 +3,7 @@ import { theme } from "@advisable/donut";
 /*  
   Colors are related to the color variants for Tag
 */
-const Colors = {
+export const Colors = {
   blue: {
     stroke: theme.colors.blue200,
     fill: theme.colors.blue100,
@@ -21,7 +21,3 @@ const Colors = {
     stroke: "#DEDBE8",
   },
 };
-
-const colorVariants = Object.keys(Colors);
-
-export { Colors, colorVariants };

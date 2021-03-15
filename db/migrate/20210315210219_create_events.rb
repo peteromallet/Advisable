@@ -7,6 +7,7 @@ class CreateEvents < ActiveRecord::Migration[6.1]
       t.string :title, null: false
       t.text :description, null: false
       t.string :url
+      t.string :color, null: false
       t.references :host, index: true, foreign_key: {to_table: :specialists}
       t.integer :attendees_count, default: 0
       t.boolean :published, default: false

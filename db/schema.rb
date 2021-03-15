@@ -292,6 +292,7 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
     t.string "title", null: false
     t.text "description", null: false
     t.string "url"
+    t.string "color", null: false
     t.bigint "host_id"
     t.integer "attendees_count", default: 0
     t.boolean "published", default: false
