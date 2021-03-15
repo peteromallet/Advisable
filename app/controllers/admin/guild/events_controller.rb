@@ -3,7 +3,7 @@
 module Admin
   module Guild
     class EventsController < Admin::ApplicationController
-      # Event date display and modification via admin needs to be in GMT-7
+      # Event dates in the admin need to be GMT-7
       around_action :override_tz
 
       def destroy_cover_photo
@@ -14,7 +14,7 @@ module Admin
       private
 
       def override_tz(&block)
-        Time.use_zone("America/Los_Angeles", &block)
+        Time.use_zone("Pacific Time (US & Canada)", &block)
       end
     end
   end

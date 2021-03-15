@@ -9,6 +9,7 @@ import ErrorBoundary from "@guild/components/ErrorBoundary";
 import TopEvent from "./components/TopEvent";
 import EventsList from "./components/EventsList";
 import Loading from "./components/Loading";
+import NoResults from "@guild/components/NoResults";
 
 const Events = () => {
   const history = useHistory();
@@ -71,18 +72,22 @@ const Events = () => {
             </Button>
           </Box>
 
-          {loading && !events.length ? <Loading /> : null}
+          {loading && !guildEvents.length ? <Loading /> : null}
           {topEvent && <TopEvent event={topEvent} />}
           <EventsList events={events} />
         </Stack>
 
-        {!loading && events.length > 0 && !hasNextPage ? (
+        {!loading && guildEvents.length > 0 && !hasNextPage ? (
           <Box py="12" textAlign="center">
             <Text color="neutral500">
               You have reached the end of the events list.
             </Text>
           </Box>
         ) : null}
+
+        {!loading && guildEvents.length === 0 && (
+          <NoResults message="There are no upcoming Events" />
+        )}
       </Box>
     </ErrorBoundary>
   );

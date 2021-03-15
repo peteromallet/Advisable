@@ -6,8 +6,8 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false) }
     url         { "http://www.google.com" }
     host        { create(:specialist) }
-    starts_at   { 1.hour.from_now }
-    ends_at     { 2.hours.from_now }
+    starts_at   { 6.hours.from_now }
+    ends_at     { 8.hours.from_now }
     published   { true }
   end
 end

@@ -4,7 +4,7 @@ require "administrate/base_dashboard"
 
 module Guild
   class EventDashboard < Administrate::BaseDashboard
-    DATETIME_OPTIONS = {format: "%d %b at %l:%m%P %Z", timezone: "America/Los_Angeles"}.freeze
+    DATETIME_OPTIONS = {format: "%d %b at %l:%m%P %Z", timezone: "Pacific Time (US & Canada)"}.freeze
     ATTRIBUTE_TYPES = {
       id: Field::String.with_options(searchable: false),
       title: Field::String,
