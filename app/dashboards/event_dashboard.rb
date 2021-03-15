@@ -13,6 +13,7 @@ class EventDashboard < Administrate::BaseDashboard
     starts_at: Field::DateTime.with_options(DATETIME_OPTIONS),
     ends_at: Field::DateTime.with_options(DATETIME_OPTIONS),
     published: Field::Boolean,
+    featured: Field::Boolean,
     cover_photo: Field::ActiveStorage.with_options(direct_upload: true),
     attendees_count: Field::Number,
     attendees: Field::HasMany.with_options(class_name: 'Specialist'),
@@ -41,6 +42,7 @@ class EventDashboard < Administrate::BaseDashboard
     published
     url
     uid
+    featured
   ].freeze
 
   FORM_ATTRIBUTES = %i[
@@ -52,6 +54,7 @@ class EventDashboard < Administrate::BaseDashboard
     published
     url
     host
+    featured
   ].freeze
 
   COLLECTION_FILTERS = {}.freeze

@@ -9,7 +9,7 @@ import { StyledLineClamp } from "@guild/views/Events/styles";
 import OrbitsBackground from "@guild/components/Event/OrbitsBackground";
 import Markdown from "@guild/components/Markdown";
 
-export default function TopEvent({ event }) {
+export default function FeaturedEvent({ event }) {
   const attendees = event.attendees.edges.map((e) => e.node) || [];
   const eventLink = `/events/${event.id}`;
 
