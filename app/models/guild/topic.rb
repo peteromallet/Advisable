@@ -40,7 +40,8 @@ module Guild
     def create_label_mirror
       return if Label.exists?({slug: slug}.merge(topicable_attr))
 
-      attrs = {name: name, slug: slug}.merge(topicable_attr)
+      published_at = published ? Time.zone.now : nil
+      attrs = {name: name, slug: slug, published_at: published_at}.merge(topicable_attr)
       Label.create(attrs)
     end
 
