@@ -196,8 +196,8 @@ RSpec.describe Guild::Post, type: :model do
       expect(popular_posts).to eq([post_b, post_a])
     end
 
-    it "does not include posts older than one week" do
-      post_b.update!(created_at: 2.weeks.ago)
+    it "does not include posts older than two weeks" do
+      post_b.update!(created_at: 3.weeks.ago)
       expect(popular_posts).not_to include(post_b)
     end
 

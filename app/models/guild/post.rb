@@ -30,7 +30,7 @@ module Guild
     scope :popular, lambda {
       published.
         includes(:specialist).
-        where(created_at: 1.week.ago..Time.current, resolved_at: nil, pinned: false).
+        where(created_at: 2.weeks.ago..Time.current, resolved_at: nil, pinned: false).
         select("guild_posts.*, reactionable_count + engagements_count AS rank").
         order("rank DESC").
         limit(3)
