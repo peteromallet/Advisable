@@ -26,7 +26,7 @@ module Subscriber
       subscriptions.create!(label: tag_or_label)
     else
       subscriptions.create!(tag: tag_or_label)
-      subscriptions.create!(label: tag_or_label.label_mirror)
+      subscribe_to!(tag_or_label.label_mirror)
     end
   end
 
@@ -37,7 +37,7 @@ module Subscriber
       subscriptions.find_by(label: tag_or_label).destroy!
     else
       subscriptions.find_by(tag: tag_or_label).destroy!
-      subscriptions.find_by!(label: tag_or_label.label_mirror).destroy!
+      unsubscribe_from!(tag_or_label.label_mirror)
     end
   end
 end

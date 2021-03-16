@@ -38,6 +38,8 @@ module Guild
     end
 
     def create_label_mirror
+      return if Label.exists?({slug: slug}.merge(topicable_attr))
+
       attrs = {name: name, slug: slug}.merge(topicable_attr)
       Label.create(attrs)
     end
