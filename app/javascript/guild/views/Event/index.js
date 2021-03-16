@@ -67,7 +67,6 @@ const Event = () => {
           height={["300px", "400px"]}
           color="purple"
           zIndex="-1"
-          orbits={10}
         />
       ) : null}
 
