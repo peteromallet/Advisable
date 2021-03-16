@@ -199,9 +199,7 @@ module Types
       post
     end
 
-    field :guild_posts,
-          Types::Guild::PostInterface.connection_type,
-          null: true, max_page_size: 5 do
+    field :guild_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
       description 'Returns a list of guild posts for the feed'
 
       argument :type, String, required: false do
@@ -222,11 +220,11 @@ module Types
       end
     end
 
-    field :guild_topic_posts,
-          Types::Guild::PostInterface.connection_type,
-          null: true, max_page_size: 5 do
-            argument :topic_id, ID, required: true
-          end
+    # TODO: AATO - Remove guild_topic_posts endpoint
+
+    field :guild_topic_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
+      argument :topic_id, ID, required: true
+    end
 
     def guild_topic_posts(topic_id:)
       requires_guild_user!
@@ -253,10 +251,7 @@ module Types
       ::Guild::Post.popular
     end
 
-    field :guild_activity,
-          Types::Guild::ActivityUnion.connection_type,
-          deprecation_reason: "Use guildNotifications query instead",
-          null: true, max_page_size: 20 do
+    field :guild_activity, Types::Guild::ActivityUnion.connection_type, deprecation_reason: "Use guildNotifications query instead", null: true, max_page_size: 20 do
       description 'Returns a list of guild activity notifications'
     end
 
@@ -265,10 +260,9 @@ module Types
       current_user.guild_activity
     end
 
-    field :guild_top_topics,
-          Types::Guild::TopicType.connection_type,
-          null: true,
-          max_page_size: 20 do
+    # TODO: AATO - Remove guild_top_topics endpoint
+
+    field :guild_top_topics, Types::Guild::TopicType.connection_type, null: true, max_page_size: 20 do
       description 'Returns a list of the top guild topic tags'
     end
 
@@ -278,12 +272,32 @@ module Types
       ::Guild::Topic.published.most_used
     end
 
+    field :top_labels, [Types::LabelType], null: true, max_page_size: 20 do
+      description 'Returns a list of the top labels'
+    end
+
+    def top_labels
+      requires_guild_user!
+
+      ::Label.published.most_used
+    end
+
+    # TODO: AATO - Remove guild_other_topics endpoint
+
     field :guild_other_topics, [Types::Guild::TopicType], null: true do
       description "Returns other guild topics that aren't related to skill, industry, or location"
     end
 
     def guild_other_topics
       ::Guild::Topic.other
+    end
+
+    field :other_labels, [Types::LabelType], null: true do
+      description "Returns other guild topics that aren't related to skill, industry, or location"
+    end
+
+    def other_labels
+      ::Label.other
     end
 
     field :guild_featured_members, [Types::SpecialistType], null: true
