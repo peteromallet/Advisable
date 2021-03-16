@@ -11,10 +11,7 @@ module Types
       include Types::Guild::AuthorInterface
       include Types::Guild::ReactionInterface
 
-      orphan_types Types::Guild::Post::PostType,
-                   Types::Guild::Post::AdviceRequiredType,
-                   Types::Guild::Post::CaseStudyType,
-                   Types::Guild::Post::OpportunityType
+      orphan_types Types::Guild::Post::PostType, Types::Guild::Post::AdviceRequiredType, Types::Guild::Post::CaseStudyType, Types::Guild::Post::OpportunityType
 
       field :id, ID, null: false do
         description 'The unique ID for the guild post'
@@ -100,6 +97,15 @@ module Types
           object.guild_topics
         else
           object.guild_topics.where(published: true)
+        end
+      end
+
+      field :labels, [Types::LabelType], null: true
+      def labels
+        if current_user == object.specialist
+          object.labels
+        else
+          object.labels.published
         end
       end
 
