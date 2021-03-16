@@ -7,6 +7,7 @@ export default function DetailsAside({
   event,
   handleEventRegistration,
   unregisterable,
+  eventStatus,
 }) {
   return (
     <>
@@ -14,6 +15,7 @@ export default function DetailsAside({
       <RegisterButton
         disabled={unregisterable}
         attending={event.attending}
+        eventStatus={eventStatus}
         onClick={handleEventRegistration}
       />
       <Share

@@ -20,7 +20,7 @@ module Mutations
 
       case action_type
       when "REGISTER"
-        event.event_attendees.create!(attendee: current_user)
+        event.event_attendees.find_or_create_by(attendee: current_user)
       when "UNREGISTER"
         event_attendee = event.event_attendees.find_by(attendee: current_user)
         event_attendee.destroy

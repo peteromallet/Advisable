@@ -5,6 +5,7 @@ module Types
     field :title, String, null: false
     field :description, String, null: false
     field :color, String, null: false
+    field :url, String, null: true
     field :starts_at, GraphQL::Types::ISO8601DateTime, null: false
     field :ends_at, GraphQL::Types::ISO8601DateTime, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false

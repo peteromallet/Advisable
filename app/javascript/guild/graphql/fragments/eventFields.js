@@ -12,6 +12,7 @@ export default gql`
     attendeesCount
     coverPhotoUrl
     color
+    url
     host {
       id
       name

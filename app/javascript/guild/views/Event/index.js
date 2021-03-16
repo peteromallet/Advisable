@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { Text, Box, useTheme, useBreakpoint } from "@advisable/donut";
@@ -14,11 +14,13 @@ import Loading from "@advisable-main/components/Loading";
 import { CoverImage } from "@guild/components/CoverImage";
 import OrbitsBackground from "@guild/components/Event/OrbitsBackground";
 import { StyledLineClamp } from "@guild/views/Events/styles";
+import { useEventStatus, EventStatus } from "./components/useEventStatus";
 import HourDateTag from "./components/HourDateTag";
 import DurationDate from "./components/DurationDate";
 import HostBio from "./components/HostBio";
 import DetailsAside from "./components/DetailsAside";
 import RegisterButton from "./components/RegisterButton";
+import StatusNotice from "./components/StatusNotice";
 
 const Event = () => {
   useScrollToTop();
@@ -35,11 +37,17 @@ const Event = () => {
   const event = data?.event;
   const isHost = viewer?.id === event?.host?.id;
 
+  const eventStatus = useEventStatus(event);
+
   const [updateRegistration, { loading: loadingRegistration }] = useMutation(
     UPDATE_EVENT_REGISTRATION,
   );
 
   const handleEventRegistration = () => {
+    if (eventStatus === EventStatus.inProgress && event?.attending) {
+      return window.open(event.url, "JoinEvent");
+    }
+
     const variables = {
       input: {
         eventId: eventId,
@@ -49,7 +57,7 @@ const Event = () => {
     updateRegistration({ variables });
   };
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     theme.updateTheme({ background: "white" });
     return () => theme.updateTheme({ background: "default" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -111,6 +119,7 @@ const Event = () => {
               flexDirection="column"
               mb={["0", "15"]}
             >
+              <StatusNotice eventStatus={eventStatus} />
               <Text
                 color="blue900"
                 letterSpacing="-0.03em"
@@ -133,6 +142,7 @@ const Event = () => {
               {sUp ? (
                 <DetailsAside
                   event={event}
+                  eventStatus={eventStatus}
                   handleEventRegistration={handleEventRegistration}
                   unregisterable={isHost || loadingRegistration}
                 />
@@ -179,6 +189,7 @@ const Event = () => {
               <RegisterButton
                 width="50%"
                 mb="0"
+                eventStatus={eventStatus}
                 attending={event.attending}
                 disabled={loadingRegistration}
                 onClick={handleEventRegistration}
