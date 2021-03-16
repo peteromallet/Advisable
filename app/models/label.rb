@@ -8,8 +8,9 @@ class Label < ApplicationRecord
   belongs_to :country, optional: true
   belongs_to :industry, optional: true
   belongs_to :skill, optional: true
-  has_many :labelings, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
+  has_many :labelings, dependent: :destroy
+  has_many :guild_posts, through: :labelings
 
   scope :published, -> { where.not(published_at: nil) }
   scope :other, -> { published.where(country_id: nil, industry_id: nil, skill_id: nil).order(labelings_count: :desc) }

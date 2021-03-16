@@ -236,6 +236,17 @@ module Types
       query.tagged_with(guild_topic, on: :guild_topics, any: true)
     end
 
+    field :label_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
+      argument :label_slug, ID, required: true
+    end
+
+    def label_posts(label_slug:)
+      requires_guild_user!
+      query = ::Guild::Post.feed(current_user)
+      label = ::Label.published.find_by!(slug: label_slug)
+      query.labeled_with(label)
+    end
+
     field :guild_popular_posts, [Types::Guild::PostInterface], null: true
 
     def guild_popular_posts(**_args)
