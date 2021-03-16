@@ -292,6 +292,8 @@ module Types
       current_user.guild_posts.order(updated_at: :desc)
     end
 
+    # TODO: AATO - Remove guild_followed_topics endpoint
+
     field :guild_followed_topics, [Types::Guild::TopicType], null: true do
       description 'Returns the topics that the specialist follows'
     end
@@ -306,7 +308,7 @@ module Types
     end
 
     def followed_labels(**_args)
-      requires_specialist!
+      requires_guild_user!
       current_user.subscribed_labels.order(created_at: :desc)
     end
 

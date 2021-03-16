@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :label do
     sequence(:name) { |n| "label_name_#{n}" }
-    published { Time.zone.now }
+    published_at { Time.zone.now }
   end
 end
