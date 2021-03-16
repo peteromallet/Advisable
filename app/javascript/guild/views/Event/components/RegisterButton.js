@@ -1,9 +1,12 @@
 import React from "react";
 import { Button, useBreakpoint } from "@advisable/donut";
 import { Calendar } from "@styled-icons/heroicons-outline";
+import { EventStatus } from "./useEventStatus";
 
-export default function RegisterButton({ attending, ...props }) {
+export default function RegisterButton({ attending, eventStatus, ...props }) {
   const sUp = useBreakpoint("sUp");
+
+  if (eventStatus === EventStatus.ended) return null;
   return (
     <Button
       mb="3"
@@ -14,7 +17,11 @@ export default function RegisterButton({ attending, ...props }) {
       `}
       {...props}
     >
-      {attending ? "Unregister" : "Register for event"}
+      {eventStatus === EventStatus.inProgress && attending
+        ? "Join"
+        : attending
+        ? "Unregister"
+        : "Register for event"}
     </Button>
   );
 }

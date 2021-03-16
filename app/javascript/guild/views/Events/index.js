@@ -1,7 +1,8 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { Text, Box, Button, Stack } from "@advisable/donut";
+import { Text, Box, Button, Stack, useModal } from "@advisable/donut";
+import useViewer from "@advisable-main/hooks/useViewer";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { Plus } from "@styled-icons/heroicons-outline";
 import { EVENTS_QUERY } from "./queries.js";
@@ -10,8 +11,11 @@ import FeaturedEvent from "./components/FeaturedEvent";
 import EventsList from "./components/EventsList";
 import Loading from "./components/Loading";
 import NoResults from "@guild/components/NoResults";
+import FormstackModal from "./components/FormstackModal";
 
 const Events = () => {
+  const modal = useModal();
+  const viewer = useViewer();
   const history = useHistory();
   const historyPopped = history.action === "POP";
 
@@ -32,8 +36,7 @@ const Events = () => {
     }
   };
 
-  const handleCreateEvent = () =>
-    window.open("https://www.formstack.com/todo-new-event", "CreateEvent");
+  const handleCreateEvent = () => modal.show();
 
   return (
     <ErrorBoundary>
@@ -89,6 +92,11 @@ const Events = () => {
           <NoResults message="There are no upcoming Events" />
         )}
       </Box>
+      <FormstackModal
+        modal={modal}
+        label="Create Event"
+        src={`https://advisable.formstack.com/forms/guild_event_form?id=${viewer.id}`}
+      />
     </ErrorBoundary>
   );
 };
