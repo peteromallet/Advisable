@@ -13,9 +13,11 @@ class Event < ApplicationRecord
   has_one_attached :cover_photo
   resize cover_photo: {resize_to_limit: [1600, 1600]}
 
-  validates :starts_at, :ends_at, :title, :description, presence: true
+  validates :starts_at, :ends_at, :title, :description, :color, presence: true
   validates :title, length: {maximum: 250, minimum: 8}
   validates :description, length: {maximum: 10_000, minimum: 16}
+  validates :color, inclusion: {in: COLORS}
+
   validate :end_is_after_start
 
   before_validation :set_color, on: :create

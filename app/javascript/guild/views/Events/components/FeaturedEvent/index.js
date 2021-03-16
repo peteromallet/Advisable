@@ -16,25 +16,28 @@ export default function FeaturedEvent({ event }) {
   return (
     <Card padding="4" borderRadius="12px">
       <Box display="flex" flexDirection={{ _: "column", m: "row" }}>
-        {event.coverPhotoUrl ? (
-          <Box
-            as={Link}
-            to={eventLink}
-            minWidth={{ _: "100%", m: "33%", l: "417px" }}
-            display="flex"
-          >
+        <Box
+          as={Link}
+          to={eventLink}
+          minWidth={{ _: "100%", m: "33%", l: "417px" }}
+          height="385px"
+          display="flex"
+        >
+          {event.coverPhotoUrl ? (
             <CoverImage
               height="385px"
               borderRadius="8px"
               cover={event.coverPhotoUrl}
             />
-          </Box>
-        ) : (
-          <OrbitsBackground borderRadius="12px" height="385px" orbits={6} />
-        )}
+          ) : (
+            <OrbitsBackground borderRadius="12px" color={event.color} />
+          )}
+        </Box>
+
         <Box marginLeft={{ _: 0, m: "8" }}>
           <Box marginTop={{ _: "5", m: 0 }}>
             <StartsAtTag
+              variant={event.color}
               startsAt={event.startsAt}
               attending={event.attending}
             />
@@ -63,7 +66,7 @@ export default function FeaturedEvent({ event }) {
                 {event.description}
               </Markdown>
             </Link>
-            <HostDetails host={event.host} />
+            <HostDetails variant={event.color} host={event.host} />
             {event.attendeesCount > 0 ? (
               <AttendeesStack
                 attendees={attendees}
