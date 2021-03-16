@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :interviews
     resources :video_calls
     resources :blacklisted_domains
+    resources :industries
     resources :webhook_events
     resources :webhook_configurations
     resources :webhooks, only: %i[index show]
@@ -43,6 +44,7 @@ Rails.application.routes.draw do
       end
       resources :topics
     end
+    resources :labels
 
     post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']
     get 'login/:gid', to: 'application#login_as', as: :login_as
