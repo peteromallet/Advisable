@@ -28,6 +28,12 @@ const LOGOUT = gql`
   }
 `;
 
+const ACCEPTED_STAGES = [
+  "Invited To Interview",
+  "Interview Scheduled",
+  "Interview Completed",
+];
+
 const Header = () => {
   const viewer = useViewer();
   const isMobile = useMobile();
@@ -38,7 +44,7 @@ const Header = () => {
 
   // Accepting condition for either client or specialist
   const isAccepted =
-    viewer?.isClient || (viewer?.isSpecialist && Boolean(viewer?.acceptedAt));
+    viewer?.isClient || ACCEPTED_STAGES.includes(viewer?.applicationStage);
 
   const handleLogout = async () => {
     await logout();

@@ -817,7 +817,6 @@ ActiveRecord::Schema.define(version: 2021_03_25_072900) do
     t.string "vat_number"
     t.string "application_interview_calendly_id"
     t.datetime "application_interview_starts_at"
-    t.datetime "accepted_at"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
