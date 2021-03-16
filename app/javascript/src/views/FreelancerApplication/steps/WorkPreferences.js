@@ -4,7 +4,7 @@ import { array, object, string } from "yup";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { Box } from "@advisable/donut";
+import { Box, Error } from "@advisable/donut";
 import { ChoiceList } from "src/components";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
@@ -34,8 +34,9 @@ export default function WorkPreferences({ specialist, skills, industries }) {
       undefined,
   };
 
-  const handleSubmit = async (values) => {
-    update({
+  const handleSubmit = async (values, { setStatus }) => {
+    setStatus(null);
+    const res = await update({
       variables: {
         input: {
           skills: values.skills.map((s) => s.label),
@@ -43,20 +44,12 @@ export default function WorkPreferences({ specialist, skills, industries }) {
           primarilyFreelance: values.primarilyFreelance === "full",
         },
       },
-      optimisticResponse: {
-        __typename: "Mutation",
-        updateProfile: {
-          __typename: "UpdateProfilePayload",
-          specialist: {
-            ...specialist,
-            ...values,
-            primarilyFreelance:
-              values.primarilyFreelance === "full" ||
-              (values.primarilyFreelance === "part" ? false : null),
-          },
-        },
-      },
     });
+
+    if (res.errors) {
+      setStatus(res.errors[0]?.message);
+      return;
+    }
 
     history.push("/freelancers/apply/ideal_project");
   };
@@ -104,7 +97,7 @@ export default function WorkPreferences({ specialist, skills, industries }) {
                 options={industries}
               />
             </Box>
-            <Box mb={8}>
+            <Box mb={4}>
               <FormField
                 isRequired
                 as={ChoiceList}
@@ -127,7 +120,13 @@ export default function WorkPreferences({ specialist, skills, industries }) {
                 ]}
               />
             </Box>
-            <SubmitButton suffix={<ArrowRight />} variant="gradient" size="l">
+            <Error>{formik.status}</Error>
+            <SubmitButton
+              mt={4}
+              suffix={<ArrowRight />}
+              variant="gradient"
+              size="l"
+            >
               Continue
             </SubmitButton>
           </Form>
