@@ -17,8 +17,10 @@ export const useInterviewTime = () => {
     variables: { id: viewer?.id },
   });
 
-  // format time
   const datetime = data?.specialist.applicationInterviewStartsAt;
+  if (!datetime) return null;
+
+  // format time
   const date = DateTime.fromISO(datetime).toLocaleString({
     day: "2-digit",
     month: "long",
