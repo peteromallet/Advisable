@@ -9,21 +9,35 @@ module Subscriber
     has_many :subscribed_labels, through: :subscriptions, source: :label
   end
 
-  def subscribe_to!(tag)
-    return if subscribed_to?(tag)
+  # TODO: AATO - Clean up tag_or_label
 
-    subscriptions.create!(tag: tag)
-    subscriptions.create!(label: tag.label_mirror)
+  def subscribed_to?(tag_or_label)
+    if tag_or_label.is_a?(Label)
+      subscriptions.exists?(label: tag_or_label)
+    else
+      subscriptions.exists?(tag: tag_or_label)
+    end
   end
 
-  def subscribed_to?(tag)
-    subscriptions.exists?(tag: tag)
+  def subscribe_to!(tag_or_label)
+    return if subscribed_to?(tag_or_label)
+
+    if tag_or_label.is_a?(Label)
+      subscriptions.create!(label: tag_or_label)
+    else
+      subscriptions.create!(tag: tag_or_label)
+      subscriptions.create!(label: tag_or_label.label_mirror)
+    end
   end
 
-  def unsubscribe_from!(tag)
-    return unless subscribed_to?(tag)
+  def unsubscribe_from!(tag_or_label)
+    return unless subscribed_to?(tag_or_label)
 
-    subscriptions.find_by(tag: tag).destroy!
-    subscriptions.find_by!(label: tag.label_mirror).destroy!
+    if tag_or_label.is_a?(Label)
+      subscriptions.find_by(label: tag_or_label).destroy!
+    else
+      subscriptions.find_by(tag: tag_or_label).destroy!
+      subscriptions.find_by!(label: tag_or_label.label_mirror).destroy!
+    end
   end
 end

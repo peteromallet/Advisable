@@ -22,6 +22,7 @@ class TagsMigration
 
   def migrate_tags
     p "Migrating tags"
+
     MigrationTag.find_in_batches do |batch|
       labels = batch.map do |t|
         published_at = t.published ? t.created_at : nil
