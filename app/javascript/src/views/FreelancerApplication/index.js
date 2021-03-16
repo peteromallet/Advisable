@@ -37,7 +37,7 @@ export default function FreelancerApplication() {
       <OrbitsBackground />
       {largeScreen ? <Sidebar specialist={specialist} /> : null}
       <Box paddingLeft={{ l: "300px" }}>
-        <Container paddingY={10} maxWidth="750px">
+        <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <AnimatePresence
             initial={false}
             custom={{ largeScreen, forwards }}
