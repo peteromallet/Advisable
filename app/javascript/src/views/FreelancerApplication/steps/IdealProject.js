@@ -1,7 +1,7 @@
 import React from "react";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
-import { Box, Textarea } from "@advisable/donut";
+import { Box, Textarea, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { ArrowRight } from "@styled-icons/feather";
@@ -31,8 +31,14 @@ export default function IdealProject({ specialist }) {
     idealProject: specialist.idealProject || "",
   };
 
-  const handleSubmit = async (values) => {
-    await update({ variables: { input: values } });
+  const handleSubmit = async (values, { setStatus }) => {
+    setStatus(null);
+    const res = await update({ variables: { input: values } });
+
+    if (res.errors) {
+      setStatus(res.errors[0]?.message);
+      return;
+    }
 
     specialist.applicationStage === "Started" &&
       (await complete({ variables: { input: {} } }));
@@ -47,29 +53,37 @@ export default function IdealProject({ specialist }) {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        <Form>
-          <StepNumber>Step 5 of 5</StepNumber>
-          <Header>Ideal Project</Header>
-          <Description>
-            Every freelancer has that one project that stands out in there mind.
-            The one that you were so excited to complete and add to your
-            portfolio. Tell us about one of your previous projects that you are
-            most proud of and why.
-          </Description>
-          <Box mb={8}>
-            <FormField
-              as={Textarea}
-              name="idealProject"
-              minRows={5}
-              charLimit={300}
-              label="How would you describe an ideal project for you?"
-              placeholder="What kind of projects most excite you? What kind of companies do you prefer working with?"
-            />
-          </Box>
-          <SubmitButton suffix={<ArrowRight />} variant="gradient" size="l">
-            Submit
-          </SubmitButton>
-        </Form>
+        {({ status }) => (
+          <Form>
+            <StepNumber>Step 5 of 5</StepNumber>
+            <Header>Ideal Project</Header>
+            <Description>
+              Every freelancer has that one project that stands out in there
+              mind. The one that you were so excited to complete and add to your
+              portfolio. Tell us about one of your previous projects that you
+              are most proud of and why.
+            </Description>
+            <Box mb={4}>
+              <FormField
+                as={Textarea}
+                name="idealProject"
+                minRows={5}
+                charLimit={300}
+                label="How would you describe an ideal project for you?"
+                placeholder="What kind of projects most excite you? What kind of companies do you prefer working with?"
+              />
+            </Box>
+            <Error>{status}</Error>
+            <SubmitButton
+              mt={4}
+              suffix={<ArrowRight />}
+              variant="gradient"
+              size="l"
+            >
+              Submit
+            </SubmitButton>
+          </Form>
+        )}
       </Formik>
     </AnimatedCard>
   );

@@ -11,6 +11,7 @@ import {
   Checkbox,
   Select,
   Avatar,
+  Error,
 } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FileUpload from "src/components/FileUpload";
@@ -49,22 +50,14 @@ export default function Introduction({ specialist, countries }) {
     publicUse: specialist.publicUse === null ? true : specialist.publicUse,
   };
 
-  const handleSubmit = async (values) => {
-    update({
-      variables: { input: values },
-      optimisticResponse: {
-        __typename: "Mutation",
-        updateProfile: {
-          __typename: "UpdateProfilePayload",
-          specialist: {
-            ...specialist,
-            ...values,
-            avatar: null,
-            country: countries.find((c) => c.id === values.country),
-          },
-        },
-      },
-    });
+  const handleSubmit = async (values, { setStatus }) => {
+    setStatus(null);
+    const res = await update({ variables: { input: values } });
+
+    if (res.errors) {
+      setStatus(res.errors[0]?.message);
+      return;
+    }
 
     history.push("/freelancers/apply/overview");
   };
@@ -141,7 +134,7 @@ export default function Introduction({ specialist, countries }) {
                 </FormField>
               </Box>
             </Box>
-            <Box mb={8}>
+            <Box mb={4}>
               <FormField as={Checkbox} type="checkbox" name="publicUse">
                 <Text mb={0.5} fontWeight="medium">
                   I’m okay with Advisable using my profile to promote me
@@ -152,7 +145,13 @@ export default function Introduction({ specialist, countries }) {
                 </Text>
               </FormField>
             </Box>
-            <SubmitButton suffix={<ArrowRight />} variant="gradient" size="l">
+            <Error>{formik.status}</Error>
+            <SubmitButton
+              mt={4}
+              suffix={<ArrowRight />}
+              variant="gradient"
+              size="l"
+            >
               Continue
             </SubmitButton>
           </Form>

@@ -3,7 +3,7 @@ import { object, string } from "yup";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
 import { ArrowRight, UploadCloud } from "@styled-icons/feather";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import FileUpload from "src/components/FileUpload";
@@ -39,21 +39,14 @@ export default function Overview({ specialist }) {
     resume: null,
   };
 
-  const handleSubmit = async (values) => {
-    update({
-      variables: { input: values },
-      optimisticResponse: {
-        __typename: "Mutation",
-        updateProfile: {
-          __typename: "UpdateProfilePayload",
-          specialist: {
-            ...specialist,
-            ...values,
-            resume: null,
-          },
-        },
-      },
-    });
+  const handleSubmit = async (values, { setStatus }) => {
+    setStatus(null);
+    const res = await update({ variables: { input: values } });
+
+    if (res.errors) {
+      setStatus(res.errors[0]?.message);
+      return;
+    }
 
     history.push("/freelancers/apply/experience");
   };
@@ -89,7 +82,7 @@ export default function Overview({ specialist }) {
                 placeholder="https://"
               />
             </Box>
-            <Box mb={8}>
+            <Box mb={4}>
               <Text fontWeight="medium" color="neutral800" mb={2}>
                 Upload Resume
               </Text>
@@ -114,7 +107,13 @@ export default function Overview({ specialist }) {
                 </Text>
               )}
             </Box>
-            <SubmitButton suffix={<ArrowRight />} variant="gradient" size="l">
+            <Error>{formik.status}</Error>
+            <SubmitButton
+              mt={4}
+              suffix={<ArrowRight />}
+              variant="gradient"
+              size="l"
+            >
               Continue
             </SubmitButton>
           </Form>

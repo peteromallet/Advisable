@@ -2,7 +2,7 @@ import React from "react";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
-import { Box, Textarea } from "@advisable/donut";
+import { Box, Textarea, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { ArrowRight } from "@styled-icons/feather";
@@ -39,20 +39,14 @@ export default function PreviousWork({ specialist }) {
     previousWorkResults: specialist.previousWorkResults || "",
   };
 
-  const handleSubmit = (values) => {
-    update({
-      variables: { input: values },
-      optimisticResponse: {
-        __typename: "Mutation",
-        updateProfile: {
-          __typename: "UpdateProfilePayload",
-          specialist: {
-            ...specialist,
-            ...values,
-          },
-        },
-      },
-    });
+  const handleSubmit = async (values, { setStatus }) => {
+    setStatus(null);
+    const res = await update({ variables: { input: values } });
+
+    if (res.errors) {
+      setStatus(res.errors[0]?.message);
+      return;
+    }
 
     history.push("/freelancers/apply/preferences");
   };
@@ -64,41 +58,49 @@ export default function PreviousWork({ specialist }) {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        <Form>
-          <StepNumber>Step 3 of 5</StepNumber>
-          <Header>Previous work</Header>
-          <Description>
-            Every freelancer has that one project that stands out in there mind.
-            The one that you were so excited to complete and add to your
-            portfolio. Tell us about one of your previous projects that you are
-            most proud of and why.
-          </Description>
-          <Box mb={6}>
-            <FormField
-              isRequired
-              as={Textarea}
-              charLimit={CHAR_LIMIT}
-              name="previousWorkDescription"
-              minRows={5}
-              label="Please provide a brief description of a project you’re proud of"
-              placeholder="What were the goals of this project? What type of work was involved?"
-            />
-          </Box>
-          <Box mb={8}>
-            <FormField
-              isRequired
-              as={Textarea}
-              charLimit={CHAR_LIMIT}
-              name="previousWorkResults"
-              minRows={5}
-              label="Why are you proud of this project?"
-              placeholder="What were the results of this project? Why does it stand out to you?"
-            />
-          </Box>
-          <SubmitButton suffix={<ArrowRight />} variant="gradient" size="l">
-            Continue
-          </SubmitButton>
-        </Form>
+        {({ status }) => (
+          <Form>
+            <StepNumber>Step 3 of 5</StepNumber>
+            <Header>Previous work</Header>
+            <Description>
+              Every freelancer has that one project that stands out in there
+              mind. The one that you were so excited to complete and add to your
+              portfolio. Tell us about one of your previous projects that you
+              are most proud of and why.
+            </Description>
+            <Box mb={6}>
+              <FormField
+                isRequired
+                as={Textarea}
+                charLimit={CHAR_LIMIT}
+                name="previousWorkDescription"
+                minRows={5}
+                label="Please provide a brief description of a project you’re proud of"
+                placeholder="What were the goals of this project? What type of work was involved?"
+              />
+            </Box>
+            <Box mb={4}>
+              <FormField
+                isRequired
+                as={Textarea}
+                charLimit={CHAR_LIMIT}
+                name="previousWorkResults"
+                minRows={5}
+                label="Why are you proud of this project?"
+                placeholder="What were the results of this project? Why does it stand out to you?"
+              />
+            </Box>
+            <Error>{status}</Error>
+            <SubmitButton
+              mt={4}
+              suffix={<ArrowRight />}
+              variant="gradient"
+              size="l"
+            >
+              Continue
+            </SubmitButton>
+          </Form>
+        )}
       </Formik>
     </AnimatedCard>
   );
