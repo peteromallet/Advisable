@@ -57,4 +57,15 @@ RSpec.describe ResizedImage do
       expect(ResizeImageJob).to have_been_enqueued.with(specialist, :avatar, {resize_to_limit: [400, 400]})
     end
   end
+
+  context "when pdf" do
+    let(:file)  { Rails.root.join("spec/support/test.pdf") }
+    let(:avatar) { ActiveStorage::Blob.create_and_upload!(io: File.open(file), filename: "test.pdf").signed_id }
+
+    it "removes the image" do
+      specialist.avatar.attach(avatar)
+      expect(specialist.resized_avatar_url).to be_nil
+      expect(specialist.avatar).not_to be_attached
+    end
+  end
 end
