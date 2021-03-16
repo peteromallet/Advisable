@@ -97,7 +97,6 @@ end
 # Table name: specialists
 #
 #  id                                :bigint           not null, primary key
-#  accepted_at                       :datetime
 #  application_interview_starts_at   :datetime
 #  application_stage                 :string
 #  average_score                     :decimal(, )
