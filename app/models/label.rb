@@ -12,6 +12,7 @@ class Label < ApplicationRecord
   has_many :labelings, dependent: :destroy
   has_many :guild_posts, through: :labelings
 
+  scope :most_used, ->(limit = 20) { order(labelings_count: :desc).limit(limit) }
   scope :published, -> { where.not(published_at: nil) }
   scope :other, -> { published.where(country_id: nil, industry_id: nil, skill_id: nil).order(labelings_count: :desc) }
 
