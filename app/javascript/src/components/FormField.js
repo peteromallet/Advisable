@@ -97,7 +97,7 @@ const FormField = ({
             justifyContent="flex-end"
             ml="auto"
             mb={description ? 2 : 1}
-            minWidth="48px"
+            minWidth="60px"
           >
             <Text
               bg={limitExceeded && "red100"}
