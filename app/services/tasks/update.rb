@@ -55,10 +55,6 @@ module Tasks
       user.is_a?(::User)
     end
 
-    def is_specialist? # rubocop:disable Naming/PredicateName
-      user.is_a?(::Specialist)
-    end
-
     def set_trial(trial) # rubocop:disable Naming/AccessorMethodName
       existing = task.application.trial_task
 
