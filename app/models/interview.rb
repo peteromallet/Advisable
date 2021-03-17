@@ -1,12 +1,22 @@
+# frozen_string_literal: true
+
 class Interview < ApplicationRecord
   include Uid
   include Airtable::Syncable
+
+  VALID_STATUSES = [
+    "Call Scheduled", "Call Completed", "Call Requested", "Need More Time Options",
+    "More Time Options Added", "Specialist Requested Reschedule", "Client Requested Reschedule"
+  ].freeze
+
   belongs_to :application
+  belongs_to :user # An interview is scheduled with a specific user (client contact)
   has_one :specialist, through: :application
-  has_one :video_call
-  belongs_to :user # An interview is schduled with a specific user (client contact)
+  has_one :video_call, dependent: :destroy
 
   scope :scheduled, -> { where(status: 'Call Scheduled') }
+
+  validates :status, inclusion: {in: VALID_STATUSES}
 end
 
 # == Schema Information
