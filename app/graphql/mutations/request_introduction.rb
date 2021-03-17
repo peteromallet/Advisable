@@ -1,51 +1,52 @@
-class Mutations::RequestIntroduction < Mutations::BaseMutation
-  argument :application, ID, required: true
-  argument :availability, [GraphQL::Types::ISO8601DateTime], required: false
-  argument :time_zone, String, required: false
+# frozen_string_literal: true
 
-  field :interview, Types::Interview, null: true
-  field :application, Types::ApplicationType, null: true
+module Mutations
+  class RequestIntroduction < Mutations::BaseMutation
+    argument :application, ID, required: true
+    argument :availability, [GraphQL::Types::ISO8601DateTime], required: false
+    argument :time_zone, String, required: false
 
-  def authorized?(**args)
-    requires_current_user!
-    application = Application.find_by_uid_or_airtable_id!(args[:application])
-    policy = ApplicationPolicy.new(current_user, application)
-    return true if policy.write?
+    field :interview, Types::Interview, null: true
+    field :application, Types::ApplicationType, null: true
 
-    ApiError.not_authorized('You do not have access to this')
-  end
+    def authorized?(**args)
+      requires_current_user!
+      application = Application.find_by_uid_or_airtable_id!(args[:application])
+      policy = ApplicationPolicy.new(current_user, application)
+      return true if policy.write?
 
-  def resolve(**args)
-    application = Application.find_by_uid_or_airtable_id!(args[:application])
-
-    if args[:availability]
-      current_user.update(availability: args[:availability])
+      ApiError.not_authorized('You do not have access to this')
     end
 
-    interview = create_interview(application, args[:time_zone])
-    update_application_status(application)
-    application.project.update_sourcing
+    def resolve(**args)
+      application = Application.find_by_uid_or_airtable_id!(args[:application])
 
-    {interview: interview, application: application}
-  end
+      current_user.update(availability: args[:availability]) if args[:availability]
 
-  private
+      interview = create_interview(application, args[:time_zone])
+      update_application_status(application)
+      application.project.update_sourcing
 
-  def create_interview(application, time_zone)
-    interview =
-      application.interviews.create(
+      {interview: interview, application: application}
+    end
+
+    private
+
+    def create_interview(application, time_zone)
+      interview = application.create_interview(
         user: current_user,
         time_zone: time_zone || current_user.time_zone,
         status: 'Call Requested',
         call_requested_at: Time.zone.now
       )
 
-    interview.sync_to_airtable
-    interview
-  end
+      interview.sync_to_airtable
+      interview
+    end
 
-  def update_application_status(application)
-    application.update(status: 'Application Accepted')
-    application.sync_to_airtable
+    def update_application_status(application)
+      application.update(status: 'Application Accepted')
+      application.sync_to_airtable
+    end
   end
 end
