@@ -4,6 +4,7 @@ class PreviousProjectPolicy < BasePolicy
   def delete?
     owner? || admin?
   end
+  alias publish? delete?
 
   private
 
