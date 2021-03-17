@@ -72,7 +72,7 @@ module Types
     # Whether or not the candidate has more previous projects than the ones they
     # have included in their application
     def has_more_projects
-      return false if object.references.empty?
+      return false if object.application_references.empty?
 
       object.previous_projects.count < object.specialist.previous_projects.count
     end

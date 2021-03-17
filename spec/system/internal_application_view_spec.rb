@@ -8,7 +8,7 @@ RSpec.describe "Internal application view", type: :system do
   let(:user) { create(:user) }
 
   before do
-    application.references.create(project: previous_project)
+    application.application_references.create(previous_project: previous_project)
   end
 
   it "Renders the application details" do
