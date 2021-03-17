@@ -6,6 +6,7 @@ class PreviousProjectPolicy < BasePolicy
   end
   alias publish? delete?
   alias update? delete?
+  alias create_image? delete?
 
   private
 
