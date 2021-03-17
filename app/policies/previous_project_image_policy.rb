@@ -4,6 +4,7 @@ class PreviousProjectImagePolicy < BasePolicy
   def update?
     owner? || admin?
   end
+  alias delete? update?
 
   private
 
