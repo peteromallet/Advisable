@@ -11,6 +11,7 @@ class BasePolicy
   def admin?
     user&.account&.admin?
   end
+  alias is_admin admin?
 
   def is_admin # rubocop:disable Naming/PredicateName
     Raven.capture_message("Somebody is still using this :unamused:", backtrace: caller)
