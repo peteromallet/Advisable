@@ -58,7 +58,6 @@ class Application < ApplicationRecord
 
   belongs_to :specialist
   belongs_to :project
-  has_many :interviews, dependent: :destroy
   has_many :tasks, dependent: :destroy
   has_many :unresponsiveness_reports, dependent: :destroy
   has_many :problematic_flags, dependent: :destroy
