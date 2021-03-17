@@ -5,6 +5,7 @@ class PreviousProjectPolicy < BasePolicy
     owner? || admin?
   end
   alias publish? delete?
+  alias update? delete?
 
   private
 
