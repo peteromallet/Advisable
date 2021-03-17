@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationReference < ApplicationRecord
+  self.ignored_columns += %i[project_id project_type]
+
   include Uid
   uid_prefix 'ref'
 
@@ -13,13 +15,11 @@ end
 # Table name: application_references
 #
 #  id                      :bigint           not null, primary key
-#  project_type            :string
 #  uid                     :string
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  application_id          :bigint
 #  off_platform_project_id :bigint
-#  project_id              :bigint
 #
 # Indexes
 #
