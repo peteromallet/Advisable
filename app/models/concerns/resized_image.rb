@@ -34,6 +34,7 @@ module ResizedImage
   rescue ActiveStorage::InvariableError
     image.purge
     Raven.capture_message("Deleted image that wasn't really an image", backtrace: caller, level: "debug", extra: {object_class: self.class.name, object_id: id, image: name})
+    nil
   end
 
   def get_resized_image_url(name, options)
