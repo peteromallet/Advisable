@@ -62,7 +62,6 @@ module Types
       end
 
       field :updated_at, GraphQL::Types::ISO8601DateTime, null: true do
-        # authorize :is_admin
         description 'The timestamp for when the guild post record was last updated'
       end
 

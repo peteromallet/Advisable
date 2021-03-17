@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class ProjectPolicy < BasePolicy
   def read?
-    is_owner? || record_belongs_to_company? || is_admin
+    owner? || record_belongs_to_company? || admin?
   end
   alias publish? read?
 
   def delete?
-    is_owner? || is_company_team_manager? || is_admin
+    owner? || is_company_team_manager? || admin?
   end
 
   def can_access_project?
@@ -14,7 +16,7 @@ class ProjectPolicy < BasePolicy
     read?
   end
 
-  def is_owner?
+  def owner?
     record.user == user
   end
 end

@@ -1,5 +1,13 @@
+# frozen_string_literal: true
+
 class PreviousProjectPolicy < BasePolicy
-  def is_specialist?
-    return true if record.specialist == user
+  def delete?
+    owner? || admin?
+  end
+
+  private
+
+  def owner?
+    record.specialist == user
   end
 end
