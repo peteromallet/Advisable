@@ -95,11 +95,10 @@ module Applications
       return unless attributes[:references]
 
       reference_projects.each do |project|
-        application.references.find_or_create_by(project: project)
+        application.application_references.find_or_create_by(previous_project: project)
       end
 
-      old = application.references.where.not(project: reference_projects)
-      old.delete_all
+      application.application_references.where.not(previous_project: reference_projects).delete_all
     end
   end
 end

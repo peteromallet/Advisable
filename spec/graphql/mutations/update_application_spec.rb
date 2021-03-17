@@ -116,7 +116,7 @@ RSpec.describe Mutations::UpdateApplication do
 
     it 'adds the references' do
       expect { AdvisableSchema.execute(query, context: context) }.to change {
-        application.reload.references.count
+        application.reload.application_references.count
       }.by(2)
     end
   end
