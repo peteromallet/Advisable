@@ -66,10 +66,8 @@ class Application < ApplicationRecord
   # from the application record after working with the client.
   has_one :previous_project, dependent: :destroy
 
-  # references attached are previous projects that the specialist attaches to the application
-  # during the application process.
-  has_many :references, -> { where(project_type: "PreviousProject") }, class_name: "ApplicationReference", dependent: :destroy, inverse_of: :application
-  has_many :previous_projects, through: :references, source: :project, source_type: "PreviousProject"
+  has_many :application_references, dependent: :destroy
+  has_many :previous_projects, through: :application_references
   has_one :interview, dependent: :destroy
 
   # Every time an application is created, updated or destroyed we want to:
