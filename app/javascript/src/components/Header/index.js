@@ -18,6 +18,7 @@ import ClientNavigation from "./ClientNavigation";
 import FreelancerNavigation from "./FreelancerNavigation";
 import GuildToggle from "src/components/GuildToggle";
 import useLogoURL from "../ApplicationProvider/useLogoURL";
+import useUserAcceptance from "src/hooks/useUserAcceptance";
 import useViewer from "src/hooks/useViewer";
 
 const LOGOUT = gql`
@@ -28,12 +29,6 @@ const LOGOUT = gql`
   }
 `;
 
-const ACCEPTED_STAGES = [
-  "Invited To Interview",
-  "Interview Scheduled",
-  "Interview Completed",
-];
-
 const Header = () => {
   const viewer = useViewer();
   const isMobile = useMobile();
@@ -41,10 +36,7 @@ const Header = () => {
   const [logout] = useMutation(LOGOUT, { variables: { input: {} } });
   const [navOpen, setNavOpen] = React.useState(false);
   const logoURL = useLogoURL();
-
-  // Accepting condition for either client or specialist
-  const isAccepted =
-    viewer?.isClient || ACCEPTED_STAGES.includes(viewer?.applicationStage);
+  const isAccepted = useUserAcceptance();
 
   const handleLogout = async () => {
     await logout();
