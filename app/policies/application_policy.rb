@@ -1,33 +1,34 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy < BasePolicy
-  def is_client_owner?
+  def client_owner?
     record.project.user == user
   end
 
-  def is_specialist?
+  def specialist?
     record.specialist == user
   end
+  alias send_proposal? specialist?
 
-  def is_owner_or_manager?
-    is_client_owner? || is_company_team_manager?
+  def owner_or_manager?
+    client_owner? || is_company_team_manager?
   end
-  alias set_type_for_project? is_owner_or_manager?
-  alias start_working? is_owner_or_manager?
+  alias set_type_for_project? owner_or_manager?
+  alias start_working? owner_or_manager?
 
   def via_client?
-    is_client_owner? || record_belongs_to_company?
+    client_owner? || record_belongs_to_company?
   end
 
   # Whether or not the user has access to read information about the application.
   def read?
-    is_specialist? || via_client? || is_admin
+    specialist? || via_client? || admin?
   end
   alias write? read?
   alias create? read?
 
   def stop_working?
-    is_owner_or_manager? || is_specialist?
+    owner_or_manager? || specialist?
   end
 
   private

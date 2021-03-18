@@ -4,24 +4,24 @@
 # an action. The TaskPolicy is a PORO that follows the rules set out by the
 # pundit gem.
 class TaskPolicy < BasePolicy
-  def is_client_owner?
+  def client_owner?
     record.application.project.user == user
   end
 
-  def is_specialist_owner?
+  def specialist_owner?
     record.application.specialist == user
   end
 
   def via_client?
-    is_client_owner? || record_belongs_to_company?
+    client_owner? || record_belongs_to_company?
   end
 
   def via_specialist_or_client?
-    is_specialist_owner? || via_client?
+    specialist_owner? || via_client?
   end
 
   def update_name
-    return true if is_admin
+    return true if admin?
 
     changeable_stage? && via_specialist_or_client?
   end
@@ -32,9 +32,9 @@ class TaskPolicy < BasePolicy
   # a task.
   def update_due_date
     return false if user.nil?
-    return true if is_admin
+    return true if admin?
     return true if changeable_stage?
-    return true if record.stage == 'Assigned' && is_specialist_owner?
+    return true if record.stage == 'Assigned' && specialist_owner?
 
     false
   end
@@ -43,21 +43,24 @@ class TaskPolicy < BasePolicy
   # task.
   def update_estimate
     return false if user.nil?
-    return true if is_admin
+    return true if admin?
     return true if ['Not Assigned', 'Quote Requested', 'Requested To Start'].include?(record.stage)
-    return true if is_specialist_owner? && ['Quote Provided', 'Assigned'].include?(record.stage)
+    return true if specialist_owner? && ['Quote Provided', 'Assigned'].include?(record.stage)
 
     false
   end
   alias update_flexible_estimate update_estimate
   alias update_estimate_type update_estimate
 
-  def update_trial
-    is_admin || is_specialist_owner?
+  def start?
+    admin? || specialist_owner?
   end
+  alias request_to_start? start?
+  alias submit? start?
+  alias update_trial start?
 
   def set_repeating
-    is_admin || via_specialist_or_client?
+    admin? || via_specialist_or_client?
   end
 
   private

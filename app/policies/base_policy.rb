@@ -8,8 +8,13 @@ class BasePolicy
     @record = record
   end
 
-  def is_admin # rubocop:disable Naming/PredicateName
+  def admin?
     user&.account&.admin?
+  end
+
+  def is_admin # rubocop:disable Naming/PredicateName
+    Raven.capture_message("Somebody is still using this :unamused:", backtrace: caller)
+    admin?
   end
 
   def is_team_manager? # rubocop:disable Naming/PredicateName
