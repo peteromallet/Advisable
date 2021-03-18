@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_095209) do
+ActiveRecord::Schema.define(version: 2021_03_18_120807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -95,14 +95,11 @@ ActiveRecord::Schema.define(version: 2021_03_17_095209) do
   create_table "application_references", force: :cascade do |t|
     t.string "uid"
     t.bigint "application_id"
-    t.string "project_type"
-    t.bigint "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "off_platform_project_id"
     t.index ["application_id"], name: "index_application_references_on_application_id"
     t.index ["off_platform_project_id"], name: "index_application_references_on_off_platform_project_id"
-    t.index ["project_type", "project_id"], name: "index_application_references_on_project"
     t.index ["uid"], name: "index_application_references_on_uid"
   end
 
