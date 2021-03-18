@@ -84,6 +84,7 @@ export default function Introduction({ specialist, countries }) {
                 Add your profile photo
               </Text>
               <FileUpload
+                name="upload-avatar"
                 onChange={(blob) => {
                   formik.setFieldValue("avatar", blob.signed_id);
                 }}
