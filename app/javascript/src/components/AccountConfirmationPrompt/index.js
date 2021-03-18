@@ -4,16 +4,14 @@ import { ShieldCheckmark } from "@styled-icons/ionicons-outline/ShieldCheckmark"
 import { Text, Link, Paragraph, Box, Circle } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
-import useUserAcceptance from "src/hooks/useUserAcceptance";
 import { RESEND_CONFIRMATION_EMAIL } from "./queries";
 
 export default function AccountConfirmationPrompt() {
   const viewer = useViewer();
   const notifications = useNotifications();
   const [resend, { data }] = useMutation(RESEND_CONFIRMATION_EMAIL);
-  const isAccepted = useUserAcceptance();
 
-  if (viewer.confirmed || !isAccepted) return null;
+  if (viewer?.confirmed || !viewer?.isAccepted) return null;
 
   async function handleResend(e) {
     e.preventDefault();
