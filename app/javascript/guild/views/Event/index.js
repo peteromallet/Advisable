@@ -44,17 +44,19 @@ const Event = () => {
   );
 
   const handleEventRegistration = () => {
-    if (eventStatus === EventStatus.inProgress && event?.attending) {
-      return window.open(event.url, "JoinEvent");
-    }
+    const inProgress = eventStatus === EventStatus.inProgress;
+    const joinEvent = () => window.open(event.url, "JoinEvent");
+    if (inProgress && event.attending) return joinEvent();
 
+    /* Register or Unregister */
     const variables = {
       input: {
         eventId: eventId,
-        actionType: event?.attending ? "UNREGISTER" : "REGISTER",
+        actionType: event.attending ? "UNREGISTER" : "REGISTER",
       },
     };
     updateRegistration({ variables });
+    if (inProgress) joinEvent();
   };
 
   useLayoutEffect(() => {

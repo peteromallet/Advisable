@@ -17,7 +17,7 @@ export default function RegisterButton({ attending, eventStatus, ...props }) {
       `}
       {...props}
     >
-      {eventStatus === EventStatus.inProgress && attending
+      {eventStatus === EventStatus.inProgress
         ? "Join"
         : attending
         ? "Unregister"
