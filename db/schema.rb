@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_081524) do
+ActiveRecord::Schema.define(version: 2021_03_17_095209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -99,7 +99,9 @@ ActiveRecord::Schema.define(version: 2021_03_15_081524) do
     t.bigint "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "off_platform_project_id"
     t.index ["application_id"], name: "index_application_references_on_application_id"
+    t.index ["off_platform_project_id"], name: "index_application_references_on_off_platform_project_id"
     t.index ["project_type", "project_id"], name: "index_application_references_on_project"
     t.index ["uid"], name: "index_application_references_on_uid"
   end
@@ -987,6 +989,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_081524) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "specialists"
   add_foreign_key "application_references", "applications"
+  add_foreign_key "application_references", "off_platform_projects"
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
   add_foreign_key "auth_providers", "accounts"

@@ -24,7 +24,6 @@ module Types
     field :referral_url, String, null: true
     field :accepts_fee, Boolean, null: true
     field :accepts_terms, Boolean, null: true
-    field :has_more_projects, Boolean, null: false
     field :interview, Types::Interview, null: true
     field :trial_program, Boolean, null: true
     field :trial_task, Types::TaskType, null: true
@@ -67,14 +66,6 @@ module Types
       projects = object.previous_projects
       projects = object.specialist.previous_projects.validated if fallback && projects.empty?
       projects
-    end
-
-    # Whether or not the candidate has more previous projects than the ones they
-    # have included in their application
-    def has_more_projects
-      return false if object.references.empty?
-
-      object.previous_projects.count < object.specialist.previous_projects.count
     end
   end
 end
