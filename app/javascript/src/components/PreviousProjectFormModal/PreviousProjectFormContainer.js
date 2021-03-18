@@ -13,7 +13,6 @@ import Routes from "./Routes";
 
 export default function PreviousProjectFormContainer({
   modal,
-  specialistId,
   onCreate,
   onPublish,
 }) {
@@ -53,7 +52,6 @@ export default function PreviousProjectFormContainer({
                 modal={modal}
                 onCreate={onCreate}
                 onPublish={onPublish}
-                specialistId={specialistId}
                 selectDataQuery={selectDataQuery}
               />
             </Container>

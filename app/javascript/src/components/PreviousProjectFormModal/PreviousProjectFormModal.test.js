@@ -30,7 +30,6 @@ function TestUI(props) {
       </button>
       <PreviousProjectFormModal
         modal={modal}
-        specialistId="spe_123"
         unstable_finalFocusRef={btnRef}
         {...props}
       />
@@ -96,7 +95,6 @@ test("Adding a new project", async () => {
             industries: ["Industry", "Industry 2"],
             primaryIndustry: "Industry 2",
             companyType: "Individual Entrepreneur",
-            specialist: "spe_123",
           },
           {
             createPreviousProject: {
