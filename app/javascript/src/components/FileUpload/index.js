@@ -16,6 +16,7 @@ import matchFileType from "src/utilities/matchFileType";
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
 const FileUpload = ({
+  name,
   label,
   filename,
   onChange,
@@ -93,7 +94,12 @@ const FileUpload = ({
             {accept} | {maxSizeInMB} MB
           </SubText>
         </Info>
-        <input type="file" accept={accept} onChange={handleChange} />
+        <input
+          type="file"
+          name={name}
+          accept={accept}
+          onChange={handleChange}
+        />
         {uploading && <ProgressBar percentage={percentage} />}
       </FileUploader>
     </FileUploadStyles>
