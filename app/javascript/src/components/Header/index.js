@@ -89,7 +89,7 @@ const Header = () => {
               <CurrentUser user={viewer} onLogout={handleLogout} />
             )}
             {!viewer && !isMobile && <Login to="/login">Login</Login>}
-            {!isMobile && !viewer.isAccepted && viewer.isSpecialist && (
+            {!isMobile && !viewer?.isAccepted && viewer?.isSpecialist && (
               <Logout onClick={handleLogout}>Logout</Logout>
             )}
           </Box>
