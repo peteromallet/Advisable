@@ -168,7 +168,6 @@ function PreviousProjects({ data, isOwner }) {
           {isOwner ? (
             <PreviousProjectFormModal
               modal={modal}
-              specialistId={viewer.id}
               onPublish={handlePublish}
               onCreate={handleNewProject}
             />

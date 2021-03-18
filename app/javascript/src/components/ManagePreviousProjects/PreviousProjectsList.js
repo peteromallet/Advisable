@@ -1,7 +1,6 @@
 import React from "react";
 import { Tabs, Stack, useModal } from "@advisable/donut";
 import { useApolloClient } from "@apollo/client";
-import useViewer from "../../hooks/useViewer";
 import PreviousProjectFormModal, {
   usePreviousProjectModal,
 } from "../PreviousProjectFormModal";
@@ -11,7 +10,6 @@ import { FETCH_PROJECTS } from "./queries";
 import ValidationModal from "./ValidationModal";
 
 export default function PreviousProjectsList({ previousProjects }) {
-  const viewer = useViewer();
   const client = useApolloClient();
   const validationModal = useModal();
   const [addedProject, setAddedProject] = React.useState(null);
@@ -52,7 +50,6 @@ export default function PreviousProjectsList({ previousProjects }) {
 
       <PreviousProjectFormModal
         modal={modal}
-        specialistId={viewer.id}
         onPublish={handlePublish}
         onCreate={handleNewProject}
       />

@@ -15,14 +15,7 @@ function RedirectToStep({ step }) {
   return <Redirect to={`${location.pathname}/${step}`} />;
 }
 
-function Routes({
-  specialistId,
-  onCreate,
-  selectDataQuery,
-  data,
-  modal,
-  onPublish,
-}) {
+function Routes({ onCreate, selectDataQuery, data, modal, onPublish }) {
   const isPublished = data?.previousProject?.draft === false || false;
 
   return (
@@ -35,7 +28,6 @@ function Routes({
       </Route>
       <Route path="*previous_projects/new/client">
         <CreatePreviousProject
-          specialistId={specialistId}
           onCreate={onCreate}
           industries={selectDataQuery.data.industries}
         />
