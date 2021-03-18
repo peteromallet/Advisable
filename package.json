@@ -2,8 +2,8 @@
   "name": "advisable",
   "private": true,
   "dependencies": {
-    "@babel/core": "^7.13.10",
     "@apollo/client": "^3.3.12",
+    "@babel/core": "^7.13.10",
     "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
     "@babel/plugin-proposal-optional-chaining": "^7.13.8",
     "@babel/plugin-transform-runtime": "^7.13.10",
@@ -56,7 +56,7 @@
     "pluralize": "^8.0.0",
     "polished": "^4.1.1",
     "puppeteer": "^7.1.0",
-    "query-string": "^6.14.0",
+    "query-string": "^7.0.0",
     "react": "^16.13.1",
     "react-bottom-scroll-listener": "^4.1.1",
     "react-day-picker": "^7.4.8",
