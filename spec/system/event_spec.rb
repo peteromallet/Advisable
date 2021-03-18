@@ -90,15 +90,17 @@ RSpec.describe 'Event view', type: :system do
 
         expect(page).to have_button('Unregister')
         expect(page).to have_button('Join', wait: 10)
+        expect(page).to have_content("This event is in progress")
         expect(page).not_to have_button('Register')
       end
 
-      it "removes the register button if ended" do
+      it "removes the Join button if ended" do
         event.update!(starts_at: Time.zone.now, ends_at: 5.seconds.from_now)
         visit "/guild/events/#{event.uid}"
 
-        expect(page).to have_button('Register')
-        expect(page).not_to have_button('Register', wait: 10)
+        expect(page).to have_button('Join')
+        expect(page).not_to have_button('Join', wait: 10)
+        expect(page).to have_content("This event has ended")
       end
     end
   end
