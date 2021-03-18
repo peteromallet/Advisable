@@ -35,7 +35,7 @@ const stepsMeta = [
 
 export default function Welcome({ specialist }) {
   // Looking for a first non-filled step to redirect there
-  const actualStep = stepsMeta.find(
+  const actualStepIndex = stepsMeta.findIndex(
     (step) =>
       !step.validationSchema.isValidSync({
         ...specialist,
@@ -43,10 +43,10 @@ export default function Welcome({ specialist }) {
       }),
   );
 
-  if (actualStep)
+  if (actualStepIndex > 0)
     return (
       <motion.div exit>
-        <Redirect to={actualStep.path} />
+        <Redirect to={stepsMeta[actualStepIndex].path} />
       </motion.div>
     );
 
