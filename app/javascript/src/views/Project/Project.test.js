@@ -1,5 +1,5 @@
 import { Settings } from "luxon";
-import { screen, within } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
   renderRoute,
@@ -10,10 +10,6 @@ import {
   mockBreakpoint,
 } from "../../testHelpers/test-utils";
 import * as queries from "./queries";
-import {
-  REJECT_APPLICATION,
-  GET_APPLICATION,
-} from "components/RejectApplicationForm/queries";
 
 // Its always 27th may 2020 at midday
 Settings.now = () => new Date(2020, 4, 27, 12, 0, 0, 0).valueOf();
@@ -221,81 +217,6 @@ test("can accept matches", async () => {
   await screen.findByText(/schedule a call with/i);
   userEvent.click(await screen.findByLabelText(/request call/i));
   await screen.findByText(/You have been matched with/i);
-});
-
-test("can reject a match", async () => {
-  const { project, user } = createTestData();
-  mockBreakpoint("lUp");
-
-  renderRoute({
-    route: `/projects/${project.id}/matches`,
-    graphQLMocks: [
-      mockViewer(user),
-      mockQuery(queries.GET_PROJECT, { id: project.id }, { project }),
-      mockQuery(
-        queries.GET_MATCHES,
-        { id: project.id },
-        {
-          project,
-          viewer: {
-            ...user,
-            walkthroughComplete: true,
-          },
-        },
-      ),
-      mockQuery(
-        GET_APPLICATION,
-        { id: project.matches[0].id },
-        {
-          application: project.matches[0],
-        },
-      ),
-      mockMutation(
-        REJECT_APPLICATION,
-        {
-          id: project.matches[0].id,
-          reason: "Answers don't demonstrate the experience I'm looking for",
-          feedback: "Feedback",
-        },
-        {
-          rejectApplication: {
-            __typename: "RejectApplicationPayload",
-            application: {
-              ...project.matches[0],
-              status: "Application Rejected",
-            },
-          },
-        },
-      ),
-      // Rejecting candidate brings up the next one and so we need to prefetch
-      // the reject modal for that.
-      mockQuery(
-        GET_APPLICATION,
-        { id: project.matches[1].id },
-        {
-          application: project.matches[1],
-        },
-      ),
-    ],
-  });
-
-  await screen.findByText(/bob belcher/i);
-  const actionBar = await screen.findByTestId("actionBar");
-  userEvent.click(await within(actionBar).findByLabelText(/reject/i));
-  await screen.findByText(/please provide feedback to/i);
-  userEvent.click(screen.getByDisplayValue(/demonstrate the experience/i));
-  userEvent.click(screen.getByLabelText(/continue/i));
-
-  userEvent.type(
-    screen.getByRole("textbox", { name: /hat feedback do you have for us/i }),
-    "Feedback",
-  );
-  const modal = await screen.findByLabelText(/reject bob/i);
-  const rejectBtn = await within(modal).findByRole("button", {
-    name: /reject/i,
-  });
-  userEvent.click(rejectBtn);
-  await screen.findByText(/tina belcher/i);
 });
 
 test("user can see list of candidates", async () => {
