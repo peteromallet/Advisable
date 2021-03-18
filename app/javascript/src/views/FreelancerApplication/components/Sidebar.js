@@ -12,7 +12,10 @@ export default function Sidebar({ specialist }) {
     ...specialist,
     country: specialist.country?.id,
   });
-  const overviewComplete = overviewValidationSchema.isValidSync(specialist);
+  const overviewComplete = overviewValidationSchema.isValidSync({
+    ...specialist,
+    resume: specialist.resume?.filename,
+  });
   const previousWorkComplete = previousWorkValidationSchema.isValidSync(
     specialist,
   );
