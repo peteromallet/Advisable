@@ -17,9 +17,11 @@ const Consultation = () => {
   if (loading) return <Loading />;
 
   if (error?.graphQLErrors[0].extensions.code === "notFound") {
-    return (
-      <NotFound>Could not find the consultation &quot;{id}&quot;</NotFound>
-    );
+    return <NotFound />;
+  }
+
+  if (!data?.consultation?.viewerIsSpecialist) {
+    return <NotFound />;
   }
 
   const status = data.consultation.status;
@@ -32,9 +34,7 @@ const Consultation = () => {
     }
     case "Accepted By Specialist": {
       content = (
-        <Redirect
-          to={`/interview_request/${data.consultation.interview.id}`}
-        />
+        <Redirect to={`/interview_request/${data.consultation.interview.id}`} />
       );
       break;
     }
