@@ -9,6 +9,7 @@ class ApplicationPolicy < BasePolicy
     record.specialist == user
   end
   alias send_proposal? specialist?
+  alias reject_invitation? specialist?
 
   def owner_or_manager?
     client_owner? || is_company_team_manager?
