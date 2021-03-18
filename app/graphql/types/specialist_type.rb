@@ -235,7 +235,7 @@ module Types
     end
 
     field :application_interview_starts_at, GraphQL::Types::ISO8601DateTime, null: true do
-      authorize :is_specialist?, :is_admin
+      authorize :specialist?, :is_admin
       description 'The time for an initial application interview'
     end
 
