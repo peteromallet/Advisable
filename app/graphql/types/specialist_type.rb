@@ -54,6 +54,7 @@ module Types
     end
 
     field :phone_number, String, null: true do
+      authorize :specialist?, :admin?
       description 'The phone number for the specialist'
     end
 
