@@ -2,6 +2,7 @@
   "name": "advisable",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.13.10",
     "@apollo/client": "^3.3.12",
     "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
     "@babel/plugin-proposal-optional-chaining": "^7.13.8",
