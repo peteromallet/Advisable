@@ -317,6 +317,7 @@ export const consultation = (fields = {}) => {
       user: null,
       specialist: null,
       interview: null,
+      viewerIsSpecialist: false,
     },
     fields,
   );

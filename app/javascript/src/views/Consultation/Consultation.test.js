@@ -14,6 +14,7 @@ test("Accepting a consultation request", async () => {
     status: "Request Completed",
     user,
     specialist,
+    viewerIsSpecialist: true,
   });
 
   const interview = mockData.interview({
@@ -95,6 +96,7 @@ test("Declining a consultation request", async () => {
     status: "Request Completed",
     user,
     specialist,
+    viewerIsSpecialist: true,
   });
 
   const graphQLMocks = [
@@ -104,7 +106,7 @@ test("Declining a consultation request", async () => {
       },
       result: {
         data: {
-          viewer: null,
+          viewer: specialist,
         },
       },
     },
@@ -177,6 +179,7 @@ test("redirects to the interview when already accepted", async () => {
     user,
     specialist,
     interview,
+    viewerIsSpecialist: true,
   });
 
   const graphQLMocks = [
