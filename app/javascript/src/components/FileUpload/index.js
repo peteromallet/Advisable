@@ -15,7 +15,14 @@ import matchFileType from "src/utilities/matchFileType";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
-const FileUpload = ({ label, onChange, preview, accept, maxSizeInMB = 2 }) => {
+const FileUpload = ({
+  label,
+  filename,
+  onChange,
+  preview,
+  accept,
+  maxSizeInMB = 2,
+}) => {
   const [file, setFile] = React.useState(null);
   const [uploading, setUploading] = React.useState(false);
   const [percentage, setPercentage] = React.useState(0);
@@ -68,6 +75,8 @@ const FileUpload = ({ label, onChange, preview, accept, maxSizeInMB = 2 }) => {
 
   if (file) {
     mainText = file.name;
+  } else if (filename) {
+    mainText = filename;
   }
 
   if (uploading) {
