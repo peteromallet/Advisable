@@ -134,7 +134,6 @@ export const application = (fields = {}) => {
       acceptsFee: true,
       acceptsTerms: true,
       proposal: null,
-      hasMoreProjects: false,
       appliedAt: "2020-05-25T12:00:00",
       proposalComment: "",
       questions: [

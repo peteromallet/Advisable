@@ -88,53 +88,40 @@ RSpec.describe Applications::Update do
   describe 'assigning references' do
     it 'creates a new application_reference' do
       expect do
-        described_class.call(
-          id: application.uid, attributes: attributes
-        )
-      end.to change { application.references.count }.by(1)
+        described_class.call(id: application.uid, attributes: attributes)
+      end.to change { application.application_references.count }.by(1)
     end
 
     it 'overrides any existing references' do
-      previous_project = create(:project)
-      application.references.create(project: previous_project)
-      described_class.call(
-        id: application.uid, attributes: attributes
-      )
+      another_project = create(:previous_project)
+      application.application_references.create(previous_project: another_project)
+      described_class.call(id: application.uid, attributes: attributes)
       application.reload
-      projects = application.references.map(&:project)
-      expect(projects).not_to include(previous_project)
+      projects = application.application_references.map(&:previous_project)
+      expect(projects).not_to include(another_project)
     end
 
     context 'when an invalid ID is passed' do
       it 'raises and error' do
         expect do
-          described_class.call(
-            id: application.uid,
-            attributes: attributes.merge({references: %w[oasindfoaoinsdfo]})
-          )
+          described_class.call(id: application.uid, attributes: attributes.merge({references: %w[oasindfoaoinsdfo]}))
         end.to raise_error(Service::Error, 'invalid_reference')
       end
     end
   end
 
   it 'updates the rate' do
-    described_class.call(
-      id: application.uid, attributes: attributes
-    )
+    described_class.call(id: application.uid, attributes: attributes)
     expect(application.reload.invoice_rate).to eq(attributes[:invoice_rate])
   end
 
   it 'updates accepts_fee' do
-    described_class.call(
-      id: application.uid, attributes: attributes
-    )
+    described_class.call(id: application.uid, attributes: attributes)
     expect(application.reload.accepts_fee).to eq(attributes[:accepts_fee])
   end
 
   it 'updates accepts_terms' do
-    described_class.call(
-      id: application.uid, attributes: attributes
-    )
+    described_class.call(id: application.uid, attributes: attributes)
     expect(application.reload.accepts_terms).to eq(attributes[:accepts_terms])
   end
 end
