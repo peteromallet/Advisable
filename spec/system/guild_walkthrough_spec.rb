@@ -20,6 +20,8 @@ RSpec.describe "Guild walkthrough", type: :system do
     click_on("Next")
     expect(page).to have_content("No comments")
     click_on("Next")
+    expect(page).to have_content("Subscribe to topics")
+    click_on("Next")
     expect(page).to have_content("That’s it!")
     click_on("Okay")
   end
