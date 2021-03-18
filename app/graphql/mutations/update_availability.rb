@@ -1,17 +1,26 @@
-class Mutations::UpdateAvailability < Mutations::BaseMutation
-  argument :id, ID, required: true
-  argument :availability, [String], required: true, description: "The clients availability. Should be an array of ISO strings"
-  argument :time_zone, String, required: false
+# frozen_string_literal: true
 
-  field :user, Types::User, null: true
+module Mutations
+  class UpdateAvailability < Mutations::BaseMutation
+    argument :id, ID, required: false, deprecation_reason: "Do not provide this anymore"
 
-  def resolve(**args)
-    user = ::User.find_by_uid_or_airtable_id!(args[:id])
-    user.update(
-      availability: args[:availability],
-      time_zone: args[:time_zone]
-    )
+    argument :availability, [String], required: true, description: "The clients availability. Should be an array of ISO strings"
+    argument :time_zone, String, required: false
 
-    { user: user }
+    # TODO: Maybe just return success here?
+    field :user, Types::User, null: true
+
+    def authorized?(**_args)
+      requires_client!
+    end
+
+    def resolve(**args)
+      current_user.update!(
+        availability: args[:availability],
+        time_zone: args[:time_zone]
+      )
+
+      {user: current_user}
+    end
   end
 end
