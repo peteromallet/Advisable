@@ -158,7 +158,6 @@ const References = ({
             modal={newProjectModal}
             onCreate={handleNewProject}
             onPublish={handlePublishProject(formik)}
-            specialistId={application.specialist.id}
           />
 
           {specialist.previousProjects.nodes.length === 0 && (
