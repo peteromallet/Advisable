@@ -41,9 +41,37 @@ RSpec.describe 'Freelancer signup', type: :system do
 
     expect(page).to have_content("Overview")
 
-    # skills = find_field('Search for a skill')
-    # skills.send_keys 'face', :down, :enter
-    # skills.send_keys 'twit', :down, :enter
-    # click_on 'Continue'
+    fill_in("linkedin", with: "https://www.linkedin.com/in/dwight-schrute/")
+    fill_in("website", with: "https://dwightschrute.com")
+    attach_file(
+      "upload-resume",
+      Rails.root.join("spec/support/test.pdf"),
+      make_visible: true
+    )
+    click_on("Continue")
+
+    expect(page).to have_content("Previous work")
+
+    fill_in("previousWorkDescription", with: "Litora inceptos varius")
+    fill_in("previousWorkResults", with: "Per dignissim primis")
+    click_on('Continue')
+
+    expect(page).to have_content('Work preferences')
+
+    skills = find_field('skills')
+    skills.send_keys 'face', :down, :enter
+    skills.send_keys 'twit', :down, :enter
+    industries = find_field('industries')
+    industries.send_keys 'fin', :down, :enter
+    industries.send_keys 'deve', :down, :enter
+    choose 'Full-time freelancer', allow_label_click: true
+    click_on 'Continue'
+
+    expect(page).to have_content('Ideal Project')
+
+    fill_in("idealProject", with: "Mauris tortor posuere")
+    click_on 'Submit'
+
+    expect(page).to have_content('We are reviewing your application')
   end
 end

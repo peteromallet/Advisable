@@ -88,6 +88,7 @@ export default function Overview({ specialist }) {
               </Text>
               <FileUpload
                 label="Upload your resume"
+                name="upload-resume"
                 filename={specialist.resume?.filename}
                 preview={() => {
                   return (
