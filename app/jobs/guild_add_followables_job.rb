@@ -7,7 +7,9 @@ class GuildAddFollowablesJob < ApplicationJob
     interests += specialist.previous_projects.flat_map { |pp| pp.industries + pp.skills }
     interests += [specialist.country]
 
-    interests.each do |i|
+    interests.compact.uniq.each do |i|
+      next unless i.label
+
       specialist.subscribe_to!(i.label)
     end
 
