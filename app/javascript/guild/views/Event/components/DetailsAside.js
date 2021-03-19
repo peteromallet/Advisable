@@ -16,6 +16,7 @@ export default function DetailsAside({
         attending={event.attending}
         eventStatus={eventStatus}
         onClick={handleEventRegistration}
+        width="100%"
       />
     </>
   );

@@ -84,7 +84,7 @@ Rails.logger.info "Creating guild events"
     host: host, 
     title: Faker::Quote.yoda[0..149], 
     description: Faker::Lorem.paragraph_by_chars(number: 4256, supplemental: false),
-    published: true,
+    published_at: Time.zone.now,
     starts_at: starts_at,
     ends_at: starts_at + 1.hour
   )

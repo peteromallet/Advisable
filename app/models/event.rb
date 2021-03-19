@@ -23,7 +23,7 @@ class Event < ApplicationRecord
   before_validation :set_color, on: :create
   before_save :reset_previous_featured, if: :featured_changed?
 
-  scope :published, -> { where(published: true) }
+  scope :published, -> { where.not(published_at: nil) }
 
   scope :upcoming, lambda {
     published.where("ends_at >= ?", Time.zone.now).order(featured: :desc, starts_at: :asc)
@@ -58,7 +58,7 @@ end
 #  description     :text             not null
 #  ends_at         :datetime
 #  featured        :boolean          default(FALSE)
-#  published       :boolean          default(FALSE)
+#  published_at    :datetime
 #  starts_at       :datetime
 #  title           :string           not null
 #  uid             :string           not null

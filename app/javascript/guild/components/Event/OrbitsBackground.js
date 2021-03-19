@@ -19,8 +19,29 @@ const Colors = {
     stroke: "#DEDBE8",
   },
 };
+
 const OrbitSvg = ({ fill, stroke }) => (
   <svg width="100%">
+    <path
+      d="M 1400 -50 m -1020, 0 a 1020,1020 0 1,0 2040,0 a 1020,1020 0 1,0 -1840,0"
+      fill={fill}
+      stroke={stroke}
+    ></path>
+    <path
+      d="M 900 -50 m -1020, 0 a 1020,1020 0 1,0 2040,0 a 1020,1020 0 1,0 -1840,0"
+      fill={fill}
+      stroke={stroke}
+    ></path>
+    <path
+      d="M 700 -50 m -920, 0 a 920,920 0 1,0 1840,0 a 920,920 0 1,0 -1840,0"
+      fill={fill}
+      stroke={stroke}
+    ></path>
+    <path
+      d="M 600 -50 m -820, 0 a 820,820 0 1,0 1640,0 a 820,820 0 1,0 -1640,0"
+      fill={fill}
+      stroke={stroke}
+    ></path>
     <path
       d="M 500 -50 m -720, 0 a 720,720 0 1,0 1440,0 a 720,720 0 1,0 -1440,0"
       fill={fill}

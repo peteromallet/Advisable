@@ -76,7 +76,7 @@ const Event = () => {
       {event.coverPhotoUrl ? (
         <OrbitsBackground
           height={["300px", "400px"]}
-          color="purple"
+          color={event.color}
           zIndex="-1"
         />
       ) : null}
@@ -151,7 +151,7 @@ const Event = () => {
                     unregisterable={isHost || loadingRegistration}
                   />
                 ) : null}
-                <HostBio host={event.host} />
+                <HostBio color={event.color} host={event.host} />
               </Sticky>
             </Box>
           </Box>
