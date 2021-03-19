@@ -9,6 +9,11 @@ if (process.env.SENTRY_FRONTEND_DSN) {
     dsn: `${process.env.SENTRY_FRONTEND_DSN}`,
     environment: process.env.SENTRY_ENVIRONMENT,
   });
+
+  Sentry.setContext("session", {
+    page_load: new Date().toISOString(),
+    released_at: process.env.RELEASED_AT,
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
