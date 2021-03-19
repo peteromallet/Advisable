@@ -1,5 +1,4 @@
 import React from "react";
-import Share from "./Share";
 import DurationDate from "./DurationDate";
 import RegisterButton from "./RegisterButton";
 
@@ -17,18 +16,6 @@ export default function DetailsAside({
         attending={event.attending}
         eventStatus={eventStatus}
         onClick={handleEventRegistration}
-      />
-      <Share
-        mb="8"
-        event={event}
-        width="100%"
-        css={`
-          color: #234ee4;
-          background-color: #edeffd;
-          &:hover {
-            background-color: #edeffd !important;
-          }
-        `}
       />
     </>
   );
