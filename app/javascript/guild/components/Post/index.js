@@ -127,7 +127,7 @@ const Post = ({
           )}
         </>
 
-        <Topics topics={post.guildTopics} />
+        <Topics walkthrough={walkthrough} topics={post.guildTopics} />
 
         {post.pinned && (
           <Notice mt={4} icon={<Pin />} padding={3} variant="orange">

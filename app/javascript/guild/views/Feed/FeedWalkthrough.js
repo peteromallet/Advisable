@@ -83,10 +83,10 @@ const steps = [
             Bye, vanity metrics 👋
           </Text>
           <Paragraph size="sm" marginBottom="24px">
-            If you’d like to give a freelancer a little nudge to say &apos;Hey,
-            nice one - this post is interesting&apos;, here’s where you can do
-            that. But Guild isn’t about racking up likes, share and follows, so
-            only the post’s author will see who’s clicked this button.
+            If you’d like to give a freelancer a little nudge to say ‘Hey, nice
+            one - this post is interesting’, here’s where you can do that. But
+            Guild isn’t about racking up likes, share and follows, so only the
+            post’s author will see who’s clicked this button.
           </Paragraph>
           <Button suffix={<ArrowForward />} variant="dark" onClick={nextStep}>
             Next
@@ -117,6 +117,34 @@ const steps = [
             that. Instead, we‘ve given you the option to message or request a
             call with other Guild members, as that‘s how we reckon real
             relationships form.
+          </Paragraph>
+          <Button suffix={<ArrowForward />} variant="dark" onClick={nextStep}>
+            Next
+          </Button>
+        </Box>
+      );
+    },
+  },
+  {
+    anchor: "postTopic",
+    highlight: "postTopic",
+    placement: "top",
+    clipPadding: 10,
+    component: function TutorialPostTopic({ nextStep }) {
+      return (
+        <Box padding="24px">
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            marginBottom="8px"
+            letterSpacing="-0.02em"
+          >
+            Subscribe to topics 📫
+          </Text>
+          <Paragraph size="sm" marginBottom="24px">
+            Tailor your feed to stay updated on personal specialities and
+            interests. To view all the topics you‘re following, head to your
+            profile drop-down and click “Followed topics”.
           </Paragraph>
           <Button suffix={<ArrowForward />} variant="dark" onClick={nextStep}>
             Next
