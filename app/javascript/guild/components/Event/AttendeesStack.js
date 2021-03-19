@@ -11,7 +11,7 @@ export default function AttendeesStack({ attendees, attendeesCount }) {
           <Avatar key={a.id} name={a.name} url={a.avatar} />
         ))}
       </AvatarStack>
-      <Text marginLeft={2.5} color="neutral500" fontSize="l">
+      <Text marginLeft={2.5} color="neutral500">
         {pluralize(attendeesCount, "Attending", "Attendees")}
       </Text>
     </Box>

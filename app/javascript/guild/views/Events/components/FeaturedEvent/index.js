@@ -1,24 +1,32 @@
 import React from "react";
-import { Card, Box, Stack } from "@advisable/donut";
-import { Link } from "react-router-dom";
+import { Box } from "@advisable/donut";
+import { useHistory } from "react-router-dom";
 import { CoverImage } from "@guild/components/CoverImage";
 import StartsAtTag from "@guild/components/Event/StartsAtTag";
 import HostDetails from "@guild/components/Event/HostDetails";
 import AttendeesStack from "@guild/components/Event/AttendeesStack";
-import { StyledLineClamp } from "@guild/views/Events/styles";
+import { StyledLineClamp, StyledEventCard } from "@guild/views/Events/styles";
 import OrbitsBackground from "@guild/components/Event/OrbitsBackground";
 import Markdown from "@guild/components/Markdown";
 
 export default function FeaturedEvent({ event }) {
   const attendees = event.attendees.edges.map((e) => e.node) || [];
+  const history = useHistory();
   const eventLink = `/events/${event.id}`;
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    history.push(eventLink);
+  };
   return (
-    <Card padding="4" borderRadius="12px">
+    <StyledEventCard
+      onClick={handleClick}
+      padding="4"
+      borderRadius="12px"
+      marginBottom={10}
+    >
       <Box display="flex" flexDirection={{ _: "column", m: "row" }}>
         <Box
-          as={Link}
-          to={eventLink}
           minWidth={{ _: "100%", m: "33%", l: "417px" }}
           height="385px"
           display="flex"
@@ -35,47 +43,48 @@ export default function FeaturedEvent({ event }) {
         </Box>
 
         <Box marginLeft={{ _: 0, m: "8" }}>
-          <Box marginTop={{ _: "5", m: 0 }}>
+          <Box marginTop={5}>
             <StartsAtTag
               variant={event.color}
               startsAt={event.startsAt}
               attending={event.attending}
             />
           </Box>
-          <Box marginTop="5">
-            <Link to={eventLink}>
-              <StyledLineClamp
-                size="4xl"
-                color="blue900"
-                lineHeight="3xl"
-                fontWeight="semibold"
-              >
-                {event.title}
-              </StyledLineClamp>
-            </Link>
+          <Box marginTop={4} marginBottom={2}>
+            <StyledLineClamp
+              size="4xl"
+              color="neutral900"
+              lineHeight="3xl"
+              fontWeight="600"
+              letterSpacing="-0.04rem"
+            >
+              {event.title}
+            </StyledLineClamp>
           </Box>
-          <Stack marginTop="3" spacing="8">
-            <Link to={eventLink}>
-              <Markdown
-                as={StyledLineClamp}
-                size="l"
-                lineHeight="l"
-                color="neutral900"
-                lines={3}
-              >
-                {event.description}
-              </Markdown>
-            </Link>
+          <Box marginBottom={12}>
+            <Markdown
+              as={StyledLineClamp}
+              size="l"
+              lineHeight="l"
+              color="neutral900"
+              lines={3}
+            >
+              {event.description}
+            </Markdown>
+          </Box>
+          <Box marginBottom={8}>
             <HostDetails variant={event.color} host={event.host} />
+          </Box>
+          <Box>
             {event.attendeesCount > 0 ? (
               <AttendeesStack
                 attendees={attendees}
                 attendeesCount={event.attendeesCount}
               />
             ) : null}
-          </Stack>
+          </Box>
         </Box>
       </Box>
-    </Card>
+    </StyledEventCard>
   );
 }

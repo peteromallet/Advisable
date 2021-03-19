@@ -10,14 +10,14 @@ export default function StartsAtTag({
 }) {
   return startsAt ? (
     <Box display="flex">
-      <Tag size={["s", "m"]} icon={Calendar} variant={variant}>
+      <Tag size="s" icon={Calendar} variant={variant}>
         {shortDate(startsAt)}
       </Tag>
       {attending ? (
         <Tag
           icon={Check}
           marginLeft="2"
-          size={["s", "m"]}
+          size="s"
           variant={variant}
           opacity="0.8"
         >

@@ -7,15 +7,16 @@ export default function HostDetails({ host, variant = "orange" }) {
     <Box display="flex" alignItems="center">
       <HostAvatar host={host} variant={variant} />
       <Box marginLeft="3">
-        <Text color="neutral900" fontSize="l">
+        <Text
+          fontSize="l"
+          fontWeight="500"
+          marginBottom={1}
+          color="neutral900"
+          letterSpacing="-0.01rem"
+        >
           {host.name}
         </Text>
-        <Text
-          letterSpacing="-0.02em"
-          marginTop="1"
-          mcolor="neutral700"
-          fontSize="xs"
-        >
+        <Text fontSize="xs" color="neutral600">
           {host.location}
         </Text>
       </Box>

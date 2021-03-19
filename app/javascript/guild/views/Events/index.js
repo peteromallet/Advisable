@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { Text, Box, Button, Stack, useModal } from "@advisable/donut";
+import { Text, Box, Button, useModal } from "@advisable/donut";
 import { DialogDisclosure } from "reakit/Dialog";
 import useViewer from "@advisable-main/hooks/useViewer";
 import BottomScrollListener from "react-bottom-scroll-listener";
@@ -51,29 +51,31 @@ const Events = () => {
         paddingX={{ _: "3" }}
         maxWidth={["100%", "100%", "1056px"]}
       >
-        <Stack spacing="xl">
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            width="100%"
+        <Box
+          marginBottom={8}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Text
+            fontSize="4xl"
+            fontWeight="500"
+            letterSpacing="-0.03rem"
+            color="neutral900"
           >
-            <Text fontSize="4xl" color="neutral900">
-              Events
-            </Text>
-            <DialogDisclosure {...modal}>
-              {(disclosure) => (
-                <Button {...disclosure} prefix={<Plus />}>
-                  Create Event
-                </Button>
-              )}
-            </DialogDisclosure>
-          </Box>
-
-          {loading && !events.length ? <Loading /> : null}
-          {featuredEvent && <FeaturedEvent event={featuredEvent} />}
-          <EventsList events={latestEvents} />
-        </Stack>
+            Upcoming Events
+          </Text>
+          <DialogDisclosure {...modal}>
+            {(disclosure) => (
+              <Button {...disclosure} prefix={<Plus />}>
+                Create Event
+              </Button>
+            )}
+          </DialogDisclosure>
+        </Box>
+        {loading && !events.length ? <Loading /> : null}
+        {featuredEvent && <FeaturedEvent event={featuredEvent} />}
+        <EventsList events={latestEvents} />
 
         {!loading && events.length > 0 && !hasNextPage ? (
           <Box py="12" textAlign="center">
