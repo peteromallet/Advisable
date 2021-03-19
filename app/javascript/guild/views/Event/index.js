@@ -1,6 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
+import Sticky from "react-stickynode";
 import { Text, Box, useTheme, useBreakpoint } from "@advisable/donut";
 import useViewer from "@advisable-main/hooks/useViewer";
 import NotFound from "src/views/NotFound";
@@ -141,20 +142,22 @@ const Event = () => {
               display="flex"
               flexDirection="column"
             >
-              {sUp ? (
-                <DetailsAside
-                  event={event}
-                  eventStatus={eventStatus}
-                  handleEventRegistration={handleEventRegistration}
-                  unregisterable={isHost || loadingRegistration}
-                />
-              ) : null}
-              <HostBio host={event.host} />
+              <Sticky top={100} enabled={sUp} bottomBoundary="#attendees">
+                {sUp ? (
+                  <DetailsAside
+                    event={event}
+                    eventStatus={eventStatus}
+                    handleEventRegistration={handleEventRegistration}
+                    unregisterable={isHost || loadingRegistration}
+                  />
+                ) : null}
+                <HostBio host={event.host} />
+              </Sticky>
             </Box>
           </Box>
 
           {event.attendeesCount > 0 ? (
-            <Box marginY={["12", "0"]} width="100%">
+            <Box marginY={["12", "0"]} width="100%" id="attendees">
               <Text
                 color="blue900"
                 letterSpacing="-0.03em"
