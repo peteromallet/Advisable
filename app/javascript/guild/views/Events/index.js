@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { Text, Box, Button, Stack, useModal } from "@advisable/donut";
+import { DialogDisclosure } from "reakit/Dialog";
 import useViewer from "@advisable-main/hooks/useViewer";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { Plus } from "@styled-icons/heroicons-outline";
@@ -36,8 +37,6 @@ const Events = () => {
     }
   };
 
-  const handleCreateEvent = () => modal.show();
-
   return (
     <ErrorBoundary>
       <BottomScrollListener
@@ -62,17 +61,13 @@ const Events = () => {
             <Text fontSize="4xl" color="neutral900">
               Events
             </Text>
-            <Button
-              fontWeight="medium"
-              prefix={<Plus />}
-              aria-label="Create Event"
-              onClick={handleCreateEvent}
-              css={`
-                background-color: #234ee4;
-              `}
-            >
-              Create Event
-            </Button>
+            <DialogDisclosure {...modal}>
+              {(disclosure) => (
+                <Button {...disclosure} prefix={<Plus />}>
+                  Create Event
+                </Button>
+              )}
+            </DialogDisclosure>
           </Box>
 
           {loading && !events.length ? <Loading /> : null}
