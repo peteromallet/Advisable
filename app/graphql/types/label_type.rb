@@ -15,9 +15,5 @@ module Types
     field :slug, String, null: false do
       description "The unique slug of the Label"
     end
-
-    field :country, Types::CountryType, null: true
-    field :skill, Types::Skill, null: true
-    field :industry, Types::IndustryType, null: true
   end
 end
