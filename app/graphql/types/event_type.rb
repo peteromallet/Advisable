@@ -10,7 +10,6 @@ module Types
     field :ends_at, GraphQL::Types::ISO8601DateTime, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :host, Types::SpecialistType, null: false
-    field :published, Boolean, null: false
     field :attendees_count, Integer, null: false
     field :attendees, Types::SpecialistType.connection_type, null: false
 
@@ -30,6 +29,11 @@ module Types
 
     def attending
       object.attendees.exists?(current_user.id)
+    end
+
+    field :published, Boolean, null: false
+    def published
+      !!object.published_at
     end
   end
 end

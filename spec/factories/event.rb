@@ -8,6 +8,6 @@ FactoryBot.define do
     host        { create(:specialist) }
     starts_at   { 6.hours.from_now }
     ends_at     { 8.hours.from_now }
-    published   { true }
+    published_at { 1.day.ago }
   end
 end

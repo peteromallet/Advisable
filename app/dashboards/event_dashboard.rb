@@ -12,7 +12,7 @@ class EventDashboard < Administrate::BaseDashboard
     host: Field::BelongsTo.with_options(class_name: 'Specialist'),
     starts_at: TimezoneDateField.with_options(DATETIME_OPTIONS),
     ends_at: TimezoneDateField.with_options(DATETIME_OPTIONS),
-    published: Field::Boolean,
+    published_at: Field::DateTime,
     featured: Field::Boolean,
     cover_photo: Field::ActiveStorage.with_options(direct_upload: true),
     attendees_count: Field::Number,
@@ -39,7 +39,7 @@ class EventDashboard < Administrate::BaseDashboard
     attendees_count
     attendees
     cover_photo
-    published
+    published_at
     url
     uid
     featured
@@ -51,7 +51,7 @@ class EventDashboard < Administrate::BaseDashboard
     starts_at
     ends_at
     cover_photo
-    published
+    published_at
     url
     host
     featured

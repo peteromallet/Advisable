@@ -13,7 +13,7 @@ RSpec.describe Event, type: :model do
     it { expect(event).to have_db_column :starts_at }
     it { expect(event).to have_db_column :ends_at }
     it { expect(event).to have_db_column :attendees_count }
-    it { expect(event).to have_db_column :published }
+    it { expect(event).to have_db_column :published_at }
     it { expect(event).to have_db_column :url }
     it { expect(event).to have_db_column :featured }
   end
@@ -50,6 +50,11 @@ RSpec.describe Event, type: :model do
     it "does not include events older than now" do
       expect(described_class.upcoming).to eq(upcoming)
       expect(described_class.upcoming).not_to include(old_event)
+    end
+
+    it "does not include events that are not published" do
+      upcoming.last.update!(published_at: nil)
+      expect(described_class.upcoming).not_to include(upcoming.last)
     end
 
     it "includes an event that is in progress" do
