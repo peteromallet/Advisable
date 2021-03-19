@@ -325,6 +325,7 @@ export default function useCombobox({
   };
 
   const inputProps = (opts = { blur: true }) => ({
+    ...props,
     ref: inputRef,
     role: "combobox",
     autoComplete: "off",
@@ -339,7 +340,6 @@ export default function useCombobox({
       : null,
     "aria-controls": state.isOpen ? listboxID : null,
     value: state.isOpen ? state.searchValue : value?.label || "",
-    ...props,
   });
 
   const propsForOption = (index) => {
