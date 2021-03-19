@@ -37,4 +37,24 @@ RSpec.describe 'Freelancer dashboard', type: :system do
       expect(page).to have_content("Schedule Interview")
     end
   end
+
+  context "when application_stage is 'Interview Scheduled'" do
+    let(:application_stage) { "Interview Scheduled" }
+
+    it 'prompts the user the call was scheduled' do
+      authenticate_as(specialist)
+      visit("/")
+      expect(page).to have_content("Call Scheduled")
+    end
+  end
+
+  context "when application_stage is 'Interview Completed'" do
+    let(:application_stage) { "Interview Completed" }
+
+    it 'prompts the user that interview completed' do
+      authenticate_as(specialist)
+      visit("/")
+      expect(page).to have_content("Interview Completed")
+    end
+  end
 end
