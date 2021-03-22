@@ -173,6 +173,15 @@ module Types
       ::VideoCall.find_by_uid!(id)
     end
 
+    field :recommended_specialist, Types::RecommendedSpecialistType, null: true
+
+    def recommended_specialist
+      requires_guild_user!
+      ::Specialists::Recommender.call(specialist: current_user)
+    rescue Service::Error => e
+      ApiError.invalid_request('noRecommendation', e.message)
+    end
+
     # Guild
     field :chat_grant, Types::ChatGrantType, null: true do
       description 'Access token grant for twilio chat client'
