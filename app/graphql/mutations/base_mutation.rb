@@ -43,7 +43,7 @@ module Mutations
     end
 
     def requires_guild_user!
-      requires_current_user!
+      requires_specialist!
       return true if current_user.guild
 
       ApiError.invalid_request("invalidPermissions", "Not a guild user")

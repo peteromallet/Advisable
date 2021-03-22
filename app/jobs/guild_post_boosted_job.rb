@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class GuildPostBoostedJob < ApplicationJob
+  # TODO: AATO - Switch this over to Labels
+
   def perform(post_id)
     post = Guild::Post.find(post_id)
     tag_ids = post.guild_topics.pluck(:id)

@@ -199,9 +199,7 @@ module Types
       post
     end
 
-    field :guild_posts,
-          Types::Guild::PostInterface.connection_type,
-          null: true, max_page_size: 5 do
+    field :guild_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
       description 'Returns a list of guild posts for the feed'
 
       argument :type, String, required: false do
@@ -222,11 +220,11 @@ module Types
       end
     end
 
-    field :guild_topic_posts,
-          Types::Guild::PostInterface.connection_type,
-          null: true, max_page_size: 5 do
-            argument :topic_id, ID, required: true
-          end
+    # TODO: AATO - Remove guild_topic_posts endpoint
+
+    field :guild_topic_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
+      argument :topic_id, ID, required: true
+    end
 
     def guild_topic_posts(topic_id:)
       requires_guild_user!
@@ -236,16 +234,24 @@ module Types
       query.tagged_with(guild_topic, on: :guild_topics, any: true)
     end
 
+    field :label_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
+      argument :label_slug, ID, required: true
+    end
+
+    def label_posts(label_slug:)
+      requires_guild_user!
+      query = ::Guild::Post.feed(current_user)
+      label = ::Label.published.find_by!(slug: label_slug)
+      query.labeled_with(label)
+    end
+
     field :guild_popular_posts, [Types::Guild::PostInterface], null: true
 
     def guild_popular_posts(**_args)
       ::Guild::Post.popular
     end
 
-    field :guild_activity,
-          Types::Guild::ActivityUnion.connection_type,
-          deprecation_reason: "Use guildNotifications query instead",
-          null: true, max_page_size: 20 do
+    field :guild_activity, Types::Guild::ActivityUnion.connection_type, deprecation_reason: "Use guildNotifications query instead", null: true, max_page_size: 20 do
       description 'Returns a list of guild activity notifications'
     end
 
@@ -254,10 +260,9 @@ module Types
       current_user.guild_activity
     end
 
-    field :guild_top_topics,
-          Types::Guild::TopicType.connection_type,
-          null: true,
-          max_page_size: 20 do
+    # TODO: AATO - Remove guild_top_topics endpoint
+
+    field :guild_top_topics, Types::Guild::TopicType.connection_type, null: true, max_page_size: 20 do
       description 'Returns a list of the top guild topic tags'
     end
 
@@ -267,12 +272,32 @@ module Types
       ::Guild::Topic.published.most_used
     end
 
+    field :top_labels, [Types::LabelType], null: true, max_page_size: 20 do
+      description 'Returns a list of the top labels'
+    end
+
+    def top_labels
+      requires_guild_user!
+
+      ::Label.published.most_used
+    end
+
+    # TODO: AATO - Remove guild_other_topics endpoint
+
     field :guild_other_topics, [Types::Guild::TopicType], null: true do
       description "Returns other guild topics that aren't related to skill, industry, or location"
     end
 
     def guild_other_topics
       ::Guild::Topic.other
+    end
+
+    field :other_labels, [Types::LabelType], null: true do
+      description "Returns other guild topics that aren't related to skill, industry, or location"
+    end
+
+    def other_labels
+      ::Label.other
     end
 
     field :guild_featured_members, [Types::SpecialistType], null: true
@@ -292,6 +317,8 @@ module Types
       current_user.guild_posts.order(updated_at: :desc)
     end
 
+    # TODO: AATO - Remove guild_followed_topics endpoint
+
     field :guild_followed_topics, [Types::Guild::TopicType], null: true do
       description 'Returns the topics that the specialist follows'
     end
@@ -299,6 +326,15 @@ module Types
     def guild_followed_topics(**_args)
       requires_guild_user!
       current_user.guild_subscribed_topics.order(created_at: :desc)
+    end
+
+    field :followed_labels, [Types::LabelType], null: true do
+      description 'Returns the labels that the specialists follows'
+    end
+
+    def followed_labels(**_args)
+      requires_guild_user!
+      current_user.subscribed_labels.order(created_at: :desc)
     end
 
     field :guild_notifications,
