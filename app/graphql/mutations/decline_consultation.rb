@@ -1,15 +1,28 @@
-class Mutations::DeclineConsultation < Mutations::BaseMutation
-  argument :consultation, ID, required: true
-  argument :reason, String, required: false
+# frozen_string_literal: true
 
-  field :consultation, Types::ConsultationType, null: true
+module Mutations
+  class DeclineConsultation < Mutations::BaseMutation
+    argument :consultation, ID, required: true
+    argument :reason, String, required: false
 
-  def resolve(**args)
-    consultation = Consultation.find_by_uid_or_airtable_id!(args[:consultation])
-    consultation.update status: 'Specialist Rejected',
-                        rejected_at: Time.zone.now,
-                        rejection_reason: args[:reason]
-    consultation.sync_to_airtable
-    { consultation: consultation }
+    field :consultation, Types::ConsultationType, null: true
+
+    def authorized?(consultation:, **_args)
+      requires_specialist!
+
+      consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
+      ConsultationPolicy.new(current_user, consultation).decline?
+    end
+
+    def resolve(consultation:, reason: nil)
+      consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
+      consultation.update(
+        status: 'Specialist Rejected',
+        rejected_at: Time.zone.now,
+        rejection_reason: reason
+      )
+      consultation.sync_to_airtable
+      {consultation: consultation}
+    end
   end
 end

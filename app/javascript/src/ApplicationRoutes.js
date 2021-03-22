@@ -99,7 +99,11 @@ const ApplicationRoutes = () => {
             component={RequestConsultation}
           />
           {/* Freelancer Routes */}
-          <Route path="/consultations/:id" component={Consultation} />
+          <AuthenticatedRoute
+            specialistOnly
+            path="/consultations/:id"
+            component={Consultation}
+          />
           <AuthenticatedRoute
             exact
             specialistOnly

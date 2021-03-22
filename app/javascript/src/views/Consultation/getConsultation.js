@@ -6,6 +6,7 @@ const getConsultation = gql`
       id
       topic
       status
+      viewerIsSpecialist
       user {
         id
         name

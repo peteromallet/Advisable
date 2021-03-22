@@ -6,9 +6,16 @@ module Mutations
 
     field :interview, Types::Interview, null: true
 
-    def resolve(**args)
+    def authorized?(consultation:)
+      requires_specialist!
+
+      consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
+      ConsultationPolicy.new(current_user, consultation).accept?
+    end
+
+    def resolve(consultation:)
       ActiveRecord::Base.transaction do
-        consultation = Consultation.find_by_uid_or_airtable_id!(args[:consultation])
+        consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
         project = get_project(consultation)
         application = create_application(project, consultation.specialist)
         interview = create_interview(application)
