@@ -10,17 +10,19 @@ import {
 import { GET_APPLICATION, REJECT_INVITATION } from "./queries";
 
 test("Renders the view for an application invitation", async () => {
+  const specialist = mockData.specialist();
+
   renderRoute({
     route: "/invites/rec1234",
     graphQLMocks: [
-      mockViewer(null),
+      mockViewer(specialist),
       mockQuery(
         GET_APPLICATION,
         { id: "rec1234" },
         {
           application: mockData.application({
+            specialist,
             status: "Invited To Apply",
-            specialist: mockData.specialist(),
             project: mockData.project({
               user: mockData.user({
                 country: mockData.country(),
@@ -36,9 +38,11 @@ test("Renders the view for an application invitation", async () => {
 });
 
 test("specialist can reject the invitation", async () => {
+  const specialist = mockData.specialist();
+
   const application = mockData.application({
+    specialist,
     status: "Invited To Apply",
-    specialist: mockData.specialist(),
     project: mockData.project({
       user: mockData.user({
         country: mockData.country(),
@@ -49,7 +53,7 @@ test("specialist can reject the invitation", async () => {
   renderRoute({
     route: "/invites/rec1234",
     graphQLMocks: [
-      mockViewer(null),
+      mockViewer(specialist),
       mockQuery(
         GET_APPLICATION,
         { id: "rec1234" },
@@ -86,17 +90,19 @@ test("specialist can reject the invitation", async () => {
 });
 
 test("when the project is closed it renders the applications closed view", async () => {
+  const specialist = mockData.specialist();
+
   renderRoute({
     route: "/invites/rec1234",
     graphQLMocks: [
-      mockViewer(null),
+      mockViewer(specialist),
       mockQuery(
         GET_APPLICATION,
         { id: "rec1234" },
         {
           application: mockData.application({
+            specialist,
             status: "Invited To Apply",
-            specialist: mockData.specialist(),
             project: mockData.project({
               applicationsOpen: false,
               user: mockData.user({
@@ -113,19 +119,21 @@ test("when the project is closed it renders the applications closed view", async
 });
 
 test("Shows notice that the application will be used in advisable application", async () => {
+  const specialist = mockData.specialist({
+    applicationStage: "On Hold",
+  });
+
   renderRoute({
     route: "/invites/rec1234",
     graphQLMocks: [
-      mockViewer(null),
+      mockViewer(specialist),
       mockQuery(
         GET_APPLICATION,
         { id: "rec1234" },
         {
           application: mockData.application({
+            specialist,
             status: "Invited To Apply",
-            specialist: mockData.specialist({
-              applicationStage: "On Hold",
-            }),
             project: mockData.project({
               user: mockData.user({
                 country: mockData.country(),
@@ -138,4 +146,30 @@ test("Shows notice that the application will be used in advisable application", 
   });
 
   await screen.findByText(/used as part of your advisable application/i);
+});
+
+test("It requires a specialist to be logged in", async () => {
+  renderRoute({
+    route: "/invites/rec1234",
+    graphQLMocks: [
+      mockViewer(null),
+      mockQuery(
+        GET_APPLICATION,
+        { id: "rec1234" },
+        {
+          application: mockData.application({
+            specialist: mockData.specialist(),
+            status: "Invited To Apply",
+            project: mockData.project({
+              user: mockData.user({
+                country: mockData.country(),
+              }),
+            }),
+          }),
+        },
+      ),
+    ],
+  });
+
+  await screen.findByText(/welcome back/i);
 });
