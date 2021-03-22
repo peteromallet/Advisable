@@ -39,6 +39,10 @@ Metrics/BlockLength:
 Metrics/ClassLength:
   Enabled: false
 
+Metrics/ModuleLength:
+  Exclude:
+    - "app/graphql/**/*"
+
 Metrics/MethodLength:
   Enabled: false
 
