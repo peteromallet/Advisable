@@ -66,10 +66,8 @@ export default function WorkPreferences({ specialist, skills, industries }) {
             <StepNumber>Step 4 of 5</StepNumber>
             <Header>Work preferences</Header>
             <Description>
-              Every freelancer has that one project that stands out in there
-              mind. The one that you were so excited to complete and add to your
-              portfolio. Tell us about one of your previous projects that you
-              are most proud of and why.
+              Tell us about your specialisms, focus areas and availability to
+              help us match you with the right projects.
             </Description>
             <Box mb={6}>
               <FormField
@@ -80,7 +78,7 @@ export default function WorkPreferences({ specialist, skills, industries }) {
                 name="skills"
                 onChange={(s) => formik.setFieldValue("skills", s)}
                 label="What are the main skills you specialise in?"
-                placeholder="e.g Facebook marketing"
+                placeholder="e.g Facebook Marketing"
                 options={skills}
               />
             </Box>

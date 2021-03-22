@@ -27,7 +27,7 @@ export const validationSchema = object().shape({
       CHAR_LIMIT,
       `Please keep the text simple. It must be at most ${CHAR_LIMIT} characters`,
     )
-    .required("Please tell us why you proud of it"),
+    .required("Please tell us why you’re proud of this project"),
 });
 
 export default function PreviousWork({ specialist }) {
@@ -63,10 +63,9 @@ export default function PreviousWork({ specialist }) {
             <StepNumber>Step 3 of 5</StepNumber>
             <Header>Previous work</Header>
             <Description>
-              Every freelancer has that one project that stands out in there
-              mind. The one that you were so excited to complete and add to your
-              portfolio. Tell us about one of your previous projects that you
-              are most proud of and why.
+              Every freelancer has that one project that stands out in their
+              mind. Tell us about one of your previous projects that you’re most
+              proud of, and why.
             </Description>
             <Box mb={6}>
               <FormField
@@ -87,7 +86,7 @@ export default function PreviousWork({ specialist }) {
                 name="previousWorkResults"
                 minRows={5}
                 label="Why are you proud of this project?"
-                placeholder="What were the results of this project? Why does it stand out to you?"
+                placeholder="What were the results of this project? Why does it stand out for you?"
               />
             </Box>
             <Error>{status}</Error>

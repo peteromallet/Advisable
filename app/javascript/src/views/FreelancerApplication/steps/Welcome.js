@@ -76,9 +76,9 @@ export default function Welcome({ specialist }) {
           marginBottom={10}
           lineHeight="1.2"
         >
-          We need to know a little more about you before we can find you some
-          projects. Once you are accepted into the Advisable network we will
-          begin matching you with projects where you can choose to apply or not.
+          We need to know a little more about you so we can find you the right
+          projects. Once you’re accepted into the Advisable network, we’ll begin
+          matching you with projects you might like to apply for.
         </Text>
         <Button
           as={Link}

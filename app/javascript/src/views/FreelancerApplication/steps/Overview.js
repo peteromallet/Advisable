@@ -63,10 +63,8 @@ export default function Overview({ specialist }) {
             <StepNumber>Step 2 of 5</StepNumber>
             <Header>Overview</Header>
             <Description>
-              Every freelancer has that one project that stands out in there
-              mind. The one that you were so excited to complete and add to your
-              portfolio. Tell us about one of your previous projects that you
-              are most proud of and why.
+              Add your portfolio links and resume to show us how you do what you
+              do.
             </Description>
             <Box mb="l">
               <FormField
