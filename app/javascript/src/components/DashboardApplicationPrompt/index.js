@@ -6,6 +6,7 @@ import { Text, Button } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import PromptCard from "./PromptCard";
 import ProgressLine from "./ProgressLine";
+import AccountCreated from "./AccountCreated";
 import { useMutation } from "@apollo/client";
 import {
   SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW,
@@ -26,26 +27,6 @@ const Header = (props) => (
 
 const Description = (props) => (
   <Text color="#0C1214" lineHeight="m" mb={6} {...props} />
-);
-
-const AccountCreated = () => (
-  <PromptCard mb={10}>
-    <ProgressLine progress={0} />
-    <Header>Account Created</Header>
-    <Description>
-      In order to be accepted to the Advisable network you must complete your
-      application. Once submitted, we will review your application and you
-      should hear from us within 2 working days.
-    </Description>
-    <Button
-      as={Link}
-      variant="gradient"
-      suffix={<ArrowRight />}
-      to="/freelancers/apply"
-    >
-      Continue Application
-    </Button>
-  </PromptCard>
 );
 
 const ApplicationSubmitted = () => (
