@@ -113,7 +113,7 @@ module Types
     end
 
     def task(id:)
-      ::Task.find_by_uid!(id)
+      ::Task.find_by!(uid: id)
     end
 
     field :currencies, [Types::CurrencyType], null: false do
@@ -201,7 +201,7 @@ module Types
 
     def event(id:)
       requires_guild_user!
-      ::Event.find_by_uid!(id)
+      ::Event.find_by!(uid: id)
     end
 
     field :guild_post, Types::Guild::PostInterface, null: true do
