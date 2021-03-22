@@ -23,7 +23,7 @@ RSpec.describe Guild::Post, type: :model do
     it { expect(guild_post).to belong_to(:specialist) }
     it { expect(guild_post).to have_many(:reactions) }
     it { expect(guild_post).to have_many(:comments).conditions(status: Guild::Comment.statuses["published"]) }
-    it { expect(guild_post).to have_many(:guild_topics) }
+    it { expect(guild_post).to have_many(:labels) }
     it { expect(guild_post).to have_many(:images) }
   end
 
@@ -105,21 +105,21 @@ RSpec.describe Guild::Post, type: :model do
 
   describe "with audience type" do
     before do
-      guild_post.guild_topic_list = %w[foo bar baz]
+      guild_post.labels = %w[foo bar baz].map { |n| Label.find_or_create_by!(name: n) }
       guild_post.update!(audience_type: "skills")
     end
 
-    it "resets the guild topics when the audience type changes" do
-      expect(guild_post.guild_topics.count).to eq(3)
+    it "resets the guild labels when the audience type changes" do
+      expect(guild_post.reload.labels.count).to eq(3)
       expect do
         guild_post.update!(audience_type: "industries")
-      end.to change(guild_post, :guild_topics).by([])
+      end.to change(guild_post, :labels).by([])
     end
 
-    it "does not reset the guild topics if the audience type does not change" do
+    it "does not reset the guild labels if the audience type does not change" do
       expect do
         guild_post.update!(audience_type: guild_post.audience_type, title: "some other title")
-      end.not_to change(guild_post.reload, :guild_topics)
+      end.not_to change(guild_post.reload, :labels)
     end
   end
 
@@ -144,10 +144,10 @@ RSpec.describe Guild::Post, type: :model do
       end.to raise_error(Guild::Post::BoostError, "Cannot boost unpublished post")
     end
 
-    it "errors when there are no guild_topics" do
+    it "errors when there are no labels" do
       expect do
         post.boost!
-      end.to raise_error(Guild::Post::BoostError, "Cannot boost a post with zero topics")
+      end.to raise_error(Guild::Post::BoostError, "Cannot boost a post with zero labels")
     end
 
     it "errors when it's already boosted" do
@@ -158,7 +158,7 @@ RSpec.describe Guild::Post, type: :model do
     end
 
     it "updates boosted_at and enqueues a job" do
-      post.guild_topic_list = ["foo"]
+      post.labels = [Label.find_or_create_by(name: "foo")]
       post.save
 
       expect do

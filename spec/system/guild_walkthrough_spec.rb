@@ -6,7 +6,7 @@ RSpec.describe "Guild walkthrough", type: :system do
   let(:account) { create(:account, completed_tutorials: []) }
   let(:specialist) { create(:specialist, guild: true, account: account) }
 
-  it "users can browse and follow guild topics" do
+  it "users can browse and follow labels" do
     create(:guild_post, title: "Test post")
     authenticate_as(specialist)
     visit("/guild")

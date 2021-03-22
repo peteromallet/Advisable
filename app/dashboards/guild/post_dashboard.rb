@@ -16,7 +16,6 @@ module Guild
         searchable: true,
         searchable_fields: %w[first_name last_name email]
       ),
-      guild_topics: ActsAsTaggableField,
       labels: Field::HasMany,
       images: Field::HasMany.with_options(class_name: "Guild::PostImage"),
       id: Field::String.with_options(searchable: false),
@@ -46,7 +45,6 @@ module Guild
       created_at
       account
       labels
-      guild_topics
     ].freeze
 
     # SHOW_PAGE_ATTRIBUTES
@@ -55,7 +53,6 @@ module Guild
       specialist
       title
       labels
-      guild_topics
       status
       type
       body
@@ -75,7 +72,6 @@ module Guild
       specialist
       title
       labels
-      guild_topics
       type
       body
       status

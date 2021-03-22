@@ -31,7 +31,7 @@ as well as a link to its edit page.
     method: :post,
     data: { confirm: 'Boost this Post and email notify all followers?' },
     style: "margin-right: 8px;"
-) if !page.resource.boosted_at && page.resource.published? && page.resource.guild_topic_list.any? %>
+) if !page.resource.boosted_at && page.resource.published? && page.resource.labels.any? %>
   </div>
 
   <div>

@@ -19,7 +19,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         author {
           id
         }
-        guildTopics {
+        labels {
           id
           name
         }
@@ -74,19 +74,19 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
     end
 
     describe "updating guild post attributes" do
-      let(:guild_topics) { create_list(:guild_topic, 3) }
+      let(:labels) { create_list(:label, 3) }
       let(:mutation) do
         lambda { |input|
           gql = input.map { |k, v| "#{k}: #{v.is_a?(String) ? "\"#{v}\"" : v}" }.join(', ')
           <<-GRAPHQL
-        #{guild_post_fields}
-        mutation {
-          updateGuildPost(input: { #{gql} }) {
-            guildPost {
-              ...GuildPostFields
+            #{guild_post_fields}
+            mutation {
+              updateGuildPost(input: { #{gql} }) {
+                guildPost {
+                  ...GuildPostFields
+                }
+              }
             }
-          }
-        }
           GRAPHQL
         }
       end
@@ -135,21 +135,20 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         end.not_to change(guild_post, :status)
       end
 
-      it "updates the topic names" do
+      it "updates the label names" do
         input = {
           guildPostId: guild_post.id,
-          labels: guild_topics.map(&:name)
+          labels: labels.map(&:name)
         }
         query = mutation[input]
 
         expect do
           update_guild_post.call(query)
           guild_post.reload
-        end.to change { guild_post.guild_topics.count }.from(0).to(3).
-          and change { guild_post.labels.count }.from(0).to(3)
+        end.to change { guild_post.labels.count }.from(0).to(3)
       end
 
-      it "creates new topic names" do
+      it "creates new label names" do
         input = {
           guildPostId: guild_post.id,
           labels: ["the razor crest"]
@@ -157,12 +156,6 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         query = mutation[input]
 
         update_guild_post.call(query)
-        new_topic = guild_post.reload.guild_topics.first
-
-        expect(new_topic.name).to eq("the razor crest")
-        expect(new_topic.slug).to eq("the-razor-crest")
-        expect(new_topic.published).to eq(false)
-
         new_label = guild_post.reload.labels.first
 
         expect(new_label.name).to eq("the razor crest")

@@ -8,13 +8,13 @@ RSpec.describe GuildPostBoostedJob do
   end
 
   let(:guild_post) { create(:guild_post, :published) }
-  let(:guild_topics) { create_list(:guild_topic, 5) }
+  let(:labels) { create_list(:label, 5) }
   let(:specialist) { create(:specialist, :guild) }
   let(:another_specialist) { create(:specialist, :guild) }
 
   before do
-    guild_topics.each { |g| specialist.subscribe_to!(g) }
-    guild_post.guild_topics = guild_topics
+    labels.each { |g| specialist.subscribe_to!(g) }
+    guild_post.labels = labels
   end
 
   context "with boosted mailer" do
@@ -25,7 +25,7 @@ RSpec.describe GuildPostBoostedJob do
     end
 
     it "enqueues multiple mails for separate specialists" do
-      another_specialist.subscribe_to!(guild_topics.first)
+      another_specialist.subscribe_to!(labels.first)
 
       expect do
         enqueued_job
@@ -33,9 +33,8 @@ RSpec.describe GuildPostBoostedJob do
     end
 
     it "does not enqueue a mail for the author of the post" do
-      guild_topics.each { |gt| guild_post.specialist.subscribe_to!(gt) }
-      expect(guild_post.specialist.subscriptions.on_tag.count).to eq(guild_topics.size)
-      expect(guild_post.specialist.subscriptions.on_label.count).to eq(guild_topics.size)
+      labels.each { |gt| guild_post.specialist.subscribe_to!(gt) }
+      expect(guild_post.specialist.subscriptions.count).to eq(labels.size)
 
       expect do
         enqueued_job

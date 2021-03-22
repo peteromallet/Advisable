@@ -5,28 +5,20 @@
 require "faker"
 require "open-uri"
 
-Rails.logger.info "Creating guild topics"
+Rails.logger.info "Creating labels"
 
-# TODO: AATO - Remove topic stuff
 # Potentially move to Label.insert_all to speed this up
-
-# Need this because ActsAsTaggableOn does some magic 🤷‍♂️
-Guild::Topic.reset_column_information
-
 current_time = Time.zone.now
 Skill.where(active: true, original: nil).find_each do |skill|
   Label.create(name: skill.name, skill: skill, published_at: current_time)
-  Guild::Topic.create(name: skill.name, topicable: skill, published: true)
 end
 
 Industry.active.order(name: :asc).find_each do |industry|
   Label.create(name: industry.name, industry: industry, published_at: current_time)
-  Guild::Topic.create(name: industry.name, topicable: industry, published: true)
 end
 
 Country.find_each do |country|
   Label.create(name: country.name, country: country, published_at: current_time)
-  Guild::Topic.create(name: country.name, topicable: country, published: true)
 end
 
 Rails.logger.info "Creating guild posts"
@@ -53,10 +45,6 @@ Specialist.update_all(guild: true)
     status: "published",
     audience_type: "none"
   )
-
-  if Guild::Topic.any?
-    post.guild_topic_list << Guild::Topic.offset(rand(Guild::Topic.count)).first.name
-  end
 
   post.labels << Label.order("RANDOM()").first
 
