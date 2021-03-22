@@ -24,9 +24,9 @@ class Event < ApplicationRecord
   before_save :reset_previous_featured, if: :featured_changed?
 
   scope :published, -> { where.not(published_at: nil) }
-
+  scope :featured, -> { where(featured: true) }
   scope :upcoming, lambda {
-    published.where("ends_at >= ?", Time.zone.now).order(featured: :desc, starts_at: :asc)
+    published.where(ends_at: (Time.zone.now..)).order(featured: :desc, starts_at: :asc)
   }
 
   private
@@ -44,7 +44,7 @@ class Event < ApplicationRecord
   def reset_previous_featured
     return unless featured
 
-    Event.where(featured: true).find_each { |event| event.update(featured: false) }
+    Event.featured.find_each { |event| event.update(featured: false) }
   end
 end
 

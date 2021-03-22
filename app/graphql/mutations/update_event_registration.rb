@@ -16,13 +16,13 @@ module Mutations
     end
 
     def resolve(event_id:, action_type:)
-      event = ::Event.find_by_uid!(event_id)
+      event = ::Event.find_by!(uid: event_id)
 
       case action_type
       when "REGISTER"
-        event.event_attendees.find_or_create_by(attendee: current_user)
+        event.event_attendees.find_or_create_by!(attendee: current_user)
       when "UNREGISTER"
-        event_attendee = event.event_attendees.find_by(attendee: current_user)
+        event_attendee = event.event_attendees.find_by!(attendee: current_user)
         event_attendee.destroy
       end
 
