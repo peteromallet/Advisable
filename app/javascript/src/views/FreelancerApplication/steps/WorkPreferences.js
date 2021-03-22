@@ -91,7 +91,7 @@ export default function WorkPreferences({ specialist, skills, industries }) {
                 name="industries"
                 onChange={(i) => formik.setFieldValue("industries", i)}
                 label="Which industries do you work in?"
-                placeholder="e.g Financial services"
+                placeholder="e.g Financial Services"
                 options={industries}
               />
             </Box>

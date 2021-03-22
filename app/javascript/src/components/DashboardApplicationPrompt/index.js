@@ -34,9 +34,10 @@ const ApplicationSubmitted = () => (
     <ProgressLine progress={1} />
     <Header>We are reviewing your application</Header>
     <Description>
-      Your application to Advisable has been is being reviewed by our team. You
-      should hear from us within the next 2 working days. In the mean time you
-      can update your application.
+      Thanks for taking the time to tell us more about you and your freelancing!
+      Your application to Advisable will be reviewed by our team, and you should
+      hear back from us within 2 working days. In the meantime, you can still
+      update your application by clicking below.
     </Description>
     <Button
       as={Link}
@@ -116,8 +117,9 @@ const InterviewScheduled = () => {
       <Header>Call Scheduled</Header>
       <Description>
         Your introductory call has been scheduled
-        {interviewTime && ` for ${interviewTime}`}. You should have also
-        received a calendar invite by now where you able to reschedule it.
+        {interviewTime && ` for ${interviewTime}`}. You should also have
+        received a calendar invite by now, where you <br /> can reschedule as
+        needed.
       </Description>
     </PromptCard>
   );

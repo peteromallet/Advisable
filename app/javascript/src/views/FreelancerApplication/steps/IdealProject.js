@@ -19,7 +19,7 @@ export const validationSchema = object().shape({
       300,
       "Please keep the description simple. It must be at most 300 characters",
     )
-    .required("Please describe an ideal project for you"),
+    .required("Please describe your ideal project"),
 });
 
 export default function IdealProject({ specialist }) {
@@ -56,12 +56,10 @@ export default function IdealProject({ specialist }) {
         {({ status }) => (
           <Form>
             <StepNumber>Step 5 of 5</StepNumber>
-            <Header>Ideal Project</Header>
-            <Description>
-              Every freelancer has that one project that stands out in there
-              mind. The one that you were so excited to complete and add to your
-              portfolio. Tell us about one of your previous projects that you
-              are most proud of and why.
+            <Header>Ideal project</Header>
+            <Description letterSpacing="-0.01rem">
+              Tell us about your perfect project so we can tailor how we match
+              you with potential work.
             </Description>
             <Box mb={4}>
               <FormField
@@ -69,8 +67,8 @@ export default function IdealProject({ specialist }) {
                 name="idealProject"
                 minRows={5}
                 charLimit={300}
-                label="How would you describe an ideal project for you?"
-                placeholder="What kind of projects most excite you? What kind of companies do you prefer working with?"
+                label="How would you describe your ideal project?"
+                placeholder="What kinds of projects most excite you? What kinds of companies do you prefer working with?"
               />
             </Box>
             <Error>{status}</Error>

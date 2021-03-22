@@ -20,10 +20,10 @@ function EditApplication() {
         Application Pending
       </Text>
       <Text mb="24px" fontSize="16px" lineHeight="1.4em" color="neutral700">
-        We are currently reviewing your application. In the meantime you can
+        We are currently reviewing your application. In the meantime, you can
         edit your application or add more projects. These projects will be
-        reviewed and scored by the Advisable team and other Advisable
-        freelancers with similar skill-sets.
+        reviewed by the Advisable team and other Advisable freelancers with
+        similar skill sets.
       </Text>
       <Notice
         mb="20px"

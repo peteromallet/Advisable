@@ -29,8 +29,8 @@ function FullApplication() {
       <Text mb="32px" fontSize="16px" lineHeight="1.4em" color="neutral700">
         In order to complete your application, you’ll need to upload and
         validate at least 3 previous projects you’ve completed. These projects
-        will be reviewed and scored by the Advisable team and other Advisable
-        freelancers with similar skill-sets.
+        will be reviewed by the Advisable team and other Advisable freelancers
+        with similar skill sets.
       </Text>
       <Columns mb="xs">
         <Text fontWeight="medium" color="blue900">
