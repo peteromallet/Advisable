@@ -30,6 +30,12 @@ def clear_unavailable_until_today
   Specialist.where("unavailable_until < ?", Time.zone.today).update_all(unavailable_until: nil) # rubocop:disable Rails/SkipsModelValidations
 end
 
+def create_recommended_specialists
+  Specialist.guild.find_each do |specialist|
+    RecommendedSpecialistsJob.perform_later(specialist.id)
+  end
+end
+
 namespace :cron do
   task hourly: :environment do
     airtable_sync
@@ -41,5 +47,11 @@ namespace :cron do
     trigger_webhooks_for_upcoming_due_date
     permanently_delete_soft_deleted_accounts
     clear_unavailable_until_today
+  end
+
+  task every_two_weeks: :environment do
+    return unless Time.zone.now.day == 14 || Time.zone.now.day == 28
+
+    create_recommended_specialists
   end
 end

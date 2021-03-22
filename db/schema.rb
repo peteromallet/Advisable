@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_24_094343) do
+ActiveRecord::Schema.define(version: 2021_03_24_211850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -712,6 +712,19 @@ ActiveRecord::Schema.define(version: 2021_03_24_094343) do
     t.string "uid"
   end
 
+  create_table "recommended_specialists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "specialist_id"
+    t.bigint "recommendation_id"
+    t.string "match_tokens", array: true
+    t.string "match_category", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["match_tokens"], name: "index_recommended_specialists_on_match_tokens", using: :gin
+    t.index ["recommendation_id", "specialist_id"], name: "index_recommended_spe_on_recommendation_id_and_spe_id", unique: true
+    t.index ["recommendation_id"], name: "index_recommended_specialists_on_recommendation_id"
+    t.index ["specialist_id"], name: "index_recommended_specialists_on_specialist_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.string "airtable_id"
     t.string "type"
@@ -1073,6 +1086,8 @@ ActiveRecord::Schema.define(version: 2021_03_24_094343) do
   add_foreign_key "project_skills", "skills"
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "users"
+  add_foreign_key "recommended_specialists", "specialists"
+  add_foreign_key "recommended_specialists", "specialists", column: "recommendation_id"
   add_foreign_key "reviews", "specialists"
   add_foreign_key "searches", "off_platform_projects", column: "manually_recommended_project_id"
   add_foreign_key "searches", "users"
