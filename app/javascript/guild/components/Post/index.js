@@ -32,14 +32,14 @@ const Post = ({
     <Sentry.ErrorBoundary>
       <Card
         position="relative"
-        padding={[4, 8]}
+        padding={[4, 6]}
         borderRadius="12px"
         width="100%"
         border="2px solid"
         borderColor={post.pinned ? "neutral400" : "white"}
         data-testid="post"
       >
-        <Box position="absolute" right="4" top="4">
+        <Box position="absolute" right="2" top="2">
           <PostTypeTag post={post} />
         </Box>
 
