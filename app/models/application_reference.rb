@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationReference < ApplicationRecord
-  self.ignored_columns += %i[project_id project_type]
-
   include Uid
   uid_prefix 'ref'
 
@@ -25,7 +23,6 @@ end
 #
 #  index_application_references_on_application_id           (application_id)
 #  index_application_references_on_off_platform_project_id  (off_platform_project_id)
-#  index_application_references_on_project                  (project_type,project_id)
 #  index_application_references_on_uid                      (uid)
 #
 # Foreign Keys
