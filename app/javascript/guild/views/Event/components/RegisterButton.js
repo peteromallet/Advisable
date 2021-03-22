@@ -9,7 +9,7 @@ export default function RegisterButton({ attending, eventStatus, ...props }) {
   if (eventStatus === EventStatus.ended) return null;
   return (
     <Button
-      mb="3"
+      mb="4"
       aria-label="Event registration"
       prefix={sUp ? <Calendar /> : null}
       css={`

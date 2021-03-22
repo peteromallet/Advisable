@@ -107,6 +107,7 @@ const Event = () => {
                 overflow="hidden"
                 borderRadius="12px"
                 cover={event.coverPhotoUrl}
+                boxShadow="l"
               />
             </Box>
           ) : null}
@@ -124,11 +125,11 @@ const Event = () => {
             >
               <StatusNotice eventStatus={eventStatus} />
               <Text
-                color="blue900"
-                letterSpacing="-0.03em"
-                lineHeight="l"
+                mb={3}
                 fontSize="2xl"
-                mb="4"
+                fontWeight="500"
+                color="neutral900"
+                letterSpacing="-0.03rem"
               >
                 Event Details
               </Text>
@@ -159,11 +160,11 @@ const Event = () => {
           {event.attendeesCount > 0 ? (
             <Box marginY={["12", "0"]} width="100%" id="attendees">
               <Text
-                color="blue900"
-                letterSpacing="-0.03em"
-                lineHeight="l"
+                mb={3}
                 fontSize="2xl"
-                mb="5"
+                fontWeight="500"
+                color="neutral900"
+                letterSpacing="-0.03rem"
               >
                 Attendees
               </Text>

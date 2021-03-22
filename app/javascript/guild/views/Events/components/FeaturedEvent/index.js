@@ -42,7 +42,7 @@ export default function FeaturedEvent({ event }) {
           )}
         </Box>
 
-        <Box marginLeft={{ _: 0, m: "8" }}>
+        <Box marginLeft={{ _: 0, m: "8" }} paddingRight={2}>
           <Box marginTop={5}>
             <StartsAtTag
               variant={event.color}
@@ -53,10 +53,10 @@ export default function FeaturedEvent({ event }) {
           <Box marginTop={4} marginBottom={2}>
             <StyledLineClamp
               size="4xl"
-              color="neutral900"
-              lineHeight="3xl"
+              lineHeight="1.1"
               fontWeight="600"
-              letterSpacing="-0.04rem"
+              color="neutral900"
+              letterSpacing="-0.05rem"
             >
               {event.title}
             </StyledLineClamp>
@@ -72,7 +72,7 @@ export default function FeaturedEvent({ event }) {
               {event.description}
             </Markdown>
           </Box>
-          <Box marginBottom={8}>
+          <Box marginBottom={6}>
             <HostDetails variant={event.color} host={event.host} />
           </Box>
           <Box>
