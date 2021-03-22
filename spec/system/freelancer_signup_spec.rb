@@ -67,7 +67,7 @@ RSpec.describe 'Freelancer signup', type: :system do
     choose 'Full-time freelancer', allow_label_click: true
     click_on 'Continue'
 
-    expect(page).to have_content('Ideal Project')
+    expect(page).to have_content('Ideal project')
 
     fill_in("idealProject", with: "Mauris tortor posuere")
     click_on 'Submit'
