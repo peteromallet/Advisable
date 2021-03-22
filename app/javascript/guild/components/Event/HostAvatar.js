@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Box, Tag, Text, Avatar } from "@advisable/donut";
 
 const StyledHostAvatar = styled(Box)`
+  width: 60px;
   position: relative;
 `;
 

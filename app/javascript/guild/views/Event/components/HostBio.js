@@ -6,12 +6,18 @@ import { StyledLineClamp } from "@guild/views/Events/styles";
 export default function HostBio({ color, host }) {
   return (
     <Box background="#F2EFFC" padding="4" borderRadius="12px">
-      <HostAvatar mb="4" variant={color} host={host} />
+      <HostAvatar mb="6" variant={color} host={host} />
       <Box mb="3">
-        <Text mb="1" fontSize="l" color="blue900">
+        <Text
+          mb={0.5}
+          fontSize="l"
+          color="neutral900"
+          fontWeight="500"
+          letterSpacing="-0.02rem"
+        >
           {host.name}
         </Text>
-        <Text fontSize="m" color="neutral600" letterSpacing="-0.02rem">
+        <Text fontSize="m" color="neutral700" letterSpacing="-0.02rem">
           {host.location}
         </Text>
       </Box>
@@ -21,7 +27,7 @@ export default function HostBio({ color, host }) {
         lineHeight="s"
         fontSize="15px"
         letterSpacing="-0.01rem"
-        color="neutral600"
+        color="neutral700"
         mb="6"
       >
         {host.bio}
