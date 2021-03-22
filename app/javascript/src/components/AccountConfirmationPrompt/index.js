@@ -52,7 +52,7 @@ export default function AccountConfirmationPrompt() {
         <>
           <Box height="1px" bg="neutral200" marginY="lg" />
           <Text fontSize="sm">
-            Didnt receive an email?{" "}
+            Haven’t received an email?{" "}
             <Link.External
               href="#"
               variant="dark"

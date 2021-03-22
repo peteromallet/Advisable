@@ -15,7 +15,6 @@ class SpecialistDashboard < Administrate::BaseDashboard
     skills: Field::HasMany,
     id: Field::Number,
     application_stage: Field::Select.with_options(collection: ::Specialist::VALID_APPLICATION_STAGES),
-    accepted_at: Field::DateTime,
     account: SimpleBelongsToField.with_options(
       searchable: true,
       searchable_fields: %w[first_name last_name email]
@@ -48,7 +47,6 @@ class SpecialistDashboard < Administrate::BaseDashboard
     image
     linkedin
     application_stage
-    accepted_at
     travel_availability
     city
     country
@@ -67,7 +65,6 @@ class SpecialistDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     application_stage
-    accepted_at
     vat_number
     skills
     linkedin
