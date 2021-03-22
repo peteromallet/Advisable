@@ -74,10 +74,7 @@ export default function Introduction({ specialist, countries }) {
             <StepNumber>Step 1 of 5</StepNumber>
             <Header>Introduction</Header>
             <Description>
-              Every freelancer has that one project that stands out in there
-              mind. The one that you were so excited to complete and add to your
-              portfolio. Tell us about one of your previous projects that you
-              are most proud of and why.
+              Fill in your details to start building your freelancer profile!
             </Description>
             <Box mb={6}>
               <Text color="neutral900" mb={2} fontWeight="medium">

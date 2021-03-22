@@ -12,8 +12,8 @@ RSpec.describe 'Freelancer dashboard', type: :system do
     it 'prompts user to start their application to advisable' do
       authenticate_as(specialist)
       visit("/")
-      expect(page).to have_content("Account Created")
-      click_on("Continue Application")
+      expect(page).to have_content("Join our freelance network")
+      click_on("Start Application")
       expect(page).to have_content("Welcome to Advisable")
     end
   end
