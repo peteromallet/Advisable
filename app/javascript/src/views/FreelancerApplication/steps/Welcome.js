@@ -40,6 +40,7 @@ export default function Welcome({ specialist }) {
       !step.validationSchema.isValidSync({
         ...specialist,
         country: specialist.country?.name,
+        resume: specialist.resume?.filename,
       }),
   );
 
