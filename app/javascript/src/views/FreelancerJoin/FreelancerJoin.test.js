@@ -1,6 +1,5 @@
 import { fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import generateType from "../../__mocks__/graphqlFields";
 import {
   mockViewer,
   mockQuery,
@@ -17,12 +16,16 @@ import {
 import VIEWER from "src/graphql/queries/viewer";
 import { GET_PROJECT } from "../JobOpportunity/queries";
 import { GET_APPLICATIONS } from "../Applications/queries";
+import { GET_SPECIALIST } from "../FreelancerApplication/queries";
 
-const viewer = generateType.specialist({
+const viewer = mockData.specialist({
   confirmed: false,
   applicationStage: "Started",
   needsToSetAPassword: false,
   invitations: [],
+  resume: null,
+  previousWorkDescription: null,
+  previousWorkResults: null,
 });
 let project = mockData.project({ user: mockData.user() });
 
@@ -51,7 +54,7 @@ const queries = [
     {
       createFreelancerAccount: {
         __typename: "CreateFreelancerAccountPayload",
-        viewer: generateType.specialist({
+        viewer: mockData.specialist({
           confirmed: false,
           needsToSetAPassword: true,
           applicationStage: "Started",
@@ -68,6 +71,11 @@ const queries = [
     },
   ),
   mockQuery(VIEWER, {}, { viewer: viewer }),
+  mockQuery(
+    GET_SPECIALIST,
+    { id: viewer.id },
+    { specialist: viewer, countries: null, skills: null, industries: null },
+  ),
 ];
 
 test("successful flow", async () => {
@@ -82,7 +90,7 @@ test("successful flow", async () => {
   userEvent.type(app.getByLabelText("Password"), "123123123");
   userEvent.type(app.getByLabelText("Confirm password"), "123123123");
   fireEvent.click(app.getByLabelText(/get started/i));
-  await app.findByText("You have not applied to any projects yet");
+  await app.findByText("Welcome to Advisable");
 });
 
 test("successful flow with project details", async () => {
