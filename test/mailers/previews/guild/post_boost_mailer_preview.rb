@@ -6,7 +6,7 @@ module Guild
     def new_post
       post = Guild::Post.first
       subscriber = Specialist.first
-      post.guild_topics.each { |gt| subscriber.subscribe_to!(gt) }
+      post.labels.each { |l| subscriber.subscribe_to!(l) }
 
       Guild::PostBoostMailer.new_post(post: post, subscriber_id: subscriber.id)
     end

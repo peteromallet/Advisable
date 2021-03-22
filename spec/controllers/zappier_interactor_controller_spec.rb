@@ -261,7 +261,7 @@ RSpec.describe ZappierInteractorController, type: :request do
   end
 
   describe "POST /boost_guild_post" do
-    let(:guild_post) { create(:guild_post, status: "published", guild_topic_list: [create(:guild_topic)]) }
+    let(:guild_post) { create(:guild_post, status: "published", labels: [create(:label)]) }
     let(:post_id) { guild_post.id }
     let(:params) { {post_id: post_id, key: key} }
 
@@ -280,7 +280,7 @@ RSpec.describe ZappierInteractorController, type: :request do
       it "returns a descriptive error" do
         post("/zappier_interactor/boost_guild_post", params: params)
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(JSON[response.body]["error"]).to eq("Cannot boost a post with zero topics")
+        expect(JSON[response.body]["error"]).to eq("Cannot boost a post with zero labels")
       end
     end
 

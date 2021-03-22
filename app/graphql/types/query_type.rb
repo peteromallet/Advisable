@@ -78,12 +78,9 @@ module Types
       ::Skill.where(active: true, original: nil).popular
     end
 
-    field :popular_guild_countries, [Types::CountryType], null: false
+    field :popular_guild_countries, [Types::LabelType], null: false
     def popular_guild_countries
-      ActsAsTaggableOn::Tag.
-        where(topicable_type: "Country").
-        most_used.
-        limit(5)
+      Label.on_country.most_used.limit(5)
     end
 
     field :previous_project, Types::PreviousProject, null: false do
@@ -222,8 +219,6 @@ module Types
       argument :type, String, required: false do
         description 'Filters guild posts by type'
       end
-
-      argument :topic_id, ID, required: false, deprecation_reason: "Topics are no longer included with the post interface"
     end
 
     def guild_posts(**args)
@@ -235,20 +230,6 @@ module Types
       else
         query
       end
-    end
-
-    # TODO: AATO - Remove guild_topic_posts endpoint
-
-    field :guild_topic_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5, deprecation_reason: "Use labelPosts instead" do
-      argument :topic_id, ID, required: true
-    end
-
-    def guild_topic_posts(topic_id:)
-      requires_guild_user!
-      query = ::Guild::Post.feed(current_user)
-
-      guild_topic = ::Guild::Topic.published.find_by_slug_or_id!(topic_id)
-      query.tagged_with(guild_topic, on: :guild_topics, any: true)
     end
 
     field :label_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
@@ -277,18 +258,6 @@ module Types
       current_user.guild_activity
     end
 
-    field :guild_top_topics, Types::Guild::TopicType.connection_type, null: true, max_page_size: 20, deprecation_reason: "Use topLabels instead" do
-      description 'Returns a list of the top guild topic tags'
-    end
-
-    # TODO: AATO - Remove guild_top_topics query
-
-    def guild_top_topics
-      requires_guild_user!
-
-      ::Guild::Topic.published.most_used
-    end
-
     field :top_labels, Types::LabelType.connection_type, null: true, max_page_size: 20 do
       description 'Returns a list of the top labels'
     end
@@ -299,18 +268,8 @@ module Types
       ::Label.published.most_used
     end
 
-    # TODO: AATO - Remove guild_other_topics endpoint
-
-    field :guild_other_topics, [Types::Guild::TopicType], null: true, deprecation_reason: "Use otherLabels field instead" do
-      description "Returns other guild topics that aren't related to skill, industry, or location"
-    end
-
-    def guild_other_topics
-      ::Guild::Topic.other
-    end
-
     field :other_labels, [Types::LabelType], null: true do
-      description "Returns other guild topics that aren't related to skill, industry, or location"
+      description "Returns other labels that aren't related to skill, industry, or location"
     end
 
     def other_labels
@@ -332,17 +291,6 @@ module Types
     def guild_your_posts(**_args)
       requires_guild_user!
       current_user.guild_posts.order(updated_at: :desc)
-    end
-
-    # TODO: AATO - Remove guild_followed_topics endpoint
-
-    field :guild_followed_topics, [Types::Guild::TopicType], null: true, deprecation_reason: "Use followedLabels instead" do
-      description 'Returns the topics that the specialist follows'
-    end
-
-    def guild_followed_topics(**_args)
-      requires_guild_user!
-      current_user.guild_subscribed_topics.order(created_at: :desc)
     end
 
     field :followed_labels, [Types::LabelType], null: true do

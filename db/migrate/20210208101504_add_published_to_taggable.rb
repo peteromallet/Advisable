@@ -6,7 +6,7 @@ class AddPublishedToTaggable < ActiveRecord::Migration[6.1]
   end
 
   def up
-    add_column ActsAsTaggableOn.tags_table, :published, :boolean, default: false
+    add_column :tags, :published, :boolean, default: false
 
     MigrationTopic.find_each do |topic|
       topic.published = true
@@ -15,6 +15,6 @@ class AddPublishedToTaggable < ActiveRecord::Migration[6.1]
   end
 
   def down
-    remove_column ActsAsTaggableOn.tags_table, :published
+    remove_column :tags, :published
   end
 end

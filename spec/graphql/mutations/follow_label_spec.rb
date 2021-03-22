@@ -31,7 +31,7 @@ RSpec.describe Mutations::FollowLabel do
     expect(specialist.subscriptions.first.label).to eq(label)
   end
 
-  it "does not follow a topic thats already followed" do
+  it "does not follow a label thats already followed" do
     specialist.subscribe_to!(label)
 
     expect(specialist.subscriptions.count).to eq(1)

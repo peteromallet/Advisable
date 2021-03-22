@@ -13,7 +13,6 @@ class Skill < ApplicationRecord
   has_many :previous_projects, through: :project_skills, source: :project, source_type: 'PreviousProject'
   has_many :consultations, dependent: :destroy
   has_one :label, required: false, dependent: :nullify
-  has_one :guild_topic, as: :topicable, class_name: 'Guild::Topic', required: false, dependent: :nullify
   belongs_to :original, class_name: 'Skill', optional: true
 
   validates :name, presence: true

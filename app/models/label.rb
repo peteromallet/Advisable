@@ -14,6 +14,9 @@ class Label < ApplicationRecord
 
   scope :most_used, ->(limit = 20) { order(labelings_count: :desc).limit(limit) }
   scope :published, -> { where.not(published_at: nil) }
+  scope :on_country, -> { where.not(country_id: nil) }
+  scope :on_industry, -> { where.not(industry_id: nil) }
+  scope :on_skill, -> { where.not(skill_id: nil) }
   scope :other, -> { published.where(country_id: nil, industry_id: nil, skill_id: nil).order(labelings_count: :desc) }
 
   validates :country, :industry, :skill, uniqueness: true, allow_blank: true
