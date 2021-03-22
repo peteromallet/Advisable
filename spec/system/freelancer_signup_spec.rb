@@ -43,11 +43,6 @@ RSpec.describe 'Freelancer signup', type: :system do
 
     fill_in("linkedin", with: "https://www.linkedin.com/in/dwight-schrute/")
     fill_in("website", with: "https://dwightschrute.com")
-    attach_file(
-      "upload-resume",
-      Rails.root.join("spec/support/test.pdf"),
-      make_visible: true
-    )
     click_on("Continue")
 
     expect(page).to have_content("Previous work")
