@@ -34,7 +34,8 @@ RSpec.describe GuildPostBoostedJob do
 
     it "does not enqueue a mail for the author of the post" do
       guild_topics.each { |gt| guild_post.specialist.subscribe_to!(gt) }
-      expect(guild_post.specialist.subscriptions.count).to eq(guild_topics.size)
+      expect(guild_post.specialist.subscriptions.on_tag.count).to eq(guild_topics.size)
+      expect(guild_post.specialist.subscriptions.on_label.count).to eq(guild_topics.size)
 
       expect do
         enqueued_job

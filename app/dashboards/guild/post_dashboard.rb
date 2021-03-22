@@ -17,6 +17,7 @@ module Guild
         searchable_fields: %w[first_name last_name email]
       ),
       guild_topics: ActsAsTaggableField,
+      labels: Field::HasMany,
       images: Field::HasMany.with_options(class_name: "Guild::PostImage"),
       id: Field::String.with_options(searchable: false),
       type: Field::Select.with_options(searchable: false, collection: ->(_field) { Guild::Post::POST_TYPES }),
@@ -44,6 +45,7 @@ module Guild
       status
       created_at
       account
+      labels
       guild_topics
     ].freeze
 
@@ -52,6 +54,7 @@ module Guild
     SHOW_PAGE_ATTRIBUTES = %i[
       specialist
       title
+      labels
       guild_topics
       status
       type
@@ -71,6 +74,7 @@ module Guild
     FORM_ATTRIBUTES = %i[
       specialist
       title
+      labels
       guild_topics
       type
       body

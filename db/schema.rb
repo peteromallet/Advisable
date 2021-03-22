@@ -418,6 +418,32 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
     t.index ["user_id"], name: "index_interviews_on_user_id"
   end
 
+  create_table "labelings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "label_id", null: false
+    t.uuid "guild_post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["guild_post_id"], name: "index_labelings_on_guild_post_id"
+    t.index ["label_id", "guild_post_id"], name: "index_labelings_on_label_id_and_guild_post_id", unique: true
+    t.index ["label_id"], name: "index_labelings_on_label_id"
+  end
+
+  create_table "labels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.datetime "published_at"
+    t.integer "labelings_count"
+    t.bigint "country_id"
+    t.bigint "industry_id"
+    t.bigint "skill_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_labels_on_country_id", unique: true
+    t.index ["industry_id"], name: "index_labels_on_industry_id", unique: true
+    t.index ["skill_id"], name: "index_labels_on_skill_id", unique: true
+    t.index ["slug"], name: "index_labels_on_slug", unique: true
+  end
+
   create_table "magic_links", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.string "path"
@@ -796,6 +822,9 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
     t.uuid "tag_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "label_id"
+    t.index ["label_id"], name: "index_subscriptions_on_label_id"
+    t.index ["specialist_id", "label_id"], name: "index_subscriptions_on_specialist_id_and_label_id", unique: true
     t.index ["specialist_id", "tag_id"], name: "index_subscriptions_on_specialist_id_and_tag_id", unique: true
     t.index ["specialist_id"], name: "index_subscriptions_on_specialist_id"
     t.index ["tag_id"], name: "index_subscriptions_on_tag_id"
@@ -996,6 +1025,11 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
   add_foreign_key "guild_reactions", "specialists", on_delete: :cascade
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
+  add_foreign_key "labelings", "guild_posts"
+  add_foreign_key "labelings", "labels"
+  add_foreign_key "labels", "countries"
+  add_foreign_key "labels", "industries"
+  add_foreign_key "labels", "skills"
   add_foreign_key "matches", "projects"
   add_foreign_key "matches", "specialists"
   add_foreign_key "notifications", "accounts"
@@ -1017,6 +1051,7 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "accounts"
   add_foreign_key "specialists", "countries"
+  add_foreign_key "subscriptions", "labels"
   add_foreign_key "subscriptions", "specialists"
   add_foreign_key "subscriptions", "tags"
   add_foreign_key "taggings", "tags"

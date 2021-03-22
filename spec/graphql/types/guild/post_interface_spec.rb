@@ -55,6 +55,10 @@ RSpec.describe Types::Guild::PostInterface do
           id
           name
         }
+        labels {
+          slug
+          name
+        }
       }
     GRAPHQL
   end
@@ -153,6 +157,58 @@ RSpec.describe Types::Guild::PostInterface do
         expect(resp["errors"][0]["extensions"]).to eq({"type" => "INVALID_REQUEST", "code" => "notFound"})
       end
     end
+
+    describe "when filtered by a label" do
+      subject(:filtered_by_label) do
+        resp = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
+        resp.dig("data", "labelPosts", "nodes")
+      end
+
+      let(:labels) { create_list(:label, 2) }
+
+      let(:query) do
+        <<-GRAPHQL
+        {
+          labelPosts(first: 5, labelSlug: "#{labels.first.slug}") {
+            nodes {
+              labels {
+                slug
+              }
+            }
+          }
+        }
+        GRAPHQL
+      end
+
+      let(:not_found_query) do
+        <<-GRAPHQL
+        {
+          labelPosts(first: 5, labelSlug: "nothing-here") {
+            nodes {
+              labels {
+                slug
+              }
+            }
+          }
+        }
+        GRAPHQL
+      end
+
+      it "returns posts that have the label" do
+        opportunity.labels << labels.first
+        opportunity.save!
+
+        label_results = filtered_by_label[0]["labels"]
+        expect(label_results.size).to eq(1)
+        expect(label_results.size).not_to eq(Label.count)
+        expect(label_results[0]).to include({"slug" => labels.first.slug})
+      end
+
+      it "returns a not found error" do
+        resp = AdvisableSchema.execute(not_found_query, context: {current_user: guild_specialist})
+        expect(resp["errors"][0]["extensions"]).to eq({"type" => "INVALID_REQUEST", "code" => "notFound"})
+      end
+    end
   end
 
   context "with removed posts" do
@@ -237,6 +293,10 @@ RSpec.describe Types::Guild::PostInterface do
               id
               name
             }
+            labels {
+              slug
+              name
+            }
           }
         }
         GRAPHQL
@@ -298,12 +358,7 @@ RSpec.describe Types::Guild::PostInterface do
     end
 
     context "with a guild_post query" do
-      let(:response) do
-        AdvisableSchema.execute(
-          query[guild_post.id],
-          context: context
-        )
-      end
+      let(:response) { AdvisableSchema.execute(query[guild_post.id], context: context) }
       let(:node) { response.dig('data', 'guildPost') }
 
       it 'includes interface fields for a Guild::Post' do
@@ -327,9 +382,18 @@ RSpec.describe Types::Guild::PostInterface do
 
         expect(node['guildTopics'][0]['name']).to eq(topic.name)
       end
+
+      it "includes the label" do
+        label = create(:label)
+        guild_post.labels << label
+        guild_post.save
+
+        expect(node['labels'][0]['name']).to eq(label.name)
+      end
     end
   end
 
+  # TODO: AATO - Remove topics
   context "with unpublished topics" do
     subject(:guild_post_query) do
       resp = AdvisableSchema.execute(opportunity_query, context: {current_user: guild_specialist})
@@ -353,6 +417,32 @@ RSpec.describe Types::Guild::PostInterface do
       guild_post.update! specialist: guild_specialist
       expect(guild_post.guild_topics.count).to eq(1)
       expect(guild_post_query["guildTopics"].size).to eq(1)
+    end
+  end
+
+  context "with unpublished labels" do
+    subject(:guild_post_query) do
+      resp = AdvisableSchema.execute(opportunity_query, context: {current_user: guild_specialist})
+      resp["data"]["guildPosts"]["nodes"][0]
+    end
+
+    let(:unpublished_label) { create(:label, name: "Nothing here to see", published_at: nil) }
+    let!(:guild_post) { create(:opportunity_guild_post) }
+
+    before do
+      guild_post.labels << unpublished_label
+      guild_post.save!
+    end
+
+    it "does not include unpublished labels" do
+      expect(guild_post.labels.count).to eq(1)
+      expect(guild_post_query["labels"].size).to eq(0)
+    end
+
+    it "includes unpublished topics if the author is current_user" do
+      guild_post.update!(specialist: guild_specialist)
+      expect(guild_post.labels.count).to eq(1)
+      expect(guild_post_query["labels"].size).to eq(1)
     end
   end
 end
