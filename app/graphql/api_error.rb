@@ -18,6 +18,24 @@
 #   raise ApiError.new("NOT_AUTHORIZED", "notAuthorized", "Viewer does not have permission to execute this mutation.")
 #
 class ApiError < GraphQL::ExecutionError
+  class NotAuthenticated < ApiError
+    def initialize(message = "You are not logged in", extensions: {})
+      super("NOT_AUTHENTICATED", "notAuthenticated", message, extensions: extensions)
+    end
+  end
+
+  class NotAuthorized < ApiError
+    def initialize(message, extensions: {})
+      super("NOT_AUTHORIZED", "notAuthorized", message, extensions: extensions)
+    end
+  end
+
+  class InvalidRequest < ApiError
+    def initialize(code, message, extensions: {})
+      super("INVALID_REQUEST", code, message, extensions: extensions)
+    end
+  end
+
   def initialize(type, code, message, extensions: {})
     super(
       message,
@@ -40,30 +58,5 @@ class ApiError < GraphQL::ExecutionError
   def self.service_error(error, extensions: {})
     code = error.code.presence || SERVICE_ERROR
     raise ApiError::InvalidRequest.new(code, error.message, extensions: extensions)
-  end
-end
-
-class ApiError::NotAuthenticated < ApiError
-  def initialize(message = "You are not logged in", extensions: {})
-    super("NOT_AUTHENTICATED", "notAuthenticated", message, extensions: extensions)
-  end
-end
-
-class ApiError::NotAuthorized < ApiError
-  def initialize(message, extensions: {})
-    super("NOT_AUTHORIZED", "notAuthorized", message, extensions: extensions)
-  end
-end
-
-# InvalidRequst can be rasied to indicate that the request the user has made is
-# invalid. Although they have provided correct input values, the request could
-# not complete for some reason.
-#
-# @example
-#   raise ApiError::InvalidRequest.new("applicationStatusNotWorking", "Application status must be "Working"")
-#
-class ApiError::InvalidRequest < ApiError
-  def initialize(code, message, extensions: {})
-    super("INVALID_REQUEST", code, message, extensions: extensions)
   end
 end
