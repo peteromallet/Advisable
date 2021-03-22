@@ -37,7 +37,7 @@ class TagsMigration
           updated_at: t.updated_at,
           created_at: t.created_at
         }
-        hash["#{t.topicable_type.downcase}_id".to_sym] = t.topicable_id
+        hash["#{t.topicable_type.downcase}_id".to_sym] = t.topicable_id if t.topicable_id.present?
         hash
       end
 
