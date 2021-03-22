@@ -11,7 +11,8 @@ export default function AccountConfirmationPrompt() {
   const notifications = useNotifications();
   const [resend, { data }] = useMutation(RESEND_CONFIRMATION_EMAIL);
 
-  if (viewer?.confirmed || !viewer?.isAccepted) return null;
+  if (viewer?.confirmed || (viewer?.isSpecialist && !viewer?.isAccepted))
+    return null;
 
   async function handleResend(e) {
     e.preventDefault();
