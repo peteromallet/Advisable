@@ -10,8 +10,9 @@ import Empty from "./Empty";
 import AccountOnHold from "./AccountOnHold";
 import OpenApplications from "./OpenApplications";
 import ApplicationInvitations from "./ApplicationInvitations";
-import AccountConfirmationPrompt from "components/AccountConfirmationPrompt";
+import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
 import DashboardApplicationPrompt from "src/components/DashboardApplicationPrompt";
+import AcceptedStatusPrompt from "src/components/AcceptedStatusPrompt";
 
 const Applications = () => {
   const history = useHistory();
@@ -23,6 +24,9 @@ const Applications = () => {
   const onHold = viewer.applicationStage === "On Hold";
   const fullApplicationPending = viewer.applicationStage === "Full Application";
   const isAccepted = viewer.applicationStage === "Accepted";
+  const hasValidatedProjects = viewer.previousProjects?.nodes?.some(
+    (proj) => proj.validationStatus === "Validated",
+  );
 
   const invitations = viewer.applications.filter(
     (a) => a.status === "Invited To Apply",
@@ -52,6 +56,7 @@ const Applications = () => {
 
   return (
     <Box maxWidth="1000px" width="96%" marginX="auto" paddingY="3xl">
+      {!hasValidatedProjects && <AcceptedStatusPrompt />}
       <DashboardApplicationPrompt />
       <AccountConfirmationPrompt />
       {onHold && (

@@ -1,17 +1,22 @@
 import React from "react";
+import styled from "styled-components";
 import { Card, Box, Text, Button, Link } from "@advisable/donut";
-import { StyledDescription, StyledHeader } from "./styles";
 import { Briefcase, UserGroup } from "@styled-icons/heroicons-outline";
 import { ArrowRight } from "@styled-icons/feather";
-import { usePreviousProjects } from "./queries";
 
-export default function Accepted() {
-  const previousProjects = usePreviousProjects();
-  const hasValidated = previousProjects.find(
-    (proj) => proj.validationStatus === "Validated",
-  );
-  if (hasValidated) return null;
+export const StyledHeader = styled(Text)`
+  background: linear-gradient(90deg, #00199b, #00cbbf);
+  letter-spacing: -0.04em;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
 
+export const StyledDescription = styled(Text)`
+  max-width: 540px;
+`;
+
+export default function AcceptedStatusPrompt() {
   return (
     <Card
       as={Box}
