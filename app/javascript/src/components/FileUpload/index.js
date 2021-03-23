@@ -11,6 +11,7 @@ import {
 } from "./styles";
 import { useNotifications } from "src/components/Notifications";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
+import matchFileType from "src/utilities/matchFileType";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
@@ -48,6 +49,11 @@ const FileUpload = ({ label, onChange, preview, accept, maxSizeInMB = 2 }) => {
     if (!e.target?.value) return false;
     const files = Array.from(e.target.files);
 
+    // Check file type
+    if (!matchFileType(files, accept)) {
+      error(`You can't upload that types of files`);
+      return false;
+    }
     // Check file size
     if (filesExceedLimit(files, maxSizeInMB)) {
       error(`File size cannot exceed ${maxSizeInMB} MB`);
