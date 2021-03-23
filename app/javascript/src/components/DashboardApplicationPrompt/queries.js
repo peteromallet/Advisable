@@ -47,25 +47,3 @@ export const SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW = gql`
     }
   }
 `;
-
-export const GET_PREVIOUS_PROJECTS = gql`
-  query previousProjects($id: ID!) {
-    specialist(id: $id) {
-      previousProjects {
-        nodes {
-          id
-          validationStatus
-        }
-      }
-    }
-  }
-`;
-
-export const usePreviousProjects = () => {
-  const viewer = useViewer();
-  const { data } = useQuery(GET_PREVIOUS_PROJECTS, {
-    variables: { id: viewer?.id },
-  });
-  const previousProjects = data?.specialist?.previousProjects?.nodes;
-  return previousProjects;
-};

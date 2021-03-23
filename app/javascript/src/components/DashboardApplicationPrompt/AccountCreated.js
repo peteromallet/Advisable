@@ -1,7 +1,19 @@
 import React from "react";
+import styled from "styled-components";
 import { Card, Box, Text, Circle, Button, Link } from "@advisable/donut";
 import { ArrowRight } from "@styled-icons/feather";
-import { StyledHeader, StyledDescription } from "./styles";
+
+export const StyledHeader = styled(Text)`
+  background: linear-gradient(90deg, #00199b, #00cbbf);
+  letter-spacing: -0.04em;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
+
+export const StyledDescription = styled(Text)`
+  max-width: 540px;
+`;
 
 function Section({ number, header, description }) {
   return (
