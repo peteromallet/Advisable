@@ -4,12 +4,14 @@ import { Box, Text } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import { StyledCoverPhoto, StyledCoverPhotoTag } from "./styles";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
+import matchFileType from "src/utilities/matchFileType";
 
 function CoverPhoto({ images, dispatch, resourceName = "project" }) {
   const cover = find(images, { cover: true });
   const [background, setBackground] = React.useState(cover?.url);
   const { error } = useNotifications();
   const MAX_SIZE_IN_MB = 5;
+  const accept = ".png, .jpg, .jpeg";
 
   React.useEffect(() => {
     if (cover?.uploading) {
@@ -29,6 +31,11 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
     if (!e.target?.value) return false;
     const files = Array.from(e.target.files);
 
+    // Check file type
+    if (!matchFileType(files, accept)) {
+      error(`You can't upload that types of files`);
+      return false;
+    }
     // Check file size
     if (filesExceedLimit(files, MAX_SIZE_IN_MB)) {
       error(`File size cannot exceed ${MAX_SIZE_IN_MB} MB`);
@@ -53,7 +60,7 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
           <input
             type="file"
             name="upload-image"
-            accept=".png, .jpg, .jpeg"
+            accept={accept}
             onChange={handleChange}
             multiple
           />
