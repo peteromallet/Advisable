@@ -8,6 +8,10 @@ const BACKGROUND = {
 };
 
 const BaseStyles = createGlobalStyle`
+  :root {
+    font-variation-settings: "ital" 0, "slnt" 0;
+  }
+
   * {
     box-sizing: border-box;
   }
