@@ -12,6 +12,7 @@ import {
   SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW,
   useInterviewTime,
 } from "./queries";
+import Accepted from "./Accepted";
 
 const Header = (props) => (
   <Text
@@ -148,6 +149,8 @@ const ApplicationStage = ({ stage }) => {
       return <InterviewScheduled />;
     case "Interview Completed":
       return <InterviewCompleted />;
+    case "Accepted":
+      return <Accepted />;
     default:
       return null;
   }
