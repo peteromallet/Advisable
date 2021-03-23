@@ -44,7 +44,9 @@ class Event < ApplicationRecord
   def reset_previous_featured
     return unless featured
 
-    Event.featured.find_each { |event| event.update(featured: false) }
+    # rubocop:disable Rails/SkipsModelValidations
+    Event.featured.update_all(featured: false)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 end
 
