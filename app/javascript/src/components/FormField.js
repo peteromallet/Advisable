@@ -51,7 +51,7 @@ const FormField = ({
       marginBottom={marginBottom}
     >
       <Box display="flex" alignItems="flex-end" width="100%">
-        <Box>
+        <Box width="100%">
           {label && (
             <Box display="flex" alignItems="baseline" mb={2}>
               <Box flexGrow="1">
