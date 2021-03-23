@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ActionBar from "components/ActionBar";
-import { Box, Button, theme } from "@advisable/donut";
+import { useDialogState } from "reakit/Dialog";
+import { Box, Button, Modal, Text, Link, theme } from "@advisable/donut";
 import VideoTrack from "./VideoTrack";
 import HelpAction from "./HelpAction";
 import useCallContext from "./useCallContext";
@@ -32,9 +33,18 @@ export default function Lobby() {
     videoTrackError,
     isAcquiringLocalTracks,
   } = useCallContext();
+  const hasError = Boolean(audioTrackError && videoTrackError);
+  const notAllowedError = [audioTrackError, videoTrackError].includes(
+    "NotAllowedError",
+  );
+  const modal = useDialogState({ visible: notAllowedError });
   const videoTrack = localTracks.find((t) => t.name.includes("camera"));
 
-  const hasError = Boolean(audioTrackError && videoTrackError);
+  useEffect(() => {
+    if (!modal.visible && notAllowedError) {
+      modal.show();
+    }
+  }, [notAllowedError, modal]);
 
   return (
     <Box
@@ -45,6 +55,29 @@ export default function Lobby() {
       justifyContent="center"
       paddingBottom="100px"
     >
+      <Modal modal={modal} hideOnClickOutside={false} showCloseButton={false}>
+        <Text
+          fontSize="2xl"
+          fontWeight="500"
+          marginBottom={4}
+          textAlign="center"
+          letterSpacing="-0.02rem"
+        >
+          It looks like we don&apos;t have access to your camera or microphone
+        </Text>
+        <Text color="neutral700" lineHeight="1.2" textAlign="center">
+          Please update your browser settings to allow access to your camera or
+          microphone and refresh the page.{" "}
+          <Link.External
+            variant="default"
+            href="https://www.notion.so/advisable/How-to-enable-camera-and-microphone-access-9bf7dea7571e4b6fb0c3993db84648e1"
+            target="_blank"
+          >
+            Click here
+          </Link.External>{" "}
+          to read how to enable camera acesss for your browser.
+        </Text>
+      </Modal>
       <Box marginBottom="xl">
         <StyledVideoPreview>
           <VideoTrack track={videoTrack} />
