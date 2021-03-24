@@ -56,7 +56,7 @@ const Applications = () => {
 
   return (
     <Box maxWidth="1000px" width="96%" marginX="auto" paddingY="3xl">
-      {!hasValidatedProjects && <AcceptedStatusPrompt />}
+      {isAccepted && !hasValidatedProjects ? <AcceptedStatusPrompt /> : null}
       <DashboardApplicationPrompt />
       <AccountConfirmationPrompt />
       {onHold && (
