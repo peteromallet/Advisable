@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_18_120807) do
+ActiveRecord::Schema.define(version: 2021_03_24_094343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -780,7 +780,7 @@ ActiveRecord::Schema.define(version: 2021_03_18_120807) do
     t.integer "specialists_count", default: 0
     t.string "characteristic_placeholder"
     t.string "goal_placeholder"
-    t.index ["airtable_id"], name: "index_skills_on_airtable_id"
+    t.index ["airtable_id"], name: "index_skills_on_airtable_id", unique: true
     t.index ["original_id"], name: "index_skills_on_original_id"
     t.index ["uid"], name: "index_skills_on_uid"
   end
