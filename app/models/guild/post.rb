@@ -80,6 +80,10 @@ module Guild
       GuildPostBoostedJob.perform_later(id)
     end
 
+    def popular?
+      reactionable_count >= Guild::Post::POPULAR_THRESHOLD && !resolved_at && !pinned
+    end
+
     protected
 
     def guild_topics_resettable?
