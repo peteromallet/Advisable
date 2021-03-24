@@ -19,6 +19,26 @@ class Skill < ApplicationRecord
   validates :airtable_id, presence: true
 
   scope :popular, -> { order(projects_count: :desc, specialists_count: :desc) }
+
+  # rubocop:disable Rails/SkipsModelValidations
+  def merge_with(duplicate, dry_run: true)
+    ActiveRecord::Base.transaction do
+      duplicate.specialist_skills.update_all(skill_id: id)
+      duplicate.user_skills.update_all(skill_id: id)
+      duplicate.project_skills.update_all(skill_id: id)
+      Consultation.where(skill_id: duplicate.id).update_all(skill_id: id)
+
+      duplicate.label&.labelings&.update_all(label_id: label.id)
+
+      duplicate.update_columns(airtable_id: nil)
+      duplicate.destroy
+
+      Skill.reset_counters(id, :specialist_skills, :project_skills)
+
+      raise "Dry run" if dry_run
+    end
+  end
+  # rubocop:enable Rails/SkipsModelValidations
 end
 
 # == Schema Information
