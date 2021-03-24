@@ -281,6 +281,8 @@ module Types
       description 'Returns a list of the top guild topic tags'
     end
 
+    # TODO: AATO - Remove guild_top_topics query
+
     def guild_top_topics
       requires_guild_user!
 
