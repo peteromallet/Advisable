@@ -57,7 +57,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
       guildPost?.audienceType === "locations"
         ? "countries"
         : guildPost?.audienceType === "other"
-        ? "guildOtherTopics"
+        ? "otherLabels"
         : guildPost?.audienceType
     ];
 
@@ -70,7 +70,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
       : guildPost?.audienceType === "industries"
       ? selectDataQuery.data?.industries.slice(0, 10)
       : guildPost?.audienceType === "other"
-      ? selectDataQuery.data?.guildOtherTopics.slice(0, 10)
+      ? selectDataQuery.data?.otherLabels.slice(0, 10)
       : selectDataQuery.data?.popularGuildCountries;
 
   const searchPlaceholder = `Search for ${indefinite(
