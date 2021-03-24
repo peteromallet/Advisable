@@ -48,8 +48,8 @@ RSpec.describe 'Event view', type: :system do
       event.update!(host: specialist)
 
       visit "/guild/events/#{event.uid}"
-      expect(page).not_to have_content('Register for event')
-      expect(page).not_to have_content('Unregister')
+      expect(page).to have_content(event.title)
+      expect(page).to have_button('Register for event', disabled: true)
     end
 
     it "shows the remaining number of attendees beyond 20" do
