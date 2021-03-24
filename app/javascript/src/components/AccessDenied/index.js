@@ -1,5 +1,5 @@
 import React from "react";
-import { Key } from "@styled-icons/feather";
+import { Key } from "@styled-icons/feather/Key";
 import { Box, Text, Circle } from "@advisable/donut";
 
 const AccessDenied = ({ heading, children }) => (

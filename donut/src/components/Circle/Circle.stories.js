@@ -1,11 +1,11 @@
 import React from "react";
-import { Calendar } from "@styled-icons/feather";
+import { Calendar } from "@styled-icons/feather/Calendar";
 import { withKnobs, text } from "@storybook/addon-knobs";
 import Circle from "./";
 import Card from "../Card";
 
 export default {
-  title: 'Utilities/Circle',
+  title: "Utilities/Circle",
   decorators: [withKnobs],
 };
 

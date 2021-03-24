@@ -2,7 +2,7 @@ import React from "react";
 import queryString from "query-string";
 import { Form, Formik } from "formik";
 import { Redirect, useHistory, useLocation } from "react-router";
-import { ChevronRight } from "@styled-icons/feather";
+import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 import { Box, Text, Error } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";

@@ -17,7 +17,9 @@ import ProjectTypeModal from "./ProjectTypeModal";
 import StopWorkingModal from "./StopWorkingModal";
 import useViewer from "src/hooks/useViewer";
 import ReportFreelancerProblem from "./ReportFreelancerProblem";
-import { HelpCircle, MessageCircle, Edit } from "@styled-icons/feather";
+import { Edit } from "@styled-icons/feather/Edit";
+import { HelpCircle } from "@styled-icons/feather/HelpCircle";
+import { MessageCircle } from "@styled-icons/feather/MessageCircle";
 
 const Sidebar = ({ data, history, tutorialModal }) => {
   const viewer = useViewer();

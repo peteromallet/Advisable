@@ -3,7 +3,7 @@ import { useApolloClient } from "@apollo/client";
 import { useNotifications } from "src/components/Notifications";
 import { object, string } from "yup";
 import { Formik, Form, Field } from "formik";
-import { Send } from "@styled-icons/ionicons-solid";
+import { Send } from "@styled-icons/ionicons-solid/Send";
 import SubmitButton from "components/SubmitButton";
 import { Textarea, Text } from "@advisable/donut";
 import { useCreateChatDirectMessage } from "./queries";

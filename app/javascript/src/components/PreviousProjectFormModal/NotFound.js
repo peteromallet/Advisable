@@ -1,5 +1,5 @@
 import React from "react";
-import { Search } from "@styled-icons/feather";
+import { Search } from "@styled-icons/feather/Search";
 import { Box, Text, Circle } from "@advisable/donut";
 import capitalize from "../../utilities/capitalize";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Input, Button } from "@advisable/donut";
-import { Check } from "@styled-icons/heroicons-outline";
-import { ChevronDown } from "@styled-icons/ionicons-outline";
+import { Check } from "@styled-icons/heroicons-outline/Check";
+import { ChevronDown } from "@styled-icons/ionicons-outline/ChevronDown";
 import Tags from "./Tags";
 import Menu from "./Menu";
 import { StyledAutocomplete, StyledComboxMobileContainer } from "./styles";

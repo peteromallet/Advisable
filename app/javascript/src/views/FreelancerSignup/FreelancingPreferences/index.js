@@ -8,7 +8,7 @@ import Choices from "../../../components/Choices";
 import CurrencyInput from "../../../components/CurrencyInput";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import useViewer from "../../../hooks/useViewer";
 
 const FreelancingPreferences = ({ history }) => {

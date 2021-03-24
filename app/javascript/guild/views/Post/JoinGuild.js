@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text, Button } from "@advisable/donut";
-import { ExternalLink } from "@styled-icons/feather";
+import { ExternalLink } from "@styled-icons/feather/ExternalLink";
 
 export default function JoinGuild() {
   return (

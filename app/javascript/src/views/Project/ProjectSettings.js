@@ -1,6 +1,6 @@
 import React from "react";
 import Loading from "components/Loading";
-import { Pencil } from "@styled-icons/ionicons-solid";
+import { Pencil } from "@styled-icons/ionicons-solid/Pencil";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Box, Card, Text, Stack, Button } from "@advisable/donut";
 import { useProjectSettings } from "./queries";

@@ -1,5 +1,5 @@
 import React from "react";
-import { Folder } from "@styled-icons/feather";
+import { Folder } from "@styled-icons/feather/Folder";
 import { Circle, Box, Text, Button } from "@advisable/donut";
 import { useHistory } from "react-router";
 

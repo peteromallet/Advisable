@@ -1,5 +1,5 @@
 import React from "react";
-import { Close } from "@styled-icons/ionicons-outline";
+import { Close } from "@styled-icons/ionicons-outline/Close";
 import {
   StyledTag,
   StyledTagLabel,

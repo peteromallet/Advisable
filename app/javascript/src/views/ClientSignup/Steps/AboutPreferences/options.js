@@ -1,5 +1,8 @@
-// Icons
-import { Tag, DollarSign, UserCheck, Star, Award } from "@styled-icons/feather";
+import { Award } from "@styled-icons/feather/Award";
+import { DollarSign } from "@styled-icons/feather/DollarSign";
+import { Star } from "@styled-icons/feather/Star";
+import { Tag } from "@styled-icons/feather/Tag";
+import { UserCheck } from "@styled-icons/feather/UserCheck";
 
 export const talentQualityMobileOptions = [
   {

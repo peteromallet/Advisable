@@ -12,7 +12,9 @@ import { Redirect } from "react-router";
 import PhoneModal from "./PhoneModal";
 import MotionStack from "../../MotionStack";
 import { Title, Description, BulletListItem } from "../../styles";
-import { Eye, Smile, Coffee } from "@styled-icons/feather";
+import { Coffee } from "@styled-icons/feather/Coffee";
+import { Eye } from "@styled-icons/feather/Eye";
+import { Smile } from "@styled-icons/feather/Smile";
 
 function AcceptedStatus({ firstName, lastName }) {
   const [

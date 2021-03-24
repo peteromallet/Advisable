@@ -1,6 +1,6 @@
 import React from "react";
 import { get } from "lodash-es";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Formik, Form } from "formik";
 import queryString from "query-string";
 import { useMutation } from "@apollo/client";

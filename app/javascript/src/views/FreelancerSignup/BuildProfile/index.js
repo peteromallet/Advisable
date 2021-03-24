@@ -18,7 +18,7 @@ import FormField from "src/components/FormField";
 import FileUpload from "src/components/FileUpload";
 import UPDATE_PROFILE from "../updateProfile";
 import validationSchema from "./validationSchema";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 
 export const GET_COUNTRIES = gql`
   {

@@ -2,7 +2,7 @@ import React from "react";
 import { useDialogState } from "reakit/Dialog";
 import { Box, Text, Modal, Button, Label } from "@advisable/donut";
 import ActionBar from "components/ActionBar";
-import { Cog } from "@styled-icons/ionicons-outline";
+import { Cog } from "@styled-icons/ionicons-outline/Cog";
 import AudioInputSelection from "./AudioInputSelection";
 import VideoInputSelection from "./VideoInputSelection";
 

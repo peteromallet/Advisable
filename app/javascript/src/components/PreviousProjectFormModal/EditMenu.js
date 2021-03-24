@@ -1,9 +1,7 @@
 import React from "react";
-import {
-  Collection,
-  MenuAlt2,
-  CheckCircle,
-} from "@styled-icons/heroicons-solid";
+import { CheckCircle } from "@styled-icons/heroicons-solid/CheckCircle";
+import { Collection } from "@styled-icons/heroicons-solid/Collection";
+import { MenuAlt2 } from "@styled-icons/heroicons-solid/MenuAlt2";
 import NavigationMenu from "../../components/NavigationMenu";
 
 const EditMenu = React.memo(function EditMenu({ urlPrefix, previousProject }) {

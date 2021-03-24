@@ -1,10 +1,8 @@
 import React from "react";
-import {
-  Star,
-  HelpCircle,
-  RefreshCcw,
-  ArrowRight,
-} from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
+import { HelpCircle } from "@styled-icons/feather/HelpCircle";
+import { RefreshCcw } from "@styled-icons/feather/RefreshCcw";
+import { Star } from "@styled-icons/feather/Star";
 import { useTranslation } from "react-i18next";
 import { Box, Text, Link, Tooltip } from "@advisable/donut";
 

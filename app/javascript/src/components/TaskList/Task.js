@@ -1,7 +1,8 @@
 import * as React from "react";
 import { DateTime } from "luxon";
 import { Text } from "@advisable/donut";
-import { Calendar, Clock } from "@styled-icons/feather";
+import { Calendar } from "@styled-icons/feather/Calendar";
+import { Clock } from "@styled-icons/feather/Clock";
 import { Task as StyledTask, Title, Detail, TaskContent } from "./styles";
 import TaskStatus from "../TaskStatus";
 import { hoursLabel, displayTaskQuote } from "../../utilities/tasks";

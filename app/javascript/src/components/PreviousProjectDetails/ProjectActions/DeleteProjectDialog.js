@@ -1,7 +1,7 @@
 import React from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { Modal, Button, Text, Paragraph } from "@advisable/donut";
-import { Trash } from "@styled-icons/heroicons-outline";
+import { Trash } from "@styled-icons/heroicons-outline/Trash";
 import { useNotifications } from "src/components/Notifications";
 import { DELETE_PREVIOUS_PROJECT } from "./mutations";
 

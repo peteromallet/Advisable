@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
 import { TRUNCATE_LIMIT } from "../Biography";
-import { AlertCircle } from "@styled-icons/feather";
+import { AlertCircle } from "@styled-icons/feather/AlertCircle";
 
 function BioLengthWiget({ meta }) {
   const numOfSymbols = meta.value.length;

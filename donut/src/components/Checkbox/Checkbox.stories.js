@@ -1,11 +1,10 @@
 import React from "react";
-import { Info, Check, AlertTriangle } from "@styled-icons/feather";
 import { withKnobs } from "@storybook/addon-knobs";
 import Checkbox from "./";
 import Card from "../Card";
 
 export default {
-  title: 'Forms/Checkbox',
+  title: "Forms/Checkbox",
   decorators: [withKnobs],
 };
 

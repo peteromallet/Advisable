@@ -1,10 +1,11 @@
 import React from "react";
-import { List, CheckSquare } from "@styled-icons/feather";
+import { List } from "@styled-icons/feather/List";
+import { CheckSquare } from "@styled-icons/feather/CheckSquare";
 import Tabs from "./";
 import Card from "../Card";
 
 export default {
-  title: 'Navigation/Tabs',
+  title: "Navigation/Tabs",
 };
 
 export const tabs = () => {

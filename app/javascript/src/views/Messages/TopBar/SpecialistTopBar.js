@@ -2,7 +2,7 @@ import React from "react";
 import { get } from "lodash-es";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { ChevronRight } from "@styled-icons/feather";
+import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 import { Text, Box, Avatar } from "@advisable/donut";
 import Status from "../../../components/Status";
 import GET_APPLICATION from "../getApplicationForSpecialist";

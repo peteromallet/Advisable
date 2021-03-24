@@ -8,7 +8,7 @@ import possesive from "src/utilities/possesive";
 import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import useViewer from "src/hooks/useViewer";
-import { Calendar } from "@styled-icons/heroicons-outline";
+import { Calendar } from "@styled-icons/heroicons-outline/Calendar";
 import SubmitButton from "src/components/SubmitButton";
 import Loading from "src/components/Loading";
 import {

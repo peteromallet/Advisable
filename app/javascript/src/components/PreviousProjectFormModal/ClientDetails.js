@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Formik, Form, useField } from "formik";
 import {
   Box,

@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Pencil } from "@styled-icons/heroicons-outline";
+import { Pencil } from "@styled-icons/heroicons-outline/Pencil";
 import { Box, Tooltip } from "@advisable/donut";
 import PostAction from "./PostAction";
 

@@ -11,7 +11,7 @@ import {
 import Loading from "src/components/Loading";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import { Trash } from "@styled-icons/ionicons-solid";
+import { Trash } from "@styled-icons/ionicons-solid/Trash";
 import Selection from "./Selection";
 import { useRejectApplication, useApplication } from "./queries";
 

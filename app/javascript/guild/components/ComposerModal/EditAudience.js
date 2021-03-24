@@ -1,15 +1,13 @@
 import { Formik, Form, Field } from "formik";
 import Loader from "components/Loader";
-import {
-  Business,
-  ColorFilter,
-  Location,
-  Search,
-} from "@styled-icons/ionicons-outline";
+import { Business } from "@styled-icons/ionicons-outline/Business";
+import { ColorFilter } from "@styled-icons/ionicons-outline/ColorFilter";
+import { Location } from "@styled-icons/ionicons-outline/Location";
+import { Search } from "@styled-icons/ionicons-outline/Search";
 import React from "react";
 import { useUpdateGuildPostWriteCache } from "./mutations";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
-import { ArrowLeft } from "@styled-icons/feather";
+import { ArrowLeft } from "@styled-icons/feather/ArrowLeft";
 import {
   Circle,
   Box,

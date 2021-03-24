@@ -1,7 +1,8 @@
 import React from "react";
 import { displayTaskQuote, displayTaskDueDate } from "../../utilities/tasks";
 import ActionBarModal from "./ActionBarModal";
-import { Calendar, Time } from "@styled-icons/ionicons-outline";
+import { Calendar } from "@styled-icons/ionicons-outline/Calendar";
+import { Time } from "@styled-icons/ionicons-outline/Time";
 import { Circle, Box, Text, Skeleton, Paragraph } from "@advisable/donut";
 import { useTask } from "./queries";
 import renderLineBreaks from "../../utilities/renderLineBreaks";

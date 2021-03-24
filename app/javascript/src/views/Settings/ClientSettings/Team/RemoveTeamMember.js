@@ -1,7 +1,7 @@
 import React from "react";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Text, Button, Modal } from "@advisable/donut";
-import { Trash } from "@styled-icons/heroicons-outline";
+import { Trash } from "@styled-icons/heroicons-outline/Trash";
 import { useRemoveUserFromCompany } from "./queries";
 
 export default function RemoveTeamMember({ member }) {

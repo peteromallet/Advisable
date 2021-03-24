@@ -2,7 +2,7 @@ import React from "react";
 import { object, string } from "yup";
 import { useTranslation } from "react-i18next";
 import { Box, Text, Columns, Toggle } from "@advisable/donut";
-import { Send } from "@styled-icons/ionicons-solid";
+import { Send } from "@styled-icons/ionicons-solid/Send";
 import { Formik, Form, Field } from "formik";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";

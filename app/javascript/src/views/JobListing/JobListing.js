@@ -1,6 +1,6 @@
 import React from "react";
 import Sticky from "../../components/Sticky";
-import { InformationCircle } from "@styled-icons/heroicons-solid";
+import { InformationCircle } from "@styled-icons/heroicons-solid/InformationCircle";
 import { Box, Text, Card, Notice } from "@advisable/donut";
 import { List, Layout, BottomBar } from "src/components";
 import { useScreenSize } from "src/utilities/screenSizes";

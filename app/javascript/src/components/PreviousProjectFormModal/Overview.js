@@ -1,5 +1,6 @@
 import React from "react";
-import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
+import { ArrowLeft } from "@styled-icons/feather/ArrowLeft";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   Box,

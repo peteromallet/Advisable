@@ -6,7 +6,8 @@ import styled from "styled-components";
 import ActionBarModal from "src/views/Project/ActionBarModal";
 import ProjectDetails from "src/components/PreviousProjectDetails";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
-import { Home, ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
+import { Home } from "@styled-icons/feather/Home";
 import Tags from "./Tags";
 import ProjectStatus from "./ProjectStatus";
 

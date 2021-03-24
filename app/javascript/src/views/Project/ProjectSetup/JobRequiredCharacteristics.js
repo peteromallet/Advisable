@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@advisable/donut";
 import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/client";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import SubmitButton from "components/SubmitButton";
 import { UPDATE_PROJECT } from "./queries";

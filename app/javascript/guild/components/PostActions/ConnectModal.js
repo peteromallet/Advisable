@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import {
-  Chat,
-  VideoCamera,
-  Link as LinkIcon,
-  ArrowLeft,
-} from "@styled-icons/heroicons-solid";
+import { ArrowLeft } from "@styled-icons/heroicons-solid/ArrowLeft";
+import { Chat } from "@styled-icons/heroicons-solid/Chat";
+import { Link as LinkIcon } from "@styled-icons/heroicons-solid/Link";
+import { VideoCamera } from "@styled-icons/heroicons-solid/VideoCamera";
 import { Modal, Circle, Box, Text, Link } from "@advisable/donut";
 import ShareModal from "@guild/components/Post/components/ShareModal";
 import MessageModal from "@guild/components/MessageModal";

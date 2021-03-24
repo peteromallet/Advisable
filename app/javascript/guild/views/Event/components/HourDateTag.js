@@ -1,7 +1,7 @@
 import React from "react";
 import { hourDate } from "@guild/utils";
 import { Text, Box } from "@advisable/donut";
-import { Calendar } from "@styled-icons/heroicons-outline";
+import { Calendar } from "@styled-icons/heroicons-outline/Calendar";
 
 export default function HourDateTag({ date, ...props }) {
   return (

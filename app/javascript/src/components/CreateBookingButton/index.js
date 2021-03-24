@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "@advisable/donut";
-import { UserCheck } from "@styled-icons/feather";
+import { UserCheck } from "@styled-icons/feather/UserCheck";
 
 const CreateBookingButton = ({ application }) => {
   const history = useHistory();

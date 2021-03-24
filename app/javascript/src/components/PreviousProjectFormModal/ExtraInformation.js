@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { ArrowLeft, ArrowRight } from "@styled-icons/feather";
+import { ArrowLeft } from "@styled-icons/feather/ArrowLeft";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Box, Text, Select, Stack, Link, Button } from "@advisable/donut";
 import Helper from "./Helper";
 import FormField from "../FormField";

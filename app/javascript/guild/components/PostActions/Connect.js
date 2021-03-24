@@ -1,5 +1,5 @@
 import React from "react";
-import { ChatbubbleEllipses } from "@styled-icons/ionicons-outline";
+import { ChatbubbleEllipses } from "@styled-icons/ionicons-outline/ChatbubbleEllipses";
 import { useModal, Box, Tooltip } from "@advisable/donut";
 import PostAction from "./PostAction";
 import useViewer from "src/hooks/useViewer";

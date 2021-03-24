@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Box } from "@advisable/donut";
-import { Star } from "@styled-icons/feather";
+import { Star } from "@styled-icons/feather/Star";
 
 const StyledSpecialistRating = styled(Box)`
   color: white;

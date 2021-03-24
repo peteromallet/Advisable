@@ -1,5 +1,5 @@
 import React from "react";
-import { Videocam } from "@styled-icons/ionicons-outline";
+import { Videocam } from "@styled-icons/ionicons-outline/Videocam";
 import ActionBar from "components/ActionBar";
 import useCallContext from "./useCallContext";
 import useLocalVideoToggle from "./useLocalVideoToggle";

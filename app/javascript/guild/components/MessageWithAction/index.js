@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Link, Button } from "@advisable/donut";
-import { ArrowBack, ArrowForward } from "@styled-icons/ionicons-outline";
+import { ArrowBack } from "@styled-icons/ionicons-outline/ArrowBack";
+import { ArrowForward } from "@styled-icons/ionicons-outline/ArrowForward";
 import { GuildBox } from "@guild/styles";
 
 const MessageWithAction = ({

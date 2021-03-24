@@ -1,6 +1,7 @@
 import React from "react";
 import { Tag, Box } from "@advisable/donut";
-import { Calendar, Check } from "@styled-icons/heroicons-outline";
+import { Calendar } from "@styled-icons/heroicons-outline/Calendar";
+import { Check } from "@styled-icons/heroicons-outline/Check";
 import { shortDate } from "@guild/utils";
 
 export default function StartsAtTag({

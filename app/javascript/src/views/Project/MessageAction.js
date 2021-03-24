@@ -1,6 +1,6 @@
 import React from "react";
 import { use100vh } from "react-div-100vh";
-import { Chatbubbles } from "@styled-icons/ionicons-solid";
+import { Chatbubbles } from "@styled-icons/ionicons-solid/Chatbubbles";
 import ActionBarModal from "./ActionBarModal";
 import { Box, useBreakpoint } from "@advisable/donut";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";

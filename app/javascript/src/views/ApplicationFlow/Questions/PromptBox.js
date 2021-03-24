@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Info } from "@styled-icons/feather";
+import { Info } from "@styled-icons/feather/Info";
 import { Box, Text, theme, useBreakpoint } from "@advisable/donut";
 import { AnimatePresence, motion } from "framer-motion";
 import { rgba } from "polished";

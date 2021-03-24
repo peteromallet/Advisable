@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Tooltip, DialogDisclosure } from "@advisable/donut";
-import { Pencil } from "@styled-icons/heroicons-outline";
+import { Pencil } from "@styled-icons/heroicons-outline/Pencil";
 import CircularButton from "src/components/CircularButton";
 
 function EditAction({ project, editModal, size }) {

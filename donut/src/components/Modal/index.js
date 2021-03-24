@@ -2,7 +2,7 @@ import React from "react";
 import { padding } from "styled-system";
 import { rgba } from "polished";
 import { motion, AnimatePresence } from "framer-motion";
-import { CloseCircle } from "@styled-icons/ionicons-solid";
+import { CloseCircle } from "@styled-icons/ionicons-solid/CloseCircle";
 import Box from "../Box";
 import theme from "../../theme";
 import {

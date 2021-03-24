@@ -1,5 +1,6 @@
 import React from "react";
-import { ChevronLeft, ChevronRight } from "@styled-icons/feather";
+import { ChevronLeft } from "@styled-icons/feather/ChevronLeft";
+import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 import { Text } from "@advisable/donut";
 import { DateTime } from "luxon";
 import {

@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Text, useBreakpoint } from "@advisable/donut";
-import { Tag, MapPin, DollarSign } from "@styled-icons/feather";
+import { DollarSign } from "@styled-icons/feather/DollarSign";
+import { MapPin } from "@styled-icons/feather/MapPin";
+import { Tag } from "@styled-icons/feather/Tag";
 import { lowerFirst } from "lodash-es";
 import { CardHeader } from "../styles";
 
