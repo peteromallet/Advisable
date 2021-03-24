@@ -33,7 +33,7 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
 
     // Check file type
     if (!matchFileType(files, accept)) {
-      error(`You can't upload that types of files`);
+      error(`Please select one of the following file types: ${accept}`);
       return false;
     }
     // Check file size
