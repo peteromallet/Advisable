@@ -1,12 +1,10 @@
 import { gql } from "@apollo/client";
 import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
 
-// TODO: AATO - Replace with label_posts
-
 export const GUILD_TOPIC_POSTS_QUERY = gql`
   ${GuildPostFields}
-  query guildTopicPosts($cursor: String, $topicId: ID!) {
-    guildTopicPosts(first: 10, after: $cursor, topicId: $topicId) {
+  query labelFeed($cursor: String, $topicId: ID!) {
+    labelPosts(first: 10, after: $cursor, labelSlug: $topicId) {
       pageInfo {
         endCursor
         hasNextPage

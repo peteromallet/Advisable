@@ -32,9 +32,9 @@ const TopicPosts = ({ topicId }) => {
     },
   );
 
-  const hasNextPage = data?.guildTopicPosts.pageInfo.hasNextPage || false;
-  const endCursor = data?.guildTopicPosts.pageInfo.endCursor;
-  const posts = data?.guildTopicPosts.edges.map((e) => e.node) || [];
+  const hasNextPage = data?.labelPosts.pageInfo.hasNextPage || false;
+  const endCursor = data?.labelPosts.pageInfo.endCursor;
+  const posts = data?.labelPosts.edges.map((e) => e.node) || [];
 
   const onReachedBottom = () => {
     if (!loading && hasNextPage) {
