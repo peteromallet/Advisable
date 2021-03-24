@@ -2,8 +2,6 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GUILD_FOLLOWED_TOPICS } from "./queries";
 import { FOLLOW_GUILD_TOPIC, UNFOLLOW_GUILD_TOPIC } from "./mutations";
 
-// TODO: AATO - Replace with followed_labels
-
 const useFollows = () => {
   const { data: followedTopicsData, loading: followedTopicsLoading } = useQuery(
     GUILD_FOLLOWED_TOPICS,
