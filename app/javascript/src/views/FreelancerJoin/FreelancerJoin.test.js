@@ -128,8 +128,8 @@ test("display alt description", async () => {
     graphQLMocks,
   });
   await app.findByText(/advisable helps/i);
-  const description = `${project.user.companyName} is looking for a ${
-    project.primarySkill?.name || project.skills[0].name
-  } specialist and we think you're a great fit!`;
+  const description = `Sign up to access this ${
+    project.primarySkill?.name || ""
+  } opportunity:`;
   await app.findByText(description);
 });
