@@ -145,7 +145,8 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         expect do
           update_guild_post.call(query)
           guild_post.reload
-        end.to change { guild_post.guild_topics.count }.from(0).to(3)
+        end.to change { guild_post.guild_topics.count }.from(0).to(3).
+          and change { guild_post.labels.count }.from(0).to(3)
       end
 
       it "creates new topic names" do
@@ -161,6 +162,12 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         expect(new_topic.name).to eq("the razor crest")
         expect(new_topic.slug).to eq("the-razor-crest")
         expect(new_topic.published).to eq(false)
+
+        new_label = guild_post.reload.labels.first
+
+        expect(new_label.name).to eq("the razor crest")
+        expect(new_label.slug).to eq("the-razor-crest")
+        expect(new_label.published_at).to be_nil
       end
 
       it "does not change the status to draft if removed" do
