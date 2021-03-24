@@ -19,6 +19,7 @@ export default gql`
     shareable
     pinned
     resolved
+    isPopular
     images {
       id
       url

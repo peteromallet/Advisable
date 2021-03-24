@@ -2,7 +2,7 @@ import React from "react";
 import * as Sentry from "@sentry/react";
 import { Pin } from "@styled-icons/ionicons-solid";
 import { Link as RouterLink, useHistory } from "react-router-dom";
-import { Box, Card, Text, Avatar, Link, Notice } from "@advisable/donut";
+import { Box, Text, Avatar, Link, Notice } from "@advisable/donut";
 import Topics from "./components/Topics";
 import Markdown from "../Markdown";
 import PostTypeTag from "@guild/components/PostTypeTag";
@@ -11,6 +11,7 @@ import { CoverImage } from "@guild/components/CoverImage";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ResolvedNotice from "./components/ResolvedNotice";
 import { guildPostUrl, isGuildPath } from "@guild/utils";
+import { StyledPostCard } from "./styles";
 
 const Post = ({
   post,
@@ -30,14 +31,11 @@ const Post = ({
 
   return (
     <Sentry.ErrorBoundary>
-      <Card
-        position="relative"
+      <StyledPostCard
         padding={[4, 6]}
-        borderRadius="12px"
-        width="100%"
-        border="2px solid"
-        borderColor={post.pinned ? "neutral400" : "white"}
         data-testid="post"
+        popular={post.isPopular}
+        pinned={post.pinned}
       >
         <Box position="absolute" right="2" top="2">
           <PostTypeTag post={post} />
@@ -134,7 +132,25 @@ const Post = ({
             This post has been pinned by the Advisable team
           </Notice>
         )}
-      </Card>
+        {post.isPopular ? (
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            margin="32px 0 -32px 0"
+          >
+            <Box
+              padding="2px 16px"
+              background="#fde7b2"
+              borderRadius="8px 8px 0 0"
+            >
+              <Text lineHeight="l" color="neutral700" fontWeight="medium">
+                Many people found this post interesting
+              </Text>
+            </Box>
+          </Box>
+        ) : null}
+      </StyledPostCard>
     </Sentry.ErrorBoundary>
   );
 };

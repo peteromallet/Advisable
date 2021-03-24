@@ -10,6 +10,7 @@ module Guild
 
     POST_TYPES = %w[Post AdviceRequired CaseStudy Opportunity].freeze
     AUDIENCE_TYPES = %w[skills industries locations none other].freeze
+    POPULAR_THRESHOLD = 5
 
     belongs_to :specialist
     has_one :account, through: :specialist

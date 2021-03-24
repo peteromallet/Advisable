@@ -289,6 +289,7 @@ RSpec.describe Types::Guild::PostInterface do
             type
             commented
             createdAtTimeAgo
+            isPopular
             guildTopics {
               id
               name
@@ -389,6 +390,16 @@ RSpec.describe Types::Guild::PostInterface do
         guild_post.save
 
         expect(node['labels'][0]['name']).to eq(label.name)
+      end
+
+      it "is popular" do
+        guild_post.update! reactionable_count: Guild::Post::POPULAR_THRESHOLD
+        expect(node['isPopular']).to eq(true)
+      end
+
+      it "is not popular" do
+        guild_post.update! reactionable_count: Guild::Post::POPULAR_THRESHOLD - 1
+        expect(node['isPopular']).to eq(false)
       end
     end
   end
