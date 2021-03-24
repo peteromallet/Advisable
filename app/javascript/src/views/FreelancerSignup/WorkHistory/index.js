@@ -7,7 +7,8 @@ import FormField from "src/components/FormField";
 import UPDATE_PROFILE from "../updateProfile";
 import COMPLETE_SETUP from "../completeSetup";
 import validationSchema from "./validationSchema";
-import { ArrowRight, UploadCloud } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
+import { UploadCloud } from "@styled-icons/feather/UploadCloud";
 
 const WorkHistory = ({ specialist, history }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);

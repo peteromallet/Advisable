@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Trash } from "@styled-icons/heroicons-outline";
+import { Trash } from "@styled-icons/heroicons-outline/Trash";
 import { useNotifications } from "src/components/Notifications";
 import { Modal, Box, Tooltip, Button, Text, Paragraph } from "@advisable/donut";
 import { useMutation } from "@apollo/client";

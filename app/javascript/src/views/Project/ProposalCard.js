@@ -2,7 +2,8 @@ import React from "react";
 import { rgba } from "polished";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
-import { ChatbubbleEllipses, ArrowForward } from "@styled-icons/ionicons-solid";
+import { ChatbubbleEllipses } from "@styled-icons/ionicons-solid/ChatbubbleEllipses";
+import { ArrowForward } from "@styled-icons/ionicons-solid/ArrowForward";
 import { StyledCard, Circle, Text, Box, Button, theme } from "@advisable/donut";
 
 const Card = styled(StyledCard)`

@@ -1,5 +1,5 @@
 import React from "react";
-import { Edit } from "@styled-icons/feather";
+import { Edit } from "@styled-icons/feather/Edit";
 import {
   Box,
   Link,

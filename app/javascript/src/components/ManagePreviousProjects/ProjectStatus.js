@@ -1,7 +1,8 @@
 import React from "react";
 import { Tooltip, Badge } from "@advisable/donut";
-import { Refresh } from "@styled-icons/heroicons-outline";
-import { CheckCircle, Pencil } from "@styled-icons/heroicons-solid";
+import { Refresh } from "@styled-icons/heroicons-outline/Refresh";
+import { CheckCircle } from "@styled-icons/heroicons-solid/CheckCircle";
+import { Pencil } from "@styled-icons/heroicons-solid/Pencil";
 
 const STATUSES = {
   Draft: {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Modal } from "@advisable/donut";
-import { Add } from "@styled-icons/ionicons-outline";
+import { Add } from "@styled-icons/ionicons-outline/Add";
 import InviteMemberForm from "./InviteMemberForm";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 

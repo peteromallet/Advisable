@@ -2,7 +2,7 @@ import React from "react";
 import { object, string } from "yup";
 import { gql, useMutation } from "@apollo/client";
 import { Formik, Form } from "formik";
-import { Ban } from "@styled-icons/heroicons-outline";
+import { Ban } from "@styled-icons/heroicons-outline/Ban";
 import { DialogDisclosure, useDialogState } from "reakit/Dialog";
 import { Text, Button, Modal, Textarea } from "@advisable/donut";
 import FormField from "components/FormField";

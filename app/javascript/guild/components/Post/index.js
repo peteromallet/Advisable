@@ -1,6 +1,6 @@
 import React from "react";
 import * as Sentry from "@sentry/react";
-import { Pin } from "@styled-icons/ionicons-solid";
+import { Pin } from "@styled-icons/ionicons-solid/Pin";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { Box, Text, Avatar, Link, Notice } from "@advisable/donut";
 import Topics from "./components/Topics";

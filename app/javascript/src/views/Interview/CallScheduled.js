@@ -1,7 +1,7 @@
 import React from "react";
 import { DateTime } from "luxon";
 import { Link } from "react-router-dom";
-import { Calendar } from "@styled-icons/ionicons-outline";
+import { Calendar } from "@styled-icons/ionicons-outline/Calendar";
 import { Circle, Box, Card, Button, Text } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 

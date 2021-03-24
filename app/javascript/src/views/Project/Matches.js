@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import MatchQueue from "./MatchQueue";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowForward } from "@styled-icons/ionicons-outline";
+import { ArrowForward } from "@styled-icons/ionicons-outline/ArrowForward";
 import { Box, Text, Paragraph, Button, useBreakpoint } from "@advisable/donut";
 import Sticky from "components/Sticky";
 import ActionBar from "./ActionBar";

@@ -1,6 +1,6 @@
 import React from "react";
-import { Exclamation } from "@styled-icons/heroicons-outline";
-import { EyeOff } from "@styled-icons/ionicons-outline";
+import { Exclamation } from "@styled-icons/heroicons-outline/Exclamation";
+import { EyeOff } from "@styled-icons/ionicons-outline/EyeOff";
 import { Box, Text, Avatar } from "@advisable/donut";
 import {
   StyledBadge,

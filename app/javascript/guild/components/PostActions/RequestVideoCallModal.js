@@ -2,7 +2,7 @@ import React from "react";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
 import { useApolloClient } from "@apollo/client";
-import { Send } from "@styled-icons/ionicons-solid";
+import { Send } from "@styled-icons/ionicons-solid/Send";
 import SubmitButton from "components/SubmitButton";
 import useViewer from "src/hooks/useViewer";
 import FormField from "components/FormField";

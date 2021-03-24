@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Text, Circle, useBreakpoint } from "@advisable/donut";
-import { Check } from "@styled-icons/feather";
+import { Check } from "@styled-icons/feather/Check";
 import MotionStack from "../MotionStack";
 
 function Component({ title, text }) {

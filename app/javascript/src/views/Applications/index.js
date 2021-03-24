@@ -3,7 +3,7 @@ import React from "react";
 import { useHistory, Redirect } from "react-router-dom";
 import { Box, Notice } from "@advisable/donut";
 import { useQuery } from "@apollo/client";
-import { RefreshCcw } from "@styled-icons/feather";
+import { RefreshCcw } from "@styled-icons/feather/RefreshCcw";
 import Loading from "../../components/Loading";
 import { GET_APPLICATIONS } from "./queries";
 import Empty from "./Empty";

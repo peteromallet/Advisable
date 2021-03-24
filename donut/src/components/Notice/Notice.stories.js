@@ -1,11 +1,11 @@
 import React from "react";
-import { AlertTriangle } from "@styled-icons/feather";
+import { AlertTriangle } from "@styled-icons/feather/AlertTriangle";
 import { withKnobs, select } from "@storybook/addon-knobs";
 import Notice from "./";
 import Card from "../Card";
 
 export default {
-  title: 'Content/Notice',
+  title: "Content/Notice",
   decorators: [withKnobs],
 };
 

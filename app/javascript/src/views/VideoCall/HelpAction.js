@@ -3,7 +3,7 @@ import SwitchToZoom from "./SwitchToZoom";
 import { useDialogState } from "reakit/Dialog";
 import { Text, Modal, Button, Paragraph } from "@advisable/donut";
 import ActionBar from "components/ActionBar";
-import { Help } from "@styled-icons/ionicons-outline";
+import { Help } from "@styled-icons/ionicons-outline/Help";
 
 export default function HelpAction() {
   const modal = useDialogState();

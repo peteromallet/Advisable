@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { ArrowBack } from "@styled-icons/ionicons-outline";
-import { Plus, MinusCircle } from "@styled-icons/heroicons-outline";
+import { ArrowBack } from "@styled-icons/ionicons-outline/ArrowBack";
+import { MinusCircle } from "@styled-icons/heroicons-outline/MinusCircle";
+import { Plus } from "@styled-icons/heroicons-outline/Plus";
 import { Box, Text, Link, Button, Card } from "@advisable/donut";
 import useFollows from "@guild/views/Follows/useFollows";
 import useScrollToTop from "@advisable-main/hooks/useScrollToTop";

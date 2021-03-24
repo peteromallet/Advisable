@@ -5,7 +5,7 @@ import { Box, Menu, Button } from "@advisable/donut";
 import DeleteTask from "./DeleteTask";
 import ToggleTrial from "./ToggleTrial";
 import ToggleRepeating from "./ToggleRepeating";
-import { MoreHorizontal } from "@styled-icons/feather";
+import { MoreHorizontal } from "@styled-icons/feather/MoreHorizontal";
 import { SavingIndicator } from "./styles";
 
 const Actions = (props) => {

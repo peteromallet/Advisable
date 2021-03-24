@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Avatar, Text, Circle } from "@advisable/donut";
-import { CheckCircle } from "@styled-icons/feather";
+import { CheckCircle } from "@styled-icons/feather/CheckCircle";
 
 const Review = ({ review }) => {
   const { role, name, companyName } = review;

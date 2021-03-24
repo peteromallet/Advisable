@@ -2,7 +2,7 @@ import React from "react";
 import * as Sentry from "@sentry/react";
 import { Button } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
-import { MessageCircle } from "@styled-icons/feather";
+import { MessageCircle } from "@styled-icons/feather/MessageCircle";
 
 const CollectFeedback = ({ eventId }) => {
   const viewer = useViewer();

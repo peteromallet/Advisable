@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useRef } from "react";
 import Sticky from "components/Sticky";
-import { QuoteRight } from "@styled-icons/boxicons-solid";
-import { ListOl, ListUl, Bold } from "@styled-icons/boxicons-regular";
+import { QuoteRight } from "@styled-icons/boxicons-solid/QuoteRight";
+import { ListOl } from "@styled-icons/boxicons-regular/ListOl";
+import { ListUl } from "@styled-icons/boxicons-regular/ListUl";
+import { Bold } from "@styled-icons/boxicons-regular/Bold";
 import { Editor, EditorState, RichUtils, getDefaultKeyBinding } from "draft-js";
 import { stateToMarkdown } from "draft-js-export-markdown";
 import { stateFromMarkdown } from "draft-js-import-markdown";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { ArrowLeft } from "@styled-icons/feather";
+import { ArrowLeft } from "@styled-icons/feather/ArrowLeft";
 import { Box, Text, Select, Stack, Link, Button } from "@advisable/donut";
 import Helper from "./Helper";
 import { usePublishPreviousProject } from "./queries";

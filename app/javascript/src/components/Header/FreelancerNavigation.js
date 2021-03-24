@@ -1,5 +1,5 @@
 import React from "react";
-import { X } from "@styled-icons/feather";
+import { X } from "@styled-icons/feather/X";
 import { useMobile } from "../../components/Breakpoint";
 import useMessageCount from "../../hooks/useMessageCount";
 import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";

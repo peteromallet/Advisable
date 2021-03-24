@@ -1,5 +1,6 @@
 import React from "react";
-import { X, SwitchHorizontal } from "@styled-icons/heroicons-outline";
+import { SwitchHorizontal } from "@styled-icons/heroicons-outline/SwitchHorizontal";
+import { X } from "@styled-icons/heroicons-outline/X";
 import { Box, Circle } from "@advisable/donut";
 import { Link } from "react-router-dom";
 

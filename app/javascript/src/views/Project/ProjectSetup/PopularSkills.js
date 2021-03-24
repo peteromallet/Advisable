@@ -2,7 +2,7 @@ import React from "react";
 import { rgba } from "polished";
 import { useField } from "formik";
 import { Text, theme } from "@advisable/donut";
-import { Plus } from "@styled-icons/feather";
+import { Plus } from "@styled-icons/feather/Plus";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import ActionBar from "./ActionBar";
 import UpdateAvailability from "./UpdateAvailability";
-import { PersonAdd } from "@styled-icons/ionicons-solid";
+import { PersonAdd } from "@styled-icons/ionicons-solid/PersonAdd";
 
 export default function AcceptApplication({ application }) {
   const dialog = useDialogState();

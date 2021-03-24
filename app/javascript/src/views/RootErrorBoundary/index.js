@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as Sentry from "@sentry/react";
-import { RefreshCw, AlertTriangle } from "@styled-icons/feather";
+import { AlertTriangle } from "@styled-icons/feather/AlertTriangle";
+import { RefreshCw } from "@styled-icons/feather/RefreshCw";
 import { Circle, Box, Text, Button } from "@advisable/donut";
 import CollectFeedback from "./CollectFeedback";
 

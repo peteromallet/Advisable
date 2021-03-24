@@ -1,6 +1,7 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Info, ArrowLeft } from "@styled-icons/feather";
+import { ArrowLeft } from "@styled-icons/feather/ArrowLeft";
+import { Info } from "@styled-icons/feather/Info";
 import { useMutation } from "@apollo/client";
 import { Box, Button, Text } from "@advisable/donut";
 import ButtonGroup from "../ButtonGroup";

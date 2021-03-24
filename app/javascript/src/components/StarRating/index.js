@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
-import { Star } from "@styled-icons/feather";
+import { Star } from "@styled-icons/feather/Star";
 
 const SIZES = {
   s: 16,

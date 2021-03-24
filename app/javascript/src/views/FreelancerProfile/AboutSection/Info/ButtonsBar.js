@@ -1,8 +1,8 @@
 import React from "react";
 import RequestTalkButton from "./RequestTalkButton";
 import IconLink from "./IconLink";
-import { LinkedinIn } from "@styled-icons/fa-brands";
-import { Globe } from "@styled-icons/feather";
+import { Linkedin } from "@styled-icons/fa-brands/Linkedin";
+import { Globe } from "@styled-icons/feather/Globe";
 import EditInfo from "./EditInfo";
 import { Box } from "@advisable/donut";
 import MessageButton from "./MessageButton";
@@ -21,11 +21,7 @@ function ButtonsBar({ isOwner, specialist }) {
       mr={{ l: "m", s: "s" }}
     >
       {specialist.linkedin && (
-        <IconLink
-          title="LinkedIn"
-          url={specialist.linkedin}
-          Icon={LinkedinIn}
-        />
+        <IconLink title="LinkedIn" url={specialist.linkedin} Icon={Linkedin} />
       )}
       {specialist.website && (
         <IconLink

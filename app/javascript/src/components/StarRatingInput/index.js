@@ -1,7 +1,7 @@
 import React from "react";
 import { nanoid } from "nanoid";
 import { useBreakpoint } from "@advisable/donut";
-import { Star } from "@styled-icons/feather";
+import { Star } from "@styled-icons/feather/Star";
 import { VisuallyHidden } from "reakit/VisuallyHidden";
 import pluralize from "../../utilities/pluralize";
 import { StyledStarRatingInput, StyledStarRating } from "./styles";

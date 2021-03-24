@@ -1,5 +1,5 @@
 import React from "react";
-import { Mail } from "@styled-icons/feather";
+import { Mail } from "@styled-icons/feather/Mail";
 import { motion } from "framer-motion";
 import { Card, Text, Circle, Box } from "@advisable/donut";
 

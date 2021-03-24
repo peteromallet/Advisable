@@ -1,5 +1,5 @@
 import React from "react";
-import { Plus } from "@styled-icons/heroicons-outline";
+import { Plus } from "@styled-icons/heroicons-outline/Plus";
 import { margin } from "styled-system";
 import styled from "styled-components";
 import { theme } from "@advisable/donut";

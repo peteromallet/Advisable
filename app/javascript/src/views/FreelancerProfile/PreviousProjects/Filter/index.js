@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useReducer } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Info } from "@styled-icons/feather";
+import { Info } from "@styled-icons/feather/Info";
 import styled from "styled-components";
 import { isEmpty } from "lodash-es";
 import { rgba } from "polished";
@@ -12,7 +12,8 @@ import useResponsiveRef from "./useResponsiveRef";
 import useChildInjection from "./useChildInjection";
 // Components
 import { Box, Text, StyledCard, Button, theme } from "@advisable/donut";
-import { ChevronUp, ChevronDown } from "@styled-icons/feather";
+import { ChevronDown } from "@styled-icons/feather/ChevronDown";
+import { ChevronUp } from "@styled-icons/feather/ChevronUp";
 
 const reducer = (state, action) => {
   switch (action.type) {

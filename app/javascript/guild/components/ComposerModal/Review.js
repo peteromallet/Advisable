@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
-import { ArrowLeft, ArrowRight, Edit } from "@styled-icons/feather";
+import { ArrowLeft } from "@styled-icons/feather/ArrowLeft";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
+import { Edit } from "@styled-icons/feather/Edit";
 import {
   Box,
   Paragraph,

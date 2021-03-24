@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DateTime } from "luxon";
-import { Info } from "@styled-icons/feather";
+import { Info } from "@styled-icons/feather/Info";
 import { Box, Text, Link, Card } from "@advisable/donut";
 import ApplicationStatus from "../../../components/ApplicationStatus";
 import { Notice } from "./styles";

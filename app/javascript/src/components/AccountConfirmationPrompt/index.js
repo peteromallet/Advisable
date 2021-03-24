@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { ShieldCheckmark } from "@styled-icons/ionicons-outline";
+import { ShieldCheckmark } from "@styled-icons/ionicons-outline/ShieldCheckmark";
 import { Text, Link, Paragraph, Box, Circle } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";

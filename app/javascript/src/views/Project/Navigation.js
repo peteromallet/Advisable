@@ -1,9 +1,11 @@
 import React from "react";
 import { Box } from "@advisable/donut";
 import { useParams } from "react-router-dom";
-import { FileTray, People, Options } from "@styled-icons/ionicons-solid";
-import BackButton from "components/BackButton";
-import NavigationMenu from "components/NavigationMenu";
+import { FileTray } from "@styled-icons/ionicons-solid/FileTray";
+import { People } from "@styled-icons/ionicons-solid/People";
+import { Options } from "@styled-icons/ionicons-solid/Options";
+import BackButton from "src/components/BackButton";
+import NavigationMenu from "src/components/NavigationMenu";
 
 function ProjectNavigation() {
   const { id } = useParams();

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Card, Box, Text, Button } from "@advisable/donut";
 
 function FullApplicationCard() {

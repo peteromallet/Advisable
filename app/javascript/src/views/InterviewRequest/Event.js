@@ -1,5 +1,5 @@
 import React from "react";
-import { Calendar } from "@styled-icons/feather";
+import { Calendar } from "@styled-icons/feather/Calendar";
 import { Box, Circle, Text } from "@advisable/donut";
 
 export default function Event({ date, zone }) {
