@@ -35,7 +35,7 @@ export default gql`
       name
       avatar
     }
-    guildTopics {
+    guildTopics: labels {
       id
       name
       slug
