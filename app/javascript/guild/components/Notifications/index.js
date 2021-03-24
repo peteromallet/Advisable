@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
 import { GUILD_NOTIFICATIONS_QUERY } from "./queries";
 import { truncate } from "lodash-es";
 import { useQuery } from "@apollo/client";
@@ -102,31 +104,33 @@ const Notifications = ({ open, closeNotifications }) => {
   }, [refetch, open]);
 
   return (
-    <Box py={4} px={6} display="flex" flexDirection="column">
-      <Text
-        fontSize="3xl"
-        color="blue900"
-        marginBottom={4}
-        fontWeight="medium"
-        letterSpacing="-0.02rem"
-      >
-        Notifications
-      </Text>
-      {loading ? (
-        <Loading />
-      ) : notificationItems && notificationItems.length ? (
-        <NotificationsList
-          closeNotifications={closeNotifications}
-          notifications={notificationItems}
-        />
-      ) : (
-        <NotificationItem pb="l" alignItems="center" justifyContent="center">
-          <Text size="m" fontWeight="500" color="catalinaBlue100">
-            {"No Notifications"}
-          </Text>
-        </NotificationItem>
-      )}
-    </Box>
+    <SimpleBar style={{ maxHeight: 300 }}>
+      <Box py={4} px={6} display="flex" flexDirection="column">
+        <Text
+          fontSize="3xl"
+          color="blue900"
+          marginBottom={4}
+          fontWeight="medium"
+          letterSpacing="-0.02rem"
+        >
+          Notifications
+        </Text>
+        {loading ? (
+          <Loading />
+        ) : notificationItems && notificationItems.length ? (
+          <NotificationsList
+            closeNotifications={closeNotifications}
+            notifications={notificationItems}
+          />
+        ) : (
+          <NotificationItem pb="l" alignItems="center" justifyContent="center">
+            <Text size="m" fontWeight="500" color="catalinaBlue100">
+              {"No Notifications"}
+            </Text>
+          </NotificationItem>
+        )}
+      </Box>
+    </SimpleBar>
   );
 };
 
