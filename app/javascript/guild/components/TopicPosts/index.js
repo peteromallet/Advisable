@@ -9,8 +9,6 @@ import LoadingPosts from "@guild/components/Posts/Loading";
 import FollowTopic from "@guild/components/FollowTopic";
 import NoResults from "@guild/components/NoResults";
 
-// TODO: AATO - Replace with label_posts
-
 const TopicPosts = ({ topicId }) => {
   const history = useHistory();
   const historyPopped = history.action === "POP";

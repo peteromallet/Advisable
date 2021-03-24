@@ -11,16 +11,16 @@ const useFollows = () => {
       fetchPolicy: "cache-first",
     },
   );
-  const followedTopics = followedTopicsData?.guildFollowedTopics;
+  const followedTopics = followedTopicsData?.followedLabels;
 
   const [unfollow] = useMutation(UNFOLLOW_GUILD_TOPIC, {
     update(cache, { data }) {
       const existing = cache.readQuery({ query: GUILD_FOLLOWED_TOPICS });
-      const removed = data?.unfollowGuildTopic?.guildTopic;
+      const removed = data?.unfollowLabel?.label;
       cache.writeQuery({
         query: GUILD_FOLLOWED_TOPICS,
         data: {
-          guildFollowedTopics: existing?.guildFollowedTopics.filter(
+          followedLabels: existing?.followedLabels.filter(
             (t) => t.id !== removed.id,
           ),
         },
@@ -31,21 +31,21 @@ const useFollows = () => {
   const [follow] = useMutation(FOLLOW_GUILD_TOPIC, {
     update(cache, { data }) {
       const existing = cache.readQuery({ query: GUILD_FOLLOWED_TOPICS });
-      const added = data?.followGuildTopic?.guildTopic;
+      const added = data?.followLabel?.label;
       cache.writeQuery({
         query: GUILD_FOLLOWED_TOPICS,
         data: {
-          guildFollowedTopics: [...existing?.guildFollowedTopics, added],
+          followedLabels: [...existing?.followedLabels, added],
         },
       });
     },
   });
 
-  const unfollowTopic = async (guildTopicId) => {
-    await unfollow({ variables: { input: { guildTopicId } } });
+  const unfollowTopic = async (labelSlug) => {
+    await unfollow({ variables: { input: { labelSlug } } });
   };
-  const followTopic = async (guildTopicId) => {
-    await follow({ variables: { input: { guildTopicId } } });
+  const followTopic = async (labelSlug) => {
+    await follow({ variables: { input: { labelSlug } } });
   };
 
   return {

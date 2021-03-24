@@ -336,7 +336,7 @@ module Types
 
     # TODO: AATO - Remove guild_followed_topics endpoint
 
-    field :guild_followed_topics, [Types::Guild::TopicType], null: true do
+    field :guild_followed_topics, [Types::Guild::TopicType], null: true, deprecation_reason: "Use followedLabels instead" do
       description 'Returns the topics that the specialist follows'
     end
 
