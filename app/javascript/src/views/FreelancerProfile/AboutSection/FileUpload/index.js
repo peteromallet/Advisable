@@ -7,6 +7,7 @@ import { Camera } from "@styled-icons/feather";
 import { AnimatePresence, motion } from "framer-motion";
 import styled, { keyframes } from "styled-components";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
+import matchFileType from "src/utilities/matchFileType";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
@@ -86,6 +87,7 @@ const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [processing, setProcessing] = useState(false);
   const { error } = useNotifications();
+  const accept = ".png, .jpg, .jpeg";
 
   const progressHandler = {
     directUploadWillStoreFileWithXHR(request) {
@@ -116,6 +118,11 @@ const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
     if (!e.target?.value) return false;
     const files = Array.from(e.target.files);
 
+    // Check file type
+    if (!matchFileType(files, accept)) {
+      error(`Please select one of the following file types: ${accept}`);
+      return false;
+    }
     // Check file size
     if (filesExceedLimit(files, maxSizeInMB)) {
       error(`File size cannot exceed ${maxSizeInMB} MB`);
@@ -177,11 +184,7 @@ const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
       <Tooltip placement="top" content={TooltipContent}>
         <FileUploader>
           <Camera size={20} strokeWidth={2} />
-          <input
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            onChange={handleChange}
-          />
+          <input type="file" accept={accept} onChange={handleChange} />
         </FileUploader>
       </Tooltip>
     </Wrapper>

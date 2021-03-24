@@ -9,6 +9,7 @@ import { useMutation, useApolloClient } from "@apollo/client";
 import { DirectUpload } from "@rails/activestorage";
 import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
+import matchFileType from "src/utilities/matchFileType";
 import { useNotifications } from "src/components/Notifications";
 import {
   useUpdateGuildPostImage,
@@ -292,6 +293,7 @@ function ImageTiles({ images, dispatch, guildPostId }) {
   const client = useApolloClient();
   const cover = find(images, { cover: true });
   const { error } = useNotifications();
+  const accept = ".png, .jpg, .jpeg";
 
   const handleSetCover = (image) => () => {
     if (image.cover) return;
@@ -345,6 +347,11 @@ function ImageTiles({ images, dispatch, guildPostId }) {
     if (!e.target?.value) return false;
     const files = Array.from(e.target.files);
 
+    // Check file type
+    if (!matchFileType(files, accept)) {
+      error(`Please select one of the following file types: ${accept}`);
+      return false;
+    }
     // Check file size
     const MAX_SIZE_IN_MB = 5;
     if (filesExceedLimit(files, MAX_SIZE_IN_MB)) {
@@ -371,7 +378,7 @@ function ImageTiles({ images, dispatch, guildPostId }) {
         <input
           type="file"
           name="upload-image"
-          accept=".png, .jpg, .jpeg"
+          accept={accept}
           onChange={handleChange}
           multiple
         />
