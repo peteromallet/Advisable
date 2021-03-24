@@ -5,11 +5,11 @@ require "rails_helper"
 RSpec.describe "Guild topics", type: :system do
   let(:account) { create(:account, completed_tutorials: ["guild"]) }
   let(:specialist) { create(:specialist, guild: true, account: account) }
-  let!(:topic) { create(:guild_topic, name: "Test Topic") }
+  let!(:topic) { create(:label, name: "Test Topic") }
 
   it "users can browse and follow guild topics" do
     post = create(:guild_post, title: "Test post")
-    post.guild_topics << topic
+    post.labels << topic
     authenticate_as(specialist)
     visit("/guild/topics/test-topic")
     expect(page).to have_content("Test post")
