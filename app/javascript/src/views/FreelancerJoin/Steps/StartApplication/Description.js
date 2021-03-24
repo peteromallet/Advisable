@@ -48,14 +48,13 @@ function WithProjectDetails({ project }) {
     industry,
     estimatedBudget,
     specialistDescription,
-    goals,
     remote,
   } = project;
   const location = remote ? "remote" : user.location;
 
-  const generatedDescription = `${user?.companyName || ""} is hiring a ${
+  const generatedDescription = `Sign up to access this ${
     primarySkill?.name || ""
-  } specialist to ${lowerFirst(goals?.[0]) || ""}`;
+  } opportunity:`;
   const description = specialistDescription || generatedDescription;
 
   return (
