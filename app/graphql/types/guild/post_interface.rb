@@ -125,6 +125,11 @@ module Types
         !!object.resolved_at
       end
 
+      field :is_popular, Boolean, null: true
+      def is_popular
+        object.reactionable_count >= ::Guild::Post::POPULAR_THRESHOLD
+      end
+
       definition_methods do
         def resolve_type(object, _context)
           raise "Unexpected Post Type: #{object.inspect}" unless ::Guild::Post::POST_TYPES.include?(object.type)

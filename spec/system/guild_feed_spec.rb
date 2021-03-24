@@ -57,6 +57,13 @@ RSpec.describe 'Guild feed', type: :system do
       latest_posts = all(:xpath, post_children["Latest Posts"])
       expect(latest_posts.size).to eq(4)
     end
+
+    it "includes a post many people have found interesting" do
+      post.update!(reactionable_count: Guild::Post::POPULAR_THRESHOLD)
+
+      visit "/guild/feed"
+      expect(page).to have_content("Many people found this post interesting")
+    end
   end
 
   context "when filtering the feed" do
