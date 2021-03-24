@@ -29,6 +29,11 @@ module Mutations
 
         if (guild_topic_names = args[:guild_topic_names].presence)
           guild_post.guild_topic_list = guild_topic_names
+
+          # TODO: AATO - save list, so we persist tags and taggings
+          guild_post.save
+          # TODO: AATO - reload to get the new tags, find topics by those ids and get their label mirrors
+          guild_post.labels = ::Guild::Topic.where(id: guild_post.reload.guild_topics.pluck(:id)).map(&:label_mirror)
         end
 
         # - A removed post cannot be published
