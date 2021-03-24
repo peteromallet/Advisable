@@ -51,7 +51,7 @@ const FileUpload = ({ label, onChange, preview, accept, maxSizeInMB = 2 }) => {
 
     // Check file type
     if (!matchFileType(files, accept)) {
-      error(`You can't upload that types of files`);
+      error(`Please select one of the following file types: ${accept}`);
       return false;
     }
     // Check file size
