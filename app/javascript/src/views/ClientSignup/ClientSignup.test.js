@@ -988,22 +988,6 @@ test("Reset the Not_Hiring rejected flow", async () => {
           },
         },
       ),
-      mockMutation(
-        REQUEST_APPLICATION_REMINDER,
-        {
-          id: clientApplication.id,
-        },
-        {
-          requestApplicationReminder: {
-            __typename: "RequestApplicationReminderPayload",
-            clientApplication: {
-              __typename: "ClientApplication",
-              id: clientApplication.id,
-              status: "Requested Reminder",
-            },
-          },
-        },
-      ),
     ],
   });
 

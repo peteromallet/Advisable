@@ -360,38 +360,8 @@ export const RESET_CLIENT_APPLICATION = gql`
   }
 `;
 
-export function useResetClientApplication({
-  id,
-  firstName,
-  lastName,
-  companyName,
-  companyType,
-  industry,
-}) {
+export function useResetClientApplication({ id }) {
   return useMutation(RESET_CLIENT_APPLICATION, {
     variables: { input: { id } },
-    optimisticResponse: {
-      __typename: "Mutation",
-      resetClientApplication: {
-        __typename: "ResetClientApplicationPayload",
-        clientApplication: {
-          __typename: "ClientApplication",
-          id,
-          firstName,
-          lastName,
-          companyName,
-          companyType,
-          industry,
-          acceptedGuaranteeTerms: false,
-          budget: null,
-          localityImportance: null,
-          numberOfFreelancers: null,
-          rejectionReason: null,
-          skills: [],
-          status: "Application Started",
-          talentQuality: null,
-        },
-      },
-    },
   });
 }

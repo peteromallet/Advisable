@@ -38,6 +38,13 @@ const createCache = () => {
           previousProjects: relayStylePagination(),
         },
       },
+      ClientApplication: {
+        fields: {
+          skills: {
+            merge: replaceArrayMerge,
+          },
+        },
+      },
       PreviousProject: {
         fields: {
           skills: {
