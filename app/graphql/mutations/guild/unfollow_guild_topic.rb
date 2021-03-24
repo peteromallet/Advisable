@@ -13,6 +13,7 @@ module Mutations
       end
 
       def resolve(guild_topic_id:)
+        Raven.capture_message("followGuildTopic called")
         guild_topic = ::Guild::Topic.published.find_by_slug_or_id(guild_topic_id)
         current_user.unsubscribe_from!(guild_topic)
 
