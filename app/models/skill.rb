@@ -42,7 +42,7 @@ end
 #
 # Indexes
 #
-#  index_skills_on_airtable_id  (airtable_id)
+#  index_skills_on_airtable_id  (airtable_id) UNIQUE
 #  index_skills_on_original_id  (original_id)
 #  index_skills_on_uid          (uid)
 #
