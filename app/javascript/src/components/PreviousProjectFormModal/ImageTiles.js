@@ -14,6 +14,7 @@ import {
   useUpdatePreviousProjectImage,
   useDeletePreviousProjectImage,
 } from "./queries";
+import matchFileType from "src/utilities/matchFileType";
 
 const StyledImageTiles = styled.div`
   width: 100%;
@@ -299,6 +300,7 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
   const client = useApolloClient();
   const cover = find(images, { cover: true });
   const { error } = useNotifications();
+  const accept = ".png, .jpg, .jpeg";
 
   const handleSetCover = (image) => () => {
     if (image.cover) return;
@@ -352,6 +354,11 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
     if (!e.target?.value) return false;
     const files = Array.from(e.target.files);
 
+    // Check file type
+    if (!matchFileType(files, accept)) {
+      error(`Please select one of the following file types: ${accept}`);
+      return false;
+    }
     // Check file size
     const MAX_SIZE_IN_MB = 5;
     if (filesExceedLimit(files, MAX_SIZE_IN_MB)) {
@@ -378,7 +385,7 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
         <input
           type="file"
           name="upload-image"
-          accept=".png, .jpg, .jpeg"
+          accept={accept}
           onChange={handleChange}
           multiple
         />
