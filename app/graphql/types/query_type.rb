@@ -277,9 +277,7 @@ module Types
       current_user.guild_activity
     end
 
-    # TODO: AATO - Remove guild_top_topics endpoint
-
-    field :guild_top_topics, Types::Guild::TopicType.connection_type, null: true, max_page_size: 20 do
+    field :guild_top_topics, Types::Guild::TopicType.connection_type, null: true, max_page_size: 20, deprecation_reason: "Use topLabels instead" do
       description 'Returns a list of the top guild topic tags'
     end
 
@@ -289,7 +287,7 @@ module Types
       ::Guild::Topic.published.most_used
     end
 
-    field :top_labels, [Types::LabelType], null: true, max_page_size: 20 do
+    field :top_labels, Types::LabelType.connection_type, null: true, max_page_size: 20 do
       description 'Returns a list of the top labels'
     end
 
