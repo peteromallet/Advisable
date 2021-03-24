@@ -200,7 +200,7 @@ const shadows = {
   xs: `0 1px 3px ${rgba(colors.blue900, 0.15)}`,
   s: `0 2px 6px ${rgba(colors.blue900, 0.15)}`,
   m: `0 4px 12px ${rgba(colors.blue900, 0.1)}`,
-  l: `0 8px 20px ${rgba(colors.blue900, 0.2)}`,
+  l: `0 8px 20px ${rgba(colors.neutral900, 0.2)}`,
 };
 
 export default {

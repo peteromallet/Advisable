@@ -36,6 +36,10 @@ export default function MobileNavigation({ mobileNavOpen, setMobileNavOpen }) {
         Messages
       </Box>
       <Box height={1} bg="neutral100" />
+      <Box as={Link} display="block" py={6} to="/events" color="neutral900">
+        Events
+      </Box>
+      <Box height={1} bg="neutral100" />
       <Box
         as="a"
         display="flex"

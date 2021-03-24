@@ -15,7 +15,7 @@ const Cover = ({ srcList }) => {
   return <StyledCoverImage src={src} />;
 };
 
-export const CoverImage = ({ height = "320px", cover, onClick }) => {
+export const CoverImage = ({ height = "320px", cover, onClick, ...props }) => {
   return (
     <Suspense
       fallback={<Skeleton height={height} width="100%" borderRadius="4px" />}
@@ -26,6 +26,8 @@ export const CoverImage = ({ height = "320px", cover, onClick }) => {
         position="relative"
         display="inline-flex"
         onClick={onClick}
+        overflow="hidden"
+        {...props}
       >
         <ErrorBoundary FallbackComponent={() => null}>
           <Cover srcList={cover} />

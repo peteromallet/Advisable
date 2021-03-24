@@ -3,6 +3,7 @@
 # $> rake db:seed:02_guild_seeds
 
 require "faker"
+require "open-uri"
 
 Rails.logger.info "Creating guild topics"
 
@@ -72,6 +73,32 @@ Specialist.update_all(guild: true)
   gpi = Guild::PostImage.create(post: post, cover: true, position: 0)
   gpi.image.attach(io: File.open(image), filename: 'cover.jpg', content_type: 'image/jpeg')
   gpi.save
+end
+
+Rails.logger.info "Creating guild events"
+
+10.times do |num|
+  host = Specialist.order(Arel.sql("RANDOM()")).first
+  starts_at = rand(5..90).days.from_now
+  event = Event.create(
+    host: host, 
+    title: Faker::Quote.yoda[0..149], 
+    description: Faker::Lorem.paragraph_by_chars(number: 4256, supplemental: false),
+    published_at: Time.zone.now,
+    starts_at: starts_at,
+    ends_at: starts_at + 1.hour
+  )
+
+  rand(1..10).times do 
+    attendee = Specialist.where.not(id: host.id).order(Arel.sql("RANDOM()")).first
+    event.event_attendees.create(attendee: attendee) unless event.attendees.exists?(attendee.id)
+  end
+
+  # Attach random picsum image without being rate limited
+  sleep(0.3)
+  file = URI.open('https://picsum.photos/1800/1800.jpg')
+  event.cover_photo.attach(io: file, filename: "cover.jpg", content_type: 'image/jpg')
+  event.save!
 end
 
 # rubocop:enable all
