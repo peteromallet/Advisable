@@ -60,7 +60,6 @@ function Terms({ match, history, application, location }) {
         onSubmit={handleSubmit}
         initialValues={initialValues}
         validationSchema={validationSchema}
-        validateOnMount
       >
         {(formik) => (
           <Form>
