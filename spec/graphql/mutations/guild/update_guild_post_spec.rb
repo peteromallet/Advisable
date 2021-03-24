@@ -35,7 +35,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
     GRAPHQL
   end
 
-  let(:query) {
+  let(:query) do
     <<-GRAPHQL
     #{guild_post_fields}
     mutation {
@@ -48,10 +48,10 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
       }
     }
     GRAPHQL
-  }
+  end
 
   context "with a guild specialist" do
-    subject(:update_guild_post) {
+    subject(:update_guild_post) do
       lambda { |query|
         resp = AdvisableSchema.execute(
           query,
@@ -59,7 +59,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         )
         resp.dig("data", *response_keys)
       }
-    }
+    end
 
     it "errors if the post is not found or not scoped to current_user" do
       another = create(:specialist)
@@ -75,7 +75,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
 
     describe "updating guild post attributes" do
       let(:guild_topics) { create_list(:guild_topic, 3) }
-      let(:mutation) {
+      let(:mutation) do
         lambda { |input|
           gql = input.map { |k, v| "#{k}: #{v.is_a?(String) ? "\"#{v}\"" : v}" }.join(', ')
           <<-GRAPHQL
@@ -89,7 +89,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         }
           GRAPHQL
         }
-      }
+      end
 
       it "updates title body and audience type" do
         input = {
@@ -100,10 +100,10 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         }
         query = mutation[input]
 
-        expect {
+        expect do
           update_guild_post.call(query)
           guild_post.reload
-        }.to change(guild_post, :title).to("this is a new title").
+        end.to change(guild_post, :title).to("this is a new title").
           and change(guild_post, :body).to("this is a new body").
           and change(guild_post, :audience_type).to("skills")
       end
@@ -114,10 +114,10 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
           shareable: true
         }
         query = mutation[input]
-        expect {
+        expect do
           update_guild_post.call(query)
           guild_post.reload
-        }.to change(guild_post, :shareable).from(false).to(true)
+        end.to change(guild_post, :shareable).from(false).to(true)
       end
 
       it "does not change the status from published to draft" do
@@ -129,10 +129,10 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
 
         query = mutation[input]
 
-        expect {
+        expect do
           update_guild_post.call(query)
           guild_post.reload
-        }.not_to change(guild_post, :status)
+        end.not_to change(guild_post, :status)
       end
 
       it "updates the topic names" do
@@ -142,10 +142,10 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
         }
         query = mutation[input]
 
-        expect {
+        expect do
           update_guild_post.call(query)
           guild_post.reload
-        }.to change { guild_post.guild_topics.count }.from(0).to(3)
+        end.to change { guild_post.guild_topics.count }.from(0).to(3)
       end
 
       it "creates new topic names" do
