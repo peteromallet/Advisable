@@ -301,7 +301,7 @@ module Types
 
     # TODO: AATO - Remove guild_other_topics endpoint
 
-    field :guild_other_topics, [Types::Guild::TopicType], null: true do
+    field :guild_other_topics, [Types::Guild::TopicType], null: true, deprecation_reason: "Use otherLabels field instead" do
       description "Returns other guild topics that aren't related to skill, industry, or location"
     end
 
