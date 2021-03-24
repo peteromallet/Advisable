@@ -57,6 +57,10 @@ const color = variant({
       color: theme.colors.cyan700,
       background: theme.colors.cyan100,
     },
+    purple: {
+      color: "#093233",
+      background: "#D5CBF5",
+    },
   },
 });
 

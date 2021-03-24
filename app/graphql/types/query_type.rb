@@ -113,7 +113,7 @@ module Types
     end
 
     def task(id:)
-      ::Task.find_by_uid!(id)
+      ::Task.find_by!(uid: id)
     end
 
     field :currencies, [Types::CurrencyType], null: false do
@@ -185,6 +185,23 @@ module Types
       requires_current_user!
       identity = current_user.uid
       Grants::ChatService.call(identity: identity)
+    end
+
+    # We'll likely add an argument after v1, 'filter', which can have a default_value of 'upcoming'
+    field :events, Types::EventType.connection_type, null: true
+
+    def events
+      requires_guild_user!
+      ::Event.upcoming
+    end
+
+    field :event, Types::EventType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def event(id:)
+      requires_guild_user!
+      ::Event.find_by!(uid: id)
     end
 
     field :guild_post, Types::Guild::PostInterface, null: true do

@@ -44,6 +44,9 @@ Rails.application.routes.draw do
       end
       resources :topics
     end
+    resources :events do
+      delete :cover_photo, on: :member, action: :destroy_cover_photo
+    end
     resources :labels
 
     post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']

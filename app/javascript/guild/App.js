@@ -12,6 +12,8 @@ import useHideIntercom from "src/hooks/useHideIntercom";
 import Feed from "./views/Feed";
 import Post from "./views/Post";
 import Messages from "./views/Messages";
+import Events from "./views/Events";
+import Event from "./views/Event";
 import TwilioProvider from "./components/TwilioProvider";
 const YourPosts = lazy(() => import("./views/YourPosts"));
 const FreelancerProfile = lazy(() =>
@@ -76,6 +78,12 @@ const App = () => {
                   component={Feed}
                 />
                 <AuthenticatedRoute exact path="/follows" component={Follows} />
+                <AuthenticatedRoute
+                  exact
+                  path="/events/:eventId"
+                  component={Event}
+                />
+                <AuthenticatedRoute exact path="/events" component={Events} />
               </Switch>
             </Suspense>
           </TwilioProvider>
