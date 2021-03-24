@@ -16,7 +16,9 @@ RSpec.describe Mutations::FollowLabel do
       followLabel(input: {
         labelSlug: "#{label.slug}"
       }) {
-        success
+        label {
+          id
+        }
       }
     }
     GRAPHQL

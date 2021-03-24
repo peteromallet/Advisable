@@ -5,7 +5,7 @@ module Mutations
     graphql_name "FollowLabel"
     argument :label_slug, ID, required: true
 
-    field :success, Boolean, null: true
+    field :label, Types::LabelType, null: true
 
     def authorized?(**_args)
       requires_guild_user!
@@ -15,7 +15,7 @@ module Mutations
       label = ::Label.find_by!(slug: label_slug)
       current_user.subscribe_to!(label)
 
-      {success: true}
+      {label: label}
     end
   end
 end
