@@ -7,7 +7,7 @@ import TopicsList from "./TopicsList";
 
 const Topics = () => {
   const { data, loading, error } = useQuery(GUILD_TOP_TOPICS_QUERY);
-  const topics = data?.guildTopTopics.nodes;
+  const topics = data?.topLabels.nodes;
 
   return (
     <Box pb="12" flexShrink={1} alignSelf="flex-start">
