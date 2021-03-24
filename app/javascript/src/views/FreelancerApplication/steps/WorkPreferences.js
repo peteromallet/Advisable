@@ -74,6 +74,7 @@ export default function WorkPreferences({ specialist, skills, industries }) {
                 isRequired
                 as={Combobox}
                 multiple
+                max={10}
                 value={formik.values.skills}
                 name="skills"
                 onChange={(s) => formik.setFieldValue("skills", s)}
@@ -87,6 +88,7 @@ export default function WorkPreferences({ specialist, skills, industries }) {
                 isRequired
                 as={Combobox}
                 multiple
+                max={10}
                 value={formik.values.industries}
                 name="industries"
                 onChange={(i) => formik.setFieldValue("industries", i)}
