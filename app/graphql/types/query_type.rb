@@ -239,7 +239,7 @@ module Types
 
     # TODO: AATO - Remove guild_topic_posts endpoint
 
-    field :guild_topic_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
+    field :guild_topic_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5, deprecation_reason: "Use labelPosts instead" do
       argument :topic_id, ID, required: true
     end
 
