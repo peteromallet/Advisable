@@ -16,6 +16,40 @@ export const StyledDescription = styled(Text)`
   max-width: 540px;
 `;
 
+const StyledIconBox = (props) => (
+  <Box
+    width={{ _: "42px", m: "48px" }}
+    height={{ _: "42px", m: "48px" }}
+    borderRadius="12px"
+    display="flex"
+    alignItems="center"
+    justifyContent="center"
+    mb={[2, 2, 4]}
+    {...props}
+  />
+);
+
+const StyledElementHeader = (props) => (
+  <Text
+    fontWeight="medium"
+    fontSize="l"
+    lineHeight="s"
+    mb={[1, 1, 2]}
+    color="neutral900"
+    {...props}
+  />
+);
+
+const StyledElementDescription = (props) => (
+  <Text
+    fontSize="sm"
+    lineHeight="s"
+    color="neutral600"
+    mb={[3, 3, 6]}
+    {...props}
+  />
+);
+
 export default function AcceptedStatusPrompt() {
   return (
     <Card
@@ -56,42 +90,22 @@ export default function AcceptedStatusPrompt() {
           gridRowGap={{ m: 0, _: 12 }}
         >
           <Box>
-            <Box
-              width={{ _: "42px", m: "48px" }}
-              height={{ _: "42px", m: "48px" }}
-              borderRadius="12px"
-              bg="orange100"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              color="orange800"
-              mb={[2, 2, 4]}
-            >
+            <StyledIconBox bg="orange100" color="orange800">
               <Briefcase size="24px" />
-            </Box>
-            <Text
-              fontWeight="medium"
-              fontSize="l"
-              lineHeight="s"
-              mb={[1, 1, 2]}
-              color="neutral900"
-            >
+            </StyledIconBox>
+            <StyledElementHeader>
               Build your profile and get access to new opportunities
-            </Text>
-            <Text
-              fontSize="sm"
-              lineHeight="s"
-              color="neutral600"
-              mb={[3, 3, 6]}
-            >
+            </StyledElementHeader>
+            <StyledElementDescription>
               In order to get access to opportunities from Advisable you need to
               have a profile. Add some of your previous work and we&apos;ll
               start searching for new opportunities that match your skillset.
-            </Text>
+            </StyledElementDescription>
             <Button
               as={Link}
               to="/profile"
               suffix={<ArrowRight />}
+              width={["100%", "auto"]}
               size="s"
               variant="subtle"
             >
@@ -99,42 +113,22 @@ export default function AcceptedStatusPrompt() {
             </Button>
           </Box>
           <Box>
-            <Box
-              width={{ _: "42px", m: "48px" }}
-              height={{ _: "42px", m: "48px" }}
-              borderRadius="12px"
-              bg="cyan100"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              color="cyan800"
-              mb={[2, 2, 4]}
-            >
+            <StyledIconBox bg="cyan100" color="cyan800">
               <UserGroup size="24px" />
-            </Box>
-            <Text
-              fontWeight="medium"
-              fontSize="l"
-              lineHeight="s"
-              mb={[1, 1, 2]}
-              color="neutral900"
-            >
+            </StyledIconBox>
+            <StyledElementHeader>
               Start building your freelance network with Guild
-            </Text>
-            <Text
-              fontSize="sm"
-              lineHeight="s"
-              color="neutral600"
-              mb={[3, 3, 6]}
-            >
+            </StyledElementHeader>
+            <StyledElementDescription>
               Start building your freelance network with Guild. You can post,
               connect with other freelancers or visit the events tab to find out
               when our next Guild event is happening.
-            </Text>
+            </StyledElementDescription>
             <Button
               as={Link.External}
               href="/guild"
               suffix={<ArrowRight />}
+              width={["100%", "auto"]}
               size="s"
               variant="subtle"
             >
