@@ -26,7 +26,6 @@ const StyledComment = styled.p`
 const StyledLeftBracket = styled.span`
   position: absolute;
   color: ${theme.colors.blue400};
-  top: 10px;
   opacity: 0.6;
   line-height: 14px;
   vertical-align: bottom;
@@ -67,6 +66,7 @@ const size = variant({
       [StyledLeftBracket]: {
         fontSize: "36px",
         left: "-18px",
+        top: "8px",
       },
       [StyledRightBracket]: {
         fontSize: "36px",
@@ -91,11 +91,12 @@ const size = variant({
         paddingLeft: "xl",
       },
       [StyledComment]: {
-        fontSize: "xl",
+        fontSize: "l",
       },
       [StyledLeftBracket]: {
         fontSize: "36px",
         left: "-18px",
+        top: "10px",
       },
       [StyledRightBracket]: {
         fontSize: "36px",
@@ -125,6 +126,7 @@ const size = variant({
       [StyledLeftBracket]: {
         fontSize: "48px",
         left: "-24px",
+        top: "10px",
       },
       [StyledRightBracket]: {
         fontSize: "48px",
@@ -149,7 +151,7 @@ const Review = ({ review, size }) => {
       <Box gridArea="avatar">
         <Avatar name={review.name} url={review.avatar} />
       </Box>
-      <Box gridArea="name">
+      <Box gridArea="name" alignSelf="center">
         <StyledName>{name || role}</StyledName>
         <StyledTitle>{title}</StyledTitle>
       </Box>
