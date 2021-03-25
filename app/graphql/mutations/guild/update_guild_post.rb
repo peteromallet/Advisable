@@ -12,7 +12,7 @@ module Mutations
       argument :publish, Boolean, required: false
       argument :type, String, required: false
       argument :audience_type, String, required: false
-      argument :guild_topic_names, [String], required: false, deprecation_reason: "Use labelNames instead"
+      argument :guild_topic_names, [String], required: false, deprecation_reason: "Use labels instead"
       argument :labels, [String], required: false
       argument :shareable, Boolean, required: false
 
