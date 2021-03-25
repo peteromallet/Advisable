@@ -14,11 +14,8 @@ export const BaseStyles = createGlobalStyle`
 export const StyledLayout = styled.div`
   width: 100vw;
   height: 100vh;
-  overflow: auto;
   position: relative;
 `;
-
-export const StyledLayoutBody = styled.div``;
 
 export const StyledHeader = styled.div`
   top: 0;
@@ -34,8 +31,18 @@ export const StyledHeader = styled.div`
   box-shadow: 0 1px 2px ${rgba(theme.colors.neutral900, 0.16)};
 `;
 
+export const StyledViewport = styled.div`
+  display: flex;
+  height: calc(100vh - ${HEADER_HEIGHT}px);
+`;
+
+export const StyledScrollContainer = styled.div`
+  height: 100%;
+  overflow-y: scroll;
+`;
+
 export const StyledHeaderRow = styled.div`
-  top: ${HEADER_HEIGHT}px;
+  top: 0px;
   display: flex;
   position: sticky;
   flex-wrap: nowrap;

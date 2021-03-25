@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Box, Text } from "@advisable/donut";
-import { Trash } from "@styled-icons/heroicons-outline";
-import { Funnel } from "@styled-icons/ionicons-outline";
+import { Trash } from "@styled-icons/heroicons-outline/Trash";
+import { Funnel } from "@styled-icons/ionicons-outline/Funnel";
 import NewFilterMenu from "./NewFilterMenu";
 import FilterBreadcrumbs from "./FilterBreadcrumbs";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
