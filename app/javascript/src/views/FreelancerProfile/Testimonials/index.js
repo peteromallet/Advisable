@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Stack, useBreakpoint } from "@advisable/donut";
-import Review from "./Review";
+import Review from "src/components/ReviewNew";
 import {
   SectionHeaderText,
   SectionHeaderWrapper,
@@ -8,7 +8,9 @@ import {
 
 function Testimonials({ reviews }) {
   const isWidescreen = useBreakpoint("sUp");
-  const cards = reviews.map((r) => <Review key={r.id} review={r} />);
+  const cards = reviews.map((r) => (
+    <Review key={r.id} review={r} size={["s", "s", "m", "l"]} />
+  ));
   return (
     <Box mb="4xl">
       <SectionHeaderWrapper divider={"neutral200"}>
