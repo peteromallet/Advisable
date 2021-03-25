@@ -15,15 +15,13 @@ class GraphqlController < ApplicationController
       session_manager: session_manager,
       current_user: current_user,
       current_account: current_account,
-      oauth_viewer:
-        session[:omniauth] ? OauthViewer.new(session[:omniauth]) : nil
+      oauth_viewer: session[:omniauth] ? OauthViewer.new(session[:omniauth]) : nil
     }
 
-    result =
-      AdvisableSchema.execute(
-        query,
-        variables: variables, context: context, operation_name: operation_name
-      )
+    result = AdvisableSchema.execute(
+      query,
+      variables: variables, context: context, operation_name: operation_name
+    )
     render json: result
   end
 
