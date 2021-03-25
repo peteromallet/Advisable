@@ -221,6 +221,13 @@ export function resourceAttribute(resourceData, attributeName) {
   return resourceData.attributes.find((a) => a.name === attributeName);
 }
 
+export function attributeIsScalar(schemaData, resource, attributeName) {
+  const type = getType(schemaData.schema, resource.type);
+  const field = type.fields.find((f) => f.name === attributeName);
+  if (field.type?.kind === "SCALAR") return true;
+  return field.type.ofType?.ofType?.type === "SCALAR";
+}
+
 // takes a resource and attributeName and returns the nested resource
 export function getNestedResource(schemadata, resource, attributeName) {
   const type = getType(schemadata.schema, resource.type);

@@ -2,11 +2,20 @@ import React from "react";
 import OneOf from "./OneOf";
 import Equals from "./Equals";
 import Includes from "./Includes";
+import NumberInput from "./NumberInput";
+import DateInput from "./DateInput";
+import StringContains from "./StringContains";
 
 const FILTERS = {
   OneOf,
   Equals,
   Includes,
+  LessThan: NumberInput,
+  DateEquals: DateInput,
+  DateAfter: DateInput,
+  DateBefore: DateInput,
+  GreaterThan: NumberInput,
+  StringContains,
 };
 
 export function getValueComponentForFilter(resource, filter) {
@@ -17,7 +26,7 @@ export function getValueComponentForFilter(resource, filter) {
   return FILTERS[attributeFilter.type];
 }
 
-export default function Filter({ resource, filter, onChange, finalize }) {
+export default function Filter({ resource, filter, onChange }) {
   const attribute = resource.attributes.find(
     (f) => f.name === filter.attribute,
   );
@@ -25,20 +34,17 @@ export default function Filter({ resource, filter, onChange, finalize }) {
   let Component = FILTERS[attributeFilter.type];
 
   if (!Component) {
-    console.error(
-      "No filter handler found. Falling back to basic input",
-      filter,
-    );
-    Component = Equals;
+    console.error("No filter handler found.", filter);
+    return null;
   }
 
   return (
     <Component
       resource={resource}
       attribute={attribute}
+      filter={attributeFilter}
       value={filter.value}
       onChange={onChange}
-      finalize={finalize}
     />
   );
 }

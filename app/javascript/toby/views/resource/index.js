@@ -1,24 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import { Box } from "@advisable/donut";
+import { motion } from "framer-motion";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useFetchResources } from "../../utilities";
 import {
   StyledLayout,
-  StyledLayoutBody,
   StyledHeader,
   StyledHeaderRow,
   StyledHeaderCell,
   StyledRow,
   StyledCell,
+  StyledViewport,
+  StyledScrollContainer,
 } from "../../styles";
-import useFilters from "./useFilters";
-import FilterMenu from "./FilterMenu";
+import FilterDrawer from "./Filters";
 import Navigation from "../../components/Navigation";
 import { Attribute } from "../../attributes";
 
 export default function Resource() {
-  const filterState = useFilters();
+  const [filters, setFilters] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
   const { loading, data, resource, fetchMore, error } = useFetchResources(
-    filterState.filters,
+    filters,
   );
 
   const hasNextPage = data?.records.pageInfo.hasNextPage;
@@ -39,27 +42,39 @@ export default function Resource() {
     <StyledLayout ref={scrollRef}>
       <StyledHeader>
         <Navigation />
-        <FilterMenu resource={resource} {...filterState} />
+        <button onClick={() => setIsOpen(!isOpen)}>Open filters</button>
       </StyledHeader>
-      <StyledHeaderRow style={{ width: 200 * resource.attributes.length }}>
-        {resource.attributes.map((attr) => (
-          <StyledHeaderCell key={attr.name}>
-            {attr.columnLabel}
-          </StyledHeaderCell>
-        ))}
-      </StyledHeaderRow>
-      <StyledLayoutBody style={{ width: 200 * resource.attributes.length }}>
-        {edges.map(({ node }) => (
-          <StyledRow key={node.id}>
-            {resource.attributes.map((attr) => (
-              <StyledCell key={attr.name}>
-                <Attribute record={node} attribute={attr} />
-              </StyledCell>
-            ))}
-          </StyledRow>
-        ))}
-        {loading && <>loading...</>}
-      </StyledLayoutBody>
+      <StyledViewport>
+        <FilterDrawer resource={resource} open={isOpen} onApply={setFilters} />
+        <StyledScrollContainer
+          as={motion.div}
+          transition={{ duration: 0.2 }}
+          animate={{ x: isOpen ? 400 : 0 }}
+        >
+          {/* Dear future developer. I know this inline-block looks random. But its important. */}
+          <Box display="inline-block">
+            <StyledHeaderRow>
+              {resource.attributes.map((attr) => (
+                <StyledHeaderCell key={attr.name}>
+                  {attr.columnLabel}
+                </StyledHeaderCell>
+              ))}
+            </StyledHeaderRow>
+            <Box>
+              {edges.map(({ node }) => (
+                <StyledRow key={node.id}>
+                  {resource.attributes.map((attr) => (
+                    <StyledCell key={attr.name}>
+                      <Attribute record={node} attribute={attr} />
+                    </StyledCell>
+                  ))}
+                </StyledRow>
+              ))}
+              {loading && <>loading...</>}
+            </Box>
+          </Box>
+        </StyledScrollContainer>
+      </StyledViewport>
     </StyledLayout>
   );
 }
