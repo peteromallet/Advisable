@@ -1,63 +1,29 @@
 import React from "react";
-import { Box, Stack, Text, Avatar } from "@advisable/donut";
-import renderLineBreaks from "../../utilities/renderLineBreaks";
-
-function SpecialistReview({ review }) {
-  const { role, name, companyName } = review;
-  const title = name ? `${role} at ${companyName}` : companyName;
-
-  return (
-    <Box padding="16px" borderRadius="12px" bg="neutral100">
-      <Box display="flex" alignItems="center" marginBottom="s">
-        <Avatar
-          size="s"
-          bg="neutral200"
-          marginRight="12px"
-          url={review.avatar}
-          name={name}
-        />
-        <Box>
-          <Text
-            color="neutral900"
-            fontWeight="medium"
-            lineHeight="20px"
-            letterSpacing="-0.02em"
-          >
-            {name || role}
-          </Text>
-          <Text fontSize="sm" color="neutral600">
-            {title}
-          </Text>
-        </Box>
-      </Box>
-      <Text
-        autoLink
-        lineHeight="20px"
-        color="neutral800"
-        fontStyle="italic"
-        letterSpacing="0.01em"
-      >
-        {renderLineBreaks(`"${review.comment}"`)}
-      </Text>
-    </Box>
-  );
-}
+import { Box, Stack, Text, useBreakpoint } from "@advisable/donut";
+import Review from "src/components/Review";
 
 export default function SpecialistReviews({ reviews }) {
+  const isWidescreen = useBreakpoint("lUp");
   return (
     <Box marginBottom="52px">
-      <Text
-        fontSize="xl"
-        fontWeight="medium"
-        color="neutral900"
-        marginBottom="16px"
-        letterSpacing="-0.01em"
+      <Box borderStyle="solid" borderBottomWidth="1px" borderColor="neutral200">
+        <Text
+          fontSize="xl"
+          fontWeight="medium"
+          color="neutral900"
+          letterSpacing="-0.01em"
+          mb={2}
+        >
+          Testimonials
+        </Text>
+      </Box>
+      <Stack
+        spacing={isWidescreen ? "20" : "12"}
+        divider={"neutral200"}
+        pt={{ _: 4, l: 8 }}
       >
-        Testimonials
-      </Text>
-      <Stack spacing="m">
         {reviews.map((review) => (
-          <SpecialistReview key={review.id} review={review} />
+          <Review key={review.id} review={review} size={{ _: "s", l: "m" }} />
         ))}
       </Stack>
     </Box>

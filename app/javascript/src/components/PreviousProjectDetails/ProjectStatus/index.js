@@ -15,7 +15,7 @@ function Validated({ project }) {
 
   return (
     <StatusWrapper>
-      <Review review={review} />
+      <Review review={review} size={{ _: "s", m: "m", l: "s" }} />
     </StatusWrapper>
   );
 }
