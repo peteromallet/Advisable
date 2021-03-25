@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Paragraph, Text, Button } from "@advisable/donut";
-import { ArrowForward } from "@styled-icons/ionicons-outline";
+import { ArrowForward } from "@styled-icons/ionicons-outline/ArrowForward";
 import {
   useWalkthrough,
   Walkthrough,

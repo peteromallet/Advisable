@@ -1,8 +1,8 @@
 import React from "react";
 import Status from "./Status";
 import { DraftCTA, FailedCTA } from "./CTAs";
-import { Exclamation } from "@styled-icons/heroicons-outline";
-import { EyeOff } from "@styled-icons/ionicons-outline";
+import { Exclamation } from "@styled-icons/heroicons-outline/Exclamation";
+import { EyeOff } from "@styled-icons/ionicons-outline/EyeOff";
 import ProjectValidationPrompt from "src/components/ProjectValidationPrompt";
 import Review from "src/components/Review";
 import { StatusWrapper } from "./styles";

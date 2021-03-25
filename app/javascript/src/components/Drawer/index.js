@@ -6,7 +6,7 @@ import { Button } from "@advisable/donut";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { useMobile } from "../../components/Breakpoint";
 import { Container, Backdrop, Drawer, Actions } from "./styles";
-import { X } from "@styled-icons/feather";
+import { X } from "@styled-icons/feather/X";
 export { default as DrawerModal } from "./DrawerModal";
 
 export default ({ isOpen, onClose, children, actions }) => {

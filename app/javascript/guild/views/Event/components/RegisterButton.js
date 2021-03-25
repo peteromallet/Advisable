@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, useBreakpoint } from "@advisable/donut";
-import { Calendar } from "@styled-icons/heroicons-outline";
+import { Calendar } from "@styled-icons/heroicons-outline/Calendar";
 import { EventStatus } from "./useEventStatus";
 
 export default function RegisterButton({ attending, eventStatus, ...props }) {

@@ -1,12 +1,10 @@
 import React from "react";
 import { padding } from "styled-system";
 import { motion } from "framer-motion";
-import {
-  Card,
-  Document,
-  LockClosed,
-  PeopleCircle,
-} from "@styled-icons/ionicons-outline";
+import { Card } from "@styled-icons/ionicons-outline/Card";
+import { Document } from "@styled-icons/ionicons-outline/Document";
+import { LockClosed } from "@styled-icons/ionicons-outline/LockClosed";
+import { PeopleCircle } from "@styled-icons/ionicons-outline/PeopleCircle";
 import NavigationMenu from "../../../components/NavigationMenu";
 import styled from "styled-components";
 import { Text, useBreakpoint } from "@advisable/donut";

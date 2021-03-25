@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
 import { useQuery } from "@apollo/client";
 import { Card, Text, Box, Stack } from "@advisable/donut";
-import { Plus, X } from "@styled-icons/heroicons-outline";
+import { Plus } from "@styled-icons/heroicons-outline/Plus";
+import { X } from "@styled-icons/heroicons-outline/X";
 import Loading from "@advisable-main/components/Loading";
 import { GUILD_TOP_TOPICS_QUERY } from "@guild/components/Topics/queries.js";
 import ErrorBoundary from "@guild/components/ErrorBoundary";

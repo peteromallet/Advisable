@@ -3,7 +3,8 @@ import { useQuery } from "@apollo/client";
 import { css } from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link as RouterLink } from "react-router-dom";
-import { Send, ArrowUp } from "@styled-icons/ionicons-solid";
+import { Send } from "@styled-icons/ionicons-solid/Send";
+import { ArrowUp } from "@styled-icons/ionicons-solid/ArrowUp";
 import {
   Box,
   Button,

@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { Search } from "@styled-icons/heroicons-outline";
+import { Search } from "@styled-icons/heroicons-outline/Search";
 import { useNotifications } from "components/Notifications";
 import { CREATE_JOB } from "../queries";
 import {

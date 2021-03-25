@@ -1,10 +1,8 @@
 import React from "react";
 import { Tag } from "@advisable/donut";
-import {
-  Support,
-  UserGroup,
-  ChartSquareBar,
-} from "@styled-icons/heroicons-outline";
+import { ChartSquareBar } from "@styled-icons/heroicons-outline/ChartSquareBar";
+import { Support } from "@styled-icons/heroicons-outline/Support";
+import { UserGroup } from "@styled-icons/heroicons-outline/UserGroup";
 
 const TYPES = {
   GuildPostAdviceRequired: {

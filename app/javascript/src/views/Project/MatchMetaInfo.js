@@ -1,7 +1,7 @@
 import React from "react";
 import currency from "src/utilities/currency";
-import { Globe } from "@styled-icons/ionicons-outline";
-import { LinkedinWithCircle } from "@styled-icons/entypo-social";
+import { Globe } from "@styled-icons/ionicons-outline/Globe";
+import { LinkedinWithCircle } from "@styled-icons/entypo-social/LinkedinWithCircle";
 import { Stack, Box, Text, Link } from "@advisable/donut";
 
 function SocialLink({ icon, children, ...props }) {

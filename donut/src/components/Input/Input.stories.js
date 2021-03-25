@@ -1,5 +1,5 @@
 import React from "react";
-import { Phone } from "@styled-icons/feather";
+import { Phone } from "@styled-icons/feather/Phone";
 import { withKnobs, text, boolean, select } from "@storybook/addon-knobs";
 import Input from "./";
 import Card from "../Card";

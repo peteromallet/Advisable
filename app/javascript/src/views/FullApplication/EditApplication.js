@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckCircle } from "@styled-icons/heroicons-solid";
+import { CheckCircle } from "@styled-icons/heroicons-solid/CheckCircle";
 import { Box, Text, Notice } from "@advisable/donut";
 import ManagePreviousProjects, {
   useManagePreviousProjects,

@@ -3,7 +3,7 @@ import { rgba } from "polished";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { theme } from "@advisable/donut";
-import { ChevronRight } from "@styled-icons/feather";
+import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 
 export const PrefixIcon = styled.div`
   color: ${theme.colors.neutral500};

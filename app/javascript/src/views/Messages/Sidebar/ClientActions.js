@@ -5,7 +5,8 @@ import { useNotifications } from "components/Notifications";
 import RejectApplicationForm from "components/RejectApplicationForm";
 import CreateBookingButton from "../../../components/CreateBookingButton";
 import ReportUnresponsive from "./ReportUnresponsive";
-import { FileText, Check } from "@styled-icons/feather";
+import { Check } from "@styled-icons/feather/Check";
+import { FileText } from "@styled-icons/feather/FileText";
 
 function RejectApplicationAction({ application }) {
   const modal = useModal();

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Tooltip } from "@advisable/donut";
-import { Bulb } from "@styled-icons/ionicons-outline";
-import { Bulb as BulbFilled } from "@styled-icons/ionicons-solid";
+import { Bulb } from "@styled-icons/ionicons-outline/Bulb";
+import { Bulb as BulbFilled } from "@styled-icons/ionicons-solid/Bulb";
 import { useMutation, gql } from "@apollo/client";
 import PostAction from "@guild/components/PostActions/PostAction";
 import useViewer from "src/hooks/useViewer";

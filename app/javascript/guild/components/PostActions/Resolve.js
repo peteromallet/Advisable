@@ -1,5 +1,5 @@
 import React from "react";
-import { Check } from "@styled-icons/heroicons-outline";
+import { Check } from "@styled-icons/heroicons-outline/Check";
 import { useNotifications } from "src/components/Notifications";
 import { Modal, Box, Tooltip, Button, Text, Paragraph } from "@advisable/donut";
 import { useMutation } from "@apollo/client";

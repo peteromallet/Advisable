@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { GuildBox, breakpoint } from "@guild/styles";
-import { Close } from "@styled-icons/ionicons-outline";
+import { Close } from "@styled-icons/ionicons-outline/Close";
 import { theme } from "@advisable/donut";
 
 const { colors } = theme;

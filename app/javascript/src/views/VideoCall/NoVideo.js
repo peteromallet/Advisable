@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Circle } from "@advisable/donut";
-import { PersonCircle } from "@styled-icons/ionicons-outline";
+import { PersonCircle } from "@styled-icons/ionicons-outline/PersonCircle";
 
 const StyledNoVideoCircle = styled(Circle)`
   background-size: cover;

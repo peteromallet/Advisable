@@ -12,8 +12,8 @@ import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";
 import ProcessingApplication from "./ProcessingApplication";
 import TilesInput from "../../TilesInput";
-// Icons
-import { X, Check } from "@styled-icons/feather";
+import { Check } from "@styled-icons/feather/Check";
+import { X } from "@styled-icons/feather/X";
 // Options
 import { talentQualityMobileOptions, talentQualityOptions } from "./options";
 // Queries

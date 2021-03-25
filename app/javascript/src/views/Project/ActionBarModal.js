@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CloseCircle } from "@styled-icons/ionicons-solid";
+import { CloseCircle } from "@styled-icons/ionicons-solid/CloseCircle";
 import styled from "styled-components";
 import { padding } from "styled-system";
 import { rgba } from "polished";

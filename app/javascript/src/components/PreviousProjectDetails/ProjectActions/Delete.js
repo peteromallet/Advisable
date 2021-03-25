@@ -1,5 +1,5 @@
 import React from "react";
-import { Trash } from "@styled-icons/heroicons-outline";
+import { Trash } from "@styled-icons/heroicons-outline/Trash";
 import { Box, Tooltip } from "@advisable/donut";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import CircularButton from "src/components/CircularButton";

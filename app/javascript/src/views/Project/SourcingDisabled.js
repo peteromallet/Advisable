@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useParams } from "react-router-dom";
-import { Pause } from "@styled-icons/ionicons-solid";
+import { Pause } from "@styled-icons/ionicons-solid/Pause";
 import { Box, Circle, Text, Paragraph, Button } from "@advisable/donut";
 import { useToggleSourcing } from "./queries";
 

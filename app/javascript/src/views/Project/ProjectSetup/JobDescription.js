@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Formik, Form, Field } from "formik";
 import { Error } from "@advisable/donut";
 import SubmitButton from "components/SubmitButton";

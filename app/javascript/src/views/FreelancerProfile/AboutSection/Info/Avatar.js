@@ -7,7 +7,7 @@ import { useNotifications } from "src/components/Notifications";
 import useImageOnLoad from "src/hooks/useImageOnLoad";
 // Components
 import { Box, theme, StyledCard } from "@advisable/donut";
-import { User } from "@styled-icons/feather";
+import { User } from "@styled-icons/feather/User";
 import FileUpload from "../FileUpload";
 // Queries
 import { UPDATE_PROFILE } from "../../queries";

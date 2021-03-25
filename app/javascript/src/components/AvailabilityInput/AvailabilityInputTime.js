@@ -1,5 +1,6 @@
 import React from "react";
-import { Check, Phone } from "@styled-icons/feather";
+import { Check } from "@styled-icons/feather/Check";
+import { Phone } from "@styled-icons/feather/Phone";
 import { Circle, Tooltip } from "@advisable/donut";
 import {
   StyledAvailabilityInputCell,

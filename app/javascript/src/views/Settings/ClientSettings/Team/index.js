@@ -1,5 +1,5 @@
 import React from "react";
-import { InformationCircle } from "@styled-icons/ionicons-outline";
+import { InformationCircle } from "@styled-icons/ionicons-outline/InformationCircle";
 import { Card, Text, Box, Tooltip } from "@advisable/donut";
 import { Redirect } from "react-router";
 import useViewer from "src/hooks/useViewer";

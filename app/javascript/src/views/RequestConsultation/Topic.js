@@ -1,5 +1,5 @@
 import { object, string } from "yup";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import React from "react";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";

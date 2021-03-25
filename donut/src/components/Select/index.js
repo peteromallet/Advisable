@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown } from "@styled-icons/feather";
+import { ChevronDown } from "@styled-icons/feather/ChevronDown";
 import {
   StyledSelect,
   StyledSelectArrow,

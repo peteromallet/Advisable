@@ -2,7 +2,7 @@ import React from "react";
 import { object, string } from "yup";
 import { gql, useMutation } from "@apollo/client";
 import { Formik, Form } from "formik";
-import { Flag } from "@styled-icons/heroicons-outline";
+import { Flag } from "@styled-icons/heroicons-outline/Flag";
 import { DialogDisclosure } from "reakit/Dialog";
 import FormField from "src/components/FormField";
 import { useNotifications } from "src/components/Notifications";

@@ -1,5 +1,6 @@
 import React from "react";
-import { VolumeHigh, VolumeMute } from "@styled-icons/ionicons-outline";
+import { VolumeHigh } from "@styled-icons/ionicons-outline/VolumeHigh";
+import { VolumeMute } from "@styled-icons/ionicons-outline/VolumeMute";
 import ActionBar from "components/ActionBar";
 import useLocalAudioToggle from "./useLocalAudioToggle";
 import useCallContext from "./useCallContext";

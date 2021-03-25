@@ -1,5 +1,6 @@
 import React from "react";
-import { Star, ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
+import { Star } from "@styled-icons/feather/Star";
 import { useTranslation } from "react-i18next";
 import { Tooltip, Box, Text, Link } from "@advisable/donut";
 

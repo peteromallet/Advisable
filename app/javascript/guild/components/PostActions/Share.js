@@ -1,6 +1,6 @@
 import React from "react";
 import { DialogDisclosure, useDialogState } from "reakit/Dialog";
-import { Link } from "@styled-icons/heroicons-outline";
+import { Link } from "@styled-icons/heroicons-outline/Link";
 import { Modal, Box, Tooltip } from "@advisable/donut";
 import PostAction from "./PostAction";
 import ShareModal from "@guild/components/Post/components/ShareModal";

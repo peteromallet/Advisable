@@ -3,7 +3,7 @@ import { Box, Text, Tooltip, theme } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import { rgba } from "polished";
 import { DirectUpload } from "@rails/activestorage";
-import { Camera } from "@styled-icons/feather";
+import { Camera } from "@styled-icons/feather/Camera";
 import { AnimatePresence, motion } from "framer-motion";
 import styled, { keyframes } from "styled-components";
 import filesExceedLimit from "src/utilities/filesExceedLimit";

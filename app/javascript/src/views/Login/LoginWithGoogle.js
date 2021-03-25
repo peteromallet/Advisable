@@ -1,5 +1,5 @@
 import React from "react";
-import { Google } from "@styled-icons/fa-brands";
+import { Google } from "@styled-icons/fa-brands/Google";
 import { StyledLoginWithGoogle } from "./styles";
 
 export default function LoginWithGoogle() {

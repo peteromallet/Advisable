@@ -5,7 +5,7 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import ActionBar from "./ActionBar";
 import { Formik, Form } from "formik";
 import { useParams } from "react-router";
-import { Share } from "@styled-icons/ionicons-outline";
+import { Share } from "@styled-icons/ionicons-outline/Share";
 import useViewer from "src/hooks/useViewer";
 import Loading from "src/components/Loading";
 import FormField from "src/components/FormField";

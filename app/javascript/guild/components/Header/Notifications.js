@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import { Notifications as NotificationIcon } from "@styled-icons/ionicons-outline";
+import { Notifications as NotificationIcon } from "@styled-icons/ionicons-outline/Notifications";
 import { NavIcon, StyledCurrentUserMenu } from "./styles";
 import { GUILD_LAST_READ_QUERY } from "./queries";
 import { GUILD_UPDATE_LAST_READ } from "./mutations";
