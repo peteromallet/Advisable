@@ -18,7 +18,9 @@ RSpec.describe Mutations::UnfollowLabel do
       unfollowLabel(input: {
         labelSlug: "#{label.slug}"
       }) {
-        success
+        label {
+          id
+        }
       }
     }
     GRAPHQL

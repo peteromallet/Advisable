@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const SELECT_DATA = gql`
-  {
+  query guildPostEditorData {
     industries {
       label: name
       value: name
@@ -24,7 +24,7 @@ export const SELECT_DATA = gql`
       label: name
       value: name
     }
-    guildOtherTopics {
+    otherLabels {
       label: name
       value: name
     }

@@ -91,7 +91,7 @@ module Types
         description 'The type of audience configured for this post'
       end
 
-      field :guild_topics, [Types::Guild::TopicType], null: true
+      field :guild_topics, [Types::Guild::TopicType], null: true, deprecation_reason: "Use labels field instead"
       def guild_topics
         if current_user == object.specialist
           object.guild_topics

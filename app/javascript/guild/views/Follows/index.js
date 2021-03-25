@@ -21,7 +21,7 @@ const Follows = () => {
   const { data: topTopicsData, loading: topTopicsLoading } = useQuery(
     GUILD_TOP_TOPICS_QUERY,
   );
-  const topTopics = topTopicsData?.guildTopTopics?.nodes;
+  const topTopics = topTopicsData?.topLabels?.nodes;
 
   /*
     Top Topics that aren't followed
@@ -62,7 +62,7 @@ const Follows = () => {
                 {followedTopics.map((topic, key) => (
                   <StyledGuildTopic
                     type="button"
-                    onClick={() => unfollowTopic(topic.id)}
+                    onClick={() => unfollowTopic(topic.slug)}
                     key={key}
                   >
                     <Text mr={2} size="s" color="#2B2D5F">
@@ -95,7 +95,7 @@ const Follows = () => {
               {unfollowedTopTopics.map((topic, key) => (
                 <StyledGuildTopic
                   type="button"
-                  onClick={() => followTopic(topic.id)}
+                  onClick={() => followTopic(topic.slug)}
                   key={key}
                 >
                   <Text mr={2} size="s" color="#2B2D5F">
