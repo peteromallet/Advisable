@@ -34,8 +34,8 @@ const Post = ({
       <StyledPostCard
         padding={[4, 6]}
         data-testid="post"
-        popular={post.isPopular}
         pinned={post.pinned}
+        popular={post.isPopular}
       >
         <Box position="absolute" right="2" top="2">
           <PostTypeTag post={post} />

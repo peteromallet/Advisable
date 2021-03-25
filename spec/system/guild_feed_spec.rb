@@ -7,9 +7,9 @@ RSpec.describe 'Guild feed', type: :system do
   let(:author) { create(:specialist, :guild) }
   let(:author_name) { author.account.first_name }
   let!(:post) { create(:guild_post, pinned: true, specialist: author) }
+  let!(:posts) { create_list(:guild_post, 4, engagements_count: 1) }
 
   before do
-    create_list(:guild_post, 6, engagements_count: 1)
     specialist.account.update!(completed_tutorials: ["guild"])
     authenticate_as(specialist)
   end
@@ -26,14 +26,18 @@ RSpec.describe 'Guild feed', type: :system do
     end
 
     it 'includes a notice that post is resolved' do
-      post.update(type: "Opportunity", resolved_at: Time.current)
+      posts.last.update(type: "Opportunity", resolved_at: 3.weeks.ago, reactionable_count: Guild::Post::POPULAR_THRESHOLD)
       visit "/guild/feed"
+      author_name = posts.last.account.first_name
       expect(page).to have_content("#{author_name} found the connection they were looking for from this post.")
+      expect(page).not_to have_content("Many people found this post interesting")
     end
 
     it "includes a pinned post at the top if there is one" do
       visit "/guild/feed"
+      post.update!(pinned: true, reactionable_count: Guild::Post::POPULAR_THRESHOLD)
       expect(page).to have_content("This post has been pinned by the Advisable team")
+      expect(page).not_to have_content("Many people found this post interesting")
     end
 
     it "does not include a pinned post if there isn't one" do
@@ -59,8 +63,7 @@ RSpec.describe 'Guild feed', type: :system do
     end
 
     it "includes a post many people have found interesting" do
-      post.update!(reactionable_count: Guild::Post::POPULAR_THRESHOLD)
-
+      posts.last.update!(created_at: 3.weeks.ago, reactionable_count: Guild::Post::POPULAR_THRESHOLD)
       visit "/guild/feed"
       expect(page).to have_content("Many people found this post interesting")
     end

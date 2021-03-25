@@ -18,9 +18,8 @@ export const StyledPostCard = styled(Card)`
     css`
       border-color: ${theme.colors.neutral400};
     `}
-  ${({ popular, pinned }) =>
+  ${({ popular }) =>
     popular &&
-    !pinned &&
     css`
       border-right: 0;
       border-left: 0;

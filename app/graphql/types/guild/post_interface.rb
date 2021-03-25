@@ -127,7 +127,7 @@ module Types
 
       field :is_popular, Boolean, null: true
       def is_popular
-        object.reactionable_count >= ::Guild::Post::POPULAR_THRESHOLD
+        object.popular?
       end
 
       definition_methods do
