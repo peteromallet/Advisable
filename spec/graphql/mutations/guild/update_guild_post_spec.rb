@@ -138,7 +138,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
       it "updates the topic names" do
         input = {
           guildPostId: guild_post.id,
-          guildTopicNames: guild_topics.map(&:name)
+          labels: guild_topics.map(&:name)
         }
         query = mutation[input]
 
@@ -152,7 +152,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
       it "creates new topic names" do
         input = {
           guildPostId: guild_post.id,
-          guildTopicNames: ["the razor crest"]
+          labels: ["the razor crest"]
         }
         query = mutation[input]
 

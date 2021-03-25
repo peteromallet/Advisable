@@ -9,8 +9,6 @@ import LoadingPosts from "@guild/components/Posts/Loading";
 import FollowTopic from "@guild/components/FollowTopic";
 import NoResults from "@guild/components/NoResults";
 
-// TODO: AATO - Replace with label_posts
-
 const TopicPosts = ({ topicId }) => {
   const history = useHistory();
   const historyPopped = history.action === "POP";
@@ -32,9 +30,9 @@ const TopicPosts = ({ topicId }) => {
     },
   );
 
-  const hasNextPage = data?.guildTopicPosts.pageInfo.hasNextPage || false;
-  const endCursor = data?.guildTopicPosts.pageInfo.endCursor;
-  const posts = data?.guildTopicPosts.edges.map((e) => e.node) || [];
+  const hasNextPage = data?.labelPosts.pageInfo.hasNextPage || false;
+  const endCursor = data?.labelPosts.pageInfo.endCursor;
+  const posts = data?.labelPosts.edges.map((e) => e.node) || [];
 
   const onReachedBottom = () => {
     if (!loading && hasNextPage) {

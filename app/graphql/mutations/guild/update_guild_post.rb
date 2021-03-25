@@ -12,7 +12,8 @@ module Mutations
       argument :publish, Boolean, required: false
       argument :type, String, required: false
       argument :audience_type, String, required: false
-      argument :guild_topic_names, [String], required: false
+      argument :guild_topic_names, [String], required: false, deprecation_reason: "Use labels instead"
+      argument :labels, [String], required: false
       argument :shareable, Boolean, required: false
 
       field :guild_post, Types::Guild::PostInterface, null: true
@@ -23,12 +24,14 @@ module Mutations
 
       def resolve(**args)
         guild_post = current_user.guild_posts.find(args[:guild_post_id])
-        assignable = args.except(:publish, :guild_post_id, :guild_topic_names)
+        assignable = args.except(:publish, :guild_post_id, :guild_topic_names, :labels)
 
         guild_post.assign_attributes(assignable)
 
-        if (guild_topic_names = args[:guild_topic_names].presence)
-          guild_post.guild_topic_list = guild_topic_names
+        labels = args[:labels].presence || args[:guild_topic_names].presence
+
+        if labels.presence
+          guild_post.guild_topic_list = labels
 
           # TODO: AATO - save list, so we persist tags and taggings
           guild_post.save

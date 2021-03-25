@@ -239,7 +239,7 @@ module Types
 
     # TODO: AATO - Remove guild_topic_posts endpoint
 
-    field :guild_topic_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
+    field :guild_topic_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5, deprecation_reason: "Use labelPosts instead" do
       argument :topic_id, ID, required: true
     end
 
@@ -277,11 +277,11 @@ module Types
       current_user.guild_activity
     end
 
-    # TODO: AATO - Remove guild_top_topics endpoint
-
-    field :guild_top_topics, Types::Guild::TopicType.connection_type, null: true, max_page_size: 20 do
+    field :guild_top_topics, Types::Guild::TopicType.connection_type, null: true, max_page_size: 20, deprecation_reason: "Use topLabels instead" do
       description 'Returns a list of the top guild topic tags'
     end
+
+    # TODO: AATO - Remove guild_top_topics query
 
     def guild_top_topics
       requires_guild_user!
@@ -289,7 +289,7 @@ module Types
       ::Guild::Topic.published.most_used
     end
 
-    field :top_labels, [Types::LabelType], null: true, max_page_size: 20 do
+    field :top_labels, Types::LabelType.connection_type, null: true, max_page_size: 20 do
       description 'Returns a list of the top labels'
     end
 
@@ -301,7 +301,7 @@ module Types
 
     # TODO: AATO - Remove guild_other_topics endpoint
 
-    field :guild_other_topics, [Types::Guild::TopicType], null: true do
+    field :guild_other_topics, [Types::Guild::TopicType], null: true, deprecation_reason: "Use otherLabels field instead" do
       description "Returns other guild topics that aren't related to skill, industry, or location"
     end
 
@@ -336,7 +336,7 @@ module Types
 
     # TODO: AATO - Remove guild_followed_topics endpoint
 
-    field :guild_followed_topics, [Types::Guild::TopicType], null: true do
+    field :guild_followed_topics, [Types::Guild::TopicType], null: true, deprecation_reason: "Use followedLabels instead" do
       description 'Returns the topics that the specialist follows'
     end
 
