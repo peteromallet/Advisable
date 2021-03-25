@@ -31,7 +31,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
       variables: {
         input: {
           guildPostId: guildPost.id,
-          guildTopicNames: guildTopicNames.map((gt) => gt.label),
+          labels: guildTopicNames.map((gt) => gt.label),
         },
       },
     });
