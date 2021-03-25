@@ -11,6 +11,7 @@ class Skill < ApplicationRecord
   has_many :duplicates, foreign_key: 'original_id', class_name: 'Skill', dependent: :destroy, inverse_of: :original
   has_many :project_skills, dependent: :destroy
   has_many :previous_projects, through: :project_skills, source: :project, source_type: 'PreviousProject'
+  has_many :consultations, dependent: :destroy
   has_one :label, required: false, dependent: :nullify
   has_one :guild_topic, as: :topicable, class_name: 'Guild::Topic', required: false, dependent: :nullify
   belongs_to :original, class_name: 'Skill', optional: true
@@ -21,21 +22,28 @@ class Skill < ApplicationRecord
   scope :popular, -> { order(projects_count: :desc, specialists_count: :desc) }
 
   # rubocop:disable Rails/SkipsModelValidations
-  def merge_with(duplicate, dry_run: true)
+  def merge_with!(duplicate)
     ActiveRecord::Base.transaction do
       duplicate.specialist_skills.update_all(skill_id: id)
       duplicate.user_skills.update_all(skill_id: id)
       duplicate.project_skills.update_all(skill_id: id)
-      Consultation.where(skill_id: duplicate.id).update_all(skill_id: id)
+      duplicate.consultations.update_all(skill_id: id)
 
-      duplicate.label&.labelings&.update_all(label_id: label.id)
+      if duplicate.label&.labelings&.any?
+        if label
+          duplicate.label&.labelings&.update_all(label_id: label.id)
+          duplicate.label&.destroy
+        else
+          duplicate.label.update(skill_id: id)
+          duplicate.reload
+        end
+      end
 
       duplicate.update_columns(airtable_id: nil)
+      duplicate.reload
+
       duplicate.destroy
-
       Skill.reset_counters(id, :specialist_skills, :project_skills)
-
-      raise "Dry run" if dry_run
     end
   end
   # rubocop:enable Rails/SkipsModelValidations
