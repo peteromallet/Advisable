@@ -60,7 +60,7 @@ const InvitedToInterview = () => {
   const [schedule] = useMutation(SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW);
 
   const handleScheduled = () => {
-    calendly("https://calendly.com/yurko-turskiy/15min", {
+    calendly("https://calendly.com/d/c9sf-mhb/an-introduction-to-advisable", {
       full_name: fullName,
       email,
     });
