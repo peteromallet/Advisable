@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_24_094343) do
+ActiveRecord::Schema.define(version: 2021_03_25_072900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -302,41 +302,6 @@ ActiveRecord::Schema.define(version: 2021_03_24_094343) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["host_id"], name: "index_events_on_host_id"
-  end
-
-  create_table "featured_specialist_contents", force: :cascade do |t|
-    t.string "airtable_id"
-    t.string "name"
-    t.jsonb "skill"
-    t.string "specialist"
-    t.string "specialist_skills"
-    t.text "featured_biography"
-    t.integer "featured_specialist_score"
-    t.string "featured_specialist_status"
-    t.string "specialist_id"
-    t.string "skill_id"
-    t.string "micro_niche_description"
-    t.string "companies_worked_with"
-    t.string "examples_of_services"
-    t.string "specialist_image"
-    t.string "specialist_city"
-    t.string "specialist_country"
-    t.jsonb "page_skills"
-    t.datetime "featured_specialist_status_applied"
-    t.datetime "featured_specialist_status_reviewed"
-    t.datetime "featured_specialist_status_posted"
-    t.datetime "featured_specialist_status_rejected"
-    t.jsonb "secondary_skills"
-    t.integer "micro_niche_rating"
-    t.integer "featured_biography_character_length"
-    t.string "name_of_freelancers_with_high_score"
-    t.string "edited"
-    t.integer "number_of_pages_featured_on"
-    t.string "first_30_characters"
-    t.string "specialist_image_real"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["airtable_id"], name: "index_featured_specialist_contents_on_airtable_id"
   end
 
   create_table "guild_comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
