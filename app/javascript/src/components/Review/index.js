@@ -166,4 +166,8 @@ const Review = ({ review, size }) => {
   );
 };
 
+Review.defaultProps = {
+  size: "m",
+};
+
 export default Review;
