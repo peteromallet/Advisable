@@ -6,7 +6,4 @@ export default {
     const value = record[field.name];
     return value ? DateTime.fromISO(value).toLocaleString() : null;
   },
-  input: function DateInput() {
-    return <>div</>;
-  },
 };

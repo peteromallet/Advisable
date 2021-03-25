@@ -181,6 +181,58 @@ function generateCollectionQuery(schemaData, resourceData) {
   return gql(queryString);
 }
 
+export function generateShowQuery(schemaData, resourceData) {
+  const node = {};
+  resourceData.attributes.forEach((attr) => {
+    node[attr.name] = selectionForField(schemaData, resourceData, attr.name);
+  });
+
+  const queryObject = {
+    query: {
+      __variables: {
+        id: "ID!",
+      },
+      record: {
+        __args: {
+          id: new VariableType("id"),
+        },
+        __aliasFor: resourceData.queryNameItem,
+        ...node,
+      },
+    },
+  };
+
+  const queryString = jsonToGraphQLQuery(queryObject);
+  return gql(queryString);
+}
+
+export function generateUpdateMutation(schemaData, resourceData) {
+  const node = {};
+  resourceData.attributes.forEach((attr) => {
+    node[attr.name] = selectionForField(schemaData, resourceData, attr.name);
+  });
+
+  const queryObject = {
+    mutation: {
+      __variables: {
+        id: "ID!",
+        attributes: `${resourceData.type}Attributes!`,
+      },
+      update: {
+        __args: {
+          id: new VariableType("id"),
+          attributes: new VariableType("attributes"),
+        },
+        __aliasFor: resourceData.queryNameUpdate,
+        resource: node,
+      },
+    },
+  };
+
+  const queryString = jsonToGraphQLQuery(queryObject);
+  return gql(queryString);
+}
+
 // Genreates a graphql query used for filtering an association down to an array
 // of ID's.
 function generateFilterQuery(schemaData, resourceData) {

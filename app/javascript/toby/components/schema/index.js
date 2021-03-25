@@ -32,8 +32,11 @@ const SCHEMA_INTROSPECTION = gql`
     resources {
       type
       queryNameCollection
+      queryNameItem
+      queryNameUpdate
       attributes {
         name
+        readonly
         columnLabel
         filters {
           name

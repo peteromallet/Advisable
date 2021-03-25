@@ -5,7 +5,4 @@ export default {
     const value = record[field.name];
     return value;
   },
-  input: function IntegerInput() {
-    return <>div</>;
-  },
 };
