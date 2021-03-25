@@ -16,6 +16,17 @@ module Mutations
 
     field :consultation, Types::ConsultationType, null: true
 
+    def authorized?(**args)
+      account = Account.find_by(email: args[:email])
+      if account
+        ApiError.invalid_request('emailBelongsToFreelancer', 'This email belongs to a freelancer account') if Specialist.find_by(account: account)
+      else
+        create_and_login_new_user(args)
+      end
+
+      requires_client!
+    end
+
     def resolve(**args)
       ActiveRecord::Base.transaction do
         consultation = create_consultation(**args)
@@ -27,72 +38,27 @@ module Mutations
 
     def create_consultation(**args)
       skill = Skill.find_by_name!(args[:skill])
-      user = user(**args)
-      specialist_record = specialist(args[:specialist])
-
-      consultation =
-        user.consultations.find_by(
-          specialist: specialist_record, status: 'Request Started'
-        )
+      specialist = Specialist.find_by_uid_or_airtable_id!(args[:specialist])
+      consultation = current_user.consultations.find_by(specialist: specialist, status: 'Request Started')
 
       if consultation.present?
         consultation.update(skill: skill)
-        consultation.sync_to_airtable
-        return consultation
-      end
-
-      consultation =
-        Consultation.create(
-          user: user(**args),
-          specialist: specialist_record,
+      else
+        consultation = Consultation.create(
+          user: current_user,
+          specialist: specialist,
           status: 'Request Started',
           skill: skill,
           source: args[:utm_source],
           request_started_at: Time.zone.now
         )
+      end
 
       consultation.sync_to_airtable
       consultation
     end
 
-    def specialist(specialist_id)
-      @specialist ||= Specialist.find_by_uid_or_airtable_id!(specialist_id)
-    end
-
-    def user(**args)
-      @user ||=
-        begin
-          if context[:current_user].is_a?(::User)
-            context[:current_user]
-          else
-            user = Account.find_by(email: args[:email])&.user
-            if user.present?
-              update_existing_user(user, **args)
-              user
-            else
-              create_new_user(**args)
-            end
-          end
-        end
-    end
-
-    def update_existing_user(user, **args)
-      user.update(company_name: args[:company])
-
-      if user.client.present?
-        user.client.update(name: args[:company]) if user.client.present?
-      else
-        client = Client.create(name: args[:company])
-        client.users << user
-      end
-
-      user.company.update(name: args[:company])
-    end
-
-    def create_new_user(**args)
-      account = Account.find_by(email: args[:email])
-      ApiError.invalid_request('emailBelongsToFreelancer', 'This email belongs to a freelancer account') if account && Specialist.find_by(account: account)
-
+    def create_and_login_new_user(args)
       account = Account.new(
         first_name: args[:first_name],
         last_name: args[:last_name],
@@ -119,7 +85,9 @@ module Mutations
       # contacts so we set the 'Client Contacts' column while calling sync.
       client.sync_to_airtable({'Client Contacts' => [user.airtable_id].compact})
 
-      user
+      context[:current_account] = account
+      context[:current_user] = user
+      session_manager.start_session(account)
     end
   end
 end

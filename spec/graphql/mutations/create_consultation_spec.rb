@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::CreateConsultation do
@@ -8,6 +10,8 @@ RSpec.describe Mutations::CreateConsultation do
   let(:email) { 'test@test.com' }
   let(:company_name) { 'Testing' }
   let(:skill_name) { skill.name }
+  let(:session_manager) { SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new) }
+  let(:context) { {session_manager: session_manager} }
 
   let(:query) do
     <<-GRAPHQL
@@ -35,7 +39,7 @@ RSpec.describe Mutations::CreateConsultation do
   end
 
   it 'creates a new consultation record' do
-    expect { AdvisableSchema.execute(query) }.to change(Consultation, :count).by(1)
+    expect { AdvisableSchema.execute(query, context: context) }.to change(Consultation, :count).by(1)
   end
 
   context 'when a consultation record already exists' do
@@ -44,57 +48,17 @@ RSpec.describe Mutations::CreateConsultation do
     before { create(:consultation, user: user, status: 'Request Started', specialist: specialist) }
 
     it 'does not create a new consultation record' do
-      expect { AdvisableSchema.execute(query) }.not_to change(Consultation, :count)
-    end
-  end
-
-  context 'when the user account already exists' do
-    let!(:user) { create(:user, company_name: 'Existing', account: create(:account, email: email)) }
-
-    it 'doesnt create a new user record' do
-      expect { AdvisableSchema.execute(query) }.not_to change(User, :count)
-    end
-
-    it 'updates their company name' do
-      expect { AdvisableSchema.execute(query) }.to change {
-        user.reload.company_name
-      }.from('Existing').
-        to(company_name)
-    end
-
-    it 'updates their associated client name' do
-      client = create(:client, name: 'Existing')
-      client.users << user
-      expect { AdvisableSchema.execute(query) }.to change {
-        user.reload.client.name
-      }.from('Existing').
-        to(company_name)
-    end
-
-    it 'updates their associated company name' do
-      company = create(:company, name: 'Existing')
-      company.users << user
-      expect { AdvisableSchema.execute(query) }.to change {
-        user.reload.company.name
-      }.from('Existing').
-        to(company_name)
-    end
-
-    it 'creates a client for the user if they dont have one' do
-      user.client_user.try(:destroy)
-      expect(user.reload.client).to be_nil
-      AdvisableSchema.execute(query)
-      expect(user.reload.client).not_to be_nil
+      expect { AdvisableSchema.execute(query, context: context) }.not_to change(Consultation, :count)
     end
   end
 
   context 'when there is no existing user with the email' do
     it 'creates a new user account' do
-      expect { AdvisableSchema.execute(query) }.to change(User, :count).by(1)
+      expect { AdvisableSchema.execute(query, context: context) }.to change(User, :count).by(1)
     end
 
     it "gives user's account team manager permission" do
-      response = AdvisableSchema.execute(query)
+      response = AdvisableSchema.execute(query, context: context)
       consultation = Consultation.find_by(uid: response["data"]["createConsultation"]["consultation"]["id"])
       expect(consultation.user.account.permissions).to include('team_manager')
     end
@@ -104,7 +68,7 @@ RSpec.describe Mutations::CreateConsultation do
     before { create(:specialist, account: create(:account, email: email)) }
 
     it 'raises an error' do
-      response = AdvisableSchema.execute(query)
+      response = AdvisableSchema.execute(query, context: context)
       error = response['errors'].first['extensions']['code']
       expect(error).to eq('emailBelongsToFreelancer')
     end
@@ -114,7 +78,7 @@ RSpec.describe Mutations::CreateConsultation do
     let(:skill_name) { 'Doesnt Exist' }
 
     it 'raises an error' do
-      response = AdvisableSchema.execute(query)
+      response = AdvisableSchema.execute(query, context: context)
       error = response['errors'].first['extensions']['code']
       expect(error).to eq('notFound')
     end
