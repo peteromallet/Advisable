@@ -163,11 +163,7 @@ test("Persist overview for future applications", async () => {
   fireEvent.change(overview, { target: { value: "This is an overview" } });
   const availability = app.getByText("2 - 4 weeks");
   fireEvent.click(availability);
-  fireEvent.click(
-    app.getByText(
-      "Save as my profile biography and persist for future applications",
-    ),
-  );
+  fireEvent.click(app.getByText("Save this biography for future applications"));
   const button = app.getByLabelText("Next");
   fireEvent.click(button);
   await app.findByText("Question one");

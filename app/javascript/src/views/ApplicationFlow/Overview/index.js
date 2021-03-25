@@ -25,7 +25,7 @@ function PersistBioWidget({ formik }) {
           formik.setFieldValue("persistBio", !formik.values.persistBio)
         }
       >
-        Save as my profile biography and persist for future applications
+        Save this biography for future applications
       </Checkbox>
     </StyledPersistBio>
   );
