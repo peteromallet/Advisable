@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Home, Chat } from "@styled-icons/heroicons-solid";
-import { Calendar } from "@styled-icons/heroicons-outline";
+import { Chat } from "@styled-icons/heroicons-solid/Chat";
+import { Home } from "@styled-icons/heroicons-solid/Home";
+import { Calendar } from "@styled-icons/heroicons-outline/Calendar";
 import { useQuery } from "@apollo/client";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { Box, useBreakpoint } from "@advisable/donut";

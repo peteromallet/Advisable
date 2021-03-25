@@ -1,5 +1,5 @@
 import React from "react";
-import { X } from "@styled-icons/feather";
+import { X } from "@styled-icons/feather/X";
 import { Tag as TagStyles, TagName, RemoveTag, Primary } from "./styles";
 
 const Tag = ({ children, onRemove, isPrimary, onSelectPrimary }) => {

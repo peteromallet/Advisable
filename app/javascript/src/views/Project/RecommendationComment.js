@@ -1,7 +1,7 @@
 import React from "react";
 import { rgba } from "polished";
 import styled from "styled-components";
-import { Flash } from "@styled-icons/ionicons-solid";
+import { Flash } from "@styled-icons/ionicons-solid/Flash";
 import { Avatar, Box, Text, StyledCard, theme } from "@advisable/donut";
 
 const Card = styled(StyledCard)`

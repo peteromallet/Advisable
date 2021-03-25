@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text, StyledCircle } from "@advisable/donut";
 import CopyURL from "../CopyURL";
-import { EyeOff } from "@styled-icons/ionicons-outline";
+import { EyeOff } from "@styled-icons/ionicons-outline/EyeOff";
 
 const ProjectValidationPrompt = ({ project }) => {
   const name = project.contactFirstName || project.contactJobTitle;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Help } from "@styled-icons/ionicons-solid";
+import { Help } from "@styled-icons/ionicons-solid/Help";
 import { Box, Button } from "@advisable/donut";
 
 export default function WalkthroughTrigger({ walkthrough }) {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client";
-import { Pencil } from "@styled-icons/heroicons-solid";
+import { Pencil } from "@styled-icons/heroicons-solid/Pencil";
 import {
   useHistory,
   useParams,

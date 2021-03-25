@@ -1,13 +1,11 @@
 import React from "react";
 import { DateTime } from "luxon";
 import { useTranslation } from "react-i18next";
-import {
-  Call,
-  Trash,
-  ChatbubbleEllipses,
-  Calendar,
-  CheckmarkCircle,
-} from "@styled-icons/ionicons-solid";
+import { Call } from "@styled-icons/ionicons-solid/Call";
+import { Trash } from "@styled-icons/ionicons-solid/Trash";
+import { ChatbubbleEllipses } from "@styled-icons/ionicons-solid/ChatbubbleEllipses";
+import { Calendar } from "@styled-icons/ionicons-solid/Calendar";
+import { CheckmarkCircle } from "@styled-icons/ionicons-solid/CheckmarkCircle";
 import { Text, Box } from "@advisable/donut";
 
 const ICONS = {

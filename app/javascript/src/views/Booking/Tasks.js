@@ -1,5 +1,6 @@
 import * as React from "react";
-import { List, CheckSquare } from "@styled-icons/feather";
+import { CheckSquare } from "@styled-icons/feather/CheckSquare";
+import { List } from "@styled-icons/feather/List";
 import { useTranslation } from "react-i18next";
 import { Text, Tabs, Card } from "@advisable/donut";
 import ActiveTasks from "./ActiveTasks";

@@ -1,8 +1,8 @@
 import React from "react";
 import RequestTalkButton from "./RequestTalkButton";
 import IconLink from "./IconLink";
-import { LinkedinIn } from "@styled-icons/fa-brands";
-import { Globe } from "@styled-icons/feather";
+import { LinkedinIn } from "@styled-icons/fa-brands/LinkedinIn";
+import { Globe } from "@styled-icons/feather/Globe";
 import EditInfo from "./EditInfo";
 import { Box } from "@advisable/donut";
 import MessageButton from "./MessageButton";

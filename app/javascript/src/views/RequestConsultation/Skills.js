@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { useParams, useHistory, useLocation } from "react-router-dom";
 import { Card, Text, Button } from "@advisable/donut";
 import TagSelect from "../../components/TagSelect";

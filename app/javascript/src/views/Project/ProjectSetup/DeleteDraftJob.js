@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { Trash } from "@styled-icons/feather";
+import { Trash } from "@styled-icons/feather/Trash";
 import { DELETE_JOB } from "./queries";
 import { GET_PROJECTS } from "../../Projects/queries";
 import {

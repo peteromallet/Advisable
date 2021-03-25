@@ -1,5 +1,5 @@
 import React from "react";
-import { LogOut } from "@styled-icons/ionicons-outline";
+import { LogOut } from "@styled-icons/ionicons-outline/LogOut";
 import ActionBar from "components/ActionBar";
 import useCallContext from "./useCallContext";
 

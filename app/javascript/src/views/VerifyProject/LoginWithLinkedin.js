@@ -1,5 +1,5 @@
 import React from "react";
-import { Linkedin } from "@styled-icons/fa-brands";
+import { Linkedin } from "@styled-icons/fa-brands/Linkedin";
 import styled from "styled-components";
 
 const StyledLoginWithLinkedin = styled.button`

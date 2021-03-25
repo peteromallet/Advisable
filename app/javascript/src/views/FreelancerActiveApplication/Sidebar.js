@@ -1,6 +1,6 @@
 // Renders the sidebar in the freelancer active application view.
 import React from "react";
-import { MessageCircle } from "@styled-icons/feather";
+import { MessageCircle } from "@styled-icons/feather/MessageCircle";
 import Sticky from "../../components/Sticky";
 import { useTranslation } from "react-i18next";
 import Back from "../../components/Back";

@@ -1,5 +1,5 @@
 import React from "react";
-import { X } from "@styled-icons/feather";
+import { X } from "@styled-icons/feather/X";
 import { Box } from "@advisable/donut";
 import {
   StyledPreviousProjectFormHeader,

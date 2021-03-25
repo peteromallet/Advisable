@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useParams } from "react-router-dom";
 import pluralize from "../../utilities/pluralize";
 import AvatarStack from "components/AvatarStack";
-import { ArrowForward } from "@styled-icons/ionicons-solid";
+import { ArrowForward } from "@styled-icons/ionicons-solid/ArrowForward";
 import { Box, Card, Text, Paragraph, Link, Avatar } from "@advisable/donut";
 import { useToggleSourcing } from "./queries";
 

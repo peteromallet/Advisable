@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { find } from "lodash-es";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { Redirect } from "react-router-dom";

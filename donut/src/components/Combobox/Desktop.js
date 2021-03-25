@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Box } from "@advisable/donut";
 import { createPopper } from "@popperjs/core";
-import { ChevronDown } from "@styled-icons/ionicons-outline";
+import { ChevronDown } from "@styled-icons/ionicons-outline/ChevronDown";
 import Input from "../Input";
 import Menu from "./Menu";
 import Tags from "./Tags";

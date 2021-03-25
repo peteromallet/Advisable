@@ -1,12 +1,14 @@
 import React from "react";
-import { Info, Check, AlertTriangle } from "@styled-icons/feather";
+import { Info } from "@styled-icons/feather/Info";
+import { Check } from "@styled-icons/feather/Check";
+import { AlertTriangle } from "@styled-icons/feather/AlertTriangle";
 import { withKnobs } from "@storybook/addon-knobs";
 import Badge from "./";
 import Card from "../Card";
 import Box from "../Box";
 
 export default {
-  title: 'Content/Badge',
+  title: "Content/Badge",
   decorators: [withKnobs],
 };
 

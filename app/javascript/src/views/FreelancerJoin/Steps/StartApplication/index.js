@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { Redirect, useHistory, useLocation } from "react-router";
 import queryString from "query-string";
 import { Form, Formik } from "formik";
-import { ChevronRight } from "@styled-icons/feather";
+import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 import { Box, Input, Error, useBreakpoint } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { HelpCircle, ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
+import { HelpCircle } from "@styled-icons/feather/HelpCircle";
 import { useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import { Box, Link, Text, Tooltip, Checkbox } from "@advisable/donut";

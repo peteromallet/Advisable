@@ -1,7 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { relativeDate } from "@guild/utils";
-import { Calendar } from "@styled-icons/ionicons-outline";
+import { Calendar } from "@styled-icons/ionicons-outline/Calendar";
 import { Box, Avatar, Text, Link, Button } from "@advisable/donut";
 
 function contextMessage(type) {

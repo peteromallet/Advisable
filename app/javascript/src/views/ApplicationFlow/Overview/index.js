@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { useMutation } from "@apollo/client";
 import { Formik, Form } from "formik";
 import { Box, Text, Checkbox, useBreakpoint } from "@advisable/donut";

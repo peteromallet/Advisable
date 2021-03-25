@@ -3,11 +3,13 @@ import { withKnobs, text, select, boolean } from "@storybook/addon-knobs";
 import Button from "./";
 import Box from "../Box";
 import Card from "../Card";
-import { Download, ArrowRight, Plus } from "@styled-icons/heroicons-outline";
+import { Download } from "@styled-icons/heroicons-outline/Download";
+import { ArrowRight } from "@styled-icons/heroicons-outline/ArrowRight";
+import { Plus } from "@styled-icons/heroicons-outline/Plus";
 import { VARIANTS } from "./styles";
 
 export default {
-  title: 'Forms/Button',
+  title: "Forms/Button",
   decorators: [withKnobs],
 };
 

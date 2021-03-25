@@ -1,6 +1,6 @@
 import React from "react";
 import Status from "../Status";
-import { Lock } from "@styled-icons/feather";
+import { Lock } from "@styled-icons/feather/Lock";
 
 const ICONS = {
   "Quote Provided": <Lock />,

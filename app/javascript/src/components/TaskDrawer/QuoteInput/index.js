@@ -1,5 +1,6 @@
 import React from "react";
-import { Clock, ArrowUp } from "@styled-icons/feather";
+import { ArrowUp } from "@styled-icons/feather/ArrowUp";
+import { Clock } from "@styled-icons/feather/Clock";
 import { motion } from "framer-motion";
 import { Card } from "@advisable/donut";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";

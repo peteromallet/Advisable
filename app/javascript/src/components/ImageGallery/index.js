@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { ChevronBack, ChevronForward } from "@styled-icons/ionicons-outline";
+import { ChevronBack } from "@styled-icons/ionicons-outline/ChevronBack";
+import { ChevronForward } from "@styled-icons/ionicons-outline/ChevronForward";
 import { useDialogState, Dialog } from "reakit/Dialog";
 import { rgba } from "polished";
 import styled from "styled-components";
-import { Close } from "@styled-icons/ionicons-outline";
+import { Close } from "@styled-icons/ionicons-outline/Close";
 import { theme, Box, Button, Text } from "@advisable/donut";
 
 export function useImageGallery(opts) {

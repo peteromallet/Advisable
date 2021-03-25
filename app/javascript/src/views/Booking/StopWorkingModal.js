@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import SubmitButton from "src/components/SubmitButton";
 import { DialogDisclosure, useDialogState } from "reakit/Dialog";
 import { Text, Button, Columns, Textarea, Modal } from "@advisable/donut";
-import { PauseCircle } from "@styled-icons/feather";
+import { PauseCircle } from "@styled-icons/feather/PauseCircle";
 
 export const STOP_WORKING = gql`
   mutation stopWorking($input: StopWorkingInput!) {

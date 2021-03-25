@@ -2,7 +2,7 @@ import React from "react";
 import { DateTime } from "luxon";
 import { sortBy, filter } from "lodash-es";
 import { Text, Link, Box } from "@advisable/donut";
-import { ArrowLeft } from "@styled-icons/feather";
+import { ArrowLeft } from "@styled-icons/feather/ArrowLeft";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import { Times, Time } from "./styles";
 

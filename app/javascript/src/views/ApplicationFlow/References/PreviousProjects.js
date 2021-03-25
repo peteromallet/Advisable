@@ -4,7 +4,7 @@ import { Stack } from "@advisable/donut";
 import SubmitButton from "../../../components/SubmitButton";
 import AddPreviousProjectButton from "../../../components/AddPreviousProjectButton";
 import PreviousProject from "./PreviousProject";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 
 const PreviousProjects = ({ previousProjects, modal }) => {
   return (

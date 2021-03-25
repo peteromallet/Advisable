@@ -2,7 +2,7 @@ import React from "react";
 import { times } from "lodash-es";
 import { DateTime } from "luxon";
 import { Formik, Field } from "formik";
-import { Check } from "@styled-icons/feather";
+import { Check } from "@styled-icons/feather/Check";
 import Box from "../Box";
 import Text from "../Text";
 import Button from "../Button";

@@ -2,7 +2,7 @@ import React from "react";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
 import { motion } from "framer-motion";
-import { Lock } from "@styled-icons/feather";
+import { Lock } from "@styled-icons/feather/Lock";
 import { Container, Card, Box, Text, Stack, Circle } from "@advisable/donut";
 import FormField from "../../components/FormField";
 import SubmitButton from "../../components/SubmitButton";

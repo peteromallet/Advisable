@@ -5,7 +5,7 @@ import { rgba } from "polished";
 import { variant } from "styled-system";
 import { theme } from "@advisable/donut";
 import { Link } from "react-router-dom";
-import { CheckmarkCircle } from "@styled-icons/ionicons-solid";
+import { CheckmarkCircle } from "@styled-icons/ionicons-solid/CheckmarkCircle";
 import MessageAction from "./MessageAction";
 import ShareApplication from "./ShareApplication";
 import AcceptApplication from "./AcceptApplication";

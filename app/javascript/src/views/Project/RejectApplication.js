@@ -5,7 +5,7 @@ import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import ActionBarModal from "./ActionBarModal";
 import RejectApplicationForm from "components/RejectApplicationForm";
 import { useNotifications } from "components/Notifications";
-import { Trash } from "@styled-icons/ionicons-solid";
+import { Trash } from "@styled-icons/ionicons-solid/Trash";
 import { useRejectCacheUpdate } from "./queries";
 
 export default function RejectApplication({ application }) {

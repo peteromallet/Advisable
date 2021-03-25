@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@advisable/donut";
-import { ChevronDown, ChevronUp } from "@styled-icons/heroicons-outline";
+import { ChevronDown } from "@styled-icons/heroicons-outline/ChevronDown";
+import { ChevronUp } from "@styled-icons/heroicons-outline/ChevronUp";
 
 const ShowMore = ({ showingMore, onToggle, text }) => (
   <Button

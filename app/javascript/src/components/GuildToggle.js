@@ -1,7 +1,7 @@
 import React from "react";
 import { margin } from "styled-system";
 import styled from "styled-components";
-import { SwitchHorizontal } from "@styled-icons/heroicons-outline";
+import { SwitchHorizontal } from "@styled-icons/heroicons-outline/SwitchHorizontal";
 
 export const StyledGuildToggle = styled.a`
   ${margin};

@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@advisable/donut";
-import { Check } from "@styled-icons/heroicons-outline";
+import { Check } from "@styled-icons/heroicons-outline/Check";
 import {
   StyledAutocompleteLoading,
   StyledAutocompleteMenuList,

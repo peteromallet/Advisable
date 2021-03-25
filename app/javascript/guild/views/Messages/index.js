@@ -4,7 +4,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box, Text, theme, useBreakpoint } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
-import { ArrowBack } from "@styled-icons/ionicons-outline";
+import { ArrowBack } from "@styled-icons/ionicons-outline/ArrowBack";
 import { useTwilioChannels } from "@guild/hooks/twilioChat/useTwilioChannels";
 import { GuildBox } from "@guild/styles";
 import useTwilio from "@guild/components/TwilioProvider/useTwilioChat";
