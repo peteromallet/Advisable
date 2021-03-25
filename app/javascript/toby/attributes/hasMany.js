@@ -17,7 +17,4 @@ export default {
       return [i > 0 && ", ", item];
     });
   },
-  input: function BelongsToInput() {
-    return <>div</>;
-  },
 };

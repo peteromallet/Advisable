@@ -8,7 +8,4 @@ export default {
       ? DateTime.fromISO(value).toLocaleString(DateTime.DATETIME_SHORT)
       : null;
   },
-  input: function DateTimeInput() {
-    return <>div</>;
-  },
 };

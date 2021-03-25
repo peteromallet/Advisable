@@ -16,6 +16,7 @@ import {
 import FilterDrawer from "./Filters";
 import Navigation from "../../components/Navigation";
 import { Attribute } from "../../attributes";
+import DetailsModal from "./DetailsModal";
 
 export default function Resource() {
   const [filters, setFilters] = useState([]);
@@ -40,6 +41,7 @@ export default function Resource() {
 
   return (
     <StyledLayout ref={scrollRef}>
+      <DetailsModal resource={resource} />
       <StyledHeader>
         <Navigation />
         <button onClick={() => setIsOpen(!isOpen)}>Open filters</button>

@@ -1,30 +1,17 @@
 import React from "react";
 import { useField } from "formik";
+import { Input } from "@advisable/donut";
 
 export default {
   render: function RenderStringColumn({ record, field }) {
     return record[field.name] || null;
   },
-  input: function StringColumnInput({ record, column }) {
-    const [field, meta, helpers] = useField(column.field);
-    return <input {...field} />;
+  initializeFormValue: function (record, attribute) {
+    return record[attribute.name] || "";
+  },
+  input: function StringAttributeInput({ attribute, record }) {
+    const [field] = useField(attribute.name);
+    if (attribute.readonly) return record[attribute.name];
+    return <Input size="sm" {...field} />;
   },
 };
-
-// const stringAttribute = {
-//   columnType: "StringColumnType",
-//   query: (resource) => {
-//     return attribute;
-//   },
-//   inputValue: (resource, attribute) => {
-//     return resource[attribute.name];
-//   },
-//   render: function ReadStringAttribute(resource, attribute) {
-//     return resource[attribute.name];
-//   },
-//   renderInput: function WriteSingleSelect(resource, attribute, formikField) {
-// return <input {...formikField.field} />;
-//   },
-// };
-
-// export default stringAttribute;
