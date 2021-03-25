@@ -1,7 +1,6 @@
 import React from "react";
 import { Folder } from "@styled-icons/feather/Folder";
-import { Circle, Box, Text, Button } from "@advisable/donut";
-import { useHistory } from "react-router";
+import { Circle, Box, Text, Button, DialogDisclosure } from "@advisable/donut";
 
 function NoProjects({ data, isOwner, modal }) {
   const firstName = data.specialist.firstName;
