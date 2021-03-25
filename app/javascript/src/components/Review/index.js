@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Avatar, theme } from "@advisable/donut";
-import { StyledAvatar } from "src/components/Avatar/styles";
+import { Box, Avatar, StyledAvatar, theme } from "@advisable/donut";
 import styled from "styled-components";
 import { variant } from "styled-system";
 
