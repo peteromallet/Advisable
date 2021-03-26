@@ -1,11 +1,9 @@
 import React from "react";
 import { Folder } from "@styled-icons/feather/Folder";
-import { Circle, Box, Text, Button } from "@advisable/donut";
-import { useHistory } from "react-router";
+import { Circle, Box, Text, Button, DialogDisclosure } from "@advisable/donut";
 
-function NoProjects({ data, isOwner }) {
+function NoProjects({ data, isOwner, modal }) {
   const firstName = data.specialist.firstName;
-  const history = useHistory();
 
   return (
     <Box textAlign="center" py="xxl">
@@ -18,15 +16,11 @@ function NoProjects({ data, isOwner }) {
       <Text color="neutral600">
         {firstName} has not added any previous projects yet
       </Text>
-      {isOwner && (
-        <Button
-          variant="subtle"
-          onClick={() => history.push("/settings/references")}
-          mt="l"
-        >
-          Add Projects
-        </Button>
-      )}
+      {isOwner ? (
+        <DialogDisclosure as={Button} variant="subtle" mt={6} {...modal}>
+          Add a Project
+        </DialogDisclosure>
+      ) : null}
     </Box>
   );
 }
