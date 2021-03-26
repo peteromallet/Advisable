@@ -1,19 +1,28 @@
-import fields from "../../__mocks__/graphqlFields";
 import { screen } from "@testing-library/react";
-import { renderRoute, mockQuery, mockViewer } from "test-utils";
+import { mockData, renderRoute, mockQuery, mockViewer } from "test-utils";
 import { GET_PROJECTS } from "./queries";
 import { GET_APPLICATIONS } from "../Applications/queries";
 
 test("Loads the clients projects", async () => {
-  const skill = fields.skill({ name: "Primary Skill" });
-  const project = fields.project({ primarySkill: skill, matches: [] });
-  const user = fields.user({ projects: [project] });
+  const skill = mockData.skill({ name: "Primary Skill" });
+  const project = mockData.project({ primarySkill: skill, matches: [] });
+  const user = mockData.user({
+    industry: mockData.industry(),
+  });
+  const company = mockData.company({ projects: [project] });
 
   renderRoute({
     route: "/projects",
     graphQLMocks: [
       mockViewer(user),
-      mockQuery(GET_PROJECTS, {}, { viewer: user }),
+      mockQuery(
+        GET_PROJECTS,
+        {},
+        {
+          viewer: user,
+          currentCompany: company,
+        },
+      ),
     ],
   });
 
@@ -21,7 +30,7 @@ test("Loads the clients projects", async () => {
 });
 
 test("Redirects to specialist dashboard if not logged in as a user", async () => {
-  const specialist = fields.specialist();
+  const specialist = mockData.specialist();
 
   renderRoute({
     route: "/projects",
@@ -54,13 +63,24 @@ test("Redirects to login page if not logged in", async () => {
 });
 
 test("Renders a account confirmation prompt", async () => {
-  const user = fields.user({ confirmed: false, projects: [] });
+  const user = mockData.user({
+    confirmed: false,
+    industry: mockData.industry(),
+  });
+  const company = mockData.company({ projects: [] });
 
   renderRoute({
     route: "/projects",
     graphQLMocks: [
       mockViewer(user),
-      mockQuery(GET_PROJECTS, {}, { viewer: user }),
+      mockQuery(
+        GET_PROJECTS,
+        {},
+        {
+          currentCompany: company,
+          viewer: user,
+        },
+      ),
     ],
   });
 
