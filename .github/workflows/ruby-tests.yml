@@ -111,15 +111,15 @@ jobs:
       - name: Test
         run: bundle exec rspec --format RSpec::Github::Formatter --format documentation
 
-      - name: Run Cypress Tests
-        uses: cypress-io/github-action@v2
-        with:
-          project: ./spec
-          browser: chrome
-          headless: true
-          start: bundle exec rails s -e test -p 3000
-          wait-on: http://localhost:3000
-          install: false
+      # - name: Run Cypress Tests
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     project: ./spec
+      #     browser: chrome
+      #     headless: true
+      #     start: bundle exec rails s -e test -p 3000
+      #     wait-on: http://localhost:3000
+      #     install: false
 
       - name: Test screenshots
         uses: actions/upload-artifact@v2
@@ -128,16 +128,16 @@ jobs:
           name: screenshots
           path: tmp/screenshots
 
-      - name: Cypress screenshots
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: cypress_screenshots
-          path: spec/cypress/screenshots/*
+      # - name: Cypress screenshots
+      #   uses: actions/upload-artifact@v2
+      #   if: always()
+      #   with:
+      #     name: cypress_screenshots
+      #     path: spec/cypress/screenshots/*
 
-      - name: Cypress Video
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: cypress_videos
-          path: spec/cypress/videos/*
+      # - name: Cypress Video
+      #   uses: actions/upload-artifact@v2
+      #   if: always()
+      #   with:
+      #     name: cypress_videos
+      #     path: spec/cypress/videos/*

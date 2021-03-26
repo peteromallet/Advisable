@@ -30,4 +30,4 @@ jobs:
         run: yarn
 
       - name: Javascript Tests
-        run: yarn test
+        run: yarn test:parallel
