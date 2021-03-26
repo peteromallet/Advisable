@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../../app/models/application_record"
-
+require_relative "../../config/environment"
 class MigrationTag < ApplicationRecord
   self.table_name = :tags
 end
@@ -118,6 +117,13 @@ namespace :data do
       )
 
     projects.find_each(&:update_application_counts)
+  end
+
+  task merge_skills: :environment do
+    Skill.where.not(original: nil).find_each do |duplicate|
+      original = duplicate.original
+      original.merge_with!(duplicate: duplicate)
+    end
   end
 
   task migrate_tags: :environment do
