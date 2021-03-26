@@ -3,18 +3,63 @@ import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Formik, Form, Field } from "formik";
-import { Error } from "@advisable/donut";
+import {
+  Box,
+  Text,
+  Error,
+  Button,
+  Modal,
+  DialogDisclosure,
+  useModal,
+} from "@advisable/donut";
 import SubmitButton from "components/SubmitButton";
 import BulletPointInput from "components/BulletPointInput";
 import { UPDATE_PROJECT } from "./queries";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 import { setupProgress } from "./SetupSteps";
 
+const ConfirmationModal = ({ modal, formik }) => {
+  return (
+    <Modal modal={modal}>
+      <Box padding={2}>
+        <Text
+          as="h2"
+          fontSize="3xl"
+          color="blue900"
+          fontWeight="medium"
+          mb={2}
+          lineHeight="l"
+        >
+          Please try to be more specific in your description.
+        </Text>
+        <Text color="neutral900" mb={4} lineHeight="s">
+          A project that attracts the best candidates has at least two
+          well-presented characteristics stated by the client.
+        </Text>
+        <Button mr={2} onClick={modal.hide} disabled={formik.isSubmitting}>
+          Update
+        </Button>
+        <Button
+          variant="subtle"
+          loading={formik.isSubmitting}
+          onClick={() => {
+            modal.hide();
+            formik.handleSubmit();
+          }}
+        >
+          Ignore
+        </Button>
+      </Box>
+    </Modal>
+  );
+};
+
 export default function JobCharacteristics({ data }) {
   const { id } = useParams();
   const history = useHistory();
   const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
+  const modal = useModal();
 
   if (!setupProgress(data.project).location) {
     return <Redirect to={`/projects/${id}/setup/location`} />;
@@ -50,6 +95,7 @@ export default function JobCharacteristics({ data }) {
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {(formik) => (
         <Form>
+          <ConfirmationModal modal={modal} formik={formik} />
           <JobSetupStepHeader mb="xs">
             What characteristics should this specialist have?
           </JobSetupStepHeader>
@@ -68,13 +114,26 @@ export default function JobCharacteristics({ data }) {
             }
             onChange={(items) => formik.setFieldValue("characteristics", items)}
           />
-          <SubmitButton
-            size="l"
-            suffix={<ArrowRight />}
-            disabled={formik.values.characteristics.length === 0}
-          >
-            Continue
-          </SubmitButton>
+          {formik.values.characteristics.length > 1 ? (
+            <SubmitButton
+              size="l"
+              suffix={<ArrowRight />}
+              loading={formik.isSubmitting}
+            >
+              Continue
+            </SubmitButton>
+          ) : (
+            <DialogDisclosure
+              as={Button}
+              size="l"
+              suffix={<ArrowRight />}
+              disabled={formik.values.characteristics.length === 0}
+              loading={formik.isSubmitting}
+              {...modal}
+            >
+              Continue
+            </DialogDisclosure>
+          )}
           {formik.status && <Error marginTop="m">{formik.status}</Error>}
         </Form>
       )}
