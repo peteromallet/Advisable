@@ -1,4 +1,5 @@
 import React from "react";
+import { upperFirst } from "lodash";
 import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
@@ -112,7 +113,12 @@ export default function JobCharacteristics({ data }) {
               primarySkill?.characteristicPlaceholder ||
               "e.g Strong communication skills"
             }
-            onChange={(items) => formik.setFieldValue("characteristics", items)}
+            onChange={(items) =>
+              formik.setFieldValue(
+                "characteristics",
+                items.map((i) => upperFirst(i)),
+              )
+            }
           />
           {formik.values.characteristics.length > 1 ? (
             <SubmitButton
