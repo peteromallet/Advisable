@@ -22,7 +22,7 @@ class Skill < ApplicationRecord
   scope :popular, -> { order(projects_count: :desc, specialists_count: :desc) }
 
   # rubocop:disable Rails/SkipsModelValidations
-  def merge_with!(duplicate)
+  def merge_with!(duplicate:)
     ActiveRecord::Base.transaction do
       duplicate.specialist_skills.update_all(skill_id: id)
       duplicate.user_skills.update_all(skill_id: id)
