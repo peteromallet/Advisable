@@ -18,11 +18,23 @@ class Label < ApplicationRecord
   scope :on_industry, -> { where.not(industry_id: nil) }
   scope :on_skill, -> { where.not(skill_id: nil) }
   scope :other, -> { published.where(country_id: nil, industry_id: nil, skill_id: nil).order(labelings_count: :desc) }
+  scope :featured, -> { published.where(featured: true) }
 
   validates :country, :industry, :skill, uniqueness: true, allow_blank: true
+  before_save :reset_previous_featured, if: :featured_changed?
 
   def publish!(time = nil)
     update(published_at: time.presence || Time.zone.now)
+  end
+
+  private
+
+  def reset_previous_featured
+    return unless featured
+
+    # rubocop:disable Rails/SkipsModelValidations
+    Label.featured.update_all(featured: false)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 end
 
@@ -31,8 +43,12 @@ end
 # Table name: labels
 #
 #  id              :uuid             not null, primary key
+#  description     :string
+#  featured        :boolean          default(FALSE)
 #  labelings_count :integer
 #  name            :string
+#  prompt          :string
+#  prompt_cta      :string
 #  published_at    :datetime
 #  slug            :string
 #  created_at      :datetime         not null

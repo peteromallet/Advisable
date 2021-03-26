@@ -40,5 +40,15 @@ export default gql`
       name
       slug
     }
+    guildComposerTopics: composerLabels {
+      id
+      name
+      slug
+    }
+    promptTopic: promptLabel {
+      id
+      name
+      slug
+    }
   }
 `;

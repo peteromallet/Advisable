@@ -93,12 +93,15 @@ module Types
 
       field :labels, [Types::LabelType], null: true
       def labels
-        if current_user == object.specialist
-          object.labels
-        else
-          object.labels.published
-        end
+        object.authorized_labels(specialist: current_user)
       end
+
+      field :composer_labels, [Types::LabelType], null: true
+      def composer_labels
+        object.authorized_labels(specialist: current_user, include_prompt: false)
+      end
+
+      field :prompt_label, Types::LabelType, null: true
 
       field :images, [Types::Guild::PostImageType], null: false
       def images

@@ -241,6 +241,15 @@ module Types
       end
     end
 
+    field :label, LabelType, null: true do
+      argument :slug, ID, required: true
+    end
+
+    def label(slug:)
+      requires_guild_user!
+      ::Label.published.find_by!(slug: slug)
+    end
+
     field :label_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
       argument :label_slug, ID, required: true
     end

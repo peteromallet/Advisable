@@ -8,7 +8,7 @@ RSpec.describe Mutations::Guild::CreateGuildPost do
   let(:title) { Faker::Lorem.sentence }
   let(:body) { Faker::Lorem.paragraph }
 
-  let(:query) {
+  let(:query) do
     <<-GRAPHQL
     mutation {
       createGuildPost(input: {
@@ -37,7 +37,7 @@ RSpec.describe Mutations::Guild::CreateGuildPost do
       }
     }
     GRAPHQL
-  }
+  end
 
   it_behaves_like "guild specialist"
 
@@ -60,8 +60,37 @@ RSpec.describe Mutations::Guild::CreateGuildPost do
         "title" => title,
         "denormalizedType" => "CaseStudy",
         "type" => "Case Study",
-        "author" => {"id" => specialist.uid},
+        "author" => {"id" => specialist.uid}
       })
+    end
+
+    context "with a prompt label" do
+      let(:prompt_label) { create(:label) }
+      let(:query) do
+        <<-GRAPHQL
+        mutation {
+          createGuildPost(input: {
+            title: "#{title}",
+            body: "#{body}",
+            type: "Post",
+            promptLabelId: "#{prompt_label.id}"
+          }) {
+            guildPost {
+              promptLabel {
+                id
+              }
+            }
+          }
+        }
+        GRAPHQL
+      end
+
+      it "creates a guild post with a prompt label" do
+        resp = AdvisableSchema.execute(query, context: {current_user: specialist})
+        puts resp.inspect
+        post_prompt_label = resp.dig("data", *response_keys, "promptLabel")
+        expect(post_prompt_label["id"]).to eq(prompt_label.id)
+      end
     end
   end
 end

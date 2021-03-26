@@ -24,10 +24,12 @@ end
 #  type               :string           default("Post"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  label_id           :uuid
 #  specialist_id      :bigint
 #
 # Indexes
 #
+#  index_guild_posts_on_label_id       (label_id)
 #  index_guild_posts_on_specialist_id  (specialist_id)
 #
 # Foreign Keys
