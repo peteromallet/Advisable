@@ -62,7 +62,6 @@ gem "pry-byebug", ">= 3.9.0"
 group :development, :test do
   gem "dotenv-rails"
   gem "factory_bot_rails"
-  gem "cypress-on-rails", "~> 1.0"
   gem "database_cleaner-active_record"
 end
 
