@@ -122,7 +122,7 @@ namespace :data do
   task merge_skills: :environment do
     Skill.where.not(original: nil).find_each do |duplicate|
       original = duplicate.original
-      original.merge_with!(duplicate)
+      original.merge_with!(duplicate: duplicate)
     end
   end
 
