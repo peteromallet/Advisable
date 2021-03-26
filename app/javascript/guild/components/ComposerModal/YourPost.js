@@ -30,17 +30,19 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
   return (
     <Box display="flex">
       <Box flexGrow={1} width="100%">
-        <Link
-          mb="s"
-          fontSize="l"
-          fontWeight="medium"
-          to={pathWithState(`/composer/${guildPost.id}/type`)}
-        >
-          <Box display="inline-block" mr="xxs">
-            <ArrowLeft size={20} strokeWidth={2} />
-          </Box>
-          Back
-        </Link>
+        {guildPost?.id && !guildPost?.promptLabel && (
+          <Link
+            mb="s"
+            fontSize="l"
+            fontWeight="medium"
+            to={pathWithState(`/composer/${guildPost.id}/type`)}
+          >
+            <Box display="inline-block" mr="xxs">
+              <ArrowLeft size={20} strokeWidth={2} />
+            </Box>
+            Back
+          </Link>
+        )}
         <Formik
           validateOnMount
           onSubmit={handleSubmit}

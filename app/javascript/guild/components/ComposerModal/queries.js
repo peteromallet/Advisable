@@ -30,3 +30,13 @@ export const SELECT_DATA = gql`
     }
   }
 `;
+
+export const LABEL_QUERY = gql`
+  query label($slug: ID!) {
+    label(slug: $slug) {
+      id
+      name
+      prompt
+    }
+  }
+`;

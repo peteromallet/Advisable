@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import CreateGuildPost from "./CreateGuildPost";
+import CreatePostFromPrompt from "./CreatePostFromPrompt";
 import EditGuildPost from "./EditGuildPost";
 import EditImages from "./EditImages";
 import EditAudience from "./EditAudience";
@@ -12,9 +13,7 @@ function RedirectToStep({ step }) {
   return <Redirect to={`${location.pathname}/${step}`} />;
 }
 
-function Routes({ onPublish, selectDataQuery, data = {} }) {
-  const guildPost = data?.guildPost;
-
+function Routes({ onPublish, selectDataQuery, guildPost, promptLabel }) {
   return (
     <Switch>
       <Route path="*composer" exact>
@@ -23,6 +22,10 @@ function Routes({ onPublish, selectDataQuery, data = {} }) {
 
       <Route path="*composer/new" exact>
         <CreateGuildPost />
+      </Route>
+
+      <Route path="*composer/prompt/:labelSlug" exact>
+        <CreatePostFromPrompt promptLabel={promptLabel} />
       </Route>
 
       <Route path="*composer/:id" exact>

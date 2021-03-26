@@ -16,6 +16,10 @@ class LabelDashboard < Administrate::BaseDashboard
     id: Field::String,
     name: Field::String,
     slug: Field::String,
+    prompt: Field::Text,
+    prompt_cta: Field::String,
+    description: Field::String,
+    featured: Field::Boolean,
     published_at: Field::DateTime,
     labelings_count: Field::Number,
     created_at: Field::DateTime,
@@ -43,6 +47,10 @@ class LabelDashboard < Administrate::BaseDashboard
     id
     name
     slug
+    prompt
+    prompt_cta
+    description
+    featured
     published_at
     labelings_count
     created_at
@@ -53,6 +61,10 @@ class LabelDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     name
+    prompt
+    prompt_cta
+    description
+    featured
     published_at
   ].freeze
 
