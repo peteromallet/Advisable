@@ -5,7 +5,7 @@
 # policy and can easily be used outside of graphql.
 class UserPolicy < BasePolicy
   # whether or not the user is the current user
-  def is_user
+  def user?
     record == user
   end
 

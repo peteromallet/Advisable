@@ -10,13 +10,13 @@ some resources will return null if it requires an authorized user to access it.
 Graphql requests are authorized using pundit policies. The logic for this can
 be seen in the `BaseField` class.
 
-The following will call the ProjectPolicy "is_user?" method to
-determin whether or not the email can be accessed. If authorization fails
+The following will call the ProjectPolicy "user?" method to
+determine whether or not the email can be accessed. If authorization fails
 null willl be returned for the email.
 
 ```rb
 class Types::Project < Types::BaseType
-  field :email, String, null: true, authorize: :is_user
+  field :email, String, null: true, authorize: :user?
 end
 ```
 

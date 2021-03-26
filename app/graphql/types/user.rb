@@ -9,7 +9,7 @@ module Types
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
 
     field :email, String, null: false do
-      authorize :admin?, :is_user, :is_candidate_for_user_project, :record_belongs_to_company?
+      authorize :admin?, :user?, :is_candidate_for_user_project, :record_belongs_to_company?
     end
 
     delegate :email, to: :account
@@ -64,16 +64,16 @@ module Types
     end
 
     field :talk_signature, String, null: false do
-      authorize :is_user
+      authorize :user?
     end
 
     field :completed_tutorials, [String], null: false do
-      authorize :is_user
+      authorize :user?
     end
 
     field :has_completed_tutorial, Boolean, null: false do
       argument :tutorial, String, required: true
-      authorize :is_user
+      authorize :user?
     end
 
     def has_completed_tutorial(tutorial:)
@@ -81,23 +81,23 @@ module Types
     end
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
-      authorize :is_user
+      authorize :user?
     end
 
     field :project_payment_method, String, null: true do
-      authorize :is_user
+      authorize :user?
     end
 
     field :setup_intent_status, String, null: true do
-      authorize :is_user
+      authorize :user?
     end
 
     field :invoice_settings, Types::InvoiceSettingsType, null: true do
-      authorize :is_user
+      authorize :user?
     end
 
     field :payments_setup, Boolean, null: true do
-      authorize :is_user
+      authorize :user?
     end
 
     delegate :project_payment_method, :setup_intent_status, :invoice_settings, :payments_setup, to: :company
@@ -106,7 +106,7 @@ module Types
 
     field :interviews, [Types::Interview], null: true do
       argument :status, String, required: false
-      authorize :is_user
+      authorize :user?
     end
 
     def interviews(status: nil)
@@ -134,7 +134,7 @@ module Types
 
     # The customer field returns information from the users stripe customer object.
     field :customer, Types::CustomerType, null: true do
-      authorize :is_user
+      authorize :user?
     end
 
     def customer
@@ -143,7 +143,7 @@ module Types
 
     # The paymentMethod field returns the users default payment method from stripe.
     field :payment_method, Types::PaymentMethodType, null: true do
-      authorize :is_user
+      authorize :user?
     end
 
     def payment_method
@@ -188,7 +188,7 @@ module Types
     end
 
     field :applications, [Types::ApplicationType], null: true do
-      authorize :is_user
+      authorize :user?
       argument :status, [String], required: false
     end
 
