@@ -1,4 +1,5 @@
 import React from "react";
+import { upperFirst } from "lodash";
 import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
@@ -118,12 +119,13 @@ export default function JobDescription({ data }) {
               formik.setFieldValue(
                 "goals",
                 items.map((item) => {
-                  formik.setStatus(
+                  const errorStatus =
                     item.length > goalMaxLength
                       ? `The goal can't be longer than ${goalMaxLength} characters`
-                      : null,
-                  );
-                  return item.substring(0, goalMaxLength);
+                      : null;
+                  formik.setStatus(errorStatus);
+                  const capped = item.substring(0, goalMaxLength);
+                  return upperFirst(capped);
                 }),
               )
             }
