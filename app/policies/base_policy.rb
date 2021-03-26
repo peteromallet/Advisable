@@ -1,28 +1,27 @@
 # frozen_string_literal: true
 
 class BasePolicy
-  attr_reader :user, :record
+  attr_reader :current_user, :record
 
-  def initialize(user, record)
-    @user = user
+  def initialize(current_user, record)
+    @current_user = current_user
     @record = record
   end
 
-  def admin?
-    user&.account&.admin?
+  def user
+    raise "REPLACE ME"
   end
 
-  def is_admin # rubocop:disable Naming/PredicateName
-    Raven.capture_message("Somebody is still using this :unamused:", backtrace: caller)
-    admin?
+  def admin?
+    current_user&.account&.admin?
   end
 
   def is_team_manager? # rubocop:disable Naming/PredicateName
-    user.is_a?(::User) && user.account.team_manager?
+    current_user.is_a?(::User) && current_user.account.team_manager?
   end
 
   def record_belongs_to_company?
-    user.is_a?(::User) && user.company == company_of_record
+    current_user.is_a?(::User) && current_user.company == company_of_record
   end
 
   def is_company_team_manager? # rubocop:disable Naming/PredicateName
@@ -31,8 +30,7 @@ class BasePolicy
 
   private
 
-  # .try will return nil even when record doesn't respond to #user
   def company_of_record
-    record.try(:user)&.company
+    record.respond_to?(:user) && record.user&.company
   end
 end

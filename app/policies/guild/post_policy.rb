@@ -1,6 +1,6 @@
 class Guild::PostPolicy < Guild::BasePolicy
   def show
-    record.specialist == user || published_and_guild? || published_and_shareable?
+    record.specialist == current_user || published_and_guild? || published_and_shareable?
   end
 
   def create_comment
