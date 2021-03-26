@@ -290,6 +290,8 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     parallel (1.20.1)
+    parallel_tests (3.6.0)
+      parallel
     parser (3.0.0.0)
       ast (~> 2.4.1)
     pg (1.2.3)
@@ -543,6 +545,7 @@ DEPENDENCIES
   omniauth
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
+  parallel_tests
   parser
   pg (>= 0.18, < 2.0)
   pghero

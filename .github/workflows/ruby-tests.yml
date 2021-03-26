@@ -90,15 +90,13 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: Setup database
-        run: |
-          bin/rails db:create
-          bin/rails db:migrate
+        run: bin/rails parallel:create db:migrate parallel:prepare
 
       - name: Compile assets
         run: bundle exec rails webpacker:compile
 
       - name: Test
-        run: bundle exec rspec --format RSpec::Github::Formatter --format documentation
+        run: bundle exec rake parallel:spec
 
       # - name: Run Cypress Tests
       #   uses: cypress-io/github-action@v2
