@@ -29,7 +29,6 @@ module Types
     field :title, String, null: true
     field :company_name, String, null: true
     field :time_zone, String, null: true
-    field :projects, [Types::ProjectType], null: true
     field :company, Types::CompanyType, null: true
 
     field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
@@ -169,6 +168,9 @@ module Types
       OpenSSL::HMAC.hexdigest('SHA256', ENV['TALKJS_SECRET'], user_id)
     end
 
+    field :projects, [Types::ProjectType], null: true, deprecation_reason: "Moved to Company" do
+      authorize :user?, :admin?
+    end
     # Exclude any projects where the sales status is 'Lost'. We need to use an
     # or statement here otherwise SQL will also exclude records where sales_status
     # is null.
