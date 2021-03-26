@@ -3,12 +3,57 @@ import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Formik, Form, Field } from "formik";
-import { Error } from "@advisable/donut";
+import {
+  Box,
+  Text,
+  Error,
+  Button,
+  Modal,
+  DialogDisclosure,
+  useModal,
+} from "@advisable/donut";
 import SubmitButton from "components/SubmitButton";
 import BulletPointInput from "components/BulletPointInput";
 import { UPDATE_PROJECT } from "./queries";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 import { setupProgress } from "./SetupSteps";
+
+const ConfirmationModal = ({ modal, formik }) => {
+  return (
+    <Modal modal={modal}>
+      <Box padding={2} paddingBottom={3}>
+        <Text
+          as="h2"
+          fontSize="3xl"
+          color="blue900"
+          fontWeight="medium"
+          mb={3}
+          lineHeight="xl"
+        >
+          Please try to give a quality overview of your expectations.
+        </Text>
+        <Text color="neutral900" mb={6} lineHeight="s">
+          Try to give at least one more goal that defines the scope of this
+          project, it will be helpful to our candidates to fully understand the
+          project.
+        </Text>
+        <Button mr={3} onClick={modal.hide} disabled={formik.isSubmitting}>
+          Update
+        </Button>
+        <Button
+          variant="subtle"
+          loading={formik.isSubmitting}
+          onClick={() => {
+            modal.hide();
+            formik.handleSubmit();
+          }}
+        >
+          Ignore
+        </Button>
+      </Box>
+    </Modal>
+  );
+};
 
 export default function JobDescription({ data }) {
   const { id } = useParams();
@@ -16,6 +61,7 @@ export default function JobDescription({ data }) {
   const location = useLocation();
   const [updateProject] = useMutation(UPDATE_PROJECT);
   const goalMaxLength = 375;
+  const modal = useModal();
 
   if (!setupProgress(data.project).requiredCharacteristics) {
     return <Redirect to={`/projects/${id}/setup/characteristics`} />;
@@ -52,6 +98,7 @@ export default function JobDescription({ data }) {
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {(formik) => (
         <Form>
+          <ConfirmationModal modal={modal} formik={formik} />
           <JobSetupStepHeader mb={2}>
             Briefly describe your goals from working with this specialist
           </JobSetupStepHeader>
@@ -82,14 +129,28 @@ export default function JobDescription({ data }) {
             }
           />
           {formik.status && <Error mb={1}>{formik.status}</Error>}
-          <SubmitButton
-            size="l"
-            marginTop={3}
-            suffix={<ArrowRight />}
-            disabled={formik.values.goals.length === 0}
-          >
-            Continue
-          </SubmitButton>
+          {formik.values.goals.length > 1 ? (
+            <SubmitButton
+              size="l"
+              marginTop={3}
+              suffix={<ArrowRight />}
+              loading={formik.isSubmitting}
+            >
+              Continue
+            </SubmitButton>
+          ) : (
+            <DialogDisclosure
+              as={Button}
+              size="l"
+              marginTop={3}
+              suffix={<ArrowRight />}
+              disabled={formik.values.goals.length === 0}
+              loading={formik.isSubmitting}
+              {...modal}
+            >
+              Continue
+            </DialogDisclosure>
+          )}
         </Form>
       )}
     </Formik>

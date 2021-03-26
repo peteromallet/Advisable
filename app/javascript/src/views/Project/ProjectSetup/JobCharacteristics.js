@@ -21,22 +21,22 @@ import { setupProgress } from "./SetupSteps";
 const ConfirmationModal = ({ modal, formik }) => {
   return (
     <Modal modal={modal}>
-      <Box padding={2}>
+      <Box padding={2} paddingBottom={3}>
         <Text
           as="h2"
           fontSize="3xl"
           color="blue900"
           fontWeight="medium"
-          mb={2}
-          lineHeight="l"
+          mb={3}
+          lineHeight="xl"
         >
           Please try to be more specific in your description.
         </Text>
-        <Text color="neutral900" mb={4} lineHeight="s">
+        <Text color="neutral900" mb={6} lineHeight="s">
           A project that attracts the best candidates has at least two
           well-presented characteristics stated by the client.
         </Text>
-        <Button mr={2} onClick={modal.hide} disabled={formik.isSubmitting}>
+        <Button mr={3} onClick={modal.hide} disabled={formik.isSubmitting}>
           Update
         </Button>
         <Button
