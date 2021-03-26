@@ -19,20 +19,24 @@ const Projects = () => {
   }, [location.pathname]);
 
   const handleCreate = (cache, response) => {
-    const { viewer } = cache.readQuery({ query: GET_PROJECTS });
+    const { currentCompany, viewer } = cache.readQuery({ query: GET_PROJECTS });
 
     dataLayer.push({
       event: "projectStarted",
       projectId: response.data.createJob.project.id,
-      projectCount: viewer.projects.length + 1,
+      projectCount: currentCompany.projects.length + 1,
     });
 
     cache.writeQuery({
       query: GET_PROJECTS,
       data: {
-        viewer: {
-          ...viewer,
-          projects: [response.data.createJob.project, ...viewer.projects],
+        viewer,
+        currentCompany: {
+          ...currentCompany,
+          projects: [
+            response.data.createJob.project,
+            ...currentCompany.projects,
+          ],
         },
       },
     });
@@ -63,7 +67,10 @@ const Projects = () => {
       {loading ? (
         <Loading />
       ) : (
-        <ProjectsList projects={data.viewer.projects} onCreate={handleCreate} />
+        <ProjectsList
+          projects={data.currentCompany.projects}
+          onCreate={handleCreate}
+        />
       )}
     </Container>
   );

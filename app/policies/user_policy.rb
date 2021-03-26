@@ -5,14 +5,13 @@
 # policy and can easily be used outside of graphql.
 class UserPolicy < BasePolicy
   # whether or not the user is the current user
-  def is_user
+  def user?
     record == user
   end
 
-  # Checks if the viewer ( as a specialist ) has applied to any of the users
-  # projects
-  def is_candidate_for_user_project
-    user && user.projects.where(user: record).any?
+  # Checks if the specialist has applied to any of the users projects
+  def candidate_for_user_project?
+    user.is_a?(::Specialist) && user.projects.where(user: record).any?
   end
 
   def company_of_record
