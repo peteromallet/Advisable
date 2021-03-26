@@ -104,6 +104,9 @@ export const project = (fields = {}) => {
     applicationsOpen: true,
     description: "desription",
     applicationCount: 0,
+    candidateCount: 0,
+    proposedCount: 0,
+    hiredCount: 0,
     status: "Brief Confirmed",
     industry: "Testing",
     companyType: "Startup",
@@ -124,6 +127,7 @@ export const project = (fields = {}) => {
     acceptedTerms: true,
     depositOwed: 0,
     applications: [],
+    createdAt: "2020-06-24T12:00:00.000",
     depositPaymentIntent: {
       __typename: "PaymentIntent",
       secret: "secret1234",

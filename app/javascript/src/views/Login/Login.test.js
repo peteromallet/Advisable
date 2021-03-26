@@ -1,12 +1,11 @@
 import { fireEvent } from "@testing-library/react";
 import VIEWER from "../../graphql/queries/viewer";
-import { renderRoute } from "test-utils";
-import mockData from "../../__mocks__/graphqlFields";
+import { renderRoute, mockData } from "test-utils";
 import LOGIN from "./login";
 import { GET_PROJECTS } from "../Projects/queries";
 
 test("User can login", async () => {
-  const user = mockData.user();
+  const user = mockData.user({ industry: mockData.industry() });
 
   let app = renderRoute({
     route: "/login",
@@ -57,10 +56,8 @@ test("User can login", async () => {
         },
         result: {
           data: {
-            viewer: {
-              ...user,
-              projects: [],
-            },
+            currentCompany: mockData.company({ projects: [] }),
+            viewer: user,
           },
         },
       },
@@ -77,7 +74,7 @@ test("User can login", async () => {
 });
 
 test("User is redirected if already logged in", async () => {
-  const user = mockData.user();
+  const user = mockData.user({ industry: mockData.industry() });
 
   const app = renderRoute({
     route: "/login",
@@ -98,10 +95,8 @@ test("User is redirected if already logged in", async () => {
         },
         result: {
           data: {
-            viewer: {
-              ...user,
-              projects: [],
-            },
+            currentCompany: mockData.company({ projects: [] }),
+            viewer: user,
           },
         },
       },
