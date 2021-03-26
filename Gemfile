@@ -60,14 +60,14 @@ gem "pry-doc"
 gem "pry-byebug", ">= 3.9.0"
 
 group :development, :test do
+  gem "parallel_tests"
   gem "dotenv-rails"
   gem "factory_bot_rails"
-  gem "cypress-on-rails", "~> 1.0"
   gem "database_cleaner-active_record"
 end
 
 group :development do
-  gem "web-console", ">= 3.3.0"
+  gem "web-console", ">= 3.3.0", require: false
   gem "listen", "~> 3.2"
   gem "graphql-rails_logger"
   gem "rubocop", require: false

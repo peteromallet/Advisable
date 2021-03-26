@@ -85,41 +85,28 @@ jobs:
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Yarn Install
-        run: bin/rails yarn:install
+      # Setup Yarn
+      - name: Setup Yarn
+        uses: bahmutov/npm-install@v1
 
       - name: Setup database
-        run: |
-          bin/rails db:create
-          bin/rails db:migrate
+        run: bin/rails parallel:create db:migrate parallel:prepare
 
       - name: Compile assets
         run: bundle exec rails webpacker:compile
 
       - name: Test
-        run: bundle exec rspec --format RSpec::Github::Formatter --format documentation
+        run: bundle exec rake parallel:spec
 
-      - name: Run Cypress Tests
-        uses: cypress-io/github-action@v2
-        with:
-          project: ./spec
-          browser: chrome
-          headless: true
-          start: bundle exec rails s -e test -p 3000
-          wait-on: http://localhost:3000
-          install: false
+      # - name: Run Cypress Tests
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     project: ./spec
+      #     browser: chrome
+      #     headless: true
+      #     start: bundle exec rails s -e test -p 3000
+      #     wait-on: http://localhost:3000
+      #     install: false
 
       - name: Test screenshots
         uses: actions/upload-artifact@v2
@@ -128,16 +115,16 @@ jobs:
           name: screenshots
           path: tmp/screenshots
 
-      - name: Cypress screenshots
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: cypress_screenshots
-          path: spec/cypress/screenshots/*
+      # - name: Cypress screenshots
+      #   uses: actions/upload-artifact@v2
+      #   if: always()
+      #   with:
+      #     name: cypress_screenshots
+      #     path: spec/cypress/screenshots/*
 
-      - name: Cypress Video
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: cypress_videos
-          path: spec/cypress/videos/*
+      # - name: Cypress Video
+      #   uses: actions/upload-artifact@v2
+      #   if: always()
+      #   with:
+      #     name: cypress_videos
+      #     path: spec/cypress/videos/*
