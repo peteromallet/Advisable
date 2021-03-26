@@ -1,4 +1,4 @@
-name: Tests
+name: Ruby Tests
 
 on:
   push:
@@ -107,9 +107,6 @@ jobs:
 
       - name: Compile assets
         run: bundle exec rails webpacker:compile
-
-      - name: Javascript Tests
-        run: yarn test
 
       - name: Test
         run: bundle exec rspec --format RSpec::Github::Formatter --format documentation
