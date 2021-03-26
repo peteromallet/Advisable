@@ -9,6 +9,6 @@ class PreviousProjectImagePolicy < BasePolicy
   private
 
   def owner?
-    record.previous_project.specialist == user
+    record.previous_project.specialist == current_user
   end
 end

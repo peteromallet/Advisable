@@ -9,6 +9,6 @@ class ConsultationPolicy < BasePolicy
   private
 
   def owner?
-    record.specialist == user
+    record.specialist == current_user
   end
 end
