@@ -27,7 +27,7 @@ afterAll(() => {
 });
 
 test("User can signup", async () => {
-  const user = mockData.user();
+  const user = mockData.user({ industry: mockData.industry() });
 
   renderRoute({
     route: `/signup/${user.id}`,
@@ -53,11 +53,8 @@ test("User can signup", async () => {
         GET_PROJECTS,
         {},
         {
-          viewer: {
-            ...user,
-            industry: mockData.industry(),
-            projects: [],
-          },
+          currentCompany: mockData.company({ projects: [] }),
+          viewer: user,
         },
       ),
     ],

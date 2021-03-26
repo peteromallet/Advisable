@@ -22,5 +22,17 @@ module Types
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
+
+    field :projects, [Types::ProjectType], null: true do
+      authorize :record_belongs_to_company?, :admin?
+    end
+    # Exclude any projects where the sales status is 'Lost'. We need to use an
+    # or statement here otherwise SQL will also exclude records where sales_status
+    # is null.
+    def projects
+      object.projects.where.not(sales_status: 'Lost').or(
+        object.projects.where(sales_status: nil)
+      ).order(created_at: :desc)
+    end
   end
 end
