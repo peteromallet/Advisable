@@ -49,7 +49,7 @@ export const StyledInputControl = styled.input`
   padding-bottom: 0;
   border-radius: 0px;
   color: ${theme.colors.neutral900};
-  font-family: system-ui, TTHoves, sans-serif;
+  font-family: TTHoves, sans-serif;
 
   &::placeholder {
     color: ${theme.colors.neutral400};
@@ -103,10 +103,8 @@ const size = variant({
   variants: {
     sm: {
       height: 40,
-      [StyledInputControl]: {
-        paddingLeft: "12px",
-        paddingRight: "12px",
-      },
+      paddingLeft: "12px",
+      paddingRight: "12px",
       [StyledInputDecoration]: {
         "&:first-child": {
           paddingLeft: "12px",
@@ -118,10 +116,8 @@ const size = variant({
     },
     md: {
       height: 48,
-      [StyledInputControl]: {
-        paddingLeft: "16px",
-        paddingRight: "16px",
-      },
+      paddingLeft: "16px",
+      paddingRight: "16px",
       [StyledInputDecoration]: {
         "&:first-child": {
           paddingLeft: "16px",
@@ -134,10 +130,8 @@ const size = variant({
     lg: {
       height: 56,
       fontSize: 18,
-      [StyledInputControl]: {
-        paddingLeft: 20,
-        paddingRight: 20,
-      },
+      paddingLeft: 20,
+      paddingRight: 20,
       [StyledInputDecoration]: {
         fontSize: "17px",
         "&:first-child": {
