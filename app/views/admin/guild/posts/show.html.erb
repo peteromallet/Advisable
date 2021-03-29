@@ -25,7 +25,7 @@ as well as a link to its edit page.
 
   <div>
   <%= link_to(
-    "Boost Post",
+    "Boost Post (#{Subscription.where(label_id: page.resource.labels.pluck(:id)).distinct.count(:specialist_id)} subscribers)",
     boost_post_admin_guild_post_path(page.resource.id),
     class: "button",
     method: :post,
