@@ -17,6 +17,7 @@ import CompanyInformation from "./CompanyInformation";
 import Sidebar from "./Sidebar";
 import Send from "./Send";
 import Complete from "./Complete";
+import Authenticate from "./Authenticate";
 import { useSpecialist } from "./queries";
 
 const RequestConsultation = () => {
@@ -87,6 +88,9 @@ const RequestConsultation = () => {
           </Route>
           <Route path="/request_consultation/:specialistId/details">
             <CompanyInformation data={data} />
+          </Route>
+          <Route path="/request_consultation/:specialistId/login">
+            <Authenticate data={data} />
           </Route>
           <Route path="/request_consultation/:specialistId/availability">
             <Availability data={data} />

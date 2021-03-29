@@ -17,11 +17,14 @@ module Mutations
     field :consultation, Types::ConsultationType, null: true
 
     def authorized?(**args)
-      account = Account.find_by(email: args[:email])
-      if account
-        ApiError.invalid_request('emailBelongsToFreelancer', 'This email belongs to a freelancer account') if Specialist.find_by(account: account)
-      else
-        create_and_login_new_user(args)
+      if current_user.blank?
+        account = Account.find_by(email: args[:email])
+
+        if account
+          ApiError.invalid_request('emailBelongsToFreelancer', 'This email belongs to a freelancer account') if Specialist.find_by(account: account)
+        else
+          create_and_login_new_user(args)
+        end
       end
 
       requires_client!
