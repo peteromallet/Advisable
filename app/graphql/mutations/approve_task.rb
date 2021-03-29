@@ -24,6 +24,7 @@ module Mutations
       end
       ApiError.invalid_request("tasks.notSaved", task.errors.full_messages.first) unless updated
 
+      task.create_invoice_item
       task.sync_to_airtable
       {task: task}
     end
