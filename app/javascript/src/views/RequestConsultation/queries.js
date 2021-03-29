@@ -71,7 +71,6 @@ export const useCreateConsultation = () => {
   const [mutate, state] = useMutation(CREATE_CONSULTATION, {
     update(cache, response) {
       if (!response.errors) {
-        cache.reset();
         cache.writeQuery({
           query: VIEWER,
           data: {
