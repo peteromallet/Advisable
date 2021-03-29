@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import { useMutation, useQuery } from "@apollo/client";
+import { useCallback } from "react";
 import { useParams, useLocation } from "react-router";
 
 export const GET_SPECIALIST = gql`
@@ -61,19 +62,28 @@ export const useCreateConsultation = (props) => {
   const params = useParams();
   const location = useLocation();
 
-  return useMutation(CREATE_CONSULTATION, {
-    variables: {
-      input: {
-        skill: location.state?.skill,
-        specialist: params.specialistId,
-        utmSource: location.state?.utmSource,
-        utmCampaign: location.state?.utmCampaign,
-        utmMedium: location.state?.utmMedium,
-        gclid: location.state?.gclid,
-      },
+  const [mutate, state] = useMutation(CREATE_CONSULTATION, props);
+
+  const create = useCallback(
+    async (input) => {
+      return await mutate({
+        variables: {
+          input: {
+            ...input,
+            skill: location.state?.skill,
+            specialist: params.specialistId,
+            utmSource: location.state?.utmSource,
+            utmCampaign: location.state?.utmCampaign,
+            utmMedium: location.state?.utmMedium,
+            gclid: location.state?.gclid,
+          },
+        },
+      });
     },
-    ...props,
-  });
+    [mutate, location, params.specialistId],
+  );
+
+  return [create, state];
 };
 
 export const UPDATE_CONSULTATION = gql`
