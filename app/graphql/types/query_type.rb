@@ -69,13 +69,13 @@ module Types
     end
 
     def skills(*)
-      ::Skill.where(active: true, original: nil)
+      ::Skill.where(active: true)
     end
 
     field :popular_skills, Types::Skill.connection_type, null: false
 
     def popular_skills
-      ::Skill.where(active: true, original: nil).popular
+      ::Skill.where(active: true).popular
     end
 
     field :popular_guild_countries, [Types::LabelType], null: false

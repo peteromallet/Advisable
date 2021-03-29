@@ -8,7 +8,7 @@ RSpec.describe Skill do
 
   describe "#merge_with!" do
     let(:original) { create(:skill) }
-    let(:duplicate) { create(:skill, original: original, airtable_id: "I REFUSE TO DIE") }
+    let(:duplicate) { create(:skill, airtable_id: "I REFUSE TO DIE") }
 
     let(:specialist) { create(:specialist) }
     let(:user) { create(:user) }

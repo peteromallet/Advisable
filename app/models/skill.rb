@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Skill < ApplicationRecord
+  self.ignored_columns += %i[original_id]
+
   include Uid
   include Airtable::Syncable
 
@@ -8,12 +10,10 @@ class Skill < ApplicationRecord
   has_many :specialists, through: :specialist_skills
   has_many :user_skills, dependent: :destroy
   has_many :users, through: :user_skills
-  has_many :duplicates, foreign_key: 'original_id', class_name: 'Skill', dependent: :destroy, inverse_of: :original
   has_many :project_skills, dependent: :destroy
   has_many :previous_projects, through: :project_skills, source: :project, source_type: 'PreviousProject'
   has_many :consultations, dependent: :destroy
   has_one :label, required: false, dependent: :nullify
-  belongs_to :original, class_name: 'Skill', optional: true
 
   validates :name, presence: true
   validates :airtable_id, presence: true
@@ -65,7 +65,6 @@ end
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  airtable_id                :string
-#  original_id                :bigint
 #
 # Indexes
 #
