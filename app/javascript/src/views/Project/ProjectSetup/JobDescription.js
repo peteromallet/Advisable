@@ -1,9 +1,9 @@
 import React from "react";
-import { upperFirst } from "lodash";
 import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Formik, Form, Field } from "formik";
+import upperFirst from "src/utilities/upperFirst";
 import {
   Box,
   Text,
@@ -13,8 +13,8 @@ import {
   DialogDisclosure,
   useModal,
 } from "@advisable/donut";
-import SubmitButton from "components/SubmitButton";
-import BulletPointInput from "components/BulletPointInput";
+import SubmitButton from "src/components/SubmitButton";
+import BulletPointInput from "src/components/BulletPointInput";
 import { UPDATE_PROJECT } from "./queries";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 import { setupProgress } from "./SetupSteps";
