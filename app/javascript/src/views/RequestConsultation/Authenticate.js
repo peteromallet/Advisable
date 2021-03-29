@@ -22,30 +22,35 @@ export default function Authenticate() {
   };
 
   const handleSubmit = async (input, formik) => {
-    const response = await login({
+    const { errors } = await login({
       variables: {
         input,
       },
     });
 
-    if (response.errors) {
-      const errorCode = response.errors?.[0]?.extensions?.code;
+    if (errors) {
+      const errorCode = errors?.[0]?.extensions?.code;
       formik.setStatus(t(`errors.${errorCode}`));
       formik.setSubmitting(false);
       return;
     }
 
-    const consultationResponse = await createConsultation();
-    const consultation =
-      consultationResponse.data?.createConsultation.consultation;
-    history.push({
-      pathname: `/request_consultation/${params.specialistId}/availability`,
-      state: {
-        ...location.state,
-        consultationId: consultation.id,
-        completed: [...(location?.state?.completed || []), "SKILLS"],
-      },
-    });
+    const response = await createConsultation();
+
+    if (response.errors) {
+      history.replace(`/request_consultation/${params.specialistId}`);
+    } else {
+      const consultation = response.data?.createConsultation.consultation;
+
+      history.push({
+        pathname: `/request_consultation/${params.specialistId}/availability`,
+        state: {
+          ...location.state,
+          consultationId: consultation.id,
+          completed: [...(location?.state?.completed || []), "SKILLS"],
+        },
+      });
+    }
   };
 
   return (

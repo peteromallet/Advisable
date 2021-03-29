@@ -1,7 +1,9 @@
 import { gql } from "@apollo/client";
+import VIEWER from "src/graphql/queries/viewer";
 import { useMutation, useQuery } from "@apollo/client";
 import { useCallback } from "react";
 import { useParams, useLocation } from "react-router";
+import { viewerFields } from "../../graphql/queries/viewer";
 
 export const GET_SPECIALIST = gql`
   query specialist($id: ID!) {
@@ -48,9 +50,13 @@ const consultationFragment = gql`
 
 export const CREATE_CONSULTATION = gql`
   ${consultationFragment}
+  ${viewerFields}
 
   mutation createConsultation($input: CreateConsultationInput!) {
     createConsultation(input: $input) {
+      viewer {
+        ...ViewerFields
+      }
       consultation {
         ...ConsultationFields
       }
@@ -58,11 +64,23 @@ export const CREATE_CONSULTATION = gql`
   }
 `;
 
-export const useCreateConsultation = (props) => {
+export const useCreateConsultation = () => {
   const params = useParams();
   const location = useLocation();
 
-  const [mutate, state] = useMutation(CREATE_CONSULTATION, props);
+  const [mutate, state] = useMutation(CREATE_CONSULTATION, {
+    update(cache, response) {
+      if (!response.errors) {
+        cache.reset();
+        cache.writeQuery({
+          query: VIEWER,
+          data: {
+            viewer: response.data.createConsultation.viewer,
+          },
+        });
+      }
+    },
+  });
 
   const create = useCallback(
     async (input) => {
