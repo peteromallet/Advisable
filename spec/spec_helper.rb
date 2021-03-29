@@ -13,6 +13,13 @@ SimpleCov.start 'rails' do
   add_filter 'test_data.rb'
   add_group 'GraphQL', 'app/graphql'
   add_group 'Services', 'app/services'
+
+  if ENV['TEST_ENV_NUMBER'] # parallel specs
+    SimpleCov.at_exit do
+      result = SimpleCov.result
+      result.format! if ParallelTests.number_of_running_processes <= 1
+    end
+  end
 end
 
 # put sidekiq in test mode
@@ -138,7 +145,8 @@ RSpec.configure do |config|
   # Print the 10 slowest examples and example groups at the
   # end of the spec run, to help surface which specs are running
   # particularly slow.
-  config.profile_examples = 10
+  # We can get that from tmp/parallel_runtime_rspec.log
+  # config.profile_examples = 10
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
