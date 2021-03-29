@@ -57,18 +57,6 @@ const specialistFields = gql`
       id
     }
 
-    projectSkills {
-      nodes {
-        id
-        name
-      }
-    }
-
-    industries {
-      id
-      name
-    }
-
     reviews {
       id
       name
