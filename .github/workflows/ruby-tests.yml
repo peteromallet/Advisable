@@ -93,10 +93,13 @@ jobs:
         run: bin/rails parallel:create db:migrate parallel:prepare
 
       - name: Compile assets
-        run: bundle exec rails webpacker:compile
+        run: bin/rails webpacker:compile
 
-      - name: Test
-        run: bundle exec rake parallel:spec
+      - name: Unit Tests
+        run: bin/rails parallel:spec['spec\/(?!system)']
+
+      - name: System Tests
+        run: bin/rspec --pattern "spec/system/**/*_spec.rb"
 
       # - name: Run Cypress Tests
       #   uses: cypress-io/github-action@v2
