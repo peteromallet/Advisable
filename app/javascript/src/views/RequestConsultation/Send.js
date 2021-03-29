@@ -65,7 +65,11 @@ function Send({ data }) {
                 }}
               />
             </Box>
-            <Button type="submit" loading={formik.isSubmitting}>
+            <Button
+              type="submit"
+              loading={formik.isSubmitting}
+              disabled={!formik.values.likelyToHire}
+            >
               Request Consultation
             </Button>
           </Form>
