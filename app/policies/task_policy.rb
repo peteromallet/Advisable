@@ -5,11 +5,11 @@
 # pundit gem.
 class TaskPolicy < BasePolicy
   def client_owner?
-    record.application.project.user == user
+    record.application.project.user == current_user
   end
 
   def specialist_owner?
-    record.application.specialist == user
+    record.application.specialist == current_user
   end
 
   def via_client?
@@ -31,7 +31,7 @@ class TaskPolicy < BasePolicy
   # Whether or not the current user has permission to update the due date for
   # a task.
   def update_due_date
-    return false if user.nil?
+    return false if current_user.nil?
     return true if admin?
     return true if changeable_stage?
     return true if record.stage == 'Assigned' && specialist_owner?
@@ -42,7 +42,7 @@ class TaskPolicy < BasePolicy
   # Whether or not the current user has permission to update the estimate for a
   # task.
   def update_estimate
-    return false if user.nil?
+    return false if current_user.nil?
     return true if admin?
     return true if ['Not Assigned', 'Quote Requested', 'Requested To Start'].include?(record.stage)
     return true if specialist_owner? && ['Quote Provided', 'Assigned'].include?(record.stage)

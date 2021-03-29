@@ -6,12 +6,12 @@
 class UserPolicy < BasePolicy
   # whether or not the user is the current user
   def user?
-    record == user
+    record == current_user
   end
 
   # Checks if the specialist has applied to any of the users projects
   def candidate_for_user_project?
-    user.is_a?(::Specialist) && user.projects.where(user: record).any?
+    current_user.is_a?(::Specialist) && current_user.projects.where(user: record).any?
   end
 
   def company_of_record
