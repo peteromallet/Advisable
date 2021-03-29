@@ -3,7 +3,7 @@
 class Invoice < ApplicationRecord
   DAYS_DUE = 30
 
-  enum status: {draft: 0, open: 1, paid: 2, paid_out: 3, void: 4}
+  enum status: {draft: 0, open: 1, paid: 2, exported: 3, paid_out: 4, void: 5}
 
   belongs_to :company
   belongs_to :application
@@ -23,6 +23,7 @@ end
 # Table name: invoices
 #
 #  id                :uuid             not null, primary key
+#  exported_at       :datetime
 #  paid_at           :datetime
 #  paid_out_at       :datetime
 #  period_end        :datetime

@@ -580,6 +580,7 @@ ActiveRecord::Schema.define(version: 2021_07_06_072105) do
     t.datetime "period_end"
     t.datetime "paid_at"
     t.datetime "paid_out_at"
+    t.datetime "exported_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["application_id"], name: "index_invoices_on_application_id"

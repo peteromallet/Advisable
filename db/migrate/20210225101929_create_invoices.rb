@@ -11,6 +11,7 @@ class CreateInvoices < ActiveRecord::Migration[6.1]
       t.datetime :period_end
       t.datetime :paid_at
       t.datetime :paid_out_at
+      t.datetime :exported_at
 
       t.timestamps
     end
