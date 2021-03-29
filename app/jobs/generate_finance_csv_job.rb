@@ -3,13 +3,16 @@
 require 'csv'
 
 class GenerateFinanceCsvJob < ApplicationJob
+  HEADERS = %w[name recipientEmail paymentReference receiverType amountCurrency amount sourceCurrency targetCurrency IBAN type].freeze
+
   queue_as :default
 
   SOURCE_CURRENCY = "EUR"
 
   def perform
-    headers = %w[name recipientEmail paymentReference receiverType amountCurrency amount sourceCurrency targetCurrency IBAN type]
-    csv_string = CSV.generate(write_headers: true, headers: headers) do |csv|
+    exported_invoices = []
+
+    csv_string = CSV.generate(write_headers: true, headers: HEADERS) do |csv|
       Invoice.draft.each do |invoice|
         specialist = invoice.specialist
 
@@ -26,6 +29,7 @@ class GenerateFinanceCsvJob < ApplicationJob
         # TODO: Remove advisable fee
         # TODO: Do currency conversion on amount
 
+        exported_invoices << invoice.id
         csv << [
           specialist.account.name,
           email,
@@ -41,9 +45,11 @@ class GenerateFinanceCsvJob < ApplicationJob
       end
     end
 
-    # upload this somewhere?
+    # TODO: email this
     file = Tempfile.new
     file.write(csv_string)
     file.close
+
+    Invoice.where(id: exported_invoices).update_all(status: :exported, exported_at: Time.zone.now) # rubocop:disable Rails/SkipsModelValidations
   end
 end
