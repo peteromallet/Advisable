@@ -57,7 +57,6 @@ class ApiError < GraphQL::ExecutionError
   end
 
   def self.service_error(error, extensions: {})
-    code = error.code.presence || SERVICE_ERROR
-    raise ApiError::InvalidRequest.new(code, error.message, extensions: extensions)
+    raise ApiError::InvalidRequest.new(error.code.presence, error.message, extensions: extensions)
   end
 end
