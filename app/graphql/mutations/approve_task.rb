@@ -7,7 +7,7 @@ module Mutations
     field :task, Types::TaskType, null: true
 
     def authorized?(**args)
-      task = Task.find_by_uid!(args[:task])
+      task = Task.find_by!(uid: args[:task])
       policy = TaskPolicy.new(current_user, task)
       return true if policy.owned_by_user_or_company?
 
@@ -15,11 +15,17 @@ module Mutations
     end
 
     def resolve(**args)
-      task = Task.find_by_uid!(args[:task])
+      task = Task.find_by!(uid: args[:task])
 
-      {task: Tasks::Approve.call(task: task, responsible_id: current_account_id)}
-    rescue Service::Error => e
-      ApiError.service_error(e)
+      ApiError.invalid_request("tasks.statusNotSubmitted", "Task is not in 'Sumitted' stage.") if task.stage != "Submitted"
+
+      updated = Logidze.with_responsible(current_account_id) do
+        task.update(stage: "Approved", approved_at: Time.zone.now)
+      end
+      ApiError.invalid_request("tasks.notSaved", task.errors.full_messages.first) unless updated
+
+      task.sync_to_airtable
+      {task: task}
     end
   end
 end

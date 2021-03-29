@@ -62,13 +62,13 @@ RSpec.describe Mutations::ApproveTask do
     end
   end
 
-  context 'when the task stage is not Submitted' do
-    let(:task) { create(:task, stage: 'Assigned') }
+  context "when the task stage is not Submitted" do
+    let(:task) { create(:task, stage: "Assigned") }
 
-    it 'returns an error' do
+    it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['message']
-      expect(error).to eq('tasks.statusNotSubmitted')
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("tasks.statusNotSubmitted")
     end
   end
 end
