@@ -15,6 +15,7 @@ module Mutations
     argument :gclid, String, required: false
 
     field :consultation, Types::ConsultationType, null: true
+    field :viewer, Types::ViewerUnion, null: true
 
     def authorized?(**args)
       if current_user.blank?
@@ -33,7 +34,7 @@ module Mutations
     def resolve(**args)
       ActiveRecord::Base.transaction do
         consultation = create_consultation(**args)
-        {consultation: consultation}
+        {consultation: consultation, viewer: current_user}
       end
     end
 
