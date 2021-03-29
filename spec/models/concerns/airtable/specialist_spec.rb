@@ -364,7 +364,7 @@ RSpec.describe Airtable::Specialist do
     end
 
     context "when a duplicate skill exists in postgres" do
-      let!(:skill_b) { create(:skill, name: skill.name, original: nil) }
+      let!(:skill_b) { create(:skill, name: skill.name) }
 
       it "replaces the duplicate with the correct skill" do
         expect do
@@ -372,13 +372,15 @@ RSpec.describe Airtable::Specialist do
         end.to change {
           specialist.reload.skills.first.id
         }.from(skill.id).to(skill_b.id)
+
+        expect(Skill.where(id: skill.id)).to eq([])
       end
     end
 
     context "when multiple duplicates exist in postgres" do
-      let!(:original) { create(:skill, name: skill.name, original: nil) }
+      let!(:original) { create(:skill, name: skill.name) }
 
-      before { create(:skill, name: skill.name, original: original) }
+      before { create(:skill, name: skill.name) }
 
       it "associates the duplicate to the original" do
         expect do
@@ -386,6 +388,8 @@ RSpec.describe Airtable::Specialist do
         end.to change {
           specialist.reload.skills.first.id
         }.from(skill.id).to(original.id)
+
+        expect(Skill.where(id: skill.id)).to eq([])
       end
     end
   end
