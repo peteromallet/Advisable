@@ -132,12 +132,7 @@ export default function JobDescription({ data }) {
           />
           {formik.status && <Error mb={1}>{formik.status}</Error>}
           {formik.values.goals.length > 1 ? (
-            <SubmitButton
-              size="l"
-              marginTop={3}
-              suffix={<ArrowRight />}
-              loading={formik.isSubmitting}
-            >
+            <SubmitButton size="l" marginTop={3} suffix={<ArrowRight />}>
               Continue
             </SubmitButton>
           ) : (

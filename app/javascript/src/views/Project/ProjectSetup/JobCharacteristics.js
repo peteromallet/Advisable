@@ -121,11 +121,7 @@ export default function JobCharacteristics({ data }) {
             }
           />
           {formik.values.characteristics.length > 1 ? (
-            <SubmitButton
-              size="l"
-              suffix={<ArrowRight />}
-              loading={formik.isSubmitting}
-            >
+            <SubmitButton size="l" suffix={<ArrowRight />}>
               Continue
             </SubmitButton>
           ) : (
