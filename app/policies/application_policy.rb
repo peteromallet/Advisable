@@ -2,11 +2,11 @@
 
 class ApplicationPolicy < BasePolicy
   def client_owner?
-    record.project.user == user
+    record.project.user == current_user
   end
 
   def specialist?
-    record.specialist == user
+    record.specialist == current_user
   end
   alias send_proposal? specialist?
   alias reject_invitation? specialist?
@@ -21,7 +21,6 @@ class ApplicationPolicy < BasePolicy
     client_owner? || record_belongs_to_company?
   end
 
-  # Whether or not the user has access to read information about the application.
   def read?
     specialist? || via_client? || admin?
   end

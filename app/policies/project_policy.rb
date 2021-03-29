@@ -17,6 +17,6 @@ class ProjectPolicy < BasePolicy
   end
 
   def owner?
-    record.user == user
+    record.user == current_user
   end
 end
