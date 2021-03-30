@@ -2,8 +2,6 @@
 
 module Mutations
   class DeleteSpecialist < Mutations::BaseMutation
-    include Mutations::Helpers::Authentication
-
     field :status, String, null: true
 
     def authorized?

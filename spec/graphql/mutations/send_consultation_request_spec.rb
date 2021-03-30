@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::SendConsultationRequest do
-  let!(:consultation) do
-    create(:consultation, status: 'Request Started', topic: nil)
-  end
-
+  let(:user) { create(:user) }
+  let(:current_user) { user }
+  let(:context) { {current_user: current_user} }
+  let(:consultation) { create(:consultation, user: user, status: 'Request Started', topic: nil) }
   let(:topic) { 'Testing' }
   let(:likely_to_hire) { 5 }
 
@@ -23,21 +25,41 @@ RSpec.describe Mutations::SendConsultationRequest do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Consultation).to receive(:sync_to_airtable)
   end
 
   it "sets the status to 'Request Completed'" do
-    expect { AdvisableSchema.execute(query) }.to change {
+    expect { AdvisableSchema.execute(query, context: context) }.to change {
       consultation.reload.status
-    }.from('Request Started')
-      .to('Request Completed')
+    }.from('Request Started').
+      to('Request Completed')
   end
 
   it 'sets the likely_to_hire value' do
-    expect { AdvisableSchema.execute(query) }.to change {
+    expect { AdvisableSchema.execute(query, context: context) }.to change {
       consultation.reload.likely_to_hire
-    }.from(nil)
-      .to(5)
+    }.from(nil).
+      to(5)
+  end
+
+  context "when no user is logged in" do
+    let(:current_user) { nil }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("notAuthenticated")
+    end
+  end
+
+  context "when the current user is a specialist" do
+    let(:current_user) { create(:specialist) }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("MUST_BE_USER")
+    end
   end
 end
