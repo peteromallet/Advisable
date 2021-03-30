@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_25_072900) do
+ActiveRecord::Schema.define(version: 2021_03_30_080138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -811,49 +811,12 @@ ActiveRecord::Schema.define(version: 2021_03_25_072900) do
 
   create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "specialist_id", null: false
-    t.uuid "tag_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "label_id"
     t.index ["label_id"], name: "index_subscriptions_on_label_id"
     t.index ["specialist_id", "label_id"], name: "index_subscriptions_on_specialist_id_and_label_id", unique: true
-    t.index ["specialist_id", "tag_id"], name: "index_subscriptions_on_specialist_id_and_tag_id", unique: true
     t.index ["specialist_id"], name: "index_subscriptions_on_specialist_id"
-    t.index ["tag_id"], name: "index_subscriptions_on_tag_id"
-  end
-
-  create_table "taggings", id: :serial, force: :cascade do |t|
-    t.uuid "tag_id"
-    t.string "taggable_type"
-    t.uuid "taggable_id"
-    t.string "tagger_type"
-    t.integer "tagger_id"
-    t.string "context", limit: 128
-    t.datetime "created_at"
-    t.index ["context"], name: "index_taggings_on_context"
-    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
-    t.index ["tag_id"], name: "index_taggings_on_tag_id"
-    t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
-    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
-    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
-    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
-    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
-    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
-  end
-
-  create_table "tags", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string "name"
-    t.integer "alias_tag_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer "taggings_count", default: 0
-    t.string "topicable_type"
-    t.bigint "topicable_id"
-    t.string "slug"
-    t.boolean "published", default: false
-    t.index ["name"], name: "index_tags_on_name", unique: true
-    t.index ["slug"], name: "index_tags_on_slug", unique: true
-    t.index ["topicable_type", "topicable_id"], name: "index_tags_on_topicable_type_and_topicable_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -1048,8 +1011,6 @@ ActiveRecord::Schema.define(version: 2021_03_25_072900) do
   add_foreign_key "specialists", "countries"
   add_foreign_key "subscriptions", "labels"
   add_foreign_key "subscriptions", "specialists"
-  add_foreign_key "subscriptions", "tags"
-  add_foreign_key "taggings", "tags"
   add_foreign_key "unresponsiveness_reports", "accounts", column: "reporter_id"
   add_foreign_key "unresponsiveness_reports", "applications"
   add_foreign_key "user_skills", "skills"
