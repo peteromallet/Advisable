@@ -49,7 +49,7 @@ const Availability = () => {
 
   const specialist = data.consultation.specialist;
 
-  const handleSubmit = async (inputs) => {
+  const handleSubmit = async (input) => {
     await updateAvailability({
       variables: { input },
     });

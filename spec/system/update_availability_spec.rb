@@ -6,6 +6,7 @@ RSpec.describe 'Update availability', type: :system do
   let(:user) { create(:user) }
 
   it 'sets the clients availability' do
+    authenticate_as(user)
     monday = Date.parse('monday')
     delta = monday > Time.zone.today ? 0 : 7
     next_monday = monday + delta
