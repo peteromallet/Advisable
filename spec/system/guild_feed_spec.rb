@@ -12,6 +12,7 @@ RSpec.describe 'Guild feed', type: :system do
   before do
     specialist.account.update!(completed_tutorials: ["guild"])
     authenticate_as(specialist)
+    allow(ChatDirectMessageJob).to receive(:perform_later)
   end
 
   context "when viewing the default feed" do
