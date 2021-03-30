@@ -5,9 +5,6 @@ module Guild
     class BoostError < StandardError; end
     self.store_full_sti_class = false
 
-    # NOTE: Can't leverage scopes when inheriting from ActsAsTaggableOn::Tag
-    acts_as_ordered_taggable_on :guild_topics
-
     POST_TYPES = %w[Post AdviceRequired CaseStudy Opportunity].freeze
     AUDIENCE_TYPES = %w[skills industries locations none other].freeze
     POPULAR_THRESHOLD = 5
@@ -50,7 +47,7 @@ module Guild
     jsonb_accessor :data, audience_type: [:string]
 
     before_validation :set_default_values
-    before_save :reset_guild_topics, if: :guild_topics_resettable?
+    before_save :reset_labels, if: :labels_resettable?
     before_save :reset_previous_pinned, if: :pinned_changed?
 
     # General, Opportunity, Advice Required, Case Study
@@ -74,7 +71,7 @@ module Guild
     def boost!
       raise BoostError, "Post is already boosted" if boosted_at.present?
       raise BoostError, "Cannot boost unpublished post" unless published?
-      raise BoostError, "Cannot boost a post with zero topics" if guild_topics.empty?
+      raise BoostError, "Cannot boost a post with zero labels" if labels.empty?
 
       update(boosted_at: Time.current)
       GuildPostBoostedJob.perform_later(id)
@@ -86,14 +83,14 @@ module Guild
 
     protected
 
-    def guild_topics_resettable?
-      audience_type_changed? && guild_topic_list.any?
+    def labels_resettable?
+      audience_type_was.present? && audience_type_changed? && labels.any?
     end
 
-    def reset_guild_topics
-      return unless guild_topics_resettable?
+    def reset_labels
+      return unless labels_resettable?
 
-      self.guild_topics = []
+      self.labels = []
     end
 
     def reset_previous_pinned
@@ -106,11 +103,6 @@ module Guild
 
     def set_default_values
       self.status = 'draft' if status.blank?
-    end
-
-    # As per instructions in https://github.com/mbleigh/acts-as-taggable-on/blob/master/lib/acts_as_taggable_on/taggable/core.rb#L300-L321
-    def find_or_create_tags_from_list_with_context(tag_list, _)
-      Guild::Topic.find_or_create_all_with_like_by_name(tag_list)
     end
   end
 end

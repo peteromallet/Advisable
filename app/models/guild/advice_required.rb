@@ -2,7 +2,6 @@
 
 module Guild
   class AdviceRequired < Post
-    acts_as_ordered_taggable_on :guild_topics
   end
 end
 

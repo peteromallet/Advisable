@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
 class Subscription < ApplicationRecord
+  self.ignored_columns += %i[tag_id]
+
   belongs_to :specialist
-  belongs_to :tag, class_name: "Guild::Topic", optional: true
-  belongs_to :label, optional: true
+  belongs_to :label
 
-  validates :tag, uniqueness: {scope: :specialist, allow_blank: true}
-  validates :label, uniqueness: {scope: :specialist, allow_blank: true}
-
-  scope :on_tag, -> { where.not(tag_id: nil) }
-  scope :on_label, -> { where.not(label_id: nil) }
+  validates :label, uniqueness: {scope: :specialist}
 end
 
 # == Schema Information
@@ -21,7 +18,6 @@ end
 #  updated_at    :datetime         not null
 #  label_id      :uuid
 #  specialist_id :bigint           not null
-#  tag_id        :uuid
 #
 # Indexes
 #

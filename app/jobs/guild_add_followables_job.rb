@@ -12,10 +12,5 @@ class GuildAddFollowablesJob < ApplicationJob
 
       specialist.subscribe_to!(i.label)
     end
-
-    # TODO: AATO - Remove this
-    Guild::Topic.where(topicable: interests.compact).each do |topic|
-      specialist.subscribe_to!(topic)
-    end
   end
 end

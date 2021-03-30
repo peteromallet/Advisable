@@ -5,7 +5,6 @@ class Country < ApplicationRecord
 
   has_many :specialists, dependent: :nullify
   has_one :label, required: false, dependent: :nullify
-  has_one :guild_topic, as: :topicable, class_name: 'Guild::Topic', required: false, dependent: :nullify
 
   validates :name, presence: true
 
