@@ -1,7 +1,7 @@
 import React from "react";
 import { matchPath, useLocation, NavLink } from "react-router-dom";
 import { motion, transform } from "framer-motion";
-import { LockClosed } from "@styled-icons/ionicons-solid";
+import { LockClosed } from "@styled-icons/ionicons-solid/LockClosed";
 import {
   StyledNavigationMenuItem,
   StyledNavigationMenuLink,

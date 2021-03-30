@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, Box, Text, Button, Link } from "@advisable/donut";
-import { Briefcase, UserGroup } from "@styled-icons/heroicons-outline";
+import { Briefcase } from "@styled-icons/heroicons-outline/Briefcase";
+import { UserGroup } from "@styled-icons/heroicons-outline/UserGroup";
 import { ArrowRight } from "@styled-icons/feather";
 
 export const StyledHeader = styled(Text)`
