@@ -1,4 +1,6 @@
 const SentryWebpackPlugin = require("@sentry/webpack-plugin");
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
 
 process.env.NODE_ENV = process.env.NODE_ENV || "production";
 
@@ -20,4 +22,5 @@ if (
   );
 }
 
-module.exports = environment.toWebpackConfig();
+console.log("Compiling webpack with production config");
+module.exports = smp.wrap(environment.toWebpackConfig());
