@@ -25,7 +25,7 @@ function PersistBioWidget({ formik }) {
           formik.setFieldValue("persistBio", !formik.values.persistBio)
         }
       >
-        Save as my profile biography and persist for future applications
+        Save this biography for future applications
       </Checkbox>
     </StyledPersistBio>
   );
@@ -93,7 +93,7 @@ function Overview({ application, history, location }) {
               >
                 Overview
               </Text>
-              <Box mb="m">
+              <Box mb={6}>
                 <FormField
                   minRows={4}
                   as={StyledIntroduction}
@@ -102,20 +102,20 @@ function Overview({ application, history, location }) {
                   formik={formik}
                   rowPadding={isWidescreen ? 64 : 80}
                   isWidescreen={isWidescreen}
+                  charLimit={280}
                   label="Give a 2-3 line description of your background as it related to this project."
                   placeholder="Give a 2-3 line description of your background as it related to this project."
                 />
               </Box>
-              <Box mb={1.5}>
-                <ChoiceList
+              <Box mb={displayLinkedInInput ? 6 : 8}>
+                <FormField
                   fullWidth
+                  as={ChoiceList}
                   optionsPerRow={2}
                   name="availability"
                   onChange={formik.handleChange}
                   value={formik.values.availability}
-                  error={
-                    formik.touched.availability && formik.errors.availability
-                  }
+                  error={false}
                   label="When are you available to start a new project?"
                   options={[
                     "Immediately",
@@ -126,13 +126,15 @@ function Overview({ application, history, location }) {
                 />
               </Box>
               {displayLinkedInInput ? (
-                <FormField
-                  name="linkedin"
-                  label="LinkedIn Profile URL"
-                  placeholder="https://www.linkedin.com/in/your-name/"
-                />
+                <Box mb={8}>
+                  <FormField
+                    name="linkedin"
+                    label="LinkedIn Profile URL"
+                    placeholder="https://www.linkedin.com/in/your-name/"
+                  />
+                </Box>
               ) : null}
-              <SubmitButton mt="l" size="l" suffix={<ArrowRight />}>
+              <SubmitButton size="l" suffix={<ArrowRight />}>
                 Next
               </SubmitButton>
             </Box>

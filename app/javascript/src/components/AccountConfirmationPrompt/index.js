@@ -11,7 +11,8 @@ export default function AccountConfirmationPrompt() {
   const notifications = useNotifications();
   const [resend, { data }] = useMutation(RESEND_CONFIRMATION_EMAIL);
 
-  if (viewer.confirmed) return null;
+  if (viewer?.confirmed || (viewer?.isSpecialist && !viewer?.isAccepted))
+    return null;
 
   async function handleResend(e) {
     e.preventDefault();
@@ -51,7 +52,7 @@ export default function AccountConfirmationPrompt() {
         <>
           <Box height="1px" bg="neutral200" marginY="lg" />
           <Text fontSize="sm">
-            Didnt receive an email?{" "}
+            Haven’t received an email?{" "}
             <Link.External
               href="#"
               variant="dark"

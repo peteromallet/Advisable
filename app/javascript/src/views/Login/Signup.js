@@ -63,7 +63,7 @@ export default function Signup() {
         </Button>
         <Button
           as={RouteLink}
-          to="/freelancers/signup"
+          to="/freelancers/join"
           width="100%"
           size="l"
           variant="subtle"

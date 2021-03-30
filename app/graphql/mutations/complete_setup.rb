@@ -19,7 +19,7 @@ module Mutations
 
     def resolve(**_args)
       specialist = context[:current_user]
-      specialist.application_stage = "On Hold"
+      specialist.application_stage = "Submitted"
       Logidze.with_responsible(specialist.account_id) do
         specialist.save
       end

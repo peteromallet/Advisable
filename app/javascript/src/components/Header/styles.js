@@ -265,3 +265,7 @@ export const Login = styled(Link)`
     color: white;
   }
 `;
+
+export const Logout = styled(Login)`
+  font-weight: 500;
+`;

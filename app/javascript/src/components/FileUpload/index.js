@@ -15,7 +15,15 @@ import matchFileType from "src/utilities/matchFileType";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
-const FileUpload = ({ label, onChange, preview, accept, maxSizeInMB = 2 }) => {
+const FileUpload = ({
+  name,
+  label,
+  filename,
+  onChange,
+  preview,
+  accept,
+  maxSizeInMB = 2,
+}) => {
   const [file, setFile] = React.useState(null);
   const [uploading, setUploading] = React.useState(false);
   const [percentage, setPercentage] = React.useState(0);
@@ -68,6 +76,8 @@ const FileUpload = ({ label, onChange, preview, accept, maxSizeInMB = 2 }) => {
 
   if (file) {
     mainText = file.name;
+  } else if (filename) {
+    mainText = filename;
   }
 
   if (uploading) {
@@ -84,7 +94,12 @@ const FileUpload = ({ label, onChange, preview, accept, maxSizeInMB = 2 }) => {
             {accept} | {maxSizeInMB} MB
           </SubText>
         </Info>
-        <input type="file" accept={accept} onChange={handleChange} />
+        <input
+          type="file"
+          name={name}
+          accept={accept}
+          onChange={handleChange}
+        />
         {uploading && <ProgressBar percentage={percentage} />}
       </FileUploader>
     </FileUploadStyles>

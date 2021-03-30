@@ -8,7 +8,7 @@ const validationSchema = object().shape({
     .email("Please enter a valid email address"),
   password: string()
     .required("Please enter a password")
-    .min(8, "Your password must be at least 8 characters long"),
+    .min(8, "Password must be at least 8 characters long"),
 });
 
 export default validationSchema;

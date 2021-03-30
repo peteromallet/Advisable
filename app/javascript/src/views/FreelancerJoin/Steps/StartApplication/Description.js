@@ -43,7 +43,6 @@ function WithProjectDetails({ project }) {
   const isWideScreen = useBreakpoint("sUp");
   const {
     user,
-    skills,
     primarySkill,
     industry,
     estimatedBudget,
@@ -61,9 +60,7 @@ function WithProjectDetails({ project }) {
   return (
     <>
       <CardHeader>
-        {user.companyName} is looking for a{" "}
-        {primarySkill?.name || skills[0].name} specialist and we think
-        you&apos;re a great fit!
+        Sign up to access this {primarySkill?.name || ""} opportunity:
       </CardHeader>
       <Box
         flexDirection={["column", "row"]}

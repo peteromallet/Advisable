@@ -8,6 +8,7 @@ class Industry < ApplicationRecord
   has_many :skills, -> { distinct }, through: :previous_projects
   has_many :companies, dependent: :nullify
   has_one :label, required: false, dependent: :nullify
+  has_many :specialist_industries, dependent: :destroy
 
   validates :name, presence: true
 

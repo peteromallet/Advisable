@@ -44,7 +44,7 @@ module Types
 
     def linkedin
       url = object.linkedin
-      return nil if url.nil?
+      return nil if url.blank?
 
       url.starts_with?('http') ? url : "https://#{url}"
     end
@@ -124,13 +124,15 @@ module Types
       object.previous_project_skills.uniq
     end
 
-    field :industries, [Types::IndustryType], null: false do
+    field :industries, [Types::IndustryType], null: false
+
+    field :project_industries, [Types::IndustryType], null: false do
       description 'Returns a list of all the industries the specialist has worked in'
     end
 
     # TODO: This should eventually be updated to include multiple industries associated with an on
     # platform project
-    def industries
+    def project_industries
       object.previous_project_industries.uniq
     end
 
@@ -230,6 +232,15 @@ module Types
     field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
       authorize :specialist?, :admin?
       description 'The timestamp for when the specialist record was created'
+    end
+
+    field :application_interview_starts_at, GraphQL::Types::ISO8601DateTime, null: true do
+      authorize :specialist?, :is_admin
+      description 'The time for an initial application interview'
+    end
+
+    field :application_interview_calendly_id, String, null: true do
+      description 'Calendly event id of initial application interview'
     end
 
     # Eventually the applications field should be updated to support pagination
@@ -362,5 +373,8 @@ module Types
     end
 
     field :unavailable_until, GraphQL::Types::ISO8601DateTime, null: true
+    field :previous_work_description, String, null: true
+    field :previous_work_results, String, null: true
+    field :ideal_project, String, null: true
   end
 end
