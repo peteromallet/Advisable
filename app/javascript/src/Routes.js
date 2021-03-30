@@ -31,8 +31,9 @@ const Routes = () => {
           render={(props) => <ConfirmAccount {...props} />}
         />
         <Route path="/signup/:id" component={Signup} />
-        <Route
+        <AuthenticatedRoute
           exact
+          clientOnly
           path="/clients/:userID/availability"
           component={Availability}
         />
