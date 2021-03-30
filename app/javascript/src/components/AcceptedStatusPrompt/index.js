@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Card, Box, Text, Button, Link } from "@advisable/donut";
 import { Briefcase } from "@styled-icons/heroicons-outline/Briefcase";
 import { UserGroup } from "@styled-icons/heroicons-outline/UserGroup";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 
 export const StyledHeader = styled(Text)`
   background: linear-gradient(90deg, #00199b, #00cbbf);
