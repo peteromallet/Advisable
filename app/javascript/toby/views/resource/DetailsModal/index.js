@@ -1,7 +1,9 @@
 import React, { useMemo, useCallback, useEffect } from "react";
 import { useDialogState } from "reakit/Dialog";
 import { Formik, Form } from "formik";
-import { Modal, Box, Text, Button } from "@advisable/donut";
+import { Modal, Box, Text } from "@advisable/donut";
+import { useNotifications } from "src/components/Notifications";
+import SubmitButton from "src/components/SubmitButton";
 import { matchPath, useHistory, useLocation } from "react-router";
 import { useSchema } from "../../../components/schema";
 import {
@@ -48,6 +50,7 @@ function useRoutedModal(path, returnPath) {
 
 function Details({ id, resource }) {
   const schema = useSchema();
+  const { notify } = useNotifications();
   const updateMutation = generateUpdateMutation(schema, resource);
   const query = generateShowQuery(schema, resource);
   const [update] = useMutation(updateMutation);
@@ -69,13 +72,16 @@ function Details({ id, resource }) {
   });
 
   const handleSubmit = async (attributes) => {
-    console.log(attributes);
-    await update({
+    const { errors } = await update({
       variables: {
         id,
         attributes,
       },
     });
+
+    if (!errors) {
+      notify("Your changes have been saved");
+    }
   };
 
   return (
@@ -91,9 +97,7 @@ function Details({ id, resource }) {
             </Box>
           );
         })}
-        <Button mt={4} type="submit">
-          Save Changes
-        </Button>
+        <SubmitButton mt={4}>Save Changes</SubmitButton>
       </Form>
     </Formik>
   );
