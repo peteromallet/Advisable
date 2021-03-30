@@ -7,6 +7,7 @@ module Toby
       attribute :uid, Attributes::String, readonly: true
       attribute :first_name, Attributes::String
       attribute :last_name, Attributes::String
+      attribute :name, Attributes::String
       attribute :email, Attributes::String
       attribute :user, Attributes::HasOne, labeled_by: :uid, column_label: "User UID"
       attribute :specialist, Attributes::HasOne, labeled_by: :uid

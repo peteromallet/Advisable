@@ -69,6 +69,7 @@ function Details({ id, resource }) {
   });
 
   const handleSubmit = async (attributes) => {
+    console.log(attributes);
     await update({
       variables: {
         id,
@@ -84,13 +85,15 @@ function Details({ id, resource }) {
           return (
             <Box key={attr.name} mb={5}>
               <Text fontWeight={500} mb={2}>
-                {attr.name}
+                {attr.columnLabel}
               </Text>
               <AttributeInput record={data.record} attribute={attr} />
             </Box>
           );
         })}
-        <Button type="submit">Save Changes</Button>
+        <Button mt={4} type="submit">
+          Save Changes
+        </Button>
       </Form>
     </Formik>
   );
