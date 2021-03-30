@@ -2,6 +2,12 @@
 
 module Types
   class ApplicationType < Types::BaseType
+    def self.authorized?(application, context)
+      policy = ApplicationPolicy.new(context[:current_user], application)
+      ApiError.not_authorized("You do not have permission to view this Application") unless policy.read?
+      super
+    end
+
     field :id, ID, null: false
     field :invoice_rate, Int, null: true
     field :applied_at, String, null: true
