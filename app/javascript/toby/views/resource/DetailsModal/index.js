@@ -12,6 +12,7 @@ import {
 } from "../../../attributes";
 import { generateShowQuery, generateUpdateMutation } from "../../../utilities";
 import { useMutation, useQuery } from "@apollo/client";
+import { pluralizeType } from "../../../utilities";
 
 function useRoutedModal(path, returnPath) {
   const modal = useDialogState();
@@ -106,7 +107,7 @@ function Details({ id, resource }) {
 export default function DetailsModal({ resource }) {
   const modal = useRoutedModal(
     "/:resource/:id",
-    `/${resource.queryNameCollection}`,
+    `/${pluralizeType(resource.type)}`,
   );
 
   return (

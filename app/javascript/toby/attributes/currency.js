@@ -11,7 +11,7 @@ export default {
   initializeFormValue: function (record, attribute) {
     return record[attribute.name] || undefined;
   },
-  input: function BooleanAttributeInput({ attribute, record }) {
+  input: function CurrencyAttributeInput({ attribute, record }) {
     const formik = useFormikContext();
 
     return <CurrencyInput {...priceInputProps(formik, attribute.name)} />;
