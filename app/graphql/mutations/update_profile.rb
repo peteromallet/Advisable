@@ -11,6 +11,7 @@ module Mutations
     argument :email, String, required: false
     argument :bio, String, required: false
     argument :skills, [String], required: false
+    argument :industries, [String], required: false
     argument :city, String, required: false
     argument :country, ID, required: false
     argument :remote, Boolean, required: false
@@ -19,6 +20,10 @@ module Mutations
     argument :website, String, required: false
     argument :resume, String, required: false
     argument :public_use, Boolean, required: false
+
+    argument :previous_work_description, String, required: false
+    argument :previous_work_results, String, required: false
+    argument :ideal_project, String, required: false
 
     field :specialist, Types::SpecialistType, null: true
 

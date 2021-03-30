@@ -20,6 +20,7 @@ const FormField = ({
   labelHint,
   caption,
   description,
+  charLimit,
   margin,
   marginTop,
   marginRight,
@@ -34,6 +35,11 @@ const FormField = ({
 
   const hasError = meta.touched && meta.error;
 
+  // Characters counter
+  const isCountable = typeof meta?.value === "string" && charLimit;
+  const charLeft = isCountable && charLimit - meta.value.length;
+  const limitExceeded = charLeft < 0;
+
   return (
     <StyledFormField
       margin={margin}
@@ -44,44 +50,65 @@ const FormField = ({
       marginRight={marginRight}
       marginBottom={marginBottom}
     >
-      {label && (
-        <Box display="flex" alignItems="baseline" mb="xs">
-          <Box flexGrow="1">
-            <Label htmlFor={id}>
-              {label}
-              {isRequired && (
-                <Text pl="4px" as="span" color="red300" fontWeight="medium">
-                  *
-                </Text>
+      <Box display="flex" alignItems="flex-end" width="100%">
+        <Box width="100%">
+          {label && (
+            <Box display="flex" alignItems="baseline" mb={2}>
+              <Box flexGrow="1">
+                <Label htmlFor={id}>
+                  {label}
+                  {isRequired && (
+                    <Text pl={1} as="span" color="red300" fontWeight="medium">
+                      *
+                    </Text>
+                  )}
+                </Label>
+              </Box>
+              {labelHint && (
+                <Box>
+                  <Text
+                    fontSize="xs"
+                    lineHeight="s"
+                    color="neutral400"
+                    paddingLeft={5}
+                    letterSpacing="-0.01em"
+                  >
+                    {labelHint}
+                  </Text>
+                </Box>
               )}
-            </Label>
-          </Box>
-          {labelHint && (
-            <Box>
-              <Text
-                fontSize="xs"
-                lineHeight="s"
-                color="neutral400"
-                paddingLeft="20px"
-                letterSpacing="-0.01em"
-              >
-                {labelHint}
-              </Text>
             </Box>
           )}
+          {description && (
+            <Text
+              fontSize="15px"
+              lineHeight="18px"
+              color="neutral600"
+              my="-4px"
+              mb={2}
+            >
+              {description}
+            </Text>
+          )}
         </Box>
-      )}
-      {description && (
-        <Text
-          fontSize="15px"
-          lineHeight="18px"
-          color="neutral600"
-          my="-4px"
-          mb="8px"
-        >
-          {description}
-        </Text>
-      )}
+        {isCountable ? (
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            ml="auto"
+            mb={description ? 2 : 1}
+            minWidth="60px"
+          >
+            <Text
+              bg={limitExceeded && "red100"}
+              color={limitExceeded ? "red400" : "neutral400"}
+              p={1}
+            >
+              {charLeft}
+            </Text>
+          </Box>
+        ) : null}
+      </Box>
       <Box position="relative">
         <Component
           {...field}

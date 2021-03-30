@@ -750,6 +750,15 @@ ActiveRecord::Schema.define(version: 2021_03_25_072900) do
     t.index ["uid"], name: "index_skills_on_uid"
   end
 
+  create_table "specialist_industries", force: :cascade do |t|
+    t.bigint "specialist_id", null: false
+    t.bigint "industry_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["industry_id"], name: "index_specialist_industries_on_industry_id"
+    t.index ["specialist_id"], name: "index_specialist_industries_on_specialist_id"
+  end
+
   create_table "specialist_skills", force: :cascade do |t|
     t.bigint "specialist_id"
     t.bigint "skill_id"
@@ -802,7 +811,12 @@ ActiveRecord::Schema.define(version: 2021_03_25_072900) do
     t.integer "member_of_week_email"
     t.jsonb "log_data"
     t.date "unavailable_until"
+    t.string "previous_work_description"
+    t.string "previous_work_results"
+    t.string "ideal_project"
     t.string "vat_number"
+    t.string "application_interview_calendly_id"
+    t.datetime "application_interview_starts_at"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
@@ -1042,6 +1056,8 @@ ActiveRecord::Schema.define(version: 2021_03_25_072900) do
   add_foreign_key "searches", "off_platform_projects", column: "manually_recommended_project_id"
   add_foreign_key "searches", "users"
   add_foreign_key "skills", "skills", column: "original_id"
+  add_foreign_key "specialist_industries", "industries"
+  add_foreign_key "specialist_industries", "specialists"
   add_foreign_key "specialist_skills", "skills"
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "accounts"

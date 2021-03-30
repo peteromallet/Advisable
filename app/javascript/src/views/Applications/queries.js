@@ -6,6 +6,12 @@ export const GET_APPLICATIONS = gql`
       ... on Specialist {
         id
         email
+        previousProjects {
+          nodes {
+            id
+            validationStatus
+          }
+        }
         applicationStage
         applications(
           status: [

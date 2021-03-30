@@ -42,7 +42,9 @@ export default function SetPassword({ prevStep, forwards }) {
       return;
     }
 
-    const nextPath = project_id ? `/opportunities/${project_id}` : "/";
+    const nextPath = project_id
+      ? `/opportunities/${project_id}`
+      : "/freelancers/apply";
     history.replace(nextPath);
   };
 

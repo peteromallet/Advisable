@@ -50,6 +50,19 @@ const primaryStyles = css`
   }
 `;
 
+const solidGradientStyles = css`
+  background: linear-gradient(108.83deg, #9423ed -10%, #2350ed 120.66%);
+
+  &:not(:disabled):hover {
+    background: linear-gradient(108.83deg, #b230f6 -39.74%, #2a61f6 120.66%);
+  }
+
+  &:not(:disabled):active {
+    background: linear-gradient(108.83deg, #9423ed -10%, #2350ed 120.66%);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+`;
+
 const secondaryStyles = css`
   background: ${theme.colors.neutral900};
 
@@ -69,6 +82,7 @@ const secondaryStyles = css`
 
 export const VARIANTS = {
   primary: primaryStyles,
+  gradient: solidGradientStyles,
   secondary: secondaryStyles,
   dark: secondaryStyles, // deprecated: use secondary variant instead
   subtle: css`

@@ -67,7 +67,7 @@ function Terms({ match, history, application, location }) {
             <Box>
               <Text
                 as="h1"
-                mb="l"
+                mb={6}
                 fontSize="30px"
                 color="blue900"
                 fontWeight="semibold"
@@ -75,7 +75,7 @@ function Terms({ match, history, application, location }) {
               >
                 Payment Terms
               </Text>
-              <Box mb="l">
+              <Box mb={6}>
                 <FormField
                   name="invoiceRate"
                   as={CurrencyInput}
@@ -84,11 +84,11 @@ function Terms({ match, history, application, location }) {
                   {...priceInputProps(formik, "invoiceRate")}
                 />
               </Box>
-              <Field as={Checkbox} type="checkbox" name="autoApply" mb="m">
+              <Field as={Checkbox} type="checkbox" name="autoApply" mb={4}>
                 I would like to automatically be applied to similar projects
                 using the data I just provided
               </Field>
-              <Box mb="m">
+              <Box mb={4}>
                 <Field
                   as={Checkbox}
                   type="checkbox"
@@ -104,7 +104,7 @@ function Terms({ match, history, application, location }) {
                   <Tooltip
                     content={
                       <>
-                        <Text color="white" size="xs" lineHeight="xs" mb="m">
+                        <Text color="white" size="xs" lineHeight="xs" mb={4}>
                           In order to facilitate fair long-term outcomes,
                           Advisable&apos;s fee to freelancers is reduced for
                           larger relationships between Freelancer and Client
@@ -121,9 +121,9 @@ function Terms({ match, history, application, location }) {
                       </>
                     }
                   >
-                    <Box pt="xs" display="flex" alignItems="center">
+                    <Box pt={2} display="flex" alignItems="center">
                       <Box
-                        mr="xxs"
+                        mr={1}
                         color="neutral700"
                         strokeWidth={1.5}
                         size={20}
@@ -135,7 +135,7 @@ function Terms({ match, history, application, location }) {
                   </Tooltip>
                 </Field>
               </Box>
-              <Box mb="m">
+              <Box mb={4}>
                 <Field
                   as={Checkbox}
                   type="checkbox"
@@ -195,7 +195,7 @@ function Terms({ match, history, application, location }) {
               </Box>
 
               <SubmitButton
-                mt="xl"
+                mt={8}
                 size="l"
                 suffix={<ArrowRight />}
                 disabled={!formik.isValid}

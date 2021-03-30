@@ -14,6 +14,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     country: Field::BelongsTo,
     skills: Field::HasMany,
     id: Field::Number,
+    application_stage: Field::Select.with_options(collection: ::Specialist::VALID_APPLICATION_STAGES),
     account: SimpleBelongsToField.with_options(
       searchable: true,
       searchable_fields: %w[first_name last_name email]
@@ -45,6 +46,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
     account
     image
     linkedin
+    application_stage
     travel_availability
     city
     country
@@ -62,7 +64,7 @@ class SpecialistDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    airtable_id
+    application_stage
     vat_number
     skills
     linkedin
