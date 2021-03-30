@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 class GuildPostBoostedJob < ApplicationJob
-  # TODO: AATO - Switch this over to Labels
-
   def perform(post_id)
     post = Guild::Post.find(post_id)
-    tag_ids = post.guild_topics.pluck(:id)
-    subscriber_ids = Subscription.where(tag_id: tag_ids).where.not(specialist_id: post.specialist_id).distinct.pluck(:specialist_id)
+    label_ids = post.labels.pluck(:id)
+    subscriber_ids = Subscription.where(label_id: label_ids).where.not(specialist_id: post.specialist_id).distinct.pluck(:specialist_id)
 
     subscriber_ids.each do |id|
       Guild::PostBoostMailer.new_post(post: post, subscriber_id: id).deliver_later

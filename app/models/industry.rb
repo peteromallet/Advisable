@@ -8,7 +8,6 @@ class Industry < ApplicationRecord
   has_many :skills, -> { distinct }, through: :previous_projects
   has_many :companies, dependent: :nullify
   has_one :label, required: false, dependent: :nullify
-  has_one :guild_topic, as: :topicable, class_name: 'Guild::Topic', required: false, dependent: :nullify
 
   validates :name, presence: true
 

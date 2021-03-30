@@ -1,32 +1,26 @@
-# rubocop:disable all
+# frozen_string_literal: true
+
+# rubocop:disable Rails/SkipsModelValidations
+
 # Usage:
 # $> rake db:seed:02_guild_seeds
 
 require "faker"
 require "open-uri"
 
-Rails.logger.info "Creating guild topics"
-
-# TODO: AATO - Remove topic stuff
-# Potentially move to Label.insert_all to speed this up
-
-# Need this because ActsAsTaggableOn does some magic 🤷‍♂️
-Guild::Topic.reset_column_information
+Rails.logger.info "Creating labels"
 
 current_time = Time.zone.now
 Skill.where(active: true, original: nil).find_each do |skill|
   Label.create(name: skill.name, skill: skill, published_at: current_time)
-  Guild::Topic.create(name: skill.name, topicable: skill, published: true)
 end
 
 Industry.active.order(name: :asc).find_each do |industry|
   Label.create(name: industry.name, industry: industry, published_at: current_time)
-  Guild::Topic.create(name: industry.name, topicable: industry, published: true)
 end
 
 Country.find_each do |country|
   Label.create(name: country.name, country: country, published_at: current_time)
-  Guild::Topic.create(name: country.name, topicable: country, published: true)
 end
 
 Rails.logger.info "Creating guild posts"
@@ -54,10 +48,6 @@ Specialist.update_all(guild: true)
     audience_type: "none"
   )
 
-  if Guild::Topic.any?
-    post.guild_topic_list << Guild::Topic.offset(rand(Guild::Topic.count)).first.name
-  end
-
   post.labels << Label.order("RANDOM()").first
 
   post.save!
@@ -77,19 +67,19 @@ end
 
 Rails.logger.info "Creating guild events"
 
-10.times do |num|
+10.times do |_num|
   host = Specialist.order(Arel.sql("RANDOM()")).first
   starts_at = rand(5..90).days.from_now
   event = Event.create(
-    host: host, 
-    title: Faker::Quote.yoda[0..149], 
+    host: host,
+    title: Faker::Quote.yoda[0..149],
     description: Faker::Lorem.paragraph_by_chars(number: 4256, supplemental: false),
     published_at: Time.zone.now,
     starts_at: starts_at,
     ends_at: starts_at + 1.hour
   )
 
-  rand(1..10).times do 
+  rand(1..10).times do
     attendee = Specialist.where.not(id: host.id).order(Arel.sql("RANDOM()")).first
     event.event_attendees.create(attendee: attendee) unless event.attendees.exists?(attendee.id)
   end
@@ -101,4 +91,4 @@ Rails.logger.info "Creating guild events"
   event.save!
 end
 
-# rubocop:enable all
+# rubocop:enable Rails/SkipsModelValidations

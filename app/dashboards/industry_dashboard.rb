@@ -14,7 +14,6 @@ class IndustryDashboard < Administrate::BaseDashboard
     skills: Field::HasMany,
     companies: Field::HasMany,
     label: Field::HasOne,
-    guild_topic: Field::HasOne,
     id: Field::Number,
     name: Field::String,
     uid: Field::String,
@@ -43,7 +42,6 @@ class IndustryDashboard < Administrate::BaseDashboard
     skills
     companies
     label
-    guild_topic
     id
     name
     uid
@@ -62,7 +60,6 @@ class IndustryDashboard < Administrate::BaseDashboard
     skills
     companies
     label
-    guild_topic
     name
     uid
     airtable_id
