@@ -44,7 +44,6 @@ function UpdateAvailabilityForm({
       const { errors } = await updateAvailability({
         variables: {
           input: {
-            id: data.viewer.id,
             availability: values.availability,
           },
         },
