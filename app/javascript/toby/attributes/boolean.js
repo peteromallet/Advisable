@@ -13,7 +13,7 @@ export default {
     const [field] = useField(attribute.name);
 
     return (
-      <Checkbox {...field} checked={field.value}>
+      <Checkbox {...field} type="checkbox" checked={field.value}>
         {attribute.columnLabel}
       </Checkbox>
     );
