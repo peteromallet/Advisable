@@ -37,24 +37,20 @@ const CompanyInformation = ({ data }) => {
   const handleSubmit = async (values, formik) => {
     formik.setStatus(null);
 
-    const response = await createConsultation({
-      variables: {
-        input: {
-          skill: location.state?.skill,
-          specialist: params.specialistId,
-          utmSource: location.state?.utmSource,
-          utmCampaign: location.state?.utmCampaign,
-          utmMedium: location.state?.utmMedium,
-          gclid: location.state?.gclid,
-          ...values,
-        },
-      },
-    });
+    const response = await createConsultation(values);
 
     if (response.errors) {
       const error = response.errors[0]?.extensions?.code;
       if (error === "emailBelongsToFreelancer") {
         formik.setFieldError("email", "This email belongs to a freelancer");
+      } else if (error === "notAuthenticated") {
+        history.push({
+          pathname: `/request_consultation/${params.specialistId}/login`,
+          state: {
+            ...location.state,
+            email: values.email,
+          },
+        });
       } else {
         formik.setStatus("Something went wrong, please try again.");
       }

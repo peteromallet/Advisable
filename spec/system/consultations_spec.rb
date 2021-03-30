@@ -26,6 +26,10 @@ RSpec.describe 'Consultations', type: :system do
     fill_in "company", with: "Dunder Mifflin"
     click_on "Continue"
 
+    fill_in "password", with: "testing123"
+    fill_in "passwordConfirmation", with: "testing123"
+    click_on "Set Password"
+
     monday = Date.parse('monday')
     delta = monday > Time.zone.now ? 0 : 7
     next_monday = monday + delta

@@ -2,6 +2,8 @@
 
 module Mutations
   class BaseMutation < GraphQL::Schema::RelayClassicMutation
+    include Helpers::Authentication
+
     argument_class(Types::BaseArgument)
 
     def current_user

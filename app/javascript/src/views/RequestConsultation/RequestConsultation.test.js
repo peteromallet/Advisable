@@ -61,6 +61,7 @@ test("When logged in the skills step continues to availability", async () => {
       {
         createConsultation: {
           __typename: "CreateConsultationPayload",
+          viewer,
           consultation,
         },
       },
@@ -111,6 +112,7 @@ test("company details step continues to availability", async () => {
       {
         createConsultation: {
           __typename: "CreateConsultationPayload",
+          viewer: mockData.user(),
           consultation,
         },
       },

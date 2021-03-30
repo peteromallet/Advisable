@@ -1,24 +1,31 @@
 # frozen_string_literal: true
 
-class Mutations::UpdateConsultation < Mutations::BaseMutation
-  argument :id, ID, required: true
-  argument :topic, String, required: true
+module Mutations
+  class UpdateConsultation < Mutations::BaseMutation
+    argument :id, ID, required: true
+    argument :topic, String, required: true
 
-  field :consultation, Types::ConsultationType, null: true
+    field :consultation, Types::ConsultationType, null: true
 
-  ALLOWED_STATUSES = ['Request Started', 'Request Completed'].freeze
+    ALLOWED_STATUSES = ['Request Started', 'Request Completed'].freeze
 
-  def resolve(**args)
-    consultation = Consultation.find_by_uid_or_airtable_id!(args[:id])
+    def authorized?(id:, **_args)
+      requires_client!
 
-    unless ALLOWED_STATUSES.include?(consultation.status)
-      ApiError.invalid_request("consultations.failedToUpdate", "Can't update the consultation becaue its status is #{consultation.status}")
+      consultation = Consultation.find_by_uid_or_airtable_id!(id)
+      ConsultationPolicy.new(current_user, consultation).update?
     end
 
-    consultation.topic = args[:topic]
+    def resolve(**args)
+      consultation = Consultation.find_by_uid_or_airtable_id!(args[:id])
 
-    consultation.save
-    consultation.sync_to_airtable
-    {consultation: consultation}
+      ApiError.invalid_request("consultations.failedToUpdate", "Can't update the consultation becaue its status is #{consultation.status}") unless ALLOWED_STATUSES.include?(consultation.status)
+
+      consultation.topic = args[:topic]
+
+      consultation.save
+      consultation.sync_to_airtable
+      {consultation: consultation}
+    end
   end
 end
