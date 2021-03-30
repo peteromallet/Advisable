@@ -3,11 +3,9 @@
 module Mutations
   class UpdateAvailability < Mutations::BaseMutation
     argument :id, ID, required: false, deprecation_reason: "Do not provide this anymore"
-
     argument :availability, [String], required: true, description: "The clients availability. Should be an array of ISO strings"
     argument :time_zone, String, required: false
 
-    # TODO: Maybe just return success here?
     field :user, Types::User, null: true
 
     def authorized?(**_args)
