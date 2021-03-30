@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box } from "@advisable/donut";
 import { motion } from "framer-motion";
+import { useHistory, useLocation } from "react-router-dom";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useFetchResources } from "../../utilities";
 import {
@@ -19,6 +20,8 @@ import { Attribute } from "../../attributes";
 import DetailsModal from "./DetailsModal";
 
 export default function Resource() {
+  const history = useHistory();
+  const location = useLocation();
   const [filters, setFilters] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const { loading, data, resource, fetchMore, error } = useFetchResources(
@@ -38,6 +41,10 @@ export default function Resource() {
   if (error) {
     return <>Failed to load {resource.type}</>;
   }
+
+  const openRecord = (id) => () => {
+    history.push(`${location.pathname}/${id}`);
+  };
 
   return (
     <StyledLayout ref={scrollRef}>
@@ -64,7 +71,7 @@ export default function Resource() {
             </StyledHeaderRow>
             <Box>
               {edges.map(({ node }) => (
-                <StyledRow key={node.id}>
+                <StyledRow key={node.id} onClick={openRecord(node.id)}>
                   {resource.attributes.map((attr) => (
                     <StyledCell key={attr.name}>
                       <Attribute record={node} attribute={attr} />

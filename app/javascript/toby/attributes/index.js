@@ -50,9 +50,8 @@ export function attributeFormValueInitializer(attribute) {
 export function AttributeInput({ record, attribute }) {
   const handler = ATTRIBUTES[attribute.__typename];
 
-  if (!handler?.input) {
-    console.error("No attribute input handler found", attribute);
-    return <div>no inpuit</div>;
+  if (attribute.readonly || !handler?.input) {
+    return <Attribute record={record} attribute={attribute} />;
   }
 
   return <handler.input record={record} attribute={attribute} />;
