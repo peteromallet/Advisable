@@ -226,14 +226,11 @@ module Airtable
     # due to a duplicate skill that has been removed from airtable. This method
     # will handle duplicate skills before retrying to sync the record
     def handle_duplicate_skill(skill, record)
-      other =
-        ::Skill.where.not(id: skill.id).where(original: nil).find_by_name(
-          skill.name
-        )
+      original = ::Skill.where.not(id: skill.id).find_by(name: skill.name)
 
-      if other
-        skill.update(original: other)
-        record.specialist_skills.find_by(skill: skill).update(skill: other)
+      if original
+        record.specialist_skills.find_by(skill: skill).update(skill: original)
+        original.merge_with!(duplicate: skill)
       else
         # The skill may have existed in airtable before so we need to clear
         # out any existing airtable_id.
