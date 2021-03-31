@@ -23,8 +23,8 @@ const AutocompleteDesktop = (props) => {
   } = props;
 
   const popper = React.useRef(null);
-  const [referenceElement, setReferenceElement] = React.useState(null);
-  const [popperElement, setPopperElement] = React.useState(null);
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [popperElement, setPopperElement] = useState(null);
 
   React.useEffect(() => {
     if (referenceElement && popperElement) {
@@ -36,8 +36,8 @@ const AutocompleteDesktop = (props) => {
     }
   }, [referenceElement, popperElement]);
 
-  const inputRef = React.useRef(null);
-  const inputSize = useComponentSize(inputRef);
+  const autocompleteRef = React.useRef(null);
+  const inputSize = useComponentSize(autocompleteRef);
   const listRef = React.useRef(null);
 
   const handleStateChange = (changes, downshift) => {
@@ -54,7 +54,7 @@ const AutocompleteDesktop = (props) => {
       });
     }
 
-    if (changes.hasOwnProperty("highlightedIndex")) {
+    if (Object.prototype.hasOwnProperty.call(changes, "highlightedIndex")) {
       if (listRef.current !== null) {
         listRef.current.scrollToItem(changes.highlightedIndex);
       }
@@ -81,12 +81,16 @@ const AutocompleteDesktop = (props) => {
       onStateChange={handleStateChange}
     >
       {(downshift) => (
-        <AutocompleteStyles {...rest} {...downshift.getRootProps()}>
+        <AutocompleteStyles
+          {...rest}
+          {...downshift.getRootProps({
+            ref: autocompleteRef,
+          })}
+        >
           <div ref={setReferenceElement}>
             <Input
               size={size}
               {...downshift.getInputProps({
-                ref: inputRef,
                 placeholder,
                 onBlur,
                 onFocus: downshift.openMenu,
