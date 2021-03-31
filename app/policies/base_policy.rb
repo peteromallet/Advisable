@@ -17,7 +17,7 @@ class BasePolicy
     current_user.is_a?(::User) && current_user.account.team_manager?
   end
 
-  def company_owner?
+  def owned_by_company?
     current_user.is_a?(::User) && current_user.company == company_of_record
   end
   # TODO: Stop using these 3 directly - make them private ▲
@@ -32,8 +32,8 @@ class BasePolicy
     record.user == current_user
   end
 
-  def user_or_company_owner?
-    user_owner? || company_owner?
+  def owned_by_user_or_company?
+    user_owner? || owned_by_company?
   end
 
   def company_of_record

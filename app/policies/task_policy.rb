@@ -12,12 +12,12 @@ class TaskPolicy < BasePolicy
     record.application.specialist == current_user
   end
 
-  def user_or_company_owner?
-    user_owner? || company_owner?
+  def owned_by_user_or_company?
+    user_owner? || owned_by_company?
   end
 
   def via_specialist_or_client?
-    specialist_owner? || user_or_company_owner?
+    specialist_owner? || owned_by_user_or_company?
   end
 
   def update_name

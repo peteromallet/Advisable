@@ -2,6 +2,6 @@
 
 class InterviewPolicy < BasePolicy
   def read?
-    specialist_owner? || user_or_company_owner? || admin?
+    specialist_owner? || owned_by_user_or_company? || admin?
   end
 end
