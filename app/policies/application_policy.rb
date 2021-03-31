@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy < BasePolicy
-  def client_owner?
+  def user_owner?
     record.project.user == current_user
   end
 
@@ -12,17 +12,17 @@ class ApplicationPolicy < BasePolicy
   alias reject_invitation? specialist?
 
   def owner_or_manager?
-    client_owner? || is_company_team_manager?
+    user_owner? || (company_owner? && team_manager?)
   end
   alias set_type_for_project? owner_or_manager?
   alias start_working? owner_or_manager?
 
-  def via_client?
-    client_owner? || record_belongs_to_company?
+  def user_or_company_owner?
+    user_owner? || company_owner?
   end
 
   def read?
-    specialist? || via_client? || admin?
+    specialist? || user_or_company_owner? || admin?
   end
   alias write? read?
   alias create? read?
