@@ -3,7 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::RequestMoreInterviewTimes do
-  let(:interview) { create(:interview, status: 'Call Requested') }
+  let(:user) { create(:user) }
+  let(:current_user) { user }
+  let(:context) { {current_user: current_user} }
+  let(:interview) { create(:interview, user: user, status: 'Call Requested') }
 
   let(:query) do
     <<-GRAPHQL
@@ -20,7 +23,7 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
     GRAPHQL
   end
 
-  let(:response) { AdvisableSchema.execute(query) }
+  let(:response) { AdvisableSchema.execute(query, context: context) }
 
   before do
     allow_any_instance_of(Interview).to receive(:sync_to_airtable)
@@ -43,6 +46,15 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
     it 'returns an error' do
       error = response['errors'][0]['extensions']['code']
       expect(error).to eq('interview.notRequested')
+    end
+  end
+
+  context "when no user is logged in" do
+    let(:current_user) { nil }
+
+    it "returns an error" do
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("notAuthorized")
     end
   end
 end
