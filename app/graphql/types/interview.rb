@@ -2,6 +2,12 @@
 
 module Types
   class Interview < Types::BaseType
+    def self.authorized?(interview, context)
+      policy = InterviewPolicy.new(context[:current_user], interview)
+      ApiError.not_authorized("You do not have permission to view this Interview") unless policy.read?
+      super
+    end
+
     field :id, ID, null: false
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
     field :availability, [GraphQL::Types::ISO8601DateTime], null: false

@@ -10,14 +10,4 @@ class ConsultationPolicy < BasePolicy
     user_owner? || admin?
   end
   alias send_request? update?
-
-  private
-
-  def specialist_owner?
-    record.specialist == current_user
-  end
-
-  def user_owner?
-    record.user == current_user
-  end
 end

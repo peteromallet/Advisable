@@ -9,7 +9,7 @@ module Mutations
     def authorized?(**args)
       task = Task.find_by_uid!(args[:task])
       policy = TaskPolicy.new(context[:current_user], task)
-      return true if policy.via_client?
+      return true if policy.owned_by_user_or_company?
 
       ApiError.not_authorized("You do not have permission to approve this task")
     end

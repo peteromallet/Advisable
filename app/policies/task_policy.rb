@@ -4,7 +4,7 @@
 # an action. The TaskPolicy is a PORO that follows the rules set out by the
 # pundit gem.
 class TaskPolicy < BasePolicy
-  def client_owner?
+  def user_owner?
     record.application.project.user == current_user
   end
 
@@ -12,12 +12,12 @@ class TaskPolicy < BasePolicy
     record.application.specialist == current_user
   end
 
-  def via_client?
-    client_owner? || record_belongs_to_company?
+  def owned_by_user_or_company?
+    user_owner? || owned_by_company?
   end
 
   def via_specialist_or_client?
-    specialist_owner? || via_client?
+    specialist_owner? || owned_by_user_or_company?
   end
 
   def update_name

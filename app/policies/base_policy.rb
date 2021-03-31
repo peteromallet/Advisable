@@ -8,27 +8,33 @@ class BasePolicy
     @record = record
   end
 
-  def user
-    raise "REPLACE ME"
-  end
-
+  # TODO: Stop using these 3 directly - make them private ▼
   def admin?
     current_user&.account&.admin?
   end
 
-  def is_team_manager? # rubocop:disable Naming/PredicateName
+  def team_manager?
     current_user.is_a?(::User) && current_user.account.team_manager?
   end
 
-  def record_belongs_to_company?
+  def owned_by_company?
     current_user.is_a?(::User) && current_user.company == company_of_record
   end
-
-  def is_company_team_manager? # rubocop:disable Naming/PredicateName
-    record_belongs_to_company? && is_team_manager?
-  end
+  # TODO: Stop using these 3 directly - make them private ▲
 
   private
+
+  def specialist_owner?
+    record.specialist == current_user
+  end
+
+  def user_owner?
+    record.user == current_user
+  end
+
+  def owned_by_user_or_company?
+    user_owner? || owned_by_company?
+  end
 
   def company_of_record
     record.respond_to?(:user) && record.user&.company

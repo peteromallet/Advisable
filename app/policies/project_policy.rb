@@ -2,12 +2,12 @@
 
 class ProjectPolicy < BasePolicy
   def read?
-    owner? || record_belongs_to_company? || admin?
+    owner? || owned_by_company? || admin?
   end
   alias publish? read?
 
   def delete?
-    owner? || is_company_team_manager? || admin?
+    owner? || (owned_by_company? && team_manager?) || admin?
   end
 
   def can_access_project?

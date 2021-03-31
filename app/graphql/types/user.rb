@@ -9,7 +9,7 @@ module Types
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
 
     field :email, String, null: false do
-      authorize :admin?, :user?, :candidate_for_user_project?, :record_belongs_to_company?
+      authorize :admin?, :user?, :candidate_for_user_project?, :owned_by_company?
     end
 
     delegate :email, to: :account
@@ -150,7 +150,7 @@ module Types
     end
 
     field :invoices, [Types::InvoiceType], null: true do
-      authorize :is_team_manager?
+      authorize :invoices?
     end
 
     def invoices

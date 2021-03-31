@@ -89,9 +89,8 @@ RSpec.describe 'Interviews', type: :system do
 
   it 'allows the user to invite a member of their team' do
     application = create(:application, status: "Application Accepted")
-    account = create(:account, first_name: "Thomas")
-    create(:user, account: account, company: application.project.user.company)
-    create(:interview, application: application, status: "Call Scheduled", starts_at: 2.days.from_now)
+    create(:user, account: create(:account, first_name: "Thomas"), company: application.project.user.company)
+    create(:interview, application: application, status: "Call Scheduled", starts_at: 2.days.from_now, user: application.project.user)
     authenticate_as(application.project.user)
     visit "/projects/#{application.project.uid}/candidates/#{application.uid}"
     click_on("Invite Others")
@@ -102,7 +101,7 @@ RSpec.describe 'Interviews', type: :system do
   it 'allows the user to invite a new member of their team' do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     application = create(:application, status: "Application Accepted")
-    create(:interview, application: application, status: "Call Scheduled", starts_at: 2.days.from_now)
+    create(:interview, application: application, status: "Call Scheduled", starts_at: 2.days.from_now, user: application.project.user)
     authenticate_as(application.project.user)
     visit "/projects/#{application.project.uid}/candidates/#{application.uid}"
     click_on("Invite Others")
