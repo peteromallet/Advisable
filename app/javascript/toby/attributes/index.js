@@ -1,4 +1,6 @@
 import React from "react";
+import { useField } from "formik";
+import { FieldError } from "@advisable/donut";
 import IdAttribute from "./id";
 import StringAttribute from "./string";
 import SelectAttribute from "./select";
@@ -47,6 +49,18 @@ export function attributeFormValueInitializer(attribute) {
   return handler?.initializeFormValue;
 }
 
+function AttributeField({ component: Component, record, attribute }) {
+  const [, meta] = useField(attribute.name);
+  const error = meta.touched && meta.error;
+
+  return (
+    <>
+      <Component record={record} attribute={attribute} />
+      {error && <FieldError mt={2}>{error}</FieldError>}
+    </>
+  );
+}
+
 export function AttributeInput({ record, attribute }) {
   const handler = ATTRIBUTES[attribute.__typename];
 
@@ -54,7 +68,13 @@ export function AttributeInput({ record, attribute }) {
     return <Attribute record={record} attribute={attribute} />;
   }
 
-  return <handler.input record={record} attribute={attribute} />;
+  return (
+    <AttributeField
+      component={handler.input}
+      record={record}
+      attribute={attribute}
+    />
+  );
 }
 
 export default ATTRIBUTES;

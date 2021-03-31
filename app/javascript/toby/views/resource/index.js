@@ -19,12 +19,13 @@ import Navigation from "../../components/Navigation";
 import { Attribute } from "../../attributes";
 import DetailsModal from "./DetailsModal";
 
-export default function Resource() {
+export default function Resource({ resource }) {
   const history = useHistory();
   const location = useLocation();
   const [filters, setFilters] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const { loading, data, resource, fetchMore, error } = useFetchResources(
+  const { loading, data, fetchMore, error } = useFetchResources(
+    resource,
     filters,
   );
 
