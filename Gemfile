@@ -92,5 +92,6 @@ group :test do
   gem "rspec-github", require: false
   gem "rspec-retry"
   gem "rspec_junit_formatter"
+  gem "rspec-github", require: false
   gem "simplecov", require: false
 end
