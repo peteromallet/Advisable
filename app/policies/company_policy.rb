@@ -2,7 +2,7 @@
 
 class CompanyPolicy < BasePolicy
   def read?
-    record_belongs_to_company? || admin?
+    company_owner? || admin?
   end
 
   private
