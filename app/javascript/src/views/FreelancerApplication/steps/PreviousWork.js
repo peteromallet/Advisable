@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Box, Textarea, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import Header from "../components/Header";
 import Description from "../components/Description";
 import StepNumber from "../components/StepNumber";

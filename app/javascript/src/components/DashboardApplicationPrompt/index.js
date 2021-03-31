@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import calendly from "src/utilities/calendly";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Text, Button } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import PromptCard from "./PromptCard";

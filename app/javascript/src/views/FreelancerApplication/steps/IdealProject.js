@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { Box, Textarea, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import StepNumber from "../components/StepNumber";
 import Header from "../components/Header";
 import Description from "../components/Description";

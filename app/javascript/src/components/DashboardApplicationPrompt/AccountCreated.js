@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, Box, Text, Circle, Button, Link } from "@advisable/donut";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 
 export const StyledHeader = styled(Text)`
   background: linear-gradient(90deg, #00199b, #00cbbf);

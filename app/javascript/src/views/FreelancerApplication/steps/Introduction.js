@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { ArrowRight } from "@styled-icons/feather";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import {
   Box,
   Text,
