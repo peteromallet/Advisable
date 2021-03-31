@@ -62,7 +62,7 @@ export default function Resource({ resource }) {
           animate={{ x: isOpen ? 400 : 0 }}
         >
           {/* Dear future developer. I know this inline-block looks random. But its important. */}
-          <Box display="inline-block">
+          <Box display="inline-block" minWidth="100vw">
             <StyledHeaderRow>
               {resource.attributes.map((attr) => (
                 <StyledHeaderCell key={attr.name}>
