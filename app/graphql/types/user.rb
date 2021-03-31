@@ -150,7 +150,7 @@ module Types
     end
 
     field :invoices, [Types::InvoiceType], null: true do
-      authorize :team_manager?
+      authorize :invoices?
     end
 
     def invoices
