@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import pluralize from "pluralize";
-import { gql, useApolloClient } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { useLazyQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { jsonToGraphQLQuery, VariableType } from "json-to-graphql-query";
@@ -10,65 +10,7 @@ export function pluralizeType(type) {
   return pluralize(type.toLowerCase());
 }
 
-export function useResourceData() {
-  const { resource } = useParams();
-  const schemaData = useSchema();
-  return getResourceByParam(schemaData.resources, resource);
-}
-
-async function convertFilterToIDs(resource, client, filter, schemaData) {
-  const query = generateFilterQuery(schemaData, resource);
-  const filterValue = await resolveFilterValue(
-    resource,
-    client,
-    filter,
-    schemaData,
-  );
-  const response = await client.query({
-    query,
-    fetchPolicy: "network-only",
-    variables: {
-      filters: [
-        {
-          attribute: filter.attribute,
-          type: filter.type,
-          value: filterValue,
-        },
-      ],
-    },
-  });
-
-  return response.data.records.nodes.map((n) => n.id);
-}
-
-async function resolveFilterValue(resource, client, filter, schemaData) {
-  if (Array.isArray(filter.value)) {
-    return Promise.resolve(filter.value);
-  }
-
-  const type = getType(schemaData.schema, resource.type);
-  const field = type.fields.find((f) => f.name === filter.attribute);
-  const nextResource = getResource(
-    schemaData.resources,
-    field.type.name || field.type.ofType?.ofType?.name,
-  );
-  return convertFilterToIDs(nextResource, client, filter.value, schemaData);
-}
-
-async function convertFilters(resourceData, client, filters, schemaData) {
-  if (!filters.length) return [];
-
-  const promises = filters.map(async (f) => ({
-    attribute: f.attribute,
-    type: f.type,
-    value: await resolveFilterValue(resourceData, client, f, schemaData),
-  }));
-
-  return Promise.all(promises);
-}
-
 export function useFetchResources(filters) {
-  const client = useApolloClient();
   const [loading, setLoading] = useState(true);
   const { resource } = useParams();
   const schemaData = useSchema();
@@ -84,19 +26,9 @@ export function useFetchResources(filters) {
 
   const fetchRecords = useCallback(
     async function fetchRecords() {
-      const resolvedFilters = await convertFilters(
-        resourceData,
-        client,
-        filters,
-        schemaData,
-      );
-      fetch({
-        variables: {
-          filters: resolvedFilters,
-        },
-      });
+      fetch({ variables: { filters } });
     },
-    [resourceData, schemaData, fetch, client, filters],
+    [fetch, filters],
   );
 
   const fetchMoreRecords = useCallback(
@@ -117,20 +49,6 @@ export function useFetchResources(filters) {
     fetchMore: fetchMoreRecords,
     loading,
   };
-}
-
-export function convertFiltersToVariable(filters) {
-  if (!filters.length) return [];
-
-  return filters.map((f) => ({
-    attribute: f.attribute,
-    type: f.type,
-    value: f.value,
-  }));
-}
-
-export function getResource(resources, name) {
-  return resources.find((resource) => resource.type === name);
 }
 
 // Takes the resources data and returns a matching resource bassed on the
@@ -172,13 +90,7 @@ function generateCollectionQuery(schemaData, resourceData) {
     },
   };
 
-  let queryString = jsonToGraphQLQuery(queryObject);
-  queryString =
-    queryString.substr(0, 6) +
-    `${resourceData.type}Collection` +
-    queryString.substr(6);
-
-  return gql(queryString);
+  return gql(jsonToGraphQLQuery(queryObject));
 }
 
 export function generateShowQuery(schemaData, resourceData) {
@@ -233,34 +145,6 @@ export function generateUpdateMutation(schemaData, resourceData) {
   return gql(queryString);
 }
 
-// Genreates a graphql query used for filtering an association down to an array
-// of ID's.
-function generateFilterQuery(schemaData, resourceData) {
-  const queryObject = {
-    query: {
-      __variables: {
-        filters: "[Filter!]",
-      },
-      records: {
-        __args: {
-          filters: new VariableType("filters"),
-        },
-        __aliasFor: resourceData.queryNameCollection,
-        pageInfo: {
-          hasNextPage: true,
-          endCursor: true,
-        },
-        nodes: {
-          id: true,
-        },
-      },
-    },
-  };
-
-  const queryString = jsonToGraphQLQuery(queryObject);
-  return gql(queryString);
-}
-
 export function getType(schema, type) {
   return schema.types.find((t) => t.name === type);
 }
@@ -271,13 +155,6 @@ export function resourceByType(schemaData, type) {
 
 export function resourceAttribute(resourceData, attributeName) {
   return resourceData.attributes.find((a) => a.name === attributeName);
-}
-
-export function attributeIsScalar(schemaData, resource, attributeName) {
-  const type = getType(schemaData.schema, resource.type);
-  const field = type.fields.find((f) => f.name === attributeName);
-  if (field.type?.kind === "SCALAR") return true;
-  return field.type.ofType?.ofType?.type === "SCALAR";
 }
 
 // takes a resource and attributeName and returns the nested resource
