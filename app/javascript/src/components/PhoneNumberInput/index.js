@@ -40,6 +40,7 @@ const StyledCountryPrompt = styled.div`
 const StyledDialCode = styled.div`
   height: 100%;
   display: flex;
+  padding-right: 8px;
   align-items: center;
 `;
 
@@ -92,14 +93,21 @@ export default function PhoneNumberInput({
     return value?.replace(countryData.dialCode, "") || "";
   }, [value, countryData.dialCode]);
 
-  const handleFocus = useCallback(() => {
-    setFocused(true);
-    onFocus();
-  }, [onFocus]);
+  const handleFocus = useCallback(
+    (e) => {
+      setFocused(true);
+      onFocus(e);
+    },
+    [onFocus],
+  );
 
-  const handleBlur = useCallback(() => {
-    setFocused(false);
-  }, [onBlur]);
+  const handleBlur = useCallback(
+    (e) => {
+      setFocused(false);
+      onBlur(e);
+    },
+    [onBlur],
+  );
 
   const submitValue = useCallback(
     (code, number) => {
@@ -143,6 +151,7 @@ export default function PhoneNumberInput({
       />
       <StyledDialCode>{countryData.dialCode}</StyledDialCode>
       <StyledInputControl
+        {...props}
         ref={input}
         onBlur={handleBlur}
         onFocus={handleFocus}
