@@ -20,7 +20,7 @@ import {
 function Draft({ project, modal }) {
   return (
     <StyledProjectStatusSection>
-      <StyledPromptBox color="grey">
+      <StyledPromptBox color="neutral">
         <Circle>
           <EyeOff />
         </Circle>
@@ -108,7 +108,7 @@ function ValidationFailed({ project, modal, onDelete }) {
 export function NoReviews({ project }) {
   return (
     <StyledProjectStatusSection>
-      <StyledPromptBox color="blue">
+      <StyledPromptBox color="neutral">
         <Circle>
           <CheckCircle strokeWidth={2} />
         </Circle>
