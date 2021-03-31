@@ -6,6 +6,9 @@ process.env.NODE_ENV = process.env.NODE_ENV || "production";
 
 const environment = require("./environment");
 
+// webpacker includes CaseSensitivePaths plugin and its slow.
+environment.plugins.delete("CaseSensitivePaths");
+
 if (
   process.env.SENTRY_ORG &&
   process.env.SENTRY_PROJECT &&
