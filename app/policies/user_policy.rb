@@ -9,10 +9,16 @@ class UserPolicy < BasePolicy
     record == current_user
   end
 
+  def invoices?
+    owned_by_company? && team_manager?
+  end
+
   # Checks if the specialist has applied to any of the users projects
   def candidate_for_user_project?
     current_user.is_a?(::Specialist) && current_user.projects.where(user: record).any?
   end
+
+  private
 
   def company_of_record
     record.company
