@@ -1,70 +1,166 @@
 import React from "react";
-import Status from "./Status";
-import { DraftCTA, FailedCTA } from "./CTAs";
 import { Exclamation } from "@styled-icons/heroicons-outline/Exclamation";
 import { EyeOff } from "@styled-icons/ionicons-outline/EyeOff";
-import ProjectValidationPrompt from "src/components/ProjectValidationPrompt";
+import { CheckCircle } from "@styled-icons/feather/CheckCircle";
+import CopyURL from "src/components/CopyURL";
 import Review from "src/components/Review";
-import { StatusWrapper } from "./styles";
+import DeleteProjectDialog from "../ProjectActions/DeleteProjectDialog";
+import { Circle, DialogDisclosure, useDialogState } from "@advisable/donut";
+import {
+  StyledProjectStatusSection,
+  StyledPromptBox,
+  StyledTextWrapper,
+  StyledTitle,
+  StyledDescription,
+  StyledURLWrapper,
+  StyledButtonsWrapper,
+  StyledButton,
+} from "./styles";
 
-function Validated({ project }) {
+function Draft({ project, modal }) {
+  return (
+    <StyledProjectStatusSection>
+      <StyledPromptBox color="grey">
+        <Circle>
+          <EyeOff />
+        </Circle>
+        <StyledTextWrapper>
+          <StyledTitle>Draft Project</StyledTitle>
+          <StyledDescription>
+            This project has not been published and will not be visible on your
+            profile. Continue editing to post it to your profile.
+          </StyledDescription>
+        </StyledTextWrapper>
+        <StyledButtonsWrapper>
+          <DialogDisclosure
+            as={StyledButton}
+            {...modal.atPath(`/previous_projects/${project.id}`)}
+          >
+            Continue
+          </DialogDisclosure>
+        </StyledButtonsWrapper>
+      </StyledPromptBox>
+    </StyledProjectStatusSection>
+  );
+}
+
+export function Validated({ project }) {
   const review = project.reviews?.[0];
   const hasComment = review?.comment;
 
   if (!hasComment) return null;
 
   return (
-    <StatusWrapper>
+    <StyledProjectStatusSection>
       <Review review={review} size={{ _: "s", m: "m", l: "s" }} />
-    </StatusWrapper>
+    </StyledProjectStatusSection>
   );
 }
 
-function Pending({ project }) {
+export function Pending({ project }) {
+  const name = project.contactFirstName || project.contactJobTitle;
+
   return (
-    <StatusWrapper>
-      <ProjectValidationPrompt project={project} />
-    </StatusWrapper>
+    <StyledProjectStatusSection>
+      <StyledPromptBox color="yellow">
+        <Circle>
+          <EyeOff strokeWidth={1.75} />
+        </Circle>
+        <StyledTextWrapper>
+          <StyledTitle>Verification required</StyledTitle>
+          <StyledDescription>
+            Please send the following verification URL to {name} from{" "}
+            {project.clientName} so they can verify the project.
+          </StyledDescription>
+        </StyledTextWrapper>
+        <StyledURLWrapper>
+          <CopyURL bg="white">{`${location.origin}/verify_project/${project.id}`}</CopyURL>
+        </StyledURLWrapper>
+      </StyledPromptBox>
+    </StyledProjectStatusSection>
   );
 }
 
-function Draft({ project, modal, ...props }) {
+function ValidationFailed({ project, modal, onDelete }) {
+  const deleteModal = useDialogState();
   return (
-    <Status
-      variant="neutral"
-      icon={<EyeOff />}
-      CTA={DraftCTA}
-      label="Draft Project"
-      message="This project has not been published and will not be visible on your profile. Continue editing to post it to your profile."
-      project={project}
-      modal={modal}
-      {...props}
-    />
+    <StyledProjectStatusSection>
+      <StyledPromptBox color="red">
+        <Circle>
+          <Exclamation />
+        </Circle>
+        <StyledTextWrapper>
+          <StyledTitle>Validation Failed</StyledTitle>
+          <StyledDescription>
+            Unfortunately the client was unable to verify this project. It will
+            not be visible to others until it is validated. You can update the
+            project and request validation again or remove the project.
+          </StyledDescription>
+        </StyledTextWrapper>
+        <StyledButtonsWrapper>
+          <DeleteProjectDialog
+            modal={deleteModal}
+            onDelete={onDelete}
+            project={project}
+          />
+          <DialogDisclosure
+            as={StyledButton}
+            {...modal.atPath(`/previous_projects/${project.id}`)}
+          >
+            Update
+          </DialogDisclosure>
+          <DialogDisclosure as={StyledButton} {...deleteModal}>
+            Delete
+          </DialogDisclosure>
+        </StyledButtonsWrapper>
+      </StyledPromptBox>
+    </StyledProjectStatusSection>
   );
 }
 
-function ValidationFailed({ project, modal, ...props }) {
+export function NoReview({ project }) {
   return (
-    <Status
-      variant="red"
-      icon={<Exclamation />}
-      CTA={FailedCTA}
-      label="Validation Failed"
-      message="
-Unfortunately the client was unable to verify this project. It will not be visible to others until it is validated. You can update the project and request validation again or remove the project."
-      project={project}
-      modal={modal}
-      {...props}
-    />
+    <StyledProjectStatusSection>
+      <StyledPromptBox color="blue">
+        <Circle>
+          <CheckCircle strokeWidth={2} />
+        </Circle>
+        <StyledTextWrapper>
+          <StyledTitle>Project Verified but not reviewed</StyledTitle>
+          <StyledDescription>
+            The client verified this project but not provided a review. You can
+            ask client to leave a review using the link below.
+          </StyledDescription>
+        </StyledTextWrapper>
+        <StyledURLWrapper>
+          <CopyURL bg="white">{`${location.origin}/verify_project/${project.id}`}</CopyURL>
+        </StyledURLWrapper>
+      </StyledPromptBox>
+    </StyledProjectStatusSection>
   );
 }
+
+// OLD
 
 function ProjectStatus({ project, modal, viewerIsOwner, ...props }) {
-  const status = (project.draft && "Draft") || project.validationStatus;
+  let status = (project.draft && "Draft") || project.validationStatus;
+  if (project.draft) {
+    status = "Draft";
+  } else if (
+    project.validationStatus === "Validated" &&
+    project.reviews.length === 0
+  ) {
+    status = "No Review";
+  } else if (project.validationStatus) {
+    status = project.validationStatus;
+  }
 
   switch (status) {
     case "Validated": {
       return <Validated project={project} />;
+    }
+    case "No Review": {
+      return <NoReview project={project} />;
     }
     case "Pending": {
       if (!viewerIsOwner) return null;
