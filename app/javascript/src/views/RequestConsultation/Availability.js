@@ -49,14 +49,9 @@ const Availability = () => {
 
   const specialist = data.consultation.specialist;
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (input) => {
     await updateAvailability({
-      variables: {
-        input: {
-          id: user.id,
-          ...values,
-        },
-      },
+      variables: { input },
     });
 
     history.push({
