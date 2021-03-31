@@ -13,6 +13,8 @@ module Toby
 
         attributes.each do |key, value|
           attribute = resource.attributes.find { |attr| attr.name == key }
+          next if attribute.readonly
+
           attribute.write(model, value)
         end
 
