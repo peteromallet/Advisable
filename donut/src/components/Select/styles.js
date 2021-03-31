@@ -34,32 +34,14 @@ export const StyledSelectControlWraper = styled.div`
   }
 `;
 
-const arrowPadding = variant({
-  prop: "size",
-  variants: {
-    sm: {
-      padding: "0 12px",
-    },
-    md: {
-      padding: "0 16px",
-    },
-    lg: {
-      padding: "0 16px",
-    },
-  },
-});
-
 export const StyledSelectArrow = styled.div`
   top: 0;
   right: 0;
   height: 100%;
   display: flex;
-  padding: 0 12px;
   position: absolute;
   align-items: center;
   color: ${theme.colors.neutral400};
-
-  ${arrowPadding}
 `;
 
 const StyledSelect_PlaceholderSelected = css`

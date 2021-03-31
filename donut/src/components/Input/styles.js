@@ -107,10 +107,10 @@ const size = variant({
       paddingRight: "12px",
       [StyledInputDecoration]: {
         "&:first-child": {
-          paddingLeft: "12px",
+          paddingRight: "12px",
         },
         "&:last-child": {
-          paddingRight: "12px",
+          paddingLeft: "12px",
         },
       },
     },
@@ -120,10 +120,10 @@ const size = variant({
       paddingRight: "16px",
       [StyledInputDecoration]: {
         "&:first-child": {
-          paddingLeft: "16px",
+          paddingRight: "16px",
         },
         "&:last-child": {
-          paddingRight: "16px",
+          paddingLeft: "16px",
         },
       },
     },
@@ -135,10 +135,10 @@ const size = variant({
       [StyledInputDecoration]: {
         fontSize: "17px",
         "&:first-child": {
-          paddingLeft: "20px",
+          paddingRight: "20px",
         },
         "&:last-child": {
-          paddingRight: "20px",
+          paddingLeft: "20px",
         },
       },
     },
