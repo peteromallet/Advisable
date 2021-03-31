@@ -1,5 +1,6 @@
 import { rgba } from "polished";
 import styled, { keyframes } from "styled-components";
+import { theme } from "@advisable/donut";
 
 const copiedAnimation = keyframes`
   0% {
@@ -21,7 +22,7 @@ export const CopyURL = styled.div`
   margin: 0 auto;
   max-width: 100%;
   position: relative;
-  background: ${props => props.bg || "#f5f7ff"};
+  background: ${(props) => props.bg || "#f5f7ff"};
   border-radius: 30px;
 
   &::after {
@@ -36,8 +37,8 @@ export const CopyURL = styled.div`
     border-bottom-right-radius: 50px;
     background: linear-gradient(
       270deg,
-      ${props => props.bg || "#f5f7ff"} 70%,
-      ${props => rgba(props.bg || "#f5f7ff", 0)} 100%
+      ${(props) => props.bg || "#f5f7ff"} 70%,
+      ${(props) => rgba(props.bg || "#f5f7ff", 0)} 100%
     );
   }
 
@@ -79,10 +80,14 @@ export const CopyURL = styled.div`
 
   span {
     right: 0;
-    top: -20px;
+    top: -24px;
     color: #173fcd;
     font-size: 12px;
     position: absolute;
+    background: white;
+    padding: ${theme.space[1]};
+    border-radius: 4px;
+
     animation: ${copiedAnimation} 1.5s cubic-bezier(0.3, 0, 0, 1) forwards;
   }
 `;
