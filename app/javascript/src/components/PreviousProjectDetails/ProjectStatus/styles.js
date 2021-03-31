@@ -72,7 +72,7 @@ export const StyledURLWrapper = styled.div`
 const color = variant({
   prop: "color",
   variants: {
-    grey: {
+    neutral: {
       bg: "neutral100",
       [StyledCircle]: { bg: "neutral200" },
       svg: { color: "neutral600" },
