@@ -89,6 +89,7 @@ module Airtable
       self['Question 1'] = application.questions.try(:first).try(:[], 'question') if application.saved_change_to_questions?
       self['Question 2'] = application.questions.try(:second).try(:[], 'question') if application.saved_change_to_questions?
       self['Trial Program'] = application.trial_program ? 'Yes' : 'No'
+      self['Application Hidden'] = application.hidden ? 'Yes' : 'No'
       self['Hourly Rate For Project'] = (application.invoice_rate.to_d / 100).to_f if application.saved_change_to_invoice_rate?
       self['Accepts Terms'] = nil if application.accepts_terms.nil?
       self['Accepts Terms'] = 'Yes' if application.accepts_terms == true
