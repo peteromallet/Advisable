@@ -4,6 +4,8 @@
 # an action. The TaskPolicy is a PORO that follows the rules set out by the
 # pundit gem.
 class TaskPolicy < BasePolicy
+  delegate :read?, to: :application_policy
+
   def user_owner?
     record.application.project.user == current_user
   end
@@ -64,6 +66,10 @@ class TaskPolicy < BasePolicy
   end
 
   private
+
+  def application_policy
+    @application_policy ||= ApplicationPolicy.new(current_user, record.application)
+  end
 
   def changeable_stage?
     ['Not Assigned', 'Quote Requested', 'Quote Provided', 'Requested To Start'].include?(record.stage)

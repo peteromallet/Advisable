@@ -2,6 +2,12 @@
 
 module Types
   class TaskType < Types::BaseType
+    def self.authorized?(task, context)
+      policy = TaskPolicy.new(context[:current_user], task)
+      ApiError.not_authorized("You do not have permission to view this Task") unless policy.read?
+      super
+    end
+
     field :id, ID, null: false
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
     field :stage, String, null: true
