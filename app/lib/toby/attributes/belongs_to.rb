@@ -31,7 +31,7 @@ module Toby
       end
 
       def write(resource, value)
-        resource.public_send("#{column}=", value)
+        resource.public_send("#{via}=", value)
       end
 
       def lazy_read_class
