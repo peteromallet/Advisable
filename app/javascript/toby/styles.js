@@ -38,6 +38,7 @@ export const StyledViewport = styled.div`
 
 export const StyledScrollContainer = styled.div`
   height: 100%;
+  min-width: 100vw;
   overflow-y: scroll;
 `;
 
