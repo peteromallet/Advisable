@@ -44,19 +44,6 @@ function Draft({ project, modal }) {
   );
 }
 
-export function Validated({ project }) {
-  const review = project.reviews?.[0];
-  const hasComment = review?.comment;
-
-  if (!hasComment) return null;
-
-  return (
-    <StyledProjectStatusSection>
-      <Review review={review} size={{ _: "s", m: "m", l: "s" }} />
-    </StyledProjectStatusSection>
-  );
-}
-
 export function Pending({ project }) {
   const name = project.contactFirstName || project.contactJobTitle;
 
@@ -118,7 +105,7 @@ function ValidationFailed({ project, modal, onDelete }) {
   );
 }
 
-export function NoReview({ project }) {
+export function NoReviews({ project }) {
   return (
     <StyledProjectStatusSection>
       <StyledPromptBox color="blue">
@@ -140,17 +127,28 @@ export function NoReview({ project }) {
   );
 }
 
-// OLD
+export function Validated({ project }) {
+  const review = project.reviews?.[0];
+  const hasComment = review?.comment;
+
+  if (!hasComment) return null;
+
+  return (
+    <StyledProjectStatusSection>
+      <Review review={review} size={{ _: "s", m: "m", l: "s" }} />
+    </StyledProjectStatusSection>
+  );
+}
 
 function ProjectStatus({ project, modal, viewerIsOwner, ...props }) {
-  let status = (project.draft && "Draft") || project.validationStatus;
+  let status;
   if (project.draft) {
     status = "Draft";
   } else if (
     project.validationStatus === "Validated" &&
-    project.reviews.length === 0
+    !project.reviews?.length
   ) {
-    status = "No Review";
+    status = "No Reviews";
   } else if (project.validationStatus) {
     status = project.validationStatus;
   }
@@ -159,8 +157,8 @@ function ProjectStatus({ project, modal, viewerIsOwner, ...props }) {
     case "Validated": {
       return <Validated project={project} />;
     }
-    case "No Review": {
-      return <NoReview project={project} />;
+    case "No Reviews": {
+      return <NoReviews project={project} />;
     }
     case "Pending": {
       if (!viewerIsOwner) return null;
