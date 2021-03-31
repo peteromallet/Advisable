@@ -98,7 +98,7 @@ const size = variant({
       },
     },
     s: {
-      height: "28px",
+      height: "24px",
       borderRadius: 8,
 
       [StyledTagLabel]: {
