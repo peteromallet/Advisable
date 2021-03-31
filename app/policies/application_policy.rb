@@ -12,17 +12,17 @@ class ApplicationPolicy < BasePolicy
   alias reject_invitation? specialist?
 
   def owner_or_manager?
-    user_owner? || (company_owner? && team_manager?)
+    user_owner? || (owned_by_company? && team_manager?)
   end
   alias set_type_for_project? owner_or_manager?
   alias start_working? owner_or_manager?
 
-  def user_or_company_owner?
-    user_owner? || company_owner?
+  def owned_by_user_or_company?
+    user_owner? || owned_by_company?
   end
 
   def read?
-    specialist? || user_or_company_owner? || admin?
+    specialist? || owned_by_user_or_company? || admin?
   end
   alias write? read?
   alias create? read?
