@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from "react";
 import pluralize from "pluralize";
 import { gql } from "@apollo/client";
 import { useLazyQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
 import { jsonToGraphQLQuery, VariableType } from "json-to-graphql-query";
 import { useSchema } from "../components/schema";
 
@@ -10,12 +9,10 @@ export function pluralizeType(type) {
   return pluralize(type.toLowerCase());
 }
 
-export function useFetchResources(filters) {
+export function useFetchResources(resource, filters) {
   const [loading, setLoading] = useState(true);
-  const { resource } = useParams();
   const schemaData = useSchema();
-  const resourceData = getResourceByParam(schemaData.resources, resource);
-  const query = generateCollectionQuery(schemaData, resourceData);
+  const query = generateCollectionQuery(schemaData, resource);
   const [fetch, { fetchMore, ...queryState }] = useLazyQuery(query, {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
@@ -45,18 +42,9 @@ export function useFetchResources(filters) {
 
   return {
     ...queryState,
-    resource: resourceData,
     fetchMore: fetchMoreRecords,
     loading,
   };
-}
-
-// Takes the resources data and returns a matching resource bassed on the
-// param version of its type. e.g accounts returns the Account resource.
-function getResourceByParam(resources, param) {
-  return resources.find((resource) => {
-    return pluralizeType(resource.type) === param;
-  });
 }
 
 // Generates a graphql a collection query for a resource

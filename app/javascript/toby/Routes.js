@@ -9,9 +9,11 @@ export default function Routes() {
 
   return (
     <Switch>
-      <Route path="/:resource">
-        <Resource />
-      </Route>
+      {resources.map((resource) => (
+        <Route key={resource.type} path={`/${pluralizeType(resource.type)}`}>
+          <Resource resource={resource} />
+        </Route>
+      ))}
       <Redirect to={`/${pluralizeType(resources[0].type)}`} />
     </Switch>
   );

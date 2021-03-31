@@ -9,7 +9,7 @@ module Toby
       attribute :last_name, Attributes::String
       attribute :name, Attributes::String, readonly: true
       attribute :email, Attributes::String
-      attribute :user, Attributes::HasOne, labeled_by: :uid, column_label: "User UID"
+      attribute :user, Attributes::HasOne, labeled_by: :uid
       attribute :specialist, Attributes::HasOne, labeled_by: :uid
       attribute :permissions, Attributes::TextArray
       attribute :unsubscribed_from, Attributes::TextArray

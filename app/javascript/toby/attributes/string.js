@@ -10,8 +10,11 @@ export default {
     return record[attribute.name] || "";
   },
   input: function StringAttributeInput({ attribute, record }) {
-    const [field] = useField(attribute.name);
+    const [field, meta] = useField(attribute.name);
     if (attribute.readonly) return record[attribute.name];
-    return <Input size="sm" {...field} />;
+
+    const error = meta.touched && meta.error;
+
+    return <Input size="sm" error={error} {...field} />;
   },
 };
