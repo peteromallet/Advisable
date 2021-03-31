@@ -78,10 +78,13 @@ export default function PhoneNumberInput({
   onBlur = () => {},
   value,
   onChange,
+  initialCountry = "US",
   ...props
 }) {
   const input = useRef(null);
-  const [country, setCountry] = useState(initCountryByDialCode(value));
+  const [country, setCountry] = useState(
+    value ? initCountryByDialCode(value) : initialCountry,
+  );
   const [focused, setFocused] = useState(false);
   const countryData = useMemo(() => DATA[country], [country]);
 

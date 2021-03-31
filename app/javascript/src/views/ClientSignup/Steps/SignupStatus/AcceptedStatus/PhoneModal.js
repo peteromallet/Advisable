@@ -5,16 +5,12 @@ import { Modal, Box } from "@advisable/donut";
 import SubmitButton from "../../../../../components/SubmitButton";
 import FormField from "src/components/FormField";
 import { useLocationState } from "../../../queries";
-import PhoneInput from "../../../../../components/PhoneInput";
-import "react-phone-number-input/style.css";
+import PhoneNumberInput from "src/components/PhoneNumberInput";
 import { Title } from "../../styles";
-import { isValidPhoneNumber } from "react-phone-number-input";
 
 const validatePhoneNumber = (number) => {
   const isEmpty = !number;
   if (isEmpty) return "Please enter your phone number";
-  const isValid = isValidPhoneNumber(number);
-  if (!isValid) return "Please enter valid phone number";
   return;
 };
 
@@ -38,12 +34,11 @@ function PhoneModal({ requestApplicationCallback, modal, countryCode }) {
             <Box mb="m">
               <FormField
                 type="tel"
-                as={PhoneInput}
                 name="phoneNumber"
+                as={PhoneNumberInput}
                 label="Leave your phone number, please"
                 placeholder="Contact number"
-                defaultCountry={countryCode}
-                error={null}
+                initialCountry={countryCode}
                 validate={validatePhoneNumber}
                 onChange={(number) =>
                   formik.setFieldValue("phoneNumber", number)
