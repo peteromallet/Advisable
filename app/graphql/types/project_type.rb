@@ -42,11 +42,21 @@ module Types
     field :specialist_description, String, null: true
     field :questions, [String], null: true
     field :accepted_terms, Boolean, null: false
-    field :deposit_owed, Int, null: true
-    field :application_count, Int, null: false
-    field :candidate_count, Int, null: false
-    field :proposed_count, Int, null: false
-    field :hired_count, Int, null: false
+    field :deposit_owed, Int, null: true do
+      authorize :read?
+    end
+    field :application_count, Int, null: false do
+      authorize :read?
+    end
+    field :candidate_count, Int, null: false do
+      authorize :read?
+    end
+    field :proposed_count, Int, null: false do
+      authorize :read?
+    end
+    field :hired_count, Int, null: false do
+      authorize :read?
+    end
     field :estimated_budget, String, null: true
     field :remote, Boolean, null: true
     field :applications_open, Boolean, null: false
@@ -80,11 +90,14 @@ module Types
     # first creating the project.
     field :likely_to_hire, Int, null: true
 
-    field :deposit_payment_intent, Types::PaymentIntentType, null: true
+    field :deposit_payment_intent, Types::PaymentIntentType, null: true do
+      authorize :read?
+    end
 
     # Returns the current 'candidates' for the project. This excludes any
     # applications in a working or finished working state.
     field :applications, [Types::ApplicationType, {null: true}], null: true do
+      authorize :read?
       argument :status, [String], required: false
     end
 
@@ -96,7 +109,8 @@ module Types
       applications
     end
 
-    field :application, Types::ApplicationType, null: true do
+    field :application, Types::ApplicationType, null: true, deprecation_reason: "Use applicationS instead" do
+      authorize :read?
       argument :id, ID, required: true
     end
 
@@ -156,7 +170,9 @@ module Types
       policy.can_access_project?
     end
 
-    field :deposit, Types::DepositType, null: true
+    field :deposit, Types::DepositType, null: true do
+      authorize :read?
+    end
 
     # In cases where there is no deposit we just return nil. Otherwise we pass
     # the project object to the DepositType.
