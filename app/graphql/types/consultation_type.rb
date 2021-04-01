@@ -2,6 +2,12 @@
 
 module Types
   class ConsultationType < Types::BaseType
+    def self.authorized?(consultation, context)
+      policy = ConsultationPolicy.new(context[:current_user], consultation)
+      ApiError.not_authorized("You do not have permission to view this Consultation") unless policy.read?
+      super
+    end
+
     field :id, ID, null: false
     field :status, String, null: true
     field :topic, String, null: true
