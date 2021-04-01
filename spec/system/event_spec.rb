@@ -22,7 +22,7 @@ RSpec.describe 'Event view', type: :system do
           expect(page).to have_content(event.title)
           expect(page).to have_content(event.description)
 
-          starts_at = event.starts_at.strftime("%d %b at %-l:%M%P")
+          starts_at = event.starts_at.strftime("%-d %b at %-l:%M%P")
           expect(page).to have_content(starts_at)
           expect(page).to have_text(event.host.name)
 
