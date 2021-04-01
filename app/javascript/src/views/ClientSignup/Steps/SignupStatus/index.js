@@ -1,22 +1,16 @@
 import React from "react";
+import { Redirect } from "react-router";
 import { useClientApplicationQuery } from "../../queries";
-import Loading from "../../../../components/Loading";
+import Loading from "src/components/Loading";
 import AcceptedStatus from "./AcceptedStatus/index";
 import NotHiringStatus from "./NotHiringStatus";
 import CheapStatus from "./CheapStatus";
-import { motion } from "framer-motion";
-import Navigation from "../Navigation";
 
 function SignupStatus() {
   const { loading, error, data } = useClientApplicationQuery();
 
-  if (loading || error)
-    return (
-      <motion.div exit>
-        <Navigation error={error} />
-        <Loading />
-      </motion.div>
-    );
+  if (loading) return <Loading />;
+  if (error) return <Redirect to="/client/signup" />;
 
   const {
     status,
