@@ -2,6 +2,7 @@ require:
   - rubocop-rails
   - rubocop-performance
   - rubocop-rspec
+  - rubocop-graphql
 
 AllCops:
   NewCops: enable
@@ -110,3 +111,12 @@ RSpec/NestedGroups:
 
 RSpec/Focus:
   AutoCorrect: false
+
+GraphQL/FieldDefinitions:
+  EnforcedStyle: define_resolver_after_definition
+
+GraphQL/FieldDescription:
+  Enabled: false
+
+GraphQL/ArgumentDescription:
+  Enabled: false

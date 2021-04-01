@@ -73,6 +73,7 @@ group :development do
   gem "rubocop-rails", require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rspec", require: false
+  gem 'rubocop-graphql', require: false
   gem "annotate"
   gem "foreman"
   gem "guard"
@@ -89,7 +90,6 @@ group :test do
   gem "shoulda-matchers"
   gem "webmock"
   gem "rspec-rails", "~> 4.0.0"
-  gem "rspec-github", require: false
   gem "rspec-retry"
   gem "rspec_junit_formatter"
   gem "rspec-github", require: false
