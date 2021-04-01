@@ -2,7 +2,7 @@
 
 class Account < ApplicationRecord
   include Uid
-  include Permissions
+  include Permissionable
 
   has_logidze
 

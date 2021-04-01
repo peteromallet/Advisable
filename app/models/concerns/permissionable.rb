@@ -1,4 +1,6 @@
-module Permissions
+# frozen_string_literal: true
+
+module Permissionable
   extend ActiveSupport::Concern
 
   class_methods do
