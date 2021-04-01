@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
+import { useLocation } from "react-router";
 import { Modal, Box } from "@advisable/donut";
 import SubmitButton from "../../../../../components/SubmitButton";
 import FormField from "src/components/FormField";
-import { useLocationState } from "../../../queries";
 import PhoneNumberInput from "src/components/PhoneNumberInput";
 import { Title } from "../../styles";
 
@@ -15,12 +15,12 @@ const validatePhoneNumber = (number) => {
 };
 
 function PhoneModal({ requestApplicationCallback, modal, countryCode }) {
-  const { applicationId } = useLocationState();
+  const location = useLocation();
   // Formik
   const initialValues = { phoneNumber: "" };
   const handleSubmit = ({ phoneNumber }) => {
     requestApplicationCallback({
-      variables: { input: { id: applicationId, phoneNumber } },
+      variables: { input: { id: location.state?.applicationId, phoneNumber } },
     });
     modal.hide();
   };

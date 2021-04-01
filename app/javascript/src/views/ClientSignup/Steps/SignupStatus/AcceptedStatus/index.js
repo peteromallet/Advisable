@@ -3,12 +3,8 @@ import PropTypes from "prop-types";
 import { DateTime } from "luxon";
 import { Box, useModal, Button, DialogDisclosure } from "@advisable/donut";
 import RequestCallButton from "../RequestCallButton";
-import {
-  useLocationState,
-  useRequestApplicationCallback,
-  useCoutryCode,
-} from "../../../queries";
-import { Redirect } from "react-router";
+import { useRequestApplicationCallback, useCoutryCode } from "../../../queries";
+import { Redirect, useLocation } from "react-router";
 import PhoneModal from "./PhoneModal";
 import { Title, Description, BulletListItem } from "../../styles";
 import { Coffee } from "@styled-icons/feather/Coffee";
@@ -16,6 +12,7 @@ import { Eye } from "@styled-icons/feather/Eye";
 import { Smile } from "@styled-icons/feather/Smile";
 
 function AcceptedStatus({ firstName, lastName }) {
+  const location = useLocation();
   const [
     requestApplicationCallback,
     { data: callback, called },
@@ -23,7 +20,6 @@ function AcceptedStatus({ firstName, lastName }) {
   const { data } = useCoutryCode();
   const countryCode = data?.clientApplication?.country?.code;
   const fullName = `${firstName} ${lastName}`;
-  const { email, applicationId } = useLocationState();
   const modal = useModal();
   const start = DateTime.fromISO(process.env.WORK_HOURS_START);
   const end = DateTime.fromISO(process.env.WORK_HOURS_END);
@@ -65,8 +61,8 @@ function AcceptedStatus({ firstName, lastName }) {
             mr={[null, "s"]}
             mb={["s", "auto"]}
             fullName={fullName}
-            email={email}
-            id={applicationId}
+            email={location.state?.email}
+            id={location.state?.applicationId}
           >
             Schedule A Call
           </RequestCallButton>

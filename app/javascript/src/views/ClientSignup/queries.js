@@ -2,11 +2,6 @@ import { gql } from "@apollo/client";
 import { useMutation, useQuery } from "@apollo/client";
 import { useLocation } from "react-router";
 
-export const useLocationState = () => {
-  const location = useLocation();
-  return location.state;
-};
-
 const clientApplicationFragment = gql`
   fragment Application on ClientApplication {
     id
@@ -46,9 +41,9 @@ export const GET_CLIENT_APPLICATION = gql`
 `;
 
 export const useClientApplicationQuery = () => {
-  const state = useLocationState();
+  const location = useLocation();
   return useQuery(GET_CLIENT_APPLICATION, {
-    variables: { id: state?.applicationId },
+    variables: { id: location.state?.applicationId },
   });
 };
 
@@ -88,9 +83,9 @@ export const ABOUT_COMPANY_QUERY = gql`
 `;
 
 export const useAboutCompanyQuery = () => {
-  const state = useLocationState();
+  const location = useLocation();
   return useQuery(ABOUT_COMPANY_QUERY, {
-    variables: { id: state?.applicationId },
+    variables: { id: location.state?.applicationId },
   });
 };
 
@@ -146,9 +141,9 @@ export const ABOUT_REQUIREMENTS_QUERY = gql`
 `;
 
 export const useAboutRequirementsQuery = () => {
-  const state = useLocationState();
+  const location = useLocation();
   return useQuery(ABOUT_REQUIREMENTS_QUERY, {
-    variables: { id: state?.applicationId },
+    variables: { id: location.state?.applicationId },
   });
 };
 
@@ -271,9 +266,9 @@ export const QUERY_COUNTRY_CODE = gql`
 `;
 
 export const useCoutryCode = () => {
-  const state = useLocationState();
+  const location = useLocation();
   return useQuery(QUERY_COUNTRY_CODE, {
-    variables: { id: state?.applicationId },
+    variables: { id: location.state?.applicationId },
   });
 };
 
