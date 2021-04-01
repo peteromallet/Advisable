@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
-import { useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { Modal, Box } from "@advisable/donut";
 import SubmitButton from "../../../../../components/SubmitButton";
 import FormField from "src/components/FormField";
@@ -16,13 +16,18 @@ const validatePhoneNumber = (number) => {
 
 function PhoneModal({ requestApplicationCallback, modal, countryCode }) {
   const location = useLocation();
+  const history = useHistory();
   // Formik
   const initialValues = { phoneNumber: "" };
-  const handleSubmit = ({ phoneNumber }) => {
-    requestApplicationCallback({
+  const handleSubmit = async ({ phoneNumber }) => {
+    await requestApplicationCallback({
       variables: { input: { id: location.state?.applicationId, phoneNumber } },
     });
     modal.hide();
+    history.push({
+      pathname: "/clients/signup/thank-you-call-you-shortly",
+      state: { ...location.state },
+    });
   };
 
   return (
