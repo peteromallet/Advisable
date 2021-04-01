@@ -117,6 +117,19 @@ class User < ApplicationRecord
       talkjs_api.leave_conversation(conversation["id"], uid)
     end
   end
+
+  # rubocop:disable Rails/SkipsModelValidations
+  def transfer_to_company(company, destroy: false)
+    ActiveRecord::Base.transaction do
+      old_company_id = company_id
+      raise "What are you even doing?" if old_company_id == company.id
+
+      update_columns(company_id: company.id)
+      account.update_columns(permissions: account.permissions + ["team_manager"]) unless account.team_manager?
+      Company.find(old_company_id).destroy! if destroy && old_company_id
+    end
+  end
+  # rubocop:enable Rails/SkipsModelValidations
 end
 
 # == Schema Information
