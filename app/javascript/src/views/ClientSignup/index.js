@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Redirect, useLocation } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
 import useViewer from "../../hooks/useViewer";
 import useSteps from "src/hooks/useSteps";
 import steps from "./Steps";
@@ -7,7 +7,6 @@ import Testimonials from "./Testimonials";
 import { Box, useTheme, useBreakpoint } from "@advisable/donut";
 import { Step } from "./styles";
 import Progress from "./Progress";
-import { AnimatePresence } from "framer-motion";
 import { useNotifications } from "src/components/Notifications";
 
 function ClientSignup() {
@@ -16,7 +15,6 @@ function ClientSignup() {
   );
   const viewer = useViewer();
   const theme = useTheme();
-  const location = useLocation();
   const isDesktop = useBreakpoint("lUp");
   const notifications = useNotifications();
 
@@ -55,11 +53,7 @@ function ClientSignup() {
             <Progress amount={progressLength} />
           </>
         )}
-        <AnimatePresence exitBeforeEnter initial={false}>
-          <Switch location={location} key={location.pathname}>
-            {routes}
-          </Switch>
-        </AnimatePresence>
+        <Switch>{routes}</Switch>
       </Box>
     </Box>
   );
