@@ -2,22 +2,22 @@ import React from "react";
 import { Button, Box } from "@advisable/donut";
 import {
   useRequestApplicationReminder,
-  useLocationState,
   getRequestApplicationReminderOptimisticResponse,
 } from "../../queries";
 import { Title, Description } from "../styles";
 import Navigation from "../Navigation";
 import TryAgainButton from "./TryAgainButton";
+import { useLocation } from "react-router";
 
 function NotHiringStatus() {
-  const locationState = useLocationState();
+  const location = useLocation();
   const [mutation, { error, called }] = useRequestApplicationReminder();
 
   const requestApplicationReminder = () => {
     mutation({
-      variables: { input: { id: locationState.applicationId } },
+      variables: { input: { id: location.state?.applicationId } },
       optimisticResponse: getRequestApplicationReminderOptimisticResponse(
-        locationState.applicationId,
+        location.state?.applicationId,
       ),
     });
   };

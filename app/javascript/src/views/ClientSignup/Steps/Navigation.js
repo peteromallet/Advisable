@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Redirect } from "react-router";
+import { Redirect, useLocation } from "react-router";
 import { useNotifications } from "src/components/Notifications";
 import STEPS from ".";
 import useSteps from "src/hooks/useSteps";
-import { useLocationState } from "../queries";
 
 const Navigation = ({
   error,
@@ -16,7 +15,7 @@ const Navigation = ({
   applicationId,
 }) => {
   const { nextStep, lastStep, initialStep } = useSteps(STEPS);
-  const locationState = useLocationState();
+  const location = useLocation();
   const [params, setParams] = useState();
   const notifications = useNotifications();
 
@@ -35,20 +34,20 @@ const Navigation = ({
             push: true,
             to: {
               pathname: "/clients/signup/email-not-allowed",
-              state: { ...locationState },
+              state: { ...location.state },
             },
           };
         case "LAST_STEP":
           return {
             push: !!lastStep.push,
-            to: { pathname: lastStep.path, state: { ...locationState } },
+            to: { pathname: lastStep.path, state: { ...location.state } },
           };
         case "NEXT_STEP":
           return {
             push: !!nextStep.push,
             to: {
               pathname: nextStep.path,
-              state: { applicationId, ...locationState },
+              state: { applicationId, ...location.state },
             },
           };
         default:
@@ -69,8 +68,8 @@ const Navigation = ({
         setParams(reduce("LAST_STEP"));
       if (
         called &&
-        (locationState?.applicationId || applicationId) &&
-        locationState?.email
+        (location.state?.applicationId || applicationId) &&
+        location.state?.email
       )
         setParams(reduce("NEXT_STEP"));
     }, delay || 0);
@@ -84,11 +83,11 @@ const Navigation = ({
     nextStep,
     lastStep,
     initialStep,
-    locationState,
     applicationId,
     emailNotAllowed,
     existingAccount,
     notifications,
+    location.state,
   ]);
 
   if (params) return <Redirect {...params} />;
