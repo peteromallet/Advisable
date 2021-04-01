@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class AccountsController < Admin::ApplicationController
     # Overwrite any of the RESTful controller actions to implement custom behavior
@@ -30,10 +32,12 @@ module Admin
     # end
 
     def resource_params
-      params.require(:account).permit(
+      attrs = params.require(:account).permit(
         *dashboard.permitted_attributes,
-        permissions: [], completed_tutorials: []
+        permissions: [], completed_tutorials: [], features: []
       )
+      attrs[:features] = (attrs[:features] || []).index_with(true)
+      attrs
     end
   end
 end
