@@ -3,6 +3,7 @@
 class Account < ApplicationRecord
   include Uid
   include Permissionable
+  include Featurable
 
   has_logidze
 
@@ -22,6 +23,7 @@ class Account < ApplicationRecord
   before_validation :strip_email
 
   register_permissions :admin, :team_manager
+  featurize :test
 
   def specialist_or_user
     specialist || user
@@ -107,6 +109,7 @@ end
 #  deleted_at          :datetime
 #  disabled_at         :datetime
 #  email               :citext
+#  features            :jsonb
 #  first_name          :string
 #  last_name           :string
 #  password_digest     :string
