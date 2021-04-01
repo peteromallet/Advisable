@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { variant, space } from "styled-system";
+import { space } from "styled-system";
 import {
   BORDER_RADIUS,
   StyledInput,
@@ -36,7 +36,7 @@ export const StyledSelectControlWraper = styled.div`
 
 export const StyledSelectArrow = styled.div`
   top: 0;
-  right: 0;
+  right: 12px;
   height: 100%;
   display: flex;
   position: absolute;

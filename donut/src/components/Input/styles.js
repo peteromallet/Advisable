@@ -14,7 +14,6 @@ export const StyledInputDecoration = styled.div`
   background-color: transparent;
   color: ${theme.colors.neutral900};
   font-family: system-ui, TTHoves, sans-serif;
-  transition: background-color 200ms, color 200ms;
 
   svg {
     width: 16px;
@@ -80,13 +79,12 @@ const StyledInput_Error = css`
 `;
 
 const StyledInput_Disabled = css`
+  opacity: 0.8;
   cursor: not-allowed;
-  border-color: ${lighten(0.024, "#eff0f3")};
 
   ${StyledInputControl} {
     cursor: not-allowed;
     color: ${theme.colors.neutral600};
-    background-color: ${lighten(0.024, "#eff0f3")};
 
     &::placeholder {
       color: ${lighten(0.12, theme.colors.neutral400)};
@@ -103,42 +101,48 @@ const size = variant({
   variants: {
     sm: {
       height: 40,
-      paddingLeft: "12px",
-      paddingRight: "12px",
+      [StyledInputControl]: {
+        paddingLeft: 3,
+        paddingRight: 3,
+      },
       [StyledInputDecoration]: {
         "&:first-child": {
-          paddingRight: "12px",
+          paddingLeft: 3,
         },
         "&:last-child": {
-          paddingLeft: "12px",
+          paddingRight: 3,
         },
       },
     },
     md: {
       height: 48,
-      paddingLeft: "16px",
-      paddingRight: "16px",
+      [StyledInputControl]: {
+        paddingLeft: 4,
+        paddingRight: 4,
+      },
       [StyledInputDecoration]: {
         "&:first-child": {
-          paddingRight: "16px",
+          paddingLeft: 4,
         },
         "&:last-child": {
-          paddingLeft: "16px",
+          paddingRight: 4,
         },
       },
     },
     lg: {
       height: 56,
       fontSize: 18,
-      paddingLeft: 20,
-      paddingRight: 20,
+      [StyledInputControl]: {
+        paddingLeft: 5,
+        paddingRight: 5,
+      },
       [StyledInputDecoration]: {
         fontSize: "17px",
         "&:first-child": {
-          paddingRight: "20px",
+          paddingLeft: 5,
         },
         "&:last-child": {
-          paddingLeft: "20px",
+          paddingRight: 5,
         },
       },
     },
