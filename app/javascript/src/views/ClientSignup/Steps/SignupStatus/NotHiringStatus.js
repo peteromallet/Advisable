@@ -5,7 +5,6 @@ import {
   useLocationState,
   getRequestApplicationReminderOptimisticResponse,
 } from "../../queries";
-import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";
 import Navigation from "../Navigation";
 import TryAgainButton from "./TryAgainButton";
@@ -26,7 +25,7 @@ function NotHiringStatus() {
   return (
     <>
       <Navigation error={error} called={called} />
-      <MotionStack>
+      <Box>
         <Title mb="m">Unfortunately, we&apos;re not a good fit</Title>
         <Description>
           It seems like you&apos;re not planning on hiring freelancers over the
@@ -44,7 +43,7 @@ function NotHiringStatus() {
           </Button>
           <TryAgainButton width={[1, "auto"]} />
         </Box>
-      </MotionStack>
+      </Box>
     </>
   );
 }

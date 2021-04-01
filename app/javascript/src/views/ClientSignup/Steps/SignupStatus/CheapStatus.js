@@ -1,12 +1,11 @@
 import React from "react";
 import { Button, Link, Box } from "@advisable/donut";
-import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";
 import TryAgainButton from "./TryAgainButton";
 
 function CheapStatus() {
   return (
-    <MotionStack>
+    <Box>
       <Title mb="m">Unfortunately, we&apos;re not a good fit</Title>
       <Description>
         Advisable only provides high-end talent. Since you&apos;re looking for
@@ -25,7 +24,7 @@ function CheapStatus() {
         </Link.External>
         <TryAgainButton width={[1, "auto"]} />
       </Box>
-    </MotionStack>
+    </Box>
   );
 }
 

@@ -1,6 +1,5 @@
 import React from "react";
-import { Link as DonutLink, Button } from "@advisable/donut";
-import MotionStack from "../MotionStack";
+import { Link as DonutLink, Button, Box } from "@advisable/donut";
 import { Title, Description } from "../styles";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
@@ -9,7 +8,7 @@ function EmailNotAllowed() {
   const location = useLocation();
 
   return (
-    <MotionStack>
+    <Box>
       <Title mb="m">Personal emails are not allowed</Title>
       <Description>
         Please try again with your company email address. If you don&apos;t have
@@ -22,7 +21,7 @@ function EmailNotAllowed() {
       <Link to={{ pathname: "/clients/signup", state: { ...location.state } }}>
         <Button width={[1, "auto"]}>Try Again</Button>
       </Link>
-    </MotionStack>
+    </Box>
   );
 }
 
