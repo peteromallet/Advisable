@@ -4,6 +4,12 @@ import DATA from "./data";
 import { theme, Box, StyledInput, StyledInputControl } from "@advisable/donut";
 import isoToEmoji from "./countryEmoji";
 
+const StyledPhonNumberInput = styled(StyledInput)`
+  ${StyledInputControl} {
+    padding-left: 4px;
+  }
+`;
+
 const StyledSelect = styled.select`
   top: 0;
   left: 0;
@@ -24,6 +30,7 @@ const StyledCountryPrompt = styled.div`
   position: relative;
   padding-right: 12px;
   align-items: center;
+  padding-left: 12px;
 
   &::after {
     content: "";
@@ -40,7 +47,6 @@ const StyledCountryPrompt = styled.div`
 const StyledDialCode = styled.div`
   height: 100%;
   display: flex;
-  padding-right: 8px;
   align-items: center;
 `;
 
@@ -138,7 +144,7 @@ export default function PhoneNumberInput({
   );
 
   return (
-    <StyledInput
+    <StyledPhonNumberInput
       data-focused={focused}
       size={size}
       $error={props.error}
@@ -158,6 +164,6 @@ export default function PhoneNumberInput({
         onChange={handleChange}
         value={valueWithoutCode}
       />
-    </StyledInput>
+    </StyledPhonNumberInput>
   );
 }
