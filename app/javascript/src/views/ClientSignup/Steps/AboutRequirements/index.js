@@ -1,20 +1,18 @@
 import React from "react";
 import { Formik, Form } from "formik";
+import { string, array, object } from "yup";
+import { Redirect, useHistory, useLocation } from "react-router";
 import { Autocomplete, Box } from "@advisable/donut";
 import FormField from "src/components/FormField";
-import SubmitButton from "../../../../components/SubmitButton";
-import Loading from "../../../../components/Loading";
-import CurrencyInput from "../../../../components/CurrencyInput";
+import SubmitButton from "src/components/SubmitButton";
+import Loading from "src/components/Loading";
+import CurrencyInput from "src/components/CurrencyInput";
 import {
   useAboutRequirementsQuery,
   useAboutRequirementsUpdate,
   getAboutRequirementsOptimisticReponse,
-  useLocationState,
 } from "../../queries";
-import { string, array, object } from "yup";
-import Navigation from "../Navigation";
 import { Title, Description } from "../styles";
-import { motion } from "framer-motion";
 import TilesInput from "../../TilesInput";
 
 const validationSchema = object().shape({
@@ -29,19 +27,25 @@ const validationSchema = object().shape({
 });
 
 function AboutRequirements() {
-  const locationState = useLocationState();
-  const [updateClientApplication, { called }] = useAboutRequirementsUpdate();
+  const location = useLocation();
+  const history = useHistory();
+  const [updateClientApplication] = useAboutRequirementsUpdate();
   const { loading, error, data } = useAboutRequirementsQuery();
 
-  if (loading || error)
-    return (
-      <motion.div exit>
-        <Navigation error={error} />
-        <Loading />
-      </motion.div>
-    );
+  if (loading) return <Loading />;
+  if (error) return <Redirect to="/client/signup" />;
 
   const { clientApplication, skills } = data;
+
+  if (clientApplication?.status !== "Application Started")
+    return (
+      <Redirect
+        to={{
+          pathname: "/clients/signup/status",
+          state: { ...location.state },
+        }}
+      />
+    );
 
   // Formik
   const initialValues = {
@@ -49,6 +53,7 @@ function AboutRequirements() {
     numberOfFreelancers: clientApplication.numberOfFreelancers || "",
     budget: clientApplication.budget / 100 || "",
   };
+
   const handleSubmit = (values) => {
     const convertedValues = {
       ...values,
@@ -57,20 +62,23 @@ function AboutRequirements() {
     updateClientApplication({
       variables: {
         input: {
-          id: locationState.applicationId,
+          id: location.state?.applicationId,
           ...convertedValues,
         },
       },
       optimisticResponse: getAboutRequirementsOptimisticReponse(
-        locationState.applicationId,
+        location.state?.applicationId,
         convertedValues,
       ),
+    });
+    history.push({
+      pathname: "/clients/signup/about_your_preferences",
+      state: { ...location.state },
     });
   };
 
   return (
     <>
-      <Navigation called={called} status={clientApplication.status} />
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
