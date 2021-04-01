@@ -211,40 +211,6 @@ export const SUBMIT_CLIENT_APPLICATION = gql`
 export const useAboutPreferencesSubmit = () =>
   useMutation(SUBMIT_CLIENT_APPLICATION);
 
-export const getAboutPreferencesOptimisticResponse = (
-  id,
-  values,
-  numberOfFreelancers,
-) => {
-  const { talentQuality } = values;
-  let status = "Application Accepted";
-  let rejectionReason = null;
-
-  // Might be better to return both reasons
-  if (talentQuality === "CHEAP" || talentQuality === "BUDGET") {
-    status = "Application Rejected";
-    rejectionReason = "CHEAP_TALENT";
-  }
-  if (numberOfFreelancers === "0") {
-    status = "Application Rejected";
-    rejectionReason = "NOT_HIRING";
-  }
-
-  return {
-    __typename: "Mutation",
-    submitClientApplication: {
-      __typename: "SubmitClientApplicationPayload",
-      clientApplication: {
-        __typename: "ClientApplication",
-        id,
-        ...values,
-        status,
-        rejectionReason,
-      },
-    },
-  };
-};
-
 /* Step 5. Application Status page */
 
 export const REQUEST_APPLICATION_REMINDER = gql`
