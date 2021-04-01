@@ -31,6 +31,16 @@ function AboutCompany() {
   }
   const { clientApplication, industries } = data;
 
+  if (clientApplication?.status !== "Application Started")
+    return (
+      <Redirect
+        to={{
+          pathname: "/clients/signup/status",
+          state: { ...location.state },
+        }}
+      />
+    );
+
   // Formik
   const initialValues = {
     companyName: clientApplication.companyName || "",
