@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Box } from "@advisable/donut";
+import { Box, Button } from "@advisable/donut";
+import { Adjustments } from "@styled-icons/heroicons-solid/Adjustments";
 import { motion } from "framer-motion";
 import { useHistory, useLocation } from "react-router-dom";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
@@ -18,6 +19,7 @@ import FilterDrawer from "./Filters";
 import Navigation from "../../components/Navigation";
 import { Attribute } from "../../attributes";
 import DetailsModal from "./DetailsModal";
+import Loading from "./Loading";
 
 export default function Resource({ resource }) {
   const history = useHistory();
@@ -33,7 +35,7 @@ export default function Resource({ resource }) {
   const endCursor = data?.records.pageInfo.endCursor;
 
   const scrollRef = useBottomScrollListener(() => {
-    if (!hasNextPage) return;
+    if (!loading && !hasNextPage) return;
     fetchMore({ variables: { cursor: endCursor } });
   });
 
@@ -48,15 +50,26 @@ export default function Resource({ resource }) {
   };
 
   return (
-    <StyledLayout ref={scrollRef}>
+    <StyledLayout>
       <DetailsModal resource={resource} />
       <StyledHeader>
         <Navigation />
-        <button onClick={() => setIsOpen(!isOpen)}>Open filters</button>
+        <Button
+          ml={2}
+          mt={2}
+          size="s"
+          prefix={<Adjustments />}
+          variant="subtle"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? "Close Filters" : "Open filters"}
+          {filters.length ? ` (${filters.length})` : null}
+        </Button>
       </StyledHeader>
       <StyledViewport>
         <FilterDrawer resource={resource} open={isOpen} onApply={setFilters} />
         <StyledScrollContainer
+          ref={scrollRef}
           as={motion.div}
           transition={{ duration: 0.2 }}
           animate={{ x: isOpen ? 400 : 0 }}
@@ -80,7 +93,7 @@ export default function Resource({ resource }) {
                   ))}
                 </StyledRow>
               ))}
-              {loading && <>loading...</>}
+              {loading && <Loading resource={resource} />}
             </Box>
           </Box>
         </StyledScrollContainer>
