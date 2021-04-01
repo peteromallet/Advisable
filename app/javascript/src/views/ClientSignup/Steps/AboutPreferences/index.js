@@ -1,13 +1,12 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { string, object, number } from "yup";
 import { Formik, Form } from "formik";
+import { string, object, number } from "yup";
+import { Redirect, useHistory, useLocation } from "react-router";
 // Components
-import SubmitButton from "../../../../components/SubmitButton";
-import Loading from "../../../../components/Loading";
-import FormField from "src/components/FormField";
 import { Box, useBreakpoint } from "@advisable/donut";
-import Navigation from "../Navigation";
+import SubmitButton from "src/components/SubmitButton";
+import Loading from "src/components/Loading";
+import FormField from "src/components/FormField";
 import { Title, Description } from "../styles";
 import ProcessingApplication from "./ProcessingApplication";
 import TilesInput from "../../TilesInput";
@@ -18,8 +17,6 @@ import { talentQualityMobileOptions, talentQualityOptions } from "./options";
 // Queries
 import {
   useAboutPreferencesSubmit,
-  getAboutPreferencesOptimisticResponse,
-  useLocationState,
   useClientApplicationQuery,
 } from "../../queries";
 
@@ -36,28 +33,29 @@ const validationSchema = object().shape({
 });
 
 function AboutPreferences() {
-  const locationState = useLocationState();
+  const isMobile = useBreakpoint("s");
+  const history = useHistory();
+  const location = useLocation();
   const [
     submitClientApplication,
     { called, data: processing },
   ] = useAboutPreferencesSubmit();
   const { loading, error, data } = useClientApplicationQuery();
-  const isMobile = useBreakpoint("s");
 
-  if (loading || error)
+  if (loading) return <Loading />;
+  if (error) return <Redirect to="/client/signup" />;
+
+  const { localityImportance, talentQuality, status } = data.clientApplication;
+
+  if (status !== "Application Started")
     return (
-      <motion.div exit>
-        <Navigation error={error} />
-        <Loading />
-      </motion.div>
+      <Redirect
+        to={{
+          pathname: "/clients/signup/status",
+          state: { ...location.state },
+        }}
+      />
     );
-
-  const {
-    localityImportance,
-    talentQuality,
-    numberOfFreelancers,
-    status,
-  } = data.clientApplication;
 
   // Formik
   const initialValues = {
@@ -66,38 +64,40 @@ function AboutPreferences() {
     talentQuality: talentQuality || "",
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     const convertedValues = {
       ...values,
       acceptedGuaranteeTerms: values.acceptedGuaranteeTerms === "yes",
       localityImportance: Number(values.localityImportance),
     };
-    submitClientApplication({
+    await submitClientApplication({
       variables: {
         input: {
-          id: locationState.applicationId,
+          id: location.state?.applicationId,
           ...convertedValues,
         },
       },
-      optimisticResponse: getAboutPreferencesOptimisticResponse(
-        locationState.applicationId,
-        convertedValues,
-        numberOfFreelancers,
-      ),
     });
+
+    // Would be nice to find a method to clean this timer
+    setTimeout(() => {
+      history.push({
+        pathname: "/clients/signup/status",
+        state: { ...location.state },
+      });
+    }, 2600);
   };
 
   return (
-    <>
-      <Navigation called={called} status={status} delay={called ? 3000 : 0} />
-      <Formik
-        validationSchema={validationSchema}
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-      >
-        {(formik) => (
-          <Form>
-            <Box>{called && <ProcessingApplication />}</Box>
+    <Formik
+      validationSchema={validationSchema}
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+    >
+      {(formik) => (
+        <Form>
+          <Box position="relative">
+            {called && <ProcessingApplication />}
             <Title>About Your Preferences</Title>
             <Description>
               This is to help tailor our recommendations to you.
@@ -161,10 +161,10 @@ function AboutPreferences() {
             <SubmitButton width={[1, "auto"]} loading={called && !processing}>
               Continue
             </SubmitButton>
-          </Form>
-        )}
-      </Formik>
-    </>
+          </Box>
+        </Form>
+      )}
+    </Formik>
   );
 }
 
