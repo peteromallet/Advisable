@@ -1,21 +1,21 @@
 import React, { useMemo, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
-import * as Yup from "yup";
-import queryString from "query-string";
-import { useStartClientApplication } from "../../queries";
+import { object, string } from "yup";
 import { Formik, Form } from "formik";
+import queryString from "query-string";
 import { useLocation, useHistory } from "react-router";
+import { Input, Box, useBreakpoint } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import { useNotifications } from "src/components/Notifications";
 import FormField from "src/components/FormField";
-import { Input, Box, useBreakpoint } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import { Title } from "../styles";
+import { useStartClientApplication } from "../../queries";
 
-const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required("Please enter your first name"),
-  lastName: Yup.string(),
-  email: Yup.string()
+const validationSchema = object().shape({
+  firstName: string().required("Please enter your first name"),
+  lastName: string(),
+  email: string()
     .email("Please provide a valid email address")
     .required("Please enter your company email address"),
 });
@@ -34,36 +34,51 @@ function StartApplication() {
     [location.search],
   );
 
-  const updateLocationState = useCallback(
-    (params) => {
-      history.replace({ ...location, state: { ...location.state, ...params } });
-    },
-    [history, location],
-  );
-
-  const handleStartApplication = useCallback(
-    async function (values) {
-      updateLocationState({
-        firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
-      });
-
-      return await startClientApplication({
+  const handleSubmit = useCallback(
+    async (values) => {
+      history.replace({ ...location, state: { ...location.state, ...values } });
+      const res = await startClientApplication({
         variables: {
           input: {
             firstName: values.firstName,
             lastName: values.lastName,
             email: values.email,
-            rid: queryParams.rid || null,
-            utmMedium: queryParams.utm_medium || null,
-            utmSource: queryParams.utm_source || null,
-            utmCampaign: queryParams.utm_campaign || null,
+            rid: values.rid || null,
+            utmMedium: values.utm_medium || null,
+            utmSource: values.utm_source || null,
+            utmCampaign: values.utm_campaign || null,
           },
         },
       });
+
+      // Get errors
+      const errorCodes = res.errors?.map((err) => err.extensions?.code);
+      const nonCorporateEmail = errorCodes?.includes("nonCorporateEmail");
+      const existingAccount = errorCodes?.includes("existingAccount");
+
+      // Actions based on errors
+      if (nonCorporateEmail) {
+        history.push({
+          pathname: "/clients/signup/email-not-allowed",
+          state: { ...location.state },
+        });
+      }
+      if (existingAccount) {
+        notifications.notify(
+          "You already have an account with the provided email",
+        );
+        history.push({ pathname: "/login" });
+      }
+
+      // Successful action
+      let applicationId =
+        res.data?.startClientApplication?.clientApplication?.id;
+      history.push({
+        pathname: "/clients/signup/about_your_company",
+        state: { applicationId, ...location.state },
+      });
     },
-    [updateLocationState, startClientApplication, queryParams],
+    [history, location, notifications, startClientApplication],
   );
 
   // Check query params
@@ -76,9 +91,9 @@ function StartApplication() {
         email,
       });
       if (!valid) return;
-      handleStartApplication(queryParams);
+      handleSubmit(queryParams);
     }
-  }, [queryParams, called, handleStartApplication]);
+  }, [queryParams, called, handleSubmit]);
 
   if (loading) return <Loading />;
 
@@ -87,49 +102,6 @@ function StartApplication() {
     firstName: location.state?.firstName || queryParams.firstName || "",
     lastName: location.state?.lastName || queryParams.lastName || "",
     email: queryParams.email || "",
-  };
-
-  const handleSubmit = async (values) => {
-    history.replace({ ...location, state: { ...location.state, ...values } });
-    const res = await startClientApplication({
-      variables: {
-        input: {
-          firstName: values.firstName,
-          lastName: values.lastName,
-          email: values.email,
-          rid: queryParams.rid || null,
-          utmMedium: queryParams.utm_medium || null,
-          utmSource: queryParams.utm_source || null,
-          utmCampaign: queryParams.utm_campaign || null,
-        },
-      },
-    });
-
-    // Get errors
-    const errorCodes = res.errors?.map((err) => err.extensions?.code);
-    const nonCorporateEmail = errorCodes?.includes("nonCorporateEmail");
-    const existingAccount = errorCodes?.includes("existingAccount");
-
-    // Actions based on errors
-    if (nonCorporateEmail) {
-      history.push({
-        pathname: "/clients/signup/email-not-allowed",
-        state: { ...location.state },
-      });
-    }
-    if (existingAccount) {
-      notifications.notify(
-        "You already have an account with the provided email",
-      );
-      history.push({ pathname: "/login" });
-    }
-
-    // Successful action
-    let applicationId = res.data?.startClientApplication?.clientApplication?.id;
-    history.push({
-      pathname: "/clients/signup/about_your_company",
-      state: { applicationId, ...location.state },
-    });
   };
 
   return (
