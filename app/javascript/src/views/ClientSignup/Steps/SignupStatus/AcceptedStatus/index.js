@@ -10,7 +10,6 @@ import {
 } from "../../../queries";
 import { Redirect } from "react-router";
 import PhoneModal from "./PhoneModal";
-import MotionStack from "../../MotionStack";
 import { Title, Description, BulletListItem } from "../../styles";
 import { Coffee } from "@styled-icons/feather/Coffee";
 import { Eye } from "@styled-icons/feather/Eye";
@@ -40,7 +39,7 @@ function AcceptedStatus({ firstName, lastName }) {
   return (
     <>
       <Navigation />
-      <MotionStack>
+      <Box>
         <Title mb="m">We think you might be a good fit</Title>
         <Description mb="s">
           The final step before being able to access Advisable’s elite pool of
@@ -87,7 +86,7 @@ function AcceptedStatus({ firstName, lastName }) {
             modal={modal}
           />
         </Box>
-      </MotionStack>
+      </Box>
     </>
   );
 }

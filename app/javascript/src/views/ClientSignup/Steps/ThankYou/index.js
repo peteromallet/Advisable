@@ -1,13 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Text, Circle, useBreakpoint } from "@advisable/donut";
+import { Box, Text, Circle, useBreakpoint } from "@advisable/donut";
 import { Check } from "@styled-icons/feather/Check";
-import MotionStack from "../MotionStack";
 
 function Component({ title, text }) {
   const isDesktop = useBreakpoint("lUp");
   return (
-    <MotionStack
+    <Box
       position="absolute"
       width="256px"
       textAlign="center"
@@ -36,7 +35,7 @@ function Component({ title, text }) {
         {title}
       </Text>
       <Text lineHeight="21px">{text}</Text>
-    </MotionStack>
+    </Box>
   );
 }
 

@@ -8,7 +8,6 @@ import Loading from "../../../../components/Loading";
 import FormField from "src/components/FormField";
 import { Box, useBreakpoint } from "@advisable/donut";
 import Navigation from "../Navigation";
-import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";
 import ProcessingApplication from "./ProcessingApplication";
 import TilesInput from "../../TilesInput";
@@ -98,74 +97,70 @@ function AboutPreferences() {
       >
         {(formik) => (
           <Form>
-            <MotionStack position="relative">
-              <Box ignore>{called && <ProcessingApplication />}</Box>
-              <Title>About Your Preferences</Title>
-              <Description>
-                This is to help tailor our recommendations to you.
-              </Description>
-              <Box mb="l">
-                <FormField
-                  isRequired
-                  alignWidth
-                  as={TilesInput}
-                  fullWidth
-                  optionsPerRow={1}
-                  name="localityImportance"
-                  onChange={(n) =>
-                    formik.setFieldValue("localityImportance", n)
-                  }
-                  error={null}
-                  label="How important is it that freelancers you hire should be in your city?"
-                  value={formik.values.localityImportance}
-                  options={[
-                    { label: "Not Important", value: 1 },
-                    { label: "Not Sure", value: 3 },
-                    { label: "Important", value: 5 },
-                  ]}
-                />
-              </Box>
-              <Box mb="l">
-                <FormField
-                  isRequired
-                  alignWidth
-                  as={TilesInput}
-                  fullWidth
-                  optionsPerRow={1}
-                  name="acceptedGuaranteeTerms"
-                  onChange={(v) =>
-                    formik.setFieldValue("acceptedGuaranteeTerms", v)
-                  }
-                  error={null}
-                  label="In order to avail of our money-back guarantee, are you willing to provide feedback on every freelancer you hire?"
-                  options={[
-                    { label: "Yes", value: "yes", icon: Check },
-                    { label: "No", value: "no", icon: X },
-                  ]}
-                  value={formik.values.acceptedGuaranteeTerms}
-                />
-              </Box>
-              <Box mb="l">
-                <FormField
-                  isRequired
-                  as={TilesInput}
-                  alignWidth
-                  fullWidth
-                  optionsPerRow={1}
-                  name="talentQuality"
-                  onChange={(v) => formik.setFieldValue("talentQuality", v)}
-                  error={null}
-                  label="What level of talent are you typically looking for?"
-                  options={
-                    isMobile ? talentQualityMobileOptions : talentQualityOptions
-                  }
-                  value={formik.values.talentQuality}
-                />
-              </Box>
-              <SubmitButton width={[1, "auto"]} loading={called && !processing}>
-                Continue
-              </SubmitButton>
-            </MotionStack>
+            <Box>{called && <ProcessingApplication />}</Box>
+            <Title>About Your Preferences</Title>
+            <Description>
+              This is to help tailor our recommendations to you.
+            </Description>
+            <Box mb="l">
+              <FormField
+                isRequired
+                alignWidth
+                as={TilesInput}
+                fullWidth
+                optionsPerRow={1}
+                name="localityImportance"
+                onChange={(n) => formik.setFieldValue("localityImportance", n)}
+                error={null}
+                label="How important is it that freelancers you hire should be in your city?"
+                value={formik.values.localityImportance}
+                options={[
+                  { label: "Not Important", value: 1 },
+                  { label: "Not Sure", value: 3 },
+                  { label: "Important", value: 5 },
+                ]}
+              />
+            </Box>
+            <Box mb="l">
+              <FormField
+                isRequired
+                alignWidth
+                as={TilesInput}
+                fullWidth
+                optionsPerRow={1}
+                name="acceptedGuaranteeTerms"
+                onChange={(v) =>
+                  formik.setFieldValue("acceptedGuaranteeTerms", v)
+                }
+                error={null}
+                label="In order to avail of our money-back guarantee, are you willing to provide feedback on every freelancer you hire?"
+                options={[
+                  { label: "Yes", value: "yes", icon: Check },
+                  { label: "No", value: "no", icon: X },
+                ]}
+                value={formik.values.acceptedGuaranteeTerms}
+              />
+            </Box>
+            <Box mb="l">
+              <FormField
+                isRequired
+                as={TilesInput}
+                alignWidth
+                fullWidth
+                optionsPerRow={1}
+                name="talentQuality"
+                onChange={(v) => formik.setFieldValue("talentQuality", v)}
+                error={null}
+                label="What level of talent are you typically looking for?"
+                options={
+                  isMobile ? talentQualityMobileOptions : talentQualityOptions
+                }
+                value={formik.values.talentQuality}
+              />
+            </Box>
+            <SubmitButton width={[1, "auto"]} loading={called && !processing}>
+              Continue
+            </SubmitButton>
           </Form>
         )}
       </Formik>

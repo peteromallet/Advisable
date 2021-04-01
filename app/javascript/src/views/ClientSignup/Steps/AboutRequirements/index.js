@@ -12,7 +12,6 @@ import {
   useLocationState,
 } from "../../queries";
 import { string, array, object } from "yup";
-import MotionStack from "../MotionStack";
 import Navigation from "../Navigation";
 import { Title, Description } from "../styles";
 import { motion } from "framer-motion";
@@ -79,61 +78,57 @@ function AboutRequirements() {
       >
         {(formik) => (
           <Form>
-            <MotionStack spacing="m">
-              <Title>About Your Requirements</Title>
-              <Description>
-                This is for us to figure out if your requirements are a good
-                match for our talent.
-              </Description>
-              <Box mb="m">
-                <FormField
-                  isRequired
-                  as={Autocomplete}
-                  multiple
-                  max={5}
-                  error={null}
-                  name="skills"
-                  placeholder="Select the skills you're looking for"
-                  label="What freelancer skills are you looking for?"
-                  options={skills}
-                  onChange={(skill) => formik.setFieldValue("skills", skill)}
-                />
-              </Box>
-              <Box mb="m">
-                <FormField
-                  isRequired
-                  as={TilesInput}
-                  fullWidth
-                  alignWidth
-                  optionsPerRow={1}
-                  name="numberOfFreelancers"
-                  onChange={(n) =>
-                    formik.setFieldValue("numberOfFreelancers", n)
-                  }
-                  error={null}
-                  label="How many freelancers would you like to hire over the next 6 months?"
-                  options={[
-                    { label: "0", value: "0" },
-                    { label: "1–3", value: "1-3", ariaLabel: "One to three" },
-                    { label: "4–10", value: "4-10", ariaLabel: "Four to ten" },
-                    { label: "10+", value: "10+", ariaLabel: "More than 10" },
-                  ]}
-                  value={formik.values.numberOfFreelancers}
-                />
-              </Box>
-              <Box mb="l">
-                <FormField
-                  as={CurrencyInput}
-                  name="budget"
-                  prefix="$"
-                  suffix="yearly"
-                  placeholder="Enter your estimated spend"
-                  label="How much do you currently spend on freelancers per year?"
-                  data-testid="budget"
-                />
-              </Box>
-              <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
-            </MotionStack>
+            <Title>About Your Requirements</Title>
+            <Description>
+              This is for us to figure out if your requirements are a good match
+              for our talent.
+            </Description>
+            <Box mb="m">
+              <FormField
+                isRequired
+                as={Autocomplete}
+                multiple
+                max={5}
+                error={null}
+                name="skills"
+                placeholder="Select the skills you're looking for"
+                label="What freelancer skills are you looking for?"
+                options={skills}
+                onChange={(skill) => formik.setFieldValue("skills", skill)}
+              />
+            </Box>
+            <Box mb="m">
+              <FormField
+                isRequired
+                as={TilesInput}
+                fullWidth
+                alignWidth
+                optionsPerRow={1}
+                name="numberOfFreelancers"
+                onChange={(n) => formik.setFieldValue("numberOfFreelancers", n)}
+                error={null}
+                label="How many freelancers would you like to hire over the next 6 months?"
+                options={[
+                  { label: "0", value: "0" },
+                  { label: "1–3", value: "1-3", ariaLabel: "One to three" },
+                  { label: "4–10", value: "4-10", ariaLabel: "Four to ten" },
+                  { label: "10+", value: "10+", ariaLabel: "More than 10" },
+                ]}
+                value={formik.values.numberOfFreelancers}
+              />
+            </Box>
+            <Box mb="l">
+              <FormField
+                as={CurrencyInput}
+                name="budget"
+                prefix="$"
+                suffix="yearly"
+                placeholder="Enter your estimated spend"
+                label="How much do you currently spend on freelancers per year?"
+                data-testid="budget"
+              />
+            </Box>
+            <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
           </Form>
         )}
       </Formik>
