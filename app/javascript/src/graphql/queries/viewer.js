@@ -7,6 +7,7 @@ export const viewerFields = gql`
       email
       name
       isAdmin
+      features
       isTeamManager
       firstName
       lastName
@@ -26,6 +27,7 @@ export const viewerFields = gql`
       email
       name
       bio
+      features
       createdAt
       firstName
       lastName
