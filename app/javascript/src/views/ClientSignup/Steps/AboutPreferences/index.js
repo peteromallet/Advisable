@@ -47,7 +47,7 @@ function AboutPreferences() {
 
   const { localityImportance, talentQuality, status } = data.clientApplication;
 
-  if (status !== "Application Started")
+  if (status !== "Application Started" && !called)
     return (
       <Redirect
         to={{
