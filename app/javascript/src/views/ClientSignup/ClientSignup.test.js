@@ -483,7 +483,7 @@ const emailNotAllowedRejection = {
       __typename: "Mutation",
       startClientApplication: null,
     },
-    errors: [{ extensions: { code: "emailNotAllowed" } }],
+    errors: [{ extensions: { code: "nonCorporateEmail" } }],
   },
 };
 
