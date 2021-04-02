@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { useQuery } from "@apollo/client";
 import Loading from "./Loading";
 import JobOpportunity from "./JobOpportunity";
@@ -17,13 +16,13 @@ let JobOpportunityContainer = ({ history, match }) => {
   if (loading) return <Loading />;
 
   if (error) {
-    const code = get(error, "graphQLErrors[0].extensions.code");
+    const code = error?.graphQLErrors?.[0]?.extensions?.code;
     if (code === "recordNotFound") {
       return <NotFound />;
     }
   }
 
-  const open = get(data, "project.applicationsOpen");
+  const open = data?.project?.applicationsOpen;
   if (!open) return <ApplicationsClosed />;
 
   return <JobOpportunity history={history} project={data.project} />;

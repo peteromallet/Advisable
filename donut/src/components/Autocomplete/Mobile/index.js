@@ -1,10 +1,7 @@
 import React from "react";
-import { get } from "lodash-es";
 import Menu from "./Menu";
-import Text from "../../Text";
 import Input from "../../Input";
-import FieldError from "../../FieldError";
-import { Autocomplete as AutocompleteStyles, Label, Tags } from "../styles";
+import { Autocomplete as AutocompleteStyles, Tags } from "../styles";
 import Tag from "../Tag";
 import { getSelected, getSelectedMultiple, handleRemoveItem } from "../utils";
 
@@ -13,9 +10,7 @@ const AutocompleteMobile = (props) => {
     options,
     placeholder,
     onChange,
-    error,
     size,
-    description,
     initalSelectedItem,
     primary,
     onPrimaryChange,
@@ -44,7 +39,7 @@ const AutocompleteMobile = (props) => {
     <AutocompleteStyles {...rest}>
       <Input
         size={size}
-        value={get(initalSelectedItem, "label", "")}
+        value={initalSelectedItem?.label || ""}
         onFocus={handleFocus}
         placeholder={placeholder}
         readOnly
@@ -76,7 +71,6 @@ const AutocompleteMobile = (props) => {
           placeholder={placeholder}
           options={options}
           initalSelectedItem
-          onChange={handleChange}
           formatLabel={formatLabel}
         />
       )}

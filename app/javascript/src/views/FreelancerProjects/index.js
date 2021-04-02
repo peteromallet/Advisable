@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { useQuery } from "@apollo/client";
 import Layout from "../../components/Layout";
 import Loading from "./Loading";
@@ -13,7 +12,7 @@ const FreelancerProjects = ({ history }) => {
     history.push(`/clients/${application.id}`);
   };
 
-  const applications = get(data, "viewer.applications") || [];
+  const applications = data?.viewer?.applications || [];
 
   return (
     <Layout>

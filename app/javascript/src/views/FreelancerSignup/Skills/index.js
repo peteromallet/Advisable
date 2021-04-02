@@ -1,6 +1,6 @@
 import React from "react";
 import { gql } from "@apollo/client";
-import { get, sortBy } from "lodash-es";
+import { sortBy } from "lodash-es";
 import { Formik, Form } from "formik";
 import { useQuery } from "@apollo/client";
 import { Redirect } from "react-router-dom";
@@ -27,7 +27,7 @@ const Skills = ({ history, location, specialist }) => {
   }
 
   const initialValues = {
-    skills: get(location.state, "skills") || [],
+    skills: location.state?.skills || [],
   };
 
   // We want to store the skills in the location state so that they are

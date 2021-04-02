@@ -1,11 +1,10 @@
 import * as React from "react";
-import { get } from "lodash-es";
 import { Box, Text, Card } from "@advisable/donut";
 import NewTask from "../../components/NewTask";
 import illustration from "./no_tasks.png";
 
 export default function NoTasks({ onNewTask, application }) {
-  let firstName = get(application, "specialist.firstName");
+  let firstName = application?.specialist?.firstName;
 
   return (
     <Card>

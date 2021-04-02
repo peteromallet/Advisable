@@ -1,6 +1,5 @@
 // Renders the freelancer signup flow.
 import React from "react";
-import { get } from "lodash-es";
 import { useQuery } from "@apollo/client";
 import { useTheme, Box } from "@advisable/donut";
 import { Switch, Route, Redirect, matchPath } from "react-router-dom";
@@ -69,7 +68,7 @@ const FreelancerSignup = ({ location }) => {
 
   if (loading) return <Loading />;
 
-  const viewer = get(data, "viewer");
+  const viewer = data?.viewer;
 
   return (
     <Box pr={{ _: 0, m: "40%" }}>

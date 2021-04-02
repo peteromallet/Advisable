@@ -1,7 +1,6 @@
 // Renders the view for when a freelancer is viewing an application with a
 // status of "Working".
 import React from "react";
-import { get } from "lodash-es";
 import { useQuery } from "@apollo/client";
 import Loading from "./Loading";
 import NotFound from "../NotFound";
@@ -13,7 +12,7 @@ const Component = (props) => {
   const query = useQuery(FETCH_APPLICATION, { variables: { id } });
 
   if (query.loading) return <Loading />;
-  if (!query.loading && !get(query, "data.application")) {
+  if (!query.loading && !query?.data?.application) {
     return <NotFound />;
   }
   return <ActiveApplication {...query} {...props} />;
