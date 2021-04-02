@@ -31,12 +31,8 @@ end
 # Table name: labels
 #
 #  id              :uuid             not null, primary key
-#  description     :string
-#  featured        :boolean          default(FALSE)
 #  labelings_count :integer
 #  name            :string
-#  prompt          :string
-#  prompt_cta      :string
 #  published_at    :datetime
 #  slug            :string
 #  created_at      :datetime         not null
