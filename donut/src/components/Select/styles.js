@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { variant, space } from "styled-system";
+import { space } from "styled-system";
 import {
   BORDER_RADIUS,
   StyledInput,
@@ -34,32 +34,14 @@ export const StyledSelectControlWraper = styled.div`
   }
 `;
 
-const arrowPadding = variant({
-  prop: "size",
-  variants: {
-    sm: {
-      padding: "0 12px",
-    },
-    md: {
-      padding: "0 16px",
-    },
-    lg: {
-      padding: "0 16px",
-    },
-  },
-});
-
 export const StyledSelectArrow = styled.div`
   top: 0;
-  right: 0;
+  right: 12px;
   height: 100%;
   display: flex;
-  padding: 0 12px;
   position: absolute;
   align-items: center;
   color: ${theme.colors.neutral400};
-
-  ${arrowPadding}
 `;
 
 const StyledSelect_PlaceholderSelected = css`

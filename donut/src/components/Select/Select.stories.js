@@ -4,11 +4,11 @@ import Card from "../Card";
 import { withKnobs, text, boolean, select } from "@storybook/addon-knobs";
 
 export default {
-  title: 'Forms/Select',
+  title: "Forms/Select",
   decorators: [withKnobs],
 };
 
-export const basic = () => {
+export const Basic = () => {
   const [value, setValue] = React.useState(null);
   const prefix = text("Prefix", null);
   const suffix = text("Suffix", null);
