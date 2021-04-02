@@ -54,7 +54,7 @@ gem "administrate-field-active_storage"
 
 gem "pry"
 gem "pry-rails"
-gem "pry-doc"
+# gem "pry-doc" Does not support Ruby 3 yet
 gem "pry-byebug", ">= 3.9.0"
 
 group :development, :test do
