@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_30_080138) do
+ActiveRecord::Schema.define(version: 2021_04_01_111446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2021_03_30_080138) do
     t.datetime "deleted_at"
     t.jsonb "unsubscribed_from"
     t.datetime "disabled_at"
+    t.jsonb "features"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["uid"], name: "index_accounts_on_uid", unique: true
   end
@@ -408,6 +409,33 @@ ActiveRecord::Schema.define(version: 2021_03_30_080138) do
     t.index ["airtable_id"], name: "index_interviews_on_airtable_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
     t.index ["user_id"], name: "index_interviews_on_user_id"
+  end
+
+  create_table "invoice_line_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "invoice_id", null: false
+    t.bigint "task_id"
+    t.string "stripe_invoice_line_item_id"
+    t.string "name"
+    t.integer "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["invoice_id"], name: "index_invoice_line_items_on_invoice_id"
+    t.index ["task_id"], name: "index_invoice_line_items_on_task_id"
+  end
+
+  create_table "invoices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "company_id", null: false
+    t.bigint "application_id", null: false
+    t.integer "status", default: 0
+    t.string "stripe_invoice_id"
+    t.datetime "period_start"
+    t.datetime "period_end"
+    t.datetime "paid_at"
+    t.datetime "paid_out_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["application_id"], name: "index_invoices_on_application_id"
+    t.index ["company_id"], name: "index_invoices_on_company_id"
   end
 
   create_table "labelings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -817,6 +845,7 @@ ActiveRecord::Schema.define(version: 2021_03_30_080138) do
     t.string "vat_number"
     t.string "application_interview_calendly_id"
     t.datetime "application_interview_starts_at"
+    t.string "iban"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
@@ -997,6 +1026,10 @@ ActiveRecord::Schema.define(version: 2021_03_30_080138) do
   add_foreign_key "guild_reactions", "specialists", on_delete: :cascade
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
+  add_foreign_key "invoice_line_items", "invoices"
+  add_foreign_key "invoice_line_items", "tasks"
+  add_foreign_key "invoices", "applications"
+  add_foreign_key "invoices", "companies"
   add_foreign_key "labelings", "guild_posts"
   add_foreign_key "labelings", "labels"
   add_foreign_key "labels", "countries"
