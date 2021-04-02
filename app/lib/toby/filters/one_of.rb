@@ -2,11 +2,11 @@
 
 module Toby
   module Filters
-    class OneOf
-      def self.apply(records, name, value = [])
+    class OneOf < BaseFilter
+      def apply(records, attribute, value: [], **_opts)
         return records if value.empty?
 
-        records.where(name => value)
+        records.where(attribute.name => value)
       end
     end
   end

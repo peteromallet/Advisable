@@ -1,28 +1,11 @@
 import React from "react";
+import { Tag } from "@advisable/donut";
 
 export default {
   render: function RenderID({ record }) {
     return record.id;
   },
-  input: function StringColumnInput({ record, column }) {
-    return record[column.field];
+  input: function RenderIDInput({ record, attribute }) {
+    return record[attribute.name];
   },
 };
-
-// const stringAttribute = {
-//   columnType: "StringColumnType",
-//   query: (resource) => {
-//     return attribute;
-//   },
-//   inputValue: (resource, attribute) => {
-//     return resource[attribute.name];
-//   },
-//   render: function ReadStringAttribute(resource, attribute) {
-//     return resource[attribute.name];
-//   },
-//   renderInput: function WriteSingleSelect(resource, attribute, formikField) {
-// return <input {...formikField.field} />;
-//   },
-// };
-
-// export default stringAttribute;

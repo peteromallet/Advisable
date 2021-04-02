@@ -17,15 +17,19 @@ module Toby
       end
 
       field :filters, [Toby::Types::ResourceFilterType], null: false
+
       def filters
-        object.class.filters.map do |k, v|
-          {name: k, type: v.name.demodulize}
-        end
+        object.class.filters
       end
 
       field :readonly, GraphQL::Types::Boolean, null: false
       def readonly
         object.options.fetch(:readonly, false)
+      end
+
+      field :column_label, GraphQL::Types::String, null: true
+      def column_label
+        object.options.fetch(:column_label) { name.titleize }
       end
 
       definition_methods do

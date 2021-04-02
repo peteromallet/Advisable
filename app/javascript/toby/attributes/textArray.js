@@ -1,10 +1,19 @@
 import React from "react";
+import { useField } from "formik";
+import BulletPointInput from "src/components/BulletPointInput";
 
 export default {
   render: function RenderStringColumn({ record, field }) {
     return record[field.name].join(", ");
   },
-  input: function StringColumnInput() {
-    return <input />;
+  input: function TextArrayInput({ attribute }) {
+    const [field, , helpers] = useField(attribute.name);
+
+    return (
+      <BulletPointInput
+        value={field.value || []}
+        onChange={(value) => helpers.setValue(value)}
+      />
+    );
   },
 };

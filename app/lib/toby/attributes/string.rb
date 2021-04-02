@@ -3,6 +3,7 @@
 module Toby
   module Attributes
     class String < BaseAttribute
+      filter :is, Filters::Equals
       filter :contains, Filters::StringContains
       filter :is_empty, Filters::CheckNil
       filter :not_empty, Filters::CheckNotNil

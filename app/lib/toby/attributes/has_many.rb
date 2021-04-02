@@ -4,23 +4,22 @@ module Toby
   module Attributes
     class HasMany < BaseAttribute
       filter :includes, Filters::Includes
+      filter :has_none, Filters::HasNone
       # filter :not_empty, Filters::CheckNotNil
 
       extension_field :labeled_by, GraphQL::Types::String
 
       # optional for when we don't follow the class == resource convention
       def model
-        options.fetch(:model) { name.to_s.singularize.capitalize }
+        options.fetch(:model) { name.to_s.singularize.camelize }
       end
 
-      # optional for when we don't follow the parent_id convention
       def column
-        options.fetch(:column) { :"#{parent.downcase}_id" }
+        reflection.inverse_of.association_foreign_key
       end
 
-      # optional for when we don't follow the id convention
       def via
-        options.fetch(:column, :id)
+        reflection.active_record_primary_key
       end
 
       def type
@@ -33,6 +32,13 @@ module Toby
 
       def lazy_read_class
         Toby::Lazy::Base
+      end
+
+      def write(resource, value)
+        klass = reflection.klass
+        attribute = reflection.active_record_primary_key
+        records = klass.where(attribute => value)
+        resource.public_send("#{name}=", records)
       end
     end
   end
