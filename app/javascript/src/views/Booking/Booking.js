@@ -1,5 +1,5 @@
 import * as React from "react";
-import { get, filter } from "lodash-es";
+import { filter } from "lodash-es";
 import { Box, Modal, useModal } from "@advisable/donut";
 import { useApolloClient } from "@apollo/client";
 import {
@@ -49,13 +49,13 @@ export default function Booking({ data, match }) {
     history.replace(`/manage/${data.application.id}/tasks/${sorted[0].id}`);
   }, []);
 
-  let status = get(data, "application.status");
+  let status = data?.application?.status;
   if (["Working", "Stopped Working"].indexOf(status) === -1) {
     return <NotFound />;
   }
 
   let application = data.application;
-  let specialist = get(data, "application.specialist");
+  let specialist = data?.application?.specialist;
 
   const openTask = (task) => {
     history.replace(`/manage/${applicationId}/tasks/${task.id}`);

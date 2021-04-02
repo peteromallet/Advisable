@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { useQuery, useMutation } from "@apollo/client";
 import { Formik, Form } from "formik";
 import { Button, Box, Text, Select } from "@advisable/donut";
@@ -26,25 +25,22 @@ const UpdatePaymentSettingsForm = ({
   };
 
   let initialValues = {
-    bankHolderName:
-      get(data, "viewer.bankHolderName") || get(data, "viewer.name"),
+    bankHolderName: data?.viewer?.bankHolderName || data?.viewer?.name,
     bankCurrency:
-      get(data, "viewer.bankCurrency") ||
-      get(data, "viewer.country.currency.isoCode"),
-    vatNumber: get(data, "viewer.vatNumber") || "",
+      data?.viewer?.bankCurrency || data?.viewer?.country?.currency?.isoCode,
+    vatNumber: data?.viewer?.vatNumber || "",
     bankHolderAddress: {
-      line1: get(data, "viewer.bankHolderAddress.line1", "") || "",
-      line2: get(data, "viewer.bankHolderAddress.line2", "") || "",
-      city: get(data, "viewer.bankHolderAddress.city", "") || "",
-      state: get(data, "viewer.bankHolderAddress.state", "") || "",
+      line1: data?.viewer?.bankHolderAddress?.line1 || "",
+      line2: data?.viewer?.bankHolderAddress?.line2 || "",
+      city: data?.viewer?.bankHolderAddress?.city || "",
+      state: data?.viewer?.bankHolderAddress?.state || "",
       country:
-        get(data, "viewer.bankHolderAddress.country") ||
-        get(data, "viewer.country.id"),
-      postcode: get(data, "viewer.bankHolderAddress.postcode") || "",
+        data?.viewer?.bankHolderAddress?.country || data?.viewer?.country?.id,
+      postcode: data?.viewer?.bankHolderAddress?.postcode || "",
     },
   };
 
-  let currencies = get(data, "currencies", []).map((currency) => ({
+  let currencies = (data?.currencies || []).map((currency) => ({
     label: `${currency.name} (${currency.isoCode})`,
     value: currency.isoCode,
   }));
