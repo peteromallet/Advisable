@@ -3,21 +3,16 @@ import {
   waitFor,
   fireEvent,
 } from "../../../testHelpers/test-utils";
-import {
-  mockViewer,
-  mockQuery,
-  mockMutation,
-} from "../../../testHelpers/apolloMocks";
-import generateTypes from "../../../__mocks__/graphqlFields";
+import { mockViewer, mockQuery, mockMutation, mockData } from "test-utils";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import { RESUME_WORKING } from "../StoppedWorkingNotice";
 
 test("Client can resume working with specialist", async () => {
-  let user = generateTypes.user();
-  let project = generateTypes.project({ user });
-  let specialist = generateTypes.specialist({ firstName: "Dennis" });
+  let user = mockData.user();
+  let project = mockData.project({ user });
+  let specialist = mockData.specialist({ firstName: "Dennis" });
 
-  let application = generateTypes.application({
+  let application = mockData.application({
     project,
     specialist,
     status: "Stopped Working",

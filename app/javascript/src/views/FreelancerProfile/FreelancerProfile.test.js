@@ -1,5 +1,4 @@
 import { screen, fireEvent } from "@testing-library/react";
-import generateType from "../../__mocks__/graphqlFields";
 import {
   mockViewer,
   mockQuery,
@@ -14,7 +13,7 @@ import { GET_COUNTRIES, GET_PROFILE, UPDATE_PROFILE } from "./queries";
 import GET_PROJECT from "src/components/PreviousProjectDetails/getProject.js";
 import { truncate } from "lodash-es";
 
-let user = generateType.user();
+let user = mockData.user();
 const skills = ["First skill", "Second skill", "Third skill"].map((name) => {
   return mockData.skill({ name: name });
 });
