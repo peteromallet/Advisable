@@ -5,7 +5,7 @@ import TryAgainButton from "./TryAgainButton";
 
 function CheapStatus() {
   return (
-    <Box>
+    <>
       <Title mb="m">Unfortunately, we&apos;re not a good fit</Title>
       <Description>
         Advisable only provides high-end talent. Since you&apos;re looking for
@@ -24,7 +24,7 @@ function CheapStatus() {
         </Button>
         <TryAgainButton width={[1, "auto"]} />
       </Box>
-    </Box>
+    </>
   );
 }
 

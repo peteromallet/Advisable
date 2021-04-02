@@ -224,20 +224,6 @@ export const REQUEST_APPLICATION_REMINDER = gql`
 export const useRequestApplicationReminder = () =>
   useMutation(REQUEST_APPLICATION_REMINDER);
 
-export const getRequestApplicationReminderOptimisticResponse = (id) => {
-  return {
-    __typename: "Mutation",
-    requestApplicationReminder: {
-      __typename: "RequestApplicationReminderPayload",
-      clientApplication: {
-        __typename: "ClientApplication",
-        id,
-        status: "Requested Reminder",
-      },
-    },
-  };
-};
-
 export const REQUEST_APPLICATION_CALLBACK = gql`
   mutation RequestApplicationCallback(
     $input: RequestApplicationCallbackInput!
