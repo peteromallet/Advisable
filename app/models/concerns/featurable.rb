@@ -14,10 +14,6 @@ module Featurable
   end
 
   class_methods do
-    def feature_flags
-      {}
-    end
-
     def featurize(*flags)
       flags.map(&:to_s).each do |flag|
         define_method "#{flag}?" do
