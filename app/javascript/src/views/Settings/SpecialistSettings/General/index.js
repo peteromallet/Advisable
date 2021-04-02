@@ -1,5 +1,5 @@
 import React from "react";
-import { get, sortBy } from "lodash-es";
+import { sortBy } from "lodash-es";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useQuery, useMutation } from "@apollo/client";
 import {
@@ -24,13 +24,13 @@ const Profile = () => {
   const notifications = useNotifications();
 
   const initialValues = {
-    email: get(data, "viewer.email") || "",
-    firstName: get(data, "viewer.firstName"),
-    lastName: get(data, "viewer.lastName"),
-    remote: get(data, "viewer.remote") || true,
-    hourlyRate: get(data, "viewer.hourlyRate") / 100.0,
-    publicUse: get(data, "viewer.publicUse") || false,
-    skills: (get(data, "viewer.skills") || []).map((s) => s.name),
+    email: data?.viewer?.email || "",
+    firstName: data?.viewer?.firstName || "",
+    lastName: data?.viewer?.lastName || "",
+    remote: data?.viewer?.remote || true,
+    hourlyRate: data?.viewer?.hourlyRate / 100.0,
+    publicUse: data?.viewer?.publicUse || false,
+    skills: (data?.viewer?.skills || []).map((s) => s.name),
   };
 
   const handleSubmit = async (values) => {

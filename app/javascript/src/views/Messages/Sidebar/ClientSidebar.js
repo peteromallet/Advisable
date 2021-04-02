@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { useQuery } from "@apollo/client";
 import { Box, Text, Avatar } from "@advisable/donut";
 import Status from "../../../components/Status";
@@ -61,11 +60,7 @@ const ClientSidebar = (props) => {
   return (
     <>
       <Box paddingBottom="m">
-        <Avatar
-          size="l"
-          name={specialist.name}
-          url={get(specialist, "image.url")}
-        />
+        <Avatar size="l" name={specialist.name} url={specialist?.image?.url} />
       </Box>
       <Box paddingBottom="xxs">
         <Text size="l" weight="semibold" color="neutral900">
@@ -74,7 +69,7 @@ const ClientSidebar = (props) => {
       </Box>
       <Box paddingBottom="s">
         <Text size="xs" color="neutral700">
-          {specialist.city}, {get(specialist, "country.name")}
+          {specialist.city}, {specialist?.country?.name}
         </Text>
       </Box>
       <Box paddingBottom="l">

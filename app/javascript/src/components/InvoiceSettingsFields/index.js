@@ -1,6 +1,6 @@
 import React from "react";
 import { string } from "yup";
-import { find, get } from "lodash-es";
+import { find } from "lodash-es";
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import { Box } from "@advisable/donut";
@@ -33,8 +33,8 @@ const emailValidation = string()
 
 const InvoiceSettingsFields = ({ formik }) => {
   const { data, loading } = useQuery(GET_DATA);
-  let countries = get(data, "countries", []);
-  const countryValue = get(formik.values, "address.country");
+  const countries = data?.countries || [];
+  const countryValue = formik.values?.address?.country;
   const country = find(countries, (c) => {
     return c.code === countryValue || c.name === countryValue;
   });

@@ -1,6 +1,5 @@
 import React from "react";
 import { gql } from "@apollo/client";
-import { get } from "lodash-es";
 import { VisuallyHidden } from "reakit/VisuallyHidden";
 import { useQuery } from "@apollo/client";
 import { connect, Field } from "formik";
@@ -32,8 +31,8 @@ const AddressFields = ({ label, name, formik }) => {
 
   if (loading) return <>loading...</>;
 
-  const touched = get(formik.touched, name);
-  const errors = get(formik.errors, name);
+  const touched = formik.touched?.name;
+  const errors = formik.errors?.name;
 
   const line1Error = touched?.line1 && errors?.line1;
   const line2Error = touched?.line2 && errors?.line2;

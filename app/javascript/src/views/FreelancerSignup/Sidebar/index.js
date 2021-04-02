@@ -1,11 +1,10 @@
 import React from "react";
-import { get } from "lodash-es";
 import { Box } from "@advisable/donut";
 import Testimonial from "./Testimonial";
 import OpenProject from "./OpenProject";
 
 const Sidebar = ({ specialist }) => {
-  const invite = get(specialist, "invitations[0]");
+  const invite = specialist?.invitations?.[0];
 
   return (
     <Box

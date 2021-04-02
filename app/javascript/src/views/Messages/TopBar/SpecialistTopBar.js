@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { ChevronRight } from "@styled-icons/feather/ChevronRight";
@@ -42,12 +41,12 @@ const SpecialistTopBar = (props) => {
   }
 
   if (application.status === "Application Accepted") {
-    if (get(application, "interview.status") === "Call Completed") {
+    if (application?.interview?.status === "Call Completed") {
       actionText = "Send Proposal";
       actionURL = `/applications/${application.id}/proposal`;
     }
 
-    if (get(application, "interview.status") === "Call Requested") {
+    if (application?.interview?.status === "Call Requested") {
       actionText = "Schedule Interview";
       actionURL = `/interview_request/${application.interview.id}`;
     }
@@ -68,15 +67,12 @@ const SpecialistTopBar = (props) => {
         <Topbar>
           <Box display="flex" alignItems="center">
             <Box padding="s">
-              <Avatar
-                size="s"
-                name={get(application, "project.user.companyName")}
-              />
+              <Avatar size="s" name={application?.project?.user?.companyName} />
             </Box>
             <Box>
               <Box paddingBottom="xxs">
                 <Text weight="semibold">
-                  {get(application, "project.user.companyName")}
+                  {application?.project?.user?.companyName}
                 </Text>
               </Box>
               <Status>{application.status}</Status>

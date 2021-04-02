@@ -7,7 +7,7 @@ import * as React from "react";
 import { withRouter } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { Box } from "@advisable/donut";
-import { get, filter } from "lodash-es";
+import { filter } from "lodash-es";
 import Drawer from "../Drawer";
 import { TaskDrawer as TaskDrawerStyles } from "./styles";
 import EditTask from "./EditTask";
@@ -93,7 +93,7 @@ const TaskDrawer = ({
   };
 
   const isSaving = filter(saving, (loading) => loading).length > 0;
-  const task = get(query, "data.task");
+  const task = query?.data?.task;
 
   if (!task) return null;
 

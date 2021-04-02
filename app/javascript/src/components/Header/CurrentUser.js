@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { get } from "lodash-es";
 import { Link } from "react-router-dom";
 import {
   CurrentUserWrapper,
@@ -13,7 +12,7 @@ const CurrentUser = ({ user, onLogout }) => {
   const [open, setOpen] = useState(false);
   const handleBlur = () => setOpen(false);
   const handleFocus = () => setOpen(true);
-  let isClient = get(viewer, "__typename") === "User";
+  const isClient = viewer?.__typename === "User";
   let isAdmin = isClient && viewer?.isAdmin;
 
   return (

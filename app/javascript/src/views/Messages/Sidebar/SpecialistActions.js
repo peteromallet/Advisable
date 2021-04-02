@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { Link } from "react-router-dom";
 import { Stack, Button } from "@advisable/donut";
 import ReportUnresponsive from "./ReportUnresponsive";
@@ -36,7 +35,7 @@ const ClientActions = ({ application }) => {
   }
 
   if (application.status === "Application Accepted") {
-    if (get(application, "interview.status") === "Call Completed") {
+    if (application?.interview?.status === "Call Completed") {
       actions.push(
         <Button
           as={Link}
@@ -49,7 +48,7 @@ const ClientActions = ({ application }) => {
       );
     }
 
-    if (get(application, "interview.status") === "Call Requested") {
+    if (application?.interview?.status === "Call Requested") {
       actions.push(
         <Button
           as={Link}

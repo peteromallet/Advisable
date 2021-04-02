@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { get } from "lodash-es";
 import context from "../applicationContext";
 
 const useViewer = () => {
@@ -7,8 +6,8 @@ const useViewer = () => {
   if (app.viewer) {
     return {
       ...app.viewer,
-      isClient: get(app, "viewer.__typename") === "User",
-      isSpecialist: get(app, "viewer.__typename") === "Specialist",
+      isClient: app?.viewer?.__typename === "User",
+      isSpecialist: app?.viewer?.__typename === "Specialist",
       isAccepted: app?.viewer?.applicationStage === "Accepted",
     };
   }
