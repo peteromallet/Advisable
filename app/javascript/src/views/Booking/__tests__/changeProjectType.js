@@ -3,21 +3,16 @@ import {
   fireEvent,
   waitForElementToBeRemoved,
 } from "../../../testHelpers/test-utils";
-import generateTypes from "../../../__mocks__/graphqlFields";
-import {
-  mockViewer,
-  mockQuery,
-  mockMutation,
-} from "../../../testHelpers/apolloMocks";
+import { mockData, mockViewer, mockQuery, mockMutation } from "test-utils";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import UPDATE_PROJECT_TYPE from "../ProjectTypeModal/setProjectType";
 
 test("User can change the project type", async () => {
-  let user = generateTypes.user();
-  let project = generateTypes.project({ user });
-  let specialist = generateTypes.specialist({ firstName: "Dennis" });
+  let user = mockData.user();
+  let project = mockData.project({ user });
+  let specialist = mockData.specialist({ firstName: "Dennis" });
 
-  let application = generateTypes.application({
+  let application = mockData.application({
     project,
     specialist,
     id: "rec1234",

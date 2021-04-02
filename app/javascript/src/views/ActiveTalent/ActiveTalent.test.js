@@ -1,14 +1,13 @@
 import { fireEvent } from "@testing-library/react";
-import { renderRoute } from "test-utils";
-import mock from "../../__mocks__/graphqlFields";
+import { renderRoute, mockData } from "test-utils";
 import VIEWER from "../../graphql/queries/viewer";
 import FETCH_DATA from "./fetchData";
 
 test("User can see their active freelancers", async () => {
-  const project = mock.project();
-  const application = mock.application();
-  const user = mock.user();
-  const specialist = mock.specialist({
+  const project = mockData.project();
+  const application = mockData.application();
+  const user = mockData.user();
+  const specialist = mockData.specialist({
     name: "John Doe",
   });
 
@@ -55,7 +54,7 @@ test("User can see their active freelancers", async () => {
 });
 
 test("User sees an empty state when they have no active talent", async () => {
-  const user = mock.user();
+  const user = mockData.user();
 
   const graphQLMocks = [
     {
@@ -96,10 +95,10 @@ test("User sees an empty state when they have no active talent", async () => {
 });
 
 test("User can view Finished talent", async () => {
-  const project = mock.project();
-  const application = mock.application({ status: "Stopped Working" });
-  const user = mock.user();
-  const specialist = mock.specialist({
+  const project = mockData.project();
+  const application = mockData.application({ status: "Stopped Working" });
+  const user = mockData.user();
+  const specialist = mockData.specialist({
     name: "John Doe",
   });
 
