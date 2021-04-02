@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { gql } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import {
@@ -33,9 +32,7 @@ const BuildProfile = ({ history, specialist }) => {
   const [updateProfile] = useMutation(UPDATE_PROFILE);
 
   const countriesQuery = useQuery(GET_COUNTRIES);
-  const [profilePhoto, setProfilePhoto] = React.useState(
-    get(specialist, "avatar"),
-  );
+  const [profilePhoto, setProfilePhoto] = React.useState(specialist?.avatar);
 
   const handleSubmit = async (values) => {
     await updateProfile({
@@ -51,7 +48,7 @@ const BuildProfile = ({ history, specialist }) => {
     avatar: undefined,
     bio: specialist.bio || "",
     city: specialist.city || "",
-    country: get(specialist, "country.id"),
+    country: specialist?.country?.id,
     publicUse: specialist.publicUse === null ? true : specialist.publicUse,
   };
 

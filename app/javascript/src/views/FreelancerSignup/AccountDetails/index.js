@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Formik, Form } from "formik";
 import queryString from "query-string";
@@ -15,7 +14,7 @@ import CREATE_FREELANCER_ACCOUNT from "./createFreelancerAccount";
 // Renders the first two steps of the signup flow.
 const AccountDetails = ({ specialist, history, location }) => {
   const { t } = useTranslation();
-  const skills = get(location.state, "skills") || [];
+  const skills = location.state?.skills || [];
   const [signup] = useMutation(CREATE_FREELANCER_ACCOUNT, {
     update(cache, response) {
       cache.writeQuery({
@@ -51,17 +50,17 @@ const AccountDetails = ({ specialist, history, location }) => {
         input: {
           ...values,
           skills,
-          pid: get(queryParams, "pid"),
-          campaignName: get(queryParams, "utm_campaign"),
-          campaignSource: get(queryParams, "utm_source"),
-          referrer: get(queryParams, "rid"),
+          pid: queryParams?.pid,
+          campaignName: queryParams?.utm_campaign,
+          campaignSource: queryParams?.utm_source,
+          referrer: queryParams?.rid,
         },
       },
     });
 
     if (errors) {
       let error = errors[0];
-      let code = get(error, "extensions.code");
+      let code = error?.extensions?.code;
 
       if (code === "emailTaken") {
         formik.setFieldError("email", t("errors.emailTaken"));

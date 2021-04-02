@@ -1,7 +1,6 @@
 // Renders the loaded state for when a freelancer is viewing an active
 // application
 import React from "react";
-import { get } from "lodash-es";
 import { Box, Modal, useModal } from "@advisable/donut";
 import { matchPath, useParams } from "react-router-dom";
 import Layout from "components/Layout";
@@ -29,8 +28,8 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
     visible: viewer.completedTutorials.indexOf(tutorial) === -1,
   });
 
-  const status = get(data, "application.status");
-  let hasSetupPayments = get(data, "application.specialist.hasSetupPayments");
+  const status = data?.application?.status;
+  let hasSetupPayments = data?.application?.specialist?.hasSetupPayments;
   if (!hasSetupPayments) {
     return <SetupPayments data={data} />;
   }
@@ -102,7 +101,7 @@ const ActiveApplication = ({ location, history, match, data, client }) => {
         {status === "Stopped Working" && (
           <Box mb="m">
             <StoppedWorkingNotice
-              client={get(data, "application.project.user.companyName")}
+              client={data?.application?.project?.user?.companyName}
             />
           </Box>
         )}

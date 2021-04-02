@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { motion } from "framer-motion";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Button, Tooltip, Box, Avatar, Text } from "@advisable/donut";
@@ -44,7 +43,7 @@ const Sidebar = ({ data, history, tutorialModal }) => {
             <Avatar
               size="l"
               name={specialist.name}
-              url={get(specialist, "image.url")}
+              url={specialist?.image?.url}
             />
           </Box>
           <Heading level={3}>{specialist.name}</Heading>
@@ -158,7 +157,7 @@ const Sidebar = ({ data, history, tutorialModal }) => {
                     </Button>
                   }
                 >
-                  {get(data, "viewer.projectPaymentMethod")}
+                  {data?.viewer?.projectPaymentMethod}
                 </AttributeList.Item>
               ) : null}
             </AttributeList>

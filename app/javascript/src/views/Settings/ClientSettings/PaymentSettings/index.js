@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { Redirect } from "react-router-dom";
 import { useDialogState } from "reakit/Dialog";
 import { useQuery, useMutation } from "@apollo/client";
@@ -53,26 +52,21 @@ const PaymentSettings = () => {
   };
 
   let initialValues = {
-    paymentMethod: get(data, "viewer.projectPaymentMethod"),
-    name: get(data, "viewer.invoiceSettings.name", get(data, "viewer.name")),
-    companyName: get(
-      data,
-      "viewer.invoiceSettings.companyName",
-      get(data, "viewer.companyName"),
-    ),
-    billingEmail: get(data, "viewer.invoiceSettings.billingEmail") || "",
-    vatNumber: get(data, "viewer.invoiceSettings.vatNumber") || "",
+    paymentMethod: data?.viewer?.projectPaymentMethod,
+    name: data?.viewer?.invoiceSettings?.name || data?.viewer?.name,
+    companyName:
+      data?.viewer?.invoiceSettings?.companyName || data?.viewer?.companyName,
+    billingEmail: data?.viewer?.invoiceSettings?.billingEmail || "",
+    vatNumber: data?.viewer?.invoiceSettings?.vatNumber || "",
     address: {
-      line1: get(data, "viewer.invoiceSettings.address.line1") || "",
-      line2: get(data, "viewer.invoiceSettings.address.line2") || "",
-      city: get(data, "viewer.invoiceSettings.address.city") || "",
-      state: get(data, "viewer.invoiceSettings.address.state") || "",
-      country: get(
-        data,
-        "viewer.invoiceSettings.address.country",
-        get(data, "viewer.country.id"),
-      ),
-      postcode: get(data, "viewer.invoiceSettings.address.postcode") || "",
+      line1: data?.viewer?.invoiceSettings?.address?.line1 || "",
+      line2: data?.viewer?.invoiceSettings?.address?.line2 || "",
+      city: data?.viewer?.invoiceSettings?.address?.city || "",
+      state: data?.viewer?.invoiceSettings?.address?.state || "",
+      country:
+        data?.viewer?.invoiceSettings?.address?.country ||
+        data?.viewer?.country?.id,
+      postcode: data?.viewer?.invoiceSettings?.address?.postcode || "",
     },
   };
 

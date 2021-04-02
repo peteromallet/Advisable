@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
 import { Text, Link } from "@advisable/donut";
@@ -48,7 +47,7 @@ const ConfirmationPending = () => {
       <Text size="s" color="neutral700" lineHeight="m">
         Please click the confirmation link in the email that we have sent to{" "}
         <Text as="span" color="neutral900" fontWeight="medium">
-          {get(viewer, "email")}
+          {viewer?.email}
         </Text>
         . If you do not receive the confirmation message within a few minutes
         please check your spam folder.

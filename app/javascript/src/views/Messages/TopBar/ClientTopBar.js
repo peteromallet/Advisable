@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { ChevronRight } from "@styled-icons/feather/ChevronRight";
@@ -52,7 +51,7 @@ const ClientTopbar = (props) => {
               <Avatar
                 size="s"
                 name={specialist.name}
-                url={get(specialist, "image.url")}
+                url={specialist?.image?.url}
               />
             </Box>
             <Box flex="1">

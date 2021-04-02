@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash-es";
 import { useQuery } from "@apollo/client";
 import { Box, Text } from "@advisable/donut";
 import currency from "../../../utilities/currency";
@@ -61,12 +60,12 @@ const SpecialistSidebar = (props) => {
     <>
       <Box paddingBottom="xxs">
         <Text size="l" weight="semibold" color="neutral900">
-          {get(application, "project.user.companyName")}
+          {application?.project?.user?.companyName}
         </Text>
       </Box>
       <Box paddingBottom="s">
         <Text size="xs" color="neutral700">
-          {get(application, "project.primarySkill.name")}
+          {application?.project?.primarySkill?.name}
         </Text>
       </Box>
       <Box paddingBottom="l">
