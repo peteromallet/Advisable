@@ -33,7 +33,7 @@ function AboutRequirements() {
   const { loading, error, data } = useAboutRequirementsQuery();
 
   if (loading) return <Loading />;
-  if (error) return <Redirect to="/client/signup" />;
+  if (error) return <Redirect to="/clients/signup" />;
 
   const { clientApplication, skills } = data;
 
