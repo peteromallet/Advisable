@@ -37,7 +37,7 @@ class Mutations::UpdateProject < Mutations::BaseMutation
 
   private
 
-  def assign_attributes(**args)
+  def assign_attributes(args)
     args.slice(
       :goals,
       :description,
