@@ -3,11 +3,13 @@
 module Types
   module AccountInterface
     include Types::BaseInterface
+
+    description "Fields that are common for all types that have an account"
     delegate :account, to: :object
 
-    field :name, String, null: true
     field :first_name, String, null: true
     field :last_name, String, null: true
+    field :name, String, null: true
     delegate :name, :first_name, :last_name, to: :account
 
     field :needs_to_set_a_password, Boolean, null: true
