@@ -48,7 +48,7 @@ const budget = "10000";
 const localityImportance = 3;
 const acceptedGuaranteeTerms = false;
 const talentQuality = "GOOD";
-const phoneNumber = "+380935556699";
+const phoneNumber = "+353123456789";
 
 const graphQLMocks = [
   mockViewer(null),
@@ -261,7 +261,7 @@ test("Successful client application flow and ASAP call", async () => {
   await screen.findByText(/we think you might/i);
   fireEvent.click(screen.getByLabelText(/call me/i));
   fireEvent.change(await screen.getByPlaceholderText(/contact number/i), {
-    target: { value: phoneNumber },
+    target: { value: "123456789" },
   });
   const submitBtn = screen.getByLabelText("Submit");
   fireEvent.click(submitBtn);
@@ -456,7 +456,7 @@ test("Successful client application flow via query string params", async () => {
   await screen.findByText(/we think you might/i);
   fireEvent.click(screen.getByLabelText(/call me/i));
   fireEvent.change(await screen.getByPlaceholderText(/contact number/i), {
-    target: { value: phoneNumber },
+    target: { value: "123456789" },
   });
   const submitBtn = screen.getByLabelText(/submit/i);
   fireEvent.click(submitBtn);
