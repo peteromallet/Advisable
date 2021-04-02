@@ -33,6 +33,13 @@ module Toby
       def lazy_read_class
         Toby::Lazy::Base
       end
+
+      def write(resource, value)
+        klass = reflection.klass
+        attribute = reflection.active_record_primary_key
+        records = klass.where(attribute => value)
+        resource.public_send("#{name}=", records)
+      end
     end
   end
 end
