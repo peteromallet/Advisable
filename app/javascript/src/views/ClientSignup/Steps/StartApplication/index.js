@@ -62,12 +62,14 @@ function StartApplication() {
           pathname: "/clients/signup/email-not-allowed",
           state: { ...location.state },
         });
+        return;
       }
       if (existingAccount) {
         notifications.notify(
           "You already have an account with the provided email",
         );
         history.push({ pathname: "/login" });
+        return;
       }
 
       // Successful action
