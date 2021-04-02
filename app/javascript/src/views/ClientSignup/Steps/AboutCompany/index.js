@@ -1,17 +1,17 @@
 import React from "react";
+import { object, string } from "yup";
 import { Formik, Form } from "formik";
-import SubmitButton from "../../../../components/SubmitButton";
+import { Redirect, useHistory, useLocation } from "react-router";
 import {
   useAboutCompanyQuery,
   useAboutCompanyUpdate,
   getAboutCompanyOptimisticReponse,
 } from "../../queries";
 import FormField from "src/components/FormField";
+import SubmitButton from "src/components/SubmitButton";
 import { Autocomplete, Select, Box } from "@advisable/donut";
-import { object, string } from "yup";
-import { Loading } from "../../../../components/Loading/styles";
+import { Loading } from "src/components/Loading/styles";
 import { Title, Description } from "../styles";
-import { Redirect, useHistory, useLocation } from "react-router";
 
 const validationSchema = object().shape({
   companyName: string().required("Please enter your company name"),
