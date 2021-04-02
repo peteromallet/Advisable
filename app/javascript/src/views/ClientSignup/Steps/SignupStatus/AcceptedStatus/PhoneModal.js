@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
 import { useHistory, useLocation } from "react-router";
 import { Modal, Box } from "@advisable/donut";
-import SubmitButton from "../../../../../components/SubmitButton";
+import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
 import PhoneNumberInput from "src/components/PhoneNumberInput";
 import { Title } from "../../styles";
