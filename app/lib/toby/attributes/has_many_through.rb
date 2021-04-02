@@ -3,28 +3,19 @@
 module Toby
   module Attributes
     class HasManyThrough < HasMany
-      # optional when has_many through: does not follow parent_model plural convention
-      def through
-        options.fetch(:through) { [parent.downcase, model.downcase].join("_").pluralize }
-      end
-
-      # optional when has_many through: does not follow model_id convention
-      def through_column
-        options.fetch(:through_column) { :"#{model.downcase}_id" }
-      end
-
-      # optional when has_many through: source model does not follow id convention
-      def source_id_column
-        options.fetch(:source_id_column, :id)
-      end
-
-      # optional constraint to support polymorphic or similar
-      def constraint
-        options[:constraint]
-      end
+      filter :includes, Filters::Includes
+      filter :has_none, Filters::HasNone
+      extension_field :labeled_by, GraphQL::Types::String
 
       def lazy_read_class
         Toby::Lazy::Through
+      end
+
+      def write(resource, value)
+        klass = reflection.source_reflection.klass
+        attribute = reflection.through_reflection.active_record_primary_key
+        records = klass.where(attribute => value)
+        resource.public_send("#{name}=", records)
       end
     end
   end

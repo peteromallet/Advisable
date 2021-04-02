@@ -2,9 +2,9 @@
 
 module Toby
   module Filters
-    class CheckNil
-      def self.apply(records, name, _)
-        records.where(name => nil)
+    class CheckNil < BaseFilter
+      def apply(records, attribute, **_opts)
+        records.where(attribute.name => nil)
       end
     end
   end

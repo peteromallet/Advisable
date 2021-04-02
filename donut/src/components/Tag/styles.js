@@ -71,8 +71,34 @@ export const StyledTagLabel = styled.span``;
 const size = variant({
   prop: "size",
   variants: {
+    xs: {
+      height: "20px",
+      borderRadius: 6,
+
+      [StyledTagLabel]: {
+        paddingX: 1,
+        fontSize: 13,
+        letterSpacing: "-0.02rem",
+      },
+
+      [StyledTagPrefix]: {
+        marginLeft: 1,
+      },
+
+      [StyledTagSuffix]: {
+        marginRight: 1,
+      },
+      svg: {
+        width: 12,
+        height: 12,
+      },
+      [StyledTagRemoveButton]: {
+        padding: "0 2px",
+        svg: { margin: 0 },
+      },
+    },
     s: {
-      height: "28px",
+      height: "24px",
       borderRadius: 8,
 
       [StyledTagLabel]: {
@@ -80,18 +106,15 @@ const size = variant({
         fontSize: 14,
         letterSpacing: "-0.01rem",
       },
-
       [StyledTagPrefix]: {
         marginLeft: 2,
       },
-
       [StyledTagSuffix]: {
         marginRight: 2,
       },
       [StyledTagRemoveButton]: {
         padding: "0 4px",
       },
-
       svg: {
         width: 16,
         height: 16,

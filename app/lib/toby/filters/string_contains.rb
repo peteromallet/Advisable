@@ -2,11 +2,11 @@
 
 module Toby
   module Filters
-    class StringContains
-      def self.apply(records, name, value = [])
+    class StringContains < BaseFilter
+      def apply(records, attribute, value: [], **_opts)
         return records if value.empty?
 
-        records.where("#{name.to_s.underscore} ilike ?", "%#{value.first}%")
+        records.where("#{attribute.name.to_s.underscore} ilike ?", "%#{value.first}%")
       end
     end
   end

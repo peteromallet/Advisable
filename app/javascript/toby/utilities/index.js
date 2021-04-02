@@ -1,7 +1,7 @@
+import { useEffect, useState, useCallback } from "react";
 import pluralize from "pluralize";
 import { gql } from "@apollo/client";
-import { useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useLazyQuery } from "@apollo/client";
 import { jsonToGraphQLQuery, VariableType } from "json-to-graphql-query";
 import { useSchema } from "../components/schema";
 
@@ -9,34 +9,42 @@ export function pluralizeType(type) {
   return pluralize(type.toLowerCase());
 }
 
-export function useResourceData() {
-  const { resource } = useParams();
+export function useFetchResources(resource, filters) {
+  const [loading, setLoading] = useState(true);
   const schemaData = useSchema();
-  return getResourceByParam(schemaData.resources, resource);
-}
-
-// Assumes that there is a resource param in the URL. e.g /accounts
-export function useResources() {
-  const { resource } = useParams();
-  const schemaData = useSchema();
-  const resourceData = getResourceByParam(schemaData.resources, resource);
-  const query = generateCollectionQuery(schemaData, resourceData);
-  const response = useQuery(query, {
+  const query = generateCollectionQuery(schemaData, resource);
+  const [fetch, { fetchMore, ...queryState }] = useLazyQuery(query, {
     notifyOnNetworkStatusChange: true,
-    variables: {},
+    fetchPolicy: "cache-and-network",
+    onCompleted() {
+      setLoading(false);
+    },
   });
-  return {
-    ...response,
-    resource: resourceData,
-  };
-}
 
-// Takes the resources data and returns a matching resource bassed on the
-// param version of its type. e.g accounts returns the Account resource.
-function getResourceByParam(resources, param) {
-  return resources.find((resource) => {
-    return pluralizeType(resource.type) === param;
-  });
+  const fetchRecords = useCallback(
+    async function fetchRecords() {
+      fetch({ variables: { filters } });
+    },
+    [fetch, filters],
+  );
+
+  const fetchMoreRecords = useCallback(
+    (opts) => {
+      setLoading(true);
+      return fetchMore(opts);
+    },
+    [fetchMore],
+  );
+
+  useEffect(() => {
+    fetchRecords();
+  }, [fetchRecords]);
+
+  return {
+    ...queryState,
+    fetchMore: fetchMoreRecords,
+    loading,
+  };
 }
 
 // Generates a graphql a collection query for a resource
@@ -70,12 +78,58 @@ function generateCollectionQuery(schemaData, resourceData) {
     },
   };
 
-  let queryString = jsonToGraphQLQuery(queryObject);
-  queryString =
-    queryString.substr(0, 6) +
-    `${resourceData.type}Collection` +
-    queryString.substr(6);
+  return gql(jsonToGraphQLQuery(queryObject));
+}
 
+export function generateShowQuery(schemaData, resourceData) {
+  const node = {};
+  resourceData.attributes.forEach((attr) => {
+    node[attr.name] = selectionForField(schemaData, resourceData, attr.name);
+  });
+
+  const queryObject = {
+    query: {
+      __variables: {
+        id: "ID!",
+      },
+      record: {
+        __args: {
+          id: new VariableType("id"),
+        },
+        __aliasFor: resourceData.queryNameItem,
+        ...node,
+      },
+    },
+  };
+
+  const queryString = jsonToGraphQLQuery(queryObject);
+  return gql(queryString);
+}
+
+export function generateUpdateMutation(schemaData, resourceData) {
+  const node = {};
+  resourceData.attributes.forEach((attr) => {
+    node[attr.name] = selectionForField(schemaData, resourceData, attr.name);
+  });
+
+  const queryObject = {
+    mutation: {
+      __variables: {
+        id: "ID!",
+        attributes: `${resourceData.type}Attributes!`,
+      },
+      update: {
+        __args: {
+          id: new VariableType("id"),
+          attributes: new VariableType("attributes"),
+        },
+        __aliasFor: resourceData.queryNameUpdate,
+        resource: node,
+      },
+    },
+  };
+
+  const queryString = jsonToGraphQLQuery(queryObject);
   return gql(queryString);
 }
 
@@ -89,6 +143,18 @@ export function resourceByType(schemaData, type) {
 
 export function resourceAttribute(resourceData, attributeName) {
   return resourceData.attributes.find((a) => a.name === attributeName);
+}
+
+// takes a resource and attributeName and returns the nested resource
+export function getNestedResource(schemadata, resource, attributeName) {
+  const type = getType(schemadata.schema, resource.type);
+  const field = type.fields.find((f) => f.name === attributeName);
+
+  if (field.type.kind === "LIST") {
+    return resourceByType(schemadata, field.type.ofType.ofType.name);
+  }
+
+  return resourceByType(schemadata, field.type.name);
 }
 
 // Returns the query selection for a given field. If the field is a scalar type
@@ -114,7 +180,7 @@ function selectionForField(schemaData, resourceData, fieldName) {
 
   if (attribute.labeledBy) {
     let fieldResource;
-    if (attribute.__typename === "HasManyAttribute") {
+    if (attribute.__typename.includes("HasMany")) {
       fieldResource = resourceByType(schemaData, field.type.ofType.ofType.name);
     } else {
       fieldResource = resourceByType(schemaData, field.type.name);

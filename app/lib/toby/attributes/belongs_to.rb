@@ -3,7 +3,7 @@
 module Toby
   module Attributes
     class BelongsTo < BaseAttribute
-      filter :one_of, Filters::OneOf
+      filter :one_of, Filters::OneOf, nested: true
       filter :is_empty, Filters::CheckNil
       filter :not_empty, Filters::CheckNotNil
 
@@ -11,17 +11,15 @@ module Toby
 
       # optional for when we don't follow the class == resource convention
       def model
-        options.fetch(:model) { name.capitalize }
+        options.fetch(:model) { name.to_s.camelize }
       end
 
-      # optional for when we don't follow the id convention
       def column
-        options.fetch(:column, :id)
+        reflection.active_record_primary_key
       end
 
-      # optional for when we don't follow the resource_id convention
       def via
-        options.fetch(:column) { :"#{model.downcase}_id" }
+        reflection.association_foreign_key
       end
 
       def type
@@ -33,7 +31,7 @@ module Toby
       end
 
       def write(resource, value)
-        resource.public_send("#{column}=", value)
+        resource.public_send("#{via}=", value)
       end
 
       def lazy_read_class

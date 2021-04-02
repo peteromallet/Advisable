@@ -32,11 +32,16 @@ const SCHEMA_INTROSPECTION = gql`
     resources {
       type
       queryNameCollection
+      queryNameItem
+      queryNameUpdate
       attributes {
         name
+        readonly
+        columnLabel
         filters {
           name
           type
+          nested
         }
         ... on SelectAttribute {
           options
@@ -45,6 +50,12 @@ const SCHEMA_INTROSPECTION = gql`
           labeledBy
         }
         ... on HasManyAttribute {
+          labeledBy
+        }
+        ... on HasManyThroughAttribute {
+          labeledBy
+        }
+        ... on HasOneAttribute {
           labeledBy
         }
       }
