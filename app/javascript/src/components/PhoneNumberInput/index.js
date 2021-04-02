@@ -4,7 +4,7 @@ import DATA from "./data";
 import { theme, Box, StyledInput, StyledInputControl } from "@advisable/donut";
 import isoToEmoji from "./countryEmoji";
 
-const StyledPhonNumberInput = styled(StyledInput)`
+const StyledPhoneNumberInput = styled(StyledInput)`
   ${StyledInputControl} {
     padding-left: 4px;
   }
@@ -144,7 +144,7 @@ export default function PhoneNumberInput({
   );
 
   return (
-    <StyledPhonNumberInput
+    <StyledPhoneNumberInput
       data-focused={focused}
       size={size}
       $error={props.error}
@@ -164,6 +164,6 @@ export default function PhoneNumberInput({
         onChange={handleChange}
         value={valueWithoutCode}
       />
-    </StyledPhonNumberInput>
+    </StyledPhoneNumberInput>
   );
 }
