@@ -13,15 +13,15 @@ function CheapStatus() {
         <Link.External href="https://www.upwork.com/">Upwork.com</Link.External>
       </Description>
       <Box display="flex" flexDirection={["column", "row"]}>
-        <Link.External
+        <Button
+          as={Link.External}
           href="https://www.upwork.com/"
-          as={Button}
           width={[1, "auto"]}
           mb={2}
           mr={2}
         >
           Go To Upwork
-        </Link.External>
+        </Button>
         <TryAgainButton width={[1, "auto"]} />
       </Box>
     </Box>
