@@ -10,7 +10,7 @@ function SignupStatus() {
   const { loading, error, data } = useClientApplicationQuery();
 
   if (loading) return <Loading />;
-  if (error) return <Redirect to="/client/signup" />;
+  if (error) return <Redirect to="/clients/signup" />;
 
   const {
     status,

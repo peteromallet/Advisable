@@ -26,9 +26,8 @@ function AboutCompany() {
   const { loading, error, data } = useAboutCompanyQuery();
 
   if (loading) return <Loading />;
-  if (error) {
-    return <Redirect to="/client/signup" />;
-  }
+  if (error) return <Redirect to="/clients/signup" />;
+
   const { clientApplication, industries } = data;
 
   if (clientApplication?.status !== "Application Started")
