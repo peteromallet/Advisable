@@ -1,21 +1,33 @@
-module Types::AccountInterface
-  include Types::BaseInterface
-  delegate :account, to: :object
+# frozen_string_literal: true
 
-  field :name, String, null: true
-  field :first_name, String, null: true
-  field :last_name, String, null: true
-  delegate :name, :first_name, :last_name, to: :account
+module Types
+  module AccountInterface
+    include Types::BaseInterface
 
-  field :needs_to_set_a_password, Boolean, null: true
+    description "Fields that are common for all types that have an account"
+    delegate :account, to: :object
 
-  def needs_to_set_a_password
-    account.password_digest.blank?
-  end
+    field :first_name, String, null: true
+    field :last_name, String, null: true
+    field :name, String, null: true
+    delegate :name, :first_name, :last_name, to: :account
 
-  field :confirmed, Boolean, null: false
+    field :needs_to_set_a_password, Boolean, null: true
 
-  def confirmed
-    account.confirmed_at.present?
+    def needs_to_set_a_password
+      account.password_digest.blank?
+    end
+
+    field :confirmed, Boolean, null: false
+
+    def confirmed
+      account.confirmed_at.present?
+    end
+
+    field :features, [String], null: true
+
+    def features
+      account.features.keys
+    end
   end
 end
