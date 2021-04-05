@@ -11,6 +11,7 @@ import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { Autocomplete, Select, Box } from "@advisable/donut";
 import { Loading } from "src/components/Loading/styles";
+import MotionStack from "../MotionStack";
 import { Title, Description } from "../styles";
 
 const validationSchema = object().shape({
@@ -74,55 +75,57 @@ function AboutCompany() {
     >
       {(formik) => (
         <Form>
-          <Title>About Your Company</Title>
-          <Description>
-            As next steps, we need you to answer a few questions in order to
-            figure out if you&apos;re a good fit for Advisable
-          </Description>
-          <Box mb="m">
-            <FormField
-              name="companyName"
-              placeholder="Company name"
-              label="What's the name of your company?"
-              isRequired
-            />
-          </Box>
-          <Box mb="m">
-            <FormField
-              isRequired
-              as={Autocomplete}
-              error={null}
-              options={industries}
-              name="industry"
-              placeholder="Select your company industry"
-              label="What industry is your company in?"
-              onChange={(industry) =>
-                formik.setFieldValue("industry", industry)
-              }
-            />
-          </Box>
-          <Box mb="l">
-            <FormField
-              isRequired
-              as={Select}
-              error={null}
-              name="companyType"
-              placeholder="Select your company type"
-              label="What type of company are you?"
-              onChange={formik.handleChange}
-              data-testid="companyType"
-            >
-              <option>Individual Entrepreneur</option>
-              <option>Small Business</option>
-              <option>Medium-Sized Business</option>
-              <option>Startup</option>
-              <option>Growth-Stage Startup</option>
-              <option>Major Corporation</option>
-              <option>Non-Profit</option>
-              <option>Education Institution</option>
-            </FormField>
-          </Box>
-          <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
+          <MotionStack>
+            <Title>About Your Company</Title>
+            <Description>
+              As next steps, we need you to answer a few questions in order to
+              figure out if you&apos;re a good fit for Advisable
+            </Description>
+            <Box mb="m">
+              <FormField
+                name="companyName"
+                placeholder="Company name"
+                label="What's the name of your company?"
+                isRequired
+              />
+            </Box>
+            <Box mb="m">
+              <FormField
+                isRequired
+                as={Autocomplete}
+                error={null}
+                options={industries}
+                name="industry"
+                placeholder="Select your company industry"
+                label="What industry is your company in?"
+                onChange={(industry) =>
+                  formik.setFieldValue("industry", industry)
+                }
+              />
+            </Box>
+            <Box mb="l">
+              <FormField
+                isRequired
+                as={Select}
+                error={null}
+                name="companyType"
+                placeholder="Select your company type"
+                label="What type of company are you?"
+                onChange={formik.handleChange}
+                data-testid="companyType"
+              >
+                <option>Individual Entrepreneur</option>
+                <option>Small Business</option>
+                <option>Medium-Sized Business</option>
+                <option>Startup</option>
+                <option>Growth-Stage Startup</option>
+                <option>Major Corporation</option>
+                <option>Non-Profit</option>
+                <option>Education Institution</option>
+              </FormField>
+            </Box>
+            <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
+          </MotionStack>
         </Form>
       )}
     </Formik>

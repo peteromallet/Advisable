@@ -8,9 +8,9 @@ import { Input, Box, useBreakpoint } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import { useNotifications } from "src/components/Notifications";
 import FormField from "src/components/FormField";
-import Loading from "src/components/Loading";
 import { Title } from "../styles";
 import { useStartClientApplication } from "../../queries";
+import MotionStack from "../MotionStack";
 
 const validationSchema = object().shape({
   firstName: string().required("Please enter your first name"),
@@ -21,10 +21,7 @@ const validationSchema = object().shape({
 });
 
 function StartApplication() {
-  const [
-    startClientApplication,
-    { called, loading },
-  ] = useStartClientApplication();
+  const [startClientApplication, { called }] = useStartClientApplication();
   const location = useLocation();
   const history = useHistory();
   const isMobile = useBreakpoint("m");
@@ -97,8 +94,6 @@ function StartApplication() {
     }
   }, [queryParams, called, handleSubmit]);
 
-  if (loading) return <Loading />;
-
   // Formik
   const initialValues = {
     firstName: location.state?.firstName || queryParams.firstName || "",
@@ -107,14 +102,14 @@ function StartApplication() {
   };
 
   return (
-    <>
-      <Formik
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-      >
-        {() => (
-          <Form>
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+    >
+      {() => (
+        <Form>
+          <MotionStack>
             <Title mb="m">Start Your Application</Title>
             <Box display={isMobile ? "block" : "flex"} mb="s">
               <Box flex="1" mr={!isMobile && "s"} mb={isMobile && "s"}>
@@ -145,10 +140,10 @@ function StartApplication() {
               />
             </Box>
             <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
-          </Form>
-        )}
-      </Formik>
-    </>
+          </MotionStack>
+        </Form>
+      )}
+    </Formik>
   );
 }
 

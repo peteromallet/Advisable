@@ -19,6 +19,7 @@ import {
   useAboutPreferencesSubmit,
   useClientApplicationQuery,
 } from "../../queries";
+import MotionStack from "../MotionStack";
 
 const validationSchema = object().shape({
   localityImportance: number().required(
@@ -96,8 +97,8 @@ function AboutPreferences() {
     >
       {(formik) => (
         <Form>
-          <Box position="relative">
-            {called && <ProcessingApplication />}
+          <MotionStack position="relative">
+            <Box ignore>{called && <ProcessingApplication />}</Box>
             <Title>About Your Preferences</Title>
             <Description>
               This is to help tailor our recommendations to you.
@@ -161,7 +162,7 @@ function AboutPreferences() {
             <SubmitButton width={[1, "auto"]} loading={called && !processing}>
               Continue
             </SubmitButton>
-          </Box>
+          </MotionStack>
         </Form>
       )}
     </Formik>

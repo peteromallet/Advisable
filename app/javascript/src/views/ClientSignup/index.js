@@ -6,12 +6,14 @@ import {
   useLocation,
   matchPath,
 } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import { Box, useTheme, useBreakpoint } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import useViewer from "src/hooks/useViewer";
 import Testimonials from "./Testimonials";
 import { Step } from "./styles";
 import Progress from "./Progress";
+import MotionStack from "./Steps/MotionStack";
 // Steps
 import StartApplication from "./Steps/StartApplication";
 import AboutCompany from "./Steps/AboutCompany";
@@ -64,47 +66,51 @@ function ClientSignup() {
         mr="auto"
         px="m"
       >
-        {currentStepNumber !== -1 && (
-          // Show steps only for active steps
-          <>
-            <Step>
-              Step {currentStepNumber} of {numberOfSteps}
-            </Step>
-            <Progress amount={progressLength} />
-          </>
-        )}
-        <Switch>
-          <Route exact path="/clients/signup" component={StartApplication} />
-          <Route
-            path="/clients/signup/about_your_company"
-            component={AboutCompany}
-          />
-          <Route
-            path="/clients/signup/about_your_requirements"
-            component={AboutRequirements}
-          />
-          <Route
-            path="/clients/signup/about_your_preferences"
-            component={AboutPreferences}
-          />
-          <Route path="/clients/signup/status" component={SignupStatus} />
-          <Route
-            path="/clients/signup/thank-you-reminder-set"
-            component={ReminderSet}
-          />
-          <Route
-            path="/clients/signup/thank-you-call-is-booked"
-            component={CallBooked}
-          />
-          <Route
-            path="/clients/signup/thank-you-call-you-shortly"
-            component={CallShortly}
-          />
-          <Route
-            path="/clients/signup/email-not-allowed"
-            component={EmailNotAllowed}
-          />
-        </Switch>
+        <AnimatePresence initial={false}>
+          {currentStepNumber !== -1 && (
+            // Show steps only for active steps
+            <MotionStack>
+              <Step>
+                Step {currentStepNumber} of {numberOfSteps}
+              </Step>
+              <Progress amount={progressLength} />
+            </MotionStack>
+          )}
+        </AnimatePresence>
+        <AnimatePresence initial={false} exitBeforeEnter>
+          <Switch location={location} key={location.pathname}>
+            <Route exact path="/clients/signup" component={StartApplication} />
+            <Route
+              path="/clients/signup/about_your_company"
+              component={AboutCompany}
+            />
+            <Route
+              path="/clients/signup/about_your_requirements"
+              component={AboutRequirements}
+            />
+            <Route
+              path="/clients/signup/about_your_preferences"
+              component={AboutPreferences}
+            />
+            <Route path="/clients/signup/status" component={SignupStatus} />
+            <Route
+              path="/clients/signup/thank-you-reminder-set"
+              component={ReminderSet}
+            />
+            <Route
+              path="/clients/signup/thank-you-call-is-booked"
+              component={CallBooked}
+            />
+            <Route
+              path="/clients/signup/thank-you-call-you-shortly"
+              component={CallShortly}
+            />
+            <Route
+              path="/clients/signup/email-not-allowed"
+              component={EmailNotAllowed}
+            />
+          </Switch>
+        </AnimatePresence>
       </Box>
     </Box>
   );
