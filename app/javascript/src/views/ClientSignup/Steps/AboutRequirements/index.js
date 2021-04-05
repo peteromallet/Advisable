@@ -14,6 +14,7 @@ import {
 } from "../../queries";
 import { Title, Description } from "../styles";
 import TilesInput from "../../TilesInput";
+import MotionStack from "../MotionStack";
 
 const validationSchema = object().shape({
   skills: array()
@@ -78,14 +79,14 @@ function AboutRequirements() {
   };
 
   return (
-    <>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        {(formik) => (
-          <Form>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={validationSchema}
+    >
+      {(formik) => (
+        <Form>
+          <MotionStack spacing="m">
             <Title>About Your Requirements</Title>
             <Description>
               This is for us to figure out if your requirements are a good match
@@ -137,10 +138,10 @@ function AboutRequirements() {
               />
             </Box>
             <SubmitButton width={[1, "auto"]}>Continue</SubmitButton>
-          </Form>
-        )}
-      </Formik>
-    </>
+          </MotionStack>
+        </Form>
+      )}
+    </Formik>
   );
 }
 

@@ -10,6 +10,7 @@ import { useRequestApplicationCallback, useCoutryCode } from "../../../queries";
 import { Coffee } from "@styled-icons/feather/Coffee";
 import { Eye } from "@styled-icons/feather/Eye";
 import { Smile } from "@styled-icons/feather/Smile";
+import MotionStack from "../../MotionStack";
 
 function AcceptedStatus({ firstName, lastName }) {
   const location = useLocation();
@@ -27,7 +28,7 @@ function AcceptedStatus({ firstName, lastName }) {
   const isWorkingRange = now >= start && now <= end;
 
   return (
-    <Box>
+    <MotionStack>
       <Title mb="m">We think you might be a good fit</Title>
       <Description mb="s">
         The final step before being able to access Advisable’s elite pool of
@@ -74,7 +75,7 @@ function AcceptedStatus({ firstName, lastName }) {
           modal={modal}
         />
       </Box>
-    </Box>
+    </MotionStack>
   );
 }
 

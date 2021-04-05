@@ -1,14 +1,15 @@
 import React from "react";
-import { Link as DonutLink, Button, Box } from "@advisable/donut";
-import { Title, Description } from "../styles";
-import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
+import { Link as DonutLink, Button } from "@advisable/donut";
+import { Title, Description } from "../styles";
+import MotionStack from "../MotionStack";
 
 function EmailNotAllowed() {
   const location = useLocation();
 
   return (
-    <Box>
+    <MotionStack>
       <Title mb="m">Personal emails are not allowed</Title>
       <Description>
         Please try again with your company email address. If you don&apos;t have
@@ -21,7 +22,7 @@ function EmailNotAllowed() {
       <Link to={{ pathname: "/clients/signup", state: { ...location.state } }}>
         <Button width={[1, "auto"]}>Try Again</Button>
       </Link>
-    </Box>
+    </MotionStack>
   );
 }
 

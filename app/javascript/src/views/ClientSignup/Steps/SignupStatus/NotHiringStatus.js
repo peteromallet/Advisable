@@ -4,6 +4,7 @@ import { Button, Box } from "@advisable/donut";
 import TryAgainButton from "./TryAgainButton";
 import { Title, Description } from "../styles";
 import { useRequestApplicationReminder } from "../../queries";
+import MotionStack from "../MotionStack";
 
 function NotHiringStatus() {
   const location = useLocation();
@@ -18,7 +19,7 @@ function NotHiringStatus() {
   };
 
   return (
-    <>
+    <MotionStack>
       <Title mb="m">Unfortunately, we&apos;re not a good fit</Title>
       <Description>
         It seems like you&apos;re not planning on hiring freelancers over the
@@ -37,7 +38,7 @@ function NotHiringStatus() {
         </Button>
         <TryAgainButton width={[1, "auto"]} />
       </Box>
-    </>
+    </MotionStack>
   );
 }
 
