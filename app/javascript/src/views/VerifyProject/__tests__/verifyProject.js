@@ -314,6 +314,8 @@ test("Can skip leaving a review", async () => {
 
   await screen.findByText(/How was your experience/i);
   user.click(screen.getByLabelText(/skip/i));
+  await screen.findByText(/What did you love about/i);
+  user.click(screen.getByLabelText(/skip/i));
   await screen.findByText(/Thanks/i);
 });
 
