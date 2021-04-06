@@ -6,14 +6,13 @@ import {
   useLocation,
   matchPath,
 } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Box, useTheme, useBreakpoint } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import useViewer from "src/hooks/useViewer";
 import Testimonials from "./Testimonials";
 import { Step } from "./styles";
 import Progress from "./Progress";
-import MotionStack from "./Steps/MotionStack";
 // Steps
 import StartApplication from "./Steps/StartApplication";
 import AboutCompany from "./Steps/AboutCompany";
@@ -49,11 +48,13 @@ function ClientSignup() {
     return <Redirect to="/" />;
   }
 
-  const currentStepNumber = STEPS_PATH.findIndex((path) =>
+  const currentStepIndex = STEPS_PATH.findIndex((path) =>
     matchPath(location.pathname, { path, exact: true }),
   );
+  const currentStepNumber = currentStepIndex > -1 ? currentStepIndex : 0;
   const numberOfSteps = STEPS_PATH.length - 1;
   const progressLength = (currentStepNumber / numberOfSteps) * 100;
+  const displayProgress = currentStepIndex !== -1;
 
   return (
     <Box display="flex" flexDirection="row">
@@ -66,17 +67,15 @@ function ClientSignup() {
         mr="auto"
         px="m"
       >
-        <AnimatePresence initial={false}>
-          {currentStepNumber !== -1 && (
-            // Show steps only for active steps
-            <MotionStack>
-              <Step>
-                Step {currentStepNumber} of {numberOfSteps}
-              </Step>
-              <Progress amount={progressLength} />
-            </MotionStack>
-          )}
-        </AnimatePresence>
+        <motion.div
+          animate={{ opacity: displayProgress ? 1 : 0 }}
+          transition={{ duration: 0.15 }}
+        >
+          <Step>
+            Step {currentStepNumber} of {numberOfSteps}
+          </Step>
+          <Progress amount={progressLength} />
+        </motion.div>
         <AnimatePresence initial={false} exitBeforeEnter>
           <Switch location={location} key={location.pathname}>
             <Route exact path="/clients/signup" component={StartApplication} />
