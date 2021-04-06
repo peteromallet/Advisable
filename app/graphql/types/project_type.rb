@@ -109,11 +109,6 @@ module Types
       applications
     end
 
-    field :application, Types::ApplicationType, null: true, deprecation_reason: "Use applicationS instead" do
-      authorize :read?
-      argument :id, ID, required: true
-    end
-
     field :characteristics, [String], null: true
     field :required_characteristics, [String], null: true
     field :optional_characteristics, [String], null: true
