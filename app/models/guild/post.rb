@@ -3,6 +3,7 @@
 module Guild
   class Post < ApplicationRecord
     class BoostError < StandardError; end
+    self.ignored_columns += %i[data]
     self.store_full_sti_class = false
 
     POST_TYPES = %w[Post AdviceRequired CaseStudy Opportunity].freeze
@@ -44,7 +45,6 @@ module Guild
     validates :title, length: {maximum: 250, minimum: 8}, allow_nil: true
     validates :body, length: {maximum: 10_000, minimum: 16}, allow_nil: true
     validates :audience_type, inclusion: {in: AUDIENCE_TYPES}, allow_nil: true
-    jsonb_accessor :data, audience_type: [:string]
 
     before_validation :set_default_values
     before_save :reset_labels, if: :labels_resettable?
@@ -112,10 +112,10 @@ end
 # Table name: guild_posts
 #
 #  id                 :uuid             not null, primary key
+#  audience_type      :string
 #  body               :text
 #  boosted_at         :datetime
 #  comments_count     :integer          default(0), not null
-#  data               :jsonb            not null
 #  engagements_count  :integer          default(0)
 #  pinned             :boolean          default(FALSE)
 #  reactionable_count :integer          default(0), not null

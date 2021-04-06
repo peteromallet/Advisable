@@ -117,6 +117,7 @@ end
 #  guild                             :boolean          default(FALSE)
 #  guild_data                        :jsonb
 #  hourly_rate                       :integer
+#  iban                              :string
 #  ideal_project                     :string
 #  image                             :jsonb
 #  linkedin                          :string
