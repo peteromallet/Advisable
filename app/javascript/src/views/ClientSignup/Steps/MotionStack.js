@@ -17,7 +17,7 @@ const container = {
 const item = {
   initial: { x: 100, opacity: 0 },
   show: { x: 0, opacity: 1 },
-  exit: { x: -100, opacity: 0, transition: { duration: 0.1 } },
+  exit: { x: -100, opacity: 0, transition: { duration: 0.2 } },
 };
 
 function MotionStack({ children, ...props }) {
