@@ -21,8 +21,6 @@
 # [Accepted] Their application has been successfull.
 #
 class Specialist < ApplicationRecord
-  self.ignored_columns += %i[guild_data]
-
   include Uid
   include SpecialistOrUser
   include Subscriber
