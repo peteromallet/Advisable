@@ -12,7 +12,6 @@ RSpec.describe Guild::Post, type: :model do
     it { expect(guild_post).to have_db_column :type }
     it { expect(guild_post).to have_db_column :body }
     it { expect(guild_post).to have_db_column :title }
-    it { expect(guild_post).to have_db_column :data }
     it { expect(guild_post).to have_db_column :status }
     it { expect(guild_post).to have_db_column :reactionable_count }
     it { expect(guild_post).to have_db_column :comments_count }

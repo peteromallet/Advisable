@@ -14,8 +14,7 @@ module Guild
       before_save :guild_joined_callbacks, if: -> { guild_changed? && guild }
 
       scope :guild, -> { where(guild: true) }
-      scope :guild_featured_members, -> { guild.where("guild_data->'guild_featured_member_at' IS NOT NULL").guild_data_order(guild_featured_member_at: :desc) }
-      jsonb_accessor :guild_data, guild_joined_date: :datetime, guild_calendly_link: [:string], guild_featured_member_at: :datetime
+      scope :guild_featured_members, -> { guild.where.not(guild_featured_member_at: nil).order(guild_featured_member_at: :desc) }
 
       register_tutorials :guild
 
