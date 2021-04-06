@@ -69,7 +69,7 @@ export const StyledStar = styled.div`
 
 export const Sidebar = styled.div`
   bottom: 0;
-  z-index: 1;
+  z-index: 4;
   width: 40%;
   height: calc(100vh - 58px);
   display: flex;
