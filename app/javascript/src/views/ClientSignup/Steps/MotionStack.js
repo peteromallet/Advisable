@@ -32,12 +32,12 @@ function MotionStack({ children, ...props }) {
   });
   return (
     <Box
-      {...props}
       as={motion.ul}
       variants={container}
       initial="initial"
       animate="show"
       exit="exit"
+      {...props}
     >
       {newChildren}
     </Box>
