@@ -120,3 +120,6 @@ GraphQL/FieldDescription:
 
 GraphQL/ArgumentDescription:
   Enabled: false
+
+GraphQL/ExtractType:
+  Enabled: false
