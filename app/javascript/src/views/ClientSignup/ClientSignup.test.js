@@ -256,6 +256,7 @@ test("Successful client application flow and ASAP call", async () => {
   fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/good/i));
   fireEvent.click(screen.getByLabelText("Continue"));
+  await screen.findByText("Processing your application");
 
   // 4 Step. Let's get started
   await screen.findByText(/we think you might/i);
