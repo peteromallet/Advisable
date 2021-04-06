@@ -49,7 +49,6 @@ gem "twilio-ruby"
 gem "graphql_playground-rails"
 
 # Guild
-gem "jsonb_accessor", "~> 1.1.0"
 gem "email_reply_parser"
 gem "administrate-field-active_storage"
 

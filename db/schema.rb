@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_01_111446) do
+ActiveRecord::Schema.define(version: 2021_04_06_074551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -359,6 +359,7 @@ ActiveRecord::Schema.define(version: 2021_04_01_111446) do
     t.boolean "pinned", default: false
     t.datetime "boosted_at"
     t.datetime "resolved_at"
+    t.string "audience_type"
     t.index ["data"], name: "index_guild_posts_on_data", using: :gin
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end
@@ -846,6 +847,9 @@ ActiveRecord::Schema.define(version: 2021_04_01_111446) do
     t.string "application_interview_calendly_id"
     t.datetime "application_interview_starts_at"
     t.string "iban"
+    t.datetime "guild_joined_date"
+    t.datetime "guild_featured_member_at"
+    t.string "guild_calendly_link"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"

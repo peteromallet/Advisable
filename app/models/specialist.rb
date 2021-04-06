@@ -21,6 +21,8 @@
 # [Accepted] Their application has been successfull.
 #
 class Specialist < ApplicationRecord
+  self.ignored_columns += %i[guild_data]
+
   include Uid
   include SpecialistOrUser
   include Subscriber
@@ -115,7 +117,9 @@ end
 #  encrypted_phone_number            :string
 #  encrypted_phone_number_iv         :string
 #  guild                             :boolean          default(FALSE)
-#  guild_data                        :jsonb
+#  guild_calendly_link               :string
+#  guild_featured_member_at          :datetime
+#  guild_joined_date                 :datetime
 #  hourly_rate                       :integer
 #  ideal_project                     :string
 #  image                             :jsonb
