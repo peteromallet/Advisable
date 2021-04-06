@@ -2,11 +2,9 @@
 
 module Types
   class ProjectType < Types::BaseType
-    field :id, ID, null: false
+    description "Fields representing Project model"
 
-    def id
-      object.uid
-    end
+    field :id, ID, null: false, method: :uid
 
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
     field :name, String, null: false
@@ -31,38 +29,33 @@ module Types
       object.skills.order(created_at: :desc)
     end
 
-    field :currency, String, null: true
-    field :status, String, null: true
-    field :service_type, String, null: true
-    field :client_referral_url, String, null: true
-    field :user, Types::User, null: true
-    field :goals, [String], null: true
-    field :description, String, null: true
-    field :company_description, String, null: true
-    field :specialist_description, String, null: true
-    field :questions, [String], null: true
     field :accepted_terms, Boolean, null: false
+    field :client_referral_url, String, null: true
+    field :company_description, String, null: true
+    field :currency, String, null: true
     field :deposit_owed, Int, null: true do
-      authorize :read?
-    end
-    field :application_count, Int, null: false do
       authorize :read?
     end
     field :candidate_count, Int, null: false do
       authorize :read?
     end
+    field :description, String, null: true
     field :proposed_count, Int, null: false do
       authorize :read?
     end
     field :hired_count, Int, null: false do
       authorize :read?
     end
-    field :estimated_budget, String, null: true
-    field :remote, Boolean, null: true
     field :applications_open, Boolean, null: false
-    field :industry, String, null: true
     field :company_type, String, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :estimated_budget, String, null: true
+    field :industry, String, null: true
+    field :remote, Boolean, null: true
+    field :service_type, String, null: true
+    field :specialist_description, String, null: true
+    field :status, String, null: true
+    field :user, Types::User, null: true
 
     field :published_at, GraphQL::Types::ISO8601DateTime, null: true do
       authorize :read?
@@ -90,10 +83,6 @@ module Types
     # first creating the project.
     field :likely_to_hire, Int, null: true
 
-    field :deposit_payment_intent, Types::PaymentIntentType, null: true do
-      authorize :read?
-    end
-
     # Returns the current 'candidates' for the project. This excludes any
     # applications in a working or finished working state.
     field :applications, [Types::ApplicationType, {null: true}], null: true do
@@ -110,8 +99,12 @@ module Types
     end
 
     field :characteristics, [String], null: true
-    field :required_characteristics, [String], null: true
     field :optional_characteristics, [String], null: true
+    field :required_characteristics, [String], null: true
+
+    field :deposit_payment_intent, Types::PaymentIntentType, null: true do
+      authorize :read?
+    end
 
     def deposit_payment_intent
       return Stripe::PaymentIntent.retrieve(object.deposit_payment_intent_id) if object.deposit_payment_intent_id
@@ -119,6 +112,10 @@ module Types
       intent = object.deposit_payment_intent
       object.update_columns(deposit_payment_intent_id: intent.id) # rubocop:disable Rails/SkipsModelValidations
       intent
+    end
+
+    field :application_count, Int, null: false do
+      authorize :read?
     end
 
     def application_count
@@ -132,9 +129,13 @@ module Types
       object.applications.find(args[:id])
     end
 
+    field :goals, [String], null: true
+
     def goals
       object.goals || []
     end
+
+    field :questions, [String], null: true
 
     def questions
       object.questions || []
