@@ -6,10 +6,12 @@ module Mutations
       description "Creates a new guild post"
       graphql_name "CreateGuildPost"
 
+      # rubocop:disable GraphQL/ExtractInputType
       argument :body, String, required: false
+      argument :post_prompt_id, ID, required: false
       argument :title, String, required: false
       argument :type, String, required: true
-      argument :prompt_label_id, ID, required: false
+      # rubocop:enable GraphQL/ExtractInputType
 
       field :guild_post, ::Types::Guild::PostInterface, null: true
 
@@ -17,14 +19,19 @@ module Mutations
         requires_guild_user!
       end
 
-      def resolve(type: nil, title: nil, body: nil, prompt_label_id: nil)
+      def resolve(type: nil, title: nil, body: nil, post_prompt_id: nil)
         guild_post = ::Guild::Post.new(
           title: title,
           body: body,
           type: type,
           specialist_id: current_user.id
         )
-        guild_post.prompt_label = ::Label.find(prompt_label_id) if prompt_label_id
+
+        if post_prompt_id
+          post_prompt = ::PostPrompt.find(post_prompt_id)
+          guild_post.post_prompt = post_prompt
+          guild_post.labels << post_prompt.label
+        end
         guild_post.save
 
         {guild_post: guild_post}

@@ -45,7 +45,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
     formik.setFieldValue("guildTopicNames", [...prev, suggested]);
   };
 
-  const guildTopicNames = guildPost?.guildComposerTopics.map((gt) => ({
+  const guildTopicNames = guildPost?.guildTopics.map((gt) => ({
     label: gt.name,
     value: gt.name,
   }));

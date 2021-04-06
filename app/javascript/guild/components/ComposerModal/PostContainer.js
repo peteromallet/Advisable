@@ -5,7 +5,7 @@ import { Box, Container, Text } from "@advisable/donut";
 import useViewer from "@advisable-main/hooks/useViewer";
 import NavigationMenu from "./NavigationMenu";
 import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
-import { SELECT_DATA, LABEL_QUERY } from "./queries";
+import { SELECT_DATA, POST_PROMPT_QUERY } from "./queries";
 import ComposerHeader from "./ComposerHeader";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
 import { StyledSidebar } from "@advisable-main/components/PreviousProjectFormModal/styles";
@@ -17,10 +17,10 @@ const CreatePostContainer = ({ modal, onPublish }) => {
   const route = useRouteMatch("*composer/:id");
   const id = route?.params.id;
 
-  const labelRouteMatch = useRouteMatch("*composer/prompt/:labelSlug");
-  const labelSlug = labelRouteMatch?.params?.labelSlug;
+  const promptRouteMatch = useRouteMatch("*composer/prompt/:id");
+  const promptId = promptRouteMatch?.params?.id;
 
-  const hasPostId = id && id !== "new" && !labelSlug;
+  const hasPostId = id && id !== "new" && !promptId;
   const viewer = useViewer();
 
   const { data, loading, error: queryError } = useQuery(GUILD_POST_QUERY, {
@@ -30,9 +30,9 @@ const CreatePostContainer = ({ modal, onPublish }) => {
     },
   });
 
-  const { data: promptLabelData } = useQuery(LABEL_QUERY, {
-    variables: { slug: labelSlug },
-    skip: !labelSlug,
+  const { data: promptData } = useQuery(POST_PROMPT_QUERY, {
+    variables: { id: promptId },
+    skip: !promptId,
   });
 
   const selectDataQuery = useQuery(SELECT_DATA);
@@ -41,7 +41,7 @@ const CreatePostContainer = ({ modal, onPublish }) => {
   const authorId = data?.guildPost?.author?.id;
   const error = queryError || (authorId && authorId !== viewer.id);
   const guildPost = data?.guildPost;
-  const promptLabel = promptLabelData?.label;
+  const postPrompt = promptData?.postPrompt;
 
   return (
     <>
@@ -60,14 +60,14 @@ const CreatePostContainer = ({ modal, onPublish }) => {
             <StyledSidebar display={["none", "none", "block"]}>
               <NavigationMenu
                 guildPost={guildPost}
-                promptLabel={promptLabel || guildPost?.promptLabel}
+                postPrompt={postPrompt || guildPost?.postPrompt}
               />
             </StyledSidebar>
             <Container maxWidth="1000px" py="2xl">
               <Routes
-                guildPost={guildPost}
-                promptLabel={promptLabel}
                 modal={modal}
+                guildPost={guildPost}
+                postPrompt={postPrompt}
                 onPublish={onPublish}
                 selectDataQuery={selectDataQuery}
               />

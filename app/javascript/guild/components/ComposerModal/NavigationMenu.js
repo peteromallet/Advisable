@@ -4,20 +4,20 @@ import useLocationStages from "@advisable-main/hooks/useLocationStages";
 import useProgressSteps from "./useProgressSteps";
 import { yourPostValidationSchema } from "./validationSchemas";
 
-const NavigationMenu = ({ guildPost, promptLabel }) => {
+const NavigationMenu = ({ guildPost, postPrompt }) => {
   const urlPrefix = ["/composer", guildPost?.id].filter(Boolean).join("/");
   return (
     <SetupMenu
       guildPost={guildPost}
-      promptLabel={promptLabel}
       urlPrefix={urlPrefix}
+      postPrompt={postPrompt}
     />
   );
 };
 
 const SetupMenu = React.memo(function SetupMenu({
+  postPrompt,
   guildPost,
-  promptLabel,
   urlPrefix,
 }) {
   const isPublished = guildPost?.status === "published";
@@ -44,7 +44,7 @@ const SetupMenu = React.memo(function SetupMenu({
 
   return (
     <MultistepMenu>
-      {!promptLabel && (
+      {!postPrompt && !guildPost?.postPrompt && (
         <MultistepMenu.Item
           to={`${urlPrefix}/type`}
           isComplete={Boolean(guildPost)}

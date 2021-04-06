@@ -3,7 +3,7 @@ import { useCreateGuildPost } from "./mutations";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
 import YourPost from "./YourPost";
 
-export default function CreatePostFromPrompt({ promptLabel }) {
+export default function CreatePostFromPrompt({ postPrompt }) {
   const { navigate } = useLocationStages();
   const [createGuildPost] = useCreateGuildPost();
 
@@ -13,7 +13,7 @@ export default function CreatePostFromPrompt({ promptLabel }) {
         input: {
           ...values,
           type: "Post",
-          promptLabelId: promptLabel.id,
+          postPromptId: postPrompt.id,
         },
       },
     });
@@ -22,7 +22,7 @@ export default function CreatePostFromPrompt({ promptLabel }) {
   };
 
   const initialValues = {
-    body: promptLabel?.prompt,
+    body: postPrompt?.prompt,
   };
 
   return (

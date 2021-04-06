@@ -31,12 +31,16 @@ export const SELECT_DATA = gql`
   }
 `;
 
-export const LABEL_QUERY = gql`
-  query label($slug: ID!) {
-    label(slug: $slug) {
+export const POST_PROMPT_QUERY = gql`
+  query postPrompt($id: ID!) {
+    postPrompt(id: $id) {
       id
-      name
       prompt
+      label {
+        id
+        name
+        slug
+      }
     }
   }
 `;
