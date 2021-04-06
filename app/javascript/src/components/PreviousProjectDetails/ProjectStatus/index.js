@@ -113,10 +113,10 @@ export function NoReviews({ project }) {
           <CheckCircle strokeWidth={2} />
         </Circle>
         <StyledTextWrapper>
-          <StyledTitle>Project Verified but not reviewed</StyledTitle>
+          <StyledTitle>Project has been verified but not reviewed</StyledTitle>
           <StyledDescription>
-            The client verified this project but not provided a review. You can
-            ask client to leave a review using the link below.
+            The client verified this project but has not provided a review. You
+            can ask the client to leave a review using the link below.
           </StyledDescription>
         </StyledTextWrapper>
         <StyledURLWrapper>
