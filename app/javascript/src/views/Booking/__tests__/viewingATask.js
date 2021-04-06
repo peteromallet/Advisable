@@ -1,16 +1,15 @@
-import { renderRoute, fireEvent } from "../../../testHelpers/test-utils";
-import generateTypes from "../../../__mocks__/graphqlFields";
+import { renderRoute, fireEvent, mockData } from "test-utils";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import FETCH_TASK from "../../../graphql/queries/taskDetails";
 
 test("User can view an active task", async () => {
-  let user = generateTypes.user();
-  let task = generateTypes.task({ name: "This is a test task" });
-  let project = generateTypes.project({ user });
-  let specialist = generateTypes.specialist({ firstName: "Dennis" });
+  let user = mockData.user();
+  let task = mockData.task({ name: "This is a test task" });
+  let project = mockData.project({ user });
+  let specialist = mockData.specialist({ firstName: "Dennis" });
 
-  let application = generateTypes.application({
+  let application = mockData.application({
     project,
     specialist,
     id: "rec1234",

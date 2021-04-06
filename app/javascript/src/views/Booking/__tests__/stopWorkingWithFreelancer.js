@@ -1,16 +1,15 @@
-import { renderRoute } from "test-utils";
+import { renderRoute, mockData } from "test-utils";
 import { fireEvent } from "@testing-library/react";
-import generateTypes from "../../../__mocks__/graphqlFields";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import { STOP_WORKING } from "../StopWorkingModal";
 
 test("Client can stop working with specialist", async () => {
-  let user = generateTypes.user();
-  let project = generateTypes.project({ user });
-  let specialist = generateTypes.specialist({ firstName: "Dennis" });
+  let user = mockData.user();
+  let project = mockData.project({ user });
+  let specialist = mockData.specialist({ firstName: "Dennis" });
 
-  let application = generateTypes.application({
+  let application = mockData.application({
     project,
     specialist,
     status: "Working",

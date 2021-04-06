@@ -1,25 +1,24 @@
 import { fireEvent, within } from "@testing-library/react";
-import { renderRoute } from "test-utils";
-import generateTypes from "../../../__mocks__/graphqlFields";
+import { renderRoute, mockData } from "test-utils";
 import VIEWER from "../../../graphql/queries/viewer";
 import GET_APPLICATION from "../fetchApplication";
 import GET_TASK from "../../../graphql/queries/taskDetails";
 import { UPDATE_TASK } from "../../../components/TaskDrawer/MarkAsTrial";
 
 test("Freelancer can toggle the task trial via the task menu", async () => {
-  const specialist = generateTypes.specialist();
-  const task = generateTypes.task({
+  const specialist = mockData.specialist();
+  const task = mockData.task({
     id: "task_1234",
     trial: false,
   });
-  const application = generateTypes.application({
+  const application = mockData.application({
     id: "rec1234",
     tasks: [task],
     trialTask: null,
     trialProgram: true,
     specialist,
-    project: generateTypes.project({
-      user: generateTypes.user(),
+    project: mockData.project({
+      user: mockData.user(),
     }),
   });
 

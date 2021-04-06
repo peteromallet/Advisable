@@ -15,7 +15,6 @@ import {
   ACCEPT_PROJECT_PAYMENT_TERMS,
 } from "../queries";
 import START_WORKING from "../startWorking";
-import graphqlFields from "../../../__mocks__/graphqlFields";
 
 test("User can complete booking setup", async () => {
   const company = mockData.company({
@@ -61,7 +60,7 @@ test("User can complete booking setup", async () => {
         {},
         {
           countries: [
-            graphqlFields.country({ code: "IE", name: "Ireland", eu: true }),
+            mockData.country({ code: "IE", name: "Ireland", eu: true }),
           ],
         },
       ),

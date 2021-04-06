@@ -1,23 +1,23 @@
 import {
   fireEvent,
   renderRoute,
+  mockData,
   waitForElementToBeRemoved,
-} from "../../testHelpers/test-utils";
+} from "test-utils";
 import {
   mockViewer,
   mockQuery,
   mockMutation,
 } from "../../testHelpers/apolloMocks";
-import generateTypes from "../../__mocks__/graphqlFields";
 import GET_APPLICATION from "./fetchApplication";
 import UPDATE_APPLICATION from "./updateApplication";
 
 test("Rate step continues to the project type step", async () => {
-  const user = generateTypes.user({ companyName: "Test Inc" });
-  const primarySkill = generateTypes.skill({ name: "Testing" });
-  const project = generateTypes.project({ user, primarySkill });
-  const specialist = generateTypes.specialist();
-  const application = generateTypes.application({
+  const user = mockData.user({ companyName: "Test Inc" });
+  const primarySkill = mockData.skill({ name: "Testing" });
+  const project = mockData.project({ user, primarySkill });
+  const specialist = mockData.specialist();
+  const application = mockData.application({
     id: "rec123",
     status: "Application Accepted",
     tasks: [],
@@ -55,11 +55,11 @@ test("Rate step continues to the project type step", async () => {
 });
 
 test("Project type step continues to the tasks step", async () => {
-  const user = generateTypes.user({ companyName: "Test Inc" });
-  const primarySkill = generateTypes.skill({ name: "Testing" });
-  const project = generateTypes.project({ user, primarySkill });
-  const specialist = generateTypes.specialist();
-  const application = generateTypes.application({
+  const user = mockData.user({ companyName: "Test Inc" });
+  const primarySkill = mockData.skill({ name: "Testing" });
+  const project = mockData.project({ user, primarySkill });
+  const specialist = mockData.specialist();
+  const application = mockData.application({
     id: "rec123",
     status: "Application Accepted",
     rate: "75",

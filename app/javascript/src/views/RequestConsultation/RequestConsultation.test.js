@@ -4,8 +4,8 @@ import {
   mockViewer,
   mockQuery,
   mockMutation,
-} from "../../testHelpers/test-utils";
-import mockData from "../../__mocks__/graphqlFields";
+  mockData,
+} from "test-utils";
 import {
   GET_SPECIALIST,
   CREATE_CONSULTATION,
