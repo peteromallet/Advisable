@@ -10,9 +10,9 @@ module Guild
     POPULAR_THRESHOLD = 5
 
     belongs_to :specialist
+    belongs_to :post_prompt, optional: true, counter_cache: :guild_posts_count
     has_one :account, through: :specialist
     has_many :reactions, as: :reactionable, dependent: :destroy
-
     has_many :comments, -> { published }, foreign_key: 'guild_post_id', class_name: 'Guild::Comment', inverse_of: 'post'
     has_many :parent_comments, -> { where(parent_comment_id: nil).published }, class_name: 'Guild::Comment', foreign_key: 'guild_post_id', inverse_of: 'post'
     has_many :images, class_name: 'Guild::PostImage', foreign_key: 'guild_post_id', inverse_of: 'post', dependent: :destroy
@@ -20,9 +20,8 @@ module Guild
     has_many :notifications, inverse_of: 'notifiable', foreign_key: 'notifiable_id', dependent: :destroy
     has_many :labelings, foreign_key: :guild_post_id, inverse_of: :guild_post, dependent: :destroy
     has_many :labels, through: :labelings
-    belongs_to :prompt_label, class_name: 'Label', foreign_key: 'label_id', inverse_of: 'guild_posts', optional: true
 
-    scope :labeled_with, ->(labels) { includes(:labelings).where(labelings: {labels: labels}).or(Post.where(prompt_label: labels)) }
+    scope :labeled_with, ->(labels) { includes(:labelings).where(labelings: {labels: labels}) }
 
     scope :feed, lambda { |specialist|
       published.
@@ -82,11 +81,6 @@ module Guild
       reactionable_count >= Guild::Post::POPULAR_THRESHOLD && !resolved_at && !pinned
     end
 
-    def authorized_labels(specialist:, include_prompt: true)
-      authorized = specialist == self.specialist ? labels : labels.published
-      include_prompt && prompt_label ? Label.where(id: [authorized, prompt_label].flatten) : authorized
-    end
-
     protected
 
     def labels_resettable?
@@ -96,7 +90,7 @@ module Guild
     def reset_labels
       return unless labels_resettable?
 
-      self.labels = []
+      self.labels = Array(post_prompt ? post_prompt.label : nil)
     end
 
     def reset_previous_pinned
@@ -132,13 +126,13 @@ end
 #  type               :string           default("Post"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  label_id           :uuid
+#  post_prompt_id     :uuid
 #  specialist_id      :bigint
 #
 # Indexes
 #
-#  index_guild_posts_on_label_id       (label_id)
-#  index_guild_posts_on_specialist_id  (specialist_id)
+#  index_guild_posts_on_post_prompt_id  (post_prompt_id)
+#  index_guild_posts_on_specialist_id   (specialist_id)
 #
 # Foreign Keys
 #

@@ -241,13 +241,19 @@ module Types
       end
     end
 
-    field :label, LabelType, null: true do
-      argument :slug, ID, required: true
+    field :latest_prompt, PostPromptType, null: true
+
+    def latest_prompt
+      ::PostPrompt.featured.first
     end
 
-    def label(slug:)
+    field :post_prompt, ::Types::PostPromptType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def post_prompt(id:)
       requires_guild_user!
-      ::Label.published.find_by!(slug: slug)
+      ::PostPrompt.find(id)
     end
 
     field :label_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do

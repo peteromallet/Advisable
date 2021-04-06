@@ -13,7 +13,7 @@ function RedirectToStep({ step }) {
   return <Redirect to={`${location.pathname}/${step}`} />;
 }
 
-function Routes({ onPublish, selectDataQuery, guildPost, promptLabel }) {
+function Routes({ onPublish, selectDataQuery, guildPost, postPrompt }) {
   return (
     <Switch>
       <Route path="*composer" exact>
@@ -24,8 +24,8 @@ function Routes({ onPublish, selectDataQuery, guildPost, promptLabel }) {
         <CreateGuildPost />
       </Route>
 
-      <Route path="*composer/prompt/:labelSlug" exact>
-        <CreatePostFromPrompt promptLabel={promptLabel} />
+      <Route path="*composer/prompt/:id" exact>
+        <CreatePostFromPrompt postPrompt={postPrompt} />
       </Route>
 
       <Route path="*composer/:id" exact>
@@ -33,7 +33,11 @@ function Routes({ onPublish, selectDataQuery, guildPost, promptLabel }) {
       </Route>
 
       <Route path="*composer/:id/type" exact>
-        <CreateGuildPost guildPost={guildPost} />
+        {guildPost?.postPrompt ? (
+          <EditGuildPost guildPost={guildPost} />
+        ) : (
+          <CreateGuildPost guildPost={guildPost} />
+        )}
       </Route>
 
       <Route path="*composer/:id/post">

@@ -30,7 +30,7 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
   return (
     <Box display="flex">
       <Box flexGrow={1} width="100%">
-        {guildPost?.id && !guildPost?.promptLabel && (
+        {guildPost?.id && !guildPost?.postPrompt && (
           <Link
             mb="s"
             fontSize="l"
