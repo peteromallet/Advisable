@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "system_helper"
 
 RSpec.describe "Creating a freelancer account", type: :system do
   it "shows the user the account confirmation flow" do

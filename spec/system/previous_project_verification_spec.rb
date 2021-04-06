@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Previous project verification', type: :system do
   before do

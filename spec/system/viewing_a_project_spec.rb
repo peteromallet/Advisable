@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Viewing a project' do
   context 'when the project user has not created an account yet' do

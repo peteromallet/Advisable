@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'User settings' do
   it 'allows user to change their password' do

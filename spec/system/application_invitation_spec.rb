@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Application invitation view', type: :system do
   let(:project) { create(:project) }

@@ -1,4 +1,4 @@
-require "rails_helper"
+require "system_helper"
 
 RSpec.describe "magic links", type: :system do
   let(:account) { create(:account, confirmed_at: nil) }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Deleting specialist account', type: :system do
   let(:specialist) { create(:specialist, account: create(:account, password: "testing123")) }

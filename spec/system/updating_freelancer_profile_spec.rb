@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe "Freelancer profile" do
   describe "introduction" do

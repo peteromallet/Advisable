@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Freelancer dashboard', type: :system do
   let(:application_stage) { "Accepted" }

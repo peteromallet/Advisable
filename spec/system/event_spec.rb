@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Event view', type: :system do
   let(:account)    { create(:account, completed_tutorials: ["guild"]) }

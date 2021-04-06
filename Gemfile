@@ -85,8 +85,7 @@ end
 group :test do
   gem "capybara"
   gem "timecop"
-  gem "selenium-webdriver"
-  gem "webdrivers"
+  gem "cuprite"
   gem "shoulda-matchers"
   gem "webmock"
   gem "rspec-rails", "~> 4.0.0"

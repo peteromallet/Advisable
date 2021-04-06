@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Updating a proposal', type: :system do
   let(:application) { create(:application, status: 'Proposed') }

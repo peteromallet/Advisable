@@ -28,9 +28,6 @@ require 'rspec/rails'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-# If there is a specific chromedriver version specified then use that
-Webdrivers::Chromedriver.required_version = ENV["CHROMEDRIVER_VERSION"] if ENV["CHROMEDRIVER_VERSION"]
-
 # configure shoulda matchers
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
@@ -38,10 +35,6 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
-
-# Silence the capybara puma logs
-Capybara.server = :puma, {Silent: true}
-Capybara.enable_aria_label = true
 
 RSpec.configure do |config|
   config.include ActiveJob::TestHelper

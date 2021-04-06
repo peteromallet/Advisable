@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Submitting a proposal', type: :system do
   let!(:project) { create(:project) }

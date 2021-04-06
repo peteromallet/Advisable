@@ -1,4 +1,4 @@
-require "rails_helper"
+require "system_helper"
 
 RSpec.describe "Resending confirmation request" do
   it "resends the confirmation email" do

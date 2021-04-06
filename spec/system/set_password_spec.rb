@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Setting a password', type: :system do
   let(:account) { create(:account, password: nil) }

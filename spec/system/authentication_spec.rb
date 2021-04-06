@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Logging in', type: :system do
   it 'redirects the user back to where they tried to go' do

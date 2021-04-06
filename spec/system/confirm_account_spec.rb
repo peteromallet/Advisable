@@ -1,4 +1,4 @@
-require "rails_helper"
+require "system_helper"
 
 RSpec.describe "Confirming an account as a user" do
   it "displays the account confirmed notification" do
@@ -12,7 +12,6 @@ RSpec.describe "Confirming an account as a user" do
     expect(page).to have_content("Your account has been confirmed")
   end
 end
-
 
 RSpec.describe "Invalid confirmation token" do
   it "displays the failed confirmation notification" do

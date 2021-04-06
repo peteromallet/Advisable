@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'project root query', type: :system do
+RSpec.describe 'project root query', type: :request do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
   let(:query) do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Managing talent', type: :system do
   let(:application) { create(:application, status: 'Working') }

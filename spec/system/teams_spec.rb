@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Teams', type: :system do
   let(:account) { create(:account, permissions: ["team_manager"]) }

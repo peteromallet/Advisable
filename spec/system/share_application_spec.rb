@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Sharing an application', type: :system do
   let(:application) { create(:full_application, status: "Applied") }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Opportunity page', type: :system do
   let(:project) { create(:project, brief_confirmed_at: 1.week.ago) }

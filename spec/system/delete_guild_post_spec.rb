@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "system_helper"
 
 RSpec.describe 'Guild post delete action', type: :system do
   let(:specialist) { create(:specialist, :guild) }
