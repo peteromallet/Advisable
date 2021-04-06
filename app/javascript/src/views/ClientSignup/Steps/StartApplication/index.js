@@ -1,10 +1,11 @@
-import React, { useMemo, useEffect, useCallback } from "react";
-import PropTypes from "prop-types";
-import { object, string } from "yup";
-import { Formik, Form } from "formik";
-import queryString from "query-string";
+import React, { useMemo, useEffect, useCallback, useState } from "react";
 import { useLocation, useHistory } from "react-router";
+import { motion } from "framer-motion";
+import queryString from "query-string";
+import { Formik, Form } from "formik";
+import { object, string } from "yup";
 import { Input, Box, useBreakpoint } from "@advisable/donut";
+import Loading from "src/components/Loading";
 import SubmitButton from "src/components/SubmitButton";
 import { useNotifications } from "src/components/Notifications";
 import FormField from "src/components/FormField";
@@ -21,6 +22,7 @@ const validationSchema = object().shape({
 });
 
 function StartApplication() {
+  const [isQueryParams, setIsQueryParams] = useState(false);
   const [startClientApplication, { called }] = useStartClientApplication();
   const location = useLocation();
   const history = useHistory();
@@ -84,6 +86,7 @@ function StartApplication() {
   useEffect(() => {
     const { firstName, lastName, email } = queryParams;
     if (!called && firstName && lastName && email) {
+      setIsQueryParams(true);
       const valid = validationSchema.validateSync({
         firstName,
         lastName,
@@ -100,6 +103,14 @@ function StartApplication() {
     lastName: location.state?.lastName || queryParams.lastName || "",
     email: queryParams.email || "",
   };
+
+  if (isQueryParams) {
+    return (
+      <motion.div exit>
+        <Loading />
+      </motion.div>
+    );
+  }
 
   return (
     <Formik
@@ -146,10 +157,5 @@ function StartApplication() {
     </Formik>
   );
 }
-
-StartApplication.propTypes = {
-  RedirectToNextStep: PropTypes.elementType,
-  redirectToNextStep: PropTypes.func,
-};
 
 export default StartApplication;
