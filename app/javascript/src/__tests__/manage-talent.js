@@ -8,12 +8,7 @@ import {
   waitForElementToBeRemoved,
 } from "../testHelpers/test-utils";
 import VIEWER from "../graphql/queries/viewer";
-import {
-  mockViewer,
-  mockQuery,
-  mockMutation,
-} from "../testHelpers/apolloMocks";
-import generateType from "../__mocks__/graphqlFields";
+import { mockData, mockViewer, mockQuery, mockMutation } from "test-utils";
 import GET_ACTIVE_APPLICATION from "../views/Booking/getActiveApplication";
 import {
   createTask as CREATE_TASK,
@@ -24,7 +19,7 @@ import SET_PROJECT_TYPE from "../views/Booking/ProjectTypeModal/setProjectType";
 jest.mock("../utilities/generateID");
 
 test("Renders the manage view for a specialist", async () => {
-  let viewer = generateType.user();
+  let viewer = mockData.user();
   const app = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
@@ -34,14 +29,14 @@ test("Renders the manage view for a specialist", async () => {
         { id: "rec1234" },
         {
           viewer,
-          application: generateType.application({
+          application: mockData.application({
             id: "rec1234",
             projectType: "Flexible",
-            tasks: [generateType.task({ name: "This is a test task" })],
-            project: generateType.project({
-              user: generateType.user(),
+            tasks: [mockData.task({ name: "This is a test task" })],
+            project: mockData.project({
+              user: mockData.user(),
             }),
-            specialist: generateType.specialist(),
+            specialist: mockData.specialist(),
           }),
         },
       ),
@@ -52,7 +47,7 @@ test("Renders the manage view for a specialist", async () => {
 });
 
 test("Renders a tutorial video if it's the first time viewing", async () => {
-  const viewer = generateType.user();
+  const viewer = mockData.user();
   const { findByText } = renderRoute({
     route: "/manage/rec1234",
     graphQLMocks: [
@@ -67,14 +62,14 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
         result: {
           data: {
             viewer,
-            application: generateType.application({
+            application: mockData.application({
               id: "rec1234",
               projectType: "Flexible",
-              tasks: [generateType.task({ name: "This is a test task" })],
-              project: generateType.project({
-                user: generateType.user(),
+              tasks: [mockData.task({ name: "This is a test task" })],
+              project: mockData.project({
+                user: mockData.user(),
               }),
-              specialist: generateType.specialist(),
+              specialist: mockData.specialist(),
             }),
           },
         },
@@ -86,7 +81,7 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
 });
 
 test("Does not render a tutorial video if the user has completed it", async () => {
-  const viewer = generateType.user({
+  const viewer = mockData.user({
     completedTutorials: ["flexible_projects"],
   });
 
@@ -113,14 +108,14 @@ test("Does not render a tutorial video if the user has completed it", async () =
         result: {
           data: {
             viewer,
-            application: generateType.application({
+            application: mockData.application({
               id: "rec1234",
               projectType: "Flexible",
-              tasks: [generateType.task({ name: "This is a test task" })],
-              project: generateType.project({
-                user: generateType.user(),
+              tasks: [mockData.task({ name: "This is a test task" })],
+              project: mockData.project({
+                user: mockData.user(),
               }),
-              specialist: generateType.specialist(),
+              specialist: mockData.specialist(),
             }),
           },
         },
@@ -133,7 +128,7 @@ test("Does not render a tutorial video if the user has completed it", async () =
 });
 
 test("The client can change the project type", async () => {
-  const viewer = generateType.user({
+  const viewer = mockData.user({
     completedTutorials: ["fixed_projects"],
   });
 
@@ -148,15 +143,15 @@ test("The client can change the project type", async () => {
         },
         {
           viewer,
-          application: generateType.application({
+          application: mockData.application({
             id: "rec1234",
             projectType: "Fixed",
-            tasks: [generateType.task({ name: "This is a test task" })],
-            project: generateType.project({
+            tasks: [mockData.task({ name: "This is a test task" })],
+            project: mockData.project({
               isOwner: true,
-              user: generateType.user(),
+              user: mockData.user(),
             }),
-            specialist: generateType.specialist(),
+            specialist: mockData.specialist(),
           }),
         },
       ),
@@ -170,7 +165,7 @@ test("The client can change the project type", async () => {
         {
           setTypeForProject: {
             __typename: "SetTypeForProjectPayload",
-            application: generateType.application({
+            application: mockData.application({
               id: "rec1234",
               projectType: "Flexible",
               monthlyLimit: 100,
@@ -205,17 +200,17 @@ test("The client can change the project type", async () => {
 test("The client can add a task", async () => {
   generateID.mockReturnValue("tas_abc");
 
-  const user = generateType.user();
-  const project = generateType.project({ user });
-  const specialist = generateType.specialist();
-  const application = generateType.application({
+  const user = mockData.user();
+  const project = mockData.project({ user });
+  const specialist = mockData.specialist();
+  const application = mockData.application({
     id: "rec1234",
     projectType: "Flexible",
     project,
     specialist,
   });
 
-  let viewer = generateType.user();
+  let viewer = mockData.user();
 
   const app = renderRoute({
     route: "/manage/rec1234",
@@ -259,7 +254,7 @@ test("The client can add a task", async () => {
             __typename: "Mutation",
             createTask: {
               __typename: "CreateTaskPayload",
-              task: generateType.task({
+              task: mockData.task({
                 id: "tas_abc",
                 application,
               }),
@@ -282,7 +277,7 @@ test("The client can add a task", async () => {
             __typename: "Mutation",
             updateTask: {
               __typename: "UpdateTaskPayload",
-              task: generateType.task({
+              task: mockData.task({
                 id: "tas_abc",
                 name: "This is a new task",
               }),

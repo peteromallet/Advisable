@@ -1,11 +1,10 @@
-import { renderRoute } from "test-utils";
+import { mockData, renderRoute } from "test-utils";
 import generateID from "../../utilities/generateID";
 import {
   screen,
   fireEvent,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
-import generateTypes from "../../__mocks__/graphqlFields";
 import VIEWER from "../../graphql/queries/viewer";
 import CREATE_TASK from "../../graphql/mutations/createTask";
 import GET_TASK from "../../graphql/queries/taskDetails";
@@ -22,10 +21,10 @@ jest.mock("../../utilities/generateID");
 test("Freelancer can create a task", async () => {
   generateID.mockReturnValue("tas_abc");
 
-  const user = generateTypes.user();
-  const project = generateTypes.project({ user });
-  const specialist = generateTypes.specialist();
-  const application = generateTypes.application({
+  const user = mockData.user();
+  const project = mockData.project({ user });
+  const specialist = mockData.specialist();
+  const application = mockData.application({
     id: "rec1234",
     project,
     specialist,
@@ -78,7 +77,7 @@ test("Freelancer can create a task", async () => {
             __typename: "Mutation",
             createTask: {
               __typename: "CreateTaskPayload",
-              task: generateTypes.task({
+              task: mockData.task({
                 id: "tas_abc",
                 application,
               }),
@@ -101,7 +100,7 @@ test("Freelancer can create a task", async () => {
             __typename: "Mutation",
             updateTask: {
               __typename: "UpdateTaskPayload",
-              task: generateTypes.task({
+              task: mockData.task({
                 id: "tas_abc",
                 name: "Task name here",
               }),
@@ -126,7 +125,7 @@ test("Freelancer can create a task", async () => {
             __typename: "Mutation",
             updateTask: {
               __typename: "UpdateTaskPayload",
-              task: generateTypes.task({
+              task: mockData.task({
                 id: "tas_abc",
                 estimate: 10,
                 flexibleEstimate: 20,
@@ -150,7 +149,7 @@ test("Freelancer can create a task", async () => {
             __typename: "Mutation",
             updateTask: {
               __typename: "UpdateTaskPayload",
-              task: generateTypes.task({
+              task: mockData.task({
                 id: "tas_abc",
                 name: "Task name here",
                 description: "Description here",
@@ -192,11 +191,11 @@ test("Freelancer can create a task", async () => {
 });
 
 test("Freelancer can mark a task as complete", async () => {
-  const user = generateTypes.user();
-  const project = generateTypes.project({ user });
-  const specialist = generateTypes.specialist();
+  const user = mockData.user();
+  const project = mockData.project({ user });
+  const specialist = mockData.specialist();
 
-  const task = generateTypes.task({
+  const task = mockData.task({
     id: "tas_1234",
     stage: "Working",
     estimate: 10,
@@ -204,7 +203,7 @@ test("Freelancer can mark a task as complete", async () => {
     estimateType: "Hourly",
   });
 
-  const application = generateTypes.application({
+  const application = mockData.application({
     id: "rec1234",
     project,
     specialist,

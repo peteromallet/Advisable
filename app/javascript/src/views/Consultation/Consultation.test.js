@@ -1,6 +1,5 @@
 import { fireEvent } from "@testing-library/react";
-import { renderRoute } from "test-utils";
-import mockData from "../../__mocks__/graphqlFields";
+import { renderRoute, mockData } from "test-utils";
 import VIEWER from "../../graphql/queries/viewer";
 import GET_CONSULTATION from "./getConsultation";
 import ACCEPT_CONSULTATION from "./acceptConsultation";
