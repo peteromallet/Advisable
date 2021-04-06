@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_01_111446) do
+ActiveRecord::Schema.define(version: 2021_04_06_063750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -359,6 +359,7 @@ ActiveRecord::Schema.define(version: 2021_04_01_111446) do
     t.boolean "pinned", default: false
     t.datetime "boosted_at"
     t.datetime "resolved_at"
+    t.string "audience_type"
     t.index ["data"], name: "index_guild_posts_on_data", using: :gin
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end

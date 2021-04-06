@@ -10,10 +10,10 @@ end
 # Table name: guild_posts
 #
 #  id                 :uuid             not null, primary key
+#  audience_type      :string
 #  body               :text
 #  boosted_at         :datetime
 #  comments_count     :integer          default(0), not null
-#  data               :jsonb            not null
 #  engagements_count  :integer          default(0)
 #  pinned             :boolean          default(FALSE)
 #  reactionable_count :integer          default(0), not null
