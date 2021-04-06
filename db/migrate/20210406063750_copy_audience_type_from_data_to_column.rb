@@ -8,6 +8,7 @@ class CopyAudienceTypeFromDataToColumn < ActiveRecord::Migration[6.1]
 
   def up
     MigrationPost.pluck(:id, :data).each do |id, data|
+      data = data.presence || {}
       MigrationPost.find(id).update_columns(audience_type: data["audience_type"])
     end
   end
