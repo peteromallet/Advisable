@@ -36,7 +36,7 @@ function AboutCompany() {
       <Redirect
         to={{
           pathname: "/clients/signup/status",
-          state: { ...location.state },
+          state: location.state,
         }}
       />
     );
@@ -63,7 +63,7 @@ function AboutCompany() {
 
     history.push({
       pathname: "/clients/signup/about_your_requirements",
-      state: { ...location.state },
+      state: location.state,
     });
   };
 

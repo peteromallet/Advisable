@@ -59,7 +59,7 @@ function StartApplication() {
       if (nonCorporateEmail) {
         history.push({
           pathname: "/clients/signup/email-not-allowed",
-          state: { ...location.state },
+          state: location.state,
         });
         return;
       }

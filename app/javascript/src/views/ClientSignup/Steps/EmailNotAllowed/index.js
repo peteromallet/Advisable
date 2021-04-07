@@ -19,7 +19,7 @@ function EmailNotAllowed() {
         </DonutLink.External>{" "}
         to tell us why you should be considered.
       </Description>
-      <Link to={{ pathname: "/clients/signup", state: { ...location.state } }}>
+      <Link to={{ pathname: "/clients/signup", state: location.state }}>
         <Button width={[1, "auto"]}>Try Again</Button>
       </Link>
     </MotionStack>

@@ -43,7 +43,7 @@ function AboutRequirements() {
       <Redirect
         to={{
           pathname: "/clients/signup/status",
-          state: { ...location.state },
+          state: location.state,
         }}
       />
     );
@@ -74,7 +74,7 @@ function AboutRequirements() {
     });
     history.push({
       pathname: "/clients/signup/about_your_preferences",
-      state: { ...location.state },
+      state: location.state,
     });
   };
 

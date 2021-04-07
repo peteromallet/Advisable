@@ -26,7 +26,7 @@ function PhoneModal({ requestApplicationCallback, modal, countryCode }) {
     modal.hide();
     history.push({
       pathname: "/clients/signup/thank-you-call-you-shortly",
-      state: { ...location.state },
+      state: location.state,
     });
   };
 
