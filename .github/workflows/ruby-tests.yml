@@ -62,7 +62,7 @@ jobs:
       - name: Set up Ruby
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 3.0.0
+          ruby-version: 3.0.1
 
       - uses: actions/setup-node@v1
         with:
