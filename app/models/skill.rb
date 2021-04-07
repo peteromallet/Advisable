@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Skill < ApplicationRecord
-  self.ignored_columns += %i[original_id]
-
   include Uid
   include Airtable::Syncable
 
@@ -71,10 +69,5 @@ end
 # Indexes
 #
 #  index_skills_on_airtable_id  (airtable_id) UNIQUE
-#  index_skills_on_original_id  (original_id)
 #  index_skills_on_uid          (uid)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (original_id => skills.id)
 #

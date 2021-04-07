@@ -3,7 +3,6 @@
 module Guild
   class Post < ApplicationRecord
     class BoostError < StandardError; end
-    self.ignored_columns += %i[data]
     self.store_full_sti_class = false
 
     POST_TYPES = %w[Post AdviceRequired CaseStudy Opportunity].freeze
@@ -130,7 +129,6 @@ end
 #
 # Indexes
 #
-#  index_guild_posts_on_data           (data) USING gin
 #  index_guild_posts_on_specialist_id  (specialist_id)
 #
 # Foreign Keys
