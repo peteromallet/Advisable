@@ -40,10 +40,7 @@ function AboutPreferences() {
   const history = useHistory();
   const location = useLocation();
   const processingTimer = useRef(null);
-  const [
-    submitClientApplication,
-    { called, data: processing },
-  ] = useAboutPreferencesSubmit();
+  const [submitClientApplication, { called }] = useAboutPreferencesSubmit();
   const { loading, error, data } = useClientApplicationQuery();
 
   useEffect(() => {
@@ -169,7 +166,10 @@ function AboutPreferences() {
                 value={formik.values.talentQuality}
               />
             </Box>
-            <SubmitButton width={[1, "auto"]} loading={called && !processing}>
+            <SubmitButton
+              width={[1, "auto"]}
+              loading={!!processingTimer?.current}
+            >
               Continue
             </SubmitButton>
           </MotionStack>
