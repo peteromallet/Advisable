@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Formik, Form } from "formik";
 import { string, object, number } from "yup";
 import { Redirect, useHistory, useLocation } from "react-router";
@@ -33,15 +33,25 @@ const validationSchema = object().shape({
   ),
 });
 
+const INTENTIONAL_PROCESSING_DELAY = 2600;
+
 function AboutPreferences() {
   const isMobile = useBreakpoint("s");
   const history = useHistory();
   const location = useLocation();
+  const processingTimer = useRef(null);
   const [
     submitClientApplication,
     { called, data: processing },
   ] = useAboutPreferencesSubmit();
   const { loading, error, data } = useClientApplicationQuery();
+
+  useEffect(() => {
+    const timer = processingTimer.current;
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [processingTimer]);
 
   if (loading) return <Loading />;
   if (error) return <Redirect to="/clients/signup" />;
@@ -80,13 +90,13 @@ function AboutPreferences() {
       },
     });
 
-    // Would be nice to find a method to clean this timer
-    setTimeout(() => {
+    // Set intentional processing timer
+    processingTimer.current = setTimeout(() => {
       history.push({
         pathname: "/clients/signup/status",
         state: location.state,
       });
-    }, 2600);
+    }, INTENTIONAL_PROCESSING_DELAY);
   };
 
   return (
