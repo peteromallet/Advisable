@@ -3,12 +3,13 @@
 module Toby
   module Filters
     class BaseFilter
-      attr_reader :name, :attribute, :options
+      attr_reader :name, :attribute, :options, :block
 
-      def initialize(name, attribute, **options)
+      def initialize(name, attribute, **options, &block)
         @name = name.to_s.camelize(:lower)
         @attribute = attribute
         @options = options
+        @block = block
       end
 
       def type
