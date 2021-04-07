@@ -3,11 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:user) { create(:user) }
+
   include_examples "uid"
 
   it "has a valid factory" do
-    user = build(:user)
-    expect(user).to be_valid
+    expect(build(:user)).to be_valid
   end
 
   it "removes any availability in the past before saving" do
@@ -22,7 +23,6 @@ RSpec.describe User, type: :model do
   end
 
   describe "#send_confirmation_email" do
-    let(:user) { build(:user) }
     let(:mail) { double('email') } # rubocop:disable RSpec/VerifiedDoubles
 
     it "sets the confirmation_digest" do
@@ -56,7 +56,6 @@ RSpec.describe User, type: :model do
   end
 
   describe "#invite_comember!" do
-    let(:user) { create(:user) }
     let(:new_account) { create(:account) }
 
     before { allow_any_instance_of(described_class).to receive(:sync_to_airtable) }
@@ -79,7 +78,6 @@ RSpec.describe User, type: :model do
   end
 
   describe "#disable!" do
-    let(:user) { create(:user) }
     let(:actor) { create(:account) }
 
     it "sets the status to disabled and syncs" do
@@ -91,6 +89,35 @@ RSpec.describe User, type: :model do
       expect(user.account.deleted_at).to be_nil
       expect(user.application_status).to eq("Disabled")
       expect(user.reload_log_data.responsible_id).to eq(actor.id)
+    end
+  end
+
+  describe "#transfer_to_company!" do
+    let(:company) { create(:company) }
+
+    it "updates the company id" do
+      old_company_id = user.company_id
+      expect(old_company_id).not_to eq(company.id)
+      expect(user.account).not_to be_team_manager
+      user.transfer_to_company!(company)
+      expect(user.company_id).to eq(company.id)
+      expect(user.account).to be_team_manager
+      expect(Company.where(id: old_company_id)).not_to be_empty
+    end
+
+    context "when destroy param" do
+      it "deletes the old company" do
+        old_company_id = user.company_id
+        user.transfer_to_company!(company, destroy: true)
+        expect(user.company_id).to eq(company.id)
+        expect(Company.where(id: old_company_id)).to be_empty
+      end
+    end
+
+    context "when passed same company id" do
+      it "raises an error" do
+        expect { user.transfer_to_company!(user.company) }.to raise_error("What are you even doing?")
+      end
     end
   end
 end
