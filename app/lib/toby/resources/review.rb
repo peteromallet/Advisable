@@ -5,7 +5,7 @@ module Toby
     class Review < BaseResource
       model_name ::Review
       attribute :uid, Attributes::String
-      attribute :comment, Attributes::String
+      attribute :comment, Attributes::LongText
     end
   end
 end

@@ -9,14 +9,14 @@ module Toby
       attribute :specialist, Attributes::BelongsTo, labeled_by: :account
       attribute :project, Attributes::BelongsTo, labeled_by: :name
       attribute :interview, Attributes::HasOne, labeled_by: :status
-      attribute :introduction, Attributes::String
+      attribute :introduction, Attributes::LongText
       attribute :hidden, Attributes::Boolean
       attribute :score, Attributes::Integer
-      attribute :comment, Attributes::String
-      attribute :proposal_comment, Attributes::String
+      attribute :comment, Attributes::LongText
+      attribute :proposal_comment, Attributes::LongText
       attribute :rejection_reason, Attributes::String
       attribute :previous_projects, Attributes::HasManyThrough
-      attribute :rejection_reason_comment, Attributes::String
+      attribute :rejection_reason_comment, Attributes::LongText
       attribute :invitation_rejection_reason, Attributes::String
       attribute :applied_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
