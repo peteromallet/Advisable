@@ -7,7 +7,7 @@ module Toby
       attribute :uid, Attributes::String
       attribute :name, Attributes::String
       attribute :sales_person, Lookups::ProjectSalesPerson
-      attribute :description, Attributes::String
+      attribute :description, Attributes::LongText
       attribute :user, Attributes::BelongsTo, labeled_by: :account
       attribute :status, Attributes::Select, options: ::Project::STATUSES
       attribute :sales_status, Attributes::Select, options: ::Project::SALES_STATUSES
