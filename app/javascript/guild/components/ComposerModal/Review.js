@@ -40,7 +40,9 @@ export default function Review({ guildPost, onPublish }) {
     onPublish && onPublish(data.updateGuildPost.guildPost);
   };
 
-  const guildTopicNames = guildPost?.guildTopics?.map((gt) => gt.name);
+  const guildTopicNames = guildPost?.guildTopics
+    ?.filter((gt) => gt.name !== guildPost?.postPrompt?.label?.name)
+    ?.map((gt) => gt.name);
 
   const handleContinue = async () => {
     await handleSubmit();
