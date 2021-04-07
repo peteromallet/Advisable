@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_074551) do
+ActiveRecord::Schema.define(version: 2021_04_06_110917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -351,7 +351,6 @@ ActiveRecord::Schema.define(version: 2021_04_06_074551) do
     t.integer "comments_count", default: 0, null: false
     t.integer "reactionable_count", default: 0, null: false
     t.bigint "specialist_id"
-    t.jsonb "data", default: {}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "engagements_count", default: 0
@@ -360,7 +359,6 @@ ActiveRecord::Schema.define(version: 2021_04_06_074551) do
     t.datetime "boosted_at"
     t.datetime "resolved_at"
     t.string "audience_type"
-    t.index ["data"], name: "index_guild_posts_on_data", using: :gin
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end
 
@@ -410,33 +408,6 @@ ActiveRecord::Schema.define(version: 2021_04_06_074551) do
     t.index ["airtable_id"], name: "index_interviews_on_airtable_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
     t.index ["user_id"], name: "index_interviews_on_user_id"
-  end
-
-  create_table "invoice_line_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "invoice_id", null: false
-    t.bigint "task_id"
-    t.string "stripe_invoice_line_item_id"
-    t.string "name"
-    t.integer "amount"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["invoice_id"], name: "index_invoice_line_items_on_invoice_id"
-    t.index ["task_id"], name: "index_invoice_line_items_on_task_id"
-  end
-
-  create_table "invoices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "company_id", null: false
-    t.bigint "application_id", null: false
-    t.integer "status", default: 0
-    t.string "stripe_invoice_id"
-    t.datetime "period_start"
-    t.datetime "period_end"
-    t.datetime "paid_at"
-    t.datetime "paid_out_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["application_id"], name: "index_invoices_on_application_id"
-    t.index ["company_id"], name: "index_invoices_on_company_id"
   end
 
   create_table "labelings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -768,14 +739,12 @@ ActiveRecord::Schema.define(version: 2021_04_06_074551) do
     t.string "category"
     t.boolean "profile"
     t.string "uid"
-    t.bigint "original_id"
     t.boolean "active"
     t.integer "projects_count", default: 0
     t.integer "specialists_count", default: 0
     t.string "characteristic_placeholder"
     t.string "goal_placeholder"
     t.index ["airtable_id"], name: "index_skills_on_airtable_id", unique: true
-    t.index ["original_id"], name: "index_skills_on_original_id"
     t.index ["uid"], name: "index_skills_on_uid"
   end
 
@@ -831,7 +800,6 @@ ActiveRecord::Schema.define(version: 2021_04_06_074551) do
     t.string "phone"
     t.boolean "guild", default: false
     t.string "community_status"
-    t.jsonb "guild_data"
     t.bigint "account_id"
     t.datetime "community_applied_at"
     t.datetime "community_accepted_at"
@@ -846,7 +814,6 @@ ActiveRecord::Schema.define(version: 2021_04_06_074551) do
     t.string "vat_number"
     t.string "application_interview_calendly_id"
     t.datetime "application_interview_starts_at"
-    t.string "iban"
     t.datetime "guild_joined_date"
     t.datetime "guild_featured_member_at"
     t.string "guild_calendly_link"
@@ -1030,10 +997,6 @@ ActiveRecord::Schema.define(version: 2021_04_06_074551) do
   add_foreign_key "guild_reactions", "specialists", on_delete: :cascade
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
-  add_foreign_key "invoice_line_items", "invoices"
-  add_foreign_key "invoice_line_items", "tasks"
-  add_foreign_key "invoices", "applications"
-  add_foreign_key "invoices", "companies"
   add_foreign_key "labelings", "guild_posts"
   add_foreign_key "labelings", "labels"
   add_foreign_key "labels", "countries"
@@ -1055,7 +1018,6 @@ ActiveRecord::Schema.define(version: 2021_04_06_074551) do
   add_foreign_key "reviews", "specialists"
   add_foreign_key "searches", "off_platform_projects", column: "manually_recommended_project_id"
   add_foreign_key "searches", "users"
-  add_foreign_key "skills", "skills", column: "original_id"
   add_foreign_key "specialist_industries", "industries"
   add_foreign_key "specialist_industries", "specialists"
   add_foreign_key "specialist_skills", "skills"
