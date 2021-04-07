@@ -4,7 +4,7 @@ module Toby
   module Resources
     class Review < BaseResource
       model_name ::Review
-      attribute :uid, Attributes::String
+      attribute :uid, Attributes::String, readonly: true
       attribute :comment, Attributes::LongText
     end
   end

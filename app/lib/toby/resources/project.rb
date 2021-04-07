@@ -4,7 +4,7 @@ module Toby
   module Resources
     class Project < BaseResource
       model_name ::Project
-      attribute :uid, Attributes::String
+      attribute :uid, Attributes::String, readonly: true
       attribute :name, Attributes::String
       attribute :sales_person, Lookups::ProjectSalesPerson
       attribute :description, Attributes::LongText
