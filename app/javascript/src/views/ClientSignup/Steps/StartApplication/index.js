@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useCallback, useState } from "react";
+import React, { useMemo, useEffect, useCallback } from "react";
 import { useLocation, useHistory } from "react-router";
 import { motion } from "framer-motion";
 import queryString from "query-string";
@@ -22,7 +22,6 @@ const validationSchema = object().shape({
 });
 
 function StartApplication() {
-  const [isQueryParams, setIsQueryParams] = useState(false);
   const [startClientApplication, { called }] = useStartClientApplication();
   const location = useLocation();
   const history = useHistory();
@@ -32,6 +31,10 @@ function StartApplication() {
     () => queryString.parse(location.search, { decode: true }),
     [location.search],
   );
+  const hasQueryParams = useMemo(() => {
+    const { firstName, lastName, email } = queryParams;
+    return firstName && lastName && email;
+  }, [queryParams]);
 
   const handleSubmit = useCallback(
     async (values) => {
@@ -86,7 +89,6 @@ function StartApplication() {
   useEffect(() => {
     const { firstName, lastName, email } = queryParams;
     if (!called && firstName && lastName && email) {
-      setIsQueryParams(true);
       const valid = validationSchema.validateSync({
         firstName,
         lastName,
@@ -104,7 +106,7 @@ function StartApplication() {
     email: queryParams.email || "",
   };
 
-  if (isQueryParams) {
+  if (hasQueryParams) {
     return (
       <motion.div exit>
         <Loading />
