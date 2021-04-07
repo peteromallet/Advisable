@@ -39,10 +39,6 @@ module Toby
         options.fetch(:readonly, false)
       end
 
-      def lazy_read(_resource, _context)
-        # Placeholder for lazy_loading
-      end
-
       def read(resource)
         resource.public_send(name)
       end
@@ -56,9 +52,9 @@ module Toby
       end
 
       class << self
-        def filter(name, type, **args)
+        def filter(name, type, **args, &block)
           @filters ||= []
-          @filters << type.new(name, self, **args)
+          @filters << type.new(name, self, **args, &block)
         end
 
         def filters

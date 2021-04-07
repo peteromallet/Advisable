@@ -6,6 +6,7 @@ module Toby
       model_name ::Project
       attribute :uid, Attributes::String
       attribute :name, Attributes::String
+      attribute :sales_person, Attributes::ProjectSalesPerson
       attribute :description, Attributes::String
       attribute :user, Attributes::BelongsTo, labeled_by: :account
       attribute :status, Attributes::Select, options: ::Project::STATUSES
