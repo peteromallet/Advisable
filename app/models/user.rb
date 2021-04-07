@@ -119,7 +119,7 @@ class User < ApplicationRecord
   end
 
   # rubocop:disable Rails/SkipsModelValidations
-  def transfer_to_company(company, destroy: false)
+  def transfer_to_company!(company, destroy: false)
     ActiveRecord::Base.transaction do
       old_company_id = company_id
       raise "What are you even doing?" if old_company_id == company.id
