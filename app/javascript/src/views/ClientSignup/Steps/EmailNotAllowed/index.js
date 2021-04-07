@@ -1,9 +1,9 @@
 import React from "react";
-import { Link as DonutLink, Button } from "@advisable/donut";
-import MotionStack from "../MotionStack";
-import { Title, Description } from "../styles";
-import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
+import { Link as DonutLink, Button } from "@advisable/donut";
+import { Title, Description } from "../styles";
+import MotionStack from "../MotionStack";
 
 function EmailNotAllowed() {
   const location = useLocation();
@@ -19,7 +19,7 @@ function EmailNotAllowed() {
         </DonutLink.External>{" "}
         to tell us why you should be considered.
       </Description>
-      <Link to={{ pathname: "/clients/signup", state: { ...location.state } }}>
+      <Link to={{ pathname: "/clients/signup", state: location.state }}>
         <Button width={[1, "auto"]}>Try Again</Button>
       </Link>
     </MotionStack>

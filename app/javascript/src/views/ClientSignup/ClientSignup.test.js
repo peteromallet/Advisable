@@ -256,6 +256,7 @@ test("Successful client application flow and ASAP call", async () => {
   fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/good/i));
   fireEvent.click(screen.getByLabelText("Continue"));
+  await screen.findByText("Processing your application");
 
   // 4 Step. Let's get started
   await screen.findByText(/we think you might/i);
@@ -362,6 +363,7 @@ test("hide 'Call Me ASAP' button outside working hours", async () => {
   fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/good/i));
   fireEvent.click(screen.getByLabelText("Continue"));
+  await screen.findByText("Processing your application");
 
   // 4 Step. Let's get started
   await screen.findByText(/we think you might/i);
@@ -451,6 +453,7 @@ test("Successful client application flow via query string params", async () => {
   fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/good/i));
   fireEvent.click(screen.getByLabelText("Continue"));
+  await screen.findByText("Processing your application");
 
   // 4 Step. Let's get started
   await screen.findByText(/we think you might/i);
@@ -483,7 +486,7 @@ const emailNotAllowedRejection = {
       __typename: "Mutation",
       startClientApplication: null,
     },
-    errors: [{ extensions: { code: "emailNotAllowed" } }],
+    errors: [{ extensions: { code: "nonCorporateEmail" } }],
   },
 };
 
@@ -659,6 +662,7 @@ test("Cheap talents client application rejection flow", async () => {
   fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/cheap/i));
   fireEvent.click(screen.getByLabelText("Continue"));
+  await screen.findByText("Processing your application");
 
   // 4 Step. Unfortunately, we're not a good fit
   await screen.findByText(/unfortunately/i);
@@ -786,6 +790,7 @@ test("Reset Cheap Talents rejected flow", async () => {
   fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/cheap/i));
   fireEvent.click(screen.getByLabelText("Continue"));
+  await screen.findByText("Processing your application");
 
   // 4 Step. Unfortunately, we're not a good fit
   await screen.findByText(/unfortunately/i);
@@ -903,6 +908,7 @@ test("Not hiring client application rejection flow", async () => {
   fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/good/i));
   fireEvent.click(screen.getByLabelText("Continue"));
+  await screen.findByText("Processing your application");
 
   // 4 Step. Unfortunately, we're not a good fit
   await screen.findByText(/unfortunately/i);
@@ -1032,6 +1038,7 @@ test("Reset the Not_Hiring rejected flow", async () => {
   fireEvent.click(screen.getByLabelText("No"));
   fireEvent.click(screen.getByLabelText(/good/i));
   fireEvent.click(screen.getByLabelText("Continue"));
+  await screen.findByText("Processing your application");
 
   // 4 Step. Unfortunately, we're not a good fit
   await screen.findByText(/unfortunately/i);
