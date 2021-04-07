@@ -1,11 +1,19 @@
 # frozen_string_literal: true
 
 module Toby
-  module Attributes
-    class ProjectSalesPerson < String
+  module Lookups
+    class ProjectSalesPerson < Attributes::String
       filter :is, Filters::Equals do |records, value|
         records.includes(user: {company: :sales_person}).
           where(sales_person: {username: value[0]})
+      end
+
+      def self.lookup?
+        true
+      end
+
+      def readonly
+        true
       end
 
       def read(resource)
