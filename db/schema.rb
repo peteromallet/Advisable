@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_110917) do
+ActiveRecord::Schema.define(version: 2021_04_07_133641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -171,6 +171,27 @@ ActiveRecord::Schema.define(version: 2021_04_06_110917) do
     t.string "domain"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "case_study_articles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "score"
+    t.boolean "confidential"
+    t.string "title"
+    t.string "subtitle"
+    t.string "comment"
+    t.string "excerpt"
+    t.string "company_type"
+    t.jsonb "goals"
+    t.datetime "published_at"
+    t.datetime "specialist_approved_at"
+    t.bigint "specialist_id", null: false
+    t.bigint "interviewer_id", null: false
+    t.bigint "editor_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["editor_id"], name: "index_case_study_articles_on_editor_id"
+    t.index ["interviewer_id"], name: "index_case_study_articles_on_interviewer_id"
+    t.index ["specialist_id"], name: "index_case_study_articles_on_specialist_id"
   end
 
   create_table "client_calls", force: :cascade do |t|
@@ -974,6 +995,9 @@ ActiveRecord::Schema.define(version: 2021_04_06_110917) do
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
   add_foreign_key "auth_providers", "accounts"
+  add_foreign_key "case_study_articles", "accounts", column: "editor_id"
+  add_foreign_key "case_study_articles", "accounts", column: "interviewer_id"
+  add_foreign_key "case_study_articles", "specialists"
   add_foreign_key "client_calls", "projects"
   add_foreign_key "client_calls", "sales_people"
   add_foreign_key "client_calls", "users"
