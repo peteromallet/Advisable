@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Text, Circle, useBreakpoint } from "@advisable/donut";
 import { Check } from "@styled-icons/feather/Check";
 import MotionStack from "../MotionStack";
@@ -40,49 +39,17 @@ function Component({ title, text }) {
   );
 }
 
-Component.propTypes = {
-  title: PropTypes.string,
-  text: PropTypes.string,
-};
+export const CallBooked = () => (
+  <Component title="Your call is booked" text="We look forward to speaking!" />
+);
 
-function CallBooked() {
-  return (
-    <Component
-      title="Your call is booked"
-      text="We look forward to speaking!"
-    />
-  );
-}
+export const CallShortly = () => (
+  <Component title="Your call is booked" text="We look forward to speaking!" />
+);
 
-function CallShortly() {
-  return (
-    <Component
-      title="Your call is booked"
-      text="We look forward to speaking!"
-    />
-  );
-}
-
-function ReminderSet() {
-  return (
-    <Component
-      title="Reminder Set"
-      text="We'll send you a reminder in six months."
-    />
-  );
-}
-
-const ThankYou = (type) => {
-  switch (type) {
-    case "CallBooked":
-      return CallBooked;
-    case "CallShortly":
-      return CallShortly;
-    case "ReminderSet":
-      return ReminderSet;
-    default:
-      return null;
-  }
-};
-
-export default ThankYou;
+export const ReminderSet = () => (
+  <Component
+    title="Reminder Set"
+    text="We'll send you a reminder in six months."
+  />
+);

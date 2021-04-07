@@ -10,14 +10,14 @@ function ProcessingApplication() {
       as={motion.div}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ x: -100, opacity: 0, transition: { duration: 0.1 } }}
+      exit={{ x: -100, opacity: 0, transition: { duration: 0.2 } }}
       position="absolute"
       display="flex"
       justifyContent="center"
       alignItems="center"
       width="100%"
       height="100%"
-      zIndex="4"
+      zIndex="2"
     >
       <Box mt="-35%">
         <Loading />

@@ -2,11 +2,6 @@ import { gql } from "@apollo/client";
 import { useMutation, useQuery } from "@apollo/client";
 import { useLocation } from "react-router";
 
-export const useLocationState = () => {
-  const location = useLocation();
-  return location.state;
-};
-
 const clientApplicationFragment = gql`
   fragment Application on ClientApplication {
     id
@@ -46,9 +41,9 @@ export const GET_CLIENT_APPLICATION = gql`
 `;
 
 export const useClientApplicationQuery = () => {
-  const state = useLocationState();
+  const location = useLocation();
   return useQuery(GET_CLIENT_APPLICATION, {
-    variables: { id: state?.applicationId },
+    variables: { id: location.state?.applicationId },
   });
 };
 
@@ -88,9 +83,9 @@ export const ABOUT_COMPANY_QUERY = gql`
 `;
 
 export const useAboutCompanyQuery = () => {
-  const state = useLocationState();
+  const location = useLocation();
   return useQuery(ABOUT_COMPANY_QUERY, {
-    variables: { id: state?.applicationId },
+    variables: { id: location.state?.applicationId },
   });
 };
 
@@ -146,9 +141,9 @@ export const ABOUT_REQUIREMENTS_QUERY = gql`
 `;
 
 export const useAboutRequirementsQuery = () => {
-  const state = useLocationState();
+  const location = useLocation();
   return useQuery(ABOUT_REQUIREMENTS_QUERY, {
-    variables: { id: state?.applicationId },
+    variables: { id: location.state?.applicationId },
   });
 };
 
@@ -211,40 +206,6 @@ export const SUBMIT_CLIENT_APPLICATION = gql`
 export const useAboutPreferencesSubmit = () =>
   useMutation(SUBMIT_CLIENT_APPLICATION);
 
-export const getAboutPreferencesOptimisticResponse = (
-  id,
-  values,
-  numberOfFreelancers,
-) => {
-  const { talentQuality } = values;
-  let status = "Application Accepted";
-  let rejectionReason = null;
-
-  // Might be better to return both reasons
-  if (talentQuality === "CHEAP" || talentQuality === "BUDGET") {
-    status = "Application Rejected";
-    rejectionReason = "CHEAP_TALENT";
-  }
-  if (numberOfFreelancers === "0") {
-    status = "Application Rejected";
-    rejectionReason = "NOT_HIRING";
-  }
-
-  return {
-    __typename: "Mutation",
-    submitClientApplication: {
-      __typename: "SubmitClientApplicationPayload",
-      clientApplication: {
-        __typename: "ClientApplication",
-        id,
-        ...values,
-        status,
-        rejectionReason,
-      },
-    },
-  };
-};
-
 /* Step 5. Application Status page */
 
 export const REQUEST_APPLICATION_REMINDER = gql`
@@ -262,20 +223,6 @@ export const REQUEST_APPLICATION_REMINDER = gql`
 
 export const useRequestApplicationReminder = () =>
   useMutation(REQUEST_APPLICATION_REMINDER);
-
-export const getRequestApplicationReminderOptimisticResponse = (id) => {
-  return {
-    __typename: "Mutation",
-    requestApplicationReminder: {
-      __typename: "RequestApplicationReminderPayload",
-      clientApplication: {
-        __typename: "ClientApplication",
-        id,
-        status: "Requested Reminder",
-      },
-    },
-  };
-};
 
 export const REQUEST_APPLICATION_CALLBACK = gql`
   mutation RequestApplicationCallback(
@@ -305,9 +252,9 @@ export const QUERY_COUNTRY_CODE = gql`
 `;
 
 export const useCoutryCode = () => {
-  const state = useLocationState();
+  const location = useLocation();
   return useQuery(QUERY_COUNTRY_CODE, {
-    variables: { id: state?.applicationId },
+    variables: { id: location.state?.applicationId },
   });
 };
 

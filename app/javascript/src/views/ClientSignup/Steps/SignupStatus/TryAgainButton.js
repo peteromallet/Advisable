@@ -1,12 +1,10 @@
 import React from "react";
+import { useHistory, useLocation } from "react-router";
 import { Button } from "@advisable/donut";
 import {
   useResetClientApplication,
   useClientApplicationQuery,
 } from "../../queries";
-import steps from "../.";
-import { useHistory } from "react-router";
-import { useLocation } from "react-router";
 
 export default function TryAgainButton(props) {
   const { loading } = useClientApplicationQuery();
@@ -18,7 +16,10 @@ export default function TryAgainButton(props) {
 
   const handleClick = async () => {
     await reset();
-    history.replace({ pathname: steps[1].path, state: location.state });
+    history.replace({
+      pathname: "/clients/signup/about_your_company",
+      state: location.state,
+    });
   };
 
   return (
