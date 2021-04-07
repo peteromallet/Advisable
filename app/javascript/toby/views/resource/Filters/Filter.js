@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from "react";
-import { Box, Select } from "@advisable/donut";
+import { Box, Select, Button } from "@advisable/donut";
+import { Trash } from "@styled-icons/heroicons-solid/Trash";
 import FilterValue from "./filters";
 import { StyledFilter } from "./styles";
 
@@ -107,7 +108,15 @@ export default function Filter({
         filter={filter}
         onChange={handleChangeValue}
       />
-      <button onClick={handleRemove}>Remove</button>
+      <Button
+        mt={2}
+        prefix={<Trash />}
+        size="xs"
+        variant="subtle"
+        onClick={handleRemove}
+      >
+        Remove
+      </Button>
     </StyledFilter>
   );
 }
