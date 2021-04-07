@@ -53,7 +53,7 @@ function AboutPreferences() {
       <Redirect
         to={{
           pathname: "/clients/signup/status",
-          state: { ...location.state },
+          state: location.state,
         }}
       />
     );
@@ -84,7 +84,7 @@ function AboutPreferences() {
     setTimeout(() => {
       history.push({
         pathname: "/clients/signup/status",
-        state: { ...location.state },
+        state: location.state,
       });
     }, 2600);
   };

@@ -18,7 +18,7 @@ export default function TryAgainButton(props) {
     await reset();
     history.replace({
       pathname: "/clients/signup/about_your_company",
-      state: { ...location.state },
+      state: location.state,
     });
   };
 
