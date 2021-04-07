@@ -5,6 +5,7 @@ module Toby
     class Specialist < BaseResource
       model_name ::Specialist
       attribute :uid, Attributes::String, readonly: true
+      attribute :email, Lookups::Accounts::Email
       attribute :application_stage, Attributes::Select, options: ::Specialist::VALID_APPLICATION_STAGES
       attribute :previous_projects, Attributes::HasMany
       attribute :account, Attributes::BelongsTo, labeled_by: :name

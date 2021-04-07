@@ -70,7 +70,16 @@ module Toby
           @extension_fields || []
         end
 
+        def lookup?
+          false
+        end
+
         def attribute_type
+          # We don't want to define additional attribute types for lookup
+          # classes. For now we just define a lookup method in the lookup class
+          # to indicate that graphql should use the superclass type.
+          return superclass.attribute_type if lookup?
+
           @attribute_type ||= begin
             root = self
             Class.new(GraphQL::Schema::Object) do
