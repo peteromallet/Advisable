@@ -36,10 +36,13 @@ const SetupMenu = React.memo(function SetupMenu({
     guildPost?.audienceType?.length ||
     progressed("EDIT_AUDIENCE");
 
+  const targetingLabels = guildPost?.guildTopics?.filter(
+    (t) => t.name !== postPrompt?.label?.name,
+  );
   const targetingComplete =
     isPublished ||
     progressed("EDIT_TARGETING") ||
-    guildPost?.guildComposerTopics?.length ||
+    targetingLabels?.length ||
     guildPost?.audienceType === "none";
 
   return (

@@ -6,14 +6,16 @@ module Mutations
       description "Updates a new guild post"
       graphql_name "UpdateGuildPost"
 
-      argument :guild_post_id, ID, required: true
-      argument :body, String, required: false
-      argument :title, String, required: false
-      argument :publish, Boolean, required: false
-      argument :type, String, required: false
+      # rubocop:disable GraphQL/ExtractInputType
       argument :audience_type, String, required: false
+      argument :body, String, required: false
+      argument :guild_post_id, ID, required: true
       argument :labels, [String], required: false
+      argument :publish, Boolean, required: false
       argument :shareable, Boolean, required: false
+      argument :title, String, required: false
+      argument :type, String, required: false
+      # rubocop:enable GraphQL/ExtractInputType
 
       field :guild_post, Types::Guild::PostInterface, null: true
 
@@ -29,6 +31,12 @@ module Mutations
         if args[:labels].present?
           labels = args[:labels].map { |name| Label.find_or_create_by(name: name) }
           guild_post.labels = labels
+        end
+
+        # - Don't allow deleting the post prompt label
+        if guild_post.post_prompt
+          label = guild_post.post_prompt&.label
+          guild_post.labels << label unless guild_post.labels.exists?(label&.id)
         end
 
         # - A removed post cannot be published

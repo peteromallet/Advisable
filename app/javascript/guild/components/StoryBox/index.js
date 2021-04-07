@@ -8,12 +8,12 @@ import LabelPost from "./LabelPost";
 
 export default function StoryBox() {
   const history = useHistory();
-  const { data, loading } = useQuery(STORY_BOX_QUERY);
+  const { data, loading } = useQuery(STORY_BOX_QUERY, {
+    fetchPolicy: "cache-and-network",
+  });
   const latestPrompt = data?.latestPrompt;
   const label = latestPrompt?.label;
   const posts = label?.guildPosts?.edges?.map((e) => e.node) || [];
-
-  console.log(posts);
 
   const handleViewAll = () => history.push(`/topics/${label.slug}`);
   const handleCreateFromPrompt = () =>
