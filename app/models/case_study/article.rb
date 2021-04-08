@@ -7,6 +7,7 @@ module CaseStudy
     belongs_to :interviewer, class_name: "Account"
     belongs_to :editor, class_name: "Account"
     has_many :skills, class_name: "CaseStudy::Skill", dependent: :destroy
+    has_many :industries, class_name: "CaseStudy::Industry", dependent: :destroy
   end
 end
 
