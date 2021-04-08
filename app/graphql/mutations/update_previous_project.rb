@@ -51,7 +51,7 @@ module Mutations
 
     private
 
-    def assignable_attrs(**args)
+    def assignable_attrs(args)
       args.slice(
         :confidential,
         :client_name,

@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "~> 2.7.2"
+ruby "~> 3.0.1"
 
 gem "rails", "~> 6.1"
 gem "pg", ">= 0.18", "< 2.0"
@@ -54,7 +54,7 @@ gem "administrate-field-active_storage"
 
 gem "pry"
 gem "pry-rails"
-gem "pry-doc"
+# gem "pry-doc" Does not support Ruby 3 yet
 gem "pry-byebug", ">= 3.9.0"
 
 group :development, :test do
