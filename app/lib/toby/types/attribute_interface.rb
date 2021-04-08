@@ -23,9 +23,6 @@ module Toby
       end
 
       field :readonly, GraphQL::Types::Boolean, null: false
-      def readonly
-        object.options.fetch(:readonly, false)
-      end
 
       field :column_label, GraphQL::Types::String, null: true
       def column_label
