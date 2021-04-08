@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_133641) do
+ActiveRecord::Schema.define(version: 2021_04_08_062936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -189,9 +189,20 @@ ActiveRecord::Schema.define(version: 2021_04_07_133641) do
     t.bigint "editor_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "case_study_company_id"
+    t.index ["case_study_company_id"], name: "index_case_study_articles_on_case_study_company_id"
     t.index ["editor_id"], name: "index_case_study_articles_on_editor_id"
     t.index ["interviewer_id"], name: "index_case_study_articles_on_interviewer_id"
     t.index ["specialist_id"], name: "index_case_study_articles_on_specialist_id"
+  end
+
+  create_table "case_study_companies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "website"
+    t.string "business_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "client_calls", force: :cascade do |t|
@@ -997,6 +1008,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_133641) do
   add_foreign_key "auth_providers", "accounts"
   add_foreign_key "case_study_articles", "accounts", column: "editor_id"
   add_foreign_key "case_study_articles", "accounts", column: "interviewer_id"
+  add_foreign_key "case_study_articles", "case_study_companies"
   add_foreign_key "case_study_articles", "specialists"
   add_foreign_key "client_calls", "projects"
   add_foreign_key "client_calls", "sales_people"

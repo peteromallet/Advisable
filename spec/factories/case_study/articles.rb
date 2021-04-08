@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :case_study_article, class: 'CaseStudy::Article' do
     score { 1 }
+    company { association :case_study_company }
     confidential { false }
     title { "MyString" }
     subtitle { "MyString" }
