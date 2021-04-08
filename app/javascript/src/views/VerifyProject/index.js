@@ -71,7 +71,17 @@ function VerifyProjectView() {
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
 
-  const Component = STATUS_MAP[data.previousProject.validationStatus];
+  // Set status
+  let status;
+  const validationStatus = data.previousProject.validationStatus;
+  const isReviewed = !!data.previousProject.reviews.length;
+  if (validationStatus === "Validated" && !isReviewed) {
+    status = "Validated Not Reviewed";
+  } else {
+    status = validationStatus;
+  }
+
+  const Component = STATUS_MAP[status];
 
   return (
     <>
