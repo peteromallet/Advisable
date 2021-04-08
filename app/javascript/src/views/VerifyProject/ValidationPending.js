@@ -33,7 +33,7 @@ function ValidationPending({ data }) {
         </Text>
         <Text fontSize="16px" lineHeight="24px" color="neutral900" mb="40px">
           When verified this project will be used to help {specialist.firstName}{" "}
-          find other projects on Adivsable. Please review the details below and
+          find other projects on Advisable. Please review the details below and
           verify that they are correct.
         </Text>
         <Text
