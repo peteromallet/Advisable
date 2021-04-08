@@ -6,6 +6,7 @@ module CaseStudy
     belongs_to :company, class_name: "CaseStudy::Company", foreign_key: :case_study_company_id, inverse_of: :articles
     belongs_to :interviewer, class_name: "Account"
     belongs_to :editor, class_name: "Account"
+    has_many :skills, class_name: "CaseStudy::Skill", dependent: :destroy
   end
 end
 
