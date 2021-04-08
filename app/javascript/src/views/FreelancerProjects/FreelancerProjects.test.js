@@ -43,7 +43,7 @@ test("render empty state", async () => {
   await screen.findByText(/no active projects/i);
 });
 
-test("Shows the freelancers active projects", async () => {
+test("Shows the freelancers finished projects", async () => {
   const freelancer = mockData.specialist({
     applications: [
       mockData.application({
@@ -67,5 +67,5 @@ test("Shows the freelancers active projects", async () => {
 
   expect(screen.queryByText(/test project/i)).toBeNull();
   user.click(await screen.findByLabelText(/finished/i));
-  screen.findByText(/test project/i);
+  await screen.findByText(/test project/i);
 });
