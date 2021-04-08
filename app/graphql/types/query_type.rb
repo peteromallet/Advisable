@@ -2,6 +2,8 @@
 
 module Types
   class QueryType < Types::BaseType
+    description "A defined set of types describing what can be queried"
+
     field :project, Types::ProjectType, null: true do
       argument :id, ID, required: true
     end
@@ -173,13 +175,11 @@ module Types
       ::VideoCall.find_by_uid!(id)
     end
 
-    field :recommended_specialist, Types::RecommendedSpecialistType, null: true
+    field :specialist_recommendation, Types::RecommendationInterface, null: true
 
-    def recommended_specialist
+    def specialist_recommendation
       requires_guild_user!
-      ::Specialists::Recommender.call(specialist: current_user)
-    rescue Service::Error => e
-      ApiError.invalid_request('noRecommendation', e.message)
+      ::Specialists::Recommender.call(current_user)
     end
 
     # Guild
