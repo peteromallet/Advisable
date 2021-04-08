@@ -2,7 +2,7 @@
 
 module CaseStudy
   class Industry < ApplicationRecord
-    belongs_to :article, class_name: "CaseStudy::Article"
+    belongs_to :article
     belongs_to :industry, class_name: "::Industry", inverse_of: :case_study_industries
   end
 end

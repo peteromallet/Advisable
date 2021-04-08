@@ -2,7 +2,7 @@
 
 module CaseStudy
   class Skill < ApplicationRecord
-    belongs_to :article, class_name: "CaseStudy::Article"
+    belongs_to :article
     belongs_to :skill, class_name: "::Skill", inverse_of: :case_study_skills
   end
 end
