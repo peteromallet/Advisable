@@ -2,7 +2,7 @@
 
 module CaseStudy
   class Company < ApplicationRecord
-    has_many :articles, class_name: "CaseStudy::Article", dependent: :destroy
+    has_many :articles, dependent: :destroy
   end
 end
 
