@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_08_134843) do
+ActiveRecord::Schema.define(version: 2021_04_08_145819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -933,6 +933,15 @@ ActiveRecord::Schema.define(version: 2021_04_08_134843) do
     t.index ["application_id"], name: "index_tasks_on_application_id"
     t.index ["stage"], name: "index_tasks_on_stage"
     t.index ["uid"], name: "index_tasks_on_uid"
+  end
+
+  create_table "toby_views", force: :cascade do |t|
+    t.string "name"
+    t.string "resource"
+    t.jsonb "filters"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["resource"], name: "index_toby_views_on_resource"
   end
 
   create_table "unresponsiveness_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

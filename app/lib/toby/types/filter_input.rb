@@ -2,7 +2,7 @@
 
 module Toby
   module Types
-    class Filter < GraphQL::Schema::InputObject
+    class FilterInput < GraphQL::Schema::InputObject
       argument :attribute, String, required: true
       argument :type, String, required: true
       argument :value, [String], required: false
