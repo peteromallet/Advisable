@@ -13,6 +13,7 @@ import CurrencyAttribute from "./currency";
 import TextArrayAttribute from "./textArray";
 import BelongsToAttribute from "./belongsTo";
 import IntegerAttribute from "./integer";
+import LongTextAttribute from "./longText";
 
 const ATTRIBUTES = {
   IdAttribute,
@@ -28,6 +29,7 @@ const ATTRIBUTES = {
   IntegerAttribute,
   HasManyThroughAttribute: HasManyAttribute,
   SelectAttribute,
+  LongTextAttribute,
 };
 
 export function Attribute({ record, attribute }) {

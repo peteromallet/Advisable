@@ -78,7 +78,7 @@ module Toby
           Class.new(GraphQL::Schema::InputObject) do
             graphql_name("#{root.model.name}Attributes")
             root.attributes.each do |attribute|
-              next if attribute.options[:readonly]
+              next if attribute.readonly
 
               argument attribute.name, attribute.input_type, required: false
             end

@@ -5,6 +5,7 @@ module Toby
     class User < BaseResource
       model_name ::User
       attribute :uid, Attributes::String, readonly: true
+      attribute :email, Lookups::Accounts::Email
       attribute :account, Attributes::BelongsTo, labeled_by: :name
       attribute :company, Attributes::BelongsTo, labeled_by: :name
       attribute :country, Attributes::BelongsTo, labeled_by: :name

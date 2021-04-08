@@ -17,7 +17,11 @@ module Toby
           filter_class = attribute.class.filters.find { |f| f.name == args[:type] }
           next if filter_class.nil?
 
-          records = filter_class.apply(records, attribute, value: args[:value])
+          records = if filter_class.block.present?
+                      filter_class.block.call(records, args[:value])
+                    else
+                      filter_class.apply(records, attribute, value: args[:value])
+                    end
         end
 
         records

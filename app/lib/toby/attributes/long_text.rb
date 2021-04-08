@@ -2,9 +2,8 @@
 
 module Toby
   module Attributes
-    class String < BaseAttribute
+    class LongText < BaseAttribute
       filter :is, Filters::Equals
-      filter :one_of, Filters::OneOf
       filter :contains, Filters::StringContains
       filter :is_empty, Filters::CheckNil
       filter :not_empty, Filters::CheckNotNil

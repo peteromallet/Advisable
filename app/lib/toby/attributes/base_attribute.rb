@@ -39,10 +39,6 @@ module Toby
         options.fetch(:readonly, false)
       end
 
-      def lazy_read(_resource, _context)
-        # Placeholder for lazy_loading
-      end
-
       def read(resource)
         resource.public_send(name)
       end
@@ -56,9 +52,9 @@ module Toby
       end
 
       class << self
-        def filter(name, type, **args)
+        def filter(name, type, **args, &block)
           @filters ||= []
-          @filters << type.new(name, self, **args)
+          @filters << type.new(name, self, **args, &block)
         end
 
         def filters
@@ -74,7 +70,16 @@ module Toby
           @extension_fields || []
         end
 
+        def lookup?
+          false
+        end
+
         def attribute_type
+          # We don't want to define additional attribute types for lookup
+          # classes. For now we just define a lookup method in the lookup class
+          # to indicate that graphql should use the superclass type.
+          return superclass.attribute_type if lookup?
+
           @attribute_type ||= begin
             root = self
             Class.new(GraphQL::Schema::Object) do

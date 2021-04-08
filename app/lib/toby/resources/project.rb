@@ -4,9 +4,10 @@ module Toby
   module Resources
     class Project < BaseResource
       model_name ::Project
-      attribute :uid, Attributes::String
+      attribute :uid, Attributes::String, readonly: true
       attribute :name, Attributes::String
-      attribute :description, Attributes::String
+      attribute :sales_person, Lookups::ProjectSalesPerson
+      attribute :description, Attributes::LongText
       attribute :user, Attributes::BelongsTo, labeled_by: :account
       attribute :status, Attributes::Select, options: ::Project::STATUSES
       attribute :sales_status, Attributes::Select, options: ::Project::SALES_STATUSES
