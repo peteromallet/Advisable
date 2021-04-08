@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_08_062936) do
+ActiveRecord::Schema.define(version: 2021_04_08_071121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -203,6 +203,16 @@ ActiveRecord::Schema.define(version: 2021_04_08_062936) do
     t.string "business_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "case_study_skills", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "primary"
+    t.uuid "article_id", null: false
+    t.bigint "skill_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_case_study_skills_on_article_id"
+    t.index ["skill_id"], name: "index_case_study_skills_on_skill_id"
   end
 
   create_table "client_calls", force: :cascade do |t|
@@ -1010,6 +1020,8 @@ ActiveRecord::Schema.define(version: 2021_04_08_062936) do
   add_foreign_key "case_study_articles", "accounts", column: "interviewer_id"
   add_foreign_key "case_study_articles", "case_study_companies"
   add_foreign_key "case_study_articles", "specialists"
+  add_foreign_key "case_study_skills", "case_study_articles", column: "article_id"
+  add_foreign_key "case_study_skills", "skills"
   add_foreign_key "client_calls", "projects"
   add_foreign_key "client_calls", "sales_people"
   add_foreign_key "client_calls", "users"
