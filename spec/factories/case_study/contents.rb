@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :case_study_content, class: 'CaseStudy::Content' do
-    article { association :case_study_article }
-    type { 1 }
+    section { association :case_study_section }
+    type { "" }
     position { 1 }
     content { {title: "wat"} }
   end
