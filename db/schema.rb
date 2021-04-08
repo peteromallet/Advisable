@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_08_074358) do
+ActiveRecord::Schema.define(version: 2021_04_08_134843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -206,13 +206,13 @@ ActiveRecord::Schema.define(version: 2021_04_08_074358) do
   end
 
   create_table "case_study_contents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "article_id", null: false
-    t.integer "type"
+    t.uuid "section_id", null: false
+    t.string "type"
     t.integer "position"
     t.jsonb "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["article_id"], name: "index_case_study_contents_on_article_id"
+    t.index ["section_id"], name: "index_case_study_contents_on_section_id"
   end
 
   create_table "case_study_industries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -222,6 +222,14 @@ ActiveRecord::Schema.define(version: 2021_04_08_074358) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_case_study_industries_on_article_id"
     t.index ["industry_id"], name: "index_case_study_industries_on_industry_id"
+  end
+
+  create_table "case_study_sections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "article_id", null: false
+    t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_case_study_sections_on_article_id"
   end
 
   create_table "case_study_skills", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -1039,9 +1047,10 @@ ActiveRecord::Schema.define(version: 2021_04_08_074358) do
   add_foreign_key "case_study_articles", "accounts", column: "interviewer_id"
   add_foreign_key "case_study_articles", "case_study_companies", column: "company_id"
   add_foreign_key "case_study_articles", "specialists"
-  add_foreign_key "case_study_contents", "case_study_articles", column: "article_id"
+  add_foreign_key "case_study_contents", "case_study_sections", column: "section_id"
   add_foreign_key "case_study_industries", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "industries"
+  add_foreign_key "case_study_sections", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_skills", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_skills", "skills"
   add_foreign_key "client_calls", "projects"
