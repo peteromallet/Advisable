@@ -1,13 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { object, string } from "yup";
 import { Formik, Form } from "formik";
 // Hooks
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { useReviewPreviousProject } from "../queries";
 // Components
 import { Text, Button, Textarea } from "@advisable/donut";
-import FormField from "../../../components/FormField";
-import SubmitButton from "../../../components/SubmitButton";
+import SubmitButton from "src/components/SubmitButton";
+import FormField from "src/components/FormField";
+
+const valiadtionSchema = object().shape({
+  comment: string().required("Please write a review"),
+});
 
 function ReviewComment({ specialist }) {
   // React Router data
@@ -55,7 +60,11 @@ function ReviewComment({ specialist }) {
         This will help {specialist.firstName} find new opportunities on
         Advisable.
       </Text>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={valiadtionSchema}
+        onSubmit={handleSubmit}
+      >
         <Form>
           <FormField
             minRows={8}
