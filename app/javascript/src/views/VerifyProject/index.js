@@ -7,6 +7,7 @@ import { usePreviousProject } from "./queries";
 import NotFound, { isNotFound } from "../NotFound";
 import ValidationPending from "./ValidationPending";
 import AlreadyValidated from "./AlreadyValidated";
+import ReviewRequested from "./ReviewRequested";
 import CannotValidate from "./CannotValidate";
 import Review from "./Review";
 import Complete from "./Complete";
@@ -20,9 +21,7 @@ function StatusPending({ data }) {
 }
 
 function StatusValidated({ data }) {
-  if (!data.oauthViewer) {
-    return <AlreadyValidated />;
-  }
+  if (!data.oauthViewer) return <AlreadyValidated />;
 
   return (
     <Switch>
@@ -34,6 +33,24 @@ function StatusValidated({ data }) {
       </Route>
       <Route>
         <Redirect to={`/verify_project/${data.previousProject.id}/review`} />
+      </Route>
+    </Switch>
+  );
+}
+
+function StatusValidatedNotReviewed({ data }) {
+  if (!data.oauthViewer) return <ReviewRequested data={data} />;
+
+  return (
+    <Switch>
+      <Route path="/verify_project/:id/review">
+        <Review data={data} />
+      </Route>
+      <Route path="/verify_project/:id/complete">
+        <Complete data={data} />
+      </Route>
+      <Route>
+        <ReviewRequested data={data} />
       </Route>
     </Switch>
   );
@@ -62,6 +79,7 @@ function StatusFailed({ data }) {
 const STATUS_MAP = {
   Pending: StatusPending,
   Validated: StatusValidated,
+  "Validated Not Reviewed": StatusValidatedNotReviewed,
   "Validation Failed": StatusFailed,
 };
 
