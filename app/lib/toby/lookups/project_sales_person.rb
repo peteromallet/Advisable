@@ -1,22 +1,6 @@
 # frozen_string_literal: true
 
 module Toby
-  class CustomLazy < Lazy::Single
-    def id
-      resource.user_id
-    end
-
-    private
-
-    def load_records
-      User.includes(company: :sales_person).where(id: state[:pending]).each do |record|
-        state[:loaded][record.id] ||= []
-        state[:loaded][record.id] << record&.company&.sales_person&.username
-      end
-      state[:pending].clear
-    end
-  end
-
   module Lookups
     class ProjectSalesPerson < Attributes::String
       filter :is, Filters::Equals do |records, value|
@@ -33,7 +17,23 @@ module Toby
       end
 
       def lazy_read_class
-        Toby::CustomLazy
+        Toby::Lazy::Lookup
+      end
+
+      def lazy_column
+        :id
+      end
+
+      def lazy_id
+        :user_id
+      end
+
+      def lazy_model
+        User.includes(company: :sales_person)
+      end
+
+      def lazy_read(record)
+        record&.company&.sales_person&.username
       end
     end
   end
