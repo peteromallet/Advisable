@@ -28,13 +28,12 @@ function NoReview({ data }) {
           fontWeight="medium"
           letterSpacing="-0.02em"
         >
-          {specialist.firstName} is asking you to leave a review on the project
-          you previously verified
+          {specialist.firstName} has requested a review from you on a previous
+          project
         </Text>
         <Text fontSize="16px" lineHeight="24px" color="neutral900" mb="40px">
-          Your review will be listed in {possessive(specialist.firstName)}{" "}
-          profile and used to help find other projects on Advisable. Also, it
-          could promote you as a reliable client.
+          Your review will be shown on {possessive(specialist.firstName)}{" "}
+          profile and will be used to help them find projects on Advisable.
         </Text>
         <Text
           fontSize={{ _: "20px", m: "22px" }}
