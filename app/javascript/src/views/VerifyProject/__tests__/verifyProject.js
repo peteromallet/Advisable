@@ -498,6 +498,7 @@ test("Displays already validated when not oauthed", async () => {
     specialist: mockData.specialist(),
     primaryIndustry: mockData.industry(),
     validationStatus: "Validated",
+    reviews: [mockData.review()],
   });
 
   const graphQLMocks = [
@@ -518,6 +519,62 @@ test("Displays already validated when not oauthed", async () => {
   });
 
   await screen.findByText(/project validated/i);
+});
+
+test("Validated but not reviewed flow", async () => {
+  const previousProject = mockData.previousProject({
+    id: "pre_1",
+    specialist: mockData.specialist(),
+    primaryIndustry: mockData.industry(),
+    validationStatus: "Validated",
+    reviews: [],
+  });
+
+  const graphQLMocks = [
+    mockViewer(null),
+    mockQuery(
+      GET_PREVIOUS_PROJECT,
+      { id: "pre_1" },
+      {
+        oauthViewer: {
+          __typename: "oauthViewer",
+          name: "Test Account",
+          image: null,
+          firstName: "Test",
+          canValidateProject: true,
+        },
+        previousProject,
+      },
+    ),
+    mockMutation(
+      REVIEW_PREVIOUS_PROJECT,
+      {
+        previousProject: "pre_1",
+        comment: "This is the comment",
+      },
+      {
+        reviewPreviousProject: {
+          __typename: "ReviewPreviousProjectPayload",
+          review: mockData.review(),
+        },
+      },
+    ),
+  ];
+
+  renderRoute({
+    route: "/verify_project/pre_1",
+    graphQLMocks,
+  });
+
+  await screen.findByText(/leave a review on the project/i);
+  user.click(screen.getByLabelText(/leave a review/i));
+  await screen.findByText(/What did you love/i);
+  user.type(
+    screen.getByPlaceholderText(/is an incredible/i),
+    "This is the comment",
+  );
+  user.click(screen.getByLabelText(/Submit/i));
+  await screen.findByText(/Thanks/i);
 });
 
 test("Prompts to auth with linkedin when failed", async () => {
@@ -545,7 +602,7 @@ test("Prompts to auth with linkedin when failed", async () => {
     graphQLMocks,
   });
 
-  await screen.findByText("Login with Linkedin");
+  await screen.findByText("Login with LinkedIn");
 });
 
 test("Can still validate project when its failed", async () => {
