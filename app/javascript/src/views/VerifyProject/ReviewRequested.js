@@ -67,7 +67,10 @@ function NoReview({ data }) {
         {viewer ? (
           <Button
             as={Link}
-            to={`/verify_project/${data.previousProject.id}/review/comment`}
+            to={{
+              pathname: `/verify_project/${data.previousProject.id}/review/comment`,
+              state: { disableSkip: true },
+            }}
             size="l"
           >
             Leave a Review

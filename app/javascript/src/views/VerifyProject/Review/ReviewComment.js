@@ -19,6 +19,7 @@ function ReviewComment({ specialist }) {
   const { id } = useParams();
   const history = useHistory();
   const location = useLocation();
+  const disableSkip = location.state?.disableSkip;
 
   // Apollo Mutation action
   const [reviewPreviousProject] = useReviewPreviousProject();
@@ -81,15 +82,17 @@ function ReviewComment({ specialist }) {
           >
             Submit Review
           </SubmitButton>
-          <Button
-            size="l"
-            type="button"
-            variant="subtle"
-            width={["100%", "auto"]}
-            onClick={handleSkip}
-          >
-            Skip
-          </Button>
+          {!disableSkip ? (
+            <Button
+              size="l"
+              type="button"
+              variant="subtle"
+              width={["100%", "auto"]}
+              onClick={handleSkip}
+            >
+              Skip
+            </Button>
+          ) : null}
         </Form>
       </Formik>
     </>
