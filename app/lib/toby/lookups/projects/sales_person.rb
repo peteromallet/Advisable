@@ -2,11 +2,11 @@
 
 module Toby
   module Lookups
-    module Accounts
-      class Email < Attributes::String
+    module Projects
+      class SalesPerson < Attributes::String
         filter :is, Filters::Equals do |records, value|
-          records.includes(:account).
-            where(accounts: {email: value[0]})
+          records.includes(user: {company: :sales_person}).
+            where(sales_person: {username: value[0]})
         end
 
         def self.lookup?
@@ -26,15 +26,15 @@ module Toby
         end
 
         def lazy_id
-          :account_id
+          :user_id
         end
 
         def lazy_model
-          Account
+          User.includes(company: :sales_person)
         end
 
         def lazy_read(record)
-          record&.email
+          record&.company&.sales_person&.username
         end
       end
     end

@@ -6,7 +6,7 @@ module Toby
       model_name ::Project
       attribute :uid, Attributes::String, readonly: true
       attribute :name, Attributes::String
-      attribute :sales_person, Lookups::ProjectSalesPerson
+      attribute :sales_person, Lookups::Projects::SalesPerson
       attribute :description, Attributes::LongText
       attribute :user, Attributes::BelongsTo, labeled_by: :account
       attribute :status, Attributes::Select, options: ::Project::STATUSES
