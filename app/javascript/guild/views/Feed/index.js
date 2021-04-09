@@ -38,9 +38,9 @@ const Feed = () => {
       {lUp && (
         <Box width="260px" flexShrink="0">
           <Sticky top={98} enabled>
+            <SuggestedConnection />
             <FeaturedMembers />
             <Referral />
-            <SuggestedConnection />
           </Sticky>
         </Box>
       )}

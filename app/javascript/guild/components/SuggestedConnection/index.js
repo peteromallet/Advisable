@@ -17,6 +17,7 @@ export default function SuggestedConnection() {
       : specialistRecommendation?.__typename === "SkillRecommendation"
       ? specialistRecommendation?.industries
       : null;
+
   const skillOrIndustriesNames = skillOrIndustries
     ?.map(({ name }) => name)
     ?.join(", ")
@@ -25,45 +26,60 @@ export default function SuggestedConnection() {
   if (loading) return <Loading />;
 
   return recommendation ? (
-    <Card
-      marginTop="m"
-      padding="3"
-      marginBottom="4"
-      borderRadius="12px"
-      background="white"
-    >
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
+    <Box marginBottom={10}>
+      <Text
+        fontSize="xs"
+        marginBottom="3"
+        color="neutral600"
+        fontWeight="medium"
+        textTransform="uppercase"
       >
-        <Box marginTop="l" flexShrink="0">
+        Suggested Member
+      </Text>
+      <Card padding="6" borderRadius="12px" background="white">
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column"
+        >
           <Avatar
-            as={RouterLink}
-            to={`/freelancers/${recommendation.id}/guild`}
             size="l"
+            as={RouterLink}
+            marginBottom={5}
+            to={`/freelancers/${recommendation.id}/guild`}
             name={recommendation.name}
             url={recommendation.avatar}
           />
+          <Text
+            marginBottom={1.5}
+            size="l"
+            color="neutral900"
+            fontWeight="medium"
+          >
+            {recommendation?.name}
+          </Text>
+          <Text
+            fontSize="s"
+            lineHeight="1.2"
+            textAlign="center"
+            color="neutral700"
+          >
+            {skillOrIndustries
+              ? `${recommendation?.firstName} also works in ${skillOrIndustriesNames}`
+              : `We think you and ${recommendation?.firstName} could have some related skills or industries`}
+          </Text>
+          <Button
+            as={RouterLink}
+            size="s"
+            to={`/freelancers/${recommendation.id}/guild`}
+            marginTop="m"
+            variant="subtle"
+          >
+            View Profile
+          </Button>
         </Box>
-        <Text marginY="xs" size="l" color="neutral900" fontWeight="medium">
-          {recommendation?.name}
-        </Text>
-        <Text textAlign="center" size="m" color="neutral600" fontWeight="light">
-          {skillOrIndustries
-            ? `${recommendation?.firstName} also works in ${skillOrIndustriesNames}`
-            : `We think you and ${recommendation?.firstName} could have some related skills or industries`}
-        </Text>
-        <Button
-          as={RouterLink}
-          to={`/freelancers/${recommendation.id}/guild`}
-          marginTop="m"
-          variant="subtle"
-        >
-          View Profile
-        </Button>
-      </Box>
-    </Card>
+      </Card>
+    </Box>
   ) : null;
 }
