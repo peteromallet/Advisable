@@ -20,6 +20,10 @@ module Toby
         records
       end
 
+      def lazy_model
+        attribute.try(:lazy_model) || reflection.klass
+      end
+
       private
 
       def state
@@ -32,9 +36,11 @@ module Toby
       end
 
       def load_records
-        reflection.klass.where(column => state[:pending]).each do |record|
-          state[:loaded][record.public_send(column)] ||= []
-          state[:loaded][record.public_send(column)] << record
+        lazy_model.where(column => state[:pending]).each do |record|
+          key = record.public_send(column)
+          value = attribute.try(:lazy_read, record) || record
+          state[:loaded][key] ||= []
+          state[:loaded][key] << value
         end
         state[:pending].clear
       end
