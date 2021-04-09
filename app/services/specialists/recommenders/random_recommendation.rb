@@ -5,7 +5,7 @@ module Specialists
     class RandomRecommendation < Recommendation
       def self.recommendation_for(specialist, others)
         recommendation = others.order(Arel.sql("RANDOM()"))&.first
-        new(specialist, recommendation)
+        new(specialist, recommendation) if recommendation.present?
       end
     end
   end
