@@ -566,7 +566,7 @@ test("Validated but not reviewed flow", async () => {
     graphQLMocks,
   });
 
-  await screen.findByText(/leave a review on the project/i);
+  await screen.findByText(/requested a review from you/i);
   user.click(screen.getByLabelText(/leave a review/i));
   await screen.findByText(/What did you love/i);
   user.type(
