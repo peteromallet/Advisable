@@ -3,6 +3,9 @@ import { Box, Text, Link } from "@advisable/donut";
 import LoginWithLinkedin from "./LoginWithLinkedin";
 
 function AuthenticateWithLinkedin({ data }) {
+  const isValidated = data.previousProject.validationStatus === "Validated";
+  const isReviewed = !!data.previousProject.reviews.length;
+
   return (
     <Box
       bg="blue50"
@@ -17,8 +20,8 @@ function AuthenticateWithLinkedin({ data }) {
         lineHeight="22px"
         fontWeight="medium"
       >
-        Please login with Linkedin to unlock the full details and verify this
-        project
+        Please login with LinkedIn to unlock the full details and{" "}
+        {isValidated && !isReviewed ? "review" : "verify"} this project
       </Text>
       <LoginWithLinkedin />
       <Text fontWeight="medium" mt="24px" mb="xs">
