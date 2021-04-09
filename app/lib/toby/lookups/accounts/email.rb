@@ -18,14 +18,14 @@ module Toby
         end
 
         def lazy_read_class
-          Toby::Lazy::Lookup
+          Toby::Lazy::Single
         end
 
-        def lazy_column
+        def column
           :id
         end
 
-        def lazy_id
+        def via
           :account_id
         end
 
