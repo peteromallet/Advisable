@@ -5,15 +5,19 @@ module Toby
     class Base
       extend Forwardable
 
-      attr_reader :attribute, :id, :context
+      attr_reader :attribute, :context, :resource
 
       def_delegators :attribute, :reflection, :column, :via
 
       def initialize(attribute, context, resource)
         @attribute = attribute
-        @id = resource.public_send(via)
         @context = context
+        @resource = resource
         state[:pending] << id
+      end
+
+      def id
+        @id ||= resource.public_send(via)
       end
 
       def resolve
