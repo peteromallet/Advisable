@@ -3,7 +3,7 @@
 module CaseStudy
   class Article < ApplicationRecord
     belongs_to :specialist
-    belongs_to :company
+    belongs_to :company, optional: true
     belongs_to :interviewer, class_name: "::Account"
     belongs_to :editor, class_name: "::Account"
     has_many :contents, dependent: :destroy
