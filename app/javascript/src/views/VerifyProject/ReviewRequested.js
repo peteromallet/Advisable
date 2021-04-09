@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import {
   Container,
   Card,
@@ -12,15 +11,7 @@ import {
 import AuthenticateWithLinkedin from "./AuthenticateWithLinkedin";
 import renderLineBreaks from "src/utilities/renderLineBreaks";
 import possessive from "src/utilities/possesive";
-
-const StyledTextMask = styled.div`
-  left: 0;
-  bottom: 0;
-  height: 60px;
-  width: 100%;
-  position: absolute;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
-`;
+import { StyledTextMask } from "./styles";
 
 function NoReview({ data }) {
   const viewer = data.oauthViewer;

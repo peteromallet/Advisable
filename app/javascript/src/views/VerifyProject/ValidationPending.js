@@ -1,18 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import { Container, Card, Box, Text, Avatar } from "@advisable/donut";
 import ValidationActions from "./ValidationActions";
 import AuthenticateWithLinkedin from "./AuthenticateWithLinkedin";
 import renderLineBreaks from "../../utilities/renderLineBreaks";
-
-const StyledTextMask = styled.div`
-  left: 0;
-  bottom: 0;
-  height: 60px;
-  width: 100%;
-  position: absolute;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
-`;
+import { StyledTextMask } from "./styles";
 
 function ValidationPending({ data }) {
   const viewer = data.oauthViewer;
