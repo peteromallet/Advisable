@@ -9,7 +9,7 @@ module Types
 
     description "Represents an interface for a specialist recommendation"
 
-    field :recommendation, Types::SpecialistType, null: false
+    field :recommendation, Types::SpecialistType, null: true
 
     definition_methods do
       def resolve_type(object, _context)

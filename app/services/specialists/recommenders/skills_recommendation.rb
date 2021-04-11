@@ -11,7 +11,7 @@ module Specialists
           having("COUNT(DISTINCT(skills.id, project_skills.skill_id)) > 1").
           order(Arel.sql("RANDOM()"))&.first
 
-        new(specialist, recommendation) if recommendation.present?
+        new(specialist, recommendation)
       end
 
       def skills
