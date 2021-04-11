@@ -10,7 +10,7 @@ module Specialists
           where(project_industries: {industry_id: industries}).
           order(Arel.sql("RANDOM()"))&.first
 
-        new(specialist, recommendation) if recommendation.present?
+        new(specialist, recommendation)
       end
 
       def industries

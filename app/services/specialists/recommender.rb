@@ -17,7 +17,7 @@ module Specialists
 
     def call
       recommender = RECOMMENDERS.sample
-      others = Specialist.guild.where.not(id: specialist.id)
+      others = Specialist.joins(:account).guild.where(account: {deleted_at: nil}).where.not(id: specialist.id)
       recommender.recommendation_for(specialist, others)
     end
   end

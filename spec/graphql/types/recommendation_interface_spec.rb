@@ -70,6 +70,6 @@ RSpec.describe Types::RecommendationInterface do
     stub_const("Specialists::Recommender::RECOMMENDERS", [Specialists::Recommenders::SkillsRecommendation])
     create(:specialist, :guild)
 
-    expect(response["data"]["specialistRecommendation"]).to eq(nil)
+    expect(response["data"]["specialistRecommendation"]["recommendation"]).to eq(nil)
   end
 end

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const SUGGESTED_CONNECTION_QUERY = gql`
-  query specialistRecommendation {
-    specialistRecommendation {
+export const SIDEBAR_QUERY = gql`
+  query sidebar($includeRecommendation: Boolean!) {
+    specialistRecommendation @include(if: $includeRecommendation) {
       recommendation {
         id
         name
@@ -21,6 +21,12 @@ export const SUGGESTED_CONNECTION_QUERY = gql`
           name
         }
       }
+    }
+    guildFeaturedMembers {
+      id
+      avatar
+      name
+      firstName
     }
   }
 `;
