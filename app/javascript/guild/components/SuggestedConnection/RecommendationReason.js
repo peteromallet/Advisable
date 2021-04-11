@@ -1,7 +1,7 @@
 import React from "react";
 
-function commaList(strings) {
-  return strings
+function commaList(list) {
+  return list
     ?.map(({ name }) => name)
     ?.join(", ")
     ?.replace(/, ([^,]*)$/, " and $1");

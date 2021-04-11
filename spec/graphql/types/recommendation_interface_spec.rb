@@ -66,7 +66,7 @@ RSpec.describe Types::RecommendationInterface do
     })
   end
 
-  it "does not return anything if there isnt a recommendation" do
+  it "does not return a recommendation" do
     stub_const("Specialists::Recommender::RECOMMENDERS", [Specialists::Recommenders::SkillsRecommendation])
     create(:specialist, :guild)
 
