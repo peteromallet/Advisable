@@ -34,9 +34,8 @@ class BaseField < GraphQL::Schema::Field
   def check_for_deprecation(context)
     return unless deprecation_reason
 
-    Raven.capture_message(
+    Sentry.capture_message(
       "Deprecated #{name} (#{original_name}) requested on #{owner_type}",
-      backtrace: caller,
       level: 'debug',
       extra: {
         query: context&.query&.query_string,

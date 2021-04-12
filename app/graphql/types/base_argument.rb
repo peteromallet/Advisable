@@ -12,9 +12,8 @@ module Types
     def check_for_argument_deprecations(context)
       return if deprecation_reason.blank?
 
-      Raven.capture_message(
+      Sentry.capture_message(
         "Deprecated argument #{name} on #{owner.name} detected",
-        backtrace: caller,
         level: "debug",
         extra: {
           query: context&.query&.query_string

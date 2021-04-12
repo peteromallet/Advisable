@@ -37,13 +37,15 @@ class ApplicationController < ActionController::Base
 
   def set_sentry_context
     if current_user.present?
-      Raven.user_context(
+      Sentry.set_user(
         id: current_user.id,
         email: current_user.account.email,
-        username: current_user.account.name
+        username: current_user.account.name,
+        is_admin: current_account.admin?,
+        account_name: current_account.name
       )
     else
-      Raven.user_context(nil)
+      Sentry.set_user(id: nil)
     end
   end
 end
