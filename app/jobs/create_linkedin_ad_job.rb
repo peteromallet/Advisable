@@ -28,7 +28,7 @@ class CreateLinkedinAdJob < ApplicationJob
     Rails.logger.error("You need to Set Up LinkedIn Ads in Admin!")
   rescue ApiRequestError => e
     # Do not retry jobs that fail LinkedIn API calls just log to Sentry
-    Raven.capture_message("Something went wrong with the LinkedIn API request", backtrace: e.backtrace, extra: {response: e.response_log, project_airtable_id: project.airtable_id})
+    Sentry.capture_message("Something went wrong with the LinkedIn API request", backtrace: e.backtrace, extra: {response: e.response_log, project_airtable_id: project.airtable_id})
     Slack.message(channel: "paid_marketing", text: "LinkedIn API job posting *failed* for #{project.name} (##{project.airtable_id})!")
   end
 
@@ -57,7 +57,7 @@ class CreateLinkedinAdJob < ApplicationJob
   end
 
   def create_conversation!
-    params = {"parentAccount": "urn:li:sponsoredAccount:#{ACCOUNT_ID}"}
+    params = {parentAccount: "urn:li:sponsoredAccount:#{ACCOUNT_ID}"}
     response = api.post_request("sponsoredConversations", params)
     @conversation_id = response.headers["x-linkedin-id"].to_i
     Rails.logger.info("New sponsored conversation created: #{conversation_id}")
@@ -77,15 +77,15 @@ class CreateLinkedinAdJob < ApplicationJob
 
   def create_ad_inmail_content!
     params = {
-        account: "urn:li:sponsoredAccount:#{ACCOUNT_ID}",
-        name: "#{project.name} | #{project.airtable_id}",
-        htmlBody: "In Mail",
-        subContent: {"com.linkedin.ads.AdInMailGuidedRepliesSubContent": {sponsoredConversation: "urn:li:sponsoredConversation:#{conversation_id}"}},
-        subject: "#{project.primary_skill&.name} Project With #{project.industry} #{project.company_type}".truncate(60),
-        sender: {
-          displayName: "Marina Krizman",
-          displayPictureV2: "urn:li:digitalmediaAsset:C5603AQEOBKwTNiLKgg",
-          from: "urn:li:person:1A7F7aK1ZO"
+      account: "urn:li:sponsoredAccount:#{ACCOUNT_ID}",
+      name: "#{project.name} | #{project.airtable_id}",
+      htmlBody: "In Mail",
+      subContent: {"com.linkedin.ads.AdInMailGuidedRepliesSubContent": {sponsoredConversation: "urn:li:sponsoredConversation:#{conversation_id}"}},
+      subject: "#{project.primary_skill&.name} Project With #{project.industry} #{project.company_type}".truncate(60),
+      sender: {
+        displayName: "Marina Krizman",
+        displayPictureV2: "urn:li:digitalmediaAsset:C5603AQEOBKwTNiLKgg",
+        from: "urn:li:person:1A7F7aK1ZO"
       }
     }
     response = api.post_request_with_retries("adInMailContentsV2", params)
@@ -96,7 +96,7 @@ class CreateLinkedinAdJob < ApplicationJob
   def create_conversation_ad!
     params = {
       campaign: "urn:li:sponsoredCampaign:#{project.linkedin_campaign_id}",
-      variables: {data: {"com.linkedin.ads.SponsoredInMailCreativeVariables": {"content": "urn:li:adInMailContent:#{inmail_id}"}}},
+      variables: {data: {"com.linkedin.ads.SponsoredInMailCreativeVariables": {content: "urn:li:adInMailContent:#{inmail_id}"}}},
       status: "DRAFT",
       type: "SPONSORED_MESSAGE"
     }
@@ -143,7 +143,7 @@ class CreateLinkedinAdJob < ApplicationJob
           {optionText: action[:text], type: "EXTERNAL_WEBSITE", actionTarget: {landingPage: action[:url]}}
         end
       end
-      params[:nextAction] = {"array": actions}
+      params[:nextAction] = {array: actions}
     end
     response = api.post_request_with_retries("sponsoredConversations/#{conversation_id}/sponsoredMessageContents", params)
     urn = response.headers["x-resourceidentity-urn"]

@@ -7,9 +7,9 @@ class Tasks::Start < ApplicationService
   end
 
   def call
-    raise Service::Error.new('tasks.mustBeAssigned') if task.stage != 'Assigned'
-    raise Service::Error.new('tasks.estimateRequired') if task.estimate.blank?
-    raise Service::Error.new('tasks.dueDateRequired') if task.due_date.blank?
+    raise Service::Error, 'tasks.mustBeAssigned' if task.stage != 'Assigned'
+    raise Service::Error, 'tasks.estimateRequired' if task.estimate.blank?
+    raise Service::Error, 'tasks.dueDateRequired' if task.due_date.blank?
 
     updated = Logidze.with_responsible(responsible_id) { task.update(stage: 'Working', started_working_at: Time.zone.now) }
     if updated
@@ -27,6 +27,6 @@ class Tasks::Start < ApplicationService
     Tasks::CreateInvoiceItem.call(task: task, responsible_id: responsible_id)
   rescue Stripe::StripeError => e
     # Still log the error in sentry
-    Raven.capture_exception(e)
+    Sentry.capture_exception(e)
   end
 end
