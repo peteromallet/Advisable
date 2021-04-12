@@ -13,35 +13,29 @@ class LinkedinApi
 
   def post_request(path, params, expected_status: 201)
     response = Faraday.post(API_ROOT + path, params.to_json, request_headers)
-    if response.status == expected_status
-      response
-    else
-      raise ApiRequestError.new(response)
-    end
+    raise ApiRequestError, response if response.status != expected_status
+
+    response
   end
 
   def put_request(path, params, expected_status: 204)
     response = Faraday.put(API_ROOT + path, params.to_json, request_headers_v2)
-    if response.status == expected_status
-      response
-    else
-      raise ApiRequestError.new(response)
-    end
+    raise ApiRequestError, response if response.status != expected_status
+
+    response
   end
 
   def get_request(path, expected_status: 200, headers: 2)
     headers = headers == 2 ? request_headers_v2 : request_headers
     response = Faraday.get(API_ROOT + path, nil, headers)
-    if response.status == expected_status
-      response
-    else
-      raise ApiRequestError.new(response)
-    end
+    raise ApiRequestError, response if response.status != expected_status
+
+    response
   end
 
-  [:post_request, :put_request, :get_request].each do |method|
+  %i[post_request put_request get_request].each do |method|
     define_method "#{method}_with_retries" do |*args, **options|
-      with_retries(options.slice(:max_retries)) do
+      with_retries(**options.slice(:max_retries)) do
         public_send(method, *args, **options.except(:max_retries))
       end
     end
@@ -53,14 +47,12 @@ class LinkedinApi
     retries = 1
     begin
       yield
-    rescue ApiRequestError => e
-      if retries <= max_retries
-        retries += 1
-        sleep 2**retries
-        retry
-      else
-        raise
-      end
+    rescue ApiRequestError
+      raise if retries > max_retries
+
+      retries += 1
+      sleep 2**retries
+      retry
     end
   end
 
