@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Airtable
   def self.sync
     Zeitwerk::Loader.eager_load_all
@@ -8,7 +10,7 @@ module Airtable
 
     ActiveRecord::Base.logger.silence do
       Airtable::Base.descendants.each do |table|
-        table.sync(report)
+        table.sync(report, started_at: started_at)
       end
     end
 
@@ -16,13 +18,13 @@ module Airtable
     Rails.logger.info("Finished airtable sync: [#{duration}]")
 
     # :nocov:
-    if report.failures.any?
-      output = "Some records failed to sync \n"
-      report.failures.each do |failure|
-        output += "#{failure[:type]} #{failure[:id]}: #{failure[:errors]}\n"
-      end
-      Rails.logger.info(output)
+    return if report.failures.none?
+
+    output = "Some records failed to sync \n"
+    report.failures.each do |failure|
+      output += "#{failure[:type]} #{failure[:id]}: #{failure[:errors]}\n"
     end
+    Rails.logger.info(output)
     # :nocov:
   end
 end
