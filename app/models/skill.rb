@@ -21,7 +21,7 @@ class Skill < ApplicationRecord
 
   # rubocop:disable Rails/SkipsModelValidations
   def merge_with!(duplicate:)
-    Raven.capture_message("Merging skills!", backtrace: caller, level: "debug", extra: {original: id, duplicate: duplicate.id})
+    Sentry.capture_message("Merging skills!", backtrace: caller, level: "debug", extra: {original: id, duplicate: duplicate.id})
 
     ActiveRecord::Base.transaction do
       duplicate.specialist_skills.update_all(skill_id: id)

@@ -4,7 +4,7 @@ class AccountsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   before_action :verify_key!
-  before_action :create_account, only: [:user, :specialist]
+  before_action :create_account, only: %i[user specialist]
 
   def me
     render json: {status: "OK."}
@@ -18,7 +18,7 @@ class AccountsController < ApplicationController
       account.save!
     end
 
-    [:airtable_id, :company_name].each do |key|
+    %i[airtable_id company_name].each do |key|
       user.public_send("#{key}=", params[key].strip) if params[key].present?
     end
 
@@ -28,13 +28,13 @@ class AccountsController < ApplicationController
 
     render json: {user_uid: user.uid, account_uid: account.uid}
   rescue ActiveRecord::RecordInvalid => e
-    Raven.capture_exception(e, extra: {params: params})
+    Sentry.capture_exception(e, extra: {params: params})
     render json: {error: "Something went wrong."}, status: :unprocessable_entity
   end
 
   def specialist
     specialist = Specialist.find_or_create_by(account: account)
-    [:airtable_id, :application_stage].each do |key|
+    %i[airtable_id application_stage].each do |key|
       specialist.public_send("#{key}=", params[key].strip) if params[key].present?
     end
     Logidze.with_responsible(specialist.account_id) do
@@ -43,7 +43,7 @@ class AccountsController < ApplicationController
 
     render json: {specialist_uid: specialist.uid, account_uid: account.uid}
   rescue ActiveRecord::RecordInvalid => e
-    Raven.capture_exception(e, extra: {params: params})
+    Sentry.capture_exception(e, extra: {params: params})
     render json: {error: "Something went wrong."}, status: :unprocessable_entity
   end
 
@@ -51,7 +51,7 @@ class AccountsController < ApplicationController
 
   def create_account
     @account = Account.find_or_create_by!(email: account_params[:email].strip)
-    [:first_name, :last_name].each do |key|
+    %i[first_name last_name].each do |key|
       account.public_send("#{key}=", params[key].strip) if params[key].present?
     end
 
