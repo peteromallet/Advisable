@@ -35,11 +35,12 @@ module Airtable
       def sync(
         report = nil,
         filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 1",
-        view: nil
+        view: nil,
+        started_at: nil
       )
         records = all(filter: filter, view: view)
         records.each do |r|
-          r.sync(report)
+          r.sync(report, started_at: started_at)
         rescue StandardError => e
           raise $ERROR_INFO, "#{e.message} (#{r.class} with id #{r.id})", $ERROR_INFO.backtrace
         end
@@ -106,7 +107,9 @@ module Airtable
     # You can pass an instance of Airtable::SyncReport to capture any
     # errors that prevented the record from being synced
     # => Airtable::Project.find("rec_123").sync
-    def sync(report = nil)
+    def sync(report = nil, started_at: nil)
+      return if started_at && model.updated_at && model.updated_at > started_at
+
       ActiveRecord::Base.transaction do
         error = false
         record_type = self.class.sync_model.to_s.underscore
@@ -171,11 +174,8 @@ module Airtable
         begin
           retry_count += 1
           instance_exec(record, &self.class.push_block) if self.class.push_block
-
           additional_fields.each { |field, value| self[field] = value }
-
           id.present? ? save : create
-
           record.update(airtable_id: id) if record.airtable_id.blank?
 
           # When airtable response with an error we call the handle_airtable_error
