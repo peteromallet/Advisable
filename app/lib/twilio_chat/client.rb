@@ -1,5 +1,7 @@
-module Integrations
-  class TwilioChat::Client
+# frozen_string_literal: true
+
+module TwilioChat
+  class Client
     MAX_FRIENDLY_NAME = 120
     attr_reader :client
     attr_accessor :channel_sid, :identity
@@ -25,12 +27,12 @@ module Integrations
       chat_service.channels(channel_sid).members(identity).fetch
     end
 
-    def create_channel_member(channel, args)
-      channel.members.create(args)
+    def create_channel_member(channel, options)
+      channel.members.create(**options)
     end
 
-    def create_channel_message(channel, args)
-      channel.messages.create(args)
+    def create_channel_message(channel, options)
+      channel.messages.create(**options)
     end
 
     # Service utilities
@@ -39,7 +41,7 @@ module Integrations
       friendly_name = message.truncate(MAX_FRIENDLY_NAME)
       @channel_sid = Digest::MD5.hexdigest([sender_uid, recipient_uid].sort.join)
       channel
-    rescue Twilio::REST::RestError => e
+    rescue Twilio::REST::RestError
       chat_service.channels.create(
         type: 'private',
         unique_name: channel_sid,
