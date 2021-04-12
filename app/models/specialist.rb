@@ -68,6 +68,8 @@ class Specialist < ApplicationRecord
 
   register_tutorials :fixed_projects, :flexible_projects
 
+  scope :available, -> { where("unavailable_until IS NULL OR unavailable_until <= ?", Time.zone.now) }
+
   def send_confirmation_email
     token = account.create_confirmation_token
     SpecialistMailer.confirm(uid: uid, token: token).deliver_later
