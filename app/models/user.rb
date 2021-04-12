@@ -15,13 +15,13 @@ class User < ApplicationRecord
   # WIP Company migration 👇️
   %i[stripe_customer_id stripe_customer invoice_name invoice_company_name billing_email address payments_setup project_payment_method accepted_project_payment_terms_at invoice_settings industry].each do |method|
     define_method(method) do
-      Raven.capture_message("Method ##{method} called on User that was meant for Company", backtrace: caller, level: 'debug')
+      Sentry.capture_message("Method ##{method} called on User that was meant for Company", level: 'debug')
       company.public_send(method)
     end
   end
 
   def company_type
-    Raven.capture_message("Method #company_type called on User that was meant for Company", backtrace: caller, level: 'debug')
+    Sentry.capture_message("Method #company_type called on User that was meant for Company", level: 'debug')
 
     company.kind
   end

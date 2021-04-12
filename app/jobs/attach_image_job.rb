@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open-uri'
 
 class AttachImageJob < ApplicationJob
@@ -18,9 +20,9 @@ class AttachImageJob < ApplicationJob
     when User
       object.avatar.attach(io: file, filename: filename)
     else
-      Raven.capture_message("Don't know what to do with #{object.class.name}")
+      Sentry.capture_message("Don't know what to do with #{object.class.name}")
     end
   rescue URI::BadURIError, URI::InvalidURIError => e
-    Raven.capture_exception(e, level: "warning")
+    Sentry.capture_exception(e, level: "warning")
   end
 end

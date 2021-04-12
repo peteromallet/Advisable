@@ -134,12 +134,12 @@ class Project < ApplicationRecord
   end
 
   def sales_person
-    Raven.capture_message("#sales_person called on Project that was meant for Company", backtrace: caller, level: 'debug')
+    Sentry.capture_message("#sales_person called on Project that was meant for Company", level: 'debug')
     user.company.sales_person
   end
 
   def owner
-    Raven.capture_message("#owner called on Project that was meant for Company", backtrace: caller, level: 'debug')
+    Sentry.capture_message("#owner called on Project that was meant for Company", level: 'debug')
     user.company.sales_person.username
   end
 
