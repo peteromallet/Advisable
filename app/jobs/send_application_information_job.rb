@@ -13,13 +13,12 @@ class SendApplicationInformationJob < ApplicationJob
 
     specialists = Specialist.
       joins(:account).
+      available.
       where(account: {deleted_at: nil}).
       where(id: specialist_ids_by_skill).
       where.not(id: specialists_with_existing_applications)
 
-    if project.location_importance.to_i > 1
-      specialists = specialists.where(country_id: project.user.country_id)
-    end
+    specialists = specialists.where(country_id: project.user.country_id) if project.location_importance.to_i > 1
 
     specialists.each do |specialist|
       SpecialistMailer.inform_about_project(project.id, specialist.id).deliver_later
