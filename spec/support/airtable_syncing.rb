@@ -45,7 +45,7 @@ RSpec.shared_examples "airtable syncing" do |config = {}|
       report = OpenStruct.new
       record = described_class.new({})
       allow(described_class).to receive(:all).and_return([record])
-      expect(record).to receive(:sync).with(report)
+      expect(record).to receive(:sync).with(report, {started_at: nil})
       described_class.sync(report)
     end
   end
