@@ -1,14 +1,7 @@
 // Renders the primary header for the app
 import React, { Fragment } from "react";
 import { gql, useMutation } from "@apollo/client";
-import {
-  Header as Wrapper,
-  Spacer,
-  Logo,
-  Hamburger,
-  Login,
-  Logout,
-} from "./styles";
+import { Header as Wrapper, Spacer, Logo, Hamburger, Login } from "./styles";
 import logo from "./logo.svg";
 import CurrentUser from "./CurrentUser";
 import { Box, useBreakpoint } from "@advisable/donut";
@@ -85,13 +78,10 @@ const Header = () => {
                 Switch to guild
               </GuildToggle>
             ) : null}
-            {viewer && !isMobile && (viewer.isAccepted || viewer.isClient) && (
+            {viewer && !isMobile && (
               <CurrentUser user={viewer} onLogout={handleLogout} />
             )}
             {!viewer && !isMobile && <Login to="/login">Login</Login>}
-            {!isMobile && !viewer?.isAccepted && viewer?.isSpecialist && (
-              <Logout onClick={handleLogout}>Logout</Logout>
-            )}
           </Box>
         </React.Fragment>
       </Wrapper>
