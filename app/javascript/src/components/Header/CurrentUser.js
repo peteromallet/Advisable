@@ -14,6 +14,7 @@ const CurrentUser = ({ user, onLogout }) => {
   const handleFocus = () => setOpen(true);
   const isClient = viewer?.__typename === "User";
   let isAdmin = isClient && viewer?.isAdmin;
+  const isAccepted = viewer?.isAccepted;
 
   return (
     <CurrentUserWrapper tabIndex="0" onFocus={handleFocus} onBlur={handleBlur}>
@@ -22,7 +23,7 @@ const CurrentUser = ({ user, onLogout }) => {
         {user.companyName && <span>{user.companyName}</span>}
       </CurrentUserToggle>
       <CurrentUserDropdown open={open}>
-        {user.guild && <a href="/guild">Guild</a>}
+        {user.guild && isAccepted && <a href="/guild">Guild</a>}
         <Link to="/settings">Settings</Link>
         {isAdmin && <a href="/admin">Admin</a>}
         <a href="#" onClick={onLogout}>
