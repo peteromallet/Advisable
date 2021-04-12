@@ -62,7 +62,7 @@ module Airtable
         @columns_hash[column] = options[:to]
       end
 
-      # sync_assocation allows us to define a mapping from an airtable column to
+      # sync_association allows us to define a mapping from an airtable column to
       # an associated ActiveRecord model. This should be used when airtable
       # columns are setup to 'Link to another record'.
       # Note: Currently only supports belongs_to relationships
