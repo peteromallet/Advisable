@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { DateTime } from "luxon";
 import { useQuery, gql } from "@apollo/client";
 import { Box, Card, Text, Button, Link } from "@advisable/donut";
@@ -124,6 +124,13 @@ export default function Availability() {
   const { data, loading, error } = useQuery(GET_UNAVAILABLE_DATE);
   const unavailableUntil = data?.viewer?.unavailableUntil;
 
+  const isAvailable = useMemo(() => {
+    if (!unavailableUntil) return true;
+    const now = DateTime.local();
+    const date = DateTime.fromISO(unavailableUntil);
+    return date < now;
+  }, [unavailableUntil]);
+
   if (loading) return <Loading />;
   if (error) return <>something went wrong</>;
 
@@ -139,14 +146,14 @@ export default function Availability() {
         Availability
       </Text>
       <Text fontSize="l" lineHeight="1.2" color="neutral800" mb={6}>
-        If you have don&apos;t have any availability for work at the moment you
-        can set a date when you will be available again below and we won&apos;t
+        If you don&apos;t have any availability for work at the moment you can
+        set a date when you will be available again below and we won&apos;t
         notify you about any other projects until then.
       </Text>
-      {unavailableUntil ? (
-        <Unavailable timestamp={unavailableUntil} viewer={data?.viewer} />
-      ) : (
+      {isAvailable ? (
         <Available viewer={data?.viewer} />
+      ) : (
+        <Unavailable timestamp={unavailableUntil} viewer={data?.viewer} />
       )}
     </Card>
   );

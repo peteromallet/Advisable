@@ -8,6 +8,7 @@ RSpec.describe SendApplicationInformationJob do
   let!(:without_skill) { create(:specialist, skills: []) }
   let!(:with_skill_in_country) { create(:specialist, skills: [project.primary_skill], country: project.user.country) }
   let!(:without_skill_in_country) { create(:specialist, country: project.user.country) }
+  let!(:not_available) { create(:specialist, skills: [project.primary_skill], unavailable_until: 2.weeks.from_now) }
   let!(:deleted_specialist) { create(:specialist, skills: [project.primary_skill], account: create(:account, deleted_at: 2.days.ago)) }
 
   before { allow_any_instance_of(Project).to receive(:sync_from_airtable) }
@@ -19,7 +20,7 @@ RSpec.describe SendApplicationInformationJob do
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
     end
 
-    [without_skill, without_skill_in_country, deleted_specialist].each do |specialist|
+    [without_skill, without_skill_in_country, deleted_specialist, not_available].each do |specialist|
       expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, specialist.id]})
     end
   end
