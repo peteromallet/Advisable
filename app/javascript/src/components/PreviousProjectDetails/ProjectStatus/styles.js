@@ -1,27 +1,50 @@
-import React from "react";
 import { rgba } from "polished";
 import styled from "styled-components";
-import { layout, space, variant, padding } from "styled-system";
-import { theme, Text, StyledCircle, Box } from "@advisable/donut";
+import { variant } from "styled-system";
+import { StyledCircle, theme } from "@advisable/donut";
 
-export const StyledImageThumbnail = styled.div`
-  ${layout};
-  ${space}
+export const StyledProjectStatusSection = styled.div`
+  /* border */
+  border-top: 1px solid;
+  border-top-color: ${theme.colors.neutral100};
 
-  cursor: pointer;
-  border-radius: 12px;
-  background-size: cover;
-  background-position: center;
-  background-color: ${theme.colors.neutral100};
+  /* spacing */
+  margin-top: ${theme.space[5]};
+  padding-top: ${theme.space[6]};
+  padding-bottom: ${theme.space[2]};
 
-  &:hover {
-    filter: brightness(90%);
+  ${StyledCircle} {
+    grid-area: icon;
+    width: 40px;
+    height: 40px;
+  }
+  svg {
+    width: 20px;
+    height: 20px;
   }
 `;
 
-export const StyledTitle = styled(Text)``;
-export const StyledMessage = styled(Text)``;
+// Text Area
+export const StyledTextWrapper = styled.div`
+  grid-area: text;
+`;
+export const StyledTitle = styled.h5`
+  margin-bottom: ${theme.space[0.5]};
+  font-size: ${theme.fontSizes.md}px;
+  font-weight: ${theme.fontWeights.medium};
+  line-height: ${theme.lineHeights.m};
+`;
+export const StyledDescription = styled.p`
+  font-size: ${theme.fontSizes.sm}px;
+  line-height: ${theme.lineHeights.xs};
+`;
 
+// Buttons area
+export const StyledButtonsWrapper = styled.div`
+  grid-area: buttons;
+  padding-top: ${theme.space[3]};
+  padding-bottom: ${theme.space[1.5]};
+`;
 export const StyledButton = styled.button`
   border: 0px;
   border-bottom: 2px solid;
@@ -35,18 +58,26 @@ export const StyledButton = styled.button`
   transition: 0.2s border-color, 0.2s color;
 `;
 
-export const StyledButtonsPannel = (props) => (
-  <Box pt={3} pb={1.5} {...props} />
-);
+// Copy URL area
+export const StyledURLWrapper = styled.div`
+  grid-column-start: 1;
+  grid-column-end: span 2;
+  grid-row-start: 2;
+  grid-row-end: span 1;
+  padding-top: ${theme.space[3]};
+  /* padding-bottom: ${theme.space[1.5]}; */
+`;
 
-export const VARIANTS = variant({
+// Prompt box
+const color = variant({
+  prop: "color",
   variants: {
     neutral: {
-      backgroundColor: "neutral100",
-      svg: { color: "neutral600" },
+      bg: "neutral100",
       [StyledCircle]: { bg: "neutral200" },
+      svg: { color: "neutral600" },
       [StyledTitle]: { color: "neutral800" },
-      [StyledMessage]: { color: "neutral600" },
+      [StyledDescription]: { color: "neutral600" },
       [StyledButton]: {
         color: rgba(theme.colors.neutral800, 0.85),
         borderBottomColor: rgba(theme.colors.neutral400, 0.8),
@@ -56,12 +87,42 @@ export const VARIANTS = variant({
         },
       },
     },
+    yellow: {
+      backgroundColor: "yellow100",
+      [StyledCircle]: { bg: "yellow200" },
+      svg: { color: "yellow800" },
+      [StyledTitle]: { color: "yellow900" },
+      [StyledDescription]: { color: "yellow900" },
+      [StyledButton]: {
+        color: rgba(theme.colors.yellow700, 0.9),
+        borderBottomColor: rgba(theme.colors.yellow500, 0.75),
+        "&:hover": {
+          color: "yellow700",
+          borderBottomColor: "yellow500",
+        },
+      },
+    },
+    blue: {
+      bg: "blue100",
+      [StyledCircle]: { bg: "blue200" },
+      svg: { color: "blue700" },
+      [StyledTitle]: { color: "blue800" },
+      [StyledDescription]: { color: "blue800" },
+      [StyledButton]: {
+        color: rgba(theme.colors.blue600, 0.9),
+        borderBottomColor: rgba(theme.colors.blue400, 0.75),
+        "&:hover": {
+          color: "blue600",
+          borderBottomColor: "blue500",
+        },
+      },
+    },
     red: {
       backgroundColor: "red100",
-      svg: { color: "red600" },
       [StyledCircle]: { bg: "red200" },
+      svg: { color: "red600" },
       [StyledTitle]: { color: "red700" },
-      [StyledMessage]: { color: "red700" },
+      [StyledDescription]: { color: "red700" },
       [StyledButton]: {
         color: rgba(theme.colors.red500, 0.9),
         borderBottomColor: rgba(theme.colors.red300, 0.75),
@@ -74,28 +135,17 @@ export const VARIANTS = variant({
   },
 });
 
-export const StyledBadge = styled.div`
-  ${padding}
-  ${VARIANTS}
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  font-weight: 400;
+export const StyledPromptBox = styled.div`
+  ${color}
+  /* grid */
+  display: grid;
+  grid-template-columns: 40px auto;
+  grid-template-rows: auto auto;
+  grid-column-gap: ${theme.space[3]};
+  grid-template-areas:
+    "icon text"
+    "icon buttons";
   border-radius: 12px;
   width: 100%;
-  align-items: center;
+  padding: ${theme.space[3]};
 `;
-
-export const StatusWrapper = (props) => (
-  <Box
-    mt={5}
-    pt={6}
-    pb={2}
-    borderTop="1px solid"
-    borderTopColor="neutral100"
-    {...props}
-  />
-);

@@ -1,11 +1,19 @@
 import React from "react";
-import { Container, Card, Box, Text, Avatar } from "@advisable/donut";
-import ValidationActions from "./ValidationActions";
+import {
+  Container,
+  Card,
+  Box,
+  Text,
+  Avatar,
+  Button,
+  Link,
+} from "@advisable/donut";
 import AuthenticateWithLinkedin from "./AuthenticateWithLinkedin";
-import renderLineBreaks from "../../utilities/renderLineBreaks";
+import renderLineBreaks from "src/utilities/renderLineBreaks";
+import possessive from "src/utilities/possesive";
 import { StyledTextMask } from "./styles";
 
-function ValidationPending({ data }) {
+function NoReview({ data }) {
   const viewer = data.oauthViewer;
   const { title, excerpt, description, specialist } = data.previousProject;
 
@@ -20,12 +28,12 @@ function ValidationPending({ data }) {
           fontWeight="medium"
           letterSpacing="-0.02em"
         >
-          {specialist.name} has requested you to verify a project on Advisable
+          {specialist.firstName} has requested a review from you on a previous
+          project
         </Text>
         <Text fontSize="16px" lineHeight="24px" color="neutral900" mb="40px">
-          When verified this project will be used to help {specialist.firstName}{" "}
-          find other projects on Advisable. Please review the details below and
-          verify that they are correct.
+          Your review will be shown on {possessive(specialist.firstName)}{" "}
+          profile and will be used to help them find projects on Advisable.
         </Text>
         <Text
           fontSize={{ _: "20px", m: "22px" }}
@@ -56,7 +64,16 @@ function ValidationPending({ data }) {
           </Text>
         </Box>
         {viewer ? (
-          <ValidationActions />
+          <Button
+            as={Link}
+            to={{
+              pathname: `/verify_project/${data.previousProject.id}/review/comment`,
+              state: { disableSkip: true },
+            }}
+            size="l"
+          >
+            Leave a Review
+          </Button>
         ) : (
           <AuthenticateWithLinkedin data={data} />
         )}
@@ -65,4 +82,4 @@ function ValidationPending({ data }) {
   );
 }
 
-export default ValidationPending;
+export default NoReview;
