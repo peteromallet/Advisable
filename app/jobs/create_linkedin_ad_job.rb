@@ -72,7 +72,7 @@ class CreateLinkedinAdJob < ApplicationJob
     params = {patch: {"$set": {firstMessageContent: first_message_urn}}}
     response = api.post_request_with_retries("sponsoredConversations/#{conversation_id}", params, expected_status: 204)
     urn = response.headers["x-resourceidentity-urn"]
-    Rails.logger.info("First message set: #{first_message_urn}")
+    Rails.logger.info("First message set: #{first_message_urn} | #{urn}")
   end
 
   def create_ad_inmail_content!
@@ -107,7 +107,7 @@ class CreateLinkedinAdJob < ApplicationJob
 
   def activate_conversation_ad!
     params = {patch: {"$set": {status: "ACTIVE"}}}
-    response = api.post_request_with_retries("adCreativesV2/#{creative_id}", params, expected_status: 204)
+    api.post_request_with_retries("adCreativesV2/#{creative_id}", params, expected_status: 204)
     Rails.logger.info("Creative Ad ACTIVATED: #{creative_id}")
   end
 
@@ -117,19 +117,19 @@ class CreateLinkedinAdJob < ApplicationJob
       conversion: "urn:lla:llaPartnerConversion:#{CONVERSION_ID}"
     }
     path = "campaignConversions/(campaign:#{CGI.escape(params[:campaign])},conversion:#{CGI.escape(params[:conversion])})"
-    response = api.put_request(path, params)
+    api.put_request(path, params)
     Rails.logger.info("New Sponsored Creative Ad created: #{creative_id}")
   end
 
   def activate_campaign!
     params = {patch: {"$set": {status: "ACTIVE"}}}
-    response = api.post_request("adCampaignsV2/#{project.linkedin_campaign_id}", params, expected_status: 204)
+    api.post_request("adCampaignsV2/#{project.linkedin_campaign_id}", params, expected_status: 204)
     Rails.logger.info("Campaign ACTIVATED: #{project.linkedin_campaign_id}")
   end
 
   def pause_campaign!
     params = {patch: {"$set": {status: "PAUSED"}}}
-    response = api.post_request("adCampaignsV2/#{project.linkedin_campaign_id}", params, expected_status: 204)
+    api.post_request("adCampaignsV2/#{project.linkedin_campaign_id}", params, expected_status: 204)
     Rails.logger.info("Campaign PAUSED: #{project.linkedin_campaign_id}")
   end
 
