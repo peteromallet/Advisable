@@ -16,7 +16,7 @@ module Airtable
       end
 
       def deprecated_find_by_airtable_id(id)
-        Sentry.capture_message("#find_by called with an Airtable ID", backtrace: caller, level: "debug")
+        Sentry.capture_message("#find_by called with an Airtable ID", level: "debug")
         find_by(airtable_id: id)
       end
 
