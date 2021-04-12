@@ -47,8 +47,8 @@ function ReviewStars({ specialist }) {
   };
 
   // Trigger on skip button
-  const handleSkip = async () => {
-    history.push(`/verify_project/${id}/complete`);
+  const handleSkip = () => {
+    history.push(`/verify_project/${id}/review/comment`);
   };
 
   return (

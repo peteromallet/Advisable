@@ -36,7 +36,7 @@ function OmniauthLogin() {
       <input type="hidden" name="authenticity_token" value={csrf} />
       <StyledLoginWithLinkedin>
         <Linkedin size={24} />
-        Login with Linkedin
+        Login with LinkedIn
       </StyledLoginWithLinkedin>
     </form>
   );

@@ -1,19 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { object, string } from "yup";
 import { Formik, Form } from "formik";
 // Hooks
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { useReviewPreviousProject } from "../queries";
 // Components
 import { Text, Button, Textarea } from "@advisable/donut";
-import FormField from "../../../components/FormField";
-import SubmitButton from "../../../components/SubmitButton";
+import SubmitButton from "src/components/SubmitButton";
+import FormField from "src/components/FormField";
+
+const valiadtionSchema = object().shape({
+  comment: string().required("Please write a review"),
+});
 
 function ReviewComment({ specialist }) {
   // React Router data
   const { id } = useParams();
   const history = useHistory();
   const location = useLocation();
+  const disableSkip = location.state?.disableSkip;
 
   // Apollo Mutation action
   const [reviewPreviousProject] = useReviewPreviousProject();
@@ -35,7 +41,9 @@ function ReviewComment({ specialist }) {
     history.push(`/verify_project/${id}/complete`);
   };
 
-  const handleSkip = () => handleSubmit(initialValues);
+  const handleSkip = () => {
+    history.push(`/verify_project/${id}/complete`);
+  };
 
   return (
     <>
@@ -53,7 +61,11 @@ function ReviewComment({ specialist }) {
         This will help {specialist.firstName} find new opportunities on
         Advisable.
       </Text>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={valiadtionSchema}
+        onSubmit={handleSubmit}
+      >
         <Form>
           <FormField
             minRows={8}
@@ -70,15 +82,17 @@ function ReviewComment({ specialist }) {
           >
             Submit Review
           </SubmitButton>
-          <Button
-            size="l"
-            type="button"
-            variant="subtle"
-            width={["100%", "auto"]}
-            onClick={handleSkip}
-          >
-            Skip
-          </Button>
+          {!disableSkip ? (
+            <Button
+              size="l"
+              type="button"
+              variant="subtle"
+              width={["100%", "auto"]}
+              onClick={handleSkip}
+            >
+              Skip
+            </Button>
+          ) : null}
         </Form>
       </Formik>
     </>
