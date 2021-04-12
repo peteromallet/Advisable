@@ -40,7 +40,9 @@ class ApplicationController < ActionController::Base
       Sentry.set_user(
         id: current_user.id,
         email: current_user.account.email,
-        username: current_user.account.name
+        username: current_user.account.name,
+        is_admin: current_account.admin?,
+        account_name: current_account.name
       )
     else
       Sentry.set_user(id: nil)
