@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
         username: current_user.account.name
       )
     else
-      Sentry.set_user(nil)
+      Sentry.set_user(id: nil)
     end
   end
 end

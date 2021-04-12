@@ -14,7 +14,6 @@ module Types
 
       Sentry.capture_message(
         "Deprecated argument #{name} on #{owner.name} detected",
-        backtrace: caller,
         level: "debug",
         extra: {
           query: context&.query&.query_string
