@@ -48,13 +48,13 @@ RSpec.describe ResizedImage do
     it "schedules ResizeImageJob" do
       specialist.avatar.attach(avatar)
       specialist.resized_avatar
-      expect(ResizeImageJob).to have_been_enqueued.with(specialist, :avatar, {resize_to_limit: [400, 400]})
+      expect(ResizeImageJob).to have_been_enqueued.with(specialist, :avatar, resize_to_limit: [400, 400])
     end
 
     it "schedules ResizeImageJob on url method" do
       specialist.avatar.attach(avatar)
       specialist.resized_avatar_url
-      expect(ResizeImageJob).to have_been_enqueued.with(specialist, :avatar, {resize_to_limit: [400, 400]})
+      expect(ResizeImageJob).to have_been_enqueued.with(specialist, :avatar, resize_to_limit: [400, 400])
     end
   end
 

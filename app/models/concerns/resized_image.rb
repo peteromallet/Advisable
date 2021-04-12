@@ -28,7 +28,7 @@ module ResizedImage
     if image.variant(options).processed?
       image.variant(options)
     else
-      ResizeImageJob.perform_later(self, name, options)
+      ResizeImageJob.perform_later(self, name, **options)
       image
     end
   rescue ActiveStorage::InvariableError
