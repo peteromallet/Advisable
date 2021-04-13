@@ -1,7 +1,7 @@
 import { renderRoute, mockData } from "test-utils";
 import userEvent from "@testing-library/user-event";
 import { fireEvent, screen } from "@testing-library/react";
-import VIEWER from "../../../graphql/queries/viewer";
+import VIEWER from "../../../graphql/queries/getViewer.graphql";
 import GET_SETUP_DATA from "../getSetupData";
 import { ACCEPT_PROJECT_PAYMENT_TERMS } from "../queries";
 

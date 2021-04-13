@@ -1,6 +1,6 @@
 import { fireEvent } from "@testing-library/react";
 import { renderRoute, mockData } from "test-utils";
-import VIEWER from "../../../graphql/queries/viewer";
+import VIEWER from "../../../graphql/queries/getViewer.graphql";
 import GET_APPLICATION from "../fetchApplication";
 import GET_TASK from "../../../graphql/queries/taskDetails";
 import { UPDATE_TASK } from "../../../components/TaskDrawer/MarkAsTrial";

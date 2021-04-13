@@ -9,18 +9,9 @@ class GraphqlController < ApplicationController
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    context = {
-      request: request,
-      client_ip: client_ip,
-      session_manager: session_manager,
-      current_user: current_user,
-      current_account: current_account,
-      oauth_viewer: session[:omniauth] ? OauthViewer.new(session[:omniauth]) : nil
-    }
-
     result = AdvisableSchema.execute(
       query,
-      variables: variables, context: context, operation_name: operation_name
+      variables: variables, context: graphql_context, operation_name: operation_name
     )
     render json: result
   end

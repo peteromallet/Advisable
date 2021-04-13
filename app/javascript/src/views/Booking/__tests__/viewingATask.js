@@ -1,5 +1,5 @@
 import { renderRoute, fireEvent, mockData } from "test-utils";
-import VIEWER from "../../../graphql/queries/viewer";
+import VIEWER from "../../../graphql/queries/getViewer.graphql";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import FETCH_TASK from "../../../graphql/queries/taskDetails";
 
