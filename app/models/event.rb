@@ -2,7 +2,7 @@
 
 class Event < ApplicationRecord
   include Uid
-  include ResizedImage
+  include Resizable
 
   COLORS = %w[blue purple cyan orange].freeze
 

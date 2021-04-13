@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :user do
     account
@@ -16,6 +18,10 @@ FactoryBot.define do
 
     trait :team_manager do
       association :account, :team_manager
+    end
+
+    trait :editor do
+      association :account, :editor
     end
   end
 end

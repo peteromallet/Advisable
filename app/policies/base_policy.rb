@@ -24,6 +24,10 @@ class BasePolicy
 
   private
 
+  def editor?
+    current_user&.account&.editor?
+  end
+
   def specialist_owner?
     record.specialist == current_user
   end

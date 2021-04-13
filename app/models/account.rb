@@ -22,7 +22,7 @@ class Account < ApplicationRecord
 
   before_validation :strip_email
 
-  register_permissions :admin, :team_manager
+  register_permissions :admin, :team_manager, :editor
   featurize :test
 
   def specialist_or_user
