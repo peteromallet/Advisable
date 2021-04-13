@@ -7,7 +7,7 @@ export const STORY_BOX_QUERY = gql`
     latestPrompt {
       id
       prompt
-      promptCta
+      cta
       description
       label {
         id
