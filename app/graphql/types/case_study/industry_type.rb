@@ -7,8 +7,8 @@ module Types
       description "Type definition for CaseStudy::Industry"
 
       field :id, ID, null: false
-      field :article, ArticleType, null: true
-      field :industry, Types::IndustryType, null: true
+      field :article, ArticleType, null: false
+      field :industry, Types::IndustryType, null: false
     end
   end
 end
