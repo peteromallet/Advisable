@@ -11,7 +11,6 @@ FactoryBot.define do
     excerpt { "MyString" }
     goals { "" }
     published_at { "2021-04-07 15:36:48" }
-    specialist_approved_at { "2021-04-07 15:36:48" }
     specialist
     interviewer { association :account }
     editor { association :account }
