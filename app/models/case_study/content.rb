@@ -3,6 +3,8 @@
 module CaseStudy
   class Content < ApplicationRecord
     belongs_to :section
+
+    has_many_attached :images
   end
 end
 
