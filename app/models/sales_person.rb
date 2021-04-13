@@ -3,7 +3,7 @@
 class SalesPerson < ApplicationRecord
   include Uid
   include Airtable::Syncable
-  include ResizedImage
+  include Resizable
 
   has_many :companies, dependent: :nullify
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PreviousProjectImage < ApplicationRecord
-  include ResizedImage
+  include Resizable
   include Uid
   uid_prefix 'ppi'
 

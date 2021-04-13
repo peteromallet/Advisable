@@ -24,7 +24,7 @@ class Specialist < ApplicationRecord
   include Uid
   include SpecialistOrUser
   include Subscriber
-  include ResizedImage
+  include Resizable
   include Airtable::Syncable
   include Guild::SpecialistsConcern
 
