@@ -8,7 +8,9 @@ const useViewer = () => {
       ...app.viewer,
       isClient: app?.viewer?.__typename === "User",
       isSpecialist: app?.viewer?.__typename === "Specialist",
-      isAccepted: app?.viewer?.applicationStage === "Accepted",
+      isAccepted:
+        app?.viewer?.applicationStage === "Accepted" ||
+        app?.viewer.__typename === "User",
     };
   }
 
