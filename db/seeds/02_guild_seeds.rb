@@ -91,13 +91,14 @@ Rails.logger.info "Creating guild events"
   event.save!
 end
 
-label = Label.last
+# Create post prompt
+label = Guild::Post.last.labels.first
 label.update!(description: "This is a label description")
 PostPrompt.create!(
   featured: true,
   label: label,
   prompt: "Please edit this text and add something *interesting*",
-  prompt_cta: "Click me"
+  cta: "Click me"
 )
 
 # rubocop:enable Rails/SkipsModelValidations

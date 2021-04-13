@@ -12,7 +12,7 @@ class PostPromptDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::String,
     prompt: Field::Text,
-    prompt_cta: Field::String,
+    cta: Field::String,
     featured: Field::Boolean,
     guild_posts: Field::HasMany,
     guild_posts_count: Field::Number,
@@ -39,7 +39,7 @@ class PostPromptDashboard < Administrate::BaseDashboard
     id
     featured
     prompt
-    prompt_cta
+    cta
     guild_posts
     label
     created_at
@@ -51,7 +51,7 @@ class PostPromptDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     featured
     prompt
-    prompt_cta
+    cta
     label
   ].freeze
 

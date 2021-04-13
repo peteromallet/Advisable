@@ -51,7 +51,7 @@ export default function StoryBox() {
           aria-label={`create a post for ${label.slug}`}
           onClick={handleCreateFromPrompt}
         >
-          {latestPrompt.promptCta}
+          {latestPrompt.cta}
         </Button>
         <Button
           size="s"

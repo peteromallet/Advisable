@@ -8,7 +8,7 @@ class PostPrompt < ApplicationRecord
 
   scope :featured, -> { where(featured: true) }
 
-  validates :prompt, :prompt_cta, presence: true
+  validates :prompt, :cta, presence: true
   before_save :reset_previous_featured, if: :featured_changed?
 
   private

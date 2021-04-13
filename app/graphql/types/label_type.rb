@@ -17,11 +17,6 @@ module Types
       description "The unique slug of the Label"
     end
 
-    field :description, String, null: true
-    field :featured, Boolean, null: false
-    field :prompt, String, null: true
-    field :prompt_cta, String, null: true
-
     field :guild_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5
 
     def guild_posts
