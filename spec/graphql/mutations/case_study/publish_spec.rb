@@ -2,14 +2,15 @@
 
 require "rails_helper"
 
-RSpec.describe Mutations::CaseStudy::Approve do
-  let(:article) { create(:case_study_article) }
-  let(:context) { {current_user: article.specialist} }
+RSpec.describe Mutations::CaseStudy::Publish do
+  let(:article) { create(:case_study_article, published_at: nil) }
+  let(:user) { create(:user, :editor) }
+  let(:context) { {current_user: user} }
 
   let(:query) do
     <<-GRAPHQL
       mutation {
-        approveCaseStudy(input: {
+        publishCaseStudy(input: {
           id: "#{article.id}",
         }) {
           success
@@ -18,18 +19,28 @@ RSpec.describe Mutations::CaseStudy::Approve do
     GRAPHQL
   end
 
-  it "sets approved_at" do
-    expect(article.specialist_approved_at).to be_nil
+  it "sets published_at" do
+    expect(article.published_at).to be_nil
 
     response = AdvisableSchema.execute(query, context: context)
-    success = response["data"]["approveCaseStudy"]["success"]
+    success = response["data"]["publishCaseStudy"]["success"]
 
     expect(success).to eq(true)
-    expect(article.reload.specialist_approved_at).not_to be_nil
+    expect(article.reload.published_at).not_to be_nil
   end
 
-  context "when the specialist doesn't have access to the article" do
-    let(:context) { {current_user: create(:specialist)} }
+  context "when current_user is specialist" do
+    let(:user) { create(:specialist) }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("notAuthorized")
+    end
+  end
+
+  context "when the user is not an editor" do
+    let(:user) { create(:user) }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
@@ -40,16 +51,6 @@ RSpec.describe Mutations::CaseStudy::Approve do
 
   context "when there is no user" do
     let(:context) { {current_user: nil} }
-
-    it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
-      error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthorized")
-    end
-  end
-
-  context "when an user is logged in" do
-    let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
