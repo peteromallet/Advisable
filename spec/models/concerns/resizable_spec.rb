@@ -9,7 +9,7 @@ class ResizedDummyImage
 end
 
 class ResizedDummy
-  include ResizedImage
+  include Resizable
 
   resize avatar: {resize_to_limit: [400, 400]}, cover_photo: {resize_to_limit: [2000, 2000]}
 
@@ -22,7 +22,7 @@ class ResizedDummy
   end
 end
 
-RSpec.describe ResizedImage do
+RSpec.describe Resizable do
   let(:dummy) { ResizedDummy.new }
   let(:specialist) { create(:specialist) }
   let(:file) { Rails.root.join("spec/support/01.jpg") }
