@@ -1,13 +1,20 @@
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useMemo, useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Box, Stack } from "@advisable/donut";
 import Filter from "./Filter";
 import EmptyFilters from "./EmptyFilters";
 import { useSchema } from "../../../components/schema";
+import ViewSelect from "./ViewSelect";
 
-export default function FilterDrawer({ resource, open, onApply }) {
+export default function FilterDrawer({
+  views,
+  filters: initialFilters,
+  resource,
+  open,
+  onApply,
+}) {
   const schemaData = useSchema();
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState(initialFilters);
   const attributesWithFilters = useMemo(
     () =>
       resource.attributes.filter((attr) => {
@@ -15,6 +22,10 @@ export default function FilterDrawer({ resource, open, onApply }) {
       }),
     [resource],
   );
+
+  useEffect(() => {
+    setFilters(initialFilters);
+  }, [initialFilters]);
 
   const handleNewFilter = useCallback(() => {
     setFilters((existing) => [
@@ -68,6 +79,7 @@ export default function FilterDrawer({ resource, open, onApply }) {
         box-shadow: 2px 0 24px rgba(0, 0, 0, 0.2);
       `}
     >
+      <ViewSelect resource={resource} views={views} />
       {filters.length === 0 && <EmptyFilters />}
       <Stack spacing="xs" mb={2}>
         {filters.map((filter, index) => (
