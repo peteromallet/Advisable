@@ -6,7 +6,7 @@
 class User < ApplicationRecord
   include Uid
   include SpecialistOrUser
-  include ResizedImage
+  include Resizable
   include Airtable::Syncable
 
   TALENT_QUALITY_OPTIONS = %w[cheap budget good top world_class].freeze

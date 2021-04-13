@@ -2,7 +2,7 @@
 
 module Guild
   class PostImage < ApplicationRecord
-    include ResizedImage
+    include Resizable
     include Uid
     uid_prefix 'gpi'
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ResizedImage
+module Resizable
   extend ActiveSupport::Concern
 
   ASSET_HOST = ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"

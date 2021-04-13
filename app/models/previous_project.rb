@@ -23,7 +23,7 @@ class PreviousProject < ApplicationRecord
   self.table_name = 'off_platform_projects'
 
   include Uid
-  include ResizedImage
+  include Resizable
 
   has_logidze
 

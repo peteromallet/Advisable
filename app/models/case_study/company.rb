@@ -2,7 +2,12 @@
 
 module CaseStudy
   class Company < ApplicationRecord
+    include Resizable
+
     has_many :articles, dependent: :destroy
+
+    has_one_attached :logo
+    resize logo: {resize_to_limit: [400, 400]}
   end
 end
 
