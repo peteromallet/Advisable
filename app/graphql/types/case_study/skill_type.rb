@@ -8,8 +8,8 @@ module Types
 
       field :id, ID, null: false
       field :primary, Boolean, null: true
-      field :article, ArticleType, null: true
-      field :skill, Skill, null: true
+      field :article, ArticleType, null: false
+      field :skill, Skill, null: false
     end
   end
 end

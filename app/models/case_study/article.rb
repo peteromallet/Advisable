@@ -6,9 +6,10 @@ module CaseStudy
     belongs_to :company, optional: true
     belongs_to :interviewer, class_name: "::Account"
     belongs_to :editor, class_name: "::Account"
-    has_many :contents, dependent: :destroy
     has_many :skills, dependent: :destroy
     has_many :industries, dependent: :destroy
+    has_many :sections, dependent: :destroy
+    has_many :contents, through: :sections
   end
 end
 

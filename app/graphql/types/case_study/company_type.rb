@@ -12,7 +12,7 @@ module Types
       field :logo, String, null: true, method: :resized_logo_url
       field :business_type, String, null: true
       field :description, String, null: true
-      field :articles, [ArticleType], null: true
+      field :articles, [ArticleType], null: false
     end
   end
 end

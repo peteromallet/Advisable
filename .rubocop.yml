@@ -123,3 +123,6 @@ GraphQL/ArgumentDescription:
 
 GraphQL/ExtractType:
   Enabled: false
+
+GraphQL/OrderedFields:
+  Enabled: false
