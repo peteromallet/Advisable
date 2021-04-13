@@ -5,5 +5,9 @@ module CaseStudy
     def approve?
       specialist_owner? || admin?
     end
+
+    def publish?
+      editor? || admin?
+    end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :account do
     first_name { Faker::Name.first_name }
@@ -9,6 +11,10 @@ FactoryBot.define do
 
     trait :team_manager do
       permissions { ["team_manager"] }
+    end
+
+    trait :editor do
+      permissions { ["editor"] }
     end
   end
 end
