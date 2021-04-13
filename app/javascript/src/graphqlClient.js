@@ -1,4 +1,4 @@
-import { ApolloClient, from, createHttpLink } from "@apollo/client";
+import { ApolloClient, from, createHttpLink, gql } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import createCache from "./apolloCache";
@@ -66,5 +66,16 @@ const client = new ApolloClient({
     },
   },
 });
+
+// write any prefetched queries to the cache
+if (window.prefetchedQueries) {
+  window.prefetchedQueries.forEach((prefetchedQuery) => {
+    client.writeQuery({
+      query: gql(prefetchedQuery.query),
+      variables: prefetchedQuery.variables,
+      data: prefetchedQuery.result.data,
+    });
+  });
+}
 
 export default client;

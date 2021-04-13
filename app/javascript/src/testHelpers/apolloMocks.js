@@ -1,5 +1,5 @@
 import { isFunction } from "lodash-es";
-import VIEWER from "../graphql/queries/viewer";
+import VIEWER from "../graphql/queries/getViewer.graphql";
 
 export const mockViewer = (viewer) => {
   return {

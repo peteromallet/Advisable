@@ -8,7 +8,7 @@ import FormField from "components/FormField";
 import SubmitButton from "components/SubmitButton";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { Box, Stack, Card, Text, Link, theme } from "@advisable/donut";
-import VIEWER from "../../graphql/queries/viewer";
+import VIEWER from "src/graphql/queries/getViewer.graphql";
 import validationSchema from "./validationSchema";
 import LOGIN from "./login";
 import LoginWithGoogle from "./LoginWithGoogle";

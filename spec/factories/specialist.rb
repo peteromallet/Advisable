@@ -5,6 +5,7 @@ FactoryBot.define do
     account
     country
     city { 'City' }
+    application_stage { "Accepted" }
     bank_holder_name { 'Jane Doe' }
     bank_currency { 'EUR' }
     hourly_rate { 200 }

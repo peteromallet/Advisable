@@ -1,6 +1,6 @@
 import { fireEvent } from "@testing-library/react";
 import { renderRoute, mockData } from "test-utils";
-import VIEWER from "../../graphql/queries/viewer";
+import VIEWER from "../../graphql/queries/getViewer.graphql";
 import FETCH_DATA from "./fetchData";
 
 test("User can see their active freelancers", async () => {
