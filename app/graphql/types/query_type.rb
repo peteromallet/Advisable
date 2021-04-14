@@ -312,5 +312,11 @@ module Types
       requires_guild_user!
       current_user.guild_notifications
     end
+
+    field :case_studies, [Types::CaseStudy::ArticleType], null: true, max_page_size: 20
+
+    def case_studies
+      ::CaseStudy::Article.all
+    end
   end
 end
