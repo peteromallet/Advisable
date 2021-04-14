@@ -8,7 +8,7 @@ module Mutations
 
       argument :id, ID, required: true
 
-      field :success, Boolean, null: true
+      field :article, Types::CaseStudy::ArticleType, null: false
 
       def authorized?(id:)
         article = ::CaseStudy::Article.find(id)
@@ -22,7 +22,7 @@ module Mutations
         article = ::CaseStudy::Article.find(id)
         article.update(published_at: Time.zone.now)
 
-        {success: true}
+        {article: article}
       end
     end
   end
