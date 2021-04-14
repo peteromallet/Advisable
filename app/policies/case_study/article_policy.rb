@@ -9,5 +9,11 @@ module CaseStudy
     def publish?
       editor? || admin?
     end
+
+    def read_company?
+      return true unless record.confidential
+
+      specialist_owner? || editor? || admin?
+    end
   end
 end
