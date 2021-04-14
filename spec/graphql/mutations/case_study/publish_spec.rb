@@ -13,7 +13,9 @@ RSpec.describe Mutations::CaseStudy::Publish do
         publishCaseStudy(input: {
           id: "#{article.id}",
         }) {
-          success
+          article {
+            id
+          }
         }
       }
     GRAPHQL
@@ -23,9 +25,9 @@ RSpec.describe Mutations::CaseStudy::Publish do
     expect(article.published_at).to be_nil
 
     response = AdvisableSchema.execute(query, context: context)
-    success = response["data"]["publishCaseStudy"]["success"]
+    id = response["data"]["publishCaseStudy"]["article"]["id"]
 
-    expect(success).to eq(true)
+    expect(id).to eq(article.id)
     expect(article.reload.published_at).not_to be_nil
   end
 
