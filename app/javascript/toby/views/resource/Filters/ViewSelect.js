@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import queryString from "query-string";
 import {
@@ -123,11 +123,16 @@ function RenameView({ view }) {
   const [value, setValue] = useState(view?.name || "");
   const [renameView, { loading }] = useRenameView();
 
+  useEffect(() => {
+    setValue(view?.name);
+  }, [view]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await renameView({
       variables: { id: view.id, name: value },
     });
+    setValue("");
     modal.hide();
   };
 
@@ -178,6 +183,7 @@ function CreateView({ resource, onCreate, filters }) {
       },
     });
     onCreate(response);
+    setValue("");
     modal.hide();
   };
 
