@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Box, Card, Text } from "@advisable/donut";
-import Link from "../../components/Link";
+import { Box, Card, Text, Link } from "@advisable/donut";
 import illustration from "./illustration.png";
 
 const Send = ({ application }) => {
