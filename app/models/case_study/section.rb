@@ -3,6 +3,7 @@
 module CaseStudy
   class Section < ApplicationRecord
     belongs_to :article
+    has_many :contents, dependent: :destroy
   end
 end
 
