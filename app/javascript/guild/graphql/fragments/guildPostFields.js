@@ -40,13 +40,5 @@ export default gql`
       name
       slug
     }
-    postPrompt {
-      id
-      label {
-        id
-        name
-        slug
-      }
-    }
   }
 `;
