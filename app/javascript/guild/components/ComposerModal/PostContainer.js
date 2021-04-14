@@ -27,6 +27,7 @@ const CreatePostContainer = ({ modal, onPublish }) => {
     skip: !hasPostId,
     variables: {
       id: route?.params?.id,
+      includePostPrompt: true,
     },
   });
 
