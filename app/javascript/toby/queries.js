@@ -44,10 +44,6 @@ const CREATE_VIEW = gql`
 
 export function useCreateView(resource) {
   return useMutation(CREATE_VIEW, {
-    variables: {
-      resource: resource,
-      name: "New view",
-    },
     update(cache, response) {
       const data = cache.readQuery({
         query: VIEWS,
@@ -60,10 +56,37 @@ export function useCreateView(resource) {
         query: VIEWS,
         variables: { resource },
         data: {
-          views: {
-            ...data.views,
-            view,
-          },
+          views: [...data.views, view],
+        },
+      });
+    },
+  });
+}
+
+const DELETE_VIEW = gql`
+  mutation deleteTobyView($id: ID!) {
+    deleteTobyView(id: $id) {
+      success
+    }
+  }
+`;
+
+export function useDeleteView(resource, view) {
+  return useMutation(DELETE_VIEW, {
+    variables: {
+      id: view.id,
+    },
+    update(cache) {
+      const data = cache.readQuery({
+        query: VIEWS,
+        variables: { resource },
+      });
+
+      cache.writeQuery({
+        query: VIEWS,
+        variables: { resource },
+        data: {
+          views: data.views.filter((v) => v.id !== view.id),
         },
       });
     },
@@ -84,4 +107,20 @@ const UPDATE_VIEW_FILTERS = gql`
 
 export function useUpdateViewFilter() {
   return useMutation(UPDATE_VIEW_FILTERS);
+}
+
+const RENAME_VIEW = gql`
+  ${viewFragment}
+
+  mutation updateView($id: ID!, $name: String) {
+    updateTobyView(id: $id, name: $name) {
+      view {
+        ...ViewFields
+      }
+    }
+  }
+`;
+
+export function useRenameView() {
+  return useMutation(RENAME_VIEW);
 }

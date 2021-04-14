@@ -4,7 +4,7 @@ module Toby
   module Mutations
     class UpdateView < GraphQL::Schema::Mutation
       argument :id, ID, required: true
-      argument :name, ID, required: false
+      argument :name, String, required: false
       argument :filters, [Types::FilterInput], required: false
 
       field :view, Types::ViewType, null: true
