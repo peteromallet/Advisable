@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
 import { useTranslation } from "react-i18next";
-import Heading from "../../components/Heading";
 import Container from "../../components/Container";
 
 const ApplicationsClosed = () => {
@@ -10,7 +9,15 @@ const ApplicationsClosed = () => {
   return (
     <Container css="text-align: center;" size="s">
       <Box paddingBottom="s">
-        <Heading size="s">{t("projects.applicationsClosed.title")}</Heading>
+        <Text
+          color="neutral900"
+          fontSize="l"
+          fontWeight="medium"
+          lineHeight="l"
+          letterSpacing="-0.015em"
+        >
+          {t("projects.applicationsClosed.title")}
+        </Text>
       </Box>
       <Text fontSize="sm">{t("projects.applicationsClosed.description")}</Text>
     </Container>

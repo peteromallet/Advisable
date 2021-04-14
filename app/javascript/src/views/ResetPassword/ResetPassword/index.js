@@ -1,9 +1,8 @@
 import React from "react";
 import { Formik } from "formik";
 import queryString from "query-string";
-import { Button } from "@advisable/donut";
+import { Button, Text } from "@advisable/donut";
 import { withNotifications } from "src/components/Notifications";
-import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import validationSchema from "./validationSchema";
 import { Container, Card } from "../styles";
@@ -61,9 +60,16 @@ export default withNotifications(
             }}
             render={(formik) => (
               <form onSubmit={formik.handleSubmit}>
-                <Heading center marginBottom="l">
+                <Text
+                  fontSize="xl"
+                  lineHeight="m"
+                  textAlign="center"
+                  color="neutral900"
+                  fontWeight="semibold"
+                  letterSpacing="-0.015em"
+                >
                   Reset Password
-                </Heading>
+                </Text>
                 <FormField
                   name="password"
                   type="password"

@@ -1,18 +1,17 @@
 // Renders the sidebar in the freelancer active application view.
 import React from "react";
 import { MessageCircle } from "@styled-icons/feather/MessageCircle";
-import Sticky from "../../components/Sticky";
+import Sticky from "src/components/Sticky";
 import { useTranslation } from "react-i18next";
-import Back from "../../components/Back";
-import Layout from "../../components/Layout";
+import Back from "src/components/Back";
+import Layout from "src/components/Layout";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Stack, Box, Button, Text } from "@advisable/donut";
-import Heading from "../../components/Heading";
-import VideoButton from "../../components/VideoButton";
-import AttributeList from "../../components/AttributeList";
-import TalkModal from "../../components/TalkModal";
-import { useMobile } from "../../components/Breakpoint";
-import currency from "../../utilities/currency";
+import VideoButton from "src/components/VideoButton";
+import AttributeList from "src/components/AttributeList";
+import TalkModal from "src/components/TalkModal";
+import { useMobile } from "src/components/Breakpoint";
+import currency from "src/utilities/currency";
 import StopWorking from "./StopWorking";
 
 const Component = ({ data, tutorial, tutorialModal }) => {
@@ -28,7 +27,15 @@ const Component = ({ data, tutorial, tutorialModal }) => {
         <Box paddingBottom="xl">
           <Back to="/clients">All Clients</Back>
         </Box>
-        <Heading level={3}>{application.project.primarySkill?.name}</Heading>
+        <Text
+          fontSize="xl"
+          lineHeight="m"
+          color="neutral900"
+          fontWeight="semibold"
+          letterSpacing="-0.015em"
+        >
+          {application.project.primarySkill?.name}
+        </Text>
         <Text>{application.project.user.companyName}</Text>
         <TalkModal
           dialog={dialog}

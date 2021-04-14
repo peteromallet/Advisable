@@ -4,9 +4,8 @@ import { rgba } from "polished";
 import styled from "styled-components";
 import { ActiveProject } from "./styles";
 import { Box, StyledCard, Text, theme } from "@advisable/donut";
-import Status from "../../../components/Status";
-import Heading from "../../../components/Heading";
-import pluralize from "../../../utilities/pluralize";
+import Status from "src/components/Status";
+import pluralize from "src/utilities/pluralize";
 
 const Card = styled(StyledCard)`
   cursor: pointer;
@@ -24,7 +23,14 @@ const Component = ({ onClick, application }) => {
     <ActiveProject>
       <Card onClick={onClick}>
         <Box padding="l">
-          <Heading level={4}>{application.project.primarySkill?.name}</Heading>
+          <Text
+            color="#0a1745"
+            fontSize="18px"
+            fontWeight="medium"
+            lineHeight="m"
+          >
+            {application.project.primarySkill?.name}
+          </Text>
           <Box paddingBottom="m">
             <Text fontSize="sm">{application.project.user.companyName}</Text>
           </Box>

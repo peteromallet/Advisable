@@ -4,14 +4,13 @@ import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Button, Tooltip, Box, Avatar, Text } from "@advisable/donut";
 import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Sticky from "../../components/Sticky";
-import Layout from "../../components/Layout";
-import Heading from "../../components/Heading";
-import currency from "../../utilities/currency";
-import VideoButton from "../../components/VideoButton";
-import AttributeList from "../../components/AttributeList";
-import { useMobile } from "../../components/Breakpoint";
-import TalkModal from "../../components/TalkModal";
+import Sticky from "src/components/Sticky";
+import Layout from "src/components/Layout";
+import currency from "src/utilities/currency";
+import VideoButton from "src/components/VideoButton";
+import AttributeList from "src/components/AttributeList";
+import { useMobile } from "src/components/Breakpoint";
+import TalkModal from "src/components/TalkModal";
 import ProjectTypeModal from "./ProjectTypeModal";
 import StopWorkingModal from "./StopWorkingModal";
 import useViewer from "src/hooks/useViewer";
@@ -46,7 +45,15 @@ const Sidebar = ({ data, history, tutorialModal }) => {
               url={specialist?.image?.url}
             />
           </Box>
-          <Heading level={3}>{specialist.name}</Heading>
+          <Text
+            fontSize="xl"
+            lineHeight="m"
+            color="neutral900"
+            fontWeight="semibold"
+            letterSpacing="-0.015em"
+          >
+            {specialist.name}
+          </Text>
           <Text fontSize="xs">
             {specialist.city}
             {specialist.country && `, ${specialist.country.name}`}
