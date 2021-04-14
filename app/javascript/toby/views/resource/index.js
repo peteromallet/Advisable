@@ -69,6 +69,22 @@ function Resource({ resource, views }) {
     setFilters(initializeViewFilters(currentView));
   }, [currentView]);
 
+  const updateFilters = useCallback(
+    (newFilters) => {
+      setFilters(newFilters);
+
+      if (currentView) {
+        updateViewFilters({
+          variables: {
+            id: currentView.id,
+            filters: newFilters,
+          },
+        });
+      }
+    },
+    [currentView, updateViewFilters],
+  );
+
   const scrollRef = useBottomScrollListener(() => {
     if (!loading && !hasNextPage) return;
     fetchMore({ variables: { cursor: endCursor } });
@@ -86,22 +102,6 @@ function Resource({ resource, views }) {
       pathname: `${location.pathname}/${id}`,
     });
   };
-
-  const updateFilters = useCallback(
-    (filters) => {
-      setFilters(filters);
-
-      if (currentView) {
-        updateViewFilters({
-          variables: {
-            id: currentView.id,
-            filters,
-          },
-        });
-      }
-    },
-    [currentView, updateViewFilters],
-  );
 
   return (
     <StyledLayout>

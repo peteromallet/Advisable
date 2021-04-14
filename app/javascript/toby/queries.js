@@ -33,8 +33,12 @@ export function useResourceViews(resource) {
 const CREATE_VIEW = gql`
   ${viewFragment}
 
-  mutation createTobyView($name: String!, $resource: String!) {
-    createTobyView(name: $name, resource: $resource) {
+  mutation createTobyView(
+    $name: String!
+    $resource: String!
+    $filters: [FilterInput!]
+  ) {
+    createTobyView(name: $name, resource: $resource, filters: $filters) {
       view {
         ...ViewFields
       }
@@ -94,12 +98,15 @@ export function useDeleteView(resource, view) {
 }
 
 const UPDATE_VIEW_FILTERS = gql`
-  ${viewFragment}
-
   mutation updateView($id: ID!, $filters: [FilterInput!]) {
     updateTobyView(id: $id, filters: $filters) {
       view {
-        ...ViewFields
+        id
+        filters {
+          attribute
+          type
+          value
+        }
       }
     }
   }
@@ -110,12 +117,11 @@ export function useUpdateViewFilter() {
 }
 
 const RENAME_VIEW = gql`
-  ${viewFragment}
-
   mutation updateView($id: ID!, $name: String) {
     updateTobyView(id: $id, name: $name) {
       view {
-        ...ViewFields
+        id
+        name
       }
     }
   }

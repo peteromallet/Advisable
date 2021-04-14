@@ -45,6 +45,12 @@ export default function TagsInput({
 
   const handleBlur = (e) => {
     setFocused(false);
+
+    if (e.target.value) {
+      onChange([...value, e.target.value]);
+      setInputValue("");
+    }
+
     onBlur(e);
   };
 

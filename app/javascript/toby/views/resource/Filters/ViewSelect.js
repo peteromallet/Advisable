@@ -163,7 +163,7 @@ function RenameView({ view }) {
   );
 }
 
-function CreateView({ resource, onCreate }) {
+function CreateView({ resource, onCreate, filters }) {
   const modal = useModal();
   const [value, setValue] = useState("");
   const [createView, { loading }] = useCreateView(resource.type);
@@ -174,6 +174,7 @@ function CreateView({ resource, onCreate }) {
       variables: {
         name: value,
         resource: resource.type,
+        filters,
       },
     });
     onCreate(response);
@@ -213,7 +214,7 @@ function CreateView({ resource, onCreate }) {
   );
 }
 
-export default function ViewSelect({ views, resource }) {
+export default function ViewSelect({ views, resource, filters }) {
   const popover = usePopoverState({ placement: "bottom-start" });
   const history = useHistory();
   const location = useLocation();
@@ -277,7 +278,11 @@ export default function ViewSelect({ views, resource }) {
               {view.name}
             </StyledView>
           ))}
-          <CreateView resource={resource} onCreate={handleCreateNewView} />
+          <CreateView
+            resource={resource}
+            onCreate={handleCreateNewView}
+            filters={filters}
+          />
         </Card>
       </Popover>
       <Box>

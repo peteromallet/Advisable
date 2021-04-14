@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback, useEffect } from "react";
+import React, { useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Box, Stack } from "@advisable/donut";
 import Filter from "./Filter";
@@ -8,13 +8,12 @@ import ViewSelect from "./ViewSelect";
 
 export default function FilterDrawer({
   views,
-  filters: initialFilters,
+  filters,
   resource,
   open,
   onApply,
 }) {
   const schemaData = useSchema();
-  const [filters, setFilters] = useState(initialFilters);
   const attributesWithFilters = useMemo(
     () =>
       resource.attributes.filter((attr) => {
@@ -23,40 +22,38 @@ export default function FilterDrawer({
     [resource],
   );
 
-  useEffect(() => {
-    setFilters(initialFilters);
-  }, [initialFilters]);
-
   const handleNewFilter = useCallback(() => {
-    setFilters((existing) => [
-      ...existing,
+    onApply([
+      ...filters,
       {
         attribute: attributesWithFilters[0].name,
         type: attributesWithFilters[0].filters[0].name,
         value: [],
       },
     ]);
-  }, [attributesWithFilters]);
+  }, [filters, onApply, attributesWithFilters]);
 
-  const handleUpdateFilter = useCallback((index, next) => {
-    setFilters((existing) =>
-      existing.map((filter, i) => {
-        if (index === i) {
-          return next;
-        }
+  const handleUpdateFilter = useCallback(
+    (index, next) => {
+      onApply(
+        filters.map((filter, i) => {
+          if (index === i) {
+            return next;
+          }
 
-        return filter;
-      }),
-    );
-  }, []);
+          return filter;
+        }),
+      );
+    },
+    [filters, onApply],
+  );
 
-  const removeFilter = useCallback((index) => {
-    setFilters((existing) => existing.filter((f, i) => i !== index));
-  }, []);
-
-  const handleApply = useCallback(() => {
-    onApply(filters);
-  }, [onApply, filters]);
+  const removeFilter = useCallback(
+    (index) => {
+      onApply(filters.filter((f, i) => i !== index));
+    },
+    [filters, onApply],
+  );
 
   return (
     <Box
@@ -79,7 +76,7 @@ export default function FilterDrawer({
         box-shadow: 2px 0 24px rgba(0, 0, 0, 0.2);
       `}
     >
-      <ViewSelect resource={resource} views={views} />
+      <ViewSelect filters={filters} resource={resource} views={views} />
       {filters.length === 0 && <EmptyFilters />}
       <Stack spacing="xs" mb={2}>
         {filters.map((filter, index) => (
@@ -96,7 +93,6 @@ export default function FilterDrawer({
       </Stack>
 
       <button onClick={handleNewFilter}>+ Add</button>
-      <button onClick={handleApply}>Apply</button>
     </Box>
   );
 }

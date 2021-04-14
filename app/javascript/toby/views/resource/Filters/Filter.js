@@ -57,28 +57,37 @@ export default function Filter({
   onUpdate,
   onRemove,
 }) {
-  const handleChangeAttribute = (attribute) => {
-    onUpdate(index, {
-      attribute: attribute.name,
-      type: attribute.filters[0].name,
-      value: [],
-    });
-  };
+  const handleChangeAttribute = useCallback(
+    (attribute) => {
+      onUpdate(index, {
+        attribute: attribute.name,
+        type: attribute.filters[0].name,
+        value: [],
+      });
+    },
+    [onUpdate, index],
+  );
 
-  const handleChangeType = (attributeFilter) => {
-    onUpdate(index, {
-      ...filter,
-      type: attributeFilter.name,
-      value: [],
-    });
-  };
+  const handleChangeType = useCallback(
+    (attributeFilter) => {
+      onUpdate(index, {
+        ...filter,
+        type: attributeFilter.name,
+        value: [],
+      });
+    },
+    [onUpdate, filter, index],
+  );
 
-  const handleChangeValue = (value) => {
-    onUpdate(index, {
-      ...filter,
-      value,
-    });
-  };
+  const handleChangeValue = useCallback(
+    (value) => {
+      onUpdate(index, {
+        ...filter,
+        value,
+      });
+    },
+    [onUpdate, filter, index],
+  );
 
   const handleRemove = () => {
     onRemove(index);

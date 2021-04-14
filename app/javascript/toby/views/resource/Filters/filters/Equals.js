@@ -1,6 +1,7 @@
 import React from "react";
-import { Select, Input } from "@advisable/donut";
+import { Select } from "@advisable/donut";
 import CurrencyInput from "./CurrencyInput";
+import StringContains from "./StringContains";
 
 function EqualsSelect({ value, attribute, onChange }) {
   return (
@@ -17,13 +18,6 @@ function EqualsSelect({ value, attribute, onChange }) {
   );
 }
 
-function EqualsInput({ value, onChange }) {
-  const handleChange = (e) => {
-    onChange([e.target.value]);
-  };
-  return <Input value={value} onChange={handleChange} type="text" />;
-}
-
 export default function Equals({ attribute, ...props }) {
   if (attribute.__typename === "CurrencyAttribute") {
     return <CurrencyInput {...props} />;
@@ -33,5 +27,5 @@ export default function Equals({ attribute, ...props }) {
     return <EqualsSelect attribute={attribute} {...props} />;
   }
 
-  return <EqualsInput attribute={attribute} {...props} />;
+  return <StringContains attribute={attribute} {...props} />;
 }
