@@ -7,6 +7,7 @@ import NotFound from "@advisable-main/components/PreviousProjectFormModal/NotFou
 import { GUILD_POST_QUERY } from "./queries";
 import Topics from "@guild/components/Post/components/Topics";
 import ResolvedNotice from "@guild/components/Post/components/ResolvedNotice";
+import ReactionsNotice from "@guild/components/Post/components/ReactionsNotice";
 import { CoverImage } from "@guild/components/CoverImage";
 import useViewer from "@advisable-main/hooks/useViewer";
 import Markdown from "@guild/components/Markdown";
@@ -138,7 +139,14 @@ const Post = () => {
 
             <Topics topics={post.guildTopics} />
 
+            {isAuthor && !!post.reactionsCount && (
+              <Box marginY="4">
+                <ReactionsNotice reactionsCount={post.reactionsCount} />
+              </Box>
+            )}
+
             <Box my={10} height="1px" width="200px" mx="auto" bg="neutral100" />
+
             {!guildViewer ? (
               <JoinGuild />
             ) : (
