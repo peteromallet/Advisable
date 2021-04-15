@@ -2,14 +2,13 @@
 
 require "rails_helper"
 
-RSpec.describe Mutations::CaseStudy::Approve do
+RSpec.describe Mutations::CaseStudy::Update do
   let(:article) { create(:case_study_article) }
-  let(:context) { {current_user: article.specialist} }
 
   let(:query) do
     <<-GRAPHQL
       mutation {
-        approveCaseStudy(input: {
+        updateCaseStudy(input: {
           id: "#{article.id}",
         }) {
           article {
@@ -20,14 +19,24 @@ RSpec.describe Mutations::CaseStudy::Approve do
     GRAPHQL
   end
 
-  it "sets approved_at" do
-    expect(article.specialist_approved_at).to be_nil
+  context "when the current user is the specialist owner" do
+    let(:context) { {current_user: article.specialist} }
 
-    response = AdvisableSchema.execute(query, context: context)
-    id = response["data"]["approveCaseStudy"]["article"]["id"]
+    it "updates the article" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"]
+      expect(error).to be_nil
+    end
+  end
 
-    expect(id).to eq(article.id)
-    expect(article.reload.specialist_approved_at).not_to be_nil
+  context "when the current user is an editor" do
+    let(:context) { {current_user: create(:user, :editor)} }
+
+    it "updates the article" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"]
+      expect(error).to be_nil
+    end
   end
 
   context "when the specialist doesn't have access to the article" do

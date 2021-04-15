@@ -2,9 +2,9 @@
 
 module Mutations
   module CaseStudy
-    class Approve < Mutations::BaseMutation
-      description "Approve a Case Study as a Specialist."
-      graphql_name "ApproveCaseStudy"
+    class Update < Mutations::BaseMutation
+      description "Update a Case Study."
+      graphql_name "UpdateCaseStudy"
 
       argument :id, ID, required: true
 
@@ -13,14 +13,15 @@ module Mutations
       def authorized?(id:)
         article = ::CaseStudy::Article.find(id)
         policy = ::CaseStudy::ArticlePolicy.new(current_user, article)
-        return true if policy.approve?
+        return true if policy.update?
 
-        ApiError.not_authorized("You do not have permissions to approve this Case Study!")
+        ApiError.not_authorized("You do not have permissions to update this Case Study!")
       end
 
       def resolve(id:)
         article = ::CaseStudy::Article.find(id)
-        article.update(specialist_approved_at: Time.zone.now)
+
+        # Figure out how to do this when the types are clear
 
         {article: article}
       end
