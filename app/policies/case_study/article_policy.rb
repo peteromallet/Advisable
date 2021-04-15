@@ -10,6 +10,10 @@ module CaseStudy
       editor? || admin?
     end
 
+    def update?
+      specialist_owner? || editor? || admin?
+    end
+
     def read_company?
       return true unless record.confidential
 

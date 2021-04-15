@@ -43,6 +43,12 @@ Rails.application.routes.draw do
         post 'boost_post', on: :member
       end
     end
+    namespace :case_study do
+      resources :articles
+      resources :skills
+      resources :companies
+      resources :industries
+    end
     resources :events do
       delete :cover_photo, on: :member, action: :destroy_cover_photo
     end

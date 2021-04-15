@@ -316,7 +316,15 @@ module Types
     field :case_studies, [Types::CaseStudy::ArticleType], null: true, max_page_size: 20
 
     def case_studies
-      ::CaseStudy::Article.all
+      ::CaseStudy::Article.published
+    end
+
+    field :case_study, Types::CaseStudy::ArticleType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def case_study(id:)
+      ::CaseStudy::Article.find(id)
     end
   end
 end
