@@ -27,7 +27,7 @@ let SideBar = (props) => {
       </Box>
       <Box paddingBottom="s">
         <Text
-          color="#0a1745"
+          color="neutral900"
           fontSize="18px"
           fontWeight="medium"
           lineHeight="m"
