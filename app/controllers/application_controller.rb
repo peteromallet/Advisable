@@ -54,7 +54,8 @@ class ApplicationController < ActionController::Base
 
   def prefetch_query(path, variables = {})
     @prefetched_queries ||= []
-    query = Rails.cache.fetch(path) { GraphqlFileParser.import(path) }
+    cache_key = "#{path}_#{ENV["HEROKU_SLUG_COMMIT"]}"
+    query = Rails.cache.fetch(cache_key) { GraphqlFileParser.import(path) }
     result = AdvisableSchema.execute(query, variables: variables, context: graphql_context)
 
     @prefetched_queries << {
