@@ -3,7 +3,6 @@ import { Box, Text } from "@advisable/donut";
 import Back from "../../components/Back";
 import Steps from "../../components/Steps";
 import Layout from "../../components/Layout";
-import Heading from "../../components/Heading";
 import { useMobile } from "../../components/Breakpoint";
 import { hasCompleteTasksStep } from "./validationSchema";
 
@@ -27,10 +26,15 @@ let SideBar = (props) => {
         <Back to="/applications">All Applications</Back>
       </Box>
       <Box paddingBottom="s">
-        <Heading level={4}>
+        <Text
+          color="neutral900"
+          fontSize="18px"
+          fontWeight="medium"
+          lineHeight="m"
+        >
           Proposal for &quot;{application.project.primarySkill?.name}&quot; with{" "}
           {application.project.user.companyName}
-        </Heading>
+        </Text>
       </Box>
       <Box paddingBottom="l">
         <Text fontSize="sm">

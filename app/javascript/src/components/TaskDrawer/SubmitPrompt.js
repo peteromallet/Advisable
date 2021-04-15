@@ -3,7 +3,6 @@ import React from "react";
 import { useMutation } from "@apollo/client";
 import { Box, Columns, Button, Text } from "@advisable/donut";
 import Slider from "../Slider";
-import Heading from "../Heading";
 import SUBMIT_TASK from "./submitTask";
 import currency from "../../utilities/currency";
 import { Confirmation, ConfirmationContainer } from "./styles";
@@ -114,9 +113,15 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
               </Text>
             </Box>
             <Box paddingBottom="m">
-              <Heading size="m">
+              <Text
+                fontSize="xl"
+                lineHeight="m"
+                color="neutral900"
+                fontWeight="semibold"
+                letterSpacing="-0.015em"
+              >
                 {isFixedPricing ? currency(estimate) : estimate}
-              </Heading>
+              </Text>
               <Text>
                 {task.estimateType === "Fixed" ? "Cost" : "Hours Worked"}
               </Text>
