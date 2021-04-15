@@ -6,10 +6,12 @@ require 'admin_constraint'
 Rails.application.routes.draw do
   match "(*any)", to: redirect { |_, req| "https://app.advisable.com#{req.fullpath}" }, via: :all, constraints: {host: "advisable.herokuapp.com"}
 
-  mount GraphqlPlayground::Rails::Engine, as: "graphql_playground", at: '/playground', graphql_path: '/graphql' if Rails.env.development? || ENV["STAGING"]
+  if Rails.env.development? || ENV["STAGING"]
+    mount GraphqlPlayground::Rails::Engine, as: "graphql_playground", at: '/playground', graphql_path: '/graphql'
+    mount GraphqlPlayground::Rails::Engine, as: "toby_playground", at: '/toby_playground', graphql_path: '/toby_graphql' if ENV["TOBY"]
+  end
 
   if ENV["TOBY"]
-    mount GraphqlPlayground::Rails::Engine, as: "toby_playground", at: '/toby_playground', graphql_path: '/toby_graphql'
     post '/toby_graphql', to: 'graphql#toby'
     get "/toby", to: "application#toby"
     get "/toby/*toby", to: "application#toby"
