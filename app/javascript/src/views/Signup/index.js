@@ -6,10 +6,9 @@ import { Redirect, useParams, useLocation, useHistory } from "react-router-dom";
 import { Button, Text, Link } from "@advisable/donut";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
-import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import useScrollRestore from "src/utilities/useScrollRestore";
-import useViewer from "../../hooks/useViewer";
+import useViewer from "src/hooks/useViewer";
 import validationSchema from "./validationSchema";
 import { Container, Card, Error } from "./styles";
 import SIGNUP from "./signup";
@@ -70,9 +69,16 @@ const Signup = () => {
         />
       </svg>
       <Card>
-        <Heading center marginBottom="xs">
+        <Text
+          fontSize="xl"
+          lineHeight="m"
+          textAlign="center"
+          color="neutral900"
+          fontWeight="semibold"
+          letterSpacing="-0.015em"
+        >
           Create your Account
-        </Heading>
+        </Text>
         <Text fontSize="s" marginBottom="xl" textAlign="center">
           {notice && t(notice)}
         </Text>

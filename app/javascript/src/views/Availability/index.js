@@ -1,9 +1,8 @@
 import { Formik } from "formik";
 import { DateTime } from "luxon";
-import { Button, Availability, useBreakpoint } from "@advisable/donut";
+import { Text, Button, Availability, useBreakpoint } from "@advisable/donut";
 import { useQuery, useMutation } from "@apollo/client";
 import React, { useState } from "react";
-import Heading from "src/components/Heading";
 import Loading from "src/components/Loading";
 import AvailabilityInput from "src/components/AvailabilityInput";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
@@ -43,9 +42,15 @@ const AvailabilityView = ({ match, notifications }) => {
           {(formik) => (
             <Form onSubmit={formik.handleSubmit}>
               <Header>
-                <Heading marginBottom="m">
+                <Text
+                  fontSize="xl"
+                  lineHeight="m"
+                  color="neutral900"
+                  fontWeight="semibold"
+                  letterSpacing="-0.015em"
+                >
                   Availability for calls with specialists!
-                </Heading>
+                </Text>
                 <TimeZoneSelect
                   value={timeZone}
                   onChange={(zone) => setTimeZone(zone)}
