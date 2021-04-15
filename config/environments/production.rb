@@ -85,12 +85,12 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  $stdout.sync = true if ENV["RAILS_LOG_TO_STDOUT"].present?
-  logger_options = {
-    app: "Advisable",
-    env: ENV["RAILS_ENV"]
-  }
-  config.logger = Logdna::Ruby.new(ENV["LOGDNA_API_KEY"], logger_options)
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    $stdout.sync = true
+    logger = ActiveSupport::Logger.new($stdout)
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
