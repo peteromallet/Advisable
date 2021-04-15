@@ -52,6 +52,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def prefetch_viewer
+    prefetch_query("app/javascript/src/graphql/queries/getViewer.graphql")
+  end
+
   def prefetch_query(path, variables = {})
     @prefetched_queries ||= []
     cache_key = "#{path}_#{ENV["HEROKU_SLUG_COMMIT"]}"
@@ -63,10 +67,6 @@ class ApplicationController < ActionController::Base
       variables: variables,
       result: result
     }
-  end
-
-  def prefetch_viewer
-    prefetch_query("app/javascript/src/graphql/queries/getViewer.graphql")
   end
 
   def graphql_context
