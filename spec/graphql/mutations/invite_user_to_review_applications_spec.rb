@@ -65,7 +65,7 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
     let(:extra) { "applicationId: \"#{application.uid}\"" }
 
     it "includes the application_id in the mail" do
-      response = AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context: context)
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_to_review_applications", "deliver_now", {args: array_including({application_id: application.uid})})
     end
   end
@@ -88,6 +88,17 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("emailBlank")
+    end
+  end
+
+  context "when email belongs to a specialist" do
+    let(:specialist) { create(:specialist) }
+    let(:email) { specialist.account.email }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"].first["extensions"]["code"]
+      expect(error).to eq("notAnUser")
     end
   end
 end
