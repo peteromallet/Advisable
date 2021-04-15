@@ -58,6 +58,7 @@ gem "pry"
 gem "pry-rails"
 # gem "pry-doc" Does not support Ruby 3 yet
 gem "pry-byebug", ">= 3.9.0"
+gem "logdna"
 
 group :development, :test do
   gem "parallel_tests"
@@ -74,7 +75,7 @@ group :development do
   gem "rubocop-rails", require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rspec", require: false
-  gem 'rubocop-graphql', require: false
+  gem "rubocop-graphql", require: false
   gem "annotate"
   gem "foreman"
   gem "guard"
