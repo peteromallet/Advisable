@@ -158,6 +158,7 @@ function ProjectStatus({ project, modal, viewerIsOwner, ...props }) {
       return <Validated project={project} />;
     }
     case "No Reviews": {
+      if (!viewerIsOwner) return null;
       return <NoReviews project={project} />;
     }
     case "Pending": {
