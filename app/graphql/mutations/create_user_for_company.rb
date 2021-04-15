@@ -1,37 +1,41 @@
 # frozen_string_literal: true
 
-class Mutations::CreateUserForCompany < Mutations::BaseMutation
-  include Mutations::Helpers::BlacklistedEmail
+module Mutations
+  class CreateUserForCompany < Mutations::BaseMutation
+    description "Creates User for a Company"
 
-  argument :email, String, required: true
-  argument :first_name, String, required: false
-  argument :last_name, String, required: false
-  argument :team_manager, Boolean, required: false
+    include Mutations::Helpers::BlacklistedEmail
 
-  field :user, Types::User, null: true
+    argument :email, String, required: true
+    argument :first_name, String, required: true
+    argument :last_name, String, required: true
+    argument :team_manager, Boolean, required: false
 
-  def authorized?(**args)
-    requires_team_manager!
-  end
+    field :user, Types::User, null: true
 
-  def resolve(email:, **optional)
-    email_blacklisted?(email)
-    attributes = optional.slice(:first_name, :last_name)
-    attributes[:permissions] = optional[:team_manager] ? [:team_manager] : []
-    account = Account.new(email: email, **attributes)
-    account.save!
+    def authorized?(**_args)
+      requires_team_manager!
+    end
 
-    new_user = current_user.invite_comember!(account)
-    UserMailer.invited_by_manager(current_user, new_user).deliver_later
+    def resolve(email:, **optional)
+      email_blacklisted?(email)
+      attributes = optional.slice(:first_name, :last_name)
+      attributes[:permissions] = optional[:team_manager] ? [:team_manager] : []
+      account = Account.new(email: email, **attributes)
+      account.save!
 
-    {user: new_user}
-  rescue ActiveRecord::RecordInvalid
-    if account.errors.added?(:email, :taken, value: email)
-      ApiError.invalid_request("emailTaken", "The email #{email} is already used by another account.")
-    elsif account.errors.added?(:email, :blank)
-      ApiError.invalid_request("emailBlank", "Email is required.")
-    else
-      raise
+      new_user = current_user.invite_comember!(account)
+      UserMailer.invited_by_manager(current_user, new_user).deliver_later
+
+      {user: new_user}
+    rescue ActiveRecord::RecordInvalid
+      if account.errors.added?(:email, :taken, value: email)
+        ApiError.invalid_request("emailTaken", "The email #{email} is already used by another account.")
+      elsif account.errors.added?(:email, :blank)
+        ApiError.invalid_request("emailBlank", "Email is required.")
+      else
+        raise
+      end
     end
   end
 end
