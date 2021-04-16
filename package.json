@@ -110,7 +110,7 @@
     "lint-staged": ">=10.5.4",
     "pixelmatch": "^5.2.1",
     "prettier": "^2.2.1",
-    "react-refresh": "^0.9.0",
+    "react-refresh": "^0.10.0",
     "waait": "^1.0.5",
     "webpack-dev-server": "^3.11.2",
     "webpackbar": "^5.0.0-3"
