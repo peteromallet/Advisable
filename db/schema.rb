@@ -185,8 +185,8 @@ ActiveRecord::Schema.define(version: 2021_04_16_101030) do
     t.datetime "published_at"
     t.datetime "specialist_approved_at"
     t.bigint "specialist_id", null: false
-    t.bigint "interviewer_id", null: false
-    t.bigint "editor_id", null: false
+    t.bigint "interviewer_id"
+    t.bigint "editor_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "company_id"
