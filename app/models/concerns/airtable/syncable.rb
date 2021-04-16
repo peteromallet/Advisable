@@ -55,6 +55,8 @@ module Airtable
 
         airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
         airtable_class.find(airtable_id).destroy
+      rescue Airrecord::Error => e
+        raise e unless e.message.include?("MODEL_ID_NOT_FOUND")
       end
 
       def sync_from_airtable
