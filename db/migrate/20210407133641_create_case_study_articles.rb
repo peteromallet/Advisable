@@ -14,8 +14,8 @@ class CreateCaseStudyArticles < ActiveRecord::Migration[6.1]
       t.datetime :published_at
       t.datetime :specialist_approved_at
       t.references :specialist, null: false, foreign_key: true
-      t.references :interviewer, null: false, foreign_key: {to_table: :accounts}
-      t.references :editor, null: false, foreign_key: {to_table: :accounts}
+      t.references :interviewer, foreign_key: {to_table: :accounts}
+      t.references :editor, foreign_key: {to_table: :accounts}
 
       t.timestamps
     end

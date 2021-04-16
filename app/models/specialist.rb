@@ -51,7 +51,9 @@ class Specialist < ApplicationRecord
   has_many :specialist_industries, dependent: :destroy
   has_many :industries, through: :specialist_industries
   has_many :answers, dependent: :destroy
+  has_many :events, foreign_key: :host_id, inverse_of: :host, dependent: :nullify
   has_many :event_attendees, dependent: :destroy
+  has_many :articles, class_name: "CaseStudy::Article", dependent: :destroy
 
   # We also have an 'image' column in the specalists table. This is a deprecated
   # column that we used to use to store the avatar from airtable in.
