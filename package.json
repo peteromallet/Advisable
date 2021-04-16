@@ -44,7 +44,7 @@
     "fuse.js": "^6.4.6",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.11.0",
-    "i18next": "^19.9.2",
+    "i18next": "^20.2.1",
     "i18next-browser-languagedetector": "^6.1.0",
     "i18next-xhr-backend": "^3.2.2",
     "indefinite": "^2.4.1",
