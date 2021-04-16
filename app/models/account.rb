@@ -16,6 +16,8 @@ class Account < ApplicationRecord
 
   has_many :actor_notifications, class_name: "Notification", foreign_key: :actor_id, dependent: :destroy, inverse_of: :actor
 
+  scope :active, -> { where(deleted_at: nil) }
+
   has_secure_password validations: false
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
   validates :email, uniqueness: true, presence: true, format: {with: /@/}

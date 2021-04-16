@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class SkillRecommendation < Types::BaseType
+  class SkillsRecommendation < Types::BaseType
     description "Represents fields for a skills recommendation"
     implements Types::RecommendationInterface
 

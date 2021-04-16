@@ -179,7 +179,7 @@ module Types
 
     def specialist_recommendation
       requires_guild_user!
-      ::Specialists::Recommender.call(current_user)
+      ::Recommendation.recommend(current_user)
     end
 
     # Guild

@@ -7,7 +7,7 @@ function commaList(list) {
     ?.replace(/, ([^,]*)$/, " and $1");
 }
 
-function SkillRecommendation({ specialistRecommendation }) {
+function SkillsRecommendation({ specialistRecommendation }) {
   const { skills, recommendation } = specialistRecommendation;
   return `${recommendation?.firstName} also works in ${commaList(skills)}`;
 }
@@ -23,7 +23,7 @@ function RandomRecommendation({ specialistRecommendation }) {
 }
 
 const TYPES = {
-  SkillRecommendation,
+  SkillsRecommendation,
   IndustryRecommendation,
   RandomRecommendation,
 };
