@@ -14,7 +14,7 @@ RSpec.describe Types::RecommendationInterface do
             recommendation {
               id
             }
-            ... on SkillRecommendation {
+            ... on SkillsRecommendation {
               skills {
                 id
                 name
@@ -35,7 +35,7 @@ RSpec.describe Types::RecommendationInterface do
   let(:current_user) { create(:specialist, :guild, skills: skills) }
 
   it "returns a skills recommendation" do
-    stub_const("Specialists::Recommender::RECOMMENDERS", [Specialists::Recommenders::SkillsRecommendation])
+    stub_const("Recommendation::RECOMMENDERS", [Recommendation::Skills])
     match = create(:specialist, :guild, skills: skills)
 
     expect(response["data"]["specialistRecommendation"]).to eq({
@@ -45,7 +45,7 @@ RSpec.describe Types::RecommendationInterface do
   end
 
   it "returns an industry recommendation" do
-    stub_const("Specialists::Recommender::RECOMMENDERS", [Specialists::Recommenders::IndustriesRecommendation])
+    stub_const("Recommendation::RECOMMENDERS", [Recommendation::Industry])
     match = create(:specialist, :guild)
     same_industry = create(:industry, name: 'Education')
     same_industry.previous_projects.create!(specialist: current_user)
@@ -58,7 +58,7 @@ RSpec.describe Types::RecommendationInterface do
   end
 
   it "returns a random recommendation" do
-    stub_const("Specialists::Recommender::RECOMMENDERS", [Specialists::Recommenders::RandomRecommendation])
+    stub_const("Recommendation::RECOMMENDERS", [Recommendation::Random])
     random_match = create(:specialist, :guild)
 
     expect(response["data"]["specialistRecommendation"]).to eq({
@@ -67,7 +67,7 @@ RSpec.describe Types::RecommendationInterface do
   end
 
   it "does not return a recommendation" do
-    stub_const("Specialists::Recommender::RECOMMENDERS", [Specialists::Recommenders::SkillsRecommendation])
+    stub_const("Recommendation::RECOMMENDERS", [Recommendation::Skills])
     create(:specialist, :guild)
 
     expect(response["data"]["specialistRecommendation"]["recommendation"]).to eq(nil)

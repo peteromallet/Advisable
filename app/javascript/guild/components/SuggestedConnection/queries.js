@@ -9,7 +9,7 @@ export const SUGGESTED_CONNECTION_QUERY = gql`
         avatar
         firstName
       }
-      ... on SkillRecommendation {
+      ... on SkillsRecommendation {
         skills {
           id
           name

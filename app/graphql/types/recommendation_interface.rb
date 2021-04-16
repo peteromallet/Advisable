@@ -5,7 +5,7 @@ module Types
     include Types::BaseInterface
     field_class BaseField
 
-    orphan_types Types::IndustryRecommendation, Types::SkillRecommendation, Types::RandomRecommendation
+    orphan_types Types::IndustryRecommendation, Types::SkillsRecommendation, Types::RandomRecommendation
 
     description "Represents an interface for a specialist recommendation"
 
@@ -13,11 +13,7 @@ module Types
 
     definition_methods do
       def resolve_type(object, _context)
-        case object.class.name
-        when "Specialists::Recommenders::IndustriesRecommendation" then Types::IndustryRecommendation
-        when "Specialists::Recommenders::SkillsRecommendation" then Types::SkillRecommendation
-        when "Specialists::Recommenders::RandomRecommendation" then Types::RandomRecommendation
-        end
+        "Types::#{object.class.name.demodulize}Recommendation".constantize
       end
     end
   end

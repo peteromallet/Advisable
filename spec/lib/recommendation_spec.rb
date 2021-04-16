@@ -2,9 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe Specialists::Recommender do
+RSpec.describe Recommendation do
   subject(:recommender) do
-    described_class.call(specialist)
+    described_class.recommend(specialist)
   end
 
   let(:specialist) { create(:specialist, :guild) }
@@ -19,7 +19,7 @@ RSpec.describe Specialists::Recommender do
     let(:match) { create(:specialist, :guild) }
 
     before do
-      stub_const("Specialists::Recommender::RECOMMENDERS", [Specialists::Recommenders::SkillsRecommendation])
+      stub_const("Recommendation::RECOMMENDERS", [Recommendation::Skills])
       specialist.update!(skills: same_skills)
     end
 
@@ -51,7 +51,7 @@ RSpec.describe Specialists::Recommender do
     end
 
     it "does not have a recommendation" do
-      stub_const("Specialists::Recommender::RECOMMENDERS", [Specialists::Recommenders::SkillsRecommendation])
+      stub_const("Recommendation::RECOMMENDERS", [Recommendation::Skills])
       # no match
       create(:specialist, :guild, skills: [])
       expect(recommender.recommendation).to eq(nil)
@@ -67,7 +67,7 @@ RSpec.describe Specialists::Recommender do
     end
 
     it "makes a recommendation if there are > 0 industries in common" do
-      stub_const("Specialists::Recommender::RECOMMENDERS", [Specialists::Recommenders::IndustriesRecommendation])
+      stub_const("Recommendation::RECOMMENDERS", [Recommendation::Industry])
       match = create(:specialist, :guild)
       same_industry.previous_projects.create!(specialist: match)
 
@@ -78,7 +78,7 @@ RSpec.describe Specialists::Recommender do
 
   context "with random" do
     it "creates a recommendation" do
-      stub_const("Specialists::Recommender::RECOMMENDERS", [Specialists::Recommenders::RandomRecommendation])
+      stub_const("Recommendation::RECOMMENDERS", [Recommendation::Random])
       others = create_list(:specialist, 2, :guild)
 
       expect(others).to include(recommender.recommendation)
