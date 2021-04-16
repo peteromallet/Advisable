@@ -5,6 +5,17 @@ import { InMemoryCache } from "@apollo/client";
 const createCache = () => {
   return new InMemoryCache({
     possibleTypes: {},
+    typePolicies: {
+      Query: {
+        fields: {
+          views: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+    },
   });
 };
 
