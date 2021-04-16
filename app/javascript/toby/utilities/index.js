@@ -58,7 +58,7 @@ function generateCollectionQuery(schemaData, resourceData) {
     query: {
       __variables: {
         cursor: "String",
-        filters: "[Filter!]",
+        filters: "[FilterInput!]",
       },
       records: {
         __args: {

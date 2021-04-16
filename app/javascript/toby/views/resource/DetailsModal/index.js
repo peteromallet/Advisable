@@ -38,8 +38,11 @@ function useRoutedModal(path, returnPath) {
   }, [history, path]);
 
   const handleHide = useCallback(() => {
-    history.replace(returnPath);
-  }, [history, returnPath]);
+    history.replace({
+      ...location,
+      pathname: returnPath,
+    });
+  }, [location, history, returnPath]);
 
   return {
     ...modal,

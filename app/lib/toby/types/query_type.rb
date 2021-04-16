@@ -11,9 +11,17 @@ module Toby
         Resources.resource_classes.sort_by(&:name)
       end
 
+      field :views, [ViewType], null: true do
+        argument :resource, String, required: true
+      end
+
+      def views(resource:)
+        ::TobyView.where(resource: resource)
+      end
+
       Resources.resource_classes.each do |resource|
         field resource.query_name_collection, resource.type.connection_type, null: false, resolver: Toby::Resolvers::Collection do
-          argument :filters, [Filter], required: false
+          argument :filters, [FilterInput], required: false
           resource_class resource
         end
 
