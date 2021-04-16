@@ -33,8 +33,8 @@ end
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  company_id             :uuid
-#  editor_id              :bigint           not null
-#  interviewer_id         :bigint           not null
+#  editor_id              :bigint
+#  interviewer_id         :bigint
 #  specialist_id          :bigint           not null
 #
 # Indexes
