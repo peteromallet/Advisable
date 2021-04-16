@@ -3,6 +3,7 @@ import * as Sentry from "@sentry/react";
 import { Pin } from "@styled-icons/ionicons-solid/Pin";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { Box, Text, Avatar, Link, Notice } from "@advisable/donut";
+import useViewer from "@advisable-main/hooks/useViewer";
 import Topics from "./components/Topics";
 import Markdown from "../Markdown";
 import PostTypeTag from "@guild/components/PostTypeTag";
@@ -10,6 +11,7 @@ import PostActions from "@guild/components/PostActions";
 import { CoverImage } from "@guild/components/CoverImage";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ResolvedNotice from "./components/ResolvedNotice";
+import ReactionsNotice from "./components/ReactionsNotice";
 import { guildPostUrl, isGuildPath } from "@guild/utils";
 import { StyledPostCard } from "./styles";
 
@@ -21,6 +23,7 @@ const Post = ({
   showResolve = false,
   walkthrough = false,
 }) => {
+  const viewer = useViewer();
   const history = useHistory();
   const url = guildPostUrl(post.id);
   const handleOpen = () => {
@@ -28,6 +31,8 @@ const Post = ({
     isGuildPath ? history.push(url) : (window.location = url);
   };
   const LinkOrExternal = isGuildPath ? RouterLink : Link.External;
+
+  const isAuthor = viewer?.id === post?.author?.id;
 
   return (
     <Sentry.ErrorBoundary>
@@ -132,6 +137,13 @@ const Post = ({
             This post has been pinned by the Advisable team
           </Notice>
         )}
+
+        {isAuthor && !!post.reactionsCount && (
+          <Box marginY="4">
+            <ReactionsNotice reactionsCount={post.reactionsCount} />
+          </Box>
+        )}
+
         {post.isPopular ? (
           <Box
             display="flex"

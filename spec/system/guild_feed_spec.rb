@@ -64,9 +64,11 @@ RSpec.describe 'Guild feed', type: :system do
     end
 
     it "includes a post many people have found interesting" do
-      posts.last.update!(created_at: 3.weeks.ago, reactionable_count: Guild::Post::POPULAR_THRESHOLD)
+      threshold = Guild::Post::POPULAR_THRESHOLD
+      posts.last.update!(specialist: specialist, created_at: 3.weeks.ago, reactionable_count: threshold)
       visit "/guild/feed"
       expect(page).to have_content("Many people found this post interesting")
+      expect(page).to have_content("#{threshold} people have marked your post as interesting")
     end
   end
 
