@@ -63,12 +63,20 @@ RSpec.describe 'Guild feed', type: :system do
       expect(latest_posts.size).to eq(4)
     end
 
-    it "includes a post many people have found interesting" do
-      threshold = Guild::Post::POPULAR_THRESHOLD
-      posts.last.update!(specialist: specialist, created_at: 3.weeks.ago, reactionable_count: threshold)
-      visit "/guild/feed"
-      expect(page).to have_content("Many people found this post interesting")
-      expect(page).to have_content("#{threshold} people have marked your post as interesting")
+    context "with interesting posts" do
+      let(:threshold) { Guild::Post::POPULAR_THRESHOLD }
+
+      it "includes a post many people have found interesting" do
+        posts.last.update!(specialist: create(:specialist, :guild), created_at: 3.weeks.ago, reactionable_count: threshold)
+        visit "/guild/feed"
+        expect(page).to have_content("Many people found this post interesting")
+      end
+
+      it "includes the number of reactions for the author" do
+        posts.last.update!(specialist: specialist, created_at: 3.weeks.ago, reactionable_count: threshold)
+        visit "/guild/feed"
+        expect(page).to have_content("#{threshold} people have found your post interesting")
+      end
     end
   end
 
