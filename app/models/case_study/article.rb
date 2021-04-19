@@ -2,6 +2,8 @@
 
 module CaseStudy
   class Article < ApplicationRecord
+    has_logidze
+
     belongs_to :specialist
     belongs_to :company, optional: true
     belongs_to :interviewer, class_name: "::Account"

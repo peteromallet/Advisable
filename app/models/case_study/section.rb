@@ -2,6 +2,8 @@
 
 module CaseStudy
   class Section < ApplicationRecord
+    has_logidze
+
     belongs_to :article
     has_many :contents, dependent: :destroy
   end
@@ -12,6 +14,7 @@ end
 # Table name: case_study_sections
 #
 #  id         :uuid             not null, primary key
+#  position   :integer
 #  type       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

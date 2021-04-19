@@ -4,6 +4,8 @@ module CaseStudy
   class Company < ApplicationRecord
     include Resizable
 
+    has_logidze
+
     has_many :articles, dependent: :destroy
 
     has_one_attached :logo
