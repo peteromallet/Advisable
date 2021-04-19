@@ -14,6 +14,7 @@ import Description from "../components/Description";
 import StepNumber from "../components/StepNumber";
 import { useMutation } from "@apollo/client";
 import { UPDATE_PROFILE } from "../queries";
+import { track } from "src/utilities/mixpanel";
 
 export const validationSchema = object().shape({
   linkedin: string().nullable().url("Please provide a valid URL"),
@@ -49,6 +50,7 @@ export default function Overview({ specialist }) {
       return;
     }
 
+    track("Overview (Specialist Application)");
     history.push("/freelancers/apply/experience");
   };
 
