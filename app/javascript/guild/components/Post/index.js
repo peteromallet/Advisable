@@ -2,6 +2,7 @@ import React from "react";
 import * as Sentry from "@sentry/react";
 import pluralize from "src/utilities/pluralize";
 import { Pin } from "@styled-icons/ionicons-solid/Pin";
+import { Bulb } from "@styled-icons/ionicons-outline/Bulb";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { Box, Text, Avatar, Link, Notice } from "@advisable/donut";
 import useViewer from "@advisable-main/hooks/useViewer";
@@ -149,8 +150,15 @@ const Post = ({
               padding="2px 16px"
               background="#fde7b2"
               borderRadius="8px 8px 0 0"
+              display="flex"
             >
-              <Text lineHeight="l" color="neutral700" fontWeight="medium">
+              <Box as={Bulb} marginTop="1" size="14" />
+              <Text
+                marginLeft="2"
+                lineHeight="l"
+                color="neutral700"
+                fontWeight="medium"
+              >
                 {isAuthor
                   ? `${pluralize(
                       post.reactionsCount,
