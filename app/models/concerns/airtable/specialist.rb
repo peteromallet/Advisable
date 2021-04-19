@@ -110,7 +110,7 @@ module Airtable
     push_data do |specialist|
       self['Biography'] = specialist.bio
       self['LinkedIn URL'] = specialist.linkedin
-      self['Can Travel'] = specialist.travel_availability
+      self['Can Travel'] = specialist.travel_availability.presence
       self['Community Status'] = specialist.community_status
       self['Community Status - Applied To Join - Timestamp'] = specialist.community_applied_at
       self['Community Status - Accepted - Timestamp'] = specialist.community_accepted_at
