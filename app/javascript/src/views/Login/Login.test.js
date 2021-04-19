@@ -1,5 +1,5 @@
 import { fireEvent } from "@testing-library/react";
-import VIEWER from "../../graphql/queries/viewer";
+import VIEWER from "../../graphql/queries/getViewer.graphql";
 import { renderRoute, mockData } from "test-utils";
 import LOGIN from "./login";
 import { GET_PROJECTS } from "../Projects/queries";

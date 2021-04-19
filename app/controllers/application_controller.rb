@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include CurrentUser
 
   before_action :set_sentry_context
+  before_action :prefetch_viewer, only: %i[frontend guild]
   before_action :authenticate_with_magic_link, only: %i[frontend guild guild_post]
 
   def frontend
@@ -47,5 +48,35 @@ class ApplicationController < ActionController::Base
     else
       Sentry.set_user(id: nil)
     end
+  end
+
+  protected
+
+  def prefetch_viewer
+    prefetch_query("app/javascript/src/graphql/queries/getViewer.graphql")
+  end
+
+  def prefetch_query(path, variables = {})
+    @prefetched_queries ||= []
+    cache_key = "#{path}_#{ENV["HEROKU_SLUG_COMMIT"]}"
+    query = Rails.cache.fetch(cache_key) { GraphqlFileParser.import(path) }
+    result = AdvisableSchema.execute(query, variables: variables, context: graphql_context)
+
+    @prefetched_queries << {
+      query: query,
+      variables: variables,
+      result: result
+    }
+  end
+
+  def graphql_context
+    {
+      request: request,
+      client_ip: client_ip,
+      session_manager: session_manager,
+      current_user: current_user,
+      current_account: current_account,
+      oauth_viewer: session[:omniauth] ? OauthViewer.new(session[:omniauth]) : nil
+    }
   end
 end

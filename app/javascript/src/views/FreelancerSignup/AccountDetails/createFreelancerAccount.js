@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { viewerFields } from "../../../graphql/queries/viewer";
+import viewerFields from "src/graphql/fragments/viewerFields.graphql";
 import { SpecialistFields } from "../getProfile";
 
 export default gql`

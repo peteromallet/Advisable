@@ -1,5 +1,5 @@
 import { renderRoute, mockData } from "test-utils";
-import VIEWER from "../../../graphql/queries/viewer";
+import VIEWER from "../../../graphql/queries/getViewer.graphql";
 import GET_SETUP_DATA from "../getSetupData";
 import { CREATE_SETUP_INTENT } from "../../../components/UpdatePaymentMethod";
 

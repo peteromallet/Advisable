@@ -1,6 +1,6 @@
 import { fireEvent } from "@testing-library/react";
 import { renderRoute, mockData } from "test-utils";
-import VIEWER from "../../../../../graphql/queries/viewer";
+import VIEWER from "../../../../../graphql/queries/getViewer.graphql";
 import { GET_DATA } from "../../../../../components/InvoiceSettingsFields";
 import GET_PAYMENT_SETTINGS from "../getPaymentSettings";
 import { UPDATE_INVOICE_SETTINGS } from "../queries";

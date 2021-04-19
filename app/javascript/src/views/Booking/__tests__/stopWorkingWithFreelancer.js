@@ -1,6 +1,6 @@
 import { renderRoute, mockData } from "test-utils";
 import { fireEvent } from "@testing-library/react";
-import VIEWER from "../../../graphql/queries/viewer";
+import VIEWER from "../../../graphql/queries/getViewer.graphql";
 import GET_ACTIVE_APPLICATION from "../getActiveApplication";
 import { STOP_WORKING } from "../StopWorkingModal";
 

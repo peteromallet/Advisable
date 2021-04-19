@@ -7,7 +7,7 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from "../testHelpers/test-utils";
-import VIEWER from "../graphql/queries/viewer";
+import VIEWER from "../graphql/queries/getViewer.graphql";
 import { mockData, mockViewer, mockQuery, mockMutation } from "test-utils";
 import GET_ACTIVE_APPLICATION from "../views/Booking/getActiveApplication";
 import {

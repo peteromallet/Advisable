@@ -2,7 +2,9 @@ import React, { useCallback } from "react";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
 import Loading from "../../../components/Loading";
-import VIEWER, { viewerFields } from "../../../graphql/queries/viewer";
+import VIEWER, {
+  viewerFields,
+} from "../../../graphql/queries/getViewer.graphql";
 import { useNotifications } from "../../../components/Notifications";
 
 export const CONFIRM = gql`

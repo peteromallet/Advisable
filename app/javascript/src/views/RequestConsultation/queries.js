@@ -1,9 +1,9 @@
 import { gql } from "@apollo/client";
-import VIEWER from "src/graphql/queries/viewer";
+import VIEWER from "src/graphql/queries/getViewer.graphql";
 import { useMutation, useQuery } from "@apollo/client";
 import { useCallback } from "react";
 import { useParams, useLocation } from "react-router";
-import { viewerFields } from "../../graphql/queries/viewer";
+import viewerFields from "../../graphql/fragments/viewerFields.graphql";
 
 export const GET_SPECIALIST = gql`
   query specialist($id: ID!) {

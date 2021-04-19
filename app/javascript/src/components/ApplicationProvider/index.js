@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
 import { Provider as DonutProvider } from "@advisable/donut";
 import Loading from "../Loading";
-import VIEWER from "../../graphql/queries/viewer";
+import VIEWER from "../../graphql/queries/getViewer.graphql";
 import useIntercom from "../../utilities/useIntercom";
 import ApplicationContext from "../../applicationContext";
 import useSentryUser from "src/hooks/useSentryUser";
