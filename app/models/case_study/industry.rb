@@ -2,6 +2,8 @@
 
 module CaseStudy
   class Industry < ApplicationRecord
+    has_logidze
+
     belongs_to :article
     belongs_to :industry, class_name: "::Industry", inverse_of: :case_study_industries
   end

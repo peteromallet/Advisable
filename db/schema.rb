@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_16_101030) do
+ActiveRecord::Schema.define(version: 2021_04_19_075326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 2021_04_16_101030) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "company_id"
+    t.jsonb "log_data"
     t.index ["company_id"], name: "index_case_study_articles_on_company_id"
     t.index ["editor_id"], name: "index_case_study_articles_on_editor_id"
     t.index ["interviewer_id"], name: "index_case_study_articles_on_interviewer_id"
@@ -203,6 +204,7 @@ ActiveRecord::Schema.define(version: 2021_04_16_101030) do
     t.string "business_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
   end
 
   create_table "case_study_contents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -212,6 +214,7 @@ ActiveRecord::Schema.define(version: 2021_04_16_101030) do
     t.jsonb "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
     t.index ["section_id"], name: "index_case_study_contents_on_section_id"
   end
 
@@ -220,6 +223,7 @@ ActiveRecord::Schema.define(version: 2021_04_16_101030) do
     t.bigint "industry_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_industries_on_article_id"
     t.index ["industry_id"], name: "index_case_study_industries_on_industry_id"
   end
@@ -229,6 +233,7 @@ ActiveRecord::Schema.define(version: 2021_04_16_101030) do
     t.string "type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_sections_on_article_id"
   end
 
@@ -238,6 +243,7 @@ ActiveRecord::Schema.define(version: 2021_04_16_101030) do
     t.bigint "skill_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_skills_on_article_id"
     t.index ["skill_id"], name: "index_case_study_skills_on_skill_id"
   end
@@ -1383,5 +1389,23 @@ ActiveRecord::Schema.define(version: 2021_04_16_101030) do
   SQL
   create_trigger :logidze_on_users, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_articles, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_articles BEFORE INSERT OR UPDATE ON public.case_study_articles FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_companies, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_companies BEFORE INSERT OR UPDATE ON public.case_study_companies FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_skills, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_skills BEFORE INSERT OR UPDATE ON public.case_study_skills FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_industries, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_industries BEFORE INSERT OR UPDATE ON public.case_study_industries FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_sections, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_sections BEFORE INSERT OR UPDATE ON public.case_study_sections FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_contents, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_contents BEFORE INSERT OR UPDATE ON public.case_study_contents FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
