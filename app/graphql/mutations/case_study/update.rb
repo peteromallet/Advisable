@@ -7,10 +7,11 @@ module Mutations
       graphql_name "UpdateCaseStudy"
 
       argument :id, ID, required: true
+      argument :sections, [GraphQL::Types::JSON], required: true
 
       field :article, Types::CaseStudy::ArticleType, null: false
 
-      def authorized?(id:)
+      def authorized?(id:, **_extra)
         article = ::CaseStudy::Article.find(id)
         policy = ::CaseStudy::ArticlePolicy.new(current_user, article)
         return true if policy.update?
@@ -18,10 +19,26 @@ module Mutations
         ApiError.not_authorized("You do not have permissions to update this Case Study!")
       end
 
-      def resolve(id:)
+      def resolve(id:, sections:)
         article = ::CaseStudy::Article.find(id)
 
-        # Figure out how to do this when the types are clear
+        ActiveRecord::Base.transaction do
+          sections.each_with_index do |sec, i|
+            section = sec["id"] ? article.sections.find(sec["id"]) : article.sections.build
+            section.update(position: i, type: sec["type"])
+            sec["content"].each_with_index do |con, j|
+              content = con["id"] ? section.contents.find(con["id"]) : section.contents.build
+              content.position = j
+              content = content.becomes!("CaseStudy::#{con["type"].capitalize}Content".constantize)
+              if content.is_a?(::CaseStudy::ImagesContent)
+                # some shit here
+              else
+                content.content = con["content"]
+              end
+              content.save!
+            end
+          end
+        end
 
         {article: article}
       end
