@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe CaseStudy::ParagraphContent, type: :model do
   let(:paragraph) { build(:case_study_paragraph_content) }

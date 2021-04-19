@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe CaseStudy::HeadingContent, type: :model do
   let(:heading) { build(:case_study_heading_content) }
