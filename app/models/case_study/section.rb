@@ -2,6 +2,8 @@
 
 module CaseStudy
   class Section < ApplicationRecord
+    self.inheritance_column = :_type_disabled
+
     has_logidze
 
     belongs_to :article

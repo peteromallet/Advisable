@@ -8,7 +8,7 @@ module CaseStudy
     def valid_content
       return if content.keys.size == 1 && content["results"].present?
 
-      errors.add(:content, "Content does not follow the type's requirements")
+      errors.add(:content, "does not follow the type's requirements")
     end
   end
 end
