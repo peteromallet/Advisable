@@ -2,6 +2,8 @@
 
 module CaseStudy
   class Section < ApplicationRecord
+    has_logidze
+
     belongs_to :article
     has_many :contents, dependent: :destroy
   end

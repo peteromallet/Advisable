@@ -2,6 +2,8 @@
 
 module CaseStudy
   class Content < ApplicationRecord
+    has_logidze
+
     belongs_to :section
 
     has_many_attached :images
