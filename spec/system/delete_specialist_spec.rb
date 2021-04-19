@@ -12,6 +12,7 @@ RSpec.describe 'Deleting specialist account', type: :system do
     fill_in "email", with: specialist.account.email
     fill_in "password", with: "testing123"
     click_on "Login"
+    expect(page).to have_content("You have not applied to any projects yet")
 
     visit "/settings/password"
     click_on "Delete account"

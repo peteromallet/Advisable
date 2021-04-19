@@ -19,8 +19,8 @@ module.exports = {
     "\\.(css|scss)$": "<rootDir>/app/javascript/src/__mocks__/styleMock.js",
   },
   transform: {
-    "^.+\\.graphql$": "jest-transform-graphql",
-    "^.+\\.(js|tsx|ts)$": "babel-jest",
+    "\\.(gql|graphql)$": "jest-transform-graphql",
+    ".*": "babel-jest",
   },
   coverageReporters: ["html"],
   coverageDirectory: "<rootDir>/jest-coverage",

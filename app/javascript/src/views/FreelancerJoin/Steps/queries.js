@@ -1,6 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
-import { viewerFields } from "src/graphql/queries/viewer";
-import VIEWER from "src/graphql/queries/viewer";
+import viewerFields from "src/graphql/fragments/viewerFields.graphql";
+import VIEWER from "src/graphql/queries/getViewer.graphql";
 
 export const GET_PROJECT = gql`
   query GetProject($id: ID!) {

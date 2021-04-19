@@ -5,7 +5,7 @@ import {
   fireEvent,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
-import VIEWER from "../../graphql/queries/viewer";
+import VIEWER from "../../graphql/queries/getViewer.graphql";
 import CREATE_TASK from "../../graphql/mutations/createTask";
 import GET_TASK from "../../graphql/queries/taskDetails";
 import FETCH_APPLICATION from "./fetchApplication";

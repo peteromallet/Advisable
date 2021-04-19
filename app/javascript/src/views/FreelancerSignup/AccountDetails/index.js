@@ -7,7 +7,7 @@ import { Redirect } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Text, Box, Button } from "@advisable/donut";
 import FormField from "components/FormField";
-import VIEWER from "../../../graphql/queries/viewer";
+import VIEWER from "../../../graphql/queries/getViewer.graphql";
 import validationSchema from "./validationSchema";
 import CREATE_FREELANCER_ACCOUNT from "./createFreelancerAccount";
 

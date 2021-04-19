@@ -13,7 +13,7 @@ import {
   GET_PROJECT as GET_PROJECT_JOIN,
   UPDATE_PASSWORD,
 } from "./Steps/queries";
-import VIEWER from "src/graphql/queries/viewer";
+import VIEWER from "src/graphql/queries/getViewer.graphql";
 import { GET_PROJECT } from "../JobOpportunity/queries";
 import { GET_APPLICATIONS } from "../Applications/queries";
 import { GET_SPECIALIST } from "../FreelancerApplication/queries";
