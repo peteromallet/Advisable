@@ -1,18 +1,15 @@
 # frozen_string_literal: true
 
 module CaseStudy
-  class Content < ApplicationRecord
-    has_logidze
-
-    belongs_to :section
-
-    has_many_attached :images
-
-    validate :valid_content
-
+  class ParagraphContent < Content
     private
 
-    def valid_content; end
+    # { type: "paragraph", content: { text: "..." } }
+    def valid_content
+      return if content.keys.size == 1 && content["text"].present?
+
+      errors.add(:content, "Content does not follow the type's requirements")
+    end
   end
 end
 
