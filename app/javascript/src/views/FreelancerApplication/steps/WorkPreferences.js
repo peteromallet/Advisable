@@ -14,6 +14,7 @@ import Header from "../components/Header";
 import Description from "../components/Description";
 import AnimatedCard from "../components/AnimatedCard";
 import { UPDATE_PROFILE } from "../queries";
+import { track } from "src/utilities/mixpanel";
 
 export const validationSchema = object().shape({
   skills: array().min(1, "Please select at least one skill"),
@@ -51,6 +52,7 @@ export default function WorkPreferences({ specialist, skills, industries }) {
       return;
     }
 
+    track("Preferences (Specialist Application)");
     history.push("/freelancers/apply/ideal_project");
   };
 

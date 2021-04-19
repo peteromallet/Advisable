@@ -23,6 +23,7 @@ import Description from "../components/Description";
 import { UPDATE_PROFILE } from "../queries";
 import { boolean, object, string } from "yup";
 import DefaultAvatarIcon from "../components/DefaultAvatarIcon";
+import { track } from "src/utilities/mixpanel";
 
 export const validationSchema = object().shape({
   avatar: string().nullable(),
@@ -59,6 +60,7 @@ export default function Introduction({ specialist, countries }) {
       return;
     }
 
+    track("Introduction (Specialist Application)");
     history.push("/freelancers/apply/overview");
   };
 
