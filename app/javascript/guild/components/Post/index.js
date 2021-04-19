@@ -1,5 +1,6 @@
 import React from "react";
 import * as Sentry from "@sentry/react";
+import pluralize from "src/utilities/pluralize";
 import { Pin } from "@styled-icons/ionicons-solid/Pin";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { Box, Text, Avatar, Link, Notice } from "@advisable/donut";
@@ -11,7 +12,6 @@ import PostActions from "@guild/components/PostActions";
 import { CoverImage } from "@guild/components/CoverImage";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ResolvedNotice from "./components/ResolvedNotice";
-import ReactionsNotice from "./components/ReactionsNotice";
 import { guildPostUrl, isGuildPath } from "@guild/utils";
 import { StyledPostCard } from "./styles";
 
@@ -138,13 +138,7 @@ const Post = ({
           </Notice>
         )}
 
-        {isAuthor && !!post.reactionsCount && (
-          <Box marginY="4">
-            <ReactionsNotice reactionsCount={post.reactionsCount} />
-          </Box>
-        )}
-
-        {post.isPopular ? (
+        {post.isPopular || (isAuthor && !!post.reactionsCount) ? (
           <Box
             display="flex"
             alignItems="center"
@@ -157,7 +151,13 @@ const Post = ({
               borderRadius="8px 8px 0 0"
             >
               <Text lineHeight="l" color="neutral700" fontWeight="medium">
-                Many people found this post interesting
+                {isAuthor
+                  ? `${pluralize(
+                      post.reactionsCount,
+                      "person has",
+                      "people have",
+                    )} found your post interesting`
+                  : "Many people found this post interesting"}
               </Text>
             </Box>
           </Box>
