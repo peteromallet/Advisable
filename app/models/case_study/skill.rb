@@ -2,6 +2,8 @@
 
 module CaseStudy
   class Skill < ApplicationRecord
+    has_logidze
+
     belongs_to :article
     belongs_to :skill, class_name: "::Skill", inverse_of: :case_study_skills
   end
