@@ -119,8 +119,7 @@ const InterviewScheduled = () => {
       <Description>
         Your introductory call has been scheduled
         {interviewTime && ` for ${interviewTime}`}. You should also have
-        received a calendar invite by now, where you <br /> can reschedule as
-        needed.
+        received a calendar invite by now, where you can reschedule as needed.
       </Description>
     </PromptCard>
   );
