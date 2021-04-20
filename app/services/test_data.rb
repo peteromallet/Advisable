@@ -20,6 +20,7 @@ class TestData
     specialist =
       Specialist.find_or_create_by(account: account) do |s|
         s.bio = attrs.fetch(:bio)
+        s.application_stage = "Accepted"
         s.country = Country.find_or_create_by(name: 'United States')
         s.city = 'Scranton'
       end
