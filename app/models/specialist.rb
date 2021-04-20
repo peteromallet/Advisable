@@ -29,6 +29,7 @@ class Specialist < ApplicationRecord
   include Guild::SpecialistsConcern
 
   VALID_APPLICATION_STAGES = ["Started", "Submitted", "Invited To Interview", "Interview Scheduled", "Interview Completed", "Full Application", "On Hold", "Completed", "Accepted", "Rejected By Us", "Rejected By Them", "References Requested", "References Provided", "References Validated", "Kicked Off"].freeze
+  REJECTED_STAGES = ["Rejected By Us", "Rejected By Them"].freeze
 
   has_logidze
 
@@ -71,7 +72,7 @@ class Specialist < ApplicationRecord
   register_tutorials :fixed_projects, :flexible_projects
 
   scope :available, -> { where("unavailable_until IS NULL OR unavailable_until <= ?", Time.zone.now) }
-  scope :not_rejected, -> { where.not(application_stage: ["Rejected By Us", "Rejected By Them"]) }
+  scope :not_rejected, -> { where.not(application_stage: REJECTED_STAGES) }
 
   def send_confirmation_email
     token = account.create_confirmation_token
