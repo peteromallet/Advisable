@@ -14,6 +14,7 @@ class SendApplicationInformationJob < ApplicationJob
     specialists = Specialist.
       joins(:account).
       available.
+      not_rejected.
       where(account: {deleted_at: nil}).
       where(id: specialist_ids_by_skill).
       where.not(id: specialists_with_existing_applications)
