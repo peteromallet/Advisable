@@ -16,7 +16,7 @@ class AccountDashboard < Administrate::BaseDashboard
     email: Field::String,
     permissions: PermissionsField,
     features: FeaturesField,
-    completed_tutorials: UserTutorialsField,
+    completed_tutorials: TutorialsField,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     user: Field::BelongsTo,
