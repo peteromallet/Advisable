@@ -11,12 +11,8 @@ module Types
       will be returned for the viewer query when the freelancer is logged in.
     HEREDOC
 
-    field :id, ID, null: false do
+    field :id, ID, null: false, method: :uid do
       description 'The unique ID for the specialist'
-    end
-
-    def id
-      object.uid
     end
 
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs." do
@@ -53,13 +49,9 @@ module Types
       description 'The specialists portfolio'
     end
 
-    field :phone_number, String, null: true do
+    field :phone_number, String, null: true, method: :phone do
       authorize :specialist?, :admin?
       description 'The phone number for the specialist'
-    end
-
-    def phone_number
-      object.phone
     end
 
     field :image, Types::AttachmentType, null: true do
@@ -74,24 +66,16 @@ module Types
       object.resume.attached? ? object.resume : nil
     end
 
-    field :avatar, String, null: true do
+    field :avatar, String, null: true, method: :avatar_or_image do
       description 'The specialists avatar'
     end
 
-    def avatar
-      object.avatar_or_image
-    end
-
-    field :cover_photo, String, null: true
-
-    def cover_photo
-      object.resized_cover_photo_url
-    end
+    field :cover_photo, String, null: true, method: :resized_cover_photo_url
 
     field :skills, [Types::SpecialistSkillType, {null: true}], null: true do
       description 'A list of skills that the specialist possesses'
-      argument :project_skills, Boolean, required: false
       argument :limit, Int, required: false
+      argument :project_skills, Boolean, required: false
     end
 
     # Specialist can have skills from multiple places:
@@ -102,12 +86,10 @@ module Types
     # include project skills by specifying the project_skills argument.
     def skills(project_skills: false, limit: nil)
       records =
-        begin
-          if project_skills
-            (object.skills + object.previous_project_skills).uniq
-          else
-            object.skills
-          end
+        if project_skills
+          (object.skills + object.previous_project_skills).uniq
+        else
+          object.skills
         end
 
       sorted =
@@ -192,8 +174,8 @@ module Types
     # TODO: authenticated-application-flow - Simplify this query arguments once
     # we know application flow is authenticated only.
     field :previous_projects, Types::PreviousProject.connection_type, null: false do
-      argument :include_validation_failed, Boolean, required: false
       argument :include_drafts, Boolean, required: false
+      argument :include_validation_failed, Boolean, required: false
       argument :include_validation_pending, Boolean, required: false
     end
 
@@ -229,6 +211,10 @@ module Types
       HEREDOC
     end
 
+    def completed_tutorials
+      object.account.completed_tutorials
+    end
+
     field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
       authorize :specialist?, :admin?
       description 'The timestamp for when the specialist record was created'
@@ -249,8 +235,8 @@ module Types
     # "Open"
     field :applications, [Types::ApplicationType], null: true do
       authorize :specialist?, :admin?
-      argument :status, [String], required: false
       argument :sales_status, [String], required: false
+      argument :status, [String], required: false
       description <<~HEREDOC
         The specialists applications. This can be filtered by passing an array of
         statuses.
