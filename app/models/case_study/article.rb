@@ -38,6 +38,7 @@ end
 #  uid                    :string           not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  airtable_id            :string
 #  company_id             :bigint
 #  editor_id              :bigint
 #  interviewer_id         :bigint
@@ -45,6 +46,7 @@ end
 #
 # Indexes
 #
+#  index_case_study_articles_on_airtable_id     (airtable_id) UNIQUE
 #  index_case_study_articles_on_company_id      (company_id)
 #  index_case_study_articles_on_editor_id       (editor_id)
 #  index_case_study_articles_on_interviewer_id  (interviewer_id)
