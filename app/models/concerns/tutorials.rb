@@ -11,7 +11,7 @@ module Tutorials
   }.freeze
 
   included do
-    validate :valid_tutorials
+    validate :valid_tutorials, on: :update
 
     def completed_tutorials=(tutorials)
       super(tutorials.reject(&:empty?))
@@ -34,7 +34,7 @@ module Tutorials
     end
 
     def available_tutorials
-      @available_tutorials ||= TUTORIALS[specialist_or_user.class.name]
+      @available_tutorials ||= TUTORIALS[specialist_or_user&.class&.name] || []
     end
 
     private
