@@ -31,7 +31,10 @@ module Mutations
               content.position = j
               content = content.becomes!("CaseStudy::#{con["type"].capitalize}Content".constantize)
               if content.is_a?(::CaseStudy::ImagesContent)
-                # some shit here
+                content.images = []
+                con["content"]["images"].each do |signed_id|
+                  content.images.attach(signed_id)
+                end
               else
                 content.content = con["content"]
               end

@@ -5,6 +5,11 @@ require "rails_helper"
 RSpec.describe Mutations::CaseStudy::Update do
   let(:article) { create(:case_study_article) }
   let(:context) { {current_user: create(:user, :editor)} }
+  let(:section_extra) { "" }
+  let(:file1) { Rails.root.join("spec/support/01.jpg") }
+  let(:image1) { ActiveStorage::Blob.create_and_upload!(io: File.open(file1), filename: "01.jpg", content_type: "image/jpeg").signed_id }
+  let(:file2) { Rails.root.join("spec/support/02.jpg") }
+  let(:image2) { ActiveStorage::Blob.create_and_upload!(io: File.open(file2), filename: "02.jpg", content_type: "image/jpeg").signed_id }
 
   let(:query) do
     <<-GRAPHQL
@@ -13,6 +18,7 @@ RSpec.describe Mutations::CaseStudy::Update do
           id: "#{article.id}",
           sections: [
             {
+              #{section_extra}
               type: "execution",
               content: #{content}
             },
@@ -46,17 +52,7 @@ RSpec.describe Mutations::CaseStudy::Update do
             text: "test",
           }
         },
-        {
-          type: "images",
-          content: {
-            images: [
-              "eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8b4276e7fa0d323419db5769d973501d46bf95eb",
-              "eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8b4276e7fa0d323419db5769d973501d46bf95eb",
-              "eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8b4276e7fa0d323419db5769d973501d46bf95eb",
-              "eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8b4276e7fa0d323419db5769d973501d46bf95eb",
-            ]
-          }
-        },
+        #{images},
         {
           type: "results",
           content: {
@@ -81,6 +77,19 @@ RSpec.describe Mutations::CaseStudy::Update do
       }
     GRAPHQL
   end
+  let(:images) do
+    <<-GRAPHQL
+      {
+        type: "images",
+        content: {
+          images: [
+            "#{image1}",
+            "#{image2}"
+          ]
+        }
+      }
+    GRAPHQL
+  end
 
   it "updates the article and saves the position" do
     response = AdvisableSchema.execute(query, context: context)
@@ -92,6 +101,9 @@ RSpec.describe Mutations::CaseStudy::Update do
     contents = article.sections.find_by(position: 0).contents
     expect(contents.count).to eq(4)
     expect(contents.pluck(:type, :position)).to match_array([["CaseStudy::HeadingContent", 0], ["CaseStudy::ImagesContent", 2], ["CaseStudy::ParagraphContent", 1], ["CaseStudy::ResultsContent", 3]])
+
+    image = contents.find_by(type: "CaseStudy::ImagesContent")
+    expect(image.images.map(&:signed_id)).to match([image1, image2])
   end
 
   context "when content is invalid" do
@@ -110,6 +122,32 @@ RSpec.describe Mutations::CaseStudy::Update do
       response = AdvisableSchema.execute(query, context: context)
       expect(response["errors"].first["message"]).to eq("Content does not follow the type's requirements")
       expect(article.sections.count).to eq(0)
+    end
+  end
+
+  context "when existing images" do
+    let(:section) { create(:case_study_section, article: article) }
+    let(:image_content) { create(:case_study_images_content, section: section) }
+    let(:section_extra) { "id: \"#{section.id}\"" }
+    let(:images) do
+      <<-GRAPHQL
+        {
+          id: "#{image_content.id}",
+          type: "images",
+          content: {
+            images: [
+              "#{image2}"
+            ]
+          }
+        }
+      GRAPHQL
+    end
+
+    it "replaces with the new ones" do
+      image_content.images.attach(image1)
+      response = AdvisableSchema.execute(query, context: context)
+      expect(response["data"]["updateCaseStudy"]["article"]["id"]).to eq(article.id)
+      expect(image_content.images.map(&:signed_id)).to match([image2])
     end
   end
 

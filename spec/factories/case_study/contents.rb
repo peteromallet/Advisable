@@ -7,22 +7,22 @@ FactoryBot.define do
   end
 
   factory :case_study_paragraph_content, parent: :case_study_content, class: "CaseStudy::ParagraphContent" do
-    type { "paragraph" }
+    type { "CaseStudy::ParagraphContent" }
     content { {text: Faker::TvShows::TheITCrowd.quote} }
   end
 
   factory :case_study_heading_content, parent: :case_study_content, class: "CaseStudy::HeadingContent" do
-    type { "heading" }
+    type { "CaseStudy::HeadingContent" }
     content { {size: "h2", text: Faker::TvShows::TheITCrowd.quote} }
   end
 
   factory :case_study_results_content, parent: :case_study_content, class: "CaseStudy::ResultsContent" do
-    type { "results" }
+    type { "CaseStudy::ResultsContent" }
     content { {results: %w[1 2 3]} }
   end
 
   factory :case_study_images_content, parent: :case_study_content, class: "CaseStudy::ImagesContent" do
-    type { "images" }
+    type { "CaseStudy::ImagesContent" }
     content { {} }
   end
 end
