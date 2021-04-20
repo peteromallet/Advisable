@@ -2,6 +2,8 @@
 
 module CaseStudy
   class Section < ApplicationRecord
+    include Uid
+
     self.inheritance_column = :_type_disabled
 
     has_logidze
@@ -15,16 +17,18 @@ end
 #
 # Table name: case_study_sections
 #
-#  id         :uuid             not null, primary key
+#  id         :bigint           not null, primary key
 #  position   :integer
 #  type       :string
+#  uid        :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  article_id :uuid             not null
+#  article_id :bigint           not null
 #
 # Indexes
 #
 #  index_case_study_sections_on_article_id  (article_id)
+#  index_case_study_sections_on_uid         (uid)
 #
 # Foreign Keys
 #

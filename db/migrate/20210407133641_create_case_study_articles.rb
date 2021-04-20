@@ -2,7 +2,8 @@
 
 class CreateCaseStudyArticles < ActiveRecord::Migration[6.1]
   def change
-    create_table :case_study_articles, id: :uuid do |t|
+    create_table :case_study_articles do |t|
+      t.string :uid, null: false, index: true
       t.integer :score
       t.boolean :confidential
       t.string :title

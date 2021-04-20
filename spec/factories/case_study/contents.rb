@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :case_study_content, class: "CaseStudy::Content" do
+    sequence(:uid) { "cas_#{SecureRandom.hex[0..14]}" }
     section { association :case_study_section }
     position { 1 }
   end
