@@ -7,9 +7,8 @@ import NotFound from "@advisable-main/components/PreviousProjectFormModal/NotFou
 import { GUILD_POST_QUERY } from "./queries";
 import Topics from "@guild/components/Post/components/Topics";
 import ResolvedNotice from "@guild/components/Post/components/ResolvedNotice";
-import ReactionsNotice from "@guild/components/Post/components/ReactionsNotice";
 import { CoverImage } from "@guild/components/CoverImage";
-import useViewer from "@advisable-main/hooks/useViewer";
+import useViewerAuthor from "@guild/hooks/useViewerAuthor";
 import Markdown from "@guild/components/Markdown";
 import PostTypeTag from "@guild/components/PostTypeTag";
 import PostActions from "@guild/components/PostActions";
@@ -17,12 +16,12 @@ import ErrorBoundary from "@guild/components/ErrorBoundary";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 import JoinGuild from "./JoinGuild";
+import PopularNotice from "@guild/components/Post/components/PopularNotice";
 import { hasGqlError, loginWithRedirectPath } from "@guild/utils";
 import { StyledImageThumbnail } from "./styles";
 
 const Post = () => {
   const { postId } = useParams();
-  const viewer = useViewer();
   const gallery = useImageGallery();
   const location = useLocation();
 
@@ -35,8 +34,9 @@ const Post = () => {
     },
   });
   const post = data?.guildPost;
+
+  const { viewer, isAuthor, popularOrAuthorReactions } = useViewerAuthor(post);
   const guildViewer = viewer?.guild;
-  const isAuthor = viewer?.id === post?.author?.id;
   const otherImages = (post?.images || []).filter((p) => p.cover === false);
 
   if (loading) return <Loading />;
@@ -53,7 +53,9 @@ const Post = () => {
         {post.images.length > 0 ? (
           <ImageGallery dialog={gallery} images={post.images} />
         ) : null}
-        <Card>
+        <Card
+          borderBottom={popularOrAuthorReactions ? "6px solid #fde7b2" : null}
+        >
           {post.coverImage && (
             <CoverImage
               height={{ _: "260px", s: "340px", m: "480px" }}
@@ -139,12 +141,6 @@ const Post = () => {
 
             <Topics topics={post.guildTopics} />
 
-            {isAuthor && !!post.reactionsCount && (
-              <Box marginY="4">
-                <ReactionsNotice reactionsCount={post.reactionsCount} />
-              </Box>
-            )}
-
             <Box my={10} height="1px" width="200px" mx="auto" bg="neutral100" />
 
             {!guildViewer ? (
@@ -157,6 +153,7 @@ const Post = () => {
               )
             )}
           </Box>
+          {popularOrAuthorReactions && <PopularNotice post={post} />}
         </Card>
       </Box>
     </ErrorBoundary>
