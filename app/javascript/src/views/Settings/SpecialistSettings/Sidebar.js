@@ -3,7 +3,6 @@ import { padding } from "styled-system";
 import { motion } from "framer-motion";
 import { Calendar } from "@styled-icons/ionicons-outline/Calendar";
 import { Card } from "@styled-icons/ionicons-outline/Card";
-import { Copy } from "@styled-icons/ionicons-outline/Copy";
 import { LockClosed } from "@styled-icons/ionicons-outline/LockClosed";
 import { PersonCircle } from "@styled-icons/ionicons-outline/PersonCircle";
 import NavigationMenu from "../../../components/NavigationMenu";
@@ -75,9 +74,6 @@ const SettingsSidebar = () => {
           </NavigationMenu.Item>
           <NavigationMenu.Item to="/settings/availability" icon={<Calendar />}>
             Availability
-          </NavigationMenu.Item>
-          <NavigationMenu.Item to="/settings/references" icon={<Copy />}>
-            Previous Projects
           </NavigationMenu.Item>
           <NavigationMenu.Item to="/settings/payment-settings" icon={<Card />}>
             Payment Settings
