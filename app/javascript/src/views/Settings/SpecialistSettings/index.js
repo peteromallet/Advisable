@@ -4,7 +4,6 @@ import Sidebar from "./Sidebar";
 import Layout from "components/Layout";
 import General from "./General";
 import Password from "./Password";
-import References from "./References";
 import PaymentSettings from "./PaymentSettings";
 import Availability from "./Availability";
 import { useBreakpoint } from "@advisable/donut";
@@ -22,7 +21,7 @@ function SpecialistSettings({ match }) {
         <Switch>
           <Route path="/settings/general" component={General} />
           <Route path="/settings/availability" component={Availability} />
-          <Route path="/settings/references" component={References} />
+          <Redirect from="/settings/references" to="/profile" />
           <Route
             path="/settings/payment-settings"
             component={PaymentSettings}
