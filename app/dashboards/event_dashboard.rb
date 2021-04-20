@@ -9,7 +9,7 @@ class EventDashboard < Administrate::BaseDashboard
     title: Field::String,
     url: Field::String,
     uid: Field::String,
-    host: Field::BelongsTo.with_options(class_name: 'Specialist'),
+    host: Field::BelongsTo.with_options(class_name: 'Specialist', scope: -> { Specialist.includes(:account) }),
     starts_at: TimezoneDateField.with_options(DATETIME_OPTIONS),
     ends_at: TimezoneDateField.with_options(DATETIME_OPTIONS),
     published_at: Field::DateTime,
