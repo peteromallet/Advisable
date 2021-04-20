@@ -27,7 +27,7 @@ export default function Markdown({ children, ...props }) {
 
   return (
     <StyledMarkdown {...props}>
-      <ReactMarkdown renderers={{ link: renderLinks }}>
+      <ReactMarkdown components={{ link: renderLinks }}>
         {formatLinks(children)}
       </ReactMarkdown>
     </StyledMarkdown>
