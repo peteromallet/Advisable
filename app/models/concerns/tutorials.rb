@@ -5,43 +5,43 @@
 module Tutorials
   extend ActiveSupport::Concern
 
-  class_methods do
-    attr_accessor :tutorials
-
-    def register_tutorials(*tutorials)
-      @tutorials ||= []
-      @tutorials += tutorials.map(&:to_s)
-    end
-  end
+  TUTORIALS = {
+    "User" => %w[fixed_projects flexible_projects recommendations],
+    "Specialist" => %w[fixed_projects flexible_projects guild]
+  }.freeze
 
   included do
-    validate :valid_tutorials, if: :account
+    validate :valid_tutorials
 
     def completed_tutorials=(tutorials)
-      account[:completed_tutorials] = tutorials.reject(&:empty?)
+      super(tutorials.reject(&:empty?))
     end
 
     # returns the array of completed tutorials
     def completed_tutorials
-      account[:completed_tutorials] || []
+      super || []
     end
 
     # Adds a given tutorial to the completed_tutorials array
     def complete_tutorial(tutorial)
       return true if completed_tutorials.include?(tutorial)
 
-      account.update(completed_tutorials: completed_tutorials + [tutorial])
+      update(completed_tutorials: completed_tutorials + [tutorial])
     end
 
     def completed_tutorial?(tutorial)
       completed_tutorials.include?(tutorial)
     end
 
+    def available_tutorials
+      @available_tutorials ||= TUTORIALS[specialist_or_user.class.name]
+    end
+
     private
 
     def valid_tutorials
       completed_tutorials.each do |tutorial|
-        next if self.class.tutorials.include?(tutorial)
+        next if available_tutorials.include?(tutorial)
 
         errors.add(
           :completed_tutorials,

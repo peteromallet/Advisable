@@ -7,7 +7,5 @@ class TutorialsField < Administrate::Field::Base
     data.join(', ')
   end
 
-  def available_tutorials
-    resource.specialist_or_user&.class&.tutorials
-  end
+  delegate :available_tutorials, to: :resource
 end

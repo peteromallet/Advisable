@@ -4,8 +4,6 @@ module Types
   class User < Types::BaseType
     implements Types::AccountInterface
     delegate :account, :company, to: :object
-
-    field :id, ID, null: false
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
 
     field :email, String, null: false do
@@ -31,14 +29,6 @@ module Types
     field :time_zone, String, null: true
     field :company, Types::CompanyType, null: true
 
-    field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
-      argument :exclude_conflicts,
-               Boolean,
-               required: false,
-               description:
-                 'Exclude any times that conflict with scheduled interviews'
-    end
-
     field :industry, Types::IndustryType, null: true
 
     # TODO: Teams - frontend should not query for user industry, instead it should
@@ -62,12 +52,12 @@ module Types
       object&.company&.sales_person
     end
 
-    field :talk_signature, String, null: false do
+    field :completed_tutorials, [String], null: false do
       authorize :user?
     end
 
-    field :completed_tutorials, [String], null: false do
-      authorize :user?
+    def completed_tutorials
+      object.account.completed_tutorials
     end
 
     field :has_completed_tutorial, Boolean, null: false do
@@ -76,7 +66,7 @@ module Types
     end
 
     def has_completed_tutorial(tutorial:)
-      object.completed_tutorial?(tutorial)
+      object.account.completed_tutorial?(tutorial)
     end
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
@@ -159,8 +149,10 @@ module Types
       end
     end
 
-    def id
-      object.uid
+    field :id, ID, null: false, method: :uid
+
+    field :talk_signature, String, null: false do
+      authorize :user?
     end
 
     def talk_signature
@@ -178,6 +170,14 @@ module Types
       company.projects.where.not(sales_status: 'Lost').or(
         company.projects.where(sales_status: nil)
       ).order(created_at: :desc)
+    end
+
+    field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
+      argument :exclude_conflicts,
+               Boolean,
+               required: false,
+               description:
+                 'Exclude any times that conflict with scheduled interviews'
     end
 
     def availability(exclude_conflicts: false)

@@ -17,8 +17,6 @@ module Guild
       scope :guild, -> { where(guild: true) }
       scope :guild_featured_members, -> { guild.where.not(guild_featured_member_at: nil).order(guild_featured_member_at: :desc) }
 
-      register_tutorials :guild
-
       def touch_guild_notifications_read_at
         return unless guild_unread_notifications
 

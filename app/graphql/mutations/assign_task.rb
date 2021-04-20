@@ -18,7 +18,7 @@ module Mutations
       task = Task.find_by_uid!(args[:task])
 
       user = task.application.project.user
-      user.complete_tutorial('fixed_projects') unless user.completed_tutorial?('fixed_projects')
+      user.account.complete_tutorial('fixed_projects') unless user.account.completed_tutorial?('fixed_projects')
 
       {task: Tasks::Assign.call(task: task, responsible_id: current_account_id)}
     rescue Service::Error => e

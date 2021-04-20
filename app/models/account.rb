@@ -2,6 +2,7 @@
 
 class Account < ApplicationRecord
   include Uid
+  include Tutorials
   include Permissionable
   include Featurable
 
