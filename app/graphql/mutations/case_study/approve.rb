@@ -11,7 +11,7 @@ module Mutations
       field :article, Types::CaseStudy::ArticleType, null: false
 
       def authorized?(id:)
-        article = ::CaseStudy::Article.find(id)
+        article = ::CaseStudy::Article.find_by!(uid: id)
         policy = ::CaseStudy::ArticlePolicy.new(current_user, article)
         return true if policy.approve?
 
@@ -19,7 +19,7 @@ module Mutations
       end
 
       def resolve(id:)
-        article = ::CaseStudy::Article.find(id)
+        article = ::CaseStudy::Article.find_by!(uid: id)
         article.update(specialist_approved_at: Time.zone.now)
 
         {article: article}

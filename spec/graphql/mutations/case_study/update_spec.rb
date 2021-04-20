@@ -15,7 +15,7 @@ RSpec.describe Mutations::CaseStudy::Update do
     <<-GRAPHQL
       mutation {
         updateCaseStudy(input: {
-          id: "#{article.id}",
+          id: "#{article.uid}",
           sections: [
             {
               #{section_extra}
@@ -93,7 +93,7 @@ RSpec.describe Mutations::CaseStudy::Update do
 
   it "updates the article and saves the position" do
     response = AdvisableSchema.execute(query, context: context)
-    expect(response["data"]["updateCaseStudy"]["article"]["id"]).to eq(article.id)
+    expect(response["data"]["updateCaseStudy"]["article"]["id"]).to eq(article.uid)
 
     expect(article.sections.count).to eq(2)
     expect(article.sections.pluck(:type, :position)).to eq([["execution", 0], ["results", 1]])
@@ -128,11 +128,11 @@ RSpec.describe Mutations::CaseStudy::Update do
   context "when existing images" do
     let(:section) { create(:case_study_section, article: article) }
     let(:image_content) { create(:case_study_images_content, section: section) }
-    let(:section_extra) { "id: \"#{section.id}\"" }
+    let(:section_extra) { "id: \"#{section.uid}\"" }
     let(:images) do
       <<-GRAPHQL
         {
-          id: "#{image_content.id}",
+          id: "#{image_content.uid}",
           type: "images",
           content: {
             images: [
@@ -146,8 +146,8 @@ RSpec.describe Mutations::CaseStudy::Update do
     it "replaces with the new ones" do
       image_content.images.attach(image1)
       response = AdvisableSchema.execute(query, context: context)
-      expect(response["data"]["updateCaseStudy"]["article"]["id"]).to eq(article.id)
-      expect(image_content.images.map(&:signed_id)).to match([image2])
+      expect(response["data"]["updateCaseStudy"]["article"]["id"]).to eq(article.uid)
+      expect(image_content.images.reload.map(&:signed_id)).to match([image2])
     end
   end
 

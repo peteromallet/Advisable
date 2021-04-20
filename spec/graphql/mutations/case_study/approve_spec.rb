@@ -10,7 +10,7 @@ RSpec.describe Mutations::CaseStudy::Approve do
     <<-GRAPHQL
       mutation {
         approveCaseStudy(input: {
-          id: "#{article.id}",
+          id: "#{article.uid}",
         }) {
           article {
             id
@@ -26,7 +26,7 @@ RSpec.describe Mutations::CaseStudy::Approve do
     response = AdvisableSchema.execute(query, context: context)
     id = response["data"]["approveCaseStudy"]["article"]["id"]
 
-    expect(id).to eq(article.id)
+    expect(id).to eq(article.uid)
     expect(article.reload.specialist_approved_at).not_to be_nil
   end
 

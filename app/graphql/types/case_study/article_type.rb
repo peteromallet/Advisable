@@ -6,7 +6,7 @@ module Types
       graphql_name "CaseStudyArticle"
       description "Type definition for CaseStudy::Article"
 
-      field :id, ID, null: false
+      field :id, ID, null: false, method: :uid
       field :company, CompanyType, null: true do
         authorize :read_company?
       end
