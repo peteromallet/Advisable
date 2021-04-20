@@ -75,7 +75,7 @@ RSpec.describe 'Guild feed', type: :system do
       it "includes the number of reactions for the author" do
         posts.last.update!(specialist: specialist, created_at: 3.weeks.ago, reactionable_count: threshold)
         visit "/guild/feed"
-        expect(page).to have_content("#{threshold} people have found your post interesting")
+        expect(page).to have_content("#{threshold} people found your post interesting")
       end
     end
   end
