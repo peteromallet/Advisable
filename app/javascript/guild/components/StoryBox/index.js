@@ -1,17 +1,11 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { STORY_BOX_QUERY } from "./queries";
 import { Text, Card, Button, Box } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import LabelPost from "./LabelPost";
 
-export default function StoryBox() {
+export default function StoryBox({ loading, latestPrompt }) {
   const history = useHistory();
-  const { data, loading } = useQuery(STORY_BOX_QUERY, {
-    fetchPolicy: "cache-and-network",
-  });
-  const latestPrompt = data?.latestPrompt;
   const label = latestPrompt?.label;
   const posts = label?.guildPosts?.edges?.map((e) => e.node) || [];
 
