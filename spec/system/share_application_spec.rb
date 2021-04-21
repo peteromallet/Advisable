@@ -14,7 +14,7 @@ RSpec.describe 'Sharing an application', type: :system do
   end
 
   it 'allows user to invite existing team members' do
-    application.project.user.complete_tutorial('recommendations')
+    application.project.user.account.complete_tutorial('recommendations')
     authenticate_as application.project.user
     visit "/projects/#{application.project.uid}/applications/#{application.uid}"
     within "*[data-testid=actionBar]" do
@@ -25,7 +25,7 @@ RSpec.describe 'Sharing an application', type: :system do
   end
 
   it 'allows user to share an application with a team member' do
-    application.project.user.complete_tutorial('recommendations')
+    application.project.user.account.complete_tutorial('recommendations')
     authenticate_as application.project.user
     visit "/projects/#{application.project.uid}/applications/#{application.uid}"
     within "*[data-testid=actionBar]" do

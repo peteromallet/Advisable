@@ -60,8 +60,6 @@ class User < ApplicationRecord
   validates :talent_quality, inclusion: {in: TALENT_QUALITY_OPTIONS}, allow_nil: true
   validates :number_of_freelancers, inclusion: {in: NUMBER_OF_FREELANCERS_OPTIONS}, allow_nil: true
 
-  register_tutorials :fixed_projects, :flexible_projects, :recommendations
-
   alias_attribute :application_status, :contact_status
 
   # company name is both a column on the users table and an attribute of the
