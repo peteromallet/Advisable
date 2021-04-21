@@ -9,8 +9,8 @@ module CaseStudy
 
     belongs_to :specialist
     belongs_to :company, optional: true
-    belongs_to :interviewer, class_name: "::Account"
-    belongs_to :editor, class_name: "::Account"
+    belongs_to :interviewer, optional: true, class_name: "::Account"
+    belongs_to :editor, optional: true, class_name: "::Account"
     has_many :skills, dependent: :destroy
     has_many :industries, dependent: :destroy
     has_many :sections, dependent: :destroy
@@ -25,10 +25,12 @@ end
 # Table name: case_study_articles
 #
 #  id                     :bigint           not null, primary key
-#  comment                :string
+#  comment                :text
 #  company_type           :string
 #  confidential           :boolean
+#  editor_note            :text
 #  excerpt                :string
+#  freelancer_edits       :text
 #  goals                  :jsonb
 #  published_at           :datetime
 #  score                  :integer

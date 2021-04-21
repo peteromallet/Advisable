@@ -8,7 +8,9 @@ class CreateCaseStudyArticles < ActiveRecord::Migration[6.1]
       t.boolean :confidential
       t.string :title
       t.string :subtitle
-      t.string :comment
+      t.text :comment
+      t.text :editor_note
+      t.text :freelancer_edits
       t.string :excerpt
       t.string :company_type
       t.jsonb :goals
