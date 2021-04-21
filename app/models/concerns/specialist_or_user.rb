@@ -6,7 +6,6 @@ module SpecialistOrUser
   extend ActiveSupport::Concern
 
   included do
-    include Tutorials
     belongs_to :account, dependent: :destroy
   end
 

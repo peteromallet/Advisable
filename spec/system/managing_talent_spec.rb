@@ -8,7 +8,7 @@ RSpec.describe 'Managing talent', type: :system do
   before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
     authenticate_as application.project.user
-    application.project.user.complete_tutorial('fixed_projects')
+    application.project.user.account.complete_tutorial('fixed_projects')
   end
 
   context 'when there are no tasks' do

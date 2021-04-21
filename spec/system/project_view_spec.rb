@@ -15,7 +15,7 @@ RSpec.describe 'Project view', type: :system do
   let!(:application80) { create(:full_application, status: 'Applied', score: 80, project: project) }
 
   it 'allows user to accept and reject matches' do
-    project.user.complete_tutorial('recommendations')
+    project.user.account.complete_tutorial('recommendations')
 
     monday = Date.parse('monday')
     delta = monday > Time.zone.today ? 0 : 7
