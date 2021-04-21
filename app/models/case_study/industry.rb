@@ -3,6 +3,7 @@
 module CaseStudy
   class Industry < ApplicationRecord
     include Uid
+    uid_prefix "csi"
 
     has_logidze
 

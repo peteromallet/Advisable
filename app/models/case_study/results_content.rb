@@ -2,6 +2,8 @@
 
 module CaseStudy
   class ResultsContent < Content
+    uid_prefix "csc"
+
     private
 
     # { type: "results", content: { results: ["1", "2", "3"] } }

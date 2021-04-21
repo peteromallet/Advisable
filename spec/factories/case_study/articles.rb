@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :case_study_article, class: 'CaseStudy::Article' do
-    sequence(:uid) { "cas_#{SecureRandom.hex[0..14]}" }
+    sequence(:uid) { "csa_#{SecureRandom.hex[0..14]}" }
     score { 1 }
     company { association :case_study_company }
     confidential { false }

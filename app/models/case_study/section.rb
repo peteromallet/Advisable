@@ -3,6 +3,7 @@
 module CaseStudy
   class Section < ApplicationRecord
     include Uid
+    uid_prefix "css"
 
     self.inheritance_column = :_type_disabled
 

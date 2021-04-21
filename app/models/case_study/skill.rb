@@ -3,6 +3,7 @@
 module CaseStudy
   class Skill < ApplicationRecord
     include Uid
+    uid_prefix "csk"
 
     has_logidze
 

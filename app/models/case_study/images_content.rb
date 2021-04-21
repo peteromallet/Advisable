@@ -2,6 +2,8 @@
 
 module CaseStudy
   class ImagesContent < Content
+    uid_prefix "csc"
+
     private
 
     # {type: "images"}
