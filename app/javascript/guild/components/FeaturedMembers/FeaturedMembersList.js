@@ -42,10 +42,10 @@ function FeaturedMember({ member }) {
   );
 }
 
-function LoadingFeaturedMembers({ members }) {
+function LoadingFeaturedMembers({ featuredMembers }) {
   return (
     <Box display="grid" gridRowGap="6" gridTemplateColumns="1fr 1fr 1fr">
-      {members.map((member) => (
+      {featuredMembers.map((member) => (
         <FeaturedMember key={member.id} member={member} />
       ))}
     </Box>

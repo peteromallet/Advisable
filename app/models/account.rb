@@ -18,6 +18,8 @@ class Account < ApplicationRecord
   has_many :interviewer_articles, inverse_of: :interviewer, foreign_key: :interviewer_id, class_name: "CaseStudy::Article", dependent: :nullify
   has_many :editor_articles, inverse_of: :editor, foreign_key: :editor_id, class_name: "CaseStudy::Article", dependent: :nullify
 
+  scope :active, -> { where(deleted_at: nil) }
+
   has_secure_password validations: false
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
   validates :email, uniqueness: true, presence: true, format: {with: /@/}
@@ -25,7 +27,7 @@ class Account < ApplicationRecord
   before_validation :strip_email
 
   register_permissions :admin, :team_manager, :editor
-  featurize :test
+  featurize :test, :guild_recommendations
 
   def specialist_or_user
     specialist || user

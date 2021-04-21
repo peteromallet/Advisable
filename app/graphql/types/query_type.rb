@@ -2,6 +2,8 @@
 
 module Types
   class QueryType < Types::BaseType
+    description "A defined set of types describing what can be queried"
+
     field :project, Types::ProjectType, null: true do
       argument :id, ID, required: true
     end
@@ -171,6 +173,13 @@ module Types
 
     def video_call(id:)
       ::VideoCall.find_by_uid!(id)
+    end
+
+    field :specialist_recommendation, Types::RecommendationInterface, null: true
+
+    def specialist_recommendation
+      requires_guild_user!
+      ::Recommendation.recommend(current_user)
     end
 
     # Guild
