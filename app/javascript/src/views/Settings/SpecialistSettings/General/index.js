@@ -101,9 +101,7 @@ const Profile = () => {
               <Text mt="m" size="s" lineHeight="s">
                 You can&apos;t add more than 10 primary skills. If you want to
                 add more skills to your profile, you can do so by{" "}
-                <Link to="/settings/references">
-                  adding a previous project.
-                </Link>
+                <Link to="/profile">adding a previous project.</Link>
               </Text>
             )}
             <Box height={1} bg="neutral100" my="l" />
