@@ -14,12 +14,14 @@ export default function PopularNotice({ post, ...props }) {
         background="#fde7b2"
         borderRadius="8px 8px 0 0"
         display="flex"
+        alignItems="center"
       >
-        <Box as={Bulb} marginTop="1" size="14" />
+        <Box as={Bulb} color="yellow800" size="14" />
         <Text
+          fontSize="sm"
           marginLeft="2"
           lineHeight="l"
-          color="neutral700"
+          color="yellow900"
           fontWeight="medium"
         >
           {isAuthor
