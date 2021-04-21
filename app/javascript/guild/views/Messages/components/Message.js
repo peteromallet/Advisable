@@ -17,6 +17,8 @@ function contextMessage(type) {
 function MessageContext({ author, message }) {
   if (!message.attributes?.calendlyLink) return null;
   const { post, postType, postTitle } = message.attributes;
+  const safeName = (name) => name || "Deleted User";
+
   return (
     <Box
       mb={2}
@@ -30,9 +32,9 @@ function MessageContext({ author, message }) {
         <Link
           variant="dark"
           fontWeight="medium"
-          to={`/freelancers/${author.id}`}
+          to={`/freelancers/${author?.id}`}
         >
-          {author.name}
+          {safeName(author?.name)}
         </Link>
         {` ${contextMessage(postType)} `}
         <Link
@@ -56,13 +58,15 @@ function MessageContext({ author, message }) {
         mb={2}
         size="s"
       >
-        Book a call with {author.firstName}
+        Book a call with {safeName(author?.firstName)}
       </Button>
     </Box>
   );
 }
 
 export default function Message({ message, author, isAuthor }) {
+  const safeName = author?.name || "Deleted User";
+
   return (
     <Box display="flex" justifyContent={isAuthor ? "flex-end" : "flex-start"}>
       <Box
@@ -74,10 +78,10 @@ export default function Message({ message, author, isAuthor }) {
           <Box flexShrink="0" mr={2}>
             <Avatar
               size="xxs"
-              as={RouterLink}
-              to={`/freelancers/${author.id}/guild`}
-              url={author.avatar}
-              name={author.name}
+              as={author && RouterLink}
+              to={`/freelancers/${author?.id}/guild`}
+              url={author?.avatar}
+              name={safeName}
             />
           </Box>
         ) : null}
@@ -101,7 +105,7 @@ export default function Message({ message, author, isAuthor }) {
             boxShadow="0 4px 8px -4px rgba(0, 0, 0, 0.2)"
           >
             <Text fontSize="xs" mb={0.5} fontWeight="medium">
-              {author.name}
+              {safeName}
             </Text>
             <Text
               autoLink

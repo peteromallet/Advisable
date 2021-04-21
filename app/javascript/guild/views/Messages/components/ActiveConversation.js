@@ -11,6 +11,7 @@ import {
   Link,
   Textarea,
   Avatar,
+  Text,
   theme,
   useBreakpoint,
 } from "@advisable/donut";
@@ -110,7 +111,7 @@ const ActiveConversation = ({ channelSid }) => {
   const participants = [otherParticipant, viewer];
 
   function getParticipantById(id) {
-    return participants.find((participant) => participant.id === id);
+    return participants.find((participant) => participant?.id === id);
   }
 
   const onSubmitNewMessage = async (message) => {
@@ -141,6 +142,8 @@ const ActiveConversation = ({ channelSid }) => {
     messagesRef.current.scrollTop = messagesRef.current.scrollTop - 64;
   }
 
+  const safeName = otherParticipant?.name || "Deleted User";
+
   if (initializing || loading) return <Loading />;
 
   return (
@@ -157,20 +160,24 @@ const ActiveConversation = ({ channelSid }) => {
           <Avatar
             mr={2}
             size="xs"
-            as={RouterLink}
-            to={`/freelancers/${otherParticipant.id}/guild`}
-            name={otherParticipant.name}
-            url={otherParticipant.avatar}
+            as={otherParticipant && RouterLink}
+            to={`/freelancers/${otherParticipant?.id}/guild`}
+            name={safeName}
+            url={otherParticipant?.avatar}
           />
-          <Link
-            fontSize="lg"
-            variant="dark"
-            fontWeight="medium"
-            to={`/freelancers/${otherParticipant.id}/guild`}
-            css={flex.flexTruncate}
-          >
-            {otherParticipant.name}
-          </Link>
+          {otherParticipant ? (
+            <Link
+              fontSize="lg"
+              variant="dark"
+              fontWeight="medium"
+              to={`/freelancers/${otherParticipant.id}/guild`}
+              css={flex.flexTruncate}
+            >
+              {safeName}
+            </Link>
+          ) : (
+            <Text>{safeName}</Text>
+          )}
         </Box>
 
         <GuildBox
