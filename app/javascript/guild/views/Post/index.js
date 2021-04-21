@@ -153,7 +153,9 @@ const Post = () => {
               )
             )}
           </Box>
-          {popularOrAuthorReactions && <PopularNotice post={post} />}
+          {popularOrAuthorReactions && (
+            <PopularNotice marginBottom="-4px" post={post} />
+          )}
         </Card>
       </Box>
     </ErrorBoundary>

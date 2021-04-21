@@ -141,7 +141,7 @@ const Post = ({
           <PopularNotice
             post={post}
             marginTop="8"
-            marginBottom={["-18px", "-30px"]}
+            marginBottom={["-20px", "-30px"]}
           />
         )}
       </StyledPostCard>
