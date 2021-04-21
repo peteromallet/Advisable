@@ -12,6 +12,8 @@ import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ResolvedNotice from "./components/ResolvedNotice";
 import { guildPostUrl, isGuildPath } from "@guild/utils";
 import { StyledPostCard } from "./styles";
+import useViewerAuthor from "@guild/hooks/useViewerAuthor";
+import PopularNotice from "./components/PopularNotice";
 
 const Post = ({
   post,
@@ -23,6 +25,8 @@ const Post = ({
 }) => {
   const history = useHistory();
   const url = guildPostUrl(post.id);
+  const { popularOrAuthorReactions } = useViewerAuthor(post);
+
   const handleOpen = () => {
     // We need to use an actual page load while the guild pack is separate.
     isGuildPath ? history.push(url) : (window.location = url);
@@ -35,7 +39,7 @@ const Post = ({
         padding={[4, 6]}
         data-testid="post"
         pinned={post.pinned}
-        popular={post.isPopular}
+        popular={popularOrAuthorReactions}
       >
         <Box position="absolute" right="2" top="2">
           <PostTypeTag post={post} />
@@ -132,24 +136,14 @@ const Post = ({
             This post has been pinned by the Advisable team
           </Notice>
         )}
-        {post.isPopular ? (
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            margin="32px 0 -32px 0"
-          >
-            <Box
-              padding="2px 16px"
-              background="#fde7b2"
-              borderRadius="8px 8px 0 0"
-            >
-              <Text lineHeight="l" color="neutral700" fontWeight="medium">
-                Many people found this post interesting
-              </Text>
-            </Box>
-          </Box>
-        ) : null}
+
+        {popularOrAuthorReactions && (
+          <PopularNotice
+            post={post}
+            marginTop="8"
+            marginBottom={["-20px", "-30px"]}
+          />
+        )}
       </StyledPostCard>
     </Sentry.ErrorBoundary>
   );
