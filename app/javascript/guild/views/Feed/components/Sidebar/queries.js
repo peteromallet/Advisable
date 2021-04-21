@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
-export const GUILD_FEATURED_MEMBERS_QUERY = gql`
-  query guildFeaturedMembers {
+export const SIDEBAR_QUERY = gql`
+  query sidebar {
     guildFeaturedMembers {
       id
       avatar
