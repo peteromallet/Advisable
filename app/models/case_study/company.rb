@@ -2,8 +2,9 @@
 
 module CaseStudy
   class Company < ApplicationRecord
-    include Uid
     include Resizable
+    include Uid
+    uid_prefix "csm"
 
     has_logidze
 

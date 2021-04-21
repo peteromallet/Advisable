@@ -3,6 +3,7 @@
 module CaseStudy
   class Content < ApplicationRecord
     include Uid
+    uid_prefix "csc"
 
     has_logidze
 

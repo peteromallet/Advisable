@@ -3,6 +3,7 @@
 module CaseStudy
   class Article < ApplicationRecord
     include Uid
+    uid_prefix "csa"
 
     has_logidze
 
