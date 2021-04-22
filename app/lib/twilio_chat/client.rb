@@ -23,6 +23,18 @@ module TwilioChat
       @channel ||= chat_service.channels(channel_sid).fetch
     end
 
+    def purge_messages!(uid)
+      user = chat_service.users(uid).fetch
+      user.user_channels.each do |user_channel|
+        @channel_sid = user_channel.channel_sid
+        chat_service.channels(channel_sid).messages.each do |message|
+          message.delete if message.from == uid
+        end
+        @channel = nil
+        update_friendly_name!
+      end
+    end
+
     def check_membership
       chat_service.channels(channel_sid).members(identity).fetch
     end
@@ -68,7 +80,7 @@ module TwilioChat
 
     def update_friendly_name!
       last_message = channel.messages.list(limit: 1, page_size: 1, order: 'desc').first&.body
-      truncated_name = last_message.truncate(MAX_FRIENDLY_NAME)
+      truncated_name = last_message.nil? ? "-" : last_message.truncate(MAX_FRIENDLY_NAME)
       channel.update(friendly_name: truncated_name)
     end
   end
