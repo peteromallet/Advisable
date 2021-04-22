@@ -2,6 +2,9 @@
 
 module CaseStudy
   class Industry < ApplicationRecord
+    include Uid
+    uid_prefix "csi"
+
     has_logidze
 
     belongs_to :article
@@ -13,16 +16,18 @@ end
 #
 # Table name: case_study_industries
 #
-#  id          :uuid             not null, primary key
+#  id          :bigint           not null, primary key
+#  uid         :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  article_id  :uuid             not null
+#  article_id  :bigint           not null
 #  industry_id :bigint           not null
 #
 # Indexes
 #
 #  index_case_study_industries_on_article_id   (article_id)
 #  index_case_study_industries_on_industry_id  (industry_id)
+#  index_case_study_industries_on_uid          (uid)
 #
 # Foreign Keys
 #

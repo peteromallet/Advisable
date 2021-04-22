@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AlphanumericId
   CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 

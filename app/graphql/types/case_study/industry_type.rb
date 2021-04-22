@@ -6,7 +6,7 @@ module Types
       graphql_name "CaseStudyIndustry"
       description "Type definition for CaseStudy::Industry"
 
-      field :id, ID, null: false
+      field :id, ID, null: false, method: :uid
       field :article, ArticleType, null: false
       field :industry, Types::IndustryType, null: false
     end

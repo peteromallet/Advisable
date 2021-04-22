@@ -2,8 +2,9 @@
 
 class CreateCaseStudySections < ActiveRecord::Migration[6.1]
   def change
-    create_table :case_study_sections, id: :uuid do |t|
-      t.references :article, null: false, foreign_key: {to_table: :case_study_articles}, type: :uuid
+    create_table :case_study_sections do |t|
+      t.string :uid, null: false, index: true
+      t.references :article, null: false, foreign_key: {to_table: :case_study_articles}
       t.string :type
       t.integer :position
 
