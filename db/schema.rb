@@ -173,7 +173,8 @@ ActiveRecord::Schema.define(version: 2021_04_19_075326) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "case_study_articles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "case_study_articles", force: :cascade do |t|
+    t.string "uid", null: false
     t.integer "score"
     t.boolean "confidential"
     t.string "title"
@@ -189,15 +190,17 @@ ActiveRecord::Schema.define(version: 2021_04_19_075326) do
     t.bigint "editor_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.uuid "company_id"
+    t.bigint "company_id"
     t.jsonb "log_data"
     t.index ["company_id"], name: "index_case_study_articles_on_company_id"
     t.index ["editor_id"], name: "index_case_study_articles_on_editor_id"
     t.index ["interviewer_id"], name: "index_case_study_articles_on_interviewer_id"
     t.index ["specialist_id"], name: "index_case_study_articles_on_specialist_id"
+    t.index ["uid"], name: "index_case_study_articles_on_uid"
   end
 
-  create_table "case_study_companies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "case_study_companies", force: :cascade do |t|
+    t.string "uid", null: false
     t.string "name"
     t.text "description"
     t.string "website"
@@ -205,10 +208,12 @@ ActiveRecord::Schema.define(version: 2021_04_19_075326) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
+    t.index ["uid"], name: "index_case_study_companies_on_uid"
   end
 
-  create_table "case_study_contents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "section_id", null: false
+  create_table "case_study_contents", force: :cascade do |t|
+    t.string "uid", null: false
+    t.bigint "section_id", null: false
     t.string "type"
     t.integer "position"
     t.jsonb "content"
@@ -216,37 +221,44 @@ ActiveRecord::Schema.define(version: 2021_04_19_075326) do
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
     t.index ["section_id"], name: "index_case_study_contents_on_section_id"
+    t.index ["uid"], name: "index_case_study_contents_on_uid"
   end
 
-  create_table "case_study_industries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "article_id", null: false
+  create_table "case_study_industries", force: :cascade do |t|
+    t.string "uid", null: false
+    t.bigint "article_id", null: false
     t.bigint "industry_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_industries_on_article_id"
     t.index ["industry_id"], name: "index_case_study_industries_on_industry_id"
+    t.index ["uid"], name: "index_case_study_industries_on_uid"
   end
 
-  create_table "case_study_sections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "article_id", null: false
+  create_table "case_study_sections", force: :cascade do |t|
+    t.string "uid", null: false
+    t.bigint "article_id", null: false
     t.string "type"
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_sections_on_article_id"
+    t.index ["uid"], name: "index_case_study_sections_on_uid"
   end
 
-  create_table "case_study_skills", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "case_study_skills", force: :cascade do |t|
+    t.string "uid", null: false
     t.boolean "primary"
-    t.uuid "article_id", null: false
+    t.bigint "article_id", null: false
     t.bigint "skill_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_skills_on_article_id"
     t.index ["skill_id"], name: "index_case_study_skills_on_skill_id"
+    t.index ["uid"], name: "index_case_study_skills_on_uid"
   end
 
   create_table "client_calls", force: :cascade do |t|

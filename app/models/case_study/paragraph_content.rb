@@ -2,13 +2,15 @@
 
 module CaseStudy
   class ParagraphContent < Content
+    uid_prefix "csc"
+
     private
 
     # { type: "paragraph", content: { text: "..." } }
     def valid_content
       return if content.keys.size == 1 && content["text"].present?
 
-      errors.add(:content, "Content does not follow the type's requirements")
+      errors.add(:content, "does not follow the type's requirements")
     end
   end
 end
@@ -17,17 +19,19 @@ end
 #
 # Table name: case_study_contents
 #
-#  id         :uuid             not null, primary key
+#  id         :bigint           not null, primary key
 #  content    :jsonb
 #  position   :integer
 #  type       :string
+#  uid        :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  section_id :uuid             not null
+#  section_id :bigint           not null
 #
 # Indexes
 #
 #  index_case_study_contents_on_section_id  (section_id)
+#  index_case_study_contents_on_uid         (uid)
 #
 # Foreign Keys
 #

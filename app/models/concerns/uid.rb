@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Generates a UID for any model that includes UID
 # If a model includes the UID module it is expected to have a uid column
 module Uid
@@ -21,7 +23,7 @@ module Uid
     end
 
     def self.prefix_for_uid
-      @uid_prefix || self.name[0..2].downcase
+      @uid_prefix || name[0..2].downcase
     end
 
     # Generates the uid for the model.
@@ -41,10 +43,9 @@ module Uid
     # Ensure that the UID is valid
     def valid_uid
       return unless uid
+
       prefix, uniq = uid.split('_')
-      if prefix != self.class.prefix_for_uid
-        errors.add(:base, 'invalid_id_prefix')
-      end
+      errors.add(:base, 'invalid_id_prefix') if prefix != self.class.prefix_for_uid
       errors.add(:base, 'id_too_short') if uniq.length != 15
     end
   end

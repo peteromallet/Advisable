@@ -3,6 +3,8 @@
 module CaseStudy
   class Company < ApplicationRecord
     include Resizable
+    include Uid
+    uid_prefix "csm"
 
     has_logidze
 
@@ -17,11 +19,16 @@ end
 #
 # Table name: case_study_companies
 #
-#  id            :uuid             not null, primary key
+#  id            :bigint           not null, primary key
 #  business_type :string
 #  description   :text
 #  name          :string
+#  uid           :string           not null
 #  website       :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#
+# Indexes
+#
+#  index_case_study_companies_on_uid  (uid)
 #
