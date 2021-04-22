@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { GUILD_POSTS_QUERY } from "./queries";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { feedStore } from "@guild/views/Feed/store";
@@ -14,9 +14,6 @@ import PopularPosts from "@guild/components/PopularPosts";
 
 const Posts = () => {
   const location = useLocation();
-  const history = useHistory();
-  const historyPopped = history.action === "POP";
-
   const defaultFilter = "For You";
   const postTypeFilter = feedStore((store) => store.postTypeFilter);
   const setPostTypeFilter = (postTypeFilter) => {
@@ -26,8 +23,6 @@ const Posts = () => {
   const isDefaultView = postTypeFilter === defaultFilter;
 
   const { data, loading, fetchMore } = useQuery(GUILD_POSTS_QUERY, {
-    fetchPolicy: historyPopped ? "cache-first" : "network-only",
-    nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
     notifyOnNetworkStatusChange: true,
     variables: { type: postTypeFilter, withPopularPosts: isDefaultView },
     errorPolicy: "none",
