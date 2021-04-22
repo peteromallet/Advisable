@@ -61,15 +61,23 @@ RSpec.describe Recommendation do
   context "with industries" do
     let(:same_industry) { create(:industry, name: 'Education') }
     let(:diff_industry) { create(:industry, name: 'Aerospace') }
+    let(:match) { create(:specialist, :guild) }
 
     before do
+      stub_const("Recommendation::RECOMMENDERS", [Recommendation::Industry])
       same_industry.previous_projects.create!(specialist: specialist)
     end
 
     it "makes a recommendation if there are > 0 industries in common" do
-      stub_const("Recommendation::RECOMMENDERS", [Recommendation::Industry])
-      match = create(:specialist, :guild)
       same_industry.previous_projects.create!(specialist: match)
+
+      expect(recommender.recommendation).to eq(match)
+      expect(recommender.industries).to eq([same_industry])
+    end
+
+    it "only includes industries that are in common" do
+      project = same_industry.previous_projects.create!(specialist: match)
+      project.industries << diff_industry
 
       expect(recommender.recommendation).to eq(match)
       expect(recommender.industries).to eq([same_industry])
