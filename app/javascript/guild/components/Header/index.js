@@ -62,7 +62,10 @@ const Header = () => {
 
           {viewer ? (
             <Box as="nav" display={{ _: "none", m: "block" }}>
-              <StyledHeaderLink as={NavLink} to="/feed">
+              <StyledHeaderLink
+                href="/guild/feed"
+                className={location.pathname === "/feed" ? "active" : null}
+              >
                 <Home />
                 Feed
               </StyledHeaderLink>
