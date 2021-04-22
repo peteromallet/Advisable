@@ -3,16 +3,16 @@
 require "administrate/base_dashboard"
 
 class EventDashboard < Administrate::BaseDashboard
-  DATETIME_OPTIONS = {format: "%d %b at %I:%M%P %Z", timezone: "Pacific Time (US & Canada)"}.freeze
+  DATETIME_OPTIONS = {format: "%d %b at %I:%M%P %Z"}.freeze
   ATTRIBUTE_TYPES = {
     id: Field::String.with_options(searchable: false),
     title: Field::String,
     url: Field::String,
     uid: Field::String,
     host: Field::BelongsTo.with_options(class_name: 'Specialist', scope: -> { Specialist.includes(:account) }),
-    starts_at: TimezoneDateField.with_options(DATETIME_OPTIONS),
-    ends_at: TimezoneDateField.with_options(DATETIME_OPTIONS),
-    published_at: Field::DateTime,
+    starts_at: Field::DateTime.with_options(DATETIME_OPTIONS),
+    ends_at: Field::DateTime.with_options(DATETIME_OPTIONS),
+    published_at: Field::DateTime.with_options(DATETIME_OPTIONS),
     featured: Field::Boolean,
     cover_photo: Field::ActiveStorage.with_options(direct_upload: true),
     attendees_count: Field::Number,
