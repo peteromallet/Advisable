@@ -9,15 +9,12 @@ import validationSchema from "./validationSchema";
 import HaveAccount from "../HaveAccount";
 import MotionCard from "../MotionCard";
 import useViewer from "src/hooks/useViewer";
-import { useCreateFreelancerAccount, useUpdateProfile } from "../queries";
 import { CardHeader } from "../styles";
 
 export default function StartApplication({ nextStep, forwards }) {
   const viewer = useViewer();
   const history = useHistory();
   const isWideScreen = useBreakpoint("sUp");
-  const [updateProfile] = useUpdateProfile();
-  const [createFreelancerAccount] = useCreateFreelancerAccount();
 
   const initialValues = {
     firstName: viewer?.firstName || "",
@@ -25,28 +22,8 @@ export default function StartApplication({ nextStep, forwards }) {
     email: viewer?.email || "",
   };
 
-  const handleSubmit = async (values, { setStatus }) => {
-    setStatus(null);
-    // redirect to set password step, pass values, and preserve query string param
-    const res = viewer
-      ? await updateProfile({
-          variables: { input: { skills: viewer.skills, ...values } },
-        })
-      : await createFreelancerAccount({
-          variables: {
-            input: { ...values, skills: [] },
-          },
-        });
-
-    if (res.errors) {
-      setStatus(res.errors[0]?.message);
-      return;
-    }
-
-    const id = viewer
-      ? res?.data?.createFreelancerAccount?.viewer?.id
-      : res?.data?.updateProfile?.specialist?.id;
-    history.push({ ...history.location, pathname: nextStep.path }, { id });
+  const handleSubmit = (values) => {
+    history.push(nextStep.path, { ...values });
   };
 
   return (
