@@ -26,7 +26,7 @@ end
 #
 #  id                     :bigint           not null, primary key
 #  comment                :text
-#  company_type           :string
+#  company_type           :jsonb
 #  confidential           :boolean
 #  editor_note            :text
 #  excerpt                :string
@@ -36,6 +36,7 @@ end
 #  score                  :integer
 #  specialist_approved_at :datetime
 #  subtitle               :string
+#  targeting              :jsonb
 #  title                  :string
 #  uid                    :string           not null
 #  created_at             :datetime         not null

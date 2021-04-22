@@ -181,7 +181,6 @@ ActiveRecord::Schema.define(version: 2021_04_22_093651) do
     t.string "subtitle"
     t.text "comment"
     t.string "excerpt"
-    t.string "company_type"
     t.jsonb "goals"
     t.datetime "published_at"
     t.datetime "specialist_approved_at"
@@ -193,6 +192,8 @@ ActiveRecord::Schema.define(version: 2021_04_22_093651) do
     t.bigint "company_id"
     t.jsonb "log_data"
     t.string "airtable_id"
+    t.jsonb "company_type"
+    t.jsonb "targeting"
     t.text "editor_note"
     t.text "freelancer_edits"
     t.index ["airtable_id"], name: "index_case_study_articles_on_airtable_id", unique: true
