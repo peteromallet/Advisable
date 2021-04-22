@@ -23,7 +23,6 @@ module Airtable
           company.logo.attach(io: url.open, filename: filename)
         end
         article.company = company
-        article.company_type = fields["Company Type"]
 
         # convert these to sections and contents
         # "Background Title",
@@ -38,10 +37,14 @@ module Airtable
         # "Key Result 2",
         # "Key Result 3",
 
+        article.title = fields["Title"]
         article.subtitle = fields["Subtitle"]
+        article.company_type = fields["Company Type"]
         article.freelancer_edits = fields["Freelancer Edits Required"]
         article.comment = fields["Advisable Comment"]
         article.editor_note = fields["Editor Note"]
+        article.goals = fields["Goals"]
+        article.targeting = fields["Additional Targeting Data"]
         article.save!
 
         Array(fields["Industry"]).each do |airtable_id|
