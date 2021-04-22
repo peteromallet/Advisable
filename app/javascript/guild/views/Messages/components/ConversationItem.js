@@ -11,6 +11,7 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
     variables: { id: conversation?.other },
   });
   const other = data?.specialist;
+  const safeName = other?.name || "Deleted User";
 
   if (loading) return <Loading />;
   return (
@@ -21,7 +22,7 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
     >
       <Box alignItems="center" display="flex">
         <Box flexShrink={0}>
-          <Avatar size={"s"} name={other.name} url={other.avatar} />
+          <Avatar size={"s"} name={safeName} url={other?.avatar} />
         </Box>
         <Box flexGrow="1" ml={2} css={flex.flexTruncate}>
           <Box
@@ -31,7 +32,7 @@ const ConversationItem = ({ conversation, setActive, isActive }) => {
             justifyContent="space-between"
           >
             <Text color="neutral900" fontWeight="medium">
-              {other.name}
+              {safeName}
             </Text>
             <Text size="xxs" color="darkGray">
               {conversation.lastMessageWords}
