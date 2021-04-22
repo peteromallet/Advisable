@@ -1,31 +1,29 @@
 import React from "react";
-import queryString from "query-string";
 import { Form, Formik } from "formik";
+import { motion } from "framer-motion";
+import { useMutation } from "@apollo/client";
 import { Redirect, useHistory, useLocation } from "react-router";
 import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 import { Box, Text, Error } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
-import useViewer from "src/hooks/useViewer";
 import MotionCard from "../MotionCard";
 import HaveAccount from "../HaveAccount";
-import { useUpdatePassword } from "../queries";
 import validationSchema from "./validationSchema";
-import { motion } from "framer-motion";
+import { CREATE_CLIENT_ACCOUNT } from "../queries";
 import { CardHeader } from "../styles";
 
 export default function SetPassword({ prevStep, forwards }) {
-  const viewer = useViewer();
-  const { search } = useLocation();
-  const [setPassword] = useUpdatePassword();
+  const [createClientAccount] = useMutation(CREATE_CLIENT_ACCOUNT);
   const history = useHistory();
-  const project_id = queryString.parse(search)?.pid;
+  const location = useLocation();
   const initialValues = {
     password: "",
     passwordConfirmation: "",
   };
 
-  if (!viewer) {
+  const { state } = location;
+  if (!state?.firstName || !state?.email) {
     return (
       <motion.div exit>
         <Redirect to={prevStep.path} />
@@ -35,17 +33,23 @@ export default function SetPassword({ prevStep, forwards }) {
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
-    const res = await setPassword({ variables: { input: values } });
+    const res = await createClientAccount({
+      variables: {
+        input: {
+          firstName: state.firstName,
+          lastName: state.lastName,
+          email: state.email,
+          password: values.password,
+        },
+      },
+    });
 
     if (res.errors) {
       setStatus(res.errors[0]?.message);
       return;
     }
 
-    const nextPath = project_id
-      ? `/opportunities/${project_id}`
-      : "/freelancers/apply";
-    history.replace(nextPath);
+    history.replace("/clients/apply");
   };
 
   return (
