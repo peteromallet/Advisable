@@ -290,4 +290,60 @@ RSpec.describe ZappierInteractorController, type: :request do
       expect(Guild::Post.find(post_id).boosted_at).to be_present
     end
   end
+
+  describe "POST /import_case_study" do
+    let(:params) { {airtable_id: "asdf", key: key} }
+    let(:stub) { instance_double(Airtable::CaseStudy) }
+    let(:article) { build_stubbed(:case_study_article, airtable_id: "asdf") }
+
+    it "imports case study" do
+      allow(Airtable::CaseStudy).to receive(:find).with("asdf").and_return(stub)
+      allow(stub).to receive(:import!).and_return(article)
+      post("/zappier_interactor/import_case_study", params: params)
+      expect(response).to have_http_status(:success)
+      json = JSON[response.body]
+      expect(json["airtable_id"]).to eq("asdf")
+      expect(json["uid"]).to eq(article.uid)
+    end
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/import_case_study", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context "when case study not found in airtable" do
+      it "tells so in the error response" do
+        allow(Airtable::CaseStudy).to receive(:find).with("asdf").and_raise(Airrecord::Error, "HTTP 404: : ")
+        post("/zappier_interactor/import_case_study", params: params)
+        expect(response).to have_http_status(:unprocessable_entity)
+        json = JSON[response.body]
+        expect(json["error"]).to eq("Case Study not found")
+      end
+    end
+
+    context "when some other airtable error" do
+      it "tells so in the error response" do
+        allow(Airtable::CaseStudy).to receive(:find).with("asdf").and_raise(Airrecord::Error, "It's raining in them tables")
+        post("/zappier_interactor/import_case_study", params: params)
+        expect(response).to have_http_status(:unprocessable_entity)
+        json = JSON[response.body]
+        expect(json["error"]).to eq("Airtable communication error")
+      end
+    end
+
+    context "when something goes wrong when importing" do
+      it "tells so in the error response" do
+        allow(Airtable::CaseStudy).to receive(:find).with("asdf").and_return(stub)
+        allow(stub).to receive(:import!).and_raise(ActiveRecord::RecordNotFound, "Couldn't find Specialist")
+        post("/zappier_interactor/import_case_study", params: params)
+        expect(response).to have_http_status(:unprocessable_entity)
+        json = JSON[response.body]
+        expect(json["error"]).to eq("Something went wrong")
+      end
+    end
+  end
 end
