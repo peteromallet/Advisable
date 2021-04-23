@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import { useHistory } from "react-router";
-import { useMutation } from "@apollo/client";
 import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 import { Box, Text, Input, Error, useBreakpoint } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
@@ -11,13 +10,13 @@ import validationSchema from "./validationSchema";
 import HaveAccount from "../HaveAccount";
 import MotionCard from "../MotionCard";
 import { CardHeader } from "../styles";
-import { CREATE_CLIENT_ACCOUNT } from "../queries";
+import { useCreateClientAccount } from "../queries";
 
 export default function StartApplication({ nextStep, forwards }) {
   const viewer = useViewer();
   const history = useHistory();
   const isWideScreen = useBreakpoint("sUp");
-  const [createClientAccount] = useMutation(CREATE_CLIENT_ACCOUNT);
+  const [createClientAccount] = useCreateClientAccount();
 
   const initialValues = {
     firstName: viewer?.firstName || "",
