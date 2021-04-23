@@ -61,4 +61,15 @@ RSpec.describe Mutations::UpdateClientApplication do
       }.from(nil).to("B2B")
     end
   end
+
+  context 'when passing company type' do
+    it "updates the company kind" do
+      user.company.update(kind: nil)
+      expect do
+        request({companyType: "Startup"})
+      end.to change {
+        user.company.reload.kind
+      }.from(nil).to("Startup")
+    end
+  end
 end
