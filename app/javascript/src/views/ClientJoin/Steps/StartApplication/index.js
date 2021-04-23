@@ -1,20 +1,23 @@
 import React from "react";
-import { useHistory } from "react-router";
 import { Form, Formik } from "formik";
+import { useHistory } from "react-router";
+import { useMutation } from "@apollo/client";
 import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 import { Box, Text, Input, Error, useBreakpoint } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
+import useViewer from "src/hooks/useViewer";
 import validationSchema from "./validationSchema";
 import HaveAccount from "../HaveAccount";
 import MotionCard from "../MotionCard";
-import useViewer from "src/hooks/useViewer";
 import { CardHeader } from "../styles";
+import { CREATE_CLIENT_ACCOUNT } from "../queries";
 
 export default function StartApplication({ nextStep, forwards }) {
   const viewer = useViewer();
   const history = useHistory();
   const isWideScreen = useBreakpoint("sUp");
+  const [createClientAccount] = useMutation(CREATE_CLIENT_ACCOUNT);
 
   const initialValues = {
     firstName: viewer?.firstName || "",
@@ -22,8 +25,18 @@ export default function StartApplication({ nextStep, forwards }) {
     email: viewer?.email || "",
   };
 
-  const handleSubmit = (values) => {
-    history.push(nextStep.path, { ...values });
+  const handleSubmit = async (values, { setStatus }) => {
+    setStatus(null);
+    const res = await createClientAccount({
+      variables: { input: { ...values } },
+    });
+
+    if (res.errors) {
+      setStatus(res.errors[0]?.message);
+      return;
+    }
+
+    history.push(nextStep.path);
   };
 
   return (
