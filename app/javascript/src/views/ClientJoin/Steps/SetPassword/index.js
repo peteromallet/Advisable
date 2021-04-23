@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
-import { useMutation } from "@apollo/client";
 import { Redirect, useHistory, useLocation } from "react-router";
 import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 import { Box, Text, Error } from "@advisable/donut";
@@ -10,11 +9,11 @@ import FormField from "src/components/FormField";
 import MotionCard from "../MotionCard";
 import HaveAccount from "../HaveAccount";
 import validationSchema from "./validationSchema";
-import { CREATE_CLIENT_ACCOUNT } from "../queries";
+import { useUpdatePassword } from "../queries";
 import { CardHeader } from "../styles";
 
 export default function SetPassword({ prevStep, forwards }) {
-  const [createClientAccount] = useMutation(CREATE_CLIENT_ACCOUNT);
+  const [setPassword] = useUpdatePassword();
   const history = useHistory();
   const location = useLocation();
   const initialValues = {
@@ -33,16 +32,7 @@ export default function SetPassword({ prevStep, forwards }) {
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
-    const res = await createClientAccount({
-      variables: {
-        input: {
-          firstName: state.firstName,
-          lastName: state.lastName,
-          email: state.email,
-          password: values.password,
-        },
-      },
-    });
+    const res = await setPassword({ variables: { input: values } });
 
     if (res.errors) {
       setStatus(res.errors[0]?.message);
