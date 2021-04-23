@@ -50,4 +50,15 @@ RSpec.describe Mutations::UpdateClientApplication do
       }.from(nil).to(industry)
     end
   end
+
+  context 'when passing business type' do
+    it "updates the business type" do
+      user.company.update(business_type: nil)
+      expect do
+        request({businessType: "B2B"})
+      end.to change {
+        user.company.reload.business_type
+      }.from(nil).to("B2B")
+    end
+  end
 end
