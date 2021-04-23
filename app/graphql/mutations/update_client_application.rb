@@ -7,6 +7,7 @@ module Mutations
     # rubocop:disable GraphQL/ExtractInputType
     argument :business_type, String, required: false
     argument :company_name, String, required: false
+    argument :company_type, String, required: false
     argument :industry, String, required: false
     # rubocop:enable GraphQL/ExtractInputType
 
@@ -31,6 +32,7 @@ module Mutations
     def update_company_details(company, args)
       company.name = args[:company_name] if args.key?(:company_name)
       company.business_type = args[:business_type] if args.key?(:business_type)
+      company.kind = args[:company_type] if args.key?(:company_type)
       company.industry = Industry.find_by_name!(args[:industry]) if args.key?(:industry)
       company.save!
     end
