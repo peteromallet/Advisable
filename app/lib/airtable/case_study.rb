@@ -7,7 +7,7 @@ module Airtable
     self.base_key = ENV["AIRTABLE_DATABASE_KEY"]
     self.table_name = "Case Studies"
 
-    def import
+    def import!
       ActiveRecord::Base.transaction do
         article = ::CaseStudy::Article.find_or_initialize_by(airtable_id: id)
 
@@ -58,7 +58,8 @@ module Airtable
         end
 
         primary_skill = ::Skill.find_by!(airtable_id: fields["Primary Skill"].first)
-        article.skills.find_by(skill: primary_skill).update(primary: true)
+        article.skills.find_by(skill: primary_skill).update!(primary: true)
+        article
       end
     end
   end
