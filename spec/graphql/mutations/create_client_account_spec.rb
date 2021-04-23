@@ -6,7 +6,6 @@ RSpec.describe Mutations::CreateClientAccount do
   let(:first_name) { 'Test' }
   let(:last_name) { 'Account' }
   let(:email) { 'test@test.com' }
-  let(:password) { 'test1234' }
   let(:session_manager) do
     SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
   end
@@ -18,7 +17,6 @@ RSpec.describe Mutations::CreateClientAccount do
         firstName: "#{first_name}",
         lastName: "#{last_name}",
         email: "#{email}",
-        password: "#{password}",
       }) {
         viewer {
           ... on User {

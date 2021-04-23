@@ -10,7 +10,6 @@ module Mutations
     argument :email, String, required: true
     argument :first_name, String, required: true
     argument :last_name, String, required: true
-    argument :password, String, required: true
     argument :rid, String, required: false
     argument :utm_campaign, String, required: false
     argument :utm_medium, String, required: false
@@ -48,7 +47,6 @@ module Mutations
         first_name: args[:first_name],
         last_name: args[:last_name],
         email: args[:email],
-        password: args[:password],
         permissions: [:team_manager]
       )
 
