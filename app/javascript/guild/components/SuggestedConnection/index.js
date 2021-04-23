@@ -31,7 +31,7 @@ export default function SuggestedConnection() {
         >
           Suggested Member
         </Text>
-        <Card padding="6" borderRadius="12px" background="white">
+        <Card padding="6" borderRadius="12px" background="white" elevation="s">
           <Box
             display="flex"
             alignItems="center"
