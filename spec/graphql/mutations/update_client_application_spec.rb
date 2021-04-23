@@ -81,4 +81,15 @@ RSpec.describe Mutations::UpdateClientApplication do
       expect(user.company.reload.goals).to include("Two")
     end
   end
+
+  context 'when passing budget' do
+    it "updates the users budget" do
+      user.update(budget: nil)
+      expect do
+        request({budget: 5000})
+      end.to change {
+        user.reload.budget
+      }.from(nil).to(5000)
+    end
+  end
 end
