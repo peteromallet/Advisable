@@ -16,6 +16,7 @@ const ClientSignup = lazy(() => import("./views/ClientSignup"));
 const FreelancerApplication = lazy(() =>
   import("./views/FreelancerApplication"),
 );
+const ClientApplication = lazy(() => import("./views/ClientApplication"));
 const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
 const Projects = lazy(() => import("./views/Projects"));
 const Project = lazy(() => import("./views/Project"));
@@ -65,6 +66,10 @@ const ApplicationRoutes = () => {
           {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
           <Route path="/clients/signup" component={ClientSignup} />
           <AuthenticatedRoute exact path="/messages" component={Messages} />
+          <AuthenticatedRoute
+            path="/clients/apply"
+            component={ClientApplication}
+          />
           <AuthenticatedRoute
             path="/freelancers/apply"
             component={FreelancerApplication}
