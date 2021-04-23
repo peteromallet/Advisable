@@ -10,7 +10,7 @@ import OrbitsContent from "./OrbitsContent";
 import Footer from "./Footer";
 import Header from "./Header";
 
-function FreelancerJoin() {
+function ClientJoin() {
   const { routes, currentStepIndex, forwards } = useSteps(steps);
   const location = useLocation();
   const largeScreen = useBreakpoint("xlUp");
@@ -18,7 +18,7 @@ function FreelancerJoin() {
 
   // Redirect to root if client or specialist logged in
   if (
-    viewer?.isClient ||
+    (viewer?.isClient && viewer?.needsToSetAPassword === false) ||
     (viewer?.isSpecialist && viewer?.applicationStage !== "Started") ||
     (viewer?.isSpecialist && viewer?.needsToSetAPassword === false)
   ) {
@@ -79,4 +79,4 @@ function FreelancerJoin() {
   );
 }
 
-export default FreelancerJoin;
+export default ClientJoin;

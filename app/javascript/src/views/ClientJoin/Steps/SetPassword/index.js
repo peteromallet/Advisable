@@ -1,11 +1,12 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
-import { Redirect, useHistory, useLocation } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 import { Box, Text, Error } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
+import useViewer from "src/hooks/useViewer";
 import MotionCard from "../MotionCard";
 import HaveAccount from "../HaveAccount";
 import validationSchema from "./validationSchema";
@@ -15,14 +16,13 @@ import { CardHeader } from "../styles";
 export default function SetPassword({ prevStep, forwards }) {
   const [setPassword] = useUpdatePassword();
   const history = useHistory();
-  const location = useLocation();
+  const viewer = useViewer();
   const initialValues = {
     password: "",
     passwordConfirmation: "",
   };
 
-  const { state } = location;
-  if (!state?.firstName || !state?.email) {
+  if (!viewer?.needsToSetAPassword) {
     return (
       <motion.div exit>
         <Redirect to={prevStep.path} />
