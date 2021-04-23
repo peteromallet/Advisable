@@ -72,4 +72,13 @@ RSpec.describe Mutations::UpdateClientApplication do
       }.from(nil).to("Startup")
     end
   end
+
+  context 'when passing goals' do
+    it "updates the company goals" do
+      user.company.update(goals: [])
+      request({goals: %w[One Two]})
+      expect(user.company.reload.goals).to include("One")
+      expect(user.company.reload.goals).to include("Two")
+    end
+  end
 end

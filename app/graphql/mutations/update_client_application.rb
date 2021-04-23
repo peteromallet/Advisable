@@ -8,6 +8,7 @@ module Mutations
     argument :business_type, String, required: false
     argument :company_name, String, required: false
     argument :company_type, String, required: false
+    argument :goals, [String], required: false
     argument :industry, String, required: false
     # rubocop:enable GraphQL/ExtractInputType
 
@@ -33,6 +34,7 @@ module Mutations
       company.name = args[:company_name] if args.key?(:company_name)
       company.business_type = args[:business_type] if args.key?(:business_type)
       company.kind = args[:company_type] if args.key?(:company_type)
+      company.goals = args[:goals] if args.key?(:goals)
       company.industry = Industry.find_by_name!(args[:industry]) if args.key?(:industry)
       company.save!
     end

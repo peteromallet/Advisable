@@ -350,6 +350,7 @@ ActiveRecord::Schema.define(version: 2021_06_03_070314) do
     t.jsonb "address"
     t.boolean "bank_transfers_enabled", default: false
     t.string "business_type"
+    t.text "goals", default: [], array: true
     t.bigint "budget"
     t.jsonb "log_data"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
