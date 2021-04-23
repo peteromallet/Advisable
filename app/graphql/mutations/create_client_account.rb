@@ -20,22 +20,24 @@ module Mutations
 
     def resolve(**args)
       email_blacklisted?(args[:email])
-      account = create_account(**args)
+      ActiveRecord::Base.transaction do
+        account = create_account(**args)
 
-      user = User.new(
-        account: account,
-        company: Company.new(name: Company.fresh_name_for('')),
-        rid: args[:rid],
-        campaign_name: args[:utm_campaign],
-        campaign_source: args[:utm_source],
-        campaign_medium: args[:utm_medium],
-        application_status: "Application Started"
-      )
+        user = User.new(
+          account: account,
+          company: Company.new(name: Company.fresh_name_for('')),
+          rid: args[:rid],
+          campaign_name: args[:utm_campaign],
+          campaign_source: args[:utm_source],
+          campaign_medium: args[:utm_medium],
+          application_status: "Application Started"
+        )
 
-      if user.save
-        login_as(account)
+        if user.save
+          login_as(account)
 
-        return {viewer: user}
+          return {viewer: user}
+        end
       end
 
       ApiError.invalid_request("INVALID", user.errors.full_messages)
