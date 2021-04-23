@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Text, Card, Button, Box } from "@advisable/donut";
+import { Text, Card, Button, Stack, Link, Box } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import LabelPost from "./LabelPost";
 
@@ -16,21 +16,25 @@ export default function StoryBox({ loading, latestPrompt }) {
   if (loading) return <Loading />;
 
   return label && posts ? (
-    <Card padding="3" marginBottom="4" borderRadius="12px" background="white">
-      <Box marginY="xs">
-        <Text marginBottom="m" size="l" color="blue900" fontWeight="medium">
-          #{label.slug}
-        </Text>
-        <Text size="s" color="neutral600" fontWeight="light">
-          {latestPrompt.description}
-        </Text>
-      </Box>
+    <Card padding={4} elevation="s" marginBottom={8} borderRadius="12px">
+      <Text
+        fontSize="xl"
+        fontWeight="500"
+        marginBottom={2}
+        color="neutral900"
+        letterSpacing="-0.024rem"
+      >
+        #{label.slug}
+      </Text>
+      <Text fontSize="sm" lineHeight="16px" color="neutral800" fontWeight="400">
+        {latestPrompt.description}
+      </Text>
 
-      <Box marginY="l">
+      <Stack spacing="md" marginTop={5} marginBottom={6} divider="neutral100">
         {posts.map((post) => (
           <LabelPost key={post.id} post={post} />
         ))}
-      </Box>
+      </Stack>
 
       <Box
         display="flex"
@@ -41,21 +45,20 @@ export default function StoryBox({ loading, latestPrompt }) {
         <Button
           size="s"
           width="100%"
-          marginBottom="3"
+          marginBottom={3}
           aria-label={`create a post for ${label.slug}`}
           onClick={handleCreateFromPrompt}
         >
           {latestPrompt.cta}
         </Button>
-        <Button
-          size="s"
+        <Link
+          fontSize="s"
           width="100%"
-          variant="subtle"
           aria-label="view all"
           onClick={handleViewAll}
         >
           View all
-        </Button>
+        </Link>
       </Box>
     </Card>
   ) : null;

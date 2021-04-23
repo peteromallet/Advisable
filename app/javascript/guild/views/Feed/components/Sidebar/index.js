@@ -16,12 +16,17 @@ export default function Sidebar() {
   const latestPrompt = data?.latestPrompt;
 
   return (
-    <Box width="260px" flexShrink="0">
+    <Box width="300px" flexShrink="0">
       <Sticky top={98} enabled>
-        <StoryBox loading={loading} latestPrompt={latestPrompt} />
-        <SuggestedConnection />
-        <FeaturedMembers loading={loading} featuredMembers={featuredMembers} />
-        <Referral />
+        <Box paddingBottom={8}>
+          <StoryBox loading={loading} latestPrompt={latestPrompt} />
+          <SuggestedConnection />
+          <FeaturedMembers
+            loading={loading}
+            featuredMembers={featuredMembers}
+          />
+          <Referral />
+        </Box>
       </Sticky>
     </Box>
   );
