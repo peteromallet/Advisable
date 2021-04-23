@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import BottomScrollListener from "react-bottom-scroll-listener";
@@ -39,6 +39,10 @@ const TopicPosts = ({ topicId }) => {
       fetchMore({ variables: { cursor: endCursor } });
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [topicId]);
 
   return (
     <>

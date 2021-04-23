@@ -11,6 +11,7 @@ import Sidebar from "./components/Sidebar";
 const Feed = () => {
   const lUp = useBreakpoint("lUp");
   const { topicId } = useParams();
+  const MemoizedTopicPosts = React.memo(TopicPosts);
 
   return (
     <Box
@@ -31,7 +32,7 @@ const Feed = () => {
         </>
       )}
       <Box width="100%" paddingX={{ _: null, l: "xl" }} minWidth="0">
-        {topicId ? <TopicPosts topicId={topicId} /> : <Posts />}
+        {topicId ? <MemoizedTopicPosts topicId={topicId} /> : <Posts />}
       </Box>
       {lUp && <Sidebar />}
     </Box>
