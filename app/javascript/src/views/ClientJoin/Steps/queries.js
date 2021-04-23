@@ -2,7 +2,7 @@ import { gql, useMutation } from "@apollo/client";
 import viewerFields from "src/graphql/fragments/viewerFields.graphql";
 import VIEWER from "src/graphql/queries/getViewer.graphql";
 
-export const CREATE_CLIENT_ACCOUNT = gql`
+const CREATE_CLIENT_ACCOUNT = gql`
   ${viewerFields}
 
   mutation CreateClientAccount($input: CreateClientAccountInput!) {
@@ -13,6 +13,20 @@ export const CREATE_CLIENT_ACCOUNT = gql`
     }
   }
 `;
+
+export const useCreateClientAccount = () =>
+  useMutation(CREATE_CLIENT_ACCOUNT, {
+    update(cache, { data, errors }) {
+      if (!errors) {
+        cache.writeQuery({
+          query: VIEWER,
+          data: {
+            viewer: data.createClientAccount.viewer,
+          },
+        });
+      }
+    },
+  });
 
 export const UPDATE_PASSWORD = gql`
   ${viewerFields}
