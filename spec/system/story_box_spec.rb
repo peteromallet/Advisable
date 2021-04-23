@@ -19,7 +19,7 @@ RSpec.describe 'Story box', type: :system do
     visit "/guild/feed"
     expect(page).to have_content(label.description)
     expect(page).to have_content(label.slug)
-    expect(page).to have_button("View all")
+    expect(page).to have_link("View all")
 
     posts = find_all(:xpath, ".//div[@data-testid='labelPost']")
     expect(posts.size).to eq(5)
