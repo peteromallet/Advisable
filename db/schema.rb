@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_075326) do
+ActiveRecord::Schema.define(version: 2021_04_22_093651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -179,9 +179,8 @@ ActiveRecord::Schema.define(version: 2021_04_19_075326) do
     t.boolean "confidential"
     t.string "title"
     t.string "subtitle"
-    t.string "comment"
+    t.text "comment"
     t.string "excerpt"
-    t.string "company_type"
     t.jsonb "goals"
     t.datetime "published_at"
     t.datetime "specialist_approved_at"
@@ -192,6 +191,12 @@ ActiveRecord::Schema.define(version: 2021_04_19_075326) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "company_id"
     t.jsonb "log_data"
+    t.string "airtable_id"
+    t.jsonb "company_type"
+    t.jsonb "targeting"
+    t.text "editor_note"
+    t.text "freelancer_edits"
+    t.index ["airtable_id"], name: "index_case_study_articles_on_airtable_id", unique: true
     t.index ["company_id"], name: "index_case_study_articles_on_company_id"
     t.index ["editor_id"], name: "index_case_study_articles_on_editor_id"
     t.index ["interviewer_id"], name: "index_case_study_articles_on_interviewer_id"
