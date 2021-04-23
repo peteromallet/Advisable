@@ -71,6 +71,22 @@ class ZappierInteractorController < ApplicationController
     render json: {error: e.message}, status: :unprocessable_entity
   end
 
+  def import_case_study
+    case_study = Airtable::CaseStudy.find(params[:airtable_id])
+    article = case_study.import!
+    render json: {uid: article.uid, airtable_id: article.airtable_id}
+  rescue Airrecord::Error => e
+    if e.message.starts_with?("HTTP 404")
+      render json: {error: "Case Study not found"}, status: :unprocessable_entity
+    else
+      Sentry.capture_exception(e, extra: {airtable_id: params[:airtable_id]})
+      render json: {error: "Airtable communication error"}, status: :unprocessable_entity
+    end
+  rescue ActiveRecord::ActiveRecordError => e
+    Sentry.capture_exception(e, extra: {airtable_id: params[:airtable_id]})
+    render json: {error: "Something went wrong"}, status: :unprocessable_entity
+  end
+
   private
 
   def application_params(existng_meta_fields = {})
