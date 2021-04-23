@@ -28,7 +28,8 @@ module Mutations
         rid: args[:rid],
         campaign_name: args[:utm_campaign],
         campaign_source: args[:utm_source],
-        campaign_medium: args[:utm_medium]
+        campaign_medium: args[:utm_medium],
+        application_status: "Application Started"
       )
 
       if user.save
