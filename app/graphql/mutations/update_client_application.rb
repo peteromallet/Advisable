@@ -5,6 +5,7 @@ module Mutations
     description "Updates the users information during signup"
 
     # rubocop:disable GraphQL/ExtractInputType
+    argument :budget, Int, required: false
     argument :business_type, String, required: false
     argument :company_name, String, required: false
     argument :company_type, String, required: false
@@ -22,6 +23,8 @@ module Mutations
     def resolve(**args)
       if current_user.application_status == "Application Started"
         update_company_details(current_user.company, args)
+        # TODO: Move budget to company
+        current_user.budget = args[:budget] if args.key?(:budget)
         current_user.save_and_sync!
       end
 
