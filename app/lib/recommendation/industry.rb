@@ -15,7 +15,7 @@ module Recommendation
     def industries
       return unless recommendation
 
-      specialist.previous_project_industries.merge(recommendation.previous_project_industries).limit(3)
+      specialist.previous_project_industries.where(id: recommendation.previous_project_industry_ids).limit(3)
     end
   end
 end
