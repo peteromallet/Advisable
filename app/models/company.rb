@@ -3,6 +3,7 @@
 class Company < ApplicationRecord
   has_logidze
 
+  BUSINESS_TYPES = %w[B2B B2C].freeze
   belongs_to :sales_person, optional: true
   belongs_to :industry, optional: true
   has_many :users, dependent: :nullify
@@ -14,6 +15,8 @@ class Company < ApplicationRecord
   has_many :consultations, through: :users
   has_many :applications, through: :projects
   # WIP Company migration 👆️
+
+  validates :business_type, inclusion: {in: BUSINESS_TYPES}, allow_nil: true
 
   attribute :address, AddressAttribute::Type.new
 
@@ -86,6 +89,7 @@ end
 #  bank_transfers_enabled            :boolean          default(FALSE)
 #  billing_email                     :string
 #  budget                            :bigint
+#  business_type                     :string
 #  invoice_company_name              :string
 #  invoice_name                      :string
 #  kind                              :string
