@@ -24,18 +24,29 @@ module Airtable
         end
         article.company = company
 
-        # convert these to sections and contents
-        # "Background Title",
-        # "Background Text",
-        # "Background Images",
-        # "Project Overview Title",
-        # Step 1 -7: Title, Details, Images
-        # "Outcome Title",
-        # "Outcome Text",
-        # "Outcome Images",
-        # "Key Result 1",
-        # "Key Result 2",
-        # "Key Result 3",
+        article.sections = []
+
+        background = article.sections.new(type: "background")
+        background.contents.new(type: "CaseStudy::HeadingContent", content: {size: "h1", text: fields["Background Title"]})
+        background.contents.new(type: "CaseStudy::ParagraphContent", content: {text: fields["Background Text"]})
+        background.contents.new(type: "CaseStudy::ImagesContent")
+        # TODO: Parse images
+
+        overview = article.sections.new(type: "overview")
+        overview.contents.new(type: "CaseStudy::HeadingContent", content: {size: "h1", text: fields["Project Overview Title"]})
+        (1..7).each do |i|
+          overview.contents.new(type: "CaseStudy::HeadingContent", content: {size: "h2", text: fields["Step #{i} Title"]})
+          overview.contents.new(type: "CaseStudy::ParagraphContent", content: {text: fields["Step #{i} Details"]})
+          overview.contents.new(type: "CaseStudy::ImagesContent")
+          # TODO: Parse images
+        end
+
+        outcome = article.sections.new(type: "outcome")
+        outcome.contents.new(type: "CaseStudy::HeadingContent", content: {size: "h1", text: fields["Outcome Title"]})
+        outcome.contents.new(type: "CaseStudy::ResultsContent", content: {results: [fields["Key Result 1"], fields["Key Result 2"], fields["Key Result 3"]]})
+        outcome.contents.new(type: "CaseStudy::ParagraphContent", content: {text: fields["Outcome Text"]})
+        outcome.contents.new(type: "CaseStudy::ImagesContent")
+        # TODO: Parse images
 
         article.title = fields["Title"]
         article.subtitle = fields["Subtitle"]
