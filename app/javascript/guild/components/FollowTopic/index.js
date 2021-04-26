@@ -4,12 +4,9 @@ import { MinusCircle } from "@styled-icons/heroicons-outline/MinusCircle";
 import { Plus } from "@styled-icons/heroicons-outline/Plus";
 import { Box, Text, Link, Button, Card } from "@advisable/donut";
 import useFollows from "@guild/views/Follows/useFollows";
-import useScrollToTop from "@advisable-main/hooks/useScrollToTop";
 import { GuildBox } from "@guild/styles";
 
 const FollowTopic = ({ topicId }) => {
-  useScrollToTop();
-
   const [followed, setFollowed] = useState(false);
   const { followTopic, unfollowTopic, followedTopics } = useFollows();
 
