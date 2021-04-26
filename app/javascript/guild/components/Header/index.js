@@ -14,9 +14,11 @@ import {
   StyledHeader,
   StyledHeaderLink,
   StyledHeaderBadge,
+  StyledHeaderBadgeNumber,
   StyledHamburger,
 } from "./styles";
 import { GUILD_LAST_READ_QUERY } from "./queries";
+import { EVENTS_QUERY } from "@guild/views/Events/queries";
 import Notifications from "./Notifications";
 import { useTwilioChat } from "../TwilioProvider";
 
@@ -34,8 +36,10 @@ const Header = () => {
     pollInterval: TWO_MINUTES,
     skip: !viewer,
   });
-
   const hasUnreadNotifications = lastReadData?.viewer?.guildUnreadNotifications;
+
+  const { data: eventsData } = useQuery(EVENTS_QUERY);
+  const eventsCount = eventsData?.events?.totalCount;
 
   return (
     <>
@@ -78,6 +82,11 @@ const Header = () => {
               </StyledHeaderLink>
               <StyledHeaderLink exact as={NavLink} to="/events">
                 <Calendar />
+                {eventsCount ? (
+                  <StyledHeaderBadgeNumber top="4px" left="32px">
+                    {eventsCount}
+                  </StyledHeaderBadgeNumber>
+                ) : null}
                 Events
               </StyledHeaderLink>
             </Box>

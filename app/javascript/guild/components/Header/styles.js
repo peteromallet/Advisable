@@ -46,12 +46,22 @@ export const StyledHeaderLink = styled.a`
 
 export const StyledHeaderBadge = styled.div`
   ${position};
-
   width: 8px;
   height: 8px;
   border-radius: 50%;
   position: absolute;
   background: ${theme.colors.froly100};
+`;
+
+export const StyledHeaderBadgeNumber = styled(StyledHeaderBadge)`
+  width: 16px;
+  height: 16px;
+  margin-left: -7px;
+  color: ${theme.colors.neutral100};
+  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 `;
 
 export const NavIcon = styled.div`
