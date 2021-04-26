@@ -15,22 +15,21 @@ module Mutations
     argument :marketing_attitude, String, required: false
     # rubocop:enable GraphQL/ExtractInputType
 
-    field :user, Types::User, null: true
+    field :client_application, Types::ClientApplicationType, null: true
 
     def authorized?(*_)
       requires_current_user!
+      ApiError.invalid_request("INVALID_STATUS", "Not started") if current_user.application_status != "Application Started"
       true
     end
 
     def resolve(**args)
-      if current_user.application_status == "Application Started"
-        update_company_details(current_user.company, args)
-        # TODO: Move budget to company
-        current_user.budget = args[:budget] if args.key?(:budget)
-        current_user.save_and_sync!
-      end
+      update_company_details(current_user.company, args)
+      # TODO: Move budget to company
+      current_user.budget = args[:budget] if args.key?(:budget)
+      current_user.save_and_sync!
 
-      {user: current_user}
+      {client_application: current_user}
     end
 
     private
