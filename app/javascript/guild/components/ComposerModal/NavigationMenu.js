@@ -4,12 +4,22 @@ import useLocationStages from "@advisable-main/hooks/useLocationStages";
 import useProgressSteps from "./useProgressSteps";
 import { yourPostValidationSchema } from "./validationSchemas";
 
-const NavigationMenu = ({ guildPost }) => {
+const NavigationMenu = ({ guildPost, postPrompt }) => {
   const urlPrefix = ["/composer", guildPost?.id].filter(Boolean).join("/");
-  return <SetupMenu guildPost={guildPost} urlPrefix={urlPrefix} />;
+  return (
+    <SetupMenu
+      guildPost={guildPost}
+      urlPrefix={urlPrefix}
+      postPrompt={postPrompt}
+    />
+  );
 };
 
-const SetupMenu = React.memo(function SetupMenu({ guildPost, urlPrefix }) {
+const SetupMenu = React.memo(function SetupMenu({
+  postPrompt,
+  guildPost,
+  urlPrefix,
+}) {
   const isPublished = guildPost?.status === "published";
   const { progressed } = useProgressSteps();
   const { pathWithState } = useLocationStages();
@@ -26,21 +36,26 @@ const SetupMenu = React.memo(function SetupMenu({ guildPost, urlPrefix }) {
     guildPost?.audienceType?.length ||
     progressed("EDIT_AUDIENCE");
 
+  const targetingLabels = guildPost?.guildTopics?.filter(
+    (t) => t.name !== postPrompt?.label?.name,
+  );
   const targetingComplete =
     isPublished ||
     progressed("EDIT_TARGETING") ||
-    guildPost?.guildTopics?.length ||
+    targetingLabels?.length ||
     guildPost?.audienceType === "none";
 
   return (
     <MultistepMenu>
-      <MultistepMenu.Item
-        to={`${urlPrefix}/type`}
-        isComplete={Boolean(guildPost)}
-        isDisabled={!guildPost}
-      >
-        Post Type
-      </MultistepMenu.Item>
+      {!postPrompt && !guildPost?.postPrompt && (
+        <MultistepMenu.Item
+          to={`${urlPrefix}/type`}
+          isComplete={Boolean(guildPost)}
+          isDisabled={!guildPost}
+        >
+          Post Type
+        </MultistepMenu.Item>
+      )}
 
       <MultistepMenu.Item
         to={pathWithState(`${urlPrefix}/post`)}

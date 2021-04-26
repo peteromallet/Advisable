@@ -241,6 +241,21 @@ module Types
       end
     end
 
+    field :latest_prompt, PostPromptType, null: true
+
+    def latest_prompt
+      ::PostPrompt.featured.first
+    end
+
+    field :post_prompt, ::Types::PostPromptType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def post_prompt(id:)
+      requires_guild_user!
+      ::PostPrompt.find(id)
+    end
+
     field :label_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
       argument :label_slug, ID, required: true
     end

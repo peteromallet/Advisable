@@ -32,6 +32,12 @@ const createCache = () => {
           guildPosts: relayStylePagination(["type"]),
           events: relayStylePagination(),
           labelPosts: relayStylePagination(),
+          postPrompt(_, { args, toReference }) {
+            return toReference({
+              __typename: "PostPrompt",
+              id: args.id,
+            });
+          },
         },
       },
       Specialist: {

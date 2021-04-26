@@ -13,6 +13,8 @@ module Types
 
       orphan_types Types::Guild::Post::PostType, Types::Guild::Post::AdviceRequiredType, Types::Guild::Post::CaseStudyType, Types::Guild::Post::OpportunityType
 
+      description "Fields representing a Guild Post model"
+
       field :id, ID, null: false do
         description 'The unique ID for the guild post'
       end
@@ -120,6 +122,8 @@ module Types
       def is_popular
         object.popular?
       end
+
+      field :post_prompt, Types::PostPromptType, null: true
 
       definition_methods do
         def resolve_type(object, _context)

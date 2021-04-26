@@ -13,13 +13,13 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
   const { pathWithState } = useLocationStages();
 
   const handleSubmit = async (values, actions) => {
-    const { errors } = await onSubmit(values);
-    if (errors) {
+    const response = await onSubmit(values);
+    if (response?.errors) {
       /*
         This is a fallback in case the yup schema does not have parity w/ the server.
         INVALID_REQUEST response is not keyed by the resepctive attribute name.
       */
-      errors.forEach(({ message }) => {
+      response.errors.forEach(({ message }) => {
         const errorKey = message[0].toLowerCase();
         actions.setFieldError(errorKey, message);
       });
@@ -30,17 +30,19 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
   return (
     <Box display="flex">
       <Box flexGrow={1} width="100%">
-        <Link
-          mb="s"
-          fontSize="l"
-          fontWeight="medium"
-          to={pathWithState(`/composer/${guildPost.id}/type`)}
-        >
-          <Box display="inline-block" mr="xxs">
-            <ArrowLeft size={20} strokeWidth={2} />
-          </Box>
-          Back
-        </Link>
+        {guildPost?.id && !guildPost?.postPrompt && (
+          <Link
+            mb="s"
+            fontSize="l"
+            fontWeight="medium"
+            to={pathWithState(`/composer/${guildPost.id}/type`)}
+          >
+            <Box display="inline-block" mr="xxs">
+              <ArrowLeft size={20} strokeWidth={2} />
+            </Box>
+            Back
+          </Link>
+        )}
         <Formik
           validateOnMount
           onSubmit={handleSubmit}

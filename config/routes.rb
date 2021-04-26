@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       delete :cover_photo, on: :member, action: :destroy_cover_photo
     end
     resources :labels
+    resources :post_prompts
 
     post 'resync', to: 'application#resync', as: :resync if ENV['STAGING']
     get 'login/:gid', to: 'application#login_as', as: :login_as

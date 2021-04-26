@@ -30,3 +30,17 @@ export const SELECT_DATA = gql`
     }
   }
 `;
+
+export const POST_PROMPT_QUERY = gql`
+  query postPrompt($id: ID!) {
+    postPrompt(id: $id) {
+      id
+      prompt
+      label {
+        id
+        name
+        slug
+      }
+    }
+  }
+`;
