@@ -8,7 +8,11 @@ export default function EventsList({ events }) {
       width="100%"
       gridGap="32px"
       display="grid"
-      gridTemplateColumns={{ _: "1fr", s: "1fr 1fr", l: "repeat(3, 1fr)" }}
+      gridTemplateColumns={{
+        _: "1fr",
+        s: "repeat(2, minmax(0, 1fr))",
+        l: "repeat(3, minmax(0, 1fr))",
+      }}
     >
       {events?.map((event) => (
         <Event key={event.id} event={event} />
