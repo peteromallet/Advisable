@@ -1,44 +1,48 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
 
-const userFields = gql`
-  fragment UserFields on User {
+const clientApplicationFields = gql`
+  fragment ClientApplicationFields on ClientApplication {
     id
-    name
-    city
-    country {
-      id
-      name
-    }
+    # Company Overview
+    companyName
+    companyType
     industry {
       id
       name
     }
+    # Company Stage
+    businessType
+    # Goals
+    goals
+    # Preferences
+    budget
+    feedback
+    marketingAttitude
   }
 `;
 
-export const GET_USER = gql`
-  ${userFields}
-  query Specialist($id: ID!) {
-    countries {
-      id
-      name
-      __typename
-    }
-    skills {
-      value: id
-      label: name
-    }
+export const CLIENT_APPLICATION_DATA = gql`
+  ${clientApplicationFields}
+
+  query ClientApplicationData {
     industries {
-      value: id
+      value: name
       label: name
     }
-    user(id: $id) {
-      ...UserFields
+    clientApplication {
+      ...ClientApplicationFields
     }
   }
 `;
 
-export const useGetUser = (id) => {
-  const response = useQuery(GET_USER, { variables: { id } });
-  return response;
-};
+export const UPDATE_CLIENT_APPLICATION = gql`
+  ${clientApplicationFields}
+
+  mutation UpdateClientApplication($input: UpdateClientApplicationInput!) {
+    updateClientApplication(input: $input) {
+      clientApplication {
+        ...ClientApplicationFields
+      }
+    }
+  }
+`;
