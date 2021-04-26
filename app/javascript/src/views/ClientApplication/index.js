@@ -22,8 +22,8 @@ export default function ClientApplication() {
   const forwards = history.action === "PUSH";
   const largeScreen = useBreakpoint("lUp");
 
-  if (viewer.isClient) {
-    notify("You already registered as a client");
+  if (viewer.isSpecialist) {
+    notify("You already registered as a freelancer");
     history.push("/");
   }
 
