@@ -137,12 +137,11 @@ module Types
       context[:oauth_viewer]
     end
 
-    field :client_application, Types::ClientApplicationType, null: true do
-      argument :id, ID, required: true
-    end
+    field :client_application, Types::ClientApplicationType, null: true
 
-    def client_application(id:)
-      ::User.find_by_uid_or_airtable_id!(id)
+    def client_application
+      requires_current_user!
+      current_user.user
     end
 
     field :invoice, Types::InvoiceType, null: true do
