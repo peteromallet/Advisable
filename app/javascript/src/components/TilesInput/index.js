@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
-import PropTypes from "prop-types";
 import { StyledTilesInputOption } from "./styles";
 
 function TilesInput({ onChange, value, options, importanceScale, alignWidth }) {
@@ -54,13 +53,5 @@ function TilesInput({ onChange, value, options, importanceScale, alignWidth }) {
     </Box>
   );
 }
-
-TilesInput.propTypes = {
-  options: PropTypes.array,
-  onChange: PropTypes.func,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  importanceScale: PropTypes.bool,
-  alignWidth: PropTypes.bool,
-};
 
 export default TilesInput;
