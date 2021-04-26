@@ -12,6 +12,7 @@ module Mutations
     argument :feedback, Boolean, required: false
     argument :goals, [String], required: false
     argument :industry, String, required: false
+    argument :marketing_attitude, String, required: false
     # rubocop:enable GraphQL/ExtractInputType
 
     field :user, Types::User, null: true
@@ -40,6 +41,7 @@ module Mutations
       company.kind = args[:company_type] if args.key?(:company_type)
       company.goals = args[:goals] if args.key?(:goals)
       company.feedback = args[:feedback] if args.key?(:feedback)
+      company.marketing_attitude = args[:marketing_attitude] if args.key?(:marketing_attitude)
       company.industry = Industry.find_by_name!(args[:industry]) if args.key?(:industry)
       company.save!
     end

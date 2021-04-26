@@ -103,4 +103,15 @@ RSpec.describe Mutations::UpdateClientApplication do
       }.from(nil).to(true)
     end
   end
+
+  context 'when passing marketingAttitude' do
+    it "sets the company marketing attitude attribute" do
+      user.company.update(marketing_attitude: nil)
+      expect do
+        request({marketingAttitude: "We’re pretty happy with our strategy & tactics"})
+      end.to change {
+        user.company.reload.marketing_attitude
+      }.from(nil).to("We’re pretty happy with our strategy & tactics")
+    end
+  end
 end

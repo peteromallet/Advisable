@@ -95,6 +95,7 @@ end
 #  invoice_company_name              :string
 #  invoice_name                      :string
 #  kind                              :string
+#  marketing_attitude                :string
 #  name                              :string
 #  payments_setup                    :boolean          default(FALSE)
 #  project_payment_method            :string
