@@ -6,6 +6,7 @@ export const EVENTS_QUERY = gql`
 
   query events($cursor: String) {
     events(first: 7, after: $cursor) {
+      totalCount
       pageInfo {
         endCursor
         hasNextPage
