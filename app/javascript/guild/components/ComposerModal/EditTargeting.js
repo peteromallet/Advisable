@@ -45,7 +45,13 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
     formik.setFieldValue("guildTopicNames", [...prev, suggested]);
   };
 
-  const guildTopicNames = guildPost?.guildTopics.map((gt) => ({
+  const filterPromptLabel = (arr, key) => {
+    const name = guildPost?.postPrompt?.label?.name;
+    return arr.filter((l) => l[key] !== name);
+  };
+
+  const filteredLabels = filterPromptLabel(guildPost?.guildTopics, "name");
+  const guildTopicNames = filteredLabels?.map((gt) => ({
     label: gt.name,
     value: gt.name,
   }));
@@ -61,6 +67,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
         ? "otherLabels"
         : guildPost?.audienceType
     ];
+  const filteredTopicables = filterPromptLabel(topicables, "value");
 
   /*
     Suggested topics for audienceType
@@ -73,6 +80,10 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
       : guildPost?.audienceType === "other"
       ? selectDataQuery.data?.otherLabels.slice(0, 10)
       : selectDataQuery.data?.popularGuildCountries;
+  const filteredSuggestedTopicables = filterPromptLabel(
+    suggestedTopicables,
+    "value",
+  );
 
   const searchPlaceholder = `Search for ${indefinite(
     guildPost.audienceType === "other"
@@ -127,7 +138,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                   max={5}
                   error={null}
                   name="guildTopicNames"
-                  options={topicables}
+                  options={filteredTopicables}
                   placeholder={searchPlaceholder}
                   value={formik.values.guildTopicNames}
                   onChange={(guildTopicNames) => {
@@ -159,7 +170,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                       wrapChildrenBoth={8}
                     >
                       {/* Filter suggestions that have already been selected */}
-                      {suggestedTopicables
+                      {filteredSuggestedTopicables
                         .filter(
                           (st) =>
                             !formik.values.guildTopicNames.find(

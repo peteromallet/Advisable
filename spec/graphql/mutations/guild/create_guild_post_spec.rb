@@ -8,7 +8,7 @@ RSpec.describe Mutations::Guild::CreateGuildPost do
   let(:title) { Faker::Lorem.sentence }
   let(:body) { Faker::Lorem.paragraph }
 
-  let(:query) {
+  let(:query) do
     <<-GRAPHQL
     mutation {
       createGuildPost(input: {
@@ -37,7 +37,7 @@ RSpec.describe Mutations::Guild::CreateGuildPost do
       }
     }
     GRAPHQL
-  }
+  end
 
   it_behaves_like "guild specialist"
 
@@ -60,7 +60,7 @@ RSpec.describe Mutations::Guild::CreateGuildPost do
         "title" => title,
         "denormalizedType" => "CaseStudy",
         "type" => "Case Study",
-        "author" => {"id" => specialist.uid},
+        "author" => {"id" => specialist.uid}
       })
     end
   end

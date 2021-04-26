@@ -8,6 +8,7 @@ class Label < ApplicationRecord
   belongs_to :country, optional: true
   belongs_to :industry, optional: true
   belongs_to :skill, optional: true
+  has_many :post_prompts, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
   has_many :labelings, dependent: :destroy
   has_many :guild_posts, through: :labelings
@@ -31,6 +32,7 @@ end
 # Table name: labels
 #
 #  id              :uuid             not null, primary key
+#  description     :text
 #  labelings_count :integer
 #  name            :string
 #  published_at    :datetime

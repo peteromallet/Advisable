@@ -452,6 +452,8 @@ ActiveRecord::Schema.define(version: 2021_04_22_093651) do
     t.datetime "boosted_at"
     t.datetime "resolved_at"
     t.string "audience_type"
+    t.uuid "post_prompt_id"
+    t.index ["post_prompt_id"], name: "index_guild_posts_on_post_prompt_id"
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end
 
@@ -523,6 +525,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_093651) do
     t.bigint "skill_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "description"
     t.index ["country_id"], name: "index_labels_on_country_id", unique: true
     t.index ["industry_id"], name: "index_labels_on_industry_id", unique: true
     t.index ["skill_id"], name: "index_labels_on_skill_id", unique: true
@@ -625,6 +628,17 @@ ActiveRecord::Schema.define(version: 2021_04_22_093651) do
     t.index ["project_id"], name: "index_payments_on_project_id"
     t.index ["source_id"], name: "index_payments_on_source_id"
     t.index ["uid"], name: "index_payments_on_uid"
+  end
+
+  create_table "post_prompts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "prompt"
+    t.string "cta"
+    t.integer "guild_posts_count", default: 0
+    t.boolean "featured", default: false
+    t.uuid "label_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["label_id"], name: "index_post_prompts_on_label_id"
   end
 
   create_table "previous_project_images", force: :cascade do |t|
@@ -1085,6 +1099,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_093651) do
   add_foreign_key "notifications", "accounts", column: "actor_id"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
+  add_foreign_key "post_prompts", "labels"
   add_foreign_key "previous_project_images", "off_platform_projects"
   add_foreign_key "problematic_flags", "applications"
   add_foreign_key "problematic_flags", "users"

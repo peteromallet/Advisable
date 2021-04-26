@@ -1,6 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
 import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
+
 export const CREATE_GUILD_POST = gql`
   ${GuildPostFields}
   mutation createGuildPost($input: CreateGuildPostInput!) {
@@ -87,5 +88,17 @@ export const useUpdateGuildPostWriteCache = () =>
           data: { guildPost },
         });
       }
+    },
+  });
+
+export const useCreateGuildPost = () =>
+  useMutation(CREATE_GUILD_POST, {
+    update(cache, { data }) {
+      const { guildPost } = data?.createGuildPost;
+      cache.writeQuery({
+        query: GUILD_POST_QUERY,
+        variables: { id: guildPost?.id },
+        data: { guildPost },
+      });
     },
   });

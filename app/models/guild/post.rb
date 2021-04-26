@@ -10,6 +10,7 @@ module Guild
     POPULAR_THRESHOLD = 5
 
     belongs_to :specialist
+    belongs_to :post_prompt, optional: true, counter_cache: :guild_posts_count
     has_one :account, through: :specialist
     has_many :reactions, as: :reactionable, dependent: :destroy
     has_many :comments, -> { published }, foreign_key: 'guild_post_id', class_name: 'Guild::Comment', inverse_of: 'post'
@@ -89,7 +90,7 @@ module Guild
     def reset_labels
       return unless labels_resettable?
 
-      self.labels = []
+      self.labels = Array(post_prompt ? post_prompt.label : nil)
     end
 
     def reset_previous_pinned
@@ -125,11 +126,13 @@ end
 #  type               :string           default("Post"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  post_prompt_id     :uuid
 #  specialist_id      :bigint
 #
 # Indexes
 #
-#  index_guild_posts_on_specialist_id  (specialist_id)
+#  index_guild_posts_on_post_prompt_id  (post_prompt_id)
+#  index_guild_posts_on_specialist_id   (specialist_id)
 #
 # Foreign Keys
 #
