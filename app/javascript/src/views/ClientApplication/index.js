@@ -1,4 +1,5 @@
 import React from "react";
+import { useQuery } from "@apollo/client";
 import { AnimatePresence } from "framer-motion";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import { Box, Container, useBreakpoint } from "@advisable/donut";
@@ -6,7 +7,8 @@ import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
 import Sidebar from "./components/Sidebar";
 import Loading from "src/components/Loading";
-import { useGetUser } from "./queries";
+import { CLIENT_APPLICATION_DATA } from "./queries";
+// Steps
 import CompanyOverview from "./steps/CompanyOverview";
 import CompanyStage from "./steps/CompanyStage";
 import Goals from "./steps/Goals";
@@ -26,13 +28,13 @@ export default function ClientApplication() {
     history.push("/");
   }
 
-  const { data, loading } = useGetUser(viewer.id);
+  const { data, loading } = useQuery(CLIENT_APPLICATION_DATA);
   if (loading) return <Loading />;
-  const { user } = data;
+  const { clientApplication, industries } = data;
 
   return (
     <div>
-      {largeScreen ? <Sidebar user={user} /> : null}
+      {largeScreen ? <Sidebar clientApplication={clientApplication} /> : null}
       <Box paddingLeft={{ l: "300px" }}>
         <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <AnimatePresence
@@ -42,16 +44,19 @@ export default function ClientApplication() {
           >
             <Switch location={location} key={location.pathname}>
               <Route path="/clients/apply/company-overview">
-                <CompanyOverview user={user} />
+                <CompanyOverview
+                  clientApplication={clientApplication}
+                  industries={industries}
+                />
               </Route>
               <Route path="/clients/apply/company-stage">
-                <CompanyStage user={user} />
+                <CompanyStage clientApplication={clientApplication} />
               </Route>
               <Route path="/clients/apply/goals">
-                <Goals user={user} />
+                <Goals clientApplication={clientApplication} />
               </Route>
               <Route path="/clients/apply/preferences">
-                <Preferences user={user} />
+                <Preferences clientApplication={clientApplication} />
               </Route>
               <Route>
                 <Welcome />
