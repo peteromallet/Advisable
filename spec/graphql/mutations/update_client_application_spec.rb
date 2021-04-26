@@ -75,7 +75,7 @@ RSpec.describe Mutations::UpdateClientApplication do
 
   context 'when passing goals' do
     it "updates the company goals" do
-      user.company.update(goals: [])
+      user.company.ate(goals: [])
       request({goals: %w[One Two]})
       expect(user.company.reload.goals).to include("One")
       expect(user.company.reload.goals).to include("Two")
@@ -90,6 +90,17 @@ RSpec.describe Mutations::UpdateClientApplication do
       end.to change {
         user.reload.budget
       }.from(nil).to(5000)
+    end
+  end
+
+  context 'when passing feedback' do
+    it "sets the company feedback attribute" do
+      user.company.update(feedback: nil)
+      expect do
+        request({feedback: true})
+      end.to change {
+        user.company.reload.feedback
+      }.from(nil).to(true)
     end
   end
 end

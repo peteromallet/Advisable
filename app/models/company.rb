@@ -90,6 +90,7 @@ end
 #  billing_email                     :string
 #  budget                            :bigint
 #  business_type                     :string
+#  feedback                          :boolean
 #  goals                             :text             default([]), is an Array
 #  invoice_company_name              :string
 #  invoice_name                      :string
