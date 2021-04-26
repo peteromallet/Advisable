@@ -31,6 +31,7 @@ const createCache = () => {
           // https://www.apollographql.com/docs/react/pagination/key-args/
           guildPosts: relayStylePagination(["type"]),
           events: relayStylePagination(),
+          labelPosts: relayStylePagination(),
         },
       },
       Specialist: {
