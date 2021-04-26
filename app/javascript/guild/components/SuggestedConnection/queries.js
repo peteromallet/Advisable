@@ -21,6 +21,12 @@ export const SUGGESTED_CONNECTION_QUERY = gql`
           name
         }
       }
+      ... on RandomRecommendation {
+        skills {
+          id
+          name
+        }
+      }
     }
   }
 `;

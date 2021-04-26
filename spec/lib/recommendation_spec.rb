@@ -85,13 +85,30 @@ RSpec.describe Recommendation do
   end
 
   context "with random" do
+    let(:other) { create(:specialist, :guild) }
+
+    before do
+      stub_const("Recommendation::RECOMMENDERS", [Recommendation::Random])
+    end
+
     it "creates a recommendation" do
       stub_const("Recommendation::RECOMMENDERS", [Recommendation::Random])
-      others = create_list(:specialist, 2, :guild)
+      other = create(:specialist, :guild)
 
-      expect(others).to include(recommender.recommendation)
-      expect(recommender).not_to respond_to(:skills)
+      expect(other).to eq(recommender.recommendation)
       expect(recommender).not_to respond_to(:industries)
+      expect(recommender.skills).to eq(nil)
+    end
+
+    it "includes the three most popular project skills ordered by count" do
+      skills = create_list(:skill, 6)
+
+      prev_projects = create_list(:previous_project, 6, specialist: other, skills: skills)
+      top_skill = skills.first
+      prev_projects.first.skills << top_skill
+
+      expect(recommender.skills.first).to eq(top_skill)
+      expect(recommender.skills.length).to eq(3)
     end
   end
 end

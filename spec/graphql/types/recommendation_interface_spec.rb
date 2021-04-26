@@ -26,6 +26,12 @@ RSpec.describe Types::RecommendationInterface do
                 name
               }
             }
+            ... on RandomRecommendation {
+              skills {
+                id
+                name
+              }
+            }
           }
         }
     GRAPHQL
@@ -57,13 +63,29 @@ RSpec.describe Types::RecommendationInterface do
     })
   end
 
-  it "returns a random recommendation" do
-    stub_const("Recommendation::RECOMMENDERS", [Recommendation::Random])
-    random_match = create(:specialist, :guild)
+  context "with random recommendations" do
+    before do
+      stub_const("Recommendation::RECOMMENDERS", [Recommendation::Random])
+    end
 
-    expect(response["data"]["specialistRecommendation"]).to eq({
-      "recommendation" => {"id" => random_match.uid}
-    })
+    let!(:random_match) { create(:specialist, :guild) }
+
+    it "returns a recommendation without skills" do
+      expect(response["data"]["specialistRecommendation"]).to eq({
+        "recommendation" => {"id" => random_match.uid},
+        "skills" => nil
+      })
+    end
+
+    it "returns a recommendation with skills" do
+      skills = create_list(:skill, 3)
+      create_list(:previous_project, 3, specialist: random_match, skills: skills)
+
+      expect(response["data"]["specialistRecommendation"]).to eq({
+        "recommendation" => {"id" => random_match.uid},
+        "skills" => skills.map { |s| {"id" => s.uid, "name" => s.name} }
+      })
+    end
   end
 
   it "does not return a recommendation" do
