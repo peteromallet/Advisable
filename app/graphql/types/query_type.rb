@@ -141,7 +141,7 @@ module Types
 
     def client_application
       requires_current_user!
-      current_user.user
+      current_user
     end
 
     field :invoice, Types::InvoiceType, null: true do
