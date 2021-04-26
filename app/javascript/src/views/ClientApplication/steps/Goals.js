@@ -35,7 +35,7 @@ export default function CompanyOverview({ clientApplication }) {
   const history = useHistory();
 
   const initialValues = {
-    goals: clientApplication.goals || [],
+    goals: clientApplication.goals.map((g) => ({ value: g, label: g })) || [],
   };
 
   const handleSubmit = async (values, { setStatus }) => {
