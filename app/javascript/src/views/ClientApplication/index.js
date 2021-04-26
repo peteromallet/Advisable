@@ -5,14 +5,13 @@ import { Box, Container, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
 import Sidebar from "./components/Sidebar";
-import Welcome from "./steps/Welcome";
-import Introduction from "./steps/Introduction";
-import Overview from "./steps/Overview";
-import PreviousWork from "./steps/PreviousWork";
-import WorkPreferences from "./steps/WorkPreferences";
-import IdealProject from "./steps/IdealProject";
 import Loading from "src/components/Loading";
-import { useGetSpecialist } from "./queries";
+import { useGetUser } from "./queries";
+import CompanyOverview from "./steps/CompanyOverview";
+import CompanyStage from "./steps/CompanyStage";
+import Goals from "./steps/Goals";
+import Preferences from "./steps/Preferences";
+import Welcome from "./steps/Welcome";
 
 export default function ClientApplication() {
   const { notify } = useNotifications();
@@ -27,13 +26,13 @@ export default function ClientApplication() {
     history.push("/");
   }
 
-  const { data, loading } = useGetSpecialist(viewer.id);
+  const { data, loading } = useGetUser(viewer.id);
   if (loading) return <Loading />;
-  const { specialist, countries, skills, industries } = data;
+  const { user } = data;
 
   return (
     <div>
-      {largeScreen ? <Sidebar specialist={specialist} /> : null}
+      {largeScreen ? <Sidebar user={user} /> : null}
       <Box paddingLeft={{ l: "300px" }}>
         <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <AnimatePresence
@@ -42,27 +41,20 @@ export default function ClientApplication() {
             exitBeforeEnter
           >
             <Switch location={location} key={location.pathname}>
-              <Route path="/freelancers/apply/introduction">
-                <Introduction specialist={specialist} countries={countries} />
+              <Route path="/clients/apply/company-overview">
+                <CompanyOverview user={user} />
               </Route>
-              <Route path="/freelancers/apply/overview">
-                <Overview specialist={specialist} />
+              <Route path="/clients/apply/company-stage">
+                <CompanyStage user={user} />
               </Route>
-              <Route path="/freelancers/apply/experience">
-                <PreviousWork specialist={specialist} />
+              <Route path="/clients/apply/goals">
+                <Goals user={user} />
               </Route>
-              <Route path="/freelancers/apply/preferences">
-                <WorkPreferences
-                  skills={skills}
-                  industries={industries}
-                  specialist={specialist}
-                />
-              </Route>
-              <Route path="/freelancers/apply/ideal_project">
-                <IdealProject specialist={specialist} />
+              <Route path="/clients/apply/preferences">
+                <Preferences user={user} />
               </Route>
               <Route>
-                <Welcome specialist={specialist} />
+                <Welcome />
               </Route>
             </Switch>
           </AnimatePresence>

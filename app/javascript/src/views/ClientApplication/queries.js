@@ -1,47 +1,23 @@
 import { gql, useQuery } from "@apollo/client";
 
-const specialistFields = gql`
-  fragment SpecialistFields on Specialist {
+const userFields = gql`
+  fragment UserFields on User {
     id
-    # Introduction step
     name
-    avatar
-    bio
     city
     country {
       id
       name
     }
-    publicUse
-    # Overview step
-    linkedin
-    website
-    resume {
+    industry {
       id
-      filename
-      url
+      name
     }
-    # Previous work step
-    previousWorkDescription
-    previousWorkResults
-    # Work preferences step
-    skills {
-      value: id
-      label: name
-    }
-    industries {
-      value: id
-      label: name
-    }
-    primarilyFreelance
-    # Ideal project step
-    idealProject
-    applicationStage
   }
 `;
 
-export const GET_SPECIALIST = gql`
-  ${specialistFields}
+export const GET_USER = gql`
+  ${userFields}
   query Specialist($id: ID!) {
     countries {
       id
@@ -56,35 +32,13 @@ export const GET_SPECIALIST = gql`
       value: id
       label: name
     }
-    specialist(id: $id) {
-      ...SpecialistFields
+    user(id: $id) {
+      ...UserFields
     }
   }
 `;
 
-export const useGetSpecialist = (id) => {
-  const response = useQuery(GET_SPECIALIST, { variables: { id } });
+export const useGetUser = (id) => {
+  const response = useQuery(GET_USER, { variables: { id } });
   return response;
 };
-
-export const UPDATE_PROFILE = gql`
-  ${specialistFields}
-  mutation UpdateProfile($input: UpdateProfileInput!) {
-    updateProfile(input: $input) {
-      specialist {
-        ...SpecialistFields
-      }
-    }
-  }
-`;
-
-export const COMPLETE_SETUP = gql`
-  ${specialistFields}
-  mutation CompleteSetup($input: CompleteSetupInput!) {
-    completeSetup(input: $input) {
-      specialist {
-        ...SpecialistFields
-      }
-    }
-  }
-`;

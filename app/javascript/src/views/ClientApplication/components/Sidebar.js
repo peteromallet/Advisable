@@ -1,31 +1,8 @@
 import React from "react";
 import { Card, Text } from "@advisable/donut";
 import MultistepMenu from "src/components/MultistepMenu";
-import { validationSchema as introductionValidationSchema } from "../steps/Introduction";
-import { validationSchema as overviewValidationSchema } from "../steps/Overview";
-import { validationSchema as idealProjectValidationSchema } from "../steps/IdealProject";
-import { validationSchema as previousWorkValidationSchema } from "../steps/PreviousWork";
-import { validationSchema as WorkPreferencesValidationSchema } from "../steps/WorkPreferences";
 
-export default function Sidebar({ specialist }) {
-  const introductionComplete = introductionValidationSchema.isValidSync({
-    ...specialist,
-    country: specialist.country?.id,
-  });
-  const overviewComplete = overviewValidationSchema.isValidSync({
-    ...specialist,
-    resume: specialist.resume?.filename,
-  });
-  const previousWorkComplete = previousWorkValidationSchema.isValidSync(
-    specialist,
-  );
-  const workPreferencesComplete = WorkPreferencesValidationSchema.isValidSync(
-    specialist,
-  );
-  const idealProjectComplete = idealProjectValidationSchema.isValidSync(
-    specialist,
-  );
-
+export default function Sidebar() {
   return (
     <Card
       top="0"
@@ -49,38 +26,22 @@ export default function Sidebar({ specialist }) {
       </Text>
       <MultistepMenu>
         <MultistepMenu.Item
-          to="/freelancers/apply/introduction"
-          isComplete={introductionComplete}
+          to="/clients/apply/company-overview"
+          isComplete={false}
         >
-          Introduction
+          Company Overview
         </MultistepMenu.Item>
         <MultistepMenu.Item
-          to="/freelancers/apply/overview"
-          isComplete={overviewComplete}
-          isDisabled={!introductionComplete && !overviewComplete}
+          to="/clients/apply/company-stage"
+          isComplete={false}
         >
-          Overview
+          Company Stage
         </MultistepMenu.Item>
-        <MultistepMenu.Item
-          to="/freelancers/apply/experience"
-          isComplete={previousWorkComplete}
-          isDisabled={!overviewComplete && !previousWorkComplete}
-        >
-          Previous work
+        <MultistepMenu.Item to="/clients/apply/goals" isComplete={false}>
+          Goals
         </MultistepMenu.Item>
-        <MultistepMenu.Item
-          to="/freelancers/apply/preferences"
-          isComplete={workPreferencesComplete}
-          isDisabled={!previousWorkComplete && !workPreferencesComplete}
-        >
-          Work preferences
-        </MultistepMenu.Item>
-        <MultistepMenu.Item
-          to="/freelancers/apply/ideal_project"
-          isComplete={idealProjectComplete}
-          isDisabled={!workPreferencesComplete && !idealProjectComplete}
-        >
-          Ideal project
+        <MultistepMenu.Item to="/clients/apply/preferences" isComplete={false}>
+          Preferences
         </MultistepMenu.Item>
       </MultistepMenu>
     </Card>
