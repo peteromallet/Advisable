@@ -26,7 +26,7 @@ export default function CompanyOverview({ clientApplication, industries }) {
   const initialValues = {
     companyName: clientApplication.companyName || "",
     businessType: clientApplication.businessType || "",
-    industry: clientApplication.industry?.name || "",
+    industry: clientApplication.industry || "",
   };
 
   const handleSubmit = async (values, { setStatus }) => {

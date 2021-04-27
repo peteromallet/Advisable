@@ -7,8 +7,8 @@ const clientApplicationFields = gql`
     companyName
     companyType
     industry {
-      id
-      name
+      label: name
+      value: name
     }
     # Company Stage
     businessType
