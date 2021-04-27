@@ -83,7 +83,7 @@ export default function CompanyOverview({ clientApplication }) {
                   name="feedback"
                   onChange={(n) => formik.setFieldValue("feedback", n)}
                   error={null}
-                  label="How many freelancers would you like to hire over the next 6 months?"
+                  label="Are you open to giving feedback on your experience with Advisable"
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
