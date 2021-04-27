@@ -23,6 +23,12 @@ RSpec.describe Recommendation do
       specialist.update!(skills: same_skills)
     end
 
+    it "does not make a recommendation if others are not accepted" do
+      specialist.update!(skills: same_skills)
+      match.update!(application_stage: "Completed", skills: same_skills)
+      expect(recommender.recommendation).to eq(nil)
+    end
+
     it "makes a recommendation when there's > 1 skill in common" do
       specialist.update!(skills: same_skills)
       match.update!(skills: same_skills)
