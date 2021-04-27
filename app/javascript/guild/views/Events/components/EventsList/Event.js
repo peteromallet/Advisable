@@ -28,6 +28,7 @@ export default function Event({ event }) {
     >
       {event.coverPhotoUrl ? (
         <CoverImage
+          maxWidth="100%"
           height="200px"
           borderRadius="12px 12px 0 0"
           cover={event.coverPhotoUrl}
