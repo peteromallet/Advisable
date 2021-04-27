@@ -24,7 +24,8 @@ export default function StartApplication({ nextStep, forwards }) {
   const history = useHistory();
   const location = useLocation();
   const isMobile = useBreakpoint("s");
-  const project_id = queryString.parse(location.search)?.pid;
+  const queryParams = queryString.parse(location.search);
+  const project_id = queryParams?.pid;
   const [updateProfile] = useUpdateProfile();
   const [createFreelancerAccount] = useCreateFreelancerAccount();
   const { data, loading, error } = useQuery(GET_PROJECT, {
@@ -38,21 +39,26 @@ export default function StartApplication({ nextStep, forwards }) {
   }
 
   const initialValues = {
-    firstName: viewer?.firstName || "",
-    lastName: viewer?.lastName || "",
-    email: viewer?.email || "",
+    firstName: viewer?.firstName || queryParams?.firstName || "",
+    lastName: viewer?.lastName || queryParams?.lastName || "",
+    email: viewer?.email || queryParams?.email || "",
   };
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
-    // redirect to set password step, pass values, and preserve query string param
     const res = viewer
       ? await updateProfile({
-          variables: { input: { skills: viewer.skills, ...values } },
+          variables: { input: values },
         })
       : await createFreelancerAccount({
           variables: {
-            input: { ...values, skills: [] },
+            input: {
+              ...values,
+              pid: queryParams?.pid,
+              campaignName: queryParams.utm_campaign,
+              campaignSource: queryParams?.utm_source,
+              referrer: queryParams?.rid,
+            },
           },
         });
 
