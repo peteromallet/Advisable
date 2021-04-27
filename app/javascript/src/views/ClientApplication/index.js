@@ -59,7 +59,7 @@ export default function ClientApplication() {
                 <Preferences clientApplication={clientApplication} />
               </Route>
               <Route>
-                <Welcome />
+                <Welcome clientApplication={clientApplication} />
               </Route>
             </Switch>
           </AnimatePresence>
