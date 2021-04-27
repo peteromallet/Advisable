@@ -55,7 +55,7 @@ export default function StartApplication({ nextStep, forwards }) {
             input: {
               ...values,
               pid: queryParams?.pid,
-              campaignName: queryParams.utm_campaign,
+              campaignName: queryParams?.utm_campaign,
               campaignSource: queryParams?.utm_source,
               referrer: queryParams?.rid,
             },
