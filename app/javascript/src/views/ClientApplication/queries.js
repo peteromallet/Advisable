@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 const clientApplicationFields = gql`
   fragment ClientApplicationFields on ClientApplication {
     id
+    status
     # Company Overview
     companyName
     companyType
@@ -40,6 +41,18 @@ export const UPDATE_CLIENT_APPLICATION = gql`
 
   mutation UpdateClientApplication($input: UpdateClientApplicationInput!) {
     updateClientApplication(input: $input) {
+      clientApplication {
+        ...ClientApplicationFields
+      }
+    }
+  }
+`;
+
+export const SUBMIT_CLIENT_APPLICATION = gql`
+  ${clientApplicationFields}
+
+  mutation SubmitClientApplication($input: SubmitClientApplicationInput!) {
+    submitClientApplication(input: $input) {
       clientApplication {
         ...ClientApplicationFields
       }

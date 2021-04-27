@@ -13,7 +13,10 @@ import AnimatedCard from "../components/AnimatedCard";
 import Header from "../components/Header";
 import Description from "../components/Description";
 import StepNumber from "../components/StepNumber";
-import { UPDATE_CLIENT_APPLICATION } from "../queries";
+import {
+  UPDATE_CLIENT_APPLICATION,
+  SUBMIT_CLIENT_APPLICATION,
+} from "../queries";
 
 export const validationSchema = object().shape({
   budget: string().required(),
@@ -25,6 +28,7 @@ export const validationSchema = object().shape({
 
 export default function CompanyOverview({ clientApplication }) {
   const [update] = useMutation(UPDATE_CLIENT_APPLICATION);
+  const [submit] = useMutation(SUBMIT_CLIENT_APPLICATION);
   const history = useHistory();
 
   const initialValues = {
@@ -44,6 +48,10 @@ export default function CompanyOverview({ clientApplication }) {
     if (res.errors) {
       setStatus(res.errors[0]?.message);
       return;
+    }
+
+    if (clientApplication.status === "Application Started") {
+      await submit({ variables: { input: {} } });
     }
 
     history.push("/");
