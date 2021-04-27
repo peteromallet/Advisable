@@ -71,6 +71,7 @@ class Specialist < ApplicationRecord
 
   scope :available, -> { where("unavailable_until IS NULL OR unavailable_until <= ?", Time.zone.now) }
   scope :not_rejected, -> { where.not(application_stage: REJECTED_STAGES) }
+  scope :accepted, -> { where(application_stage: "Accepted") }
 
   def send_confirmation_email
     token = account.create_confirmation_token
