@@ -18,8 +18,13 @@ function IndustryRecommendation({ specialistRecommendation }) {
 }
 
 function RandomRecommendation({ specialistRecommendation }) {
-  const { recommendation } = specialistRecommendation;
-  return `We think you and ${recommendation?.firstName} could have some related skills or industries`;
+  const {
+    skills,
+    recommendation: { firstName },
+  } = specialistRecommendation;
+  return `${firstName} is an expert in ${
+    skills ? commaList(skills) : "Marketing"
+  }`;
 }
 
 const TYPES = {
