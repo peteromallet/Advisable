@@ -17,9 +17,11 @@ module Mutations
 
     field :client_application, Types::ClientApplicationType, null: true
 
+    ALLOWED_STATUSES = ["Application Started", "Submitted"].freeze
+
     def authorized?(*_)
       requires_current_user!
-      ApiError.invalid_request("INVALID_STATUS", "Not started") if current_user.application_status != "Application Started"
+      ApiError.invalid_request("INVALID_STATUS", "Wrong application status") unless ALLOWED_STATUSES.include?(current_user.application_status)
       true
     end
 
