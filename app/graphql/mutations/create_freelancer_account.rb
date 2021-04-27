@@ -27,7 +27,7 @@ module Mutations
       description 'The account password'
     end
 
-    argument :skills, [String], required: true do
+    argument :skills, [String], required: false do
       description 'An array of skills'
     end
 
@@ -51,7 +51,7 @@ module Mutations
 
     def resolve(**args)
       skills =
-        args[:skills].map do |name|
+        (args[:skills] || []).map do |name|
           skill = Skill.find_by(name: name)
           if skill.nil?
             ApiError.invalid_request(
