@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
-  protect_from_forgery with: :null_session
   before_action :require_admin, only: :toby
-  skip_before_action :verify_authenticity_token, if: -> { Rails.env.development? }
 
   def execute
     variables = ensure_hash(params[:variables])
@@ -26,6 +24,13 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def verify_authenticity_token
+    return if ENV["GRAPHQL_PLAYGROUND"].present?
+    return if ENV["API_ACCESS_KEY"].present? && request.headers["Api-Key"] == ENV["API_ACCESS_KEY"]
+
+    super
+  end
 
   def require_admin
     return if current_account&.admin?
