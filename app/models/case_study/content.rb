@@ -13,6 +13,8 @@ module CaseStudy
 
     validate :valid_content
 
+    scope :by_position, -> { order(:position) }
+
     private
 
     def valid_content; end
