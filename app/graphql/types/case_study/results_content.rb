@@ -9,7 +9,7 @@ module Types
 
       field :results, [String], null: true
       def results
-        object.content["results"]&.reject(&:nil?)
+        (object.content["results"] || []).select(&:present?)
       end
     end
   end
