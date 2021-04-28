@@ -12,7 +12,6 @@ module Types
       end
       field :skills, [SkillType], null: true
       field :industries, [IndustryType], null: true
-      field :sections, [SectionType], null: true
       field :title, String, null: true
       field :subtitle, String, null: true
       field :excerpt, String, null: true
@@ -23,6 +22,11 @@ module Types
       field :goals, [String], null: true
       field :published_at, GraphQL::Types::ISO8601DateTime, null: true
       field :specialist_approved_at, GraphQL::Types::ISO8601DateTime, null: true
+
+      field :sections, [SectionType], null: true
+      def sections
+        object.sections.order(:position)
+      end
     end
   end
 end
