@@ -348,7 +348,7 @@ module Types
     end
 
     def case_study(id:)
-      ::CaseStudy::Article.find(id)
+      ::CaseStudy::Article.find_by!(uid: id)
     end
   end
 end
