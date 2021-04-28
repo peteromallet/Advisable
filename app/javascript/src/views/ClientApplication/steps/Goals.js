@@ -14,7 +14,7 @@ import StepNumber from "../components/StepNumber";
 import { UPDATE_CLIENT_APPLICATION } from "../queries";
 
 export const validationSchema = object().shape({
-  goals: array().required("Please select your goals"),
+  goals: array().min(1, "Please add at least one goal"),
 });
 
 const GOALS = [
