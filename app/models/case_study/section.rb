@@ -11,6 +11,8 @@ module CaseStudy
 
     belongs_to :article
     has_many :contents, dependent: :destroy
+
+    scope :by_position, -> { order(:position) }
   end
 end
 

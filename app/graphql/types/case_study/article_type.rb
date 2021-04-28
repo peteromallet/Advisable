@@ -26,7 +26,7 @@ module Types
 
       field :sections, [SectionType], null: true
       def sections
-        object.sections.order(:position)
+        object.sections.by_position
       end
     end
   end

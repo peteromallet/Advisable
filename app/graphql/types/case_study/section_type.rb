@@ -12,7 +12,7 @@ module Types
 
       field :contents, [Types::CaseStudy::ContentInterface], null: true
       def contents
-        object.contents.order(:position)
+        object.contents.by_position
       end
     end
   end
