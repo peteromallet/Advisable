@@ -1,7 +1,8 @@
 import React from "react";
+import * as Sentry from "@sentry/react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import client from "./graphqlClient";
 
@@ -11,16 +12,16 @@ const stripePromise = loadStripe(keys.stripePublicKey);
 import "./i18n";
 import App from "./App";
 
-const Root = () => {
+const Root = ({ history }) => {
   return (
     <ApolloProvider client={client}>
-      <BrowserRouter>
+      <Router history={history}>
         <Elements stripe={stripePromise}>
           <App />
         </Elements>
-      </BrowserRouter>
+      </Router>
     </ApolloProvider>
   );
 };
 
-export default Root;
+export default Sentry.withProfiler(Root);

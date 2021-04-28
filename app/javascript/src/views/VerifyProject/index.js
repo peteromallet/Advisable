@@ -1,5 +1,6 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router";
+import { Switch, Redirect } from "react-router";
+import Route from "src/components/Route";
 import { Box } from "@advisable/donut";
 import Logo from "../../components/Logo";
 import Loading from "../../components/Loading";

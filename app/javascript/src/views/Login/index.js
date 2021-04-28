@@ -1,6 +1,7 @@
 // Renders the login page
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch } from "react-router-dom";
+import Route from "src/components/Route";
 import useScrollRestore from "../../utilities/useScrollRestore";
 import { Box } from "@advisable/donut";
 import LoginForm from "./LoginForm";

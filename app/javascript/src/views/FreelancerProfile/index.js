@@ -1,7 +1,8 @@
 import React from "react";
 // Hooks
 import useLogoURL from "src/components/ApplicationProvider/useLogoURL";
-import { useParams, Switch, Route } from "react-router-dom";
+import { useParams, Switch } from "react-router-dom";
+import Route from "src/components/Route";
 import useInitialScroll from "./useInitialScroll";
 import useViewer from "src/hooks/useViewer";
 import { useQuery } from "@apollo/client";

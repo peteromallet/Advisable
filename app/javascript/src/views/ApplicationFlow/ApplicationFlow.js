@@ -1,13 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { isEmpty, filter } from "lodash-es";
-import {
-  Switch,
-  Route,
-  Redirect,
-  useLocation,
-  matchPath,
-} from "react-router-dom";
+import { Switch, Redirect, useLocation, matchPath } from "react-router-dom";
+import Route from "src/components/Route";
 import { Box, useBreakpoint, useTheme } from "@advisable/donut";
 import Terms from "./Terms";
 import Overview from "./Overview";

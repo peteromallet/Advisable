@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Route, useLocation } from "react-router-dom";
+import Route from "src/components/Route";
+import { useLocation } from "react-router-dom";
 import useViewer from "@advisable-main/hooks/useViewer";
 
 function RedirectToLogin({ viewer }) {

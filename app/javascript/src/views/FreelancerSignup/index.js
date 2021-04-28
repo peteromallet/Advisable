@@ -2,7 +2,8 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { useTheme, Box } from "@advisable/donut";
-import { Switch, Route, Redirect, matchPath } from "react-router-dom";
+import { Switch, Redirect, matchPath } from "react-router-dom";
+import Route from "src/components/Route";
 import Logo from "../../components/Logo";
 import Loading from "../../components/Loading";
 import { Main, Content } from "./styles";

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Redirect, Switch, Route } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
+import Route from "src/components/Route";
 // Hooks
 import useScrollToTop from "../../../hooks/useScrollToTop";
 // Components

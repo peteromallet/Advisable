@@ -1,13 +1,8 @@
 import React, { lazy } from "react";
 import { useQuery } from "@apollo/client";
 import { Container, useBreakpoint } from "@advisable/donut";
-import {
-  Route,
-  useParams,
-  useLocation,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { useParams, useLocation, Switch, Redirect } from "react-router-dom";
+import Route from "src/components/Route";
 import View from "components/View";
 import Loading from "components/Loading";
 import { handleAuthError } from "./utilities";

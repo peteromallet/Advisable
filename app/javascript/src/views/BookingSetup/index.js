@@ -3,13 +3,8 @@
 import React from "react";
 import { Box } from "@advisable/donut";
 import { useQuery } from "@apollo/client";
-import {
-  Switch,
-  Route,
-  Redirect,
-  useParams,
-  generatePath,
-} from "react-router-dom";
+import { Switch, Redirect, useParams, generatePath } from "react-router-dom";
+import Route from "src/components/Route";
 import GET_SETUP_DATA from "./getSetupData";
 import Loading from "../../components/Loading";
 import CardDetails from "./CardDetails";
