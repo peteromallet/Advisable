@@ -11,7 +11,7 @@ import AccountOnHold from "./AccountOnHold";
 import OpenApplications from "./OpenApplications";
 import ApplicationInvitations from "./ApplicationInvitations";
 import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
-import DashboardApplicationPrompt from "src/components/DashboardApplicationPrompt";
+import FreelancerApplicationPrompt from "src/components/FreelancerApplicationPrompt";
 import AcceptedStatusPrompt from "src/components/AcceptedStatusPrompt";
 
 const Applications = () => {
@@ -57,7 +57,7 @@ const Applications = () => {
   return (
     <Box maxWidth="1000px" width="96%" marginX="auto" paddingY="3xl">
       {isAccepted && !hasValidatedProjects ? <AcceptedStatusPrompt /> : null}
-      <DashboardApplicationPrompt />
+      <FreelancerApplicationPrompt />
       <AccountConfirmationPrompt />
       {onHold && (
         <Box mb="l">
