@@ -1,6 +1,5 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { useHistory } from "react-router-dom";
 import { Text, Box, Button, useModal } from "@advisable/donut";
 import { DialogDisclosure } from "reakit/Dialog";
 import useViewer from "@advisable-main/hooks/useViewer";
@@ -17,12 +16,8 @@ import FormstackModal from "./components/FormstackModal";
 const Events = () => {
   const modal = useModal();
   const viewer = useViewer();
-  const history = useHistory();
-  const historyPopped = history.action === "POP";
 
   const { data, loading, fetchMore } = useQuery(EVENTS_QUERY, {
-    fetchPolicy: historyPopped ? "cache-first" : "network-only",
-    nextFetchPolicy: historyPopped ? "cache-first" : "cache-and-network",
     notifyOnNetworkStatusChange: true,
   });
   const hasNextPage = data?.events.pageInfo.hasNextPage || false;
