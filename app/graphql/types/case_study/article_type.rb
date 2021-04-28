@@ -7,6 +7,7 @@ module Types
       description "Type definition for CaseStudy::Article"
 
       field :id, ID, null: false, method: :uid
+      field :specialist, Types::SpecialistType, null: true
       field :company, CompanyType, null: true do
         authorize :read_company?
       end
