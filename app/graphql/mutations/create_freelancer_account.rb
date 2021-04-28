@@ -27,7 +27,7 @@ module Mutations
       description 'The account password'
     end
 
-    argument :skills, [String], required: true do
+    argument :skills, [String], required: false do
       description 'An array of skills'
     end
 
@@ -51,7 +51,7 @@ module Mutations
 
     def resolve(**args)
       skills =
-        args[:skills].map do |name|
+        (args[:skills] || []).map do |name|
           skill = Skill.find_by(name: name)
           if skill.nil?
             ApiError.invalid_request(
@@ -76,7 +76,7 @@ module Mutations
         application_stage: 'Started',
         phone: args[:phone],
         pid: args[:pid],
-        referrer: args[:referrer]
+        referrer: resolve_referrer(args[:referrer])
       )
 
       # frozen_string_literal: false
@@ -100,6 +100,15 @@ module Mutations
     end
 
     private
+
+    # TODO: Make specialist referrer column a relationship to specialist table
+    # to remove dependency on Airtable.
+    def resolve_referrer(id)
+      return nil if id.blank?
+      return id if id.match?(/^rec[^_]/)
+
+      Specialist.find_by_uid(id)&.airtable_id
+    end
 
     # When a freelancer signs up, they may have come from a campaign that passed
     # a pid (project ID) as a query param. This can be sent with the signup
