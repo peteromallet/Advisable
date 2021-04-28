@@ -9,7 +9,11 @@ module Types
       field :id, ID, null: false, method: :uid
       field :type, String, null: false
       field :article, ArticleType, null: false
-      field :contents, [ContentType], null: true
+
+      field :contents, [Types::CaseStudy::ContentInterface], null: true
+      def contents
+        object.contents.order(:position)
+      end
     end
   end
 end
