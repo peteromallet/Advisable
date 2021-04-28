@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import useViewer from "src/hooks/useViewer";
 import { Card, Box, Text, Circle, Button, Link } from "@advisable/donut";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 
@@ -49,7 +50,107 @@ function Section({ number, header, description }) {
   );
 }
 
+function ClientContent() {
+  return (
+    <>
+      <StyledHeader mb={3} fontSize={["3xl", "40px"]} fontWeight="semibold">
+        Join Advisable
+      </StyledHeader>
+      <StyledDescription mb={[8, 8, 10, 14]} lineHeight="s" color="neutral800">
+        You have created an account, however, you have not completed your
+        application. Please submit an application in order to gain access to top
+        tier projects and freelancers.
+      </StyledDescription>
+      <Box
+        display="grid"
+        gridTemplateColumns={{ m: "repeat(3, 25.3%)" }}
+        gridTemplateRows={{ s: "repeat(3, auto)" }}
+        justifyContent="space-around"
+        gridRowGap={{ m: 0, _: 8 }}
+        mb={[9, 10, 12, 16]}
+      >
+        <Section
+          number={1}
+          header="Access to world-class projects"
+          description="Get recommendations of case studies that our freelancers have executed for leading companies."
+        />
+        <Section
+          number={2}
+          header="Learn from the best"
+          description="Discover the strategies that our freelancers executed to help top companies."
+        />
+        <Section
+          number={3}
+          header="Hire the best"
+          description="Hire the freelancers who have executed projects at leading companies."
+        />
+      </Box>
+      <Button
+        as={Link}
+        size={{ _: "m", m: "l" }}
+        variant="gradient"
+        suffix={<ArrowRight />}
+        to="/clients/apply"
+        width={{ _: "100%", m: "auto" }}
+      >
+        Start Application
+      </Button>
+    </>
+  );
+}
+
+function FreelancerContent() {
+  return (
+    <>
+      <StyledHeader mb={3} fontSize={["3xl", "40px"]} fontWeight="semibold">
+        Join our freelance network
+      </StyledHeader>
+      <StyledDescription mb={[8, 8, 10, 14]} lineHeight="s" color="neutral800">
+        You have created an account, however, you have not yet been accepted
+        into our Network. Please submit an application to join our freelance
+        network and get access to top tier projects
+      </StyledDescription>
+      <Box
+        display="grid"
+        gridTemplateColumns={{ m: "repeat(3, 25.3%)" }}
+        gridTemplateRows={{ s: "repeat(3, auto)" }}
+        justifyContent="space-around"
+        gridRowGap={{ m: 0, _: 8 }}
+        mb={[9, 10, 12, 16]}
+      >
+        <Section
+          number={1}
+          header="Priority Access To Opportunities"
+          description="Get access to opportunities in your skill set with companies that value your brilliance."
+        />
+        <Section
+          number={2}
+          header="A Trusted Network Of Brilliant Peers"
+          description="Join our freelance community and build a trusted network of people you love to work with."
+        />
+        <Section
+          number={3}
+          header="A Beautiful Profile To Represent Your Work"
+          description="Show off your best work with a profile specifically built for freelancers."
+        />
+      </Box>
+      <Button
+        as={Link}
+        size={{ _: "m", m: "l" }}
+        variant="gradient"
+        suffix={<ArrowRight />}
+        to="/freelancers/apply"
+        width={{ _: "100%", m: "auto" }}
+      >
+        Start Application
+      </Button>
+    </>
+  );
+}
+
 export default function AccountCreated() {
+  const viewer = useViewer();
+
   return (
     <Card
       as={Box}
@@ -65,52 +166,7 @@ export default function AccountCreated() {
         flexDirection="column"
         textAlign={{ _: "left", m: "center" }}
       >
-        <StyledHeader mb={3} fontSize={["3xl", "40px"]} fontWeight="semibold">
-          Join our freelance network
-        </StyledHeader>
-        <StyledDescription
-          mb={[8, 8, 10, 14]}
-          lineHeight="s"
-          color="neutral800"
-        >
-          You have created an account, however, you have not yet been accepted
-          into our Network. Please submit an application to join our freelance
-          network and get access to top tier projects
-        </StyledDescription>
-        <Box
-          display="grid"
-          gridTemplateColumns={{ m: "repeat(3, 25.3%)" }}
-          gridTemplateRows={{ s: "repeat(3, auto)" }}
-          justifyContent="space-around"
-          gridRowGap={{ m: 0, _: 8 }}
-          mb={[9, 10, 12, 16]}
-        >
-          <Section
-            number={1}
-            header="Priority Access To Opportunities"
-            description="Get access to opportunities in your skill set with companies that value your brilliance."
-          />
-          <Section
-            number={2}
-            header="A Trusted Network Of Brilliant Peers"
-            description="Join our freelance community and build a trusted network of people you love to work with."
-          />
-          <Section
-            number={3}
-            header="A Beautiful Profile To Represent Your Work"
-            description="Show off your best work with a profile specifically built for freelancers."
-          />
-        </Box>
-        <Button
-          as={Link}
-          size={{ _: "m", m: "l" }}
-          variant="gradient"
-          suffix={<ArrowRight />}
-          to="/freelancers/apply"
-          width={{ _: "100%", m: "auto" }}
-        >
-          Start Application
-        </Button>
+        {viewer.isSpecialist ? <FreelancerContent /> : <ClientContent />}
       </Box>
     </Card>
   );
