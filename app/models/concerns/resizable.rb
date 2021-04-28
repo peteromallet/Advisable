@@ -3,8 +3,6 @@
 module Resizable
   extend ActiveSupport::Concern
 
-  ASSET_HOST = ENV['ORIGIN'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-
   class_methods do
     def resize(attachments)
       attachments.each do |name, options|
@@ -42,9 +40,9 @@ module Resizable
     return if image.blank?
 
     if image.respond_to?(:variation)
-      Rails.application.routes.url_helpers.rails_representation_url(image, host: ASSET_HOST)
+      Rails.application.routes.url_helpers.rails_representation_url(image, host: Advisable::Application::ORIGIN_HOST)
     else
-      Rails.application.routes.url_helpers.rails_blob_url(image, host: ASSET_HOST)
+      Rails.application.routes.url_helpers.rails_blob_url(image, host: Advisable::Application::ORIGIN_HOST)
     end
   end
 end
