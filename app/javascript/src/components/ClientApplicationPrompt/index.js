@@ -46,7 +46,7 @@ const ApplicationSubmitted = () => (
       mr={[0, 3]}
       mb={[3, 0]}
       width={["100%", "auto"]}
-      to="/freelancers/apply/introduction"
+      to="/clients/apply/company-overview"
     >
       Update Application
     </Button>
