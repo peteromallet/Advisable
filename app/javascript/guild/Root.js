@@ -8,7 +8,7 @@ import App from "./App";
 const Root = ({ history }) => {
   return (
     <ApolloProvider client={client}>
-      <Router history={history} basename="/guild">
+      <Router history={history}>
         <App />
       </Router>
     </ApolloProvider>

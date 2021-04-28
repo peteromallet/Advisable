@@ -1,6 +1,6 @@
 import React from "react";
 import { ApolloProvider } from "@apollo/client";
-import { Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { Provider as DonutProvider } from "@advisable/donut";
 import client from "./apolloClient";
 import Routes from "./Routes";

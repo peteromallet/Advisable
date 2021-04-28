@@ -6,7 +6,7 @@ import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 import { createBrowserHistory } from "history";
 
-const history = createBrowserHistory();
+const history = createBrowserHistory({ basename: "/guild" });
 
 if (process.env.SENTRY_FRONTEND_DSN) {
   Sentry.init({
