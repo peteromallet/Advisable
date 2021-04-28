@@ -6,7 +6,7 @@ import CopyLink from "./components/CopyLink";
 const Referral = () => {
   const viewer = useViewer();
   const link = encodeURI(
-    `https://advisable.com/guild/refer/?referrer=${viewer.name}&id=${viewer.id}`,
+    `https://discover.advisable.com/guild?ref=${viewer.id}`,
   );
 
   return (

@@ -44,26 +44,6 @@ const queries = [
     },
   ),
   mockMutation(
-    CREATE_FREELANCER_ACCOUNT,
-    {
-      firstName: viewer.firstName,
-      lastName: viewer.lastName,
-      email: viewer.email,
-      skills: [],
-    },
-    {
-      createFreelancerAccount: {
-        __typename: "CreateFreelancerAccountPayload",
-        viewer: mockData.specialist({
-          confirmed: false,
-          needsToSetAPassword: true,
-          applicationStage: "Started",
-          invitations: [],
-        }),
-      },
-    },
-  ),
-  mockMutation(
     UPDATE_PASSWORD,
     { password: "123123123", passwordConfirmation: "123123123" },
     {
@@ -79,7 +59,28 @@ const queries = [
 ];
 
 test("successful flow", async () => {
-  const graphQLMocks = [...queries];
+  const graphQLMocks = [
+    ...queries,
+    mockMutation(
+      CREATE_FREELANCER_ACCOUNT,
+      {
+        firstName: viewer.firstName,
+        lastName: viewer.lastName,
+        email: viewer.email,
+      },
+      {
+        createFreelancerAccount: {
+          __typename: "CreateFreelancerAccountPayload",
+          viewer: mockData.specialist({
+            confirmed: false,
+            needsToSetAPassword: true,
+            applicationStage: "Started",
+            invitations: [],
+          }),
+        },
+      },
+    ),
+  ];
   const app = renderRoute({ route: `/freelancers/join`, graphQLMocks });
   await app.findByText(/advisable helps/i);
   userEvent.type(app.getByLabelText(/first name/i), viewer.firstName);
@@ -94,7 +95,29 @@ test("successful flow", async () => {
 });
 
 test("successful flow with project details", async () => {
-  const graphQLMocks = [...queries];
+  const graphQLMocks = [
+    ...queries,
+    mockMutation(
+      CREATE_FREELANCER_ACCOUNT,
+      {
+        firstName: viewer.firstName,
+        lastName: viewer.lastName,
+        email: viewer.email,
+        pid: project.id,
+      },
+      {
+        createFreelancerAccount: {
+          __typename: "CreateFreelancerAccountPayload",
+          viewer: mockData.specialist({
+            confirmed: false,
+            needsToSetAPassword: true,
+            applicationStage: "Started",
+            invitations: [],
+          }),
+        },
+      },
+    ),
+  ];
   mockBreakpoint("mUp");
   const app = renderRoute({
     route: `/freelancers/join?pid=${project.id}`,
