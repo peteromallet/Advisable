@@ -8,21 +8,16 @@ RSpec.describe "Guild view post", type: :system do
 
   context "with recommendations" do
     before do
-      create(:specialist, guild: true)
       authenticate_as(specialist)
     end
 
-    it "is has a recommendation when enabled" do
+    it "has a recommendation" do
       stub_const("Recommendation::RECOMMENDERS", [Recommendation::Random])
-      account.toggle_guild_recommendations!
+      match = create(:specialist, guild: true)
 
       visit("/guild/feed")
       expect(page).to have_content("SUGGESTED MEMBER")
-    end
-
-    it "does not have a recommendation when disabled" do
-      visit("/guild/feed")
-      expect(page).not_to have_content("SUGGESTED MEMBER")
+      expect(page).to have_content("#{match.first_name} is an expert in Marketing")
     end
   end
 end
