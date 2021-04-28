@@ -4,10 +4,14 @@ require "open-uri"
 
 module Airtable
   class CaseStudy < Airrecord::Table
+    attr_reader :content_position
+
     self.base_key = ENV["AIRTABLE_DATABASE_KEY"]
     self.table_name = "Case Studies"
 
     def import!
+      @content_position = 0
+
       ActiveRecord::Base.transaction do
         article = ::CaseStudy::Article.find_or_initialize_by(airtable_id: id)
 
@@ -24,18 +28,26 @@ module Airtable
         end
         article.company = company
 
-        # convert these to sections and contents
-        # "Background Title",
-        # "Background Text",
-        # "Background Images",
-        # "Project Overview Title",
-        # Step 1 -7: Title, Details, Images
-        # "Outcome Title",
-        # "Outcome Text",
-        # "Outcome Images",
-        # "Key Result 1",
-        # "Key Result 2",
-        # "Key Result 3",
+        article.sections = []
+
+        background = article.sections.new(type: "background", position: 0)
+        attach_heading(background, fields["Background Title"])
+        attach_paragraph(background, fields["Background Text"])
+        attach_images(background, Array(fields["Background Images"]))
+
+        overview = article.sections.new(type: "overview", position: 1)
+        attach_heading(overview, fields["Project Overview Title"])
+        (1..7).each do |i|
+          attach_heading(overview, fields["Step #{i} Title"], size: "h2")
+          attach_paragraph(overview, fields["Step #{i} Details"])
+          attach_images(overview, Array(fields["Step #{i} Images"]))
+        end
+
+        outcome = article.sections.new(type: "outcome", position: 2)
+        attach_heading(outcome, fields["Outcome Title"])
+        attach_results(outcome, [fields["Key Result 1"], fields["Key Result 2"], fields["Key Result 3"]])
+        attach_paragraph(outcome, fields["Outcome Text"])
+        attach_images(outcome, Array(fields["Outcome Images"]))
 
         article.title = fields["Title"]
         article.subtitle = fields["Subtitle"]
@@ -61,6 +73,43 @@ module Airtable
         article.skills.find_by(skill: primary_skill).update!(primary: true)
         article
       end
+    end
+
+    private
+
+    def attach_heading(section, field, size: "h1")
+      return if field.blank?
+
+      section.contents.new(type: "CaseStudy::HeadingContent", content: {size: size, text: field}, position: content_position)
+      increment_content_position
+    end
+
+    def attach_paragraph(section, field)
+      return if field.blank?
+
+      section.contents.new(type: "CaseStudy::ParagraphContent", content: {text: field}, position: content_position)
+      increment_content_position
+    end
+
+    def attach_results(section, results)
+      section.contents.new(type: "CaseStudy::ResultsContent", content: {results: results}, position: content_position)
+      increment_content_position
+    end
+
+    def attach_images(section, fields)
+      return if fields.none?
+
+      content = section.contents.new(type: "CaseStudy::ImagesContent", position: content_position)
+      increment_content_position
+      fields.each do |field|
+        url = URI.parse(field["url"])
+        filename = File.basename(url.path)
+        content.images.attach(io: url.open, filename: filename)
+      end
+    end
+
+    def increment_content_position
+      @content_position += 1
     end
   end
 end
