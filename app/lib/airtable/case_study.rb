@@ -27,28 +27,22 @@ module Airtable
         article.sections = []
 
         background = article.sections.new(type: "background")
-        background.contents.new(type: "CaseStudy::HeadingContent", content: {size: "h1", text: fields["Background Title"]})
-        background.contents.new(type: "CaseStudy::ParagraphContent", content: {text: fields["Background Text"]})
-        background.contents.new(type: "CaseStudy::ImagesContent")
-        # TODO: Parse images
+        attach_heading(background, fields["Background Title"])
+        attach_paragraph(background, fields["Background Text"])
         attach_images(background, fields["Background Images"])
 
         overview = article.sections.new(type: "overview")
-        overview.contents.new(type: "CaseStudy::HeadingContent", content: {size: "h1", text: fields["Project Overview Title"]})
+        attach_heading(overview, fields["Project Overview Title"])
         (1..7).each do |i|
-          overview.contents.new(type: "CaseStudy::HeadingContent", content: {size: "h2", text: fields["Step #{i} Title"]})
-          overview.contents.new(type: "CaseStudy::ParagraphContent", content: {text: fields["Step #{i} Details"]})
-          overview.contents.new(type: "CaseStudy::ImagesContent")
-          # TODO: Parse images
+          attach_heading(overview, fields["Step #{i} Title"], size: "h2")
+          attach_paragraph(overview, fields["Step #{i} Details"])
           attach_images(overview, fields["Step #{i} Images"])
         end
 
         outcome = article.sections.new(type: "outcome")
-        outcome.contents.new(type: "CaseStudy::HeadingContent", content: {size: "h1", text: fields["Outcome Title"]})
+        attach_heading(outcome, fields["Outcome Title"])
         outcome.contents.new(type: "CaseStudy::ResultsContent", content: {results: [fields["Key Result 1"], fields["Key Result 2"], fields["Key Result 3"]]})
-        outcome.contents.new(type: "CaseStudy::ParagraphContent", content: {text: fields["Outcome Text"]})
-        outcome.contents.new(type: "CaseStudy::ImagesContent")
-        # TODO: Parse images
+        attach_paragraph(outcome, fields["Outcome Text"])
         attach_images(outcome, fields["Outcome Images"])
 
         article.title = fields["Title"]
@@ -78,6 +72,18 @@ module Airtable
     end
 
     private
+
+    def attach_heading(section, field, size: "h1")
+      return if field.blank?
+
+      section.contents.new(type: "CaseStudy::HeadingContent", content: {size: size, text: field})
+    end
+
+    def attach_paragraph(section, field)
+      return if field.blank?
+
+      section.contents.new(type: "CaseStudy::ParagraphContent", content: {text: field})
+    end
 
     def attach_images(section, field)
       content = section.contents.new(type: "CaseStudy::ImagesContent")
