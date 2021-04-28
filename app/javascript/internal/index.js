@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import Route from "src/components/Route";
 import { ApolloProvider } from "@apollo/client";
 import client from "../src/graphqlClient";
 import Header from "../src/components/Header";
@@ -10,7 +11,7 @@ import Application from "./views/Application";
 const Root = () => {
   return (
     <ApolloProvider client={client}>
-      <BrowserRouter basename="/internal">
+      <Router basename="/internal">
         <ApplicationProvider>
           <Header />
           <Switch>
@@ -18,7 +19,7 @@ const Root = () => {
             <Route>Route not found</Route>
           </Switch>
         </ApplicationProvider>
-      </BrowserRouter>
+      </Router>
     </ApolloProvider>
   );
 };

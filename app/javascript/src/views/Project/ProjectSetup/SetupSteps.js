@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useBreakpoint, Card } from "@advisable/donut";
 import {
   Switch,
-  Route,
   Redirect,
   matchPath,
   useLocation,
   useParams,
 } from "react-router-dom";
+import Route from "src/components/Route";
 import Deposit from "./Deposit";
 import JobSkills from "./JobSkills";
 import PublishJob from "./PublishJob";

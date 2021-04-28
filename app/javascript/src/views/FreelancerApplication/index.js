@@ -1,6 +1,7 @@
 import React from "react";
 import { AnimatePresence } from "framer-motion";
-import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import { Switch, useLocation, useHistory } from "react-router-dom";
+import Route from "src/components/Route";
 import { Box, Container, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";

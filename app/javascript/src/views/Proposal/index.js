@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
+import Route from "src/components/Route";
 import useViewer from "src/hooks/useViewer";
 import Layout from "../../components/Layout";
 import Rate from "./Rate";
