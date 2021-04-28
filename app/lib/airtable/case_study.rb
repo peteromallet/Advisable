@@ -31,6 +31,7 @@ module Airtable
         background.contents.new(type: "CaseStudy::ParagraphContent", content: {text: fields["Background Text"]})
         background.contents.new(type: "CaseStudy::ImagesContent")
         # TODO: Parse images
+        attach_images(background, fields["Background Images"])
 
         overview = article.sections.new(type: "overview")
         overview.contents.new(type: "CaseStudy::HeadingContent", content: {size: "h1", text: fields["Project Overview Title"]})
@@ -39,6 +40,7 @@ module Airtable
           overview.contents.new(type: "CaseStudy::ParagraphContent", content: {text: fields["Step #{i} Details"]})
           overview.contents.new(type: "CaseStudy::ImagesContent")
           # TODO: Parse images
+          attach_images(overview, fields["Step #{i} Images"])
         end
 
         outcome = article.sections.new(type: "outcome")
@@ -47,6 +49,7 @@ module Airtable
         outcome.contents.new(type: "CaseStudy::ParagraphContent", content: {text: fields["Outcome Text"]})
         outcome.contents.new(type: "CaseStudy::ImagesContent")
         # TODO: Parse images
+        attach_images(outcome, fields["Outcome Images"])
 
         article.title = fields["Title"]
         article.subtitle = fields["Subtitle"]
@@ -71,6 +74,17 @@ module Airtable
         primary_skill = ::Skill.find_by!(airtable_id: fields["Primary Skill"].first)
         article.skills.find_by(skill: primary_skill).update!(primary: true)
         article
+      end
+    end
+
+    private
+
+    def attach_images(section, field)
+      content = section.contents.new(type: "CaseStudy::ImagesContent")
+      Array(field).each do |image|
+        url = URI.parse(image["url"])
+        filename = File.basename(url.path)
+        content.images.attach(io: url.open, filename: filename)
       end
     end
   end
