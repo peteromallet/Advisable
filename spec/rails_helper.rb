@@ -55,6 +55,16 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  config.around(:each, allow_forgery_protection: true) do |example|
+    original_forgery_protection = ActionController::Base.allow_forgery_protection
+    ActionController::Base.allow_forgery_protection = true
+    begin
+      example.run
+    ensure
+      ActionController::Base.allow_forgery_protection = original_forgery_protection
+    end
+  end
+
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
