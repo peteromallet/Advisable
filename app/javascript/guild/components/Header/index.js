@@ -38,7 +38,7 @@ const Header = () => {
   });
   const hasUnreadNotifications = lastReadData?.viewer?.guildUnreadNotifications;
 
-  const { data: eventsData } = useQuery(EVENTS_QUERY);
+  const { data: eventsData } = useQuery(EVENTS_QUERY, { skip: !viewer });
   const eventsCount = eventsData?.events?.totalCount;
 
   return (
