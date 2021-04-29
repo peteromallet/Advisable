@@ -17,9 +17,7 @@ RSpec.describe Review do
 
     it "updates the specialists reviews_count column" do
       specialist = create(:specialist, reviews_count: 0)
-      expect do
-        create(:review, specialist: specialist, type: "On-Platform Job Review")
-      end.to change { specialist.reload.reviews_count }.by(1)
+      expect { create(:review, specialist: specialist) }.to change { specialist.reload.reviews_count }.by(1)
     end
 
     it "is called after_destroy" do
