@@ -50,7 +50,7 @@ export default function CompanyStage({ clientApplication }) {
             <Header>Company Stage</Header>
             <Description>Some description</Description>
             <Box mb={6}>
-              <Box mb="l">
+              <Box mb={6}>
                 <FormField
                   isRequired
                   as={Select}

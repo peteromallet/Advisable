@@ -58,14 +58,14 @@ export default function CompanyOverview({ clientApplication, industries }) {
             <Header>Company Overview</Header>
             <Description>Some description</Description>
             <Box mb={6}>
-              <Box mb="l">
+              <Box mb={6}>
                 <FormField
                   name="companyName"
                   label="Company Name"
                   placeholder="Company name"
                 />
               </Box>
-              <Box mb="l">
+              <Box mb={6}>
                 <FormField
                   isRequired
                   as={Select}
@@ -80,7 +80,7 @@ export default function CompanyOverview({ clientApplication, industries }) {
                   <option>B2C</option>
                 </FormField>
               </Box>
-              <Box mb="l">
+              <Box mb={6}>
                 <FormField
                   isRequired
                   name="industry"

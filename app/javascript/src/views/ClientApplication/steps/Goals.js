@@ -65,7 +65,7 @@ export default function CompanyOverview({ clientApplication }) {
             <Header>Goals</Header>
             <Description>Some description</Description>
             <Box mb={6}>
-              <Box mb="l">
+              <Box mb={6}>
                 <FormField
                   isRequired
                   name="goals"

@@ -70,7 +70,7 @@ export default function CompanyOverview({ clientApplication }) {
             <Header>Company Overview</Header>
             <Description>Some description</Description>
             <Box mb={6}>
-              <Box mb="l">
+              <Box mb={6}>
                 <FormField
                   as={CurrencyInput}
                   name="budget"
@@ -81,7 +81,7 @@ export default function CompanyOverview({ clientApplication }) {
                   data-testid="budget"
                 />
               </Box>
-              <Box mb="l">
+              <Box mb={6}>
                 <FormField
                   isRequired
                   as={TilesInput}
@@ -99,7 +99,7 @@ export default function CompanyOverview({ clientApplication }) {
                   value={formik.values.feedback}
                 />
               </Box>
-              <Box mb="l">
+              <Box mb={6}>
                 <FormField
                   isRequired
                   as={Select}
