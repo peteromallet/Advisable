@@ -25,7 +25,6 @@ module Mutations
       review = project.reviews.create(
         comment: args[:comment],
         specialist: project.specialist,
-        type: 'Off-Platform Project Review',
         ratings: {
           skills: args[:skills],
           availability: args[:availability],

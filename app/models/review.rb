@@ -6,7 +6,7 @@
 # again is a polymorphic assocation and is used to add more context to the
 # review.
 class Review < ApplicationRecord
-  self.ignored_columns += %i[reviewable_id reviewable_type]
+  self.ignored_columns += %i[reviewable_id reviewable_type type project_type]
 
   include Uid
   include Airtable::Syncable
@@ -15,9 +15,7 @@ class Review < ApplicationRecord
   self.inheritance_column = :_type_disabled
 
   belongs_to :specialist, optional: true
-  # The review project is a polymorphic association. The review
-  # can either blong to a project or an off-platform project.
-  belongs_to :project, polymorphic: true
+  belongs_to :project, class_name: "PreviousProject"
 
   after_destroy :update_specialist_ratings
   after_destroy :update_specialist_reviews_count
@@ -68,9 +66,7 @@ end
 #
 #  id            :bigint           not null, primary key
 #  comment       :text
-#  project_type  :string
 #  ratings       :jsonb
-#  type          :string
 #  uid           :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

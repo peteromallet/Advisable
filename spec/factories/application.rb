@@ -21,7 +21,6 @@ FactoryBot.define do
         application.previous_projects << project
         create(
           :review,
-          type: 'Off-Platform Project Review',
           specialist: application.specialist,
           project: project
         )
