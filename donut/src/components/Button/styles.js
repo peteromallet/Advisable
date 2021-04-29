@@ -140,7 +140,8 @@ const buttonSize = variant({
   prop: "buttonSize",
   variants: {
     xs: {
-      height: 28,
+      height: "28px",
+      lineHeight: "28px",
       fontSize: 14,
       fontWeight: 500,
       paddingLeft: 3,
@@ -157,11 +158,12 @@ const buttonSize = variant({
       },
     },
     s: {
-      height: 35,
-      fontSize: 15,
+      height: "36px",
+      lineHeight: "36px",
+      fontSize: 16,
       fontWeight: 500,
-      paddingLeft: 18,
-      paddingRight: 18,
+      paddingLeft: "20px",
+      paddingRight: "20px",
       svg: {
         width: 16,
         height: 16,
@@ -174,11 +176,12 @@ const buttonSize = variant({
       },
     },
     m: {
-      height: 42,
+      height: "40px",
       fontSize: 17,
+      lineHeight: "40px",
       fontWeight: 500,
-      paddingLeft: 24,
-      paddingRight: 24,
+      paddingLeft: "24px",
+      paddingRight: "24px",
       svg: {
         width: 20,
         height: 20,
@@ -191,8 +194,9 @@ const buttonSize = variant({
       },
     },
     l: {
-      height: 50,
+      height: "48px",
       fontSize: 18,
+      lineHeight: "48px",
       fontWeight: 500,
       paddingLeft: 24,
       paddingRight: 24,
