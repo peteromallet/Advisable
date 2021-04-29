@@ -31,11 +31,7 @@ class Review < ApplicationRecord
   def update_specialist_reviews_count
     return if specialist.blank?
 
-    specialist.reviews_count =
-      Review.where(
-        specialist: specialist,
-        type: ['On-Platform Job Review', 'Off-Platform Project Review']
-      ).count
+    specialist.reviews_count = Review.where(specialist: specialist).count
     specialist.save(validate: false)
   end
 
