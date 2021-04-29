@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   def toby
     return if current_account&.admin?
 
-    redirect_to "/"
+    redirect_to(current_account ? "/" : "/login?redirect=/toby")
   end
 
   def client_ip
