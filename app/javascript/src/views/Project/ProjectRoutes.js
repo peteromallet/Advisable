@@ -1,12 +1,7 @@
 import React from "react";
 import { useBreakpoint } from "@advisable/donut";
-import {
-  Switch,
-  Route,
-  useParams,
-  useRouteMatch,
-  Redirect,
-} from "react-router-dom";
+import { Switch, useParams, useRouteMatch, Redirect } from "react-router-dom";
+import Route from "src/components/Route";
 import Inbox from "./Inbox";
 import Candidates from "./Candidates";
 import ProjectSettings from "./ProjectSettings";

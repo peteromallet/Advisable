@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
-import { Switch, Redirect, Route, useParams } from "react-router-dom";
+import { Switch, Redirect, useParams } from "react-router-dom";
+import Route from "src/components/Route";
 import ApplicationProvider from "@advisable-main/components/ApplicationProvider";
 import RootErrorBoundary from "@advisable-main/views/RootErrorBoundary";
 import Loading from "@advisable-main/components/Loading";
