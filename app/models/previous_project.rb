@@ -38,7 +38,7 @@ class PreviousProject < ApplicationRecord
   belongs_to :reviewed_by, class_name: 'SalesPerson', optional: true
 
   has_many :application_references, foreign_key: 'off_platform_project_id', inverse_of: :previous_project, dependent: :destroy
-  has_many :reviews, as: :project, dependent: :destroy
+  has_many :reviews, foreign_key: :project_id, inverse_of: :project, dependent: :destroy
   has_many :images, class_name: 'PreviousProjectImage', foreign_key: 'off_platform_project_id', inverse_of: :previous_project, dependent: :destroy
   has_one :cover_photo, -> { where cover: true }, class_name: 'PreviousProjectImage', foreign_key: 'off_platform_project_id', inverse_of: :previous_project
 
