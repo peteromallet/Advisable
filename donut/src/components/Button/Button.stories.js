@@ -15,7 +15,7 @@ export default {
 
 export const basic = () => {
   const label = text("Label", "Save Changes");
-  const size = select("Size", ["s", "m", "l"], "m");
+  const size = select("Size", ["xs", "s", "m", "l"], "m");
   const disabled = boolean("Disabled", false);
   const loading = boolean("Loading", false);
   const variant = select("Variant", Object.keys(VARIANTS), "primary");
