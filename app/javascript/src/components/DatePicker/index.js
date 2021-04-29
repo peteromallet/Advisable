@@ -24,7 +24,7 @@ DatePicker.Input = function DatePickerInput({
   const popover = usePopoverState({ placement: "bottom-start", gutter: 0 });
 
   const handleSelection = (date) => {
-    onChange(date.toISOString());
+    onChange(DateTime.fromJSDate(date).toISODate());
     popover.hide();
   };
 
