@@ -71,7 +71,6 @@ class TestData
     previous_project.project_industries.create(industry: industries[2])
 
     previous_project.reviews.create(
-      type: "Off-Platform Project Review",
       comment: Faker::Hipster.sentence(word_count: 16),
       specialist: previous_project.specialist
     )
