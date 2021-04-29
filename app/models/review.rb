@@ -42,7 +42,27 @@ class Review < ApplicationRecord
   def update_specialist_ratings
     return if specialist.blank?
 
-    Specialists::CalculateRatings.call(specialist: specialist)
+    collected_ratings.each do |name, collected|
+      rating = (collected.sum / collected.length.to_f).round(2)
+      specialist.ratings[name] = rating
+    end
+
+    specialist.save
+  end
+
+  def collected_ratings
+    ratings = {}
+    specialist.reviews.each do |review|
+      next if review.ratings.nil?
+
+      review.ratings.each do |name, rating|
+        next if rating.nil?
+
+        ratings[name] ||= []
+        ratings[name] << rating
+      end
+    end
+    ratings
   end
 end
 
