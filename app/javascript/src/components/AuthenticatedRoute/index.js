@@ -2,7 +2,8 @@
 // authenticated user to view the route. If the viewer is not authenticated it
 // will redirect to the Login view.
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import Route from "src/components/Route";
 import useViewer from "../../hooks/useViewer";
 
 const AuthenticatedRoute = ({

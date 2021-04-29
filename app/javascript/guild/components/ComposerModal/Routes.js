@@ -1,5 +1,6 @@
 import React from "react";
-import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+import { Switch, Redirect, useLocation } from "react-router-dom";
+import Route from "src/components/Route";
 import CreateGuildPost from "./CreateGuildPost";
 import CreatePostFromPrompt from "./CreatePostFromPrompt";
 import EditGuildPost from "./EditGuildPost";

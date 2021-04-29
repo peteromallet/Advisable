@@ -1,6 +1,7 @@
 import React from "react";
 import { Container } from "@advisable/donut";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
+import Route from "src/components/Route";
 import useViewer from "../../hooks/useViewer";
 import Complete from "./Complete";
 import NewApplication from "./NewApplication";

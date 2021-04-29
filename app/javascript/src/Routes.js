@@ -1,6 +1,7 @@
-import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+import { Redirect, Switch, useLocation } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
 
+import Route from "src/components/Route";
 import Loading from "src/components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Login from "./views/Login";

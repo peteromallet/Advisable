@@ -1,11 +1,6 @@
 import React from "react";
-import {
-  Switch,
-  Redirect,
-  Route,
-  useLocation,
-  matchPath,
-} from "react-router-dom";
+import { Switch, Redirect, useLocation, matchPath } from "react-router-dom";
+import Route from "src/components/Route";
 import { AnimatePresence, motion } from "framer-motion";
 import { Box, useTheme, useBreakpoint } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";

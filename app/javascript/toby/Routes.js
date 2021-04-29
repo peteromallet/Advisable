@@ -1,5 +1,6 @@
 import React from "react";
-import { Switch, Redirect, Route } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
+import Route from "src/components/Route";
 import Resource from "./views/resource";
 import { useSchema } from "./components/schema";
 import { pluralizeType } from "./utilities";

@@ -1,5 +1,6 @@
 import React from "react";
-import { Switch, Route, useParams } from "react-router-dom";
+import { Switch, useParams } from "react-router-dom";
+import Route from "src/components/Route";
 import Loading from "components/Loading";
 import { useInterview } from "./queries";
 import CallScheduled from "./CallScheduled";
