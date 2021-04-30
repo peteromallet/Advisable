@@ -4,6 +4,8 @@
 # A freelancer account is represented by the Specialist model. Ideally these
 # two models will eventually be merged to be different types of users.
 class User < ApplicationRecord
+  self.ignored_columns += %i[budget]
+
   include Uid
   include SpecialistOrUser
   include Resizable
@@ -140,7 +142,6 @@ end
 #  application_rejected_at           :datetime
 #  application_reminder_at           :datetime
 #  availability                      :text
-#  budget                            :bigint
 #  campaign_medium                   :string
 #  campaign_name                     :string
 #  campaign_source                   :string
