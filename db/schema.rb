@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_22_093651) do
+ActiveRecord::Schema.define(version: 2021_04_30_105057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -325,6 +325,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_093651) do
     t.string "vat_number"
     t.jsonb "address"
     t.boolean "bank_transfers_enabled", default: false
+    t.bigint "budget"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
     t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
   end
