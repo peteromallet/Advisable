@@ -35,9 +35,6 @@ module Mutations
             adherence_to_schedule: args[:adherence_to_schedule]
           }
         )
-
-      review.sync_to_airtable
-
       {review: review}
     end
   end

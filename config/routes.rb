@@ -22,19 +22,20 @@ Rails.application.routes.draw do
     mount PgHero::Engine, at: "pghero", constraints: AdminConstraint.new
 
     resources :applications
-    resources :countries
-    resources :projects
-    resources :previous_projects
-    resources :skills
     resources :accounts
     resources :specialists
     resources :users
-    resources :companies
-    resources :project_skills
     resources :interviews
+    resources :reviews
+    resources :projects
+    resources :previous_projects
     resources :video_calls
-    resources :blacklisted_domains
+    resources :companies
     resources :industries
+    resources :skills
+    resources :project_skills
+    resources :countries
+    resources :blacklisted_domains
     resources :webhook_events
     resources :webhook_configurations
     resources :webhooks, only: %i[index show]
