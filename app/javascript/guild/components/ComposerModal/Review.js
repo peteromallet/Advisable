@@ -166,7 +166,15 @@ export default function Review({ guildPost, onPublish }) {
         </Button>
         <Text mt="l" size="s" fontWeight="light" lineHeight="m" color="#626575">
           By publishing this post you are aggreeing to the Advisable Guild code
-          of conduct and community guidelines.
+          of conduct and{" "}
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://app.advisable.com/guild/posts/56b99ee5-d66e-4053-8562-5769fb929208"
+          >
+            community guidelines
+          </a>
+          .
         </Text>
       </Box>
     </Box>
