@@ -216,8 +216,6 @@ class TestData
         c.domain = "advisable.com"
       end
 
-    client.users << user unless client.users.include?(user)
-
     # Test project
     sales_automation = Skill.find_by_name("Sales Automation")
     sales_operations = Skill.find_by_name("Sales Operations")

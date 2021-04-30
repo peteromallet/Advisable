@@ -38,23 +38,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#company_name' do
-    context "when the user has a client record" do
-      it "returns the clients name" do
-        client = create(:client, name: "Test Corp")
-        user = create(:user, client: client)
-        expect(user.company_name).to eq(client.name)
-      end
-    end
-
-    context 'when the user has no client record' do
-      it "returns the clients name" do
-        user = create(:user, client: nil, company_name: "Test Company")
-        expect(user.company_name).to eq("Test Company")
-      end
-    end
-  end
-
   describe "#invite_comember!" do
     let(:new_account) { create(:account) }
 
