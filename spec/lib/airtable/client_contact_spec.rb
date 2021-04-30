@@ -32,20 +32,6 @@ RSpec.describe Airtable::ClientContact do
         expect(company.reload.kind).to eq("Hyper Mega Company")
       end
     end
-
-    context "when the associated client has been synced" do
-      it "associates the user to that client record" do
-        user = create(:user, client: nil)
-        client = create(:client)
-        airtable = described_class.new({
-          "Client" => [client.airtable_id],
-          "Email Address" => "test@airtable.com"
-        }, id: user.airtable_id)
-        expect { airtable.sync }.to change {
-          user.reload.client
-        }.from(nil).to(client)
-      end
-    end
   end
 
   describe "value stripping" do
