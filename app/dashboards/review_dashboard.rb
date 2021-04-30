@@ -14,7 +14,6 @@ class ReviewDashboard < Administrate::BaseDashboard
     project: Field::Polymorphic.with_options(classes: [Project, PreviousProject]),
     id: Field::Number,
     airtable_id: Field::String,
-    type: Field::String,
     comment: Field::Text,
     ratings: Field::String.with_options(searchable: false),
     created_at: Field::DateTime,
@@ -35,16 +34,15 @@ class ReviewDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
+    id
+    uid
+    airtable_id
     specialist
     project
-    id
-    airtable_id
-    type
     comment
     ratings
     created_at
     updated_at
-    uid
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -53,11 +51,7 @@ class ReviewDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     specialist
     project
-    airtable_id
-    type
     comment
-    ratings
-    uid
   ].freeze
 
   # COLLECTION_FILTERS
