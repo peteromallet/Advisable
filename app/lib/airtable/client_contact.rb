@@ -72,7 +72,7 @@ module Airtable
       amount = self['Estimated Annual Freelancer Spend (USD)']
       return if amount.nil?
 
-      user.budget = amount * 100
+      user.company.budget = amount * 100
     end
 
     # After the syncing process has been complete
@@ -109,11 +109,11 @@ module Airtable
       self['Contact Status'] = user.contact_status
       self['Same City Importance'] = user.locality_importance
       self['Address'] = Address.new(user.company.address).to_s if user.company.address.present?
-      self['Skills Interested In'] = user.skills.map(&:airtable_id).compact.uniq
+      self['Skills Interested In'] = user.skills.filter_map(&:airtable_id).uniq
       self['Application Accepted Timestamp'] = user.application_accepted_at
       self['Application Rejected Timestamp'] = user.application_rejected_at
       self['How many freelancers do you plan on hiring over the next 6 months?'] = user.number_of_freelancers
-      self['Estimated Annual Freelancer Spend (USD)'] = user.budget / 100.0 if user.budget
+      self['Estimated Annual Freelancer Spend (USD)'] = user.company.budget / 100.0 if user.company.budget
       push_unsubscribed_from(user)
     end
   end

@@ -11,12 +11,14 @@ module Mutations
 
       user.application_status = "Application Started"
       user.accepted_guarantee_terms_at = nil
-      user.budget = nil
       user.skill_ids = []
       user.locality_importance = nil
       user.number_of_freelancers = nil
       user.rejection_reason = nil
       user.talent_quality = nil
+
+      user.company.update(budget: nil)
+
       user.save_and_sync!
 
       {clientApplication: user}
