@@ -10,7 +10,7 @@ module Types
     end
 
     def can_validate_project(id:)
-      project = ::PreviousProject.find_by_uid(id)
+      project = ::PreviousProject.find_by_uid!(id)
       object.can_validate_project?(project)
     end
   end
