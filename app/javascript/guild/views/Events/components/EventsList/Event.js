@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import { Box } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import { CoverImage } from "@guild/components/CoverImage";
 import StartsAtTag from "@guild/components/Event/StartsAtTag";
 import HostDetails from "@guild/components/Event/HostDetails";
@@ -61,6 +61,8 @@ export default function Event({ event }) {
           marginTop="3"
           lineHeight="1.3"
           color="neutral700"
+          height="64px"
+          as={Text}
         >
           <ReactMarkdown>{event.description}</ReactMarkdown>
         </StyledLineClamp>
