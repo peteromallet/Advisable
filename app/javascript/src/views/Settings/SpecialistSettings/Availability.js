@@ -63,13 +63,15 @@ function Available({ viewer }) {
   const popover = usePopoverState({ placement: "bottom-start" });
 
   const handleDaySelection = useCallback(
-    (date) => {
+    (date, modifiers) => {
+      if (modifiers.disabled) return;
+
       popover.hide();
 
       setUnavailable({
         variables: {
           input: {
-            date: date.toISOString(),
+            date: DateTime.fromJSDate(date).toISODate(),
           },
         },
         optimisticResponse: {
