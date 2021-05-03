@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import { useHistory } from "react-router-dom";
 import { CoverImage } from "@guild/components/CoverImage";
 import StartsAtTag from "@guild/components/Event/StartsAtTag";
@@ -57,18 +57,13 @@ export default function FeaturedEvent({ event }) {
               fontWeight="600"
               color="neutral900"
               letterSpacing="-0.05rem"
+              as={Text}
             >
               {event.title}
             </StyledLineClamp>
           </Box>
           <Box marginBottom={12}>
-            <Markdown
-              as={StyledLineClamp}
-              size="l"
-              lineHeight="l"
-              color="neutral900"
-              lines={3}
-            >
+            <Markdown as={StyledLineClamp} height="72px" lines={3}>
               {event.description}
             </Markdown>
           </Box>
