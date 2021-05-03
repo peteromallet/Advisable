@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::SendProposal do
-  let(:project) { create(:project, status: 'Brief Confirmed') }
+  let(:project) { create(:project, status: "Brief Confirmed") }
   let(:application) do
-    create(:application, status: 'Interview Completed', project: project)
+    create(:application, status: "Interview Completed", project: project)
   end
   let(:query) do
     <<-GRAPHQL
@@ -33,67 +33,65 @@ RSpec.describe Mutations::SendProposal do
 
   it "sets the status to 'Proposed'" do
     response = AdvisableSchema.execute(query, context: context)
-    status = response['data']['sendProposal']['application']['status']
-    expect(status).to eq('Proposed')
+    status = response["data"]["sendProposal"]["application"]["status"]
+    expect(status).to eq("Proposed")
   end
 
-  it 'sets the proposalComment' do
+  it "sets the proposalComment" do
     response = AdvisableSchema.execute(query, context: context)
-    comment = response['data']['sendProposal']['application']['proposalComment']
-    expect(comment).to eq('This is the proposal comment')
+    comment = response["data"]["sendProposal"]["application"]["proposalComment"]
+    expect(comment).to eq("This is the proposal comment")
   end
 
-  it 'sets the project status to Proposal Received' do
+  it "sets the project status to Proposal Received" do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       application.reload.project.status
-    }.from('Brief Confirmed').to('Proposal Received')
+    }.from("Brief Confirmed").to("Proposal Received")
   end
 
-  it 'triggers a webhook' do
+  it "triggers a webhook" do
     expect(WebhookEvent).to receive(:trigger).with(
-      'applications.proposal_sent',
+      "applications.proposal_sent",
       any_args
     )
     AdvisableSchema.execute(query, context: context)
   end
 
-  context 'when there is no logged in user' do
+  context "when there is no logged in user" do
     let(:context) { {current_user: nil} }
 
-    it 'returns an error' do
+    it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]
-      expect(error['extensions']['code']).to eq('notAuthorized')
+      error = response["errors"][0]
+      expect(error["extensions"]["code"]).to eq("notAuthorized")
     end
   end
 
-  context 'when the client is logged in' do
+  context "when the client is logged in" do
     let(:context) { {current_user: application.project.user} }
 
-    it 'returns an error' do
+    it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]
-      expect(error['extensions']['code']).to eq('notAuthorized')
+      error = response["errors"][0]
+      expect(error["extensions"]["code"]).to eq("notAuthorized")
     end
   end
 
-  context 'when the logged in specialist is not the application specialist' do
+  context "when the logged in specialist is not the application specialist" do
     let(:context) { {current_user: create(:specialist)} }
 
-    it 'returns an error' do
+    it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]
-      expect(error['extensions']['code']).to eq('notAuthorized')
+      error = response["errors"][0]
+      expect(error["extensions"]["code"]).to eq("notAuthorized")
     end
   end
 
-  context 'when a Service::Error is thrown' do
-    it 'includes it in the response' do
-      error = Service::Error.new('service_error')
-      allow(Proposals::Send).to receive(:call).and_raise(error)
+  context "when a Service::Error is thrown" do
+    it "includes it in the response" do
+      allow_any_instance_of(Application).to receive(:save).and_return(false)
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]
-      expect(error['message']).to eq('service_error')
+      expect(response["errors"][0]["message"]).to eq("ApiError::InvalidRequest")
     end
   end
 end
