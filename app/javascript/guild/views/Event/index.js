@@ -90,12 +90,13 @@ const Event = () => {
           <HourDateTag mb="2" date={event.startsAt} />
           <StyledLineClamp
             lines={2}
-            size="38px"
+            fontSize="38px"
             color="blue900"
             lineHeight="120%"
             fontWeight="semibold"
             letterSpacing="-0.02em"
             mb="7"
+            as={Text}
           >
             {event.title}
           </StyledLineClamp>
