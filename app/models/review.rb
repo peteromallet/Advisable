@@ -9,7 +9,6 @@ class Review < ApplicationRecord
   self.ignored_columns += %i[reviewable_id reviewable_type type project_type]
 
   include Uid
-  include Airtable::Syncable
 
   # disable STI for the type column
   self.inheritance_column = :_type_disabled
