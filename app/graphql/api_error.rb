@@ -44,6 +44,7 @@ class ApiError < GraphQL::ExecutionError
   end
 
   def self.invalid_request(code, message = "", extensions: {})
+    message = code if message.blank?
     raise ApiError::InvalidRequest.new(code, message, extensions: extensions)
   end
 

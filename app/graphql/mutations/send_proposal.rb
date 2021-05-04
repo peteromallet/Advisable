@@ -17,10 +17,18 @@ module Mutations
 
     def resolve(**args)
       application = Application.find_by_uid_or_airtable_id!(args[:application])
+      application.proposal_comment = args[:proposal_comment]
+      application.status = "Proposed"
 
-      {application: Proposals::Send.call(application: application, comment: args[:proposal_comment], current_account_id: current_account_id)}
-    rescue Service::Error => e
-      ApiError.service_error(e)
+      success = current_account_responsible_for { application.save }
+      ApiError.invalid_request(application.errors.full_messages.first) unless success
+
+      application.sync_to_airtable
+      application.project.update(status: "Proposal Received")
+      application.project.sync_to_airtable
+      WebhookEvent.trigger("applications.proposal_sent", WebhookEvent::Application.data(application))
+
+      {application: application}
     end
   end
 end
