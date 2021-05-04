@@ -129,12 +129,6 @@ module Types
       description 'A list of reviews for the specialist'
     end
 
-    def reviews
-      object.reviews.where(
-        type: ['On-Platform Job Review', 'Off-Platform Project Review']
-      )
-    end
-
     field :reviews_count, Integer, null: true do
       description 'The amount of reviews a specialist has'
     end

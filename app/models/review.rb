@@ -6,43 +6,46 @@
 # again is a polymorphic assocation and is used to add more context to the
 # review.
 class Review < ApplicationRecord
-  self.ignored_columns += %i[reviewable_id reviewable_type]
+  self.ignored_columns += %i[reviewable_id reviewable_type type project_type]
 
   include Uid
-  include Airtable::Syncable
 
   # disable STI for the type column
   self.inheritance_column = :_type_disabled
 
-  belongs_to :specialist, optional: true
-  # The review project is a polymorphic association. The review
-  # can either blong to a project or an off-platform project.
-  belongs_to :project, polymorphic: true
+  belongs_to :specialist, optional: true, counter_cache: true
+  belongs_to :project, class_name: "PreviousProject"
 
   after_destroy :update_specialist_ratings
-  after_destroy :update_specialist_reviews_count
   # After the record is saved we want to update the specialists average ratings
   after_save :update_specialist_ratings, if: :saved_change_to_ratings?
 
-  after_save :update_specialist_reviews_count
-
   private
-
-  def update_specialist_reviews_count
-    return if specialist.blank?
-
-    specialist.reviews_count =
-      Review.where(
-        specialist: specialist,
-        type: ['On-Platform Job Review', 'Off-Platform Project Review']
-      ).count
-    specialist.save(validate: false)
-  end
 
   def update_specialist_ratings
     return if specialist.blank?
 
-    Specialists::CalculateRatings.call(specialist: specialist)
+    collected_ratings.each do |name, collected|
+      rating = (collected.sum / collected.length.to_f).round(2)
+      specialist.ratings[name] = rating
+    end
+
+    specialist.save
+  end
+
+  def collected_ratings
+    ratings = {}
+    specialist.reviews.each do |review|
+      next if review.ratings.nil?
+
+      review.ratings.each do |name, rating|
+        next if rating.nil?
+
+        ratings[name] ||= []
+        ratings[name] << rating
+      end
+    end
+    ratings
   end
 end
 
@@ -52,9 +55,7 @@ end
 #
 #  id            :bigint           not null, primary key
 #  comment       :text
-#  project_type  :string
 #  ratings       :jsonb
-#  type          :string
 #  uid           :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
