@@ -8,23 +8,9 @@ RSpec.describe Review do
     expect(review).to be_valid
   end
 
-  describe "#update_specialist_reviews_count" do
-    it "is called after save" do
-      review = build(:review)
-      expect(review).to receive(:update_specialist_reviews_count)
-      review.save
-    end
-
-    it "updates the specialists reviews_count column" do
-      specialist = create(:specialist, reviews_count: 0)
-      expect { create(:review, specialist: specialist) }.to change { specialist.reload.reviews_count }.by(1)
-    end
-
-    it "is called after_destroy" do
-      review = create(:review)
-      expect(review).to receive(:update_specialist_reviews_count)
-      review.destroy
-    end
+  it "updates the specialists reviews_count column" do
+    specialist = create(:specialist, reviews_count: 0)
+    expect { create(:review, specialist: specialist) }.to change { specialist.reload.reviews_count }.by(1)
   end
 
   describe "#update_specialist_ratings" do
