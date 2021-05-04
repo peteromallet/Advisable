@@ -17,7 +17,6 @@ class Project < ApplicationRecord
   has_logidze
 
   has_many :applications, dependent: :destroy
-  has_many :reviews, as: :project, dependent: :destroy
   has_many :project_skills, as: :project, dependent: :destroy
   has_many :skills, through: :project_skills
   has_many :project_industries, as: :project, dependent: :destroy

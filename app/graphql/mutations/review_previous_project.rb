@@ -22,19 +22,17 @@ module Mutations
 
     def resolve(**args)
       project = PreviousProject.find_by_uid!(args[:previous_project])
-      review =
-        project.reviews.create(
-          comment: args[:comment],
-          specialist: project.specialist,
-          type: 'Off-Platform Project Review',
-          ratings: {
-            skills: args[:skills],
-            availability: args[:availability],
-            communication: args[:communication],
-            quality_of_work: args[:quality_of_work],
-            adherence_to_schedule: args[:adherence_to_schedule]
-          }
-        )
+      review = project.reviews.create(
+        comment: args[:comment],
+        specialist: project.specialist,
+        ratings: {
+          skills: args[:skills],
+          availability: args[:availability],
+          communication: args[:communication],
+          quality_of_work: args[:quality_of_work],
+          adherence_to_schedule: args[:adherence_to_schedule]
+        }
+      )
       {review: review}
     end
   end

@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Previous project verification', type: :system do
   before do
-    allow_any_instance_of(Review).to receive(:sync_to_airtable)
-
     OmniAuth.config.test_mode = true
     OmniAuth.config.add_mock(
       :linkedin,
