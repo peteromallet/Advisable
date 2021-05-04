@@ -13,24 +13,14 @@ class Review < ApplicationRecord
   # disable STI for the type column
   self.inheritance_column = :_type_disabled
 
-  belongs_to :specialist, optional: true
+  belongs_to :specialist, optional: true, counter_cache: true
   belongs_to :project, class_name: "PreviousProject"
 
   after_destroy :update_specialist_ratings
-  after_destroy :update_specialist_reviews_count
   # After the record is saved we want to update the specialists average ratings
   after_save :update_specialist_ratings, if: :saved_change_to_ratings?
 
-  after_save :update_specialist_reviews_count
-
   private
-
-  def update_specialist_reviews_count
-    return if specialist.blank?
-
-    specialist.reviews_count = Review.where(specialist: specialist).count
-    specialist.save(validate: false)
-  end
 
   def update_specialist_ratings
     return if specialist.blank?
