@@ -14,7 +14,7 @@ module Types
 
     field :application,
           Types::ApplicationType,
-          description: 'Get an application record by its airtable ID',
+          description: "Get an application record by its airtable ID",
           null: true do
       argument :id, ID, required: true
     end
@@ -25,7 +25,7 @@ module Types
 
     field :interview,
           Types::Interview,
-          description: 'Fetch an interview record by its airtable ID',
+          description: "Fetch an interview record by its airtable ID",
           null: true do
       argument :id, ID, required: true
     end
@@ -36,7 +36,7 @@ module Types
 
     field :user,
           Types::User,
-          description: 'Fetch a user record by its airtable ID', null: true do
+          description: "Fetch a user record by its airtable ID", null: true do
       argument :id, ID, required: true
     end
 
@@ -44,13 +44,13 @@ module Types
       ::User.find_by_uid_or_airtable_id!(id)
     end
 
-    field :current_company, Types::CompanyType, description: 'Get the current company', null: true
+    field :current_company, Types::CompanyType, description: "Get the current company", null: true
 
     def current_company
       current_user.company
     end
 
-    field :viewer, Types::ViewerUnion, 'Get the current viewer', null: true
+    field :viewer, Types::ViewerUnion, "Get the current viewer", null: true
 
     def viewer
       current_user
@@ -58,14 +58,14 @@ module Types
 
     field :countries,
           [Types::CountryType],
-          'Return the list of countries',
+          "Return the list of countries",
           null: false
 
     def countries
       ::Country.all.order(name: :asc)
     end
 
-    field :skills, [Types::Skill], 'Returns a list of skills', null: false do
+    field :skills, [Types::Skill], "Returns a list of skills", null: false do
       # TODO: Remove local arg now that it is not being used
       argument :local, Boolean, required: false
     end
@@ -116,7 +116,7 @@ module Types
     end
 
     field :currencies, [Types::CurrencyType], null: false do
-      description 'A list of all currencies'
+      description "A list of all currencies"
     end
 
     def currencies
@@ -158,10 +158,10 @@ module Types
 
       invoice
     rescue Stripe::InvalidRequestError
-      ApiError.invalid_request('notFound', 'Invoice not found')
+      ApiError.invalid_request("notFound", "Invoice not found")
     end
 
-    field :questions, [Types::QuestionType], 'Returns a list of questions', null: true
+    field :questions, [Types::QuestionType], "Returns a list of questions", null: true
 
     def questions
       ::Question.all
@@ -184,13 +184,24 @@ module Types
 
     # Guild
     field :chat_grant, Types::ChatGrantType, null: true do
-      description 'Access token grant for twilio chat client'
+      description "Access token grant for twilio chat client"
     end
 
     def chat_grant
       requires_current_user!
-      identity = current_user.uid
-      Grants::ChatService.call(identity: identity)
+
+      grant = Twilio::JWT::AccessToken::ChatGrant.new
+      grant.service_sid = ENV.fetch("TWILIO_CHAT_SERVICE_SID")
+      token = Twilio::JWT::AccessToken.new(
+        ENV.fetch("TWILIO_SID"),
+        ENV.fetch("TWILIO_API_KEY_SID"),
+        ENV.fetch("TWILIO_API_KEY_SECRET"),
+        [grant],
+        identity: current_user.uid,
+        ttl: 86_400
+      )
+
+      {identity: current_user.uid, access_token: token.to_jwt}
     end
 
     # We'll likely add an argument after v1, 'filter', which can have a default_value of 'upcoming'
@@ -223,10 +234,10 @@ module Types
     end
 
     field :guild_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
-      description 'Returns a list of guild posts for the feed'
+      description "Returns a list of guild posts for the feed"
 
       argument :type, String, required: false do
-        description 'Filters guild posts by type'
+        description "Filters guild posts by type"
       end
     end
 
@@ -234,7 +245,7 @@ module Types
       requires_guild_user!
       query = ::Guild::Post.feed(current_user)
 
-      if (type = args[:type].presence) && type != 'For You'
+      if (type = args[:type].presence) && type != "For You"
         query.where(type: type)
       else
         query
@@ -274,7 +285,7 @@ module Types
     end
 
     field :guild_activity, Types::Guild::ActivityUnion.connection_type, deprecation_reason: "Use guildNotifications query instead", null: true, max_page_size: 20 do
-      description 'Returns a list of guild activity notifications'
+      description "Returns a list of guild activity notifications"
     end
 
     def guild_activity
@@ -283,7 +294,7 @@ module Types
     end
 
     field :top_labels, Types::LabelType.connection_type, null: true, max_page_size: 20 do
-      description 'Returns a list of the top labels'
+      description "Returns a list of the top labels"
     end
 
     def top_labels
@@ -318,7 +329,7 @@ module Types
     end
 
     field :followed_labels, [Types::LabelType], null: true do
-      description 'Returns the labels that the specialists follows'
+      description "Returns the labels that the specialists follows"
     end
 
     def followed_labels(**_args)
