@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::UpdateClientApplication do
@@ -39,9 +41,7 @@ RSpec.describe Mutations::UpdateClientApplication do
       }
     GRAPHQL
 
-    expect { AdvisableSchema.execute(query) }.not_to change {
-      user.reload.company_name
-    }
+    expect { AdvisableSchema.execute(query) }.not_to change(user, :company_name)
   end
 
   it 'can update industry' do
@@ -108,7 +108,7 @@ RSpec.describe Mutations::UpdateClientApplication do
   end
 
   it 'Can update the budget' do
-    user = create(:user, application_status: "Application Started", budget: nil)
+    user = create(:user, application_status: "Application Started")
     query = <<-GRAPHQL
       mutation {
         updateClientApplication(input: {
@@ -123,7 +123,7 @@ RSpec.describe Mutations::UpdateClientApplication do
     GRAPHQL
 
     expect { AdvisableSchema.execute(query) }.to change {
-      user.reload.budget
+      user.company.reload.budget
     }.from(nil).to(10_000)
   end
 
@@ -164,9 +164,7 @@ RSpec.describe Mutations::UpdateClientApplication do
         }
       GRAPHQL
 
-      expect { AdvisableSchema.execute(query) }.not_to change {
-        user.reload.company_name
-      }
+      expect { AdvisableSchema.execute(query) }.not_to change(user, :company_name)
     end
   end
 end

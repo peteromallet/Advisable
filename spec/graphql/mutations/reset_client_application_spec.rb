@@ -7,29 +7,31 @@ RSpec.describe Mutations::ResetClientApplication do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
-  let(:industry) do
-    create(:industry, name: "Digital Marketing")
-  end
+  let(:industry) { create(:industry, name: "Digital Marketing") }
   let(:skill) { create(:skill, name: 'Marketing') }
   let(:company) do
-    create(:company,
-           name: "SomeCorp",
-           kind: "Growth-Stage Startup",
-           industry: industry)
+    create(
+      :company,
+      name: "SomeCorp",
+      kind: "Growth-Stage Startup",
+      budget: 100,
+      industry: industry
+    )
   end
 
   let(:user) do
-    create(:user,
-           application_status: "Application Rejected",
-           company_name: "SomeCorp",
-           company: company,
-           budget: 100,
-           number_of_freelancers: 0,
-           skills: [skill],
-           accepted_guarantee_terms_at: 1.day.ago,
-           locality_importance: 1,
-           rejection_reason: "not_hiring",
-           talent_quality: "cheap")
+    create(
+      :user,
+      application_status: "Application Rejected",
+      company_name: "SomeCorp",
+      company: company,
+      number_of_freelancers: 0,
+      skills: [skill],
+      accepted_guarantee_terms_at: 1.day.ago,
+      locality_importance: 1,
+      rejection_reason: "not_hiring",
+      talent_quality: "cheap"
+    )
   end
 
   let(:query) do
@@ -50,7 +52,7 @@ RSpec.describe Mutations::ResetClientApplication do
     expect { AdvisableSchema.execute(query) }.to change {
       user.reload.application_status
     }.from('Application Rejected').to('Application Started')
-    expect(user.budget).to eq(nil)
+    expect(user.company.budget).to eq(nil)
     expect(user.number_of_freelancers).to eq(nil)
     expect(user.skills).to eq([])
     expect(user.accepted_guarantee_terms_at).to eq(nil)

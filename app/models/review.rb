@@ -50,19 +50,17 @@ end
 #
 # Table name: reviews
 #
-#  id              :bigint           not null, primary key
-#  comment         :text
-#  project_type    :string
-#  ratings         :jsonb
-#  reviewable_type :string
-#  type            :string
-#  uid             :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  airtable_id     :string
-#  project_id      :bigint
-#  reviewable_id   :bigint
-#  specialist_id   :bigint
+#  id            :bigint           not null, primary key
+#  comment       :text
+#  project_type  :string
+#  ratings       :jsonb
+#  type          :string
+#  uid           :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  airtable_id   :string
+#  project_id    :bigint
+#  specialist_id :bigint
 #
 # Indexes
 #
