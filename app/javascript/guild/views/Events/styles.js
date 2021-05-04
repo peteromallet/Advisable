@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Text, Card } from "@advisable/donut";
+import { Card, Box } from "@advisable/donut";
 
-export const StyledLineClamp = styled(Text)`
+export const StyledLineClamp = styled(Box)`
   display: -webkit-box;
   -webkit-line-clamp: ${({ lines }) => lines || 2};
   -webkit-box-orient: vertical;
