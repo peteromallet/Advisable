@@ -396,6 +396,8 @@ ActiveRecord::Schema.define(version: 2021_05_07_065127) do
     t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "google_calendar_id"
+    t.string "status"
     t.index ["host_id"], name: "index_events_on_host_id"
   end
 
