@@ -13,7 +13,7 @@ module Types
 
     field :url, String, null: false
     def url
-      object.record.resized_image_url_for(object.blob_id)
+      object.record.resized_images_mapping[object.id]
     end
   end
 end

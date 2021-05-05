@@ -28,10 +28,18 @@ module Resizable
         end
 
         define_method "resized_#{name}_urls" do
+          public_send("resized_#{name}_mapping").values
+        end
+
+        define_method "resized_#{name}_mapping" do
+          mapping = instance_variable_get("@resized_#{name}_mapping")
+          return mapping if mapping
+
           images = public_send("resized_#{name}")
-          images.map do |image|
-            get_resized_image_url(image)
-          end
+          mapping = images.map do |image|
+            [image.id, get_resized_image_url(image)]
+          end.to_h
+          instance_variable_set("@resized_#{name}_mapping", mapping)
         end
       end
     end

@@ -81,6 +81,25 @@ RSpec.describe Resizable do
           expect(ResizeImageJob).to have_been_enqueued.with(att, resize_to_limit: [1600, 1600])
         end
       end
+
+      it "schedules ResizeImageJob on _mapping method" do
+        project.images.attach(avatar)
+        project.images.attach(image2)
+        mapping = project.resized_images_mapping
+
+        # This is testing memoization 👇
+        project.resized_images_mapping
+        project.resized_images_mapping
+        project.resized_images_mapping
+        # This is testing memoization 👆
+
+        keys = []
+        project.images.attachments.each do |att|
+          keys << att.id
+          expect(ResizeImageJob).to have_been_enqueued.with(att, resize_to_limit: [1600, 1600])
+        end
+        expect(mapping.keys).to eq(keys)
+      end
     end
   end
 
