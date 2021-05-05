@@ -156,7 +156,7 @@ const ApplicationStage = ({ stage }) => {
 
 export default function DashboardApplicationPrompt() {
   const viewer = useViewer();
-  const applicationStage = viewer?.applicationStage;
+  const applicationStage = viewer?.clientApplication?.status;
 
   return <ApplicationStage stage={applicationStage} />;
 }
