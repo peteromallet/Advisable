@@ -1,23 +1,24 @@
 import { gql, useQuery } from "@apollo/client";
 import { DateTime } from "luxon";
-import useViewer from "src/hooks/useViewer";
 
 export const GET_INTERVIEW_TIME = gql`
-  query specialistInterviewTime($id: ID!) {
-    specialist(id: $id) {
-      id
-      applicationInterviewStartsAt
+  query getClientApplicationInterviewTime {
+    viewer {
+      ... on User {
+        id
+        clientApplication {
+          id
+          interviewStartsAt
+        }
+      }
     }
   }
 `;
 
 export const useInterviewTime = () => {
-  const viewer = useViewer();
-  const { data } = useQuery(GET_INTERVIEW_TIME, {
-    variables: { id: viewer?.id },
-  });
+  const { data } = useQuery(GET_INTERVIEW_TIME);
 
-  const datetime = data?.specialist.applicationInterviewStartsAt;
+  const datetime = data?.viewer?.clientApplication?.interviewStartsAt;
   if (!datetime) return null;
 
   // format time

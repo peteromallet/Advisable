@@ -21,6 +21,7 @@ module Types
     field :country, Types::CountryType, null: true
     field :id, ID, null: false, method: :uid
     field :status, String, null: true, method: :application_status
+    field :interview_starts_at, GraphQL::Types::ISO8601DateTime, null: true, method: :application_interview_starts_at
 
     field :company_name, String, null: true
     def company_name
