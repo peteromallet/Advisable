@@ -26,25 +26,23 @@ module Mutations
     end
 
     def resolve(**args)
-      update_company_details(current_user.company, args)
-      # TODO: Move budget to company
-      current_user.budget = args[:budget] if args.key?(:budget)
-      current_user.save_and_sync!
-
-      {client_application: current_user}
-    end
-
-    private
-
-    def update_company_details(company, args)
+      company = current_user.company
       company.name = args[:company_name] if args.key?(:company_name)
+      company.budget = args[:budget] if args.key?(:budget)
       company.business_type = args[:business_type] if args.key?(:business_type)
       company.kind = args[:company_type] if args.key?(:company_type)
       company.goals = args[:goals] if args.key?(:goals)
       company.feedback = args[:feedback] if args.key?(:feedback)
       company.marketing_attitude = args[:marketing_attitude] if args.key?(:marketing_attitude)
       company.industry = Industry.find_by_name!(args[:industry]) if args.key?(:industry)
-      company.save!
+
+      if company.save
+        current_user.reload.sync_to_airtable
+        return {client_application: current_user}
+      end
+
+      message = copmany.errors.full_messages.first
+      ApiError.invalid_request('failedToSave', message)
     end
   end
 end
