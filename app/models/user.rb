@@ -143,6 +143,7 @@ end
 #  id                                :bigint           not null, primary key
 #  accepted_guarantee_terms_at       :datetime
 #  application_accepted_at           :datetime
+#  application_interview_starts_at   :datetime
 #  application_rejected_at           :datetime
 #  application_reminder_at           :datetime
 #  availability                      :text

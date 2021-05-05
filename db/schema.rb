@@ -1004,6 +1004,7 @@ ActiveRecord::Schema.define(version: 2021_06_03_070314) do
     t.bigint "account_id"
     t.jsonb "log_data"
     t.uuid "company_id"
+    t.datetime "application_interview_starts_at"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["company_id"], name: "index_users_on_company_id"
