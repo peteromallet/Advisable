@@ -6,10 +6,10 @@
 class User < ApplicationRecord
   self.ignored_columns += %i[company_name]
 
+  include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser
   include Resizable
-  include Airtable::Syncable
 
   TALENT_QUALITY_OPTIONS = %w[cheap budget good top world_class].freeze
   NUMBER_OF_FREELANCERS_OPTIONS = %w[0 1-3 4-10 10+].freeze

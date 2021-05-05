@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class SalesPerson < ApplicationRecord
+  include ::Airtable::Syncable
   include Uid
-  include Airtable::Syncable
   include Resizable
 
   has_many :companies, dependent: :nullify

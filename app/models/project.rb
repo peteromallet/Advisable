@@ -10,8 +10,8 @@
 # record. See the app/modals/application.rb for more details.
 #
 class Project < ApplicationRecord
+  include ::Airtable::Syncable
   include Uid
-  include Airtable::Syncable
   include Project::Constants
 
   has_logidze
