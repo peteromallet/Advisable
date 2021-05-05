@@ -4,8 +4,9 @@ import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
-import { Box, Select, Error, Combobox } from "@advisable/donut";
+import { Box, Error, Combobox } from "@advisable/donut";
 import FormField from "src/components/FormField";
+import TilesInput from "src/components/TilesInput";
 import SubmitButton from "src/components/SubmitButton";
 import AnimatedCard from "../components/AnimatedCard";
 import Header from "../components/Header";
@@ -68,17 +69,20 @@ export default function CompanyOverview({ clientApplication, industries }) {
               <Box mb={6}>
                 <FormField
                   isRequired
-                  as={Select}
-                  error={null}
+                  as={TilesInput}
+                  fullWidth
+                  alignWidth
+                  optionsPerRow={2}
                   name="businessType"
-                  placeholder="Select your business type"
+                  onChange={(n) => formik.setFieldValue("businessType", n)}
+                  error={null}
                   label="How would you describe your company?"
-                  onChange={formik.handleChange}
-                  data-testid="companyType"
-                >
-                  <option>B2B</option>
-                  <option>B2C</option>
-                </FormField>
+                  options={[
+                    { label: "B2B", value: "B2B" },
+                    { label: "B2C", value: "B2C" },
+                  ]}
+                  value={formik.values.businessType}
+                />
               </Box>
               <Box mb={6}>
                 <FormField
