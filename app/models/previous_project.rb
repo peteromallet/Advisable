@@ -28,7 +28,10 @@ class PreviousProject < ApplicationRecord
   has_logidze
 
   has_one_attached :contact_image
-  resize contact_image: {resize_to_limit: [400, 400]}
+  has_one_attached :cover_photo
+  resize contact_image: {resize_to_limit: [400, 400]}, cover_photo: {resize_to_limit: [1600, 1600]}
+  has_many_attached :images
+  resize_many images: {resize_to_limit: [1600, 1600]}
 
   belongs_to :specialist
   has_one :account, through: :specialist
