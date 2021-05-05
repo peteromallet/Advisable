@@ -21,11 +21,11 @@
 # [Accepted] Their application has been successfull.
 #
 class Specialist < ApplicationRecord
+  include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser
   include Subscriber
   include Resizable
-  include Airtable::Syncable
   include Guild::SpecialistsConcern
 
   VALID_APPLICATION_STAGES = ["Started", "Submitted", "Invited To Interview", "Interview Scheduled", "Interview Completed", "Full Application", "On Hold", "Completed", "Accepted", "Rejected By Us", "Rejected By Them", "References Requested", "References Provided", "References Validated", "Kicked Off"].freeze

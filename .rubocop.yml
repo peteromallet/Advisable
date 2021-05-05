@@ -92,7 +92,7 @@ Rails/SquishedSQLHeredocs:
   Enabled: false
 
 Rails/EnvironmentVariableAccess:
-  Enabled: false
+  AllowReads: true
 
 RSpec/ExampleLength:
   Enabled: false

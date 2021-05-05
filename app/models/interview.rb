@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
+  include ::Airtable::Syncable
   include Uid
-  include Airtable::Syncable
 
   VALID_STATUSES = [
     "Call Scheduled", "Call Completed", "Call Requested", "Need More Time Options",
