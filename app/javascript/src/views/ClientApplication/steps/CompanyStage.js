@@ -4,8 +4,9 @@ import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
-import { Box, Select, Error } from "@advisable/donut";
+import { Box, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
+import TilesInput from "src/components/TilesInput";
 import SubmitButton from "src/components/SubmitButton";
 import AnimatedCard from "../components/AnimatedCard";
 import Header from "../components/Header";
@@ -50,28 +51,40 @@ export default function CompanyStage({ clientApplication }) {
             <Header>Company Stage</Header>
             <Description>Some description</Description>
             <Box mb={6}>
-              <Box mb={6}>
-                <FormField
-                  isRequired
-                  as={Select}
-                  error={null}
-                  name="companyType"
-                  placeholder="Select your company type"
-                  label="Company Stage"
-                  onChange={formik.handleChange}
-                  data-testid="companyType"
-                >
-                  <option>Individual Entrepreneur</option>
-                  <option>Small Business</option>
-                  <option>Medium-Sized Business</option>
-                  <option>Startup</option>
-                  <option>Growth-Stage Startup</option>
-                  <option>Major Corporation</option>
-                  <option>Non-Profit</option>
-                  <option>Education Institution</option>
-                  <option>Government</option>
-                </FormField>
-              </Box>
+              <FormField
+                isRequired
+                as={TilesInput}
+                optionsPerRow={2}
+                fullWidth
+                alignWidth
+                name="companyType"
+                onChange={(n) => formik.setFieldValue("companyType", n)}
+                error={null}
+                label={null}
+                options={[
+                  {
+                    label: "Individual Entrepreneur",
+                    value: "Individual Entrepreneur",
+                  },
+                  { label: "Small Business", value: "Small Business" },
+                  {
+                    label: "Medium-Sized Business",
+                    value: "Medium-Sized Business",
+                  },
+                  { label: "Startup", value: "Startup" },
+                  {
+                    label: "Growth-Stage Startup",
+                    value: "Growth-Stage Startup",
+                  },
+                  { label: "Major Corporation", value: "Major Corporation" },
+                  { label: "Non-Profit", value: "Non-Profit" },
+                  {
+                    label: "Education Institution",
+                    value: "Education Institution",
+                  },
+                ]}
+                value={formik.values.companyType}
+              />
             </Box>
             <Error>{formik.status}</Error>
             <SubmitButton
