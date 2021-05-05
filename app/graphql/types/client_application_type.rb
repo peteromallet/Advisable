@@ -4,6 +4,8 @@
 # The underlying object for a ClientApplicationType is a User object.
 module Types
   class ClientApplicationType < Types::BaseType
+    description "Represents a clients application to Advisable"
+
     delegate :company, to: :object
     delegate :goals, :marketing_attitude, :business_type, :feedback, :budget, :industry, to: :company
 
@@ -19,6 +21,11 @@ module Types
     field :country, Types::CountryType, null: true
     field :id, ID, null: false, method: :uid
     field :status, String, null: true, method: :application_status
+
+    field :company_name, String, null: true
+    def company_name
+      object.company.name
+    end
 
     field :first_name, String, null: false
     def first_name

@@ -67,7 +67,7 @@ export default function CompanyOverview({ clientApplication }) {
         {(formik) => (
           <Form>
             <StepNumber>Step 4 of 4</StepNumber>
-            <Header>Company Overview</Header>
+            <Header>Preferences</Header>
             <Description>Some description</Description>
             <Box mb={6}>
               <Box mb={6}>
