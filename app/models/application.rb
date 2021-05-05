@@ -41,8 +41,8 @@
 # be set back to Working.
 #
 class Application < ApplicationRecord
+  include ::Airtable::Syncable
   include Uid
-  include Airtable::Syncable
 
   has_logidze
 

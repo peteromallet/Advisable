@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Skill < ApplicationRecord
+  include ::Airtable::Syncable
   include Uid
-  include Airtable::Syncable
 
   has_many :specialist_skills, dependent: :destroy
   has_many :specialists, through: :specialist_skills

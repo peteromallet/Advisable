@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class ClientCall < ApplicationRecord
-  include Airtable::Syncable
-  belongs_to :project, required: false
-  belongs_to :sales_person, required: false
-  belongs_to :user, required: false
+  include ::Airtable::Syncable
+  belongs_to :project, optional: true
+  belongs_to :sales_person, optional: true
+  belongs_to :user, optional: true
 end
 
 # == Schema Information

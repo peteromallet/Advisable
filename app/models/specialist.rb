@@ -21,6 +21,7 @@
 # [Accepted] Their application has been successfull.
 #
 class Specialist < ApplicationRecord
+  include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser
   include Subscriber
