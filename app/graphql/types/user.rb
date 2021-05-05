@@ -218,5 +218,14 @@ module Types
         object.received_articles.active
       end
     end
+
+    # The client application is another representation of a user that is
+    # specifically used during the client signup flow.
+    field :client_application, Types::ClientApplicationType, null: true do
+      authorize :user?
+    end
+    def client_application
+      object
+    end
   end
 end
