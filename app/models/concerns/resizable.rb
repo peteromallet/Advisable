@@ -12,15 +12,27 @@ module Resizable
         end
 
         define_method "resized_#{name}_url" do
-          image = get_resized_image(public_send(name), options)
-          get_resized_image_url(image, options)
+          image = public_send("resized_#{name}")
+          get_resized_image_url(image)
         end
       end
     end
 
     def resize_many(attachments)
       attachments.each do |name, options|
-        # TODO
+        define_method "resized_#{name}" do
+          images = public_send(name)
+          images.map do |image|
+            get_resized_image(image, options)
+          end
+        end
+
+        define_method "resized_#{name}_urls" do
+          images = public_send("resized_#{name}")
+          images.map do |image|
+            get_resized_image_url(image)
+          end
+        end
       end
     end
   end
@@ -33,8 +45,8 @@ module Resizable
     if image.variant(options).processed?
       image.variant(options)
     else
-      # TODO: This needs fixing because we don't have name
-      ResizeImageJob.perform_later(self, name, **options)
+      image = image.attachment unless image.is_a?(ActiveStorage::Attachment)
+      ResizeImageJob.perform_later(image, **options)
       image
     end
   rescue ActiveStorage::InvariableError
@@ -43,7 +55,7 @@ module Resizable
     nil
   end
 
-  def get_resized_image_url(image, _options)
+  def get_resized_image_url(image)
     return if image.blank?
 
     if image.respond_to?(:variation)
