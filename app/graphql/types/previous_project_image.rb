@@ -13,7 +13,11 @@ module Types
 
     field :url, String, null: false
     def url
-      object.record.resized_images_mapping[object.id]
+      if object.record.cover_photo.blob_id == object.blob_id
+        object.record.resized_cover_photo_url
+      else
+        object.record.resized_images_mapping[object.id]
+      end
     end
   end
 end
