@@ -6,8 +6,6 @@
 # again is a polymorphic assocation and is used to add more context to the
 # review.
 class Review < ApplicationRecord
-  self.ignored_columns += %i[reviewable_id reviewable_type type project_type]
-
   include Uid
 
   # disable STI for the type column
@@ -66,8 +64,6 @@ end
 # Indexes
 #
 #  index_reviews_on_airtable_id    (airtable_id)
-#  index_reviews_on_project        (project_type,project_id)
-#  index_reviews_on_reviewable     (reviewable_type,reviewable_id)
 #  index_reviews_on_specialist_id  (specialist_id)
 #
 # Foreign Keys
