@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_30_105057) do
+ActiveRecord::Schema.define(version: 2021_05_05_073416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -752,20 +752,14 @@ ActiveRecord::Schema.define(version: 2021_04_30_105057) do
 
   create_table "reviews", force: :cascade do |t|
     t.string "airtable_id"
-    t.string "type"
     t.bigint "specialist_id"
-    t.string "project_type"
     t.bigint "project_id"
-    t.string "reviewable_type"
-    t.bigint "reviewable_id"
     t.text "comment"
     t.jsonb "ratings"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "uid"
     t.index ["airtable_id"], name: "index_reviews_on_airtable_id"
-    t.index ["project_type", "project_id"], name: "index_reviews_on_project"
-    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
     t.index ["specialist_id"], name: "index_reviews_on_specialist_id"
   end
 
@@ -989,7 +983,6 @@ ActiveRecord::Schema.define(version: 2021_04_30_105057) do
     t.string "campaign_medium"
     t.string "contact_status"
     t.string "fid"
-    t.bigint "budget"
     t.integer "locality_importance"
     t.datetime "accepted_guarantee_terms_at"
     t.string "talent_quality"
