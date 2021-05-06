@@ -4,8 +4,9 @@ import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
-import { Box, Error, Combobox } from "@advisable/donut";
+import { Box, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
+import CheckboxInput from "src/components/CheckboxInput";
 import SubmitButton from "src/components/SubmitButton";
 import AnimatedCard from "../components/AnimatedCard";
 import Header from "../components/Header";
@@ -66,16 +67,17 @@ export default function CompanyOverview({ clientApplication }) {
             <Description>Some description</Description>
             <Box mb={6}>
               <Box mb={6}>
-                <FormField
-                  isRequired
-                  name="goals"
-                  as={Combobox}
-                  multiple
-                  options={GOALS.map((g) => ({ value: g, label: g }))}
-                  onChange={(g) => formik.setFieldValue("goals", g)}
-                  placeholder="Select your goals"
-                  label="What goals do you want to achieve"
-                />
+                {GOALS.map((goal, i) => (
+                  <FormField
+                    key={i}
+                    type="checkbox"
+                    value={goal}
+                    as={CheckboxInput}
+                    name="goals"
+                  >
+                    {goal}
+                  </FormField>
+                ))}
               </Box>
             </Box>
             <Error>{formik.status}</Error>
