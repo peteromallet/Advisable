@@ -6,7 +6,7 @@ import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import SubmitButton from "components/SubmitButton";
 import { UPDATE_PROJECT } from "./queries";
-import RequiredCharacteristic from "./RequiredCharacteristic";
+import CheckboxInput from "src/components/CheckboxInput";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 import { setupProgress } from "./SetupSteps";
 
@@ -68,7 +68,7 @@ export default function JobRequiredCharacteristics({ data }) {
                   key={i}
                   type="checkbox"
                   value={characteristic}
-                  as={RequiredCharacteristic}
+                  as={CheckboxInput}
                   name="requiredCharacteristics"
                 >
                   {characteristic}
