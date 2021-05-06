@@ -2,7 +2,7 @@
 
 module Types
   class PreviousProjectImage < Types::BaseType
-    field :id, ID, null: false, method: :blob_id
+    field :id, ID, null: false
 
     field :cover, Boolean, null: false
     def cover
