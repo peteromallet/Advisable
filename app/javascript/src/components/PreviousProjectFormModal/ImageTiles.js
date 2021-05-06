@@ -12,7 +12,6 @@ import { useNotifications } from "src/components/Notifications";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
 import {
   GET_PREVIOUS_PROJECT,
-  useUpdatePreviousProjectImage,
   useDeletePreviousProjectImage,
 } from "./queries";
 import matchFileType from "src/utilities/matchFileType";
@@ -251,20 +250,11 @@ const PortfolioImage = React.memo(function PortfolioImage({
   onClick,
   dispatch,
 }) {
-  const [setAsCover] = useUpdatePreviousProjectImage();
   const [deleteImage] = useDeletePreviousProjectImage();
 
   const handleClick = () => {
     if (image.cover) return;
 
-    setAsCover({
-      variables: {
-        input: {
-          previousProjectImage: image.id,
-          cover: true,
-        },
-      },
-    });
 
     onClick();
   };
