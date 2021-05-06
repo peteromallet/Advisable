@@ -1,11 +1,11 @@
 import React from "react";
 import { object, string, boolean } from "yup";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import TilesInput from "src/components/TilesInput";
-import { Box, Error, Select } from "@advisable/donut";
+import { Label, Box, Error, RadioGroup, Radio } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import CurrencyInput from "src/components/CurrencyInput";
 import SubmitButton from "src/components/SubmitButton";
@@ -87,7 +87,7 @@ export default function CompanyOverview({ clientApplication }) {
                   as={TilesInput}
                   fullWidth
                   alignWidth
-                  optionsPerRow={1}
+                  optionsPerRow={2}
                   name="feedback"
                   onChange={(n) => formik.setFieldValue("feedback", n)}
                   error={null}
@@ -99,26 +99,32 @@ export default function CompanyOverview({ clientApplication }) {
                   value={formik.values.feedback}
                 />
               </Box>
-              <Box mb={6}>
-                <FormField
-                  isRequired
-                  as={Select}
-                  error={null}
+              <Label mb={3}>
+                How would you describe your company’s attitude to marketing?
+              </Label>
+              <RadioGroup>
+                <Field
+                  as={Radio}
+                  type="radio"
                   name="marketingAttitude"
-                  placeholder="Select your type of attitude"
-                  label="How would you describe your company’s attitude to marketing?"
-                  onChange={formik.handleChange}
-                  data-testid="companyType"
-                >
-                  <option>
-                    We’re pretty happy with our strategy & tactics
-                  </option>
-                  <option>We sometimes test new strategies and tactics</option>
-                  <option>
-                    We’re always testing new strategies and tactics
-                  </option>
-                </FormField>
-              </Box>
+                  value="We’re pretty happy with our strategy & tactics"
+                  description="We’re pretty happy with our strategy & tactics"
+                />
+                <Field
+                  as={Radio}
+                  type="radio"
+                  name="marketingAttitude"
+                  value="We sometimes test new strategies and tactics"
+                  description="We sometimes test new strategies and tactics"
+                />
+                <Field
+                  as={Radio}
+                  type="radio"
+                  name="marketingAttitude"
+                  value="We’re always testing new strategies and tactics"
+                  description="We’re always testing new strategies and tactics"
+                />
+              </RadioGroup>
             </Box>
             <Error>{formik.status}</Error>
             <SubmitButton
