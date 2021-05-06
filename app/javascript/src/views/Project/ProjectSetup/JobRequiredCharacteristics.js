@@ -53,7 +53,7 @@ export default function JobRequiredCharacteristics({ data }) {
   return (
     <>
       <JobSetupStepHeader mb="xs">
-        Which of these characteristics are essential?*
+        Which of these characteristics are essential?
       </JobSetupStepHeader>
       <JobSetupStepSubHeader mb="xl">
         We&apos;ll make sure that whichever specialists we match you with have
