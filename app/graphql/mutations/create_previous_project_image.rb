@@ -2,27 +2,25 @@
 
 module Mutations
   class CreatePreviousProjectImage < Mutations::BaseMutation
-    argument :id, String, required: false
-    argument :previous_project, ID, required: true
     argument :attachment, String, required: true
-    argument :position, Int, required: false
     argument :cover, Boolean, required: false
+    argument :previous_project, ID, required: true
 
     field :image, Types::PreviousProjectImage, null: true
 
     def authorized?(previous_project:, **_args)
       requires_specialist!
-      project = PreviousProject.find_by_uid(previous_project)
+      project = PreviousProject.find_by!(previous_project)
       policy = PreviousProjectPolicy.new(current_user, project)
       policy.create_image?
     end
 
-    def resolve(**args)
-      project = PreviousProject.find_by_uid!(args[:previous_project])
-      ppi = project.images.create(uid: args[:id], position: args[:position], cover: args[:cover])
-      ppi.image.attach(args[:attachment])
+    def resolve(previous_project:, attachment:, cover:)
+      project = PreviousProject.find_by!(previous_project)
+      object = cover ? project.cover_photo : project.images
+      image = object.attach(attachment)
 
-      {image: ppi}
+      {image: image}
     end
   end
 end
