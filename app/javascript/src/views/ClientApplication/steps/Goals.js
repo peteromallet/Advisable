@@ -55,35 +55,25 @@ export default function CompanyOverview({ clientApplication }) {
 
   return (
     <AnimatedCard>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(formik) => (
           <Form>
             <StepNumber>Step 3 of 4</StepNumber>
             <Header>Goals</Header>
             <Description>Some description</Description>
             <Box mb={6}>
-              <Box mb={6}>
-                {GOALS.map((goal, i) => (
-                  <FormField
-                    key={i}
-                    type="checkbox"
-                    value={goal}
-                    as={CheckboxInput}
-                    name="goals"
-                  >
-                    {goal}
-                  </FormField>
-                ))}
-              </Box>
+              <FormField
+                as={CheckboxInput}
+                name="goals"
+                options={GOALS}
+                optionsPerRow={2}
+              />
             </Box>
             <Error>{formik.status}</Error>
             <SubmitButton
               mt={4}
               suffix={<ArrowRight />}
+              disabled={formik.values.goals.length === 0}
               variant="gradient"
               size="l"
             >
