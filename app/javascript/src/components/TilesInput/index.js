@@ -2,27 +2,9 @@ import React from "react";
 import { Box, Text } from "@advisable/donut";
 import { StyledTilesInputOption } from "./styles";
 
-function TilesInput({
-  onChange,
-  value,
-  options,
-  importanceScale,
-  alignWidth,
-  optionsPerRow,
-}) {
+function TilesInput({ onChange, value, options, alignWidth, optionsPerRow }) {
   const createClickHandler = (value) => () => onChange(value);
   const numberOfTiles = options.length;
-
-  const importanceScaleLabels = (
-    <Box display="flex" pt="xxs">
-      <Text fontSize="xxs" color="neutral300" fontWeight="light">
-        not important
-      </Text>
-      <Text fontSize="xxs" color="neutral300" fontWeight="light" ml="auto">
-        very important
-      </Text>
-    </Box>
-  );
 
   return (
     <Box>
@@ -57,7 +39,6 @@ function TilesInput({
           </StyledTilesInputOption>
         ))}
       </Box>
-      {importanceScale && importanceScaleLabels}
     </Box>
   );
 }
