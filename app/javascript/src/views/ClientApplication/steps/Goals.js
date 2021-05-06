@@ -36,13 +36,13 @@ export default function CompanyOverview({ clientApplication }) {
   const history = useHistory();
 
   const initialValues = {
-    goals: clientApplication.goals.map((g) => ({ value: g, label: g })) || [],
+    goals: clientApplication.goals || [],
   };
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
     const res = await update({
-      variables: { input: { goals: values.goals.map((g) => g.value) } },
+      variables: { input: values },
     });
 
     if (res.errors) {
