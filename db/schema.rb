@@ -390,7 +390,6 @@ ActiveRecord::Schema.define(version: 2021_05_07_065127) do
     t.string "url"
     t.string "color", null: false
     t.bigint "host_id"
-    t.integer "attendees_count", default: 0
     t.boolean "featured", default: false
     t.datetime "published_at"
     t.datetime "starts_at"
