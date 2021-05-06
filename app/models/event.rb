@@ -54,20 +54,19 @@ end
 #
 # Table name: events
 #
-#  id              :bigint           not null, primary key
-#  attendees_count :integer          default(0)
-#  color           :string           not null
-#  description     :text             not null
-#  ends_at         :datetime
-#  featured        :boolean          default(FALSE)
-#  published_at    :datetime
-#  starts_at       :datetime
-#  title           :string           not null
-#  uid             :string           not null
-#  url             :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  host_id         :bigint
+#  id           :bigint           not null, primary key
+#  color        :string           not null
+#  description  :text             not null
+#  ends_at      :datetime
+#  featured     :boolean          default(FALSE)
+#  published_at :datetime
+#  starts_at    :datetime
+#  title        :string           not null
+#  uid          :string           not null
+#  url          :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  host_id      :bigint
 #
 # Indexes
 #

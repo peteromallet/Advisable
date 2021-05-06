@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EventAttendee < ApplicationRecord
-  belongs_to :event, counter_cache: :attendees_count
+  belongs_to :event
   belongs_to :attendee, class_name: 'Specialist', foreign_key: 'specialist_id', inverse_of: :event_attendees
 
   validates :attendee, uniqueness: {

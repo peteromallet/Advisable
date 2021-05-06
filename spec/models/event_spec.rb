@@ -12,7 +12,6 @@ RSpec.describe Event, type: :model do
     it { expect(event).to have_db_column :description }
     it { expect(event).to have_db_column :starts_at }
     it { expect(event).to have_db_column :ends_at }
-    it { expect(event).to have_db_column :attendees_count }
     it { expect(event).to have_db_column :published_at }
     it { expect(event).to have_db_column :url }
     it { expect(event).to have_db_column :featured }
@@ -32,15 +31,6 @@ RSpec.describe Event, type: :model do
     expect do
       event.update!(ends_at: Time.zone.at(0))
     end.to raise_error(ActiveRecord::RecordInvalid).with_message(/Ends at must be after starts_at/)
-  end
-
-  it "has a counter for event attendees" do
-    event.save!
-
-    expect do
-      event.event_attendees.create(attendee: create(:specialist))
-      event.reload
-    end.to change(event, :attendees_count).from(0).to(1)
   end
 
   describe "with upcoming" do
