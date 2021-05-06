@@ -1,3 +1,18 @@
+GIT
+  remote: https://github.com/lostmahbles/administrate.git
+  revision: 27404f6bbbfa8ae7227ff205ac8cc4ad194194dd
+  specs:
+    administrate (0.15.0)
+      actionpack (>= 5.0)
+      actionview (>= 5.0)
+      activerecord (>= 5.0)
+      datetime_picker_rails (~> 0.0.7)
+      jquery-rails (>= 4.0)
+      kaminari (>= 1.0)
+      momentjs-rails (~> 2.8)
+      sassc-rails (~> 2.1)
+      selectize-rails (~> 0.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -62,16 +77,6 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    administrate (0.15.0)
-      actionpack (>= 5.0)
-      actionview (>= 5.0)
-      activerecord (>= 5.0)
-      datetime_picker_rails (~> 0.0.7)
-      jquery-rails (>= 4.0)
-      kaminari (>= 1.0)
-      momentjs-rails (~> 2.8)
-      sassc-rails (~> 2.1)
-      selectize-rails (~> 0.6)
     administrate-field-active_storage (0.3.7)
       administrate (>= 0.2.2)
       rails (>= 6.0)
@@ -515,7 +520,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  administrate
+  administrate!
   administrate-field-active_storage
   airrecord (~> 1.0.5)
   annotate
