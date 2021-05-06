@@ -63,17 +63,11 @@ export default function JobRequiredCharacteristics({ data }) {
         {(formik) => (
           <Form>
             <Box mb="xl">
-              {characteristics.map((characteristic, i) => (
-                <Field
-                  key={i}
-                  type="checkbox"
-                  value={characteristic}
-                  as={CheckboxInput}
-                  name="requiredCharacteristics"
-                >
-                  {characteristic}
-                </Field>
-              ))}
+              <Field
+                as={CheckboxInput}
+                name="requiredCharacteristics"
+                options={characteristics}
+              />
             </Box>
 
             <SubmitButton
