@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Mutations
-  class CreatePreviousProjectImage < Mutations::BaseMutation
+  class SetPreviousProjectCoverImage < Mutations::BaseMutation
     argument :attachment, String, required: true
     argument :previous_project, ID, required: true
 
@@ -16,7 +16,7 @@ module Mutations
 
     def resolve(previous_project:, attachment:)
       project = PreviousProject.find_by!(previous_project)
-      image = project.images.attach(attachment)
+      image = project.cover_photo.attach(attachment)
 
       {image: image}
     end
