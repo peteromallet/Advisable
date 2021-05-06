@@ -1,9 +1,10 @@
 import React from "react";
 import { darken } from "polished";
 import styled, { css } from "styled-components";
-import { theme } from "@advisable/donut";
+import { theme, Box } from "@advisable/donut";
+import FormField from "src/components/FormField";
 
-const StyledRequiredCharacteristicCheckbox = styled.div`
+const StyledCheckbox = styled.div`
   top: 50%;
   left: 16px;
   width: 20px;
@@ -19,22 +20,21 @@ const StyledRequiredCharacteristicCheckbox = styled.div`
   border: 2px solid ${theme.colors.neutral400};
 `;
 
-const StyledRequiredCharacteristic_Selected = css`
+const StyledCheckboxWrapper_Selected = css`
   border-color: ${theme.colors.neutral100};
 
-  ${StyledRequiredCharacteristicCheckbox} {
+  ${StyledCheckbox} {
     color: white;
     border-color: ${theme.colors.blue800};
     background-color: ${theme.colors.blue800};
   }
 `;
 
-const StyledRequiredCharacteristic = styled.label`
+const StyledCheckboxWrapper = styled.label`
   padding: 12px;
   font-size: 15px;
   font-weight: 400;
   line-height: 20px;
-  margin-bottom: 8px;
   position: relative;
   border-radius: 12px;
   padding-left: 52px;
@@ -56,14 +56,14 @@ const StyledRequiredCharacteristic = styled.label`
     position: absolute;
   }
 
-  ${(p) => p.$selected && StyledRequiredCharacteristic_Selected};
+  ${(p) => p.$selected && StyledCheckboxWrapper_Selected};
 `;
 
-export default function RequiredCharacteristic({ children, ...rest }) {
+function Checkbox({ children, ...rest }) {
   return (
-    <StyledRequiredCharacteristic $selected={rest.checked}>
+    <StyledCheckboxWrapper $selected={rest.checked}>
       <input type="checkbox" {...rest} />
-      <StyledRequiredCharacteristicCheckbox>
+      <StyledCheckbox>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="10"
@@ -78,8 +78,38 @@ export default function RequiredCharacteristic({ children, ...rest }) {
             clipRule="evenodd"
           ></path>
         </svg>
-      </StyledRequiredCharacteristicCheckbox>
+      </StyledCheckbox>
       {children}
-    </StyledRequiredCharacteristic>
+    </StyledCheckboxWrapper>
+  );
+}
+
+export default function CheckboxInput({
+  name,
+  options,
+  optionsPerRow,
+  alignWidth,
+}) {
+  return (
+    <Box
+      display="grid"
+      gridTemplateColumns={`repeat(${optionsPerRow || 1}, ${
+        alignWidth ? "minmax(0, 1fr)" : "auto"
+      })`}
+      gridColumnGap={2}
+      gridRowGap={2}
+    >
+      {options.map((option, i) => (
+        <FormField
+          key={i}
+          type="checkbox"
+          value={option?.value || option}
+          as={Checkbox}
+          name={name}
+        >
+          {option?.label || option}
+        </FormField>
+      ))}
+    </Box>
   );
 }
