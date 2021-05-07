@@ -128,11 +128,7 @@ export const usePublishPreviousProject = (props) =>
 export const DELETE = gql`
   mutation deletePhoto($input: DeletePreviousProjectImageInput!) {
     deletePreviousProjectImage(input: $input) {
-      image {
-        id
-        url
-        cover
-      }
+      success
     }
   }
 `;

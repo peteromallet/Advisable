@@ -257,7 +257,7 @@ const PortfolioImage = React.memo(function PortfolioImage({
     deleteImage({
       variables: {
         input: {
-          previousProjectImage: image.id,
+          id: image.id,
         },
       },
     });
