@@ -140,7 +140,6 @@ end
 #  application_rejected_at           :datetime
 #  application_reminder_at           :datetime
 #  availability                      :text
-#  budget                            :bigint
 #  campaign_medium                   :string
 #  campaign_name                     :string
 #  campaign_source                   :string
