@@ -7,7 +7,7 @@ module Types
       description "Type definition for CaseStudy::Industry"
 
       field :id, ID, null: false, method: :uid
-      field :article, ArticleType, null: false
+      field :article, Article, null: false
       field :industry, Types::IndustryType, null: false
     end
   end

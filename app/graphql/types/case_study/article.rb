@@ -2,7 +2,7 @@
 
 module Types
   module CaseStudy
-    class ArticleType < Types::BaseType
+    class Article < Types::BaseType
       graphql_name "CaseStudyArticle"
       description "Type definition for CaseStudy::Article"
 

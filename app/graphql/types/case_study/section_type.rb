@@ -8,7 +8,7 @@ module Types
 
       field :id, ID, null: false, method: :uid
       field :type, String, null: false
-      field :article, ArticleType, null: false
+      field :article, Article, null: false
 
       field :contents, [Types::CaseStudy::ContentInterface], null: true
       def contents
