@@ -5,7 +5,7 @@ class Event < ApplicationRecord
   include Resizable
 
   COLORS = %w[blue purple cyan orange].freeze
-
+  STATUSES = %w[Proposed Accepted Rejected].freeze
   has_many :event_attendees, inverse_of: :event, dependent: :destroy
   has_many :attendees, through: :event_attendees
   belongs_to :host, class_name: 'Specialist'
@@ -17,6 +17,7 @@ class Event < ApplicationRecord
   validates :title, length: {maximum: 250, minimum: 8}
   validates :description, length: {maximum: 10_000, minimum: 16}
   validates :color, inclusion: {in: COLORS}
+  validates :status, inclusion: {in: STATUSES}, allow_blank: true
 
   validate :end_is_after_start
 
@@ -38,6 +39,8 @@ class Event < ApplicationRecord
   end
 
   def end_is_after_start
+    return unless starts_at.present? && ends_at.present?
+
     errors.add(:ends_at, "must be after starts_at") if starts_at >= ends_at
   end
 
@@ -54,19 +57,21 @@ end
 #
 # Table name: events
 #
-#  id           :bigint           not null, primary key
-#  color        :string           not null
-#  description  :text             not null
-#  ends_at      :datetime
-#  featured     :boolean          default(FALSE)
-#  published_at :datetime
-#  starts_at    :datetime
-#  title        :string           not null
-#  uid          :string           not null
-#  url          :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  host_id      :bigint
+#  id                 :bigint           not null, primary key
+#  color              :string           not null
+#  description        :text             not null
+#  ends_at            :datetime
+#  featured           :boolean          default(FALSE)
+#  published_at       :datetime
+#  starts_at          :datetime
+#  status             :string
+#  title              :string           not null
+#  uid                :string           not null
+#  url                :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  google_calendar_id :string
+#  host_id            :bigint
 #
 # Indexes
 #
