@@ -7,11 +7,13 @@ import Loading from "./Loading";
 import { GET_PROJECTS } from "./queries";
 import ProjectsList from "./ProjectsList";
 import UpdateIndustryModal from "./UpdateIndustryModal";
-import dataLayer from "../../utilities/dataLayer";
+import dataLayer from "src/utilities/dataLayer";
+import useViewer from "src/hooks/useViewer";
 import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
 import ClientApplicationPrompt from "src/components/ClientApplicationPrompt";
 
 const Projects = () => {
+  const viewer = useViewer();
   const location = useLocation();
   const { loading, data } = useQuery(GET_PROJECTS);
 
@@ -48,17 +50,6 @@ const Projects = () => {
       <ClientApplicationPrompt />
       <AccountConfirmationPrompt />
 
-      <Text
-        mb={5}
-        as="h2"
-        fontSize="4xl"
-        color="neutral900"
-        fontWeight="medium"
-        letterSpacing="-0.04rem"
-      >
-        Your Projects
-      </Text>
-
       {!loading && (
         <UpdateIndustryModal
           industry={data?.viewer.industry}
@@ -66,14 +57,29 @@ const Projects = () => {
         />
       )}
 
-      {loading ? (
-        <Loading />
-      ) : (
-        <ProjectsList
-          projects={data.currentCompany.projects}
-          onCreate={handleCreate}
-        />
-      )}
+      {viewer.isAccepted ? (
+        <>
+          <Text
+            mb={5}
+            as="h2"
+            fontSize="4xl"
+            color="neutral900"
+            fontWeight="medium"
+            letterSpacing="-0.04rem"
+          >
+            Your Projects
+          </Text>
+
+          {loading ? (
+            <Loading />
+          ) : (
+            <ProjectsList
+              projects={data.currentCompany.projects}
+              onCreate={handleCreate}
+            />
+          )}
+        </>
+      ) : null}
     </Container>
   );
 };
