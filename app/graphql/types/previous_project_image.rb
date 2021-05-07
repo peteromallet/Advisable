@@ -2,12 +2,16 @@
 
 module Types
   class PreviousProjectImage < Types::BaseType
+    description <<~HEREDOC
+      Represents an image attached to a previous project
+    HEREDOC
+
     field :id, ID, null: false
 
     field :cover, Boolean, null: false
     def cover
       cover_photo = object.record.cover_photo
-      blob_id = cover_photo ? cover_photo.blob_id : object.record.images.first&.blob_id
+      blob_id = cover_photo.attached? ? cover_photo.blob_id : object.record.images.first&.blob_id
       object.blob_id == blob_id
     end
 
