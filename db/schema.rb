@@ -983,7 +983,6 @@ ActiveRecord::Schema.define(version: 2021_05_05_073416) do
     t.string "campaign_medium"
     t.string "contact_status"
     t.string "fid"
-    t.bigint "budget"
     t.integer "locality_importance"
     t.datetime "accepted_guarantee_terms_at"
     t.string "talent_quality"
