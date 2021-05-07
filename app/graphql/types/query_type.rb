@@ -361,5 +361,19 @@ module Types
     def case_study(id:)
       ::CaseStudy::Article.find_by!(uid: id)
     end
+
+    field :case_study_search, Types::CaseStudy::Search, null: true do
+      argument :id, ID, required: true
+    end
+
+    def case_study_search(id:)
+      ::CaseStudy::Search.find_by!(uid: id)
+    end
+
+    field :case_study_searches, [Types::CaseStudy::Search], null: true, max_page_size: 20
+
+    def case_study_searches
+      current_user.searches
+    end
   end
 end
