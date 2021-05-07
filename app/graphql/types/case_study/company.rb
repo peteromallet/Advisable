@@ -2,7 +2,7 @@
 
 module Types
   module CaseStudy
-    class CompanyType < Types::BaseType
+    class Company < Types::BaseType
       graphql_name "CaseStudyCompany"
       description "Type definition for CaseStudy::Company"
 
