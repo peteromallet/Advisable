@@ -27,7 +27,7 @@ RSpec.describe 'Events view', type: :system do
       event.attendees << specialist
       visit "/guild/events"
       expect(page).to have_content("Attending")
-      expect(page).to have_content("#{event.reload.attendees_count} Attending")
+      expect(page).to have_content("#{event.attendees.count} Attending")
     end
   end
 end

@@ -34,7 +34,7 @@ RSpec.describe Mutations::UpdateEventRegistration do
         update_event_registration
         event.reload
       end.to change(EventAttendee, :count).from(0).to(1).
-        and change(event, :attendees_count).from(0).to(1)
+        and change(event.attendees, :count).from(0).to(1)
     end
 
     it "does not register the current_user of they are already registered" do
@@ -43,7 +43,7 @@ RSpec.describe Mutations::UpdateEventRegistration do
       expect do
         update_event_registration
         event.reload
-      end.not_to change(event, :attendees_count)
+      end.to change(event, :event_attendees)
     end
 
     it "returns an event and whether current user is attending" do
@@ -85,7 +85,7 @@ RSpec.describe Mutations::UpdateEventRegistration do
       expect do
         update_event_registration
         event.reload
-      end.to change(event, :attendees_count).from(1).to(0)
+      end.to change(event.event_attendees, :count).from(1).to(0)
     end
 
     it "shows the viewer as not attending" do
