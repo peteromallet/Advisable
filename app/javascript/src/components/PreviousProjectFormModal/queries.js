@@ -45,6 +45,7 @@ const previousProjectFields = gql`
       id
       url
       cover
+      signedId
     }
     primaryIndustry {
       id

@@ -15,6 +15,11 @@ module Types
       object.blob_id == blob_id
     end
 
+    field :signed_id, String, null: false
+    def signed_id
+      object.blob.signed_id
+    end
+
     field :url, String, null: false
     def url
       if object.record.cover_photo.blob_id == object.blob_id
