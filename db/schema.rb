@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_07_065127) do
+ActiveRecord::Schema.define(version: 2021_05_07_095425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -241,6 +241,20 @@ ActiveRecord::Schema.define(version: 2021_05_07_065127) do
     t.index ["uid"], name: "index_case_study_industries_on_uid"
   end
 
+  create_table "case_study_searches", force: :cascade do |t|
+    t.string "uid", null: false
+    t.string "name"
+    t.bigint "user_id", null: false
+    t.string "business_type"
+    t.jsonb "goals"
+    t.jsonb "saved"
+    t.jsonb "archived"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uid"], name: "index_case_study_searches_on_uid"
+    t.index ["user_id"], name: "index_case_study_searches_on_user_id"
+  end
+
   create_table "case_study_sections", force: :cascade do |t|
     t.string "uid", null: false
     t.bigint "article_id", null: false
@@ -256,12 +270,14 @@ ActiveRecord::Schema.define(version: 2021_05_07_065127) do
   create_table "case_study_skills", force: :cascade do |t|
     t.string "uid", null: false
     t.boolean "primary"
-    t.bigint "article_id", null: false
+    t.bigint "article_id"
     t.bigint "skill_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
+    t.bigint "search_id"
     t.index ["article_id"], name: "index_case_study_skills_on_article_id"
+    t.index ["search_id"], name: "index_case_study_skills_on_search_id"
     t.index ["skill_id"], name: "index_case_study_skills_on_skill_id"
     t.index ["uid"], name: "index_case_study_skills_on_uid"
   end
@@ -1058,8 +1074,10 @@ ActiveRecord::Schema.define(version: 2021_05_07_065127) do
   add_foreign_key "case_study_contents", "case_study_sections", column: "section_id"
   add_foreign_key "case_study_industries", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "industries"
+  add_foreign_key "case_study_searches", "users"
   add_foreign_key "case_study_sections", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_skills", "case_study_articles", column: "article_id"
+  add_foreign_key "case_study_skills", "case_study_searches", column: "search_id"
   add_foreign_key "case_study_skills", "skills"
   add_foreign_key "client_calls", "projects"
   add_foreign_key "client_calls", "sales_people"
