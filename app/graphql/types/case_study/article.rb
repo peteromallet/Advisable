@@ -11,7 +11,7 @@ module Types
       field :company, Company, null: true do
         authorize :read_company?
       end
-      field :skills, [SkillType], null: true
+      field :skills, [Skill], null: true
       field :industries, [Industry], null: true
       field :title, String, null: true
       field :subtitle, String, null: true
