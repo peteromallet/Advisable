@@ -20,9 +20,9 @@ module Types
         object.skills.find_by(primary: true)
       end
       field :goals, [String], null: true
-      field :saved, Types::CaseStudy::ArticleType.connection_type, null: true
-      field :archived, Types::CaseStudy::ArticleType.connection_type, null: true
-      field :results, Types::CaseStudy::ArticleType.connection_type, null: true
+      field :saved, Article.connection_type, null: true
+      field :archived, Article.connection_type, null: true
+      field :results, Article.connection_type, null: true
     end
   end
 end

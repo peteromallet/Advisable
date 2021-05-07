@@ -8,7 +8,7 @@ module Types
 
       field :id, ID, null: false, method: :uid
       field :primary, Boolean, null: true
-      field :article, ArticleType, null: false
+      field :article, Article, null: false
       field :skill, Skill, null: false
     end
   end
