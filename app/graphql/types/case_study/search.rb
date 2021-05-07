@@ -14,8 +14,8 @@ module Types
 
       field :id, ID, null: false, method: :uid
       field :name, String, null: false
-      field :skills, [SkillType], null: true
-      field :primary_skill, SkillType, null: true
+      field :skills, [Skill], null: true
+      field :primary_skill, Skill, null: true
       def primary_skill
         object.skills.find_by(primary: true)
       end

@@ -2,7 +2,7 @@
 
 module Types
   module CaseStudy
-    class SkillType < Types::BaseType
+    class Skill < Types::BaseType
       graphql_name "CaseStudySkill"
       description "Type definition for CaseStudy::Skill"
 
