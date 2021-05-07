@@ -33,6 +33,10 @@ module TwilioChat
         @channel = nil
         update_friendly_name!
       end
+    rescue Twilio::REST::RestError => e
+      raise unless e.message.starts_with?("[HTTP 404]")
+
+      Sentry.capture_message("Nothing to delete for #{uid}", level: "info")
     end
 
     def check_membership
