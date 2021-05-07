@@ -3,6 +3,9 @@
 module Types
   class PreviousProject < Types::BaseType
     include PreviousProjectHelper
+
+    description "Represents a specialists previous project"
+
     field :goal, String, null: true
     field :description, String, null: true
     field :specialist, Types::SpecialistType, null: false
@@ -20,7 +23,7 @@ module Types
 
     field :cover_photo, Types::PreviousProjectImage, null: true
     def cover_photo
-      object.cover_photo || object.images.first
+      object.cover_photo.presence || object.images.first
     end
 
     field :industry_relevance, Integer, null: true
