@@ -39,6 +39,8 @@ class Event < ApplicationRecord
   end
 
   def end_is_after_start
+    return unless starts_at.present? && ends_at.present?
+
     errors.add(:ends_at, "must be after starts_at") if starts_at >= ends_at
   end
 
