@@ -24,7 +24,7 @@ module Types
       field :published_at, GraphQL::Types::ISO8601DateTime, null: true
       field :specialist_approved_at, GraphQL::Types::ISO8601DateTime, null: true
 
-      field :sections, [SectionType], null: true
+      field :sections, [Section], null: true
       def sections
         object.sections.by_position
       end

@@ -2,7 +2,7 @@
 
 module Types
   module CaseStudy
-    class SectionType < Types::BaseType
+    class Section < Types::BaseType
       graphql_name "CaseStudySection"
       description "Type definition for CaseStudy::Section"
 
