@@ -9,7 +9,7 @@ module Types
       field :id, ID, null: false, method: :uid
       field :position, Int, null: false
       field :type, String, null: false
-      field :section, SectionType, null: false
+      field :section, Section, null: false
       field :content, GraphQL::Types::JSON, null: false
     end
   end
