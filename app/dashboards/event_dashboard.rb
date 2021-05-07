@@ -15,7 +15,6 @@ class EventDashboard < Administrate::BaseDashboard
     published_at: Field::DateTime.with_options(DATETIME_OPTIONS),
     featured: Field::Boolean,
     cover_photo: Field::ActiveStorage.with_options(direct_upload: true),
-    attendees_count: Field::Number,
     attendees: Field::HasMany.with_options(class_name: 'Specialist'),
     created_at: Field::DateTime,
     description: Field::Text,
@@ -27,7 +26,6 @@ class EventDashboard < Administrate::BaseDashboard
     title
     starts_at
     ends_at
-    attendees_count
     uid
     status
   ].freeze
@@ -39,7 +37,6 @@ class EventDashboard < Administrate::BaseDashboard
     starts_at
     ends_at
     host
-    attendees_count
     attendees
     cover_photo
     published_at
