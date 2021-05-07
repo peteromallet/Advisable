@@ -175,6 +175,20 @@ const CREATE_PHOTO = gql`
         id
         url
         cover
+        signedId
+      }
+    }
+  }
+`;
+
+const SET_COVER = gql`
+  mutation setCoverPhoto($input: SetPreviousProjectCoverImageInput!) {
+    setPreviousProjectCoverImage(input: $input) {
+      image {
+        id
+        url
+        cover
+        signedId
       }
     }
   }
@@ -220,6 +234,7 @@ function Upload({ previousProjectId, image, dispatch, onClick }) {
 
       dispatch({
         type: "UPLOAD_FINISHED",
+        key: image.key,
         image: newImage,
       });
     },
@@ -254,16 +269,20 @@ const PortfolioImage = React.memo(function PortfolioImage({
 
   const handleRemove = (e) => {
     e.stopPropagation();
-    deleteImage({
-      variables: {
-        input: {
-          id: image.id,
+
+    if (image.id) {
+      deleteImage({
+        variables: {
+          input: {
+            id: image.id,
+          },
         },
-      },
-    });
+      });
+    }
+
     dispatch({
       type: "REMOVE_IMAGE",
-      id: image.id,
+      key: image.key,
     });
   };
 
@@ -283,6 +302,7 @@ const PortfolioImage = React.memo(function PortfolioImage({
 function ImageTiles({ images, dispatch, previousProjectId }) {
   const client = useApolloClient();
   const cover = find(images, { cover: true });
+  const [createImage] = useMutation(SET_COVER);
   const { error } = useNotifications();
   const accept = ".png, .jpg, .jpeg";
 
@@ -291,8 +311,19 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
 
     dispatch({
       type: "SET_COVER",
-      id: image.id,
+      key: image.key,
     });
+
+    if (image.signedId) {
+      createImage({
+        variables: {
+          input: {
+            previousProject: previousProjectId,
+            attachment: image.signedId,
+          },
+        },
+      });
+    }
 
     // Unset the existing cover photo in the graphql cache
     if (cover) {
@@ -315,7 +346,7 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
     if (image.uploading) {
       return (
         <Upload
-          key={image.id}
+          key={image.key}
           image={image}
           dispatch={dispatch}
           previousProjectId={previousProjectId}
@@ -326,7 +357,7 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
 
     return (
       <PortfolioImage
-        key={image.id}
+        key={image.key}
         image={image}
         dispatch={dispatch}
         onClick={handleSetCover(image)}
