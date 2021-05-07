@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_05_073416) do
+ActiveRecord::Schema.define(version: 2021_05_07_065127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -326,6 +326,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_073416) do
     t.jsonb "address"
     t.boolean "bank_transfers_enabled", default: false
     t.bigint "budget"
+    t.jsonb "log_data"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
     t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
   end
@@ -1402,6 +1403,9 @@ ActiveRecord::Schema.define(version: 2021_05_05_073416) do
   SQL
   create_trigger :logidze_on_applications, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_applications BEFORE INSERT OR UPDATE ON public.applications FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_companies, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_companies BEFORE INSERT OR UPDATE ON public.companies FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_off_platform_projects, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_off_platform_projects BEFORE INSERT OR UPDATE ON public.off_platform_projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Company < ApplicationRecord
+  has_logidze
+
   belongs_to :sales_person, optional: true
   belongs_to :industry, optional: true
   has_many :users, dependent: :nullify
