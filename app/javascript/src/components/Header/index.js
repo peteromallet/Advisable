@@ -47,7 +47,7 @@ const Header = () => {
           <Logo href={logoURL}>
             <img src={logo} alt="" />
           </Logo>
-          {viewer && viewer.isClient && (
+          {viewer && viewer.isClient && viewer.isAccepted && (
             <ClientNavigation
               navOpen={navOpen}
               onCloseNav={() => setNavOpen(false)}
