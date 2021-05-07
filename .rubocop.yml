@@ -91,6 +91,9 @@ Rails/DynamicFindBy:
 Rails/SquishedSQLHeredocs:
   Enabled: false
 
+Rails/EnvironmentVariableAccess:
+  Enabled: false
+
 RSpec/ExampleLength:
   Enabled: false
 
