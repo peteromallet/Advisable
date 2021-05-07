@@ -8,7 +8,7 @@ module Types
 
       field :id, ID, null: false, method: :uid
       field :specialist, Types::SpecialistType, null: true
-      field :company, CompanyType, null: true do
+      field :company, Company, null: true do
         authorize :read_company?
       end
       field :skills, [SkillType], null: true
