@@ -2,7 +2,7 @@
 
 module Types
   module CaseStudy
-    class IndustryType < Types::BaseType
+    class Industry < Types::BaseType
       graphql_name "CaseStudyIndustry"
       description "Type definition for CaseStudy::Industry"
 

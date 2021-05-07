@@ -12,7 +12,7 @@ module Types
         authorize :read_company?
       end
       field :skills, [SkillType], null: true
-      field :industries, [IndustryType], null: true
+      field :industries, [Industry], null: true
       field :title, String, null: true
       field :subtitle, String, null: true
       field :excerpt, String, null: true
