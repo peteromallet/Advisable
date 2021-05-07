@@ -10,10 +10,7 @@ import { useMutation, useApolloClient } from "@apollo/client";
 import { DirectUpload } from "@rails/activestorage";
 import { useNotifications } from "src/components/Notifications";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
-import {
-  GET_PREVIOUS_PROJECT,
-  useDeletePreviousProjectImage,
-} from "./queries";
+import { GET_PREVIOUS_PROJECT, useDeletePreviousProjectImage } from "./queries";
 import matchFileType from "src/utilities/matchFileType";
 
 const StyledImageTiles = styled.div`
@@ -213,11 +210,8 @@ function Upload({ previousProjectId, image, dispatch, onClick }) {
       const r = await createImage({
         variables: {
           input: {
-            id: image.id,
             previousProject: previousProjectId,
             attachment: blob.signed_id,
-            cover: image.cover,
-            position: image.position,
           },
         },
       });
@@ -254,7 +248,6 @@ const PortfolioImage = React.memo(function PortfolioImage({
 
   const handleClick = () => {
     if (image.cover) return;
-
 
     onClick();
   };
