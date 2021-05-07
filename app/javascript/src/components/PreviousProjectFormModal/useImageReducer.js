@@ -1,6 +1,22 @@
 import { useReducer } from "react";
-import { find } from "lodash-es";
-import generateID from "../../utilities/generateID";
+import generateID from "src/utilities/generateID";
+
+function attributesFromAttachment(attachment) {
+  return {
+    key: generateID("ppi"),
+    uploading: false,
+    id: attachment.id,
+    url: attachment.url,
+    cover: attachment.cover,
+    signedId: attachment.signedId,
+  };
+}
+
+function initializeState(attachments) {
+  return attachments.map((attachment) => {
+    return attributesFromAttachment(attachment);
+  });
+}
 
 // We manage all of the photos inside of a state reducer. This is to make the UX when managing
 // images a little better. e.g Allow users to change cover photos before the photos finish
@@ -19,22 +35,20 @@ function reducer(state, action) {
       return [
         ...state,
         {
-          id: generateID("ppi"),
+          key: generateID("ppi"),
           uploading: true,
           file: action.file,
           cover: action.cover,
-          position: action.position,
         },
       ];
     }
 
     case "UPLOAD_FINISHED": {
       return state.map((image) => {
-        if (image.id === action.image.id) {
+        if (image.key === action.key) {
           return {
             ...image,
-            ...action.image,
-            uploading: false,
+            ...attributesFromAttachment(action.image),
           };
         }
 
@@ -43,9 +57,10 @@ function reducer(state, action) {
     }
 
     case "REMOVE_IMAGE": {
-      const isCover = find(state, { id: action.id })?.cover || false;
+      const image = state.find((i) => i.key === action.key);
+      const isCover = image?.cover || false;
 
-      let nextState = state.filter((img) => img.id !== action.id);
+      const nextState = state.filter((i) => i.key !== image.key);
 
       if (isCover && nextState[0]) {
         nextState[0].cover = true;
@@ -55,14 +70,14 @@ function reducer(state, action) {
     }
 
     case "SET_COVER": {
-      const cover = find(state, { cover: true });
+      const cover = state.find((i) => i.cover);
 
       return state.map((image) => {
-        if (image.id === action.id) {
+        if (image.key === action.key) {
           return { ...image, cover: true };
         }
 
-        if (image.id === cover?.id) {
+        if (image.key === cover?.key) {
           return { ...image, cover: false };
         }
 
@@ -73,7 +88,8 @@ function reducer(state, action) {
 }
 
 function useImageReducer(images) {
-  return useReducer(reducer, images);
+  const initState = initializeState(images);
+  return useReducer(reducer, initState);
 }
 
 export default useImageReducer;
