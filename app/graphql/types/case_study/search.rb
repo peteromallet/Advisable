@@ -4,7 +4,7 @@ module Types
   module CaseStudy
     class Search < Types::BaseType
       def self.authorized?(search, context)
-        policy = CaseStudy::SearchPolicy.new(context[:current_user], search)
+        policy = ::CaseStudy::SearchPolicy.new(context[:current_user], search)
         ApiError.not_authorized("You do not have permission to view this Search") unless policy.read?
         super
       end
