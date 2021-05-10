@@ -7,6 +7,7 @@ module Mutations
     # rubocop:disable GraphQL/ExtractInputType
     argument :attachment, String, required: true
     argument :cover, Boolean, required: true
+    argument :position, Int, required: true
     argument :previous_project, ID, required: true
     # rubocop:enable GraphQL/ExtractInputType
 
@@ -19,7 +20,7 @@ module Mutations
       policy.create_image?
     end
 
-    def resolve(previous_project:, attachment:, cover:)
+    def resolve(previous_project:, attachment:, cover:, position:)
       project = PreviousProject.find_by!(uid: previous_project)
       blob = ActiveStorage::Blob.find_signed!(attachment)
       project.images.attach(blob)

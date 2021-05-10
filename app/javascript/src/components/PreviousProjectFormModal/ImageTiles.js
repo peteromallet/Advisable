@@ -194,7 +194,7 @@ const SET_COVER = gql`
   }
 `;
 
-function Upload({ previousProjectId, image, dispatch, onClick }) {
+function Upload({ previousProjectId, image, dispatch, onClick, position }) {
   const [createImage] = useMutation(CREATE_PHOTO, {
     update(client, { data }) {
       const prev = client.readQuery({
@@ -223,6 +223,7 @@ function Upload({ previousProjectId, image, dispatch, onClick }) {
       const r = await createImage({
         variables: {
           input: {
+            position,
             cover: image.cover,
             previousProject: previousProjectId,
             attachment: blob.signed_id,
@@ -342,13 +343,14 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
     }
   };
 
-  const tiles = images.map((image) => {
+  const tiles = images.map((image, index) => {
     if (image.uploading) {
       return (
         <Upload
           key={image.key}
           image={image}
           dispatch={dispatch}
+          position={index}
           previousProjectId={previousProjectId}
           onClick={handleSetCover(image)}
         />
