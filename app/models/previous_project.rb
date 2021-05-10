@@ -28,8 +28,7 @@ class PreviousProject < ApplicationRecord
   has_logidze
 
   has_one_attached :contact_image
-  has_one_attached :cover_photo
-  resize contact_image: {resize_to_limit: [400, 400]}, cover_photo: {resize_to_limit: [1600, 1600]}
+  resize contact_image: {resize_to_limit: [400, 400]}
   has_many_attached :images
   resize_many images: {resize_to_limit: [1600, 1600]}
 
@@ -68,6 +67,10 @@ class PreviousProject < ApplicationRecord
   # associated specialists project count.
   after_destroy :update_specialist_project_count
   after_save :update_specialist_project_count
+
+  def cover_photo
+    images.find_by(id: cover_photo_id).presence || images.first
+  end
 
   def on_platform?
     application_id.present?
@@ -143,16 +146,19 @@ end
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
 #  application_id              :bigint
+#  cover_photo_id              :bigint
 #  reviewed_by_id              :bigint
 #  specialist_id               :bigint
 #
 # Indexes
 #
 #  index_off_platform_projects_on_application_id  (application_id)
+#  index_off_platform_projects_on_cover_photo_id  (cover_photo_id)
 #  index_off_platform_projects_on_reviewed_by_id  (reviewed_by_id)
 #  index_off_platform_projects_on_specialist_id   (specialist_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (cover_photo_id => active_storage_attachments.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #
