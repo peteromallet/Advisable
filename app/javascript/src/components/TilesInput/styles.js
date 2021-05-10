@@ -35,7 +35,7 @@ const StyledTilesInputOption = styled.button`
   box-shadow: inset 0px 0px 0px 0px ${theme.colors.blue500};
 
   & span {
-    color: ${theme.colors.neutral500};
+    color: ${theme.colors.neutral600};
   }
 
   &:hover {
