@@ -18,7 +18,7 @@ module Toby
       attribute :updated_at, Attributes::DateTime, readonly: true
 
       def self.label(record)
-        record.name
+        record.email
       end
 
       def self.search(query)

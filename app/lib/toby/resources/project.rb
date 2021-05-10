@@ -26,6 +26,16 @@ module Toby
       attribute :accepted_terms_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
+
+      def self.label(record)
+        primary_skill = record.primary_skill&.name
+        company = record.user&.company&.name
+        "#{company} - #{primary_skill}"
+      end
+
+      def self.search(query)
+        ::Project.joins(user: :company).where("companies.name ilike ?", "%#{query}%")
+      end
     end
   end
 end

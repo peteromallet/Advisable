@@ -20,6 +20,14 @@ module Toby
       attribute :unavailable_until, Attributes::Date
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
+
+      def self.label(record)
+        record.account&.email || record.id
+      end
+
+      def self.search(query)
+        ::Specialist.joins(:account).where("accounts.email ilike ?", "%#{query}%")
+      end
     end
   end
 end
