@@ -13,9 +13,16 @@ function attributesFromAttachment(attachment) {
 }
 
 function initializeState(attachments) {
-  return attachments.map((attachment) => {
+  const images = attachments.map((attachment) => {
     return attributesFromAttachment(attachment);
   });
+
+  const hasCover = images.some((i) => i.cover);
+  if (!hasCover && images.length > 0) {
+    images[0].cover = true;
+  }
+
+  return images;
 }
 
 // We manage all of the photos inside of a state reducer. This is to make the UX when managing
