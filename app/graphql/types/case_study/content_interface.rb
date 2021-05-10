@@ -10,7 +10,7 @@ module Types
       orphan_types(ParagraphContent, HeadingContent, ImagesContent, ResultsContent)
 
       field :id, ID, null: false, method: :uid
-      field :section, SectionType, null: false
+      field :section, Section, null: false
 
       definition_methods do
         def resolve_type(object, _context)
