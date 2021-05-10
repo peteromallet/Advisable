@@ -1,8 +1,15 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
-import { StyledTilesInputOption } from "./styles";
+import StyledTilesInputOption from "./styles";
 
-function TilesInput({ onChange, value, options, alignWidth, optionsPerRow }) {
+function TilesInput({
+  onChange,
+  value,
+  options,
+  alignWidth,
+  optionsPerRow,
+  size = "m",
+}) {
   const createClickHandler = (value) => () => onChange(value);
   const numberOfTiles = options.length;
 
@@ -18,8 +25,9 @@ function TilesInput({ onChange, value, options, alignWidth, optionsPerRow }) {
       >
         {options.map((option) => (
           <StyledTilesInputOption
-            key={option.value}
+            size={size}
             type="button"
+            key={option.value}
             data-selected={value === option.value}
             aria-label={option.label}
             onClick={createClickHandler(option.value)}
