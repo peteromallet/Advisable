@@ -108,7 +108,7 @@
     "jest-styled-components": "^7.0.4",
     "jest-transform-graphql": "^2.1.0",
     "jest-watch-typeahead": "^0.6.3",
-    "lint-staged": ">=10.5.4",
+    "lint-staged": ">=11.0.0",
     "pixelmatch": "^5.2.1",
     "prettier": "^2.3.0",
     "react-refresh": "^0.10.0",
