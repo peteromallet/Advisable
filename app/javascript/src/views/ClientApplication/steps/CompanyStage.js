@@ -50,8 +50,9 @@ export default function CompanyStage({ clientApplication }) {
             <StepNumber>Step 2 of 4</StepNumber>
             <Header>Company Stage</Header>
             <Description>Some description</Description>
-            <Box mb={6}>
+            <Box mb={4}>
               <FormField
+                size="l"
                 isRequired
                 as={TilesInput}
                 optionsPerRow={2}
