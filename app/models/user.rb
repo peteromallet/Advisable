@@ -38,6 +38,7 @@ class User < ApplicationRecord
   has_many :user_skills, dependent: :destroy
   has_many :skills, through: :user_skills
   has_many :client_calls, dependent: :destroy
+  has_many :searches, class_name: "CaseStudy::Search", dependent: :destroy
   has_one :client_user, dependent: :destroy
   has_one :client, through: :client_user
 

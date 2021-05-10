@@ -348,13 +348,13 @@ module Types
       current_user.guild_notifications
     end
 
-    field :case_studies, [Types::CaseStudy::ArticleType], null: true, max_page_size: 20
+    field :case_studies, [Types::CaseStudy::Article], null: true, max_page_size: 20
 
     def case_studies
       ::CaseStudy::Article.published
     end
 
-    field :case_study, Types::CaseStudy::ArticleType, null: true do
+    field :case_study, Types::CaseStudy::Article, null: true do
       argument :id, ID, required: true
     end
 

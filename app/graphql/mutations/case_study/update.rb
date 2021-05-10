@@ -9,7 +9,7 @@ module Mutations
       argument :id, ID, required: true
       argument :sections, [GraphQL::Types::JSON], required: true
 
-      field :article, Types::CaseStudy::ArticleType, null: false
+      field :article, Types::CaseStudy::Article, null: false
 
       def authorized?(id:, **_extra)
         article = ::CaseStudy::Article.find_by!(uid: id)

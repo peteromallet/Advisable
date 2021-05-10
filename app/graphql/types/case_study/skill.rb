@@ -2,13 +2,13 @@
 
 module Types
   module CaseStudy
-    class SkillType < Types::BaseType
+    class Skill < Types::BaseType
       graphql_name "CaseStudySkill"
       description "Type definition for CaseStudy::Skill"
 
       field :id, ID, null: false, method: :uid
       field :primary, Boolean, null: true
-      field :article, ArticleType, null: false
+      field :article, Article, null: false
       field :skill, Skill, null: false
     end
   end
