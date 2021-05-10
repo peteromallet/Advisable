@@ -51,19 +51,19 @@ export function attributeFormValueInitializer(attribute) {
   return handler?.initializeFormValue;
 }
 
-function AttributeField({ component: Component, record, attribute }) {
+function AttributeField({ component: Component, record, attribute, ...props }) {
   const [, meta] = useField(attribute.name);
   const error = meta.touched && meta.error;
 
   return (
     <>
-      <Component record={record} attribute={attribute} />
+      <Component record={record} attribute={attribute} {...props} />
       {error && <FieldError mt={2}>{error}</FieldError>}
     </>
   );
 }
 
-export function AttributeInput({ record, attribute }) {
+export function AttributeInput({ record, attribute, ...props }) {
   const handler = ATTRIBUTES[attribute.__typename];
 
   if (attribute.readonly || !handler?.input) {
@@ -75,6 +75,7 @@ export function AttributeInput({ record, attribute }) {
       component={handler.input}
       record={record}
       attribute={attribute}
+      {...props}
     />
   );
 }

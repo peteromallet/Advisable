@@ -56,6 +56,12 @@ module Toby
           root = self
           type_class = Class.new(GraphQL::Schema::Object) do
             graphql_name(root.model.name)
+            field :_label, String, null: false
+
+            define_method(:_label) do
+              root.label(object)
+            end
+
             root.attributes.each do |attribute|
               # define a field for each attribute
               field attribute.name, attribute.type, null: true
@@ -118,6 +124,10 @@ module Toby
             argument :id, GraphQL::Schema::Object::ID, required: true
             field :success, GraphQL::Types::Boolean, null: true
           end
+        end
+
+        def label(record)
+          record.id
         end
 
         def search(input)
