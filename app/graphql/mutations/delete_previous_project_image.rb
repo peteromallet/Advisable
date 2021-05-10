@@ -15,6 +15,7 @@ module Mutations
 
     def resolve(id:)
       image = ActiveStorage::Attachment.find(id)
+      image.record.update(cover_photo_id: nil) if image.record.cover_photo_id == id.to_i
       image.destroy
       {success: true}
     end
