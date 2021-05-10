@@ -13,7 +13,12 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
   const accept = ".png, .jpg, .jpeg";
 
   React.useEffect(() => {
-    if (cover?.uploading) {
+    if (!cover) {
+      setBackground(null);
+      return;
+    }
+
+    if (cover.file) {
       const reader = new FileReader();
 
       reader.onload = (e) => {
@@ -22,7 +27,7 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
 
       reader.readAsDataURL(cover.file);
     } else {
-      setBackground(cover?.url);
+      setBackground(cover.url);
     }
   }, [cover]);
 
