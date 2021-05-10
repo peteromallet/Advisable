@@ -20,16 +20,16 @@ module Types
     field :contact_name, String, null: true
     field :contact_job_title, String, null: true
     field :contact_relationship, String, null: true
-
     field :cover_photo, Types::PreviousProjectImage, null: true
-    def cover_photo
-      object.cover_photo&.attachment || object.images.first
-    end
-
     field :industry_relevance, Integer, null: true
     field :location_relevance, Integer, null: true
     field :pending_description, String, null: true, deprecation_reason: "Descriptions dont need to be approved anymore"
+
     field :images, [Types::PreviousProjectImage], null: false
+    def images
+      object.images.order(:position)
+    end
+
     field :id, ID, null: false, method: :uid
 
     field :draft, Boolean, null: false

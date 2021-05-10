@@ -17,8 +17,9 @@ module Mutations
 
     def resolve(previous_project:, attachment:)
       project = PreviousProject.find_by!(uid: previous_project)
-      project.cover_photo.attach(attachment)
-      image = project.reload.cover_photo.attachment
+      blob = ActiveStorage::Blob.find_signed!(attachment)
+      image = blob.attachments.find_by(record: project)
+      project.update(cover_photo_id: image.id)
 
       {image: image}
     end
