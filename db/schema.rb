@@ -639,7 +639,9 @@ ActiveRecord::Schema.define(version: 2021_05_13_084713) do
     t.string "validation_failed_reason"
     t.bigint "reviewed_by_id"
     t.jsonb "log_data"
+    t.bigint "cover_photo_id"
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
+    t.index ["cover_photo_id"], name: "index_off_platform_projects_on_cover_photo_id"
     t.index ["reviewed_by_id"], name: "index_off_platform_projects_on_reviewed_by_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end
@@ -1097,6 +1099,7 @@ ActiveRecord::Schema.define(version: 2021_05_13_084713) do
   add_foreign_key "matches", "specialists"
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
+  add_foreign_key "off_platform_projects", "active_storage_attachments", column: "cover_photo_id"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "post_prompts", "labels"

@@ -82,7 +82,7 @@ class TestData
 
     if [true, false].sample
       url = stock_image
-      previous_project.cover_photo.attach(
+      previous_project.images.attach(
         io: URI.open(url), filename: File.basename(URI.parse(url).path)
       )
     end
