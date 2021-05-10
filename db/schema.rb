@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_07_095425) do
+ActiveRecord::Schema.define(version: 2021_05_10_073154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -797,25 +797,6 @@ ActiveRecord::Schema.define(version: 2021_05_07_095425) do
     t.string "uid"
   end
 
-  create_table "searches", force: :cascade do |t|
-    t.string "uid"
-    t.bigint "user_id", null: false
-    t.string "skill"
-    t.string "industry"
-    t.boolean "industry_experience_required"
-    t.string "company_type"
-    t.boolean "company_experience_required"
-    t.bigint "recommended_project_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "description"
-    t.bigint "manually_recommended_project_id"
-    t.index ["manually_recommended_project_id"], name: "index_searches_on_manually_recommended_project_id"
-    t.index ["recommended_project_id"], name: "index_searches_on_recommended_project_id"
-    t.index ["uid"], name: "index_searches_on_uid"
-    t.index ["user_id"], name: "index_searches_on_user_id"
-  end
-
   create_table "skills", force: :cascade do |t|
     t.string "name"
     t.string "airtable_id"
@@ -1122,8 +1103,6 @@ ActiveRecord::Schema.define(version: 2021_05_07_095425) do
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "users"
   add_foreign_key "reviews", "specialists"
-  add_foreign_key "searches", "off_platform_projects", column: "manually_recommended_project_id"
-  add_foreign_key "searches", "users"
   add_foreign_key "specialist_industries", "industries"
   add_foreign_key "specialist_industries", "specialists"
   add_foreign_key "specialist_skills", "skills"
