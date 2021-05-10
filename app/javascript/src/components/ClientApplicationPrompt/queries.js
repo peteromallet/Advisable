@@ -36,14 +36,19 @@ export const useInterviewTime = () => {
   return formatted;
 };
 
-export const SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW = gql`
-  mutation ScheduleAdvisableApplicationInterview(
-    $input: ScheduleAdvisableApplicationInterviewInput!
+export const SCHEDULE_CLIENT_APPLICATION_INTERVIEW = gql`
+  mutation ScheduleClientApplicationInterview(
+    $input: ScheduleClientApplicationInterviewInput!
   ) {
-    scheduleAdvisableApplicationInterview(input: $input) {
-      specialist {
+    scheduleClientApplicationInterview(input: $input) {
+      user {
         id
         applicationStage
+        clientApplication {
+          id
+          status
+          interviewStartsAt
+        }
       }
     }
   }
