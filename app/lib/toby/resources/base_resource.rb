@@ -37,6 +37,10 @@ module Toby
           @query_name_delete || "delete#{model_s.camelize}"
         end
 
+        def query_name_search
+          @query_name_search || "search#{model_s.camelize}"
+        end
+
         def attribute(name, type, **args)
           @attributes ||= [Attributes::Id.new(:id, self)]
 
@@ -114,6 +118,10 @@ module Toby
             argument :id, GraphQL::Schema::Object::ID, required: true
             field :success, GraphQL::Types::Boolean, null: true
           end
+        end
+
+        def search(input)
+          model.where(id: input)
         end
       end
     end

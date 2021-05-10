@@ -36,6 +36,14 @@ module Toby
         define_method resource.query_name_item do |args|
           resource.model.find(args[:id])
         end
+
+        field resource.query_name_search, resource.type.connection_type, null: false do
+          argument :query, String, required: true
+        end
+
+        define_method resource.query_name_search do |args|
+          resource.search(args[:query])
+        end
       end
     end
   end
