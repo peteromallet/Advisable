@@ -165,21 +165,13 @@ function Terms({ match, history, application, location }) {
                 >
                   I agree to participate in{" "}
                   <Tooltip
-                    interactable
                     content={
                       <>
                         Advisable offers clients a trial period of up to 8 hours
                         when working with a new freelancer. You will be paid for
                         work completed during this trial as long as the client
-                        agrees you adhered to{" "}
-                        <Link
-                          as="a"
-                          display="inline"
-                          href="https://advisable.com/professional-standards"
-                          target="_blank"
-                        >
-                          Advisable&apos;s Professional Standards
-                        </Link>
+                        agrees you adhered to Advisable&apos;s professional
+                        standards.
                       </>
                     }
                   >
