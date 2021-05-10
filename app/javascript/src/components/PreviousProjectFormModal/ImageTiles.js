@@ -219,11 +219,11 @@ function Upload({ previousProjectId, image, dispatch, onClick }) {
   });
 
   const upload = useUpload(image.file, {
-    cover: image.cover,
     onSuccess: async (blob) => {
       const r = await createImage({
         variables: {
           input: {
+            cover: image.cover,
             previousProject: previousProjectId,
             attachment: blob.signed_id,
           },
@@ -302,7 +302,7 @@ const PortfolioImage = React.memo(function PortfolioImage({
 function ImageTiles({ images, dispatch, previousProjectId }) {
   const client = useApolloClient();
   const cover = find(images, { cover: true });
-  const [createImage] = useMutation(SET_COVER);
+  const [setCoverImage] = useMutation(SET_COVER);
   const { error } = useNotifications();
   const accept = ".png, .jpg, .jpeg";
 
@@ -315,7 +315,7 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
     });
 
     if (image.signedId) {
-      createImage({
+      setCoverImage({
         variables: {
           input: {
             previousProject: previousProjectId,
