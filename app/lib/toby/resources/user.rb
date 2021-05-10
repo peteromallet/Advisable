@@ -12,6 +12,14 @@ module Toby
       attribute :application_status, Attributes::Select, options: ["Accepted", "Invited", "Active", "Access Granted"]
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
+
+      def self.label(record)
+        record.account&.email || record.id
+      end
+
+      def self.search(query)
+        ::User.joins(:account).where("accounts.email ilike ?", "%#{query}%")
+      end
     end
   end
 end
