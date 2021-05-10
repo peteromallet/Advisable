@@ -34,6 +34,7 @@ const SCHEMA_INTROSPECTION = gql`
       queryNameCollection
       queryNameItem
       queryNameUpdate
+      queryNameSearch
       attributes {
         name
         readonly

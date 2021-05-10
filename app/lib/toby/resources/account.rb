@@ -17,6 +17,10 @@ module Toby
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
+      def self.label(record)
+        record.name
+      end
+
       def self.search(query)
         ::Account.where("email ilike ?", "%#{query}%")
       end
