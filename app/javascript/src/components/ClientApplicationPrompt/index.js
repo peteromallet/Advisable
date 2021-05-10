@@ -9,7 +9,7 @@ import ProgressLine from "./ProgressLine";
 import AccountCreated from "./AccountCreated";
 import { useMutation } from "@apollo/client";
 import {
-  SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW,
+  SCHEDULE_CLIENT_APPLICATION_INTERVIEW,
   useInterviewTime,
 } from "./queries";
 
@@ -57,10 +57,10 @@ const InvitedToInterview = () => {
   const { firstName, lastName, email, id } = useViewer();
   const fullName = `${firstName} ${lastName}`;
 
-  const [schedule] = useMutation(SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW);
+  const [schedule] = useMutation(SCHEDULE_CLIENT_APPLICATION_INTERVIEW);
 
   const handleScheduled = () => {
-    calendly("https://calendly.com/d/c9sf-mhb/an-introduction-to-advisable", {
+    calendly("https://calendly.com/yurko-turskiy/15min", {
       a2: id,
       full_name: fullName,
       email,
@@ -77,11 +77,7 @@ const InvitedToInterview = () => {
       if (!isCalendlyEvent(e)) return null;
 
       if (e.data.event === "calendly.event_scheduled") {
-        // URI example:
-        // https://api.calendly.com/scheduled_events/AEQZY6BZ7BGPC6EZ
-        const url = new URL(e.data.payload.event.uri);
-        const eventId = url.pathname.split("/")[2];
-        schedule({ variables: { input: { eventId } } });
+        schedule({ variables: { input: {} } });
       }
     };
 
