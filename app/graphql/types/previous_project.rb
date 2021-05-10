@@ -23,7 +23,7 @@ module Types
 
     field :cover_photo, Types::PreviousProjectImage, null: true
     def cover_photo
-      object.cover_photo.presence || object.images.first
+      object.cover_photo&.attachment || object.images.first
     end
 
     field :industry_relevance, Integer, null: true
