@@ -27,11 +27,12 @@ module Toby
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
-      def self.label(record)
-        primary_skill = record.primary_skill&.name
-        company = record.user&.company&.name
-        "#{company} - #{primary_skill}"
-      end
+      # TODO: Complex label
+      # def self.label(record)
+      #   primary_skill = record.primary_skill&.name
+      #   company = record.user&.company&.name
+      #   "#{company} - #{primary_skill}"
+      # end
 
       def self.search(query)
         ::Project.joins(user: :company).where("companies.name ilike ?", "%#{query}%")

@@ -59,7 +59,7 @@ module Toby
             field :_label, String, null: false
 
             define_method(:_label) do
-              root.label(object)
+              root.label(object, context)
             end
 
             root.attributes.each do |attribute|
@@ -126,7 +126,7 @@ module Toby
           end
         end
 
-        def label(record)
+        def label(record, _context)
           record.id
         end
 
