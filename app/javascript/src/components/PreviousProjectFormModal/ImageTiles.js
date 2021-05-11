@@ -225,8 +225,8 @@ function Upload({ previousProjectId, image, dispatch, onClick, position }) {
       const r = await createImage({
         variables: {
           input: {
-            position,
             cover: image.cover,
+            position: image.position,
             previousProject: previousProjectId,
             attachment: blob.signed_id,
           },
@@ -345,17 +345,13 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
     }
   };
 
-  const tiles = images.map((image, index) => {
+  const tiles = images.map((image) => {
     if (image.uploading) {
-      const previousImage = images[index - 1];
-      console.log(previousImage);
-
       return (
         <Upload
           key={image.key}
           image={image}
           dispatch={dispatch}
-          position={(previousImage?.position || 0) + 1}
           previousProjectId={previousProjectId}
           onClick={handleSetCover(image)}
         />
@@ -394,7 +390,6 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
         type: "NEW_UPLOAD",
         file,
         cover: !cover && i === 0,
-        position: images.length + (i + 1),
       });
     });
   };
