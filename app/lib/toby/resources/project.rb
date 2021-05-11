@@ -27,12 +27,14 @@ module Toby
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
-      # TODO: Complex label
-      # def self.label(record)
-      #   primary_skill = record.primary_skill&.name
-      #   company = record.user&.company&.name
-      #   "#{company} - #{primary_skill}"
-      # end
+      def self.label(record, context)
+        Lazy::ComplexLabel.new(::Project, record.id, context, includes: [{user: :company}, :primary_skill]) do |r|
+          r.user&.company&.name.to_s
+          primary_skill = r.primary_skill&.name
+          company = r.user&.company&.name
+          "#{company} - #{primary_skill}"
+        end
+      end
 
       def self.search(query)
         ::Project.joins(user: :company).where("companies.name ilike ?", "%#{query}%")
