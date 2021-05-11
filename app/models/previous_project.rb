@@ -69,7 +69,7 @@ class PreviousProject < ApplicationRecord
   after_save :update_specialist_project_count
 
   def cover_photo
-    images.find_by(id: cover_photo_id).presence || images.first
+    images.find_by(id: cover_photo_id).presence || images.order(:position).first
   end
 
   def on_platform?
