@@ -23,10 +23,13 @@ module Mutations
     def resolve(previous_project:, attachment:, cover:, position:)
       project = PreviousProject.find_by!(uid: previous_project)
       blob = ActiveStorage::Blob.find_signed!(attachment)
+      image = ActiveStorage::Attachment.create!(
+        name: "images",
+        record: project,
+        blob: blob,
+        position: position
+      )
 
-      project.images.attach(blob)
-      image = project.reload.images.find_by_blob_id(blob.id)
-      image.update(position: position)
       project.update(cover_photo_id: image.id) if cover
 
       {image: image}
