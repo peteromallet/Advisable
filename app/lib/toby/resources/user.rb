@@ -13,8 +13,8 @@ module Toby
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
-      def self.label(record)
-        record.account.email || record.id
+      def self.label(record, context)
+        Lazy::Label.new(::Account, :id, :email, record.account_id, context)
       end
 
       def self.search(query)

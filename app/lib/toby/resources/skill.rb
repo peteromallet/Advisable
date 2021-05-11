@@ -6,8 +6,8 @@ module Toby
       model_name ::Skill
       attribute :name, Attributes::String
 
-      def self.label(record)
-        record.name
+      def self.label(record, context)
+        Lazy::Label.new(::Skill, :id, :name, record.id, context)
       end
     end
   end
