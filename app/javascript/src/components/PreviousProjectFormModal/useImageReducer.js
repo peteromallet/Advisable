@@ -47,6 +47,7 @@ function reducer(state, action) {
           uploading: true,
           file: action.file,
           cover: action.cover,
+          position: (state[state.length - 1]?.position || 0) + 1,
         },
       ];
     }
@@ -57,6 +58,7 @@ function reducer(state, action) {
           return {
             ...image,
             ...attributesFromAttachment(action.image),
+            cover: image.cover,
           };
         }
 
