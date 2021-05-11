@@ -9,6 +9,10 @@ module Toby
       def self.label(record, context)
         Lazy::Label.new(::Skill, record.id, context, value_column: :name)
       end
+
+      def self.search(query)
+        ::Skill.where("name ilike ?", "%#{query}%")
+      end
     end
   end
 end
