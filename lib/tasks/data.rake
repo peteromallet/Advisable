@@ -5,7 +5,9 @@ require_relative "../../config/environment"
 def migrate_image_to_project(ppi, project)
   blob = ppi.image.blob
   project.images.attach(blob)
-  ActiveStorage::Attachment.find_by!(record: project, blob: blob).update(position: ppi.position)
+  attachment = ActiveStorage::Attachment.find_by!(record: project, blob: blob)
+  attachment.update(position: ppi.position)
+  project.update(cover_photo_id: attachment.id) if ppi.cover
   ppi.destroy!
 rescue ActiveRecord::ActiveRecordError => e
   Sentry.capture_exception(e, level: "debug", extra: {ppi_id: ppi.id})
