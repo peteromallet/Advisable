@@ -7,6 +7,8 @@ module CaseStudy
 
     has_logidze
 
+    scope :primary, -> { where(primary: true) }
+
     belongs_to :article, optional: true
     belongs_to :search, optional: true
     belongs_to :skill, class_name: "::Skill", inverse_of: :case_study_skills
