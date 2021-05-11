@@ -21,7 +21,7 @@ import { setupProgress } from "./SetupSteps";
 
 const ConfirmationModal = ({ modal, formik }) => {
   return (
-    <Modal modal={modal}>
+    <Modal modal={modal} label="Be more specific">
       <Box padding={2} paddingBottom={3}>
         <Text
           as="h2"

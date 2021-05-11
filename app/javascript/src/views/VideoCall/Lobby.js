@@ -55,7 +55,12 @@ export default function Lobby() {
       justifyContent="center"
       paddingBottom="100px"
     >
-      <Modal modal={modal} hideOnClickOutside={false} showCloseButton={false}>
+      <Modal
+        modal={modal}
+        hideOnClickOutside={false}
+        showCloseButton={false}
+        label="No access to camera or microphone"
+      >
         <Text
           fontSize="2xl"
           fontWeight="500"

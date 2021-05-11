@@ -13,7 +13,7 @@ export default function ValidationModal({
   const DEFAULT_DESCRIPTION = `Thanks for adding the details of your project with ${clientName}! To validate this project, please share this link with ${contactName}`;
 
   return (
-    <Modal modal={modal} padding="l">
+    <Modal modal={modal} padding="l" label={title || DEFAULT_TITLE}>
       <Text
         mb="xs"
         color="blue900"
