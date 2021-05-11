@@ -23,22 +23,24 @@ module Mutations
         article = ::CaseStudy::Article.find_by!(uid: id)
 
         ActiveRecord::Base.transaction do
-          sections.each_with_index do |sec, i|
-            section = sec["id"] ? article.sections.find_by!(uid: sec["id"]) : article.sections.build
-            section.update(position: i, type: sec["type"])
-            sec["content"].each_with_index do |con, j|
-              content = con["id"] ? section.contents.find_by!(uid: con["id"]) : section.contents.build
-              content.position = j
-              content = content.becomes!("CaseStudy::#{con["type"].capitalize}Content".constantize)
-              if content.is_a?(::CaseStudy::ImagesContent)
-                content.images = []
-                con["content"]["images"].each do |signed_id|
-                  content.images.attach(signed_id)
+          current_account_responsible_for do
+            sections.each_with_index do |sec, i|
+              section = sec["id"] ? article.sections.find_by!(uid: sec["id"]) : article.sections.build
+              section.update(position: i, type: sec["type"])
+              sec["content"].each_with_index do |con, j|
+                content = con["id"] ? section.contents.find_by!(uid: con["id"]) : section.contents.build
+                content.position = j
+                content = content.becomes!("CaseStudy::#{con["type"].capitalize}Content".constantize)
+                if content.is_a?(::CaseStudy::ImagesContent)
+                  content.images = []
+                  con["content"]["images"].each do |signed_id|
+                    content.images.attach(signed_id)
+                  end
+                else
+                  content.content = con["content"]
                 end
-              else
-                content.content = con["content"]
+                content.save!
               end
-              content.save!
             end
           end
         end

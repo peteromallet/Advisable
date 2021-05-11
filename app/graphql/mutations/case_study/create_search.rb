@@ -19,19 +19,23 @@ module Mutations
       end
 
       def resolve(name:, goals:, business_type:, skills:, primary_skill:)
-        search = ::CaseStudy::Search.create!(
-          user: current_user,
-          name: name,
-          goals: goals,
-          business_type: business_type
-        )
-
-        skills.each do |skill|
-          ::CaseStudy::Skill.create!(
-            search: search,
-            primary: primary_skill == skill,
-            skill: ::Skill.find_by!(name: skill)
+        search = current_account_responsible_for do
+          search = ::CaseStudy::Search.create!(
+            user: current_user,
+            name: name,
+            goals: goals,
+            business_type: business_type
           )
+
+          skills.each do |skill|
+            ::CaseStudy::Skill.create!(
+              search: search,
+              primary: primary_skill == skill,
+              skill: ::Skill.find_by!(name: skill)
+            )
+          end
+
+          search
         end
 
         {search: search}
