@@ -20,7 +20,10 @@ module Mutations
 
       def resolve(id:)
         article = ::CaseStudy::Article.find_by!(uid: id)
-        article.update(specialist_approved_at: Time.zone.now)
+
+        current_account_responsible_for do
+          article.update(specialist_approved_at: Time.zone.now)
+        end
 
         {article: article}
       end
