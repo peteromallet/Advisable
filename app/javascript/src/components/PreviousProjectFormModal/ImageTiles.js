@@ -176,6 +176,7 @@ const CREATE_PHOTO = gql`
         url
         cover
         signedId
+        position
       }
     }
   }
@@ -189,6 +190,7 @@ const SET_COVER = gql`
         url
         cover
         signedId
+        position
       }
     }
   }
@@ -345,12 +347,15 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
 
   const tiles = images.map((image, index) => {
     if (image.uploading) {
+      const previousImage = images[index - 1];
+      console.log(previousImage);
+
       return (
         <Upload
           key={image.key}
           image={image}
           dispatch={dispatch}
-          position={index}
+          position={(previousImage?.position || 0) + 1}
           previousProjectId={previousProjectId}
           onClick={handleSetCover(image)}
         />
