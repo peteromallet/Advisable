@@ -193,7 +193,13 @@ PreviousProjectDetails.Modal = function PreviousProjectDetailsModal({
   ...props
 }) {
   return (
-    <Modal modal={modal} width={800} padding="xl" {...props}>
+    <Modal
+      modal={modal}
+      width={800}
+      padding="xl"
+      label="Previous Project Details"
+      {...props}
+    >
       <PreviousProjectDetails detailsModal={modal} id={id} />
     </Modal>
   );

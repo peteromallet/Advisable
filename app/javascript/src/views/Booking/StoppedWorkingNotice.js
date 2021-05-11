@@ -34,7 +34,11 @@ export default function StoppedWorkingNotice({ firstName, application }) {
 
   return (
     <>
-      <Modal modal={modal} padding={8}>
+      <Modal
+        modal={modal}
+        padding={8}
+        label={`Resume working with ${firstName}`}
+      >
         <Text fontSize="3xl" fontWeight="500" lineHeight="1.2" mb={6}>
           Are you sure you want to resume working with {firstName}?
         </Text>

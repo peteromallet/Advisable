@@ -159,7 +159,11 @@ const PaymentSettings = () => {
         )}
       </Formik>
 
-      <Modal modal={paymentMethodModal} padding={2}>
+      <Modal
+        modal={paymentMethodModal}
+        padding={2}
+        label="Update payment method"
+      >
         <Box p="l">
           <UpdatePaymentMethod
             onSuccess={() => {

@@ -100,7 +100,7 @@ function DeleteView({ resource, view, onDelete }) {
 
   return (
     <>
-      <Modal modal={modal}>
+      <Modal modal={modal} label="Confirm Delete">
         <Text fontSize="3xl" mb={4}>
           Are you sure you want to delete this view
         </Text>
@@ -138,7 +138,7 @@ function RenameView({ view }) {
 
   return (
     <>
-      <Modal modal={modal}>
+      <Modal modal={modal} label="Rename view">
         <Text fontSize="3xl" mb={4}>
           Rename view
         </Text>
@@ -189,7 +189,7 @@ function CreateView({ resource, onCreate, filters }) {
 
   return (
     <>
-      <Modal modal={modal}>
+      <Modal modal={modal} label="Create a new view">
         <Text fontSize="3xl" mb={4}>
           Create a new view
         </Text>
