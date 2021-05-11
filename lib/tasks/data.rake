@@ -3,7 +3,9 @@
 require_relative "../../config/environment"
 
 def migrate_image_to_project(ppi, project)
-  blob = ppi.image.blob
+  blob = ppi.image&.blob
+  return unless blob
+
   project.images.attach(blob)
   attachment = ActiveStorage::Attachment.find_by!(record: project, blob: blob)
   attachment.update(position: ppi.position)
