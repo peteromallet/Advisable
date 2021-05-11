@@ -6,9 +6,9 @@ module Toby
       model_name ::Application
       attribute :uid, Attributes::String, readonly: true
       attribute :status, Attributes::Select, options: ["Applied"] + ::Application::ACTIVE_STATUSES
-      attribute :specialist, Attributes::BelongsTo, labeled_by: :account
-      attribute :project, Attributes::BelongsTo, labeled_by: :name
-      attribute :interview, Attributes::HasOne, labeled_by: :status
+      attribute :specialist, Attributes::BelongsTo
+      attribute :project, Attributes::BelongsTo
+      attribute :interview, Attributes::HasOne
       attribute :introduction, Attributes::LongText
       attribute :hidden, Attributes::Boolean
       attribute :score, Attributes::Integer
