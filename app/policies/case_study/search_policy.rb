@@ -5,6 +5,7 @@ module CaseStudy
     def read?
       user_owner? || admin?
     end
+    alias update? read?
     alias delete? read?
   end
 end
