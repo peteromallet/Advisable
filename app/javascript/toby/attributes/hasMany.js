@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useField } from "formik";
 import TagsInput from "../components/TagsInput";
+import { useSchema } from "../components/schema";
+import { useSearchResource, getNestedResource } from "../utilities";
+import { Combobox } from "@advisable/donut";
 
 export default {
   render: function RenderHasMany({ record, field }) {
@@ -15,13 +18,44 @@ export default {
   initializeFormValue: function (record, attribute) {
     return record[attribute.name].map((n) => n.id) || [];
   },
-  input: function HasManyInput({ attribute }) {
-    const [field, , helpers] = useField(attribute.name);
+  input: function HasManyInput({ resource, record, attribute }) {
+    const schema = useSchema();
+    const [, , { setValue }] = useField(attribute.name);
+    const [selections, setSelections] = useState(
+      record[attribute.name].map((v) => ({
+        value: v.id,
+        label: v._label,
+      })),
+    );
+
+    const associatedResource = getNestedResource(
+      schema,
+      resource,
+      attribute.name,
+    );
+
+    const search = useSearchResource(associatedResource);
+
+    const handleSearch = async (query) => {
+      const response = await search(query);
+      const data = response.data?.records?.nodes || [];
+      return data.map((node) => ({
+        value: node.id,
+        label: node._label,
+      }));
+    };
+
+    const handleChange = (next) => {
+      setSelections(next);
+      setValue(next.map((v) => v.value));
+    };
 
     return (
-      <TagsInput
-        value={field.value}
-        onChange={(value) => helpers.setValue(value)}
+      <Combobox
+        multiple
+        value={selections}
+        loadOptions={handleSearch}
+        onChange={handleChange}
       />
     );
   },
