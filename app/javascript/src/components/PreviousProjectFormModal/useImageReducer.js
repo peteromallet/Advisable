@@ -8,6 +8,7 @@ function attributesFromAttachment(attachment) {
     id: attachment.id,
     url: attachment.url,
     cover: attachment.cover,
+    position: attachment.position,
     signedId: attachment.signedId,
   };
 }

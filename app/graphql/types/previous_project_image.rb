@@ -7,6 +7,7 @@ module Types
     HEREDOC
 
     field :id, ID, null: false
+    field :position, Int, null: true
 
     field :cover, Boolean, null: false
     def cover
