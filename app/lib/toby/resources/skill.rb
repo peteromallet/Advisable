@@ -7,7 +7,7 @@ module Toby
       attribute :name, Attributes::String
 
       def self.label(record, context)
-        Lazy::Label.new(::Skill, :id, :name, record.id, context)
+        Lazy::Label.new(::Skill, record.id, context, value_column: :name)
       end
     end
   end

@@ -5,12 +5,12 @@ module Toby
     class Label
       attr_reader :klass, :id_column, :value_column, :id, :context
 
-      def initialize(klass, id_column, value_column, id, context)
+      def initialize(klass, id, context, value_column:, id_column: :id)
         @klass = klass
-        @id_column = id_column
-        @value_column = value_column
         @id = id
         @context = context
+        @id_column = id_column
+        @value_column = value_column
         state[:pending] << id
       end
 
@@ -22,7 +22,7 @@ module Toby
       private
 
       def state
-        context[:"lazy_load_label_#{klass}_#{value_column}"] ||= {pending: Set.new, loaded: {}}
+        context[:"lazy_load_label_#{klass}"] ||= {pending: Set.new, loaded: {}}
       end
 
       def load_records
