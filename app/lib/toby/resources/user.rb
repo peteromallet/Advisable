@@ -6,9 +6,9 @@ module Toby
       model_name ::User
       attribute :uid, Attributes::String, readonly: true
       attribute :email, Lookups::Accounts::Email
-      attribute :account, Attributes::BelongsTo, labeled_by: :name
-      attribute :company, Attributes::BelongsTo, labeled_by: :name
-      attribute :country, Attributes::BelongsTo, labeled_by: :name
+      attribute :account, Attributes::BelongsTo
+      attribute :company, Attributes::BelongsTo
+      attribute :country, Attributes::BelongsTo
       attribute :application_status, Attributes::Select, options: ["Accepted", "Invited", "Active", "Access Granted"]
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true

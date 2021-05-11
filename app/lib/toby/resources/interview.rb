@@ -7,7 +7,7 @@ module Toby
       attribute :uid, Attributes::String, readonly: true
       attribute :starts_at, Attributes::DateTime
       attribute :status, Attributes::Select, options: []
-      attribute :application, Attributes::BelongsTo, labeled_by: :specialist
+      attribute :application, Attributes::BelongsTo
     end
   end
 end

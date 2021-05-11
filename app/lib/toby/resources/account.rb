@@ -9,8 +9,8 @@ module Toby
       attribute :last_name, Attributes::String
       attribute :name, Attributes::String, readonly: true
       attribute :email, Attributes::String
-      attribute :user, Attributes::HasOne, labeled_by: :uid
-      attribute :specialist, Attributes::HasOne, labeled_by: :uid
+      attribute :user, Attributes::HasOne
+      attribute :specialist, Attributes::HasOne
       attribute :permissions, Attributes::TextArray
       attribute :unsubscribed_from, Attributes::TextArray
       attribute :confirmed_at, Attributes::DateTime

@@ -8,11 +8,11 @@ module Toby
       attribute :name, Attributes::String
       attribute :sales_person, Lookups::Projects::SalesPerson
       attribute :description, Attributes::LongText
-      attribute :user, Attributes::BelongsTo, labeled_by: :account
+      attribute :user, Attributes::BelongsTo
       attribute :status, Attributes::Select, options: ::Project::STATUSES
       attribute :sales_status, Attributes::Select, options: ::Project::SALES_STATUSES
       attribute :service_type, Attributes::Select, options: ::Project::SERVICE_TYPES
-      attribute :skills, Attributes::HasManyThrough, labeled_by: :name
+      attribute :skills, Attributes::HasManyThrough
       attribute :estimated_budget, Attributes::String
       attribute :goals, Attributes::TextArray
       attribute :questions, Attributes::TextArray
