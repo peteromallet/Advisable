@@ -1,23 +1,14 @@
 import React, { useState } from "react";
 import { useField } from "formik";
 import { useSchema } from "../components/schema";
-import {
-  resourceByType,
-  resourceAttribute,
-  useSearchResource,
-  getNestedResource,
-} from "../utilities";
-import { Attribute } from "./index";
+import { useSearchResource, getNestedResource } from "../utilities";
 import { Combobox } from "@advisable/donut";
 
 export default {
   render: function RenderBelongsTo({ record, field }) {
-    const schemaData = useSchema();
     const value = record[field.name];
     if (!value) return null;
-    const resource = resourceByType(schemaData, value.__typename);
-    const attribute = resourceAttribute(resource, field.labeledBy || "id");
-    return <Attribute record={value} attribute={attribute} />;
+    return value._label;
   },
   initializeFormValue: function (record, attribute) {
     return record[attribute.name]?.id || undefined;

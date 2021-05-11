@@ -47,18 +47,6 @@ const SCHEMA_INTROSPECTION = gql`
         ... on SelectAttribute {
           options
         }
-        ... on BelongsToAttribute {
-          labeledBy
-        }
-        ... on HasManyAttribute {
-          labeledBy
-        }
-        ... on HasManyThroughAttribute {
-          labeledBy
-        }
-        ... on HasOneAttribute {
-          labeledBy
-        }
       }
     }
   }
@@ -131,9 +119,8 @@ function buildTypePolicies(data) {
   };
 
   data.resources.forEach((resource) => {
-    typePolicies.Query.fields[
-      resource.queryNameCollection
-    ] = relayStylePagination();
+    typePolicies.Query.fields[resource.queryNameCollection] =
+      relayStylePagination();
   });
 
   return typePolicies;
