@@ -28,8 +28,7 @@ module Toby
       attribute :updated_at, Attributes::DateTime, readonly: true
 
       def self.label(record, context)
-        Lazy::ComplexLabel.new(::Project, record.id, context, includes: [{user: :company}, :primary_skill]) do |r|
-          r.user&.company&.name.to_s
+        Lazy::Label.new(::Project, record.id, context, includes: [{user: :company}, :primary_skill]) do |r|
           primary_skill = r.primary_skill&.name
           company = r.user&.company&.name
           "#{company} - #{primary_skill}"
