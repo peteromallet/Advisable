@@ -215,26 +215,8 @@ function selectionForField(schemaData, resourceData, fieldName) {
     }
   }
 
-  const attribute = resourceAttribute(resourceData, fieldName);
-
-  const query = {
+  return {
     id: true,
     _label: true,
   };
-
-  if (attribute.labeledBy) {
-    let fieldResource;
-    if (attribute.__typename.includes("HasMany")) {
-      fieldResource = resourceByType(schemaData, field.type.ofType.ofType.name);
-    } else {
-      fieldResource = resourceByType(schemaData, field.type.name);
-    }
-    query[attribute.labeledBy] = selectionForField(
-      schemaData,
-      fieldResource,
-      attribute.labeledBy,
-    );
-  }
-
-  return query;
 }
