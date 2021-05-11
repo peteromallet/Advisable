@@ -3,16 +3,20 @@
 module Toby
   module Lazy
     class Label
-      attr_reader :klass, :id_column, :value_column, :id, :context
+      attr_reader :klass, :id, :context, :id_column, :includes, :value_column, :block
 
-      def initialize(klass, id, context, value_column:, id_column: :id)
+      # rubocop: disable Metrics/ParameterLists
+      def initialize(klass, id, context, id_column: :id, includes: nil, value_column: nil, &block)
         @klass = klass
         @id = id
         @context = context
         @id_column = id_column
+        @includes = includes
         @value_column = value_column
+        @block = block
         state[:pending] << id
       end
+      # rubocop: enable Metrics/ParameterLists
 
       def resolve
         load_records unless state[:loaded].key?(id)
@@ -26,9 +30,10 @@ module Toby
       end
 
       def load_records
-        klass.where(id_column => state[:pending]).each do |record|
+        ar = includes ? klass.includes(*includes) : klass
+        ar.where(id_column => state[:pending]).each do |record|
           key = record.public_send(id_column)
-          value = record.public_send(value_column)
+          value = value_column ? record.public_send(value_column) : block.call(record)
           state[:loaded][key] = value
         end
         state[:pending].clear
