@@ -211,11 +211,6 @@ class TestData
     user.update(availability: [])
     account.update(completed_tutorials: [])
 
-    client =
-      Client.find_or_create_by(name: "Dunder Mifflin") do |c|
-        c.domain = "advisable.com"
-      end
-
     # Test project
     sales_automation = Skill.find_by_name("Sales Automation")
     sales_operations = Skill.find_by_name("Sales Operations")
