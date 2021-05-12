@@ -39,8 +39,6 @@ class User < ApplicationRecord
   has_many :skills, through: :user_skills
   has_many :client_calls, dependent: :destroy
   has_many :searches, class_name: "CaseStudy::Search", dependent: :destroy
-  has_one :client_user, dependent: :destroy
-  has_one :client, through: :client_user
 
   belongs_to :company, optional: true
   belongs_to :country, optional: true
@@ -62,17 +60,6 @@ class User < ApplicationRecord
   validates :number_of_freelancers, inclusion: {in: NUMBER_OF_FREELANCERS_OPTIONS}, allow_nil: true
 
   alias_attribute :application_status, :contact_status
-
-  # company name is both a column on the users table and an attribute of the
-  # users associated "client" record. We are leaning towards deprecating the
-  # user "company_name" column and so this method provide a bridge between
-  # the two where it will first check for the client record and then fall back
-  # to the company_name column
-  def company_name
-    return client.name if client.present?
-
-    self[:company_name]
-  end
 
   def send_confirmation_email
     token = account.create_confirmation_token
