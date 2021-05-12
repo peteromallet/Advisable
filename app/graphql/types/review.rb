@@ -3,20 +3,15 @@
 module Types
   class Review < Types::BaseType
     include PreviousProjectHelper
-    field :id, ID, null: false
-    field :avatar, String, null: true
     field :comment, String, null: true
     field :type, String, null: true
     field :ratings, Types::Ratings, null: true
-    field :name, String, null: true
     field :first_name, String, null: true
-    field :role, String, null: true
     field :specialist, Types::SpecialistType, null: false
-    field :company_name, String, null: true
 
-    def id
-      object.uid
-    end
+    field :id, ID, null: false, method: :uid
+
+    field :avatar, String, null: true
 
     def avatar
       return unless project.is_a?(::PreviousProject)
@@ -24,12 +19,16 @@ module Types
       project.resized_contact_image_url
     end
 
+    field :name, String, null: true
+
     def name
       return project.user.account.name if project.is_a?(::Project)
       return nil if project&.confidential?
 
       project.contact_name
     end
+
+    field :role, String, null: true
 
     def role
       if project.is_a?(::Project)
@@ -39,9 +38,11 @@ module Types
       end
     end
 
+    field :company_name, String, null: true
+
     def company_name
       if project.is_a?(::Project)
-        project.user.company_name
+        project.user.company.name
       else
         previous_project_company_name(project)
       end

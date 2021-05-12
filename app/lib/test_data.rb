@@ -205,7 +205,6 @@ class TestData
         kind: "Startup",
         sales_person: sales_person
       )
-      u.company_name = "Dunder Mifflin"
     end
 
     user.update(availability: [])

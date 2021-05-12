@@ -30,7 +30,7 @@ class ClientApplicationSubmittedNotificationJob < ApplicationJob
             {
               type: 'mrkdwn',
               text:
-                "*Company Details*\nName: `#{user.company_name}`\nIndustry: `#{
+                "*Company Details*\nName: `#{user.company.name}`\nIndustry: `#{
                   user.company.industry.try(:name)
                 }`\nCompany Type: `#{user.company.kind}`"
             },

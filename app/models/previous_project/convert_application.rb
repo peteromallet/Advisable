@@ -10,16 +10,14 @@ class PreviousProject::ConvertApplication
   end
 
   def run
-    if application.previous_project.present?
-      raise 'Application already has a previous project'
-    end
+    raise 'Application already has a previous project' if application.previous_project.present?
 
     application.specialist.previous_projects.create(
       confidential: false,
       application: application,
       description: project.description,
       goal: project.goals.try(:first),
-      client_name: project.user.company_name,
+      client_name: project.user.company.name,
       validation_status: 'Validated',
       company_type: project.user.company.kind,
       contact_job_title: project.user.title,
