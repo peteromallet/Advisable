@@ -37,6 +37,10 @@ module Toby
           @query_name_delete || "delete#{model_s.camelize}"
         end
 
+        def query_name_search
+          @query_name_search || "search#{model_s.camelize}"
+        end
+
         def attribute(name, type, **args)
           @attributes ||= [Attributes::Id.new(:id, self)]
 
@@ -52,6 +56,12 @@ module Toby
           root = self
           type_class = Class.new(GraphQL::Schema::Object) do
             graphql_name(root.model.name)
+            field :_label, String, null: false
+
+            define_method(:_label) do
+              root.label(object, context)
+            end
+
             root.attributes.each do |attribute|
               # define a field for each attribute
               field attribute.name, attribute.type, null: true
@@ -114,6 +124,14 @@ module Toby
             argument :id, GraphQL::Schema::Object::ID, required: true
             field :success, GraphQL::Types::Boolean, null: true
           end
+        end
+
+        def label(record, _context)
+          record.id
+        end
+
+        def search(input)
+          model.where(id: input)
         end
       end
     end

@@ -1,12 +1,55 @@
 import { useEffect, useState, useCallback } from "react";
 import pluralize from "pluralize";
 import { gql } from "@apollo/client";
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useApolloClient } from "@apollo/client";
 import { jsonToGraphQLQuery, VariableType } from "json-to-graphql-query";
 import { useSchema } from "../components/schema";
 
 export function pluralizeType(type) {
   return pluralize(type.toLowerCase());
+}
+
+function generateSearchQuery(schemaData, resource) {
+  const queryObject = {
+    query: {
+      __variables: {
+        query: "String!",
+      },
+      records: {
+        __args: {
+          query: new VariableType("query"),
+          first: 10,
+        },
+        __aliasFor: resource.queryNameSearch,
+        nodes: {
+          id: true,
+          _label: true,
+        },
+      },
+    },
+  };
+
+  return gql(jsonToGraphQLQuery(queryObject));
+}
+
+export function useSearchResource(resource) {
+  const schema = useSchema();
+  const client = useApolloClient();
+  const query = generateSearchQuery(schema, resource);
+
+  const handleSearch = useCallback(
+    (search) => {
+      return client.query({
+        query,
+        variables: {
+          query: search,
+        },
+      });
+    },
+    [client, query],
+  );
+
+  return handleSearch;
 }
 
 export function useFetchResources(resource, filters) {
@@ -165,32 +208,15 @@ function selectionForField(schemaData, resourceData, fieldName) {
   // if its a scalar type just return true
   if (field.type.kind === "SCALAR") return true;
 
-  // handle specialist case when we might have a list of SCALAR types
+  // handle special case when we might have a list of SCALAR types
   if (field.type.kind === "LIST") {
     if (field.type.ofType.ofType?.kind === "SCALAR") {
       return true;
     }
   }
 
-  const attribute = resourceAttribute(resourceData, fieldName);
-
-  const query = {
+  return {
     id: true,
+    _label: true,
   };
-
-  if (attribute.labeledBy) {
-    let fieldResource;
-    if (attribute.__typename.includes("HasMany")) {
-      fieldResource = resourceByType(schemaData, field.type.ofType.ofType.name);
-    } else {
-      fieldResource = resourceByType(schemaData, field.type.name);
-    }
-    query[attribute.labeledBy] = selectionForField(
-      schemaData,
-      fieldResource,
-      attribute.labeledBy,
-    );
-  }
-
-  return query;
 }

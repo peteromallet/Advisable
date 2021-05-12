@@ -7,8 +7,6 @@ module Toby
       filter :is_empty, Filters::CheckNil
       filter :not_empty, Filters::CheckNotNil
 
-      extension_field :labeled_by, GraphQL::Types::String
-
       # optional for when we don't follow the class == resource convention
       def model
         options.fetch(:model) { name.to_s.camelize }
