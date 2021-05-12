@@ -23,7 +23,7 @@ RSpec.describe Mutations::DeleteSpecialist do
     expect(account.deleted_at).not_to be_nil
   end
 
-  context "when clientuser" do
+  context "when user" do
     let(:user) { create(:user) }
 
     it "can not delete the answer" do

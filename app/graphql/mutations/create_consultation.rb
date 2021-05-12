@@ -2,17 +2,17 @@
 
 module Mutations
   class CreateConsultation < Mutations::BaseMutation
-    argument :specialist, ID, required: true
+    argument :company, String, required: false
+    argument :email, String, required: false
     argument :first_name, String, required: false
     argument :last_name, String, required: false
-    argument :email, String, required: false
-    argument :company, String, required: false
     argument :skill, String, required: true
+    argument :specialist, ID, required: true
 
-    argument :utm_source, String, required: false
+    argument :gclid, String, required: false
     argument :utm_campaign, String, required: false
     argument :utm_medium, String, required: false
-    argument :gclid, String, required: false
+    argument :utm_source, String, required: false
 
     field :consultation, Types::ConsultationType, null: true
     field :viewer, Types::ViewerUnion, null: true
@@ -80,14 +80,7 @@ module Mutations
         gclid: args[:gclid]
       )
 
-      domain = user.account.email.split('@').last
-      client = Client.create(name: args[:company], domain: domain)
-      client.users << user
-
       user.sync_to_airtable
-      # Currently we dont have a relationship between clients and client
-      # contacts so we set the 'Client Contacts' column while calling sync.
-      client.sync_to_airtable({'Client Contacts' => [user.airtable_id].compact})
 
       context[:current_account] = account
       context[:current_user] = user

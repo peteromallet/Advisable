@@ -35,7 +35,6 @@ RSpec.describe Mutations::CreateConsultation do
   before do
     allow_any_instance_of(Consultation).to receive(:sync_to_airtable)
     allow_any_instance_of(User).to receive(:sync_to_airtable)
-    allow_any_instance_of(Client).to receive(:sync_to_airtable)
   end
 
   it 'creates a new consultation record' do

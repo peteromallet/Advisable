@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe 'Client signup', type: :system do
   before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
-    allow_any_instance_of(Client).to receive(:sync_to_airtable)
     create(:industry, name: "Financial Services")
     create(:industry, name: "Development")
     create(:industry, name: "Design")

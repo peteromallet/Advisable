@@ -53,15 +53,6 @@ module Airtable
         user.company.industry = industry
       end
 
-      # if there is a client_id and it is not already synced then sync it.
-      client_id = fields['Client'].try(:first)
-
-      if client_id && user.client.try(:airtable_id) != client_id
-        client = ::Client.find_by_airtable_id(client_id)
-        client = Airtable::Client.find(client_id).sync if client.nil?
-        user.client = client
-      end
-
       user.account.test_account = true if fields['Test Account'].try(:include?, 'Yes')
 
       sync_budget(user)

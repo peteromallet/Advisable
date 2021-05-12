@@ -45,8 +45,6 @@ module Mutations
     def update_company_name(user, company_name)
       user.company_name = company_name
       user.company.name = company_name
-      user.client&.update(name: company_name)
-      user.client&.sync_to_airtable
     end
 
     def update_skills(user, skills)
