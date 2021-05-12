@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { GuildBox } from "@guild/styles";
 import { theme } from "@advisable/donut";
+import { rgba } from "polished";
 
 export const ComposerBoxOption = styled(GuildBox)`
   height: 135px;
@@ -54,4 +55,57 @@ export const StyledTopicable = styled.button`
   svg {
     color: #a2a3c0;
   }
+`;
+
+const withoutCoverStyles = css`
+  border: 2px dashed ${theme.colors.neutral100};
+  &:hover {
+    border-color: ${theme.colors.neutral300};
+    .title {
+      color: ${theme.colors.blue600};
+    }
+  }
+`;
+
+const withCoverStyles = css`
+  background-image: url("${(p) => p.coverImage}");
+`;
+
+export const StyledCoverPhoto = styled.div`
+  height: 300px;
+  margin-bottom: 12px;
+  position: relative;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background-color: ${theme.colors.neutral50};
+  ${(p) => (p.coverImage ? withCoverStyles : withoutCoverStyles)};
+  input {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+`;
+
+export const StyledCoverPhotoTag = styled.div`
+  top: 8px;
+  left: 8px;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 6px 3px 6px;
+  border-radius: 6px;
+  position: absolute;
+  text-transform: uppercase;
+  background: ${rgba(theme.colors.neutral900, 0.9)};
 `;
