@@ -68,15 +68,6 @@ RSpec.describe Applications::StartWorking do
     )
   end
 
-  it 'triggers a webhook' do
-    expect(Webhook).to receive(:process).with(application)
-    described_class.call(
-      application: application,
-      project_type: project_type,
-      monthly_limit: monthly_limit
-    )
-  end
-
   it 'creates a previous project' do
     previous_project = double(PreviousProject) # rubocop:disable RSpec/VerifiedDoubles
     allow_any_instance_of(Application).to receive(:create_previous_project).and_return(previous_project)
