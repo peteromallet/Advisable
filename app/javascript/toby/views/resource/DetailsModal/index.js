@@ -123,7 +123,11 @@ function Details({ id, resource }) {
                   </Tag>
                 )}
               </Box>
-              <AttributeInput record={data.record} attribute={attr} />
+              <AttributeInput
+                resource={resource}
+                record={data.record}
+                attribute={attr}
+              />
               <Box mt={5} height={1} bg="neutral100" />
             </Box>
           );

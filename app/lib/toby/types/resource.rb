@@ -8,6 +8,7 @@ module Toby
       field :query_name_create, String, null: false
       field :query_name_update, String, null: false
       field :query_name_destroy, String, null: false
+      field :query_name_search, String, null: false
       field :attributes, [Toby::Types::AttributeInterface], null: false
       field :type, String, null: false
 

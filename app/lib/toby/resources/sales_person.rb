@@ -8,6 +8,14 @@ module Toby
       attribute :last_name, Attributes::String
       attribute :email, Attributes::String
       attribute :name, Attributes::String, readonly: true
+
+      def self.label(record, context)
+        Lazy::Label.new(::SalesPerson, record.id, context, value_column: :email)
+      end
+
+      def self.search(query)
+        ::SalesPerson.where("email ilike ?", "%#{query}%")
+      end
     end
   end
 end
