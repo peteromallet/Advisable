@@ -204,19 +204,16 @@ end
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
 #  airtable_id                      :string
-#  client_id                        :bigint
 #  deposit_payment_intent_id        :string
 #  linkedin_campaign_id             :bigint
 #  user_id                          :bigint
 #
 # Indexes
 #
-#  index_projects_on_client_id     (client_id)
 #  index_projects_on_sales_status  (sales_status)
 #  index_projects_on_user_id       (user_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (client_id => clients.id)
 #  fk_rails_...  (user_id => users.id)
 #
