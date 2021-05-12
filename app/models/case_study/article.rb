@@ -15,6 +15,7 @@ module CaseStudy
     has_many :industries, dependent: :destroy
     has_many :sections, dependent: :destroy
     has_many :contents, through: :sections
+    has_many :search_feedbacks, dependent: :destroy
 
     scope :published, -> { where.not(published_at: nil) }
   end
