@@ -62,7 +62,7 @@ export default function Portfolio({ modal, data }) {
           mr="xs"
           onClick={handleContinue}
           suffix={<ArrowRight />}
-          disabled={data.previousProject.images.length === 0}
+          disabled={images.length === 0}
         >
           Continue
         </Button>
