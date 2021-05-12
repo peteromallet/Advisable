@@ -8,7 +8,7 @@ RSpec.describe Mutations::UpdateClientApplication do
   end
 
   it 'Can update the company_name' do
-    user = create(:user, application_status: "Application Started", company_name: 'Before')
+    user = create(:user, application_status: "Application Started", company: create(:company, name: 'Before'))
     query = <<-GRAPHQL
       mutation {
         updateClientApplication(input: {
@@ -23,12 +23,12 @@ RSpec.describe Mutations::UpdateClientApplication do
     GRAPHQL
 
     expect { AdvisableSchema.execute(query) }.to change {
-      user.reload.company_name
+      user.reload.company.name
     }.from('Before').to('After')
   end
 
   it 'Doesnt update company name if not provided' do
-    user = create(:user, application_status: "Application Started", company_name: 'Before')
+    user = create(:user, application_status: "Application Started", company: create(:company, name: 'Before'))
     query = <<-GRAPHQL
       mutation {
         updateClientApplication(input: {
@@ -41,7 +41,7 @@ RSpec.describe Mutations::UpdateClientApplication do
       }
     GRAPHQL
 
-    expect { AdvisableSchema.execute(query) }.not_to change(user, :company_name)
+    expect { AdvisableSchema.execute(query) }.not_to change(user.company, :name)
   end
 
   it 'can update industry' do
@@ -164,7 +164,7 @@ RSpec.describe Mutations::UpdateClientApplication do
         }
       GRAPHQL
 
-      expect { AdvisableSchema.execute(query) }.not_to change(user, :company_name)
+      expect { AdvisableSchema.execute(query) }.not_to change(user.company, :name)
     end
   end
 end

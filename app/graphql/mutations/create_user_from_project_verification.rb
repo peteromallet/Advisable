@@ -43,7 +43,6 @@ class Mutations::CreateUserFromProjectVerification < Mutations::BaseMutation
     user = User.new(
       account: account,
       company: company,
-      company_name: project.client_name,
       fid: fid,
       contact_status: 'Application Started',
       campaign_source: 'validation'

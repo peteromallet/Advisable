@@ -58,7 +58,7 @@ class Mutations::RequestApplicationCallback < Mutations::BaseMutation
           "type": 'section',
           "fields": [
             {"type": 'mrkdwn', "text": "*Name*\n#{user.account.name}"},
-            {"type": 'mrkdwn', "text": "*Company*\n#{user.company_name}"}
+            {"type": 'mrkdwn', "text": "*Company*\n#{user.company.name}"}
           ]
         },
         {

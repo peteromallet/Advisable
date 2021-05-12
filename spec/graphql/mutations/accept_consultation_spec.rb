@@ -39,7 +39,7 @@ RSpec.describe Mutations::AcceptConsultation do
     response = AdvisableSchema.execute(query, context: context)
     interview_id = response["data"]["acceptConsultation"]["interview"]["id"]
     project = Interview.find_by(uid: interview_id).application.project
-    expect(project.attributes.slice("user_id", "sales_status", "status", "service_type", "name").values).to match_array([consultation.user_id, "Open", "Project Created", "Consultation", "#{consultation.user.company_name} - #{consultation.skill.name}"])
+    expect(project.attributes.slice("user_id", "sales_status", "status", "service_type", "name").values).to match_array([consultation.user_id, "Open", "Project Created", "Consultation", "#{consultation.user.company.name} - #{consultation.skill.name}"])
     expect(project.primary_skill).to eq(consultation.skill)
   end
 

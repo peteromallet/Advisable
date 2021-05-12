@@ -4,6 +4,8 @@
 # A freelancer account is represented by the Specialist model. Ideally these
 # two models will eventually be merged to be different types of users.
 class User < ApplicationRecord
+  self.ignored_columns += %i[company_name]
+
   include Uid
   include SpecialistOrUser
   include Resizable
@@ -61,6 +63,11 @@ class User < ApplicationRecord
 
   alias_attribute :application_status, :contact_status
 
+  def company_name
+    Sentry.capture_message("Something is still using company_name")
+    company.name
+  end
+
   def send_confirmation_email
     token = account.create_confirmation_token
     UserMailer.confirm(uid: uid, token: token).deliver_later
@@ -78,7 +85,6 @@ class User < ApplicationRecord
     user = User.new(
       account: account,
       company_id: company_id,
-      company_name: company_name,
       application_status: "Active"
     )
     user.save_and_sync_with_responsible!(account_id)
@@ -131,7 +137,6 @@ end
 #  campaign_medium                   :string
 #  campaign_name                     :string
 #  campaign_source                   :string
-#  company_name                      :string
 #  contact_status                    :string
 #  exceptional_project_payment_terms :string
 #  fid                               :string
