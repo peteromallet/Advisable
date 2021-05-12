@@ -77,13 +77,6 @@ RSpec.shared_examples "airtable syncing" do |config = {}|
       end
     end
 
-    it "calls Webhook.process" do
-      allow(record).to receive(:model).and_return(active_record_model)
-      allow(active_record_model).to receive(:save).and_return(true)
-      expect(Webhook).to receive(:process).with(active_record_model)
-      record.sync
-    end
-
     context "when the model fails to save" do
       it "logs a warning" do
         active_record_model = create(factory)
