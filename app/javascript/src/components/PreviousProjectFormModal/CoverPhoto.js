@@ -5,7 +5,7 @@ import { StyledCoverPhoto, StyledCoverPhotoTag } from "./styles";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
 import matchFileType from "src/utilities/matchFileType";
 
-function CoverPhoto({ images, dispatch, resourceName = "project" }) {
+function CoverPhoto({ state: images, addUpload }) {
   const cover = images.find((c) => c.cover);
   const [background, setBackground] = React.useState(cover?.url);
   const { error } = useNotifications();
@@ -46,14 +46,7 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
       return false;
     }
 
-    files.forEach((file, i) => {
-      dispatch({
-        type: "NEW_UPLOAD",
-        file,
-        cover: !cover && i === 0,
-        position: i + 1,
-      });
-    });
+    files.forEach(addUpload);
   };
 
   return (
@@ -69,7 +62,7 @@ function CoverPhoto({ images, dispatch, resourceName = "project" }) {
             multiple
           />
           <Text color="blue900" mb={1.5} className="title">
-            Add images to this {resourceName}
+            Add images to this project
           </Text>
 
           <Text fontSize="xs" color="neutral500" className="subtext">

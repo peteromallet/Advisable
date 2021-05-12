@@ -1,17 +1,16 @@
 import React from "react";
 import { gql } from "@apollo/client";
-import { find } from "lodash-es";
 import { rgba } from "polished";
 import { Plus } from "@styled-icons/feather/Plus";
 import { X } from "@styled-icons/feather/X";
 import styled, { css } from "styled-components";
 import { theme } from "@advisable/donut";
-import { useMutation, useApolloClient } from "@apollo/client";
-import { DirectUpload } from "@rails/activestorage";
+import { useMutation } from "@apollo/client";
 import { useNotifications } from "src/components/Notifications";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
-import { GET_PREVIOUS_PROJECT, useDeletePreviousProjectImage } from "./queries";
+import { useDeletePreviousProjectImage } from "./queries";
 import matchFileType from "src/utilities/matchFileType";
+import useUpload from "./useUpload";
 
 const StyledImageTiles = styled.div`
   width: 100%;
@@ -121,53 +120,6 @@ const StyledNewImageTile = styled.div`
   }
 `;
 
-const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
-
-function useUpload(file, config = {}) {
-  const preview = React.useRef(null);
-  const configuration = React.useRef(config);
-  const [percentage, setPercentage] = React.useState(0);
-
-  React.useEffect(() => {
-    configuration.current = config;
-  }, [config]);
-
-  const progressHandler = {
-    directUploadWillStoreFileWithXHR(request) {
-      request.upload.addEventListener("progress", (e) => {
-        const p = Math.round((100 * e.loaded) / e.total);
-        setPercentage(p);
-      });
-    },
-  };
-
-  function success(blob) {
-    configuration.current.onSuccess(blob);
-  }
-
-  React.useEffect(() => {
-    const upload = new DirectUpload(file, DIRECT_UPLOAD_URL, progressHandler);
-
-    upload.create((error, blob) => {
-      if (error) {
-        console.error(error);
-      } else {
-        success(blob);
-      }
-    });
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      preview.current = e.target.result;
-    };
-
-    reader.readAsDataURL(file);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return { percentage, preview: preview.current };
-}
-
 const CREATE_PHOTO = gql`
   mutation createPhoto($input: CreatePreviousProjectImageInput!) {
     createPreviousProjectImage(input: $input) {
@@ -196,29 +148,8 @@ const SET_COVER = gql`
   }
 `;
 
-function Upload({ previousProjectId, image, dispatch, onClick, position }) {
-  const [createImage] = useMutation(CREATE_PHOTO, {
-    update(client, { data }) {
-      const prev = client.readQuery({
-        query: GET_PREVIOUS_PROJECT,
-        variables: { id: previousProjectId },
-      });
-
-      client.writeQuery({
-        query: GET_PREVIOUS_PROJECT,
-        variables: { id: previousProjectId },
-        data: {
-          previousProject: {
-            ...prev.previousProject,
-            images: [
-              ...prev.previousProject.images,
-              data.createPreviousProjectImage.image,
-            ],
-          },
-        },
-      });
-    },
-  });
+function Upload({ previousProjectId, image, finishUpload, onClick }) {
+  const [createImage] = useMutation(CREATE_PHOTO);
 
   const upload = useUpload(image.file, {
     onSuccess: async (blob) => {
@@ -234,12 +165,7 @@ function Upload({ previousProjectId, image, dispatch, onClick, position }) {
       });
 
       const newImage = r.data.createPreviousProjectImage.image;
-
-      dispatch({
-        type: "UPLOAD_FINISHED",
-        key: image.key,
-        image: newImage,
-      });
+      finishUpload(image.key, newImage);
     },
   });
 
@@ -260,7 +186,7 @@ function Upload({ previousProjectId, image, dispatch, onClick, position }) {
 const PortfolioImage = React.memo(function PortfolioImage({
   image,
   onClick,
-  dispatch,
+  remove,
 }) {
   const [deleteImage] = useDeletePreviousProjectImage();
 
@@ -272,6 +198,7 @@ const PortfolioImage = React.memo(function PortfolioImage({
 
   const handleRemove = (e) => {
     e.stopPropagation();
+    remove(image);
 
     if (image.id) {
       deleteImage({
@@ -282,11 +209,6 @@ const PortfolioImage = React.memo(function PortfolioImage({
         },
       });
     }
-
-    dispatch({
-      type: "REMOVE_IMAGE",
-      key: image.key,
-    });
   };
 
   return (
@@ -302,20 +224,21 @@ const PortfolioImage = React.memo(function PortfolioImage({
   );
 });
 
-function ImageTiles({ images, dispatch, previousProjectId }) {
-  const client = useApolloClient();
-  const cover = find(images, { cover: true });
+function ImageTiles({
+  state: images,
+  previousProjectId,
+  remove,
+  setCover,
+  addUpload,
+  finishUpload,
+}) {
   const [setCoverImage] = useMutation(SET_COVER);
   const { error } = useNotifications();
   const accept = ".png, .jpg, .jpeg";
 
   const handleSetCover = (image) => () => {
     if (image.cover) return;
-
-    dispatch({
-      type: "SET_COVER",
-      key: image.key,
-    });
+    setCover(image);
 
     if (image.signedId) {
       setCoverImage({
@@ -327,22 +250,6 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
         },
       });
     }
-
-    // Unset the existing cover photo in the graphql cache
-    if (cover) {
-      client.writeFragment({
-        id: `PreviousProjectImage:${cover.id}`,
-        fragment: gql`
-          fragment image on PreviousProjectImage {
-            cover
-          }
-        `,
-        data: {
-          __typename: "PreviousProjectImage",
-          cover: false,
-        },
-      });
-    }
   };
 
   const tiles = images.map((image) => {
@@ -351,7 +258,7 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
         <Upload
           key={image.key}
           image={image}
-          dispatch={dispatch}
+          finishUpload={finishUpload}
           previousProjectId={previousProjectId}
           onClick={handleSetCover(image)}
         />
@@ -362,7 +269,7 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
       <PortfolioImage
         key={image.key}
         image={image}
-        dispatch={dispatch}
+        remove={remove}
         onClick={handleSetCover(image)}
       />
     );
@@ -384,14 +291,7 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
       return false;
     }
 
-    const cover = find(images, { cover: true });
-    files.forEach((file, i) => {
-      dispatch({
-        type: "NEW_UPLOAD",
-        file,
-        cover: !cover && i === 0,
-      });
-    });
+    files.forEach(addUpload);
   };
 
   return (
