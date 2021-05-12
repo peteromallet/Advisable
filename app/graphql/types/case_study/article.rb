@@ -28,6 +28,22 @@ module Types
       def sections
         object.sections.by_position
       end
+
+      field :is_saved, Boolean, null: false do
+        argument :id, ID, required: true
+      end
+      def is_saved(id:)
+        search = CaseStudy::Search.find_by!(uid: id)
+        search.saved.include?(object.id)
+      end
+
+      field :is_archived, Boolean, null: false do
+        argument :id, ID, required: true
+      end
+      def is_archived(id:)
+        search = CaseStudy::Search.find_by!(uid: id)
+        search.archived.include?(object.id)
+      end
     end
   end
 end
