@@ -22,7 +22,7 @@ module Mutations
         policy = ::CaseStudy::SearchPolicy.new(context[:current_user], search)
         return true if policy.update?
 
-        ApiError.not_authorized("You do not have permission to delete this search")
+        ApiError.not_authorized("You do not have permission to update this search")
       end
 
       def resolve(id:, **args)
