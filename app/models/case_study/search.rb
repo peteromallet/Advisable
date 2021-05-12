@@ -7,6 +7,7 @@ module CaseStudy
 
     belongs_to :user
     has_many :skills, dependent: :destroy
+    has_many :search_feedbacks, dependent: :destroy
   end
 end
 

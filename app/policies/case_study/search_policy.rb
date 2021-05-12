@@ -6,6 +6,7 @@ module CaseStudy
       user_owner? || admin?
     end
     alias save_article? read?
+    alias archive_article? read?
     alias update? read?
     alias delete? read?
   end
