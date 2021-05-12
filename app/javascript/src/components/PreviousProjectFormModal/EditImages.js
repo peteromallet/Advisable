@@ -6,7 +6,7 @@ import ImageTiles from "./ImageTiles";
 import useImageReducer from "./useImageReducer";
 
 function EditImages({ data }) {
-  const [images, dispatch] = useImageReducer(data.previousProject.images);
+  const images = useImageReducer(data.previousProject.images);
 
   return (
     <Box display="flex">
@@ -19,11 +19,10 @@ function EditImages({ data }) {
           can select one mage as the project cover photo.
         </Text>
         <Box mb="xl">
-          <CoverPhoto images={images} dispatch={dispatch} />
+          <CoverPhoto {...images} />
           {images.length > 0 && (
             <ImageTiles
-              images={images}
-              dispatch={dispatch}
+              {...images}
               previousProjectId={data.previousProject.id}
             />
           )}

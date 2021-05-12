@@ -10,7 +10,7 @@ import useImageReducer from "./useImageReducer";
 
 export default function Portfolio({ modal, data }) {
   const { navigate, skip, pathWithState } = useLocationStages();
-  const [images, dispatch] = useImageReducer(data.previousProject.images);
+  const images = useImageReducer(data.previousProject.images);
 
   const handleContinue = () => {
     navigate(
@@ -49,11 +49,10 @@ export default function Portfolio({ modal, data }) {
           can select one mage as the project cover photo.
         </Text>
         <Box mb="xl">
-          <CoverPhoto images={images} dispatch={dispatch} />
+          <CoverPhoto {...images} />
           {images.length > 0 && (
             <ImageTiles
-              images={images}
-              dispatch={dispatch}
+              {...images}
               previousProjectId={data.previousProject.id}
             />
           )}
