@@ -141,7 +141,7 @@ export default function DetailsModal({ resource }) {
   );
 
   return (
-    <Modal width={800} modal={modal}>
+    <Modal width={800} modal={modal} label="Details">
       {modal.visible && <Details id={modal.params.id} resource={resource} />}
     </Modal>
   );

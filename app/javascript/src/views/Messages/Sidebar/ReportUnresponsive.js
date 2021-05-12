@@ -52,7 +52,7 @@ function ReportUnresponsiveModal({ asClient, application, modal }) {
   };
 
   return (
-    <Modal modal={modal}>
+    <Modal modal={modal} label="Report Unresponsive">
       <Text mb={2} fontSize="4xl" fontWeight="medium" letterSpacing="-0.03em">
         Report Unresponsive
       </Text>

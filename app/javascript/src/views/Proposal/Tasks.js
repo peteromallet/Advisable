@@ -119,7 +119,11 @@ const Tasks = ({ application, match, location, history }) => {
         taskId={taskMatch ? taskMatch.params.taskId : null}
         onDeleteTask={handleDeleteTask}
       />
-      <Modal modal={trialModal} padding={8}>
+      <Modal
+        modal={trialModal}
+        padding={8}
+        label="Haven't proposed a trial task"
+      >
         <Text fontSize="3xl" fontWeight="500" as="h3" marginBottom={2}>
           You haven&apos;t proposed a trial task
         </Text>

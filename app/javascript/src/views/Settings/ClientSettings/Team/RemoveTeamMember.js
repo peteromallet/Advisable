@@ -13,7 +13,7 @@ export default function RemoveTeamMember({ member }) {
       <DialogDisclosure {...modal} as={Button} size="xs" variant="subtle">
         <Trash />
       </DialogDisclosure>
-      <Modal modal={modal} padding={8}>
+      <Modal modal={modal} padding={8} label={`Want to remove ${member.name}?`}>
         <Text
           mb={2}
           as="h2"

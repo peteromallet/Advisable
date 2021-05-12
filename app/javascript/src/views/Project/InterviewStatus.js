@@ -228,7 +228,7 @@ function InviteTeamMemberModal({ modal, application }) {
   );
 
   return (
-    <Modal modal={modal}>
+    <Modal modal={modal} label="invite to call">
       {loading && <Loading />}
       {!loading && (
         <>
