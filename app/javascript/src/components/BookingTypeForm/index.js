@@ -1,10 +1,11 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { Box, Button, Radio, RadioGroup, Checkbox } from "@advisable/donut";
+import { Box, Radio, RadioGroup, Checkbox } from "@advisable/donut";
 import FormField from "components/FormField";
 import CurrencyInput from "components/CurrencyInput";
 import currency from "../../utilities/currency";
 import { object, string, boolean, number } from "yup";
+import SubmitButton from "src/components/SubmitButton";
 
 const validation = object().shape({
   projectType: string().required("Please select a project type"),
@@ -144,14 +145,9 @@ const BookingTypeForm = ({
               </Box>
             </>
           )}
-          <Button
-            size="l"
-            type="submit"
-            disabled={!formik.isValid}
-            loading={formik.isSubmitting}
-          >
+          <SubmitButton size="l" disabled={!formik.isValid}>
             {buttonLabel || "Continue"}
-          </Button>
+          </SubmitButton>
         </Form>
       )}
     </Formik>

@@ -137,7 +137,7 @@ export const VARIANTS = {
 };
 
 const buttonSize = variant({
-  prop: "buttonSize",
+  prop: "$buttonSize",
   variants: {
     xs: {
       height: "28px",

@@ -20,7 +20,7 @@ export default function DeleteAccountModal({ modal }) {
   };
 
   return (
-    <Modal modal={modal} padding={8}>
+    <Modal modal={modal} padding={8} label="Want to delete your account?">
       <Text fontSize="3xl" fontWeight="medium" mb={2}>
         Are you sure?
       </Text>

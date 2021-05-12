@@ -16,7 +16,7 @@ const Button = React.forwardRef(function DonutButton(
       aria-label={children}
       data-loading={loading}
       disabled={loading || disabled}
-      buttonSize={size}
+      $buttonSize={size}
       {...props}
     >
       {loading && <Loading />}
