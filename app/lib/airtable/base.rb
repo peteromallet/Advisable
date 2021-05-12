@@ -144,7 +144,6 @@ module Airtable
           instance_exec(model, &self.class.sync_block) if self.class.sync_block
 
           if model.save
-            Webhook.process(model)
             instance_exec(model, &self.class.after_sync_block) if self.class.after_sync_block
 
             model

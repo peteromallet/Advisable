@@ -1,40 +1,36 @@
-class Applications::StartWorking < ApplicationService
-  attr_reader :application, :project_type, :monthly_limit, :current_account_id
+# frozen_string_literal: true
 
-  def initialize(application:, project_type:, monthly_limit:, current_account_id: nil)
-    @application = application
-    @project_type = project_type
-    @monthly_limit = monthly_limit
-    @current_account_id = current_account_id
-  end
+module Applications
+  class StartWorking < ApplicationService
+    attr_reader :application, :project_type, :monthly_limit, :current_account_id
 
-  def call
-    unless %w[Fixed Flexible].include?(project_type)
-      raise Service::Error.new('invalidProjectType')
+    def initialize(application:, project_type:, monthly_limit:, current_account_id: nil)
+      super()
+      @application = application
+      @project_type = project_type
+      @monthly_limit = monthly_limit
+      @current_account_id = current_account_id
     end
 
-    application.status = 'Working'
-    application.project_type = project_type
-    application.monthly_limit = monthly_limit if project_type == 'Flexible'
+    def call
+      raise Service::Error, 'invalidProjectType' unless %w[Fixed Flexible].include?(project_type)
 
-    success = Logidze.with_responsible(current_account_id) do
-      application.save
-    end
+      application.status = 'Working'
+      application.project_type = project_type
+      application.monthly_limit = monthly_limit if project_type == 'Flexible'
 
-    if success
-      if application.previous_project.blank?
-        project = application.create_previous_project
+      success = Logidze.with_responsible(current_account_id) do
+        application.save
       end
 
-      if project_type == 'Flexible'
-        Applications::FlexibleInvoice.call(application: application)
+      if success
+        application.create_previous_project if application.previous_project.blank?
+        Applications::FlexibleInvoice.call(application: application) if project_type == 'Flexible'
+        application.sync_to_airtable
+        return application
       end
 
-      application.sync_to_airtable
-      Webhook.process(application)
-      return application
+      raise Service::Error, application.errors.full_messages.first
     end
-
-    raise Service::Error.new(application.errors.full_messages.first)
   end
 end
