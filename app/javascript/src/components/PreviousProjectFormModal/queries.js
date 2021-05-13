@@ -135,4 +135,5 @@ export const DELETE = gql`
   }
 `;
 
-export const useDeletePreviousProjectImage = () => useMutation(DELETE);
+export const useDeletePreviousProjectImage = (opts) =>
+  useMutation(DELETE, opts);
