@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_12_112513) do
+ActiveRecord::Schema.define(version: 2021_05_13_084713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(version: 2021_05_12_112513) do
     t.jsonb "archived"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
     t.index ["uid"], name: "index_case_study_searches_on_uid"
     t.index ["user_id"], name: "index_case_study_searches_on_user_id"
   end
@@ -1439,5 +1440,8 @@ ActiveRecord::Schema.define(version: 2021_05_12_112513) do
   SQL
   create_trigger :logidze_on_case_study_contents, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_case_study_contents BEFORE INSERT OR UPDATE ON public.case_study_contents FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_searches, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_searches BEFORE INSERT OR UPDATE ON public.case_study_searches FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
