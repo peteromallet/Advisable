@@ -3,11 +3,16 @@
 module Guild
   class Post < ApplicationRecord
     class BoostError < StandardError; end
+    include Resizable
+
     self.store_full_sti_class = false
 
     POST_TYPES = %w[Post AdviceRequired CaseStudy Opportunity].freeze
     AUDIENCE_TYPES = %w[skills industries locations none other].freeze
     POPULAR_THRESHOLD = 5
+
+    has_many_attached :images
+    resize_many images: {resize_to_limit: [1600, 1600]}
 
     belongs_to :specialist
     belongs_to :post_prompt, optional: true, counter_cache: :guild_posts_count
@@ -15,7 +20,6 @@ module Guild
     has_many :reactions, as: :reactionable, dependent: :destroy
     has_many :comments, -> { published }, foreign_key: 'guild_post_id', class_name: 'Guild::Comment', inverse_of: 'post'
     has_many :parent_comments, -> { where(parent_comment_id: nil).published }, class_name: 'Guild::Comment', foreign_key: 'guild_post_id', inverse_of: 'post'
-    has_many :images, class_name: 'Guild::PostImage', foreign_key: 'guild_post_id', inverse_of: 'post', dependent: :destroy
     has_many :engagements, class_name: 'Guild::PostEngagement', foreign_key: 'guild_post_id', dependent: :destroy, inverse_of: 'post'
     has_many :notifications, inverse_of: 'notifiable', foreign_key: 'notifiable_id', dependent: :destroy
     has_many :labelings, foreign_key: :guild_post_id, inverse_of: :guild_post, dependent: :destroy
@@ -61,7 +65,7 @@ module Guild
     end
 
     def cover_image
-      images.find_by(cover: true)
+      images.find_by(id: cover_photo_id).presence || images.order(:position).first
     end
 
     def excerpt
@@ -126,15 +130,18 @@ end
 #  type               :string           default("Post"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  cover_photo_id     :bigint
 #  post_prompt_id     :uuid
 #  specialist_id      :bigint
 #
 # Indexes
 #
+#  index_guild_posts_on_cover_photo_id  (cover_photo_id)
 #  index_guild_posts_on_post_prompt_id  (post_prompt_id)
 #  index_guild_posts_on_specialist_id   (specialist_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (cover_photo_id => active_storage_attachments.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #

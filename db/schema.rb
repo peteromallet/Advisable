@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_13_084713) do
+ActiveRecord::Schema.define(version: 2021_05_13_120403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -484,6 +484,8 @@ ActiveRecord::Schema.define(version: 2021_05_13_084713) do
     t.datetime "resolved_at"
     t.string "audience_type"
     t.uuid "post_prompt_id"
+    t.bigint "cover_photo_id"
+    t.index ["cover_photo_id"], name: "index_guild_posts_on_cover_photo_id"
     t.index ["post_prompt_id"], name: "index_guild_posts_on_post_prompt_id"
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end
@@ -1086,6 +1088,7 @@ ActiveRecord::Schema.define(version: 2021_05_13_084713) do
   add_foreign_key "guild_post_engagements", "guild_posts"
   add_foreign_key "guild_post_engagements", "specialists"
   add_foreign_key "guild_post_images", "guild_posts", on_delete: :cascade
+  add_foreign_key "guild_posts", "active_storage_attachments", column: "cover_photo_id"
   add_foreign_key "guild_posts", "specialists"
   add_foreign_key "guild_reactions", "specialists", on_delete: :cascade
   add_foreign_key "interviews", "applications"

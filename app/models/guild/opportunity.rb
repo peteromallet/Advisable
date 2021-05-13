@@ -24,15 +24,18 @@ end
 #  type               :string           default("Post"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  cover_photo_id     :bigint
 #  post_prompt_id     :uuid
 #  specialist_id      :bigint
 #
 # Indexes
 #
+#  index_guild_posts_on_cover_photo_id  (cover_photo_id)
 #  index_guild_posts_on_post_prompt_id  (post_prompt_id)
 #  index_guild_posts_on_specialist_id   (specialist_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (cover_photo_id => active_storage_attachments.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #

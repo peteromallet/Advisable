@@ -6,24 +6,8 @@ module Guild
     include Uid
     uid_prefix 'gpi'
 
-    belongs_to :post, class_name: 'Guild::Post', foreign_key: 'guild_post_id', inverse_of: 'images'
     has_one_attached :image
     resize image: {resize_to_limit: [1600, 1600]}
-
-    after_destroy :set_first_to_cover, if: :cover
-    after_destroy :reduce_positions
-
-    private
-
-    def reduce_positions
-      post.images.where('position > ?', position).find_each do |image|
-        image.update position: image.position - 1
-      end
-    end
-
-    def set_first_to_cover
-      post.images.order(position: :asc).first.try(:update, cover: true)
-    end
   end
 end
 

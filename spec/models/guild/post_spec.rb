@@ -24,7 +24,6 @@ RSpec.describe Guild::Post, type: :model do
     it { expect(guild_post).to have_many(:reactions) }
     it { expect(guild_post).to have_many(:comments).conditions(status: Guild::Comment.statuses["published"]) }
     it { expect(guild_post).to have_many(:labels) }
-    it { expect(guild_post).to have_many(:images) }
   end
 
   describe "with comments" do
