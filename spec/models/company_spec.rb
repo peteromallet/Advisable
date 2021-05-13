@@ -6,22 +6,20 @@ RSpec.describe Company, type: :model do
   let(:company) { create(:company) }
 
   describe ".fresh_name_for" do
-    let(:user) { create(:user, company_name: "Acme") }
-
     it "returns the same name as user's company" do
-      expect(described_class.fresh_name_for(user.company_name)).to eq("Acme")
+      expect(described_class.fresh_name_for("Acme")).to eq("Acme")
     end
 
     context "when company with that name already exists" do
       it "returns the same name as user's company with (2)" do
         create(:company, name: "Acme")
-        expect(described_class.fresh_name_for(user.company_name)).to eq("Acme (2)")
+        expect(described_class.fresh_name_for("Acme")).to eq("Acme (2)")
       end
 
       it "returns the same name as user's company with a bigger number in parenthesis" do
         create(:company, name: "Acme")
         create(:company, name: "Acme (2)")
-        expect(described_class.fresh_name_for(user.company_name)).to eq("Acme (3)")
+        expect(described_class.fresh_name_for("Acme")).to eq("Acme (3)")
       end
     end
   end
@@ -46,9 +44,9 @@ RSpec.describe Company, type: :model do
           metadata: {company_id: company.id}
         }).and_return(customer)
 
-        expect {
+        expect do
           company.stripe_customer_id
-        }.to change {
+        end.to change {
           company.reload[:stripe_customer_id]
         }.from(nil).to("cus_123")
       end
@@ -100,9 +98,9 @@ RSpec.describe Company, type: :model do
     it "sets payments_setup to true" do
       company = create(:company, payments_setup: nil, invoice_name: "Test", accepted_project_payment_terms_at: 2.hours.ago)
       allow(company).to receive(:payment_method).and_return(payment_method)
-      expect {
+      expect do
         company.update_payments_setup
-      }.to change {
+      end.to change {
         company.reload.payments_setup
       }.from(nil).to(true)
     end
@@ -111,9 +109,9 @@ RSpec.describe Company, type: :model do
       it "sets payments_setup to false" do
         company = create(:company, project_payment_method: "Card", payments_setup: nil)
         allow(company).to receive(:payment_method).and_return(nil)
-        expect {
+        expect do
           company.update_payments_setup
-        }.to change {
+        end.to change {
           company.reload.payments_setup
         }.from(nil).to(false)
       end
@@ -123,9 +121,9 @@ RSpec.describe Company, type: :model do
       it "sets payments_setup to false" do
         company = create(:company, project_payment_method: "Bank Transfer", payments_setup: nil, invoice_name: nil)
         allow(company).to receive(:payment_method).and_return(payment_method)
-        expect {
+        expect do
           company.update_payments_setup
-        }.to change {
+        end.to change {
           company.reload.payments_setup
         }.from(nil).to(false)
       end
@@ -135,9 +133,9 @@ RSpec.describe Company, type: :model do
       it "sets payments_setup to false" do
         company = create(:company, project_payment_method: "Bank Transfer", payments_setup: nil, invoice_name: "Test", accepted_project_payment_terms_at: nil)
         allow(company).to receive(:payment_method).and_return(payment_method)
-        expect {
+        expect do
           company.update_payments_setup
-        }.to change {
+        end.to change {
           company.reload.payments_setup
         }.from(nil).to(false)
       end

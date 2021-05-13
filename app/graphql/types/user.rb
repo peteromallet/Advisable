@@ -26,6 +26,10 @@ module Types
 
     field :title, String, null: true
     field :company_name, String, null: true
+    def company_name
+      object.company.name
+    end
+
     field :time_zone, String, null: true
     field :company, Types::CompanyType, null: true
 

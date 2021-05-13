@@ -20,6 +20,10 @@ module Types
     end
 
     field :company_name, String, null: true
+    def company_name
+      object.company.name
+    end
+
     field :budget, Int, null: true
     field :skills, [Types::Skill], null: true
     field :locality_importance, Int, null: true

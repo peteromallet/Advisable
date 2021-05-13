@@ -35,16 +35,11 @@ module Mutations
     end
 
     def update_company_attributes(user, args)
-      update_company_name(user, args[:company_name]) if args[:company_name]
+      user.company.name = args[:company_name] if args[:company_name]
       user.company.budget = args[:budget] if args[:budget]
       user.company.industry = Industry.find_by!(name: args[:industry]) if args[:industry]
       user.company.kind = args[:company_type] if args[:company_type]
       current_account_responsible_for { user.company.save }
-    end
-
-    def update_company_name(user, company_name)
-      user.company_name = company_name
-      user.company.name = company_name
     end
 
     def update_skills(user, skills)
