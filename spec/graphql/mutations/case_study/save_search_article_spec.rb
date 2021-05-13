@@ -15,7 +15,9 @@ RSpec.describe Mutations::CaseStudy::SaveSearchArticle do
           search: "#{search.uid}",
           article: "#{article.uid}"
         }) {
-          success
+          article {
+            id
+          }
         }
       }
     GRAPHQL
@@ -25,8 +27,8 @@ RSpec.describe Mutations::CaseStudy::SaveSearchArticle do
     uid = search.uid
     expect(search.saved).to eq([123])
     response = AdvisableSchema.execute(query, context: context)
-    success = response["data"]["saveCaseStudySearchArticle"]["success"]
-    expect(success).to eq(true)
+    r_article = response["data"]["saveCaseStudySearchArticle"]["article"]
+    expect(r_article["id"]).to eq(article.uid)
     expect(::CaseStudy::Search.find_by(uid: uid).saved).to match_array([123, article.id])
   end
 
