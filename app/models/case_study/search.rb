@@ -5,8 +5,11 @@ module CaseStudy
     include Uid
     uid_prefix "csr"
 
+    has_logidze
+
     belongs_to :user
     has_many :skills, dependent: :destroy
+    has_many :search_feedbacks, dependent: :destroy
   end
 end
 
