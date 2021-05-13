@@ -9,7 +9,7 @@ module Mutations
     argument :locality_importance, Int, required: false
     argument :talent_quality, String, required: false
 
-    field :client_application, Types::ClientApplicationType, null: true
+    field :clientApplication, Types::ClientApplicationType, null: true
 
     def authorized?(**args)
       @user = User.find_by_uid_or_airtable_id!(args[:id])
