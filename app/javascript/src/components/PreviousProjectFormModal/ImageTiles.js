@@ -1,5 +1,5 @@
-import React from "react";
-import { gql } from "@apollo/client";
+import React, { useCallback } from "react";
+import { gql, useApolloClient } from "@apollo/client";
 import { rgba } from "polished";
 import { Plus } from "@styled-icons/feather/Plus";
 import { X } from "@styled-icons/feather/X";
@@ -186,10 +186,8 @@ function Upload({ previousProjectId, image, finishUpload, onClick }) {
 const PortfolioImage = React.memo(function PortfolioImage({
   image,
   onClick,
-  remove,
+  onRemove,
 }) {
-  const [deleteImage] = useDeletePreviousProjectImage();
-
   const handleClick = () => {
     if (image.cover) return;
 
@@ -198,17 +196,7 @@ const PortfolioImage = React.memo(function PortfolioImage({
 
   const handleRemove = (e) => {
     e.stopPropagation();
-    remove(image);
-
-    if (image.id) {
-      deleteImage({
-        variables: {
-          input: {
-            id: image.id,
-          },
-        },
-      });
-    }
+    onRemove(image);
   };
 
   return (
@@ -232,7 +220,9 @@ function ImageTiles({
   addUpload,
   finishUpload,
 }) {
+  const { cache } = useApolloClient();
   const [setCoverImage] = useMutation(SET_COVER);
+  const [deleteImage] = useDeletePreviousProjectImage();
   const { error } = useNotifications();
   const accept = ".png, .jpg, .jpeg";
 
@@ -252,6 +242,37 @@ function ImageTiles({
     }
   };
 
+  const handleRemoveImage = useCallback(
+    (image) => {
+      remove(image);
+
+      if (image.id) {
+        deleteImage({
+          variables: {
+            input: {
+              id: image.id,
+            },
+          },
+        });
+
+        cache.modify({
+          id: cache.identify({
+            __typename: "PreviousProject",
+            id: previousProjectId,
+          }),
+          fields: {
+            images(existingRefs, { readField }) {
+              return existingRefs.filter((imageRef) => {
+                return image.id != readField("id", imageRef);
+              });
+            },
+          },
+        });
+      }
+    },
+    [cache, remove, deleteImage, previousProjectId],
+  );
+
   const tiles = images.map((image) => {
     if (image.uploading) {
       return (
@@ -269,7 +290,7 @@ function ImageTiles({
       <PortfolioImage
         key={image.key}
         image={image}
-        remove={remove}
+        onRemove={handleRemoveImage}
         onClick={handleSetCover(image)}
       />
     );
