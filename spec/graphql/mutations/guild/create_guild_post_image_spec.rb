@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::Guild::CreateGuildPostImage do
@@ -14,11 +16,10 @@ RSpec.describe Mutations::Guild::CreateGuildPostImage do
     ).signed_id
   end
 
-  let(:query) {
+  let(:query) do
     <<-GRAPHQL
     mutation {
       createGuildPostImage(input: {
-        id: "gpi_#{AlphanumericId.generate}",
         guildPostId: "#{guild_post.id}"
         attachment: "#{attachment}"
         cover: true
@@ -33,10 +34,11 @@ RSpec.describe Mutations::Guild::CreateGuildPostImage do
       }
     }
     GRAPHQL
-  }
+  end
 
   context "with an unauthorized specialist" do
     let(:resp) { AdvisableSchema.execute(query, context: {current_user: create(:specialist, :guild)}) }
+
     it 'returns an error' do
       error = resp['errors'].first['extensions']['code']
       expect(error).to eq('notAuthorized')
@@ -44,7 +46,7 @@ RSpec.describe Mutations::Guild::CreateGuildPostImage do
   end
 
   context "with a guild specialist" do
-    subject(:create_guild_post_iage) do
+    subject(:create_guild_post_image) do
       resp = AdvisableSchema.execute(
         query,
         context: {current_user: specialist}
@@ -53,11 +55,10 @@ RSpec.describe Mutations::Guild::CreateGuildPostImage do
     end
 
     it "creates a new guild post image" do
-      expect {
-        subject
+      expect do
+        create_guild_post_image
         guild_post.reload
-      }.to change { guild_post.images.count }.from(0).to(1).
-        and change { Guild::PostImage.count }.by(1)
+      end.to change { guild_post.images.count }.from(0).to(1)
     end
   end
 end
