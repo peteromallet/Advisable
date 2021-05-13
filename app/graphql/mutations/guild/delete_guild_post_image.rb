@@ -1,26 +1,29 @@
 # frozen_string_literal: true
 
-class Mutations::Guild::DeleteGuildPostImage < Mutations::BaseMutation
-  graphql_name "DeleteGuildPostImage"
+module Mutations
+  module Guild
+    class DeleteGuildPostImage < Mutations::BaseMutation
+      graphql_name "DeleteGuildPostImage"
 
-  argument :guild_post_image_id, ID, required: true
+      argument :guild_post_image_id, ID, required: true
 
-  field :success, Boolean, null: true
+      field :success, Boolean, null: true
 
-  def authorized?(**args)
-    requires_guild_user!
-  end
+      def authorized?(guild_post_image_id:)
+        requires_guild_user!
+        image = ActiveStorage::Attachment.find(guild_post_image_id)
+        ApiError.not_authorized('You dont have access to this') if image.record.specialist != current_user
+        true
+      end
 
-  def resolve(**args)
-    image = Guild::PostImage.find_by(uid: args[:guild_post_image_id])
-    return {success: false} if image.blank?
+      def resolve(guild_post_image_id:)
+        image = ActiveStorage::Attachment.find(guild_post_image_id)
+        return {success: false} if image.blank?
 
-    if image.post.specialist != current_user
-      ApiError.not_authorized('You dont have access to this')
+        image.record.update(cover_photo_id: nil) if image.record.cover_photo_id == id.to_i
+        image.destroy
+        {success: true}
+      end
     end
-
-    image.destroy
-
-    {success: true}
   end
 end
