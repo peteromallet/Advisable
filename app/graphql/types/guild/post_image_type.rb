@@ -19,6 +19,7 @@ module Types
 
       field :url, String, null: false
       def url
+        binding.pry
         object.record.resized_images_mapping[object.id]
       end
     end

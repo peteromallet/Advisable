@@ -1,9 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Mutations::Guild::UpdateGuildPostImage do
+RSpec.describe Mutations::Guild::SetGuildPostCoverImage do
   let(:specialist) { create(:specialist, :guild) }
   let(:guild_post) { create(:guild_post, specialist: specialist) }
-  let(:guild_post_image) { create(:guild_post_image, post: guild_post, image: attachment) }
   let(:response_keys) { %w[updateGuildPostImage image] }
   let(:attachment) do
     file = Rails.root.join('spec/support/01.jpg')
@@ -14,13 +13,12 @@ RSpec.describe Mutations::Guild::UpdateGuildPostImage do
     )
   end
 
-  let(:query) {
+  let(:query) do
     <<-GRAPHQL
     mutation {
-      updateGuildPostImage(input: {
-        guildPostImageId: "#{guild_post_image.uid}",
-        cover: false
-        position: 2
+      setGuildPostCoverPhoto(input: {
+        guildPost: "#{guild_post.id}",
+        attachment: "#{attachment.signed_id}"
       }) {
         image {
           id
@@ -31,7 +29,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPostImage do
       }
     }
     GRAPHQL
-  }
+  end
 
   context "with an unauthorized specialist" do
     let(:resp) { AdvisableSchema.execute(query, context: {current_user: create(:specialist, :guild)}) }
@@ -44,11 +42,11 @@ RSpec.describe Mutations::Guild::UpdateGuildPostImage do
 
   context "with a guild specialist" do
     it "updates a guild post image" do
-      expect {
-        r = AdvisableSchema.execute(query, context: {current_user: specialist})
-        guild_post_image.reload
-      }.to change(guild_post_image, :cover).from(true).to(false).
-        and change(guild_post_image, :position).from(1).to(2)
+      guild_post.images.attach(attachment)
+      expect(guild_post.cover_photo_id).to eq(nil)
+      response = AdvisableSchema.execute(query, context: {current_user: specialist})
+      pp response
+      expect(guild_post.cover_photo_id).to eq(attachment.id)
     end
   end
 end
