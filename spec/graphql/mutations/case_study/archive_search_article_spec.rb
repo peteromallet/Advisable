@@ -17,7 +17,9 @@ RSpec.describe Mutations::CaseStudy::ArchiveSearchArticle do
           article: "#{article.uid}",
           #{extra}
         }) {
-          success
+          article {
+            id
+          }
         }
       }
     GRAPHQL
@@ -27,8 +29,8 @@ RSpec.describe Mutations::CaseStudy::ArchiveSearchArticle do
     uid = search.uid
     expect(search.archived).to eq([123])
     response = AdvisableSchema.execute(query, context: context)
-    success = response["data"]["archiveCaseStudySearchArticle"]["success"]
-    expect(success).to eq(true)
+    r_article = response["data"]["archiveCaseStudySearchArticle"]["article"]
+    expect(r_article["id"]).to eq(article.uid)
     expect(::CaseStudy::Search.find_by(uid: uid).archived).to match_array([123, article.id])
   end
 
@@ -38,9 +40,8 @@ RSpec.describe Mutations::CaseStudy::ArchiveSearchArticle do
 
     it "creates SearchFeedback" do
       response = AdvisableSchema.execute(query, context: context)
-      pp response
-      success = response["data"]["archiveCaseStudySearchArticle"]["success"]
-      expect(success).to eq(true)
+      r_article = response["data"]["archiveCaseStudySearchArticle"]["article"]
+      expect(r_article["id"]).to eq(article.uid)
       feedback = search.search_feedbacks.first
       expect(feedback.article).to eq(article)
       expect(feedback.feedback).to eq(text)

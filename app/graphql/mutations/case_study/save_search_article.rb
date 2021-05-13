@@ -9,7 +9,7 @@ module Mutations
       argument :article, ID, required: true
       argument :search, ID, required: true
 
-      field :success, Boolean, null: true
+      field :article, Types::CaseStudy::Article, null: false
 
       def authorized?(search:, **_args)
         requires_client!
@@ -27,7 +27,11 @@ module Mutations
 
         search.saved << article.id
 
-        {success: search.save}
+        current_account_responsible_for do
+          search.save
+        end
+
+        {article: article}
       end
     end
   end
