@@ -20,9 +20,7 @@ class AccountsController < ApplicationController
       account.save!
     end
 
-    %i[airtable_id company_name].each do |key|
-      user.public_send("#{key}=", params[key].strip) if params[key].present?
-    end
+    user.airtable_id = params[:airtable_id].strip if params[:airtable_id].present?
 
     Logidze.with_responsible(user.account_id) do
       user.save!

@@ -73,7 +73,6 @@ module Mutations
       user = User.create(
         account: account,
         company: Company.new(name: Company.fresh_name_for(args[:company])),
-        company_name: args[:company],
         campaign_source: args[:utm_source],
         campaign_name: args[:utm_campaign],
         campaign_medium: args[:utm_medium],

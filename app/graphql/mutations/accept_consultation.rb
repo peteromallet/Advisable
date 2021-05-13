@@ -51,7 +51,7 @@ module Mutations
         status: 'Project Created',
         service_type: 'Consultation',
         primary_skill: consultation.skill,
-        name: "#{consultation.user.company_name} - #{consultation.skill.name}"
+        name: "#{consultation.user.company.name} - #{consultation.skill.name}"
       )
       project.sync_to_airtable
       project
