@@ -3,6 +3,7 @@ import generateID from "src/utilities/generateID";
 
 function attributesFromAttachment(attachment) {
   return {
+    id: attachment.id,
     key: generateID("ppi"),
     uploading: false,
     url: attachment.url,
@@ -49,6 +50,7 @@ function reducer(state, action) {
             ...image,
             ...attributesFromAttachment(action.image),
             cover: image.cover,
+            id: image.id,
           };
         }
 
