@@ -26,9 +26,11 @@ module Mutations
       update_guarantee_terms(args[:accepted_guarantee_terms])
       update_accepted_or_rejected
 
-      current_account_responsible_for { user.save }
+      current_account_responsible_for do
+        user.save!
+        user.create_case_study_search
+      end
       user.sync_to_airtable
-      create_case_study_search
       ClientApplicationSubmittedNotificationJob.perform_later(user.id)
 
       {clientApplication: user}
@@ -67,15 +69,6 @@ module Mutations
 
       user.application_accepted_at = Time.zone.now if application_status == "Application Accepted"
       user.application_rejected_at = Time.zone.now if application_status == "Application Rejected"
-    end
-
-    def create_case_study_search
-      ::CaseStudy::Search.create!(
-        user: user,
-        business_type: user.company.kind,
-        goals: user.projects.first&.goals,
-        name: "Project recommendations for #{user.company.name}"
-      )
     end
   end
 end
