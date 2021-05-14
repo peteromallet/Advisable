@@ -249,6 +249,16 @@ function ImageTiles({
 
   const updateCoverInCache = useCallback(
     (image) => {
+      const existingCover = previousProject.coverPhoto;
+      if (existingCover) {
+        client.cache.modify({
+          id: client.cache.identify(existingCover),
+          fields: {
+            cover: () => false,
+          },
+        });
+      }
+
       client.cache.modify({
         id: client.cache.identify(image),
         fields: {

@@ -27,6 +27,8 @@ export const previousProjectImageFields = gql`
 `;
 
 const previousProjectFields = gql`
+  ${previousProjectImageFields}
+
   fragment PreviousProjectFields on PreviousProject {
     id
     draft
@@ -49,15 +51,10 @@ const previousProjectFields = gql`
     industryRelevance
     locationRelevance
     coverPhoto {
-      id
-      url
+      ...PreviousProjectImageFields
     }
     images {
-      id
-      url
-      cover
-      signedId
-      position
+      ...PreviousProjectImageFields
     }
     primaryIndustry {
       id
