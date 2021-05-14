@@ -247,17 +247,12 @@ function ImageTiles({
   const { error } = useNotifications();
   const accept = ".png, .jpg, .jpeg";
 
-  const handleSetCover = (image) => () => {
-    if (image.cover) return;
-    setCover(image);
-
-    if (image.id) {
-      setCoverImage({
-        variables: {
-          input: {
-            previousProject: previousProject.id,
-            attachment: image.signedId,
-          },
+  const updateCoverInCache = useCallback(
+    (image) => {
+      client.cache.modify({
+        id: client.cache.identify(image),
+        fields: {
+          cover: () => true,
         },
       });
 
@@ -274,6 +269,25 @@ function ImageTiles({
           },
         },
       });
+    },
+    [client.cache, previousProject],
+  );
+
+  const handleSetCover = (image) => () => {
+    if (image.cover) return;
+    setCover(image);
+
+    if (image.id) {
+      setCoverImage({
+        variables: {
+          input: {
+            previousProject: previousProject.id,
+            attachment: image.signedId,
+          },
+        },
+      });
+
+      updateCoverInCache(image);
     }
   };
 
@@ -302,9 +316,14 @@ function ImageTiles({
             },
           },
         });
+
+        if (image.cover) {
+          const nextCover = images.filter((i) => i.id !== image.id)[0];
+          updateCoverInCache(nextCover);
+        }
       }
     },
-    [client, remove, deleteImage, previousProject],
+    [client, remove, deleteImage, previousProject, updateCoverInCache, images],
   );
 
   const tiles = images.map((image) => {
