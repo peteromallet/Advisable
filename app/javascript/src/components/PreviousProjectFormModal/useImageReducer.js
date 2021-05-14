@@ -3,13 +3,9 @@ import generateID from "src/utilities/generateID";
 
 function attributesFromAttachment(attachment) {
   return {
-    id: attachment.id,
+    ...attachment,
     key: generateID("ppi"),
     uploading: false,
-    url: attachment.url,
-    cover: attachment.cover,
-    position: attachment.position,
-    signedId: attachment.signedId,
   };
 }
 

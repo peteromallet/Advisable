@@ -251,12 +251,26 @@ function ImageTiles({
     if (image.cover) return;
     setCover(image);
 
-    if (image.signedId) {
+    if (image.id) {
       setCoverImage({
         variables: {
           input: {
             previousProject: previousProject.id,
             attachment: image.signedId,
+          },
+        },
+      });
+
+      client.cache.modify({
+        id: client.cache.identify(previousProject),
+        fields: {
+          coverPhoto() {
+            const newRef = client.cache.writeFragment({
+              fragment: previousProjectImageFields,
+              data: image,
+            });
+
+            return newRef;
           },
         },
       });
