@@ -51,10 +51,7 @@ export default function Portfolio({ modal, data }) {
         <Box mb="xl">
           <CoverPhoto {...images} />
           {images.length > 0 && (
-            <ImageTiles
-              {...images}
-              previousProjectId={data.previousProject.id}
-            />
+            <ImageTiles {...images} previousProject={data.previousProject} />
           )}
         </Box>
         <Button

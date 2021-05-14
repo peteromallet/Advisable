@@ -16,6 +16,16 @@ export const SELECT_DATA = gql`
   }
 `;
 
+export const previousProjectImageFields = gql`
+  fragment PreviousProjectImageFields on PreviousProjectImage {
+    id
+    url
+    cover
+    signedId
+    position
+  }
+`;
+
 const previousProjectFields = gql`
   fragment PreviousProjectFields on PreviousProject {
     id
@@ -39,6 +49,7 @@ const previousProjectFields = gql`
     industryRelevance
     locationRelevance
     coverPhoto {
+      id
       url
     }
     images {
