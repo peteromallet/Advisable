@@ -145,3 +145,27 @@ export const DELETE = gql`
 
 export const useDeletePreviousProjectImage = (opts) =>
   useMutation(DELETE, opts);
+
+export const CREATE_PHOTO = gql`
+  ${previousProjectImageFields}
+
+  mutation createPhoto($input: CreatePreviousProjectImageInput!) {
+    createPreviousProjectImage(input: $input) {
+      image {
+        ...PreviousProjectImageFields
+      }
+    }
+  }
+`;
+
+export const SET_COVER = gql`
+  ${previousProjectImageFields}
+
+  mutation setCoverPhoto($input: SetPreviousProjectCoverImageInput!) {
+    setPreviousProjectCoverImage(input: $input) {
+      image {
+        ...PreviousProjectImageFields
+      }
+    }
+  }
+`;
