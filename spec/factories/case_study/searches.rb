@@ -5,7 +5,5 @@ FactoryBot.define do
     sequence(:uid) { "csr_#{SecureRandom.hex[0..14]}" }
     user
     name { "It's a search" }
-    business_type { "B2B" }
-    goals { ["first goal", "second goal"] }
   end
 end
