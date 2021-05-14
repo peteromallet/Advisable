@@ -11,6 +11,10 @@ const getProject = gql`
       contactJobTitle
       validationStatus
       draft
+      coverPhoto {
+        id
+        url
+      }
       images {
         id
         url
