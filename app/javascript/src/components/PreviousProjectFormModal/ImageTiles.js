@@ -11,6 +11,7 @@ import filesExceedLimit from "src/utilities/filesExceedLimit";
 import { useDeletePreviousProjectImage } from "./queries";
 import matchFileType from "src/utilities/matchFileType";
 import useUpload from "./useUpload";
+import { previousProjectImageFields } from "./queries";
 
 const StyledImageTiles = styled.div`
   width: 100%;
@@ -148,7 +149,8 @@ const SET_COVER = gql`
   }
 `;
 
-function Upload({ previousProjectId, image, finishUpload, onClick }) {
+function Upload({ previousProject, image, finishUpload, onClick }) {
+  const client = useApolloClient();
   const [createImage] = useMutation(CREATE_PHOTO);
 
   const upload = useUpload(image.file, {
@@ -158,13 +160,32 @@ function Upload({ previousProjectId, image, finishUpload, onClick }) {
           input: {
             cover: image.cover,
             position: image.position,
-            previousProject: previousProjectId,
+            previousProject: previousProject.id,
             attachment: blob.signed_id,
           },
         },
       });
 
       const newImage = r.data.createPreviousProjectImage.image;
+
+      client.cache.modify({
+        id: client.cache.identify(previousProject),
+        fields: {
+          images(existing = [], { readField }) {
+            const newRef = client.cache.writeFragment({
+              fragment: previousProjectImageFields,
+              data: newImage,
+            });
+
+            if (existing.some((ref) => readField("id", ref) === newRef.id)) {
+              return existing;
+            }
+
+            return [...existing, newRef];
+          },
+        },
+      });
+
       finishUpload(image.key, newImage);
     },
   });
@@ -214,13 +235,13 @@ const PortfolioImage = React.memo(function PortfolioImage({
 
 function ImageTiles({
   state: images,
-  previousProjectId,
+  previousProject,
   remove,
   setCover,
   addUpload,
   finishUpload,
 }) {
-  const { cache } = useApolloClient();
+  const client = useApolloClient();
   const [setCoverImage] = useMutation(SET_COVER);
   const [deleteImage] = useDeletePreviousProjectImage();
   const { error } = useNotifications();
@@ -234,7 +255,7 @@ function ImageTiles({
       setCoverImage({
         variables: {
           input: {
-            previousProject: previousProjectId,
+            previousProject: previousProject.id,
             attachment: image.signedId,
           },
         },
@@ -244,9 +265,22 @@ function ImageTiles({
 
   const handleRemoveImage = useCallback(
     (image) => {
-      remove(image);
-
       if (image.id) {
+        const fields = {
+          images(existingRefs, { readField }) {
+            return existingRefs.filter((imageRef) => {
+              return image.id != readField("id", imageRef);
+            });
+          },
+        };
+
+        client.cache.modify({
+          id: client.cache.identify(previousProject),
+          fields,
+        });
+
+        remove(image);
+
         deleteImage({
           variables: {
             input: {
@@ -254,23 +288,9 @@ function ImageTiles({
             },
           },
         });
-
-        cache.modify({
-          id: cache.identify({
-            __typename: "PreviousProject",
-            id: previousProjectId,
-          }),
-          fields: {
-            images(existingRefs, { readField }) {
-              return existingRefs.filter((imageRef) => {
-                return image.id != readField("id", imageRef);
-              });
-            },
-          },
-        });
       }
     },
-    [cache, remove, deleteImage, previousProjectId],
+    [client, remove, deleteImage, previousProject],
   );
 
   const tiles = images.map((image) => {
@@ -280,7 +300,7 @@ function ImageTiles({
           key={image.key}
           image={image}
           finishUpload={finishUpload}
-          previousProjectId={previousProjectId}
+          previousProject={previousProject}
           onClick={handleSetCover(image)}
         />
       );
