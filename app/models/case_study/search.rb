@@ -10,6 +10,22 @@ module CaseStudy
     belongs_to :user
     has_many :skills, dependent: :destroy
     has_many :search_feedbacks, dependent: :destroy
+
+    def results
+      Article.
+        joins(:skills).
+        where(case_study_skills: {skill_id: skills.pluck(:skill_id)}).
+        where(company_type: business_type).
+        where("goals ?| array[:goals]", goals: goals)
+    end
+
+    def archived_articles
+      Article.where(id: archived)
+    end
+
+    def saved_articles
+      Article.where(id: saved)
+    end
   end
 end
 
