@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_13_084713) do
+ActiveRecord::Schema.define(version: 2021_05_17_120013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -512,6 +512,7 @@ ActiveRecord::Schema.define(version: 2021_05_13_084713) do
     t.datetime "more_time_options_added_at"
     t.datetime "client_requested_reschedule_at"
     t.datetime "specialist_requested_reschedule_at"
+    t.jsonb "log_data"
     t.index ["airtable_id"], name: "index_interviews_on_airtable_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
     t.index ["user_id"], name: "index_interviews_on_user_id"
@@ -1384,6 +1385,9 @@ ActiveRecord::Schema.define(version: 2021_05_13_084713) do
   SQL
   create_trigger :logidze_on_companies, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_companies BEFORE INSERT OR UPDATE ON public.companies FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_interviews, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_interviews BEFORE INSERT OR UPDATE ON public.interviews FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_off_platform_projects, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_off_platform_projects BEFORE INSERT OR UPDATE ON public.off_platform_projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
