@@ -12,7 +12,7 @@ module Mutations
     end
 
     def resolve(tutorial:)
-      viewer = context[:current_user]
+      viewer = current_user
       viewer.account.complete_tutorial(tutorial)
       {viewer: viewer}
     end

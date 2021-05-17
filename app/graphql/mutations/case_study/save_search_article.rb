@@ -15,7 +15,7 @@ module Mutations
         requires_client!
 
         search = ::CaseStudy::Search.find_by!(uid: search)
-        policy = ::CaseStudy::SearchPolicy.new(context[:current_user], search)
+        policy = ::CaseStudy::SearchPolicy.new(current_user, search)
         return true if policy.save_article?
 
         ApiError.not_authorized("You do not have permission to save article to this search")

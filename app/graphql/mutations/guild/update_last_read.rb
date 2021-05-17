@@ -14,7 +14,7 @@ module Mutations
       end
 
       def resolve(**_args)
-        viewer = context[:current_user]
+        viewer = current_user
         viewer.touch_guild_notifications_read_at
 
         {viewer: viewer}

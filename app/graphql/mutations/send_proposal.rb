@@ -9,7 +9,7 @@ module Mutations
 
     def authorized?(**args)
       application = Application.find_by_uid_or_airtable_id!(args[:application])
-      policy = ApplicationPolicy.new(context[:current_user], application)
+      policy = ApplicationPolicy.new(current_user, application)
       return true if policy.send_proposal?
 
       ApiError.not_authorized("You do not have permission to send this proposal")
