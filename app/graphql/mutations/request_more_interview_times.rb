@@ -1,36 +1,40 @@
 # frozen_string_literal: true
 
-class Mutations::RequestMoreInterviewTimes < Mutations::BaseMutation
-  argument :id, ID, required: true
-  argument :availability_note, String, required: false
+module Mutations
+  class RequestMoreInterviewTimes < Mutations::BaseMutation
+    argument :availability_note, String, required: false
+    argument :id, ID, required: true
 
-  field :interview, Types::Interview, null: true
+    field :interview, Types::Interview, null: true
 
-  ALLOWED_STATUSES = [
-    'Call Requested',
-    'Client Requested Reschedule',
-    'Need More Time Options',
-    'More Time Options Added'
-  ].freeze
+    ALLOWED_STATUSES = [
+      'Call Requested',
+      'Client Requested Reschedule',
+      'Need More Time Options',
+      'More Time Options Added'
+    ].freeze
 
-  def resolve(**args)
-    interview = Interview.find_by_uid_or_airtable_id!(args[:id])
+    def resolve(**args)
+      interview = Interview.find_by_uid_or_airtable_id!(args[:id])
 
-    unless ALLOWED_STATUSES.include?(interview.status)
-      ApiError.invalid_request(
-              'interview.notRequested',
-              'Interview is not in a requested state'
-            )
+      unless ALLOWED_STATUSES.include?(interview.status)
+        ApiError.invalid_request(
+          'interview.notRequested',
+          'Interview is not in a requested state'
+        )
+      end
+
+      current_account_responsible_for do
+        interview.update(
+          status: 'Need More Time Options',
+          requested_more_time_options_at: Time.zone.now,
+          availability_note: args[:availability_note]
+        )
+      end
+
+      interview.sync_to_airtable
+
+      {interview: interview}
     end
-
-    interview.update(
-      status: 'Need More Time Options',
-      requested_more_time_options_at: Time.zone.now,
-      availability_note: args[:availability_note]
-    )
-
-    interview.sync_to_airtable
-
-    {interview: interview}
   end
 end
