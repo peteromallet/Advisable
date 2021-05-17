@@ -3,11 +3,11 @@ import { Key } from "@styled-icons/feather/Key";
 import { Box, Text, Circle } from "@advisable/donut";
 
 const AccessDenied = ({ heading, children }) => (
-  <Box maxWidth={320} mx="auto" my="xxl" textAlign="center">
-    <Circle size={60} color="white" bg="blue800" mb="l">
+  <Box maxWidth={320} mx="auto" my={10} textAlign="center">
+    <Circle size={60} color="white" bg="blue800" mb={6}>
       <Key size={24} strokeWidth={2} />
     </Circle>
-    <Text fontWeight="medium" mb="xxs">
+    <Text fontWeight="medium" mb={1}>
       {heading || "Access Denied"}
     </Text>
     <Text fontSize="s" lineHeight="s" color="neutral700">
