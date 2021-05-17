@@ -43,7 +43,6 @@ module Airtable
         user.company.update(sales_person: sales_person)
       end
 
-      user.company.name = self['Company Name'].try(:first)
       industry_id = self['Industry'].try(:first)
       if industry_id
         industry = ::Industry.find_by_airtable_id(industry_id)
@@ -93,7 +92,6 @@ module Airtable
       self['RID'] = user.rid
       self['gclid'] = user.gclid
       self['fid'] = user.fid
-      self['Company Name'] = user.company.name
       self['City'] = user.company.address.try(:[], 'city')
       self['Application Reminder At'] = user.application_reminder_at
       self['Contact Status'] = user.contact_status
