@@ -15,8 +15,13 @@ module Mutations
       "More Time Options Added"
     ].freeze
 
-    def authorized?(**_args)
+    def authorized?(id:, **_args)
       requires_specialist!
+      interview = Interview.find_by_uid_or_airtable_id!(id)
+      policy = InterviewPolicy.new(current_user, interview)
+      return true if policy.schedule?
+
+      ApiError.not_authorized("You do not have permission to schedule this interview")
     end
 
     def resolve(**args)
