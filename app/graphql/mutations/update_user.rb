@@ -2,19 +2,19 @@
 
 module Mutations
   class UpdateUser < Mutations::BaseMutation
-    argument :industry, String, required: false
     argument :company_type, String, required: false
+    argument :industry, String, required: false
 
     field :user, Types::User, null: true
 
     def authorized?(**_args)
-      return true if context[:current_user].is_a?(::User)
+      return true if current_user.is_a?(::User)
 
       ApiError.not_authenticated
     end
 
     def resolve(**args)
-      user = context[:current_user]
+      user = current_user
 
       # If the users address has not yet been set then schedule the geocode job
       GeocodeUserJob.perform_later(user.id, context[:client_ip]) unless user.company.address.provided?

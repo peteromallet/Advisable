@@ -7,7 +7,7 @@ module Mutations
 
     # The completeSetup mutation requires a specalist to be logged in.
     def authorized?(**_args)
-      specialist = context[:current_user]
+      specialist = current_user
 
       ApiError.not_authenticated unless specialist
       ApiError.not_authenticated("You are logged in as a client") if specialist.is_a?(::User)
@@ -18,7 +18,7 @@ module Mutations
     end
 
     def resolve(**_args)
-      specialist = context[:current_user]
+      specialist = current_user
       specialist.application_stage = "Submitted"
       Logidze.with_responsible(specialist.account_id) do
         specialist.save
