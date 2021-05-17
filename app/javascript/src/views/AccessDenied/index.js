@@ -17,9 +17,9 @@ const AccessDenied = ({ heading, children }) => (
   </Box>
 );
 
-export function isAccessDenied(graphqlError) {
+export function isNotAuthorized(graphqlError) {
   const code = graphqlError?.graphQLErrors?.[0]?.extensions?.code;
-  return code === "INVALID_PERMISSIONS";
+  return code === "notAuthorized";
 }
 
 export default AccessDenied;
