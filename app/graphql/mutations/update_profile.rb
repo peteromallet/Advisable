@@ -30,14 +30,14 @@ module Mutations
     field :specialist, Types::SpecialistType, null: true
 
     def authorized?(**_args)
-      ApiError.not_authenticated("You are not logged in") unless context[:current_user]
-      ApiError.not_authenticated("You are logged in as a user") if context[:current_user].is_a?(::User)
+      ApiError.not_authenticated("You are not logged in") unless current_user
+      ApiError.not_authenticated("You are logged in as a user") if current_user.is_a?(::User)
 
       true
     end
 
     def resolve(**args)
-      @specialist = context[:current_user]
+      @specialist = current_user
       @attributes = args
 
       specialist.assign_attributes(assignable_attributes)

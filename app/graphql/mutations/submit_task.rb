@@ -2,14 +2,14 @@
 
 module Mutations
   class SubmitTask < Mutations::BaseMutation
-    argument :task, ID, required: true
     argument :final_cost, Int, required: false
+    argument :task, ID, required: true
 
     field :task, Types::TaskType, null: true
 
     def authorized?(**args)
       task = Task.find_by_uid!(args[:task])
-      policy = TaskPolicy.new(context[:current_user], task)
+      policy = TaskPolicy.new(current_user, task)
       return true if policy.submit?
 
       ApiError.not_authorized("You do not have permission to approve this task")

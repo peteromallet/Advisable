@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::Guild::CreateComment do
@@ -5,7 +7,7 @@ RSpec.describe Mutations::Guild::CreateComment do
   let(:specialist) { build(:specialist, :guild) }
   let(:response_keys) { %w[createGuildComment guildComment] }
 
-  let(:query) {
+  let(:query) do
     <<-GRAPHQL
     mutation {
       createGuildComment(input: {
@@ -25,7 +27,7 @@ RSpec.describe Mutations::Guild::CreateComment do
       }
     }
     GRAPHQL
-  }
+  end
 
   it_behaves_like "guild specialist"
 
@@ -56,7 +58,7 @@ RSpec.describe Mutations::Guild::CreateComment do
     describe "child comments" do
       let(:guild_post) { create(:guild_post) }
       let(:guild_comment) { create(:guild_comment, post: guild_post) }
-      let(:create_child_comment_query) {
+      let(:create_child_comment_query) do
         <<-GRAPHQL
         mutation {
           createGuildComment(input: {
@@ -66,31 +68,30 @@ RSpec.describe Mutations::Guild::CreateComment do
           }) {
             guildComment {
               id
-              parentComment { 
+              parentComment {
                 id
               }
             }
           }
         }
         GRAPHQL
-      }
-      let(:resp) {
+      end
+      let(:resp) do
         AdvisableSchema.execute(create_child_comment_query, context: {current_user: specialist})
-      }
+      end
 
       it "creates a child comment" do
-        expect {
+        expect do
           resp
-        }.to change { guild_comment.reload.child_comments.size }.by(1)
+        end.to change { guild_comment.reload.child_comments.size }.by(1)
       end
 
       it "has an id thats different than the parent_comment id" do
         data = resp.dig("data", *response_keys)
 
         expect(data.dig("parentComment", "id")).to eq(guild_comment.id)
-        expect(data["id"]).to_not eq(guild_comment.id)
+        expect(data["id"]).not_to eq(guild_comment.id)
       end
     end
   end
 end
-

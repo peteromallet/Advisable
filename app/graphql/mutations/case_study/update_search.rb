@@ -19,7 +19,7 @@ module Mutations
         requires_client!
 
         search = ::CaseStudy::Search.find_by!(uid: id)
-        policy = ::CaseStudy::SearchPolicy.new(context[:current_user], search)
+        policy = ::CaseStudy::SearchPolicy.new(current_user, search)
         return true if policy.update?
 
         ApiError.not_authorized("You do not have permission to update this search")
