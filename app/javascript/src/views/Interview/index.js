@@ -10,7 +10,7 @@ import MoreTimeOptionsAdded from "./MoreTimeOptionsAdded";
 import ClientRequestedReschedule from "./ClientRequestedReschedule";
 import SpecialistRequestedReschedule from "./SpecialistRequestedReschedule";
 import RescheduleInterview from "./RescheduleInterview";
-import NotFound, { isNotFound } from "../NotFound";
+import NotFound, { isNotAuthorized, isNotFound } from "../NotFound";
 
 function InterviewState({ interview }) {
   switch (interview.status) {
@@ -54,6 +54,13 @@ export default function Interview() {
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
+  if (isNotAuthorized(error)) {
+    return (
+      <NotFound code="401" heading="Not Authorized">
+        {error.message}
+      </NotFound>
+    );
+  }
 
   const interview = data.interview;
 
