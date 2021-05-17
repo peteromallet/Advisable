@@ -315,24 +315,6 @@ ActiveRecord::Schema.define(version: 2021_05_13_084713) do
     t.index ["user_id"], name: "index_client_calls_on_user_id"
   end
 
-  create_table "client_users", force: :cascade do |t|
-    t.bigint "client_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["client_id"], name: "index_client_users_on_client_id"
-    t.index ["user_id"], name: "index_client_users_on_user_id"
-  end
-
-  create_table "clients", force: :cascade do |t|
-    t.string "name"
-    t.string "airtable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "domain"
-    t.index ["airtable_id"], name: "index_clients_on_airtable_id"
-  end
-
   create_table "companies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "kind"
@@ -719,7 +701,6 @@ ActiveRecord::Schema.define(version: 2021_05_13_084713) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "currency"
-    t.bigint "client_id"
     t.string "client_referral_url"
     t.text "company_description"
     t.text "description"
@@ -767,7 +748,6 @@ ActiveRecord::Schema.define(version: 2021_05_13_084713) do
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
     t.jsonb "log_data"
-    t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["sales_status"], name: "index_projects_on_sales_status"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -1067,8 +1047,6 @@ ActiveRecord::Schema.define(version: 2021_05_13_084713) do
   add_foreign_key "client_calls", "projects"
   add_foreign_key "client_calls", "sales_people"
   add_foreign_key "client_calls", "users"
-  add_foreign_key "client_users", "clients"
-  add_foreign_key "client_users", "users"
   add_foreign_key "companies", "industries"
   add_foreign_key "companies", "sales_people"
   add_foreign_key "consultations", "interviews"
@@ -1104,7 +1082,6 @@ ActiveRecord::Schema.define(version: 2021_05_13_084713) do
   add_foreign_key "problematic_flags", "users"
   add_foreign_key "project_industries", "industries"
   add_foreign_key "project_skills", "skills"
-  add_foreign_key "projects", "clients"
   add_foreign_key "projects", "users"
   add_foreign_key "reviews", "specialists"
   add_foreign_key "specialist_industries", "industries"
