@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
 
-const NotFound = ({ code, heading, children }) => (
+const NotFound = ({ heading, children }) => (
   <Box maxWidth={320} mx="auto" my={10} textAlign="center">
     <Text
       mb={4}
@@ -11,7 +11,7 @@ const NotFound = ({ code, heading, children }) => (
       fontWeight="bold"
       letterSpacing="-0.05em"
     >
-      {code || 404}
+      404
     </Text>
     <Text fontWeight="medium" mb={1}>
       {heading || "Not Found"}
@@ -22,12 +22,9 @@ const NotFound = ({ code, heading, children }) => (
   </Box>
 );
 
-const matchesCode = (error, code) =>
-  error?.graphQLErrors?.some((err) => err.extensions?.code === code);
-
-export const isNotFound = (graphQLError) =>
-  matchesCode(graphQLError, "notFound");
-export const isNotAuthorized = (graphQLError) =>
-  matchesCode(graphQLError, "notAuthorized");
+export const isNotFound = (graphqlError) => {
+  const code = graphqlError?.graphQLErrors?.[0]?.extensions?.code;
+  return code === "notFound";
+};
 
 export default NotFound;
