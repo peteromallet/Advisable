@@ -25,7 +25,9 @@ class GeocodeAccountJob < ApplicationJob
   end
 
   def geocode_specialist
-    # TODO
+    specialist = account.specialist
+    specialist.country = country
+    specialist.sync_to_airtable
   end
 
   def geocode(ip)
