@@ -10,7 +10,7 @@ export default function LoginWithGoogle() {
   return (
     <form action="/auth/google_oauth2" method="POST">
       <input type="hidden" name="authenticity_token" value={csrf} />
-      <StyledLoginWithGoogle buttonSize="l" type="submit">
+      <StyledLoginWithGoogle $buttonSize="l" type="submit">
         <Google />
         Login with Google
       </StyledLoginWithGoogle>
