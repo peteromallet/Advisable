@@ -29,7 +29,7 @@ module Mutations
     end
 
     def resolve(**args)
-      specialist = context[:current_user]
+      specialist = current_user
       specialist.update(
         bank_holder_name: args[:bank_holder_name],
         bank_holder_address: args[:bank_holder_address].try(:to_h),

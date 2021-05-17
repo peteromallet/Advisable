@@ -7,7 +7,7 @@ module Mutations
 
     # The completeSetup mutation requires a specalist to be logged in.
     def authorized?(**_args)
-      specialist = context[:current_user]
+      specialist = current_user
 
       ApiError.not_authenticated unless specialist
 
@@ -19,7 +19,7 @@ module Mutations
     end
 
     def resolve(**_args)
-      specialist = context[:current_user]
+      specialist = current_user
       specialist.application_stage = 'Full Application'
       current_account_responsible_for { specialist.save }
       specialist.sync_to_airtable

@@ -8,7 +8,7 @@ module Mutations
 
     def authorized?(**args)
       task = Task.find_by_uid!(args[:task])
-      policy = TaskPolicy.new(context[:current_user], task)
+      policy = TaskPolicy.new(current_user, task)
 
       return true if policy.request_to_start?
 
