@@ -9,7 +9,7 @@ module Types
       field :id, ID, null: false, method: :uid
       field :primary, Boolean, null: true
       field :article, Article, null: false
-      field :skill, Skill, null: false
+      field :skill, Types::Skill, null: false
     end
   end
 end
