@@ -6,6 +6,15 @@ module Mutations
 
     field :interview, Types::Interview, null: true
 
+    def authorized?(id:)
+      requires_current_user!
+      interview = Interview.find_by_uid_or_airtable_id!(id)
+      policy = InterviewPolicy.new(current_user, interview)
+      return true if policy.resend_request?
+
+      ApiError.not_authorized("You do not have permission to resend request to this interview")
+    end
+
     def resolve(id:)
       interview = Interview.find_by_uid_or_airtable_id!(id)
       interview.assign_attributes(status: "More Time Options Added", more_time_options_added_at: Time.zone.now)
