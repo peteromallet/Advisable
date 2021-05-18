@@ -16,8 +16,8 @@ import {
   InputError,
   Button,
   Stack,
+  Combobox as Autocomplete,
 } from "@advisable/donut";
-import Autocomplete from "@advisable/donut/components/Combobox";
 import { GuildBox } from "@guild/styles";
 import indefinite from "indefinite";
 
