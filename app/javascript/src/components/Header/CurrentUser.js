@@ -26,6 +26,7 @@ const CurrentUser = ({ user, onLogout }) => {
         {user.guild && isAccepted && <a href="/guild">Guild</a>}
         <Link to="/settings">Settings</Link>
         {isAdmin && <a href="/admin">Admin</a>}
+        {isAdmin && <a href="/toby">Toby</a>}
         <a href="#" onClick={onLogout}>
           Logout
         </a>
