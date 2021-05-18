@@ -193,6 +193,7 @@ export const Label = styled.label`
 
 export const Description = styled.textarea`
   width: 100%;
+  height: 100%;
   padding: 8px;
   border: none;
   resize: none;
