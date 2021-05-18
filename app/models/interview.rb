@@ -4,6 +4,8 @@ class Interview < ApplicationRecord
   include Uid
   include Airtable::Syncable
 
+  has_logidze
+
   VALID_STATUSES = [
     "Call Scheduled", "Call Completed", "Call Requested", "Need More Time Options",
     "More Time Options Added", "Specialist Requested Reschedule", "Client Requested Reschedule"
