@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
-  self.ignored_columns += %i[airtable_id]
-
   include Uid
+  include ::Airtable::Syncable
 
   has_logidze
 
@@ -20,23 +19,6 @@ class Interview < ApplicationRecord
   scope :scheduled, -> { where(status: 'Call Scheduled') }
 
   validates :status, inclusion: {in: VALID_STATUSES}
-
-  def self.find_by_uid_or_airtable_id(id)
-    airtable_id?(id) ? deprecated_find_by_airtable_id(id) : find_by(uid: id)
-  end
-
-  def self.deprecated_find_by_airtable_id(id)
-    Sentry.capture_message("#find_by called with an Airtable ID", level: "debug")
-    find_by(airtable_id: id)
-  end
-
-  def self.find_by_uid_or_airtable_id!(id)
-    find_by_uid_or_airtable_id(id) || raise(ActiveRecord::RecordNotFound)
-  end
-
-  def self.airtable_id?(id)
-    id =~ /^rec[^_]/
-  end
 end
 
 # == Schema Information
@@ -57,6 +39,7 @@ end
 #  uid                                :string
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
+#  airtable_id                        :string
 #  application_id                     :bigint
 #  user_id                            :bigint
 #  zoom_meeting_id                    :string
