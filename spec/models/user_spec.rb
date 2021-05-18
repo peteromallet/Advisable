@@ -58,6 +58,25 @@ RSpec.describe User, type: :model do
       expect_any_instance_of(described_class).to receive(:sync_to_airtable)
       user.invite_comember!(new_account)
     end
+
+    it "creates a case study search" do
+      create(:project, user: user, goals: %w[one two])
+      new_user = user.invite_comember!(new_account)
+      search = ::CaseStudy::Search.find_by(user: new_user)
+      expect(search.business_type).to eq(user.company.kind)
+      expect(search.goals).to eq(%w[one two])
+      expect(search.name).to eq("Project recommendations for #{user.company.name}")
+    end
+  end
+
+  describe "#create_case_study_search" do
+    it "creates one with goals and company name" do
+      create(:project, goals: %w[one two], user: user)
+      search = user.create_case_study_search
+      expect(search.goals).to match_array(%w[one two])
+      expect(search.business_type).to eq("Startup")
+      expect(search.name).to eq("Project recommendations for Test Company")
+    end
   end
 
   describe "#disable!" do

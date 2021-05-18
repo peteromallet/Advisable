@@ -25,8 +25,8 @@ class Specialist < ApplicationRecord
   include SpecialistOrUser
   include Subscriber
   include Resizable
-  include Airtable::Syncable
-  include Guild::SpecialistsConcern
+  include ::Airtable::Syncable
+  include ::Guild::SpecialistsConcern
 
   VALID_APPLICATION_STAGES = ["Started", "Submitted", "Invited To Interview", "Interview Scheduled", "Interview Completed", "Full Application", "On Hold", "Completed", "Accepted", "Rejected By Us", "Rejected By Them", "References Requested", "References Provided", "References Validated", "Kicked Off"].freeze
   REJECTED_STAGES = ["Rejected By Us", "Rejected By Them"].freeze

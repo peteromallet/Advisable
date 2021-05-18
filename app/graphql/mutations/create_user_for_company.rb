@@ -24,7 +24,7 @@ module Mutations
       account = Account.new(email: email, **attributes)
       account.save!
 
-      new_user = current_user.invite_comember!(account)
+      new_user = current_user.invite_comember!(account, responsible: current_account_id)
       UserMailer.invited_by_manager(current_user, new_user).deliver_later
 
       {user: new_user}

@@ -19,11 +19,11 @@ RSpec.describe Mutations::SubmitClientApplication do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
-  it 'Sets the status to accepted' do
+  it 'sets the status to accepted' do
     expect { AdvisableSchema.execute(query) }.to change {
       user.reload.application_status
     }.from("Application Started").to("Application Accepted")
@@ -47,7 +47,7 @@ RSpec.describe Mutations::SubmitClientApplication do
       GRAPHQL
     end
 
-    it 'Sets the status to rejected with a reason' do
+    it 'sets the status to rejected with a reason' do
       AdvisableSchema.execute(query)
       expect(user.reload.application_status).to eq("Application Rejected")
       expect(user.reload.rejection_reason).to eq('cheap_talent')
@@ -63,6 +63,19 @@ RSpec.describe Mutations::SubmitClientApplication do
       AdvisableSchema.execute(query)
       expect(user.reload.application_status).to eq("Application Rejected")
       expect(user.reload.rejection_reason).to eq('not_hiring')
+    end
+  end
+
+  context "with case study search" do
+    let(:goals) { %w[one two] }
+
+    it "creates one with goals and company name" do
+      create(:project, goals: goals, user: user)
+      AdvisableSchema.execute(query)
+      search = ::CaseStudy::Search.find_by(user: user)
+      expect(search.goals).to match_array(goals)
+      expect(search.business_type).to eq("Startup")
+      expect(search.name).to eq("Project recommendations for Test Company")
     end
   end
 end
