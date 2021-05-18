@@ -137,6 +137,39 @@ RSpec.describe ZappierInteractorController, type: :request do
     end
   end
 
+  describe "POST /update_interview" do
+    let(:interview) { create(:interview, status: "Call Scheduled") }
+    let(:status) { "Call Requested" }
+    let(:params) { {status: status, uid: interview.uid, key: key} }
+
+    before { allow_any_instance_of(Application).to receive(:sync_to_airtable) }
+
+    it "updates the interview and syncs to airtable" do
+      post("/zappier_interactor/update_interview", params: params)
+      expect(response).to have_http_status(:success)
+      expect(interview.reload.status).to eq("Call Requested")
+    end
+
+    context "when given wrong status" do
+      let(:status) { "Not a valid status" }
+
+      it "ignores the param" do
+        post("/zappier_interactor/update_interview", params: params)
+        expect(response.status).to eq(422)
+        expect(JSON[response.body]["message"]).to eq("Validation failed: Status is not included in the list")
+      end
+    end
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/update_interview", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
   describe "POST /attach_previous_project_image" do
     let(:previous_project) { create(:previous_project) }
     let(:image) { "http://path.to/image.jpg" }
