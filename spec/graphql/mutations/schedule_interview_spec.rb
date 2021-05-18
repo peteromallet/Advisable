@@ -31,7 +31,6 @@ RSpec.describe Mutations::ScheduleInterview do
   end
 
   before do
-    allow_any_instance_of(Interview).to receive(:sync_to_airtable)
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
   end
 

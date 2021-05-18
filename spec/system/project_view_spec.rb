@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe 'Project view', type: :system do
   before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
-    allow_any_instance_of(Interview).to receive(:sync_to_airtable)
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
     create(:full_application, status: 'Applied', score: 90, project: project)
   end

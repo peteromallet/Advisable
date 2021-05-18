@@ -26,12 +26,7 @@ RSpec.describe Mutations::ResendInterviewRequest do
     GRAPHQL
   end
 
-  before do
-    allow_any_instance_of(Interview).to receive(:sync_to_airtable)
-  end
-
   it "sets the status to 'More Time Options Added'" do
-    expect_any_instance_of(Interview).to receive(:sync_to_airtable)
     response = AdvisableSchema.execute(query, context: context)
     status = response["data"]["resendInterviewRequest"]["interview"]["status"]
     expect(status).to eq("More Time Options Added")
