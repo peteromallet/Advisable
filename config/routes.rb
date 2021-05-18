@@ -87,8 +87,10 @@ Rails.application.routes.draw do
   get 'accounts/me'
   post 'accounts/user'
   post 'accounts/specialist'
+
   post 'zappier_interactor/create_application'
   post 'zappier_interactor/update_application'
+  post 'zappier_interactor/update_interview'
   post 'zappier_interactor/attach_previous_project_image'
   post 'zappier_interactor/create_magic_link'
   post 'zappier_interactor/enable_guild'
