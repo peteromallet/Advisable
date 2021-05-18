@@ -89,6 +89,7 @@ module Mutations
       end
 
       if success
+        GeocodeAccountJob.perform_later(account, context[:client_ip])
         specialist.sync_to_airtable
         create_application_record(specialist, args[:pid])
         specialist.send_confirmation_email

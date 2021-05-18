@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::CreateFreelancerAccount do
@@ -47,7 +49,10 @@ RSpec.describe Mutations::CreateFreelancerAccount do
   def response
     AdvisableSchema.execute(
       query,
-      context: {session_manager: session_manager}
+      context: {
+        session_manager: session_manager,
+        client_ip: "1.2.3.4"
+      }
     )
   end
 
@@ -70,6 +75,11 @@ RSpec.describe Mutations::CreateFreelancerAccount do
   it 'sends the confirmation email' do
     expect_any_instance_of(Specialist).to receive(:send_confirmation_email)
     response
+  end
+
+  it "schedules geocode job" do
+    uid = response.dig("data", "createFreelancerAccount", "viewer", "id")
+    expect(GeocodeAccountJob).to have_been_enqueued.with(Specialist.find_by(uid: uid).account, "1.2.3.4")
   end
 
   context 'when no pid is provided' do

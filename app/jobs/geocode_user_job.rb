@@ -1,9 +1,14 @@
+# frozen_string_literal: true
+
 require 'open-uri'
 
+# TODO: Delete once all production jobs are processed
 class GeocodeUserJob < ApplicationJob
   queue_as :default
 
   def perform(id, ip)
+    Sentry.capture_message("THIS SHOULD NO LOGNER BE USED WTF")
+
     user = User.find(id)
     return unless user
 
