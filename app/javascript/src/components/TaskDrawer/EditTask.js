@@ -194,7 +194,13 @@ const EditTask = ({
           </VerticalLayout.Header>
           <VerticalLayout.Content style={{ flexDirection: "column" }}>
             <Scrollable>
-              <Box paddingX="m" paddingBottom="m">
+              <Box
+                display="flex"
+                flexDirection="column"
+                paddingX="m"
+                paddingBottom="m"
+                height="100%"
+              >
                 <TaskDetails>
                   <DueDate
                     readOnly={dueDateReadOnly}
@@ -219,7 +225,7 @@ const EditTask = ({
                 {!readOnly && !isClient && !task.application.trialTask && (
                   <MarkAsTrial task={task} isClient={isClient} />
                 )}
-                <div style={{ marginTop: 16 }}>
+                <Box mt={4} flexGrow="1">
                   <Description
                     readOnly={descriptionReadOnly}
                     value={attributes.description}
@@ -228,7 +234,7 @@ const EditTask = ({
                     onChange={handleChangeWithTimeout("description")}
                     isFocused={editAllowed && focusedElement === "description"}
                   />
-                </div>
+                </Box>
               </Box>
             </Scrollable>
           </VerticalLayout.Content>
