@@ -29,6 +29,7 @@ class GeocodeAccountJob < ApplicationJob
   def geocode_specialist
     specialist = account.specialist
     specialist.country = country
+    specialist.city = geocoded_ip.city
     specialist.sync_to_airtable
   end
 
