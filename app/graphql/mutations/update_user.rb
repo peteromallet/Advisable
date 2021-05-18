@@ -17,7 +17,7 @@ module Mutations
       user = current_user
 
       # If the users address has not yet been set then schedule the geocode job
-      GeocodeUserJob.perform_later(user.id, context[:client_ip]) unless user.company.address.provided?
+      GeocodeAccountJob.perform_later(user.account, context[:client_ip]) unless user.company.address.provided?
 
       company_args = {}
 

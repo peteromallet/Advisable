@@ -37,7 +37,7 @@ module Mutations
           account.last_name = args[:last_name]
           if save_account(account) && save_user(user)
             user.sync_to_airtable
-            GeocodeUserJob.perform_later(user.id, context[:client_ip]) if context[:request]
+            GeocodeAccountJob.perform_later(account, context[:client_ip]) if context[:request]
           end
         end
 
