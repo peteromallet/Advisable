@@ -32,6 +32,16 @@ class ZappierInteractorController < ApplicationController
     render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
   end
 
+  def update_interview
+    interview = Interview.find_by!(uid: params[:uid])
+    interview.update!(status: params[:status])
+    render json: {status: "OK.", uid: interview.uid}
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "Interview not found"}, status: :unprocessable_entity
+  rescue ActiveRecord::RecordInvalid => e
+    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
+  end
+
   def attach_previous_project_image
     previous_project = PreviousProject.find_by!(uid: params[:uid])
     raise ActiveRecord::RecordNotFound if params[:image_url].blank?
