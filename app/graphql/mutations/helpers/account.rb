@@ -16,7 +16,7 @@ module Mutations
           attributes = attributes.slice(:first_name, :last_name)
           account = ::Account.new(email: email, **attributes)
           account.save!
-          current_user.invite_comember!(account)
+          current_user.invite_comember!(account, responsible: current_account_id)
         end
       rescue ActiveRecord::RecordInvalid
         raise ApiError::InvalidRequest.new("emailBlank", "Email is required.") if account.errors.added?(:email, :blank)

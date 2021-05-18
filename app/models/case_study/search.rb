@@ -10,6 +10,22 @@ module CaseStudy
     belongs_to :user
     has_many :skills, dependent: :destroy
     has_many :search_feedbacks, dependent: :destroy
+
+    def results
+      query = Article.distinct
+      query = query.joins(:skills).where(case_study_skills: {skill_id: skills.pluck(:skill_id)}) if skills.any?
+      query = query.where(company_type: business_type) if business_type.present?
+      query = query.where("goals ?| array[:goals]", goals: goals) if goals.present?
+      query
+    end
+
+    def archived_articles
+      Article.where(id: archived)
+    end
+
+    def saved_articles
+      Article.where(id: saved)
+    end
   end
 end
 

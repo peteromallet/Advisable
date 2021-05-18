@@ -81,14 +81,26 @@ class User < ApplicationRecord
     self.availability = availability.select { |time| time > Time.zone.now }
   end
 
-  def invite_comember!(account)
-    user = User.new(
-      account: account,
-      company_id: company_id,
-      application_status: "Active"
-    )
-    user.save_and_sync_with_responsible!(account_id)
+  def invite_comember!(account, responsible: nil)
+    user = User.new(account: account, company_id: company_id, application_status: "Active")
+    responsible = account_id if responsible.nil?
+    Logidze.with_responsible(responsible) do
+      user.save!
+      user.create_case_study_search
+    end
+    user.sync_to_airtable
     user
+  end
+
+  def create_case_study_search
+    last_project = projects.order(created_at: :desc).last
+    last_company_project = Project.where(user: company.users).order(created_at: :desc).last
+    ::CaseStudy::Search.create!(
+      user: self,
+      business_type: company.kind,
+      goals: (last_project || last_company_project)&.goals,
+      name: "Project recommendations for #{company.name}"
+    )
   end
 
   def disabled?
