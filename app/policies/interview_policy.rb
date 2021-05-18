@@ -5,6 +5,7 @@ class InterviewPolicy < BasePolicy
     specialist_owner? || owned_by_user_or_company? || admin?
   end
   alias resend_request? read?
+  alias request_reschedule? read?
 
   def schedule?
     specialist_owner? || admin?
