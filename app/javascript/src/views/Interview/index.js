@@ -1,7 +1,9 @@
 import React from "react";
 import { Switch, useParams } from "react-router-dom";
+import AccessDenied, { isNotAuthorized } from "src/views/AccessDenied";
+import NotFound, { isNotFound } from "src/views/NotFound";
 import Route from "src/components/Route";
-import Loading from "components/Loading";
+import Loading from "src/components/Loading";
 import { useInterview } from "./queries";
 import CallScheduled from "./CallScheduled";
 import CallRequested from "./CallRequested";
@@ -10,7 +12,6 @@ import MoreTimeOptionsAdded from "./MoreTimeOptionsAdded";
 import ClientRequestedReschedule from "./ClientRequestedReschedule";
 import SpecialistRequestedReschedule from "./SpecialistRequestedReschedule";
 import RescheduleInterview from "./RescheduleInterview";
-import NotFound, { isNotFound } from "../NotFound";
 
 function InterviewState({ interview }) {
   switch (interview.status) {
@@ -54,6 +55,7 @@ export default function Interview() {
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
+  if (isNotAuthorized(error)) return <AccessDenied />;
 
   const interview = data.interview;
 

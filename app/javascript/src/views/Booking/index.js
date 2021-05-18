@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import NotFound from "../NotFound";
-import Loading from "../../components/Loading";
-import AccessDenied from "../../components/AccessDenied";
+import AccessDenied from "src/views/AccessDenied";
+import NotFound from "src/views/NotFound";
+import Loading from "src/components/Loading";
 import GET_ACTIVE_APPLICATION from "./getActiveApplication";
 import Booking from "./Booking";
 
