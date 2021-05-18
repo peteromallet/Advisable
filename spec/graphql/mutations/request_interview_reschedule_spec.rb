@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::RequestInterviewReschedule do
@@ -25,8 +27,6 @@ RSpec.describe Mutations::RequestInterviewReschedule do
     let(:context) { {current_user: user} }
 
     it "updates interview accordingly" do
-      expect_any_instance_of(Interview).to receive(:sync_to_airtable)
-
       response = AdvisableSchema.execute(query, context: context)
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_reschedule_request", any_args)
 
@@ -42,8 +42,6 @@ RSpec.describe Mutations::RequestInterviewReschedule do
     let(:context) { {current_user: specialist} }
 
     it "updates interview accordingly" do
-      expect_any_instance_of(Interview).to receive(:sync_to_airtable)
-
       response = AdvisableSchema.execute(query, context: context)
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "interview_reschedule_request", any_args)
 

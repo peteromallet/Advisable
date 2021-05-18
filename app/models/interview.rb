@@ -20,6 +20,23 @@ class Interview < ApplicationRecord
   scope :scheduled, -> { where(status: 'Call Scheduled') }
 
   validates :status, inclusion: {in: VALID_STATUSES}
+
+  def self.find_by_uid_or_airtable_id(id)
+    airtable_id?(id) ? deprecated_find_by_airtable_id(id) : find_by(uid: id)
+  end
+
+  def self.deprecated_find_by_airtable_id(id)
+    Sentry.capture_message("#find_by called with an Airtable ID", level: "debug")
+    find_by(airtable_id: id)
+  end
+
+  def self.find_by_uid_or_airtable_id!(id)
+    find_by_uid_or_airtable_id(id) || raise(ActiveRecord::RecordNotFound)
+  end
+
+  def self.airtable_id?(id)
+    id =~ /^rec[^_]/
+  end
 end
 
 # == Schema Information

@@ -32,8 +32,6 @@ module Mutations
         )
       end
 
-      interview.sync_to_airtable
-
       {interview: interview}
     end
   end
