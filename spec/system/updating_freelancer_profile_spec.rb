@@ -42,7 +42,7 @@ RSpec.describe 'Freelancer profile', type: :system do
     )
 
     expect(page).not_to have_css('*[data-uploading]')
-    second_image = find_all('*[class^=ImageTiles__StyledImageTile-]')[1]
+    second_image = find_all('*[class*=StyledImageTile]')[1]
     second_image.click
     within(second_image) { click_on 'Remove image' }
 
