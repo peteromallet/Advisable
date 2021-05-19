@@ -54,7 +54,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
   };
 
   return (
-    <Confirmation>
+    <Confirmation body-scroll-lock-ignore>
       <ConfirmationContainer>
         {step === CONFIRM_APPROVED && (
           <>
@@ -89,7 +89,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
         {step === HOURS_WORKED && (
           <>
             <Box paddingBottom="s">
-              <Text fontWeight="500" color="neutral900">
+              <Text fontSize="lg" fontWeight="500" color="neutral900">
                 {isFixedPricing ? (
                   <>How much did this project cost?</>
                 ) : (
@@ -133,7 +133,7 @@ const SubmitPrompt = ({ task, onClose, onSubmit }) => {
                 min={task.estimate}
                 label="Hours Worked"
                 max={task.flexibleEstimate}
-                step={isFixedPricing ? "5000" : "1"}
+                step={isFixedPricing ? "100" : "1"}
                 onChange={(e) => setCost(e.target.value)}
               />
             </Box>
