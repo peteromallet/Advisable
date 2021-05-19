@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import Div100vh from "react-div-100vh";
 import { Button } from "@advisable/donut";
-import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { useMobile } from "../../components/Breakpoint";
 import { Container, Backdrop, Drawer, Actions } from "./styles";
 import { X } from "@styled-icons/feather/X";
@@ -26,20 +26,34 @@ export default ({ isOpen, onClose, children, actions }) => {
     }
   };
 
-  React.useEffect(() => {
-    return () => {
-      clearAllBodyScrollLocks();
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   return () => {
+  //     clearAllBodyScrollLocks();
+  //   };
+  // }, []);
 
   React.useLayoutEffect(() => {
-    if (isOpen && document.body.style.overflow !== "hidden") {
-      disableBodyScroll(drawerRef.current);
+    const el = drawerRef.current;
+
+    if (isOpen) {
+      disableBodyScroll(el, {
+        allowTouchMove(element) {
+          while (element && element !== document.body) {
+            if (element.getAttribute("body-scroll-lock-ignore") !== null) {
+              return true;
+            }
+
+            element = element.parentElement;
+          }
+        },
+      });
+    } else {
+      enableBodyScroll(el);
     }
 
-    if (!isOpen) {
-      clearAllBodyScrollLocks();
-    }
+    return () => {
+      enableBodyScroll(el);
+    };
   }, [isOpen]);
 
   React.useEffect(() => {
