@@ -35,11 +35,11 @@ const StyledTilesInputOption = styled.button`
   box-shadow: inset 0px 0px 0px 0px ${theme.colors.blue500};
 
   & span {
-    color: ${theme.colors.neutral600};
+    color: ${theme.colors.neutral700};
   }
 
   &:hover {
-    box-shadow: inset 0px 0px 0px 2px ${theme.colors.neutral200};
+    box-shadow: inset 0px 0px 0px 2px ${theme.colors.neutral300};
   }
 
   &[data-selected="true"] {
