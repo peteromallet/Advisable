@@ -110,22 +110,22 @@ export default function CompanyOverview({ clientApplication }) {
                   as={Radio}
                   type="radio"
                   name="marketingAttitude"
-                  value="We’re pretty happy with our strategy & tactics"
-                  description="We’re pretty happy with our strategy & tactics"
+                  value="We rarely experiment & try new things"
+                  description="We rarely experiment & try new things"
                 />
                 <Field
                   as={Radio}
                   type="radio"
                   name="marketingAttitude"
-                  value="We sometimes test new strategies and tactics"
-                  description="We sometimes test new strategies and tactics"
+                  value="We sometimes test new strategies & tactics"
+                  description="We sometimes test new strategies & tactics"
                 />
                 <Field
                   as={Radio}
                   type="radio"
                   name="marketingAttitude"
-                  value="We’re always testing new strategies and tactics"
-                  description="We’re always testing new strategies and tactics"
+                  value="We’re constantly looking for opportunities"
+                  description="We’re constantly looking for opportunities"
                 />
               </RadioGroup>
             </Box>
