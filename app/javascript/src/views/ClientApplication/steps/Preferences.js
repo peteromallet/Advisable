@@ -68,7 +68,10 @@ export default function CompanyOverview({ clientApplication }) {
           <Form>
             <StepNumber>Step 4 of 4</StepNumber>
             <Header>Preferences</Header>
-            <Description>Some description</Description>
+            <Description>
+              This will help us understand whether your company is a good fit
+              for Advisable.
+            </Description>
             <Box mb={6}>
               <Box mb={6}>
                 <FormField

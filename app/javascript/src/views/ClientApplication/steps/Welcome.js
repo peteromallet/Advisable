@@ -66,9 +66,8 @@ export default function Welcome({ clientApplication }) {
           marginBottom={10}
           lineHeight="1.2"
         >
-          We need to know a little more about you so we can find you the right
-          projects. Once you’re accepted, you&apos;ll gain access to our
-          freelancer&apos;s best projects and will be able to hire them.
+          In order to understand how best to serve you, we’d first like to ask
+          you some questions about your company, goals, and preferences.
         </Text>
         <Button
           as={Link}
