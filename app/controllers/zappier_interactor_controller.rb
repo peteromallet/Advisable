@@ -93,7 +93,7 @@ class ZappierInteractorController < ApplicationController
       render json: {error: "Airtable communication error"}, status: :unprocessable_entity
     end
   rescue ActiveRecord::ActiveRecordError => e
-    Sentry.capture_exception(e, extra: {airtable_id: params[:airtable_id]})
+    Sentry.capture_message("Something went wrong when importing Case Study #{params[:airtable_id]}", extra: {message: e.message})
     render json: {error: "Something went wrong"}, status: :unprocessable_entity
   end
 
