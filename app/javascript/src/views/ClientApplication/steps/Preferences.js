@@ -80,7 +80,7 @@ export default function CompanyOverview({ clientApplication }) {
                   prefix="$"
                   suffix="yearly"
                   placeholder="Enter your estimated spend"
-                  label="How much do you currently spend on freelancers per year?"
+                  label="What’s your company’s estimated annual marketing budget?"
                   data-testid="budget"
                 />
               </Box>
