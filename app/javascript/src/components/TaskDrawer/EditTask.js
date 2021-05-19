@@ -161,13 +161,13 @@ const EditTask = ({
       {confirmPrompt && (
         <Confirmation>
           <ConfirmationContainer>
-            <Box paddingBottom="l">
+            <Box paddingBottom={6}>
               <Text fontSize="sm" lineHeight="1.2">
                 Editing this task will remove the quote that has been provided.
                 Are you sure you want to continue?
               </Text>
             </Box>
-            <Button onClick={handleConfirm} mr="xs">
+            <Button onClick={handleConfirm} mr={2}>
               Continue
             </Button>
             <Button onClick={() => setConfirmPrompt(false)} variant="subtle">
@@ -179,7 +179,7 @@ const EditTask = ({
       <Div100vh>
         <VerticalLayout>
           <VerticalLayout.Header>
-            <Box paddingX="m" paddingTop="60px">
+            <Box paddingX={4} paddingTop={15}>
               {!hideStatus && <TaskStatus>{task.stage}</TaskStatus>}
               <Title
                 data-testid="nameField"
@@ -194,7 +194,13 @@ const EditTask = ({
           </VerticalLayout.Header>
           <VerticalLayout.Content style={{ flexDirection: "column" }}>
             <Scrollable>
-              <Box paddingX="m" paddingBottom="m">
+              <Box
+                display="flex"
+                flexDirection="column"
+                paddingX={4}
+                paddingBottom={4}
+                height="100%"
+              >
                 <TaskDetails>
                   <DueDate
                     readOnly={dueDateReadOnly}
@@ -219,7 +225,7 @@ const EditTask = ({
                 {!readOnly && !isClient && !task.application.trialTask && (
                   <MarkAsTrial task={task} isClient={isClient} />
                 )}
-                <div style={{ marginTop: 16 }}>
+                <Box mt={4} flexGrow="1">
                   <Description
                     readOnly={descriptionReadOnly}
                     value={attributes.description}
@@ -228,12 +234,12 @@ const EditTask = ({
                     onChange={handleChangeWithTimeout("description")}
                     isFocused={editAllowed && focusedElement === "description"}
                   />
-                </div>
+                </Box>
               </Box>
             </Scrollable>
           </VerticalLayout.Content>
           <VerticalLayout.Footer style={{ background: "white" }}>
-            <Box padding="l">
+            <Box padding={6}>
               {!readOnly && showStatusNotice && (
                 <StageDescription isClient={isClient} task={task} />
               )}
