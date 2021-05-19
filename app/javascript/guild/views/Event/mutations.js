@@ -20,7 +20,7 @@ export const UPDATE_EVENT_REGISTRATION = gql`
     updateEventRegistration(input: $input) {
       event {
         ...EventFields
-        attendees(first: 20) {
+        attendees(first: 100) {
           ...AttendeesDetailsFields
         }
       }

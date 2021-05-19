@@ -52,8 +52,8 @@ RSpec.describe 'Event view', type: :system do
       expect(page).to have_button('Register for event', disabled: true)
     end
 
-    it "shows the remaining number of attendees beyond 20" do
-      attendees = create_list(:specialist, 30)
+    it "shows the remaining number of attendees beyond 100" do
+      attendees = create_list(:specialist, 110)
       event.attendees << attendees
 
       visit "/guild/events/#{event.uid}"

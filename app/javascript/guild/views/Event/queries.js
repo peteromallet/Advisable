@@ -6,7 +6,7 @@ export const EVENT_QUERY = gql`
   query event($id: ID!) {
     event(id: $id) {
       ...EventFields
-      attendees(first: 20) {
+      attendees(first: 100) {
         edges {
           node {
             id
