@@ -60,7 +60,10 @@ export default function CompanyOverview({ clientApplication }) {
           <Form>
             <StepNumber>Step 3 of 4</StepNumber>
             <Header>Goals</Header>
-            <Description>Some description</Description>
+            <Description>
+              We’ll recommend you talent & projects that have helped similar
+              companies achieve the goals you select.
+            </Description>
             <Box mb={6}>
               <FormField
                 as={CheckboxInput}

@@ -49,7 +49,9 @@ export default function CompanyStage({ clientApplication }) {
           <Form>
             <StepNumber>Step 2 of 4</StepNumber>
             <Header>Company Stage</Header>
-            <Description>Some description</Description>
+            <Description>
+              This will help us tailor our recommendations to you.
+            </Description>
             <Box mb={4}>
               <FormField
                 size="l"

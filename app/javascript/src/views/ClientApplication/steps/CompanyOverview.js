@@ -57,7 +57,9 @@ export default function CompanyOverview({ clientApplication, industries }) {
           <Form>
             <StepNumber>Step 1 of 4</StepNumber>
             <Header>Company Overview</Header>
-            <Description>Some description</Description>
+            <Description>
+              To start, we’d like to know a little bit more about your company.
+            </Description>
             <Box mb={6}>
               <Box mb={6}>
                 <FormField
