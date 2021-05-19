@@ -79,6 +79,15 @@ RSpec.describe Mutations::ScheduleInterview do
     end
   end
 
+  context "when logged in specialist is a different specialist" do
+    let(:current_user) { create(:specialist) }
+
+    it "raises an error" do
+      error = request["errors"].first["extensions"]["type"]
+      expect(error).to eq("NOT_AUTHORIZED")
+    end
+  end
+
   context 'when the interview is already scheduled' do
     let(:status) { "Call Scheduled" }
 

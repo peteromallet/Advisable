@@ -13,7 +13,10 @@ module Mutations
       interview = Interview.find_by_uid_or_airtable_id!(args[:interview])
       ApiError.invalid_request("INTERVIEW_NOT_SCHEDULED", "Interview is not in scheduled state.") if interview.status != "Call Scheduled"
 
-      true
+      policy = InterviewPolicy.new(current_user, interview)
+      return true if policy.request_reschedule?
+
+      ApiError.not_authorized("You do not have permission to request rescueduling of this interview")
     end
 
     def resolve(**args)
