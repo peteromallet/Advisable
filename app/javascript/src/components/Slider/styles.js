@@ -26,6 +26,7 @@ const thumb = css`
 
 export const Input = styled.input`
   width: 100%;
+  height: 20px;
   outline: none;
   appearance: none;
   background-color: transparent;
