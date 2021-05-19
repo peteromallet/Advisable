@@ -14,6 +14,15 @@ module Mutations
       'More Time Options Added'
     ].freeze
 
+    def authorized?(id:, **_args)
+      requires_current_user!
+      interview = Interview.find_by_uid_or_airtable_id!(id)
+      policy = InterviewPolicy.new(current_user, interview)
+      return true if policy.request_more_times?
+
+      ApiError.not_authorized("You do not have permission to request more interview times")
+    end
+
     def resolve(**args)
       interview = Interview.find_by_uid_or_airtable_id!(args[:id])
 
