@@ -11,12 +11,18 @@ export default function useSentryUser(viewer) {
   useEffect(() => {
     if (!Sentry) return;
     if (viewer) {
+      const user = {
+        id: viewer.id,
+        email: viewer.email,
+        username: viewer.name,
+      };
+
+      if (window.advisableAdmin) {
+        user.admin = window.advisableAdmin;
+      }
+
       Sentry.configureScope((scope) => {
-        scope.setUser({
-          id: viewer.id,
-          email: viewer.email,
-          username: viewer.name,
-        });
+        scope.setUser(user);
       });
     } else {
       clearSentryUser();

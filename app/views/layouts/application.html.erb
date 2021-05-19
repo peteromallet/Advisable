@@ -110,6 +110,12 @@ mixpanel.init("<%= ENV["MIXPANEL"] %>", {"api_host": "https://api-eu.mixpanel.co
         window.prefetchedQueries = <%= @prefetched_queries.to_json.html_safe %>
       </script>
     <% end %>
+
+    <% if current_account&.admin? %>
+      <script>
+        window.advisableAdmin = "<%= current_account.name %>"
+      </script>
+    <% end %>
   </head>
 
   <body>
