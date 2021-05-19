@@ -17,7 +17,7 @@ const Slider = ({
   const [id] = React.useState(rest.id || uniqueId("Slider"));
 
   const cssVars = {
-    ["--Slider-progress"]: `${progress}%`,
+    "--Slider-progress": `${progress}%`,
   };
 
   return (
