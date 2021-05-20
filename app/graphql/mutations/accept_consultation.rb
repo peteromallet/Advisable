@@ -70,9 +70,7 @@ module Mutations
     end
 
     def create_interview(application)
-      interview = application.create_interview(status: 'Call Requested', user: application.project.user)
-      interview.sync_to_airtable
-      interview
+      application.create_interview(status: 'Call Requested', user: application.project.user)
     end
   end
 end

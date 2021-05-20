@@ -35,14 +35,9 @@ module Mutations
       interview.starts_at = args[:starts_at]
       interview.call_scheduled_at = Time.zone.now
       interview.status = "Call Scheduled"
-      interview.save_and_sync_with_responsible!(current_account_id)
+      current_account_responsible_for { interview.save! }
 
-      if args[:phone_number]
-        update_specialist_number(
-          interview.application.specialist,
-          args[:phone_number]
-        )
-      end
+      update_specialist_number(interview.application.specialist, args[:phone_number]) if args[:phone_number]
 
       {interview: interview}
     end
