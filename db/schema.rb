@@ -484,6 +484,8 @@ ActiveRecord::Schema.define(version: 2021_06_09_115840) do
     t.datetime "resolved_at"
     t.string "audience_type"
     t.uuid "post_prompt_id"
+    t.bigint "article_id"
+    t.index ["article_id"], name: "index_guild_posts_on_article_id"
     t.index ["post_prompt_id"], name: "index_guild_posts_on_post_prompt_id"
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end
@@ -1079,6 +1081,7 @@ ActiveRecord::Schema.define(version: 2021_06_09_115840) do
   add_foreign_key "guild_post_engagements", "guild_posts"
   add_foreign_key "guild_post_engagements", "specialists"
   add_foreign_key "guild_post_images", "guild_posts", on_delete: :cascade
+  add_foreign_key "guild_posts", "case_study_articles", column: "article_id"
   add_foreign_key "guild_posts", "specialists"
   add_foreign_key "guild_reactions", "specialists", on_delete: :cascade
   add_foreign_key "interviews", "applications"
