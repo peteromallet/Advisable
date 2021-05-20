@@ -30,7 +30,7 @@ const Event = () => {
   const viewer = useViewer();
   const theme = useTheme();
   const sUp = useBreakpoint("sUp");
-  const detailsRef = React.useRef(null);
+  const detailsRef = useRef(null);
 
   const { data, loading } = useQuery(EVENT_QUERY, {
     variables: { id: eventId },

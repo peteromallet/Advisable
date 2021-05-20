@@ -21,6 +21,7 @@ export default function Event({ event }) {
     <StyledEventCard
       flex="auto"
       height="510px"
+      minWidth="0"
       key={event.id}
       borderRadius="12px"
       position="relative"
