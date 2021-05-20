@@ -43,16 +43,21 @@ const StyledArchiveButton = styled.div`
 export default function ArchiveButton({ search, article }) {
   const [archive] = useArchive();
 
-  const handleClick = useCallback(() => {
-    archive({
-      variables: {
-        input: {
-          search: search.id,
-          article: article.id,
+  const handleClick = useCallback(
+    (e) => {
+      e.stopPropagation();
+
+      archive({
+        variables: {
+          input: {
+            search: search.id,
+            article: article.id,
+          },
         },
-      },
-    });
-  }, [search, article, archive]);
+      });
+    },
+    [search, article, archive],
+  );
 
   return (
     <StyledArchiveButton onClick={handleClick}>

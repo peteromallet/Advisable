@@ -1,0 +1,35 @@
+query getCaseStudy($id: ID!) {
+  caseStudy(id: $id) {
+    id
+    title
+    subtitle
+    comment
+    specialist {
+      id
+      bio
+      avatar
+      name
+      firstName
+    }
+    sections {
+      id
+      type
+      contents {
+        id
+        ... on Heading {
+          size
+          text
+        }
+        ... on Paragraph {
+          text
+        }
+        ... on Images {
+          images {
+            id
+            url
+          }
+        }
+      }
+    }
+  }
+}

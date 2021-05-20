@@ -10,8 +10,10 @@ module Mutations
       argument :article, ID, required: true
       argument :feedback, String, required: false
       argument :search, ID, required: true
+      # rubocop:enable GraphQL/ExtractInputType
 
       field :article, Types::CaseStudy::Article, null: false
+      field :search, Types::CaseStudy::Search, null: false
 
       def authorized?(search:, **_args)
         requires_client!
@@ -48,7 +50,7 @@ module Mutations
 
         current_account_responsible_for { search.save }
 
-        {article: article}
+        {article: article, search: search.reload}
       end
     end
   end
