@@ -3,9 +3,6 @@
 require_relative "../../config/environment"
 
 def migrate_image_to_project(ppi, project)
-  blob = ppi.image&.blob
-  return unless blob
-
   project.images.attach(blob)
   attachment = ActiveStorage::Attachment.find_by!(record: project, blob: blob)
   attachment.update(position: ppi.position)
@@ -44,11 +41,16 @@ namespace :data do
   end
 
   task migrate_previous_project_images: :environment do
-    PreviousProjectImage.find_each do |ppi|
-      project = PreviousProject.find_by(id: ppi.off_platform_project_id)
-      next unless project
+    PreviousProject.find_each do |project|
+      ppis = PreviousProjectImage.where(off_platform_project_id: project.id)
+      existing_images = project.images.pluck(:blob_id)
 
-      migrate_image_to_project(ppi, project)
+      ppis.each do |ppi|
+        blob = ppi.image&.blob
+        next if blob.blank? || existing_images.include?(blob.id)
+
+        migrate_image_to_project(ppi, project)
+      end
     end
   end
 end
