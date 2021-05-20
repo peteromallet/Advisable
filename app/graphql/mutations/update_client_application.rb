@@ -13,6 +13,7 @@ module Mutations
     argument :goals, [String], required: false
     argument :industry, String, required: false
     argument :marketing_attitude, String, required: false
+    argument :title, String, required: false
     # rubocop:enable GraphQL/ExtractInputType
 
     field :client_application, Types::ClientApplicationType, null: true
@@ -26,6 +27,7 @@ module Mutations
     end
 
     def resolve(**args)
+      current_user.title = args[:title] if args.key?(:title)
       company = current_user.company
       company.name = args[:company_name] if args.key?(:company_name)
       company.budget = args[:budget] if args.key?(:budget)
@@ -35,14 +37,9 @@ module Mutations
       company.feedback = args[:feedback] if args.key?(:feedback)
       company.marketing_attitude = args[:marketing_attitude] if args.key?(:marketing_attitude)
       company.industry = Industry.find_by_name!(args[:industry]) if args.key?(:industry)
+      current_user.save_and_sync!
 
-      if company.save
-        current_user.reload.sync_to_airtable
-        return {client_application: current_user}
-      end
-
-      message = copmany.errors.full_messages.first
-      ApiError.invalid_request('failedToSave', message)
+      {client_application: current_user}
     end
   end
 end
