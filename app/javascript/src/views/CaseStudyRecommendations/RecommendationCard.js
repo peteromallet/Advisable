@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { useHistory } from "react-router";
 import { Text, Box } from "@advisable/donut";
 import ArchiveButton from "./ArchiveButton";
 import {
@@ -8,6 +9,12 @@ import {
 } from "./styles";
 
 export default function RecommendationCard({ search, caseStudy, zIndex }) {
+  const history = useHistory();
+
+  const handleClick = useCallback(() => {
+    history.push(`/explore/${search.id}/${caseStudy.id}`);
+  }, [history, search, caseStudy]);
+
   return (
     <StyledRecommendationCard
       display="flex"
@@ -15,6 +22,7 @@ export default function RecommendationCard({ search, caseStudy, zIndex }) {
       padding={6}
       zIndex={zIndex}
       alignItems="center"
+      onClick={handleClick}
     >
       <StyledRecommendationCardAvatar
         mr={6}
