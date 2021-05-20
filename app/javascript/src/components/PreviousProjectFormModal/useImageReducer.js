@@ -46,7 +46,6 @@ function reducer(state, action) {
             ...image,
             ...attributesFromAttachment(action.image),
             cover: image.cover,
-            id: image.id,
           };
         }
 
