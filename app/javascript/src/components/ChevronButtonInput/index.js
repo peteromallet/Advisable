@@ -1,18 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Text } from "@advisable/donut";
 import StyledChevronInputOption, { Loading } from "./styles";
 import { ChevronForward } from "@styled-icons/ionicons-outline/ChevronForward";
 import { useFormikContext } from "formik";
 
 function ChevronButtonInput({ value, options, alignWidth, size = "m", name }) {
+  const [submit, setSubmit] = useState(false);
   const formik = useFormikContext();
 
   const handleClick = (value) => (e) => {
     formik.setFieldValue(name, value);
-    formik.submitForm();
+    setSubmit(true);
     e.preventDefault();
     return;
   };
+
+  useEffect(() => {
+    if (submit) {
+      formik.submitForm();
+      setSubmit(false);
+    }
+  }, [formik, submit]);
 
   return (
     <Box>
@@ -31,7 +39,6 @@ function ChevronButtonInput({ value, options, alignWidth, size = "m", name }) {
             data-selected={value === option.value}
             data-submitting={formik.isSubmitting}
             disabled={value !== option.value && formik.isSubmitting}
-            // disabled={true}
             aria-label={option.label}
             onClick={handleClick(option.value)}
           >
