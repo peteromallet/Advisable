@@ -53,7 +53,6 @@ export default function CompanyStage({ clientApplication }) {
             <Box mb={4}>
               <FormField
                 size="l"
-                isRequired
                 as={ChevronButtonInput}
                 fullWidth
                 alignWidth

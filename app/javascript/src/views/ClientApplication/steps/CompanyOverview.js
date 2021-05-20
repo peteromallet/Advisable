@@ -18,6 +18,7 @@ export const validationSchema = object().shape({
   companyName: string().required("Please enter your company name"),
   businessType: string().required("Please enter your business type"),
   industry: object().required("Please enter your company industry"),
+  title: string().required("Please enter your role at the company"),
 });
 
 export default function CompanyOverview({ clientApplication, industries }) {
@@ -71,7 +72,6 @@ export default function CompanyOverview({ clientApplication, industries }) {
               </Box>
               <Box mb={6}>
                 <FormField
-                  isRequired
                   as={TilesInput}
                   fullWidth
                   alignWidth
@@ -89,7 +89,6 @@ export default function CompanyOverview({ clientApplication, industries }) {
               </Box>
               <Box mb={6}>
                 <FormField
-                  isRequired
                   name="industry"
                   as={Combobox}
                   options={industries}

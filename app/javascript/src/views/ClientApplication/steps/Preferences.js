@@ -86,7 +86,6 @@ export default function CompanyOverview({ clientApplication }) {
               </Box>
               <Box mb={6}>
                 <FormField
-                  isRequired
                   as={TilesInput}
                   fullWidth
                   alignWidth
