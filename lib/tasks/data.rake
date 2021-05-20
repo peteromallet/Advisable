@@ -10,7 +10,6 @@ def migrate_image_to_project(ppi, project)
   attachment = ActiveStorage::Attachment.find_by!(record: project, blob: blob)
   attachment.update(position: ppi.position)
   project.update(cover_photo_id: attachment.id) if ppi.cover
-  ppi.destroy!
 rescue ActiveRecord::ActiveRecordError => e
   Sentry.capture_exception(e, level: "debug", extra: {ppi_id: ppi.id})
 end
