@@ -25,10 +25,6 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
 
   let(:response) { AdvisableSchema.execute(query, context: context) }
 
-  before do
-    allow_any_instance_of(Interview).to receive(:sync_to_airtable)
-  end
-
   it "sets the status to 'Need More Time Options'" do
     status = response['data']['requestMoreInterviewTimes']['interview']['status']
     expect(status).to eq('Need More Time Options')

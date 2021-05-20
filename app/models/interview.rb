@@ -2,7 +2,7 @@
 
 class Interview < ApplicationRecord
   include Uid
-  include Airtable::Syncable
+  include ::Airtable::Syncable
 
   has_logidze
 

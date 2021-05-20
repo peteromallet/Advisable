@@ -3,10 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Resending interview request', type: :system do
-  before do
-    allow_any_instance_of(Interview).to receive(:sync_to_airtable)
-  end
-
   it 'resends the interview request' do
     next_workday = Time.zone.now.next_weekday
     application = create(:application)

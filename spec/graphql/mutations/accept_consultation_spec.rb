@@ -25,7 +25,6 @@ RSpec.describe Mutations::AcceptConsultation do
   before do
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
-    allow_any_instance_of(Interview).to receive(:sync_to_airtable)
     allow_any_instance_of(Consultation).to receive(:sync_to_airtable)
   end
 

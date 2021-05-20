@@ -27,12 +27,12 @@ module Mutations
       when Specialist
         interview.status = "Specialist Requested Reschedule"
         interview.specialist_requested_reschedule_at = Time.zone.now
-        interview.save_and_sync_with_responsible!(current_account_id)
+        current_account_responsible_for { interview.save! }
         UserMailer.interview_reschedule_request(interview).deliver_later
       when User
         interview.status = "Client Requested Reschedule"
         interview.client_requested_reschedule_at = Time.zone.now
-        interview.save_and_sync_with_responsible!(current_account_id)
+        current_account_responsible_for { interview.save! }
         SpecialistMailer.interview_reschedule_request(interview).deliver_later
       else
         ApiError.invalid_request("MUST_BE_CLIENT_OR_SPECIALIST", "Current user must be a client or a specialist.")

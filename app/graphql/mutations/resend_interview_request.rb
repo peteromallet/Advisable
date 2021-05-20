@@ -21,7 +21,6 @@ module Mutations
       success = current_account_responsible_for { interview.save(validate: false) }
       # Don't bother validating as we want to force these updates
       if success
-        interview.sync_to_airtable
         {interview: interview}
       else
         ApiError.invalid_request("FAILED_TO_RESEND", interview.errors.full_messages.first)
