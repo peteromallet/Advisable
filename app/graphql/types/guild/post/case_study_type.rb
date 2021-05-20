@@ -8,6 +8,14 @@ module Types
 
         implements Types::Guild::PostInterface
 
+        def title
+          object.article&.title
+        end
+
+        def excerpt
+          object.article&.excerpt
+        end
+
         field :article, Types::CaseStudy::Article, null: true
       end
     end
