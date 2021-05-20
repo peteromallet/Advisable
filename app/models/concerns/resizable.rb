@@ -37,7 +37,7 @@ module Resizable
 
           images = public_send("resized_#{name}")
           mapping = images.map do |image|
-            [image.id, get_resized_image_url(image)]
+            [image.blob.id, get_resized_image_url(image)]
           end.to_h
           instance_variable_set("@resized_#{name}_mapping", mapping)
         end
