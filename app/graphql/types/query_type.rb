@@ -31,7 +31,7 @@ module Types
     end
 
     def interview(id:)
-      ::Interview.find_by_uid_or_airtable_id!(id)
+      ::Interview.find_by!(uid: id)
     end
 
     field :user,

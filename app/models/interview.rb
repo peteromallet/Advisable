@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
+  self.ignored_columns += %i[airtable_id]
+
   include Uid
-  include ::Airtable::Syncable
 
   has_logidze
 
@@ -39,7 +40,6 @@ end
 #  uid                                :string
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
-#  airtable_id                        :string
 #  application_id                     :bigint
 #  user_id                            :bigint
 #  zoom_meeting_id                    :string

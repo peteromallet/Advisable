@@ -8,7 +8,7 @@ module Mutations
 
     def authorized?(id:)
       requires_current_user!
-      interview = Interview.find_by_uid_or_airtable_id!(id)
+      interview = Interview.find_by!(uid: id)
       policy = InterviewPolicy.new(current_user, interview)
       return true if policy.resend_request?
 
@@ -16,7 +16,7 @@ module Mutations
     end
 
     def resolve(id:)
-      interview = Interview.find_by_uid_or_airtable_id!(id)
+      interview = Interview.find_by!(uid: id)
       interview.assign_attributes(status: "More Time Options Added", more_time_options_added_at: Time.zone.now)
       success = current_account_responsible_for { interview.save(validate: false) }
       # Don't bother validating as we want to force these updates

@@ -17,7 +17,7 @@ module Mutations
 
     def authorized?(id:, **_args)
       requires_specialist!
-      interview = Interview.find_by_uid_or_airtable_id!(id)
+      interview = Interview.find_by!(uid: id)
       policy = InterviewPolicy.new(current_user, interview)
       return true if policy.schedule?
 
@@ -25,7 +25,7 @@ module Mutations
     end
 
     def resolve(**args)
-      interview = Interview.find_by_uid_or_airtable_id!(args[:id])
+      interview = Interview.find_by!(uid: args[:id])
 
       ApiError.invalid_request("INTERVIEW_IS_NOT_SCHEDULABLE", "Interview is not in a schedulable state.") unless ALLOWED_STATUES.include?(interview.status)
 
