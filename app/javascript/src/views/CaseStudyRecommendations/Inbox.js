@@ -45,7 +45,7 @@ export default function RecommendationsInbox() {
       <Box position="relative">
         <AnimateSharedLayout>
           {caseStudies.map((c) => (
-            <motion.div layoutId={c.id} key={c.id}>
+            <motion.div initial={false} layoutId={c.id} key={c.id}>
               <Box paddingBottom={4}>
                 <RecommendationCard caseStudy={c} search={search} />
               </Box>

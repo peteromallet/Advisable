@@ -28,6 +28,7 @@ const StyledArchiveButtonIcon = styled.div`
 `;
 
 const StyledArchiveButton = styled.div`
+  cursor: pointer;
   align-items: center;
   display: inline-flex;
   flex-direction: column;
@@ -40,7 +41,7 @@ const StyledArchiveButton = styled.div`
   }
 `;
 
-export default function ArchiveButton({ search, article }) {
+export default function ArchiveButton({ search, article, onArchive }) {
   const [archive] = useArchive();
 
   const handleClick = useCallback(
@@ -55,8 +56,10 @@ export default function ArchiveButton({ search, article }) {
           },
         },
       });
+
+      onArchive();
     },
-    [search, article, archive],
+    [search, article, archive, onArchive],
   );
 
   return (

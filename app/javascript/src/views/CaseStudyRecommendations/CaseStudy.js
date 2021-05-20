@@ -6,6 +6,7 @@ import { Box, Text, Card, Button, useTheme } from "@advisable/donut";
 import CaseStudyContent from "src/components/CaseStudyContent";
 import { useCaseStudy } from "./queries";
 import Sticky from "react-stickynode";
+import ActionBar from "./ActionBar";
 
 const StyledHero = styled.div`
   width: 100%;
@@ -32,15 +33,15 @@ const Container = styled.div`
 
 const StyledSidebar = styled.div`
   left: 0;
-  top: -36px;
+  top: -24px;
   width: 228px;
   z-index: 4;
   position: absolute;
 `;
 
 const StyledAvatar = styled.div`
-  width: 100%;
-  height: 280px;
+  width: 200px;
+  height: 260px;
   background: white;
   border-radius: 24px;
   background-size: cover;
@@ -50,9 +51,9 @@ const StyledAvatar = styled.div`
 
 export default function CaseStudy() {
   const { setTheme } = useTheme();
-  const { caseStudyId } = useParams();
+  const { id, caseStudyId } = useParams();
   const { data, loading } = useCaseStudy({
-    variables: { id: caseStudyId },
+    variables: { id: caseStudyId, searchId: id },
   });
 
   useLayoutEffect(() => {
@@ -61,7 +62,7 @@ export default function CaseStudy() {
   }, [setTheme]);
 
   if (loading) return <>loading</>;
-  const { caseStudy } = data;
+  const { caseStudySearch, caseStudy } = data;
   const { specialist } = caseStudy;
 
   return (
@@ -117,6 +118,7 @@ export default function CaseStudy() {
         </Text>
         <Box height="1px" bg="neutral200" marginY={8} />
         <CaseStudyContent caseStudy={caseStudy} />
+        <ActionBar search={caseStudySearch} caseStudy={caseStudy} />
       </Container>
     </>
   );
