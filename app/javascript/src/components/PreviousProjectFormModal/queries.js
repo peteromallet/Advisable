@@ -16,7 +16,19 @@ export const SELECT_DATA = gql`
   }
 `;
 
+export const previousProjectImageFields = gql`
+  fragment PreviousProjectImageFields on PreviousProjectImage {
+    id
+    url
+    cover
+    signedId
+    position
+  }
+`;
+
 const previousProjectFields = gql`
+  ${previousProjectImageFields}
+
   fragment PreviousProjectFields on PreviousProject {
     id
     draft
@@ -39,12 +51,10 @@ const previousProjectFields = gql`
     industryRelevance
     locationRelevance
     coverPhoto {
-      url
+      ...PreviousProjectImageFields
     }
     images {
-      id
-      url
-      cover
+      ...PreviousProjectImageFields
     }
     primaryIndustry {
       id
@@ -125,31 +135,37 @@ export const PUBLISH_PREVIOUS_PROJECT = gql`
 export const usePublishPreviousProject = (props) =>
   useMutation(PUBLISH_PREVIOUS_PROJECT, props);
 
-export const UPDATE_IMAGE = gql`
-  mutation updatePhoto($input: UpdatePreviousProjectImageInput!) {
-    updatePreviousProjectImage(input: $input) {
-      image {
-        id
-        url
-        cover
-      }
-    }
-  }
-`;
-
-export const useUpdatePreviousProjectImage = (props) =>
-  useMutation(UPDATE_IMAGE, props);
-
 export const DELETE = gql`
   mutation deletePhoto($input: DeletePreviousProjectImageInput!) {
     deletePreviousProjectImage(input: $input) {
+      success
+    }
+  }
+`;
+
+export const useDeletePreviousProjectImage = (opts) =>
+  useMutation(DELETE, opts);
+
+export const CREATE_PHOTO = gql`
+  ${previousProjectImageFields}
+
+  mutation createPhoto($input: CreatePreviousProjectImageInput!) {
+    createPreviousProjectImage(input: $input) {
       image {
-        id
-        url
-        cover
+        ...PreviousProjectImageFields
       }
     }
   }
 `;
 
-export const useDeletePreviousProjectImage = () => useMutation(DELETE);
+export const SET_COVER = gql`
+  ${previousProjectImageFields}
+
+  mutation setCoverPhoto($input: SetPreviousProjectCoverImageInput!) {
+    setPreviousProjectCoverImage(input: $input) {
+      image {
+        ...PreviousProjectImageFields
+      }
+    }
+  }
+`;

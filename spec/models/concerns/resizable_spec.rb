@@ -48,13 +48,58 @@ RSpec.describe Resizable do
     it "schedules ResizeImageJob" do
       specialist.avatar.attach(avatar)
       specialist.resized_avatar
-      expect(ResizeImageJob).to have_been_enqueued.with(specialist, :avatar, resize_to_limit: [400, 400])
+      expect(ResizeImageJob).to have_been_enqueued.with(specialist.avatar.attachment, resize_to_limit: [400, 400])
     end
 
-    it "schedules ResizeImageJob on url method" do
+    it "schedules ResizeImageJob on _url method" do
       specialist.avatar.attach(avatar)
       specialist.resized_avatar_url
-      expect(ResizeImageJob).to have_been_enqueued.with(specialist, :avatar, resize_to_limit: [400, 400])
+      expect(ResizeImageJob).to have_been_enqueued.with(specialist.avatar.attachment, resize_to_limit: [400, 400])
+    end
+
+    context "when many" do
+      let(:project) { create(:previous_project) }
+      let(:file2) { Rails.root.join("spec/support/02.jpg") }
+      let(:image2) { ActiveStorage::Blob.create_and_upload!(io: File.open(file2), filename: "02.jpg", content_type: "image/jpeg").signed_id }
+
+      it "schedules ResizeImageJobs" do
+        project.images.attach(avatar)
+        project.images.attach(image2)
+        project.resized_images
+
+        project.images.attachments.each do |att|
+          expect(ResizeImageJob).to have_been_enqueued.with(att, resize_to_limit: [1600, 1600])
+        end
+      end
+
+      it "schedules ResizeImageJob on _urls method" do
+        project.images.attach(avatar)
+        project.images.attach(image2)
+        project.resized_images_urls
+
+        project.images.attachments.each do |att|
+          expect(ResizeImageJob).to have_been_enqueued.with(att, resize_to_limit: [1600, 1600])
+        end
+      end
+
+      it "schedules ResizeImageJob on _mapping method" do
+        project.images.attach(avatar)
+        project.images.attach(image2)
+        mapping = project.resized_images_mapping
+
+        # This is testing memoization 👇
+        project.resized_images_mapping
+        project.resized_images_mapping
+        project.resized_images_mapping
+        # This is testing memoization 👆
+
+        keys = []
+        project.images.attachments.each do |att|
+          keys << att.id
+          expect(ResizeImageJob).to have_been_enqueued.with(att, resize_to_limit: [1600, 1600])
+        end
+        expect(mapping.keys).to eq(keys)
+      end
     end
   end
 

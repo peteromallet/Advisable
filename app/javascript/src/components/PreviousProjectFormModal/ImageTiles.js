@@ -1,234 +1,61 @@
-import React from "react";
-import { gql } from "@apollo/client";
-import { find } from "lodash-es";
-import { rgba } from "polished";
+import React, { useCallback } from "react";
+import { useApolloClient } from "@apollo/client";
 import { Plus } from "@styled-icons/feather/Plus";
 import { X } from "@styled-icons/feather/X";
-import styled, { css } from "styled-components";
-import { theme } from "@advisable/donut";
-import { useMutation, useApolloClient } from "@apollo/client";
-import { DirectUpload } from "@rails/activestorage";
+import { useMutation } from "@apollo/client";
 import { useNotifications } from "src/components/Notifications";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
-import {
-  GET_PREVIOUS_PROJECT,
-  useUpdatePreviousProjectImage,
-  useDeletePreviousProjectImage,
-} from "./queries";
+import { useDeletePreviousProjectImage } from "./queries";
 import matchFileType from "src/utilities/matchFileType";
+import useUpload from "./useUpload";
+import { previousProjectImageFields, CREATE_PHOTO, SET_COVER } from "./queries";
+import {
+  StyledImageTiles,
+  StyledImageTileProgress,
+  StyledImageTileProgressBar,
+  StyledRemovePhotoButton,
+  StyledImageTile,
+  StyledNewImageTile,
+} from "./styles";
 
-const StyledImageTiles = styled.div`
-  width: 100%;
-  display: grid;
-  row-gap: 12px;
-  column-gap: 12px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-`;
-
-const StyledImageTileProgress = styled.div`
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  border-radius: 8px;
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  background: ${rgba(theme.colors.neutral100, 0.85)};
-`;
-
-const StyledImageTileProgressBar = styled.div`
-  width: 70%;
-  height: 4px;
-  position: relative;
-  border-radius: 2px;
-  background: white;
-
-  &::after {
-    content: "";
-    top: 0;
-    left: 0;
-    height: 100%;
-    border-radius: 2px;
-    position: absolute;
-    transition: width 100ms;
-    width: ${(p) => p.percentage}%;
-    background: ${theme.colors.neutral900};
-  }
-`;
-
-export const StyledRemovePhotoButton = styled.button`
-  width: 24px;
-  height: 24px;
-  top: -12px;
-  right: -12px;
-  appearance: none;
-  position: absolute;
-  border-radius: 50%;
-  color: white;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: ${theme.colors.blue900};
-
-  opacity: 0;
-  transform: scale(0);
-  transition: opacity 200ms, transform 200ms;
-`;
-
-const coverPhotoTile = css`
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px ${theme.colors.blue600};
-`;
-
-const StyledImageTile = styled.div`
-  height: 100px;
-  border-radius: 8px;
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  background-image: url("${(p) => p.image}");
-  background-color: ${theme.colors.neutral100};
-  ${(p) => p.isCover && coverPhotoTile};
-
-  &:hover ${StyledRemovePhotoButton} {
-    opacity: 1;
-    transform: scale(1);
-  }
-`;
-
-const StyledNewImageTile = styled.div`
-  height: 100px;
-  border-radius: 8px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${theme.colors.neutral300};
-  background: ${theme.colors.neutral50};
-  border: 2px dashed ${theme.colors.neutral100};
-
-  &:hover {
-    color: ${theme.colors.neutral400};
-    border-color: ${theme.colors.neutral300};
-  }
-
-  input {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    width: 100%;
-    position: absolute;
-  }
-`;
-
-const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
-
-function useUpload(file, config = {}) {
-  const preview = React.useRef(null);
-  const configuration = React.useRef(config);
-  const [percentage, setPercentage] = React.useState(0);
-
-  React.useEffect(() => {
-    configuration.current = config;
-  }, [config]);
-
-  const progressHandler = {
-    directUploadWillStoreFileWithXHR(request) {
-      request.upload.addEventListener("progress", (e) => {
-        const p = Math.round((100 * e.loaded) / e.total);
-        setPercentage(p);
-      });
-    },
-  };
-
-  function success(blob) {
-    configuration.current.onSuccess(blob);
-  }
-
-  React.useEffect(() => {
-    const upload = new DirectUpload(file, DIRECT_UPLOAD_URL, progressHandler);
-
-    upload.create((error, blob) => {
-      if (error) {
-        console.error(error);
-      } else {
-        success(blob);
-      }
-    });
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      preview.current = e.target.result;
-    };
-
-    reader.readAsDataURL(file);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return { percentage, preview: preview.current };
-}
-
-const CREATE_PHOTO = gql`
-  mutation createPhoto($input: CreatePreviousProjectImageInput!) {
-    createPreviousProjectImage(input: $input) {
-      image {
-        id
-        url
-        cover
-      }
-    }
-  }
-`;
-
-function Upload({ previousProjectId, image, dispatch, onClick }) {
-  const [createImage] = useMutation(CREATE_PHOTO, {
-    update(client, { data }) {
-      const prev = client.readQuery({
-        query: GET_PREVIOUS_PROJECT,
-        variables: { id: previousProjectId },
-      });
-
-      client.writeQuery({
-        query: GET_PREVIOUS_PROJECT,
-        variables: { id: previousProjectId },
-        data: {
-          previousProject: {
-            ...prev.previousProject,
-            images: [
-              ...prev.previousProject.images,
-              data.createPreviousProjectImage.image,
-            ],
-          },
-        },
-      });
-    },
-  });
+function Upload({ previousProject, image, finishUpload, onClick }) {
+  const client = useApolloClient();
+  const [createImage] = useMutation(CREATE_PHOTO);
 
   const upload = useUpload(image.file, {
-    cover: image.cover,
     onSuccess: async (blob) => {
       const r = await createImage({
         variables: {
           input: {
-            id: image.id,
-            previousProject: previousProjectId,
-            attachment: blob.signed_id,
             cover: image.cover,
             position: image.position,
+            previousProject: previousProject.id,
+            attachment: blob.signed_id,
           },
         },
       });
 
       const newImage = r.data.createPreviousProjectImage.image;
 
-      dispatch({
-        type: "UPLOAD_FINISHED",
-        image: newImage,
+      client.cache.modify({
+        id: client.cache.identify(previousProject),
+        fields: {
+          images(existing = [], { readField }) {
+            const newRef = client.cache.writeFragment({
+              fragment: previousProjectImageFields,
+              data: newImage,
+            });
+
+            if (existing.some((ref) => readField("id", ref) === newRef.id)) {
+              return existing;
+            }
+
+            return [...existing, newRef];
+          },
+        },
       });
+
+      finishUpload(image.key, newImage);
     },
   });
 
@@ -249,39 +76,17 @@ function Upload({ previousProjectId, image, dispatch, onClick }) {
 const PortfolioImage = React.memo(function PortfolioImage({
   image,
   onClick,
-  dispatch,
+  onRemove,
 }) {
-  const [setAsCover] = useUpdatePreviousProjectImage();
-  const [deleteImage] = useDeletePreviousProjectImage();
-
   const handleClick = () => {
     if (image.cover) return;
-
-    setAsCover({
-      variables: {
-        input: {
-          previousProjectImage: image.id,
-          cover: true,
-        },
-      },
-    });
 
     onClick();
   };
 
   const handleRemove = (e) => {
     e.stopPropagation();
-    deleteImage({
-      variables: {
-        input: {
-          previousProjectImage: image.id,
-        },
-      },
-    });
-    dispatch({
-      type: "REMOVE_IMAGE",
-      id: image.id,
-    });
+    onRemove(image);
   };
 
   return (
@@ -297,45 +102,115 @@ const PortfolioImage = React.memo(function PortfolioImage({
   );
 });
 
-function ImageTiles({ images, dispatch, previousProjectId }) {
+function ImageTiles({
+  state: images,
+  previousProject,
+  remove,
+  setCover,
+  addUpload,
+  finishUpload,
+}) {
   const client = useApolloClient();
-  const cover = find(images, { cover: true });
+  const [setCoverImage] = useMutation(SET_COVER);
+  const [deleteImage] = useDeletePreviousProjectImage();
   const { error } = useNotifications();
   const accept = ".png, .jpg, .jpeg";
 
-  const handleSetCover = (image) => () => {
-    if (image.cover) return;
+  const updateCoverInCache = useCallback(
+    (image) => {
+      const existingCover = previousProject.coverPhoto;
+      if (existingCover) {
+        client.cache.modify({
+          id: client.cache.identify(existingCover),
+          fields: {
+            cover: () => false,
+          },
+        });
+      }
 
-    dispatch({
-      type: "SET_COVER",
-      id: image.id,
-    });
-
-    // Unset the existing cover photo in the graphql cache
-    if (cover) {
-      client.writeFragment({
-        id: `PreviousProjectImage:${cover.id}`,
-        fragment: gql`
-          fragment image on PreviousProjectImage {
-            cover
-          }
-        `,
-        data: {
-          __typename: "PreviousProjectImage",
-          cover: false,
+      client.cache.modify({
+        id: client.cache.identify(image),
+        fields: {
+          cover: () => true,
         },
       });
+
+      client.cache.modify({
+        id: client.cache.identify(previousProject),
+        fields: {
+          coverPhoto() {
+            const newRef = client.cache.writeFragment({
+              fragment: previousProjectImageFields,
+              data: image,
+            });
+
+            return newRef;
+          },
+        },
+      });
+    },
+    [client.cache, previousProject],
+  );
+
+  const handleSetCover = (image) => () => {
+    if (image.cover) return;
+    setCover(image);
+
+    if (image.id) {
+      setCoverImage({
+        variables: {
+          input: {
+            previousProject: previousProject.id,
+            attachment: image.signedId,
+          },
+        },
+      });
+
+      updateCoverInCache(image);
     }
   };
+
+  const handleRemoveImage = useCallback(
+    (image) => {
+      if (image.id) {
+        client.cache.modify({
+          id: client.cache.identify(previousProject),
+          fields: {
+            images(existingRefs, { readField }) {
+              return existingRefs.filter((imageRef) => {
+                return image.id != readField("id", imageRef);
+              });
+            },
+          },
+        });
+
+        remove(image);
+
+        deleteImage({
+          variables: {
+            input: {
+              id: image.id,
+            },
+          },
+        });
+
+        if (image.cover) {
+          const nextCover = images.filter((i) => i.id !== image.id)[0];
+          updateCoverInCache(nextCover);
+        }
+      }
+    },
+    [client, remove, deleteImage, previousProject, updateCoverInCache, images],
+  );
 
   const tiles = images.map((image) => {
     if (image.uploading) {
       return (
         <Upload
-          key={image.id}
+          key={image.key}
           image={image}
-          dispatch={dispatch}
-          previousProjectId={previousProjectId}
+          finishUpload={finishUpload}
+          previousProject={previousProject}
           onClick={handleSetCover(image)}
         />
       );
@@ -343,9 +218,9 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
 
     return (
       <PortfolioImage
-        key={image.id}
+        key={image.key}
         image={image}
-        dispatch={dispatch}
+        onRemove={handleRemoveImage}
         onClick={handleSetCover(image)}
       />
     );
@@ -367,15 +242,7 @@ function ImageTiles({ images, dispatch, previousProjectId }) {
       return false;
     }
 
-    const cover = find(images, { cover: true });
-    files.forEach((file, i) => {
-      dispatch({
-        type: "NEW_UPLOAD",
-        file,
-        cover: !cover && i === 0,
-        position: images.length + (i + 1),
-      });
-    });
+    files.forEach(addUpload);
   };
 
   return (

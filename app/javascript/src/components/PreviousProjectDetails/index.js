@@ -29,7 +29,7 @@ function PreviousProjectDetails({ detailsModal, id }) {
   const project = data.previousProject;
   const viewerIsOwner = project.specialist.id === viewer?.id;
 
-  const cover = project.images.find((i) => i.cover);
+  const cover = project.coverPhoto;
   const otherImages = project.images.filter((i) => !i.cover);
 
   return (

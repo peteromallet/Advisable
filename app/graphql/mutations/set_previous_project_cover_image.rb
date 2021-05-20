@@ -1,15 +1,10 @@
 # frozen_string_literal: true
 
 module Mutations
-  class CreatePreviousProjectImage < Mutations::BaseMutation
-    description "Attaches an image to a previous project"
-
-    # rubocop:disable GraphQL/ExtractInputType
+  class SetPreviousProjectCoverImage < Mutations::BaseMutation
+    description "Set the cover image for a previous project"
     argument :attachment, String, required: true
-    argument :cover, Boolean, required: true
-    argument :position, Int, required: true
     argument :previous_project, ID, required: true
-    # rubocop:enable GraphQL/ExtractInputType
 
     field :image, Types::PreviousProjectImage, null: true
 
@@ -20,17 +15,11 @@ module Mutations
       policy.create_image?
     end
 
-    def resolve(previous_project:, attachment:, cover:, position:)
+    def resolve(previous_project:, attachment:)
       project = PreviousProject.find_by!(uid: previous_project)
       blob = ActiveStorage::Blob.find_signed!(attachment)
-      image = ActiveStorage::Attachment.create!(
-        name: "images",
-        record: project,
-        blob: blob,
-        position: position
-      )
-
-      project.update(cover_photo_id: image.id) if cover
+      image = blob.attachments.find_by(record: project)
+      project.update(cover_photo_id: image.id)
 
       {image: image}
     end

@@ -7,6 +7,7 @@ const projectFields = gql`
     title
     clientName
     coverPhoto {
+      id
       url
     }
     excerpt

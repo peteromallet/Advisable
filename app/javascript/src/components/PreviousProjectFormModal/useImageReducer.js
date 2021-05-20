@@ -1,40 +1,51 @@
-import { useReducer } from "react";
-import { find } from "lodash-es";
-import generateID from "../../utilities/generateID";
+import { useReducer, useCallback, useMemo } from "react";
+import generateID from "src/utilities/generateID";
 
-// We manage all of the photos inside of a state reducer. This is to make the UX when managing
-// images a little better. e.g Allow users to change cover photos before the photos finish
-// uploading. This state is an array of objects with the following attributes:
-// - id: The previous project image UID. When a file is uploaded, this is generated on the
-//       client side which allows to easily update the graphql cache once the upload completes
-//       and the record is saved.
-// - url: The url for the image. This will be null for images that are uploading.
-// - file: The original file for the image. This will only be set for images that have just been
-// .       uploaded and will be null for any images that are returned from the API on initial load.
-// - uploading: Whether or not the image is currently uploading.
-// - cover: Whether or not the image is the cover photo.
+function attributesFromAttachment(attachment) {
+  return {
+    ...attachment,
+    key: generateID("ppi"),
+    uploading: false,
+  };
+}
+
+function initializeState(attachments) {
+  const images = attachments.map((attachment) => {
+    return attributesFromAttachment(attachment);
+  });
+
+  const hasCover = images.some((i) => i.cover);
+  if (!hasCover && images.length > 0) {
+    images[0].cover = true;
+  }
+
+  return images;
+}
+
 function reducer(state, action) {
   switch (action.type) {
     case "NEW_UPLOAD": {
+      const cover = state.find((i) => i.cover);
+
       return [
         ...state,
         {
-          id: generateID("ppi"),
+          key: generateID("ppi"),
           uploading: true,
           file: action.file,
-          cover: action.cover,
-          position: action.position,
+          cover: !cover && state.length === 0,
+          position: (state[state.length - 1]?.position || 0) + 1,
         },
       ];
     }
 
     case "UPLOAD_FINISHED": {
       return state.map((image) => {
-        if (image.id === action.image.id) {
+        if (image.key === action.key) {
           return {
             ...image,
-            ...action.image,
-            uploading: false,
+            ...attributesFromAttachment(action.image),
+            cover: image.cover,
           };
         }
 
@@ -43,9 +54,10 @@ function reducer(state, action) {
     }
 
     case "REMOVE_IMAGE": {
-      const isCover = find(state, { id: action.id })?.cover || false;
+      const image = state.find((i) => i.key === action.key);
+      const isCover = image?.cover || false;
 
-      let nextState = state.filter((img) => img.id !== action.id);
+      const nextState = state.filter((i) => i.key !== image.key);
 
       if (isCover && nextState[0]) {
         nextState[0].cover = true;
@@ -55,14 +67,14 @@ function reducer(state, action) {
     }
 
     case "SET_COVER": {
-      const cover = find(state, { cover: true });
+      const cover = state.find((i) => i.cover);
 
       return state.map((image) => {
-        if (image.id === action.id) {
+        if (image.key === action.key) {
           return { ...image, cover: true };
         }
 
-        if (image.id === cover?.id) {
+        if (image.key === cover?.key) {
           return { ...image, cover: false };
         }
 
@@ -73,7 +85,38 @@ function reducer(state, action) {
 }
 
 function useImageReducer(images) {
-  return useReducer(reducer, images);
+  const initState = initializeState(images);
+  const [state, dispatch] = useReducer(reducer, initState);
+
+  const addUpload = useCallback((file) => {
+    dispatch({
+      type: "NEW_UPLOAD",
+      file,
+    });
+  }, []);
+
+  const setCover = useCallback((image) => {
+    dispatch({ type: "SET_COVER", key: image.key });
+  }, []);
+
+  const remove = useCallback((image) => {
+    dispatch({
+      type: "REMOVE_IMAGE",
+      key: image.key,
+    });
+  }, []);
+
+  const finishUpload = useCallback((key, image) => {
+    dispatch({
+      type: "UPLOAD_FINISHED",
+      key,
+      image,
+    });
+  }, []);
+
+  const length = useMemo(() => state.length, [state]);
+
+  return { state, length, addUpload, setCover, remove, finishUpload };
 }
 
 export default useImageReducer;

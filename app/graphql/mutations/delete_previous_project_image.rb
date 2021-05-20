@@ -2,21 +2,22 @@
 
 module Mutations
   class DeletePreviousProjectImage < Mutations::BaseMutation
-    argument :previous_project_image, ID, required: true
+    argument :id, ID, required: true
 
-    field :image, Types::PreviousProjectImage, null: true
+    field :success, Boolean, null: true
 
-    def authorized?(previous_project_image:, **_args)
+    def authorized?(id:)
       requires_specialist!
-      image = PreviousProjectImage.find_by_uid!(previous_project_image)
-      policy = PreviousProjectImagePolicy.new(current_user, image)
-      policy.delete?
+      image = ActiveStorage::Attachment.find(id)
+      policy = PreviousProjectPolicy.new(current_user, image.record)
+      policy.delete_image?
     end
 
-    def resolve(**args)
-      image = PreviousProjectImage.find_by_uid!(args[:previous_project_image])
+    def resolve(id:)
+      image = ActiveStorage::Attachment.find(id)
+      image.record.update(cover_photo_id: nil) if image.record.cover_photo_id == id.to_i
       image.destroy
-      {image: image}
+      {success: true}
     end
   end
 end

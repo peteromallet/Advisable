@@ -1,24 +1,20 @@
 import React from "react";
+import { find } from "lodash-es";
 import { Box, Text } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import { StyledCoverPhoto, StyledCoverPhotoTag } from "./styles";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
 import matchFileType from "src/utilities/matchFileType";
 
-function CoverPhoto({ state: images, addUpload }) {
-  const cover = images.find((c) => c.cover);
+function CoverPhoto({ images, dispatch, resourceName = "project" }) {
+  const cover = find(images, { cover: true });
   const [background, setBackground] = React.useState(cover?.url);
   const { error } = useNotifications();
   const MAX_SIZE_IN_MB = 5;
   const accept = ".png, .jpg, .jpeg";
 
   React.useEffect(() => {
-    if (!cover) {
-      setBackground(null);
-      return;
-    }
-
-    if (cover.file) {
+    if (cover?.uploading) {
       const reader = new FileReader();
 
       reader.onload = (e) => {
@@ -27,7 +23,7 @@ function CoverPhoto({ state: images, addUpload }) {
 
       reader.readAsDataURL(cover.file);
     } else {
-      setBackground(cover.url);
+      setBackground(cover?.url);
     }
   }, [cover]);
 
@@ -46,7 +42,14 @@ function CoverPhoto({ state: images, addUpload }) {
       return false;
     }
 
-    files.forEach(addUpload);
+    files.forEach((file, i) => {
+      dispatch({
+        type: "NEW_UPLOAD",
+        file,
+        cover: !cover && i === 0,
+        position: i + 1,
+      });
+    });
   };
 
   return (
@@ -62,7 +65,7 @@ function CoverPhoto({ state: images, addUpload }) {
             multiple
           />
           <Text color="blue900" mb={1.5} className="title">
-            Add images to this project
+            Add images to this {resourceName}
           </Text>
 
           <Text fontSize="xs" color="neutral500" className="subtext">

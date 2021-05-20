@@ -29,6 +29,8 @@ class PreviousProject < ApplicationRecord
 
   has_one_attached :contact_image
   resize contact_image: {resize_to_limit: [400, 400]}
+  has_many_attached :images
+  resize_many images: {resize_to_limit: [1600, 1600]}
 
   belongs_to :specialist
   has_one :account, through: :specialist
@@ -39,8 +41,6 @@ class PreviousProject < ApplicationRecord
 
   has_many :application_references, foreign_key: 'off_platform_project_id', inverse_of: :previous_project, dependent: :destroy
   has_many :reviews, foreign_key: :project_id, inverse_of: :project, dependent: :destroy
-  has_many :images, class_name: 'PreviousProjectImage', foreign_key: 'off_platform_project_id', inverse_of: :previous_project, dependent: :destroy
-  has_one :cover_photo, -> { where cover: true }, class_name: 'PreviousProjectImage', foreign_key: 'off_platform_project_id', inverse_of: :previous_project
 
   # Project skills
   has_many :project_skills, as: :project, dependent: :destroy
@@ -67,6 +67,10 @@ class PreviousProject < ApplicationRecord
   # associated specialists project count.
   after_destroy :update_specialist_project_count
   after_save :update_specialist_project_count
+
+  def cover_photo
+    images.find_by(id: cover_photo_id).presence || images.order(:position).first
+  end
 
   def on_platform?
     application_id.present?
@@ -142,16 +146,19 @@ end
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
 #  application_id              :bigint
+#  cover_photo_id              :bigint
 #  reviewed_by_id              :bigint
 #  specialist_id               :bigint
 #
 # Indexes
 #
 #  index_off_platform_projects_on_application_id  (application_id)
+#  index_off_platform_projects_on_cover_photo_id  (cover_photo_id)
 #  index_off_platform_projects_on_reviewed_by_id  (reviewed_by_id)
 #  index_off_platform_projects_on_specialist_id   (specialist_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (cover_photo_id => active_storage_attachments.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #

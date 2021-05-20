@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Text, Button, Link } from "@advisable/donut";
 import useLocationStages from "@advisable-main/hooks/useLocationStages";
-import CoverPhoto from "@advisable-main/components/PreviousProjectFormModal/CoverPhoto";
 import { ArrowLeft } from "@styled-icons/feather/ArrowLeft";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import useImageReducer from "./useImageReducer";
 import useProgressSteps from "./useProgressSteps";
 import { ImageTiles } from "./Images";
+import CoverPhoto from "./CoverPhoto";
 
 export default function EditImages({ guildPost }) {
   const { pathWithState } = useLocationStages();
