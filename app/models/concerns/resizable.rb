@@ -7,11 +7,39 @@ module Resizable
     def resize(attachments)
       attachments.each do |name, options|
         define_method "resized_#{name}" do
-          get_resized_image(name, options)
+          image = public_send(name)
+          get_resized_image(image, options)
         end
 
         define_method "resized_#{name}_url" do
-          get_resized_image_url(name, options)
+          image = public_send("resized_#{name}")
+          get_resized_image_url(image)
+        end
+      end
+    end
+
+    def resize_many(attachments)
+      attachments.each do |name, options|
+        define_method "resized_#{name}" do
+          images = public_send(name)
+          images.map do |image|
+            get_resized_image(image, options)
+          end
+        end
+
+        define_method "resized_#{name}_urls" do
+          public_send("resized_#{name}_mapping").values
+        end
+
+        define_method "resized_#{name}_mapping" do
+          mapping = instance_variable_get("@resized_#{name}_mapping")
+          return mapping if mapping
+
+          images = public_send("resized_#{name}")
+          mapping = images.map do |image|
+            [image.id, get_resized_image_url(image)]
+          end.to_h
+          instance_variable_set("@resized_#{name}_mapping", mapping)
         end
       end
     end
@@ -19,14 +47,14 @@ module Resizable
 
   private
 
-  def get_resized_image(name, options)
-    image = public_send(name)
+  def get_resized_image(image, options)
     return if image.blank?
 
     if image.variant(options).processed?
       image.variant(options)
     else
-      ResizeImageJob.perform_later(self, name, **options)
+      image = image.attachment unless image.is_a?(ActiveStorage::Attachment)
+      ResizeImageJob.perform_later(image, **options)
       image
     end
   rescue ActiveStorage::InvariableError
@@ -35,8 +63,7 @@ module Resizable
     nil
   end
 
-  def get_resized_image_url(name, options)
-    image = get_resized_image(name, options)
+  def get_resized_image_url(image)
     return if image.blank?
 
     if image.respond_to?(:variation)

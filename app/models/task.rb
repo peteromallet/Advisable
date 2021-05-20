@@ -25,8 +25,8 @@
 #   client.
 #
 class Task < ApplicationRecord
+  include ::Airtable::Syncable
   include Uid
-  include Airtable::Syncable
 
   has_logidze
 

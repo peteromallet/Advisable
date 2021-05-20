@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 2021_05_17_120013) do
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
+    t.integer "position"
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -621,7 +622,9 @@ ActiveRecord::Schema.define(version: 2021_05_17_120013) do
     t.string "validation_failed_reason"
     t.bigint "reviewed_by_id"
     t.jsonb "log_data"
+    t.bigint "cover_photo_id"
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
+    t.index ["cover_photo_id"], name: "index_off_platform_projects_on_cover_photo_id"
     t.index ["reviewed_by_id"], name: "index_off_platform_projects_on_reviewed_by_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end
@@ -1075,6 +1078,7 @@ ActiveRecord::Schema.define(version: 2021_05_17_120013) do
   add_foreign_key "matches", "specialists"
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
+  add_foreign_key "off_platform_projects", "active_storage_attachments", column: "cover_photo_id"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "post_prompts", "labels"
