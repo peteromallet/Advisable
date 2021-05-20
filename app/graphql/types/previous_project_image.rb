@@ -21,7 +21,8 @@ module Types
 
     field :url, String, null: false
     def url
-      object.record.resized_images_mapping[object.id]
+      # object.record.resized_images_mapping[object.id]
+      Rails.application.routes.url_helpers.rails_blob_url(object, host: Advisable::Application::ORIGIN_HOST)
     end
   end
 end
