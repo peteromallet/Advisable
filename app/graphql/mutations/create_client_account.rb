@@ -25,7 +25,7 @@ module Mutations
 
         user = User.new(
           account: account,
-          company: Company.new(name: Company.fresh_name_for('')),
+          company: Company.new(name: ""),
           rid: args[:rid],
           campaign_name: args[:utm_campaign],
           campaign_source: args[:utm_source],
