@@ -16,7 +16,7 @@ module Mutations
 
     def authorized?(id:, **_args)
       requires_current_user!
-      interview = Interview.find_by_uid_or_airtable_id!(id)
+      interview = Interview.find_by!(uid: id)
       policy = InterviewPolicy.new(current_user, interview)
       return true if policy.request_more_times?
 
@@ -24,7 +24,7 @@ module Mutations
     end
 
     def resolve(**args)
-      interview = Interview.find_by_uid_or_airtable_id!(args[:id])
+      interview = Interview.find_by!(uid: args[:id])
 
       unless ALLOWED_STATUSES.include?(interview.status)
         ApiError.invalid_request(

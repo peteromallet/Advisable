@@ -10,7 +10,7 @@ module Mutations
     def authorized?(**args)
       requires_current_user!
 
-      interview = Interview.find_by_uid_or_airtable_id!(args[:interview])
+      interview = Interview.find_by!(uid: args[:interview])
       ApiError.invalid_request("INTERVIEW_NOT_SCHEDULED", "Interview is not in scheduled state.") if interview.status != "Call Scheduled"
 
       policy = InterviewPolicy.new(current_user, interview)
@@ -20,7 +20,7 @@ module Mutations
     end
 
     def resolve(**args)
-      interview = Interview.find_by_uid_or_airtable_id!(args[:interview])
+      interview = Interview.find_by!(uid: args[:interview])
       interview.availability_note = args[:note]
 
       case current_user
