@@ -28,6 +28,7 @@ export default function CompanyOverview({ clientApplication, industries }) {
     companyName: clientApplication.companyName || "",
     businessType: clientApplication.businessType || "",
     industry: clientApplication.industry || "",
+    title: clientApplication.title || "",
   };
 
   const handleSubmit = async (values, { setStatus }) => {
@@ -95,6 +96,13 @@ export default function CompanyOverview({ clientApplication, industries }) {
                   onChange={(i) => formik.setFieldValue("industry", i)}
                   placeholder="Select your company industry"
                   label="What industry is your company in?"
+                />
+              </Box>
+              <Box mb={6}>
+                <FormField
+                  name="title"
+                  label="What is your role at the company?"
+                  placeholder="Your role"
                 />
               </Box>
             </Box>

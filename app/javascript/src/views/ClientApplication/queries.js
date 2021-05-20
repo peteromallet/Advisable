@@ -11,6 +11,7 @@ const clientApplicationFields = gql`
       label: name
       value: name
     }
+    title
     # Company Stage
     businessType
     # Goals
