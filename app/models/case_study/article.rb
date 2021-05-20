@@ -19,6 +19,7 @@ module CaseStudy
     has_many :shares, class_name: "SharedArticle", dependent: :destroy
     has_many :archived_articles, dependent: :destroy
     has_many :saved_articles, dependent: :destroy
+    has_one :guild_post, class_name: "::Guild::Post", dependent: :nullify
 
     scope :published, -> { where.not(published_at: nil) }
   end
