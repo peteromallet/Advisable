@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import Sticky from "react-stickynode";
@@ -30,6 +30,7 @@ const Event = () => {
   const viewer = useViewer();
   const theme = useTheme();
   const sUp = useBreakpoint("sUp");
+  const detailsRef = useRef(null);
 
   const { data, loading } = useQuery(EVENT_QUERY, {
     variables: { id: eventId },
@@ -67,6 +68,8 @@ const Event = () => {
   }, []);
 
   const attendees = event?.attendees.edges.map((e) => e.node) || [];
+  const detailsBottomBoundary =
+    detailsRef?.current?.clientHeight + detailsRef?.current?.offsetTop;
 
   if (loading) return <Loading />;
   if (!event) return <NotFound resource="Event" id={eventId} />;
@@ -123,6 +126,7 @@ const Event = () => {
               width={["100%", "70%"]}
               flexDirection="column"
               mb={["0", "15"]}
+              ref={detailsRef}
             >
               <StatusNotice eventStatus={eventStatus} />
               <Text
@@ -144,7 +148,11 @@ const Event = () => {
               display="flex"
               flexDirection="column"
             >
-              <Sticky top={100} enabled={sUp} bottomBoundary="#attendees">
+              <Sticky
+                top={100}
+                enabled={sUp}
+                bottomBoundary={detailsBottomBoundary}
+              >
                 {sUp ? (
                   <DetailsAside
                     event={event}
@@ -159,7 +167,7 @@ const Event = () => {
           </Box>
 
           {event.attendeesCount > 0 ? (
-            <Box marginY={["12", "0"]} width="100%" id="attendees">
+            <Box marginY={["12", "0"]} width="100%">
               <Text
                 mb={3}
                 fontSize="2xl"
