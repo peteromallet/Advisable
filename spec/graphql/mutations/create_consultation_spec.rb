@@ -69,7 +69,7 @@ RSpec.describe Mutations::CreateConsultation do
     it 'raises an error' do
       response = AdvisableSchema.execute(query, context: context)
       error = response['errors'].first['extensions']['code']
-      expect(error).to eq('emailBelongsToFreelancer')
+      expect(error).to eq('EMAIL_BELONGS_TO_A_FREELANCER')
     end
   end
 
