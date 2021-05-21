@@ -26,7 +26,7 @@ function RequestPasswordReset() {
         setStatus(APPLICATION_IN_PROCESS);
       }
 
-      if (error === "request_password_reset.account_not_found") {
+      if (error === "ACCOUNT_NOT_FOUND") {
         setStatus(NO_ACCOUNT);
       }
     }
