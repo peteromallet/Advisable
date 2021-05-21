@@ -258,7 +258,7 @@ RSpec.describe Mutations::UpdateApplication do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("invalidApplication")
+      expect(error).to eq("INVALID_APPLICATION")
     end
   end
 end
