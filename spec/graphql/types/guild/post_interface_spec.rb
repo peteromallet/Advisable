@@ -148,7 +148,7 @@ RSpec.describe Types::Guild::PostInterface do
 
       it "returns a not found error" do
         resp = AdvisableSchema.execute(not_found_query, context: {current_user: guild_specialist})
-        expect(resp["errors"][0]["extensions"]).to eq({"type" => "INVALID_REQUEST", "code" => "notFound"})
+        expect(resp["errors"][0]["extensions"]).to eq({"type" => "INVALID_REQUEST", "code" => "NOT_FOUND"})
       end
     end
   end

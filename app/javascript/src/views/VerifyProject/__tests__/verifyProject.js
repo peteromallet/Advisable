@@ -671,7 +671,7 @@ test("Render not found when API return not found", async () => {
             path: ["previousProject"],
             extensions: {
               type: "INVALID_REQUEST",
-              code: "notFound",
+              code: "NOT_FOUND",
             },
           },
         ],

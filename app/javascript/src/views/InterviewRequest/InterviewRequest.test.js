@@ -302,7 +302,7 @@ test("renders 404 if not found", async () => {
             path: ["interview"],
             extensions: {
               type: "INVALID_REQUEST",
-              code: "notFound",
+              code: "NOT_FOUND",
             },
           },
         ],
