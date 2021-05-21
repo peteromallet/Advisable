@@ -3,6 +3,8 @@
 module CaseStudy
   class Content < ApplicationRecord
     include Uid
+    include Resizable
+
     uid_prefix "csc"
 
     has_logidze
@@ -10,6 +12,7 @@ module CaseStudy
     belongs_to :section
 
     has_many_attached :images
+    resize_many images: {resize_to_limit: [1600, 1600]}
 
     validate :valid_content
 
