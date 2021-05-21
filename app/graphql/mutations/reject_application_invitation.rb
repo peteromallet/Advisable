@@ -23,7 +23,7 @@ module Mutations
         application.save
       end
 
-      ApiError.invalid_request("applications.failedToReject") unless success
+      ApiError.invalid_request("FAILED_TO_REJECT_APPLICATION") unless success
 
       application.sync_to_airtable
       {application: application}
