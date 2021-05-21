@@ -13,7 +13,7 @@ module Mutations
 
       return true if (current_user.is_a?(::Specialist) && application.specialist == current_user) || (current_user.is_a?(::User) && current_user == application.project.user)
 
-      ApiError.invalid_request("invalidApplication", "The application does not belong to signed in user.")
+      ApiError.invalid_request("INVALID_APPLICATION", "The application does not belong to signed in user.")
     end
 
     def resolve(application_id:, message:)
