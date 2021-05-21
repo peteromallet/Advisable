@@ -22,7 +22,7 @@ module Mutations
         account = Account.find_by(email: args[:email])
 
         if account
-          ApiError.invalid_request('emailBelongsToFreelancer', 'This email belongs to a freelancer account') if Specialist.find_by(account: account)
+          ApiError.invalid_request('EMAIL_BELONGS_TO_A_FREELANCER', 'This email belongs to a freelancer account') if Specialist.find_by(account: account)
         else
           create_and_login_new_user(args)
         end
