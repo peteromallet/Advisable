@@ -72,7 +72,7 @@ RSpec.describe Mutations::StartClientApplication do
       create(:blacklisted_domain, domain: 'gmail.com')
       response = AdvisableSchema.execute(query)
       error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('nonCorporateEmail')
+      expect(error).to eq('NON_CORPORATE_EMAIL')
     end
   end
 
