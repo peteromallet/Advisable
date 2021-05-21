@@ -22,6 +22,17 @@ export function useArchive(opts) {
               }),
             };
           },
+          archived(previous, { toReference }) {
+            return {
+              ...previous,
+              edges: [
+                ...previous.edges,
+                {
+                  node: toReference(article),
+                },
+              ],
+            };
+          },
         },
       });
     },
