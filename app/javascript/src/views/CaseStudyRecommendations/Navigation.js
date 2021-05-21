@@ -56,7 +56,7 @@ export default function CaseStudyRecommendationsNavigation({ inboxCount }) {
       </StyledNavLink>
       <StyledNavLink to={`/explore/${id}/archived`}>
         <Archive />
-        Archive
+        Archived
       </StyledNavLink>
     </Box>
   );

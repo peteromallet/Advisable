@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 // import INBOX from "./getRecommendations.gql";
 import CASE_STUDY from "./getCaseStudy.gql";
 import ARCHIVE from "./archiveRecommendation.gql";
+import ARCHIVED from "./archivedRecommendations.gql";
 
 export function useArchive(opts) {
   return useMutation(ARCHIVE, {
@@ -26,6 +27,10 @@ export function useArchive(opts) {
     },
     ...opts,
   });
+}
+
+export function useArchived(opts) {
+  return useQuery(ARCHIVED, opts);
 }
 
 export function useCaseStudy(opts) {
