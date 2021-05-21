@@ -66,7 +66,7 @@ RSpec.describe Mutations::RemoveUserFromCompany do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("noUsersLeftInCompany")
+      expect(error).to eq("NO_USERS_LEFT_IN_THE_COMPANY")
     end
   end
 end
