@@ -41,7 +41,11 @@ const StyledArchiveButton = styled.div`
   }
 `;
 
-export default function ArchiveButton({ search, article, onArchive }) {
+export default function ArchiveButton({
+  search,
+  article,
+  onArchive = () => {},
+}) {
   const [archive] = useArchive();
 
   const handleClick = useCallback(

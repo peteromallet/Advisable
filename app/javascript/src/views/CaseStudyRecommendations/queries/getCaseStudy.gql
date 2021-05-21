@@ -26,6 +26,9 @@ query getCaseStudy($searchId: ID!, $id: ID!) {
         ... on Paragraph {
           text
         }
+        ... on Results {
+          results
+        }
         ... on Images {
           images {
             id
