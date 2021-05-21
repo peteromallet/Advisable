@@ -125,7 +125,7 @@ class TestData
       project: project, specialist: specialist, status: "Application Accepted"
     )
 
-    interview = application.interview || application.create_interview(airtable_id: AlphanumericId.generate, user: project.user)
+    interview = application.interview || application.create_interview(user: project.user)
     interview.status = "Call Requested"
     interview.save
     application
