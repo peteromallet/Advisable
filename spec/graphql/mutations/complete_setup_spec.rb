@@ -53,7 +53,7 @@ RSpec.describe Mutations::CompleteSetup do
       response =
         AdvisableSchema.execute(query, context: {current_user: specialist})
       error_code = response['errors'][0]['extensions']['code']
-      expect(error_code).to eq('invalidApplicationStage')
+      expect(error_code).to eq('INVALID_APPLICATION_STAGE')
     end
   end
 end
