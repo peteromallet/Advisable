@@ -52,7 +52,7 @@ module Mutations
         specialist.save
       end
 
-      ApiError.invalid_request("failedToUpdate", specialist.errors.full_messages.first) unless success
+      ApiError.invalid_request("FAILED_TO_UPDATE", specialist.errors.full_messages.first) unless success
 
       specialist.sync_to_airtable
 
