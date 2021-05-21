@@ -32,7 +32,7 @@ module Mutations
       if account.errors.added?(:email, :taken, value: email)
         ApiError.invalid_request("EMAIL_TAKEN", "The email #{email} is already used by another account.")
       elsif account.errors.added?(:email, :blank)
-        ApiError.invalid_request("emailBlank", "Email is required.")
+        ApiError.invalid_request("EMAIL_BLANK", "Email is required.")
       else
         raise
       end

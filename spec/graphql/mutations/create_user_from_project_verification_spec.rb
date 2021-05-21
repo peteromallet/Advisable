@@ -86,7 +86,7 @@ RSpec.describe Mutations::CreateUserFromProjectVerification do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("emailBlank")
+      expect(error).to eq("EMAIL_BLANK")
     end
   end
 end

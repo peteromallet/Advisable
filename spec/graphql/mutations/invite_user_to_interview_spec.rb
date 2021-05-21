@@ -81,7 +81,7 @@ RSpec.describe Mutations::InviteUserToInterview do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("emailBlank")
+      expect(error).to eq("EMAIL_BLANK")
     end
   end
 end
