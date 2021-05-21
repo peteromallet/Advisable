@@ -38,7 +38,7 @@
     "EMAIL_TAKEN": "This email address is already associated with an existing account.",
     "account_not_found": "Your account could not be found. You must first go through our application process.",
     "ACCOUNT_EXISTS": "This account already exists",
-    "nonCorporateEmail": "You need to use a corporate email to sign up. Advisable is designed for companies that are hiring freelancers. If you’re a small business or individual, we recommend Upwork.",
+    "NON_CORPORATE_EMAIL": "You need to use a corporate email to sign up. Advisable is designed for companies that are hiring freelancers. If you’re a small business or individual, we recommend Upwork.",
     "somethingWentWrong": "Something went wrong and your request was not processed correctly. Please try again.",
     "AUTHENTICATION_FAILED": "Invalid login credentials, please try again."
   },

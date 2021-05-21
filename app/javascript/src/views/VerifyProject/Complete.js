@@ -40,7 +40,7 @@ function ValidationComplete({ data }) {
 
     if (errors) {
       const errorCode = errors[0].extensions?.code;
-      if (errorCode === "nonCorporateEmail") {
+      if (errorCode === "NON_CORPORATE_EMAIL") {
         formik.setFieldError(
           "email",
           "This domain is not allowed, please use a work email address.",
