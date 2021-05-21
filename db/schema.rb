@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_17_120013) do
+ActiveRecord::Schema.define(version: 2021_05_21_145417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -624,7 +624,6 @@ ActiveRecord::Schema.define(version: 2021_05_17_120013) do
     t.jsonb "log_data"
     t.bigint "cover_photo_id"
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
-    t.index ["cover_photo_id"], name: "index_off_platform_projects_on_cover_photo_id"
     t.index ["reviewed_by_id"], name: "index_off_platform_projects_on_reviewed_by_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end
@@ -1078,7 +1077,6 @@ ActiveRecord::Schema.define(version: 2021_05_17_120013) do
   add_foreign_key "matches", "specialists"
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
-  add_foreign_key "off_platform_projects", "active_storage_attachments", column: "cover_photo_id"
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "post_prompts", "labels"
