@@ -539,7 +539,7 @@ const accountExistsRejection = {
       __typename: "Mutation",
       startClientApplication: null,
     },
-    errors: [{ extensions: { code: "existingAccount" } }],
+    errors: [{ extensions: { code: "EXISTING_ACCOUNT" } }],
   },
 };
 
