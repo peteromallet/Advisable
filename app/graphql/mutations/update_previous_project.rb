@@ -4,24 +4,24 @@ module Mutations
   class UpdatePreviousProject < Mutations::BaseMutation
     ALLOWED_ARGS_WHEN_PUBLISHED = %i[previous_project description contact_name contact_job_title contact_relationship].freeze
 
-    argument :previous_project, ID, required: true
     argument :client_name, String, required: false
-    argument :confidential, Boolean, required: false
-    argument :industries, [String], required: false
-    argument :primary_industry, String, required: false
     argument :company_type, String, required: false
+    argument :confidential, Boolean, required: false
+    argument :contact_job_title, String, required: false
+    argument :contact_name, String, required: false
+    argument :contact_relationship, String, required: false
+    argument :cost_to_hire, Integer, required: false
     argument :description, String, required: false
+    argument :execution_cost, Integer, required: false
     argument :goal, String, required: false
-    argument :skills, [String], required: false
-    argument :primary_skill, String, required: false
-    argument :public_use, Boolean, required: false
+    argument :industries, [String], required: false
     argument :industry_relevance, Integer, required: false
     argument :location_relevance, Integer, required: false
-    argument :cost_to_hire, Integer, required: false
-    argument :execution_cost, Integer, required: false
-    argument :contact_name, String, required: false
-    argument :contact_job_title, String, required: false
-    argument :contact_relationship, String, required: false
+    argument :previous_project, ID, required: true
+    argument :primary_industry, String, required: false
+    argument :primary_skill, String, required: false
+    argument :public_use, Boolean, required: false
+    argument :skills, [String], required: false
 
     field :previous_project, Types::PreviousProject, null: true
 
@@ -32,7 +32,7 @@ module Mutations
       policy = PreviousProjectPolicy.new(current_user, project)
       return unless policy.update?
 
-      ApiError.invalid_request("projectPublished", "Can not save changes because the project has been published") if project.draft == false && (args.keys - ALLOWED_ARGS_WHEN_PUBLISHED).any?
+      ApiError.invalid_request("PROJECT_PUBLISHED", "Can not save changes because the project has been published") if project.draft == false && (args.keys - ALLOWED_ARGS_WHEN_PUBLISHED).any?
       ApiError.invalid_request("PROJECT_VALIDATED", "Project has already been validated") if project.validation_status == "Validated"
 
       true
