@@ -22,7 +22,7 @@ function RequestPasswordReset() {
   const handleRequest = ({ data, errors }) => {
     if (errors) {
       let error = errors[0]?.extensions?.code;
-      if (error === "request_password_reset.application_required") {
+      if (error === "APPLICATION_REQUIRED") {
         setStatus(APPLICATION_IN_PROCESS);
       }
 
