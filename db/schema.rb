@@ -263,6 +263,7 @@ ActiveRecord::Schema.define(version: 2021_05_21_145417) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
+    t.jsonb "results"
     t.index ["uid"], name: "index_case_study_searches_on_uid"
     t.index ["user_id"], name: "index_case_study_searches_on_user_id"
   end
