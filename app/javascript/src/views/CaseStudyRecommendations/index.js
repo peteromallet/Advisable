@@ -9,8 +9,12 @@ export default function CaseStudyRecommendations() {
       <Route path="/explore" exact>
         searches
       </Route>
+      <Route
+        path="/explore/:id/(inbox|archived)"
+        component={RecommendationsInbox}
+      />
       <Route path="/explore/:id/:caseStudyId" component={CaseStudy} />
-      <Route path="/explore/:id" component={RecommendationsInbox} />
+      <Redirect from="/explore/:id" to="/explore/:id/inbox" />
       <Redirect to="/explore" />
     </Switch>
   );

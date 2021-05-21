@@ -6,6 +6,7 @@ import INBOX from "./queries/getRecommendations.gql";
 import { Box, Container, Text } from "@advisable/donut";
 import RecommendationCard from "./RecommendationCard";
 import pluralize from "src/utilities/pluralize";
+import CaseStudyRecommendationsNavigation from "./Navigation";
 
 export default function RecommendationsInbox() {
   const { id } = useParams();
@@ -31,7 +32,7 @@ export default function RecommendationsInbox() {
             Project recommendations for Dunder Mifflin
           </Text>
         </Box>
-        <Text fontSize="lg" lineHeight="24px" color="neutral700">
+        <Text fontSize="lg" lineHeight="24px" color="neutral700" mb={4}>
           You have{" "}
           {pluralize(
             caseStudies.length,
@@ -41,6 +42,7 @@ export default function RecommendationsInbox() {
           of how freelancers in our network have solved a similar problem for
           other companies.
         </Text>
+        <CaseStudyRecommendationsNavigation inboxCount={caseStudies.length} />
       </Box>
       <Box position="relative">
         <AnimateSharedLayout>
