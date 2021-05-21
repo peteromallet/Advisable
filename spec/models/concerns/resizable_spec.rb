@@ -95,7 +95,7 @@ RSpec.describe Resizable do
 
         keys = []
         project.images.attachments.each do |att|
-          keys << att.id
+          keys << att.blob_id
           expect(ResizeImageJob).to have_been_enqueued.with(att, resize_to_limit: [1600, 1600])
         end
         expect(mapping.keys).to eq(keys)
