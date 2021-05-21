@@ -1,12 +1,13 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { Switch, Route, useParams } from "react-router-dom";
 import { AnimateSharedLayout, motion } from "framer-motion";
 import INBOX from "./queries/getRecommendations.gql";
 import { Box, Container, Text } from "@advisable/donut";
 import RecommendationCard from "./RecommendationCard";
 import pluralize from "src/utilities/pluralize";
 import CaseStudyRecommendationsNavigation from "./Navigation";
+import ArchivedRecommendations from "./ArchivedRecommendations";
 
 export default function RecommendationsInbox() {
   const { id } = useParams();
@@ -45,15 +46,22 @@ export default function RecommendationsInbox() {
         <CaseStudyRecommendationsNavigation inboxCount={caseStudies.length} />
       </Box>
       <Box position="relative">
-        <AnimateSharedLayout>
-          {caseStudies.map((c) => (
-            <motion.div initial={false} layoutId={c.id} key={c.id}>
-              <Box paddingBottom={4}>
-                <RecommendationCard caseStudy={c} search={search} />
-              </Box>
-            </motion.div>
-          ))}
-        </AnimateSharedLayout>
+        <Switch>
+          <Route path="/explore/:id/inbox">
+            <AnimateSharedLayout>
+              {caseStudies.map((c) => (
+                <motion.div initial={false} layoutId={c.id} key={c.id}>
+                  <Box paddingBottom={4}>
+                    <RecommendationCard caseStudy={c} search={search} />
+                  </Box>
+                </motion.div>
+              ))}
+            </AnimateSharedLayout>
+          </Route>
+          <Route path="/explore/:id/archived">
+            <ArchivedRecommendations />
+          </Route>
+        </Switch>
       </Box>
     </Container>
   );
