@@ -42,7 +42,7 @@ const RequestConsultation = () => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  if (error?.graphQLErrors[0].extensions.code === "notFound") {
+  if (error?.graphQLErrors[0].extensions.code === "NOT_FOUND") {
     return <NotFound />;
   }
 

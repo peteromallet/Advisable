@@ -79,7 +79,7 @@ RSpec.describe Mutations::CreateConsultation do
     it 'raises an error' do
       response = AdvisableSchema.execute(query, context: context)
       error = response['errors'].first['extensions']['code']
-      expect(error).to eq('notFound')
+      expect(error).to eq('NOT_FOUND')
     end
   end
 end
