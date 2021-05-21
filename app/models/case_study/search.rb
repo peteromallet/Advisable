@@ -20,11 +20,11 @@ module CaseStudy
     end
 
     def archived_articles
-      Article.where(id: archived)
+      archived.present? ? Article.where(id: archived) : []
     end
 
     def saved_articles
-      Article.where(id: saved)
+      saved.present? ? Article.where(id: saved) : []
     end
   end
 end
