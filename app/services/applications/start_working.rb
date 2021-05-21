@@ -13,7 +13,7 @@ module Applications
     end
 
     def call
-      raise Service::Error, 'invalidProjectType' unless %w[Fixed Flexible].include?(project_type)
+      raise Service::Error, 'INVALID_PROJECT_TYPE' unless %w[Fixed Flexible].include?(project_type)
 
       application.status = 'Working'
       application.project_type = project_type

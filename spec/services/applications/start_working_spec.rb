@@ -99,7 +99,7 @@ RSpec.describe Applications::StartWorking do
           project_type: 'invalid project type',
           monthly_limit: monthly_limit
         )
-      end.to raise_error(Service::Error, 'invalidProjectType')
+      end.to raise_error(Service::Error, 'INVALID_PROJECT_TYPE')
     end
   end
 end
