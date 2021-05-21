@@ -107,7 +107,7 @@ RSpec.describe Mutations::UpdateProfile do
     it "returns an error" do
       allow_any_instance_of(Specialist).to receive(:save).and_return(false)
       error = response["errors"][0]["extensions"]
-      expect(error["code"]).to eq("failedToUpdate")
+      expect(error["code"]).to eq("FAILED_TO_UPDATE")
     end
   end
 
