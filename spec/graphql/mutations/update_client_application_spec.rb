@@ -10,7 +10,7 @@ RSpec.describe Mutations::UpdateClientApplication do
     <<-GRAPHQL
     mutation update($input: UpdateClientApplicationInput!) {
       updateClientApplication(input: $input) {
-        user {
+        clientApplication {
           id
         }
       }
@@ -62,6 +62,15 @@ RSpec.describe Mutations::UpdateClientApplication do
     end
   end
 
+  context 'when passing title' do
+    it "updates the title" do
+      user.update(title: nil)
+      expect do
+        request({title: "CEO"})
+      end.to change(user, :title).from(nil).to("CEO")
+    end
+  end
+
   context 'when passing company type' do
     it "updates the company kind" do
       user.company.update(kind: nil)
@@ -75,7 +84,7 @@ RSpec.describe Mutations::UpdateClientApplication do
 
   context 'when passing goals' do
     it "updates the company goals" do
-      user.company.ate(goals: [])
+      user.company.update(goals: [])
       request({goals: %w[One Two]})
       expect(user.company.reload.goals).to include("One")
       expect(user.company.reload.goals).to include("Two")
@@ -84,11 +93,11 @@ RSpec.describe Mutations::UpdateClientApplication do
 
   context 'when passing budget' do
     it "updates the users budget" do
-      user.update(budget: nil)
+      user.company.update(budget: nil)
       expect do
         request({budget: 5000})
       end.to change {
-        user.reload.budget
+        user.company.reload.budget
       }.from(nil).to(5000)
     end
   end
