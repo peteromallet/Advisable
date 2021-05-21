@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import Images from "./Images";
 import Heading from "./Heading";
+import Results from "./Results";
 import Paragraph from "./Paragraph";
 
 const CONTENT_TYPES = {
   Images,
   Heading,
+  Results,
   Paragraph,
 };
 

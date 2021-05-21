@@ -2,7 +2,8 @@ import React, { useLayoutEffect } from "react";
 import truncate from "lodash/truncate";
 import styled from "styled-components";
 import { useParams } from "react-router";
-import { Box, Text, Card, Button, useTheme } from "@advisable/donut";
+import { Check } from "@styled-icons/heroicons-solid/Check";
+import { Circle, Box, Text, Card, Button, useTheme } from "@advisable/donut";
 import CaseStudyContent from "src/components/CaseStudyContent";
 import { useCaseStudy } from "./queries";
 import Sticky from "react-stickynode";
@@ -48,6 +49,30 @@ const StyledAvatar = styled.div`
   background-position: center;
   box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.12);
 `;
+
+function CaseStudySummaryResults({ caseStudy }) {
+  const outcomeSection = caseStudy.sections.find((s) => s.type === "outcome");
+  if (!outcomeSection) return null;
+  const resultsBlock = outcomeSection.contents.find(
+    (c) => c.__typename === "Results",
+  );
+  if (!resultsBlock) return null;
+
+  return (
+    <Box paddingTop={4} paddingBottom={4}>
+      {resultsBlock.results.map((result, index) => (
+        <Box key={index} display="flex" alignItems="center" marginBottom={3}>
+          <Circle size={20} marginRight={2} bg="cyan600" color="white">
+            <Check size={12} />
+          </Circle>
+          <Text fontSize="lg" fontWeight="350">
+            {result}
+          </Text>
+        </Box>
+      ))}
+    </Box>
+  );
+}
 
 export default function CaseStudy() {
   const { setTheme } = useTheme();
@@ -116,6 +141,7 @@ export default function CaseStudy() {
         >
           {caseStudy.subtitle}
         </Text>
+        <CaseStudySummaryResults caseStudy={caseStudy} />
         <Box height="1px" bg="neutral200" marginY={8} />
         <CaseStudyContent caseStudy={caseStudy} />
         <ActionBar search={caseStudySearch} caseStudy={caseStudy} />

@@ -8,7 +8,7 @@ const SIZES = {
     lineHeight: "32px",
     letterSpacing: "-0.03rem",
     paddingTop: 4,
-    paddingBottom: 8,
+    paddingBottom: 6,
   },
   h2: {
     fontWeight: 500,
@@ -16,7 +16,7 @@ const SIZES = {
     lineHeight: "28px",
     letterSpacing: "-0.03rem",
     paddingTop: 4,
-    marginBottom: 4,
+    paddingBottom: 4,
   },
 };
 
