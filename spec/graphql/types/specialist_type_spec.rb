@@ -60,7 +60,7 @@ RSpec.describe Types::SpecialistType do
       it 'prevents access' do
         error = response['errors'][0][:code]
         expect(response['data']['specialist']['applications']).to be_nil
-        expect(error).to eq('invalidPermissions')
+        expect(error).to eq('INVALID_PERMISSIONS')
       end
     end
 
@@ -70,7 +70,7 @@ RSpec.describe Types::SpecialistType do
       it 'prevents access' do
         error = response['errors'][0][:code]
         expect(response['data']['specialist']['applications']).to be_nil
-        expect(error).to eq('invalidPermissions')
+        expect(error).to eq('INVALID_PERMISSIONS')
       end
     end
 
@@ -101,7 +101,7 @@ RSpec.describe Types::SpecialistType do
       it "prevents access" do
         error = response["errors"][0][:code]
         expect(response["data"]["specialist"]["applications"]).to be_nil
-        expect(error).to eq("invalidPermissions")
+        expect(error).to eq("INVALID_PERMISSIONS")
       end
     end
 
@@ -111,7 +111,7 @@ RSpec.describe Types::SpecialistType do
       it "prevents access" do
         error = response["errors"][0][:code]
         expect(response["data"]["specialist"]["applications"]).to be_nil
-        expect(error).to eq("invalidPermissions")
+        expect(error).to eq("INVALID_PERMISSIONS")
       end
     end
 
