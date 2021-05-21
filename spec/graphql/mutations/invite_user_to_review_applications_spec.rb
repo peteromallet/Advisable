@@ -98,7 +98,7 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("notAnUser")
+      expect(error).to eq("NOT_AN_USER")
     end
   end
 end
