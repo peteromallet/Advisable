@@ -19,9 +19,6 @@ RSpec.describe Mutations::CreateFreelancerAccount do
         firstName: "Test",
         lastName: "Account",
         email: "#{email}",
-        phone: "0861234567",
-        #{password.blank? ? "" : "password: \"#{password}\","}
-        skills: ["#{skill_name}"],
         pid: "#{project.try(:airtable_id)}",
         campaignName: "campaignName",
         campaignSource: "campaignSource",
@@ -60,12 +57,6 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     expect { response }.to change(Specialist, :count).by(1)
   end
 
-  it 'Adds the provided skills' do
-    response
-    specialist = Specialist.order(:created_at).last
-    expect(specialist.skills).to include(skill)
-  end
-
   it 'Creates an application invitation if a PID is provided' do
     response
     specialist = Specialist.order(:created_at).last
@@ -89,15 +80,6 @@ RSpec.describe Mutations::CreateFreelancerAccount do
       response
       specialist = Specialist.order(:created_at).last
       expect(specialist.applications).to be_empty
-    end
-  end
-
-  context "when given a skill that doesn't exist" do
-    let(:skill_name) { 'Nope' }
-
-    it 'returns an error' do
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('skillNotFound')
     end
   end
 
@@ -127,35 +109,5 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     response
     specialist = Specialist.last
     expect(specialist.account.email).to eq(email)
-  end
-
-  it 'sets the phone_number' do
-    response
-    specialist = Specialist.last
-    expect(specialist.phone).to eq('0861234567')
-  end
-
-  context "when no password provided" do
-    let(:password) { nil }
-
-    it "creates a new specialist" do
-      expect { response }.to change(Specialist, :count).by(1)
-    end
-
-    it "sets the first_name, last_name, and email" do
-      response
-      specialist = Specialist.last
-      expect(specialist.account.attributes.slice("first_name", "last_name", "email").values).to match_array(["Account", "Test", "test@test.com"])
-    end
-
-    context "when given an email that is already been used" do
-      let(:user) { create(:user) }
-      let(:email) { user.account.email.upcase }
-
-      it "returns an error" do
-        error = response["errors"][0]["extensions"]["code"]
-        expect(error).to eq("EMAIL_TAKEN")
-      end
-    end
   end
 end
