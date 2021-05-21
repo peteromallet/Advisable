@@ -52,12 +52,10 @@ class OffPlatformProject < PreviousProject; end
 # Indexes
 #
 #  index_off_platform_projects_on_application_id  (application_id)
-#  index_off_platform_projects_on_cover_photo_id  (cover_photo_id)
 #  index_off_platform_projects_on_reviewed_by_id  (reviewed_by_id)
 #  index_off_platform_projects_on_specialist_id   (specialist_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (cover_photo_id => active_storage_attachments.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #
