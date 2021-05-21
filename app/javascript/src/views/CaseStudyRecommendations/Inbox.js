@@ -21,12 +21,12 @@ export default function RecommendationsInbox() {
   return (
     <Container maxWidth="900px" py={10}>
       <Box maxWidth="500px" marginX="auto" textAlign="center" mb={10}>
-        <Box maxWidth="460px" mx="auto" mb={3}>
+        <Box maxWidth="440px" mx="auto" mb={3}>
           <Text
             fontSize="4xl"
             fontWeight="550"
             lineHeight="28px"
-            letterSpacing="-0.03rem"
+            letterSpacing="-0.05rem"
           >
             Project recommendations for Dunder Mifflin
           </Text>
