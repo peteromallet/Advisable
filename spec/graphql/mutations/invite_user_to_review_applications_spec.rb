@@ -56,7 +56,7 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("invalidProject")
+      expect(error).to eq("INVALID_PROJECT")
     end
   end
 
