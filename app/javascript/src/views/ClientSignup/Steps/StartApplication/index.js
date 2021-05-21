@@ -56,7 +56,7 @@ function StartApplication() {
       // Get errors
       const errorCodes = res.errors?.map((err) => err.extensions?.code);
       const nonCorporateEmail = errorCodes?.includes("nonCorporateEmail");
-      const existingAccount = errorCodes?.includes("existingAccount");
+      const existingAccount = errorCodes?.includes("EXISTING_ACCOUNT");
 
       // Actions based on errors
       if (nonCorporateEmail) {

@@ -52,7 +52,7 @@ RSpec.describe Mutations::StartClientApplication do
       )
       response = AdvisableSchema.execute(query)
       error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('existingAccount')
+      expect(error).to eq('EXISTING_ACCOUNT')
     end
   end
 
@@ -61,7 +61,7 @@ RSpec.describe Mutations::StartClientApplication do
       create(:specialist, account: create(:account, email: email))
       response = AdvisableSchema.execute(query)
       error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('existingAccount')
+      expect(error).to eq('EXISTING_ACCOUNT')
     end
   end
 
