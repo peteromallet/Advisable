@@ -30,7 +30,7 @@ module Mutations
     def resolve(**args)
       task = Task.find_by_uid!(args[:id])
 
-      ApiError.invalid_request("applicationStatusNotWorking", "Application status is 'Stopped Working'") if task.application.status == "Stopped Working"
+      ApiError.invalid_request("APPLICATION_STATUS_NOT_WORKING", "Application status is 'Stopped Working'") if task.application.status == "Stopped Working"
 
       task = Tasks::Update.call(task: task, attributes: args.except(:id), user: current_user, responsible_id: current_account_id)
 

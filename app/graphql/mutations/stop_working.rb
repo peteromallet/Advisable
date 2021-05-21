@@ -24,7 +24,7 @@ module Mutations
 
       ApiError.not_authorized("You do not have permission to execute this mutation") unless policy.stop_working?
 
-      ApiError.invalid_request("applicationStatusNotWorking", "The application status must be 'Working'.") if application.status != "Working"
+      ApiError.invalid_request("APPLICATION_STATUS_NOT_WORKING", "The application status must be 'Working'.") if application.status != "Working"
 
       true
     end
