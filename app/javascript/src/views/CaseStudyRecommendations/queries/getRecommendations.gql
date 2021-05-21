@@ -7,6 +7,7 @@ query recommendationsInbox($id: ID!) {
         id
         title
         subtitle
+        isArchived(id: $id)
         specialist {
           id
           avatar

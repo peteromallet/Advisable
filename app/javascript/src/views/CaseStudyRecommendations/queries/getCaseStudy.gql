@@ -5,6 +5,7 @@ query getCaseStudy($searchId: ID!, $id: ID!) {
   caseStudy(id: $id) {
     id
     title
+    isArchived(id: $searchId)
     subtitle
     comment
     specialist {
