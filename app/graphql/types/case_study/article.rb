@@ -33,7 +33,7 @@ module Types
         argument :id, ID, required: true
       end
       def is_saved(id:)
-        search = CaseStudy::Search.find_by!(uid: id)
+        search = ::CaseStudy::Search.find_by!(uid: id)
         search.saved.include?(object.id)
       end
 
@@ -41,7 +41,7 @@ module Types
         argument :id, ID, required: true
       end
       def is_archived(id:)
-        search = CaseStudy::Search.find_by!(uid: id)
+        search = ::CaseStudy::Search.find_by!(uid: id)
         search.archived.include?(object.id)
       end
 

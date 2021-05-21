@@ -12,6 +12,15 @@ export function useArchive(opts) {
       const { article, search } = response.data.archiveCaseStudySearchArticle;
 
       cache.modify({
+        id: cache.identify(article),
+        fields: {
+          isArchived() {
+            return true;
+          },
+        },
+      });
+
+      cache.modify({
         id: cache.identify(search),
         fields: {
           results(previous, { readField }) {
