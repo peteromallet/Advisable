@@ -19,7 +19,7 @@ module Mutations
           current_user.invite_comember!(account, responsible: current_account_id)
         end
       rescue ActiveRecord::RecordInvalid
-        raise ApiError::InvalidRequest.new("emailBlank", "Email is required.") if account.errors.added?(:email, :blank)
+        raise ApiError::InvalidRequest.new("EMAIL_BLANK", "Email is required.") if account.errors.added?(:email, :blank)
 
         raise
       end
