@@ -104,7 +104,7 @@ RSpec.describe Mutations::UpdateClientApplication do
 
     response = AdvisableSchema.execute(query)
     code = response['errors'][0]['extensions']['code']
-    expect(code).to eq('failedToSave')
+    expect(code).to eq('FALIED_TO_SAVE')
   end
 
   it 'Can update the budget' do
