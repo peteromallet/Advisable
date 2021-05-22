@@ -71,8 +71,8 @@ export default function CompanyOverview({ clientApplication }) {
             <StepNumber>Step 4 of 4</StepNumber>
             <Header>Preferences</Header>
             <Description>
-              This will help us understand whether your company is a good fit
-              for Advisable.
+              This will help understand whether you and your company are a good
+              fit for Advisable.
             </Description>
             <Box mb={6}>
               <Box mb={6}>
