@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { Box, Error } from "@advisable/donut";
 import ChevronButtonInput from "src/components/ChevronButtonInput";
+import { useNotifications } from "src/components/Notifications";
 import FormField from "src/components/FormField";
 import AnimatedCard from "../components/AnimatedCard";
 import Header from "../components/Header";
@@ -18,6 +19,7 @@ export const validationSchema = object().shape({
 
 export default function CompanyStage({ clientApplication }) {
   const [update] = useMutation(UPDATE_CLIENT_APPLICATION);
+  const { error } = useNotifications();
   const history = useHistory();
 
   const initialValues = {
@@ -26,12 +28,21 @@ export default function CompanyStage({ clientApplication }) {
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
-    const res = await update({ variables: { input: values } });
-
-    if (res.errors) {
-      setStatus(res.errors[0]?.message);
-      return;
-    }
+    update({
+      variables: { input: values },
+      optimisticResponse: {
+        __typename: "Mutation",
+        updateClientApplication: {
+          __typename: "UpdateClientApplicationPayload",
+          clientApplication: {
+            __typename: "ClientApplication",
+            ...clientApplication,
+            ...values,
+          },
+        },
+      },
+      onError: (err) => error(err.message),
+    });
 
     history.push("/clients/apply/goals");
   };
