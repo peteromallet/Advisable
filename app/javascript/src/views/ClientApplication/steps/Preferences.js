@@ -19,6 +19,7 @@ import {
 } from "../queries";
 
 export const validationSchema = object().shape({
+  title: string().required("Please enter your role at the company"),
   budget: string().required(),
   feedback: boolean().required(),
   marketingAttitude: string().required(
@@ -32,6 +33,7 @@ export default function CompanyOverview({ clientApplication }) {
   const history = useHistory();
 
   const initialValues = {
+    title: clientApplication.title || "",
     budget: clientApplication.budget / 100 || "",
     feedback: clientApplication.feedback || undefined,
     marketingAttitude: clientApplication.marketingAttitude || "",
@@ -73,6 +75,13 @@ export default function CompanyOverview({ clientApplication }) {
               for Advisable.
             </Description>
             <Box mb={6}>
+              <Box mb={6}>
+                <FormField
+                  name="title"
+                  label="What is your role at the company?"
+                  placeholder="Your role"
+                />
+              </Box>
               <Box mb={6}>
                 <FormField
                   as={CurrencyInput}
