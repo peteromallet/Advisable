@@ -18,7 +18,6 @@ export const validationSchema = object().shape({
   companyName: string().required("Please enter your company name"),
   businessType: string().required("Please enter your business type"),
   industry: object().required("Please enter your company industry"),
-  title: string().required("Please enter your role at the company"),
 });
 
 export default function CompanyOverview({ clientApplication, industries }) {
@@ -29,7 +28,6 @@ export default function CompanyOverview({ clientApplication, industries }) {
     companyName: clientApplication.companyName || "",
     businessType: clientApplication.businessType || "",
     industry: clientApplication.industry || "",
-    title: clientApplication.title || "",
   };
 
   const handleSubmit = async (values, { setStatus }) => {
@@ -95,13 +93,6 @@ export default function CompanyOverview({ clientApplication, industries }) {
                   onChange={(i) => formik.setFieldValue("industry", i)}
                   placeholder="Select your company industry"
                   label="What industry is your company in?"
-                />
-              </Box>
-              <Box mb={6}>
-                <FormField
-                  name="title"
-                  label="What is your role at the company?"
-                  placeholder="Your role"
                 />
               </Box>
             </Box>
