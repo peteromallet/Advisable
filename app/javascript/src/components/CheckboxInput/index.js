@@ -106,6 +106,7 @@ export default function CheckboxInput({
           value={option?.value || option}
           as={Checkbox}
           name={name}
+          aria-label={option?.label || option}
         >
           {option?.label || option}
         </FormField>
