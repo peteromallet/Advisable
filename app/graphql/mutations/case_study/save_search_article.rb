@@ -25,7 +25,7 @@ module Mutations
         search = ::CaseStudy::Search.find_by!(uid: search)
         article = ::CaseStudy::Article.find_by!(uid: article)
 
-        search.saved << article.id
+        search.saved = search.saved + [article.id]
 
         current_account_responsible_for do
           search.save
