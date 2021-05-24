@@ -9,12 +9,19 @@ module Mutations
 
     def authorized?
       requires_client!
+      check_application_started
+      true
     end
 
     def resolve
-      check_application_started
-      current_user.application_status = "Submitted"
-      current_user.save_and_sync!
+      current_account_responsible_for do
+        current_user.application_status = "Submitted"
+        current_user.save!
+        current_user.create_case_study_search
+      end
+
+      current_user.sync_to_airtable
+      ClientApplicationSubmittedNotificationJob.perform_later(current_user.id)
 
       {client_application: current_user}
     end

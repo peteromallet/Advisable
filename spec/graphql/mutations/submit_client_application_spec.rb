@@ -51,8 +51,8 @@ RSpec.describe Mutations::SubmitClientApplication do
     let(:goals) { %w[one two] }
 
     it "creates one with goals and company name" do
-      create(:project, goals: goals, user: user)
-      AdvisableSchema.execute(query)
+      user.company.update goals: goals
+      request
       search = ::CaseStudy::Search.find_by(user: user)
       expect(search.goals).to match_array(goals)
       expect(search.business_type).to eq("Startup")
