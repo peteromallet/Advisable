@@ -14,7 +14,7 @@ const StyledImage = styled.div`
   border: 2px solid rgba(0, 0, 0, 0.12);
 `;
 
-export default function CaseStudyImages({ images }) {
+function CaseStudyImages({ images }) {
   const dialog = useImageGallery();
 
   return (
@@ -40,4 +40,9 @@ export default function CaseStudyImages({ images }) {
       </Box>
     </Box>
   );
+}
+
+export default function CaseStudyImagesContainer(props) {
+  if (props.images.length === 0) return null;
+  return <CaseStudyImages {...props} />;
 }
