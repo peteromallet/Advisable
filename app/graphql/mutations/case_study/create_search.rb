@@ -6,10 +6,10 @@ module Mutations
       description "Create a Case Study Search as the current User."
       graphql_name "CreateCaseStudySearch"
 
-      argument :business_type, String, required: true
-      argument :goals, [String], required: true
-      argument :name, String, required: true
-      argument :primary_skill, String, required: true
+      argument :business_type, String, required: false
+      argument :goals, [String], required: false
+      argument :name, String, required: false
+      argument :primary_skill, String, required: false
       argument :skills, [String], required: true
 
       field :search, Types::CaseStudy::Search, null: false
