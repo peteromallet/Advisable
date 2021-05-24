@@ -11,9 +11,9 @@ import ActionBar from "./ActionBar";
 
 const StyledHero = styled.div`
   width: 100%;
-  height: 280px;
   background: #e1eef3;
-  padding-bottom: 80px;
+  padding-top: 80px;
+  padding-bottom: 68px;
   display: flex;
   align-items: flex-end;
 `;
@@ -26,6 +26,7 @@ const StyledArticleTitle = styled.h1`
 `;
 
 const Container = styled.div`
+  width: 100%;
   margin: 0 auto;
   max-width: 1000px;
   position: relative;
