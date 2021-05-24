@@ -21,7 +21,6 @@ class Mutations::ApplyForProject < Mutations::BaseMutation
       app.accepts_fee = false
       app.accepts_terms = false
       app.featured = false
-      app.references_requested = false
     end
 
     unless ["Invited To Apply", "Applied"].include?(application.status)

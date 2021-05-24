@@ -26,7 +26,7 @@ RSpec.describe Mutations::ApplyForProject do
     expect(response["data"]["applyForProject"]["application"]).to include({"status" => "Invited To Apply"})
 
     application = Application.find_by_uid!(response["data"]["applyForProject"]["application"]["id"])
-    expect(application.attributes.slice("status", "accepts_fee", "accepts_terms", "featured", "references_requested")).to eq({"accepts_fee" => false, "accepts_terms" => false, "featured" => false, "references_requested" => false, "status" => "Invited To Apply"})
+    expect(application.attributes.slice("status", "accepts_fee", "accepts_terms", "featured")).to eq({"accepts_fee" => false, "accepts_terms" => false, "featured" => false, "status" => "Invited To Apply"})
   end
 
   context 'when application exists already' do
