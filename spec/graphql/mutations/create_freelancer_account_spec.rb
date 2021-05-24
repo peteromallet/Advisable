@@ -100,4 +100,28 @@ RSpec.describe Mutations::CreateFreelancerAccount do
       expect(error).to eq("EMAIL_TAKEN")
     end
   end
+
+  describe "referrer parsing" do
+    let(:referrer) { create(:specialist) }
+    let(:referrer_id) { referrer.uid }
+
+    it "sets the referrer relation" do
+      data = response["data"]
+      uid = data.dig("createFreelancerAccount", "viewer", "id")
+      specialist = Specialist.find_by(uid: uid)
+      expect(specialist.referrer_id).to eq(referrer.id)
+      expect(specialist.referrer_rename_me).to eq(referrer)
+      expect(referrer.referred).to eq([specialist])
+    end
+
+    context "when passed airtable id" do
+      let(:referrer_id) { referrer.airtable_id }
+
+      it "tells sentry about it" do
+        allow(Sentry).to receive(:capture_message)
+        expect(Sentry).to receive(:capture_message).with("We're still getting airtable ids in referrers :unamused:", level: "debug")
+        response
+      end
+    end
+  end
 end
