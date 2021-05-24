@@ -30,21 +30,23 @@ module Mutations
         case action
         when "archive"
           search.archived = search.archived + [article.id]
-
-          if args[:feedback]
-            ::CaseStudy::SearchFeedback.create!(
-              search: search,
-              article: article,
-              feedback: args[:feedback]
-            )
-          end
         when "save"
           search.saved = search.saved + [article.id]
+        when "unarchive"
+          search.archived = search.archived - [article.id]
+        when "unsave"
+          search.saved = search.saved - [article.id]
         end
 
-        current_account_responsible_for do
-          search.save
+        if args[:feedback]
+          ::CaseStudy::SearchFeedback.create!(
+            search: search,
+            article: article,
+            feedback: args[:feedback]
+          )
         end
+
+        current_account_responsible_for { search.save }
 
         {article: article}
       end

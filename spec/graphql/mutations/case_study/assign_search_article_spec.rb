@@ -69,6 +69,34 @@ RSpec.describe Mutations::CaseStudy::AssignSearchArticle do
     end
   end
 
+  describe "action: unarchive" do
+    let(:search) { create(:case_study_search, archived: [123, article.id]) }
+    let(:action) { "unarchive" }
+
+    it "unarchives the article to the search" do
+      uid = search.uid
+      expect(search.archived).to match_array([123, article.id])
+      response = AdvisableSchema.execute(query, context: context)
+      r_article = response["data"]["assignCaseStudySearchArticle"]["article"]
+      expect(r_article["id"]).to eq(article.uid)
+      expect(::CaseStudy::Search.find_by(uid: uid).archived).to eq([123])
+    end
+  end
+
+  describe "action: unsave" do
+    let(:search) { create(:case_study_search, saved: [123, article.id]) }
+    let(:action) { "unsave" }
+
+    it "unsaves the article to the search" do
+      uid = search.uid
+      expect(search.saved).to match_array([123, article.id])
+      response = AdvisableSchema.execute(query, context: context)
+      r_article = response["data"]["assignCaseStudySearchArticle"]["article"]
+      expect(r_article["id"]).to eq(article.uid)
+      expect(::CaseStudy::Search.find_by(uid: uid).saved).to eq([123])
+    end
+  end
+
   context "when current_user is not owner" do
     let(:user) { create(:user) }
 
