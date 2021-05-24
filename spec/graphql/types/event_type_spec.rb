@@ -67,13 +67,13 @@ RSpec.describe Types::EventType do
       GRAPHQL
     end
 
-    it "includes a list of upcoming events" do
-      expect(events_query.flat_map(&:values)).to eq(Event.upcoming.pluck(:uid))
+    it "includes a list of events" do
+      expect(events_query.flat_map(&:values)).to eq(Event.list.pluck(:uid))
     end
 
-    it "does not include events older than now" do
+    it "includes events that have ended" do
       old_event = create(:event, starts_at: 5.minutes.ago, ends_at: 1.minute.ago)
-      expect(events_query).not_to include({"id" => old_event.id})
+      expect(events_query).to include({"id" => old_event.uid})
     end
   end
 end

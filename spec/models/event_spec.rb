@@ -33,28 +33,28 @@ RSpec.describe Event, type: :model do
     end.to raise_error(ActiveRecord::RecordInvalid).with_message(/Ends at must be after starts_at/)
   end
 
-  describe "with upcoming" do
-    let(:old_event) { create(:event, starts_at: 1.year.ago, ends_at: 1.month.ago) }
-    let(:upcoming) { create_list(:event, 2, starts_at: 1.hour.from_now, ends_at: 2.hours.from_now) }
+  describe "with list" do
+    let(:ended) { create(:event, starts_at: 1.year.ago, ends_at: 1.month.ago) }
+    let(:upcoming) { create(:event, starts_at: 1.hour.from_now, ends_at: 2.hours.from_now) }
 
-    it "does not include events older than now" do
-      expect(described_class.upcoming).to eq(upcoming)
-      expect(described_class.upcoming).not_to include(old_event)
+    it "includes upcoming and concluded events" do
+      expect(described_class.list).to include(upcoming)
+      expect(described_class.list).to include(ended)
     end
 
     it "does not include events that are not published" do
-      upcoming.last.update!(published_at: nil)
-      expect(described_class.upcoming).not_to include(upcoming.last)
+      upcoming.update!(published_at: nil)
+      expect(described_class.list).not_to include(upcoming)
     end
 
     it "includes an event that is in progress" do
       in_progress = create(:event, starts_at: 1.minute.ago, ends_at: 5.minutes.from_now)
-      expect(described_class.upcoming).to include(in_progress)
+      expect(described_class.list).to include(in_progress)
     end
 
     it "includes the featured event at the beginning if there is one" do
       featured = create(:event, starts_at: 12.hours.from_now, ends_at: 13.hours.from_now, featured: true)
-      expect(described_class.upcoming.first).to eq(featured)
+      expect(described_class.list.first).to eq(featured)
     end
   end
 

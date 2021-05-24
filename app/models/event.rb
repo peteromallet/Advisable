@@ -26,8 +26,8 @@ class Event < ApplicationRecord
 
   scope :published, -> { where.not(published_at: nil) }
   scope :featured, -> { where(featured: true) }
-  scope :upcoming, lambda {
-    published.where(ends_at: (Time.zone.now..)).order(featured: :desc, starts_at: :asc)
+  scope :list, lambda {
+    published.order(featured: :desc, starts_at: :desc)
   }
 
   private

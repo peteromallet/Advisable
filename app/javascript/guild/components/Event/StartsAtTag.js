@@ -6,11 +6,19 @@ import { shortDate } from "@guild/utils";
 
 export default function StartsAtTag({
   startsAt,
+  endsAt,
   attending,
   variant = "orange",
 }) {
+  const ended = Date.parse(endsAt) < Date.now();
+
   return startsAt ? (
     <Box display="flex">
+      {ended ? (
+        <Tag marginRight="2" size="s" variant="neutral">
+          Ended
+        </Tag>
+      ) : null}
       <Tag size="s" icon={Calendar} variant={variant}>
         {shortDate(startsAt)}
       </Tag>
@@ -22,7 +30,7 @@ export default function StartsAtTag({
           variant={variant}
           opacity="0.8"
         >
-          Attending
+          {ended ? "Attended" : "Attending"}
         </Tag>
       ) : null}
     </Box>

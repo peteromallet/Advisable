@@ -45,6 +45,7 @@ export default function Event({ event }) {
         <StartsAtTag
           variant={event.color}
           startsAt={event.startsAt}
+          endsAt={event.endsAt}
           attending={event.attending}
         />
         <StyledLineClamp

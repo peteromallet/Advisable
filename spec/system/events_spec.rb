@@ -14,7 +14,7 @@ RSpec.describe 'Events view', type: :system do
 
   context "when viewing the events list" do
     it "displays a message if there are no events" do
-      allow(Event).to receive(:upcoming).and_return([])
+      allow(Event).to receive(:list).and_return([])
 
       visit "/guild/events"
       expect(page).to have_content("There are no upcoming Events")
@@ -28,6 +28,13 @@ RSpec.describe 'Events view', type: :system do
       visit "/guild/events"
       expect(page).to have_content("Attending")
       expect(page).to have_content("#{event.attendees.count} Attending")
+    end
+
+    it "includes older events that have ended" do
+      create(:event, starts_at: 2.days.ago, ends_at: 1.day.ago, host: host)
+      visit "/guild/events"
+
+      expect(page).to have_content("Ended")
     end
   end
 end
