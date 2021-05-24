@@ -158,7 +158,7 @@ module Types
 
       invoice
     rescue Stripe::InvalidRequestError
-      ApiError.invalid_request("notFound", "Invoice not found")
+      ApiError.invalid_request("NOT_FOUND", "Invoice not found")
     end
 
     field :questions, [Types::QuestionType], "Returns a list of questions", null: true

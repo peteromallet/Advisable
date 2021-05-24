@@ -13,7 +13,7 @@ module Mutations
 
     def authorized?(**args)
       @user = User.find_by_uid_or_airtable_id!(args[:id])
-      ApiError.invalid_request('alreadySubmitted', 'Application has already been submitted') if user.application_status != "Application Started"
+      ApiError.invalid_request('ALREADY_SUBMITTED', 'Application has already been submitted') if user.application_status != "Application Started"
 
       true
     end

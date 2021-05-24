@@ -13,7 +13,7 @@ module Mutations
       application = Application.find_by!(uid: id)
       return true if current_user == application.specialist
 
-      raise ApiError::InvalidRequest.new("invalidApplication", "The application does not belong to signed in user.")
+      raise ApiError::InvalidRequest.new("INVALID_APPLICATION", "The application does not belong to signed in user.")
     end
 
     def resolve(id:)

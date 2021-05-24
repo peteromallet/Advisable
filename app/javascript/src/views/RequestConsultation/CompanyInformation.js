@@ -41,7 +41,7 @@ const CompanyInformation = ({ data }) => {
 
     if (response.errors) {
       const error = response.errors[0]?.extensions?.code;
-      if (error === "emailBelongsToFreelancer") {
+      if (error === "EMAIL_BELONGS_TO_A_FREELANCER") {
         formik.setFieldError("email", "This email belongs to a freelancer");
       } else if (error === "notAuthenticated") {
         history.push({

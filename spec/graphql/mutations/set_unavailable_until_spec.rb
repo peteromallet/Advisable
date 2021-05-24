@@ -41,7 +41,7 @@ RSpec.describe Mutations::SetUnavailableUntil do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]
-      expect(error["extensions"]["code"]).to eq("invalidDate")
+      expect(error["extensions"]["code"]).to eq("INVALID_DATE")
     end
   end
 

@@ -76,7 +76,7 @@ export default function PublishJob({ data }) {
         nextStep();
       }
 
-      dataLayer.push({ event: "projectPublished", projectId: id });
+      dataLayer.push({ event: "PROJECT_PUBLISHED", projectId: id });
     }
   };
 

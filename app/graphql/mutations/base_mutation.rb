@@ -48,7 +48,7 @@ module Mutations
       requires_specialist!
       return true if current_user&.guild
 
-      ApiError.invalid_request("invalidPermissions", "Not a guild user")
+      ApiError.invalid_request("INVALID_PERMISSIONS", "Not a guild user")
     end
 
     def requires_team_manager!

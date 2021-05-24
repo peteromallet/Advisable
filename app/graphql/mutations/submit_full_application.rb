@@ -13,7 +13,7 @@ module Mutations
 
       ApiError.not_authenticated('You are logged in as a user') if specialist.is_a?(::User)
 
-      ApiError.invalid_request("invalidApplicationStage", "The account status must be 'On Hold' but it is #{specialist.application_stage}") if specialist.application_stage != 'On Hold'
+      ApiError.invalid_request("INVALID_APPLICATION_STAGE", "The account status must be 'On Hold' but it is #{specialist.application_stage}") if specialist.application_stage != 'On Hold'
 
       true
     end

@@ -467,7 +467,7 @@ test("Renders 404 if the specialist isn't found", async () => {
             path: ["specialist"],
             extensions: {
               type: "INVALID_REQUEST",
-              code: "notFound",
+              code: "NOT_FOUND",
             },
           },
         ],

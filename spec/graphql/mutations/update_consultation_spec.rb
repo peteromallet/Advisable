@@ -40,7 +40,7 @@ RSpec.describe Mutations::UpdateConsultation do
       consultation.update(status: "Accepted by Specialist")
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("consultations.failedToUpdate")
+      expect(error).to eq("CONSULTATIONS_FAILED_TO_UPDATE")
     end
   end
 

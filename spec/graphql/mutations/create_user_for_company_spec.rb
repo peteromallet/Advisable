@@ -81,7 +81,7 @@ RSpec.describe Mutations::CreateUserForCompany do
       create(:blacklisted_domain, domain: "gmail.com")
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("nonCorporateEmail")
+      expect(error).to eq("NON_CORPORATE_EMAIL")
     end
   end
 
@@ -90,7 +90,7 @@ RSpec.describe Mutations::CreateUserForCompany do
       create(:user, account: create(:account, email: email))
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("emailTaken")
+      expect(error).to eq("EMAIL_TAKEN")
     end
   end
 
@@ -100,7 +100,7 @@ RSpec.describe Mutations::CreateUserForCompany do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("emailBlank")
+      expect(error).to eq("EMAIL_BLANK")
     end
   end
 

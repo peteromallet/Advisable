@@ -20,7 +20,7 @@ module Mutations
 
       ActiveRecord::Base.transaction do
         account = Account.find_or_create_by(email: args[:email])
-        ApiError.invalid_request('existingAccount', 'An account already exists with this email') if account.has_password?
+        ApiError.invalid_request('EXISTING_ACCOUNT', 'An account already exists with this email') if account.has_password?
 
         user = User.find_or_create_by(account: account) do |u|
           u.application_status = "Application Started"
@@ -62,7 +62,7 @@ module Mutations
     def check_existing_specialist_account(email)
       return unless Account.find_by(email: email)&.specialist
 
-      ApiError.invalid_request('existingAccount', 'This email belongs to a specialist account')
+      ApiError.invalid_request('EXISTING_ACCOUNT', 'This email belongs to a specialist account')
     end
   end
 end
