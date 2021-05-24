@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import CASE_STUDY from "./getCaseStudy.gql";
 import ARCHIVE from "./archiveRecommendation.gql";
 import ARCHIVED from "./archivedRecommendations.gql";
+import GET_SEARCHES from "./getSearches.gql";
 
 export function useArchive(opts) {
   return useMutation(ARCHIVE, {
@@ -55,4 +56,8 @@ export function useArchived(opts) {
 
 export function useCaseStudy(opts) {
   return useQuery(CASE_STUDY, opts);
+}
+
+export function useCaseStudySearches(opts) {
+  return useQuery(GET_SEARCHES, opts);
 }

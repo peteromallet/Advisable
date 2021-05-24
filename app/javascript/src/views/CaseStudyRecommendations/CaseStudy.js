@@ -1,9 +1,9 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import truncate from "lodash/truncate";
 import styled from "styled-components";
 import { useParams } from "react-router";
 import { Check } from "@styled-icons/heroicons-solid/Check";
-import { Circle, Box, Text, Card, Button, useTheme } from "@advisable/donut";
+import { Circle, Box, Text, Card, Button } from "@advisable/donut";
 import CaseStudyContent from "src/components/CaseStudyContent";
 import { useCaseStudy } from "./queries";
 import Sticky from "react-stickynode";
@@ -75,16 +75,10 @@ function CaseStudySummaryResults({ caseStudy }) {
 }
 
 export default function CaseStudy() {
-  const { setTheme } = useTheme();
   const { id, caseStudyId } = useParams();
   const { data, loading } = useCaseStudy({
     variables: { id: caseStudyId, searchId: id },
   });
-
-  useLayoutEffect(() => {
-    setTheme((t) => ({ ...t, background: "beige" }));
-    return () => setTheme((t) => ({ ...t, background: "default" }));
-  }, [setTheme]);
 
   if (loading) return <>loading</>;
   const { caseStudySearch, caseStudy } = data;
