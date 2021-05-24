@@ -9,8 +9,21 @@ module Airtable
     self.base_key = ENV["AIRTABLE_DATABASE_KEY"]
     self.table_name = "Case Studies"
 
-    def import!
+    def import!(testing: false)
       @content_position = 0
+
+      if testing
+        ::Specialist.first.update(airtable_id: fields["Specialist"].first) if ::Specialist.find_by(airtable_id: fields["Specialist"].first).nil?
+        ::SalesPerson.first.update(airtable_id: fields["Interviewer"].first) if ::SalesPerson.find_by(airtable_id: fields["Interviewer"].first).nil?
+
+        Array(fields["Industry"]).each do |airtable_id|
+          ::Industry.where(airtable_id: nil).order("RANDOM()").first.update(airtable_id: airtable_id) if ::Industry.find_by(airtable_id: airtable_id).nil?
+        end
+
+        Array(fields["Skills"]).each do |airtable_id|
+          ::Skill.where(airtable_id: nil).order("RANDOM()").first.update(airtable_id: airtable_id) if ::Skill.find_by(airtable_id: airtable_id).nil?
+        end
+      end
 
       ActiveRecord::Base.transaction do
         article = ::CaseStudy::Article.find_or_initialize_by(airtable_id: id)
