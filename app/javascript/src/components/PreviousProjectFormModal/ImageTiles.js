@@ -196,7 +196,9 @@ function ImageTiles({
 
         if (image.cover) {
           const nextCover = images.filter((i) => i.id !== image.id)[0];
-          updateCoverInCache(nextCover);
+          if (nextCover) {
+            updateCoverInCache(nextCover);
+          }
         }
       }
     },
