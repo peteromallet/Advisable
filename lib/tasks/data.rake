@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "ruby-progressbar"
 require_relative "../../config/environment"
 
 def migrate_image_to_project(ppi, blob, project)
@@ -55,6 +56,18 @@ namespace :data do
 
         migrate_image_to_project(ppi, blob, project)
       end
+    end
+  end
+
+  task migrate_specialist_referrers: :environment do
+    specialists = Specialist.where.not(referrer: [nil, ""])
+    pb = ProgressBar.create(title: "Specialists", total: specialists.count, format: "%a %b\u{15E7}%i %p%% %t", progress_mark: ' ', remainder_mark: "\u{FF65}")
+    specialists.each do |specialist|
+      pb.increment
+      referrer_id = Specialist.find_by_uid_or_airtable_id(specialist.referrer)&.id
+      next unless referrer_id
+
+      specialist.update(referrer_id: referrer_id)
     end
   end
 end
