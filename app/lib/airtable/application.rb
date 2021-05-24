@@ -36,7 +36,6 @@ module Airtable
       application.accepts_fee = fields['Accepts Fee'] == 'Yes'
       application.accepts_terms = fields['Accepts Terms'] == 'Yes'
       application.featured = fields['Featured Candidate'] == 'Yes'
-      application.references_requested = fields['References Requested'] == 'Yes'
       application.hidden = fields['Application Hidden'] == 'Yes'
       application.hide_from_profile = fields['Hide From Profile'] == 'Yes'
       application.trial_program = self['Trial Program'].include?('Yes') if self['Trial Program']
@@ -103,7 +102,6 @@ module Airtable
       self['Advisable Comment'] = application.comment
       self['Rejected Reason Comment'] = application.rejection_reason_comment
       self['Rejected Feedback'] = application.rejection_feedback
-      self['References Requested'] = application.references_requested ? 'Yes' : nil
       self['Project Type'] = application.project_type
       self['Monthly Limit'] = application.monthly_limit
       self['Stopped Working Reason'] = application.stopped_working_reason

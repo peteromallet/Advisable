@@ -15,7 +15,6 @@ module Types
     field :featured, Boolean, null: true
     field :hidden, Boolean, null: true
     field :score, Int, null: true
-    field :references_requested, Boolean, null: true
     field :availability, String, null: true
     field :specialist, Types::SpecialistType, null: true
     field :status, String, null: true
