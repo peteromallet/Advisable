@@ -36,11 +36,11 @@ module Mutations
         if user.save
           login_as(account)
 
-          return {viewer: user}
+          {viewer: user}
+        else
+          ApiError.invalid_request("INVALID", user.errors.full_messages)
         end
       end
-
-      ApiError.invalid_request("INVALID", user.errors.full_messages)
     end
 
     private
