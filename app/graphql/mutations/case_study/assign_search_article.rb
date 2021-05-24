@@ -2,10 +2,11 @@
 
 module Mutations
   module CaseStudy
-    class ArchiveSearchArticle < Mutations::BaseMutation
-      description "Archive a Case Study Article on a Case Study Search"
-      graphql_name "ArchiveCaseStudySearchArticle"
+    class AssignSearchArticle < Mutations::BaseMutation
+      description "Assign a Case Study Article on a Case Study Search to be saved or archived."
+      graphql_name "AssignCaseStudySearchArticle"
 
+      argument :action, String, required: true
       argument :article, ID, required: true
       argument :feedback, String, required: false
       argument :search, ID, required: true
@@ -17,16 +18,25 @@ module Mutations
 
         search = ::CaseStudy::Search.find_by!(uid: search)
         policy = ::CaseStudy::SearchPolicy.new(current_user, search)
-        return true if policy.archive_article?
+        return true if policy.assign_article?
 
-        ApiError.not_authorized("You do not have permission to archive article on this search")
+        ApiError.not_authorized("You do not have permission to assign article on this search")
       end
 
-      def resolve(search:, article:, **args)
+      def resolve(search:, article:, action:, **args)
         search = ::CaseStudy::Search.find_by!(uid: search)
         article = ::CaseStudy::Article.find_by!(uid: article)
 
-        search.archived = search.archived + [article.id]
+        case action
+        when "archive"
+          search.archived = search.archived + [article.id]
+        when "save"
+          search.saved = search.saved + [article.id]
+        when "unarchive"
+          search.archived = search.archived - [article.id]
+        when "unsave"
+          search.saved = search.saved - [article.id]
+        end
 
         if args[:feedback]
           ::CaseStudy::SearchFeedback.create!(
@@ -36,9 +46,7 @@ module Mutations
           )
         end
 
-        current_account_responsible_for do
-          search.save
-        end
+        current_account_responsible_for { search.save }
 
         {article: article}
       end
