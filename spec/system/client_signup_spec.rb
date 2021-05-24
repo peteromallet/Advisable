@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Client signup', type: :system do
   before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
+    create(:blacklisted_domain, domain: "gmail.com")
     create(:industry, name: "Financial Services")
     create(:industry, name: "Development")
     create(:industry, name: "Design")
@@ -13,12 +14,23 @@ RSpec.describe 'Client signup', type: :system do
     create(:skill, name: "Twitter Advertising")
   end
 
+  it 'Client can not use public emails' do
+    visit('/clients/join')
+    fill_in("firstName", with: "Michael")
+    fill_in("lastName", with: "Scott")
+    fill_in("email", with: "michael+scott@gmail.com")
+    click_on("Get Started")
+
+    expect(page).to have_content("The email michael+scott@gmail.com is not allowed")
+  end
+
   it 'Client can create an account and gets redirected to projects' do
     visit("/clients/join")
     fill_in("firstName", with: "Michael")
     fill_in("lastName", with: "Scott")
     fill_in("email", with: "michael+scott@dundermifflin.com")
     click_on("Get Started")
+    expect(page).to have_content("Welcome to Advisable!")
     fill_in("password", with: "testing123")
     fill_in("passwordConfirmation", with: "testing123")
     click_on("Get Started")
