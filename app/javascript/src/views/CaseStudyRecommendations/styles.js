@@ -64,3 +64,20 @@ export const StyledRecommendationCard = styled(Box)`
     }
   }
 `;
+
+export const StyledSearchCard = styled.div`
+  padding: 24px;
+  height: 400px;
+  cursor: pointer;
+  background: white;
+  position: relative;
+  border-radius: 12px;
+  transition: box-shadow 200ms;
+  box-shadow: 0px 4px 8px rgba(56, 56, 56, 0.04),
+    0px 16px 40px rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    box-shadow: 0px 8px 16px rgba(56, 56, 56, 0.08),
+      0px 16px 60px rgba(0, 0, 0, 0.08);
+  }
+`;
