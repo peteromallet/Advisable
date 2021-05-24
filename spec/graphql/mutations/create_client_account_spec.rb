@@ -76,7 +76,7 @@ RSpec.describe Mutations::CreateClientAccount do
     it "returns an error" do
       create(:blacklisted_domain, domain: "gmail.com")
       error = request["errors"][0]["extensions"]["code"]
-      expect(error).to eq("nonCorporateEmail")
+      expect(error).to eq("NON_CORPORATE_EMAIL")
     end
   end
 end
