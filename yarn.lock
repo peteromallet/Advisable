@@ -13956,33 +13956,34 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
 
-twilio-chat@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/twilio-chat/-/twilio-chat-4.1.0.tgz#56ba84bfb85e8b774b222790c764b6ab569294a1"
-  integrity sha512-oK/Req0KMBedZox3lciBEKmAiMe6L/6z8fGlx+4YKRjEX3J4Abag0TkMwAxPizB32ILKQKV2WBi/+Hqwi808RA==
+twilio-chat@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/twilio-chat/-/twilio-chat-5.0.0.tgz#d6ffc12877f534501eb8f49ac77cc48709952f96"
+  integrity sha512-OkYlQEe7Ge8V0PbJ3owYF/2dbvLeap9xrtX4eYUly+kOd/xAGynWDTCZpTsFOtWE5PZ4iB/Sasl6tTNHfJJImA==
   dependencies:
     babel-runtime "^6.26.0"
     iso8601-duration "^1.2.0"
     loglevel "^1.6.6"
-    operation-retrier "^3.0.0"
+    operation-retrier "^3.0.1"
     platform "^1.3.6"
     rfc6902 "^3.0.2"
-    twilio-mcs-client "^0.3.3"
-    twilio-notifications "^0.5.9"
-    twilio-sync "^0.13.0"
+    twilio-mcs-client "^0.4.1"
+    twilio-notifications "^0.5.11"
+    twilio-sdk-type-validator "0.1.0"
+    twilio-sync "^1.0.0"
     twilsock "^0.6.1"
-    uuid "^3.3.2"
+    uuid "^3.4.0"
 
-twilio-mcs-client@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/twilio-mcs-client/-/twilio-mcs-client-0.3.3.tgz#6d4c6ae56af77c0d7631131dac2ce28a33652efc"
-  integrity sha512-lNnVITgLg14HBG2oshnwjAeyBxhuqJeAIQE/KUDCGLHwtA6moE49SE1RRtUr5hhziyDSCTjm5X8YeP0m/lL7QA==
+twilio-mcs-client@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/twilio-mcs-client/-/twilio-mcs-client-0.4.1.tgz#d8a3588131c22d7cfa7fc97fc1acb881e0e98b06"
+  integrity sha512-RetNbvpZn6MJZ26R4EMNiWmbIkvZ7CIctcOQ5pURLh7fsx2YO99jNW9YtmzL2SUf2Hfm5aFXN9/N9kzKBrF0GQ==
   dependencies:
     loglevel "^1.6.4"
     operation-retrier "^3.0.1"
     xmlhttprequest "^1.8.0"
 
-twilio-notifications@^0.5.11, twilio-notifications@^0.5.9:
+twilio-notifications@^0.5.11, twilio-notifications@^0.5.12:
   version "0.5.12"
   resolved "https://registry.yarnpkg.com/twilio-notifications/-/twilio-notifications-0.5.12.tgz#040a4b1f01f6eca8834352b68671b5c14484158c"
   integrity sha512-tuL1jTsi5pnEHDV7jzS1eg6roQvjfFkS/Mn1cV+jxPt7c2p18ymDorsHZ85LgVE/OIm8aK5QrsPaaFxrFi3rVQ==
@@ -13992,16 +13993,21 @@ twilio-notifications@^0.5.11, twilio-notifications@^0.5.9:
     twilsock "^0.6.2"
     uuid "^3.2.1"
 
-twilio-sync@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/twilio-sync/-/twilio-sync-0.13.0.tgz#6b89f94b4e23b827dc07cc2502f32a3c794aa6b7"
-  integrity sha512-3SfV2zQh6B2g+Tl7McYvcLH4/2IEZShXN7Lm/7GDkNnBSCtmX8cJLd5uOE1Vrj2pCXVXD9Ty2dxJlE4cDwBwlg==
+twilio-sdk-type-validator@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/twilio-sdk-type-validator/-/twilio-sdk-type-validator-0.1.0.tgz#897c2d8f8a2ef405947a99ebfd6b8ad3969b9c0e"
+  integrity sha512-YYGvjKvEN8EoavXH5efC5oPtuSdUAJz+uygg3j6J6Jrg3yaQedPe63T8Srs9a5XtDn2CqU5ODRJJqTyRtNy8eg==
+
+twilio-sync@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/twilio-sync/-/twilio-sync-1.0.0.tgz#655a8248afcf7f8d397e04bc566b841a17fb3f93"
+  integrity sha512-dWvUjzm06e6q9ZJpU9RhtYJz8Zi4xcAeLHfvMdpqeSEFcz0fPhbrFUC1Q+oZsWCLGPZq6UIy8nTqfICx381hEw==
   dependencies:
     loglevel "^1.6.3"
     operation-retrier "^3.0.0"
     platform "^1.3.6"
-    twilio-notifications "^0.5.11"
-    twilsock "^0.6.1"
+    twilio-notifications "^0.5.12"
+    twilsock "^0.6.2"
     uuid "^3.3.2"
 
 twilio-video@^2.13.1:

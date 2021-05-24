@@ -79,7 +79,7 @@
     "styled-components": "^5.3.0",
     "styled-system": "^5.1.5",
     "talkjs": "^0.14.5",
-    "twilio-chat": "^4.1.0",
+    "twilio-chat": "^5.0.0",
     "twilio-video": "^2.13.1",
     "url-regex": "^5.0.0",
     "use-sound": "^2.1.0",
