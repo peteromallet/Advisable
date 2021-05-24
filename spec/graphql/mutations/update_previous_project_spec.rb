@@ -78,7 +78,7 @@ RSpec.describe Mutations::UpdatePreviousProject do
 
       response = AdvisableSchema.execute(query, context: context)
       error = response['errors'].first['extensions']['code']
-      expect(error).to eq('projectPublished')
+      expect(error).to eq('PROJECT_PUBLISHED')
     end
   end
 

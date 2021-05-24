@@ -55,7 +55,7 @@ RSpec.describe Mutations::RequestPasswordReset do
 
     it 'returns an error' do
       error = response['errors'][0]
-      expect(error['message']).to eq('request_password_reset.account_not_found')
+      expect(error['message']).to eq('ACCOUNT_NOT_FOUND')
     end
   end
 
@@ -75,7 +75,7 @@ RSpec.describe Mutations::RequestPasswordReset do
       it 'returns an error' do
         response = AdvisableSchema.execute(query, context: {})
         error = response['errors'][0]
-        expect(error['message']).to eq('request_password_reset.application_required')
+        expect(error['message']).to eq('APPLICATION_REQUIRED')
       end
     end
   end

@@ -6,7 +6,7 @@ class AdvisableSchema < GraphQL::Schema
   mutation Types::MutationType
 
   rescue_from(ActiveRecord::RecordNotFound) do
-    ApiError.invalid_request("notFound", "Resouce was not found")
+    ApiError.invalid_request("NOT_FOUND", "Resouce was not found")
   end
 
   rescue_from(ActiveRecord::RecordInvalid) do |e|
@@ -14,6 +14,6 @@ class AdvisableSchema < GraphQL::Schema
   end
 
   def self.unauthorized_field(error)
-    raise GraphQL::ExecutionError.new("Invalid permissions for #{error.field.graphql_name} field", options: {code: 'invalidPermissions'})
+    raise GraphQL::ExecutionError.new("Invalid permissions for #{error.field.graphql_name} field", options: {code: 'INVALID_PERMISSIONS'})
   end
 end

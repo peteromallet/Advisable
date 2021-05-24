@@ -69,7 +69,7 @@ RSpec.describe Mutations::StopWorking do
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
       error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('applicationStatusNotWorking')
+      expect(error).to eq('APPLICATION_STATUS_NOT_WORKING')
     end
   end
 end

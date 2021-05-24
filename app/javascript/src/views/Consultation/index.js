@@ -16,7 +16,7 @@ const Consultation = () => {
 
   if (loading) return <Loading />;
 
-  if (error?.graphQLErrors[0].extensions.code === "notFound") {
+  if (error?.graphQLErrors[0].extensions.code === "NOT_FOUND") {
     return <NotFound />;
   }
 

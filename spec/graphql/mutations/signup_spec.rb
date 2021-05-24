@@ -66,7 +66,7 @@ RSpec.describe Mutations::Signup do
 
     it 'returns an error' do
       error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('notFound')
+      expect(error).to eq('NOT_FOUND')
     end
   end
 

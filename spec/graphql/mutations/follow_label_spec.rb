@@ -45,7 +45,7 @@ RSpec.describe Mutations::FollowLabel do
     let(:context) { {current_user: specialist} }
 
     it "throws an error" do
-      expect(response["errors"].first.dig("extensions", "code")).to eq("invalidPermissions")
+      expect(response["errors"].first.dig("extensions", "code")).to eq("INVALID_PERMISSIONS")
     end
   end
 

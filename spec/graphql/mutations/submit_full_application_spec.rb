@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::SubmitFullApplication do
@@ -15,21 +17,21 @@ RSpec.describe Mutations::SubmitFullApplication do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
   end
 
   it 'Sets their application status to "Full Application"' do
-    expect {
-      AdvisableSchema.execute(query, context: { current_user: specialist })
-    }.to change { specialist.reload.application_stage }.from('On Hold').to(
+    expect do
+      AdvisableSchema.execute(query, context: {current_user: specialist})
+    end.to change { specialist.reload.application_stage }.from('On Hold').to(
       'Full Application'
     )
   end
 
   context 'When not logged in' do
     it 'returns an error' do
-      response = AdvisableSchema.execute(query, context: { current_user: nil })
+      response = AdvisableSchema.execute(query, context: {current_user: nil})
       error = response['errors'].first['extensions']['type']
       expect(error).to eq('NOT_AUTHENTICATED')
     end
@@ -38,7 +40,7 @@ RSpec.describe Mutations::SubmitFullApplication do
   context 'When logged in as a user' do
     it 'returns an error' do
       response =
-        AdvisableSchema.execute(query, context: { current_user: create(:user) })
+        AdvisableSchema.execute(query, context: {current_user: create(:user)})
       error = response['errors'].first['extensions']['type']
       expect(error).to eq('NOT_AUTHENTICATED')
     end
@@ -49,9 +51,9 @@ RSpec.describe Mutations::SubmitFullApplication do
 
     it 'responds with an error' do
       response =
-        AdvisableSchema.execute(query, context: { current_user: specialist })
+        AdvisableSchema.execute(query, context: {current_user: specialist})
       error = response['errors'].first['extensions']['code']
-      expect(error).to eq('invalidApplicationStage')
+      expect(error).to eq('INVALID_APPLICATION_STAGE')
     end
   end
 end

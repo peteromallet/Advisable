@@ -31,7 +31,7 @@ module Mutations
 
     def failed_to_save(user)
       message = user.errors.full_messages.first
-      ApiError.invalid_request('failedToSave', message)
+      ApiError.invalid_request('FALIED_TO_SAVE', message)
     end
 
     def update_company_attributes(user, args)

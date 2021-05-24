@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::CreateUserFromProjectVerification do
@@ -38,9 +40,9 @@ RSpec.describe Mutations::CreateUserFromProjectVerification do
   end
 
   it 'creates a new user' do
-    expect {
+    expect do
       AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
-    }.to change(User, :count).by(1)
+    end.to change(User, :count).by(1)
   end
 
   it "gives newly created user's account team manager permission" do
@@ -65,7 +67,7 @@ RSpec.describe Mutations::CreateUserFromProjectVerification do
       response =
         AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
       error = response['errors'].first['extensions']['code']
-      expect(error).to eq('nonCorporateEmail')
+      expect(error).to eq('NON_CORPORATE_EMAIL')
     end
   end
 
@@ -74,7 +76,7 @@ RSpec.describe Mutations::CreateUserFromProjectVerification do
       create(:user, account: create(:account, email: email))
       response = AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
       error = response['errors'].first['extensions']['code']
-      expect(error).to eq('emailTaken')
+      expect(error).to eq('EMAIL_TAKEN')
     end
   end
 
@@ -84,7 +86,7 @@ RSpec.describe Mutations::CreateUserFromProjectVerification do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("emailBlank")
+      expect(error).to eq("EMAIL_BLANK")
     end
   end
 end

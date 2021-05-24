@@ -10,10 +10,10 @@ module Mutations
       account = Account.find_by(email: email)
 
       if account.blank?
-        ApiError.invalid_request("request_password_reset.account_not_found")
+        ApiError.invalid_request("ACCOUNT_NOT_FOUND")
       elsif !account.has_password? && account.specialist.present?
         WebhookEvent.trigger("specialists.forgotten_password_for_non_account", WebhookEvent::Specialist.data(account.specialist))
-        ApiError.invalid_request("request_password_reset.application_required")
+        ApiError.invalid_request("APPLICATION_REQUIRED")
       else
         account.reset_password!
         {sent: true}

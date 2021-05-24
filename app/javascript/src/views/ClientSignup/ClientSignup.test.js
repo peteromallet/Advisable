@@ -486,7 +486,7 @@ const emailNotAllowedRejection = {
       __typename: "Mutation",
       startClientApplication: null,
     },
-    errors: [{ extensions: { code: "nonCorporateEmail" } }],
+    errors: [{ extensions: { code: "NON_CORPORATE_EMAIL" } }],
   },
 };
 
@@ -539,7 +539,7 @@ const accountExistsRejection = {
       __typename: "Mutation",
       startClientApplication: null,
     },
-    errors: [{ extensions: { code: "existingAccount" } }],
+    errors: [{ extensions: { code: "EXISTING_ACCOUNT" } }],
   },
 };
 

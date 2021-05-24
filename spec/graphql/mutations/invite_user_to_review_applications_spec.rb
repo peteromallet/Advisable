@@ -56,7 +56,7 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("invalidProject")
+      expect(error).to eq("INVALID_PROJECT")
     end
   end
 
@@ -77,7 +77,7 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
       create(:blacklisted_domain, domain: "gmail.com")
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("nonCorporateEmail")
+      expect(error).to eq("NON_CORPORATE_EMAIL")
     end
   end
 
@@ -87,7 +87,7 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("emailBlank")
+      expect(error).to eq("EMAIL_BLANK")
     end
   end
 
@@ -98,7 +98,7 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("notAnUser")
+      expect(error).to eq("NOT_AN_USER")
     end
   end
 end

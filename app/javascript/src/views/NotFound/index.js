@@ -24,7 +24,7 @@ const NotFound = ({ heading, children }) => (
 
 export const isNotFound = (graphqlError) => {
   const code = graphqlError?.graphQLErrors?.[0]?.extensions?.code;
-  return code === "notFound";
+  return code === "NOT_FOUND";
 };
 
 export default NotFound;
