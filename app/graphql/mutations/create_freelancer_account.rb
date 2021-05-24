@@ -81,7 +81,7 @@ module Mutations
 
       # frozen_string_literal: false
       # Creates a new freelancer account
-      ApiError.invalid_request('emailTaken', 'This email is already being used by another account') if !account.valid? && specialist.valid? && account.errors.added?(:email, "has already been taken")
+      ApiError.invalid_request('EMAIL_TAKEN', 'This email is already being used by another account') if !account.valid? && specialist.valid? && account.errors.added?(:email, "has already been taken")
 
       specialist.skills = skills
       success = Logidze.with_responsible(specialist.account_id) do

@@ -53,7 +53,7 @@ module Mutations
       {user: user}
     rescue ActiveRecord::RecordInvalid
       if account.errors.added?(:email, :taken, value: email)
-        ApiError.invalid_request("emailTaken", "The email #{email} is already used by another account.")
+        ApiError.invalid_request("EMAIL_TAKEN", "The email #{email} is already used by another account.")
       elsif account.errors.added?(:email, :blank)
         ApiError.invalid_request("emailBlank", "Email is required.")
       else

@@ -107,7 +107,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
 
     it 'returns an error' do
       error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('emailTaken')
+      expect(error).to eq('EMAIL_TAKEN')
     end
   end
 
@@ -154,7 +154,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
 
       it "returns an error" do
         error = response["errors"][0]["extensions"]["code"]
-        expect(error).to eq("emailTaken")
+        expect(error).to eq("EMAIL_TAKEN")
       end
     end
   end
