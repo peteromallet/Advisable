@@ -19,18 +19,6 @@ module Mutations
       description 'The freelancers email address'
     end
 
-    argument :phone, String, required: false do
-      description 'The freelancers phone number'
-    end
-
-    argument :password, String, required: false do
-      description 'The account password'
-    end
-
-    argument :skills, [String], required: false do
-      description 'An array of skills'
-    end
-
     argument :pid, String, required: false do
       description 'The project ID that they are signing up for.'
     end
@@ -50,23 +38,10 @@ module Mutations
     field :viewer, Types::ViewerUnion, null: false
 
     def resolve(**args)
-      skills =
-        (args[:skills] || []).map do |name|
-          skill = Skill.find_by(name: name)
-          if skill.nil?
-            ApiError.invalid_request(
-              'skillNotFound',
-              "Skill '#{name}' does not exist"
-            )
-          end
-          skill
-        end
-
       account = Account.new(
         first_name: args[:first_name],
         last_name: args[:last_name],
-        email: args[:email],
-        password: args[:password]
+        email: args[:email]
       )
 
       specialist = Specialist.new(
@@ -74,7 +49,6 @@ module Mutations
         campaign_name: args[:campaign_name],
         campaign_source: args[:campaign_source],
         application_stage: 'Started',
-        phone: args[:phone],
         pid: args[:pid],
         referrer: resolve_referrer(args[:referrer])
       )
@@ -83,7 +57,6 @@ module Mutations
       # Creates a new freelancer account
       ApiError.invalid_request('EMAIL_TAKEN', 'This email is already being used by another account') if !account.valid? && specialist.valid? && account.errors.added?(:email, "has already been taken")
 
-      specialist.skills = skills
       success = Logidze.with_responsible(specialist.account_id) do
         specialist.save
       end
