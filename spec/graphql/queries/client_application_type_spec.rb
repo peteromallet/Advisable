@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe Types::ClientApplicationType do
+RSpec.describe "clientApplication query", type: :system do
   let(:user) { create(:user, application_status: "Application Started") }
   let(:query) do
     <<-GRAPHQL
     query {
-      clientApplication(id: "#{user.uid}") {
+      clientApplication {
         id
         status
       }
@@ -13,12 +15,18 @@ RSpec.describe Types::ClientApplicationType do
     GRAPHQL
   end
 
+  let(:current_user) { user }
+  let(:context) { {current_user: current_user} }
+
+  def request
+    AdvisableSchema.execute(query, context: context)
+  end
+
   context 'when the application_status is started' do
     let(:user) { create(:user, application_status: "Application Started") }
 
     it 'the status field is "Application Started"' do
-      response = AdvisableSchema.execute(query)
-      status = response['data']['clientApplication']['status']
+      status = request['data']['clientApplication']['status']
       expect(status).to eq('Application Started')
     end
   end
@@ -27,8 +35,7 @@ RSpec.describe Types::ClientApplicationType do
     let(:user) { create(:user, application_status: "Application Accepted") }
 
     it 'the status field is "Application Accepted"' do
-      response = AdvisableSchema.execute(query)
-      status = response['data']['clientApplication']['status']
+      status = request['data']['clientApplication']['status']
       expect(status).to eq('Application Accepted')
     end
   end
@@ -37,8 +44,7 @@ RSpec.describe Types::ClientApplicationType do
     let(:user) { create(:user, application_status: "Application Rejected") }
 
     it 'the status field is "Application Rejected"' do
-      response = AdvisableSchema.execute(query)
-      status = response['data']['clientApplication']['status']
+      status = request['data']['clientApplication']['status']
       expect(status).to eq('Application Rejected')
     end
   end
