@@ -26,7 +26,7 @@ module Mutations
         search = ::CaseStudy::Search.find_by!(uid: search)
         article = ::CaseStudy::Article.find_by!(uid: article)
 
-        search.archived << article.id
+        search.archived = search.archived + [article.id]
 
         if args[:feedback]
           ::CaseStudy::SearchFeedback.create!(
