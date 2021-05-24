@@ -1,6 +1,7 @@
 import { ApolloClient, from, createHttpLink, gql } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
+import { RetryLink } from "@apollo/client/link/retry";
 import createCache from "./apolloCache";
 import * as Sentry from "@sentry/react";
 
@@ -21,6 +22,18 @@ const authLink = setContext((_, { headers }) => {
 
 const httpLink = createHttpLink({
   uri: "/graphql",
+});
+
+const retryLink = new RetryLink({
+  delay: {
+    initial: 300,
+    max: Infinity,
+    jitter: true,
+  },
+  attempts: {
+    max: 3,
+    retryIf: (error) => !!error,
+  },
 });
 
 const errorLink = onError(({ graphQLErrors, operation }) => {
@@ -56,7 +69,7 @@ const errorLink = onError(({ graphQLErrors, operation }) => {
 
 const client = new ApolloClient({
   cache,
-  link: from([errorLink, authLink, httpLink]),
+  link: from([retryLink, errorLink, authLink, httpLink]),
   defaultOptions: {
     mutate: {
       errorPolicy: "all",
