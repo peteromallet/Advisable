@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_21_145417) do
+ActiveRecord::Schema.define(version: 2021_05_24_063443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -878,9 +878,11 @@ ActiveRecord::Schema.define(version: 2021_05_21_145417) do
     t.datetime "guild_joined_date"
     t.datetime "guild_featured_member_at"
     t.string "guild_calendly_link"
+    t.bigint "referrer_id"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
+    t.index ["referrer_id"], name: "index_specialists_on_referrer_id"
     t.index ["uid"], name: "index_specialists_on_uid"
   end
 
@@ -1094,6 +1096,7 @@ ActiveRecord::Schema.define(version: 2021_05_21_145417) do
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "accounts"
   add_foreign_key "specialists", "countries"
+  add_foreign_key "specialists", "specialists", column: "referrer_id"
   add_foreign_key "subscriptions", "labels"
   add_foreign_key "subscriptions", "specialists"
   add_foreign_key "unresponsiveness_reports", "accounts", column: "reporter_id"
@@ -1386,6 +1389,27 @@ ActiveRecord::Schema.define(version: 2021_05_21_145417) do
   create_trigger :logidze_on_applications, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_applications BEFORE INSERT OR UPDATE ON public.applications FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
+  create_trigger :logidze_on_case_study_articles, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_articles BEFORE INSERT OR UPDATE ON public.case_study_articles FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_companies, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_companies BEFORE INSERT OR UPDATE ON public.case_study_companies FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_contents, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_contents BEFORE INSERT OR UPDATE ON public.case_study_contents FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_industries, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_industries BEFORE INSERT OR UPDATE ON public.case_study_industries FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_searches, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_searches BEFORE INSERT OR UPDATE ON public.case_study_searches FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_sections, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_sections BEFORE INSERT OR UPDATE ON public.case_study_sections FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_skills, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_skills BEFORE INSERT OR UPDATE ON public.case_study_skills FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
   create_trigger :logidze_on_companies, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_companies BEFORE INSERT OR UPDATE ON public.companies FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
@@ -1406,26 +1430,5 @@ ActiveRecord::Schema.define(version: 2021_05_21_145417) do
   SQL
   create_trigger :logidze_on_users, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_case_study_articles, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_case_study_articles BEFORE INSERT OR UPDATE ON public.case_study_articles FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_case_study_companies, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_case_study_companies BEFORE INSERT OR UPDATE ON public.case_study_companies FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_case_study_skills, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_case_study_skills BEFORE INSERT OR UPDATE ON public.case_study_skills FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_case_study_industries, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_case_study_industries BEFORE INSERT OR UPDATE ON public.case_study_industries FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_case_study_sections, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_case_study_sections BEFORE INSERT OR UPDATE ON public.case_study_sections FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_case_study_contents, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_case_study_contents BEFORE INSERT OR UPDATE ON public.case_study_contents FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_case_study_searches, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_case_study_searches BEFORE INSERT OR UPDATE ON public.case_study_searches FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
