@@ -82,7 +82,7 @@
     "twilio-chat": "^5.0.0",
     "twilio-video": "^2.13.1",
     "url-regex": "^5.0.0",
-    "use-sound": "^2.1.0",
+    "use-sound": "^3.0.1",
     "webpack-bundle-analyzer": "^4.4.2",
     "yup": "^0.32.9",
     "zustand": "^3.5.1"
