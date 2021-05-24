@@ -90,7 +90,7 @@ RSpec.describe Mutations::CreateUserForCompany do
       create(:user, account: create(:account, email: email))
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("emailTaken")
+      expect(error).to eq("EMAIL_TAKEN")
     end
   end
 
