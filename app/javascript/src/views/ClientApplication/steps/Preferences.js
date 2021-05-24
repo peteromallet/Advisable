@@ -20,8 +20,10 @@ import {
 
 export const validationSchema = object().shape({
   title: string().required("Please enter your role at the company"),
-  budget: string().required(),
-  feedback: boolean().required(),
+  budget: string().required("Please enter your budget"),
+  feedback: boolean().required(
+    "Please tell us if you open to provide feedback",
+  ),
   marketingAttitude: string().required(
     "Please select your type of marketing attitude",
   ),
