@@ -6,6 +6,7 @@ module Mutations
       description "Assign a Case Study Article on a Case Study Search to be saved or archived."
       graphql_name "AssignCaseStudySearchArticle"
 
+      # rubocop:disable GraphQL/ExtractInputType
       argument :action, String, required: true
       argument :article, ID, required: true
       argument :feedback, String, required: false
