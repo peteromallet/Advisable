@@ -1,0 +1,10 @@
+mutation archiveSearchArticle($input: ArchiveCaseStudySearchArticleInput!) {
+  archiveCaseStudySearchArticle(input: $input) {
+    search {
+      id
+    }
+    article {
+      id
+    }
+  }
+}

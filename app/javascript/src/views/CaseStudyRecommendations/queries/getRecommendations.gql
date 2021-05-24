@@ -1,0 +1,17 @@
+query recommendationsInbox($id: ID!) {
+  caseStudySearch(id: $id) {
+    id
+    name
+    results {
+      nodes {
+        id
+        title
+        subtitle
+        specialist {
+          id
+          avatar
+        }
+      }
+    }
+  }
+}
