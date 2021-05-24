@@ -29,8 +29,8 @@ function FreelancerProfile() {
   });
   useInitialScroll(data);
 
+  if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
-  if (loading || !data) return <Loading />;
 
   return (
     <Box
