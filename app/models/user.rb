@@ -93,12 +93,10 @@ class User < ApplicationRecord
   end
 
   def create_case_study_search
-    last_project = projects.order(created_at: :desc).last
-    last_company_project = Project.where(user: company.users).order(created_at: :desc).last
     ::CaseStudy::Search.create!(
       user: self,
       business_type: company.kind,
-      goals: (last_project || last_company_project)&.goals,
+      goals: company&.goals,
       name: "Project recommendations for #{company.name}"
     )
   end
