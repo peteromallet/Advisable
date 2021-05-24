@@ -61,6 +61,7 @@ function ArchiveForm({ search, article, onArchive = () => {}, modal }) {
       await archive({
         variables: {
           input: {
+            action: "archive",
             search: search.id,
             article: article.id,
             feedback: feedback === "_OTHER" ? otherFeedback : feedback,

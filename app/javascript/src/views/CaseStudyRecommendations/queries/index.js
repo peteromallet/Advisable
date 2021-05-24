@@ -1,16 +1,16 @@
 import { useMutation, useQuery } from "@apollo/client";
 // import INBOX from "./getRecommendations.gql";
 import CASE_STUDY from "./getCaseStudy.gql";
-import ARCHIVE from "./archiveRecommendation.gql";
+import ASSIGN from "./assignRecommendation.gql";
 import ARCHIVED from "./archivedRecommendations.gql";
 import GET_SEARCHES from "./getSearches.gql";
 
 export function useArchive(opts) {
-  return useMutation(ARCHIVE, {
+  return useMutation(ASSIGN, {
     update(cache, response) {
       if (response.errors) return;
 
-      const { article, search } = response.data.archiveCaseStudySearchArticle;
+      const { article, search } = response.data.assignCaseStudySearchArticle;
 
       cache.modify({
         id: cache.identify(article),
