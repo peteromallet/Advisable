@@ -33,11 +33,6 @@ RSpec.describe Mutations::RequestToStart do
     expect(stage).to eq('Requested To Start')
   end
 
-  it 'triggers a webhook' do
-    expect(WebhookEvent).to receive(:trigger).with('tasks.requested_to_start', any_args)
-    AdvisableSchema.execute(query, context: context)
-  end
-
   context 'when the task does not have a name' do
     let(:task) { create(:task, stage: 'Not Assigned', name: nil) }
 

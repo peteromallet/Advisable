@@ -1,35 +1,30 @@
-class Tasks::RequestToStart < ApplicationService
-  attr_reader :task, :responsible_id
+# frozen_string_literal: true
 
-  def initialize(task:, responsible_id: nil)
-    @task = task
-    @responsible_id = responsible_id
-  end
+module Tasks
+  class RequestToStart < ApplicationService
+    attr_reader :task, :responsible_id
 
-  def call
-    if task.stage != "Not Assigned"
-      raise Service::Error.new("tasks.cantRequestToStart", message: "Stage must be 'Not Assigned'")
+    def initialize(task:, responsible_id: nil)
+      @task = task
+      @responsible_id = responsible_id
     end
 
-    if task.name.blank?
-      raise Service::Error.new("tasks.nameRequired")
-    end
+    def call
+      raise Service::Error.new("tasks.cantRequestToStart", message: "Stage must be 'Not Assigned'") if task.stage != "Not Assigned"
 
-    if task.description.blank?
-      raise Service::Error.new("tasks.descriptionRequired")
-    end
+      raise Service::Error, "tasks.nameRequired" if task.name.blank?
 
-    if task.application.status != 'Working'
-      raise Service::Error.new("tasks.cantRequestToStart", message: "Application status is not 'Working'")
-    end
+      raise Service::Error, "tasks.descriptionRequired" if task.description.blank?
 
-    updated = Logidze.with_responsible(responsible_id) { task.update(stage: "Requested To Start") }
-    if updated
-      task.sync_to_airtable
-      WebhookEvent.trigger("tasks.requested_to_start", WebhookEvent::Task.data(task))
-      return task
-    end
+      raise Service::Error.new("tasks.cantRequestToStart", message: "Application status is not 'Working'") if task.application.status != 'Working'
 
-    raise Service::Error.new("tasks.failedToSave", message: task.errors.full_messages.first)
+      updated = Logidze.with_responsible(responsible_id) { task.update(stage: "Requested To Start") }
+      if updated
+        task.sync_to_airtable
+        return task
+      end
+
+      raise Service::Error.new("tasks.failedToSave", message: task.errors.full_messages.first)
+    end
   end
 end

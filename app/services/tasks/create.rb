@@ -1,19 +1,22 @@
-class Tasks::Create < ApplicationService
-  attr_reader :task, :responsible_id
+# frozen_string_literal: true
 
-  def initialize(application:, attributes:, responsible_id: nil)
-    @task = application.tasks.new(attributes.merge({
-      stage: "Not Assigned"
-    }))
-    @responsible_id = responsible_id
-  end
+module Tasks
+  class Create < ApplicationService
+    attr_reader :task, :responsible_id
 
-  def call
-    saved = Logidze.with_responsible(responsible_id) { task.save }
-    raise Service::Error.new(task.errors.full_messages.first) unless saved
+    def initialize(application:, attributes:, responsible_id: nil)
+      @task = application.tasks.new(attributes.merge({
+        stage: "Not Assigned"
+      }))
+      @responsible_id = responsible_id
+    end
 
-    task.sync_to_airtable
-    WebhookEvent.trigger("tasks.created", WebhookEvent::Task.data(task))
-    task
+    def call
+      saved = Logidze.with_responsible(responsible_id) { task.save }
+      raise Service::Error, task.errors.full_messages.first unless saved
+
+      task.sync_to_airtable
+      task
+    end
   end
 end

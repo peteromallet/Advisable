@@ -30,9 +30,7 @@ RSpec.describe Mutations::InviteUserToInterview do
 
   before { allow_any_instance_of(User).to receive(:sync_to_airtable) }
 
-  it "creates a new user on the company, sends an email to new user, and triggers a webhook" do
-    expect(WebhookEvent).to receive(:trigger).with("user.invited_to_interview", hash_including(application: hash_including("uid" => application.uid), user: hash_including(email: email)))
-
+  it "creates a new user on the company and sends an email to new user" do
     response = AdvisableSchema.execute(query, context: context)
 
     uid = response["data"]["inviteUserToInterview"]["user"]["id"]
@@ -45,9 +43,7 @@ RSpec.describe Mutations::InviteUserToInterview do
     let(:existing_user) { create(:user) }
     let(:email) { existing_user.account.email }
 
-    it "sends an email to existing user and triggers a webhook" do
-      expect(WebhookEvent).to receive(:trigger).with("user.invited_to_interview", hash_including(application: hash_including("uid" => application.uid), user: hash_including(email: email)))
-
+    it "sends an email to existing user" do
       AdvisableSchema.execute(query, context: context)
 
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_to_interview", "deliver_now", {args: [user, existing_user, application]})

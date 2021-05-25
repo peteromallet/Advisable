@@ -1,17 +1,19 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Tasks::Start do
   let(:task) { create(:task, stage: "Assigned") }
 
-  before :each do
+  before do
     allow_any_instance_of(Task).to receive(:sync_to_airtable)
     allow(Tasks::CreateInvoiceItem).to receive(:call)
   end
 
   it "sets the stage to 'Working'" do
-    expect {
-      Tasks::Start.call(task: task)
-    }.to change {
+    expect do
+      described_class.call(task: task)
+    end.to change {
       task.reload.stage
     }.from("Assigned").to("Working")
   end
@@ -20,9 +22,9 @@ RSpec.describe Tasks::Start do
     let(:task) { create(:task, stage: "Quote Requested") }
 
     it "raises an error" do
-      expect {
-        Tasks::Start.call(task: task)
-      }.to raise_error("tasks.mustBeAssigned")
+      expect do
+        described_class.call(task: task)
+      end.to raise_error("tasks.mustBeAssigned")
     end
   end
 
@@ -30,9 +32,9 @@ RSpec.describe Tasks::Start do
     let(:task) { create(:task, stage: "Assigned", estimate: nil) }
 
     it "raises an error" do
-      expect {
-        Tasks::Start.call(task: task)
-      }.to raise_error("tasks.estimateRequired")
+      expect do
+        described_class.call(task: task)
+      end.to raise_error("tasks.estimateRequired")
     end
   end
 
@@ -40,9 +42,9 @@ RSpec.describe Tasks::Start do
     let(:task) { create(:task, stage: "Assigned", due_date: nil) }
 
     it "raises an error" do
-      expect {
-        Tasks::Start.call(task: task)
-      }.to raise_error("tasks.dueDateRequired")
+      expect do
+        described_class.call(task: task)
+      end.to raise_error("tasks.dueDateRequired")
     end
   end
 
@@ -52,7 +54,7 @@ RSpec.describe Tasks::Start do
 
     it "calls the Tasks::CreateInvoiceItem service" do
       expect(Tasks::CreateInvoiceItem).to receive(:call)
-      Tasks::Start.call(task: task)
+      described_class.call(task: task)
     end
   end
 
@@ -62,12 +64,7 @@ RSpec.describe Tasks::Start do
 
     it "does not call the Tasks::CreateInvoiceItem service" do
       expect(Tasks::CreateInvoiceItem).not_to receive(:call)
-      Tasks::Start.call(task: task)
+      described_class.call(task: task)
     end
-  end
-
-  it "triggers the tasks.started webhook" do
-    expect(WebhookEvent).to receive(:trigger).with("tasks.started", any_args)
-    Tasks::Start.call(task: task)
   end
 end

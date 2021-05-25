@@ -92,18 +92,6 @@ module Airtable
       end
 
       specialist.saved_change_to_application_stage
-      # Deteremine whether or not the specialist record was just created for the
-      #  first time.
-      new_record = specialist.created_at == specialist.updated_at
-
-      # if the record is not a new record and there was an update to the
-      # application_stage column then trigger a webhook event.
-      if !new_record && specialist.saved_change_to_application_stage
-        WebhookEvent.trigger(
-          'specialists.application_stage_changed',
-          WebhookEvent::Specialist.data(specialist)
-        )
-      end
     end
 
     # Describes how data should be synced to airtable.
