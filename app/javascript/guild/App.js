@@ -79,11 +79,7 @@ const App = () => {
                   component={Feed}
                 />
                 <AuthenticatedRoute exact path="/follows" component={Follows} />
-                <AuthenticatedRoute
-                  exact
-                  path="/events/:eventId"
-                  component={Event}
-                />
+                <Route exact path="/events/:eventId" component={Event} />
                 <AuthenticatedRoute exact path="/events" component={Events} />
               </Switch>
             </Suspense>
