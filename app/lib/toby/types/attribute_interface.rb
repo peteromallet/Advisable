@@ -29,6 +29,11 @@ module Toby
         object.options.fetch(:column_label) { name.titleize }
       end
 
+      field :description, GraphQL::Types::String, null: true
+      def description
+        object.options.fetch(:description, nil)
+      end
+
       definition_methods do
         def resolve_type(object, _)
           object.class.attribute_type

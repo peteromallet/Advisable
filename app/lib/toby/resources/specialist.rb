@@ -11,7 +11,12 @@ module Toby
       attribute :bio, Attributes::LongText
       attribute :linkedin, Attributes::String
       attribute :website, Attributes::String
-      attribute :hourly_rate, Attributes::Currency
+
+      attribute :hourly_rate, Attributes::Currency, description: <<~DESCRIPTION
+        This is their default hourly rate, however, it can be customized on a
+        per application basis.
+      DESCRIPTION
+
       attribute :country, Attributes::BelongsTo
       attribute :skills, Attributes::HasManyThrough
       attribute :unavailable_until, Attributes::Date
