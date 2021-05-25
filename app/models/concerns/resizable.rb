@@ -59,7 +59,7 @@ module Resizable
     end
   rescue ActiveStorage::InvariableError
     image.purge
-    Sentry.capture_message("Deleted image that wasn't really an image", level: "debug", extra: {object_class: self.class.name, object_id: id, image: name})
+    Sentry.capture_message("Deleted image that wasn't really an image", level: "debug", extra: {object_class: self.class.name, object_id: id})
     nil
   end
 
