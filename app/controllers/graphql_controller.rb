@@ -30,6 +30,25 @@ class GraphqlController < ApplicationController
     return if ENV["API_ACCESS_KEY"].present? && request.headers["Api-Key"] == ENV["API_ACCESS_KEY"]
 
     super
+  rescue ActionController::InvalidAuthenticityToken
+    parsed = begin
+      request_authenticity_tokens.compact.map { |t| unmask_token(decode_csrf_token(t)) }
+    rescue StandardError
+      nil
+    end
+
+    Sentry.capture_message(
+      "Invalid CSRF token",
+      level: "debug",
+      extra: {
+        headers: headers,
+        tokens: request_authenticity_tokens,
+        parsed: parsed,
+        real: real_csrf_token(session),
+        global: global_csrf_token(session)
+      }
+    )
+    raise
   end
 
   def require_admin
