@@ -123,6 +123,16 @@ function Details({ id, resource }) {
                   </Tag>
                 )}
               </Box>
+              {attr.description && (
+                <Text
+                  fontSize="sm"
+                  lineHeight="20px"
+                  color="neutral800"
+                  marginBottom={3}
+                >
+                  {attr.description}
+                </Text>
+              )}
               <AttributeInput
                 resource={resource}
                 record={data.record}
