@@ -1,6 +1,6 @@
 import React from "react";
 import { DateTime } from "luxon";
-import { Input, Card } from "@advisable/donut";
+import { Input, Card, Button } from "@advisable/donut";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
 import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
@@ -19,6 +19,7 @@ DatePicker.Input = function DatePickerInput({
   disabledDays,
   label,
   onChange,
+  clearable,
   ...props
 }) {
   const popover = usePopoverState({ placement: "bottom-start", gutter: 0 });
@@ -28,11 +29,10 @@ DatePicker.Input = function DatePickerInput({
     popover.hide();
   };
 
-  // useEffect(() => {
-  //   if (!popover.visible) {
-  //     onBlur();
-  //   }
-  // }, [popover, onBlur]);
+  const handleClear = () => {
+    onChange(null);
+    popover.hide();
+  };
 
   const selected = props.value && DateTime.fromISO(props.value);
   const inputValue = selected
@@ -62,6 +62,17 @@ DatePicker.Input = function DatePickerInput({
             disabledDays={disabledDays}
             onDayClick={handleSelection}
           />
+          {clearable && (
+            <Button
+              size="xs"
+              marginTop={2}
+              type="button"
+              variant="minimal"
+              onClick={handleClear}
+            >
+              Clear date
+            </Button>
+          )}
         </Card>
       </Popover>
     </>
