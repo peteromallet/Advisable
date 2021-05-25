@@ -89,6 +89,7 @@ export default function CompanyOverview({ clientApplication, industries }) {
                 <FormField
                   name="industry"
                   as={Combobox}
+                  autoComplete="off"
                   options={industries}
                   onChange={(i) => formik.setFieldValue("industry", i)}
                   placeholder="Select your company industry"
