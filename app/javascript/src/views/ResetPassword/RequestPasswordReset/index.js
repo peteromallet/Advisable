@@ -22,9 +22,6 @@ function RequestPasswordReset() {
   const handleRequest = ({ data, errors }) => {
     if (errors) {
       let error = errors[0]?.extensions?.code;
-      if (error === "APPLICATION_REQUIRED") {
-        setStatus(APPLICATION_IN_PROCESS);
-      }
 
       if (error === "ACCOUNT_NOT_FOUND") {
         setStatus(NO_ACCOUNT);
