@@ -1,32 +1,28 @@
-class Tasks::RequestQuote < ApplicationService
-  attr_reader :task, :responsible_id
+# frozen_string_literal: true
 
-  def initialize(task:, responsible_id: nil)
-    @task = task
-    @responsible_id = responsible_id
-  end
+module Tasks
+  class RequestQuote < ApplicationService
+    attr_reader :task, :responsible_id
 
-  def call
-    unless ['Not Assigned', 'Requested To Start'].include?(task.stage)
-      raise Service::Error.new('tasks.cantRequestQuote')
+    def initialize(task:, responsible_id: nil)
+      @task = task
+      @responsible_id = responsible_id
     end
 
-    raise Service::Error.new('tasks.nameRequired') if task.name.blank?
+    def call
+      raise Service::Error, 'tasks.cantRequestQuote' unless ['Not Assigned', 'Requested To Start'].include?(task.stage)
 
-    if task.description.blank?
-      raise Service::Error.new('tasks.descriptionRequired')
+      raise Service::Error, 'tasks.nameRequired' if task.name.blank?
+
+      raise Service::Error, 'tasks.descriptionRequired' if task.description.blank?
+
+      updated = Logidze.with_responsible(responsible_id) { task.update(stage: 'Quote Requested', quote_requested_at: Time.zone.now) }
+      if updated
+        task.sync_to_airtable
+        return task
+      end
+
+      raise Service::Error, task.errors.full_messages.first
     end
-
-    updated = Logidze.with_responsible(responsible_id) { task.update(stage: 'Quote Requested', quote_requested_at: Time.zone.now) }
-    if updated
-      task.sync_to_airtable
-      WebhookEvent.trigger(
-        'tasks.quote_requested',
-        WebhookEvent::Task.data(task)
-      )
-      return task
-    end
-
-    raise Service::Error.new(task.errors.full_messages.first)
   end
 end
