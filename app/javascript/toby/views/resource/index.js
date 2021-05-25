@@ -131,6 +131,7 @@ function Resource({ resource, views }) {
         <StyledScrollContainer
           ref={scrollRef}
           as={motion.div}
+          $filterOpen={isOpen}
           transition={{ duration: 0.2 }}
           animate={{ x: isOpen ? 400 : 0 }}
         >
