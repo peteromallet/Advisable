@@ -58,25 +58,4 @@ RSpec.describe Mutations::RequestPasswordReset do
       expect(error['message']).to eq('ACCOUNT_NOT_FOUND')
     end
   end
-
-  context 'when the account is a specialist' do
-    let(:account) { create(:account, reset_sent_at: nil, reset_digest: nil, password: nil) }
-    let(:user) { create(:specialist, account: account) }
-
-    context 'when the specialist doesnt have an account yet' do
-      it 'triggers a webhook event' do
-        expect(WebhookEvent).to receive(:trigger).with(
-          'specialists.forgotten_password_for_non_account',
-          WebhookEvent::Specialist.data(user)
-        )
-        AdvisableSchema.execute(query, context: {})
-      end
-
-      it 'returns an error' do
-        response = AdvisableSchema.execute(query, context: {})
-        error = response['errors'][0]
-        expect(error['message']).to eq('APPLICATION_REQUIRED')
-      end
-    end
-  end
 end
