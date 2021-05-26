@@ -1,5 +1,4 @@
 import React from "react";
-import find from "lodash/find";
 import sortBy from "lodash/sortBy";
 import { withKnobs, select } from "@storybook/addon-knobs";
 import Text from "../Text";
@@ -106,7 +105,7 @@ export const PrimarySelection = () => {
     emoji: country.emoji,
   }));
 
-  const primaryCountry = find(options, { value: primary });
+  const primaryCountry = options.find((o) => o.value === primary);
 
   return (
     <Card maxWidth={600} margin="50px auto" padding="l">

@@ -1,4 +1,3 @@
-import find from "lodash/find";
 import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { DateTime } from "luxon";
 import { StyledAvailabilityInput } from "./styles";
@@ -33,7 +32,7 @@ const AvailabilityInput = React.memo(function AvailabilityInput({
 
   const eventForTime = (time) => {
     const parsed = DateTime.fromISO(time).setZone(timezone);
-    return find(events, (event) => {
+    return events.find((event) => {
       const eventTime = DateTime.fromISO(event.time).setZone(timezone);
       return +parsed === +eventTime;
     });

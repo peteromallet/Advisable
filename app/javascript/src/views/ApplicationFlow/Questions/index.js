@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import find from "lodash/find";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
@@ -39,10 +38,11 @@ const Questions = ({
   useScrollRestore(null, [number]);
   const questions = application.project.questions || [];
   const question = questions[number - 1];
-  const applicationQuestion = find(application.questions, { question }) || {};
+  const applicationQuestion =
+    application.questions.find((q) => q.question === question) || {};
   const previousQuestion =
-    find(application.questions, {
-      question: questions[number - 2],
+    application.questions.find((q) => {
+      q.question === questions[number - 2];
     }) || {};
 
   useEffect(() => {
