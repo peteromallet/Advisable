@@ -31,22 +31,7 @@ class GraphqlController < ApplicationController
 
     super
   rescue ActionController::InvalidAuthenticityToken
-    parsed = begin
-      request_authenticity_tokens.compact.map { |t| Base64.encode64(unmask_token(decode_csrf_token(t))) }
-    rescue StandardError
-      nil
-    end
-
-    Sentry.capture_message(
-      "Invalid CSRF token",
-      level: "debug",
-      extra: {
-        b64_t: parsed,
-        b64_real: Base64.encode64(real_csrf_token(session)),
-        b64_global: Base64.encode64(global_csrf_token(session))
-      }
-    )
-    raise
+    render status: :unprocessable_entity, json: {message: "INVALID_CSRF"}
   end
 
   def require_admin
