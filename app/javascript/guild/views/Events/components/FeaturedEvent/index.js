@@ -42,7 +42,11 @@ export default function FeaturedEvent({ event }) {
           )}
         </Box>
 
-        <Box marginLeft={{ _: 0, m: "8" }} paddingRight={2}>
+        <Box
+          marginLeft={{ _: 0, m: "8" }}
+          paddingRight={2}
+          minWidth={{ _: "100%", m: "33%" }}
+        >
           <Box marginTop={5}>
             <StartsAtTag
               variant={event.color}
