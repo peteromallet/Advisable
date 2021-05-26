@@ -3,7 +3,7 @@
 class ZappierInteractorController < ApplicationController
   include MagicLinkHelper
 
-  ALLOWED_APPLICATION_FIELDS = %i[comment featured hidden hide_from_profile introduction references_requested rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source].freeze
+  ALLOWED_APPLICATION_FIELDS = %i[comment featured hidden hide_from_profile introduction rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source].freeze
   PARAMETRIZED_APPLICATION_META_FIELDS = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }.freeze
 
   skip_before_action :verify_authenticity_token
