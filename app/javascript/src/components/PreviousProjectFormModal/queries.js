@@ -64,6 +64,8 @@ const previousProjectFields = gql`
     industries {
       id
       name
+      label: name
+      value: name
     }
     primarySkill {
       id
@@ -72,6 +74,8 @@ const previousProjectFields = gql`
     skills {
       id
       name
+      label: name
+      value: name
     }
     reviews {
       id
