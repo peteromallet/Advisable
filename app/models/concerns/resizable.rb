@@ -36,7 +36,9 @@ module Resizable
           return mapping if mapping
 
           images = public_send("resized_#{name}")
-          mapping = images.map do |image|
+          mapping = images.filter_map do |image|
+            next if image.blob.blank?
+
             [image.blob.id, get_resized_image_url(image)]
           end.to_h
           instance_variable_set("@resized_#{name}_mapping", mapping)
