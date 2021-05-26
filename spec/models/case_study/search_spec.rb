@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+# TODO: Maybe refactor this to factories so we're not creating so many things all the time
 RSpec.describe CaseStudy::Search, type: :model do
   it "has a valid factory" do
     expect(build(:case_study_search)).to be_valid
@@ -85,6 +86,22 @@ RSpec.describe CaseStudy::Search, type: :model do
       results = search.results
       expect(results.pluck(:id)).to match_array([article1.id, article2.id])
       expect(search.attributes["results"]).to match_array([article1.id, article2.id])
+    end
+
+    context "when skills given" do
+      it "does not filter by goals" do
+        article1.skills.create(skill: skill1)
+        article1.skills.create(skill: skill2)
+        article2.skills.create(skill: skill1)
+        article1.update(goals: %w[one two])
+        article2.update(goals: %w[three])
+        search = create(:case_study_search, goals: %w[one two])
+        search.skills.create(skill: skill1)
+        search.skills.create(skill: skill2)
+        results = search.results
+        expect(results.pluck(:id)).to match_array([article1.id, article2.id])
+        expect(search.attributes["results"]).to match_array([article1.id, article2.id])
+      end
     end
   end
 end
