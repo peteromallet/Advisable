@@ -11,16 +11,18 @@ module Types
 
     field :cover, Boolean, null: false
     def cover
-      object.blob_id == object.record.cover_photo.blob_id
+      object.blob_id.present? && object.blob_id == object.record.cover_photo.blob_id
     end
 
-    field :signed_id, String, null: false
+    field :signed_id, String, null: true
     def signed_id
-      object.blob.signed_id
+      object.blob&.signed_id
     end
 
-    field :url, String, null: false
+    field :url, String, null: true
     def url
+      return if object.blob_id.blank?
+
       object.record.resized_images_mapping[object.blob_id]
     end
   end
