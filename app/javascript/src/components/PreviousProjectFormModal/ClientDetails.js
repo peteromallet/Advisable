@@ -8,7 +8,7 @@ import {
   Select,
   Checkbox,
   Columns,
-  Autocomplete,
+  Combobox,
   useBreakpoint,
 } from "@advisable/donut";
 import Helper from "./Helper";
@@ -121,7 +121,7 @@ function IndustriesSelection({ industries }) {
     <>
       <FormField
         {...field}
-        as={Autocomplete}
+        as={Combobox}
         max={3}
         multiple
         error={null}
@@ -129,8 +129,8 @@ function IndustriesSelection({ industries }) {
         options={industries}
         placeholder="Search for an industry"
         onChange={(industries) => {
-          if (field.value.indexOf(primaryField.value) === -1) {
-            primaryHelpers.setValue(industries[0]);
+          if (field.value?.indexOf(primaryField?.value) === -1) {
+            primaryHelpers.setValue(industries?.[0]?.value);
           }
           helpers.setValue(industries);
         }}
@@ -150,7 +150,7 @@ function PrimaryIndustry() {
       label="Which of these is the primary industry for this company?"
     >
       {industries.value.map((industry) => (
-        <option key={industry}>{industry}</option>
+        <option key={industry.value}>{industry.label}</option>
       ))}
     </FormField>
   );
