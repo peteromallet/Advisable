@@ -50,7 +50,6 @@ module Mutations
         campaign_source: args[:campaign_source],
         application_stage: 'Started',
         pid: args[:pid],
-        referrer: resolve_referrer(args[:referrer]),
         referrer_id: find_referrer(args[:referrer])
       )
 
@@ -75,14 +74,6 @@ module Mutations
     end
 
     private
-
-    # TODO: deprecate
-    def resolve_referrer(id)
-      return nil if id.blank?
-      return id if id.match?(/^rec[^_]/)
-
-      Specialist.find_by_uid(id)&.airtable_id
-    end
 
     # TODO: remove airtable lookup
     def find_referrer(uid)
