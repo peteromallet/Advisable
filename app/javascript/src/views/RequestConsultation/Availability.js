@@ -4,7 +4,7 @@ import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Info } from "@styled-icons/feather/Info";
-import { Card, Box, Text, Button, Autocomplete } from "@advisable/donut";
+import { Card, Box, Text, Button, Combobox } from "@advisable/donut";
 import { useParams, useLocation, Redirect, useHistory } from "react-router-dom";
 import Loading from "../../components/Loading";
 import AvailabilityInput from "../../components/AvailabilityInput";
@@ -51,7 +51,7 @@ const Availability = () => {
 
   const handleSubmit = async (input) => {
     await updateAvailability({
-      variables: { input },
+      variables: { input: { ...input, timeZone: input.timeZone.value } },
     });
 
     history.push({
@@ -63,11 +63,11 @@ const Availability = () => {
     });
   };
 
+  const initialTimeZone =
+    user?.timeZone || Intl.DateTimeFormat()?.resolvedOptions()?.timeZone || "";
+
   const initialValues = {
-    timeZone:
-      user?.timeZone ||
-      Intl.DateTimeFormat()?.resolvedOptions()?.timeZone ||
-      "",
+    timeZone: { value: initialTimeZone, label: initialTimeZone },
     availability: user?.availability || [],
   };
 
@@ -104,14 +104,14 @@ const Availability = () => {
                   it&apos;ll be for us to find a time that suits them.
                 </Text>
                 <Field
-                  as={Autocomplete}
+                  as={Combobox}
                   name="timeZone"
                   label="Time Zone"
                   options={TIMEZONE_OPTIONS}
-                  formatInputValue={(value) => `Timezone: ${value}`}
+                  formatInputValue={(value) => `Timezone: ${value.label}`}
                   onChange={(o) => {
                     formik.setFieldTouched("timeZone", true);
-                    formik.setFieldValue("timeZone", o.value);
+                    formik.setFieldValue("timeZone", o);
                   }}
                 />
               </Box>
@@ -123,7 +123,7 @@ const Availability = () => {
               >
                 <AvailabilityInput
                   value={formik.values.availability}
-                  timezone={formik.values.timeZone}
+                  timezone={formik.values.timeZone.value}
                   onChange={(a) => {
                     formik.setFieldTouched("availability", true);
                     formik.setFieldValue("availability", a);
