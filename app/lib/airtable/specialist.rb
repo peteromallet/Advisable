@@ -79,7 +79,7 @@ module Airtable
       specialist.remote = true if fields['Remote OK'].try(:include?, 'Yes')
       specialist.remote = false if fields['Remote OK'].try(:include?, 'No')
       specialist.account.test_account = true if fields['Test Account'].try(:include?, 'Yes')
-      specialist.referrer_id = Specialist.find_by(airtable_id: self['Referrer'].first)&.id if self['Referrer'].try(:first).present?
+      specialist.referrer_id = ::Specialist.find_by(airtable_id: self['Referrer'].first)&.id if self['Referrer'].try(:first).present?
 
       sync_unsubscribed_from(specialist)
     end
