@@ -21,6 +21,8 @@ module Types
     field :attending, Boolean, null: false
 
     def attending
+      return false if current_user.blank?
+
       object.attendees.exists?(current_user.id)
     end
 
