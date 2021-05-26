@@ -16,9 +16,12 @@ module CaseStudy
     def results(fresh: false)
       if fresh || attributes["results"].blank?
         query = Article.distinct.where.not(id: archived).limit(RESULT_LIMIT)
-        query = query.joins(:skills).where(case_study_skills: {skill_id: skills.pluck(:skill_id)}) if skills.any?
         query = query.where(company_type: business_type) if business_type.present?
-        query = query.where("goals ?| array[:goals]", goals: goals) if goals.present?
+        if skills.any?
+          query = query.joins(:skills).where(case_study_skills: {skill_id: skills.pluck(:skill_id)})
+        elsif goals.present?
+          query = query.where("goals ?| array[:goals]", goals: goals)
+        end
         update(results: query.pluck(:id))
         query
       else
