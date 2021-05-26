@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_24_063443) do
+ActiveRecord::Schema.define(version: 2021_05_24_140027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -122,7 +122,6 @@ ActiveRecord::Schema.define(version: 2021_05_24_063443) do
     t.string "comment"
     t.text "rejection_reason"
     t.text "rejection_reason_comment"
-    t.boolean "references_requested"
     t.string "invitation_rejection_reason"
     t.datetime "applied_at"
     t.boolean "hidden"

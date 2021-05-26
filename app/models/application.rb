@@ -41,8 +41,6 @@
 # be set back to Working.
 #
 class Application < ApplicationRecord
-  self.ignored_columns += %i[references_requested]
-
   include ::Airtable::Syncable
   include Uid
 
