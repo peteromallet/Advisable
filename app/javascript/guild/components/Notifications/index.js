@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { GUILD_NOTIFICATIONS_QUERY } from "./queries";
-import { truncate } from "lodash-es";
+import truncate from "lodash/truncate";
 import { useQuery } from "@apollo/client";
 import * as Sentry from "@sentry/react";
 import Loading from "@advisable-main/components/Loading";

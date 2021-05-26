@@ -11,17 +11,15 @@ import {
 } from "../../testHelpers/test-utils";
 import { GET_COUNTRIES, GET_PROFILE, UPDATE_PROFILE } from "./queries";
 import GET_PROJECT from "src/components/PreviousProjectDetails/getProject.js";
-import { truncate } from "lodash-es";
+import truncate from "lodash/truncate";
 
 let user = mockData.user();
 const skills = ["First skill", "Second skill", "Third skill"].map((name) => {
   return mockData.skill({ name: name });
 });
-const industries = [
-  "First industry",
-  "Second industry",
-  "Third industry",
-].map((name) => mockData.industry({ name }));
+const industries = ["First industry", "Second industry", "Third industry"].map(
+  (name) => mockData.industry({ name }),
+);
 const country = mockData.country();
 const countries = [{ ...country, value: country.id, label: country.name }];
 const review = mockData.review();

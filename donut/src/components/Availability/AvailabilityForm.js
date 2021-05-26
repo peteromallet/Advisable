@@ -1,5 +1,5 @@
 import React from "react";
-import { times } from "lodash-es";
+import times from "lodash/times";
 import { DateTime } from "luxon";
 import { Formik, Field } from "formik";
 import { Check } from "@styled-icons/feather/Check";

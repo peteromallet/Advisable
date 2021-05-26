@@ -10,7 +10,7 @@ import {
   filterChildren,
 } from "./lib";
 import { Box } from "@advisable/donut";
-import { flow } from "lodash-es";
+import flow from "lodash/flow";
 
 const initState = flow([
   setInitialValues,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { find } from "lodash-es";
+import find from "lodash/find";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";

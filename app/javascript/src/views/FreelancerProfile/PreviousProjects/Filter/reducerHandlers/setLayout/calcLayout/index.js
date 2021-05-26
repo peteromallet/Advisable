@@ -1,4 +1,5 @@
-import { flow, max } from "lodash-es";
+import flow from "lodash/flow";
+import max from "lodash/max";
 import layoutReducer from "./layoutReducer";
 import expandItems from "./expandItems";
 import setCollapsedHeight from "./setCollapsedHeight";

@@ -1,5 +1,7 @@
 import React from "react";
-import { uniqueId, filter, find } from "lodash-es";
+import filter from "lodash/filter";
+import find from "lodash/find";
+import uniqueId from "lodash/uniqueId";
 import Desktop from "./Desktop";
 import Mobile from "./Mobile";
 import useBreakpoint from "../../hooks/useBreakpoint";

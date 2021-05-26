@@ -1,5 +1,5 @@
 import * as React from "react";
-import { filter } from "lodash-es";
+import filter from "lodash/filter";
 import { Box, Text } from "@advisable/donut";
 import Invitation from "./Invitation";
 import Loading from "./Loading";

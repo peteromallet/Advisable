@@ -1,5 +1,5 @@
 import React from "react";
-import { sortBy } from "lodash-es";
+import sortBy from "lodash/sortBy";
 import Fuse from "fuse.js";
 import { withKnobs, select } from "@storybook/addon-knobs";
 import Card from "../Card";

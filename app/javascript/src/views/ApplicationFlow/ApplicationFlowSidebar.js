@@ -7,7 +7,7 @@ import { padding } from "styled-system";
 import MultistepMenu from "../../components/MultistepMenu";
 import Back from "../../components/Back";
 import { useLocation } from "react-router";
-import { filter } from "lodash-es";
+import filter from "lodash/filter";
 
 const SidebarContainer = styled.div`
   width: 320px;

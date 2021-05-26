@@ -2,13 +2,14 @@ import React, { useMemo, useCallback } from "react";
 import { matchPath } from "react-router-dom";
 import Route from "src/components/Route";
 import usePathnameQueue from "src/utilities/usePathnameQueue";
-import { findIndex } from "lodash-es";
+import findIndex from "lodash/findIndex";
 
 function useSteps(steps) {
   const [currentPathname, previousPathname] = usePathnameQueue(2);
-  const activeSteps = useMemo(() => steps.filter((step) => !step.passive), [
-    steps,
-  ]);
+  const activeSteps = useMemo(
+    () => steps.filter((step) => !step.passive),
+    [steps],
+  );
 
   // STEPS search methods
   const matchStepPath = useCallback(
@@ -39,20 +40,20 @@ function useSteps(steps) {
   const numberOfSteps = steps.length;
   const numberOfActiveSteps = activeSteps.length;
 
-  const nextStep = useMemo(() => steps[currentStepIndex + 1] || steps[0], [
-    currentStepIndex,
-    steps,
-  ]);
-  const prevStep = useMemo(() => steps[currentStepIndex - 1], [
-    currentStepIndex,
-    steps,
-  ]);
+  const nextStep = useMemo(
+    () => steps[currentStepIndex + 1] || steps[0],
+    [currentStepIndex, steps],
+  );
+  const prevStep = useMemo(
+    () => steps[currentStepIndex - 1],
+    [currentStepIndex, steps],
+  );
 
   const initialStep = useMemo(() => steps[0], [steps]);
-  const lastStep = useMemo(() => steps[activeSteps.length - 1], [
-    activeSteps.length,
-    steps,
-  ]);
+  const lastStep = useMemo(
+    () => steps[activeSteps.length - 1],
+    [activeSteps.length, steps],
+  );
 
   // Route components for React Router
   const routes = useMemo(

@@ -1,5 +1,5 @@
 import React from "react";
-import { find } from "lodash-es";
+import find from "lodash/find";
 import { Box, Text } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import { StyledCoverPhoto, StyledCoverPhotoTag } from "./styles";

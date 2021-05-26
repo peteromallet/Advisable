@@ -1,6 +1,6 @@
 import React from "react";
 import { gql } from "@apollo/client";
-import { find } from "lodash-es";
+import find from "lodash/find";
 import { rgba } from "polished";
 import { Plus } from "@styled-icons/feather/Plus";
 import { X } from "@styled-icons/feather/X";
