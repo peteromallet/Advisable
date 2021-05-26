@@ -32,7 +32,7 @@ class GraphqlController < ApplicationController
     super
   rescue ActionController::InvalidAuthenticityToken
     parsed = begin
-      request_authenticity_tokens.compact.map { |t| unmask_token(decode_csrf_token(t)) }
+      request_authenticity_tokens.compact.map { |t| Base64.encode64(unmask_token(decode_csrf_token(t))) }
     rescue StandardError
       nil
     end
@@ -41,11 +41,9 @@ class GraphqlController < ApplicationController
       "Invalid CSRF token",
       level: "debug",
       extra: {
-        headers: headers,
-        tokens: request_authenticity_tokens,
-        parsed: parsed,
-        real: real_csrf_token(session),
-        global: global_csrf_token(session)
+        b64_t: parsed,
+        b64_real: Base64.encode64(real_csrf_token(session)),
+        b64_global: Base64.encode64(global_csrf_token(session))
       }
     )
     raise
