@@ -12,7 +12,7 @@ import {
   Select,
   Checkbox,
   InputError,
-  Autocomplete,
+  Combobox,
   Button,
   Textarea,
 } from "@advisable/donut";
@@ -46,6 +46,7 @@ export default function Overview({ modal, data, skills }) {
         input: {
           previousProject: data.previousProject.id,
           ...values,
+          skills: values.skills.map((s) => s.value),
         },
       },
     });
@@ -57,7 +58,7 @@ export default function Overview({ modal, data, skills }) {
   const initialValues = {
     description: data.previousProject.description || "",
     goal: data.previousProject.goal || GOALS[0],
-    skills: data.previousProject.skills.map((s) => s.name),
+    skills: data.previousProject.skills,
     primarySkill: data.previousProject.primarySkill?.name || "",
     publicUse: data.previousProject.publicUse || true,
   };
@@ -138,7 +139,7 @@ export default function Overview({ modal, data, skills }) {
                   <Label mb="xs">
                     What skills did you use for this project?
                   </Label>
-                  <Autocomplete
+                  <Combobox
                     max={5}
                     multiple
                     name="skills"
@@ -149,7 +150,10 @@ export default function Overview({ modal, data, skills }) {
                       const { primarySkill } = formik.values;
                       const selected = formik.values.skills;
                       if (selected.indexOf(primarySkill) === -1) {
-                        formik.setFieldValue("primarySkill", skills[0]);
+                        formik.setFieldValue(
+                          "primarySkill",
+                          skills?.[0]?.value,
+                        );
                       }
                       formik.setFieldValue("skills", skills);
                     }}
@@ -164,7 +168,7 @@ export default function Overview({ modal, data, skills }) {
                       label="Which of these was the primary skill for this project?"
                     >
                       {formik.values.skills.map((skill) => (
-                        <option key={skill}>{skill}</option>
+                        <option key={skill.value}>{skill.label}</option>
                       ))}
                     </FormField>
                   </Box>
