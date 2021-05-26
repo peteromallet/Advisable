@@ -5,6 +5,7 @@ module Tasks
     attr_reader :task, :responsible_id
 
     def initialize(application:, attributes:, responsible_id: nil)
+      super()
       @task = application.tasks.new(attributes.merge({
         stage: "Not Assigned"
       }))

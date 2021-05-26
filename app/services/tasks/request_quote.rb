@@ -5,6 +5,7 @@ module Tasks
     attr_reader :task, :responsible_id
 
     def initialize(task:, responsible_id: nil)
+      super()
       @task = task
       @responsible_id = responsible_id
     end
