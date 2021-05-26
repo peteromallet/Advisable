@@ -577,6 +577,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  ruby-progressbar
   sass-rails (>= 6)
   selenium-webdriver
   sentry-rails
