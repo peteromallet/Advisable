@@ -16,7 +16,7 @@ import {
   InputError,
   Button,
   Stack,
-  Combobox as Autocomplete,
+  Combobox,
 } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
 import indefinite from "indefinite";
@@ -131,7 +131,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                   {guildPost.audienceType === "other" &&
                     " You can optionally create a new topic."}
                 </Label>
-                <Autocomplete
+                <Combobox
                   multiple
                   size="md"
                   creatable={guildPost.audienceType === "other"}
