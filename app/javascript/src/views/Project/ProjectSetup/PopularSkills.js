@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { rgba } from "polished";
 import { useField } from "formik";
 import { Text, theme } from "@advisable/donut";
@@ -65,10 +65,14 @@ export default function PopularSkills({
 }) {
   const { t } = useTranslation();
   const [field, , helpers] = useField("skills");
+  const selected = useMemo(
+    () => field.value.map((s) => s.value),
+    [field.value],
+  );
 
-  const filtered = React.useMemo(() => {
-    return skills.filter((s) => field.value.indexOf(s.name) === -1);
-  }, [skills, field.value]);
+  const filtered = useMemo(() => {
+    return skills.filter((s) => selected.indexOf(s.name) === -1);
+  }, [skills, selected]);
 
   if (filtered.length === 0) return null;
 
@@ -97,7 +101,12 @@ export default function PopularSkills({
             type="button"
             key={skill.id}
             disabled={disabled}
-            onClick={() => helpers.setValue([...field.value, skill.name])}
+            onClick={() =>
+              helpers.setValue([
+                ...field.value,
+                { value: skill.name, label: skill.name },
+              ])
+            }
           >
             <Plus size={16} strokeWidth={2} />
             {skill.name}
