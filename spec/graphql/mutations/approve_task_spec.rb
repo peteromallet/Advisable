@@ -79,7 +79,7 @@ RSpec.describe Mutations::ApproveTask do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("tasks.statusNotSubmitted")
+      expect(error).to eq("TASK_STATUS_NOT_SUBMITTED")
     end
   end
 end

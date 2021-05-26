@@ -11,11 +11,11 @@ module Mutations
       task = Task.find_by_uid!(args[:task])
       policy = TaskPolicy.new(current_user, task)
       ApiError.not_authorized("You do not have permission to approve this task") unless policy.submit?
-      ApiError.invalid_request("tasks.notSubmittable", "Application status is not 'Working'") if task.application.status != "Working"
+      ApiError.invalid_request("TASK_NOT_SUBMITTABLE", "Application status is not 'Working'") if task.application.status != "Working"
 
       stages = %w[Working]
       stages << "Not Assigned" if task.application.project_type == "Flexible"
-      ApiError.invalid_request("tasks.notSubmittable") unless stages.include?(task.stage)
+      ApiError.invalid_request("TASK_NOT_SUBMITTABLE") unless stages.include?(task.stage)
 
       true
     end

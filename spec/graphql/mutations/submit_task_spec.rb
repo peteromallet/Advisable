@@ -69,7 +69,7 @@ RSpec.describe Mutations::SubmitTask do
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
       error = response['errors'][0]
-      expect(error['extensions']['code']).to eq('tasks.notSubmittable')
+      expect(error['extensions']['code']).to eq('TASK_NOT_SUBMITTABLE')
     end
   end
 
@@ -79,7 +79,7 @@ RSpec.describe Mutations::SubmitTask do
     it 'returns an error' do
       response = AdvisableSchema.execute(query, context: context)
       error = response['errors'][0]
-      expect(error['extensions']['code']).to eq('tasks.notSubmittable')
+      expect(error['extensions']['code']).to eq('TASK_NOT_SUBMITTABLE')
     end
   end
 
