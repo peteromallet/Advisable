@@ -71,20 +71,6 @@ RSpec.describe Airtable::Application do
       expect { airtable.sync }.to change { application.reload.featured }.from(true).to(false)
     end
 
-    it 'sets references_requested to true if airtable value is Yes' do
-      application = create(:application, references_requested: false)
-      airtable = described_class.new({'References Requested' => 'Yes'}, id: application.airtable_id)
-
-      expect { airtable.sync }.to change { application.reload.references_requested }.from(false).to(true)
-    end
-
-    it 'sets references_requested to false if airtable value is No' do
-      application = create(:application, references_requested: true)
-      airtable = described_class.new({'References Requested' => 'No'}, id: application.airtable_id)
-
-      expect { airtable.sync }.to change { application.reload.references_requested }.from(true).to(false)
-    end
-
     context 'when the specialist record has been synced' do
       it 'sets up the association' do
         specialist_a = create(:specialist)

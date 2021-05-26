@@ -41,6 +41,8 @@
 # be set back to Working.
 #
 class Application < ApplicationRecord
+  self.ignored_columns += %i[references_requested]
+
   include ::Airtable::Syncable
   include Uid
 
@@ -161,7 +163,6 @@ end
 #  proposal_comment            :string
 #  proposal_sent_at            :datetime
 #  questions                   :jsonb
-#  references_requested        :boolean
 #  rejection_feedback          :text
 #  rejection_reason            :text
 #  rejection_reason_comment    :text
