@@ -26,7 +26,6 @@ module Mutations
       application.sync_to_airtable
       application.project.update(status: "Proposal Received")
       application.project.sync_to_airtable
-      WebhookEvent.trigger("applications.proposal_sent", WebhookEvent::Application.data(application))
 
       {application: application}
     end
