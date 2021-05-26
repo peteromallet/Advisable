@@ -148,11 +148,9 @@ test("Maintains selected time zone", async () => {
   const berlinTime = "12:00 PM - 12:30 PM";
   const laTime = "3:00 AM - 3:30 AM";
   expect(screen.queryByText(berlinTime)).not.toBeNull();
-  const timeZoneSelect = screen.getByPlaceholderText("Your Timezone");
-  user.click(timeZoneSelect);
-  user.type(timeZoneSelect, "America/Los_Angeles");
-  fireEvent.keyDown(timeZoneSelect, { key: "ArrowDown" });
-  fireEvent.keyDown(timeZoneSelect, { key: "Enter" });
+  const timeZoneInput = screen.getByPlaceholderText("Your Timezone");
+  fireEvent.change(timeZoneInput, { target: { value: "America/Los_Angeles" } });
+  fireEvent.keyDown(timeZoneInput, { key: "Return", keyCode: 13 });
   expect(screen.queryByText(berlinTime)).toBeNull();
   user.click(screen.getByText(laTime));
 
