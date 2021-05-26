@@ -110,7 +110,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
       uid = data.dig("createFreelancerAccount", "viewer", "id")
       specialist = Specialist.find_by(uid: uid)
       expect(specialist.referrer_id).to eq(referrer.id)
-      expect(specialist.referrer_rename_me).to eq(referrer)
+      expect(specialist.referrer).to eq(referrer)
       expect(referrer.referred).to eq([specialist])
     end
 
