@@ -51,6 +51,8 @@ const projectFields = gql`
     skills {
       id
       name
+      value: name
+      label: name
     }
   }
 `;
