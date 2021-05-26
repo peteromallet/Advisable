@@ -1,5 +1,4 @@
 import React from "react";
-import find from "lodash/find";
 import Downshift from "downshift";
 
 export const stateChangeTypes = Downshift.stateChangeTypes;
@@ -53,10 +52,10 @@ const DownshiftMulti = (props) => {
   let selected;
   if (props.multiple) {
     selected = props.value.map((item) => {
-      return find(props.options, { value: item });
+      return props.options.find((o) => o.value === item);
     });
   } else {
-    selected = find(props.options, { value: props.value }) || null;
+    selected = props.options.find((o) => o.value === props.value) || null;
   }
 
   const downshiftProps = (downshift) => ({
