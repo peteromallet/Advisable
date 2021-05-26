@@ -21,6 +21,8 @@
 # [Accepted] Their application has been successfull.
 #
 class Specialist < ApplicationRecord
+  self.ignored_columns += %i[referrer]
+
   include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser
@@ -140,7 +142,6 @@ end
 #  project_count                     :integer
 #  public_use                        :boolean
 #  ratings                           :jsonb
-#  referrer                          :string
 #  remote                            :boolean
 #  reviews_count                     :integer
 #  travel_availability               :string
