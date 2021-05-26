@@ -151,7 +151,7 @@ RSpec.describe Mutations::UpdateTask do
         it 'does not removes the estimate' do
           expect do
             AdvisableSchema.execute(query, context: context)
-          end.not_to change { task.reload.estimate }
+          end.not_to(change { task.reload.estimate })
         end
       end
     end
@@ -273,7 +273,7 @@ RSpec.describe Mutations::UpdateTask do
 
       it 'sets the trial' do
         expect do
-          response = AdvisableSchema.execute(query, context: context)
+          AdvisableSchema.execute(query, context: context)
         end.to change { task.reload.trial }.from(false).to(true)
       end
 
@@ -284,7 +284,7 @@ RSpec.describe Mutations::UpdateTask do
 
         it 'toggles the other trial task to false' do
           expect do
-            response = AdvisableSchema.execute(query, context: context)
+            AdvisableSchema.execute(query, context: context)
           end.to change { trial.reload.trial }.from(true).to(false)
         end
       end

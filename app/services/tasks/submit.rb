@@ -5,6 +5,7 @@ module Tasks
     attr_reader :task, :final_cost, :responsible_id
 
     def initialize(task:, final_cost:, responsible_id: nil)
+      super()
       @task = task
       @final_cost = final_cost
       @responsible_id = responsible_id
