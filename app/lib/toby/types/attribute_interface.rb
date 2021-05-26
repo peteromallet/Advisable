@@ -29,6 +29,12 @@ module Toby
         object.options.fetch(:column_label) { name.titleize }
       end
 
+      field :description, GraphQL::Types::String, null: true
+      def description
+        resource_key = object.resource.model_s.underscore
+        I18n.t("toby.resources.#{resource_key}.#{object.name}", default: nil)
+      end
+
       definition_methods do
         def resolve_type(object, _)
           object.class.attribute_type
