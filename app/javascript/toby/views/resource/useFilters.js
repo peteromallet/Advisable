@@ -1,4 +1,4 @@
-import { uniqueId } from "lodash-es";
+import uniqueId from "lodash/uniqueId";
 import { useState, useCallback } from "react";
 
 export default function useFilters(initialFilters = []) {

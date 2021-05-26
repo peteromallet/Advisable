@@ -1,4 +1,5 @@
-import { merge, uniqueId } from "lodash-es";
+import merge from "lodash/merge";
+import uniqueId from "lodash/uniqueId";
 
 export const company = (fields = {}) => {
   return merge(

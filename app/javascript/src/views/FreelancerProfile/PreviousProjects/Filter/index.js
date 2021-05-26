@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useReducer } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Info } from "@styled-icons/feather/Info";
 import styled from "styled-components";
-import { isEmpty } from "lodash-es";
+import isEmpty from "lodash/isEmpty";
 import { rgba } from "polished";
 // Utilities
 import { handleSectionParams, setLayout } from "./reducerHandlers";
@@ -69,12 +69,14 @@ function Filter({ children, skillFilters, industryFilters, clearFilters }) {
   });
   // Actions
   const createAction = useMemo(() => createDispatcher(dispatch), []);
-  const addSectionParams = useMemo(() => createAction("ADD_SECTION_PARAMS"), [
-    createAction,
-  ]);
-  const setWrapperWidth = useMemo(() => createAction("SET_WRAPPER_WIDTH"), [
-    createAction,
-  ]);
+  const addSectionParams = useMemo(
+    () => createAction("ADD_SECTION_PARAMS"),
+    [createAction],
+  );
+  const setWrapperWidth = useMemo(
+    () => createAction("SET_WRAPPER_WIDTH"),
+    [createAction],
+  );
   const setLayout = useMemo(() => createAction("SET_LAYOUT"), [createAction]);
   const expandCollapse = createAction("EXPAND_COLLAPSE");
   const [layoutRef] = useResponsiveRef(setWrapperWidth);

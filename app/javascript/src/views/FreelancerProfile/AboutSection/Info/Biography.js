@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Text, theme } from "@advisable/donut";
-import { truncate } from "lodash-es";
+import truncate from "lodash/truncate";
 
 export const TRUNCATE_LIMIT = 280;
 

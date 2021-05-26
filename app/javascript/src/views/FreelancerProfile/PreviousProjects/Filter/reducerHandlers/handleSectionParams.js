@@ -1,4 +1,6 @@
-import { maxBy, minBy, sumBy } from "lodash-es";
+import maxBy from "lodash/maxBy";
+import minBy from "lodash/minBy";
+import sumBy from "lodash/sumBy";
 
 export const handleSectionParams = (state, sectionName, params) => {
   const maxWidth = maxBy(params, "width");

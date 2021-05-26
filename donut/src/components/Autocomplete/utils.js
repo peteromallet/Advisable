@@ -1,4 +1,4 @@
-import { find } from "lodash-es";
+import find from "lodash/find";
 
 export const getSelected = (value, options) => {
   return find(options, { value: value }) || null;

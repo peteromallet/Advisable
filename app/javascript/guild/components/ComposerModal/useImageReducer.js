@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { find } from "lodash-es";
+import find from "lodash/find";
 import generateID from "@advisable-main/utilities/generateID";
 
 // We manage all of the photos inside of a state reducer. This is to make the UX when managing

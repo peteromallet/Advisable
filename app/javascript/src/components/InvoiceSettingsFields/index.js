@@ -1,6 +1,6 @@
 import React from "react";
 import { string } from "yup";
-import { find } from "lodash-es";
+import find from "lodash/find";
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import { Box } from "@advisable/donut";

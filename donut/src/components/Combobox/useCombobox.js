@@ -1,5 +1,5 @@
 import Fuse from "fuse.js";
-import { uniqueId } from "lodash-es";
+import uniqueId from "lodash/uniqueId";
 import { useReducer, useEffect, useRef, useMemo } from "react";
 
 const ENTER = 13;

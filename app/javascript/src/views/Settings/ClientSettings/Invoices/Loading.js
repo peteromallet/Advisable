@@ -1,5 +1,5 @@
 import React from "react";
-import { times } from "lodash-es";
+import times from "lodash/times";
 import { Box, Card, Skeleton, Stack } from "@advisable/donut";
 
 function Loading() {

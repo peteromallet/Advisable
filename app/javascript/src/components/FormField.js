@@ -4,7 +4,7 @@ import { useField } from "formik";
 import { margin } from "styled-system";
 import styled from "styled-components";
 import { Box, Text, Input, Label, InputError } from "@advisable/donut";
-import { uniqueId } from "lodash-es";
+import uniqueId from "lodash/uniqueId";
 
 const StyledFormField = styled.div`
   ${margin}

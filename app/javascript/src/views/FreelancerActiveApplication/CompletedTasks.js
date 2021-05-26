@@ -1,5 +1,5 @@
 import React from "react";
-import { filter } from "lodash-es";
+import filter from "lodash/filter";
 import { Text } from "@advisable/donut";
 import TaskList from "../../components/TaskList";
 

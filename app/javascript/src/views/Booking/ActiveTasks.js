@@ -1,5 +1,5 @@
 import React from "react";
-import { filter } from "lodash-es";
+import filter from "lodash/filter";
 import NoTasks from "./NoTasks";
 import NewTask from "../../components/NewTask";
 import TaskList from "../../components/TaskList";
