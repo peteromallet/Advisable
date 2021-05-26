@@ -31,7 +31,8 @@ module Toby
 
       field :description, GraphQL::Types::String, null: true
       def description
-        object.options.fetch(:description, nil)
+        resource_key = object.resource.model_s.underscore
+        I18n.t("toby.resources.#{resource_key}.#{object.name}", default: nil)
       end
 
       definition_methods do
