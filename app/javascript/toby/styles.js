@@ -38,7 +38,8 @@ export const StyledViewport = styled.div`
 
 export const StyledScrollContainer = styled.div`
   height: 100%;
-  min-width: 100vw;
+  min-width: 0;
+  width: ${(p) => (p.$filterOpen ? "calc(100vw - 400px)" : "100vw")};
   overflow-y: scroll;
 `;
 
