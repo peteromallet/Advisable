@@ -79,7 +79,7 @@ module Airtable
       specialist.remote = true if fields['Remote OK'].try(:include?, 'Yes')
       specialist.remote = false if fields['Remote OK'].try(:include?, 'No')
       specialist.account.test_account = true if fields['Test Account'].try(:include?, 'Yes')
-      specialist.referrer = self['Referrer'].try(:first)
+      specialist.referrer_id = Specialist.find_by(airtable_id: self['Referrer'].first)&.id if self['Referrer'].try(:first).present?
 
       sync_unsubscribed_from(specialist)
     end
@@ -162,7 +162,7 @@ module Airtable
       self['PID'] = specialist.pid if specialist.pid
       self['Campaign Name'] = specialist.campaign_name if specialist.campaign_name
       self['Campaign Source'] = specialist.campaign_source if specialist.campaign_source
-      self['Referrer'] = [specialist.referrer] if specialist.referrer
+      self['Referrer'] = [specialist.referrer_rename_me.airtable_id] if specialist.referrer_rename_me
 
       # We only want to try and sync their avatar if they have uplodated one.
       # We also check to see if the filename in airtable is different to the

@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::CreateFreelancerAccount do
   let(:project) { create(:project) }
-  let(:skill) { create(:skill, name: 'Marketing') }
-  let(:skill_name) { skill.name }
-  let(:email) { 'test@test.com' }
-  let(:password) { 'test1234' }
-  let(:session_manager) do
-    SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
-  end
+  let(:email) { "test@test.com" }
+  let(:referrer_id) { "referrer" }
+  let(:session_manager) { SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new) }
 
   let(:query) do
     <<-GRAPHQL
@@ -22,7 +18,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
         pid: "#{project.try(:airtable_id)}",
         campaignName: "campaignName",
         campaignSource: "campaignSource",
-        referrer: "referrer"
+        referrer: "#{referrer_id}"
       }) {
         viewer {
           ... on Specialist {
@@ -53,17 +49,28 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     )
   end
 
-  it 'Creates a new specialist' do
+  it "creates a new specialist" do
     expect { response }.to change(Specialist, :count).by(1)
   end
 
-  it 'Creates an application invitation if a PID is provided' do
-    response
-    specialist = Specialist.order(:created_at).last
+  it "sets first name, last name, and email" do
+    data = response["data"]
+    uid = data.dig("createFreelancerAccount", "viewer", "id")
+    specialist = Specialist.find_by(uid: uid)
+    account = specialist.account
+    expect(account.first_name).to eq("Test")
+    expect(account.last_name).to eq("Account")
+    expect(account.email).to eq(email)
+  end
+
+  it "creates an application invitation if a PID is provided" do
+    data = response["data"]
+    uid = data.dig("createFreelancerAccount", "viewer", "id")
+    specialist = Specialist.find_by(uid: uid)
     expect(specialist.applications.first.project).to eq(project)
   end
 
-  it 'sends the confirmation email' do
+  it "sends the confirmation email" do
     expect_any_instance_of(Specialist).to receive(:send_confirmation_email)
     response
   end
@@ -73,41 +80,48 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     expect(GeocodeAccountJob).to have_been_enqueued.with(Specialist.find_by(uid: uid).account, "1.2.3.4")
   end
 
-  context 'when no pid is provided' do
+  context "when no pid is provided" do
     let(:project) { nil }
 
     it "doesn't create any application record" do
-      response
-      specialist = Specialist.order(:created_at).last
+      data = response["data"]
+      uid = data.dig("createFreelancerAccount", "viewer", "id")
+      specialist = Specialist.find_by(uid: uid)
       expect(specialist.applications).to be_empty
     end
   end
 
-  context 'when given an email that is already been used' do
+  context "when given an email that is already been used" do
     let(:user) { create(:user) }
     let(:email) { user.account.email.upcase }
 
-    it 'returns an error' do
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('EMAIL_TAKEN')
+    it "returns an error" do
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("EMAIL_TAKEN")
     end
   end
 
-  it 'sets the first_name' do
-    response
-    specialist = Specialist.last
-    expect(specialist.account.first_name).to eq('Test')
-  end
+  describe "referrer parsing" do
+    let(:referrer) { create(:specialist) }
+    let(:referrer_id) { referrer.uid }
 
-  it 'sets the last_name' do
-    response
-    specialist = Specialist.last
-    expect(specialist.account.last_name).to eq('Account')
-  end
+    it "sets the referrer relation" do
+      data = response["data"]
+      uid = data.dig("createFreelancerAccount", "viewer", "id")
+      specialist = Specialist.find_by(uid: uid)
+      expect(specialist.referrer_id).to eq(referrer.id)
+      expect(specialist.referrer_rename_me).to eq(referrer)
+      expect(referrer.referred).to eq([specialist])
+    end
 
-  it 'sets the email' do
-    response
-    specialist = Specialist.last
-    expect(specialist.account.email).to eq(email)
+    context "when passed airtable id" do
+      let(:referrer_id) { referrer.airtable_id }
+
+      it "tells sentry about it" do
+        allow(Sentry).to receive(:capture_message)
+        expect(Sentry).to receive(:capture_message).with("We're still getting airtable ids in referrers :unamused:", level: "debug")
+        response
+      end
+    end
   end
 end

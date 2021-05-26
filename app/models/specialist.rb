@@ -35,6 +35,7 @@ class Specialist < ApplicationRecord
   has_logidze
 
   belongs_to :country, optional: true
+  belongs_to :referrer_rename_me, class_name: "Specialist", foreign_key: :referrer_id, inverse_of: :referred, optional: true
 
   has_many :reviews, dependent: :destroy
   has_many :consultations, dependent: :destroy
@@ -56,6 +57,7 @@ class Specialist < ApplicationRecord
   has_many :events, foreign_key: :host_id, inverse_of: :host, dependent: :nullify
   has_many :event_attendees, dependent: :destroy
   has_many :articles, class_name: "CaseStudy::Article", dependent: :destroy
+  has_many :referred, class_name: "Specialist", foreign_key: :referrer_id, inverse_of: :referrer_rename_me, dependent: :nullify
 
   # We also have an 'image' column in the specalists table. This is a deprecated
   # column that we used to use to store the avatar from airtable in.
@@ -152,16 +154,19 @@ end
 #  airtable_id                       :string
 #  application_interview_calendly_id :string
 #  country_id                        :bigint
+#  referrer_id                       :bigint
 #
 # Indexes
 #
 #  index_specialists_on_account_id   (account_id)
 #  index_specialists_on_airtable_id  (airtable_id)
 #  index_specialists_on_country_id   (country_id)
+#  index_specialists_on_referrer_id  (referrer_id)
 #  index_specialists_on_uid          (uid)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (country_id => countries.id)
+#  fk_rails_...  (referrer_id => specialists.id)
 #

@@ -50,7 +50,8 @@ module Mutations
         campaign_source: args[:campaign_source],
         application_stage: 'Started',
         pid: args[:pid],
-        referrer: resolve_referrer(args[:referrer])
+        referrer: resolve_referrer(args[:referrer]),
+        referrer_id: find_referrer(args[:referrer])
       )
 
       # frozen_string_literal: false
@@ -75,13 +76,21 @@ module Mutations
 
     private
 
-    # TODO: Make specialist referrer column a relationship to specialist table
-    # to remove dependency on Airtable.
+    # TODO: deprecate
     def resolve_referrer(id)
       return nil if id.blank?
       return id if id.match?(/^rec[^_]/)
 
       Specialist.find_by_uid(id)&.airtable_id
+    end
+
+    # TODO: remove airtable lookup
+    def find_referrer(uid)
+      return nil if uid.blank?
+
+      Sentry.capture_message("We're still getting airtable ids in referrers :unamused:", level: "debug") if uid.match?(/^rec[^_]/)
+
+      Specialist.find_by_uid_or_airtable_id(uid)&.id
     end
 
     # When a freelancer signs up, they may have come from a campaign that passed
