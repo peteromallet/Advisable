@@ -10,16 +10,41 @@ import {
 import * as queries from "../queries";
 import { GET_JOB, UPDATE_PROJECT, PUBLISH_PROJECT } from "./queries";
 
+const mockedSkills = [
+  mockData.skill({
+    name: "Linkedin Marketing",
+    label: "Linkedin Marketing",
+    value: "Linkedin Marketing",
+  }),
+  mockData.skill({
+    name: "Instagram Marketing",
+    label: "Instagram Marketing",
+    value: "Instagram Marketing",
+  }),
+  mockData.skill({
+    name: "Facebook Marketing",
+    label: "Facebook Marketing",
+    value: "Facebook Marketing",
+  }),
+  mockData.skill({
+    name: "Twitter Marketing",
+    label: "Twitter Marketing",
+    value: "Twitter Marketing",
+  }),
+];
+
+const pupularSkills = [
+  mockData.skill({ name: "Linkedin Marketing" }),
+  mockData.skill({ name: "Instagram Marketing" }),
+];
+
 test("User can publish a job", async () => {
   const user = mockData.user({
     salesPerson: mockData.salesPerson(),
     industry: mockData.industry({
       popularSkills: {
         __typename: "SkillsConnection",
-        nodes: [
-          mockData.skill({ name: "Linkedin Marketing" }),
-          mockData.skill({ name: "Instagram Marketing" }),
-        ],
+        nodes: pupularSkills,
       },
     }),
   });
@@ -58,10 +83,7 @@ test("User can publish a job", async () => {
           ],
           popularSkills: {
             __typename: "SkillsConnection",
-            nodes: [
-              mockData.skill({ name: "Facebook Marketing" }),
-              mockData.skill({ name: "Twitter Marketing" }),
-            ],
+            nodes: pupularSkills,
           },
           project,
         },
@@ -73,10 +95,20 @@ test("User can publish a job", async () => {
           skills: ["Linkedin Marketing", "Facebook Marketing"],
         },
         () => {
-          project.primarySkill = mockData.skill({ name: "Linked Marketing" });
+          project.primarySkill = mockData.skill({
+            name: "Linkedin Marketing",
+          });
           project.skills = [
-            mockData.skill({ name: "Linkedin Marketing" }),
-            mockData.skill({ name: "Facebook Marketing" }),
+            mockData.skill({
+              name: "Linkedin Marketing",
+              label: "Linkedin Marketing",
+              value: "Linkedin Marketing",
+            }),
+            mockData.skill({
+              name: "Facebook Marketing",
+              label: "Facebook Marketing",
+              value: "Facebook Marketing",
+            }),
           ];
 
           return {
@@ -95,7 +127,7 @@ test("User can publish a job", async () => {
         },
         () => {
           project.primarySkill = mockData.skill({
-            name: "Facebook Marketing ",
+            name: "Facebook Marketing",
           });
 
           return {
@@ -237,10 +269,9 @@ test("User can publish a job", async () => {
   await screen.findByText(/What skills should this specialist have?/i);
   userEvent.click(screen.getByText(/linkedin marketing/i));
   const skillsInput = screen.getByPlaceholderText("e.g Facebook Advertising");
-  fireEvent.click(skillsInput);
-  userEvent.type(skillsInput, "Face");
-  fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
-  fireEvent.keyDown(skillsInput, { key: "Enter" });
+  fireEvent.change(skillsInput, { target: { value: "Face" } });
+  fireEvent.keyDown(skillsInput, { key: "ArrowDown", keyCode: 40 });
+  fireEvent.keyDown(skillsInput, { key: "Return", keyCode: 13 });
   userEvent.click(screen.getByLabelText(/continue/i));
 
   await screen.findByText(/Which of these is the most important/i);
@@ -292,10 +323,7 @@ test("When pending review redirects to published page", async () => {
     industry: mockData.industry({
       popularSkills: {
         __typename: "SkillsConnection",
-        nodes: [
-          mockData.skill({ name: "Linkedin Marketing" }),
-          mockData.skill({ name: "Instagram Marketing" }),
-        ],
+        nodes: mockedSkills,
       },
     }),
   });
@@ -305,8 +333,8 @@ test("When pending review redirects to published page", async () => {
     publishedAt: "2020-11-26T12:00:00",
     status: "Pending Advisable Confirmation",
     salesPerson: mockData.salesPerson(),
-    skills: [mockData.skill({ name: "Linkedin Marketing" })],
-    primarySkill: mockData.skill({ name: "Linkedin Marketing" }),
+    skills: [mockedSkills[0]],
+    primarySkill: mockedSkills[0],
   });
 
   renderRoute({
@@ -318,18 +346,10 @@ test("When pending review redirects to published page", async () => {
         GET_JOB,
         { id: project.id },
         {
-          skills: [
-            mockData.skill({ name: "Facebook Marketing" }),
-            mockData.skill({ name: "Twitter Marketing" }),
-            mockData.skill({ name: "Linkedin Marketing" }),
-            mockData.skill({ name: "Instagram Marketing" }),
-          ],
+          skills: mockedSkills,
           popularSkills: {
             __typename: "SkillsConnection",
-            nodes: [
-              mockData.skill({ name: "Facebook Marketing" }),
-              mockData.skill({ name: "Twitter Marketing" }),
-            ],
+            nodes: mockedSkills,
           },
           project,
         },
