@@ -8,15 +8,17 @@ import TimeZoneSelect from "src/components/TimeZoneSelect";
 import { Times, Time } from "./styles";
 
 export default function SelectTime(props) {
+  const localTimezone = DateTime.local().zoneName;
   const { availability, timeZone, match, clientName } = props;
-  const [selectedTimeZone, setTimeZone] = React.useState(
-    DateTime.local().zoneName || timeZone,
-  );
+  const [selectedTimeZone, setTimeZone] = React.useState({
+    value: localTimezone || timeZone,
+    label: localTimezone || timeZone,
+  });
 
   const date = DateTime.fromISO(match.params.date, { zone: timeZone });
   const times = sortBy(
     filter(availability, (t) => {
-      const time = DateTime.fromISO(t, { zone: selectedTimeZone });
+      const time = DateTime.fromISO(t, { zone: selectedTimeZone.value });
       return date.day === time.day;
     }),
     (time) => DateTime.fromISO(time).toFormat("T"),
@@ -51,13 +53,15 @@ export default function SelectTime(props) {
       />
       <Times>
         {times.map((time) => {
-          const parsed = DateTime.fromISO(time, { zone: selectedTimeZone });
+          const parsed = DateTime.fromISO(time, {
+            zone: selectedTimeZone.value,
+          });
           return (
             <Time
               key={time}
               to={{
                 pathname: parsed.toUTC().toISO(),
-                state: { zone: selectedTimeZone },
+                state: { zone: selectedTimeZone.value },
               }}
             >
               {`${parsed.toFormat("h:mm a")} - ${parsed
