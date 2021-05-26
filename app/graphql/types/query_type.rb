@@ -216,7 +216,6 @@ module Types
     end
 
     def event(id:)
-      requires_guild_user!
       ::Event.find_by!(uid: id)
     end
 
