@@ -27,52 +27,12 @@ RSpec.describe Airtable::Specialist do
       }, id: specialist.airtable_id)
     end
 
-    it 'triggers the application_stage_changed webhook event' do
-      expect(WebhookEvent).to receive(:trigger).with(
-        "specialists.application_stage_changed",
-        hash_including(application_stage: "Started")
-      )
-      airtable.sync
-    end
-
     context "when updated_at is fresher than sync_started_at" do
-      it 'does not change data nor triggers the application_stage_changed webhook event' do
+      it 'does not change data' do
         old_email = specialist.account.email
-        expect(WebhookEvent).not_to receive(:trigger).with(
-          "specialists.application_stage_changed",
-          hash_including(application_stage: "Started")
-        )
 
         airtable.sync(started_at: 5.minutes.ago)
         expect(specialist.account.reload.email).to eq(old_email)
-      end
-    end
-
-    context "when the record is a new record" do
-      let(:airtable) do
-        described_class.new({
-          "Application Stage" => "Started"
-        }, id: "rec_new")
-      end
-
-      it "does not trigger a webhook" do
-        expect(WebhookEvent).not_to receive(:trigger).with(
-          "specialists.application_stage_changed",
-          hash_including(application_stage: "Started")
-        )
-        airtable.sync(started_at: 5.minutes.ago)
-      end
-    end
-
-    context "when there is no change to the application_stage" do
-      let(:specialist) { create(:specialist, application_stage: "Started") }
-
-      it "does not trigger a webhook" do
-        expect(WebhookEvent).not_to receive(:trigger).with(
-          "specialists.application_stage_changed",
-          hash_including(application_stage: "Started")
-        )
-        airtable.sync
       end
     end
   end

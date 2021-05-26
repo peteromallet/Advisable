@@ -111,11 +111,6 @@ RSpec.describe Mutations::UpdateTask do
       expect(name).to eq('Updated Name')
     end
 
-    it 'doesnt trigger a webhook' do
-      expect(WebhookEvent).not_to receive(:trigger)
-      AdvisableSchema.execute(query, context: context)
-    end
-
     context 'when the stage is Assigned' do
       let(:task) { create(:task, name: nil, stage: 'Assigned') }
 
@@ -144,9 +139,9 @@ RSpec.describe Mutations::UpdateTask do
         let(:context) { {current_user: task.application.project.user} }
 
         it 'removes the estimate' do
-          expect {
+          expect do
             AdvisableSchema.execute(query, context: context)
-          }.to change { task.reload.estimate }.from(8).to(nil)
+          end.to change { task.reload.estimate }.from(8).to(nil)
         end
       end
 
@@ -154,9 +149,9 @@ RSpec.describe Mutations::UpdateTask do
         let(:context) { {current_user: task.application.specialist} }
 
         it 'does not removes the estimate' do
-          expect {
+          expect do
             AdvisableSchema.execute(query, context: context)
-          }.not_to change { task.reload.estimate }
+          end.not_to(change { task.reload.estimate })
         end
       end
     end
@@ -249,14 +244,6 @@ RSpec.describe Mutations::UpdateTask do
           task.reload.stage
         }.from('Quote Requested').to('Quote Provided')
       end
-
-      it 'triggers a webhook' do
-        allow(WebhookEvent).to receive(:trigger).with(
-          'tasks.quote_provided',
-          any_args
-        )
-        AdvisableSchema.execute(query, context: context)
-      end
     end
   end
 
@@ -285,9 +272,9 @@ RSpec.describe Mutations::UpdateTask do
       let(:context) { {current_user: task.application.specialist} }
 
       it 'sets the trial' do
-        expect {
-          response = AdvisableSchema.execute(query, context: context)
-        }.to change { task.reload.trial }.from(false).to(true)
+        expect do
+          AdvisableSchema.execute(query, context: context)
+        end.to change { task.reload.trial }.from(false).to(true)
       end
 
       context 'when the application has an existing trial task' do
@@ -296,9 +283,9 @@ RSpec.describe Mutations::UpdateTask do
         end
 
         it 'toggles the other trial task to false' do
-          expect {
-            response = AdvisableSchema.execute(query, context: context)
-          }.to change { trial.reload.trial }.from(true).to(false)
+          expect do
+            AdvisableSchema.execute(query, context: context)
+          end.to change { trial.reload.trial }.from(true).to(false)
         end
       end
 

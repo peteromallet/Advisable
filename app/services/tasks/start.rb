@@ -19,7 +19,6 @@ module Tasks
       if updated
         add_invoice_item if task.application.project_type == 'Fixed'
         task.sync_to_airtable
-        WebhookEvent.trigger('tasks.started', WebhookEvent::Task.data(task))
       end
 
       task

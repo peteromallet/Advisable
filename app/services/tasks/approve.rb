@@ -1,23 +1,25 @@
-class Tasks::Approve < ApplicationService
-  attr_reader :task, :responsible_id
+# frozen_string_literal: true
 
-  def initialize(task:, responsible_id: nil)
-    @task = task
-    @responsible_id = responsible_id
-  end
+module Tasks
+  class Approve < ApplicationService
+    attr_reader :task, :responsible_id
 
-  def call
-    if task.stage != 'Submitted'
-      raise Service::Error.new('tasks.statusNotSubmitted')
+    def initialize(task:, responsible_id: nil)
+      super()
+      @task = task
+      @responsible_id = responsible_id
     end
 
-    updated = Logidze.with_responsible(responsible_id) { task.update(stage: 'Approved', approved_at: Time.zone.now) }
-    if updated
-      task.sync_to_airtable
-      WebhookEvent.trigger('tasks.approved', WebhookEvent::Task.data(task))
-      return task
-    end
+    def call
+      raise Service::Error, 'tasks.statusNotSubmitted' if task.stage != 'Submitted'
 
-    raise Service::Error.new(task.errors.full_messages.first)
+      updated = Logidze.with_responsible(responsible_id) { task.update(stage: 'Approved', approved_at: Time.zone.now) }
+      if updated
+        task.sync_to_airtable
+        return task
+      end
+
+      raise Service::Error, task.errors.full_messages.first
+    end
   end
 end

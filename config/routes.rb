@@ -36,7 +36,6 @@ Rails.application.routes.draw do
     resources :project_skills
     resources :countries
     resources :blacklisted_domains
-    resources :webhook_events
     resources :webhooks, only: %i[index show]
     namespace :guild do
       resources :posts, as: :opportunity

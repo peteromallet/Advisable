@@ -32,14 +32,6 @@ RSpec.describe Mutations::RequestQuote do
     expect(stage).to eq('Quote Requested')
   end
 
-  it 'triggers a webhook' do
-    expect(WebhookEvent).to receive(:trigger).with(
-      'tasks.quote_requested',
-      any_args
-    )
-    AdvisableSchema.execute(query, context: context)
-  end
-
   context 'when the task does not have a name' do
     let(:task) { create(:task, stage: 'Not Assigned', name: nil) }
 

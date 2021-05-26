@@ -35,11 +35,6 @@ RSpec.describe Mutations::CreateTask do
     it 'creates a new task' do
       expect(response['data']['createTask']['task']).not_to be_nil
     end
-
-    it 'triggers a webhook' do
-      expect(WebhookEvent).to receive(:trigger).with('tasks.created', any_args)
-      AdvisableSchema.execute(query, context: context)
-    end
   end
 
   context 'when the specialist is authenticated' do

@@ -49,14 +49,6 @@ RSpec.describe Mutations::SendProposal do
     }.from("Brief Confirmed").to("Proposal Received")
   end
 
-  it "triggers a webhook" do
-    expect(WebhookEvent).to receive(:trigger).with(
-      "applications.proposal_sent",
-      any_args
-    )
-    AdvisableSchema.execute(query, context: context)
-  end
-
   context "when there is no logged in user" do
     let(:context) { {current_user: nil} }
 
