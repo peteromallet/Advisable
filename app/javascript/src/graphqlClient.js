@@ -9,12 +9,11 @@ const cache = createCache();
 
 const authLink = setContext((_, { headers }) => {
   const csrfElement = document.querySelector("meta[name=csrf-token]");
-  const csrf = csrfElement?.getAttribute("content");
 
   return {
     headers: {
       ...headers,
-      "X-CSRF-Token": csrf,
+      "X-CSRF-Token": window?._CSRF || csrfElement.content,
       "X-RELEASED-AT": process.env.RELEASED_AT,
     },
   };
