@@ -2,8 +2,9 @@ import React from "react";
 import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
-import { Formik, Form, Field } from "formik";
-import { Box, Autocomplete, Error } from "@advisable/donut";
+import { Formik, Form } from "formik";
+import { Box, Combobox, Error } from "@advisable/donut";
+import FormField from "src/components/FormField";
 import SubmitButton from "components/SubmitButton";
 import PopularSkills from "./PopularSkills";
 import { UPDATE_PROJECT } from "./queries";
@@ -16,7 +17,7 @@ export default function JobSkills({ data }) {
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const initialValues = {
-    skills: data.project.skills.map((s) => s.name),
+    skills: data.project.skills,
   };
 
   const handleSubmit = async (values, formik) => {
@@ -24,7 +25,7 @@ export default function JobSkills({ data }) {
       variables: {
         input: {
           id,
-          skills: values.skills,
+          skills: values.skills.map((s) => s.value),
         },
       },
     });
@@ -68,12 +69,12 @@ export default function JobSkills({ data }) {
           <JobSetupStepSubHeader mb="l">
             This is to help us know which specialists to invite to this project.
           </JobSetupStepSubHeader>
-          <Field
+          <FormField
+            as={Combobox}
             max={5}
             multiple
             name="skills"
-            marginBottom="xl"
-            as={Autocomplete}
+            marginBottom={7}
             options={skillOptions}
             placeholder="e.g Facebook Advertising"
             onChange={(skills) => formik.setFieldValue("skills", skills)}
