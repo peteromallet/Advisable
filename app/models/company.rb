@@ -91,7 +91,7 @@ end
 #  budget                            :bigint
 #  business_type                     :string
 #  feedback                          :boolean
-#  goals                             :text             default([]), is an Array
+#  goals                             :jsonb
 #  invoice_company_name              :string
 #  invoice_name                      :string
 #  kind                              :string

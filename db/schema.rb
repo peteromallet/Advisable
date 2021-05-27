@@ -349,9 +349,9 @@ ActiveRecord::Schema.define(version: 2021_06_03_070314) do
     t.string "vat_number"
     t.jsonb "address"
     t.boolean "bank_transfers_enabled", default: false
-    t.string "business_type"
-    t.text "goals", default: [], array: true
+    t.jsonb "goals"
     t.boolean "feedback"
+    t.string "business_type"
     t.string "marketing_attitude"
     t.bigint "budget"
     t.jsonb "log_data"
