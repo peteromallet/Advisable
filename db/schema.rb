@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_24_140027) do
+ActiveRecord::Schema.define(version: 2021_05_26_104245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -1007,14 +1007,6 @@ ActiveRecord::Schema.define(version: 2021_05_24_140027) do
     t.string "zoom_url"
     t.index ["interview_id"], name: "index_video_calls_on_interview_id"
     t.index ["uid"], name: "index_video_calls_on_uid"
-  end
-
-  create_table "webhook_events", force: :cascade do |t|
-    t.string "name"
-    t.string "event"
-    t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "webhooks", force: :cascade do |t|
