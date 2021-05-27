@@ -4,7 +4,6 @@ module Mutations
   class UpdateClientApplication < Mutations::BaseMutation
     description "Updates the users information during signup"
 
-    # rubocop:disable GraphQL/ExtractInputType
     argument :budget, Int, required: false
     argument :business_type, String, required: false
     argument :company_name, String, required: false
@@ -14,7 +13,6 @@ module Mutations
     argument :industry, String, required: false
     argument :marketing_attitude, String, required: false
     argument :title, String, required: false
-    # rubocop:enable GraphQL/ExtractInputType
 
     field :client_application, Types::ClientApplicationType, null: true
 
@@ -30,22 +28,29 @@ module Mutations
       current_user.title = args[:title] if args.key?(:title)
       company = current_user.company
       company.name = args[:company_name] if args.key?(:company_name)
-      company.budget = args[:budget] if args.key?(:budget)
-      company.business_type = args[:business_type] if args.key?(:business_type)
-      company.kind = args[:company_type] if args.key?(:company_type)
-      company.goals = args[:goals] if args.key?(:goals)
-      company.feedback = args[:feedback] if args.key?(:feedback)
-      company.marketing_attitude = args[:marketing_attitude] if args.key?(:marketing_attitude)
       company.industry = Industry.find_by_name!(args[:industry]) if args.key?(:industry)
+      company.kind = args[:company_type] if args.key?(:company_type)
+      company.assign_attributes(
+        args.slice(
+          :budget,
+          :business_type,
+          :goals,
+          :feedback,
+          :marketing_attitude,
+        )
+      )
       success = current_account_responsible_for do
         current_user.save && company.save
       end
+
       if success
         current_user.sync_to_airtable
-        return {client_application: current_user}
+      else
+        message = copmany.errors.full_messages.first
+        ApiError.invalid_request('failedToSave', message)
       end
-      message = copmany.errors.full_messages.first
-      ApiError.invalid_request('failedToSave', message)
+
+      {client_application: current_user}
     end
   end
 end
