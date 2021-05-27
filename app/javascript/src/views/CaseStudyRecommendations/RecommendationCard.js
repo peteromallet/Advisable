@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useHistory } from "react-router";
 import { Text, Box } from "@advisable/donut";
-import ArchiveButton from "./ArchiveButton";
+import CaseStudyActions from "./CaseStudyActions";
 import {
   StyledRecommendationCard,
   StyledRecommendationCardAvatar,
@@ -47,7 +47,7 @@ export default function RecommendationCard({ search, caseStudy, zIndex }) {
         </Box>
       </Box>
       <StyledRecommendationCardActions>
-        <ArchiveButton search={search} article={caseStudy} />
+        <CaseStudyActions search={search} caseStudy={caseStudy} />
       </StyledRecommendationCardActions>
     </StyledRecommendationCard>
   );

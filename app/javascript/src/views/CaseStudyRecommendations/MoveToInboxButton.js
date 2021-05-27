@@ -5,7 +5,7 @@ import { theme } from "@advisable/donut";
 import { useUnarchive } from "./queries";
 
 const StyledInboxButtonLabel = styled.div`
-  font-size: 14px;
+  font-size: 13px;
   color: ${theme.colors.neutral700};
 `;
 
@@ -28,6 +28,7 @@ const StyledInboxButtonIcon = styled.div`
 `;
 
 const StyledInboxButton = styled.div`
+  width: 60px;
   cursor: pointer;
   align-items: center;
   display: inline-flex;
@@ -67,7 +68,7 @@ export default function MoveToInboxButton({
       <StyledInboxButtonIcon>
         <InboxIn />
       </StyledInboxButtonIcon>
-      <StyledInboxButtonLabel>Inbox</StyledInboxButtonLabel>
+      <StyledInboxButtonLabel>Unarchive</StyledInboxButtonLabel>
     </StyledInboxButton>
   );
 }
