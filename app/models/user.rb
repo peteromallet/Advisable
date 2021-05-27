@@ -96,7 +96,7 @@ class User < ApplicationRecord
     ::CaseStudy::Search.create!(
       user: self,
       business_type: company.kind,
-      goals: company&.goals,
+      goals: company.goals,
       name: "Project recommendations for #{company.name}"
     )
   end

@@ -6,7 +6,6 @@ module Mutations
 
     description "Creates a new client account"
 
-    # rubocop:disable GraphQL/ExtractInputType
     argument :email, String, required: true
     argument :first_name, String, required: true
     argument :last_name, String, required: true
@@ -14,7 +13,6 @@ module Mutations
     argument :utm_campaign, String, required: false
     argument :utm_medium, String, required: false
     argument :utm_source, String, required: false
-    # rubocop:enable GraphQL/ExtractInputType
 
     field :viewer, Types::ViewerUnion, null: false
 
@@ -25,7 +23,7 @@ module Mutations
 
         user = User.new(
           account: account,
-          company: Company.new(name: ""),
+          company: Company.new,
           rid: args[:rid],
           campaign_name: args[:utm_campaign],
           campaign_source: args[:utm_source],

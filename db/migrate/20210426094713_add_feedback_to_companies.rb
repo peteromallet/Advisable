@@ -2,6 +2,6 @@
 
 class AddFeedbackToCompanies < ActiveRecord::Migration[6.1]
   def change
-    add_column :companies, :feedback, :boolean
+    add_column(:companies, :feedback, :boolean)
   end
 end

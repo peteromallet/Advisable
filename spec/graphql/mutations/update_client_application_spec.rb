@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Mutations::UpdateClientApplication do
+RSpec.describe(Mutations::UpdateClientApplication) do
   let(:user) { create(:user, application_status: "Application Started") }
   let(:context) { {current_user: user} }
 
@@ -26,7 +26,7 @@ RSpec.describe Mutations::UpdateClientApplication do
     AdvisableSchema.execute(query, context: context, variables: {input: input})
   end
 
-  it 'updates the users company name' do
+  it "updates the users company name" do
     expect(user.company.reload.name).not_to eq("CHANGED")
     request({companyName: "CHANGED"})
     expect(user.company.reload.name).to eq("CHANGED")
@@ -38,7 +38,7 @@ RSpec.describe Mutations::UpdateClientApplication do
     end
   end
 
-  context 'when passing industries' do
+  context "when passing industries" do
     let!(:industry) { create(:industry, name: "Marketing") }
 
     it "updates the users industries" do
@@ -51,7 +51,7 @@ RSpec.describe Mutations::UpdateClientApplication do
     end
   end
 
-  context 'when passing business type' do
+  context "when passing business type" do
     it "updates the business type" do
       user.company.update(business_type: nil)
       expect do
@@ -62,7 +62,7 @@ RSpec.describe Mutations::UpdateClientApplication do
     end
   end
 
-  context 'when passing title' do
+  context "when passing title" do
     it "updates the title" do
       user.update(title: nil)
       expect do
@@ -71,7 +71,7 @@ RSpec.describe Mutations::UpdateClientApplication do
     end
   end
 
-  context 'when passing company type' do
+  context "when passing company type" do
     it "updates the company kind" do
       user.company.update(kind: nil)
       expect do
@@ -82,16 +82,15 @@ RSpec.describe Mutations::UpdateClientApplication do
     end
   end
 
-  context 'when passing goals' do
+  context "when passing goals" do
     it "updates the company goals" do
-      user.company.update(goals: [])
+      user.company.update(goals: %w[Three])
       request({goals: %w[One Two]})
-      expect(user.company.reload.goals).to include("One")
-      expect(user.company.reload.goals).to include("Two")
+      expect(user.company.reload.goals).to match_array(%w[One Two])
     end
   end
 
-  context 'when passing budget' do
+  context "when passing budget" do
     it "updates the users budget" do
       user.company.update(budget: nil)
       expect do
@@ -102,7 +101,7 @@ RSpec.describe Mutations::UpdateClientApplication do
     end
   end
 
-  context 'when passing feedback' do
+  context "when passing feedback" do
     it "sets the company feedback attribute" do
       user.company.update(feedback: nil)
       expect do
@@ -113,7 +112,7 @@ RSpec.describe Mutations::UpdateClientApplication do
     end
   end
 
-  context 'when passing marketingAttitude' do
+  context "when passing marketingAttitude" do
     it "sets the company marketing attitude attribute" do
       user.company.update(marketing_attitude: nil)
       expect do

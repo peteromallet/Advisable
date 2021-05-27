@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Mutations::CreateClientAccount do
+RSpec.describe(Mutations::CreateClientAccount) do
   let(:first_name) { 'Test' }
   let(:last_name) { 'Account' }
   let(:email) { 'test@test.com' }
