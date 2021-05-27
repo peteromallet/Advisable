@@ -54,6 +54,7 @@ module Mutations
       return account if account.save
 
       ApiError.invalid_request("EMAIL_TAKEN", "Email already belongs to another account") if account.errors.added?(:email, "has already been taken")
+      ApiError.invalid_request("FAILED_TO_CREATE_ACCOUNT")
     end
   end
 end
