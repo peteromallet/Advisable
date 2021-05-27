@@ -9,12 +9,11 @@ const cache = createCache();
 
 const authLink = setContext((_, { headers }) => {
   const csrfElement = document.querySelector("meta[name=csrf-token]");
-  const csrf = csrfElement?.getAttribute("content");
 
   return {
     headers: {
       ...headers,
-      "X-CSRF-Token": csrf,
+      "X-CSRF-Token": window?._CSRF || csrfElement.content,
       "X-RELEASED-AT": process.env.RELEASED_AT,
     },
   };
@@ -36,7 +35,23 @@ const retryLink = new RetryLink({
   },
 });
 
-const errorLink = onError(({ graphQLErrors, operation }) => {
+const errorLink = onError(({ graphQLErrors, operation, networkError }) => {
+  if (networkError) {
+    if (networkError.result?.message === "INVALID_CSRF") {
+      const csrfElement = document.querySelector("meta[name=csrf-token]");
+      const csrf = csrfElement?.getAttribute("content");
+
+      Sentry.withScope(function (scope) {
+        scope.setContext("csrf_token", {
+          has_csrf_element: csrfElement ? true : false,
+          csrf,
+        });
+
+        Sentry.captureMessage("Invalid CSRF Token");
+      });
+    }
+  }
+
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, ...rest }) => {
       const name = operation.operationName;
