@@ -14,6 +14,9 @@ const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
         <CloseNav onClick={onCloseNav}>
           <X />
         </CloseNav>
+        <NavItem onClick={onCloseNav} to="/explore">
+          Explore
+        </NavItem>
         <NavItem onClick={onCloseNav} to="/projects">
           Find Talent
         </NavItem>
