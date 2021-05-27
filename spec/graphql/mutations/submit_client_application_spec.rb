@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Mutations::SubmitClientApplication do
+RSpec.describe(Mutations::SubmitClientApplication) do
   let(:application_status) { "Application Started" }
   let(:user) { create(:user, application_status: application_status) }
   let(:context) { {current_user: user} }
@@ -51,7 +51,7 @@ RSpec.describe Mutations::SubmitClientApplication do
     let(:goals) { %w[one two] }
 
     it "creates one with goals and company name" do
-      user.company.update goals: goals
+      user.company.update(goals: goals)
       request
       search = ::CaseStudy::Search.find_by(user: user)
       expect(search.goals).to match_array(goals)

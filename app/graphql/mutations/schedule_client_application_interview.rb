@@ -12,14 +12,12 @@ module Mutations
     def authorized?(*_args)
       requires_client!
 
-      if current_user.application_status != "Invited To Interview"
-        ApiError.invalid_request(
-          "INVALID_APPLICATION_STATUS",
-          "The account status must be 'Invited To Interview' but it is #{current_user.application_status}"
-        )
-      end
+      return true if current_user.application_status == "Invited To Interview"
 
-      true
+      ApiError.invalid_request(
+        "INVALID_APPLICATION_STATUS",
+        "The account status must be 'Invited To Interview' but it is #{current_user.application_status}"
+      )
     end
 
     def resolve
