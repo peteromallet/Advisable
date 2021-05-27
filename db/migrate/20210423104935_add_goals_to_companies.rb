@@ -2,6 +2,14 @@
 
 class AddGoalsToCompanies < ActiveRecord::Migration[6.1]
   def change
-    add_column(:companies, :goals, :text, array: true, default: [])
+    safety_assured do
+      change_table(:companies, bulk: true) do |t|
+        t.column(:goals, :jsonb)
+        t.column(:feedback, :boolean)
+        t.column(:business_type, :string)
+        t.column(:marketing_attitude, :string)
+        t.column(:budget, :bigint)
+      end
+    end
   end
 end
