@@ -20,7 +20,7 @@ export default function Searches() {
     <Container maxWidth="1100px" py={12}>
       <Box maxWidth="600px" marginBottom={8}>
         <Text fontSize="4xl" fontWeight="600" letterSpacing="-0.04rem" mb={2}>
-          Project recommendations
+          Explore
         </Text>
         <Text fontSize="lg" color="neutral800" lineHeight="24px">
           See how other companies have used freelancers in our network to

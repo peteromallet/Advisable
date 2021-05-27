@@ -1,8 +1,7 @@
 import React, { useCallback } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import ArchiveButton from "./ArchiveButton";
-import MoveToInboxButton from "./MoveToInboxButton";
+import CaseStudyActions from "./CaseStudyActions";
 
 const StyledActionBarContainer = styled.div`
   left: 50%;
@@ -36,19 +35,11 @@ export default function ActionBar({ search, caseStudy }) {
   return (
     <StyledActionBarContainer>
       <StyledActionBar>
-        {caseStudy.isArchived ? (
-          <MoveToInboxButton
-            search={search}
-            article={caseStudy}
-            onArchive={handleArchive}
-          />
-        ) : (
-          <ArchiveButton
-            search={search}
-            article={caseStudy}
-            onArchive={handleArchive}
-          />
-        )}
+        <CaseStudyActions
+          search={search}
+          caseStudy={caseStudy}
+          onArchive={handleArchive}
+        />
       </StyledActionBar>
     </StyledActionBarContainer>
   );

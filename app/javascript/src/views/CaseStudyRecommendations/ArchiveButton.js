@@ -17,7 +17,7 @@ import { Form, Formik, Field } from "formik";
 import SubmitButton from "src/components/SubmitButton";
 
 const StyledArchiveButtonLabel = styled.div`
-  font-size: 14px;
+  font-size: 13px;
   color: ${theme.colors.neutral700};
 `;
 
@@ -40,6 +40,7 @@ const StyledArchiveButtonIcon = styled.div`
 `;
 
 const StyledArchiveButton = styled.div`
+  width: 60px;
   cursor: pointer;
   align-items: center;
   display: inline-flex;
