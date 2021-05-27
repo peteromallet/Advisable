@@ -6,10 +6,11 @@ class InvoiceLineItem < ApplicationRecord
   belongs_to :invoice
   belongs_to :task, optional: true
 
-  def create_in_stripe!
+  def create_in_stripe!(now: false)
     return if stripe_invoice_line_item_id.present?
 
-    Stripe::CreateInvoiceLineItemJob.perform_later(self)
+    method = now ? :perform_now : :perform_later
+    Stripe::CreateInvoiceLineItemJob.public_send(method, self)
   end
 end
 
