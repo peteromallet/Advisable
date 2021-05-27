@@ -27,12 +27,57 @@ export function useArchive(opts) {
           results(previous, { readField }) {
             return {
               ...previous,
-              nodes: previous.nodes.filter((nodeRef) => {
-                return article.id !== readField("id", nodeRef);
+              edges: previous.edges.filter((edge) => {
+                return article.id !== readField("id", edge.node);
               }),
             };
           },
           archived(previous, { toReference }) {
+            return {
+              ...previous,
+              edges: [
+                ...previous.edges,
+                {
+                  node: toReference(article),
+                },
+              ],
+            };
+          },
+        },
+      });
+    },
+    ...opts,
+  });
+}
+
+export function useUnarchive(opts) {
+  return useMutation(ASSIGN, {
+    update(cache, response) {
+      if (response.errors) return;
+
+      const { article, search } = response.data.assignCaseStudySearchArticle;
+
+      cache.modify({
+        id: cache.identify(article),
+        fields: {
+          isArchived() {
+            return false;
+          },
+        },
+      });
+
+      cache.modify({
+        id: cache.identify(search),
+        fields: {
+          archived(previous, { readField }) {
+            return {
+              ...previous,
+              edges: previous.edges.filter((edge) => {
+                return article.id !== readField("id", edge.node);
+              }),
+            };
+          },
+          results(previous, { toReference }) {
             return {
               ...previous,
               edges: [
