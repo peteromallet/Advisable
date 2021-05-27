@@ -27,7 +27,8 @@ RSpec.describe GraphqlController, type: :request do
       let(:api_key) { "1234" }
 
       it "is unauthorized" do
-        expect { post("/graphql", params: params, headers: headers) }.to raise_error(ActionController::InvalidAuthenticityToken)
+        post("/graphql", params: params, headers: headers)
+        expect(JSON[response.body]["message"]).to eq("INVALID_CSRF")
       end
     end
 
@@ -35,7 +36,8 @@ RSpec.describe GraphqlController, type: :request do
       let(:api_key) { "" }
 
       it "is unauthorized" do
-        expect { post("/graphql", params: params, headers: headers) }.to raise_error(ActionController::InvalidAuthenticityToken)
+        post("/graphql", params: params, headers: headers)
+        expect(JSON[response.body]["message"]).to eq("INVALID_CSRF")
       end
     end
 
@@ -43,7 +45,8 @@ RSpec.describe GraphqlController, type: :request do
       let(:headers) { {} }
 
       it "is unauthorized" do
-        expect { post("/graphql", params: params, headers: headers) }.to raise_error(ActionController::InvalidAuthenticityToken)
+        post("/graphql", params: params, headers: headers)
+        expect(JSON[response.body]["message"]).to eq("INVALID_CSRF")
       end
     end
   end

@@ -116,6 +116,10 @@ mixpanel.init("<%= ENV["MIXPANEL"] %>", {"api_host": "https://api-eu.mixpanel.co
         window.advisableAdmin = "<%= current_account.name %>"
       </script>
     <% end %>
+
+    <script>
+      window._CSRF = "<%= form_authenticity_token %>"
+    </script>
   </head>
 
   <body>
