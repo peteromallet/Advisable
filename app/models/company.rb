@@ -54,6 +54,10 @@ class Company < ApplicationRecord
     setup
   end
 
+  def goals
+    super || []
+  end
+
   def payment_method
     stripe_customer.invoice_settings.default_payment_method
   end
