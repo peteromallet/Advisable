@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { InboxIn } from "@styled-icons/heroicons-solid/InboxIn";
 import { theme } from "@advisable/donut";
+import { useUnarchive } from "./queries";
 
 const StyledInboxButtonLabel = styled.div`
   font-size: 14px;
@@ -40,8 +41,26 @@ const StyledInboxButton = styled.div`
   }
 `;
 
-export default function MoveToInboxButton() {
-  const handleClick = () => {};
+export default function MoveToInboxButton({
+  search,
+  article,
+  onSuccess = () => {},
+}) {
+  const [unarchive] = useUnarchive();
+
+  const handleClick = async () => {
+    await unarchive({
+      variables: {
+        input: {
+          action: "unarchive",
+          search: search.id,
+          article: article.id,
+        },
+      },
+    });
+
+    onSuccess();
+  };
 
   return (
     <StyledInboxButton onClick={handleClick}>

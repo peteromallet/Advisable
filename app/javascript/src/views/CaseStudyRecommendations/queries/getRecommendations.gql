@@ -3,14 +3,16 @@ query recommendationsInbox($id: ID!) {
     id
     name
     results {
-      nodes {
-        id
-        title
-        subtitle
-        isArchived(id: $id)
-        specialist {
+      edges {
+        node {
           id
-          avatar
+          title
+          subtitle
+          isArchived(id: $id)
+          specialist {
+            id
+            avatar
+          }
         }
       }
     }

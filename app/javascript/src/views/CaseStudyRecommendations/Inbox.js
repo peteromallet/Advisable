@@ -18,7 +18,7 @@ export default function RecommendationsInbox() {
   if (loading) return <>loading...</>;
 
   const search = data.caseStudySearch;
-  const caseStudies = search.results.nodes;
+  const caseStudies = search.results.edges.map((e) => e.node);
 
   return (
     <Container maxWidth="900px" py={10}>
