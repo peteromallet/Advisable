@@ -22,7 +22,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
-  def request(input)
+  def request(input = {})
     AdvisableSchema.execute(query, context: context, variables: {input: input})
   end
 
@@ -34,7 +34,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
 
   context "when company name is not passed" do
     it "doesnt update the company name" do
-      expect { request({}) }.not_to(change { user.company.reload.name })
+      expect { request }.not_to(change { user.company.reload.name })
     end
   end
 

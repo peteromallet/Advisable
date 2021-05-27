@@ -45,12 +45,10 @@ module Mutations
 
       if success
         current_user.sync_to_airtable
+        {client_application: current_user}
       else
-        message = copmany.errors.full_messages.first
-        ApiError.invalid_request('failedToSave', message)
+        ApiError.invalid_request('failedToSave', company.errors.full_messages.first)
       end
-
-      {client_application: current_user}
     end
   end
 end
