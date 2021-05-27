@@ -3,7 +3,7 @@
 require 'csv'
 
 class GenerateFinanceCsvJob < ApplicationJob
-  HEADERS = %w[name recipientEmail paymentReference receiverType amountCurrency amount sourceCurrency targetCurrency IBAN type].freeze
+  HEADERS = %w[name recipientEmail paymentReference receiverType amountGross amountNet sourcingFee amountCurrency sourceCurrency targetCurrency IBAN type].freeze
 
   queue_as :default
 
@@ -25,8 +25,8 @@ class GenerateFinanceCsvJob < ApplicationJob
         end
 
         amount_currency = "USD" # TODO: Apparently not always
-        amount = Invoice.draft.first.line_items.sum(:amount)
-        # TODO: Remove advisable fee
+        amount_gross = invoice.line_items.sum(:amount)
+        amount_net = amount_gross * (1 - specialist.sourcing_fee_percentage)
         # TODO: Do currency conversion on amount
 
         exported_invoices << invoice.id
@@ -35,8 +35,10 @@ class GenerateFinanceCsvJob < ApplicationJob
           email,
           "invoice##{invoice.id}",
           "PRIVATE",
+          amount_gross,
+          amount_net,
+          specialist.sourcing_fee_percentage * 100,
           amount_currency,
-          amount,
           SOURCE_CURRENCY,
           specialist.bank_currency.presence || SOURCE_CURRENCY,
           iban,
