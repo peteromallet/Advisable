@@ -8,6 +8,7 @@ import CaseStudyContent from "src/components/CaseStudyContent";
 import { useCaseStudy } from "./queries";
 import Sticky from "react-stickynode";
 import ActionBar from "./ActionBar";
+import orbits from "./orbits.svg";
 
 const StyledHero = styled.div`
   width: 100%;
@@ -16,6 +17,8 @@ const StyledHero = styled.div`
   padding-bottom: 68px;
   display: flex;
   align-items: flex-end;
+  background-size: cover;
+  background-position: center;
 `;
 
 const StyledArticleTitle = styled.h1`
@@ -87,7 +90,7 @@ export default function CaseStudy() {
 
   return (
     <>
-      <StyledHero>
+      <StyledHero style={{ backgroundImage: `url(${orbits})` }}>
         <Container>
           <StyledSidebar>
             <Sticky top={102} enabled>
@@ -120,26 +123,28 @@ export default function CaseStudy() {
         </Container>
       </StyledHero>
       <Container>
-        {caseStudy.comment ? (
-          <Card marginTop="-32px" padding={5} borderRadius="16px">
-            <Text fontSize="lg" lineHeight="20px" fontStyle="italic">
-              &quot;{caseStudy.comment}&quot;
-            </Text>
-          </Card>
-        ) : null}
-        <Text
-          fontSize="xl"
-          lineHeight="28px"
-          fontWeight={350}
-          paddingTop={10}
-          paddingBottom={6}
-        >
-          {caseStudy.subtitle}
-        </Text>
-        <CaseStudySummaryResults caseStudy={caseStudy} />
-        <Box height="1px" bg="neutral200" marginY={8} />
-        <CaseStudyContent caseStudy={caseStudy} />
-        <ActionBar search={caseStudySearch} caseStudy={caseStudy} />
+        <Box paddingBottom="120px">
+          {caseStudy.comment ? (
+            <Card marginTop="-32px" padding={5} borderRadius="16px">
+              <Text fontSize="lg" lineHeight="20px" fontStyle="italic">
+                &quot;{caseStudy.comment}&quot;
+              </Text>
+            </Card>
+          ) : null}
+          <Text
+            fontSize="xl"
+            lineHeight="28px"
+            fontWeight={350}
+            paddingTop={10}
+            paddingBottom={6}
+          >
+            {caseStudy.subtitle}
+          </Text>
+          <CaseStudySummaryResults caseStudy={caseStudy} />
+          <Box height="1px" bg="neutral200" marginY={8} />
+          <CaseStudyContent caseStudy={caseStudy} />
+          <ActionBar search={caseStudySearch} caseStudy={caseStudy} />
+        </Box>
       </Container>
     </>
   );
