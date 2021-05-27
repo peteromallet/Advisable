@@ -3,7 +3,7 @@ import truncate from "lodash/truncate";
 import styled from "styled-components";
 import { useParams } from "react-router";
 import { Check } from "@styled-icons/heroicons-solid/Check";
-import { Circle, Box, Text, Card, Button } from "@advisable/donut";
+import { Circle, Box, Text, Card, Button, theme } from "@advisable/donut";
 import CaseStudyContent from "src/components/CaseStudyContent";
 import { useCaseStudy } from "./queries";
 import Sticky from "react-stickynode";
@@ -19,6 +19,22 @@ const StyledHero = styled.div`
   align-items: flex-end;
   background-size: cover;
   background-position: center;
+`;
+
+const StyledName = styled.a`
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.04rem;
+  padding-top: 24px;
+  padding-bottom: 8px;
+  display: inline-block;
+  color: ${theme.colors.neutral900};
+
+  &:hover {
+    color: ${theme.colors.blue600};
+    text-decoration: underline;
+  }
 `;
 
 const StyledArticleTitle = styled.h1`
@@ -45,7 +61,7 @@ const StyledSidebar = styled.div`
 `;
 
 const StyledAvatar = styled.div`
-  width: 200px;
+  width: 220px;
   height: 260px;
   background: white;
   border-radius: 24px;
@@ -97,24 +113,21 @@ export default function CaseStudy() {
               <StyledAvatar
                 style={{ backgroundImage: `url(${specialist.avatar})` }}
               />
-              <Text
-                pt={6}
-                pb={4}
-                fontSize="3xl"
-                fontWeight={550}
-                letterSpacing="-0.03rem"
+              <StyledName
+                target="_blank"
+                href={`/freelancers/${specialist.id}`}
               >
                 {specialist.name}
-              </Text>
+              </StyledName>
               <Text
-                fontSize="sm"
+                fontSize="xs"
                 fontWeight={350}
                 lineHeight="20px"
                 paddingBottom={8}
               >
-                {truncate(specialist.bio, { length: 180 })}
+                {truncate(specialist.bio, { length: 170 })}
               </Text>
-              <Button variant="gradient" size="l">
+              <Button variant="gradient">
                 Work with {specialist.firstName}
               </Button>
             </Sticky>
