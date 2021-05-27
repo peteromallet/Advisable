@@ -5,9 +5,9 @@ import { AnimateSharedLayout, motion } from "framer-motion";
 import INBOX from "./queries/getRecommendations.gql";
 import { Box, Container, Text } from "@advisable/donut";
 import RecommendationCard from "./RecommendationCard";
-import pluralize from "src/utilities/pluralize";
 import CaseStudyRecommendationsNavigation from "./Navigation";
 import ArchivedRecommendations from "./ArchivedRecommendations";
+import InboxEmpty from "./InboxEmpty";
 
 export default function RecommendationsInbox() {
   const { id } = useParams();
@@ -23,7 +23,7 @@ export default function RecommendationsInbox() {
   return (
     <Container maxWidth="900px" py={10}>
       <Box maxWidth="500px" marginX="auto" textAlign="center" mb={10}>
-        <Box maxWidth="440px" mx="auto" mb={3}>
+        <Box maxWidth="440px" mx="auto" mb={6}>
           <Text
             fontSize="4xl"
             fontWeight="550"
@@ -33,21 +33,12 @@ export default function RecommendationsInbox() {
             Project recommendations for Dunder Mifflin
           </Text>
         </Box>
-        <Text fontSize="lg" lineHeight="24px" color="neutral700" mb={4}>
-          You have{" "}
-          {pluralize(
-            caseStudies.length,
-            "project recommendation",
-            "project recommendations",
-          )}{" "}
-          of how freelancers in our network have solved a similar problem for
-          other companies.
-        </Text>
         <CaseStudyRecommendationsNavigation inboxCount={caseStudies.length} />
       </Box>
       <Box position="relative">
         <Switch>
           <Route path="/explore/:id/inbox">
+            {caseStudies.length === 0 && <InboxEmpty />}
             <AnimateSharedLayout>
               {caseStudies.map((c) => (
                 <motion.div initial={false} layoutId={c.id} key={c.id}>
