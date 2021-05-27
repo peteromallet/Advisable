@@ -42,7 +42,7 @@ const Questions = ({
     application.questions.find((q) => q.question === question) || {};
   const previousQuestion =
     application.questions.find((q) => {
-      q.question === questions[number - 2];
+      return q.question === questions[number - 2];
     }) || {};
 
   useEffect(() => {
