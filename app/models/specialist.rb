@@ -107,6 +107,11 @@ class Specialist < ApplicationRecord
       url
     end
   end
+
+  # sourcing_fee value is stored in basis points integers: 8% -> 800 bp
+  def sourcing_fee_percentage
+    (sourcing_fee.presence || 800) / BigDecimal("10000")
+  end
 end
 
 # == Schema Information
@@ -154,6 +159,7 @@ end
 #  ratings                           :jsonb
 #  remote                            :boolean
 #  reviews_count                     :integer
+#  sourcing_fee                      :integer
 #  travel_availability               :string
 #  trustpilot_review_status          :string
 #  uid                               :string
