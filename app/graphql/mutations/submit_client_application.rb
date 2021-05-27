@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# frozen_string_literal: true
-
 module Mutations
   class SubmitClientApplication < Mutations::BaseMutation
     description "Submits a clients application"
@@ -9,8 +7,10 @@ module Mutations
 
     def authorized?
       requires_client!
-      check_application_started
-      true
+
+      return true if current_user.application_status == "Application Started"
+
+      ApiError.invalid_request("APPLICATION_NOT_STARTED", "application status is #{current_user.application_status}")
     end
 
     def resolve
@@ -24,14 +24,6 @@ module Mutations
       ClientApplicationSubmittedNotificationJob.perform_later(current_user.id)
 
       {client_application: current_user}
-    end
-
-    private
-
-    def check_application_started
-      return if current_user.application_status == "Application Started"
-
-      ApiError.invalid_request("APPLICATION_NOT_STARTED", "application status is #{current_user.application_status}")
     end
   end
 end
