@@ -73,6 +73,11 @@ class Company < ApplicationRecord
     }
   end
 
+  # admin_fee value is stored in basis points integers: 5% -> 500 bp
+  def admin_fee_percentage
+    (admin_fee.presence || 500) / BigDecimal("10000")
+  end
+
   private
 
   def are_payments_setup
@@ -91,6 +96,7 @@ end
 #  id                                :uuid             not null, primary key
 #  accepted_project_payment_terms_at :datetime
 #  address                           :jsonb
+#  admin_fee                         :integer
 #  bank_transfers_enabled            :boolean          default(FALSE)
 #  billing_email                     :string
 #  budget                            :bigint

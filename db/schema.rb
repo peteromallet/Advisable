@@ -379,6 +379,7 @@ ActiveRecord::Schema.define(version: 2021_07_06_072105) do
     t.string "marketing_attitude"
     t.bigint "budget"
     t.jsonb "log_data"
+    t.integer "admin_fee"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
     t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
   end
@@ -942,6 +943,7 @@ ActiveRecord::Schema.define(version: 2021_07_06_072105) do
     t.datetime "guild_featured_member_at"
     t.string "guild_calendly_link"
     t.bigint "referrer_id"
+    t.integer "sourcing_fee"
     t.bigint "interviewer_id"
     t.string "case_study_status"
     t.string "trustpilot_review_status"
