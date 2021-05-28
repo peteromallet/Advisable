@@ -76,6 +76,8 @@ Style/Documentation:
 
 Style/MethodCallWithArgsParentheses:
   Enabled: true
+  Exclude:
+    - "db/**/*"
   IgnoredMethods:
     - to
     - not_to
