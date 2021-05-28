@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Takes calendly's eventID and fetch interview details
 module Mutations
   class ScheduleClientApplicationInterview < BaseMutation
     description "Schedule an interview of a client with Advisable"
@@ -8,7 +7,7 @@ module Mutations
     field :user, Types::User, null: true
 
     # The scheduleClientApplicationInterview mutation
-    # requires a specalist to be logged in.
+    # requires a client to be logged in.
     def authorized?(*_args)
       requires_client!
 
