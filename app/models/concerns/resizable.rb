@@ -37,7 +37,7 @@ module Resizable
 
           images = public_send("resized_#{name}")
           mapping = images.filter_map do |image|
-            next if image.blob.blank?
+            next if image&.blob.blank?
 
             [image.blob.id, get_resized_image_url(image)]
           end.to_h
