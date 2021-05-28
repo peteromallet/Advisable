@@ -31,7 +31,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
     expect(user.company.reload.name).not_to eq("CHANGED")
     request({companyName: "CHANGED"})
     expect(user.company.reload.name).to eq("CHANGED")
-    expect(unchanged_data < user.company.reload.attributes).to eq(true)
+    expect(unchanged_data < user.company.reload.attributes).to be(true)
   end
 
   context "when company name is not passed" do
@@ -63,7 +63,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
       end.to change {
         user.company.reload.business_type
       }.from(nil).to("B2B")
-      expect(unchanged_data < user.company.reload.attributes).to eq(true)
+      expect(unchanged_data < user.company.reload.attributes).to be(true)
     end
   end
 
@@ -74,7 +74,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
       expect do
         request({title: "CEO"})
       end.to change(user, :title).from(nil).to("CEO")
-      expect(unchanged_data < user.reload.attributes).to eq(true)
+      expect(unchanged_data < user.reload.attributes).to be(true)
     end
   end
 
@@ -87,7 +87,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
       end.to change {
         user.company.reload.kind
       }.from(nil).to("Startup")
-      expect(unchanged_data < user.company.reload.attributes).to eq(true)
+      expect(unchanged_data < user.company.reload.attributes).to be(true)
     end
   end
 
@@ -97,7 +97,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
       unchanged_data = user.company.reload.attributes.dup.except("goals", "updated_at")
       request({goals: %w[One Two]})
       expect(user.company.reload.goals).to match_array(%w[One Two])
-      expect(unchanged_data < user.company.reload.attributes).to eq(true)
+      expect(unchanged_data < user.company.reload.attributes).to be(true)
     end
   end
 
@@ -110,7 +110,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
       end.to change {
         user.company.reload.budget
       }.from(nil).to(5000)
-      expect(unchanged_data < user.company.reload.attributes).to eq(true)
+      expect(unchanged_data < user.company.reload.attributes).to be(true)
     end
   end
 
@@ -123,7 +123,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
       end.to change {
         user.company.reload.feedback
       }.from(nil).to(true)
-      expect(unchanged_data < user.company.reload.attributes).to eq(true)
+      expect(unchanged_data < user.company.reload.attributes).to be(true)
     end
   end
 
@@ -136,7 +136,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
       end.to change {
         user.company.reload.marketing_attitude
       }.from(nil).to("We’re pretty happy with our strategy & tactics")
-      expect(unchanged_data < user.company.reload.attributes).to eq(true)
+      expect(unchanged_data < user.company.reload.attributes).to be(true)
     end
   end
 end
