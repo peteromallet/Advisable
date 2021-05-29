@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box, Text } from "@advisable/donut";
 import StyledChevronInputOption, { Loading } from "./styles";
 import { ChevronForward } from "@styled-icons/ionicons-outline/ChevronForward";
-import { useFormikContext } from "formik";
 
-function ChevronButtonInput({ value, options, alignWidth, size = "m", name }) {
-  const [submit, setSubmit] = useState(false);
-  const formik = useFormikContext();
-
+function ChevronButtonInput({
+  value,
+  options,
+  alignWidth,
+  size = "m",
+  onSelect,
+  loading,
+}) {
   const handleClick = (value) => (e) => {
-    formik.setFieldValue(name, value);
-    setSubmit(true);
+    onSelect(value);
     e.preventDefault();
     return;
   };
-
-  useEffect(() => {
-    if (submit) {
-      formik.submitForm();
-      setSubmit(false);
-    }
-  }, [formik, submit]);
 
   return (
     <Box>
@@ -29,7 +24,7 @@ function ChevronButtonInput({ value, options, alignWidth, size = "m", name }) {
         gridTemplateColumns={`1, ${alignWidth ? "minmax(0, 1fr)" : "auto"})`}
         gridColumnGap={2}
         gridRowGap={2}
-        css={formik.isSubmitting && "cursor: wait;"}
+        css={loading && "cursor: wait;"}
       >
         {options.map((option) => (
           <StyledChevronInputOption
@@ -37,8 +32,8 @@ function ChevronButtonInput({ value, options, alignWidth, size = "m", name }) {
             type="submit"
             key={option.value}
             data-selected={value === option.value}
-            data-submitting={formik.isSubmitting}
-            disabled={value !== option.value && formik.isSubmitting}
+            data-submitting={loading}
+            disabled={value !== option.value && loading}
             aria-label={option.label}
             onClick={handleClick(option.value)}
           >
@@ -57,7 +52,7 @@ function ChevronButtonInput({ value, options, alignWidth, size = "m", name }) {
               alignItems="center"
               justifyContent="center"
             >
-              {formik.isSubmitting && value === option.value ? (
+              {loading && value === option.value ? (
                 <Loading />
               ) : (
                 <ChevronForward />
