@@ -46,7 +46,7 @@ export default function CompanyOverview({ clientApplication }) {
     });
 
     if (res.errors) {
-      setStatus(res.errors[0]?.message);
+      setStatus("Something went wrong, please try again");
       return;
     }
 
