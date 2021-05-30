@@ -203,7 +203,7 @@ class TestData
         address: {city: "Dublin", country: "IE"},
         industry: industry,
         kind: "Startup",
-        sales_person: sales_person,
+        sales_person: sales_person
       )
     end
 
