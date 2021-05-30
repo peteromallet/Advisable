@@ -34,7 +34,7 @@ export default function CompanyStage({ clientApplication }) {
           },
         },
       },
-      onError: (err) => error(err.message),
+      onError: () => error("Something went wrong, please try again"),
     });
 
     history.push("/clients/apply/goals");
