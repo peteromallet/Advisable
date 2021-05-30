@@ -31,13 +31,7 @@ module Mutations
       company.industry = Industry.find_by_name!(args[:industry]) if args.key?(:industry)
       company.kind = args[:company_type] if args.key?(:company_type)
       company.assign_attributes(
-        args.slice(
-          :budget,
-          :business_type,
-          :goals,
-          :feedback,
-          :marketing_attitude,
-        )
+        args.slice(:budget, :business_type, :goals, :feedback, :marketing_attitude)
       )
       success = current_account_responsible_for do
         current_user.save && company.save
