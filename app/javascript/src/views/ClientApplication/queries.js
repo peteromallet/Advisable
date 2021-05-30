@@ -52,8 +52,8 @@ export const UPDATE_CLIENT_APPLICATION = gql`
 export const SUBMIT_CLIENT_APPLICATION = gql`
   ${clientApplicationFields}
 
-  mutation SubmitClientApplication($input: SubmitClientApplicationInput!) {
-    submitClientApplication(input: $input) {
+  mutation SubmitClientApplication {
+    submitClientApplication(input: {}) {
       clientApplication {
         ...ClientApplicationFields
       }
