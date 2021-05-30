@@ -55,7 +55,7 @@ export default function CompanyOverview({ clientApplication }) {
     }
 
     if (clientApplication.status === "Application Started") {
-      await submit({ variables: { input: {} } });
+      await submit();
     }
 
     history.push("/");
