@@ -77,13 +77,32 @@ const InvitedToInterview = () => {
       if (!isCalendlyEvent(e)) return null;
 
       if (e.data.event === "calendly.event_scheduled") {
-        schedule({ variables: { input: {} } });
+        schedule({
+          variables: { input: {} },
+          optimisticResponse: {
+            __typename: "Mutation",
+            scheduleClientApplicationInterview: {
+              __typename: "ScheduleClientApplicationInterviewPayload",
+              user: {
+                __typename: "User",
+                applicationStage: "Interview Scheduled",
+                id,
+                clientApplication: {
+                  id,
+                  __typename: "ClientApplication",
+                  status: "Interview Scheduled",
+                  interviewStartsAt: null,
+                },
+              },
+            },
+          },
+        });
       }
     };
 
     window.addEventListener("message", handleCalendly);
     return () => window.addEventListener("message", handleCalendly);
-  }, [schedule]);
+  }, [id, schedule]);
 
   return (
     <PromptCard mb={10}>
