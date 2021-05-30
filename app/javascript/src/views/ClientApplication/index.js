@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { AnimatePresence } from "framer-motion";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import { Box, Container, useBreakpoint } from "@advisable/donut";
+import GenericError from "src/views/GenericError";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
 import Sidebar from "./components/Sidebar";
@@ -28,8 +29,9 @@ export default function ClientApplication() {
     history.push("/");
   }
 
-  const { data, loading } = useQuery(CLIENT_APPLICATION_DATA);
+  const { data, loading, error } = useQuery(CLIENT_APPLICATION_DATA);
   if (loading) return <Loading />;
+  if (error) return <GenericError />;
   const { clientApplication, industries } = data;
 
   return (
