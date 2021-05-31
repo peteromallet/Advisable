@@ -37,6 +37,23 @@ class Invoice < ApplicationRecord
     )
     line_item.create_in_stripe!(now: true)
   end
+
+  def apply_deposit!
+    project = application.project
+    deposit_left = project.deposit_paid - project.deposit_used
+    return if deposit_left <= 0
+
+    line_item = line_items.create!(
+      name: "Deposit",
+      amount: 0 - deposit_left,
+      metadata: {charge_freelancer: false}
+    )
+    line_item.create_in_stripe!(now: true)
+
+    raise InvoiceError, "Something went wrong when applying deposit" if line_item.reload.stripe_invoice_line_item_id.blank?
+
+    project.update(deposit_used: deposit_left)
+  end
 end
 
 # == Schema Information

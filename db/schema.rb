@@ -811,6 +811,7 @@ ActiveRecord::Schema.define(version: 2021_07_06_072105) do
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
     t.jsonb "log_data"
+    t.integer "deposit_used"
     t.boolean "stop_candidate_proposed_emails"
     t.string "level_of_expertise_required"
     t.integer "likelihood_to_confirm"

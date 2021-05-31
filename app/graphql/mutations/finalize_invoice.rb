@@ -2,6 +2,8 @@
 
 module Mutations
   class FinalizeInvoice < Mutations::BaseMutation
+    description "Finalizes customer's invoice by creating admin fee, applying deposit, and marking invoice as finalized in Stripe."
+
     argument :id, ID, required: true
 
     field :invoice, Types::InvoiceType, null: true
@@ -18,6 +20,7 @@ module Mutations
     def resolve(id:)
       invoice = Invoice.find(id)
       invoice.create_admin_fee!
+      invoice.apply_deposit!
       response = Stripe::Invoice.finalize_invoice(invoice.stripe_invoice_id, auto_advance: false)
       invoice.update!(status: response.status)
       {invoice: invoice}
