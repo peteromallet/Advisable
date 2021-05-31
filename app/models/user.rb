@@ -4,8 +4,6 @@
 # A freelancer account is represented by the Specialist model. Ideally these
 # two models will eventually be merged to be different types of users.
 class User < ApplicationRecord
-  self.ignored_columns += %i[company_name]
-
   include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser

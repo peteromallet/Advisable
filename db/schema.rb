@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_26_104245) do
+ActiveRecord::Schema.define(version: 2021_05_31_063900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -500,7 +500,6 @@ ActiveRecord::Schema.define(version: 2021_05_26_104245) do
     t.datetime "starts_at"
     t.string "status"
     t.string "time_zone"
-    t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
@@ -514,7 +513,6 @@ ActiveRecord::Schema.define(version: 2021_05_26_104245) do
     t.datetime "client_requested_reschedule_at"
     t.datetime "specialist_requested_reschedule_at"
     t.jsonb "log_data"
-    t.index ["airtable_id"], name: "index_interviews_on_airtable_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
     t.index ["user_id"], name: "index_interviews_on_user_id"
   end
@@ -963,7 +961,6 @@ ActiveRecord::Schema.define(version: 2021_05_26_104245) do
     t.datetime "updated_at", null: false
     t.string "uid"
     t.bigint "country_id"
-    t.string "company_name"
     t.string "title"
     t.string "stripe_customer_id"
     t.string "exceptional_project_payment_terms"
