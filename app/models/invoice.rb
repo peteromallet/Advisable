@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Invoice < ApplicationRecord
+  class InvoiceError < StandardError; end
+
   DAYS_DUE = 30
 
   enum status: {draft: 0, open: 1, paid: 2, exported: 3, paid_out: 4, void: 5}
@@ -15,6 +17,25 @@ class Invoice < ApplicationRecord
     return if stripe_invoice_id.present?
 
     Stripe::CreateInvoiceJob.perform_later(self)
+  end
+
+  def total(for_specialist: false)
+    if for_specialist
+      line_items.select(&:charge_freelancer?).sum(&:amount)
+    else
+      line_items.sum(:amount)
+    end
+  end
+
+  def create_admin_fee!
+    raise InvoiceError, "Fee already created on this invoice" if line_items.any? { |li| li.metadata["charge_freelancer"] == false }
+
+    line_item = line_items.create!(
+      name: "Admin fee",
+      amount: total * company.admin_fee_percentage,
+      metadata: {charge_freelancer: false}
+    )
+    line_item.create_in_stripe!(now: true)
   end
 end
 

@@ -32,7 +32,8 @@ RSpec.describe Mutations::FinalizeInvoice do
     status = response["data"]["finalizeInvoice"]["invoice"]["status"]
     expect(status).to eq("open")
 
-    expect(invoice.reload.line_items.sum(:amount)).to eq(105)
+    expect(invoice.reload.total).to eq(105)
+    expect(invoice.reload.total(for_specialist: true)).to eq(100)
   end
 
   context "when logged in user is a different specialist" do

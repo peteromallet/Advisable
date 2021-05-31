@@ -568,6 +568,7 @@ ActiveRecord::Schema.define(version: 2021_07_06_072105) do
     t.integer "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "metadata"
     t.index ["invoice_id"], name: "index_invoice_line_items_on_invoice_id"
     t.index ["task_id"], name: "index_invoice_line_items_on_task_id"
   end

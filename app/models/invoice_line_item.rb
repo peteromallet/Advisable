@@ -6,6 +6,14 @@ class InvoiceLineItem < ApplicationRecord
   belongs_to :invoice
   belongs_to :task, optional: true
 
+  def metadata
+    super.presence || {}
+  end
+
+  def charge_freelancer?
+    metadata["charge_freelancer"] != false
+  end
+
   def create_in_stripe!(now: false)
     return if stripe_invoice_line_item_id.present?
 
@@ -20,6 +28,7 @@ end
 #
 #  id                          :uuid             not null, primary key
 #  amount                      :integer
+#  metadata                    :jsonb
 #  name                        :string
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null

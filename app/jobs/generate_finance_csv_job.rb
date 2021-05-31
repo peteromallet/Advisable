@@ -25,7 +25,7 @@ class GenerateFinanceCsvJob < ApplicationJob
         end
 
         amount_currency = "USD" # TODO: Apparently not always
-        amount_gross = invoice.line_items.sum(:amount)
+        amount_gross = invoice.total(for_specialist: true)
         amount_net = amount_gross * (1 - specialist.sourcing_fee_percentage)
         # TODO: Do currency conversion on amount
 

@@ -11,7 +11,8 @@ module Stripe
         customer: line_item.invoice.company.stripe_customer_id,
         amount: line_item.amount,
         currency: ::InvoiceLineItem::CURRENCY,
-        description: line_item.name
+        description: line_item.name,
+        metadata: line_item.metadata
       }
       attrs[:invoice] = line_item.invoice.stripe_invoice_id if line_item.invoice.stripe_invoice_id.present?
 

@@ -17,16 +17,9 @@ module Mutations
 
     def resolve(id:)
       invoice = Invoice.find(id)
-
-      total = invoice.line_items.sum(:amount)
-      fee = total * invoice.company.admin_fee_percentage
-      line_item = invoice.line_items.create!(name: "Admin fee", amount: fee)
-      line_item.create_in_stripe!(now: true)
-
+      invoice.create_admin_fee!
       response = Stripe::Invoice.finalize_invoice(invoice.stripe_invoice_id, auto_advance: false)
-
       invoice.update!(status: response.status)
-
       {invoice: invoice}
     end
   end
