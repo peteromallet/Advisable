@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
-  self.ignored_columns += %i[airtable_id]
-
   include Uid
 
   has_logidze
@@ -46,7 +44,6 @@ end
 #
 # Indexes
 #
-#  index_interviews_on_airtable_id     (airtable_id)
 #  index_interviews_on_application_id  (application_id)
 #  index_interviews_on_user_id         (user_id)
 #
