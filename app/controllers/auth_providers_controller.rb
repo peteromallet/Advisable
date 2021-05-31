@@ -10,6 +10,11 @@ class AuthProvidersController < ApplicationController
     public_send(provider)
   end
 
+  def failure
+    # do something here to display error
+    redirect_to params[:origin]
+  end
+
   def linkedin
     omniauth = {
       uid: auth_hash.uid,

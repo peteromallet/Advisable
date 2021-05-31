@@ -70,6 +70,7 @@ Rails.application.routes.draw do
   post '/stripe_events', to: 'stripe_events#create'
 
   get '/auth/:provider/callback', to: 'auth_providers#create'
+  get '/auth/failure', to: 'auth_providers#failure'
 
   get '/guild', to: 'application#guild', as: :guild_root
   get '/guild/posts/:id', to: 'application#guild_post', as: :guild_post
