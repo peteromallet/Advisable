@@ -6,8 +6,6 @@ module Mutations
 
     field :user, Types::User, null: true
 
-    # The scheduleClientApplicationInterview mutation
-    # requires a client to be logged in.
     def authorized?(*_args)
       requires_client!
 
@@ -20,7 +18,7 @@ module Mutations
     end
 
     def resolve
-      current_user.application_status = 'Interview Scheduled'
+      current_user.application_status = "Interview Scheduled"
       current_user.save_and_sync_with_responsible!(current_account_id)
 
       {user: current_user}
