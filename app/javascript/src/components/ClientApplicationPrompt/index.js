@@ -60,11 +60,14 @@ const InvitedToInterview = () => {
   const [schedule] = useMutation(SCHEDULE_CLIENT_APPLICATION_INTERVIEW);
 
   const handleScheduled = () => {
-    calendly("https://calendly.com/yurko-turskiy/15min", {
-      a2: id,
-      full_name: fullName,
-      email,
-    });
+    calendly(
+      "https://calendly.com/advisable-marketing/advisable-application-call",
+      {
+        a2: id,
+        full_name: fullName,
+        email,
+      },
+    );
   };
 
   // Listen calendly notifications:
