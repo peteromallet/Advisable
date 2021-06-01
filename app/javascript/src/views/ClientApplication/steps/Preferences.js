@@ -81,7 +81,7 @@ export default function CompanyOverview({ clientApplication }) {
                 <FormField
                   name="title"
                   label={`What's your job title at ${clientApplication.companyName}?`}
-                  placeholder="Your role"
+                  placeholder="Your job title"
                 />
               </Box>
               <Box mb={6}>
