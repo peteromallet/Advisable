@@ -62,6 +62,11 @@ module Toby
               root.label(object, context)
             end
 
+            field :_history, [Toby::Types::Version], null: true
+            def _history
+              object.reload_log_data.data["h"]
+            end
+
             root.attributes.each do |attribute|
               # define a field for each attribute
               field attribute.name, attribute.type, null: true
