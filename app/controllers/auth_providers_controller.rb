@@ -10,6 +10,19 @@ class AuthProvidersController < ApplicationController
     public_send(provider)
   end
 
+  def failure
+    if params[:origin].present? && params["message"] == "user_cancelled_login"
+      uri = URI.parse(params[:origin])
+      params = URI.decode_www_form(uri.query || "") << ["authorization_failed", "Authorization failed. Please try again."]
+      uri.query = URI.encode_www_form(params.to_h)
+    else
+      Sentry.capture_message("Something went wrong when with oauth.")
+      uri = "/"
+    end
+
+    redirect_to uri.to_s
+  end
+
   def linkedin
     omniauth = {
       uid: auth_hash.uid,

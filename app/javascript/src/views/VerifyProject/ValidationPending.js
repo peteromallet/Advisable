@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import queryString from "query-string";
+import { useLocation } from "react-router";
+import { useNotifications } from "src/components/Notifications";
 import { Container, Card, Box, Text, Avatar } from "@advisable/donut";
 import ValidationActions from "./ValidationActions";
 import AuthenticateWithLinkedin from "./AuthenticateWithLinkedin";
@@ -7,7 +10,16 @@ import { StyledTextMask } from "./styles";
 
 function ValidationPending({ data }) {
   const viewer = data.oauthViewer;
+  const location = useLocation();
+  const { error } = useNotifications();
   const { title, excerpt, description, specialist } = data.previousProject;
+
+  // Display errors
+  useEffect(() => {
+    const queryParams = queryString.parse(location.search, { decode: true });
+    queryParams?.authorization_failed &&
+      error(queryParams.authorization_failed);
+  }, [error, location.search]);
 
   return (
     <Container maxWidth="700px" pb="20px">
