@@ -203,5 +203,8 @@ module Types
       records = records.where(status: status) if status
       records
     end
+
+    field :sent_articles, [Types::CaseStudy::SharedArticle], null: true
+    field :received_articles, [Types::CaseStudy::SharedArticle], null: true
   end
 end

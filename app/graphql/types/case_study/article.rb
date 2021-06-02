@@ -44,6 +44,8 @@ module Types
         search = CaseStudy::Search.find_by!(uid: id)
         search.archived.include?(object.id)
       end
+
+      field :shares, [SharedArticle], null: true
     end
   end
 end
