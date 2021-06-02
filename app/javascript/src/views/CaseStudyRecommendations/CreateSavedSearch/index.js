@@ -17,6 +17,7 @@ import NotFound from "src/views/NotFound";
 import Skills from "./steps/Skills";
 import Goals from "./steps/Goals";
 import Preferences from "./steps/Preferences";
+import Review from "./steps/Review";
 
 export default function CreateSavedSearch() {
   const { id } = useParams();
@@ -50,7 +51,7 @@ export default function CreateSavedSearch() {
                 <Preferences id={id} />
               </Route>
               <Route path="/explore/new/:id/review">
-                <Box>Review</Box>
+                <Review id={id} />
               </Route>
             </Switch>
           </AnimatePresence>
