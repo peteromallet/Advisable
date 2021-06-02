@@ -21,7 +21,6 @@ module Mutations
         rejected_at: Time.zone.now,
         rejection_reason: reason
       )
-      consultation.sync_to_airtable
       {consultation: consultation}
     end
   end

@@ -58,7 +58,6 @@ module Mutations
         )
       end
 
-      consultation.sync_to_airtable
       consultation
     end
 
