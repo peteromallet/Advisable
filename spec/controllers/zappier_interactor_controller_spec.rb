@@ -170,6 +170,29 @@ RSpec.describe ZappierInteractorController, type: :request do
     end
   end
 
+  describe "POST /update_consultation" do
+    let(:consultation) { create(:consultation, status: "Call Scheduled") }
+    let(:status) { "Call Requested" }
+    let(:params) { {status: status, uid: consultation.uid, key: key} }
+
+    before { allow_any_instance_of(Application).to receive(:sync_to_airtable) }
+
+    it "updates the consultation and syncs to airtable" do
+      post("/zappier_interactor/update_consultation", params: params)
+      expect(response).to have_http_status(:success)
+      expect(consultation.reload.status).to eq("Call Requested")
+    end
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/update_consultation", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
   describe "POST /attach_previous_project_image" do
     let(:previous_project) { create(:previous_project) }
     let(:image) { "http://path.to/image.jpg" }
