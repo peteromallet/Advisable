@@ -20,7 +20,7 @@ export default function CreateSavedSearch() {
             exitBeforeEnter
           >
             <Switch location={location} key={location.pathname}>
-              <Route path={["/explore/new", "/explore/new/:id/skills"]}>
+              <Route path={["/explore/new", "/explore/new/:id/skills"]} exact>
                 <Box>Skills</Box>
               </Route>
               <Route path="/explore/new/:id/goals">
