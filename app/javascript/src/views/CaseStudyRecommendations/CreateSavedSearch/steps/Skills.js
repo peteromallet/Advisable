@@ -54,6 +54,7 @@ export default function Skills({ id, skills }) {
             <SubmitButton
               mt={4}
               suffix={<ArrowRight />}
+              disabled={formik.values.skills.length === 0}
               variant="gradient"
               size="l"
             >
