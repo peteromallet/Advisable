@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Text } from "@advisable/donut";
 import MultistepMenu from "src/components/MultistepMenu";
 
-export default function Sidebar() {
+export default function Sidebar({ id }) {
   return (
     <Card
       top="0"
@@ -25,7 +25,11 @@ export default function Sidebar() {
         Create a Saved Search
       </Text>
       <MultistepMenu>
-        <MultistepMenu.Item to="/explore/new" exact isComplete={false}>
+        <MultistepMenu.Item
+          exact
+          to={id ? `/explore/new/${id}/skills` : "/explore/new"}
+          isComplete={false}
+        >
           Skills
         </MultistepMenu.Item>
         <MultistepMenu.Item to="/explore/new/id/goals" isComplete={false}>

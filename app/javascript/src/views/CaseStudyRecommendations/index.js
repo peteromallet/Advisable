@@ -25,7 +25,10 @@ export default function CaseStudyRecommendations() {
       <Route path="/explore" exact>
         <Searches />
       </Route>
-      <Route path="/explore/new" component={CreateSavedSearch} />
+      <Route
+        path={["/explore/new/:id", "/explore/new"]}
+        component={CreateSavedSearch}
+      />
       <Route
         path="/explore/:id/(inbox|archived)"
         component={RecommendationsInbox}

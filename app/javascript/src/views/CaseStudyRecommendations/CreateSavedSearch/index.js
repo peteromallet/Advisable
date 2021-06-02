@@ -1,17 +1,27 @@
 import React from "react";
-import { Route, Switch, useHistory } from "react-router";
+import { Route, Switch, useHistory, useParams } from "react-router";
 import { AnimatePresence } from "framer-motion";
 import { Box, Container, useBreakpoint } from "@advisable/donut";
-import Sidebar from "./Sidebar";
+import Loading from "src/components/Loading";
+import Sidebar from "./components/Sidebar";
+import Skills from "./steps/Skills";
+import { useQuery } from "@apollo/client";
+import GET_SAVED_SEARCH from "../queries/getSavedSearch.gql";
+import NotFound from "src/views/NotFound";
 
 export default function CreateSavedSearch() {
+  const { id } = useParams();
   const history = useHistory();
   const largeScreen = useBreakpoint("lUp");
   const forwards = history.action === "PUSH";
 
+  const { data, loading, error } = useQuery(GET_SAVED_SEARCH);
+  if (loading) return <Loading />;
+  if (error) return <NotFound />;
+
   return (
     <div>
-      {largeScreen ? <Sidebar /> : null}
+      {largeScreen ? <Sidebar id={id} /> : null}
       <Box paddingLeft={{ l: "300px" }}>
         <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <AnimatePresence
@@ -21,7 +31,7 @@ export default function CreateSavedSearch() {
           >
             <Switch location={location} key={location.pathname}>
               <Route path={["/explore/new", "/explore/new/:id/skills"]} exact>
-                <Box>Skills</Box>
+                <Skills id={id} skills={data.skills} />
               </Route>
               <Route path="/explore/new/:id/goals">
                 <Box>Goals</Box>
