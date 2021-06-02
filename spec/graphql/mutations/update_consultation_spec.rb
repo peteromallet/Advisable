@@ -24,10 +24,6 @@ RSpec.describe Mutations::UpdateConsultation do
     GQL
   end
 
-  before do
-    allow_any_instance_of(Consultation).to receive(:sync_to_airtable)
-  end
-
   it "sets the topic" do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       consultation.reload.topic
