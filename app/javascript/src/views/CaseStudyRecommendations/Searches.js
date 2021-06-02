@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Container, Badge } from "@advisable/donut";
+import { Box, Text, Container, Badge, Link } from "@advisable/donut";
 import { StyledSearchCard } from "./styles";
 import { useCaseStudySearches } from "./queries";
 import { useHistory } from "react-router";
@@ -36,6 +36,7 @@ export default function Searches() {
             </Text>
           </StyledSearchCard>
         ))}
+        <Link to="/explore/new">Create a new saved search</Link>
       </Box>
     </Container>
   );
