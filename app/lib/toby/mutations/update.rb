@@ -3,6 +3,8 @@
 module Toby
   module Mutations
     class Update < GraphQL::Schema::Mutation
+      include Helpers::Session
+
       class << self
         attr_accessor :resource
       end
@@ -18,7 +20,9 @@ module Toby
           attribute.write(model, value)
         end
 
-        model.save!
+        Logidze.with_responsible(current_account_id) do
+          model.save!
+        end
 
         {resource: model}
       end
