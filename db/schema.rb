@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_31_063900) do
+ActiveRecord::Schema.define(version: 2021_06_02_114144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -277,6 +277,19 @@ ActiveRecord::Schema.define(version: 2021_05_31_063900) do
     t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_sections_on_article_id"
     t.index ["uid"], name: "index_case_study_sections_on_uid"
+  end
+
+  create_table "case_study_shared_articles", force: :cascade do |t|
+    t.bigint "article_id", null: false
+    t.bigint "shared_with_id", null: false
+    t.bigint "shared_by_id", null: false
+    t.text "message"
+    t.datetime "archived_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_case_study_shared_articles_on_article_id"
+    t.index ["shared_by_id"], name: "index_case_study_shared_articles_on_shared_by_id"
+    t.index ["shared_with_id"], name: "index_case_study_shared_articles_on_shared_with_id"
   end
 
   create_table "case_study_skills", force: :cascade do |t|
@@ -1035,6 +1048,9 @@ ActiveRecord::Schema.define(version: 2021_05_31_063900) do
   add_foreign_key "case_study_search_feedbacks", "case_study_searches", column: "search_id"
   add_foreign_key "case_study_searches", "users"
   add_foreign_key "case_study_sections", "case_study_articles", column: "article_id"
+  add_foreign_key "case_study_shared_articles", "case_study_articles", column: "article_id"
+  add_foreign_key "case_study_shared_articles", "users", column: "shared_by_id"
+  add_foreign_key "case_study_shared_articles", "users", column: "shared_with_id"
   add_foreign_key "case_study_skills", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_skills", "case_study_searches", column: "search_id"
   add_foreign_key "case_study_skills", "skills"
