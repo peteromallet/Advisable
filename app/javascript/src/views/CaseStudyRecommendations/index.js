@@ -5,6 +5,7 @@ import CaseStudy from "./CaseStudy";
 import Searches from "./Searches";
 import RecommendationsInbox from "./Inbox";
 import useFeatureFlag from "src/hooks/useFeatureFlag";
+import CreateSavedSearch from "./CreateSavedSearch";
 
 export default function CaseStudyRecommendations() {
   const { setTheme } = useTheme();
@@ -24,6 +25,7 @@ export default function CaseStudyRecommendations() {
       <Route path="/explore" exact>
         <Searches />
       </Route>
+      <Route path="/explore/new" component={CreateSavedSearch} />
       <Route
         path="/explore/:id/(inbox|archived)"
         component={RecommendationsInbox}
