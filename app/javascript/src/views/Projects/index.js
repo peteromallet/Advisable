@@ -6,7 +6,6 @@ import { Container, Text } from "@advisable/donut";
 import Loading from "./Loading";
 import { GET_PROJECTS } from "./queries";
 import ProjectsList from "./ProjectsList";
-import UpdateIndustryModal from "./UpdateIndustryModal";
 import dataLayer from "src/utilities/dataLayer";
 import useViewer from "src/hooks/useViewer";
 import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
@@ -49,13 +48,6 @@ const Projects = () => {
     <Container py="xl">
       <ClientApplicationPrompt />
       <AccountConfirmationPrompt />
-
-      {!loading && (
-        <UpdateIndustryModal
-          industry={data?.viewer.industry}
-          companyType={data?.viewer.companyType}
-        />
-      )}
 
       {viewer.isAccepted ? (
         <>
