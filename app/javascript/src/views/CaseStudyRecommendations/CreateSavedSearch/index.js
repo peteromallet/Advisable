@@ -4,10 +4,12 @@ import { AnimatePresence } from "framer-motion";
 import { Box, Container, useBreakpoint } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import Sidebar from "./components/Sidebar";
-import Skills from "./steps/Skills";
 import { useQuery } from "@apollo/client";
 import GET_SAVED_SEARCH from "../queries/getSavedSearch.gql";
 import NotFound from "src/views/NotFound";
+// Steps
+import Skills from "./steps/Skills";
+import Goals from "./steps/Goals";
 
 export default function CreateSavedSearch() {
   const { id } = useParams();
@@ -34,7 +36,7 @@ export default function CreateSavedSearch() {
                 <Skills id={id} skills={data.skills} />
               </Route>
               <Route path="/explore/new/:id/goals">
-                <Box>Goals</Box>
+                <Goals id={id} />
               </Route>
               <Route path="/explore/new/:id/preferences">
                 <Box>Preferences</Box>
