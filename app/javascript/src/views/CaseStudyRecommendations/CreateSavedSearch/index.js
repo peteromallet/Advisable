@@ -1,5 +1,11 @@
 import React from "react";
-import { Route, Switch, useHistory, useParams } from "react-router";
+import {
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  useParams,
+} from "react-router";
 import { AnimatePresence } from "framer-motion";
 import { Box, Container, useBreakpoint } from "@advisable/donut";
 import Loading from "src/components/Loading";
@@ -14,6 +20,7 @@ import Preferences from "./steps/Preferences";
 
 export default function CreateSavedSearch() {
   const { id } = useParams();
+  const location = useLocation();
   const history = useHistory();
   const largeScreen = useBreakpoint("lUp");
   const forwards = history.action === "PUSH";
