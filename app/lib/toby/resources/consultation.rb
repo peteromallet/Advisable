@@ -6,6 +6,7 @@ module Toby
       model_name ::Consultation
 
       attribute :uid, Attributes::String, readonly: true
+      attribute :request_url, Lookups::Consultations::RequestUrl
       attribute :specialist, Attributes::BelongsTo, readonly: true
       attribute :user, Attributes::BelongsTo, readonly: true
       attribute :interview, Attributes::BelongsTo, readonly: true
