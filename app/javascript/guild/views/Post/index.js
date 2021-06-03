@@ -93,7 +93,14 @@ const Post = () => {
             <Box mb={4}>
               <PostTypeTag post={post} />
             </Box>
-            <Text fontWeight="medium" size="5xl" color="meutral900" mb={6}>
+            <Text
+              fontWeight="semibold"
+              size="5xl"
+              color="meutral900"
+              py={0.5}
+              mb={6}
+              lineHeight="4xl"
+            >
               {post.title}
             </Text>
 
@@ -134,7 +141,6 @@ const Post = () => {
                 </Box>
               ) : null}
             </Box>
-
             <Box mb={8}>
               <Markdown>{post.body}</Markdown>
             </Box>
