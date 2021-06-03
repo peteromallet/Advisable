@@ -10,27 +10,27 @@ class ZappierInteractorController < ApplicationController
   before_action :verify_key!
 
   def update_interview
-    find_and_respond(Interview, params.permit(:status))
+    find_and_update(Interview, params.permit(:status))
   end
 
   def update_consultation
-    find_and_respond(Consultation, params.permit(:status))
+    find_and_update(Consultation, params.permit(:status))
   end
 
   def update_user
-    find_and_respond(User, params.permit(whitelisted_user_params))
+    find_and_update(User, params.permit(whitelisted_user_params))
   end
 
   def update_specialist
-    find_and_respond(Specialist, params.permit(whitelisted_specialist_params))
+    find_and_update(Specialist, params.permit(whitelisted_specialist_params))
   end
 
   def update_project
-    find_and_respond(Project, params.permit(whitelisted_project_params))
+    find_and_update(Project, params.permit(whitelisted_project_params))
   end
 
   def update_application
-    find_and_respond(Application) do |record|
+    find_and_update(Application) do |record|
       record.update!(application_params(record.meta_fields))
     end
   end
@@ -103,7 +103,7 @@ class ZappierInteractorController < ApplicationController
 
   private
 
-  def find_and_respond(model, attrs = {})
+  def find_and_update(model, attrs = {})
     record = model.public_send(:find_by!, uid: params[:uid])
     return unless record
 
