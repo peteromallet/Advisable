@@ -71,7 +71,7 @@ export const Sidebar = styled.div`
   bottom: 0;
   z-index: 4;
   width: 40%;
-  height: calc(100vh - 58px);
+  height: calc(100vh - 60px);
   display: flex;
   position: fixed;
   overflow: hidden;

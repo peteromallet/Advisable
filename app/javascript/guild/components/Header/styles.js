@@ -5,7 +5,7 @@ import { theme, Box } from "@advisable/donut";
 
 export const StyledHeader = styled(Box)`
   z-index: 5;
-  height: 58px;
+  height: 60px;
   width: 100%;
   color: white;
   display: flex;
