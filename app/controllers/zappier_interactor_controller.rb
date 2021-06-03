@@ -3,8 +3,6 @@
 class ZappierInteractorController < ApplicationController
   include MagicLinkHelper
 
-  attr_reader :record
-
   ALLOWED_APPLICATION_FIELDS = %i[comment featured hidden hide_from_profile introduction rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source].freeze
   PARAMETRIZED_APPLICATION_META_FIELDS = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }.freeze
 
@@ -24,56 +22,38 @@ class ZappierInteractorController < ApplicationController
   end
 
   def update_application
-    find_record!(Application, params[:uid])
-    return unless record
-
-    handle_response do
+    find_and_respond(Application) do |record|
       record.update!(application_params(record.meta_fields))
       record.sync_to_airtable
     end
   end
 
   def update_interview
-    find_record!(Interview, params[:uid])
-    return unless record
-
-    handle_response do
+    find_and_respond(Interview) do |record|
       record.update!(status: params[:status])
     end
   end
 
   def update_consultation
-    find_record!(Consultation, params[:uid])
-    return unless record
-
-    handle_response do
+    find_and_respond(Consultation) do |record|
       record.update!(status: params[:status])
     end
   end
 
   def update_user
-    find_record!(User, params[:uid])
-    return unless record
-
-    handle_response do
+    find_and_respond(User) do
       record.update!(whitelisted_user_params)
     end
   end
 
   def update_specialist
-    find_record!(Specialist, params[:uid])
-    return unless record
-
-    handle_response do
+    find_and_respond(Specialist) do
       record.update!(whitelisted_specialist_params)
     end
   end
 
   def update_project
-    find_record!(Project, params[:uid])
-    return unless record
-
-    handle_response do
+    find_and_respond(Project) do
       record.update!(whitelisted_project_params)
     end
   end
@@ -99,11 +79,11 @@ class ZappierInteractorController < ApplicationController
   end
 
   def enable_guild
-    find_record!(Specialist, params[:uid])
-    return unless record
-
-    record.update!(guild: true)
+    specialist = Specialist.find_by!(uid: params[:uid])
+    specialist.update!(guild: true)
     render json: {status: "OK."}
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "Account not found"}, status: :unprocessable_entity
   end
 
   def boost_guild_post
@@ -134,15 +114,15 @@ class ZappierInteractorController < ApplicationController
 
   private
 
-  def find_record!(model, uid)
-    @record = model.public_send(:find_by!, uid: uid)
+  def find_and_respond(model)
+    record = model.public_send(:find_by!, uid: params[:uid])
+    return unless record
+
+    yield(record)
+
+    render json: {status: "OK.", uid: record.uid}
   rescue ActiveRecord::RecordNotFound
     render json: {error: "#{model} not found"}, status: :unprocessable_entity
-  end
-
-  def handle_response
-    yield
-    render json: {status: "OK.", uid: record.uid}
   rescue ActiveRecord::RecordInvalid => e
     render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
   end
