@@ -2,6 +2,8 @@
 
 module CaseStudy
   class SharedArticle < ApplicationRecord
+    include Uid
+
     belongs_to :article
     belongs_to :shared_with, class_name: "::User", inverse_of: :received_articles
     belongs_to :shared_by, class_name: "::User", inverse_of: :sent_articles, optional: true
@@ -15,6 +17,7 @@ end
 #  id             :bigint           not null, primary key
 #  archived_at    :datetime
 #  message        :text
+#  uid            :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  article_id     :bigint           not null
