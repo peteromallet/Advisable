@@ -54,6 +54,27 @@ class ZappierInteractorController < ApplicationController
     end
   end
 
+  def update_user
+    find_record!(User, params[:uid])
+    return unless record
+
+    # TODO
+  end
+
+  def update_specialist
+    find_record!(Specialist, params[:uid])
+    return unless record
+
+    # TODO
+  end
+
+  def update_project
+    find_record!(Project, params[:uid])
+    return unless record
+
+    # TODO
+  end
+
   def attach_previous_project_image
     previous_project = PreviousProject.find_by!(uid: params[:uid])
     raise ActiveRecord::RecordNotFound if params[:image_url].blank?
