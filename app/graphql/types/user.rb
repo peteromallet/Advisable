@@ -204,7 +204,16 @@ module Types
       records
     end
 
-    field :sent_articles, [Types::CaseStudy::SharedArticle], null: true
-    field :received_articles, [Types::CaseStudy::SharedArticle], null: true
+    field :sent_shared_articles, [Types::CaseStudy::SharedArticle], null: true, method: :sent_articles
+
+    field :received_shared_articles, [Types::CaseStudy::SharedArticle], null: true
+    def received_shared_articles
+      object.received_articles.active
+    end
+
+    field :archived_articles, [Types::CaseStudy::SharedArticle], null: true
+    def archived_articles
+      object.received_articles.archived
+    end
   end
 end
