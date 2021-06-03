@@ -56,14 +56,14 @@ const Post = () => {
         <Card
           borderBottom={popularOrAuthorReactions ? "6px solid #fde7b2" : null}
         >
-          {post.coverImage && (
+          {post.coverImage ? (
             <CoverImage
               height={{ _: "260px", s: "340px", m: "480px" }}
               images={post.images}
               cover={post.coverImage.url}
               onClick={() => gallery.open(0)}
             />
-          )}
+          ) : null}
 
           {otherImages.length > 0 ? (
             <Box
