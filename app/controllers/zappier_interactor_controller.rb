@@ -9,25 +9,6 @@ class ZappierInteractorController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :verify_key!
 
-  def create_application
-    specialist = Specialist.find_by!(uid: params[:specialist_id])
-    project = Project.find_by!(uid: params[:project_id])
-    application = Application.create!(application_params.merge({specialist_id: specialist.id, project_id: project.id}))
-    application.sync_to_airtable
-    render json: {status: "OK.", uid: application.uid}
-  rescue ActiveRecord::RecordNotFound => e
-    render json: {error: "Record not found", message: e.message}, status: :unprocessable_entity
-  rescue ActiveRecord::RecordInvalid => e
-    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
-  end
-
-  def update_application
-    find_and_respond(Application) do |record|
-      record.update!(application_params(record.meta_fields))
-      record.sync_to_airtable
-    end
-  end
-
   def update_interview
     find_and_respond(Interview, :status)
   end
@@ -46,6 +27,25 @@ class ZappierInteractorController < ApplicationController
 
   def update_project
     find_and_respond(Project, *whitelisted_project_params)
+  end
+
+  def update_application
+    find_and_respond(Application) do |record|
+      record.update!(application_params(record.meta_fields))
+      record.sync_to_airtable
+    end
+  end
+
+  def create_application
+    specialist = Specialist.find_by!(uid: params[:specialist_id])
+    project = Project.find_by!(uid: params[:project_id])
+    application = Application.create!(application_params.merge({specialist_id: specialist.id, project_id: project.id}))
+    application.sync_to_airtable
+    render json: {status: "OK.", uid: application.uid}
+  rescue ActiveRecord::RecordNotFound => e
+    render json: {error: "Record not found", message: e.message}, status: :unprocessable_entity
+  rescue ActiveRecord::RecordInvalid => e
+    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
   end
 
   def attach_previous_project_image
