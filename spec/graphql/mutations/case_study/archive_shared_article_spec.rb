@@ -6,12 +6,14 @@ RSpec.describe Mutations::CaseStudy::ArchiveSharedArticle do
   let(:user) { create(:user) }
   let(:context) { {current_user: user} }
   let(:shared_article) { create(:case_study_shared_article, shared_with: user) }
+  let(:extra) { "" }
 
   let(:query) do
     <<-GRAPHQL
       mutation {
         archiveCaseStudySharedArticle(input: {
           sharedArticle: "#{shared_article.uid}",
+          #{extra}
         }) {
           sharedArticle {
             id
@@ -37,6 +39,20 @@ RSpec.describe Mutations::CaseStudy::ArchiveSharedArticle do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]["message"]
       expect(error).to eq("You do not have permission to archive this shared article")
+    end
+  end
+
+  context "when unarchive param is true" do
+    let(:shared_article) { create(:case_study_shared_article, shared_with: user, archived_at: Time.zone.now) }
+    let(:extra) { "unarchive: true" }
+
+    it "unarchives the article" do
+      expect(shared_article.archived_at).not_to be_nil
+      response = AdvisableSchema.execute(query, context: context)
+      uid = response["data"]["archiveCaseStudySharedArticle"]["sharedArticle"]["id"]
+      shared_article.reload
+      expect(shared_article.uid).to eq(uid)
+      expect(shared_article.archived_at).to be_nil
     end
   end
 
