@@ -7,6 +7,9 @@ module CaseStudy
     belongs_to :article
     belongs_to :shared_with, class_name: "::User", inverse_of: :received_articles
     belongs_to :shared_by, class_name: "::User", inverse_of: :sent_articles, optional: true
+
+    scope :active, -> { where(archived_at: nil) }
+    scope :archived, -> { where.not(archived_at: nil) }
   end
 end
 
