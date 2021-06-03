@@ -3,6 +3,8 @@
 class ZappierInteractorController < ApplicationController
   include MagicLinkHelper
 
+  attr_reader :record
+
   ALLOWED_APPLICATION_FIELDS = %i[comment featured hidden hide_from_profile introduction rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source].freeze
   PARAMETRIZED_APPLICATION_META_FIELDS = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }.freeze
 
@@ -12,44 +14,44 @@ class ZappierInteractorController < ApplicationController
   def create_application
     specialist = Specialist.find_by!(uid: params[:specialist_id])
     project = Project.find_by!(uid: params[:project_id])
-    application = Application.create!(application_params.merge({specialist_id: specialist.id, project_id: project.id}))
-    application.sync_to_airtable
-    render json: {status: "OK.", uid: application.uid}
+    handle_validation_errors do
+      application = Application.create!(application_params.merge({specialist_id: specialist.id, project_id: project.id}))
+      application.sync_to_airtable
+      render json: {status: "OK.", uid: application.uid}
+    end
   rescue ActiveRecord::RecordNotFound => e
     render json: {error: "Record not found", message: e.message}, status: :unprocessable_entity
-  rescue ActiveRecord::RecordInvalid => e
-    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
   end
 
   def update_application
-    application = Application.find_by!(uid: params[:uid])
-    application.update!(application_params(application.meta_fields))
-    application.sync_to_airtable
-    render json: {status: "OK.", uid: application.uid}
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "Application not found"}, status: :unprocessable_entity
-  rescue ActiveRecord::RecordInvalid => e
-    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
+    find_record!(Application, params[:uid])
+    return unless record
+
+    handle_validation_errors do
+      record.update!(application_params(record.meta_fields))
+      record.sync_to_airtable
+      render json: {status: "OK.", uid: record.uid}
+    end
   end
 
   def update_interview
-    interview = Interview.find_by!(uid: params[:uid])
-    interview.update!(status: params[:status])
-    render json: {status: "OK.", uid: interview.uid}
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "Interview not found"}, status: :unprocessable_entity
-  rescue ActiveRecord::RecordInvalid => e
-    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
+    find_record!(Interview, params[:uid])
+    return unless record
+
+    handle_validation_errors do
+      record.update!(status: params[:status])
+      render json: {status: "OK.", uid: record.uid}
+    end
   end
 
   def update_consultation
-    consultation = Consultation.find_by!(uid: params[:uid])
-    consultation.update!(status: params[:status])
-    render json: {status: "OK.", uid: consultation.uid}
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "Consultation not found"}, status: :unprocessable_entity
-  rescue ActiveRecord::RecordInvalid => e
-    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
+    find_record!(Consultation, params[:uid])
+    return unless record
+
+    handle_validation_errors do
+      record.update!(status: params[:status])
+      render json: {status: "OK.", uid: record.uid}
+    end
   end
 
   def attach_previous_project_image
@@ -64,21 +66,20 @@ class ZappierInteractorController < ApplicationController
 
   def create_magic_link
     account = find_account_from_uid(params[:uid])
-    url = params[:url]
     options = {}
     options[:expires_at] = params[:expires_at] if params[:expires_at].present?
-    link = magic_link(account, url, **options)
+    link = magic_link(account, params[:url], **options)
     render json: {magic_link: link}
   rescue ActiveRecord::RecordNotFound
     render json: {error: "Account not found"}, status: :unprocessable_entity
   end
 
   def enable_guild
-    specialist = Specialist.find_by!(uid: params[:uid])
-    specialist.update!(guild: true)
+    find_record!(Specialist, params[:uid])
+    return unless record
+
+    record.update!(guild: true)
     render json: {status: "OK."}
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "Account not found"}, status: :unprocessable_entity
   end
 
   def boost_guild_post
@@ -108,6 +109,18 @@ class ZappierInteractorController < ApplicationController
   end
 
   private
+
+  def find_record!(model, uid)
+    @record = model.public_send(:find_by!, uid: uid)
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "#{model} not found"}, status: :unprocessable_entity
+  end
+
+  def handle_validation_errors
+    yield
+  rescue ActiveRecord::RecordInvalid => e
+    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
+  end
 
   def application_params(existng_meta_fields = {})
     attrs = params.require(:application).permit(ALLOWED_APPLICATION_FIELDS + PARAMETRIZED_APPLICATION_META_FIELDS.keys).to_h
