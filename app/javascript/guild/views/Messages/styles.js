@@ -54,14 +54,15 @@ export const StyledComposer = styled(Box)`
   box-shadow: 0 8px 32px -8px ${rgba(colors.neutral900, 0.2)};
 
   ${StyledButton} {
-    right: 12px;
+    left: 12px;
     bottom: 12px;
     position: absolute;
   }
 
   ${StyledTextarea} {
     textarea {
-      padding-right: 114px;
+      margin-bottom: 48px;
+      padding-right: 48px;
     }
   }
 

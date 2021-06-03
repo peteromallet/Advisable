@@ -226,7 +226,7 @@ const ActiveConversation = ({ channelSid }) => {
         </GuildBox>
 
         {/* New Message */}
-        <Box width="100%" px={5} pb={4}>
+        <Box width="100%" p={3}>
           <Composer onSubmit={onSubmitNewMessage} />
         </Box>
       </>
