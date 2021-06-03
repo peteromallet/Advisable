@@ -29,33 +29,23 @@ class ZappierInteractorController < ApplicationController
   end
 
   def update_interview
-    find_and_respond(Interview) do |record|
-      record.update!(status: params[:status])
-    end
+    find_and_respond(Interview, :status)
   end
 
   def update_consultation
-    find_and_respond(Consultation) do |record|
-      record.update!(status: params[:status])
-    end
+    find_and_respond(Consultation, :status)
   end
 
   def update_user
-    find_and_respond(User) do
-      record.update!(whitelisted_user_params)
-    end
+    find_and_respond(User, *whitelisted_user_params)
   end
 
   def update_specialist
-    find_and_respond(Specialist) do
-      record.update!(whitelisted_specialist_params)
-    end
+    find_and_respond(Specialist, *whitelisted_specialist_params)
   end
 
   def update_project
-    find_and_respond(Project) do
-      record.update!(whitelisted_project_params)
-    end
+    find_and_respond(Project, *whitelisted_project_params)
   end
 
   def attach_previous_project_image
@@ -114,11 +104,15 @@ class ZappierInteractorController < ApplicationController
 
   private
 
-  def find_and_respond(model)
+  def find_and_respond(model, *whitelisted_params)
     record = model.public_send(:find_by!, uid: params[:uid])
     return unless record
 
-    yield(record)
+    if whitelisted_params.present?
+      record.update!(params.permit(whitelisted_params))
+    else
+      yield(record)
+    end
 
     render json: {status: "OK.", uid: record.uid}
   rescue ActiveRecord::RecordNotFound
