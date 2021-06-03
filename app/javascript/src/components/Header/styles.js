@@ -140,7 +140,7 @@ export const NavItem = styled(NavLink)`
 
   &.active {
     color: white;
-    border-bottom: 2px solid white;
+    box-shadow: inset 0 -2px white;
   }
 
   @media (max-width: 800px) {
