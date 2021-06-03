@@ -7,9 +7,22 @@ export const StyledMarkdown = styled.div`
   overflow-wrap: break-word;
   color: ${theme.colors.neutral800};
 
+  h1,
+  h2,
+  h3,
+  p,
+  ul,
+  ol,
+  li,
+  blockquote,
+  b {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
   h1 {
     font-size: 30px;
-    line-height: 34px;
+    line-height: 36px;
     margin-bottom: 16px;
     letter-spacing: -0.03rem;
     color: ${theme.colors.neutral900};
@@ -18,15 +31,15 @@ export const StyledMarkdown = styled.div`
   h2 {
     font-size: 25px;
     line-height: 28px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     letter-spacing: -0.03rem;
     color: ${theme.colors.neutral900};
   }
 
   h3 {
     font-size: 22px;
-    line-height: 25px;
-    margin-bottom: 10px;
+    line-height: 28px;
+    margin-bottom: 12px;
     letter-spacing: -0.02rem;
     color: ${theme.colors.neutral900};
   }
