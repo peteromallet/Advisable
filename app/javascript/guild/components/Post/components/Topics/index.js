@@ -8,7 +8,7 @@ const Topics = ({ topics = [], walkthrough = false }) => (
     display="flex"
     flexWrap="wrap"
     alignItems="center"
-    wrapChildrenBoth={8}
+    wrapChildrenHorizontal={8}
     data-walkthrough={walkthrough ? "postTopic" : null}
   >
     {topics.map((topic, key) => (
