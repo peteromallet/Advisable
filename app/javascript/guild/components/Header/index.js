@@ -17,8 +17,7 @@ import {
   StyledHeaderBadgeNumber,
   StyledHamburger,
 } from "./styles";
-import { GUILD_LAST_READ_QUERY } from "./queries";
-import { EVENTS_QUERY } from "@guild/views/Events/queries";
+import { GUILD_LAST_READ_QUERY, UPCOMING_EVENTS_COUNT } from "./queries";
 import Notifications from "./Notifications";
 import { useTwilioChat } from "../TwilioProvider";
 
@@ -38,8 +37,10 @@ const Header = () => {
   });
   const hasUnreadNotifications = lastReadData?.viewer?.guildUnreadNotifications;
 
-  const { data: eventsData } = useQuery(EVENTS_QUERY, { skip: !viewer });
-  const eventsCount = eventsData?.events?.totalCount;
+  const { data: eventsData } = useQuery(UPCOMING_EVENTS_COUNT, {
+    skip: !viewer,
+  });
+  const eventsCount = eventsData?.upcomingEventsCount;
 
   return (
     <>
@@ -83,7 +84,11 @@ const Header = () => {
               <StyledHeaderLink exact as={NavLink} to="/events">
                 <Calendar />
                 {eventsCount ? (
-                  <StyledHeaderBadgeNumber top="4px" left="32px">
+                  <StyledHeaderBadgeNumber
+                    top="4px"
+                    left="32px"
+                    data-testid="upcomingEvents"
+                  >
                     {eventsCount}
                   </StyledHeaderBadgeNumber>
                 ) : null}
