@@ -8,7 +8,6 @@ import useViewer from "@advisable-main/hooks/useViewer";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Header from "@guild/components/Header";
 import { NotificationsProvider } from "components/Notifications";
-import useHideIntercom from "src/hooks/useHideIntercom";
 
 import Feed from "./views/Feed";
 import Post from "./views/Post";
@@ -33,16 +32,10 @@ const GuildOrRedirectFreelancerProfile = () => {
   }
 };
 
-function HideIntercom() {
-  useHideIntercom();
-  return null;
-}
-
 const App = () => {
   return (
     <ApplicationProvider>
       <RootErrorBoundary>
-        <HideIntercom />
         <NotificationsProvider>
           <TwilioProvider>
             <Header />
