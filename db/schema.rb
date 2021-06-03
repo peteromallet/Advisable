@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_02_114144) do
+ActiveRecord::Schema.define(version: 2021_06_03_070314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -287,6 +287,7 @@ ActiveRecord::Schema.define(version: 2021_06_02_114144) do
     t.datetime "archived_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "uid"
     t.index ["article_id"], name: "index_case_study_shared_articles_on_article_id"
     t.index ["shared_by_id"], name: "index_case_study_shared_articles_on_shared_by_id"
     t.index ["shared_with_id"], name: "index_case_study_shared_articles_on_shared_with_id"
