@@ -14,23 +14,22 @@ class ZappierInteractorController < ApplicationController
   def create_application
     specialist = Specialist.find_by!(uid: params[:specialist_id])
     project = Project.find_by!(uid: params[:project_id])
-    handle_validation_errors do
-      application = Application.create!(application_params.merge({specialist_id: specialist.id, project_id: project.id}))
-      application.sync_to_airtable
-      render json: {status: "OK.", uid: application.uid}
-    end
+    application = Application.create!(application_params.merge({specialist_id: specialist.id, project_id: project.id}))
+    application.sync_to_airtable
+    render json: {status: "OK.", uid: application.uid}
   rescue ActiveRecord::RecordNotFound => e
     render json: {error: "Record not found", message: e.message}, status: :unprocessable_entity
+  rescue ActiveRecord::RecordInvalid => e
+    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
   end
 
   def update_application
     find_record!(Application, params[:uid])
     return unless record
 
-    handle_validation_errors do
+    handle_response do
       record.update!(application_params(record.meta_fields))
       record.sync_to_airtable
-      render json: {status: "OK.", uid: record.uid}
     end
   end
 
@@ -38,9 +37,8 @@ class ZappierInteractorController < ApplicationController
     find_record!(Interview, params[:uid])
     return unless record
 
-    handle_validation_errors do
+    handle_response do
       record.update!(status: params[:status])
-      render json: {status: "OK.", uid: record.uid}
     end
   end
 
@@ -48,9 +46,8 @@ class ZappierInteractorController < ApplicationController
     find_record!(Consultation, params[:uid])
     return unless record
 
-    handle_validation_errors do
+    handle_response do
       record.update!(status: params[:status])
-      render json: {status: "OK.", uid: record.uid}
     end
   end
 
@@ -58,21 +55,27 @@ class ZappierInteractorController < ApplicationController
     find_record!(User, params[:uid])
     return unless record
 
-    # TODO
+    handle_response do
+      record.update!(whitelisted_user_params)
+    end
   end
 
   def update_specialist
     find_record!(Specialist, params[:uid])
     return unless record
 
-    # TODO
+    handle_response do
+      record.update!(whitelisted_specialist_params)
+    end
   end
 
   def update_project
     find_record!(Project, params[:uid])
     return unless record
 
-    # TODO
+    handle_response do
+      record.update!(whitelisted_project_params)
+    end
   end
 
   def attach_previous_project_image
@@ -137,8 +140,9 @@ class ZappierInteractorController < ApplicationController
     render json: {error: "#{model} not found"}, status: :unprocessable_entity
   end
 
-  def handle_validation_errors
+  def handle_response
     yield
+    render json: {status: "OK.", uid: record.uid}
   rescue ActiveRecord::RecordInvalid => e
     render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
   end
