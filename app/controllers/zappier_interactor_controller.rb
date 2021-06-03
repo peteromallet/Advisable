@@ -10,29 +10,28 @@ class ZappierInteractorController < ApplicationController
   before_action :verify_key!
 
   def update_interview
-    find_and_respond(Interview, :status)
+    find_and_respond(Interview, params.permit(:status))
   end
 
   def update_consultation
-    find_and_respond(Consultation, :status)
+    find_and_respond(Consultation, params.permit(:status))
   end
 
   def update_user
-    find_and_respond(User, *whitelisted_user_params)
+    find_and_respond(User, params.permit(whitelisted_user_params))
   end
 
   def update_specialist
-    find_and_respond(Specialist, *whitelisted_specialist_params)
+    find_and_respond(Specialist, params.permit(whitelisted_specialist_params))
   end
 
   def update_project
-    find_and_respond(Project, *whitelisted_project_params)
+    find_and_respond(Project, params.permit(whitelisted_project_params))
   end
 
   def update_application
     find_and_respond(Application) do |record|
       record.update!(application_params(record.meta_fields))
-      record.sync_to_airtable
     end
   end
 
@@ -104,15 +103,17 @@ class ZappierInteractorController < ApplicationController
 
   private
 
-  def find_and_respond(model, *whitelisted_params)
+  def find_and_respond(model, attrs = {})
     record = model.public_send(:find_by!, uid: params[:uid])
     return unless record
 
-    if whitelisted_params.present?
-      record.update!(params.permit(whitelisted_params))
+    if attrs.present?
+      record.update!(attrs)
     else
       yield(record)
     end
+
+    record.sync_to_airtable if record.respond_to?(:sync_to_airtable)
 
     render json: {status: "OK.", uid: record.uid}
   rescue ActiveRecord::RecordNotFound
