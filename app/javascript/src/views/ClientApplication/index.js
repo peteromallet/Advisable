@@ -30,7 +30,7 @@ export default function ClientApplication() {
   }
 
   const { data, loading, error } = useQuery(CLIENT_APPLICATION_DATA);
-  if (loading) return <Loading />;
+  if (loading && !data) return <Loading />;
   if (error) return <GenericError />;
   const { clientApplication, industries } = data;
 
