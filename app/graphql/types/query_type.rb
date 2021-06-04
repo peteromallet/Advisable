@@ -211,11 +211,6 @@ module Types
       ::Event.list
     end
 
-    field :upcoming_events_count, Integer, null: true
-    def upcoming_events_count
-      ::Event.upcoming.count
-    end
-
     field :event, Types::EventType, null: true do
       argument :id, ID, required: true
     end
