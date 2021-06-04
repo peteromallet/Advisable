@@ -30,7 +30,7 @@ class Event < ApplicationRecord
     published.order(featured: :desc, starts_at: :desc)
   }
   scope :upcoming, lambda {
-    list.where(ends_at: (Time.zone.now..))
+    where(ends_at: (Time.zone.now..))
   }
 
   private

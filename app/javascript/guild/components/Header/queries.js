@@ -11,12 +11,6 @@ export const GUILD_LAST_READ_QUERY = gql`
   }
 `;
 
-export const UPCOMING_EVENTS_COUNT = gql`
-  {
-    upcomingEventsCount
-  }
-`;
-
 export const LOGOUT = gql`
   mutation logout($input: LogoutInput!) {
     logout(input: $input) {

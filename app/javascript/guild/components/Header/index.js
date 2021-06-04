@@ -17,7 +17,8 @@ import {
   StyledHeaderBadgeNumber,
   StyledHamburger,
 } from "./styles";
-import { GUILD_LAST_READ_QUERY, UPCOMING_EVENTS_COUNT } from "./queries";
+import { GUILD_LAST_READ_QUERY } from "./queries";
+import { EVENTS_QUERY } from "@guild/views/Events/queries";
 import Notifications from "./Notifications";
 import { useTwilioChat } from "../TwilioProvider";
 
@@ -37,10 +38,8 @@ const Header = () => {
   });
   const hasUnreadNotifications = lastReadData?.viewer?.guildUnreadNotifications;
 
-  const { data: eventsData } = useQuery(UPCOMING_EVENTS_COUNT, {
-    skip: !viewer,
-  });
-  const eventsCount = eventsData?.upcomingEventsCount;
+  const { data: eventsData } = useQuery(EVENTS_QUERY, { skip: !viewer });
+  const eventsCount = eventsData?.events?.upcomingEventsCount;
 
   return (
     <>
