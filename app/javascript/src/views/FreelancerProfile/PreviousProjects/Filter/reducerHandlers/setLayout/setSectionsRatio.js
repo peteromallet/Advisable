@@ -1,4 +1,4 @@
-import { sumBy } from "lodash-es";
+import sumBy from "lodash/sumBy";
 
 const setSectionsRatio = (state) => {
   const sectionKeys = Object.keys(state.sections);

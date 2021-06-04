@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { isEmpty, truncate } from "lodash";
+import isEmpty from "lodash/isEmpty";
+import truncate from "lodash/truncate";
 import { rgba } from "polished";
 import { motion } from "framer-motion";
 import { variant } from "styled-system";

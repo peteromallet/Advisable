@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Box, Text, theme } from "@advisable/donut";
 import { useApolloClient, gql, useQuery } from "@apollo/client";
 import { useEffect } from "react";
-import { range } from "lodash-es";
+import range from "lodash/range";
 import { useCallback } from "react";
 import styled from "styled-components";
 

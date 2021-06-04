@@ -1,5 +1,5 @@
 import React, { useMemo, useReducer } from "react";
-import { every } from "lodash-es";
+import every from "lodash/every";
 // Utils
 import createDispatcher from "src/utilities/createDispatcher";
 import {

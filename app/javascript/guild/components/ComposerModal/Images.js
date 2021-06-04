@@ -1,6 +1,5 @@
 import React from "react";
 import { gql } from "@apollo/client";
-import { find } from "lodash-es";
 import { rgba } from "polished";
 import { Plus } from "@styled-icons/feather/Plus";
 import { X } from "@styled-icons/feather/X";
@@ -292,7 +291,7 @@ const PortfolioImage = React.memo(function PortfolioImage({
 
 function ImageTiles({ images, dispatch, guildPostId }) {
   const client = useApolloClient();
-  const cover = find(images, { cover: true });
+  const cover = images.find((i) => i.cover);
   const { error } = useNotifications();
   const accept = ".png, .jpg, .jpeg";
 
@@ -360,7 +359,7 @@ function ImageTiles({ images, dispatch, guildPostId }) {
       return false;
     }
 
-    const cover = find(images, { cover: true });
+    const cover = images.find((i) => i.cover);
     files.forEach((file, i) => {
       dispatch({
         type: "NEW_UPLOAD",

@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { curry } from "lodash-es";
+import curry from "lodash/curry";
 
 const isoToLocalFormat = curry((format, iso) => {
   const timezone = DateTime.local().zoneName;

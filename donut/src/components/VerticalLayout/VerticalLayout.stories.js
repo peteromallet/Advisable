@@ -1,5 +1,5 @@
 import React from "react";
-import { times } from "lodash-es";
+import times from "lodash/times";
 import Box from "../Box";
 import VerticalLayout from "./";
 

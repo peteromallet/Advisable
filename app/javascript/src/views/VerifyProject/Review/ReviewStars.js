@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import { isEmpty } from "lodash-es";
+import isEmpty from "lodash/isEmpty";
 // Hooks
 import { useHistory, useParams, useLocation } from "react-router-dom";
 // Components

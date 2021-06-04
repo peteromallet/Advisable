@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { uniqueId } from "lodash-es";
+import uniqueId from "lodash/uniqueId";
 import { AnimatePresence, motion } from "framer-motion";
 import { Container } from "./styles";
 import Notification from "./Notification";

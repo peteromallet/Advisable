@@ -1,4 +1,4 @@
-import { uniqueId } from "lodash-es";
+import uniqueId from "lodash/uniqueId";
 import React, { useMemo } from "react";
 import { StyledRadio, StyledRadioInput, StyledRadioToggle } from "./styles";
 

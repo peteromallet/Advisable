@@ -1,5 +1,5 @@
 import React from "react";
-import { sortBy } from "lodash-es";
+import sortBy from "lodash/sortBy";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useQuery, useMutation } from "@apollo/client";
 import {
