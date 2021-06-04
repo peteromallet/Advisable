@@ -21,6 +21,8 @@
 # [Accepted] Their application has been successfull.
 #
 class Specialist < ApplicationRecord
+  self.ignored_columns += %i[referrer]
+
   include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser
@@ -35,7 +37,7 @@ class Specialist < ApplicationRecord
   has_logidze
 
   belongs_to :country, optional: true
-  belongs_to :referrer_rename_me, class_name: "Specialist", foreign_key: :referrer_id, inverse_of: :referred, optional: true
+  belongs_to :referrer, class_name: "Specialist", inverse_of: :referred, optional: true
 
   has_many :reviews, dependent: :destroy
   has_many :consultations, dependent: :destroy
@@ -57,7 +59,7 @@ class Specialist < ApplicationRecord
   has_many :events, foreign_key: :host_id, inverse_of: :host, dependent: :nullify
   has_many :event_attendees, dependent: :destroy
   has_many :articles, class_name: "CaseStudy::Article", dependent: :destroy
-  has_many :referred, class_name: "Specialist", foreign_key: :referrer_id, inverse_of: :referrer_rename_me, dependent: :nullify
+  has_many :referred, class_name: "Specialist", foreign_key: :referrer_id, inverse_of: :referrer, dependent: :nullify
 
   # We also have an 'image' column in the specalists table. This is a deprecated
   # column that we used to use to store the avatar from airtable in.
@@ -140,7 +142,6 @@ end
 #  project_count                     :integer
 #  public_use                        :boolean
 #  ratings                           :jsonb
-#  referrer                          :string
 #  remote                            :boolean
 #  reviews_count                     :integer
 #  travel_availability               :string
