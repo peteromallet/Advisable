@@ -1,4 +1,4 @@
-import { reduce } from "lodash-es";
+import reduce from "lodash/reduce";
 import React, { useState, useEffect } from "react";
 import {
   StyledAvatar,

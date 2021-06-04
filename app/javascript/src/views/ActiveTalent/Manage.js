@@ -1,5 +1,5 @@
 import React from "react";
-import { filter } from "lodash-es";
+import filter from "lodash/filter";
 import { Text, Tabs } from "@advisable/donut";
 import TalentCard from "./TalentCard";
 import { Cards } from "./styles";

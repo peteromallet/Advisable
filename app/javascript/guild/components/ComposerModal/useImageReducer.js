@@ -1,5 +1,4 @@
 import { useReducer } from "react";
-import { find } from "lodash-es";
 import generateID from "@advisable-main/utilities/generateID";
 
 // We manage all of the photos inside of a state reducer. This is to make the UX when managing
@@ -42,7 +41,7 @@ function reducer(state, action) {
     }
 
     case "REMOVE_IMAGE": {
-      const isCover = find(state, { id: action.id })?.cover || false;
+      const isCover = state.find((i) => i.id === action.id)?.cover || false;
 
       let nextState = state.filter((img) => img.id !== action.id);
 
@@ -54,7 +53,7 @@ function reducer(state, action) {
     }
 
     case "SET_COVER": {
-      const cover = find(state, { cover: true });
+      const cover = state.find((i) => i.cover);
 
       return state.map((image) => {
         if (image.id === action.id) {

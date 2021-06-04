@@ -1,5 +1,6 @@
 import React from "react";
-import { uniqueId, filter, find } from "lodash-es";
+import filter from "lodash/filter";
+import uniqueId from "lodash/uniqueId";
 import Desktop from "./Desktop";
 import Mobile from "./Mobile";
 import useBreakpoint from "../../hooks/useBreakpoint";
@@ -22,10 +23,10 @@ const Autocomplete = ({ options: selectOptions, size, value, ...rest }) => {
 
   if (rest.multiple) {
     filteredValue = filter(value, (v) => {
-      return find(options, { value: v });
+      return options.find((o) => o.value === v);
     });
   } else {
-    filteredValue = find(options, { value });
+    filteredValue = options.find((o) => o.value === value);
   }
 
   let isMax = rest.multiple && rest.max && filteredValue.length >= rest.max;

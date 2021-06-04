@@ -1,5 +1,5 @@
 import React from "react";
-import { isObject } from "lodash-es";
+import isObject from "lodash/isObject";
 import InputLabel from "../InputLabel";
 import InputError from "../InputError";
 import InputDescription from "../InputDescription";

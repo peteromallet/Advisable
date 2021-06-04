@@ -1,5 +1,5 @@
 import * as React from "react";
-import { filter } from "lodash-es";
+import filter from "lodash/filter";
 import { Box, Modal, useModal } from "@advisable/donut";
 import { useApolloClient } from "@apollo/client";
 import {

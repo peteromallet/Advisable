@@ -1,6 +1,7 @@
 import React from "react";
 import { DateTime } from "luxon";
-import { sortBy, reduce } from "lodash-es";
+import reduce from "lodash/reduce";
+import sortBy from "lodash/sortBy";
 import { Text, Modal, useModal } from "@advisable/donut";
 import { Day, RequestMore } from "./styles";
 import NoAvailability from "./NoAvailability";

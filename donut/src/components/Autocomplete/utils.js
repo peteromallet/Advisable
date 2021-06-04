@@ -1,11 +1,9 @@
-import { find } from "lodash-es";
-
 export const getSelected = (value, options) => {
-  return find(options, { value: value }) || null;
+  return options.find((o) => o.value === value) || null;
 };
 
 export const getSelectedMultiple = (value, options) => {
-  return value.map((item) => find(options, { value: item }));
+  return value.map((item) => options.find((o) => o.value === item));
 };
 
 export const handleRemoveItem = (item, value, onChange) => () => {

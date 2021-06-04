@@ -7,7 +7,7 @@ import * as React from "react";
 import { withRouter } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { Box } from "@advisable/donut";
-import { filter } from "lodash-es";
+import filter from "lodash/filter";
 import Drawer from "../Drawer";
 import { TaskDrawer as TaskDrawerStyles } from "./styles";
 import EditTask from "./EditTask";

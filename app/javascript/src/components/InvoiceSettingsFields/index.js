@@ -1,6 +1,5 @@
 import React from "react";
 import { string } from "yup";
-import { find } from "lodash-es";
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import { Box } from "@advisable/donut";
@@ -35,7 +34,7 @@ const InvoiceSettingsFields = ({ formik }) => {
   const { data, loading } = useQuery(GET_DATA);
   const countries = data?.countries || [];
   const countryValue = formik.values?.address?.country;
-  const country = find(countries, (c) => {
+  const country = countries.find((c) => {
     return c.code === countryValue || c.name === countryValue;
   });
 

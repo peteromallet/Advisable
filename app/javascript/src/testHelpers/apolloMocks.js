@@ -1,4 +1,4 @@
-import { isFunction } from "lodash-es";
+import isFunction from "lodash/isFunction";
 import VIEWER from "../graphql/queries/getViewer.graphql";
 
 export const mockViewer = (viewer) => {

@@ -1,5 +1,4 @@
 import React from "react";
-import { find } from "lodash-es";
 import { Box, Text } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import { StyledCoverPhoto, StyledCoverPhotoTag } from "./styles";
@@ -7,7 +6,7 @@ import filesExceedLimit from "src/utilities/filesExceedLimit";
 import matchFileType from "src/utilities/matchFileType";
 
 function CoverPhoto({ images, dispatch, resourceName = "project" }) {
-  const cover = find(images, { cover: true });
+  const cover = images.find((i) => i.cover);
   const [background, setBackground] = React.useState(cover?.url);
   const { error } = useNotifications();
   const MAX_SIZE_IN_MB = 5;

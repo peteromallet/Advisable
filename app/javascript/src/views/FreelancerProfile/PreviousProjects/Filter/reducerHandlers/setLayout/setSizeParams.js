@@ -1,4 +1,4 @@
-import { flow } from "lodash-es";
+import flow from "lodash/flow";
 import { theme } from "@advisable/donut";
 
 const getParams = (rowIndex) => {
