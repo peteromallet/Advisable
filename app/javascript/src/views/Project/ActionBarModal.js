@@ -8,7 +8,7 @@ import { theme, Box } from "@advisable/donut";
 import { Dialog, DialogBackdrop } from "reakit/Dialog";
 
 const StyledDialogBackdrop = styled(motion.div)`
-  top: 58px;
+  top: 60px;
   right: 0;
   bottom: 0;
   left: ${(props) => `${props.leftIndent}px`};

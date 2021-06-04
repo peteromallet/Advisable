@@ -4,7 +4,7 @@ import { theme, Link } from "@advisable/donut";
 
 export const Spacer = styled.div`
   width: 100%;
-  height: 58px;
+  height: 60px;
 `;
 
 export const Header = styled.header`
@@ -12,7 +12,7 @@ export const Header = styled.header`
   left: 0;
   z-index: 5;
   width: 100%;
-  height: 58px;
+  height: 60px;
   display: flex;
   position: fixed;
   background: ${theme.colors.blue600};
@@ -123,7 +123,7 @@ export const NavContainer = styled.div`
 `;
 
 export const NavItem = styled(NavLink)`
-  height: 58px;
+  height: 60px;
   color: #aabdff;
   font-size: 15px;
   font-weight: 400;
@@ -140,7 +140,7 @@ export const NavItem = styled(NavLink)`
 
   &.active {
     color: white;
-    border-bottom: 2px solid white;
+    box-shadow: inset 0 -2px white;
   }
 
   @media (max-width: 800px) {
