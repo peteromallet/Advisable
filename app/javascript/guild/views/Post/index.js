@@ -90,9 +90,7 @@ const Post = () => {
           ) : null}
 
           <Box px={{ _: 6, s: "xxl" }} pt={10} pb={14}>
-            <Box mb={4}>
-              <PostTypeTag post={post} />
-            </Box>
+            <PostTypeTag post={post} mb={4} />
             <Text
               fontWeight="semibold"
               size="5xl"
