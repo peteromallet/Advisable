@@ -22,7 +22,10 @@ module Mutations
         article = ::CaseStudy::Article.find_by!(uid: id)
 
         current_account_responsible_for do
-          article.update(published_at: Time.zone.now)
+          ActiveRecord::Base.transaction do
+            article.update(published_at: Time.zone.now)
+            ::Guild::CaseStudy.create_from_article!(article)
+          end
         end
 
         {article: article}
