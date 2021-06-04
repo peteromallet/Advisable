@@ -111,7 +111,7 @@ const Header = () => {
           <CurrentUser />
         </Box>
       </StyledHeader>
-      <Box height="58px" />
+      <Box height="60px" />
     </>
   );
 };
