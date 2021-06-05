@@ -20,9 +20,10 @@ export default function PostActions({
 }) {
   const viewer = useViewer();
   const viewerIsAuthor = post.author.id === viewer?.id;
+  const isCaseStudy = post.type === "Case Study";
   const isShareable = showShare && post.shareable;
-  const isEditable = showEdit && viewerIsAuthor;
-  const isDeleteable = showDelete && viewerIsAuthor;
+  const isEditable = showEdit && viewerIsAuthor && !isCaseStudy;
+  const isDeleteable = showDelete && viewerIsAuthor && !isCaseStudy;
   const isResolvable =
     showResolve &&
     viewerIsAuthor &&
