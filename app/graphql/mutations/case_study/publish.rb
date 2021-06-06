@@ -23,7 +23,7 @@ module Mutations
 
         current_account_responsible_for do
           ActiveRecord::Base.transaction do
-            article.update(published_at: Time.zone.now)
+            article.update!(published_at: Time.zone.now)
             ::Guild::CaseStudy.create_from_article!(article)
           end
         end
