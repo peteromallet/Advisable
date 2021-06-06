@@ -19,6 +19,7 @@ import JoinGuild from "./JoinGuild";
 import PopularNotice from "@guild/components/Post/components/PopularNotice";
 import { hasGqlError, loginWithRedirectPath } from "@guild/utils";
 import { StyledImageThumbnail } from "./styles";
+import Article from "./Article";
 
 const Post = () => {
   const { postId } = useParams();
@@ -34,6 +35,7 @@ const Post = () => {
     },
   });
   const post = data?.guildPost;
+  const hasArticle = post?.type === "Case Study" && post?.article;
 
   const { viewer, isAuthor, popularOrAuthorReactions } = useViewerAuthor(post);
   const guildViewer = viewer?.guild;
@@ -136,7 +138,11 @@ const Post = () => {
             </Box>
 
             <Box mb={8}>
-              <Markdown>{post.body}</Markdown>
+              {hasArticle ? (
+                <Article article={post?.article} />
+              ) : (
+                <Markdown>{post.body}</Markdown>
+              )}
             </Box>
 
             <Topics topics={post.guildTopics} />
