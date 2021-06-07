@@ -56,10 +56,17 @@ module Toby
           root = self
           type_class = Class.new(GraphQL::Schema::Object) do
             graphql_name(root.model.name)
-            field :_label, String, null: false
 
+            field :_label, String, null: false
             define_method(:_label) do
               root.label(object, context)
+            end
+
+            if root.model.ancestors.include?(Logidze::Model)
+              field :_history, [Toby::Types::Version], null: true
+              define_method(:_history) do
+                object.reload_log_data.data["h"]
+              end
             end
 
             root.attributes.each do |attribute|
