@@ -46,14 +46,14 @@ class ZappierInteractorController < ApplicationController
       end
 
       if params[:skills].present?
-        project.skills = params[:skills].filter_map do |uid|
-          Skill.find_by(uid: uid)
+        project.skills = params[:skills].filter_map do |name|
+          Skill.find_by(name: name)
         end
       end
 
       if params[:primary_skill].present?
         project.project_skills.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
-        skill = Skill.find_by(uid: params[:primary_skill])
+        skill = Skill.find_by(name: params[:primary_skill])
         project.skills << skill unless project.project_skills.find_by(skill: skill)
         project.project_skills.find_by(skill: skill).update(primary: true)
       end
