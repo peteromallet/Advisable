@@ -203,5 +203,18 @@ module Types
       records = records.where(status: status) if status
       records
     end
+
+    field :sent_shared_articles, [Types::CaseStudy::SharedArticle], null: true, method: :sent_articles
+
+    field :received_shared_articles, [Types::CaseStudy::SharedArticle], null: true do
+      argument :archived, Boolean, required: false
+    end
+    def received_shared_articles(archived: false)
+      if archived
+        object.received_articles.archived
+      else
+        object.received_articles.active
+      end
+    end
   end
 end
