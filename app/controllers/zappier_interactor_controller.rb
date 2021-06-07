@@ -5,6 +5,7 @@ class ZappierInteractorController < ApplicationController
 
   ALLOWED_APPLICATION_FIELDS = %i[comment featured hidden hide_from_profile introduction rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source].freeze
   PARAMETRIZED_APPLICATION_META_FIELDS = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }.freeze
+  ALLOWED_PROJECT_FIELDS = %i[status sales_status estimated_budget remote required_characteristics goals description deposit company_description].freeze
 
   skip_before_action :verify_authenticity_token
   before_action :verify_key!
@@ -26,12 +27,44 @@ class ZappierInteractorController < ApplicationController
   end
 
   def update_project
-    find_and_update(Project, params.permit(whitelisted_project_params))
+    find_and_update(Project) do |project|
+      # add fields and airtable syncing for
+      # Stop Candidate Proposed Emails
+      # Level Of Expertise Required
+      # Likelihood To Confirm (%)
+      # Lost Reason
+      # Project Start
+      attrs = params.permit(ALLOWED_PROJECT_FIELDS).reject { |_k, v| v.blank? && v != "   " } # 3 spaces means null
+      questions = params.permit(:question_1, :question_2).values.compact # rubocop:disable Naming/VariableNumber
+      attrs[:questions] = questions if questions.any?
+
+      if params[:required_characteristics].presence || params[:optional_characteristics].presence
+        required = params[:required_characteristics].presence || project.required_characteristics
+        optional = params[:optional_characteristic].presence || project.optional_characteristics
+        attrs[:characteristics] = (required || []) + (optional || [])
+        attrs[:required_characteristics] = required
+      end
+
+      if params[:skills].present?
+        project.skills = params[:skills].filter_map do |uid|
+          Skill.find_by(uid: uid)
+        end
+      end
+
+      if params[:primary_skill].present?
+        project.project_skills.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+        skill = Skill.find_by(uid: params[:primary_skill])
+        project.skills << skill unless project.project_skills.find_by(skill: skill)
+        project.project_skills.find_by(skill: skill).update(primary: true)
+      end
+
+      project.update!(attrs)
+    end
   end
 
   def update_application
-    find_and_update(Application) do |record|
-      record.update!(application_params(record.meta_fields))
+    find_and_update(Application) do |application|
+      application.update!(application_params(application.meta_fields))
     end
   end
 
@@ -113,7 +146,7 @@ class ZappierInteractorController < ApplicationController
       yield(record)
     end
 
-    record.sync_to_airtable if record.respond_to?(:sync_to_airtable)
+    record.sync_to_airtable if record.respond_to?(:sync_to_airtable) && record.airtable_id.present?
 
     render json: {status: "OK.", uid: record.uid}
   rescue ActiveRecord::RecordNotFound
