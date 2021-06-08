@@ -39,7 +39,7 @@ const Header = () => {
   const hasUnreadNotifications = lastReadData?.viewer?.guildUnreadNotifications;
 
   const { data: eventsData } = useQuery(EVENTS_QUERY, { skip: !viewer });
-  const eventsCount = eventsData?.events?.totalCount;
+  const eventsCount = eventsData?.events?.upcomingEventsCount;
 
   return (
     <>
@@ -83,7 +83,11 @@ const Header = () => {
               <StyledHeaderLink exact as={NavLink} to="/events">
                 <Calendar />
                 {eventsCount ? (
-                  <StyledHeaderBadgeNumber top="4px" left="32px">
+                  <StyledHeaderBadgeNumber
+                    top="4px"
+                    left="32px"
+                    data-testid="upcomingEvents"
+                  >
                     {eventsCount}
                   </StyledHeaderBadgeNumber>
                 ) : null}
