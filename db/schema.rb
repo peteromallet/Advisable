@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_03_070314) do
+ActiveRecord::Schema.define(version: 2021_06_08_091306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -672,16 +672,6 @@ ActiveRecord::Schema.define(version: 2021_06_03_070314) do
     t.index ["label_id"], name: "index_post_prompts_on_label_id"
   end
 
-  create_table "previous_project_images", force: :cascade do |t|
-    t.integer "position"
-    t.bigint "off_platform_project_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "uid"
-    t.boolean "cover"
-    t.index ["off_platform_project_id"], name: "index_previous_project_images_on_off_platform_project_id"
-  end
-
   create_table "problematic_flags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "application_id", null: false
     t.bigint "user_id", null: false
@@ -1093,7 +1083,6 @@ ActiveRecord::Schema.define(version: 2021_06_03_070314) do
   add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "projects"
   add_foreign_key "post_prompts", "labels"
-  add_foreign_key "previous_project_images", "off_platform_projects"
   add_foreign_key "problematic_flags", "applications"
   add_foreign_key "problematic_flags", "users"
   add_foreign_key "project_industries", "industries"
