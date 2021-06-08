@@ -19,8 +19,7 @@ module Airtable
     sync_column 'Campaign Source', to: :campaign_source
     sync_column 'Campaign Name', to: :campaign_name
     sync_column 'Brief Confirmed - Timestamp', to: :brief_confirmed_at
-    sync_column 'Brief Pending Confirmation - Timestamp',
-                to: :brief_pending_confirmation_at
+    sync_column 'Brief Pending Confirmation - Timestamp', to: :brief_pending_confirmation_at
     sync_column 'Call Scheduled - Timestamp', to: :call_scheduled_at
     sync_column 'Interview Scheduled - Timestamp', to: :interview_scheduled_at
     sync_column 'Candidate Proposed - Timestamp', to: :candidate_proposed_at
@@ -32,6 +31,10 @@ module Airtable
     sync_column 'Won - Timestamp', to: :won_at
     sync_column 'Lost - Timestamp', to: :lost_at
     sync_column 'Plain Text Industry', to: :industry
+    sync_column 'Level Of Expertise Required', to: :level_of_expertise_required
+    sync_column 'Likelihood To Confirm (%)', to: :likelihood_to_confirm
+    sync_column 'Lost Reason', to: :lost_reason
+    sync_column 'Project Start', to: :project_start
 
     # sync_data is used to sync more complicated parts of the airtable record that
     # dont fit into a simple column mapping like above. It takes the ActiveRecord
@@ -90,6 +93,7 @@ module Airtable
       project.deposit = (fields['Deposit Amount Required'].to_f * 100).to_i
       project.remote = true if fields['Remote OK'].try(:include?, 'Yes')
       project.remote = false if fields['Remote OK'].try(:include?, 'No')
+      project.stop_candidate_proposed_emails = fields['Stop Candidate Proposed Emails'].try(:include?, 'Yes')
       project.industry_experience_required = false if fields['Industry Experience Required'].try(:include?, 'No')
       project.industry_experience_required = true if fields['Industry Experience Required'].try(:include?, 'Yes')
       project.company_type_experience_required = false if fields['Company Type Experience Required'].try(:include?, 'No')
@@ -115,10 +119,17 @@ module Airtable
       self['Primary Skill Required'] = project.primary_skill.try(:name)
       self['Industry Experience Required'] = 'Yes' if project.industry_experience_required
       self['Industry Experience Required'] = 'No' if project.industry_experience_required == false
+      self['Remote OK'] = 'Yes' if project.remote
+      self['Remote OK'] = 'No' if project.remote == false
+      self['Stop Candidate Proposed Emails'] = 'Yes' if project.stop_candidate_proposed_emails
       self['Company Type Experience Required'] = 'Yes' if project.company_type_experience_required
       self['Company Type Experience Required'] = 'No' if project.company_type_experience_required == false
       self['Project Status'] = project.sales_status
       self['Owner'] = [project.user.company.sales_person.airtable_id].compact if project.user.company.sales_person
+      self['Level Of Expertise Required'] = project.level_of_expertise_required
+      self['Likelihood To Confirm (%)'] = project.likelihood_to_confirm
+      self['Lost Reason'] = project.lost_reason
+      self['Project Start'] = project.project_start
     end
 
     private
