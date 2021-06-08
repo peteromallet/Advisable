@@ -757,6 +757,11 @@ ActiveRecord::Schema.define(version: 2021_06_08_091306) do
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
     t.jsonb "log_data"
+    t.boolean "stop_candidate_proposed_emails"
+    t.string "level_of_expertise_required"
+    t.integer "likelihood_to_confirm"
+    t.string "lost_reason"
+    t.string "project_start"
     t.index ["sales_status"], name: "index_projects_on_sales_status"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
