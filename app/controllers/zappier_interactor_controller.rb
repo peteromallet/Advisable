@@ -28,15 +28,9 @@ class ZappierInteractorController < ApplicationController
 
   def update_project
     find_and_update(Project) do |project|
-      # add fields and airtable syncing for
-      # Stop Candidate Proposed Emails
-      # Level Of Expertise Required
-      # Likelihood To Confirm (%)
-      # Lost Reason
-      # Project Start
-      attrs = params.permit(ALLOWED_PROJECT_FIELDS).reject { |_k, v| v.blank? && v != "   " } # 3 spaces means null
-      questions = params.permit(:question_1, :question_2).values.compact # rubocop:disable Naming/VariableNumber
-      attrs[:questions] = questions if questions.any?
+      attrs = parse_params(params.permit(ALLOWED_PROJECT_FIELDS))
+      questions = parse_params(params.permit(:question_1, :question_2)).values # rubocop:disable Naming/VariableNumber
+      attrs[:questions] = questions.compact unless questions.empty?
 
       if params[:required_characteristics].presence || params[:optional_characteristics].presence
         required = params[:required_characteristics].presence || project.required_characteristics
@@ -162,6 +156,16 @@ class ZappierInteractorController < ApplicationController
       attrs[:meta_fields][field] = attrs.delete(param) if attrs.key?(param)
     end
     attrs
+  end
+
+  # Remove empty keys to avoid nullifying
+  # Make explicit nullifying possible via `-`
+  def parse_params(attrs)
+    attrs.to_h.filter_map do |k, v|
+      next if v.blank? && v != "-"
+
+      [k, v == "-" ? nil : v]
+    end.to_h
   end
 
   def find_account_from_uid(uid)
