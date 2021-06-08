@@ -77,7 +77,6 @@ export { Orbit } from "./components/OrbitsSystem";
 export { default as SharedOrbitsProvider } from "./components/OrbitsSystem/SharedOrbitsProvider";
 export { default as BulletList } from "./components/BulletList";
 export * from "./components/BulletList/styles";
-export { default as Autocomplete } from "./components/Autocomplete";
 export { default as useBreakpoint } from "./hooks/useBreakpoint";
 export { default as useBreakpoints } from "./hooks/useBreakpoints";
 export { default as useTheme } from "./hooks/useTheme";
