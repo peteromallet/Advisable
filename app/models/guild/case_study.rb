@@ -9,6 +9,10 @@ module Guild
       labels = Label.joins(skill: [:case_study_skills])
       create!(status: "published", specialist: article.specialist, labels: labels, article: article)
     end
+
+    def excerpt
+      article&.subtitle&.truncate(300)
+    end
   end
 end
 
