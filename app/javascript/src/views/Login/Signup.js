@@ -53,7 +53,7 @@ export default function Signup() {
         <Flash name="notice" variant="orange" marginBottom={4} />
         <Button
           as={RouteLink}
-          to="/clients/signup"
+          to="/clients/join"
           width="100%"
           size="l"
           variant="subtle"

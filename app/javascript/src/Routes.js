@@ -13,6 +13,7 @@ const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const VerifyProject = lazy(() => import("./views/VerifyProject"));
 const Availability = lazy(() => import("./views/Availability"));
+const ClientJoin = lazy(() => import("./views/ClientJoin"));
 const FreelancerJoin = lazy(() => import("./views/FreelancerJoin"));
 const VideoCall = lazy(() => import("./views/VideoCall"));
 
@@ -43,6 +44,7 @@ const Routes = () => {
           from="/freelancers/signup"
           to={{ pathname: "/freelancers/join", search: location.search }}
         />
+        <Route path="/clients/join" component={ClientJoin} />
         <Route path="/freelancers/join" component={FreelancerJoin} />
         <Route path="/verify_project/:id" component={VerifyProject} />
         <Route component={ApplicationRoutes} />

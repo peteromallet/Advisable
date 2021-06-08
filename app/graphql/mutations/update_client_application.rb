@@ -2,49 +2,47 @@
 
 module Mutations
   class UpdateClientApplication < Mutations::BaseMutation
+    description "Updates the users information during signup"
+
     argument :budget, Int, required: false
+    argument :business_type, String, required: false
     argument :company_name, String, required: false
     argument :company_type, String, required: false
-    argument :id, ID, required: true
+    argument :feedback, Boolean, required: false
+    argument :goals, [String], required: false
     argument :industry, String, required: false
-    argument :number_of_freelancers, String, required: false
-    argument :skills, [String], required: false
+    argument :marketing_attitude, String, required: false
+    argument :title, String, required: false
 
-    field :clientApplication, Types::ClientApplicationType, null: true
+    field :client_application, Types::ClientApplicationType, null: true
+
+    ALLOWED_STATUSES = ["Application Started", "Submitted"].freeze
+
+    def authorized?(*_)
+      requires_current_user!
+      ApiError.invalid_request("INVALID_STATUS", "Wrong application status") unless ALLOWED_STATUSES.include?(current_user.application_status)
+      true
+    end
 
     def resolve(**args)
-      user = User.find_by_uid_or_airtable_id!(args[:id])
-
-      if user.application_status == "Application Started"
-        user.number_of_freelancers = args[:number_of_freelancers] if args[:number_of_freelancers]
-        update_skills(user, args[:skills]) if args[:skills]
-        update_company_attributes(user, args)
-        current_account_responsible_for { user.save }
-        failed_to_save(user) if user.errors.any?
-        user.sync_to_airtable
+      current_user.title = args[:title] if args.key?(:title)
+      company = current_user.company
+      company.name = args[:company_name] if args.key?(:company_name)
+      company.industry = Industry.find_by_name!(args[:industry]) if args.key?(:industry)
+      company.kind = args[:company_type] if args.key?(:company_type)
+      company.assign_attributes(
+        args.slice(:budget, :business_type, :goals, :feedback, :marketing_attitude)
+      )
+      success = current_account_responsible_for do
+        current_user.save && company.save
       end
 
-      {clientApplication: user}
-    end
-
-    private
-
-    def failed_to_save(user)
-      message = user.errors.full_messages.first
-      ApiError.invalid_request('FALIED_TO_SAVE', message)
-    end
-
-    def update_company_attributes(user, args)
-      user.company.name = args[:company_name] if args[:company_name]
-      user.company.budget = args[:budget] if args[:budget]
-      user.company.industry = Industry.find_by!(name: args[:industry]) if args[:industry]
-      user.company.kind = args[:company_type] if args[:company_type]
-      current_account_responsible_for { user.company.save }
-    end
-
-    def update_skills(user, skills)
-      records = Skill.where(name: skills)
-      user.skill_ids = records.map(&:id)
+      if success
+        current_user.sync_to_airtable
+        {client_application: current_user}
+      else
+        ApiError.invalid_request('FAILED_TO_SAVE', company.errors.full_messages.first)
+      end
     end
   end
 end

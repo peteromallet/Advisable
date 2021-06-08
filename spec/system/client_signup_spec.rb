@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Client signup', type: :system do
   before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
+    create(:blacklisted_domain, domain: "gmail.com")
     create(:industry, name: "Financial Services")
     create(:industry, name: "Development")
     create(:industry, name: "Design")
@@ -13,31 +14,52 @@ RSpec.describe 'Client signup', type: :system do
     create(:skill, name: "Twitter Advertising")
   end
 
-  it 'allows the user to signup as a client' do
-    visit("/clients/signup")
+  it 'Client can not use public emails' do
+    visit('/clients/join')
+    fill_in("firstName", with: "Michael")
+    fill_in("lastName", with: "Scott")
+    fill_in("email", with: "michael+scott@gmail.com")
+    click_on("Get Started")
+
+    expect(page).to have_content("The email michael+scott@gmail.com is not allowed")
+  end
+
+  it 'Client can create an account and gets redirected to projects' do
+    visit("/clients/join")
     fill_in("firstName", with: "Michael")
     fill_in("lastName", with: "Scott")
     fill_in("email", with: "michael+scott@dundermifflin.com")
-    click_on("Continue")
+    click_on("Get Started")
+    expect(page).to have_content("Welcome to Advisable!")
+    fill_in("password", with: "testing123")
+    fill_in("passwordConfirmation", with: "testing123")
+    click_on("Get Started")
 
+    expect(page).to have_content("Welcome to Advisable")
+    click_on("Get Started")
+
+    expect(page).to have_content("Company Overview")
     fill_in("companyName", with: "Dunder Mifflin")
+    find("button[aria-label='B2B']").click
     industry = find_field("Select your company industry")
     industry.send_keys("des", :down, :return)
-    select("Startup", from: "companyType")
     click_on("Continue")
 
-    skills = find_field("Select the skills you're looking for")
-    skills.send_keys("twitt", :down, :return)
-    skills.send_keys("face", :down, :return)
-    find("button[aria-label='Four to ten']").click
+    expect(page).to have_content("Company Stage")
+    find("button[aria-label='Small Business']").click
+
+    expect(page).to have_content("Goals")
+    find('label', text: 'Increase Web Traffic').click
+    find('label', text: 'Improve Conversion').click
+    click_on("Continue")
+
+    expect(page).to have_content("Preferences")
+    fill_in("title", with: "CEO")
     fill_in("budget", with: "10000")
-    click_on("Continue")
-
-    find("button[aria-label='Not Important']").click
     find("button[aria-label='Yes']").click
-    find("button[aria-label='World-class']").click
+    find('label', text: 'We rarely experiment & try new things').click
     click_on("Continue")
 
-    expect(page).to have_content("We think you might be a good fit")
+    expect(page).to have_content('We are reviewing your application')
   end
 end

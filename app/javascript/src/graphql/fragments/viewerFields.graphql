@@ -12,8 +12,13 @@ fragment ViewerFields on ViewerUnion {
     createdAt
     companyName
     talkSignature
+    applicationStage
     completedTutorials
     needsToSetAPassword
+    clientApplication {
+      id
+      status
+    }
     country {
       id
       name

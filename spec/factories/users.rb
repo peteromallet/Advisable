@@ -5,6 +5,8 @@ FactoryBot.define do
     account
     country
     company
+    title { "CTO" }
+    application_status { "Accepted" }
     sequence(:uid) { "use_#{SecureRandom.hex[0..14]}" }
     sequence(:airtable_id) { |n| "recuser#{n}" }
 

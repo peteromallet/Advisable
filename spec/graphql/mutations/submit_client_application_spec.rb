@@ -1,16 +1,16 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe Mutations::SubmitClientApplication do
-  let(:user) { create(:user, application_status: "Application Started") }
+RSpec.describe(Mutations::SubmitClientApplication) do
+  let(:application_status) { "Application Started" }
+  let(:user) { create(:user, application_status: application_status) }
+  let(:context) { {current_user: user} }
+
   let(:query) do
     <<-GRAPHQL
       mutation {
-        submitClientApplication(input: {
-          id: "#{user.uid}",
-          talentQuality: "good",
-          localityImportance: 1,
-          acceptedGuaranteeTerms: true
-        }) {
+        submitClientApplication(input: {}) {
           clientApplication {
             id
           }
@@ -23,46 +23,27 @@ RSpec.describe Mutations::SubmitClientApplication do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
-  it 'sets the status to accepted' do
-    expect { AdvisableSchema.execute(query) }.to change {
+  def request
+    AdvisableSchema.execute(query, context: context)
+  end
+
+  it 'Sets the status to Submitted' do
+    expect { request }.to change {
       user.reload.application_status
-    }.from("Application Started").to("Application Accepted")
+    }.from("Application Started").to("Submitted")
   end
 
-  context 'when they select cheap talent' do
-    let(:query) do
-      <<-GRAPHQL
-        mutation {
-          submitClientApplication(input: {
-            id: "#{user.uid}",
-            talentQuality: "cheap",
-            localityImportance: 1,
-            acceptedGuaranteeTerms: true
-          }) {
-            clientApplication {
-              id
-            }
-          }
-        }
-      GRAPHQL
-    end
-
-    it 'sets the status to rejected with a reason' do
-      AdvisableSchema.execute(query)
-      expect(user.reload.application_status).to eq("Application Rejected")
-      expect(user.reload.rejection_reason).to eq('cheap_talent')
-    end
+  it 'syncs to airtable' do
+    expect_any_instance_of(User).to receive(:sync_to_airtable)
+    request
   end
 
-  context 'when they select not hiring any freelancers' do
-    let(:user) do
-      create(:user, application_status: "Application Started", number_of_freelancers: '0')
-    end
+  context "when the application_status is not 'Application Started'" do
+    let(:application_status) { "Submitted" }
 
-    it 'sets the status to rejected with a reason' do
-      AdvisableSchema.execute(query)
-      expect(user.reload.application_status).to eq("Application Rejected")
-      expect(user.reload.rejection_reason).to eq('not_hiring')
+    it "returns an error" do
+      error = request["errors"][0]["extensions"]["code"]
+      expect(error).to eq("APPLICATION_NOT_STARTED")
     end
   end
 
@@ -70,8 +51,8 @@ RSpec.describe Mutations::SubmitClientApplication do
     let(:goals) { %w[one two] }
 
     it "creates one with goals and company name" do
-      create(:project, goals: goals, user: user)
-      AdvisableSchema.execute(query)
+      user.company.update(goals: goals)
+      request
       search = ::CaseStudy::Search.find_by(user: user)
       expect(search.goals).to match_array(goals)
       expect(search.business_type).to eq("Startup")

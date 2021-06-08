@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe(User, type: :model) do
   let(:user) { create(:user) }
 
   include_examples "uid"
@@ -60,7 +60,7 @@ RSpec.describe User, type: :model do
     end
 
     it "creates a case study search" do
-      create(:project, user: user, goals: %w[one two])
+      user.company.update(goals: %w[one two])
       new_user = user.invite_comember!(new_account)
       search = ::CaseStudy::Search.find_by(user: new_user)
       expect(search.business_type).to eq(user.company.kind)
@@ -71,7 +71,7 @@ RSpec.describe User, type: :model do
 
   describe "#create_case_study_search" do
     it "creates one with goals and company name" do
-      create(:project, goals: %w[one two], user: user)
+      user.company.update(goals: %w[one two])
       search = user.create_case_study_search
       expect(search.goals).to match_array(%w[one two])
       expect(search.business_type).to eq("Startup")

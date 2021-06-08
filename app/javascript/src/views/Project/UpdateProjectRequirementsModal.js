@@ -1,11 +1,11 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import ActionBarModal from "./ActionBarModal";
-import SubmitButton from "components/SubmitButton";
-import BulletPointInput from "components/BulletPointInput";
+import SubmitButton from "src/components/SubmitButton";
+import BulletPointInput from "src/components/BulletPointInput";
+import CheckboxInput from "src/components/CheckboxInput";
 import { Text, Stack, Box } from "@advisable/donut";
+import ActionBarModal from "./ActionBarModal";
 import { useUpdateProject } from "./queries";
-import RequiredCharacteristic from "./ProjectSetup/RequiredCharacteristic";
 
 const CHARACTERISTICS = "CHARACTERISTICS";
 const REQUIRED_CHARACTERISTICS = "REQUIRED_CHARACTERISTICS";
@@ -99,7 +99,7 @@ export default function UpdateProjectRequirementsModal({ dialog, project }) {
                         key={i}
                         type="checkbox"
                         value={characteristic}
-                        as={RequiredCharacteristic}
+                        as={CheckboxInput}
                         name="requiredCharacteristics"
                       >
                         {characteristic}
