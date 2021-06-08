@@ -165,6 +165,7 @@ end
 #  talent_quality                    :string
 #  time_zone                         :string
 #  title                             :string
+#  trustpilot_review_status          :string
 #  uid                               :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null

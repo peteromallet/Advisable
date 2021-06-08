@@ -5,7 +5,7 @@ class ZappierInteractorController < ApplicationController
 
   ALLOWED_APPLICATION_FIELDS = %i[comment featured hidden hide_from_profile introduction rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source].freeze
   PARAMETRIZED_APPLICATION_META_FIELDS = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }.freeze
-  ALLOWED_USER_FIELDS = %i[campaign_name campaign_medium campaign_source].freeze
+  ALLOWED_USER_FIELDS = %i[campaign_name campaign_medium campaign_source trustpilot_review_status].freeze
   ALLOWED_PROJECT_FIELDS = %i[status sales_status estimated_budget remote required_characteristics goals description deposit company_description stop_candidate_proposed_emails level_of_expertise_required likelihood_to_confirm lost_reason project_start].freeze
 
   skip_before_action :verify_authenticity_token
@@ -20,7 +20,6 @@ class ZappierInteractorController < ApplicationController
   end
 
   def update_user
-    # Trustpilot Review Status
     find_and_update(User) do |user|
       attrs = parse_params(params.permit(ALLOWED_USER_FIELDS))
       attrs[:owner] = SalesPerson.find_by(uid: params[:owner]) if params[:owner].present?
