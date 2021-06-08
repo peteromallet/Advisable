@@ -1,8 +1,10 @@
 import { gql } from "@apollo/client";
 import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
+import CaseStudyFields from "@guild/graphql/fragments/caseStudyFields";
 
 export const GUILD_POSTS_QUERY = gql`
   ${GuildPostFields}
+  ${CaseStudyFields}
   query guildPosts(
     $cursor: String
     $type: String
@@ -10,6 +12,7 @@ export const GUILD_POSTS_QUERY = gql`
   ) {
     guildPopularPosts @include(if: $withPopularPosts) {
       ...GuildPostFields
+      ...CaseStudyFields
       ... on PostInterface {
         author {
           id
@@ -27,6 +30,7 @@ export const GUILD_POSTS_QUERY = gql`
       edges {
         node {
           ...GuildPostFields
+          ...CaseStudyFields
           author {
             location
             id
