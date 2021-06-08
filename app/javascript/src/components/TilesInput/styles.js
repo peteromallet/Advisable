@@ -1,7 +1,22 @@
 import styled from "styled-components";
+import { variant } from "styled-system";
 import { theme } from "@advisable/donut";
 
-export const StyledTilesInputOption = styled.button`
+const size = variant({
+  prop: "size",
+  variants: {
+    m: {
+      minHeight: "48px",
+    },
+    l: {
+      minHeight: "64px",
+    },
+  },
+});
+
+const StyledTilesInputOption = styled.button`
+  ${size}
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,7 +24,6 @@ export const StyledTilesInputOption = styled.button`
   align-items: center;
   border: none;
   padding: 12px 4px;
-  min-height: 48px;
   outline: none;
   font-size: 14px;
   cursor: pointer;
@@ -21,11 +35,11 @@ export const StyledTilesInputOption = styled.button`
   box-shadow: inset 0px 0px 0px 0px ${theme.colors.blue500};
 
   & span {
-    color: ${theme.colors.neutral500};
+    color: ${theme.colors.neutral700};
   }
 
   &:hover {
-    box-shadow: inset 0px 0px 0px 2px ${theme.colors.neutral200};
+    box-shadow: inset 0px 0px 0px 2px ${theme.colors.neutral300};
   }
 
   &[data-selected="true"] {
@@ -39,3 +53,9 @@ export const StyledTilesInputOption = styled.button`
     color: ${theme.colors.blue900};
   }
 `;
+
+StyledTilesInputOption.defaultProps = {
+  size: "l",
+};
+
+export default StyledTilesInputOption;

@@ -37,6 +37,12 @@ export const user = (fields = {}) => {
       paymentMethod: null,
       paymentsSetup: true,
       bankTransfersEnabled: true,
+      applicationStage: "Accepted",
+      clientApplication: {
+        id: uniqueId("app"),
+        status: "Accepted",
+        __typename: "ClientApplication",
+      },
       companyType: "Startup",
       projectPaymentMethod: "Bank Transfer",
       location: "Dublin, Ireland",

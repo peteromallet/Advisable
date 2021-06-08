@@ -12,10 +12,10 @@ import useViewer from "./hooks/useViewer";
 const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
 const Applications = lazy(() => import("./views/Applications"));
-const ClientSignup = lazy(() => import("./views/ClientSignup"));
 const FreelancerApplication = lazy(() =>
   import("./views/FreelancerApplication"),
 );
+const ClientApplication = lazy(() => import("./views/ClientApplication"));
 const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
 const Projects = lazy(() => import("./views/Projects"));
 const Project = lazy(() => import("./views/Project"));
@@ -55,6 +55,7 @@ function RedirectToSetPassword() {
 
 const ApplicationRoutes = () => {
   const viewer = useViewer();
+  const location = useLocation();
 
   return (
     <>
@@ -63,8 +64,15 @@ const ApplicationRoutes = () => {
         <Switch>
           <AuthenticatedRoute path="/set_password" component={SetPassword} />
           {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
-          <Route path="/clients/signup" component={ClientSignup} />
+          <Redirect
+            from="/clients/signup"
+            to={{ ...location, pathname: "/clients/join" }}
+          />
           <AuthenticatedRoute exact path="/messages" component={Messages} />
+          <AuthenticatedRoute
+            path="/clients/apply"
+            component={ClientApplication}
+          />
           <AuthenticatedRoute
             path="/freelancers/apply"
             component={FreelancerApplication}

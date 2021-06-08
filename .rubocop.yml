@@ -74,6 +74,14 @@ Style/AsciiComments:
 Style/Documentation:
   Enabled: false
 
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  Exclude:
+    - "db/**/*"
+  IgnoredMethods:
+    - to
+    - not_to
+
 # Let's discuss this one
 # I'd like to go double quotes everywhere, but am open to discussion
 Style/StringLiterals:
@@ -125,6 +133,9 @@ GraphQL/ArgumentDescription:
   Enabled: false
 
 GraphQL/ExtractType:
+  Enabled: false
+
+GraphQL/ExtractInputType:
   Enabled: false
 
 GraphQL/OrderedFields:

@@ -6,7 +6,7 @@ import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
 import SubmitButton from "components/SubmitButton";
 import { UPDATE_PROJECT } from "./queries";
-import RequiredCharacteristic from "./RequiredCharacteristic";
+import CheckboxInput from "src/components/CheckboxInput";
 import { JobSetupStepHeader, JobSetupStepSubHeader } from "./styles";
 import { setupProgress } from "./SetupSteps";
 
@@ -63,17 +63,11 @@ export default function JobRequiredCharacteristics({ data }) {
         {(formik) => (
           <Form>
             <Box mb="xl">
-              {characteristics.map((characteristic, i) => (
-                <Field
-                  key={i}
-                  type="checkbox"
-                  value={characteristic}
-                  as={RequiredCharacteristic}
-                  name="requiredCharacteristics"
-                >
-                  {characteristic}
-                </Field>
-              ))}
+              <Field
+                as={CheckboxInput}
+                name="requiredCharacteristics"
+                options={characteristics}
+              />
             </Box>
 
             <SubmitButton
