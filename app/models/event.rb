@@ -29,6 +29,9 @@ class Event < ApplicationRecord
   scope :list, lambda {
     published.order(featured: :desc, starts_at: :desc)
   }
+  scope :upcoming, lambda {
+    where(ends_at: (Time.zone.now..))
+  }
 
   private
 
