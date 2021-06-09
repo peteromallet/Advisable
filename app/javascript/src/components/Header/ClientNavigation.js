@@ -3,10 +3,12 @@ import { X } from "@styled-icons/feather/X";
 import { useMobile } from "../../components/Breakpoint";
 import useMessageCount from "../../hooks/useMessageCount";
 import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";
+import useFeatureFlag from "src/hooks/useFeatureFlag";
 
 const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
   const isMobile = useMobile();
   const messageCount = useMessageCount();
+  const isCaseStudiesEnabled = useFeatureFlag("case_studies");
 
   return (
     <NavContainer isOpen={navOpen}>
@@ -14,9 +16,11 @@ const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
         <CloseNav onClick={onCloseNav}>
           <X />
         </CloseNav>
-        <NavItem onClick={onCloseNav} to="/explore">
-          Explore
-        </NavItem>
+        {isCaseStudiesEnabled && (
+          <NavItem onClick={onCloseNav} to="/explore">
+            Explore
+          </NavItem>
+        )}
         <NavItem onClick={onCloseNav} to="/projects">
           Find Talent
         </NavItem>

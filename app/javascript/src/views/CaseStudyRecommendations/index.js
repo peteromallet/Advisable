@@ -4,13 +4,20 @@ import { Switch, Route, Redirect } from "react-router";
 import CaseStudy from "./CaseStudy";
 import Searches from "./Searches";
 import RecommendationsInbox from "./Inbox";
+import useFeatureFlag from "src/hooks/useFeatureFlag";
 
 export default function CaseStudyRecommendations() {
   const { setTheme } = useTheme();
+  const isExploreEnabled = useFeatureFlag("case_studies");
+
   useLayoutEffect(() => {
     setTheme((t) => ({ ...t, background: "beige" }));
     return () => setTheme((t) => ({ ...t, background: "default" }));
   }, [setTheme]);
+
+  if (!isExploreEnabled) {
+    return <Redirect to="/projects" />;
+  }
 
   return (
     <Switch>
