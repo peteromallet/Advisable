@@ -8,7 +8,6 @@ class AddGoalsToCompanies < ActiveRecord::Migration[6.1]
         t.column(:feedback, :boolean)
         t.column(:business_type, :string)
         t.column(:marketing_attitude, :string)
-        t.column(:budget, :bigint)
       end
     end
   end
