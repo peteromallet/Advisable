@@ -6,6 +6,7 @@ class ZappierInteractorController < ApplicationController
   ALLOWED_APPLICATION_FIELDS = %i[comment featured hidden hide_from_profile introduction rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source].freeze
   PARAMETRIZED_APPLICATION_META_FIELDS = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }.freeze
   ALLOWED_USER_FIELDS = %i[campaign_name campaign_medium campaign_source trustpilot_review_status].freeze
+  ALLOWED_SPECIALIST_FIELDS = %i[campaign_name campaign_source application_stage].freeze
   ALLOWED_PROJECT_FIELDS = %i[status sales_status estimated_budget remote required_characteristics goals description deposit company_description stop_candidate_proposed_emails level_of_expertise_required likelihood_to_confirm lost_reason project_start].freeze
 
   skip_before_action :verify_authenticity_token
@@ -24,13 +25,15 @@ class ZappierInteractorController < ApplicationController
       attrs = parse_params(params.permit(ALLOWED_USER_FIELDS))
       attrs[:owner] = SalesPerson.find_by(uid: params[:owner]) if params[:owner].present?
       user.update!(attrs)
-      user.account.update(unsubscribed_from: ["ALL"]) if params[:unsubscribe_all] == true
-      user.account.update(unsubscribed_from: []) if params[:unsubscribe_all] == false
+      update_unsubscriptions(user.account)
     end
   end
 
   def update_specialist
-    find_and_update(Specialist, params.permit(whitelisted_specialist_params))
+    find_and_update(Specialist) do |specialist|
+      specialist.update!(parse_params(params.permit(ALLOWED_SPECIALIST_FIELDS)))
+      update_unsubscriptions(specialist.account)
+    end
   end
 
   def update_project
@@ -163,6 +166,20 @@ class ZappierInteractorController < ApplicationController
       attrs[:meta_fields][field] = attrs.delete(param) if attrs.key?(param)
     end
     attrs
+  end
+
+  def update_unsubscriptions(account)
+    unsubscribes = account.unsubscribed_from.uniq
+    Account::SUBSCRIPTIONS.each do |name|
+      param = params["unsubscribe_#{name.downcase.tr(" ", "_")}"]
+      case param
+      when false
+        unsubscribes -= [name]
+      when true
+        unsubscribes += [name]
+      end
+    end
+    account.update!(unsubscribed_from: unsubscribes.uniq)
   end
 
   # Remove empty keys to avoid nullifying

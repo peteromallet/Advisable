@@ -6,6 +6,8 @@ class Account < ApplicationRecord
   include Permissionable
   include Featurable
 
+  SUBSCRIPTIONS = ["All", "SMS Alerts", "Automated Invitations", "Personal Invitations", "Onboarding Emails", "Status Surveys"].freeze
+
   has_logidze
 
   has_one :user, dependent: :destroy
