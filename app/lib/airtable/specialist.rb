@@ -115,8 +115,7 @@ module Airtable
       self['Bank Holder Name'] = specialist.bank_holder_name
       self['Bank Currency'] = specialist.bank_currency
       self['VAT Number'] = specialist.vat_number
-      self['Estimated Number of Freelance Projects'] =
-        specialist.number_of_projects
+      self['Estimated Number of Freelance Projects'] = specialist.number_of_projects
       self['Application Stage'] = specialist.application_stage
 
       if specialist.saved_change_to_bio
