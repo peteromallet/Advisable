@@ -81,6 +81,10 @@ Style/MethodCallWithArgsParentheses:
   IgnoredMethods:
     - to
     - not_to
+    - render
+    - raise
+    - head
+    - describe
 
 # Let's discuss this one
 # I'd like to go double quotes everywhere, but am open to discussion
