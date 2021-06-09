@@ -22,10 +22,12 @@ class ZappierInteractorController < ApplicationController
 
   def update_user
     find_and_update(User) do |user|
-      attrs = parse_params(params.permit(ALLOWED_USER_FIELDS))
-      attrs[:owner] = SalesPerson.find_by(uid: params[:owner]) if params[:owner].present?
-      user.update!(attrs)
-      update_unsubscriptions(user.account)
+      user.update!(parse_params(params.permit(ALLOWED_USER_FIELDS)))
+      if params[:owner].present?
+        sales_person = params[:owner] == "-" ? nil : SalesPerson.find_by!(uid: params[:owner])
+        user.company.update!(sales_person_id: sales_person&.id)
+      end
+      update_unsubscriptions!(user.account)
     end
   end
 
@@ -37,13 +39,14 @@ class ZappierInteractorController < ApplicationController
         attrs[:interviewer_id] = sales_person&.id
       end
       specialist.update!(attrs)
-      update_unsubscriptions(specialist.account)
+      update_unsubscriptions!(specialist.account)
     end
   end
 
   def update_project
     find_and_update(Project) do |project|
       attrs = parse_params(params.permit(ALLOWED_PROJECT_FIELDS))
+
       questions = parse_params(params.permit(:question_1, :question_2)).values # rubocop:disable Naming/VariableNumber
       attrs[:questions] = questions.compact unless questions.empty?
 
@@ -173,7 +176,7 @@ class ZappierInteractorController < ApplicationController
     attrs
   end
 
-  def update_unsubscriptions(account)
+  def update_unsubscriptions!(account)
     unsubscribes = account.unsubscribed_from.uniq
     Account::SUBSCRIPTIONS.each do |name|
       param = params["unsubscribe_#{name.downcase.tr(" ", "_")}"]
