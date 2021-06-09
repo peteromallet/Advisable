@@ -89,7 +89,7 @@ class Account < ApplicationRecord
   end
 
   def unsubscribed?(subscription)
-    unsubscribed_from.include?(subscription)
+    unsubscribed_from.include?("All") || unsubscribed_from.include?(subscription)
   end
 
   private
