@@ -21,24 +21,27 @@ export const StyledMarkdown = styled.div`
   }
 
   h1 {
-    font-size: 30px;
-    line-height: 36px;
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: ${theme.fontWeights.semibold};
     margin-bottom: 16px;
     letter-spacing: -0.03rem;
     color: ${theme.colors.neutral900};
   }
 
   h2 {
-    font-size: 25px;
-    line-height: 28px;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: ${theme.fontWeights.semibold};
     margin-bottom: 12px;
     letter-spacing: -0.03rem;
     color: ${theme.colors.neutral900};
   }
 
   h3 {
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: ${theme.fontWeights.semibold};
     margin-bottom: 12px;
     letter-spacing: -0.02rem;
     color: ${theme.colors.neutral900};
