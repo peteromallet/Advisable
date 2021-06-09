@@ -63,6 +63,10 @@ class User < ApplicationRecord
 
   alias_attribute :application_status, :contact_status
 
+  def guild
+    false
+  end
+
   def company_name
     Sentry.capture_message("Something is still using company_name")
     company.name
