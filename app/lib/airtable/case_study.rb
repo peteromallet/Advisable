@@ -13,15 +13,15 @@ module Airtable
       @content_position = 0
 
       if testing
-        ::Specialist.first.update(airtable_id: fields["Specialist"].first) if ::Specialist.find_by(airtable_id: fields["Specialist"].first).nil?
-        ::SalesPerson.first.update(airtable_id: fields["Interviewer"].first) if ::SalesPerson.find_by(airtable_id: fields["Interviewer"].first).nil?
+        Airtable::Specialist.find(fields["Specialist"].first).sync if ::Specialist.find_by(airtable_id: fields["Specialist"].first).nil?
+        Airtable::SalesPerson.find(fields["Interviewer"].first).sync if ::SalesPerson.find_by(airtable_id: fields["Interviewer"].first).nil?
 
         Array(fields["Industry"]).each do |airtable_id|
-          ::Industry.order("RANDOM()").first.update(airtable_id: airtable_id) if ::Industry.find_by(airtable_id: airtable_id).nil?
+          Airtable::Industry.find(airtable_id).sync if ::Industry.find_by(airtable_id: airtable_id).nil?
         end
 
         Array(fields["Skills"]).each do |airtable_id|
-          ::Skill.order("RANDOM()").first.update(airtable_id: airtable_id) if ::Skill.find_by(airtable_id: airtable_id).nil?
+          Airtable::Skill.find(airtable_id).sync if ::Skill.find_by(airtable_id: airtable_id).nil?
         end
       end
 
