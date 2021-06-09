@@ -6,6 +6,7 @@ class SalesPerson < ApplicationRecord
   include Resizable
 
   has_many :companies, dependent: :nullify
+  has_many :interviewees, class_name: "Specialist", inverse_of: :interviewer, foreign_key: :interviewer_id, dependent: :nullify
 
   has_one_attached :image
   resize image: {resize_to_limit: [400, 400]}

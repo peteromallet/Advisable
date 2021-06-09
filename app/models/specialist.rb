@@ -38,6 +38,7 @@ class Specialist < ApplicationRecord
 
   belongs_to :country, optional: true
   belongs_to :referrer, class_name: "Specialist", inverse_of: :referred, optional: true
+  belongs_to :interviewer, optional: true, class_name: "SalesPerson"
 
   has_many :reviews, dependent: :destroy
   has_many :consultations, dependent: :destroy
@@ -109,13 +110,16 @@ end
 #  id                                :bigint           not null, primary key
 #  application_interview_starts_at   :datetime
 #  application_stage                 :string
+#  application_status                :string
 #  average_score                     :decimal(, )
 #  bank_currency                     :string
 #  bank_holder_address               :jsonb
 #  bank_holder_name                  :string
 #  bio                               :text
+#  campaign_medium                   :string
 #  campaign_name                     :string
 #  campaign_source                   :string
+#  case_study_status                 :string
 #  city                              :string
 #  community_accepted_at             :datetime
 #  community_applied_at              :datetime
@@ -145,6 +149,7 @@ end
 #  remote                            :boolean
 #  reviews_count                     :integer
 #  travel_availability               :string
+#  trustpilot_review_status          :string
 #  uid                               :string
 #  unavailable_until                 :date
 #  vat_number                        :string
@@ -155,19 +160,22 @@ end
 #  airtable_id                       :string
 #  application_interview_calendly_id :string
 #  country_id                        :bigint
+#  interviewer_id                    :bigint
 #  referrer_id                       :bigint
 #
 # Indexes
 #
-#  index_specialists_on_account_id   (account_id)
-#  index_specialists_on_airtable_id  (airtable_id)
-#  index_specialists_on_country_id   (country_id)
-#  index_specialists_on_referrer_id  (referrer_id)
-#  index_specialists_on_uid          (uid)
+#  index_specialists_on_account_id      (account_id)
+#  index_specialists_on_airtable_id     (airtable_id)
+#  index_specialists_on_country_id      (country_id)
+#  index_specialists_on_interviewer_id  (interviewer_id)
+#  index_specialists_on_referrer_id     (referrer_id)
+#  index_specialists_on_uid             (uid)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (country_id => countries.id)
+#  fk_rails_...  (interviewer_id => sales_people.id)
 #  fk_rails_...  (referrer_id => specialists.id)
 #
