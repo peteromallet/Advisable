@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_08_120744) do
+ActiveRecord::Schema.define(version: 2021_06_09_115840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -889,9 +889,15 @@ ActiveRecord::Schema.define(version: 2021_06_08_120744) do
     t.datetime "guild_featured_member_at"
     t.string "guild_calendly_link"
     t.bigint "referrer_id"
+    t.bigint "interviewer_id"
+    t.string "case_study_status"
+    t.string "trustpilot_review_status"
+    t.string "campaign_medium"
+    t.string "application_status"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
+    t.index ["interviewer_id"], name: "index_specialists_on_interviewer_id"
     t.index ["referrer_id"], name: "index_specialists_on_referrer_id"
     t.index ["uid"], name: "index_specialists_on_uid"
   end
@@ -1101,6 +1107,7 @@ ActiveRecord::Schema.define(version: 2021_06_08_120744) do
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "accounts"
   add_foreign_key "specialists", "countries"
+  add_foreign_key "specialists", "sales_people", column: "interviewer_id"
   add_foreign_key "specialists", "specialists", column: "referrer_id"
   add_foreign_key "subscriptions", "labels"
   add_foreign_key "subscriptions", "specialists"
