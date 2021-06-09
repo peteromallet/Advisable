@@ -289,6 +289,102 @@ RSpec.describe ZappierInteractorController, type: :request do
     end
   end
 
+  describe "POST /update_specialist" do
+    let(:account) { create(:account) }
+    let(:specialist) { create(:specialist, account: account, community_status: "Old Status", campaign_name: "Old Name") }
+    let(:params) { {uid: specialist.uid, key: key} }
+
+    before { allow_any_instance_of(Specialist).to receive(:sync_to_airtable) }
+
+    it "updates allowed fields" do
+      post("/zappier_interactor/update_specialist", params: params.merge(campaign_name: "New Name"))
+      expect(response).to have_http_status(:success)
+      expect(specialist.reload.campaign_name).to eq("New Name")
+    end
+
+    it "can nullify an allowed field" do
+      post("/zappier_interactor/update_specialist", params: params.merge(campaign_name: "-"))
+      expect(response).to have_http_status(:success)
+      expect(specialist.reload.campaign_name).to be_nil
+    end
+
+    it "does not update field that is not allowed" do
+      post("/zappier_interactor/update_specialist", params: params.merge(community_status: "New Status"))
+      expect(response).to have_http_status(:success)
+      expect(specialist.reload.community_status).to eq("Old Status")
+    end
+
+    it "updates interviewer" do
+      sp = create(:sales_person)
+      post("/zappier_interactor/update_specialist", params: params.merge(interviewer: sp.uid))
+      expect(response).to have_http_status(:success)
+      expect(specialist.reload.interviewer_id).to eq(sp.id)
+    end
+
+    it "can nullify interviewer" do
+      sp = create(:sales_person)
+      specialist.update!(interviewer_id: sp.id)
+      post("/zappier_interactor/update_specialist", params: params.merge(interviewer: "-"))
+      expect(response).to have_http_status(:success)
+      expect(specialist.reload.interviewer_id).to be_nil
+    end
+
+    describe "updating unsubscriptions" do
+      context "when unsubscribed is nil" do
+        let(:account) { create(:account, unsubscribed_from: nil) }
+
+        it "adds new" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_all: true), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq(["All"])
+        end
+
+        it "doesn't fail removal" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_all: false), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq([])
+        end
+      end
+
+      context "when unsubscribed has content" do
+        let(:account) { create(:account, unsubscribed_from: ["All"]) }
+
+        it "doesn't duplicate existing ones" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_all: true), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq(["All"])
+        end
+
+        it "doesn't duplicate existing ones when empty param" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_all: nil), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq(["All"])
+        end
+
+        it "adds new" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_sms_alerts: true), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to match_array(["All", "SMS Alerts"])
+        end
+
+        it "doesn't fail removal" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_all: false), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq([])
+        end
+      end
+    end
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/update_specialist", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
   describe "POST /attach_previous_project_image" do
     let(:previous_project) { create(:previous_project) }
     let(:image) { "http://path.to/image.jpg" }
