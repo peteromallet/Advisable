@@ -86,7 +86,7 @@ class User < ApplicationRecord
   end
 
   def invite_comember!(account, responsible: nil)
-    user = User.new(account: account, company_id: company_id, application_status: "Active")
+    user = User.new(account: account, company_id: company_id, application_status: "Application Accepted")
     responsible = account_id if responsible.nil?
     Logidze.with_responsible(responsible) do
       user.save!
