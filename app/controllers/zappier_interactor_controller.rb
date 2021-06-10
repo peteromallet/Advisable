@@ -52,8 +52,8 @@ class ZappierInteractorController < ApplicationController
 
       if params[:required_characteristics].presence || params[:optional_characteristics].presence
         required = params[:required_characteristics].presence || project.required_characteristics
-        optional = params[:optional_characteristic].presence || project.optional_characteristics
-        attrs[:characteristics] = (required || []) + (optional || [])
+        optional = params[:optional_characteristics].presence || project.optional_characteristics
+        attrs[:characteristics] = ((required || []) + (optional || [])).uniq
         attrs[:required_characteristics] = required
       end
 
@@ -64,10 +64,12 @@ class ZappierInteractorController < ApplicationController
       end
 
       if params[:primary_skill].present?
-        project.project_skills.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
         skill = Skill.find_by(name: params[:primary_skill])
-        project.skills << skill unless project.project_skills.find_by(skill: skill)
-        project.project_skills.find_by(skill: skill).update(primary: true)
+        if skill
+          project.project_skills.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+          project.skills << skill unless project.project_skills.find_by(skill: skill)
+          project.project_skills.find_by(skill: skill).update(primary: true)
+        end
       end
 
       project.update!(attrs)
