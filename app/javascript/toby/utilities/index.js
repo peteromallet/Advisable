@@ -140,6 +140,15 @@ export function generateShowQuery(schemaData, resourceData) {
           id: new VariableType("id"),
         },
         __aliasFor: resourceData.queryNameItem,
+        _history: {
+          number: true,
+          createdAt: true,
+          responsible: true,
+          changes: {
+            attribute: true,
+            value: true,
+          },
+        },
         ...node,
       },
     },
