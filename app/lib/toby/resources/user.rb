@@ -9,7 +9,7 @@ module Toby
       attribute :account, Attributes::BelongsTo
       attribute :company, Attributes::BelongsTo
       attribute :country, Attributes::BelongsTo
-      attribute :application_status, Attributes::Select, options: ["Accepted", "Invited", "Active", "Access Granted"]
+      attribute :application_status, Attributes::Select, options: ["Application Started", "Submitted", "Invited To Interview", "Interview Scheduled", "Application Rejected", "Application Accepted"]
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
