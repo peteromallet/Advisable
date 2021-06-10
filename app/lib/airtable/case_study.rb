@@ -47,6 +47,7 @@ module Airtable
         attach_heading(background, fields["Background Title"])
         attach_paragraph(background, fields["Background Text"])
         attach_images(background, Array(fields["Background Images"]))
+        attach_links(background, Array(fields["Background Links"]))
 
         overview = article.sections.new(type: "overview", position: 1)
         attach_heading(overview, fields["Project Overview Title"])
@@ -54,6 +55,7 @@ module Airtable
           attach_heading(overview, fields["Step #{i} Title"], size: "h2")
           attach_paragraph(overview, fields["Step #{i} Details"])
           attach_images(overview, Array(fields["Step #{i} Images"]))
+          attach_links(overview, Array(fields["Step #{i} Links"]))
         end
 
         outcome = article.sections.new(type: "outcome", position: 2)
@@ -61,6 +63,7 @@ module Airtable
         attach_results(outcome, [fields["Key Result 1"], fields["Key Result 2"], fields["Key Result 3"]])
         attach_paragraph(outcome, fields["Outcome Text"])
         attach_images(outcome, Array(fields["Outcome Images"]))
+        attach_links(background, Array(fields["Outcome Links"]))
 
         article.title = fields["Title"]
         article.subtitle = fields["Subtitle"]
@@ -106,6 +109,14 @@ module Airtable
 
     def attach_results(section, results)
       section.contents.new(type: "CaseStudy::ResultsContent", content: {results: results}, position: content_position)
+      increment_content_position
+    end
+
+    def attach_links(section, field)
+      return if field.blank?
+
+      links = field.first.split("\n")
+      section.contents.new(type: "CaseStudy::LinksContent", content: {links: links}, position: content_position)
       increment_content_position
     end
 
