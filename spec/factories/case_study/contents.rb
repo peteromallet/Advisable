@@ -22,6 +22,11 @@ FactoryBot.define do
     content { {results: %w[1 2 3]} }
   end
 
+  factory :case_study_links_content, parent: :case_study_content, class: "CaseStudy::LinksContent" do
+    type { "CaseStudy::LinksContent" }
+    content { {links: [Faker::TvShows::SiliconValley.url, Faker::TvShows::SiliconValley.url]} }
+  end
+
   factory :case_study_images_content, parent: :case_study_content, class: "CaseStudy::ImagesContent" do
     type { "CaseStudy::ImagesContent" }
     content { {} }
