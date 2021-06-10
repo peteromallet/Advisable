@@ -7,9 +7,6 @@ export const StyledMarkdown = styled.div`
   overflow-wrap: break-word;
   color: ${theme.colors.neutral800};
 
-  h1,
-  h2,
-  h3,
   p,
   ul,
   ol,
@@ -21,6 +18,8 @@ export const StyledMarkdown = styled.div`
   }
 
   h1 {
+    padding-top: 2px;
+    padding-bottom: 2px;
     font-size: 28px;
     line-height: 32px;
     font-weight: ${theme.fontWeights.semibold};
@@ -30,10 +29,12 @@ export const StyledMarkdown = styled.div`
   }
 
   h2 {
+    padding-top: 1px;
+    padding-bottom: 1px;
     font-size: 20px;
     line-height: 24px;
     font-weight: ${theme.fontWeights.semibold};
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     letter-spacing: -0.03rem;
     color: ${theme.colors.neutral900};
   }
@@ -49,7 +50,9 @@ export const StyledMarkdown = styled.div`
 
   p,
   .paragraph {
-    margin-bottom: 32px;
+    margin-bottom: 24px;
+    padding-top: 2px;
+    padding-bottom: 2px;
   }
 
   ul {
