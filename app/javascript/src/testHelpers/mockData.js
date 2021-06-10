@@ -37,10 +37,10 @@ export const user = (fields = {}) => {
       paymentMethod: null,
       paymentsSetup: true,
       bankTransfersEnabled: true,
-      applicationStage: "Accepted",
+      applicationStage: "Application Accepted",
       clientApplication: {
         id: uniqueId("app"),
-        status: "Accepted",
+        status: "Application Accepted",
         __typename: "ClientApplication",
       },
       companyType: "Startup",
