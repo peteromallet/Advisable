@@ -1,8 +1,7 @@
-import { DateTime } from "luxon";
 import React, { useMemo, useCallback, useEffect } from "react";
 import { useDialogState } from "reakit/Dialog";
 import { Formik, Form } from "formik";
-import { Modal, Box, Text, Tag, Stack } from "@advisable/donut";
+import { Modal, Box, Text, Tag } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import SubmitButton from "src/components/SubmitButton";
 import { matchPath, useHistory, useLocation } from "react-router";
@@ -14,6 +13,7 @@ import {
 import { generateShowQuery, generateUpdateMutation } from "../../../utilities";
 import { useMutation, useQuery } from "@apollo/client";
 import { pluralizeType } from "../../../utilities";
+import VersionHistory from "./VersionHistory";
 
 function useRoutedModal(path, returnPath) {
   const modal = useDialogState();
@@ -53,52 +53,17 @@ function useRoutedModal(path, returnPath) {
   };
 }
 
-function History({ history }) {
+function History({ resource }) {
   return (
     <Box
       width={300}
+      flexShrink={0}
       maxHeight="100%"
       bg="neutral100"
       borderRadius="12px"
       padding={4}
     >
-      <Stack spacing="md">
-        {history.map((h) => (
-          <Box bg="neutral200" key={h.number} borderRadius="8px">
-            <Box padding={3}>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                mb={1}
-                alignItems="flex-end"
-              >
-                <Text fontSize="xs" fontWeight={500}>
-                  Version {h.number}
-                </Text>
-                <Text fontSize="2xs" pl={1} color="neutral600">
-                  {DateTime.fromISO(h.createdAt).toFormat("HH:mm dd LLL yyyy")}
-                </Text>
-              </Box>
-              <Text fontSize="2xs" color="neutral700">
-                {h.responsible || "Anonymous"}
-              </Text>
-            </Box>
-            <Box mx={3} height="1px" bg="neutral300" />
-            <Box padding={3}>
-              {h.changes.map((change) => (
-                <Box marginBottom={3} key={change.attribute}>
-                  <Text fontSize="xs" fontWeight={500} mb={1}>
-                    {change.attribute}
-                  </Text>
-                  <Text fontSize="xs" color="neutral800">
-                    {change.value}
-                  </Text>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-        ))}
-      </Stack>
+      <VersionHistory resource={resource} />
     </Box>
   );
 }
@@ -155,7 +120,7 @@ function Details({ id, resource }) {
 
   return (
     <Box display="flex">
-      <Box paddingRight={8}>
+      <Box paddingRight={8} width="100%">
         <Formik onSubmit={handleSubmit} initialValues={initialValues}>
           <Form>
             {resource.attributes.map((attr) => {
@@ -199,7 +164,7 @@ function Details({ id, resource }) {
           </Form>
         </Formik>
       </Box>
-      <History history={data.record._history} />
+      <History resource={data.record} />
     </Box>
   );
 }
