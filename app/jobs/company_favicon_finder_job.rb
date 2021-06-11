@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class CompanyLogoFinderJob < ApplicationJob
+class CompanyFaviconFinderJob < ApplicationJob
   queue_as :default
 
   def perform(company, force: false)
-    return if company.website.blank? || (company.logo.present? && !force)
+    return if company.website.blank? || (company.favicon.present? && !force)
 
     @company = company
     iconuri = shortcut_uri
@@ -15,15 +15,14 @@ class CompanyLogoFinderJob < ApplicationJob
     tempfile = Tempfile.new(filename, binmode: true)
     tempfile.write(res.body)
     tempfile.close
-    company.logo.attach(io: File.open(tempfile.path), filename: filename)
+    company.favicon.attach(io: File.open(tempfile.path), filename: filename)
   end
 
   private
 
   def shortcut_uri
-    uri = URI.parse(@company.website)
-    uri.path = "/"
-    res = Faraday.get(uri)
+    uri = company_website
+    res = Faraday.new(url: uri) { |f| f.use(FaradayMiddleware::FollowRedirects) }.get
     doc = Nokogiri::HTML(res.body)
     icons = doc.xpath('//link[@rel="icon" or @rel="shortcut icon"]')
 
@@ -37,5 +36,20 @@ class CompanyLogoFinderJob < ApplicationJob
       iconuri.path = "/favicon.ico"
     end
     iconuri
+  end
+
+  def company_website
+    uri = URI.parse(@company.website)
+    case uri
+    when URI::HTTP, URI::HTTPS
+      uri.path = "/"
+    when URI::Generic
+      # https://rubular.com/r/jcPny2GqaBObpW
+      url = @company.website.match(%r{(?<protocol>https?:)?(?<slashes>//)?(?<url>\w*\.\w*)/?.*$})[:url]
+      uri = URI.parse("http://#{url}")
+    else
+      raise "unsupported url class (#{url.class}) for #{url}"
+    end
+    uri
   end
 end

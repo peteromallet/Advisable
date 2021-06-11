@@ -41,7 +41,7 @@ module Airtable
           company.logo.attach(io: url.open, filename: filename)
         end
         company.save!
-        CompanyLogoFinderJob.perform_later(company)
+        CompanyFaviconFinderJob.perform_later(company)
         article.company = company
 
         article.sections = []
