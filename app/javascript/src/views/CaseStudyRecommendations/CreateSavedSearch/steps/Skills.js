@@ -1,6 +1,7 @@
 import React from "react";
-import { Formik, Form } from "formik";
 import { array, object } from "yup";
+import { Formik, Form } from "formik";
+import { useHistory } from "react-router";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Box, Combobox, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
@@ -8,7 +9,6 @@ import SubmitButton from "src/components/SubmitButton";
 import AnimatedCard from "../components/AnimatedCard";
 import StepNumber from "../components/StepNumber";
 import Header from "../components/Header";
-import { useHistory } from "react-router";
 
 export const validationSchema = object().shape({
   skills: array().min(1, "Please select at least one skill"),
@@ -21,8 +21,12 @@ export default function Skills({ id, skills }) {
     skills: [],
   };
 
-  const handleSubmit = () => {
-    history.push(`/explore/new/${id}/goals`);
+  const handleSubmit = (values) => {
+    const locationState = history.location.state;
+    history.push(`/explore/new/${id}/goals`, {
+      ...locationState,
+      skills: values.skills.map((s) => s.value),
+    });
   };
 
   return (

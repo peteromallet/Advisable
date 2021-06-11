@@ -32,8 +32,9 @@ export default function Preferences({ id }) {
     marketingAttitude: "",
   };
 
-  const handleSubmit = () => {
-    history.push(`/explore/new/${id}/review`);
+  const handleSubmit = (values) => {
+    const locationState = history.location.state;
+    history.push(`/explore/new/${id}/review`, { ...locationState, ...values });
   };
 
   return (

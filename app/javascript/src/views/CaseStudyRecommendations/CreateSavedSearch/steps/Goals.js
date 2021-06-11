@@ -36,8 +36,12 @@ export default function Goals({ id }) {
     goals: [],
   };
 
-  const handleSubmit = () => {
-    history.push(`/explore/new/${id}/preferences`);
+  const handleSubmit = (values) => {
+    const locationState = history.location.state;
+    history.push(`/explore/new/${id}/preferences`, {
+      ...locationState,
+      ...values,
+    });
   };
 
   return (
