@@ -1,7 +1,0 @@
-query getSavedSearch {
-  skills {
-    id
-    value: name
-    label: name
-  }
-}

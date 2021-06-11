@@ -1,0 +1,8 @@
+mutation updateCaseStudySearch($input: UpdateCaseStudySearchInput!) {
+  updateCaseStudySearch(input: $input) {
+    search {
+      id
+      goals
+    }
+  }
+}
