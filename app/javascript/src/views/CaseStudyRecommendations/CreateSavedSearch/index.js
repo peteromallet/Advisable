@@ -10,14 +10,13 @@ import { AnimatePresence } from "framer-motion";
 import { Box, Container, useBreakpoint } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import Sidebar from "./components/Sidebar";
-import { useQuery } from "@apollo/client";
-import GET_SAVED_SEARCH from "../queries/getSavedSearch.gql";
 import NotFound from "src/views/NotFound";
 // Steps
 import Skills from "./steps/Skills";
 import Goals from "./steps/Goals";
 import Preferences from "./steps/Preferences";
 import Review from "./steps/Review";
+import { useSavedSearch } from "./useSavedSearch";
 
 export default function CreateSavedSearch() {
   const { id } = useParams();
@@ -25,8 +24,8 @@ export default function CreateSavedSearch() {
   const history = useHistory();
   const largeScreen = useBreakpoint("lUp");
   const forwards = history.action === "PUSH";
+  const { data, loading, error } = useSavedSearch(id);
 
-  const { data, loading, error } = useQuery(GET_SAVED_SEARCH);
   if (loading) return <Loading />;
   if (error) return <NotFound />;
 
