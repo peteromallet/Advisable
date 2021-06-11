@@ -54,7 +54,10 @@ const ComboboxMenu = React.forwardRef(function ComboboxMenu(
 
       {!isLoading && !hasReachedMax
         ? options.map((option, index) => (
-            <AutocompleteOption key={option.value} {...propsForOption(index)}>
+            <AutocompleteOption
+              key={`${option.value}-${index}`}
+              {...propsForOption(index)}
+            >
               {option.label}
             </AutocompleteOption>
           ))
