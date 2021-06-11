@@ -91,8 +91,10 @@ export function useFetchResources(resource, filters) {
 }
 
 // Generates a graphql a collection query for a resource
-function generateCollectionQuery(schemaData, resourceData) {
-  const node = {};
+export function generateCollectionQuery(schemaData, resourceData) {
+  const node = {
+    _label: true,
+  };
   resourceData.attributes.forEach((attr) => {
     node[attr.name] = selectionForField(schemaData, resourceData, attr.name);
   });
