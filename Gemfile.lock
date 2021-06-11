@@ -164,6 +164,8 @@ GEM
     faraday-excon (1.1.0)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
+    faraday_middleware (1.0.0)
+      faraday (~> 1.0)
     ffi (1.15.1)
     foreman (0.87.2)
     formatador (0.2.5)
@@ -537,6 +539,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   faraday
+  faraday_middleware
   foreman
   fx
   geocoder
