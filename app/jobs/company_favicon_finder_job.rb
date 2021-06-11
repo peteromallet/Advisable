@@ -24,13 +24,17 @@ class CompanyFaviconFinderJob < ApplicationJob
     uri = company_website
     res = Faraday.new(url: uri) { |f| f.use(FaradayMiddleware::FollowRedirects) }.get
     doc = Nokogiri::HTML(res.body)
-    icons = doc.xpath('//link[@rel="icon" or @rel="shortcut icon"]')
+    icons = doc.xpath('//link[@rel="icon" or @rel="shortcut icon" or @rel="apple-touch-icon" or @rel="apple-touch-icon-precomposed"]')
 
     if icons.any?
       biggest = icons.max_by { |i| i.attributes["sizes"]&.value.to_i }
       selected = biggest.presence || icons.first
       iconuri = URI.parse(selected["href"])
-      iconuri.host = uri.host if iconuri.host.blank?
+      if iconuri.host.blank?
+        path = iconuri.path
+        iconuri = uri
+        iconuri.path = path
+      end
     else
       iconuri = uri
       iconuri.path = "/favicon.ico"
