@@ -45,8 +45,8 @@ class CompanyFaviconFinderJob < ApplicationJob
       uri.path = "/"
     when URI::Generic
       # https://rubular.com/r/jcPny2GqaBObpW
-      url = @company.website.match(%r{(?<protocol>https?:)?(?<slashes>//)?(?<url>\w*\.\w*)/?.*$})[:url]
-      uri = URI.parse("http://#{url}")
+      domain = @company.website.match(%r{(?<protocol>https?:)?(?<slashes>//)?(?<domain>\w*\.\w*)/?.*$})[:domain]
+      uri = URI.parse("http://#{domain}")
     else
       raise "unsupported url class (#{url.class}) for #{url}"
     end
