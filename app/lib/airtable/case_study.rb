@@ -17,11 +17,11 @@ module Airtable
         ::SalesPerson.first.update(airtable_id: fields["Interviewer"].first) if ::SalesPerson.find_by(airtable_id: fields["Interviewer"].first).nil?
 
         Array(fields["Industry"]).each do |airtable_id|
-          ::Industry.where(airtable_id: nil).order("RANDOM()").first.update(airtable_id: airtable_id) if ::Industry.find_by(airtable_id: airtable_id).nil?
+          ::Industry.order("RANDOM()").first.update(airtable_id: airtable_id) if ::Industry.find_by(airtable_id: airtable_id).nil?
         end
 
         Array(fields["Skills"]).each do |airtable_id|
-          ::Skill.where(airtable_id: nil).order("RANDOM()").first.update(airtable_id: airtable_id) if ::Skill.find_by(airtable_id: airtable_id).nil?
+          ::Skill.order("RANDOM()").first.update(airtable_id: airtable_id) if ::Skill.find_by(airtable_id: airtable_id).nil?
         end
       end
 
@@ -34,11 +34,14 @@ module Airtable
 
         company = ::CaseStudy::Company.find_or_initialize_by(name: fields["Client Name"])
         company.business_type = fields["Company Focus"]
+        company.website = fields["Client URL"]
         if fields["Client Logo"].present?
           url = URI.parse(fields["Client Logo"].first["url"])
           filename = File.basename(url.path)
           company.logo.attach(io: url.open, filename: filename)
         end
+        company.save!
+        CompanyFaviconFinderJob.perform_later(company)
         article.company = company
 
         article.sections = []
