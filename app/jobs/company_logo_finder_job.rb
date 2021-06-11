@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "open-uri"
-
 class CompanyLogoFinderJob < ApplicationJob
   queue_as :default
 
@@ -11,9 +9,16 @@ class CompanyLogoFinderJob < ApplicationJob
     @company = company
     iconuri = shortcut_uri
     filename = File.basename(iconuri.path)
-    file = iconuri.open
-    company.logo.attach(io: file, filename: filename)
+    res = Faraday.new(url: iconuri) { |f| f.use(FaradayMiddleware::FollowRedirects) }.get
+    return unless res.status == 200
+
+    tempfile = Tempfile.new(filename, binmode: true)
+    tempfile.write(res.body)
+    tempfile.close
+    company.logo.attach(io: File.open(tempfile.path), filename: filename)
   end
+
+  private
 
   def shortcut_uri
     uri = URI.parse(@company.website)
@@ -21,12 +26,16 @@ class CompanyLogoFinderJob < ApplicationJob
     res = Faraday.get(uri)
     doc = Nokogiri::HTML(res.body)
     icons = doc.xpath('//link[@rel="icon" or @rel="shortcut icon"]')
-    return unless icons.any?
 
-    biggest = icons.max_by { |i| i.attributes["sizes"]&.value.to_i }
-    selected = biggest.presence || icons.first
-    iconuri = URI.parse(selected["href"])
-    iconuri.host = uri.host if iconuri.host.blank?
+    if icons.any?
+      biggest = icons.max_by { |i| i.attributes["sizes"]&.value.to_i }
+      selected = biggest.presence || icons.first
+      iconuri = URI.parse(selected["href"])
+      iconuri.host = uri.host if iconuri.host.blank?
+    else
+      iconuri = uri
+      iconuri.path = "/favicon.ico"
+    end
     iconuri
   end
 end
