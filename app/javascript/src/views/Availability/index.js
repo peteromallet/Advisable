@@ -12,11 +12,16 @@ import useWindowSize from "src/utilities/useWindowSize";
 import { Container, Form, Header, Body, Footer } from "./styles";
 import { GET_AVAILABILITY, UPDATE_AVAILABILITY } from "./queries";
 
+const DEFAULT_TIMEZONE = DateTime.local().zoneName || "UTC";
+
 const AvailabilityView = ({ match, notifications }) => {
   const windowSize = useWindowSize();
   const sup = useBreakpoint("sUp");
   const [updateAvailability] = useMutation(UPDATE_AVAILABILITY);
-  const [timeZone, setTimeZone] = useState(DateTime.local().zoneName || "UTC");
+  const [timeZone, setTimeZone] = useState({
+    value: DEFAULT_TIMEZONE,
+    label: DEFAULT_TIMEZONE,
+  });
 
   const { data, loading } = useQuery(GET_AVAILABILITY, {
     variables: { id: match.params.userID },
@@ -60,7 +65,7 @@ const AvailabilityView = ({ match, notifications }) => {
                 {sup ? (
                   <AvailabilityInput
                     maxHeight="100%"
-                    timezone={timeZone}
+                    timezone={timeZone.value}
                     value={formik.values.availability}
                     onChange={(times) => {
                       formik.setFieldValue("availability", times);
@@ -72,7 +77,7 @@ const AvailabilityView = ({ match, notifications }) => {
                   />
                 ) : (
                   <Availability
-                    timezone={timeZone}
+                    timezone={timeZone.value}
                     value={formik.values.availability}
                     onChange={(times) => {
                       formik.setFieldValue("availability", times);
