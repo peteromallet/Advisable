@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Card, Box, Text, Paragraph } from "@advisable/donut";
+import { Container, Card, Text, Paragraph } from "@advisable/donut";
 import UpdateAvailablityForm from "./UpdateAvailabilityForm";
 import { useRequestInterviewReschedule } from "./queries";
 
