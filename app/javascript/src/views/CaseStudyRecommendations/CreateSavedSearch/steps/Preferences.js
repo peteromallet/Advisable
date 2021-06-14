@@ -46,7 +46,7 @@ export default function Preferences({ id }) {
       >
         {(formik) => (
           <Form>
-            <StepNumber>Step 4 of 4</StepNumber>
+            <StepNumber>Step 3 of 4</StepNumber>
             <Header>Preferences</Header>
             <Description>
               This will help understand whether you and your company are a good
