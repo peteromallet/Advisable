@@ -17,7 +17,10 @@ const specialist = mockData.specialist({
 
 test("update specialist's general settings", async () => {
   const skill = mockData.skill();
-  const specialistSkill = mockData.specialistSkill();
+  const specialistSkill = mockData.specialistSkill({
+    label: "Skill",
+    value: "Skill",
+  });
   const skills = [
     { __typename: "Skill", value: skill.name, label: skill.name },
   ];
@@ -60,10 +63,9 @@ test("update specialist's general settings", async () => {
     graphQLMocks,
   });
   await app.findByText(/general settings/i);
-  const skillsInput = await app.findByPlaceholderText("e.g Online Marketing");
-  fireEvent.click(skillsInput);
-  fireEvent.keyDown(skillsInput, { key: "ArrowDown" });
-  fireEvent.keyDown(skillsInput, { key: "Enter" });
+  const skillsInput = screen.getByPlaceholderText("e.g Online Marketing");
+  fireEvent.keyDown(skillsInput, { key: "ArrowDown", keyCode: 40 });
+  fireEvent.keyDown(skillsInput, { key: "Return", keyCode: 13 });
   fireEvent.click(app.getByText("Yes, I’m happy to work remote"));
   const email = await screen.findByLabelText(/Email/i);
   user.clear(email);

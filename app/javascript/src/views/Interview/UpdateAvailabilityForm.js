@@ -23,6 +23,8 @@ export default function UpdateAvailabilityFormContainer(props) {
   return <UpdateAvailabilityForm {...props} data={data} />;
 }
 
+const DEFAULT_TIMEZONE = DateTime.local().zoneName || "UTC";
+
 function UpdateAvailabilityForm({
   data,
   buttonLabel = "Update Availability",
@@ -31,9 +33,10 @@ function UpdateAvailabilityForm({
   const isDesktop = useBreakpoint("mUp");
   const notifications = useNotifications();
   const [updateAvailability] = useUpdateAvailability();
-  const [timezone, setTimezone] = React.useState(
-    DateTime.local().zoneName || "UTC",
-  );
+  const [timezone, setTimezone] = React.useState({
+    value: DEFAULT_TIMEZONE,
+    label: DEFAULT_TIMEZONE,
+  });
 
   const initialValues = {
     availability: data.viewer.availability,
@@ -79,7 +82,7 @@ function UpdateAvailabilityForm({
           <Field
             events={events}
             name="availability"
-            timezone={timezone}
+            timezone={timezone.value}
             as={isDesktop ? AvailabilityDesktop : Availability}
             onChange={(a) => formik.setFieldValue("availability", a)}
           />

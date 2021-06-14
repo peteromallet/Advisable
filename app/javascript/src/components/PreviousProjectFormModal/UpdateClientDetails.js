@@ -13,6 +13,7 @@ export default function UpdateClientDetails({ modal, data, industries }) {
         input: {
           previousProject: data.previousProject.id,
           ...values,
+          industries: values.industries.map((i) => i.value),
         },
       },
     });
@@ -29,7 +30,7 @@ export default function UpdateClientDetails({ modal, data, industries }) {
         clientName: data.previousProject.clientName,
         primaryIndustry: data.previousProject.primaryIndustry.name,
         companyType: data.previousProject.companyType,
-        industries: data.previousProject.industries.map((i) => i.name),
+        industries: data.previousProject.industries,
         confidential: data.previousProject.confidential,
       }}
     />

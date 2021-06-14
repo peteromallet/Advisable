@@ -10,6 +10,8 @@ const fields = gql`
     lastName
     skills {
       name
+      value: name
+      label: name
     }
     hourlyRate
     publicUse
