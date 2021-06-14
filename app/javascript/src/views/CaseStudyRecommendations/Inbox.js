@@ -30,7 +30,7 @@ export default function RecommendationsInbox() {
             lineHeight="28px"
             letterSpacing="-0.05rem"
           >
-            Project recommendations for Dunder Mifflin
+            {search.name}
           </Text>
         </Box>
         <CaseStudyRecommendationsNavigation inboxCount={caseStudies.length} />
