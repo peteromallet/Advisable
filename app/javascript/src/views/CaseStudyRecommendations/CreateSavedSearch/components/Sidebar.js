@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Text } from "@advisable/donut";
 import MultistepMenu from "src/components/MultistepMenu";
 
-export default function Sidebar({ id }) {
+export default function Sidebar({ searchId }) {
   return (
     <Card
       top="0"
@@ -27,18 +27,27 @@ export default function Sidebar({ id }) {
       <MultistepMenu>
         <MultistepMenu.Item
           exact
-          to={id ? `/explore/new/${id}/skills` : "/explore/new"}
+          to={searchId ? `/explore/new/${searchId}/skills` : "/explore/new"}
           isComplete={false}
         >
           Skills
         </MultistepMenu.Item>
-        <MultistepMenu.Item to="/explore/new/id/goals" isComplete={false}>
+        <MultistepMenu.Item
+          to={`/explore/new/${searchId}/goals`}
+          isComplete={false}
+        >
           Goals
         </MultistepMenu.Item>
-        <MultistepMenu.Item to="/explore/new/id/preferences" isComplete={false}>
+        <MultistepMenu.Item
+          to={`/explore/new/${searchId}/preferences`}
+          isComplete={false}
+        >
           Preferences
         </MultistepMenu.Item>
-        <MultistepMenu.Item to="/explore/new/id/review" isComplete={false}>
+        <MultistepMenu.Item
+          to={`/explore/new/${searchId}/review`}
+          isComplete={false}
+        >
           Review
         </MultistepMenu.Item>
       </MultistepMenu>
