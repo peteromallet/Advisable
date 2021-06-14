@@ -1,6 +1,7 @@
 import React from "react";
 import { object, array } from "yup";
 import { Formik, Form } from "formik";
+import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Box, Error } from "@advisable/donut";
@@ -11,6 +12,8 @@ import AnimatedCard from "../components/AnimatedCard";
 import Header from "../components/Header";
 import Description from "../components/Description";
 import StepNumber from "../components/StepNumber";
+// Queries
+import UPDATE_CASE_STUDY_SEARCH from "../../queries/updateCaseStudySearch.gql";
 
 export const validationSchema = object().shape({
   goals: array().min(1, "Please add at least one goal"),
@@ -29,19 +32,32 @@ const GOALS = [
   "Improve Efficiency",
 ];
 
-export default function Goals({ id }) {
+export default function Goals({ caseStudySearch }) {
   const history = useHistory();
+  const [update] = useMutation(UPDATE_CASE_STUDY_SEARCH);
 
   const initialValues = {
-    goals: [],
+    goals: caseStudySearch.goals || [],
   };
 
-  const handleSubmit = (values) => {
-    const locationState = history.location.state;
-    history.push(`/explore/new/${id}/preferences`, {
-      ...locationState,
-      ...values,
+  const handleSubmit = async (values, { setStatus }) => {
+    setStatus(null);
+
+    const res = await update({
+      variables: {
+        input: {
+          id: caseStudySearch.id,
+          ...values,
+        },
+      },
     });
+
+    if (res.errors) {
+      setStatus("Something went wrong, please try again");
+      return;
+    }
+
+    history.push(`/explore/new/${caseStudySearch.id}/preferences`);
   };
 
   return (
@@ -49,7 +65,7 @@ export default function Goals({ id }) {
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {(formik) => (
           <Form>
-            <StepNumber>Step 3 of 4</StepNumber>
+            <StepNumber>Step 2 of 4</StepNumber>
             <Header>Goals</Header>
             <Description>
               We’ll recommend you talent & projects that have helped similar
