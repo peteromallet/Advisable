@@ -36,7 +36,7 @@ RSpec.describe Company, type: :model do
       let(:user) { create(:user, company: company) }
 
       it "creates a new stripe customer and stores the id" do
-        customer = double(Stripe::Customer, id: "cus_123") # rubocop:disable Rspec/VerifiedDoubles
+        customer = double(Stripe::Customer, id: "cus_123") # rubocop:disable RSpec/VerifiedDoubles
 
         allow(Stripe::Customer).to receive(:create).with({
           email: user.account.email,
