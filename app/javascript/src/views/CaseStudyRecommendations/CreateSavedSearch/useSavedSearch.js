@@ -12,7 +12,7 @@ const GET_SKILLS = gql`
 `;
 
 const GET_SKILLS_CASE_STUDY_SEARCH = gql`
-  query {
+  query ($id: ID!) {
     skills {
       id
       value: name
@@ -21,6 +21,14 @@ const GET_SKILLS_CASE_STUDY_SEARCH = gql`
     caseStudySearch(id: $id) {
       id
       goals
+      skills {
+        id
+        skill {
+          id
+          value: name
+          label: name
+        }
+      }
     }
   }
 `;

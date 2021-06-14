@@ -5,7 +5,9 @@ mutation createCaseStudySearch($input: CreateCaseStudySearchInput!) {
       skills {
         id
         skill {
-          name
+          id
+          value: name
+          label: name
         }
       }
     }

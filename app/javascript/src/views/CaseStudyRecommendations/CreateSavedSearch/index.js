@@ -41,16 +41,19 @@ export default function CreateSavedSearch() {
           >
             <Switch location={location} key={location.pathname}>
               <Route path={["/explore/new", "/explore/new/:id/skills"]} exact>
-                <Skills id={id} skills={data.skills} />
+                <Skills
+                  caseStudySearch={data.caseStudySearch}
+                  skills={data.skills}
+                />
               </Route>
               <Route path="/explore/new/:id/goals">
-                <Goals id={id} />
+                <Goals caseStudySearch={data.caseStudySearch} />
               </Route>
               <Route path="/explore/new/:id/preferences">
-                <Preferences id={id} />
+                <Preferences caseStudySearch={data.caseStudySearch} />
               </Route>
               <Route path="/explore/new/:id/review">
-                <Review id={id} />
+                <Review caseStudySearch={data.caseStudySearch} />
               </Route>
             </Switch>
           </AnimatePresence>

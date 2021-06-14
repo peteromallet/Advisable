@@ -9,24 +9,50 @@ import SubmitButton from "src/components/SubmitButton";
 import AnimatedCard from "../components/AnimatedCard";
 import StepNumber from "../components/StepNumber";
 import Header from "../components/Header";
+import CREATE_CASE_STUDY_SEARCH from "../../queries/createCaseStudySearch.gql";
+import UPDATE_CASE_STUDY_SEARCH from "../../queries/updateCaseStudySearch.gql";
+import { useMutation } from "@apollo/client";
 
 export const validationSchema = object().shape({
   skills: array().min(1, "Please select at least one skill"),
 });
 
-export default function Skills({ id, skills }) {
+export default function Skills({ caseStudySearch, skills }) {
+  const [create] = useMutation(CREATE_CASE_STUDY_SEARCH);
+  const [update] = useMutation(UPDATE_CASE_STUDY_SEARCH);
+
   const history = useHistory();
 
   const initialValues = {
-    skills: [],
+    skills: caseStudySearch?.skills.map((s) => s.skill) || [],
   };
 
-  const handleSubmit = (values) => {
-    const locationState = history.location.state;
-    history.push(`/explore/new/${id}/goals`, {
-      ...locationState,
-      skills: values.skills.map((s) => s.value),
-    });
+  const handleSubmit = async (values, { setStatus }) => {
+    setStatus(null);
+
+    const res = caseStudySearch
+      ? await update({
+          variables: {
+            input: {
+              id: caseStudySearch.id,
+              skills: values.skills.map((s) => s.value),
+            },
+          },
+        })
+      : await create({
+          variables: { input: { skills: values.skills.map((s) => s.value) } },
+        });
+
+    if (res.errors) {
+      setStatus("Something went wrong, please try again");
+      return;
+    }
+
+    const searchId =
+      caseStudySearch?.id || res.data?.createCaseStudySearch?.search.id;
+
+    history.replace(`/explore/new/${searchId}/skills`);
+    history.push(`/explore/new/${searchId}/goals`);
   };
 
   return (
