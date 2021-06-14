@@ -31,7 +31,7 @@ export default function CreateSavedSearch() {
 
   return (
     <div>
-      {largeScreen ? <Sidebar id={id} /> : null}
+      {largeScreen ? <Sidebar searchId={data.caseStudySearch?.id} /> : null}
       <Box paddingLeft={{ l: "300px" }}>
         <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <AnimatePresence
