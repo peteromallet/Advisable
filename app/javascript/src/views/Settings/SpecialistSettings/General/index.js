@@ -8,7 +8,7 @@ import {
   Text,
   Link,
   InputError,
-  Autocomplete,
+  Combobox,
   Checkbox,
 } from "@advisable/donut";
 import Loading from "components/Loading";
@@ -30,7 +30,7 @@ const Profile = () => {
     remote: data?.viewer?.remote || true,
     hourlyRate: data?.viewer?.hourlyRate / 100.0,
     publicUse: data?.viewer?.publicUse || false,
-    skills: (data?.viewer?.skills || []).map((s) => s.name),
+    skills: data?.viewer?.skills || [],
   };
 
   const handleSubmit = async (values) => {
@@ -41,7 +41,7 @@ const Profile = () => {
       hourlyRate: values.hourlyRate * 100,
       remote: values.remote,
       publicUse: values.publicUse,
-      skills: values.skills,
+      skills: values.skills.map((s) => s.value),
     };
     const response = await updateProfile({ variables: { input } });
     if (response.errors) {
@@ -86,7 +86,7 @@ const Profile = () => {
               multiple
               max={10}
               name="skills"
-              as={Autocomplete}
+              as={Combobox}
               description="Add up to 10 skill’s that you have used in previously completed projects."
               label="What type of projects are you looking for?"
               placeholder="e.g Online Marketing"

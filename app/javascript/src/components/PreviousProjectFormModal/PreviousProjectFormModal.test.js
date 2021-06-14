@@ -40,10 +40,26 @@ function TestUI(props) {
 test("Adding a new project", async () => {
   const handleCreate = jest.fn();
   const handlePublish = jest.fn();
-  const skill = mockData.industry({ name: "Skill" });
-  const skill2 = mockData.skill({ name: "Skill 2" });
-  const industry = mockData.industry({ name: "Industry" });
-  const industry2 = mockData.industry({ name: "Industry 2" });
+  const skill = mockData.industry({
+    name: "Skill",
+    value: "Skill",
+    label: "Skill",
+  });
+  const skill2 = mockData.skill({
+    name: "Skill 2",
+    value: "Skill 2",
+    label: "Skill 2",
+  });
+  const industry = mockData.industry({
+    name: "Industry",
+    value: "Industry",
+    label: "Industry",
+  });
+  const industry2 = mockData.industry({
+    name: "Industry 2",
+    value: "Industry 2",
+    label: "Industry 2",
+  });
   const previousProject = mockData.previousProject({
     id: "pre_1",
     draft: true,
@@ -154,29 +170,25 @@ test("Adding a new project", async () => {
   fireEvent.click(await screen.findByText("Open"));
   const clientName = await screen.findByLabelText("Company Name");
   fireEvent.change(clientName, { target: { value: "Test inc" } });
-  const industryField = await screen.findByPlaceholderText(/industry/i);
+  const industryField = screen.getByPlaceholderText(/search for an industry/i);
   fireEvent.click(industryField);
-  fireEvent.keyDown(industryField, { key: "ArrowDown" });
-  fireEvent.keyDown(industryField, { key: "Enter" });
-  fireEvent.keyDown(industryField, { key: "ArrowDown" });
-  fireEvent.keyDown(industryField, { key: "Enter" });
-  fireEvent.change(
-    screen.getByLabelText(
-      "Which of these is the primary industry for this company?",
-    ),
-    { target: { value: "Industry 2" } },
+  fireEvent.keyDown(industryField, { key: "Return", keyCode: 13 });
+  fireEvent.keyDown(industryField, { key: "ArrowDown", keyCode: 40 });
+  fireEvent.keyDown(industryField, { key: "Return", keyCode: 13 });
+  const primaryInput = screen.getByLabelText(
+    "Which of these is the primary industry for this company?",
   );
+  fireEvent.change(primaryInput, { target: { value: "Industry 2" } });
   let continueBtn = await screen.findByLabelText("Continue");
   fireEvent.click(continueBtn);
 
   const description = await screen.findByLabelText("Project description");
   fireEvent.change(description, { target: { value: "Description" } });
-  const skillField = await screen.findByPlaceholderText("Search for a skill");
+  const skillField = screen.getByPlaceholderText(/search for a skill/i);
   fireEvent.click(skillField);
-  fireEvent.keyDown(skillField, { key: "ArrowDown" });
-  fireEvent.keyDown(skillField, { key: "Enter" });
-  fireEvent.keyDown(skillField, { key: "ArrowDown" });
-  fireEvent.keyDown(skillField, { key: "Enter" });
+  fireEvent.keyDown(skillField, { key: "Return", keyCode: 13 });
+  fireEvent.keyDown(skillField, { key: "ArrowDown", keyCode: 40 });
+  fireEvent.keyDown(skillField, { key: "Return", keyCode: 13 });
   fireEvent.change(
     screen.getByLabelText(
       "Which of these was the primary skill for this project?",
@@ -219,8 +231,8 @@ test("Adding a new project", async () => {
 });
 
 test("can edit the description", async () => {
-  const industry = mockData.industry();
-  const skill = mockData.skill();
+  const industry = mockData.industry({ label: "Industry", value: "Industry" });
+  const skill = mockData.skill({ label: "Skill", value: "Skill" });
   const previousProject = mockData.previousProject({
     id: "pre_1",
     draft: false,

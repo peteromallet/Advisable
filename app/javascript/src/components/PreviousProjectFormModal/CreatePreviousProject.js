@@ -24,7 +24,10 @@ export default function CreatePreviousProject({ onCreate, industries }) {
   const handleCreate = async (values) => {
     const response = await createPreviousProject({
       variables: {
-        input: values,
+        input: {
+          ...values,
+          industries: values.industries?.map((i) => i.value),
+        },
       },
     });
 
