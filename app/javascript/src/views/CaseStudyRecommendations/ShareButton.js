@@ -8,7 +8,7 @@ const StyledShareButtonLabel = styled.div`
   color: ${theme.colors.neutral700};
 `;
 
-const StyledSahreButtonIcon = styled.div`
+const StyledShareButtonIcon = styled.div`
   width: 40px;
   height: 40px;
   display: flex;
@@ -34,7 +34,7 @@ const StyledShareButton = styled.div`
   flex-direction: column;
 
   &:hover {
-    ${StyledSahreButtonIcon} {
+    ${StyledShareButtonIcon} {
       color: ${theme.colors.neutral600};
       background: ${theme.colors.neutral200};
     }
@@ -46,9 +46,9 @@ export default function ShareButton() {
 
   return (
     <StyledShareButton onClick={handleClick}>
-      <StyledSahreButtonIcon>
+      <StyledShareButtonIcon>
         <Upload />
-      </StyledSahreButtonIcon>
+      </StyledShareButtonIcon>
       <StyledShareButtonLabel>Share</StyledShareButtonLabel>
     </StyledShareButton>
   );
