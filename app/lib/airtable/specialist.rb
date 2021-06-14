@@ -33,12 +33,26 @@ module Airtable
     sync_column 'Community Status - Accepted - Timestamp', to: :community_accepted_at
     sync_column 'Community Status - Invited To Call - Timestamp', to: :community_invited_to_call_at
     sync_column 'Community Score', to: :community_score
+    sync_column 'Application Status', to: :application_status
+    sync_column 'Campaign Medium', to: :campaign_medium
+    sync_column 'Case Study Status', to: :case_study_status
+    sync_column 'Trustpilot Review Status', to: :trustpilot_review_status
 
     sync_data do |specialist|
       if self['Bank Holder Address']
         # sync the bank holder address
         specialist.bank_holder_address =
           Address.parse(self['Bank Holder Address']).to_h
+      end
+
+      interviewer_id = fields['Interviewer'].try(:first)
+      if interviewer_id
+        sales_person = ::SalesPerson.find_by(airtable_id: interviewer_id)
+        if sales_person.nil?
+          airtable_sp = Airtable::SalesPerson.find(interviewer_id)
+          sales_person = airtable_sp.sync
+        end
+        specialist.update(interviewer: sales_person)
       end
 
       # Sync 'Okay To Use Publicly'
@@ -115,9 +129,13 @@ module Airtable
       self['Bank Holder Name'] = specialist.bank_holder_name
       self['Bank Currency'] = specialist.bank_currency
       self['VAT Number'] = specialist.vat_number
-      self['Estimated Number of Freelance Projects'] =
-        specialist.number_of_projects
+      self['Estimated Number of Freelance Projects'] = specialist.number_of_projects
       self['Application Stage'] = specialist.application_stage
+      self['Interviewer'] = [specialist.interviewer&.airtable_id].compact
+      self['Application Status'] = specialist.application_status
+      self['Campaign Medium'] = specialist.campaign_medium
+      self['Case Study Status'] = specialist.case_study_status
+      self['Trustpilot Review Status'] = specialist.trustpilot_review_status
 
       if specialist.saved_change_to_bio
         self['Specialist Bio Updated'] = 'Yes'
