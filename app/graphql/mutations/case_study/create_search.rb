@@ -18,19 +18,19 @@ module Mutations
         requires_client!
       end
 
-      def resolve(name:, goals:, business_type:, skills:, primary_skill:)
+      def resolve(skills:, **args)
         search = current_account_responsible_for do
           search = ::CaseStudy::Search.create!(
             user: current_user,
-            name: name,
-            goals: goals,
-            business_type: business_type
+            name: args[:name],
+            goals: args[:goals],
+            business_type: args[:business_type]
           )
 
           skills.each do |skill|
             ::CaseStudy::Skill.create!(
               search: search,
-              primary: primary_skill == skill,
+              primary: args[:primary_skill] == skill,
               skill: ::Skill.find_by!(name: skill)
             )
           end
