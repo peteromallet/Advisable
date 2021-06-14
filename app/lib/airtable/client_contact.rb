@@ -29,6 +29,7 @@ module Airtable
     sync_column 'fid', to: :fid
     sync_column 'gclid', to: :gclid
     sync_column 'Same City Importance', to: :locality_importance
+    sync_column 'Trustpilot Review Status', to: :trustpilot_review_status
 
     sync_data do |user|
       user.company.address = Address.parse(self['Address']).to_h if self["Address"]
@@ -102,6 +103,7 @@ module Airtable
       self['Application Rejected Timestamp'] = user.application_rejected_at
       self['How many freelancers do you plan on hiring over the next 6 months?'] = user.number_of_freelancers
       self['Estimated Annual Freelancer Spend (USD)'] = user.company.budget / 100.0 if user.company.budget
+      self['Trustpilot Review Status'] = user.trustpilot_review_status
       push_unsubscribed_from(user)
     end
   end

@@ -6,6 +6,8 @@ class Account < ApplicationRecord
   include Permissionable
   include Featurable
 
+  SUBSCRIPTIONS = ["All", "SMS Alerts", "Automated Invitations", "Personal Invitations", "Onboarding Emails", "Status Surveys"].freeze
+
   has_logidze
 
   has_one :user, dependent: :destroy
@@ -89,7 +91,7 @@ class Account < ApplicationRecord
   end
 
   def unsubscribed?(subscription)
-    unsubscribed_from.include?(subscription)
+    unsubscribed_from.include?("All") || unsubscribed_from.include?(subscription)
   end
 
   private

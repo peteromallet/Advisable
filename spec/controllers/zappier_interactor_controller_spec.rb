@@ -175,7 +175,7 @@ RSpec.describe ZappierInteractorController, type: :request do
     let(:status) { "Call Requested" }
     let(:params) { {status: status, uid: consultation.uid, key: key} }
 
-    before { allow_any_instance_of(Application).to receive(:sync_to_airtable) }
+    before { allow_any_instance_of(Consultation).to receive(:sync_to_airtable) }
 
     it "updates the consultation and syncs to airtable" do
       post("/zappier_interactor/update_consultation", params: params)
@@ -188,6 +188,332 @@ RSpec.describe ZappierInteractorController, type: :request do
 
       it "is unauthorized" do
         post("/zappier_interactor/update_consultation", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
+  describe "POST /update_user" do
+    let(:account) { create(:account) }
+    let(:user) { create(:user, account: account, title: "Old Title", campaign_name: "Old Name") }
+    let(:params) { {uid: user.uid, key: key} }
+
+    before { allow_any_instance_of(User).to receive(:sync_to_airtable) }
+
+    it "updates allowed fields" do
+      post("/zappier_interactor/update_user", params: params.merge(campaign_name: "New Name"))
+      expect(response).to have_http_status(:success)
+      expect(user.reload.campaign_name).to eq("New Name")
+    end
+
+    it "can nullify an allowed field" do
+      post("/zappier_interactor/update_user", params: params.merge(campaign_name: "-"))
+      expect(response).to have_http_status(:success)
+      expect(user.reload.campaign_name).to be_nil
+    end
+
+    it "does not update field that is not allowed" do
+      post("/zappier_interactor/update_user", params: params.merge(title: "New Title"))
+      expect(response).to have_http_status(:success)
+      expect(user.reload.title).to eq("Old Title")
+    end
+
+    it "updates owner" do
+      sp = create(:sales_person)
+      post("/zappier_interactor/update_user", params: params.merge(owner: sp.uid))
+      expect(response).to have_http_status(:success)
+      expect(user.company.reload.sales_person_id).to eq(sp.id)
+    end
+
+    it "can nullify owner" do
+      sp = create(:sales_person)
+      user.company.update!(sales_person_id: sp.id)
+      post("/zappier_interactor/update_user", params: params.merge(owner: "-"))
+      expect(response).to have_http_status(:success)
+      expect(user.company.reload.sales_person_id).to be_nil
+    end
+
+    describe "updating unsubscriptions" do
+      context "when unsubscribed is nil" do
+        let(:account) { create(:account, unsubscribed_from: nil) }
+
+        it "adds new" do
+          post("/zappier_interactor/update_user", params: params.merge(unsubscribe_all: true), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq(["All"])
+        end
+
+        it "doesn't fail removal" do
+          post("/zappier_interactor/update_user", params: params.merge(unsubscribe_all: false), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq([])
+        end
+      end
+
+      context "when unsubscribed has content" do
+        let(:account) { create(:account, unsubscribed_from: ["All"]) }
+
+        it "doesn't duplicate existing ones" do
+          post("/zappier_interactor/update_user", params: params.merge(unsubscribe_all: true), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq(["All"])
+        end
+
+        it "doesn't duplicate existing ones when empty param" do
+          post("/zappier_interactor/update_user", params: params.merge(unsubscribe_all: nil), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq(["All"])
+        end
+
+        it "adds new" do
+          post("/zappier_interactor/update_user", params: params.merge(unsubscribe_sms_alerts: true), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to match_array(["All", "SMS Alerts"])
+        end
+
+        it "doesn't fail removal" do
+          post("/zappier_interactor/update_user", params: params.merge(unsubscribe_all: false), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq([])
+        end
+      end
+    end
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/update_user", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
+  describe "POST /update_specialist" do
+    let(:account) { create(:account) }
+    let(:specialist) { create(:specialist, account: account, community_status: "Old Status", campaign_name: "Old Name") }
+    let(:params) { {uid: specialist.uid, key: key} }
+
+    before { allow_any_instance_of(Specialist).to receive(:sync_to_airtable) }
+
+    it "updates allowed fields" do
+      post("/zappier_interactor/update_specialist", params: params.merge(campaign_name: "New Name"))
+      expect(response).to have_http_status(:success)
+      expect(specialist.reload.campaign_name).to eq("New Name")
+    end
+
+    it "can nullify an allowed field" do
+      post("/zappier_interactor/update_specialist", params: params.merge(campaign_name: "-"))
+      expect(response).to have_http_status(:success)
+      expect(specialist.reload.campaign_name).to be_nil
+    end
+
+    it "does not update field that is not allowed" do
+      post("/zappier_interactor/update_specialist", params: params.merge(community_status: "New Status"))
+      expect(response).to have_http_status(:success)
+      expect(specialist.reload.community_status).to eq("Old Status")
+    end
+
+    it "updates interviewer" do
+      sp = create(:sales_person)
+      post("/zappier_interactor/update_specialist", params: params.merge(interviewer: sp.uid))
+      expect(response).to have_http_status(:success)
+      expect(specialist.reload.interviewer_id).to eq(sp.id)
+    end
+
+    it "can nullify interviewer" do
+      sp = create(:sales_person)
+      specialist.update!(interviewer_id: sp.id)
+      post("/zappier_interactor/update_specialist", params: params.merge(interviewer: "-"))
+      expect(response).to have_http_status(:success)
+      expect(specialist.reload.interviewer_id).to be_nil
+    end
+
+    describe "updating unsubscriptions" do
+      context "when unsubscribed is nil" do
+        let(:account) { create(:account, unsubscribed_from: nil) }
+
+        it "adds new" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_all: true), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq(["All"])
+        end
+
+        it "doesn't fail removal" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_all: false), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq([])
+        end
+      end
+
+      context "when unsubscribed has content" do
+        let(:account) { create(:account, unsubscribed_from: ["All"]) }
+
+        it "doesn't duplicate existing ones" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_all: true), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq(["All"])
+        end
+
+        it "doesn't duplicate existing ones when empty param" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_all: nil), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq(["All"])
+        end
+
+        it "adds new" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_sms_alerts: true), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to match_array(["All", "SMS Alerts"])
+        end
+
+        it "doesn't fail removal" do
+          post("/zappier_interactor/update_specialist", params: params.merge(unsubscribe_all: false), as: :json)
+          expect(response).to have_http_status(:success)
+          expect(account.reload.unsubscribed_from).to eq([])
+        end
+      end
+    end
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/update_specialist", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
+  describe "POST /update_project" do
+    let(:project) { create(:project, campaign_name: "Old Name", sales_status: "Old Status") }
+    let(:params) { {uid: project.uid, key: key} }
+
+    before { allow_any_instance_of(Project).to receive(:sync_to_airtable) }
+
+    it "updates allowed fields" do
+      post("/zappier_interactor/update_project", params: params.merge(sales_status: "New Status"))
+      expect(response).to have_http_status(:success)
+      expect(project.reload.sales_status).to eq("New Status")
+    end
+
+    it "can nullify an allowed field" do
+      post("/zappier_interactor/update_project", params: params.merge(sales_status: "-"))
+      expect(response).to have_http_status(:success)
+      expect(project.reload.sales_status).to be_nil
+    end
+
+    it "does not update field that is not allowed" do
+      post("/zappier_interactor/update_project", params: params.merge(campaign_name: "New Name"))
+      expect(response).to have_http_status(:success)
+      expect(project.reload.campaign_name).to eq("Old Name")
+    end
+
+    describe "updating questions" do
+      let(:project) { create(:project, questions: nil) }
+
+      it "groups 2 into one array" do
+        post("/zappier_interactor/update_project", params: params.merge(question_1: "First question", question_2: "Second question")) # rubocop:disable Naming/VariableNumber
+        expect(response).to have_http_status(:success)
+        expect(project.reload.questions).to match_array(["First question", "Second question"])
+      end
+
+      it "groups 1 into array of single element" do
+        post("/zappier_interactor/update_project", params: params.merge(question_1: "First question", question_2: "")) # rubocop:disable Naming/VariableNumber
+        expect(response).to have_http_status(:success)
+        expect(project.reload.questions).to match_array(["First question"])
+        post("/zappier_interactor/update_project", params: params.merge(question_2: "Second question")) # rubocop:disable Naming/VariableNumber
+        expect(response).to have_http_status(:success)
+        expect(project.reload.questions).to match_array(["Second question"])
+      end
+
+      it "does not change them if both params are empty" do
+        project.update(questions: ["Existing question"])
+        post("/zappier_interactor/update_project", params: params.merge(question_1: "", question_2: "")) # rubocop:disable Naming/VariableNumber
+        expect(response).to have_http_status(:success)
+        expect(project.reload.questions).to match_array(["Existing question"])
+      end
+
+      it "can nullify them" do
+        post("/zappier_interactor/update_project", params: params.merge(question_1: "-", question_2: "-")) # rubocop:disable Naming/VariableNumber
+        expect(response).to have_http_status(:success)
+        expect(project.reload.questions).to match_array([])
+      end
+    end
+
+    describe "updating characteristics" do
+      let(:project) { create(:project, required_characteristics: nil, characteristics: nil) }
+
+      it "works when both are provided" do
+        post("/zappier_interactor/update_project", params: params.merge(required_characteristics: ["Swimming"], optional_characteristics: %w[Dancing Running]), as: :json)
+        expect(response).to have_http_status(:success)
+        expect(project.reload.required_characteristics).to match_array(["Swimming"])
+        expect(project.reload.characteristics).to match_array(%w[Swimming Dancing Running])
+      end
+
+      it "does not duplicate them when optional contains required ones too" do
+        post("/zappier_interactor/update_project", params: params.merge(required_characteristics: ["Swimming"], optional_characteristics: %w[Swimming Dancing Running]), as: :json)
+        expect(response).to have_http_status(:success)
+        expect(project.reload.required_characteristics).to match_array(["Swimming"])
+        expect(project.reload.characteristics).to match_array(%w[Swimming Dancing Running])
+      end
+
+      it "can replace optional" do
+        project.update(required_characteristics: ["Running"], characteristics: ["Dancing"])
+        post("/zappier_interactor/update_project", params: params.merge(optional_characteristics: %w[Swimming]), as: :json)
+        expect(response).to have_http_status(:success)
+        expect(project.reload.required_characteristics).to match_array(%w[Running])
+        expect(project.reload.characteristics).to match_array(%w[Running Swimming])
+      end
+
+      it "can replace required" do
+        project.update(required_characteristics: ["Running"], characteristics: ["Dancing"])
+        post("/zappier_interactor/update_project", params: params.merge(required_characteristics: ["Swimming"]), as: :json)
+        expect(response).to have_http_status(:success)
+        expect(project.reload.required_characteristics).to match_array(["Swimming"])
+        expect(project.reload.characteristics).to match_array(%w[Dancing Swimming])
+      end
+    end
+
+    describe "updating skills" do
+      let!(:skill1) { create(:skill, name: "Swimming") }
+      let!(:skill2) { create(:skill, name: "Running") }
+      let!(:skill3) { create(:skill, name: "Dancing") }
+
+      it "can add skills" do
+        post("/zappier_interactor/update_project", params: params.merge(skills: %w[Swimming Running]), as: :json)
+        expect(response).to have_http_status(:success)
+        expect(project.reload.skills).to match_array([skill1, skill2])
+      end
+
+      it "can replace primary skill and move existing one to skills" do
+        project.update(primary_skill: skill1)
+        post("/zappier_interactor/update_project", params: params.merge(primary_skill: "Dancing"), as: :json)
+        expect(response).to have_http_status(:success)
+        expect(project.reload.primary_skill).to eq(skill3)
+        expect(project.reload.skills).to match_array([skill1, skill3])
+      end
+
+      it "ignores non-existing skills" do
+        post("/zappier_interactor/update_project", params: params.merge(skills: %w[Swimming Running Climbing]), as: :json)
+        expect(response).to have_http_status(:success)
+        expect(project.reload.skills).to match_array([skill1, skill2])
+      end
+
+      it "ignores non-existing primary skill" do
+        project.update(primary_skill: skill1)
+        post("/zappier_interactor/update_project", params: params.merge(primary_skill: "Climbing"), as: :json)
+        expect(response).to have_http_status(:success)
+        expect(project.reload.primary_skill).to eq(skill1)
+        expect(project.reload.skills).to match_array([skill1])
+      end
+    end
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/update_project", params: params)
         expect(response).to have_http_status(:unauthorized)
       end
     end

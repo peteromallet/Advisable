@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_08_091306) do
+ActiveRecord::Schema.define(version: 2021_06_09_115840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -757,6 +757,11 @@ ActiveRecord::Schema.define(version: 2021_06_08_091306) do
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
     t.jsonb "log_data"
+    t.boolean "stop_candidate_proposed_emails"
+    t.string "level_of_expertise_required"
+    t.integer "likelihood_to_confirm"
+    t.string "lost_reason"
+    t.string "project_start"
     t.index ["sales_status"], name: "index_projects_on_sales_status"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -884,9 +889,15 @@ ActiveRecord::Schema.define(version: 2021_06_08_091306) do
     t.datetime "guild_featured_member_at"
     t.string "guild_calendly_link"
     t.bigint "referrer_id"
+    t.bigint "interviewer_id"
+    t.string "case_study_status"
+    t.string "trustpilot_review_status"
+    t.string "campaign_medium"
+    t.string "application_status"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
+    t.index ["interviewer_id"], name: "index_specialists_on_interviewer_id"
     t.index ["referrer_id"], name: "index_specialists_on_referrer_id"
     t.index ["uid"], name: "index_specialists_on_uid"
   end
@@ -995,6 +1006,7 @@ ActiveRecord::Schema.define(version: 2021_06_08_091306) do
     t.jsonb "log_data"
     t.uuid "company_id"
     t.datetime "application_interview_starts_at"
+    t.string "trustpilot_review_status"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["company_id"], name: "index_users_on_company_id"
@@ -1095,6 +1107,7 @@ ActiveRecord::Schema.define(version: 2021_06_08_091306) do
   add_foreign_key "specialist_skills", "specialists"
   add_foreign_key "specialists", "accounts"
   add_foreign_key "specialists", "countries"
+  add_foreign_key "specialists", "sales_people", column: "interviewer_id"
   add_foreign_key "specialists", "specialists", column: "referrer_id"
   add_foreign_key "subscriptions", "labels"
   add_foreign_key "subscriptions", "specialists"

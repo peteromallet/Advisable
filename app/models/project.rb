@@ -184,10 +184,14 @@ end
 #  industry_experience_required     :boolean
 #  interview_completed_at           :datetime
 #  interview_scheduled_at           :datetime
+#  level_of_expertise_required      :string
+#  likelihood_to_confirm            :integer
 #  likely_to_hire                   :integer
 #  location_importance              :integer
 #  lost_at                          :datetime
+#  lost_reason                      :string
 #  name                             :string
+#  project_start                    :string
 #  proposal_received_at             :datetime
 #  proposed_count                   :integer          default(0)
 #  published_at                     :datetime
@@ -199,6 +203,7 @@ end
 #  sourcing                         :boolean
 #  specialist_description           :text
 #  status                           :string
+#  stop_candidate_proposed_emails   :boolean
 #  uid                              :string
 #  won_at                           :datetime
 #  created_at                       :datetime         not null
