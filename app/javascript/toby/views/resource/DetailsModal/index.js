@@ -13,6 +13,7 @@ import {
 import { generateShowQuery, generateUpdateMutation } from "../../../utilities";
 import { useMutation, useQuery } from "@apollo/client";
 import { pluralizeType } from "../../../utilities";
+import VersionHistory from "./VersionHistory";
 
 function useRoutedModal(path, returnPath) {
   const modal = useDialogState();
@@ -50,6 +51,21 @@ function useRoutedModal(path, returnPath) {
     show: handleShow,
     hide: handleHide,
   };
+}
+
+function History({ resource }) {
+  return (
+    <Box
+      width={300}
+      flexShrink={0}
+      maxHeight="100%"
+      bg="neutral100"
+      borderRadius="12px"
+      padding={4}
+    >
+      <VersionHistory resource={resource} />
+    </Box>
+  );
 }
 
 function Details({ id, resource }) {
@@ -103,48 +119,53 @@ function Details({ id, resource }) {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-      <Form>
-        {resource.attributes.map((attr) => {
-          return (
-            <Box key={attr.name} mb={5}>
-              <Box
-                mb={2}
-                width="100%"
-                display="flex"
-                justifyContent="space-between"
-              >
-                <Text fontWeight={500} as="span">
-                  {attr.columnLabel}
-                </Text>
-                {attr.readonly && (
-                  <Tag ml={2} size="xs">
-                    Readonly
-                  </Tag>
-                )}
-              </Box>
-              {attr.description && (
-                <Text
-                  fontSize="sm"
-                  lineHeight="20px"
-                  color="neutral800"
-                  marginBottom={3}
-                >
-                  {attr.description}
-                </Text>
-              )}
-              <AttributeInput
-                resource={resource}
-                record={data.record}
-                attribute={attr}
-              />
-              <Box mt={5} height={1} bg="neutral100" />
-            </Box>
-          );
-        })}
-        <SubmitButton mt={4}>Save Changes</SubmitButton>
-      </Form>
-    </Formik>
+    <Box display="flex">
+      <Box paddingRight={8} width="100%">
+        <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+          <Form>
+            {resource.attributes.map((attr) => {
+              return (
+                <Box key={attr.name} mb={5}>
+                  <Box
+                    mb={2}
+                    width="100%"
+                    display="flex"
+                    justifyContent="space-between"
+                  >
+                    <Text fontWeight={500} as="span">
+                      {attr.columnLabel}
+                    </Text>
+                    {attr.readonly && (
+                      <Tag ml={2} size="xs">
+                        Readonly
+                      </Tag>
+                    )}
+                  </Box>
+                  {attr.description && (
+                    <Text
+                      fontSize="sm"
+                      lineHeight="20px"
+                      color="neutral800"
+                      marginBottom={3}
+                    >
+                      {attr.description}
+                    </Text>
+                  )}
+                  <AttributeInput
+                    resource={resource}
+                    record={data.record}
+                    attribute={attr}
+                  />
+                  <Box mt={5} height={1} bg="neutral100" />
+                </Box>
+              );
+            })}
+            <SubmitButton mt={4}>Save Changes</SubmitButton>
+          </Form>
+        </Formik>
+      </Box>
+      <History resource={data.record} />
+    </Box>
   );
 }
 
@@ -155,7 +176,7 @@ export default function DetailsModal({ resource }) {
   );
 
   return (
-    <Modal width={800} modal={modal} label="Details">
+    <Modal width={1000} modal={modal} label="Details">
       {modal.visible && <Details id={modal.params.id} resource={resource} />}
     </Modal>
   );
