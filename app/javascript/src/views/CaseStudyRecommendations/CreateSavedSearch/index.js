@@ -50,7 +50,10 @@ export default function CreateSavedSearch() {
                 <Goals caseStudySearch={data.caseStudySearch} />
               </Route>
               <Route path="/explore/new/:id/preferences">
-                <Preferences caseStudySearch={data.caseStudySearch} />
+                <Preferences
+                  caseStudySearch={data.caseStudySearch}
+                  clientApplication={data.clientApplication}
+                />
               </Route>
               <Route path="/explore/new/:id/review">
                 <Review caseStudySearch={data.caseStudySearch} />

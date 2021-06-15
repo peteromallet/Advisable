@@ -1,117 +1,60 @@
 import React from "react";
-import { object, string, boolean } from "yup";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
-import TilesInput from "src/components/TilesInput";
-import { Label, Box, Error, RadioGroup, Radio } from "@advisable/donut";
+import { Box, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
-import CurrencyInput from "src/components/CurrencyInput";
 import SubmitButton from "src/components/SubmitButton";
-import AnimatedCard from "../components/AnimatedCard";
+import CheckboxInput from "src/components/CheckboxInput";
 import Header from "../components/Header";
-import Description from "../components/Description";
 import StepNumber from "../components/StepNumber";
+import Description from "../components/Description";
+import AnimatedCard from "../components/AnimatedCard";
 
-export const validationSchema = object().shape({
-  budget: string().required("Please enter your budget"),
-  feedback: boolean().required(
-    "Please tell us if you open to provide feedback",
-  ),
-  marketingAttitude: string().required(
-    "Please select your type of marketing attitude",
-  ),
-});
-
-export default function Preferences({ id }) {
+export default function Preferences({ id, clientApplication }) {
   const history = useHistory();
 
+  const preferencesOptions = [
+    `The company is ${clientApplication.businessType}`,
+    `The company is ${clientApplication.companyType}`,
+    `The company is in the ${clientApplication.industry?.name} space`,
+    // `The company is in [Location]`, // We don't know a location of a client
+    `The freelancer is available right now`,
+    `The cost of this project is within our overall budget`,
+    `The freelancer’s hourly rate is within a specific amount`,
+  ];
+
   const initialValues = {
-    budget: "",
-    feedback: undefined,
-    marketingAttitude: "",
+    preferences: [],
   };
 
-  const handleSubmit = (values) => {
-    const locationState = history.location.state;
-    history.push(`/explore/new/${id}/review`, { ...locationState, ...values });
+  const handleSubmit = () => {
+    history.push(`/explore/new/${id}/review`);
   };
 
   return (
     <AnimatedCard>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(formik) => (
           <Form>
             <StepNumber>Step 3 of 4</StepNumber>
             <Header>Preferences</Header>
             <Description>
-              This will help understand whether you and your company are a good
-              fit for Advisable.
+              What’s important to you when searching for projects
             </Description>
             <Box mb={6}>
-              <Box mb={6}>
-                <FormField
-                  as={CurrencyInput}
-                  name="budget"
-                  prefix="$"
-                  suffix="yearly"
-                  placeholder="Enter your estimated spend"
-                  label="What’s your company’s estimated annual marketing budget?"
-                  data-testid="budget"
-                />
-              </Box>
-              <Box mb={6}>
-                <FormField
-                  as={TilesInput}
-                  fullWidth
-                  alignWidth
-                  optionsPerRow={2}
-                  name="feedback"
-                  onChange={(n) => formik.setFieldValue("feedback", n)}
-                  error={null}
-                  label="Are you open to giving feedback on your experience with Advisable"
-                  options={[
-                    { label: "Yes", value: true },
-                    { label: "No", value: false },
-                  ]}
-                  value={formik.values.feedback}
-                />
-              </Box>
-              <Label mb={3}>
-                How would you describe your company’s attitude to marketing?
-              </Label>
-              <RadioGroup>
-                <Field
-                  as={Radio}
-                  type="radio"
-                  name="marketingAttitude"
-                  value="We rarely experiment & try new things"
-                  description="We rarely experiment & try new things"
-                />
-                <Field
-                  as={Radio}
-                  type="radio"
-                  name="marketingAttitude"
-                  value="We sometimes test new strategies & tactics"
-                  description="We sometimes test new strategies & tactics"
-                />
-                <Field
-                  as={Radio}
-                  type="radio"
-                  name="marketingAttitude"
-                  value="We’re constantly looking for opportunities"
-                  description="We’re constantly looking for opportunities"
-                />
-              </RadioGroup>
+              <FormField
+                as={CheckboxInput}
+                name="preferences"
+                options={preferencesOptions}
+                optionsPerRow={1}
+              />
             </Box>
             <Error>{formik.status}</Error>
             <SubmitButton
               mt={4}
               suffix={<ArrowRight />}
+              disabled={formik.values.preferences.length === 0}
               variant="gradient"
               size="l"
             >

@@ -3,6 +3,13 @@ import gql from "graphql-tag";
 
 const GET_SKILLS = gql`
   query {
+    clientApplication {
+      companyType
+      industry {
+        name
+      }
+      businessType
+    }
     skills {
       id
       value: name
@@ -17,6 +24,13 @@ const GET_SKILLS_CASE_STUDY_SEARCH = gql`
       id
       value: name
       label: name
+    }
+    clientApplication {
+      companyType
+      industry {
+        name
+      }
+      businessType
     }
     caseStudySearch(id: $id) {
       id
