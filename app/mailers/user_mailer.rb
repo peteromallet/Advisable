@@ -35,6 +35,10 @@ class UserMailer < ApplicationMailer
     mail(to: @user.account.email, subject: "#{@inviter.account.first_name} invited you to join the #{@project.try(:name)} interview with #{@application.specialist.account.name} on Advisable")
   end
 
+  def case_study_searches_refreshed(user, updated_searches)
+    # { search_id => [article_id, article_id,…], search_id => [article_id, article_id,…],…}
+  end
+
   private
 
   def application_url(application_id)

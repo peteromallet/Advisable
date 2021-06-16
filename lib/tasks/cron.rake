@@ -18,6 +18,10 @@ def clear_unavailable_until_today
   Specialist.where("unavailable_until < ?", Time.zone.today).update_all(unavailable_until: nil) # rubocop:disable Rails/SkipsModelValidations
 end
 
+def refresh_case_study_searches
+  RefreshCaseStudySearchesJob.perform_now
+end
+
 namespace :cron do
   task hourly: :environment do
     airtable_sync
@@ -27,5 +31,9 @@ namespace :cron do
     clear_magic_links
     permanently_delete_soft_deleted_accounts
     clear_unavailable_until_today
+  end
+
+  task weekly: :environment do
+    topup_case_study_searches
   end
 end
