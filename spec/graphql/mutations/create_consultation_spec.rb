@@ -33,7 +33,6 @@ RSpec.describe Mutations::CreateConsultation do
   end
 
   before do
-    allow_any_instance_of(Consultation).to receive(:sync_to_airtable)
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 

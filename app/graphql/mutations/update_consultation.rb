@@ -24,7 +24,6 @@ module Mutations
       consultation.topic = args[:topic]
 
       consultation.save
-      consultation.sync_to_airtable
       {consultation: consultation}
     end
   end
