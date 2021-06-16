@@ -175,8 +175,6 @@ RSpec.describe ZappierInteractorController, type: :request do
     let(:status) { "Call Requested" }
     let(:params) { {status: status, uid: consultation.uid, key: key} }
 
-    before { allow_any_instance_of(Consultation).to receive(:sync_to_airtable) }
-
     it "updates the consultation and syncs to airtable" do
       post("/zappier_interactor/update_consultation", params: params)
       expect(response).to have_http_status(:success)
