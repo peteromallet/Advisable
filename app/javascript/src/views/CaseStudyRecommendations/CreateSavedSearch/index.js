@@ -14,7 +14,6 @@ import NotFound from "src/views/NotFound";
 // Steps
 import Skills from "./steps/Skills";
 import Goals from "./steps/Goals";
-import Preferences from "./steps/Preferences";
 import Review from "./steps/Review";
 import { useSavedSearch } from "./useSavedSearch";
 
@@ -48,12 +47,6 @@ export default function CreateSavedSearch() {
               </Route>
               <Route path="/explore/new/:id/goals">
                 <Goals caseStudySearch={data.caseStudySearch} />
-              </Route>
-              <Route path="/explore/new/:id/preferences">
-                <Preferences
-                  caseStudySearch={data.caseStudySearch}
-                  clientApplication={data.clientApplication}
-                />
               </Route>
               <Route path="/explore/new/:id/review">
                 <Review caseStudySearch={data.caseStudySearch} />
