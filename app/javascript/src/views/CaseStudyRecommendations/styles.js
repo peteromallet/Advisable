@@ -81,3 +81,19 @@ export const StyledSearchCard = styled.div`
       0px 16px 60px rgba(0, 0, 0, 0.08);
   }
 `;
+
+export const StyledNewSearchButton = styled(StyledSearchCard)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  width: 100%;
+  transition: box-shadow 200ms, background 200ms;
+  box-shadow: 0px 0px 0px rgba(56, 56, 56, 0.04),
+    0px 0px 0px rgba(0, 0, 0, 0.04);
+  border: 2px solid white;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+`;
