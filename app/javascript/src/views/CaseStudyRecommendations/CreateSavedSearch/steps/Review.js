@@ -12,7 +12,7 @@ import StepNumber from "../components/StepNumber";
 import Header from "../components/Header";
 import Description from "../components/Description";
 // Queries
-import UPDATE_CASE_STUDY_SEARCH from "../../queries/updateCaseStudySearch.gql";
+import UPDATE_CASE_STUDY_SEARCH from "../queries/updateCaseStudySearch.gql";
 
 export default function Review({ caseStudySearch }) {
   const [update] = useMutation(UPDATE_CASE_STUDY_SEARCH);

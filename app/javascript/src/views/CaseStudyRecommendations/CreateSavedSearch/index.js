@@ -16,7 +16,8 @@ import Skills from "./steps/Skills";
 import Goals from "./steps/Goals";
 import Preferences from "./steps/Preferences";
 import Review from "./steps/Review";
-import { useSavedSearch } from "./useSavedSearch";
+// Queries
+import { useSavedSearch } from "./queries/useSavedSearch";
 
 const useSavedSearchId = () => {
   const location = useLocation();
