@@ -39,6 +39,12 @@ export default function Sidebar({ searchId }) {
           Goals
         </MultistepMenu.Item>
         <MultistepMenu.Item
+          to={`/explore/new/${searchId}/preferences`}
+          isComplete={false}
+        >
+          Preferences
+        </MultistepMenu.Item>
+        <MultistepMenu.Item
           to={`/explore/new/${searchId}/review`}
           isComplete={false}
         >
