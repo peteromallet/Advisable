@@ -3,6 +3,8 @@
 module CaseStudy
   class ImagesContent < Content
     uid_prefix "csc"
+    has_many_attached :images
+    resize_many images: {resize_to_limit: [1600, 1600]}
 
     private
 

@@ -1,0 +1,16 @@
+query getSearches {
+  caseStudySearches {
+    id
+    name
+    results {
+      nodes {
+        id
+        specialist {
+          id
+          name
+          avatar
+        }
+      }
+    }
+  }
+}

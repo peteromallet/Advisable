@@ -194,6 +194,7 @@ class TestData
       a.password = "testing123"
       a.permissions = %w[team_manager admin]
       a.confirmed_at = 1.day.ago
+      a.features = %w[case_studies]
     end
 
     user = User.find_or_create_by(account: account) do |u|

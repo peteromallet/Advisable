@@ -1,0 +1,20 @@
+query recommendationsInbox($id: ID!) {
+  caseStudySearch(id: $id) {
+    id
+    name
+    results {
+      edges {
+        node {
+          id
+          title
+          subtitle
+          isArchived(id: $id)
+          specialist {
+            id
+            avatar
+          }
+        }
+      }
+    }
+  }
+}

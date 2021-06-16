@@ -1,0 +1,42 @@
+query getCaseStudy($searchId: ID!, $id: ID!) {
+  caseStudySearch(id: $searchId) {
+    id
+  }
+  caseStudy(id: $id) {
+    id
+    title
+    isArchived(id: $searchId)
+    subtitle
+    comment
+    specialist {
+      id
+      bio
+      avatar
+      name
+      firstName
+    }
+    sections {
+      id
+      type
+      contents {
+        id
+        ... on Heading {
+          size
+          text
+        }
+        ... on Paragraph {
+          text
+        }
+        ... on Results {
+          results
+        }
+        ... on Images {
+          images {
+            id
+            url
+          }
+        }
+      }
+    }
+  }
+}
