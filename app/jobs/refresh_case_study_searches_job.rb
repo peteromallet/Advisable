@@ -7,7 +7,7 @@ class RefreshCaseStudySearchesJob < ApplicationJob
       updated_searches = {}
       user.searches.each do |search|
         existing_results = search[:results] || []
-        amount_to_add = CaseStudy::Search::RESULT_LIMIT - (existing.size - search.archived.size)
+        amount_to_add = CaseStudy::Search::RESULT_LIMIT - (existing_results.size - search.archived.size)
         next if amount_to_add <= 0
 
         existing_or_archived = existing_results + search.archived
