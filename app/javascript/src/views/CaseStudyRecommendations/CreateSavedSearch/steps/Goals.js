@@ -16,7 +16,7 @@ import StepNumber from "../components/StepNumber";
 import UPDATE_CASE_STUDY_SEARCH from "../../queries/updateCaseStudySearch.gql";
 
 export const validationSchema = object().shape({
-  goals: array().min(1, "Please add at least one goal"),
+  goals: array().min(1, "Please add at least one goal").required(),
 });
 
 const GOALS = [
