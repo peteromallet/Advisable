@@ -18,8 +18,14 @@ import Preferences from "./steps/Preferences";
 import Review from "./steps/Review";
 import { useSavedSearch } from "./useSavedSearch";
 
-export default function CreateSavedSearch() {
+const useSavedSearchId = () => {
+  const location = useLocation();
   const { id } = useParams();
+  return { id: id || location.state?.id };
+};
+
+export default function CreateSavedSearch() {
+  const { id } = useSavedSearchId();
   const location = useLocation();
   const history = useHistory();
   const largeScreen = useBreakpoint("lUp");

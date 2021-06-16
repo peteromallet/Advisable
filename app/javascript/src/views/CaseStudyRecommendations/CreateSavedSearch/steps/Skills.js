@@ -11,17 +11,21 @@ import StepNumber from "../components/StepNumber";
 import Header from "../components/Header";
 import CREATE_CASE_STUDY_SEARCH from "../../queries/createCaseStudySearch.gql";
 import UPDATE_CASE_STUDY_SEARCH from "../../queries/updateCaseStudySearch.gql";
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
+import { GET_SKILLS_CASE_STUDY_SEARCH } from "../useSavedSearch";
+import { useLocation } from "react-router-dom";
 
 export const validationSchema = object().shape({
   skills: array().min(1, "Please select at least one skill"),
 });
 
 export default function Skills({ caseStudySearch, skills }) {
+  const client = useApolloClient();
   const [create] = useMutation(CREATE_CASE_STUDY_SEARCH);
   const [update] = useMutation(UPDATE_CASE_STUDY_SEARCH);
 
   const history = useHistory();
+  const location = useLocation();
 
   const initialValues = {
     skills: caseStudySearch?.skills.map((s) => s.skill) || [],
@@ -51,7 +55,18 @@ export default function Skills({ caseStudySearch, skills }) {
     const searchId =
       caseStudySearch?.id || res.data?.createCaseStudySearch?.search.id;
 
-    history.replace(`/explore/new/${searchId}/skills`);
+    if (!caseStudySearch) {
+      // Prefetch caseStudySearch to prevent
+      // loading state in parent component
+      await client.query({
+        query: GET_SKILLS_CASE_STUDY_SEARCH,
+        variables: { id: searchId },
+      });
+
+      // Put search id to location state to read
+      // it when user clicks back button
+      history.replace(location.pathname, { id: searchId });
+    }
     history.push(`/explore/new/${searchId}/goals`);
   };
 

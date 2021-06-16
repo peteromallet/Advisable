@@ -18,19 +18,19 @@ const GET_SKILLS = gql`
   }
 `;
 
-const GET_SKILLS_CASE_STUDY_SEARCH = gql`
+export const GET_SKILLS_CASE_STUDY_SEARCH = gql`
   query ($id: ID!) {
-    skills {
-      id
-      value: name
-      label: name
-    }
     clientApplication {
       companyType
       industry {
         name
       }
       businessType
+    }
+    skills {
+      id
+      value: name
+      label: name
     }
     caseStudySearch(id: $id) {
       id
