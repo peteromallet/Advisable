@@ -2,6 +2,8 @@ mutation createCaseStudySearch($input: CreateCaseStudySearchInput!) {
   createCaseStudySearch(input: $input) {
     search {
       id
+      name
+      goals
       skills {
         id
         skill {
