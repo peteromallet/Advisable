@@ -12,6 +12,16 @@ mutation createCaseStudySearch($input: CreateCaseStudySearchInput!) {
           label: name
         }
       }
+      results {
+        nodes {
+          id
+          specialist {
+            id
+            name
+            avatar
+          }
+        }
+      }
     }
   }
 }
