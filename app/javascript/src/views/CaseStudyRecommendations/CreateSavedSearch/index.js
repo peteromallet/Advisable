@@ -57,7 +57,7 @@ export default function CreateSavedSearch() {
               </Route>
               <Route path="/explore/new/:id/preferences">
                 <Preferences
-                  caseStudySearch={data.caseStudySearch}
+                  id={data.caseStudySearch?.id}
                   clientApplication={data.clientApplication}
                 />
               </Route>
