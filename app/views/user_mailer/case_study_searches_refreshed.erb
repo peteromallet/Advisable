@@ -1,0 +1,10 @@
+<p>
+  Hi <%= @user.account.first_name %>,
+</p>
+
+<% @searches.each do |search, articles| %>
+  <p>
+    <%= search.inspect %>
+    <%= articles.inspect %>
+  </p>
+<% end %>

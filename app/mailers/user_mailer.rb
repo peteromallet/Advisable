@@ -4,12 +4,12 @@ class UserMailer < ApplicationMailer
   def confirm(uid:, token:)
     @user = User.find_by(uid: uid)
     @token = token
-    mail(to: @user.account.email, subject: 'Account Confirmation')
+    mail(to: @user.account.email, subject: "Account Confirmation")
   end
 
   def interview_reschedule_request(interview)
     @interview = interview
-    mail(from: interview.user.company.sales_person.email_with_name, to: interview.user.account.email, subject: 'Interview Reschedule Request')
+    mail(from: interview.user.company.sales_person.email_with_name, to: interview.user.account.email, subject: "Interview Reschedule Request")
   end
 
   def invited_by_manager(manager, user)
@@ -36,7 +36,11 @@ class UserMailer < ApplicationMailer
   end
 
   def case_study_searches_refreshed(user, updated_searches)
-    # { search_id => [article_id, article_id,…], search_id => [article_id, article_id,…],…}
+    @user = user
+    @searches = updated_searches.map do |search, articles|
+      [CaseStudy::Search.find(search), CaseStudy::Article.where(id: articles)]
+    end
+    mail(to: @user.account.email, subject: "You Have New Recommendations")
   end
 
   private

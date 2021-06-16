@@ -22,17 +22,36 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.invited_to_interview(User.first, User.last, random_application)
   end
 
+  def case_study_searches_refreshed
+    ApplicationRecord.uncached do
+      searches = {random_search.id => [random_article.id], random_search.id => [random_article.id, random_article.id]}
+      UserMailer.case_study_searches_refreshed(random_user, searches)
+    end
+  end
+
   private
 
+  def random_user
+    User.order("RANDOM()").first
+  end
+
+  def random_search
+    CaseStudy::Search.order("RANDOM()").first
+  end
+
+  def random_article
+    CaseStudy::Article.order("RANDOM()").first
+  end
+
   def random_interview
-    Interview.order(Arel.sql('RANDOM()')).first
+    Interview.order("RANDOM()").first
   end
 
   def random_project
-    Project.order(Arel.sql('RANDOM()')).first
+    Project.order("RANDOM()").first
   end
 
   def random_application
-    Application.order(Arel.sql('RANDOM()')).first
+    Application.order("RANDOM()").first
   end
 end
