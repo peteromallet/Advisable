@@ -372,5 +372,21 @@ module Types
     def case_study_searches
       current_user.searches
     end
+
+    field :case_study_skills, [Types::Skill], null: true
+
+    def case_study_skills
+      ::Skill.where(id: ::CaseStudy::Skill.select(:skill_id).distinct)
+    end
+
+    field :popular_case_study_skills, [Types::Skill], null: true do
+      argument :first, Integer, required: false
+    end
+
+    def popular_case_study_skills(first = nil)
+      skills_by_usage = ::CaseStudy::Skill.select("skill_id, COUNT(skill_id) as usage").order("usage DESC").group("skill_id")
+      skills_by_usage = skills_by_usage.limit(first) if first.present?
+      ::Skill.where(id: skills_by_usage.map(&:skill_id))
+    end
   end
 end
