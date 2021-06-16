@@ -35,6 +35,9 @@ const FullApplication = lazy(() => import("./views/FullApplication"));
 const Interview = lazy(() => import("./views/Interview"));
 const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
 const SetPassword = lazy(() => import("./views/SetPassword"));
+const CaseStudyRecommendations = lazy(() =>
+  import("./views/CaseStudyRecommendations"),
+);
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -165,6 +168,11 @@ const ApplicationRoutes = () => {
           <AuthenticatedRoute
             path="/profile"
             component={RedirectToFreelancerProfile}
+          />
+          <AuthenticatedRoute
+            clientOnly
+            path="/explore"
+            component={CaseStudyRecommendations}
           />
           <Route component={NotFound} />
         </Switch>

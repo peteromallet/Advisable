@@ -1,0 +1,20 @@
+query archivedRecommendations($id: ID!) {
+  caseStudySearch(id: $id) {
+    id
+    name
+    archived {
+      edges {
+        node {
+          id
+          title
+          subtitle
+          isArchived(id: $id)
+          specialist {
+            id
+            avatar
+          }
+        }
+      }
+    }
+  }
+}
