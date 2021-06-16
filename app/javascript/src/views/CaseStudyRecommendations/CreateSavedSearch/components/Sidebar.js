@@ -5,11 +5,13 @@ import MultistepMenu from "src/components/MultistepMenu";
 import { validationSchema as skillsValidationSchema } from "../steps/Skills";
 import { validationSchema as goalsValidationSchema } from "../steps/Goals";
 
-export default function Sidebar({ searchId }) {
+export default function Sidebar({ caseStudySearch }) {
   const location = useLocation();
-  const skillsComplete = skillsValidationSchema.isValidSync();
-  const goalsComplete = goalsValidationSchema.isValidSync();
+  const skillsComplete = skillsValidationSchema.isValidSync(caseStudySearch);
+  const goalsComplete = goalsValidationSchema.isValidSync(caseStudySearch);
   const preferencesComplete = location.pathname.includes("review");
+
+  const searchId = caseStudySearch?.id;
 
   return (
     <Card

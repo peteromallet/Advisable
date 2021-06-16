@@ -16,7 +16,7 @@ import { GET_SKILLS_CASE_STUDY_SEARCH } from "../useSavedSearch";
 import { useLocation } from "react-router-dom";
 
 export const validationSchema = object().shape({
-  skills: array().min(1, "Please select at least one skill"),
+  skills: array().min(1, "Please select at least one skill").required(),
 });
 
 export default function Skills({ caseStudySearch, skills }) {
