@@ -34,6 +34,7 @@ export const GET_SKILLS_CASE_STUDY_SEARCH = gql`
     }
     caseStudySearch(id: $id) {
       id
+      name
       goals
       skills {
         id
