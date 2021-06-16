@@ -1,8 +1,16 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { Card, Text } from "@advisable/donut";
 import MultistepMenu from "src/components/MultistepMenu";
+import { validationSchema as skillsValidationSchema } from "../steps/Skills";
+import { validationSchema as goalsValidationSchema } from "../steps/Goals";
 
 export default function Sidebar({ searchId }) {
+  const location = useLocation();
+  const skillsComplete = skillsValidationSchema.isValidSync();
+  const goalsComplete = goalsValidationSchema.isValidSync();
+  const preferencesComplete = location.pathname.includes("review");
+
   return (
     <Card
       top="0"
@@ -28,25 +36,27 @@ export default function Sidebar({ searchId }) {
         <MultistepMenu.Item
           exact
           to={searchId ? `/explore/new/${searchId}/skills` : "/explore/new"}
-          isComplete={false}
+          isComplete={skillsComplete}
         >
           Skills
         </MultistepMenu.Item>
         <MultistepMenu.Item
           to={`/explore/new/${searchId}/goals`}
-          isComplete={false}
+          isComplete={goalsComplete}
+          isDisabled={!skillsComplete && !goalsComplete}
         >
           Goals
         </MultistepMenu.Item>
         <MultistepMenu.Item
           to={`/explore/new/${searchId}/preferences`}
-          isComplete={false}
+          isComplete={preferencesComplete}
+          isDisabled={!goalsComplete && !preferencesComplete}
         >
           Preferences
         </MultistepMenu.Item>
         <MultistepMenu.Item
           to={`/explore/new/${searchId}/review`}
-          isComplete={false}
+          isDisabled={!preferencesComplete}
         >
           Review
         </MultistepMenu.Item>

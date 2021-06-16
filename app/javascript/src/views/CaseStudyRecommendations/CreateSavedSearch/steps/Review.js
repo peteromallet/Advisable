@@ -33,7 +33,7 @@ export default function Review({ id }) {
               variant="gradient"
               size="l"
             >
-              Submit
+              Confirm
             </SubmitButton>
           </Form>
         )}
