@@ -13,7 +13,7 @@ import Header from "../components/Header";
 import Description from "../components/Description";
 import StepNumber from "../components/StepNumber";
 // Queries
-import UPDATE_CASE_STUDY_SEARCH from "../../queries/updateCaseStudySearch.gql";
+import UPDATE_CASE_STUDY_SEARCH from "../queries/updateCaseStudySearch.gql";
 
 export const validationSchema = object().shape({
   goals: array().min(1, "Please add at least one goal").required(),

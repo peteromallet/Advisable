@@ -1,7 +1,8 @@
 import React from "react";
 import { array, object } from "yup";
 import { Formik, Form } from "formik";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router-dom";
+import { useApolloClient, useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Box, Combobox, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
@@ -9,11 +10,10 @@ import SubmitButton from "src/components/SubmitButton";
 import AnimatedCard from "../components/AnimatedCard";
 import StepNumber from "../components/StepNumber";
 import Header from "../components/Header";
-import CREATE_CASE_STUDY_SEARCH from "../../queries/createCaseStudySearch.gql";
-import UPDATE_CASE_STUDY_SEARCH from "../../queries/updateCaseStudySearch.gql";
-import { useApolloClient, useMutation } from "@apollo/client";
-import { GET_SKILLS_CASE_STUDY_SEARCH } from "../useSavedSearch";
-import { useLocation } from "react-router-dom";
+// Queries
+import { GET_SKILLS_CASE_STUDY_SEARCH } from "../queries/useSavedSearch";
+import CREATE_CASE_STUDY_SEARCH from "../queries/createCaseStudySearch.gql";
+import UPDATE_CASE_STUDY_SEARCH from "../queries/updateCaseStudySearch.gql";
 
 export const validationSchema = object().shape({
   skills: array().min(1, "Please select at least one skill").required(),
