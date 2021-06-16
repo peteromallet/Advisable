@@ -1,9 +1,9 @@
 import React from "react";
-import { Box, Text, Container, Badge, Link, Circle } from "@advisable/donut";
-import { StyledNewSearchButton, StyledSearchCard } from "./styles";
-import { Add } from "@styled-icons/ionicons-outline/Add";
-import { useCaseStudySearches } from "./queries";
 import { useHistory } from "react-router";
+import { Box, Text, Container, Badge } from "@advisable/donut";
+import CreateSavedSearchButton from "./CreateSavedSearchButton";
+import { StyledSearchCard } from "./styles";
+import { useCaseStudySearches } from "./queries";
 
 export default function Searches() {
   const history = useHistory();
@@ -37,18 +37,7 @@ export default function Searches() {
             </Text>
           </StyledSearchCard>
         ))}
-        <Link to="/explore/new">
-          <StyledNewSearchButton>
-            <Box textAlign="center" mb={8}>
-              <Circle bg="rgba(0,0,0, 0.05)" color="white" mb={4}>
-                <Add />
-              </Circle>
-              <Text color="neutral400" fontSize="m">
-                Create a new saved search
-              </Text>
-            </Box>
-          </StyledNewSearchButton>
-        </Link>
+        <CreateSavedSearchButton />
       </Box>
     </Container>
   );
