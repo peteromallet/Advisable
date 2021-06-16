@@ -1,10 +1,15 @@
-<p>
-  Hi <%= @user.account.first_name %>,
-</p>
-
 <% @searches.each do |search, articles| %>
   <p>
-    <%= search.inspect %>
-    <%= articles.inspect %>
+    <%= search.name %>
+    <pre><%= search.inspect %></pre>
+    <ul>
+      <% articles.each do |article| %>
+        <li>
+          <h5><%= article.title %></h5>
+          <p><%= article.subtitle %></p>
+          <pre><%= article.inspect %></pre>
+        </li>
+      <% end %>
+    </ul>
   </p>
 <% end %>
