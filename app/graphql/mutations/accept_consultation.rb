@@ -24,7 +24,6 @@ module Mutations
           status: 'Accepted By Specialist',
           accepted_at: Time.zone.now
         )
-        consultation.sync_to_airtable
         {interview: interview}
       end
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :consultation do
     user
@@ -5,6 +7,5 @@ FactoryBot.define do
     specialist
     status { "Request Started" }
     topic { "Consultation Topic" }
-    airtable_id { "rec_123" }
   end
 end
