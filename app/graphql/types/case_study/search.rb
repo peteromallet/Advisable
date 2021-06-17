@@ -14,9 +14,6 @@ module Types
 
       field :id, ID, null: false, method: :uid
       field :name, String, null: false
-      def name
-        object.name || ::Skill.find(object.skills.first.skill_id).name
-      end
       field :skills, [Skill], null: true
       field :primary_skill, Skill, null: true
       def primary_skill
