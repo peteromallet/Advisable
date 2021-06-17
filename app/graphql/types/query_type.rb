@@ -372,5 +372,24 @@ module Types
     def case_study_searches
       current_user.searches
     end
+
+    field :case_study_skills, Types::Skill.connection_type, null: true
+
+    def case_study_skills
+      ::Skill.where(id: ::CaseStudy::Skill.select(:skill_id).distinct)
+    end
+
+    field :popular_case_study_skills, [Types::Skill], null: true do
+      argument :limit, Integer, required: false
+    end
+
+    def popular_case_study_skills(limit = 20)
+      skills_by_usage = ::CaseStudy::Skill.select("skill_id, COUNT(skill_id) as usage").
+        order("usage DESC").
+        group("skill_id").
+        limit(limit).
+        map(&:skill_id)
+      ::Skill.where(id: skills_by_usage)
+    end
   end
 end
