@@ -550,7 +550,7 @@ RSpec.describe ZappierInteractorController, type: :request do
 
     context "when non-existing project" do
       it "is unprocessable" do
-        params[:uid] = 'pre_does_not_exist'
+        params[:uid] = "pre_does_not_exist"
         post("/zappier_interactor/attach_previous_project_image", params: params)
         expect(response).to have_http_status(:unprocessable_entity)
         expect(AttachImageJob).not_to have_been_enqueued.with(previous_project, image)
@@ -723,6 +723,48 @@ RSpec.describe ZappierInteractorController, type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
         json = JSON[response.body]
         expect(json["error"]).to eq("Something went wrong")
+      end
+    end
+  end
+
+  describe "POST /send_email" do
+    let(:user) { create(:specialist) }
+    let(:params) { {uid: user.uid, subject: "Subject", body: "<h1>Heya!</h1>", key: key} }
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/send_email", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context "when specialist" do
+      it "sends the email" do
+        post("/zappier_interactor/send_email", params: params)
+        expect(response).to have_http_status(:success)
+        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "zappier_email", "deliver_now", {args: [user.account, "Subject", "<h1>Heya!</h1>"]})
+      end
+    end
+
+    context "when user" do
+      let(:user) { create(:user) }
+
+      it "sends the email" do
+        post("/zappier_interactor/send_email", params: params)
+        expect(response).to have_http_status(:success)
+        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "zappier_email", "deliver_now", {args: [user.account, "Subject", "<h1>Heya!</h1>"]})
+      end
+    end
+
+    context "when account" do
+      let(:user) { create(:account) }
+
+      it "sends the email" do
+        post("/zappier_interactor/send_email", params: params)
+        expect(response).to have_http_status(:success)
+        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "zappier_email", "deliver_now", {args: [user, "Subject", "<h1>Heya!</h1>"]})
       end
     end
   end
