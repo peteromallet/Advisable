@@ -1,8 +1,9 @@
 import React from "react";
+import { useHistory } from "react-router";
 import { Box, Text, Container, Badge } from "@advisable/donut";
+import CreateSavedSearchButton from "./CreateSavedSearchButton";
 import { StyledSearchCard } from "./styles";
 import { useCaseStudySearches } from "./queries";
-import { useHistory } from "react-router";
 
 export default function Searches() {
   const history = useHistory();
@@ -36,6 +37,7 @@ export default function Searches() {
             </Text>
           </StyledSearchCard>
         ))}
+        <CreateSavedSearchButton />
       </Box>
     </Container>
   );

@@ -49,7 +49,7 @@ module Mutations
           search.save
         end
 
-        {search: search}
+        {search: search.reload}
       end
     end
   end

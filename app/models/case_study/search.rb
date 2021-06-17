@@ -13,6 +13,10 @@ module CaseStudy
     has_many :skills, dependent: :destroy
     has_many :search_feedbacks, dependent: :destroy
 
+    def name
+      attributes["name"].presence || (skills.primary.first || skills.first)&.skill&.name
+    end
+
     def results(fresh: false)
       if fresh || attributes["results"].blank?
         query = Article.distinct.where.not(id: archived).limit(RESULT_LIMIT)
