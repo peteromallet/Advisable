@@ -105,13 +105,12 @@ class ZappierInteractorController < ApplicationController
   end
 
   def create_magic_link
-    account = find_account_from_uid(params[:uid])
-    options = {}
-    options[:expires_at] = params[:expires_at] if params[:expires_at].present?
-    link = magic_link(account, params[:url], **options)
-    render json: {magic_link: link}
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "Account not found"}, status: :unprocessable_entity
+    with_account do |account|
+      options = {}
+      options[:expires_at] = params[:expires_at] if params[:expires_at].present?
+      link = magic_link(account, params[:url], **options)
+      render json: {magic_link: link}
+    end
   end
 
   def enable_guild
@@ -119,7 +118,7 @@ class ZappierInteractorController < ApplicationController
     specialist.update!(guild: true)
     render json: {status: "OK."}
   rescue ActiveRecord::RecordNotFound
-    render json: {error: "Account not found"}, status: :unprocessable_entity
+    render json: {error: "Specialist not found"}, status: :unprocessable_entity
   end
 
   def boost_guild_post
@@ -146,6 +145,13 @@ class ZappierInteractorController < ApplicationController
   rescue ActiveRecord::ActiveRecordError => e
     Sentry.capture_message("Something went wrong when importing Case Study #{params[:airtable_id]}", extra: {message: e.message})
     render json: {error: "Something went wrong"}, status: :unprocessable_entity
+  end
+
+  def send_email
+    with_account do |account|
+      AccountMailer.zappier_email(account, params[:subject], params[:body]).deliver_later
+      render json: {status: "OK."}
+    end
   end
 
   private
@@ -202,18 +208,24 @@ class ZappierInteractorController < ApplicationController
     end.to_h
   end
 
-  def find_account_from_uid(uid)
-    klass = case uid
+  def with_account
+    yield(find_account_by_uid)
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "Account not found"}, status: :unprocessable_entity
+  end
+
+  def find_account_by_uid
+    klass = case params[:uid]
             when /^spe/
               Specialist
             when /^use/
               User
             when /^acc/
-              return Account.find_by!(uid: uid)
+              return Account.find_by!(uid: params[:uid])
             else
               raise ActiveRecord::RecordNotFound
             end
-    klass.public_send(:find_by!, uid: uid).account
+    klass.public_send(:find_by!, uid: params[:uid]).account
   end
 
   def verify_key!

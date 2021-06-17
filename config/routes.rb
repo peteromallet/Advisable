@@ -100,6 +100,7 @@ Rails.application.routes.draw do
   post 'zappier_interactor/enable_guild'
   post 'zappier_interactor/boost_guild_post'
   post 'zappier_interactor/import_case_study'
+  post 'zappier_interactor/send_email'
 
   # match every other route to the frontend codebase
   root 'application#frontend'
