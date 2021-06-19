@@ -139,13 +139,18 @@ const Post = () => {
                 </Box>
               ) : null}
             </Box>
-            <Box mb={8}>
-              <Markdown>{post.body}</Markdown>
-            </Box>
+            <Markdown>{post.body}</Markdown>
 
             <Topics topics={post.guildTopics} />
 
-            <Box my={10} height="1px" width="200px" mx="auto" bg="neutral100" />
+            <Box
+              my={10}
+              height="4px"
+              borderTop="1px solid"
+              borderColor="neutral100"
+              width="200px"
+              mx="auto"
+            />
 
             {!guildViewer ? (
               <JoinGuild />
