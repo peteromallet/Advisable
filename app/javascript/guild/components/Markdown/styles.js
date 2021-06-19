@@ -76,7 +76,7 @@ export const StyledMarkdown = styled.div`
   blockquote {
     margin: 12px 0;
     font-style: italic;
-    padding-left: 24px;
+    padding-left: 20px;
     color: ${theme.colors.neutral600};
     border-left: 2px solid ${theme.colors.neutral200};
   }
@@ -85,8 +85,8 @@ export const StyledMarkdown = styled.div`
     margin: 0;
     font-size: 20px;
     line-height: 28px;
-    padding-top: 3px;
-    padding-bottom: 5px;
+    padding-top: 7px;
+    padding-bottom: 9px;
   }
 
   a {
