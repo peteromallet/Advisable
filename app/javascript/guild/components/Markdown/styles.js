@@ -11,7 +11,6 @@ export const StyledMarkdown = styled.div`
   ul,
   ol,
   li,
-  blockquote,
   b {
     padding-top: 2px;
     padding-bottom: 2px;
@@ -76,12 +75,18 @@ export const StyledMarkdown = styled.div`
 
   blockquote {
     margin: 12px 0;
-    font-size: 22px;
-    line-height: 28px;
     font-style: italic;
     padding-left: 24px;
-    color: ${theme.colors.neutral700};
-    border-left: 2px solid ${theme.colors.neutral700};
+    color: ${theme.colors.neutral600};
+    border-left: 2px solid ${theme.colors.neutral200};
+  }
+
+  blockquote p {
+    margin: 0;
+    font-size: 20px;
+    line-height: 28px;
+    padding-top: 3px;
+    padding-bottom: 5px;
   }
 
   a {
