@@ -93,16 +93,63 @@ export const StyledCell = styled.div`
 `;
 
 export const StyledNavigation = styled.div`
-  background: #ddd;
-  padding: 20px 20px 0 20px;
+  user-select: none;
+  position: relative;
 `;
 
-export const StyledNavLink = styled(NavLink)`
-  font-size: 16px;
-  padding: 6px 12px;
+export const StyledCurrentResource = styled.div`
+  padding: 16px;
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: 500;
+  align-items: center;
+  display: inline-flex;
+  letter-spacing: -0.02rem;
+  color: ${theme.colors.neutral900};
+
+  svg {
+    height: 20px;
+    margin-right: 8px;
+  }
+
+  span {
+    margin-top: -3px;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const StyledResourceMenu = styled.div`
+  z-index: 10;
+  width: 320px;
+  left: 20px;
   background: white;
-  margin-right: 4px;
-  display: inline-block;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  max-height: 400px;
+  border-radius: 12px;
+  overflow-y: scroll;
+  box-shadow: 0 12px 56px -12px rgba(0, 0, 0, 0.28), 0 0 4px rgba(0, 0, 0, 0.04);
+`;
+
+export const StyledResourceLink = styled(NavLink)`
+  display: flex;
+  font-size: 16px;
+  padding: 8px 12px;
+  align-items: center;
+  color: ${theme.colors.neutral700};
+
+  &:hover {
+    background: ${theme.colors.neutral50};
+  }
+
+  svg {
+    height: 16px;
+    margin-right: 8px;
+    color: ${theme.colors.neutral400};
+  }
+
+  span {
+    margin-top: -3px;
+  }
 `;

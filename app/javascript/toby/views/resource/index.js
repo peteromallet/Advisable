@@ -107,7 +107,7 @@ function Resource({ resource, views }) {
     <StyledLayout>
       <DetailsModal resource={resource} />
       <StyledHeader>
-        <Navigation />
+        <Navigation resource={resource} />
         <Button
           ml={2}
           mt={2}
