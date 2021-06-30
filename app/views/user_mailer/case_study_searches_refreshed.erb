@@ -1,15 +1,45 @@
-<% @searches.each do |search, articles| %>
-  <p>
-    <%= search.name %>
-    <pre><%= search.inspect %></pre>
-    <ul>
-      <% articles.each do |article| %>
-        <li>
-          <h5><%= article.title %></h5>
-          <p><%= article.subtitle %></p>
-          <pre><%= article.inspect %></pre>
-        </li>
-      <% end %>
-    </ul>
-  </p>
+<%= render "emails/container" do %>
+  <%= render "emails/spacing", height: "32px" %>
+
+  <%= render "emails/heading" do %>
+    We've found new recommendations for you!
+  <% end %>
+
+  <%= render "emails/paragraph" do %>
+    We’ve found some new recommendations for you based on the searches you have made.
+  <% end %>
+
+  <% @searches.each do |search, articles| %>
+    <div style="margin-bottom: 32px;">
+      <h2 style="margin-left: 32px; font-family: arial; font-size: 18px; line-height: 24px;"><%= search.name %></h2>
+      <table style="padding: 0 32px;">
+        <% articles.each do |article| %>
+          <tr>
+            <td style="vertical-align: top;" width="18%">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td>
+                    <a href="<%= "/explore/#{search.uid}/#{article.uid}" %>" style="border-radius: 12px; display: block; width: 100%; height: 120px; background-size: cover; background-position: center; background-image: url('<%= article.specialist.avatar.url %>');">
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="80%">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td style="padding-left: 16px;">
+                    <a href="<%= "/explore/#{search.uid}/#{article.uid}" %>" style="color: #0D1D35;">
+                      <h5 style="font-family: arial; font-size: 18px; margin-top: 0; margin-bottom: 8px;"><%= article.title %></h5>
+                    </a>
+                    <p style="font-family: arial; font-size: 14px; line-height: 16px; color: #3E4D55; margin-top: 0; margin-bottom: 24px;"><%= article.subtitle %></p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
 <% end %>
