@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%= yield(:head) %>
+  </head>
+
+  <body style="background: #F2F1F0;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:separate">
+      <tbody>
+        <tr>
+          <td align="center" bgcolor="#F2F1F0" height="40" width="100%"></td>
+        </tr>
+        <tr>
+          <td align="center" bgcolor="#F2F1F0" height="24" width="100%">
+            <%= image_tag "logo-blue.png", height: "24" %>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" bgcolor="#F2F1F0" height="24" width="100%"></td>
+        </tr>
+        <tr>
+          <td align="center" bgcolor="#F2F1F0">
+            <table border="0" cellpadding="0" cellspacing="0" style="max-width:600px;border-collapse:separate">
+              <tbody>
+                <tr>
+                  <td>
+                    <%= yield %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" bgcolor="#F2F1F0" height="24" width="100%"></td>
+        </tr>
+        <tr>
+          <td align="center" bgcolor="#F2F1F0" width="100%">
+            <p style="margin: 0; font-size: 12px; line-height: 16px;font-family: Arial; color: #514B46;">
+              You’re receiving this email because you signed up for Advisable.
+              <br />
+              You can manage your email notifications here.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" bgcolor="#F2F1F0" height="40" width="100%"></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
