@@ -1,10 +1,13 @@
 import React from "react";
 import * as Sentry from "@sentry/react";
 import { StyledPostCard } from "./styles";
+import { Box } from "@advisable/donut";
 import useViewerAuthor from "@guild/hooks/useViewerAuthor";
 import Body from "./components/Body";
-import PostTop from "./components/Top/PostTop";
-import ArticleTop from "./components/Top/ArticleTop";
+import PostCover from "./components/Cover/PostCover";
+import ArticleCover from "./components/Cover/ArticleCover";
+import AuthorDetails from "./components/AuthorDetails";
+import PostTypeTag from "@guild/components/PostTypeTag";
 
 const Post = ({
   post,
@@ -15,8 +18,7 @@ const Post = ({
   walkthrough = false,
 }) => {
   const { popularOrAuthorReactions } = useViewerAuthor(post);
-  const hasArticle = post.type === "Case Study" && !!post.article;
-  const TopContent = hasArticle ? ArticleTop : PostTop;
+  const Cover = post.article ? ArticleCover : PostCover;
 
   return (
     <Sentry.ErrorBoundary>
@@ -26,7 +28,11 @@ const Post = ({
         pinned={post.pinned}
         popular={popularOrAuthorReactions}
       >
-        <TopContent post={post} />
+        <Cover post={post} />
+        <Box position="absolute" right="2" top="2">
+          <PostTypeTag post={post} />
+        </Box>
+        <AuthorDetails post={post} />
         <Body
           post={post}
           showEdit={showEdit}
