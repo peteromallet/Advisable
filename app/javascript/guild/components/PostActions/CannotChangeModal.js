@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Text, Paragraph } from "@advisable/donut";
 
-export default function CannotEditModal({ modal, action = "Edit" }) {
+export default function CannotChangeModal({ modal, action = "Edit" }) {
   return (
     <Modal modal={modal} label={`Cannot ${action}`} padding="l">
       <Text

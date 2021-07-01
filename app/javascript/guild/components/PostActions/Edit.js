@@ -4,7 +4,7 @@ import { useDialogState } from "reakit/Dialog";
 import { Pencil } from "@styled-icons/heroicons-outline/Pencil";
 import { Box, Tooltip } from "@advisable/donut";
 import PostAction from "./PostAction";
-import CannotEditModal from "./CannotEditModal";
+import CannotChangeModal from "./CannotChangeModal";
 
 function EditPost({ post, size }) {
   const history = useHistory();
@@ -15,7 +15,7 @@ function EditPost({ post, size }) {
   }
   return (
     <>
-      <CannotEditModal modal={modal} />
+      <CannotChangeModal modal={modal} />
       <Tooltip placement="top" content="Edit">
         <Box
           css={`

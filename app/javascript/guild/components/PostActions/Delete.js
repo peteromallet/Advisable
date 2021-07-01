@@ -7,7 +7,7 @@ import { useMutation } from "@apollo/client";
 import { DELETE_GUILD_POST } from "./mutations";
 import PostAction from "./PostAction";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
-import CannotEditModal from "./CannotEditModal";
+import CannotChangeModal from "./CannotChangeModal";
 
 function DeletePost({ post, size }) {
   const history = useHistory();
@@ -31,7 +31,7 @@ function DeletePost({ post, size }) {
   return (
     <>
       {post.article ? (
-        <CannotEditModal action="Delete" modal={modal} />
+        <CannotChangeModal action="Delete" modal={modal} />
       ) : (
         <Modal modal={modal} label="Delete post" padding="l">
           <Text
