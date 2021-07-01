@@ -4,7 +4,7 @@ import { useDialogState } from "reakit/Dialog";
 import { Box } from "@advisable/donut";
 import { StyledYourPost, StyledStatus } from "./styles";
 import Post from "@guild/components/Post";
-import CannotEditModal from "@guild/components/PostActions/CannotEditModal";
+import CannotChangeModal from "@guild/components/PostActions/CannotChangeModal";
 
 export default function YourPost({ post }) {
   const history = useHistory();
@@ -17,7 +17,7 @@ export default function YourPost({ post }) {
 
   return (
     <>
-      <CannotEditModal modal={modal} />
+      <CannotChangeModal modal={modal} />
       <Box position="relative">
         <StyledStatus onClick={handleClick}>
           {published ? "Edit" : "Edit Draft"}
