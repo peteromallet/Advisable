@@ -23,7 +23,11 @@ const CreatePostContainer = ({ modal, onPublish }) => {
   const hasPostId = id && id !== "new" && !promptId;
   const viewer = useViewer();
 
-  const { data, loading, error: queryError } = useQuery(GUILD_POST_QUERY, {
+  const {
+    data,
+    loading,
+    error: queryError,
+  } = useQuery(GUILD_POST_QUERY, {
     skip: !hasPostId,
     variables: {
       id: route?.params?.id,

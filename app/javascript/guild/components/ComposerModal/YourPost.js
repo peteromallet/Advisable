@@ -59,7 +59,12 @@ const YourPost = ({ guildPost, onSubmit, initialValues = {} }) => {
                 autoFocus
               />
               <ErrorMessage component={InputError} name="title" mt="2" />
-              <Box height="1px" bg="neutral100" marginY="xl" />
+              <Box
+                height="4px"
+                borderTop="1px solid"
+                borderColor="neutral100"
+                marginY={8}
+              />
               <RichTextEditor
                 value={formik.values.body}
                 onBlur={() => {
