@@ -37,10 +37,11 @@ class UserMailer < ApplicationMailer
 
   def case_study_searches_refreshed(user, updated_searches)
     @user = user
+    @account = @user.account
     @searches = updated_searches.map do |search, articles|
       [CaseStudy::Search.find(search), CaseStudy::Article.where(id: articles)]
     end
-    mail(to: @user.account.email, subject: "You Have New Recommendations") do |f|
+    mail(to: @account.email, subject: "You Have New Recommendations") do |f|
       f.html { render(layout: "email_v2") }
     end
   end
