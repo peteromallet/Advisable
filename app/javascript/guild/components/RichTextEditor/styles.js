@@ -32,7 +32,7 @@ export const StyledToolbarButton = styled.button`
   border: none;
   appearance: none;
   width: 36px;
-  height: 30px;
+  height: 32px;
   border-radius: 10px;
   margin-right: 2px;
   background: transparent;
