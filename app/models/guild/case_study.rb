@@ -3,10 +3,10 @@
 module Guild
   class CaseStudy < Post
     def self.create_from_article!(article)
-      return unless article.is_a? ::CaseStudy::Article
+      return unless article.is_a?(::CaseStudy::Article)
       return if article.guild_post
 
-      labels = Label.joins(skill: [:case_study_skills])
+      labels = Label.joins(skill: [:case_study_skills]).merge(article.skills)
       create!(status: "published", specialist: article.specialist, labels: labels, article: article)
     end
 
