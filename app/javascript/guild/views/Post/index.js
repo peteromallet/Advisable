@@ -19,7 +19,7 @@ import JoinGuild from "./JoinGuild";
 import PopularNotice from "@guild/components/Post/components/PopularNotice";
 import { hasGqlError, loginWithRedirectPath } from "@guild/utils";
 import { StyledImageThumbnail } from "./styles";
-import Article from "./Article";
+import CaseStudyContent from "src/components/CaseStudyContent";
 
 const Post = () => {
   const { postId } = useParams();
@@ -136,8 +136,8 @@ const Post = () => {
             </Box>
 
             <Box mb={8}>
-              {post?.article ? (
-                <Article article={post.article} />
+              {post.article ? (
+                <CaseStudyContent caseStudy={post.article} />
               ) : (
                 <Markdown>{post.body}</Markdown>
               )}
