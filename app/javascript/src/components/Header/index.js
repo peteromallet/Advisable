@@ -2,7 +2,6 @@
 import React, { Fragment } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { Header as Wrapper, Spacer, Logo, Hamburger, Login } from "./styles";
-import logo from "./logo.svg";
 import CurrentUser from "./CurrentUser";
 import { Box, useBreakpoint } from "@advisable/donut";
 import { useMobile } from "src/components/Breakpoint";
@@ -12,6 +11,7 @@ import FreelancerNavigation from "./FreelancerNavigation";
 import GuildToggle from "src/components/GuildToggle";
 import useLogoURL from "../ApplicationProvider/useLogoURL";
 import useViewer from "src/hooks/useViewer";
+import LogoMark from "src/components/LogoMark";
 
 const LOGOUT = gql`
   mutation logout($input: LogoutInput!) {
@@ -45,7 +45,7 @@ const Header = () => {
             <div />
           </Hamburger>
           <Logo href={logoURL}>
-            <img src={logo} alt="" />
+            <LogoMark color="white" size={24} />
           </Logo>
           {viewer && viewer.isClient && viewer.isAccepted && (
             <ClientNavigation
