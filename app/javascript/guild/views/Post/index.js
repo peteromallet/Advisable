@@ -35,8 +35,6 @@ const Post = () => {
     },
   });
   const post = data?.guildPost;
-  const hasArticle = post?.type === "Case Study" && post?.article;
-
   const { viewer, isAuthor, popularOrAuthorReactions } = useViewerAuthor(post);
   const guildViewer = viewer?.guild;
   const otherImages = (post?.images || []).filter((p) => p.cover === false);
@@ -138,8 +136,8 @@ const Post = () => {
             </Box>
 
             <Box mb={8}>
-              {hasArticle ? (
-                <Article article={post?.article} />
+              {post?.article ? (
+                <Article article={post.article} />
               ) : (
                 <Markdown>{post.body}</Markdown>
               )}

@@ -40,5 +40,10 @@ export default gql`
       name
       slug
     }
+    ... on GuildPostCaseStudy {
+      article {
+        id
+      }
+    }
   }
 `;

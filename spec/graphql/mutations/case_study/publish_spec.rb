@@ -53,6 +53,7 @@ RSpec.describe Mutations::CaseStudy::Publish do
     it "creates post labelings for case study skills with labels" do
       case_study_skills = create_list(:case_study_skill, 2, article: article)
       label = create(:label, skill: case_study_skills.first.skill)
+      create(:label)
       publish_query
 
       expect(article.guild_post.labels).to eq([label])
