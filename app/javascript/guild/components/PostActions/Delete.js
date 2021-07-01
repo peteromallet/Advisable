@@ -7,6 +7,7 @@ import { useMutation } from "@apollo/client";
 import { DELETE_GUILD_POST } from "./mutations";
 import PostAction from "./PostAction";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
+import CannotEditModal from "./CannotEditModal";
 
 function DeletePost({ post, size }) {
   const history = useHistory();
@@ -29,40 +30,44 @@ function DeletePost({ post, size }) {
 
   return (
     <>
-      <Modal modal={modal} label="Delete post" padding="l">
-        <Text
-          as="h4"
-          mb={2}
-          color="blue900"
-          fontSize="24px"
-          lineHeight="26px"
-          fontWeight="medium"
-          letterSpacing="-0.02em"
-        >
-          Delete Post?
-        </Text>
-        <Paragraph mb={6}>
-          Are you sure you want to delete this post. This can not be undone.
-        </Paragraph>
-        <Button
-          mr={2}
-          size="s"
-          loading={loading}
-          disabled={loading}
-          prefix={<Trash />}
-          onClick={handleDelete}
-        >
-          Confirm
-        </Button>
-        <Button
-          size="s"
-          variant="subtle"
-          disabled={loading}
-          onClick={modal.hide}
-        >
-          Cancel
-        </Button>
-      </Modal>
+      {post.article ? (
+        <CannotEditModal action="Delete" modal={modal} />
+      ) : (
+        <Modal modal={modal} label="Delete post" padding="l">
+          <Text
+            as="h4"
+            mb={2}
+            color="blue900"
+            fontSize="24px"
+            lineHeight="26px"
+            fontWeight="medium"
+            letterSpacing="-0.02em"
+          >
+            Delete Post?
+          </Text>
+          <Paragraph mb={6}>
+            Are you sure you want to delete this post. This can not be undone.
+          </Paragraph>
+          <Button
+            mr={2}
+            size="s"
+            loading={loading}
+            disabled={loading}
+            prefix={<Trash />}
+            onClick={handleDelete}
+          >
+            Confirm
+          </Button>
+          <Button
+            size="s"
+            variant="subtle"
+            disabled={loading}
+            onClick={modal.hide}
+          >
+            Cancel
+          </Button>
+        </Modal>
+      )}
 
       <Tooltip placement="top" content="Delete">
         <Box
