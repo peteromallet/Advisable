@@ -7,33 +7,51 @@ export const StyledMarkdown = styled.div`
   overflow-wrap: break-word;
   color: ${theme.colors.neutral800};
 
+  p,
+  ul,
+  ol,
+  li,
+  b {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
   h1 {
-    font-size: 30px;
-    line-height: 34px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: ${theme.fontWeights.semibold};
     margin-bottom: 16px;
     letter-spacing: -0.03rem;
     color: ${theme.colors.neutral900};
   }
 
   h2 {
-    font-size: 25px;
-    line-height: 28px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: ${theme.fontWeights.semibold};
     margin-bottom: 10px;
     letter-spacing: -0.03rem;
     color: ${theme.colors.neutral900};
   }
 
   h3 {
-    font-size: 22px;
-    line-height: 25px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: ${theme.fontWeights.semibold};
+    margin-bottom: 12px;
     letter-spacing: -0.02rem;
     color: ${theme.colors.neutral900};
   }
 
   p,
   .paragraph {
-    margin-bottom: 32px;
+    margin-bottom: 24px;
+    padding-top: 2px;
+    padding-bottom: 2px;
   }
 
   ul {
@@ -57,12 +75,18 @@ export const StyledMarkdown = styled.div`
 
   blockquote {
     margin: 12px 0;
-    font-size: 22px;
-    line-height: 28px;
     font-style: italic;
-    padding-left: 24px;
-    color: ${theme.colors.neutral700};
-    border-left: 2px solid ${theme.colors.neutral700};
+    padding-left: 20px;
+    color: ${theme.colors.neutral600};
+    border-left: 2px solid ${theme.colors.neutral200};
+  }
+
+  blockquote * {
+    margin: 0;
+    font-size: 20px;
+    line-height: 28px;
+    padding-top: 7px;
+    padding-bottom: 9px;
   }
 
   a {

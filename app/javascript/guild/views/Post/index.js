@@ -56,14 +56,14 @@ const Post = () => {
         <Card
           borderBottom={popularOrAuthorReactions ? "6px solid #fde7b2" : null}
         >
-          {post.coverImage && (
+          {post.coverImage ? (
             <CoverImage
               height={{ _: "260px", s: "340px", m: "480px" }}
               images={post.images}
               cover={post.coverImage.url}
               onClick={() => gallery.open(0)}
             />
-          )}
+          ) : null}
 
           {otherImages.length > 0 ? (
             <Box
@@ -90,10 +90,15 @@ const Post = () => {
           ) : null}
 
           <Box px={{ _: 6, s: "xxl" }} pt={10} pb={14}>
-            <Box mb={4}>
-              <PostTypeTag post={post} />
-            </Box>
-            <Text fontWeight="medium" size="5xl" color="meutral900" mb={6}>
+            <PostTypeTag post={post} mb={4} />
+            <Text
+              fontWeight="semibold"
+              size="5xl"
+              color="meutral900"
+              py={0.5}
+              mb={6}
+              lineHeight="4xl"
+            >
               {post.title}
             </Text>
 
@@ -134,14 +139,18 @@ const Post = () => {
                 </Box>
               ) : null}
             </Box>
-
-            <Box mb={8}>
-              <Markdown>{post.body}</Markdown>
-            </Box>
+            <Markdown>{post.body}</Markdown>
 
             <Topics topics={post.guildTopics} />
 
-            <Box my={10} height="1px" width="200px" mx="auto" bg="neutral100" />
+            <Box
+              my={10}
+              height="4px"
+              borderTop="1px solid"
+              borderColor="neutral100"
+              width="200px"
+              mx="auto"
+            />
 
             {!guildViewer ? (
               <JoinGuild />

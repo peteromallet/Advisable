@@ -24,7 +24,7 @@ export const CoverImage = ({ height = "320px", cover, onClick, ...props }) => {
         width="100%"
         height={height}
         position="relative"
-        display="inline-flex"
+        display="flex"
         onClick={onClick}
         overflow="hidden"
         {...props}
