@@ -81,7 +81,7 @@ export const StyledMarkdown = styled.div`
     border-left: 2px solid ${theme.colors.neutral200};
   }
 
-  blockquote p {
+  blockquote * {
     margin: 0;
     font-size: 20px;
     line-height: 28px;
