@@ -4,13 +4,10 @@ module Types
   module Guild
     module Post
       class CaseStudyType < Types::BaseType
+        description "Represents a case study guild post"
         graphql_name "GuildPostCaseStudy"
 
         implements Types::Guild::PostInterface
-
-        def title
-          object.article&.title
-        end
 
         field :article, Types::CaseStudy::Article, null: true
       end

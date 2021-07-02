@@ -10,6 +10,12 @@ module Guild
       create!(status: "published", specialist: article.specialist, labels: labels, article: article)
     end
 
+    def title
+      return article.title if article.present?
+
+      self[:title]
+    end
+
     def excerpt
       article&.subtitle&.truncate(300)
     end
