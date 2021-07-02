@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <Box gridArea="header" alignSelf="end">
       <Link.External href="https://advisable.com/">
-        <AdvisableLogo alt="Advisable logo" white="true" />
+        <AdvisableLogo color="white" />
       </Link.External>
     </Box>
   );

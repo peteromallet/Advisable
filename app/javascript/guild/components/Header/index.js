@@ -5,11 +5,11 @@ import { Calendar } from "@styled-icons/heroicons-outline/Calendar";
 import { useQuery } from "@apollo/client";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { Box, useBreakpoint } from "@advisable/donut";
-import logo from "@advisable-main/components/Header/logo.svg";
 import CurrentUser from "./CurrentUser";
 import MobileNavigation from "./MobileNavigation";
 import useViewer from "src/hooks/useViewer";
 import GuildToggle from "src/components/GuildToggle";
+import LogoMark from "src/components/LogoMark";
 import {
   StyledHeader,
   StyledHeaderLink,
@@ -53,9 +53,9 @@ const Header = () => {
             </StyledHamburger>
           </Box>
 
-          <Box mt="-2px" mr={8}>
+          <Box mr={4}>
             <Link to="/">
-              <img src={logo} alt="" />
+              <LogoMark color="white" size={24} />
             </Link>
           </Box>
 
