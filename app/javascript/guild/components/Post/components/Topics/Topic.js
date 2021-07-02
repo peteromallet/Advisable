@@ -10,9 +10,12 @@ const Topic = ({ topic }) => {
   return (
     <Text
       onClick={handleClick}
-      fontSize="s"
+      fontSize="m"
+      lineHeight="24px"
+      py={0.5}
       fontWeight="medium"
       color="neutral400"
+      mr={2}
       css={css`
         outline: none;
         &:hover {

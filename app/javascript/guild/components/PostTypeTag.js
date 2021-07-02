@@ -19,8 +19,8 @@ const TYPES = {
   },
 };
 
-export default function PostTypeTag({ post, size }) {
+export default function PostTypeTag({ post, size, ...props }) {
   const postType = TYPES[post.__typename];
   if (!postType) return null;
-  return <Tag size={size || "s"} {...TYPES[post.__typename]} />;
+  return <Tag size={size || "s"} {...TYPES[post.__typename]} {...props} />;
 }
