@@ -1,63 +1,48 @@
 import React from "react";
-import styled from "styled-components";
-import { theme, Box } from "@advisable/donut";
-import { Inbox } from "@styled-icons/heroicons-solid/Inbox";
-import { Archive } from "@styled-icons/heroicons-solid/Archive";
-import { NavLink, useParams } from "react-router-dom";
+import { Box } from "@advisable/donut";
+import { Collection } from "@styled-icons/heroicons-solid/Collection";
+import { Bookmark } from "@styled-icons/heroicons-solid/Bookmark";
+import { InboxIn } from "@styled-icons/heroicons-solid/InboxIn";
+import { Trash } from "@styled-icons/heroicons-solid/Trash";
+import { PlusCircle } from "@styled-icons/heroicons-solid/PlusCircle";
+import {
+  StyledNavigationItem,
+  StyledNavigationItemCount,
+  StyledNewSearch,
+} from "./styles";
 
-const StyledNavLink = styled(NavLink)`
-  margin: 0 4px;
-  font-weight: 450;
-  padding: 8px 12px;
-  border-radius: 12px;
-  align-items: center;
-  display: inline-flex;
-  transition: color 200ms;
-  color: ${theme.colors.neutral500};
-
-  svg {
-    width: 20px;
-    height: 20px;
-    margin-right: 4px;
-  }
-
-  &:not(.active):hover {
-    color: ${theme.colors.neutral700};
-  }
-
-  &.active {
-    color: ${theme.colors.neutral900};
-    background: ${theme.colors.neutral100};
-  }
-`;
-
-const Count = styled.div`
-  color: white;
-  height: 20px;
-  padding: 0 8px;
-  font-size: 12px;
-  font-weight: 500;
-  margin-left: 8px;
-  border-radius: 25px;
-  align-items: center;
-  display: inline-flex;
-  background: ${theme.colors.cyan700};
-`;
-
-export default function CaseStudyRecommendationsNavigation({ inboxCount }) {
-  const { id } = useParams();
-
+function NavItem({ icon, children, count, ...props }) {
   return (
-    <Box display="flex" alignItems="center" justifyContent="center">
-      <StyledNavLink to={`/explore/${id}/inbox`}>
-        <Inbox />
-        Inbox
-        {inboxCount > 0 && <Count>{inboxCount}</Count>}
-      </StyledNavLink>
-      <StyledNavLink to={`/explore/${id}/archived`}>
-        <Archive />
+    <StyledNavigationItem {...props}>
+      {icon ? React.createElement(icon) : null}
+      <span>{children}</span>
+      {count ? (
+        <StyledNavigationItemCount>{count}</StyledNavigationItemCount>
+      ) : null}
+    </StyledNavigationItem>
+  );
+}
+
+export default function ExploreNavigation() {
+  return (
+    <Box padding={4}>
+      <NavItem icon={Collection} to="/explore/inbox" count={12}>
+        Recommendations
+      </NavItem>
+      <StyledNewSearch as="button">
+        <PlusCircle />
+        Create a new search
+      </StyledNewSearch>
+      <Box height={1} bg="neutral100" marginY={6} />
+      <NavItem icon={InboxIn} to="/explore/shared" count={4}>
+        Shared
+      </NavItem>
+      <NavItem icon={Bookmark} to="/explore/favorites">
+        Favorites
+      </NavItem>
+      <NavItem icon={Trash} to="/explore/archived">
         Archived
-      </StyledNavLink>
+      </NavItem>
     </Box>
   );
 }
