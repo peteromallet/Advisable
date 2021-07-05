@@ -40,15 +40,6 @@ module CaseStudy
       end
       query
     end
-
-    # TODO: Update to use the new thingy
-    def saved
-      attributes["saved"].presence || []
-    end
-
-    def saved_articles
-      Article.where(id: saved)
-    end
   end
 end
 
