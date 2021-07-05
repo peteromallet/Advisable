@@ -38,17 +38,9 @@ module Mutations
           article.saved_articles.where(user: current_user).destroy_all
         end
 
-        if args[:feedback]
-          ::CaseStudy::SearchFeedback.create!(
-            search: search,
-            article: article,
-            feedback: args[:feedback]
-          )
-        end
+        ::CaseStudy::SearchFeedback.create!(search: search, article: article, feedback: args[:feedback]) if args[:feedback]
 
-        current_account_responsible_for { search.save }
-
-        {article: article, search: search.reload}
+        {article: article, search: search}
       end
     end
   end
