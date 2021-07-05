@@ -15,13 +15,13 @@ class User < ApplicationRecord
   # WIP Company migration 👇️
   %i[stripe_customer_id stripe_customer invoice_name invoice_company_name billing_email address payments_setup project_payment_method accepted_project_payment_terms_at invoice_settings industry].each do |method|
     define_method(method) do
-      Sentry.capture_message("Method ##{method} called on User that was meant for Company", level: 'debug')
+      Sentry.capture_message("Method ##{method} called on User that was meant for Company", level: "debug")
       company.public_send(method)
     end
   end
 
   def company_type
-    Sentry.capture_message("Method #company_type called on User that was meant for Company", level: 'debug')
+    Sentry.capture_message("Method #company_type called on User that was meant for Company", level: "debug")
 
     company.kind
   end
@@ -39,8 +39,10 @@ class User < ApplicationRecord
   has_many :skills, through: :user_skills
   has_many :client_calls, dependent: :destroy
   has_many :searches, class_name: "CaseStudy::Search", dependent: :destroy
-  has_many :sent_articles, class_name: "CaseStudy::SharedArticle", foreign_key: :shared_by, inverse_of: :shared_by, dependent: :nullify
-  has_many :received_articles, class_name: "CaseStudy::SharedArticle", foreign_key: :shared_with, inverse_of: :shared_with, dependent: :destroy
+  has_many :sent_articles, class_name: "CaseStudy::SharedArticle", foreign_key: :shared_by_id, inverse_of: :shared_by, dependent: :nullify
+  has_many :received_articles, class_name: "CaseStudy::SharedArticle", foreign_key: :shared_with_id, inverse_of: :shared_with, dependent: :destroy
+  has_many :archived_articles, class_name: "CaseStudy::ArchivedArticle", dependent: :destroy
+  has_many :archived_sent_articles, class_name: "CaseStudy::ArchivedArticle", foreign_key: :shared_by_id, inverse_of: :shared_by, dependent: :nullify
 
   belongs_to :company, optional: true
   belongs_to :country, optional: true

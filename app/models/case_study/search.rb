@@ -12,11 +12,13 @@ module CaseStudy
     belongs_to :user
     has_many :skills, dependent: :destroy
     has_many :search_feedbacks, dependent: :destroy
+    has_many :archived_articles, dependent: :nullify
 
     def name
       attributes["name"].presence || (skills.primary.first || skills.first)&.skill&.name
     end
 
+    # TODO: Exclude via new archived model
     def results
       if attributes["results"].blank?
         query = results_query(limit: RESULT_LIMIT, exclude: archived)
@@ -39,16 +41,13 @@ module CaseStudy
       query
     end
 
+    # TODO: Deprecate
     def archived
       attributes["archived"].presence || []
     end
 
     def saved
       attributes["saved"].presence || []
-    end
-
-    def archived_articles
-      Article.where(id: archived)
     end
 
     def saved_articles
