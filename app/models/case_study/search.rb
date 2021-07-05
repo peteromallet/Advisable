@@ -13,6 +13,7 @@ module CaseStudy
     has_many :skills, dependent: :destroy
     has_many :search_feedbacks, dependent: :destroy
     has_many :archived_articles, dependent: :nullify
+    has_many :saved_articles, dependent: :nullify
 
     def name
       attributes["name"].presence || (skills.primary.first || skills.first)&.skill&.name
@@ -40,6 +41,7 @@ module CaseStudy
       query
     end
 
+    # TODO: Update to use the new thingy
     def saved
       attributes["saved"].presence || []
     end
