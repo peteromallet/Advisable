@@ -6,13 +6,10 @@ module Mutations
       description "Assign a Case Study Article on a Case Study Search to be saved or archived."
       graphql_name "AssignCaseStudySearchArticle"
 
-      # rubocop:disable GraphQL/ExtractInputType
       argument :action, String, required: true
       argument :article, ID, required: true
       argument :feedback, String, required: false
       argument :search, ID, required: true
-      # rubocop:enable GraphQL/ExtractInputType
-
       field :article, Types::CaseStudy::Article, null: false
       field :search, Types::CaseStudy::Search, null: false
 
@@ -32,11 +29,11 @@ module Mutations
 
         case action
         when "archive"
-          search.archived = search.archived + [article.id]
+          article.archived_articles.create!(user: current_user, search: search)
         when "save"
           search.saved = search.saved + [article.id]
         when "unarchive"
-          search.archived = search.archived - [article.id]
+          article.archived_articles.where(user: current_user).destroy_all
         when "unsave"
           search.saved = search.saved - [article.id]
         end
