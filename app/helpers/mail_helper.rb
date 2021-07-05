@@ -33,9 +33,11 @@ module MailHelper
   end
 
   def manage_subscriptions_url(account)
-    return "https://advisable.com/client-contact-unsubscribe/?cid=#{account.user.uid}" if account.user.present?
-
-    "https://advisable.com/unsubscribe?Specialist%20ID=#{account.specialist.uid}"
+    if account.user.present?
+      "https://advisable.com/client-contact-unsubscribe/?cid=#{account.user.uid}"
+    else
+      "https://advisable.com/unsubscribe?Specialist%20ID=#{account.specialist.uid}"
+    end
   end
 
   private
