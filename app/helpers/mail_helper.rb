@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MailHelper
   include MagicLinkHelper
 
@@ -9,7 +11,7 @@ module MailHelper
     "#{root_host}/update-skills?sid=#{specialist.uid}&skill=#{ERB::Util.url_encode(specialist.skills.pluck(:name).join(', '))}"
   end
 
-  def specialist_project_application_url(specialist, project)
+  def specialist_project_application_url(project)
     "#{app_host}/opportunities/#{project.uid}?utm_campaign=#{project.uid}"
   end
 
@@ -28,6 +30,14 @@ module MailHelper
 
   def set_password_url
     "#{app_host}/set_password"
+  end
+
+  def manage_subscriptions_url(account)
+    if account.user.present?
+      "https://advisable.com/client-contact-unsubscribe/?cid=#{account.user.uid}"
+    else
+      "https://advisable.com/unsubscribe?Specialist%20ID=#{account.specialist.uid}"
+    end
   end
 
   private

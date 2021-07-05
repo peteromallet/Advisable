@@ -17,20 +17,26 @@ module CaseStudy
       attributes["name"].presence || (skills.primary.first || skills.first)&.skill&.name
     end
 
-    def results(fresh: false)
-      if fresh || attributes["results"].blank?
-        query = Article.distinct.where.not(id: archived).limit(RESULT_LIMIT)
-        query = query.where(company_type: business_type) if business_type.present?
-        if skills.any?
-          query = query.joins(:skills).where(case_study_skills: {skill_id: skills.pluck(:skill_id)})
-        elsif goals.present?
-          query = query.where("goals ?| array[:goals]", goals: goals)
-        end
+    def results
+      if attributes["results"].blank?
+        query = results_query(limit: RESULT_LIMIT, exclude: archived)
         update(results: query.pluck(:id))
-        query
-      else
-        Article.where(id: attributes["results"]).where.not(id: archived)
       end
+
+      Article.where(id: attributes["results"]).where.not(id: archived)
+    end
+
+    def results_query(limit: nil, exclude: nil)
+      query = Article.distinct
+      query = query.limit(limit) if limit.present?
+      query = query.where.not(id: exclude) if exclude.present?
+      query = query.where(company_type: business_type) if business_type.present?
+      if skills.any?
+        query = query.joins(:skills).where(case_study_skills: {skill_id: skills.pluck(:skill_id)})
+      elsif goals.present?
+        query = query.where("goals ?| array[:goals]", goals: goals)
+      end
+      query
     end
 
     def archived

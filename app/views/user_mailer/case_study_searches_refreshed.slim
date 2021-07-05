@@ -1,0 +1,35 @@
+css:
+  @media (max-width: 600px) {
+    .avatar { height: 80px !important; }
+  }
+
+= render "emails/container" do
+  = render "emails/spacing", height: "32px"
+  = render "emails/heading" do
+    | We've found new recommendations for you!
+
+  = render "emails/paragraph" do
+    | We’ve found some new recommendations for you based on the searches you have made.
+
+  - @searches.each do |search, articles|
+    div style="margin-bottom: 32px;"
+      h2 style="margin-left: 32px; font-family: arial; font-size: 18px; line-height: 24px;"
+        = search.name
+      table style="padding: 0 32px;"
+        - articles.each do |article|
+          tr
+            td style="vertical-align: top;" width="16%" class="avatarContainer"
+              table border="0" cellpadding="0" cellspacing="0" width="100%"
+                tr
+                  td
+                    a href="#{"#{app_host}/explore/#{search.uid}/#{article.uid}"}" class="avatar" style="border-radius: 12px; display: block; width: 100%; height: 120px; background-size: cover; background-position: center; background-image: url('#{article.specialist.avatar.url}');"
+
+            td width="80%"
+              table border="0" cellpadding="0" cellspacing="0" width="100%"
+                tr
+                  td style="padding-left: 16px;"
+                    a href="#{"#{app_host}/explore/#{search.uid}/#{article.uid}"}" style="color: #0D1D35; text-decoration: none;"
+                      h5 style="font-family: arial; font-size: 18px; line-height: 20px; margin-top: 0; margin-bottom: 8px;"
+                        = article.title
+                    p style="font-family: arial; font-size: 13px; line-height: 16px; color: #3E4D55; margin-top: 0; margin-bottom: 32px;"
+                      = article.subtitle
