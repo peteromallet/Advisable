@@ -61,7 +61,6 @@ end
 #  goals         :jsonb
 #  name          :string
 #  results       :jsonb
-#  saved         :jsonb
 #  uid           :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

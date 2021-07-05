@@ -54,16 +54,14 @@ RSpec.describe Mutations::CaseStudy::AssignSearchArticle do
   end
 
   describe "action: save" do
-    let(:search) { create(:case_study_search, saved: [123]) }
+    let(:search) { create(:case_study_search) }
     let(:action) { "save" }
 
     it "saves the article to the search" do
-      uid = search.uid
-      expect(search.saved).to eq([123])
       response = AdvisableSchema.execute(query, context: context)
       r_article = response["data"]["assignCaseStudySearchArticle"]["article"]
       expect(r_article["id"]).to eq(article.uid)
-      expect(::CaseStudy::Search.find_by(uid: uid).saved).to match_array([123, article.id])
+      expect(::CaseStudy::SavedArticle.where(user: search.user, article: article)).not_to be_empty
     end
   end
 
@@ -82,16 +80,16 @@ RSpec.describe Mutations::CaseStudy::AssignSearchArticle do
   end
 
   describe "action: unsave" do
-    let(:search) { create(:case_study_search, saved: [123, article.id]) }
+    let(:search) { create(:case_study_search) }
     let(:action) { "unsave" }
 
     it "unsaves the article to the search" do
-      uid = search.uid
-      expect(search.saved).to match_array([123, article.id])
+      create(:case_study_saved_article, user: search.user, article: article)
+      expect(::CaseStudy::SavedArticle.where(user: search.user)).not_to be_empty
       response = AdvisableSchema.execute(query, context: context)
       r_article = response["data"]["assignCaseStudySearchArticle"]["article"]
       expect(r_article["id"]).to eq(article.uid)
-      expect(::CaseStudy::Search.find_by(uid: uid).saved).to eq([123])
+      expect(::CaseStudy::SavedArticle.where(user: search.user)).to be_empty
     end
   end
 
