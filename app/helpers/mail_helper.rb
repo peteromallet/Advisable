@@ -11,7 +11,7 @@ module MailHelper
     "#{root_host}/update-skills?sid=#{specialist.uid}&skill=#{ERB::Util.url_encode(specialist.skills.pluck(:name).join(', '))}"
   end
 
-  def specialist_project_application_url(_, project)
+  def specialist_project_application_url(project)
     "#{app_host}/opportunities/#{project.uid}?utm_campaign=#{project.uid}"
   end
 
