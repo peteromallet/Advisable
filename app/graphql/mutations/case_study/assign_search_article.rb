@@ -30,12 +30,12 @@ module Mutations
         case action
         when "archive"
           article.archived_articles.create!(user: current_user, search: search)
-        when "save"
-          search.saved = search.saved + [article.id]
         when "unarchive"
           article.archived_articles.where(user: current_user).destroy_all
+        when "save"
+          article.saved_articles.create!(user: current_user, search: search)
         when "unsave"
-          search.saved = search.saved - [article.id]
+          article.saved_articles.where(user: current_user).destroy_all
         end
 
         if args[:feedback]

@@ -20,6 +20,7 @@ module Mutations
         ApiError.not_authorized("You do not have permission to archive this shared article")
       end
 
+      # TODO: Update with new logic
       def resolve(shared_article:, **args)
         shared_article = ::CaseStudy::SharedArticle.find_by!(uid: shared_article)
         archived_at = args[:unarchive] == true ? nil : Time.zone.now
