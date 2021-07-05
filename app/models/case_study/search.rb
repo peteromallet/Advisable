@@ -18,14 +18,13 @@ module CaseStudy
       attributes["name"].presence || (skills.primary.first || skills.first)&.skill&.name
     end
 
-    # TODO: Exclude via new archived model
     def results
       if attributes["results"].blank?
-        query = results_query(limit: RESULT_LIMIT, exclude: archived)
+        query = results_query(limit: RESULT_LIMIT, exclude: user.archived_articles.pluck(:article_id))
         update(results: query.pluck(:id))
       end
 
-      Article.where(id: attributes["results"]).where.not(id: archived)
+      Article.where(id: attributes["results"]).where.not(id: user.archived_articles.pluck(:article_id))
     end
 
     def results_query(limit: nil, exclude: nil)
@@ -39,11 +38,6 @@ module CaseStudy
         query = query.where("goals ?| array[:goals]", goals: goals)
       end
       query
-    end
-
-    # TODO: Deprecate
-    def archived
-      attributes["archived"].presence || []
     end
 
     def saved
@@ -61,7 +55,6 @@ end
 # Table name: case_study_searches
 #
 #  id            :bigint           not null, primary key
-#  archived      :jsonb
 #  business_type :string
 #  goals         :jsonb
 #  name          :string
