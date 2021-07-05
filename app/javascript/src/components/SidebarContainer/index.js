@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Card } from "@advisable/donut";
 
-function Sidebar({ children, ...props }) {
+function SidebarContainer({ children, ...props }) {
   return (
     <Card
       as={motion.div}
@@ -23,4 +23,4 @@ function Sidebar({ children, ...props }) {
   );
 }
 
-export default Sidebar;
+export default SidebarContainer;
