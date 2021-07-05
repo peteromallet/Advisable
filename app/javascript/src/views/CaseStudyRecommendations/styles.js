@@ -1,13 +1,74 @@
 import styled from "styled-components";
+import { space, typography } from "styled-system";
+import { Link, NavLink } from "react-router-dom";
 import { Box, theme } from "@advisable/donut";
 
 export const StyledRecommendationCardAvatar = styled(Box)`
-  width: 120px;
-  height: 140px;
+  width: 132px;
+  height: 168px;
   border-radius: 16px;
   background: ${theme.colors.neutral200};
   background-size: cover;
   background-position: center;
+  position: relative;
+`;
+
+export const StyledNavigationItem = styled(NavLink)`
+  border: none;
+  appearance: none;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  padding: 0 12px;
+  font-size: 16px;
+  border-radius: 12px;
+  align-items: center;
+  background: transparent;
+  font-family: TTHoves, sans-serif;
+  color: ${theme.colors.neutral700};
+
+  svg {
+    width: 20px;
+    margin-right: 8px;
+  }
+
+  span {
+    flex: 1;
+  }
+
+  &:hover {
+    color: ${theme.colors.neutral900};
+    background: ${theme.colors.neutral50};
+  }
+
+  &.active {
+    color: ${theme.colors.neutral900};
+    background: ${theme.colors.neutral100};
+  }
+`;
+
+export const StyledNewSearch = styled(StyledNavigationItem)`
+  color: ${theme.colors.neutral400};
+`;
+
+export const StyledNavigationItemCount = styled.div`
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 520;
+  color: ${theme.colors.cyan800};
+  border-radius: 8px;
+  background: ${theme.colors.cyan200};
+`;
+
+export const StyledRecommendationTitle = styled(Link)`
+  ${space};
+  ${typography};
+  display: block;
+  color: ${theme.colors.neutral900};
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export const StyledRecommendationCardActions = styled.div`
