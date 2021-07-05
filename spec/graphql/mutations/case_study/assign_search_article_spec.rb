@@ -28,16 +28,14 @@ RSpec.describe Mutations::CaseStudy::AssignSearchArticle do
   end
 
   describe "action: archive" do
-    let(:search) { create(:case_study_search, archived: [123]) }
+    let(:search) { create(:case_study_search) }
     let(:action) { "archive" }
 
     it "archives the article to the search" do
-      uid = search.uid
-      expect(search.archived).to eq([123])
       response = AdvisableSchema.execute(query, context: context)
       r_article = response["data"]["assignCaseStudySearchArticle"]["article"]
       expect(r_article["id"]).to eq(article.uid)
-      expect(::CaseStudy::Search.find_by(uid: uid).archived).to match_array([123, article.id])
+      expect(::CaseStudy::ArchivedArticle.where(user: search.user, article: article)).not_to be_empty
     end
 
     context "when feedback provided" do
@@ -70,16 +68,16 @@ RSpec.describe Mutations::CaseStudy::AssignSearchArticle do
   end
 
   describe "action: unarchive" do
-    let(:search) { create(:case_study_search, archived: [123, article.id]) }
+    let(:search) { create(:case_study_search) }
     let(:action) { "unarchive" }
 
     it "unarchives the article to the search" do
-      uid = search.uid
-      expect(search.archived).to match_array([123, article.id])
+      create(:case_study_archived_article, user: search.user, article: article)
+      expect(::CaseStudy::ArchivedArticle.where(user: search.user)).not_to be_empty
       response = AdvisableSchema.execute(query, context: context)
       r_article = response["data"]["assignCaseStudySearchArticle"]["article"]
       expect(r_article["id"]).to eq(article.uid)
-      expect(::CaseStudy::Search.find_by(uid: uid).archived).to eq([123])
+      expect(::CaseStudy::ArchivedArticle.where(user: search.user)).to be_empty
     end
   end
 
