@@ -65,12 +65,9 @@ module Types
       ::Country.all.order(name: :asc)
     end
 
-    field :skills, [Types::Skill], "Returns a list of skills", null: false do
-      # TODO: Remove local arg now that it is not being used
-      argument :local, Boolean, required: false
-    end
+    field :skills, [Types::Skill], "Returns a list of skills", null: false
 
-    def skills(*)
+    def skills
       ::Skill.where(active: true)
     end
 
