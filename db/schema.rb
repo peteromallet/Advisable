@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_05_124907) do
+ActiveRecord::Schema.define(version: 2021_07_05_125806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -308,7 +308,6 @@ ActiveRecord::Schema.define(version: 2021_07_05_124907) do
     t.bigint "shared_with_id", null: false
     t.bigint "shared_by_id", null: false
     t.text "message"
-    t.datetime "archived_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "uid"
