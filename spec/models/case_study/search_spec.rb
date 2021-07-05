@@ -66,7 +66,7 @@ RSpec.describe CaseStudy::Search, type: :model do
         archived: [article4.id]
       )
       expect(search.results.pluck(:id)).to match_array([article1.id, article2.id, article3.id])
-      expect(search.results(fresh: true).pluck(:id)).to match_array([article1.id])
+      search.update(results: nil)
       expect(search.results.pluck(:id)).to match_array([article1.id])
     end
 
