@@ -6,7 +6,10 @@ module CaseStudy
       user_owner? || admin?
     end
     alias assign_article? read?
-    alias update? read?
     alias delete? read?
+
+    def update?
+      !record.company_recomendation && read?
+    end
   end
 end
