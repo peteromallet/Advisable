@@ -3,6 +3,9 @@
 class Invoice < ApplicationRecord
   class InvoiceError < StandardError; end
 
+  include Uid
+  uid_prefix 'inv'
+
   DAYS_DUE = 30
 
   enum status: {draft: 0, open: 1, paid: 2, exported: 3, paid_out: 4, void: 5}
@@ -60,13 +63,14 @@ end
 #
 # Table name: invoices
 #
-#  id                :uuid             not null, primary key
+#  id                :bigint           not null, primary key
 #  exported_at       :datetime
 #  paid_at           :datetime
 #  paid_out_at       :datetime
 #  period_end        :datetime
 #  period_start      :datetime
 #  status            :integer          default("draft")
+#  uid               :string           not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  application_id    :bigint           not null

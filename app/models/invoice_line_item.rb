@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class InvoiceLineItem < ApplicationRecord
+  include Uid
+  uid_prefix 'ili'
+
   CURRENCY = "usd"
 
   belongs_to :invoice
@@ -26,13 +29,14 @@ end
 #
 # Table name: invoice_line_items
 #
-#  id                          :uuid             not null, primary key
+#  id                          :bigint           not null, primary key
 #  amount                      :integer
 #  metadata                    :jsonb
 #  name                        :string
+#  uid                         :string           not null
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
-#  invoice_id                  :uuid             not null
+#  invoice_id                  :bigint           not null
 #  stripe_invoice_line_item_id :string
 #  task_id                     :bigint
 #

@@ -560,9 +560,10 @@ ActiveRecord::Schema.define(version: 2021_07_06_072105) do
     t.index ["user_id"], name: "index_interviews_on_user_id"
   end
 
-  create_table "invoice_line_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "invoice_id", null: false
+  create_table "invoice_line_items", force: :cascade do |t|
+    t.bigint "invoice_id", null: false
     t.bigint "task_id"
+    t.string "uid", null: false
     t.string "stripe_invoice_line_item_id"
     t.string "name"
     t.integer "amount"
@@ -573,11 +574,12 @@ ActiveRecord::Schema.define(version: 2021_07_06_072105) do
     t.index ["task_id"], name: "index_invoice_line_items_on_task_id"
   end
 
-  create_table "invoices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "invoices", force: :cascade do |t|
     t.uuid "company_id", null: false
     t.bigint "application_id", null: false
     t.integer "status", default: 0
     t.string "stripe_invoice_id"
+    t.string "uid", null: false
     t.datetime "period_start"
     t.datetime "period_end"
     t.datetime "paid_at"
