@@ -10,7 +10,11 @@ RSpec.describe GraphqlController, type: :request do
     <<-GRAPHQL
       {
         caseStudies {
-          id
+          edges {
+            node {
+              id
+            }
+          }
         }
       }
     GRAPHQL

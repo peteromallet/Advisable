@@ -342,8 +342,7 @@ module Types
       current_user.guild_notifications
     end
 
-    field :case_studies, [Types::CaseStudy::Article], null: true, max_page_size: 20
-
+    field :case_studies, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20
     def case_studies
       ::CaseStudy::Article.published
     end
@@ -354,6 +353,18 @@ module Types
 
     def case_study(id:)
       ::CaseStudy::Article.find_by!(uid: id)
+    end
+
+    field :saved_articles, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20
+    def saved_articles
+      requires_current_user!
+      ::CaseStudy::Article.published.where(id: current_user.saved_articles.select(:article_id))
+    end
+
+    field :archived_articles, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20
+    def archived_articles
+      requires_current_user!
+      ::CaseStudy::Article.published.where(id: current_user.archived_articles.select(:article_id))
     end
 
     field :case_study_search, Types::CaseStudy::Search, null: true do
