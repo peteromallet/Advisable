@@ -14,6 +14,7 @@ module Types
 
       field :id, ID, null: false, method: :uid
       field :name, String, null: false
+      field :company_recomendation, Boolean, null: true
       field :skills, [Skill], null: true
       field :primary_skill, Skill, null: true
       def primary_skill

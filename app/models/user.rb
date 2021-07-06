@@ -94,18 +94,19 @@ class User < ApplicationRecord
     responsible = account_id if responsible.nil?
     Logidze.with_responsible(responsible) do
       user.save!
-      user.create_case_study_search
+      user.create_company_recomendation_search
     end
     user.sync_to_airtable
     user
   end
 
-  def create_case_study_search
+  def create_company_recomendation_search
     ::CaseStudy::Search.create!(
       user: self,
       business_type: company.kind,
       goals: company.goals,
-      name: "Project recommendations for #{company.name}"
+      name: "Project recommendations for #{company.name}",
+      company_recomendation: true
     )
   end
 
