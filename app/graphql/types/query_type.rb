@@ -141,6 +141,22 @@ module Types
       current_user
     end
 
+    # TODO: Rename these internal_* maybe? 😬
+    field :internal_invoices, [Types::InternalInvoice], null: true
+    def internal_invoices
+      requires_client!
+      current_user.company.invoices
+    end
+
+    field :internal_invoice, Types::InternalInvoice, null: true do
+      argument :id, ID, required: true
+    end
+
+    def internal_invoice(id:)
+      requires_client!
+      current_user.company.invoices.find(id)
+    end
+
     field :invoice, Types::InvoiceType, null: true do
       argument :id, ID, required: true
     end
