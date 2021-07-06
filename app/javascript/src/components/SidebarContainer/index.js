@@ -1,9 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Card } from "@advisable/donut";
+import { Card, useBreakpoint } from "@advisable/donut";
 
 function SidebarContainer({ children, ...props }) {
-  return (
+  const largeScreen = useBreakpoint("lUp");
+
+  return largeScreen ? (
     <Card
       as={motion.div}
       initial={{ opacity: 0, left: -100 }}
@@ -20,7 +22,7 @@ function SidebarContainer({ children, ...props }) {
     >
       {children}
     </Card>
-  );
+  ) : null;
 }
 
 export default SidebarContainer;
