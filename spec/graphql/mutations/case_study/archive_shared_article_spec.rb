@@ -23,13 +23,14 @@ RSpec.describe Mutations::CaseStudy::ArchiveSharedArticle do
     GRAPHQL
   end
 
-  it "archives the article" do
-    expect(shared_article.archived_at).to be_nil
+  it "archives the article and sets shared_by" do
+    expect(::CaseStudy::ArchivedArticle.where(user: user, article: shared_article.article)).to be_empty
     response = AdvisableSchema.execute(query, context: context)
     uid = response["data"]["archiveCaseStudySharedArticle"]["sharedArticle"]["id"]
     shared_article.reload
     expect(shared_article.uid).to eq(uid)
-    expect(shared_article.archived_at).not_to be_nil
+    archived = ::CaseStudy::ArchivedArticle.find_by(user: user, article: shared_article.article)
+    expect(archived.shared_by).to eq(shared_article.shared_by)
   end
 
   context "when shared article belongs to a different user" do
@@ -43,16 +44,17 @@ RSpec.describe Mutations::CaseStudy::ArchiveSharedArticle do
   end
 
   context "when unarchive param is true" do
-    let(:shared_article) { create(:case_study_shared_article, shared_with: user, archived_at: Time.zone.now) }
+    let(:shared_article) { create(:case_study_shared_article, shared_with: user) }
     let(:extra) { "unarchive: true" }
 
     it "unarchives the article" do
-      expect(shared_article.archived_at).not_to be_nil
+      create(:case_study_archived_article, user: user, article: shared_article.article)
+      expect(::CaseStudy::ArchivedArticle.where(user: user, article: shared_article.article)).not_to be_empty
       response = AdvisableSchema.execute(query, context: context)
       uid = response["data"]["archiveCaseStudySharedArticle"]["sharedArticle"]["id"]
       shared_article.reload
       expect(shared_article.uid).to eq(uid)
-      expect(shared_article.archived_at).to be_nil
+      expect(::CaseStudy::ArchivedArticle.where(user: user, article: shared_article.article)).to be_empty
     end
   end
 

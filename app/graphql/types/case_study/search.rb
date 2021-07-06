@@ -14,14 +14,13 @@ module Types
 
       field :id, ID, null: false, method: :uid
       field :name, String, null: false
+      field :company_recomendation, Boolean, null: true
       field :skills, [Skill], null: true
       field :primary_skill, Skill, null: true
       def primary_skill
         object.skills.find_by(primary: true)
       end
       field :goals, [String], null: true
-      field :saved, Article.connection_type, null: true, method: :saved_articles
-      field :archived, Article.connection_type, null: true, method: :archived_articles
       field :results, Article.connection_type, null: true
     end
   end

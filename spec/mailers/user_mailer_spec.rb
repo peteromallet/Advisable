@@ -35,7 +35,9 @@ RSpec.describe UserMailer do
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to include(article1.id.to_s)
+      expect(mail.body.encoded).to include(article1.uid).
+        and(include(article2.uid).
+        and(include(article3.uid)))
     end
   end
 end

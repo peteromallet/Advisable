@@ -69,13 +69,14 @@ RSpec.describe(User, type: :model) do
     end
   end
 
-  describe "#create_case_study_search" do
+  describe "#create_company_recomendation_search" do
     it "creates one with goals and company name" do
       user.company.update(goals: %w[one two])
-      search = user.create_case_study_search
+      search = user.create_company_recomendation_search
       expect(search.goals).to match_array(%w[one two])
       expect(search.business_type).to eq("Startup")
       expect(search.name).to eq("Project recommendations for Test Company")
+      expect(search.company_recomendation).to be_truthy
     end
   end
 

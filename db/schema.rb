@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_09_115840) do
+ActiveRecord::Schema.define(version: 2021_07_06_072105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -173,6 +173,19 @@ ActiveRecord::Schema.define(version: 2021_06_09_115840) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "case_study_archived_articles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "article_id", null: false
+    t.bigint "search_id"
+    t.bigint "shared_by_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_case_study_archived_articles_on_article_id"
+    t.index ["search_id"], name: "index_case_study_archived_articles_on_search_id"
+    t.index ["shared_by_id"], name: "index_case_study_archived_articles_on_shared_by_id"
+    t.index ["user_id"], name: "index_case_study_archived_articles_on_user_id"
+  end
+
   create_table "case_study_articles", force: :cascade do |t|
     t.string "uid", null: false
     t.integer "score"
@@ -241,6 +254,19 @@ ActiveRecord::Schema.define(version: 2021_06_09_115840) do
     t.index ["uid"], name: "index_case_study_industries_on_uid"
   end
 
+  create_table "case_study_saved_articles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "article_id", null: false
+    t.bigint "search_id"
+    t.bigint "shared_by_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_case_study_saved_articles_on_article_id"
+    t.index ["search_id"], name: "index_case_study_saved_articles_on_search_id"
+    t.index ["shared_by_id"], name: "index_case_study_saved_articles_on_shared_by_id"
+    t.index ["user_id"], name: "index_case_study_saved_articles_on_user_id"
+  end
+
   create_table "case_study_search_feedbacks", force: :cascade do |t|
     t.bigint "search_id", null: false
     t.bigint "article_id", null: false
@@ -257,12 +283,11 @@ ActiveRecord::Schema.define(version: 2021_06_09_115840) do
     t.bigint "user_id", null: false
     t.string "business_type"
     t.jsonb "goals"
-    t.jsonb "saved"
-    t.jsonb "archived"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
     t.jsonb "results"
+    t.boolean "company_recomendation"
     t.index ["uid"], name: "index_case_study_searches_on_uid"
     t.index ["user_id"], name: "index_case_study_searches_on_user_id"
   end
@@ -284,7 +309,6 @@ ActiveRecord::Schema.define(version: 2021_06_09_115840) do
     t.bigint "shared_with_id", null: false
     t.bigint "shared_by_id", null: false
     t.text "message"
-    t.datetime "archived_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "uid"
@@ -1045,6 +1069,10 @@ ActiveRecord::Schema.define(version: 2021_06_09_115840) do
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
   add_foreign_key "auth_providers", "accounts"
+  add_foreign_key "case_study_archived_articles", "case_study_articles", column: "article_id"
+  add_foreign_key "case_study_archived_articles", "case_study_searches", column: "search_id"
+  add_foreign_key "case_study_archived_articles", "users"
+  add_foreign_key "case_study_archived_articles", "users", column: "shared_by_id"
   add_foreign_key "case_study_articles", "accounts", column: "editor_id"
   add_foreign_key "case_study_articles", "accounts", column: "interviewer_id"
   add_foreign_key "case_study_articles", "case_study_companies", column: "company_id"
@@ -1052,6 +1080,10 @@ ActiveRecord::Schema.define(version: 2021_06_09_115840) do
   add_foreign_key "case_study_contents", "case_study_sections", column: "section_id"
   add_foreign_key "case_study_industries", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "industries"
+  add_foreign_key "case_study_saved_articles", "case_study_articles", column: "article_id"
+  add_foreign_key "case_study_saved_articles", "case_study_searches", column: "search_id"
+  add_foreign_key "case_study_saved_articles", "users"
+  add_foreign_key "case_study_saved_articles", "users", column: "shared_by_id"
   add_foreign_key "case_study_search_feedbacks", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_search_feedbacks", "case_study_searches", column: "search_id"
   add_foreign_key "case_study_searches", "users"
