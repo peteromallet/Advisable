@@ -29,20 +29,14 @@ module Types
         object.sections.by_position
       end
 
-      field :is_saved, Boolean, null: false do
-        argument :id, ID, required: true
-      end
-      def is_saved(id:)
-        search = ::CaseStudy::Search.find_by!(uid: id)
-        search.saved.include?(object.id)
+      field :is_saved, Boolean, null: false
+      def is_saved
+        object.saved_articles.exists?(user: current_user)
       end
 
-      field :is_archived, Boolean, null: false do
-        argument :id, ID, required: true
-      end
-      def is_archived(id:)
-        search = ::CaseStudy::Search.find_by!(uid: id)
-        search.archived.include?(object.id)
+      field :is_archived, Boolean, null: false
+      def is_archived
+        object.archived_articles.exists?(user: current_user)
       end
 
       field :shares, [SharedArticle], null: true

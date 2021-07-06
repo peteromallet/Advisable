@@ -12,6 +12,8 @@ module CaseStudy
     belongs_to :user
     has_many :skills, dependent: :destroy
     has_many :search_feedbacks, dependent: :destroy
+    has_many :archived_articles, dependent: :nullify
+    has_many :saved_articles, dependent: :nullify
 
     def name
       attributes["name"].presence || (skills.primary.first || skills.first)&.skill&.name
@@ -19,11 +21,11 @@ module CaseStudy
 
     def results
       if attributes["results"].blank?
-        query = results_query(limit: RESULT_LIMIT, exclude: archived)
+        query = results_query(limit: RESULT_LIMIT, exclude: user.archived_articles.pluck(:article_id))
         update(results: query.pluck(:id))
       end
 
-      Article.where(id: attributes["results"]).where.not(id: archived)
+      Article.where(id: attributes["results"]).where.not(id: user.archived_articles.pluck(:article_id))
     end
 
     def results_query(limit: nil, exclude: nil)
@@ -38,22 +40,6 @@ module CaseStudy
       end
       query
     end
-
-    def archived
-      attributes["archived"].presence || []
-    end
-
-    def saved
-      attributes["saved"].presence || []
-    end
-
-    def archived_articles
-      Article.where(id: archived)
-    end
-
-    def saved_articles
-      Article.where(id: saved)
-    end
   end
 end
 
@@ -61,17 +47,16 @@ end
 #
 # Table name: case_study_searches
 #
-#  id            :bigint           not null, primary key
-#  archived      :jsonb
-#  business_type :string
-#  goals         :jsonb
-#  name          :string
-#  results       :jsonb
-#  saved         :jsonb
-#  uid           :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  user_id       :bigint           not null
+#  id                    :bigint           not null, primary key
+#  business_type         :string
+#  company_recomendation :boolean
+#  goals                 :jsonb
+#  name                  :string
+#  results               :jsonb
+#  uid                   :string           not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  user_id               :bigint           not null
 #
 # Indexes
 #

@@ -5,12 +5,13 @@ class RefreshCaseStudySearchesJob < ApplicationJob
     users = User.where(id: CaseStudy::Search.distinct.select(:user_id))
     users.each do |user|
       updated_searches = {}
+      user_archived = user.archived_articles.pluck(:article_id)
       user.searches.each do |search|
         existing_results = search[:results] || []
-        amount_to_add = CaseStudy::Search::RESULT_LIMIT - (existing_results.size - search.archived.size)
+        amount_to_add = CaseStudy::Search::RESULT_LIMIT - (existing_results - user_archived).size
         next if amount_to_add <= 0
 
-        existing_or_archived = existing_results + search.archived
+        existing_or_archived = existing_results + user_archived
         new_results = search.results_query(limit: amount_to_add, exclude: existing_or_archived).pluck(:id)
         next if new_results.none?
 

@@ -13,7 +13,12 @@ module Airtable
       @content_position = 0
 
       if testing
-        Airtable::Specialist.find(fields["Specialist"].first).sync if ::Specialist.find_by(airtable_id: fields["Specialist"].first).nil?
+        if ::Specialist.find_by(airtable_id: fields["Specialist"].first).nil?
+          airspecialist = Airtable::Specialist.find(fields["Specialist"].first)
+          existing = ::Account.find_by(email: airspecialist["Email Address"])
+          existing&.update(email: "#{SecureRandom.hex}+#{existing.email}")
+          airspecialist.sync
+        end
         Airtable::SalesPerson.find(fields["Interviewer"].first).sync if ::SalesPerson.find_by(airtable_id: fields["Interviewer"].first).nil?
 
         Array(fields["Industry"]).each do |airtable_id|

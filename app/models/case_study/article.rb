@@ -17,6 +17,8 @@ module CaseStudy
     has_many :contents, through: :sections
     has_many :search_feedbacks, dependent: :destroy
     has_many :shares, class_name: "SharedArticle", dependent: :destroy
+    has_many :archived_articles, dependent: :destroy
+    has_many :saved_articles, dependent: :destroy
 
     scope :published, -> { where.not(published_at: nil) }
   end

@@ -11,7 +11,6 @@ module Types
       field :shared_with, Types::User, null: false
       field :shared_by, Types::User, null: true
       field :message, String, null: true
-      field :archived_at, GraphQL::Types::ISO8601DateTime, null: true
     end
   end
 end
