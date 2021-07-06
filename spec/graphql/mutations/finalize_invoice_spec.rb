@@ -26,7 +26,7 @@ RSpec.describe Mutations::FinalizeInvoice do
     invoice.line_items.create!(amount: 40)
     invoice.line_items.create!(amount: 60)
 
-    allow(Stripe::Invoice).to receive(:finalize_invoice).with("asdf1234", auto_advance: false).and_return(OpenStruct.new(status: "open"))
+    allow(Stripe::Invoice).to receive(:send_invoice).with("asdf1234").and_return(OpenStruct.new(status: "open"))
     expect_any_instance_of(InvoiceLineItem).to receive(:create_in_stripe!).with(now: true)
     response = AdvisableSchema.execute(query, context: context)
     status = response["data"]["finalizeInvoice"]["invoice"]["status"]

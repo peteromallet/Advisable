@@ -21,7 +21,7 @@ module Mutations
       invoice = Invoice.find(id)
       invoice.create_admin_fee!
       invoice.apply_deposit!
-      response = Stripe::Invoice.finalize_invoice(invoice.stripe_invoice_id, auto_advance: false)
+      response = Stripe::Invoice.send_invoice(invoice.stripe_invoice_id)
       invoice.update!(status: response.status)
       {invoice: invoice}
     end
