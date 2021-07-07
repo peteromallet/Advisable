@@ -99,7 +99,15 @@ class Specialist < ApplicationRecord
   def avatar_or_image
     return resized_avatar_url if avatar.attached?
 
-    image.try(:[], 'url')
+    image
+  end
+
+  def image
+    url = super.try(:[], "url")
+    return if url.blank?
+
+    AttachImageJob.perform_later(self, url)
+    url
   end
 end
 
