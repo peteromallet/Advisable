@@ -136,6 +136,7 @@ module Airtable
       self['Campaign Medium'] = specialist.campaign_medium
       self['Case Study Status'] = specialist.case_study_status
       self['Trustpilot Review Status'] = specialist.trustpilot_review_status
+      self["Specialist Industries"] = specialist.industries.filter_map(&:airtable_id)
 
       if specialist.saved_change_to_bio
         self['Specialist Bio Updated'] = 'Yes'
