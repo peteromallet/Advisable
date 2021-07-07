@@ -7,10 +7,11 @@ import {
   useParams,
 } from "react-router";
 import { AnimatePresence } from "framer-motion";
-import { Box, Container, useBreakpoint } from "@advisable/donut";
+import { Container, useBreakpoint } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import Sidebar from "./components/Sidebar";
 import NotFound from "src/views/NotFound";
+import View from "src/components/View";
 // Steps
 import Skills from "./steps/Skills";
 import Goals from "./steps/Goals";
@@ -37,9 +38,9 @@ export default function CreateSavedSearch() {
   if (error) return <NotFound />;
 
   return (
-    <div>
-      {largeScreen ? <Sidebar caseStudySearch={data.caseStudySearch} /> : null}
-      <Box paddingLeft={{ l: "300px" }}>
+    <View>
+      <Sidebar caseStudySearch={data.caseStudySearch} />
+      <View.Content>
         <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <AnimatePresence
             initial={false}
@@ -68,7 +69,7 @@ export default function CreateSavedSearch() {
             </Switch>
           </AnimatePresence>
         </Container>
-      </Box>
-    </div>
+      </View.Content>
+    </View>
   );
 }
