@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Text } from "@advisable/donut";
+import { Text } from "@advisable/donut";
+import View from "src/components/View";
 import MultistepMenu from "src/components/MultistepMenu";
 import { validationSchema as introductionValidationSchema } from "../steps/Introduction";
 import { validationSchema as overviewValidationSchema } from "../steps/Overview";
@@ -16,34 +17,21 @@ export default function Sidebar({ specialist }) {
     ...specialist,
     resume: specialist.resume?.filename,
   });
-  const previousWorkComplete = previousWorkValidationSchema.isValidSync(
-    specialist,
-  );
-  const workPreferencesComplete = WorkPreferencesValidationSchema.isValidSync(
-    specialist,
-  );
-  const idealProjectComplete = idealProjectValidationSchema.isValidSync(
-    specialist,
-  );
+  const previousWorkComplete =
+    previousWorkValidationSchema.isValidSync(specialist);
+  const workPreferencesComplete =
+    WorkPreferencesValidationSchema.isValidSync(specialist);
+  const idealProjectComplete =
+    idealProjectValidationSchema.isValidSync(specialist);
 
   return (
-    <Card
-      top="0"
-      left="0"
-      padding={6}
-      width="300px"
-      height="100vh"
-      position="fixed"
-      paddingTop="60px"
-      borderRadius="0px"
-    >
+    <View.Sidebar>
       <Text
         color="neutral400"
         textTransform="uppercase"
         fontWeight="medium"
         fontSize="2xs"
         mb={4}
-        mt={6}
       >
         Application
       </Text>
@@ -83,6 +71,6 @@ export default function Sidebar({ specialist }) {
           Ideal project
         </MultistepMenu.Item>
       </MultistepMenu>
-    </Card>
+    </View.Sidebar>
   );
 }
