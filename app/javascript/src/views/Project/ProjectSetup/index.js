@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { useBreakpoint, useTheme } from "@advisable/donut";
+import { Container, useBreakpoint, useTheme } from "@advisable/donut";
 import { useParams, useLocation } from "react-router-dom";
 import Loading from "src/components/Loading";
 import View from "src/components/View";
@@ -34,19 +34,16 @@ export default function JobSetup() {
   return (
     <View>
       <JobSetupSidebar data={data} />
-      <View.Content
-        mx="auto"
-        my={{ _: 0, m: "64px" }}
-        padding={{ _: "24px", m: "0" }}
-        maxWidth={{ _: "100%", m: "680px" }}
-      >
-        {!largeScreen && data.project.status === "Draft" && (
-          <SetupDots
-            marginBottom={{ _: "m", m: "l" }}
-            justifyContent={{ _: "start", m: "center" }}
-          />
-        )}
-        <SetupSteps data={data} />
+      <View.Content>
+        <Container paddingY={16} paddingX={[4, 4, 6, 8]} maxWidth="750px">
+          {!largeScreen && data.project.status === "Draft" && (
+            <SetupDots
+              marginBottom={{ _: "m", m: "l" }}
+              justifyContent={{ _: "start", m: "center" }}
+            />
+          )}
+          <SetupSteps data={data} />
+        </Container>
       </View.Content>
     </View>
   );
