@@ -1,5 +1,4 @@
 import React from "react";
-import { Box } from "@advisable/donut";
 import { useParams } from "react-router-dom";
 import { FileTray } from "@styled-icons/ionicons-solid/FileTray";
 import { People } from "@styled-icons/ionicons-solid/People";
@@ -11,7 +10,7 @@ function ProjectNavigation() {
   const { id } = useParams();
 
   return (
-    <Box padding="24px">
+    <>
       <BackButton to="/projects" marginBottom="m" />
 
       <NavigationMenu>
@@ -28,7 +27,7 @@ function ProjectNavigation() {
           Project Details
         </NavigationMenu.Item>
       </NavigationMenu>
-    </Box>
+    </>
   );
 }
 
