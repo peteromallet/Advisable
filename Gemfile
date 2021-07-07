@@ -10,7 +10,7 @@ gem "good_migrations"
 gem "pghero"
 gem "logidze", ">= 1.0.0"
 gem "fx"
-gem "puma", ">= 5.2.1"
+gem "puma"
 gem "puma_worker_killer"
 gem "barnes"
 gem "sass-rails", ">= 6"
@@ -35,17 +35,17 @@ gem "omniauth"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 
-gem "airrecord", "~> 1.0.5"
+gem "airrecord"
 
 gem "graphql"
 gem "parser"
-gem "stripe", "~> 5.14"
-gem "attr_encrypted", "~> 3.1.0"
+gem "stripe"
+gem "attr_encrypted"
 
 gem "pundit"
 gem "nanoid"
 
-gem "aws-sdk-s3", "~> 1"
+gem "aws-sdk-s3"
 gem "image_processing"
 gem "faker"
 gem "twilio-ruby"
@@ -58,7 +58,7 @@ gem "administrate-field-active_storage"
 gem "pry"
 gem "pry-rails"
 # gem "pry-doc" Does not support Ruby 3 yet
-gem "pry-byebug", ">= 3.9.0"
+gem "pry-byebug", github: "deivid-rodriguez/pry-byebug" # Uses pry 0.14
 gem "ruby-progressbar", require: false
 
 group :development, :test do
@@ -69,8 +69,8 @@ group :development, :test do
 end
 
 group :development do
-  gem "web-console", ">= 3.3.0", require: false
-  gem "listen", "~> 3.2"
+  gem "web-console", require: false
+  gem "listen"
   gem "graphql-rails_logger"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
@@ -92,7 +92,7 @@ group :test do
   gem "webdrivers"
   gem "shoulda-matchers"
   gem "webmock"
-  gem "rspec-rails", "~> 4.0.0"
+  gem "rspec-rails"
   gem "rspec-retry"
   gem "rspec_junit_formatter"
   gem "rspec-github", require: false
