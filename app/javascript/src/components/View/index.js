@@ -13,6 +13,7 @@ function ViewSidebar({ children, ...props }) {
 ViewSidebar.defaultProps = {
   width: "300px",
   padding: "24px",
+  display: { _: "none", l: "block" },
 };
 
 function View({ children }) {
