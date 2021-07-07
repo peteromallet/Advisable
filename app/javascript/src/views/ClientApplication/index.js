@@ -2,12 +2,13 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { AnimatePresence } from "framer-motion";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
-import { Box, Container, useBreakpoint } from "@advisable/donut";
+import { Container, useBreakpoint } from "@advisable/donut";
 import GenericError from "src/views/GenericError";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
-import Sidebar from "./components/Sidebar";
+import View from "src/components/View";
 import Loading from "src/components/Loading";
+import Sidebar from "./components/Sidebar";
 import { CLIENT_APPLICATION_DATA } from "./queries";
 // Steps
 import CompanyOverview from "./steps/CompanyOverview";
@@ -35,10 +36,10 @@ export default function ClientApplication() {
   const { clientApplication, industries } = data;
 
   return (
-    <div>
-      {largeScreen ? <Sidebar clientApplication={clientApplication} /> : null}
-      <Box paddingLeft={{ l: "300px" }}>
-        <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
+    <View>
+      <Sidebar clientApplication={clientApplication} />
+      <View.Content>
+        <Container paddingY={12} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <AnimatePresence
             initial={false}
             custom={{ largeScreen, forwards }}
@@ -66,7 +67,7 @@ export default function ClientApplication() {
             </Switch>
           </AnimatePresence>
         </Container>
-      </Box>
-    </div>
+      </View.Content>
+    </View>
   );
 }
