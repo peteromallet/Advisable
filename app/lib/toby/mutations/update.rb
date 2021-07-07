@@ -24,6 +24,8 @@ module Toby
           model.save!
         end
 
+        model.sync_to_airtable if model.respond_to?(:sync_to_airtable) && model.airtable_id.present?
+
         {resource: model}
       end
     end
