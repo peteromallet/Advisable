@@ -2,8 +2,12 @@ import React from "react";
 import { use100vh } from "react-div-100vh";
 import { StyledView, StyledViewContent, StyledSidebar } from "./styles";
 
-function ViewContent({ children }) {
-  return <StyledViewContent id="view">{children}</StyledViewContent>;
+function ViewContent({ children, ...props }) {
+  return (
+    <StyledViewContent id="view" {...props}>
+      {children}
+    </StyledViewContent>
+  );
 }
 
 function ViewSidebar({ children, ...props }) {
