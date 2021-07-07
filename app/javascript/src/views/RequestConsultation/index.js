@@ -7,7 +7,7 @@ import {
   Redirect,
   useLocation,
 } from "react-router-dom";
-import { Container, useTheme, useBreakpoint } from "@advisable/donut";
+import { useTheme, useBreakpoint } from "@advisable/donut";
 import View from "src/components/View";
 import NotFound from "../NotFound";
 import Loading from "../../components/Loading";
@@ -66,51 +66,54 @@ const RequestConsultation = () => {
   return (
     <View>
       <Sidebar data={data} />
-      <View.Content>
-        <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
-          <Switch location={location} key={location.pathname}>
-            <Route path="/request_consultation/:specialistId/sent">
-              <Complete data={data} />
-            </Route>
-            <Route path="/request_consultation/:specialistId/skills">
-              <Skills data={data} />
-            </Route>
-            <Route path="/request_consultation/:specialistId/details">
-              <CompanyInformation data={data} />
-            </Route>
-            <Route path="/request_consultation/:specialistId/login">
-              <Authenticate data={data} />
-            </Route>
-            <Route path="/request_consultation/:specialistId/availability">
-              <Availability data={data} />
-            </Route>
-            <Route path="/request_consultation/:specialistId/topic">
-              <Topic data={data} />
-            </Route>
-            <Route path="/request_consultation/:specialistId/send">
-              <Send data={data} />
-            </Route>
-            <Route>
-              <Redirect
-                to={{
-                  pathname: `/request_consultation/${params.specialistId}/skills`,
-                  search: location.search,
-                  state: {
-                    skill: queryParams.skill,
-                    firstName: queryParams.firstName,
-                    lastName: queryParams.lastName,
-                    email: queryParams.email,
-                    company: queryParams.company,
-                    utmSource: queryParams.utm_source,
-                    utmName: queryParams.utm_campaign,
-                    utmMedium: queryParams.utm_medium,
-                    glid: queryParams.glid,
-                  },
-                }}
-              />
-            </Route>
-          </Switch>
-        </Container>
+      <View.Content
+        mx="auto"
+        my={{ _: 0, m: "64px" }}
+        padding={{ _: "24px", m: "0" }}
+        maxWidth={{ _: "100%", m: "680px" }}
+      >
+        <Switch location={location} key={location.pathname}>
+          <Route path="/request_consultation/:specialistId/sent">
+            <Complete data={data} />
+          </Route>
+          <Route path="/request_consultation/:specialistId/skills">
+            <Skills data={data} />
+          </Route>
+          <Route path="/request_consultation/:specialistId/details">
+            <CompanyInformation data={data} />
+          </Route>
+          <Route path="/request_consultation/:specialistId/login">
+            <Authenticate data={data} />
+          </Route>
+          <Route path="/request_consultation/:specialistId/availability">
+            <Availability data={data} />
+          </Route>
+          <Route path="/request_consultation/:specialistId/topic">
+            <Topic data={data} />
+          </Route>
+          <Route path="/request_consultation/:specialistId/send">
+            <Send data={data} />
+          </Route>
+          <Route>
+            <Redirect
+              to={{
+                pathname: `/request_consultation/${params.specialistId}/skills`,
+                search: location.search,
+                state: {
+                  skill: queryParams.skill,
+                  firstName: queryParams.firstName,
+                  lastName: queryParams.lastName,
+                  email: queryParams.email,
+                  company: queryParams.company,
+                  utmSource: queryParams.utm_source,
+                  utmName: queryParams.utm_campaign,
+                  utmMedium: queryParams.utm_medium,
+                  glid: queryParams.glid,
+                },
+              }}
+            />
+          </Route>
+        </Switch>
       </View.Content>
     </View>
   );
