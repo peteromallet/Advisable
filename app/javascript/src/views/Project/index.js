@@ -51,7 +51,7 @@ export default function Project() {
   return (
     <View>
       <Route path="/projects/:id" exact={!isLargerScreen}>
-        <View.Sidebar width={["100%", "100%", "100%", "280px"]}>
+        <View.Sidebar display="block" width={["100%", "100%", "100%", "280px"]}>
           <Navigation data={data} />
         </View.Sidebar>
       </Route>
