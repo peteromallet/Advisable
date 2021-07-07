@@ -4,9 +4,9 @@ import DeleteDraftJob from "./DeleteDraftJob";
 import { useLocation, useParams } from "react-router-dom";
 import MultistepMenu from "src/components/MultistepMenu";
 import BackButton from "src/components/BackButton";
-import SidebarContainer from "src/components/SidebarContainer";
-import { setupProgress } from "./SetupSteps";
+import View from "src/components/View";
 import useViewer from "src/hooks/useViewer";
+import { setupProgress } from "./SetupSteps";
 
 export default function JobSetupSidebar({ data }) {
   const { id } = useParams();
@@ -22,7 +22,7 @@ export default function JobSetupSidebar({ data }) {
   const canDelete = viewer.isTeamManager || project.isOwner;
 
   return (
-    <SidebarContainer>
+    <View.Sidebar>
       <BackButton to="/projects" marginBottom="m" />
       <MultistepMenu>
         <MultistepMenu.Item
@@ -99,6 +99,6 @@ export default function JobSetupSidebar({ data }) {
           <DeleteDraftJob id={id} />
         </Box>
       ) : null}
-    </SidebarContainer>
+    </View.Sidebar>
   );
 }
