@@ -15,6 +15,7 @@ module Toby
       attribute :hourly_rate, Attributes::Currency
       attribute :country, Attributes::BelongsTo
       attribute :skills, Attributes::HasManyThrough
+      attribute :industries, Attributes::HasManyThrough
       attribute :unavailable_until, Attributes::Date
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
