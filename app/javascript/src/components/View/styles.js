@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { compose, width, space, padding, layout, display } from "styled-system";
+import { compose, width, padding, display } from "styled-system";
 
 export const StyledView = styled.div`
   display: flex;
@@ -7,8 +7,6 @@ export const StyledView = styled.div`
 `;
 
 export const StyledViewContent = styled.div`
-  ${compose(space, layout)};
-
   flex: 1;
   height: 100%;
   overflow-y: scroll;
