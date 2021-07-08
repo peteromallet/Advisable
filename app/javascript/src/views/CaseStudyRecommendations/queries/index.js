@@ -6,46 +6,46 @@ import SIDEBAR from "./sidebar.gql";
 import SAVED from "./savedArticles.gql";
 import SHARED from "./sharedArticles.gql";
 
-export function useArchive(opts) {
+export function useArchive({ article, search }, opts) {
   return useMutation(ASSIGN, {
     update(cache, response) {
       if (response.errors) return;
 
-      // const { article, search } = response.data.assignCaseStudySearchArticle;
+      const existing = cache.readQuery({ query: ARCHIVED });
 
-      // cache.modify({
-      //   id: cache.identify(article),
-      //   fields: {
-      //     isArchived() {
-      //       return true;
-      //     },
-      //   },
-      // });
+      if (existing) {
+        cache.writeQuery({
+          query: ARCHIVED,
+          data: {
+            archivedArticles: {
+              nodes: [...existing.archivedArticles.nodes, article],
+            },
+          },
+        });
+      }
 
-      // cache.modify({
-      //   id: cache.identify(search),
-      //   fields: {
-      //     results(previous, { readField }) {
-      //       return {
-      //         ...previous,
-      //         edges: previous.edges.filter((edge) => {
-      //           return article.id !== readField("id", edge.node);
-      //         }),
-      //       };
-      //     },
-      //     archived(previous, { toReference }) {
-      //       return {
-      //         ...previous,
-      //         edges: [
-      //           ...previous.edges,
-      //           {
-      //             node: toReference(article),
-      //           },
-      //         ],
-      //       };
-      //     },
-      //   },
-      // });
+      cache.modify({
+        id: cache.identify(article),
+        fields: {
+          isArchived() {
+            return true;
+          },
+        },
+      });
+
+      cache.modify({
+        id: cache.identify(search),
+        fields: {
+          results(previous, { readField }) {
+            return {
+              ...previous,
+              nodes: previous.nodes.filter((node) => {
+                return article.id !== readField("id", node);
+              }),
+            };
+          },
+        },
+      });
     },
     ...opts,
   });
