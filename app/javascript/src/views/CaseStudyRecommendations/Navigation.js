@@ -58,11 +58,11 @@ export default function ExploreNavigation({ data }) {
         Create a new search
       </StyledNewSearch>
       <Box height={1} bg="neutral100" marginY={6} />
-      <NavItem icon={InboxIn} to="/explore/shared" count={4}>
-        Shared
-      </NavItem>
       <NavItem icon={Bookmark} to="/explore/favorites">
         Favorites
+      </NavItem>
+      <NavItem icon={InboxIn} to="/explore/shared">
+        Shared
       </NavItem>
       <NavItem icon={Trash} to="/explore/archived">
         Archive
