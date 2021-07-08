@@ -36,7 +36,6 @@ RSpec.describe Mutations::UpdateAvatar do
 
     it "updates the avatar" do
       response = AdvisableSchema.execute(query, context: context)
-      pp response
       id = response["data"]["updateAvatar"]["viewer"]["id"]
       expect(id).to eq(current_user.uid)
       expect(current_user.avatar.blob.signed_id).to eq(signed_id)

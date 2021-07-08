@@ -1,5 +1,5 @@
-mutation assignSearchArticle($input: AssignCaseStudySearchArticleInput!) {
-  assignCaseStudySearchArticle(input: $input) {
+mutation assignSearchArticle($input: AssignCaseStudyArticleInput!) {
+  assignCaseStudyArticle(input: $input) {
     search {
       id
     }
