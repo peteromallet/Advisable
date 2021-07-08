@@ -1,0 +1,17 @@
+query ExplorerSidebar {
+  caseStudySearches {
+    id
+    name
+    companyRecomendation
+    results {
+      nodes {
+        id
+      }
+    }
+  }
+  savedArticles {
+    nodes {
+      id
+    }
+  }
+}
