@@ -163,7 +163,7 @@ module Types
 
     def talk_signature
       user_id = context[:current_user].uid
-      OpenSSL::HMAC.hexdigest('SHA256', ENV['TALKJS_SECRET'], user_id)
+      OpenSSL::HMAC.hexdigest("SHA256", ENV["TALKJS_SECRET"], user_id)
     end
 
     field :projects, [Types::ProjectType], null: true, deprecation_reason: "Moved to Company" do
@@ -173,7 +173,7 @@ module Types
     # or statement here otherwise SQL will also exclude records where sales_status
     # is null.
     def projects
-      company.projects.where.not(sales_status: 'Lost').or(
+      company.projects.where.not(sales_status: "Lost").or(
         company.projects.where(sales_status: nil)
       ).order(created_at: :desc)
     end
@@ -183,7 +183,7 @@ module Types
                Boolean,
                required: false,
                description:
-                 'Exclude any times that conflict with scheduled interviews'
+                 "Exclude any times that conflict with scheduled interviews"
     end
 
     def availability(exclude_conflicts: false)
@@ -227,5 +227,7 @@ module Types
     def client_application
       object
     end
+
+    field :avatar, String, null: true
   end
 end
