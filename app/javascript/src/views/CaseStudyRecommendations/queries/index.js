@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
 import CASE_STUDY_SEARCH from "./getRecommendations.gql";
-import CASE_STUDY from "./getCaseStudy.gql";
 import ASSIGN from "./assignArticle.gql";
 import ARCHIVED from "./archivedArticles.gql";
 import SIDEBAR from "./sidebar.gql";
@@ -99,10 +98,6 @@ export function useUnarchive(opts) {
 
 export function useArchived(opts) {
   return useQuery(ARCHIVED, opts);
-}
-
-export function useCaseStudy(opts) {
-  return useQuery(CASE_STUDY, opts);
 }
 
 export function useCaseStudySearch(opts) {
