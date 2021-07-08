@@ -5,7 +5,7 @@ import { useArchivedArticles } from "./queries";
 
 export default function ArchivedArticles() {
   const { data, loading } = useArchivedArticles();
-  const articles = data?.ArchivedArticles?.nodes || [];
+  const articles = data?.archivedArticles?.nodes || [];
 
   return (
     <div>
