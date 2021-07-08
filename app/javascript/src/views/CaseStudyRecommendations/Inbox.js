@@ -65,7 +65,7 @@ export default function ExploreInbox() {
         )}
         <Box marginY={8} height="1px" bg="neutral200" />
       </Box>
-      <CaseStudiesList articles={articles} />
+      <CaseStudiesList articles={articles} search={search} />
       {articles.length === 0 &&
         (search.companyRecomendation ? (
           <CompanyRecommendationsEmpty />

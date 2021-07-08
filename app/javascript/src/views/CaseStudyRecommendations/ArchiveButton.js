@@ -54,8 +54,8 @@ const StyledArchiveButton = styled.div`
   }
 `;
 
-function ArchiveForm({ search, article, onArchive = () => {}, modal }) {
-  const [archive] = useArchive();
+function ArchiveForm({ article, search, onArchive = () => {}, modal }) {
+  const [archive] = useArchive({ article, search });
 
   const handleSubmit = useCallback(
     async ({ feedback, otherFeedback }) => {
@@ -63,7 +63,6 @@ function ArchiveForm({ search, article, onArchive = () => {}, modal }) {
         variables: {
           input: {
             action: "archive",
-            search: search.id,
             article: article.id,
             feedback: feedback === "_OTHER" ? otherFeedback : feedback,
           },
@@ -73,7 +72,7 @@ function ArchiveForm({ search, article, onArchive = () => {}, modal }) {
       modal.hide();
       onArchive();
     },
-    [archive, search, article, onArchive, modal],
+    [archive, article, onArchive, modal],
   );
 
   return (
