@@ -61,7 +61,7 @@ export const StyledNavigationItemCount = styled.div`
   background: ${theme.colors.cyan200};
 `;
 
-export const StyledRecommendationTitle = styled(Link)`
+export const StyledRecommendationTitle = styled.a`
   ${space};
   ${typography};
   display: block;
