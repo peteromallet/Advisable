@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import CASE_STUDY_SEARCH from "./getRecommendations.gql";
 import CASE_STUDY from "./getCaseStudy.gql";
-import ASSIGN from "./assignRecommendation.gql";
+import ASSIGN from "./assignArticle.gql";
 import ARCHIVED from "./archivedArticles.gql";
 import SIDEBAR from "./sidebar.gql";
 import SAVED from "./savedArticles.gql";
@@ -12,41 +12,41 @@ export function useArchive(opts) {
     update(cache, response) {
       if (response.errors) return;
 
-      const { article, search } = response.data.assignCaseStudyArticle;
+      // const { article, search } = response.data.assignCaseStudySearchArticle;
 
-      cache.modify({
-        id: cache.identify(article),
-        fields: {
-          isArchived() {
-            return true;
-          },
-        },
-      });
+      // cache.modify({
+      //   id: cache.identify(article),
+      //   fields: {
+      //     isArchived() {
+      //       return true;
+      //     },
+      //   },
+      // });
 
-      cache.modify({
-        id: cache.identify(search),
-        fields: {
-          results(previous, { readField }) {
-            return {
-              ...previous,
-              edges: previous.edges.filter((edge) => {
-                return article.id !== readField("id", edge.node);
-              }),
-            };
-          },
-          archived(previous, { toReference }) {
-            return {
-              ...previous,
-              edges: [
-                ...previous.edges,
-                {
-                  node: toReference(article),
-                },
-              ],
-            };
-          },
-        },
-      });
+      // cache.modify({
+      //   id: cache.identify(search),
+      //   fields: {
+      //     results(previous, { readField }) {
+      //       return {
+      //         ...previous,
+      //         edges: previous.edges.filter((edge) => {
+      //           return article.id !== readField("id", edge.node);
+      //         }),
+      //       };
+      //     },
+      //     archived(previous, { toReference }) {
+      //       return {
+      //         ...previous,
+      //         edges: [
+      //           ...previous.edges,
+      //           {
+      //             node: toReference(article),
+      //           },
+      //         ],
+      //       };
+      //     },
+      //   },
+      // });
     },
     ...opts,
   });
