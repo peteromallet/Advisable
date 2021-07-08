@@ -208,15 +208,9 @@ module Types
 
     field :sent_shared_articles, [Types::CaseStudy::SharedArticle], null: true, method: :sent_articles
 
-    field :received_shared_articles, [Types::CaseStudy::SharedArticle], null: true do
-      argument :archived, Boolean, required: false
-    end
-    def received_shared_articles(archived: false)
-      if archived
-        object.received_articles.archived
-      else
-        object.received_articles.active
-      end
+    field :received_shared_articles, [Types::CaseStudy::SharedArticle], null: true
+    def received_shared_articles
+      object.received_articles.where.not(article_id: current_user.archived_articles.select(:article_id))
     end
 
     # The client application is another representation of a user that is
