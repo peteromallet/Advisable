@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Text, Box, Circle } from "@advisable/donut";
 import CaseStudyActions from "./CaseStudyActions";
 import LogoMark from "src/components/LogoMark";
@@ -7,7 +6,6 @@ import {
   StyledRecommendation,
   StyledRecommendationTitle,
   StyledRecommendationCardAvatar,
-  StyledRecommendationCardActions,
 } from "./styles";
 
 export default function RecommendationCard({ caseStudy }) {
@@ -38,13 +36,13 @@ export default function RecommendationCard({ caseStudy }) {
         <Box>
           <StyledRecommendationTitle
             mb={2}
-            as={Link}
+            target="_blank"
             fontSize="2xl"
             fontWeight={600}
             className="title"
             lineHeight="24px"
             letterSpacing="-0.03rem"
-            to={`/explore/${caseStudy.id}`}
+            href={`/case_studies/${caseStudy.id}`}
           >
             {caseStudy.title}
           </StyledRecommendationTitle>

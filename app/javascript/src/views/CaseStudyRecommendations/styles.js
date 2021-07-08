@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { rgba } from "polished";
 import { space, typography } from "styled-system";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Box, theme } from "@advisable/donut";
 
 export const StyledRecommendationCardAvatar = styled(Box)`
@@ -61,7 +61,7 @@ export const StyledNavigationItemCount = styled.div`
   background: ${theme.colors.cyan200};
 `;
 
-export const StyledRecommendationTitle = styled(Link)`
+export const StyledRecommendationTitle = styled.a`
   ${space};
   ${typography};
   display: block;

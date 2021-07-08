@@ -32,7 +32,7 @@ export default function SharedArticles() {
       </Text>
       <Box marginY={8} height="1px" bg="neutral200" />
       {loading && <>loading...</>}
-      {articles.length ? (
+      {!loading && articles.length ? (
         <CaseStudiesList articles={articles} />
       ) : (
         <SharedEmpty />
