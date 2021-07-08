@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { rgba } from "polished";
 import { space, typography } from "styled-system";
 import { Link, NavLink } from "react-router-dom";
 import { Box, theme } from "@advisable/donut";
@@ -76,11 +77,10 @@ export const StyledRecommendationCardActions = styled.div`
   right: 0;
   height: 100%;
   display: flex;
-  padding: 0 48px;
+  padding-left: 48px;
   position: absolute;
   align-items: center;
-  border-radius: 16px;
-  background: white;
+  background: #f8f8f9;
   opacity: 0;
   pointer-events: none;
   transition: opacity 200ms;
@@ -92,17 +92,12 @@ export const StyledRecommendationCardActions = styled.div`
     position: absolute;
     top: 0;
     left: -80px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+    background: linear-gradient(90deg, ${rgba("#F8F8F9", 0)} 0%, #f8f8f9 100%);
   }
 `;
 
-export const StyledRecommendationCard = styled(Box)`
-  cursor: pointer;
-  background: white;
+export const StyledRecommendation = styled(Box)`
   position: relative;
-  transition: box-shadow 200ms;
-  box-shadow: 0px 4px 8px rgba(56, 56, 56, 0.04),
-    0px 16px 40px rgba(0, 0, 0, 0.04);
 
   .subtitle {
     display: -webkit-box;
@@ -112,13 +107,6 @@ export const StyledRecommendationCard = styled(Box)`
   }
 
   &:hover {
-    box-shadow: 0px 8px 16px rgba(56, 56, 56, 0.08),
-      0px 16px 60px rgba(0, 0, 0, 0.08);
-
-    .title {
-      text-decoration: underline;
-    }
-
     ${StyledRecommendationCardActions} {
       opacity: 1;
       pointer-events: all;

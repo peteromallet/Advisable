@@ -4,6 +4,7 @@ const COLORS = {
   blue: "#0C3FEC",
   dark: "#041651",
   white: "white",
+  subtle: "#CCCCD1",
 };
 
 function LogoMark({ size = "20", color = "blue" }) {

@@ -1,21 +1,19 @@
-import React, { useCallback } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import { Text, Box, Circle } from "@advisable/donut";
+import CaseStudyActions from "./CaseStudyActions";
+import LogoMark from "src/components/LogoMark";
 import {
+  StyledRecommendation,
   StyledRecommendationTitle,
   StyledRecommendationCardAvatar,
+  StyledRecommendationCardActions,
 } from "./styles";
 
 export default function RecommendationCard({ caseStudy }) {
-  const history = useHistory();
-
-  const handleClick = useCallback(() => {
-    history.push(`/explore/${caseStudy.id}`);
-  }, [history, caseStudy]);
-
   return (
-    <>
-      <Box display="flex" onClick={handleClick} alignItems="center">
+    <StyledRecommendation>
+      <Box display="flex">
         <StyledRecommendationCardAvatar
           mr={6}
           flexShrink={0}
@@ -30,7 +28,11 @@ export default function RecommendationCard({ caseStudy }) {
             right="-8px"
             top="-8px"
           >
-            <img src={caseStudy.favicon} width="16px" />
+            {caseStudy.company?.favicon ? (
+              <img src={caseStudy.company.favicon} width="16px" />
+            ) : (
+              <LogoMark size={16} color="subtle" />
+            )}
           </Circle>
         </StyledRecommendationCardAvatar>
         <Box>
@@ -49,11 +51,18 @@ export default function RecommendationCard({ caseStudy }) {
           <Text mb={4} fontSize="md" color="neutral500">
             {caseStudy.specialist.name}
           </Text>
-          <Text lineHeight="20px" color="neutral900" className="subtitle">
+          <Text
+            lineHeight="20px"
+            color="neutral900"
+            className="subtitle"
+            marginBottom={6}
+          >
             {caseStudy.subtitle}
           </Text>
+          <CaseStudyActions caseStudy={caseStudy} />
         </Box>
       </Box>
-    </>
+      {/* <StyledRecommendationCardActions></StyledRecommendationCardActions> */}
+    </StyledRecommendation>
   );
 }
