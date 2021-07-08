@@ -727,6 +727,41 @@ RSpec.describe ZappierInteractorController, type: :request do
     end
   end
 
+  describe "POST /post_case_study_to_guild" do
+    let(:article) { create(:case_study_article) }
+    let(:params) { {uid: article.uid, key: key} }
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/post_case_study_to_guild", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    it "creates guild post" do
+      post("/zappier_interactor/post_case_study_to_guild", params: params)
+      expect(response).to have_http_status(:success)
+      body = JSON[response.body]
+      expect(body.keys).to include("post_id")
+      expect(::Guild::Post.find(body["post_id"]).article_id).to eq(article.id)
+    end
+
+    context "when guild posts already exists" do
+      let(:article) { create(:case_study_article) }
+      let!(:guild_post) { create(:guild_post, article: article) }
+
+      it "returns the existing one" do
+        post("/zappier_interactor/post_case_study_to_guild", params: params)
+        expect(response).to have_http_status(:success)
+        body = JSON[response.body]
+        expect(body.keys).to include("post_id")
+        expect(body["post_id"]).to eq(guild_post.id)
+      end
+    end
+  end
+
   describe "POST /send_email" do
     let(:user) { create(:specialist) }
     let(:params) { {uid: user.uid, subject: "Subject", body: "<h1>Heya!</h1>", key: key} }

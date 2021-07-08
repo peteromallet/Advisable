@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     resources :skills
     resources :project_skills
     resources :countries
-    resources :blacklisted_domains
+    resources :blacklisted_domains # rubocop:disable Naming/InclusiveLanguage
     resources :webhooks, only: %i[index show]
     namespace :guild do
       resources :posts, as: :opportunity
@@ -100,6 +100,7 @@ Rails.application.routes.draw do
   post 'zappier_interactor/enable_guild'
   post 'zappier_interactor/boost_guild_post'
   post 'zappier_interactor/import_case_study'
+  post 'zappier_interactor/post_case_study_to_guild'
   post 'zappier_interactor/send_email'
 
   # match every other route to the frontend codebase

@@ -147,6 +147,14 @@ class ZappierInteractorController < ApplicationController
     render json: {error: "Something went wrong"}, status: :unprocessable_entity
   end
 
+  def post_case_study_to_guild
+    article = CaseStudy::Article.find_by!(uid: params[:uid])
+    post = Guild::CaseStudy.create_from_article!(article)
+    render json: {status: "OK.", post_id: post.id}
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "Case Study not found"}, status: :unprocessable_entity
+  end
+
   def send_email
     with_account do |account|
       AccountMailer.zappier_email(account, params[:subject], params[:body]).deliver_later
