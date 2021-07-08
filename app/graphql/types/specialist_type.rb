@@ -54,7 +54,7 @@ module Types
       description 'The phone number for the specialist'
     end
 
-    field :image, Types::AttachmentType, null: true do
+    field :image, Types::AttachmentType, null: true, deprecation_reason: "Use #avatar instead" do
       description 'The specialists profile image'
     end
 

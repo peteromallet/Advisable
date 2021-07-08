@@ -97,17 +97,15 @@ class Specialist < ApplicationRecord
 
   # Fallback to the airtable image if they have not uploaded an avatar
   def avatar_or_image
-    return resized_avatar_url if avatar.attached?
+    if avatar.attached?
+      resized_avatar_url
+    else
+      url = image.try(:[], "url")
+      return if url.blank?
 
-    image
-  end
-
-  def image
-    url = super.try(:[], "url")
-    return if url.blank?
-
-    AttachImageJob.perform_later(self, url)
-    url
+      AttachImageJob.perform_later(self, url)
+      url
+    end
   end
 end
 
