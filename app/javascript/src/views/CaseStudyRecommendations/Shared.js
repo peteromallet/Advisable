@@ -14,7 +14,8 @@ function SharedEmpty() {
         No shared articles
       </Text>
       <Text fontSize="sm" color="neutral700" lineHeight="20px">
-        You don&apos;t have any shared articles yet.
+        You don&apos;t have any shared articles yet. When someone shares a case
+        study with you it will appear here.
       </Text>
     </Box>
   );
@@ -28,9 +29,6 @@ export default function SharedArticles() {
     <div>
       <Text fontSize="5xl" fontWeight={600} letterSpacing="-0.04rem" mb={2}>
         Shared
-      </Text>
-      <Text size="lg" color="neutral800">
-        Case studies that have been shared with you.
       </Text>
       <Box marginY={8} height="1px" bg="neutral200" />
       {loading && <>loading...</>}
