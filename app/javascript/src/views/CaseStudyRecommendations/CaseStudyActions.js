@@ -1,6 +1,7 @@
 import React from "react";
 import ShareButton from "./ShareButton";
 import ArchiveButton from "./ArchiveButton";
+import FavoriteButton from "./FavoriteButton";
 import MoveToInboxButton from "./MoveToInboxButton";
 
 export default function CaseStudyActions({
@@ -11,6 +12,7 @@ export default function CaseStudyActions({
 }) {
   return (
     <>
+      <FavoriteButton article={caseStudy} />
       {caseStudy.isArchived ? (
         <MoveToInboxButton
           search={search}
@@ -24,7 +26,6 @@ export default function CaseStudyActions({
           onArchive={onArchive}
         />
       )}
-      <ShareButton article={caseStudy} />
       <ShareButton article={caseStudy} />
     </>
   );

@@ -1,7 +1,24 @@
 import React from "react";
-import { Text } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import CaseStudiesList from "./CaseStudiesList";
 import { useSharedArticles } from "./queries";
+import inbox from "src/illustrations/empty_inbox.svg";
+
+function SharedEmpty() {
+  return (
+    <Box paddingY={12} paddingX={4} maxWidth={400} mx="auto" textAlign="center">
+      <Box marginBottom={4}>
+        <img src={inbox} alt="" />
+      </Box>
+      <Text fontSize="lg" fontWeight={500} marginBottom={2}>
+        No shared articles
+      </Text>
+      <Text fontSize="sm" color="neutral700" lineHeight="20px">
+        You don&apos;t have any shared articles yet.
+      </Text>
+    </Box>
+  );
+}
 
 export default function SharedArticles() {
   const { data, loading } = useSharedArticles();
@@ -12,11 +29,16 @@ export default function SharedArticles() {
       <Text fontSize="5xl" fontWeight={600} letterSpacing="-0.04rem" mb={2}>
         Shared
       </Text>
-      <Text size="lg" color="neutral800" mb={12}>
+      <Text size="lg" color="neutral800">
         Case studies that have been shared with you.
       </Text>
+      <Box marginY={8} height="1px" bg="neutral200" />
       {loading && <>loading...</>}
-      {articles.length ? <CaseStudiesList articles={articles} /> : null}
+      {articles.length ? (
+        <CaseStudiesList articles={articles} />
+      ) : (
+        <SharedEmpty />
+      )}
     </div>
   );
 }
