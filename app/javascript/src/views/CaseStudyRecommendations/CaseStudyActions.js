@@ -25,6 +25,7 @@ export default function CaseStudyActions({
         />
       )}
       <ShareButton article={caseStudy} />
+      <ShareButton article={caseStudy} />
     </>
   );
 }

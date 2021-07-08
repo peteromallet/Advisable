@@ -4,6 +4,7 @@ import { Collection } from "@styled-icons/heroicons-solid/Collection";
 import { Bookmark } from "@styled-icons/heroicons-solid/Bookmark";
 import { InboxIn } from "@styled-icons/heroicons-solid/InboxIn";
 import { Trash } from "@styled-icons/heroicons-solid/Trash";
+import { Search } from "@styled-icons/heroicons-solid/Search";
 import { PlusCircle } from "@styled-icons/heroicons-solid/PlusCircle";
 import {
   StyledNavigationItem,
@@ -23,12 +24,35 @@ function NavItem({ icon, children, count, ...props }) {
   );
 }
 
-export default function ExploreNavigation() {
+export default function ExploreNavigation({ data }) {
+  const companySearch = data.caseStudySearches.find(
+    (s) => s.companyRecomendation,
+  );
+  const searches = data.caseStudySearches.filter(
+    (s) => !s.companyRecomendation,
+  );
+
   return (
     <Box padding={4}>
-      <NavItem icon={Collection} to="/explore/inbox" count={12}>
-        Recommendations
-      </NavItem>
+      {companySearch && (
+        <NavItem
+          icon={Collection}
+          to={`/explore/${companySearch.id}`}
+          count={companySearch.results.length}
+        >
+          Recommendations
+        </NavItem>
+      )}
+      {searches.map((s) => (
+        <NavItem
+          key={s.id}
+          icon={Search}
+          to={`/explore/${s.id}`}
+          count={s.results.length}
+        >
+          {s.name}
+        </NavItem>
+      ))}
       <StyledNewSearch as="button">
         <PlusCircle />
         Create a new search
@@ -41,7 +65,7 @@ export default function ExploreNavigation() {
         Favorites
       </NavItem>
       <NavItem icon={Trash} to="/explore/archived">
-        Archived
+        Archive
       </NavItem>
     </Box>
   );

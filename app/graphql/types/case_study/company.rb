@@ -13,6 +13,11 @@ module Types
       field :business_type, String, null: true
       field :description, String, null: true
       field :articles, [Article], null: false
+      
+      field :favicon, String, null: true
+      def favicon
+        object.favicon.url
+      end
     end
   end
 end

@@ -1,18 +1,21 @@
-query recommendationsInbox($id: ID!) {
+query ExplorerSearchRecommendations($id: ID!) {
   caseStudySearch(id: $id) {
     id
     name
-    results {
-      edges {
-        node {
+    companyRecomendation
+    results(first: 12) {
+      nodes {
+        id
+        title
+        subtitle
+        company {
           id
-          title
-          subtitle
-          isArchived(id: $id)
-          specialist {
-            id
-            avatar
-          }
+          logo
+        }
+        specialist {
+          id
+          name
+          avatar
         }
       }
     }
