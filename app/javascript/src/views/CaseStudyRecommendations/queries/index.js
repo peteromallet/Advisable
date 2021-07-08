@@ -5,6 +5,7 @@ import ASSIGN from "./assignRecommendation.gql";
 import ARCHIVED from "./archivedArticles.gql";
 import SIDEBAR from "./sidebar.gql";
 import SAVED from "./savedArticles.gql";
+import SHARED from "./sharedArticles.gql";
 
 export function useArchive(opts) {
   return useMutation(ASSIGN, {
@@ -118,4 +119,8 @@ export function useSavedArticles(opts) {
 
 export function useArchivedArticles(opts) {
   return useQuery(ARCHIVED, opts);
+}
+
+export function useSharedArticles(opts) {
+  return useQuery(SHARED, opts);
 }
