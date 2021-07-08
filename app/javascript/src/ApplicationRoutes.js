@@ -66,6 +66,7 @@ const ApplicationRoutes = () => {
       <Header />
       <Suspense fallback={<Loading />}>
         <Switch>
+          <Route path="/case_studies/:id" component={CaseStudy} />
           <AuthenticatedRoute path="/set_password" component={SetPassword} />
           {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
           <Redirect
