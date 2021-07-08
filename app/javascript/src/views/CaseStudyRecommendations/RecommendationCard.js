@@ -8,7 +8,7 @@ import {
   StyledRecommendationCardAvatar,
 } from "./styles";
 
-export default function RecommendationCard({ caseStudy }) {
+export default function RecommendationCard({ caseStudy, search }) {
   return (
     <StyledRecommendation>
       <Box display="flex">
@@ -57,7 +57,7 @@ export default function RecommendationCard({ caseStudy }) {
           >
             {caseStudy.subtitle}
           </Text>
-          <CaseStudyActions caseStudy={caseStudy} />
+          <CaseStudyActions search={search} caseStudy={caseStudy} />
         </Box>
       </Box>
       {/* <StyledRecommendationCardActions></StyledRecommendationCardActions> */}
