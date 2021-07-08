@@ -10,7 +10,7 @@ export function useArchive(opts) {
     update(cache, response) {
       if (response.errors) return;
 
-      const { article, search } = response.data.assignCaseStudySearchArticle;
+      const { article, search } = response.data.assignCaseStudyArticle;
 
       cache.modify({
         id: cache.identify(article),
@@ -55,7 +55,7 @@ export function useUnarchive(opts) {
     update(cache, response) {
       if (response.errors) return;
 
-      const { article, search } = response.data.assignCaseStudySearchArticle;
+      const { article, search } = response.data.assignCaseStudyArticle;
 
       cache.modify({
         id: cache.identify(article),
