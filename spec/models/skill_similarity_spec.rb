@@ -20,12 +20,16 @@ RSpec.describe SkillSimilarity, type: :model do
       described_class.create(skill1: facebook_ads, skill2: instagram_optimization, similarity: 0)
     end
 
-    it "returns skills that are similar to the given skill" do
-      expect(described_class.similar_to(instagram_ads)).to match_array([facebook_ads, social_ads])
+    it "returns skills that are similar to the given skill including itself" do
+      expect(described_class.similar_to(instagram_ads)).to match_array([instagram_ads, facebook_ads, social_ads])
     end
 
     it "takes similarity as an optional param" do
-      expect(described_class.similar_to(instagram_ads, 25)).to match_array([facebook_ads, social_ads, instagram_optimization])
+      expect(described_class.similar_to(instagram_ads, 25)).to match_array([instagram_ads, facebook_ads, social_ads, instagram_optimization])
+    end
+
+    it "takes multiple" do
+      expect(described_class.similar_to([instagram_optimization, facebook_ads])).to match_array([instagram_ads, facebook_ads, instagram_optimization])
     end
   end
 end
