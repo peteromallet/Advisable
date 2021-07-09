@@ -53,7 +53,7 @@ export default function ExploreNavigation({ data }) {
           {s.name}
         </NavItem>
       ))}
-      <StyledNewSearch as="button">
+      <StyledNewSearch to="/explore/new">
         <PlusCircle />
         Create a new search
       </StyledNewSearch>
