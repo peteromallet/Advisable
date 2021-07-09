@@ -33,16 +33,60 @@ export function useArchive({ article, search }, opts) {
         },
       });
 
+      if (search) {
+        cache.modify({
+          id: cache.identify(search),
+          fields: {
+            results(previous, { readField }) {
+              return {
+                ...previous,
+                nodes: previous.nodes.filter((node) => {
+                  return article.id !== readField("id", node);
+                }),
+              };
+            },
+          },
+        });
+      }
+    },
+    ...opts,
+  });
+}
+
+export function useFavorite({ article }, opts) {
+  const isSaved = article.isSaved;
+
+  return useMutation(ASSIGN, {
+    variables: {
+      input: {
+        action: isSaved ? "unsave" : "save",
+        article: article.id,
+      },
+    },
+    update(cache, response) {
+      if (response.errors) return;
+
+      const existing = cache.readQuery({ query: SAVED });
+      if (existing) {
+        cache.writeQuery({
+          query: SAVED,
+          data: {
+            savedArticles: {
+              nodes: isSaved
+                ? existing.savedArticles.nodes.filter(
+                    (a) => a.id !== article.id,
+                  )
+                : [...existing.savedArticles.nodes, article],
+            },
+          },
+        });
+      }
+
       cache.modify({
-        id: cache.identify(search),
+        id: cache.identify(article),
         fields: {
-          results(previous, { readField }) {
-            return {
-              ...previous,
-              nodes: previous.nodes.filter((node) => {
-                return article.id !== readField("id", node);
-              }),
-            };
+          isSaved() {
+            return isSaved ? false : true;
           },
         },
       });
@@ -96,8 +140,8 @@ export function useUnarchive(opts) {
   });
 }
 
-export function useArchived(opts) {
-  return useQuery(ARCHIVED, opts);
+export function useArchived(props, opts) {
+  return useQuery(ARCHIVED, props, opts);
 }
 
 export function useCaseStudySearch(opts) {
