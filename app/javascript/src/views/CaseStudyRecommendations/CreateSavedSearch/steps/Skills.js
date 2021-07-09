@@ -14,7 +14,7 @@ import Header from "../components/Header";
 import { GET_SKILLS_CASE_STUDY_SEARCH } from "../queries/useSavedSearch";
 import CREATE_CASE_STUDY_SEARCH from "../queries/createCaseStudySearch.gql";
 import UPDATE_CASE_STUDY_SEARCH from "../queries/updateCaseStudySearch.gql";
-import GET_SEARCHES from "../../queries/getSearches.gql";
+import GET_SEARCHES from "../../queries/sidebar.gql";
 
 export const validationSchema = object().shape({
   skills: array().min(1, "Please select at least one skill").required(),
@@ -51,6 +51,7 @@ export default function Skills({ caseStudySearch, skills }) {
             cache.writeQuery({
               query: GET_SEARCHES,
               data: {
+                ...previous,
                 caseStudySearches: [
                   ...previous.caseStudySearches,
                   { ...data.createCaseStudySearch.search },
