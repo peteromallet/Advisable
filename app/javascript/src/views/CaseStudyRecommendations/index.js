@@ -7,6 +7,7 @@ import Shared from "./Shared";
 import Archived from "./Archived";
 import Favorites from "./Favorites";
 import Navigation from "./Navigation";
+import CreateSearch from "./CreateSavedSearch";
 import { useCaseStudySearches } from "./queries";
 
 export default function CaseStudyExplorer() {
@@ -20,23 +21,33 @@ export default function CaseStudyExplorer() {
     data.caseStudySearches[0];
 
   return (
-    <View>
-      <Route path="/explore" exact={!isLargeScreen}>
-        <View.Sidebar width={["100%", "100%", "300px"]}>
-          <Navigation data={data} />
-        </View.Sidebar>
+    <Switch>
+      <Route
+        path={["/explore/new/:id", "/explore/new"]}
+        component={CreateSearch}
+      />
+      <Route>
+        <View>
+          <Route path="/explore" exact={!isLargeScreen}>
+            <View.Sidebar width={["100%", "100%", "300px"]}>
+              <Navigation data={data} />
+            </View.Sidebar>
+          </Route>
+          <View.Content>
+            <Box maxWidth={800} paddingY={12} paddingX={4} marginX="auto">
+              <Switch>
+                <Route path="/explore/shared" component={Shared} />
+                <Route path="/explore/favorites" component={Favorites} />
+                <Route path="/explore/archived" component={Archived} />
+                <Route path="/explore/:id" component={Inbox} />
+                {isLargeScreen && (
+                  <Redirect to={`/explore/${defaultSearch.id}`} />
+                )}
+              </Switch>
+            </Box>
+          </View.Content>
+        </View>
       </Route>
-      <View.Content>
-        <Box maxWidth={800} paddingY={12} paddingX={4} marginX="auto">
-          <Switch>
-            <Route path="/explore/shared" component={Shared} />
-            <Route path="/explore/favorites" component={Favorites} />
-            <Route path="/explore/archived" component={Archived} />
-            <Route path="/explore/:id" component={Inbox} />
-            {isLargeScreen && <Redirect to={`/explore/${defaultSearch.id}`} />}
-          </Switch>
-        </Box>
-      </View.Content>
-    </View>
+    </Switch>
   );
 }
