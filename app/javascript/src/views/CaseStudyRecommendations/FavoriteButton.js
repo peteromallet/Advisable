@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Bookmark } from "@styled-icons/heroicons-solid/Bookmark";
 import { theme } from "@advisable/donut";
+import { useFavorite } from "./queries";
 
 const StyledShareButtonLabel = styled.div`
   font-size: 13px;
@@ -39,13 +40,26 @@ const StyledShareButton = styled.div`
       background: ${theme.colors.neutral200};
     }
   }
+
+  &[data-active="true"] {
+    ${StyledShareButtonIcon} {
+      color: white;
+      background: ${theme.colors.yellow500};
+    }
+  }
 `;
 
 export default function FavoriteButton({ article }) {
-  const handleClick = async () => {};
+  const [favorite] = useFavorite({
+    article,
+  });
+
+  const handleClick = async () => {
+    favorite();
+  };
 
   return (
-    <StyledShareButton $active={article.isSaved} onClick={handleClick}>
+    <StyledShareButton data-active={article.isSaved} onClick={handleClick}>
       <StyledShareButtonIcon>
         <Bookmark />
       </StyledShareButtonIcon>

@@ -1,19 +1,9 @@
+#import "./articleFields.gql"
 query ExplorerSharedArticles {
   sharedArticles {
     id
     article {
-      id
-      title
-      subtitle
-      company {
-        id
-        logo
-      }
-      specialist {
-        id
-        name
-        avatar
-      }
+      ...ArticleFields
     }
   }
 }
