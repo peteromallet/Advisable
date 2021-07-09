@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
 import CaseStudiesList from "./CaseStudiesList";
+import CardsSkeleton from "./CardsSkeleton";
 import { useSavedArticles } from "./queries";
 import illustration from "src/illustrations/empty_folder.svg";
 
@@ -32,12 +33,11 @@ export default function FavoriteArticles() {
         Favorites
       </Text>
       <Box marginY={8} height="1px" bg="neutral200" />
-      {loading && <>loading...</>}
-      {!loading && articles.length ? (
+      {loading && <CardsSkeleton />}
+      {!loading && articles.length > 0 && (
         <CaseStudiesList articles={articles} />
-      ) : (
-        <FavouritesEmpty />
       )}
+      {!loading && articles.length === 0 && <FavouritesEmpty />}
     </div>
   );
 }
