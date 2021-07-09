@@ -6,7 +6,7 @@ import SIDEBAR from "./sidebar.gql";
 import SAVED from "./savedArticles.gql";
 import SHARED from "./sharedArticles.gql";
 
-export function useArchive({ article, search }, opts) {
+export function useArchive({ article, searchId }, opts) {
   return useMutation(ASSIGN, {
     update(cache, response) {
       if (response.errors) return;
@@ -33,9 +33,9 @@ export function useArchive({ article, search }, opts) {
         },
       });
 
-      if (search) {
+      if (searchId) {
         cache.modify({
-          id: cache.identify(search),
+          id: cache.identify({ __typename: "CaseStudySearch", id: searchId }),
           fields: {
             results(previous, { readField }) {
               return {

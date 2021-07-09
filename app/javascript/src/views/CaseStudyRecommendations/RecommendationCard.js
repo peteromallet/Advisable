@@ -9,6 +9,11 @@ import {
 } from "./styles";
 
 export default function RecommendationCard({ caseStudy, search }) {
+  let url = `/case_Studies/${caseStudy.id}`;
+  if (search) {
+    url = `${url}?search=${search.id}`;
+  }
+
   return (
     <StyledRecommendation>
       <Box display="flex">
@@ -42,7 +47,7 @@ export default function RecommendationCard({ caseStudy, search }) {
             className="title"
             lineHeight="24px"
             letterSpacing="-0.03rem"
-            href={`/case_studies/${caseStudy.id}`}
+            href={url}
           >
             {caseStudy.title}
           </StyledRecommendationTitle>
@@ -57,10 +62,9 @@ export default function RecommendationCard({ caseStudy, search }) {
           >
             {caseStudy.subtitle}
           </Text>
-          <CaseStudyActions search={search} caseStudy={caseStudy} />
+          <CaseStudyActions searchId={search?.id} caseStudy={caseStudy} />
         </Box>
       </Box>
-      {/* <StyledRecommendationCardActions></StyledRecommendationCardActions> */}
     </StyledRecommendation>
   );
 }
