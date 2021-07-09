@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_08_121729) do
+ActiveRecord::Schema.define(version: 2021_07_09_101908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -660,23 +660,6 @@ ActiveRecord::Schema.define(version: 2021_07_08_121729) do
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end
 
-  create_table "payments", force: :cascade do |t|
-    t.string "uid"
-    t.string "source_id"
-    t.string "charge_id"
-    t.integer "amount"
-    t.string "currency"
-    t.string "status"
-    t.string "error_code"
-    t.bigint "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["charge_id"], name: "index_payments_on_charge_id"
-    t.index ["project_id"], name: "index_payments_on_project_id"
-    t.index ["source_id"], name: "index_payments_on_source_id"
-    t.index ["uid"], name: "index_payments_on_uid"
-  end
-
   create_table "post_prompts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "prompt"
     t.string "cta"
@@ -1113,7 +1096,6 @@ ActiveRecord::Schema.define(version: 2021_07_08_121729) do
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
   add_foreign_key "off_platform_projects", "specialists"
-  add_foreign_key "payments", "projects"
   add_foreign_key "post_prompts", "labels"
   add_foreign_key "problematic_flags", "applications"
   add_foreign_key "problematic_flags", "users"
