@@ -5,7 +5,7 @@ import FavoriteButton from "./FavoriteButton";
 import MoveToInboxButton from "./MoveToInboxButton";
 
 export default function CaseStudyActions({
-  search,
+  searchId,
   caseStudy,
   onArchive,
   onUnarchive,
@@ -13,15 +13,12 @@ export default function CaseStudyActions({
   return (
     <>
       <FavoriteButton article={caseStudy} />
-      {caseStudy.isArchived ? (
-        <MoveToInboxButton
-          search={search}
-          article={caseStudy}
-          onArchive={onUnarchive}
-        />
-      ) : (
+      {caseStudy.isArchived && (
+        <MoveToInboxButton article={caseStudy} onArchive={onUnarchive} />
+      )}
+      {searchId && !caseStudy.isArchived && (
         <ArchiveButton
-          search={search}
+          searchId={searchId}
           article={caseStudy}
           onArchive={onArchive}
         />
