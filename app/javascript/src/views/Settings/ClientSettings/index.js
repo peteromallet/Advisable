@@ -20,13 +20,17 @@ const ClientSettings = ({ match }) => {
   const initialPath = viewer.isTeamManager ? "/payments" : "/password";
 
   return (
-    <View>
+    <View type={{ _: "vertical", l: "horizontal" }}>
       {/* On mobile we only show the navigation menu if the URL is exactly
       /settings. On desktop we want to display it as a sidebar on all settings
       pages. We use a Route with exact prop to achieve this. */}
       <Route path={match.path} component={Sidebar} exact={!breakpointS} />
       <View.Content>
-        <Container paddingY={12} paddingX={[4, 4, 6, 8]} maxWidth="940px">
+        <Container
+          paddingY={{ _: 4, s: 0, l: 12 }}
+          paddingX={[4, 4, 6, 8]}
+          maxWidth={{ l: "940px" }}
+        >
           <Switch>
             <Route path="/settings/payments" component={PaymentSettings} />
             <Route path="/settings/team" component={Team} />
