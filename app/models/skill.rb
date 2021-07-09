@@ -47,6 +47,10 @@ class Skill < ApplicationRecord
     end
   end
   # rubocop:enable Rails/SkipsModelValidations
+
+  def with_similar_skills(similarity = 50)
+    SkillSimilarity.similar_to(self, similarity)
+  end
 end
 
 # == Schema Information

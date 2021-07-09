@@ -8,17 +8,25 @@ class SkillSimilarity < ApplicationRecord
   validates :skill2, uniqueness: {scope: :skill1}
 
   validates :similarity, presence: true
+  validates :similarity, inclusion: 0..100
   validate :skills_are_different
   validate :unique_combination
 
-  def self.similar_to(skill, similarity = 50)
-    Skill.where(
-      id: where(skill1: skill, similarity: similarity..).select(:skill2_id)
-    ).or(
-      Skill.where(
-        id: where(skill2: skill, similarity: similarity..).select(:skill1_id)
+  # returns origin and all related skills - it can take singular or plulral skills
+  def self.similar_to(skills, similarity = 50)
+    query = Skill.where(id: skills)
+    Array(skills).each do |skill|
+      query = query.or(
+        Skill.where(
+          id: where(skill1: skill, similarity: similarity..).select(:skill2_id)
+        )
+      ).or(
+        Skill.where(
+          id: where(skill2: skill, similarity: similarity..).select(:skill1_id)
+        )
       )
-    )
+    end
+    query
   end
 
   private
