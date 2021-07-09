@@ -7,14 +7,14 @@ RSpec.describe Event, type: :model do
   let(:event) { build(:event, host: host) }
 
   describe "db columns" do
-    it { expect(event).to have_db_column :id }
-    it { expect(event).to have_db_column :title }
-    it { expect(event).to have_db_column :description }
-    it { expect(event).to have_db_column :starts_at }
-    it { expect(event).to have_db_column :ends_at }
-    it { expect(event).to have_db_column :published_at }
-    it { expect(event).to have_db_column :url }
-    it { expect(event).to have_db_column :featured }
+    it { expect(event).to have_db_column(:id) }
+    it { expect(event).to have_db_column(:title) }
+    it { expect(event).to have_db_column(:description) }
+    it { expect(event).to have_db_column(:starts_at) }
+    it { expect(event).to have_db_column(:ends_at) }
+    it { expect(event).to have_db_column(:published_at) }
+    it { expect(event).to have_db_column(:url) }
+    it { expect(event).to have_db_column(:featured) }
   end
 
   describe "relationships" do
@@ -52,9 +52,18 @@ RSpec.describe Event, type: :model do
       expect(described_class.list).to include(in_progress)
     end
 
-    it "includes the featured event at the beginning if there is one" do
-      featured = create(:event, starts_at: 12.hours.from_now, ends_at: 13.hours.from_now, featured: true)
-      expect(described_class.list.first).to eq(featured)
+    it "orders by featured first, asc upcoming second, and asc ended last" do
+      upcoming1 = create(:event, starts_at: 1.day.from_now, ends_at: 2.days.from_now)
+      upcoming2 = create(:event, starts_at: 2.days.from_now, ends_at: 3.days.from_now)
+      ended1 = create(:event, starts_at: 3.days.ago, ends_at: 2.days.ago)
+      ended2 = create(:event, starts_at: 2.days.ago, ends_at: 1.day.ago)
+      featured = create(:event, featured: true, starts_at: 3.days.from_now, ends_at: 4.days.from_now)
+
+      expect(described_class.list).to eq(
+        [
+          featured, upcoming1, upcoming2, ended1, ended2
+        ]
+      )
     end
   end
 

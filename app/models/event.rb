@@ -27,7 +27,14 @@ class Event < ApplicationRecord
   scope :published, -> { where.not(published_at: nil) }
   scope :featured, -> { where(featured: true) }
   scope :list, lambda {
-    published.order(featured: :desc, starts_at: :desc)
+    published.order(
+      Arel.sql("
+        CASE
+          WHEN featured = true THEN 0
+          WHEN starts_at > NOW() THEN 1
+          ELSE 2
+        END, starts_at ASC")
+    )
   }
   scope :upcoming, lambda {
     where(ends_at: (Time.zone.now..))
