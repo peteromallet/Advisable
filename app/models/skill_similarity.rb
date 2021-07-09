@@ -11,6 +11,16 @@ class SkillSimilarity < ApplicationRecord
   validate :skills_are_different
   validate :unique_combination
 
+  def self.similar_to(skill, similarity = 50)
+    Skill.where(
+      id: where(skill1: skill, similarity: similarity..).select(:skill2_id)
+    ).or(
+      Skill.where(
+        id: where(skill2: skill, similarity: similarity..).select(:skill1_id)
+      )
+    )
+  end
+
   private
 
   def skills_are_different
