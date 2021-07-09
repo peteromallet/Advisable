@@ -1,18 +1,8 @@
+#import "./articleFields.gql"
 query ExplorerFavoriteArticles {
   savedArticles {
     nodes {
-      id
-      title
-      subtitle
-      company {
-        id
-        logo
-      }
-      specialist {
-        id
-        name
-        avatar
-      }
+      ...ArticleFields
     }
   }
 }
