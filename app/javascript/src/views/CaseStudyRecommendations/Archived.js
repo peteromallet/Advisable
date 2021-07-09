@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
 import CaseStudiesList from "./CaseStudiesList";
+import CardsSkeleton from "./CardsSkeleton";
 import { useArchivedArticles } from "./queries";
 import inbox from "src/illustrations/box.svg";
 
@@ -30,12 +31,11 @@ export default function ArchivedArticles() {
         Archived
       </Text>
       <Box marginY={8} height="1px" bg="neutral200" />
-      {loading && <>loading...</>}
-      {!loading && articles.length ? (
+      {loading && <CardsSkeleton />}
+      {!loading && articles.length > 0 && (
         <CaseStudiesList articles={articles} />
-      ) : (
-        <ArchivedEmpty />
       )}
+      {!loading && articles.length === 0 && <ArchivedEmpty />}
     </div>
   );
 }
