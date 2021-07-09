@@ -95,12 +95,24 @@ export function useFavorite({ article }, opts) {
   });
 }
 
-export function useUnarchive(opts) {
+export function useUnarchive({ article }) {
   return useMutation(ASSIGN, {
     update(cache, response) {
       if (response.errors) return;
 
-      const { article, search } = response.data.assignCaseStudyArticle;
+      const existing = cache.readQuery({ query: ARCHIVED });
+      if (existing) {
+        cache.writeQuery({
+          query: ARCHIVED,
+          data: {
+            archivedArticles: {
+              nodes: existing.archivedArticles.nodes.filter(
+                (a) => a.id !== article.id,
+              ),
+            },
+          },
+        });
+      }
 
       cache.modify({
         id: cache.identify(article),
@@ -110,33 +122,7 @@ export function useUnarchive(opts) {
           },
         },
       });
-
-      cache.modify({
-        id: cache.identify(search),
-        fields: {
-          archived(previous, { readField }) {
-            return {
-              ...previous,
-              edges: previous.edges.filter((edge) => {
-                return article.id !== readField("id", edge.node);
-              }),
-            };
-          },
-          results(previous, { toReference }) {
-            return {
-              ...previous,
-              edges: [
-                ...previous.edges,
-                {
-                  node: toReference(article),
-                },
-              ],
-            };
-          },
-        },
-      });
     },
-    ...opts,
   });
 }
 

@@ -3,6 +3,7 @@ fragment ArticleFields on CaseStudyArticle {
   title
   subtitle
   isSaved
+  isArchived
   company {
     id
     logo
