@@ -15,23 +15,27 @@ function ViewSidebar({ children, ...props }) {
 }
 
 ViewSidebar.defaultProps = {
-  width: "300px",
   padding: "24px",
   display: { _: "none", l: "block" },
 };
 
-function View({ children }) {
+function View({ children, ...props }) {
   const height = use100vh();
   return (
     <StyledView
       style={{
         height: height ? `${height - 58}px` : "100%",
       }}
+      {...props}
     >
       {children}
     </StyledView>
   );
 }
+
+View.defaultProps = {
+  type: "horizontal",
+};
 
 View.Sidebar = ViewSidebar;
 View.Content = ViewContent;
