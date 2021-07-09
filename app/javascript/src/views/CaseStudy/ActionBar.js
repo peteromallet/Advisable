@@ -1,7 +1,8 @@
-import React, { useCallback } from "react";
-import { useHistory } from "react-router";
+import React from "react";
+import queryString from "query-string";
 import styled from "styled-components";
-import CaseStudyActions from "./CaseStudyActions";
+import CaseStudyActions from "../CaseStudyRecommendations/CaseStudyActions";
+import { useLocation } from "react-router-dom";
 
 const StyledActionBarContainer = styled.div`
   left: 50%;
@@ -25,21 +26,14 @@ const StyledActionBar = styled.div`
     0px 12px 80px rgba(26, 26, 31, 0.16);
 `;
 
-export default function ActionBar({ search, caseStudy }) {
-  const history = useHistory();
-
-  const handleArchive = useCallback(() => {
-    history.replace(`/explore/${search.id}`);
-  }, [history, search]);
+export default function ActionBar({ caseStudy }) {
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
 
   return (
     <StyledActionBarContainer>
       <StyledActionBar>
-        <CaseStudyActions
-          search={search}
-          caseStudy={caseStudy}
-          onArchive={handleArchive}
-        />
+        <CaseStudyActions searchId={queryParams.search} caseStudy={caseStudy} />
       </StyledActionBar>
     </StyledActionBarContainer>
   );

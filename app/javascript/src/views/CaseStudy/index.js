@@ -8,6 +8,7 @@ import CaseStudyContent from "src/components/CaseStudyContent";
 import { useCaseStudy } from "./queries";
 import Sticky from "react-stickynode";
 import orbits from "./orbits.svg";
+import ActionBar from "./ActionBar";
 
 const StyledHero = styled.div`
   width: 100%;
@@ -95,9 +96,7 @@ function CaseStudySummaryResults({ caseStudy }) {
 
 export default function CaseStudy() {
   const { id } = useParams();
-  const { data, loading } = useCaseStudy({
-    variables: { id },
-  });
+  const { data, loading } = useCaseStudy(id);
 
   if (loading) return <>loading</>;
   const { caseStudy } = data;
@@ -155,6 +154,7 @@ export default function CaseStudy() {
           <CaseStudySummaryResults caseStudy={caseStudy} />
           <Box height="1px" bg="neutral200" marginY={8} />
           <CaseStudyContent caseStudy={caseStudy} />
+          <ActionBar caseStudy={caseStudy} />
         </Box>
       </Container>
     </>

@@ -4,6 +4,8 @@ query getCaseStudy($id: ID!) {
     title
     subtitle
     comment
+    isSaved
+    isArchived
     specialist {
       id
       bio
