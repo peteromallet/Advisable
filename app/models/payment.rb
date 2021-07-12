@@ -57,7 +57,11 @@ class Payment < ApplicationRecord
       amount: amount_with_fee,
       currency: "usd",
       customer: company.stripe_customer_id,
-      metadata: {admin_fee: admin_fee}
+      metadata: {
+        payment_type: "payment",
+        payment: uid,
+        admin_fee: admin_fee
+      }
     }
   end
 

@@ -10,18 +10,18 @@ module StripeEvents
 
     private
 
-    def payment_intent
+    def intent
       event.data.object
     end
 
     def metadata
-      payment_intent.metadata
+      intent.metadata
     end
 
     def process_deposit
       project = Project.find_by!(uid: metadata.project)
 
-      project.deposit_paid += payment_intent.amount
+      project.deposit_paid += intent.amount
       project.status = "Brief Confirmed"
       project.published_at = Time.zone.now
       project.sales_status = "Open"
@@ -32,8 +32,13 @@ module StripeEvents
       # Attach the payment method
       Users::AttachPaymentMethod.call(
         user: project.user,
-        payment_method_id: payment_intent.payment_method
+        payment_method_id: intent.payment_method
       )
+    end
+
+    def process_payment
+      payment = Payment.find_by!(uid: metadata.payment)
+      payment.update(status: intent.status)
     end
   end
 end
