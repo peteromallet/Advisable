@@ -12757,10 +12757,10 @@ raw-loader@^4.0.2:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
-react-bottom-scroll-listener@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/react-bottom-scroll-listener/-/react-bottom-scroll-listener-4.1.1.tgz#6c684babb7d9effb48205f62eb9df706f26ccae2"
-  integrity sha512-Qmcu1SuqrlJzZkXPr+AAduelvUy7Drk4hwMAOcVQrl47cGYR2TEkpAJoRQWJ5boCUpNdifhKD5Uuajn8+5lTIQ==
+react-bottom-scroll-listener@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-bottom-scroll-listener/-/react-bottom-scroll-listener-5.0.0.tgz#173ab652d2285ea8831a9b79f58d6fc70cf353d0"
+  integrity sha512-X+PE8qiTOd8H9WxrvBKG5AZFUtekWk2mR8YNXhF0Zd8HbpX8eNjPcKm4Y8EEdxmgOe6rP02r/glPI72tWNqtpw==
   dependencies:
     lodash.debounce "^4.0.8"
 
