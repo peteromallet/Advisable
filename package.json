@@ -79,13 +79,13 @@
     "styled-components": "^5.3.0",
     "styled-system": "^5.1.5",
     "talkjs": "^0.14.5",
-    "twilio-chat": "^5.0.0",
+    "twilio-chat": "^5.0.1",
     "twilio-video": "^2.15.1",
     "url-regex": "^5.0.0",
     "use-sound": "^3.0.1",
     "webpack-bundle-analyzer": "^4.4.2",
     "yup": "^0.32.9",
-    "zustand": "^3.5.5"
+    "zustand": "^3.5.6"
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
