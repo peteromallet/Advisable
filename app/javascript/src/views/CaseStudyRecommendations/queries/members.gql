@@ -1,0 +1,10 @@
+query TeamMembers {
+  currentCompany {
+    id
+    users {
+      id
+      name
+      email
+    }
+  }
+}

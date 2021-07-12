@@ -5,6 +5,8 @@ import ARCHIVED from "./archivedArticles.gql";
 import SIDEBAR from "./sidebar.gql";
 import SAVED from "./savedArticles.gql";
 import SHARED from "./sharedArticles.gql";
+import MEMBERS from "./members.gql";
+import SHARE from "./shareArticle.gql";
 
 export function useArchive({ article, searchId }, opts) {
   return useMutation(ASSIGN, {
@@ -126,6 +128,10 @@ export function useUnarchive({ article }) {
   });
 }
 
+export function useShareArticle() {
+  return useMutation(SHARE);
+}
+
 export function useArchived(props, opts) {
   return useQuery(ARCHIVED, props, opts);
 }
@@ -148,4 +154,8 @@ export function useArchivedArticles(opts) {
 
 export function useSharedArticles(opts) {
   return useQuery(SHARED, opts);
+}
+
+export function useTeamMembers(opts) {
+  return useQuery(MEMBERS, opts);
 }

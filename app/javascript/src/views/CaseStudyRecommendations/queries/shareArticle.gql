@@ -1,0 +1,10 @@
+mutation ShareArticle($input: ShareCaseStudyArticleInput!) {
+  shareCaseStudyArticle(input: $input) {
+    sharedArticle {
+      id
+      article {
+        id
+      }
+    }
+  }
+}
