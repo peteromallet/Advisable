@@ -27,7 +27,8 @@ const ClientSettings = ({ match }) => {
       <Route path={match.path} component={Sidebar} exact={!breakpointS} />
       <View.Content>
         <Container
-          paddingY={{ _: 4, s: 0, l: 12 }}
+          pt={{ _: 4, s: 0, l: 12 }}
+          pb={10}
           paddingX={[4, 4, 6, 8]}
           maxWidth={{ l: "940px" }}
         >
