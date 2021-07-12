@@ -1,5 +1,16 @@
-class Types::Guild::Post::CaseStudyType < Types::BaseType
-  graphql_name "GuildPostCaseStudy"
+# frozen_string_literal: true
 
-  implements Types::Guild::PostInterface
+module Types
+  module Guild
+    module Post
+      class CaseStudyType < Types::BaseType
+        description "Represents a case study guild post"
+        graphql_name "GuildPostCaseStudy"
+
+        implements Types::Guild::PostInterface
+
+        field :article, Types::CaseStudy::Article, null: true
+      end
+    end
+  end
 end

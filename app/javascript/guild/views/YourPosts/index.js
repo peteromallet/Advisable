@@ -1,18 +1,15 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { useHistory } from "react-router-dom";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import Loading from "@advisable-main/components/Loading";
 import { Text, Box } from "@advisable/donut";
 import { GuildBox } from "@guild/styles";
-import Post from "@guild/components/Post";
 import { GUILD_YOUR_POSTS_QUERY } from "./queries";
 import Filters from "@guild/components/Filters";
 import { cursorLoadMore } from "@guild/utils";
-import { StyledYourPost, StyledStatus } from "./styles";
+import YourPost from "./YourPost";
 
 const YourPosts = () => {
-  const history = useHistory();
   const { data, loading, fetchMore } = useQuery(GUILD_YOUR_POSTS_QUERY, {
     fetchPolicy: "network-only",
   });
@@ -26,8 +23,6 @@ const YourPosts = () => {
       });
   });
 
-  const handleEdit = (postId) => history.push(`composer/${postId}/type`);
-
   return loading ? (
     <Loading />
   ) : (
@@ -40,19 +35,9 @@ const YourPosts = () => {
       <GuildBox spaceChildrenVertical={48}>
         <Filters yourPosts />
         {data &&
-          data.guildYourPosts.nodes.map((post, key) => {
-            const published = /published|removed/.test(post.status);
-            return (
-              <Box key={key} position="relative">
-                <StyledStatus onClick={() => handleEdit(post.id)}>
-                  {published ? "Edit" : "Edit Draft"}
-                </StyledStatus>
-                <StyledYourPost draft={!published}>
-                  <Post post={post} />
-                </StyledYourPost>
-              </Box>
-            );
-          })}
+          data.guildYourPosts.nodes.map((post, key) => (
+            <YourPost key={key} post={post} />
+          ))}
         {!loading && !data?.guildYourPosts?.nodes?.length && (
           <GuildBox
             background="white"
