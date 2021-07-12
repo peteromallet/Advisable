@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :payment do
-    project
     sequence(:uid) { "pay_#{SecureRandom.hex[0..14]}" }
-    currency { "usd" }
-    charge_id { "ch_1234" }
-    amount { 100_00 }
-    status { "captured" }
+    amount { 100 }
+    admin_fee { 10 }
+    status { "pending" }
+    company
+    specialist
   end
 end
