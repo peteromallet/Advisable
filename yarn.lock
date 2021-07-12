@@ -15331,10 +15331,10 @@ use-latest@^1.0.0:
   dependencies:
     use-isomorphic-layout-effect "^1.0.0"
 
-use-sound@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/use-sound/-/use-sound-3.0.1.tgz#9671926ffb32773875f80b51258a5a17e3841ac5"
-  integrity sha512-M6rwX6x+yaBw/R+adPfSlydef2W3UXcOZOmk9TsfAobEDUfKO71lwHOe6ammGGW2DVDXV5t1KoU7dxBLlxFTtA==
+use-sound@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/use-sound/-/use-sound-4.0.1.tgz#8c8de4badd16902db7762fd9418a4283b9bf7b3e"
+  integrity sha512-hykJ86kNcu6y/FzlSHcQxhjSGMslZx2WlfLpZNoPbvueakv4OF3xPxEtGV2YmculrIaH0tPp9LtG4jgy17xMWg==
   dependencies:
     howler "^2.1.3"
 
