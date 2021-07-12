@@ -33,6 +33,7 @@ class Specialist < ApplicationRecord
 
   VALID_APPLICATION_STAGES = ["Started", "Submitted", "Invited To Interview", "Interview Scheduled", "Interview Completed", "Full Application", "On Hold", "Completed", "Accepted", "Rejected By Us", "Rejected By Them", "References Requested", "References Provided", "References Validated", "Kicked Off"].freeze
   REJECTED_STAGES = ["Rejected By Us", "Rejected By Them"].freeze
+  DEFAULT_SOURCING_FEE = 800
 
   has_logidze
 
@@ -110,7 +111,7 @@ class Specialist < ApplicationRecord
 
   # sourcing_fee value is stored in basis points integers: 8% -> 800 bp
   def sourcing_fee_percentage
-    (sourcing_fee.presence || 800) / BigDecimal("10000")
+    (sourcing_fee.presence || DEFAULT_SOURCING_FEE) / BigDecimal("10000")
   end
 end
 
