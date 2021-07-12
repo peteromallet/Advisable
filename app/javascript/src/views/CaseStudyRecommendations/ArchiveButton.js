@@ -75,6 +75,9 @@ function ArchiveForm({ article, searchId, onArchive = () => {}, modal }) {
     [archive, article, onArchive, modal],
   );
 
+  const primarySkill =
+    article.skills.find((s) => s.primary) || article.skills[0];
+
   return (
     <Formik
       initialValues={{ feedback: "", otherFeedback: undefined }}
@@ -115,9 +118,9 @@ function ArchiveForm({ article, searchId, onArchive = () => {}, modal }) {
               as={Radio}
               type="radio"
               name="feedback"
-              value={`Not interested in ${article.primarySkill?.skill?.name}`}
+              value={`Not interested in ${primarySkill?.skill?.name}`}
             >
-              Not interested in {article.primarySkill?.skill?.name}
+              Not interested in {primarySkill?.skill?.name}
             </Field>
             <Field as={Radio} type="radio" name="feedback" value="_OTHER">
               Other
