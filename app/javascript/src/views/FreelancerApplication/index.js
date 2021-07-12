@@ -34,7 +34,7 @@ export default function FreelancerApplication() {
   const { specialist, countries, skills, industries } = data;
 
   return (
-    <View>
+    <View type={{ _: "contentOnly", l: "horizontal" }}>
       <Sidebar specialist={specialist} />
       <View.Content>
         <Container paddingY={12} paddingX={[4, 4, 6, 8]} maxWidth="750px">

@@ -36,7 +36,7 @@ export default function ClientApplication() {
   const { clientApplication, industries } = data;
 
   return (
-    <View>
+    <View type={{ _: "contentOnly", l: "horizontal" }}>
       <Sidebar clientApplication={clientApplication} />
       <View.Content>
         <Container paddingY={12} paddingX={[4, 4, 6, 8]} maxWidth="750px">
