@@ -4,6 +4,14 @@ fragment ArticleFields on CaseStudyArticle {
   subtitle
   isSaved
   isArchived
+  skills {
+    id
+    primary
+    skill {
+      id
+      name
+    }
+  }
   company {
     id
     logo
