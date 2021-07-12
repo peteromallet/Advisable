@@ -169,40 +169,6 @@ export default function CreateGuildPost({ guildPost }) {
                   name="type"
                   type="radio"
                   as={RadioOption}
-                  value="CaseStudy"
-                  aria-label="Case study"
-                  onChange={(e) => selectHandler(formik, e)}
-                  onClick={(e) => selectHandler(formik, e)}
-                >
-                  <Circle
-                    size={64}
-                    bg="green200"
-                    color="blue900"
-                    marginBottom="lg"
-                  >
-                    {formik.isSubmitting &&
-                    formik.values.type === "CaseStudy" ? (
-                      <Loader color="blue900" />
-                    ) : (
-                      <BarChart size={32} />
-                    )}
-                  </Circle>
-                  <Text
-                    fontSize="l"
-                    letterSpacing="-0.02rem"
-                    fontWeight="medium"
-                    marginBottom="2xs"
-                  >
-                    Case study
-                  </Text>
-                  <Text lineHeight="16px" fontSize="xs" color="neutral700">
-                    Share a case study with other Guild members
-                  </Text>
-                </Field>
-                <Field
-                  name="type"
-                  type="radio"
-                  as={RadioOption}
                   value="Post"
                   aria-label="Other"
                   onChange={(e) => selectHandler(formik, e)}

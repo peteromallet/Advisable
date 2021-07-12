@@ -19,6 +19,7 @@ import JoinGuild from "./JoinGuild";
 import PopularNotice from "@guild/components/Post/components/PopularNotice";
 import { hasGqlError, loginWithRedirectPath } from "@guild/utils";
 import { StyledImageThumbnail } from "./styles";
+import CaseStudyContent from "src/components/CaseStudyContent";
 
 const Post = () => {
   const { postId } = useParams();
@@ -34,7 +35,6 @@ const Post = () => {
     },
   });
   const post = data?.guildPost;
-
   const { viewer, isAuthor, popularOrAuthorReactions } = useViewerAuthor(post);
   const guildViewer = viewer?.guild;
   const otherImages = (post?.images || []).filter((p) => p.cover === false);
@@ -139,7 +139,14 @@ const Post = () => {
                 </Box>
               ) : null}
             </Box>
-            <Markdown>{post.body}</Markdown>
+
+            <Box mb={8}>
+              {post.article ? (
+                <CaseStudyContent caseStudy={post.article} />
+              ) : (
+                <Markdown>{post.body}</Markdown>
+              )}
+            </Box>
 
             <Topics topics={post.guildTopics} />
 
