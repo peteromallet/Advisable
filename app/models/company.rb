@@ -4,6 +4,8 @@ class Company < ApplicationRecord
   has_logidze
 
   BUSINESS_TYPES = %w[B2B B2C].freeze
+  DEFAULT_ADMIN_FEE = 500
+
   belongs_to :sales_person, optional: true
   belongs_to :industry, optional: true
   has_many :users, dependent: :nullify
@@ -74,7 +76,7 @@ class Company < ApplicationRecord
 
   # admin_fee value is stored in basis points integers: 5% -> 500 bp
   def admin_fee_percentage
-    (admin_fee.presence || 500) / BigDecimal("10000")
+    (admin_fee.presence || DEFAULT_ADMIN_FEE) / BigDecimal("10000")
   end
 
   private
