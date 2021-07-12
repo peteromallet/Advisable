@@ -3,6 +3,7 @@ import { Formik, Form, Field } from "formik";
 import SubmitButton from "src/components/SubmitButton";
 import BulletPointInput from "src/components/BulletPointInput";
 import CheckboxInput from "src/components/CheckboxInput";
+import FormField from "src/components/FormField";
 import { Text, Stack, Box } from "@advisable/donut";
 import ActionBarModal from "./ActionBarModal";
 import { useUpdateProject } from "./queries";
@@ -94,17 +95,11 @@ export default function UpdateProjectRequirementsModal({ dialog, project }) {
                     Which of these characteristics are essential?
                   </Text>
                   <Box marginBottom="xl">
-                    {formik.values.characteristics.map((characteristic, i) => (
-                      <Field
-                        key={i}
-                        type="checkbox"
-                        value={characteristic}
-                        as={CheckboxInput}
-                        name="requiredCharacteristics"
-                      >
-                        {characteristic}
-                      </Field>
-                    ))}
+                    <FormField
+                      as={CheckboxInput}
+                      name="requiredCharacteristics"
+                      options={formik.values.characteristics}
+                    />
                   </Box>
                   <SubmitButton>Save Changes</SubmitButton>
                 </>
