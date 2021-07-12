@@ -10,7 +10,7 @@ import useViewer from "src/hooks/useViewer";
 import View from "src/components/View";
 
 const SidebarTitle = styled.div`
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     margin-left: 0;
   }
 `;
