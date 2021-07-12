@@ -3,8 +3,7 @@
 FactoryBot.define do
   factory :payment do
     sequence(:uid) { "pay_#{SecureRandom.hex[0..14]}" }
-    amount { 100 }
-    admin_fee { 10 }
+    amount { 10000 }
     status { "pending" }
     company
     specialist
