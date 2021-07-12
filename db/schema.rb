@@ -764,6 +764,7 @@ ActiveRecord::Schema.define(version: 2021_07_09_101908) do
     t.integer "likelihood_to_confirm"
     t.string "lost_reason"
     t.string "project_start"
+    t.integer "deposit_used"
     t.index ["sales_status"], name: "index_projects_on_sales_status"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
