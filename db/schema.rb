@@ -801,6 +801,17 @@ ActiveRecord::Schema.define(version: 2021_07_09_101908) do
     t.string "uid"
   end
 
+  create_table "skill_similarities", force: :cascade do |t|
+    t.bigint "skill1_id", null: false
+    t.bigint "skill2_id", null: false
+    t.integer "similarity", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["skill1_id", "skill2_id"], name: "index_skill_similarities_on_skill1_id_and_skill2_id", unique: true
+    t.index ["skill1_id"], name: "index_skill_similarities_on_skill1_id"
+    t.index ["skill2_id"], name: "index_skill_similarities_on_skill2_id"
+  end
+
   create_table "skills", force: :cascade do |t|
     t.string "name"
     t.string "airtable_id"
@@ -1103,6 +1114,8 @@ ActiveRecord::Schema.define(version: 2021_07_09_101908) do
   add_foreign_key "project_skills", "skills"
   add_foreign_key "projects", "users"
   add_foreign_key "reviews", "specialists"
+  add_foreign_key "skill_similarities", "skills", column: "skill1_id"
+  add_foreign_key "skill_similarities", "skills", column: "skill2_id"
   add_foreign_key "specialist_industries", "industries"
   add_foreign_key "specialist_industries", "specialists"
   add_foreign_key "specialist_skills", "skills"
