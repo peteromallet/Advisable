@@ -1,43 +1,44 @@
-class StripeEvents::PaymentIntentSucceeded < StripeEvents::BaseEvent
-  def process
-    # If the payment type was a deposit
-    if payment_type == 'deposit'
-      # Get the project from the project id that is stored in the metadata
-      project = Project.find_by_uid(payment_intent.metadata.project)
-      # Mark the deposit as paid
-      project.deposit_paid += payment_intent.amount
+# frozen_string_literal: true
+
+module StripeEvents
+  class PaymentIntentSucceeded < StripeEvents::BaseEvent
+    def process
+      return unless metadata.payment_type
+
+      __send__("process_#{metadata.payment_type}")
+    end
+
+    private
+
+    def intent
+      event.data.object
+    end
+
+    def metadata
+      intent.metadata
+    end
+
+    def process_deposit
+      project = Project.find_by!(uid: metadata.project)
+
+      project.deposit_paid += intent.amount
       project.status = "Brief Confirmed"
       project.published_at = Time.zone.now
-      project.sales_status = 'Open'
+      project.sales_status = "Open"
       project.sourcing = true
-
-      Logidze.with_responsible(project&.user&.account_id) do
-        project.save(validate: false)
-      end
-
+      project.save(validate: false)
       project.sync_to_airtable
 
       # Attach the payment method
       Users::AttachPaymentMethod.call(
         user: project.user,
-        payment_method_id: payment_intent.payment_method
+        payment_method_id: intent.payment_method
       )
     end
-  end
 
-  private
-
-  # We store the payment type inside of the payment intent metadata in stripe.
-  # e.g Deposit payments will have a payment type of 'deposit'
-  def payment_type
-    payment_intent.metadata.try(:payment_type)
-  end
-
-  def payment_intent
-    event.data.object
-  end
-
-  def payment_method
-    Stripe::PaymentMethod.retrieve(payment_intent.payment_method)
+    def process_payment
+      payment = Payment.find_by!(uid: metadata.payment)
+      payment.update(status: intent.status)
+    end
   end
 end

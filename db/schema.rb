@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_09_101908) do
+ActiveRecord::Schema.define(version: 2021_07_12_093549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -371,6 +371,7 @@ ActiveRecord::Schema.define(version: 2021_07_09_101908) do
     t.string "marketing_attitude"
     t.bigint "budget"
     t.jsonb "log_data"
+    t.integer "admin_fee"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
     t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
   end
@@ -662,6 +663,22 @@ ActiveRecord::Schema.define(version: 2021_07_09_101908) do
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.string "uid"
+    t.integer "amount"
+    t.integer "admin_fee"
+    t.string "status"
+    t.uuid "company_id", null: false
+    t.bigint "specialist_id", null: false
+    t.bigint "task_id"
+    t.string "payment_intent_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_payments_on_company_id"
+    t.index ["specialist_id"], name: "index_payments_on_specialist_id"
+    t.index ["task_id"], name: "index_payments_on_task_id"
+  end
+
   create_table "post_prompts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "prompt"
     t.string "cta"
@@ -763,6 +780,7 @@ ActiveRecord::Schema.define(version: 2021_07_09_101908) do
     t.integer "likelihood_to_confirm"
     t.string "lost_reason"
     t.string "project_start"
+    t.integer "deposit_used"
     t.index ["sales_status"], name: "index_projects_on_sales_status"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -901,6 +919,7 @@ ActiveRecord::Schema.define(version: 2021_07_09_101908) do
     t.datetime "guild_featured_member_at"
     t.string "guild_calendly_link"
     t.bigint "referrer_id"
+    t.integer "sourcing_fee"
     t.bigint "interviewer_id"
     t.string "case_study_status"
     t.string "trustpilot_review_status"
@@ -1110,6 +1129,9 @@ ActiveRecord::Schema.define(version: 2021_07_09_101908) do
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
   add_foreign_key "off_platform_projects", "specialists"
+  add_foreign_key "payments", "companies"
+  add_foreign_key "payments", "specialists"
+  add_foreign_key "payments", "tasks"
   add_foreign_key "post_prompts", "labels"
   add_foreign_key "problematic_flags", "applications"
   add_foreign_key "problematic_flags", "users"
