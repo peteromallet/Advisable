@@ -30,7 +30,7 @@ export default function HandlePayment({ payment }) {
     setProcessing(false);
 
     if (response.error) {
-      setError(response.error);
+      setError(response.error.message);
     } else {
       setError(null);
       client.cache.modify({
