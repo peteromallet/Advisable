@@ -14,10 +14,6 @@ function ViewSidebar({ children, ...props }) {
   return <StyledSidebar {...props}>{children}</StyledSidebar>;
 }
 
-ViewSidebar.defaultProps = {
-  padding: "24px",
-};
-
 function View({ children, ...props }) {
   const height = use100vh();
   return (
@@ -31,6 +27,10 @@ function View({ children, ...props }) {
     </StyledView>
   );
 }
+
+ViewSidebar.defaultProps = {
+  padding: "24px",
+};
 
 View.defaultProps = {
   sidebar: { _: "off", l: "on" },
