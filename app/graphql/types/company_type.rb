@@ -2,6 +2,8 @@
 
 module Types
   class CompanyType < Types::BaseType
+    description "Type for Company model"
+
     field :id, ID, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
@@ -35,6 +37,17 @@ module Types
       object.projects.where.not(sales_status: 'Lost').or(
         object.projects.where(sales_status: nil)
       ).order(created_at: :desc)
+    end
+
+    field :payments, Types::Payment.connection_type, null: true do
+      authorize :read?
+      argument :status, String, required: false
+    end
+
+    def payments(status: nil)
+      payments = object.payments
+      payments = payments.with_status(status) if status.present?
+      payments
     end
   end
 end

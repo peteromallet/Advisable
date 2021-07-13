@@ -404,5 +404,14 @@ module Types
         map(&:skill_id)
       ::Skill.where(id: skills_by_usage)
     end
+
+    field :payment, Types::Payment, null: true do
+      argument :id, ID, required: true
+    end
+
+    def payment(id:)
+      requires_client!
+      current_user.company.payments.find_by!(uid: id)
+    end
   end
 end

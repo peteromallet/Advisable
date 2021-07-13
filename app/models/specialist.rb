@@ -33,6 +33,7 @@ class Specialist < ApplicationRecord
 
   VALID_APPLICATION_STAGES = ["Started", "Submitted", "Invited To Interview", "Interview Scheduled", "Interview Completed", "Full Application", "On Hold", "Completed", "Accepted", "Rejected By Us", "Rejected By Them", "References Requested", "References Provided", "References Validated", "Kicked Off"].freeze
   REJECTED_STAGES = ["Rejected By Us", "Rejected By Them"].freeze
+  DEFAULT_SOURCING_FEE = 800
 
   has_logidze
 
@@ -40,6 +41,7 @@ class Specialist < ApplicationRecord
   belongs_to :referrer, class_name: "Specialist", inverse_of: :referred, optional: true
   belongs_to :interviewer, optional: true, class_name: "SalesPerson"
 
+  has_many :payments, dependent: :nullify
   has_many :reviews, dependent: :destroy
   has_many :consultations, dependent: :destroy
   has_many :applications, dependent: :destroy
@@ -107,6 +109,11 @@ class Specialist < ApplicationRecord
       url
     end
   end
+
+  # sourcing_fee value is stored in basis points integers: 8% -> 800 bp
+  def sourcing_fee_percentage
+    (sourcing_fee.presence || DEFAULT_SOURCING_FEE) / BigDecimal("10000")
+  end
 end
 
 # == Schema Information
@@ -154,6 +161,7 @@ end
 #  ratings                           :jsonb
 #  remote                            :boolean
 #  reviews_count                     :integer
+#  sourcing_fee                      :integer
 #  travel_availability               :string
 #  trustpilot_review_status          :string
 #  uid                               :string

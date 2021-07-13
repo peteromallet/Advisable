@@ -4,8 +4,11 @@ class Company < ApplicationRecord
   has_logidze
 
   BUSINESS_TYPES = %w[B2B B2C].freeze
+  DEFAULT_ADMIN_FEE = 500
+
   belongs_to :sales_person, optional: true
   belongs_to :industry, optional: true
+  has_many :payments, dependent: :nullify
   has_many :users, dependent: :nullify
   has_many :accounts, through: :users
 
@@ -72,6 +75,11 @@ class Company < ApplicationRecord
     }
   end
 
+  # admin_fee value is stored in basis points integers: 5% -> 500 bp
+  def admin_fee_percentage
+    (admin_fee.presence || DEFAULT_ADMIN_FEE) / BigDecimal("10000")
+  end
+
   private
 
   def are_payments_setup
@@ -90,6 +98,7 @@ end
 #  id                                :uuid             not null, primary key
 #  accepted_project_payment_terms_at :datetime
 #  address                           :jsonb
+#  admin_fee                         :integer
 #  bank_transfers_enabled            :boolean          default(FALSE)
 #  billing_email                     :string
 #  budget                            :bigint

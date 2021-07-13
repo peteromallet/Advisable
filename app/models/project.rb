@@ -48,12 +48,10 @@ class Project < ApplicationRecord
     %w[Won Lost].exclude?(sales_status)
   end
 
-  def deposit
-    self[:deposit] || 0
-  end
-
-  def deposit_paid
-    self[:deposit_paid] || 0
+  %i[deposit deposit_paid deposit_used].each do |m|
+    define_method m do
+      super().presence || 0
+    end
   end
 
   # returns the amount of the deposit that is left to be paid
@@ -175,6 +173,7 @@ end
 #  currency                         :string
 #  deposit                          :integer
 #  deposit_paid                     :integer
+#  deposit_used                     :integer
 #  description                      :text
 #  estimated_budget                 :string
 #  goals                            :text             default([]), is an Array
