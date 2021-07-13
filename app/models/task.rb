@@ -32,6 +32,7 @@ class Task < ApplicationRecord
 
   validates :estimate_type, inclusion: {in: %w[Hourly Fixed]}, allow_nil: true
 
+  has_one :payment, dependent: :nullify
   belongs_to :application
 
   scope :active, -> { where.not(stage: "Deleted") }
