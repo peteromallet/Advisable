@@ -64,6 +64,7 @@ function ArchiveForm({ article, searchId, onArchive = () => {}, modal }) {
           input: {
             action: "archive",
             article: article.id,
+            searh: searchId,
             feedback: feedback === "_OTHER" ? otherFeedback : feedback,
           },
         },
