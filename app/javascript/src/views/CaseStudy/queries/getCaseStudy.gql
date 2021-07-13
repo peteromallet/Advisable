@@ -6,6 +6,14 @@ query getCaseStudy($id: ID!) {
     comment
     isSaved
     isArchived
+    skills {
+      id
+      primary
+      skill {
+        id
+        name
+      }
+    }
     specialist {
       id
       bio
