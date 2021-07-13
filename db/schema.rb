@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_13_095206) do
+ActiveRecord::Schema.define(version: 2021_07_13_114940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -372,6 +372,7 @@ ActiveRecord::Schema.define(version: 2021_07_13_095206) do
     t.bigint "budget"
     t.jsonb "log_data"
     t.integer "admin_fee"
+    t.string "stripe_payment_method"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
     t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
   end
@@ -789,12 +790,12 @@ ActiveRecord::Schema.define(version: 2021_07_13_095206) do
     t.bigint "linkedin_campaign_id"
     t.datetime "published_at"
     t.jsonb "log_data"
+    t.integer "deposit_used"
     t.boolean "stop_candidate_proposed_emails"
     t.string "level_of_expertise_required"
     t.integer "likelihood_to_confirm"
     t.string "lost_reason"
     t.string "project_start"
-    t.integer "deposit_used"
     t.index ["sales_status"], name: "index_projects_on_sales_status"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -929,6 +930,7 @@ ActiveRecord::Schema.define(version: 2021_07_13_095206) do
     t.string "vat_number"
     t.string "application_interview_calendly_id"
     t.datetime "application_interview_starts_at"
+    t.string "iban"
     t.datetime "guild_joined_date"
     t.datetime "guild_featured_member_at"
     t.string "guild_calendly_link"
@@ -939,7 +941,6 @@ ActiveRecord::Schema.define(version: 2021_07_13_095206) do
     t.string "trustpilot_review_status"
     t.string "campaign_medium"
     t.string "application_status"
-    t.string "iban"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"

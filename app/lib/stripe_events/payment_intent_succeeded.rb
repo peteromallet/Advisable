@@ -39,6 +39,7 @@ module StripeEvents
     def process_payment
       payment = Payment.find_by!(uid: metadata.payment)
       payment.update(status: intent.status)
+      payment.company.update(stripe_payment_method: intent.payment_method)
     end
   end
 end

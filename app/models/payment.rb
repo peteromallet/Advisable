@@ -23,7 +23,7 @@ class Payment < ApplicationRecord
   def create_in_stripe!
     if payment_intent_id.blank?
       intent = Stripe::PaymentIntent.create(
-        stripe_params.merge({confirm: true, off_session: true}),
+        stripe_params.merge({confirm: true, off_session: true, payment_method: company.stripe_payment_method}),
         {idempotency_key: "#{uid}_off_session"}
       )
       update!(payment_intent_id: intent.id, status: intent.status)
