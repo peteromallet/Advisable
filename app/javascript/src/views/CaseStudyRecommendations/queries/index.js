@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, makeReference } from "@apollo/client";
 import CASE_STUDY_SEARCH from "./getRecommendations.gql";
 import ASSIGN from "./assignArticle.gql";
 import ARCHIVED from "./archivedArticles.gql";
@@ -6,6 +6,7 @@ import SIDEBAR from "./sidebar.gql";
 import SAVED from "./savedArticles.gql";
 import SHARED from "./sharedArticles.gql";
 import MEMBERS from "./members.gql";
+import DELETE from "./deleteSearch.gql";
 import SHARE from "./shareArticle.gql";
 
 export function useArchive({ article, searchId }, opts) {
@@ -130,6 +131,28 @@ export function useUnarchive({ article }) {
 
 export function useShareArticle() {
   return useMutation(SHARE);
+}
+
+export function useDeleteSearch(search) {
+  return useMutation(DELETE, {
+    variables: {
+      input: {
+        id: search.id,
+      },
+    },
+    update(cache) {
+      cache.modify({
+        id: cache.identify(makeReference("ROOT_QUERY")),
+        fields: {
+          caseStudySearches(existing, { readField }) {
+            return existing.filter((ref) => {
+              return search.id !== readField("id", ref);
+            });
+          },
+        },
+      });
+    },
+  });
 }
 
 export function useArchived(props, opts) {
