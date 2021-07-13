@@ -16,7 +16,6 @@ function ViewSidebar({ children, ...props }) {
 
 ViewSidebar.defaultProps = {
   padding: "24px",
-  display: { _: "none", l: "block" },
 };
 
 function View({ children, ...props }) {
@@ -34,7 +33,7 @@ function View({ children, ...props }) {
 }
 
 View.defaultProps = {
-  type: "horizontal",
+  sidebar: { _: "off", l: "on" },
 };
 
 View.Sidebar = ViewSidebar;
