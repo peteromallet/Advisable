@@ -1,11 +1,14 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
+import { Link, useHistory } from "react-router-dom";
+import { Box, Text, Button } from "@advisable/donut";
 import CaseStudiesList from "./CaseStudiesList";
 import { useParams } from "react-router-dom";
 import { useCaseStudySearch } from "./queries";
 import inbox from "src/illustrations/inbox.svg";
 import postbox from "src/illustrations/postbox.svg";
+import { Pencil } from "@styled-icons/heroicons-solid/Pencil";
 import ViewLoading from "./ViewLoading";
+import DeleteSearch from "./DeleteSearch";
 
 function SavedSearchEmpty() {
   return (
@@ -43,6 +46,7 @@ function CompanyRecommendationsEmpty() {
 
 export default function ExploreInbox() {
   const { id } = useParams();
+  const history = useHistory();
   const { data, loading } = useCaseStudySearch({
     variables: { id },
   });
@@ -52,18 +56,45 @@ export default function ExploreInbox() {
   const search = data.caseStudySearch;
   const articles = search.results.nodes;
 
+  const afterDelete = () => {
+    history.replace("/explore");
+  };
+
   return (
     <>
       <Box>
-        <Text fontSize="5xl" fontWeight={600} letterSpacing="-0.04rem" mb={2}>
-          {search.name}
-        </Text>
-        {search.companyRecomendation && (
-          <Text size="lg" color="neutral800">
-            See how freelancers in our network have helped similar companies
-            achieve their goals.
-          </Text>
-        )}
+        <Box display="flex" alignItems="center">
+          <Box flex={1}>
+            <Text
+              fontSize="5xl"
+              fontWeight={600}
+              letterSpacing="-0.04rem"
+              mb={2}
+            >
+              {search.name}
+            </Text>
+            {search?.companyRecomendation && (
+              <Text size="lg" color="neutral800">
+                See how freelancers in our network have helped similar companies
+                achieve their goals.
+              </Text>
+            )}
+          </Box>
+          {!search?.companyRecomendation && (
+            <Box>
+              <Button
+                as={Link}
+                size="xs"
+                variant="subtle"
+                marginRight={1}
+                to={`/explore/new/${search.id}/skills`}
+              >
+                <Pencil size={16} />
+              </Button>
+              <DeleteSearch search={search} onDelete={afterDelete} />
+            </Box>
+          )}
+        </Box>
         <Box marginY={8} height="1px" bg="neutral200" />
       </Box>
       <CaseStudiesList articles={articles} search={search} />

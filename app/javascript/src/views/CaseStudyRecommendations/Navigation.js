@@ -3,7 +3,7 @@ import { Box } from "@advisable/donut";
 import { Collection } from "@styled-icons/heroicons-solid/Collection";
 import { Bookmark } from "@styled-icons/heroicons-solid/Bookmark";
 import { InboxIn } from "@styled-icons/heroicons-solid/InboxIn";
-import { Trash } from "@styled-icons/heroicons-solid/Trash";
+import { Archive } from "@styled-icons/heroicons-solid/Archive";
 import { Search } from "@styled-icons/heroicons-solid/Search";
 import { PlusCircle } from "@styled-icons/heroicons-solid/PlusCircle";
 import {
@@ -64,7 +64,7 @@ export default function ExploreNavigation({ data }) {
       <NavItem icon={InboxIn} to="/explore/shared">
         Shared
       </NavItem>
-      <NavItem icon={Trash} to="/explore/archived">
+      <NavItem icon={Archive} to="/explore/archived">
         Archive
       </NavItem>
     </>
