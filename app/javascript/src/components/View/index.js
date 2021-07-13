@@ -24,7 +24,7 @@ function View({ children, ...props }) {
   return (
     <StyledView
       style={{
-        height: height ? `${height - 58}px` : "100%",
+        height: height ? `${height - 60}px` : "100%",
       }}
       {...props}
     >

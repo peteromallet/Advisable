@@ -44,11 +44,6 @@ const viewVariants = variant({
         overflowY: "visible",
       },
     },
-    contentOnly: {
-      [StyledSidebar]: {
-        display: "none",
-      },
-    },
   },
 });
 
