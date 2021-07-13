@@ -1,0 +1,20 @@
+query Payment($id: ID!) {
+  payment(id: $id) {
+    id
+    status
+    amount
+    adminFee
+    task {
+      id
+      name
+    }
+    specialist {
+      id
+      name
+      avatar
+    }
+    paymentIntent {
+      secret
+    }
+  }
+}
