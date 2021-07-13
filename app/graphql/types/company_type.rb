@@ -39,7 +39,7 @@ module Types
       ).order(created_at: :desc)
     end
 
-    field :payments, [Types::Payment], null: true do
+    field :payments, Types::Payment.connection_type, null: true do
       authorize :read?
       argument :status, String, required: false
     end
@@ -48,14 +48,6 @@ module Types
       payments = object.payments
       payments = payments.with_status(status) if status.present?
       payments
-    end
-
-    field :unsuccessful_payments, [Types::Payment], null: true do
-      authorize :read?
-    end
-
-    def unsuccessful_payments
-      object.payments.unsuccessful
     end
   end
 end

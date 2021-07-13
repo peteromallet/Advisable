@@ -15,7 +15,6 @@ class Payment < ApplicationRecord
   validates :status, inclusion: {in: VALID_STATUSES}, allow_nil: true
 
   scope :with_status, ->(status) { where(status: status) }
-  scope :unsuccessful, -> { where.not(status: "succeeded") }
 
   def amount_with_fee
     amount + admin_fee
