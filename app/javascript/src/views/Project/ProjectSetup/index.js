@@ -33,7 +33,7 @@ export default function JobSetup() {
 
   return (
     <View>
-      <JobSetupSidebar data={data} />
+      {largeScreen ? <JobSetupSidebar data={data} /> : null}
       <View.Content>
         <Container paddingY={16} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           {!largeScreen && data.project.status === "Draft" && (
