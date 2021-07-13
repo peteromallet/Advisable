@@ -6,6 +6,24 @@ class Payout < ApplicationRecord
 
   belongs_to :specialist
   belongs_to :task, optional: true
+
+  before_create :set_sourcing_fee
+
+  validates :amount, presence: true
+
+  scope :with_status, ->(status) { where(status: status) }
+
+  def amount_with_fee
+    amount + sourcing_fee
+  end
+
+  private
+
+  def set_sourcing_fee
+    return if sourcing_fee.present?
+
+    self.sourcing_fee = (amount * specialist.sourcing_fee_percentage).round
+  end
 end
 
 # == Schema Information
