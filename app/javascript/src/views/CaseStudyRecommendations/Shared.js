@@ -1,8 +1,8 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
-import CaseStudiesList from "./CaseStudiesList";
+import { Box, Text, Stack } from "@advisable/donut";
 import CardsSkeleton from "./CardsSkeleton";
 import { useSharedArticles } from "./queries";
+import CaseStudyCard from "./RecommendationCard";
 import inbox from "src/illustrations/empty_inbox.svg";
 
 function SharedEmpty() {
@@ -24,7 +24,7 @@ function SharedEmpty() {
 
 export default function SharedArticles() {
   const { data, loading } = useSharedArticles();
-  const articles = data?.sharedArticles?.map((s) => s.article) || [];
+  const sharedArticles = data?.sharedArticles || [];
 
   return (
     <div>
@@ -33,10 +33,18 @@ export default function SharedArticles() {
       </Text>
       <Box marginY={8} height="1px" bg="neutral200" />
       {loading && <CardsSkeleton />}
-      {!loading && articles.length > 0 && (
-        <CaseStudiesList articles={articles} />
+      {!loading && sharedArticles.length > 0 && (
+        <Stack spacing="4xl" divider="neutral200">
+          {sharedArticles.map((sharedArticle) => (
+            <CaseStudyCard
+              key={sharedArticle.id}
+              caseStudy={sharedArticle.article}
+              sharedArticle={sharedArticle}
+            />
+          ))}
+        </Stack>
       )}
-      {!loading && articles.length === 0 && <SharedEmpty />}
+      {!loading && sharedArticles.length === 0 && <SharedEmpty />}
     </div>
   );
 }
