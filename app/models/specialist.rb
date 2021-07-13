@@ -147,6 +147,7 @@ end
 #  guild_featured_member_at          :datetime
 #  guild_joined_date                 :datetime
 #  hourly_rate                       :integer
+#  iban                              :string
 #  ideal_project                     :string
 #  image                             :jsonb
 #  linkedin                          :string

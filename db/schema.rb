@@ -939,6 +939,7 @@ ActiveRecord::Schema.define(version: 2021_07_13_095206) do
     t.string "trustpilot_review_status"
     t.string "campaign_medium"
     t.string "application_status"
+    t.string "iban"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
