@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Box, Text } from "@advisable/donut";
-import Back from "../../components/Back";
-import Steps from "../../components/Steps";
-import Layout from "../../components/Layout";
-import { useMobile } from "../../components/Breakpoint";
+import Back from "src/components/Back";
+import Steps from "src/components/Steps";
+import View from "src/components/View";
+import { useMobile } from "src/components/Breakpoint";
 import { hasCompleteTasksStep } from "./validationSchema";
 
 let SideBar = (props) => {
@@ -21,7 +21,7 @@ let SideBar = (props) => {
   const isSent = application.status === "Proposed";
 
   return (
-    <Layout.Sidebar>
+    <View.Sidebar>
       <Box paddingBottom="m">
         <Back to="/applications">All Applications</Back>
       </Box>
@@ -78,7 +78,7 @@ let SideBar = (props) => {
           </Steps.Step>
         </Steps>
       )}
-    </Layout.Sidebar>
+    </View.Sidebar>
   );
 };
 
