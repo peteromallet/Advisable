@@ -30,7 +30,7 @@ class Payment < ApplicationRecord
     end
 
     payment_intent_id
-  rescue Stripe::InvalidRequestError => e
+  rescue Stripe::StripeError => e
     update!(status: "failed")
     Sentry.capture_exception(e, extra: {stripe_error: e.json_body[:error]})
     Slack.message(channel: "client_engagement", text: "Something went wrong with the payment for *#{company.name}* (#{company_id}) with *#{specialist.account.name}* (#{specialist.uid})! Payment: #{uid}")
@@ -44,11 +44,11 @@ class Payment < ApplicationRecord
     return if payment_intent_id.present?
 
     intent = Stripe::PaymentIntent.create(
-      stripe_params,
+      stripe_params.merge({setup_future_usage: "off_session"}),
       {idempotency_key: "#{uid}_on_session"}
     )
     update!(payment_intent_id: intent.id, status: intent.status)
-  rescue Stripe::InvalidRequestError => e
+  rescue Stripe::StripeError => e
     Sentry.capture_exception(e, extra: {stripe_error: e.json_body[:error]})
   end
 
