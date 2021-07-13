@@ -8,6 +8,7 @@ class Company < ApplicationRecord
 
   belongs_to :sales_person, optional: true
   belongs_to :industry, optional: true
+  has_many :payments, dependent: :nullify
   has_many :users, dependent: :nullify
   has_many :accounts, through: :users
 
