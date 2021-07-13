@@ -30,6 +30,7 @@ const RequestConsultation = () => {
   });
 
   const mediumAndUp = useBreakpoint("mUp");
+  const largeScreen = useBreakpoint("lUp");
   React.useEffect(() => {
     if (!mediumAndUp) {
       theme.updateTheme({ background: "white" });
@@ -65,7 +66,7 @@ const RequestConsultation = () => {
 
   return (
     <View>
-      <Sidebar data={data} />
+      {largeScreen ? <Sidebar data={data} /> : null}
       <View.Content>
         <Container paddingY={12} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <Switch location={location} key={location.pathname}>
