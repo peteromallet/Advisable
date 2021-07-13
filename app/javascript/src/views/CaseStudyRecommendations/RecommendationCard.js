@@ -8,7 +8,11 @@ import {
   StyledRecommendationCardAvatar,
 } from "./styles";
 
-export default function RecommendationCard({ caseStudy, search }) {
+export default function RecommendationCard({
+  caseStudy,
+  search,
+  sharedArticle,
+}) {
   let url = `/case_Studies/${caseStudy.id}`;
   if (search) {
     url = `${url}?search=${search.id}`;
@@ -39,6 +43,11 @@ export default function RecommendationCard({ caseStudy, search }) {
           </Circle>
         </StyledRecommendationCardAvatar>
         <Box>
+          {sharedArticle && (
+            <Text fontWeight={500} mb={2} color="neutral700">
+              {sharedArticle.sharedBy?.name} shared an article with you
+            </Text>
+          )}
           <StyledRecommendationTitle
             mb={2}
             target="_blank"
@@ -62,6 +71,21 @@ export default function RecommendationCard({ caseStudy, search }) {
           >
             {caseStudy.subtitle}
           </Text>
+          {sharedArticle?.message && (
+            <Box
+              padding={3}
+              bg="neutral100"
+              borderRadius="12px"
+              marginBottom={6}
+            >
+              <Text fontSize="sm" fontWeight={500} mb={1} color="neutral500">
+                {sharedArticle.sharedBy?.name}
+              </Text>
+              <Text fontSize="sm" lineHeight="20px" color="neutral800">
+                &quot;{sharedArticle.message}&quot;
+              </Text>
+            </Box>
+          )}
           <CaseStudyActions searchId={search?.id} caseStudy={caseStudy} />
         </Box>
       </Box>
