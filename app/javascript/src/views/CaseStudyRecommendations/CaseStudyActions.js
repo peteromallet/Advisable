@@ -12,7 +12,7 @@ export default function CaseStudyActions({
 }) {
   return (
     <>
-      <FavoriteButton article={caseStudy} />
+      {!caseStudy.isArchived && <FavoriteButton article={caseStudy} />}
       {caseStudy.isArchived && (
         <MoveToInboxButton article={caseStudy} onArchive={onUnarchive} />
       )}
