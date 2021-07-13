@@ -113,6 +113,7 @@ end
 #  payments_setup                    :boolean          default(FALSE)
 #  project_payment_method            :string
 #  setup_intent_status               :string
+#  stripe_payment_method             :string
 #  vat_number                        :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
