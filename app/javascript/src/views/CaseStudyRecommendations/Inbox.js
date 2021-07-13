@@ -1,11 +1,11 @@
 import React from "react";
-import { Box, Text, Skeleton } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import CaseStudiesList from "./CaseStudiesList";
 import { useParams } from "react-router-dom";
 import { useCaseStudySearch } from "./queries";
-import CardsSkeleton from "./CardsSkeleton";
 import inbox from "src/illustrations/inbox.svg";
 import postbox from "src/illustrations/postbox.svg";
+import ViewLoading from "./ViewLoading";
 
 function SavedSearchEmpty() {
   return (
@@ -41,25 +41,13 @@ function CompanyRecommendationsEmpty() {
   );
 }
 
-function Loading() {
-  return (
-    <>
-      <Box>
-        <Skeleton height="24px" width="30%" />
-        <Box marginY={10} height="1px" bg="neutral200" />
-        <CardsSkeleton />
-      </Box>
-    </>
-  );
-}
-
 export default function ExploreInbox() {
   const { id } = useParams();
   const { data, loading } = useCaseStudySearch({
     variables: { id },
   });
 
-  if (loading) return <Loading />;
+  if (loading) return <ViewLoading />;
 
   const search = data.caseStudySearch;
   const articles = search.results.nodes;

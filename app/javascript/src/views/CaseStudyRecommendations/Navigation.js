@@ -33,7 +33,7 @@ export default function ExploreNavigation({ data }) {
   );
 
   return (
-    <Box padding={4}>
+    <>
       {companySearch && (
         <NavItem
           icon={Collection}
@@ -67,6 +67,6 @@ export default function ExploreNavigation({ data }) {
       <NavItem icon={Trash} to="/explore/archived">
         Archive
       </NavItem>
-    </Box>
+    </>
   );
 }
