@@ -49,5 +49,18 @@ module Types
       payments = payments.with_status(status) if status.present?
       payments
     end
+
+    field :invoice, Types::PaymentInvoice, null: true do
+      authorize :read?
+      argument :month, String, required: true
+    end
+
+    def invoice(month: nil)
+      month = Date.parse(month)
+      OpenStruct.new({
+        month: month,
+        payments: object.payments.where(created_at: month.all_month)
+      })
+    end
   end
 end
