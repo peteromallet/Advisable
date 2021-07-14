@@ -43,6 +43,7 @@ const PaymentMethodForm = ({
       {(formik) => (
         <Form>
           <FormField
+            size="sm"
             marginBottom="4"
             name="cardholder"
             label="Cardholder Name"

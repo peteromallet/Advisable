@@ -38,6 +38,7 @@ const SetPassword = lazy(() => import("./views/SetPassword"));
 const CaseStudyRecommendations = lazy(() =>
   import("./views/CaseStudyRecommendations"),
 );
+const Payment = lazy(() => import("./views/Payment"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -173,6 +174,11 @@ const ApplicationRoutes = () => {
             clientOnly
             path="/explore"
             component={CaseStudyRecommendations}
+          />
+          <AuthenticatedRoute
+            clientOnly
+            path="/payments/:id"
+            component={Payment}
           />
           <Route component={NotFound} />
         </Switch>

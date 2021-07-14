@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe StripeEvents::SetupIntentSucceeded do
   let!(:company) { create(:company, stripe_setup_intent_id: "si_12345", setup_intent_status: "pending") }
-  let(:event) {
+  let(:event) do
     OpenStruct.new({
       type: "setup_intent.succeeded",
       data: OpenStruct.new({
@@ -14,25 +14,25 @@ RSpec.describe StripeEvents::SetupIntentSucceeded do
         })
       })
     })
-  }
+  end
 
   before do
-    allow(Users::AttachPaymentMethod).to receive(:call)
+    allow(UpdateCompanysPaymentMethodJob).to receive(:perform_later)
     create(:user, company: company)
   end
 
   it "sets the setup_intent_status attribute for the user to succeeded" do
-    expect {
+    expect do
       StripeEvents.process(event)
-    }.to change {
+    end.to change {
       company.reload.setup_intent_status
     }.from("pending").to("succeeded")
   end
 
   it "calls the attach payment method service" do
-    expect(Users::AttachPaymentMethod).to receive(:call).with(
-      user: instance_of(User),
-      payment_method_id: "pm_12345"
+    expect(UpdateCompanysPaymentMethodJob).to receive(:perform_later).with(
+      instance_of(Company),
+      "pm_12345"
     )
     StripeEvents.process(event)
   end

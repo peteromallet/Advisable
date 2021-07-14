@@ -62,7 +62,7 @@ class Company < ApplicationRecord
   end
 
   def payment_method
-    stripe_customer.invoice_settings.default_payment_method
+    stripe_payment_method.present? || stripe_customer.invoice_settings.default_payment_method
   end
 
   def invoice_settings
@@ -113,6 +113,7 @@ end
 #  payments_setup                    :boolean          default(FALSE)
 #  project_payment_method            :string
 #  setup_intent_status               :string
+#  stripe_payment_method             :string
 #  vat_number                        :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
