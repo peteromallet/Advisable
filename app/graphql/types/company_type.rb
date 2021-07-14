@@ -50,17 +50,14 @@ module Types
       payments
     end
 
-    field :invoice, Types::PaymentInvoice, null: true do
+    field :invoices, Types::PaymentInvoice.connection_type, null: true do
       authorize :read?
-      argument :month, String, required: true
     end
 
-    def invoice(month: nil)
-      month = Date.parse(month)
-      OpenStruct.new({
-        month: month,
-        payments: object.payments.where(created_at: month.all_month)
-      })
+    def invoices
+      object.payments.with_status("succeeded").group_by { |p| [p.created_at.year, p.created_at.month] }.map do |(year, month), payments|
+        OpenStruct.new({year: year, month: month, payments: payments})
+      end
     end
   end
 end
