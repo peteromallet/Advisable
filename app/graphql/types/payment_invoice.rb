@@ -4,6 +4,7 @@ module Types
   class PaymentInvoice < Types::BaseType
     description "Collection of payments in a month"
 
+    field :year, String, null: false
     field :month, String, null: false
     field :payments, [Types::Payment], null: false
   end

@@ -17,5 +17,6 @@ module Types
     field :company, CompanyType, null: false
     field :specialist, SpecialistType, null: false
     field :task, TaskType, null: true
+    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
   end
 end
