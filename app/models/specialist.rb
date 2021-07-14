@@ -42,6 +42,7 @@ class Specialist < ApplicationRecord
   belongs_to :interviewer, optional: true, class_name: "SalesPerson"
 
   has_many :payments, dependent: :nullify
+  has_many :payouts, dependent: :nullify
   has_many :reviews, dependent: :destroy
   has_many :consultations, dependent: :destroy
   has_many :applications, dependent: :destroy
@@ -146,6 +147,7 @@ end
 #  guild_featured_member_at          :datetime
 #  guild_joined_date                 :datetime
 #  hourly_rate                       :integer
+#  iban                              :string
 #  ideal_project                     :string
 #  image                             :jsonb
 #  linkedin                          :string
