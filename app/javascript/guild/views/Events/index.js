@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { Text, Box, Button, useModal } from "@advisable/donut";
 import { DialogDisclosure } from "reakit/Dialog";
 import useViewer from "@advisable-main/hooks/useViewer";
-import BottomScrollListener from "react-bottom-scroll-listener";
+import { BottomScrollListener } from "react-bottom-scroll-listener";
 import { Plus } from "@styled-icons/heroicons-outline/Plus";
 import { EVENTS_QUERY } from "./queries.js";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
