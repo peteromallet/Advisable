@@ -1,6 +1,7 @@
 module.exports = {
   verbose: true,
   testTimeout: 40000,
+  testEnvironment: "jsdom",
   roots: ["app/javascript/src", "donut/src"],
   setupFilesAfterEnv: ["<rootDir>/app/javascript/src/testHelpers/setup.js"],
   moduleDirectories: [

@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
 import { GUILD_POSTS_QUERY } from "./queries";
-import BottomScrollListener from "react-bottom-scroll-listener";
+import { BottomScrollListener } from "react-bottom-scroll-listener";
 import { feedStore } from "@guild/views/Feed/store";
 import Post from "../Post";
 import LoadingPosts from "./Loading";
