@@ -29,17 +29,13 @@ module StripeEvents
       project.save(validate: false)
       project.sync_to_airtable
 
-      # Attach the payment method
-      Users::AttachPaymentMethod.call(
-        user: project.user,
-        payment_method_id: intent.payment_method
-      )
+      UpdateCompanysPaymentMethodJob.perform_later(project.user.company, intent.payment_method)
     end
 
     def process_payment
       payment = Payment.find_by!(uid: metadata.payment)
       payment.update(status: intent.status)
-      payment.company.update(stripe_payment_method: intent.payment_method)
+      UpdateCompanysPaymentMethodJob.perform_later(payment.company, intent.payment_method)
     end
   end
 end

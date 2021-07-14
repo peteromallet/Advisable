@@ -62,7 +62,7 @@ class Company < ApplicationRecord
   end
 
   def payment_method
-    stripe_customer.invoice_settings.default_payment_method
+    stripe_payment_method.present? || stripe_customer.invoice_settings.default_payment_method
   end
 
   def invoice_settings
