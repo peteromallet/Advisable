@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_12_093549) do
+ActiveRecord::Schema.define(version: 2021_07_13_095206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -679,6 +679,20 @@ ActiveRecord::Schema.define(version: 2021_07_12_093549) do
     t.index ["task_id"], name: "index_payments_on_task_id"
   end
 
+  create_table "payouts", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "specialist_id", null: false
+    t.bigint "task_id"
+    t.integer "amount"
+    t.integer "sourcing_fee"
+    t.string "status"
+    t.datetime "processed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["specialist_id"], name: "index_payouts_on_specialist_id"
+    t.index ["task_id"], name: "index_payouts_on_task_id"
+  end
+
   create_table "post_prompts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "prompt"
     t.string "cta"
@@ -925,6 +939,7 @@ ActiveRecord::Schema.define(version: 2021_07_12_093549) do
     t.string "trustpilot_review_status"
     t.string "campaign_medium"
     t.string "application_status"
+    t.string "iban"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
@@ -1132,6 +1147,8 @@ ActiveRecord::Schema.define(version: 2021_07_12_093549) do
   add_foreign_key "payments", "companies"
   add_foreign_key "payments", "specialists"
   add_foreign_key "payments", "tasks"
+  add_foreign_key "payouts", "specialists"
+  add_foreign_key "payouts", "tasks"
   add_foreign_key "post_prompts", "labels"
   add_foreign_key "problematic_flags", "applications"
   add_foreign_key "problematic_flags", "users"
