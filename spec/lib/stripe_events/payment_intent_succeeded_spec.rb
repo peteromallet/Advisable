@@ -23,7 +23,7 @@ RSpec.describe StripeEvents::PaymentIntentSucceeded do
     let(:metadata) { OpenStruct.new({payment_type: "deposit", project: project.uid}) }
 
     before do
-      allow(Users::AttachPaymentMethod).to receive(:call)
+      allow(UpdateCompanysPaymentMethodJob).to receive(:perform_later)
       allow_any_instance_of(User).to receive(:stripe_customer_id).and_return("cu_1234")
       allow_any_instance_of(Project).to receive(:sync_to_airtable)
     end
@@ -37,9 +37,9 @@ RSpec.describe StripeEvents::PaymentIntentSucceeded do
     end
 
     it "attaches the payment method" do
-      expect(Users::AttachPaymentMethod).to receive(:call).with(
-        user: instance_of(User),
-        payment_method_id: "pm_12345"
+      expect(UpdateCompanysPaymentMethodJob).to receive(:perform_later).with(
+        instance_of(Company),
+        "pm_12345"
       )
       StripeEvents.process(event)
     end

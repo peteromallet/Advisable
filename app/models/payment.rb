@@ -23,19 +23,19 @@ class Payment < ApplicationRecord
   def create_in_stripe!
     if payment_intent_id.blank?
       intent = Stripe::PaymentIntent.create(
-        stripe_params.merge({confirm: true, off_session: true}),
+        stripe_params.merge({confirm: true, off_session: true, payment_method: company.stripe_payment_method}),
         {idempotency_key: "#{uid}_off_session"}
       )
       update!(payment_intent_id: intent.id, status: intent.status)
     end
 
-    payment_intent_id
+    self
   rescue Stripe::StripeError => e
-    update!(status: "failed")
+    update!(status: "failed", payment_intent_id: e.json_body.dig(:error, :payment_intent, :id))
     Sentry.capture_exception(e, extra: {stripe_error: e.json_body[:error]})
     Slack.message(channel: "client_engagement", text: "Something went wrong with the payment for *#{company.name}* (#{company_id}) with *#{specialist.account.name}* (#{specialist.uid})! Payment: #{uid}")
     create_on_session_intent!
-    payment_intent_id
+    self
   end
 
   private
