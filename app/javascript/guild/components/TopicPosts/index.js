@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import BottomScrollListener from "react-bottom-scroll-listener";
+import { BottomScrollListener } from "react-bottom-scroll-listener";
 import { Stack, Box, Text } from "@advisable/donut";
 import { GUILD_TOPIC_POSTS_QUERY } from "./queries";
 import Post from "@guild/components/Post";
