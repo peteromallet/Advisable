@@ -1,7 +1,8 @@
 import { useApolloClient } from "@apollo/client";
 import React, { useState } from "react";
-import { Text } from "@advisable/donut";
+import { Text, Box } from "@advisable/donut";
 import PaymentMethodForm from "src/components/PaymentMethodForm";
+import { ExclamationCircle } from "@styled-icons/heroicons-solid/ExclamationCircle";
 
 export default function HandlePayment({ payment }) {
   const client = useApolloClient();
@@ -50,7 +51,21 @@ export default function HandlePayment({ payment }) {
         buttonLabel="Complete Payment"
         handleCardDetails={handleCardDetails}
       />
-      {error ? <Text color="red600">{error}</Text> : null}
+      {error ? (
+        <Box
+          display="flex"
+          alignItems="center"
+          bg="red100"
+          padding={4}
+          marginTop={6}
+          borderRadius="12px"
+        >
+          <Box color="red800" mr={2}>
+            <ExclamationCircle size={24} />
+          </Box>
+          <Text color="red800">{error}</Text>
+        </Box>
+      ) : null}
     </>
   );
 }
