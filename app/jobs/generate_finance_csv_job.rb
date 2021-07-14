@@ -11,7 +11,7 @@ class GenerateFinanceCsvJob < ApplicationJob
 
   def perform
     csv_string = CSV.generate(write_headers: true, headers: HEADERS) do |csv|
-      Payout.unprocesed.each do |payout|
+      Payout.unprocessed.each do |payout|
         specialist = payout.specialist
 
         type = email = iban = nil

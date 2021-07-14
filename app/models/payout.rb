@@ -12,7 +12,7 @@ class Payout < ApplicationRecord
   validates :amount, presence: true
 
   scope :with_status, ->(status) { where(status: status) }
-  scope :unprocesed, -> { where(processed_at: nil) }
+  scope :unprocessed, -> { where(processed_at: nil) }
 
   def amount_without_fee
     amount - sourcing_fee
