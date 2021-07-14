@@ -2,13 +2,14 @@ import React from "react";
 import { Container, Card, Box, Stack, Avatar, Text } from "@advisable/donut";
 import { usePayment } from "./queries";
 import currency from "src/utilities/currency";
+import Loading from "src/components/Loading";
 import PaymentSuccessful from "./PaymentSuccessful";
 import HandlePayment from "./HandlePayment";
 
 export default function Payment() {
   const { data, loading } = usePayment();
 
-  if (loading) return <>loading...</>;
+  if (loading) return <Loading />;
 
   const payment = data?.payment;
 
