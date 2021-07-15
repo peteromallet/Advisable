@@ -162,6 +162,11 @@ class ZappierInteractorController < ApplicationController
     end
   end
 
+  def send_finance_email
+    GenerateFinanceCsvJob.perform_later(params[:email])
+    render json: {status: "OK."}
+  end
+
   private
 
   def find_and_update(model, attrs = {})
