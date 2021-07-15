@@ -1,9 +1,20 @@
 #import "./articleFields.gql"
 query ExplorerSearchRecommendations($id: ID!) {
+  currentCompany {
+    id
+    name
+  }
   caseStudySearch(id: $id) {
     id
     name
     companyRecomendation
+    skills {
+      id
+      skill {
+        id
+        name
+      }
+    }
     results(first: 12) {
       nodes {
         ...ArticleFields

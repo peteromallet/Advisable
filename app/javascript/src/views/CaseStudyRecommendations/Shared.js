@@ -29,7 +29,7 @@ export default function SharedArticles() {
   return (
     <div>
       <Text fontSize="5xl" fontWeight={600} letterSpacing="-0.04rem" mb={2}>
-        Shared
+        Shared with you
       </Text>
       <Box marginY={8} height="1px" bg="neutral200" />
       {loading && <CardsSkeleton />}
