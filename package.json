@@ -84,6 +84,7 @@
     "url-regex": "^5.0.0",
     "use-sound": "^4.0.1",
     "webpack-bundle-analyzer": "^4.4.2",
+    "yarn": "^1.22.10",
     "yup": "^0.32.9",
     "zustand": "^3.5.6"
   },

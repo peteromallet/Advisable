@@ -59,5 +59,18 @@ module Types
         OpenStruct.new({year: year, month: month, payments: payments})
       end
     end
+
+    field :invoice, Types::PaymentInvoice, null: true do
+      authorize :read?
+      argument :month, String, required: true
+    end
+
+    def invoice(month: nil)
+      month = Date.parse(month)
+      OpenStruct.new({
+        month: month,
+        payments: object.payments.with_status("succeeded").where(created_at: month.all_month)
+      })
+    end
   end
 end
