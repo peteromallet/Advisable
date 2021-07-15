@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'csv'
+require "csv"
 
 class GenerateFinanceCsvJob < ApplicationJob
   HEADERS = %w[name recipientEmail paymentReference receiverType amountGross amountNet sourcingFee amountCurrency sourceCurrency targetCurrency IBAN type].freeze
@@ -9,9 +9,9 @@ class GenerateFinanceCsvJob < ApplicationJob
 
   SOURCE_CURRENCY = "EUR"
 
-  def perform
+  def perform(email)
     csv_string = CSV.generate(write_headers: true, headers: HEADERS) do |csv|
-      Payout.unprocessed.each do |payout|
+      Payout.unprocessed.order(:specialist_id, :created_at).each do |payout|
         specialist = payout.specialist
 
         type = email = iban = nil
@@ -41,9 +41,6 @@ class GenerateFinanceCsvJob < ApplicationJob
       end
     end
 
-    # TODO: email this
-    file = Tempfile.new
-    file.write(csv_string)
-    file.close
+    StaffMailer.finance_csv(email, csv_string).deliver_later
   end
 end

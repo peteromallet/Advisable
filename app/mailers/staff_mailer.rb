@@ -23,6 +23,11 @@ class StaffMailer < ApplicationMailer
     mail(to: @sales_person.email_with_name, subject: "#{@user.account.name} reported #{@specialist.account.name} as problematic on #{@project.name}")
   end
 
+  def finance_csv(email, csv)
+    attachments["payouts.csv"] = {mime_type: "text/csv", content: csv}
+    mail(to: email, subject: "Payouts CSV", body: "Please find attached the CSV of payouts.")
+  end
+
   private
 
   def instance_variables_for_unresponsiveness_report(report)
