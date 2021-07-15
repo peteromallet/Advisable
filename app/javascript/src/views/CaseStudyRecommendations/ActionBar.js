@@ -5,12 +5,9 @@ import CaseStudyActions from "../CaseStudyRecommendations/CaseStudyActions";
 import { useLocation } from "react-router-dom";
 
 const StyledActionBarContainer = styled.div`
-  left: 50%;
   bottom: 0;
-  width: 1000px;
-  position: fixed;
-  padding-left: 300px;
-  transform: translateX(-50%);
+  width: 100%;
+  position: sticky;
   display: flex;
   align-items: center;
   justify-content: center;
