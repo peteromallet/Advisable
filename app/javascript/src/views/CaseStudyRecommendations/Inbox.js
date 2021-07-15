@@ -9,6 +9,7 @@ import postbox from "src/illustrations/postbox.svg";
 import { Pencil } from "@styled-icons/heroicons-solid/Pencil";
 import ViewLoading from "./ViewLoading";
 import DeleteSearch from "./DeleteSearch";
+import commaSeparated from "src/utilities/commaSeparated";
 
 function SavedSearchEmpty() {
   return (
@@ -54,7 +55,9 @@ export default function ExploreInbox() {
   if (loading) return <ViewLoading />;
 
   const search = data.caseStudySearch;
+  const company = data.currentCompany;
   const articles = search.results.nodes;
+  const skills = search.skills.map((s) => s.skill.name);
 
   const afterDelete = () => {
     history.replace("/explore");
@@ -73,15 +76,22 @@ export default function ExploreInbox() {
             >
               {search.name}
             </Text>
-            {search?.companyRecomendation && (
-              <Text size="lg" color="neutral800">
-                See how freelancers in our network have helped similar companies
-                achieve their goals.
+            {search?.companyRecomendation ? (
+              <Text size="lg" color="neutral800" lineHeight="24px">
+                These are pre-made recommendations from a diverse range of
+                projects that we think will be interesting to {company.name}{" "}
+                based on your goals, industry and more.
+              </Text>
+            ) : (
+              <Text size="lg" color="neutral800" lineHeight="24px">
+                These are {commaSeparated(skills)} recommendations that we think
+                will be a good fit for {company.name} based on your goals,
+                industry, and more.
               </Text>
             )}
           </Box>
           {!search?.companyRecomendation && (
-            <Box>
+            <Box paddingLeft={8}>
               <Button
                 as={Link}
                 size="xs"
