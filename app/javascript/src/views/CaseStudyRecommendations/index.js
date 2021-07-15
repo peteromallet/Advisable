@@ -23,10 +23,6 @@ export default function CaseStudyExplorer() {
 
   return (
     <Switch>
-      <Route
-        path={["/explore/new/:id", "/explore/new"]}
-        component={CreateSearch}
-      />
       <Route>
         <View>
           <Route path="/explore" exact={!isLargeScreen}>
@@ -47,6 +43,10 @@ export default function CaseStudyExplorer() {
           </Route>
           <View.Content>
             <Switch>
+              <Route
+                path={["/explore/new/:id", "/explore/new"]}
+                component={CreateSearch}
+              />
               <Route path="/explore/articles/:id" component={Article} />
               <Route>
                 <Box maxWidth={800} paddingY={12} paddingX={4} marginX="auto">
