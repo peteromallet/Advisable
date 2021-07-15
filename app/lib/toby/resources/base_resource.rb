@@ -11,34 +11,19 @@ module Toby
           @model_s = model.to_s
         end
 
-        def query_names(**options)
-          options.each do |key, value|
-            instance_variable_set(:"@query_name_#{key}", value)
-          end
-        end
-
         def query_name_collection
-          @query_name_collection || model_s.pluralize.camelize(:lower)
+          model_s.pluralize.camelize(:lower)
         end
 
         def query_name_item
-          @query_name_item || model_s.camelize(:lower)
+          model_s.camelize(:lower)
         end
 
-        def query_name_create
-          @query_name_create || "create#{model_s.camelize}"
-        end
-
-        def query_name_update
-          @query_name_update || "update#{model_s.camelize}"
-        end
-
-        def query_name_delete
-          @query_name_delete || "delete#{model_s.camelize}"
-        end
-
-        def query_name_search
-          @query_name_search || "search#{model_s.camelize}"
+        # query_name_create, query_name_update, query_name_delete, query_name_search
+        %i[create update delete search].each do |method|
+          define_method("query_name_#{method}") do
+            "#{method}#{model_s.camelize}"
+          end
         end
 
         def attribute(name, type, **args)
@@ -48,13 +33,21 @@ module Toby
           @attributes << type.new(name, self, **args)
         end
 
-        def type
-          @type ||= define_type
+        def label(record, _context)
+          record.id
         end
 
-        def define_type
+        def search(input)
+          model.where(id: input)
+        end
+
+        def type
+          @type ||= Toby::Types.const_set(name.demodulize, type_class)
+        end
+
+        def type_class
           root = self
-          type_class = Class.new(GraphQL::Schema::Object) do
+          Class.new(GraphQL::Schema::Object) do
             graphql_name(root.model.name)
 
             field :_label, String, null: false
@@ -82,8 +75,6 @@ module Toby
               end
             end
           end
-
-          Toby::Types.const_set(name.demodulize, type_class)
         end
 
         def input_type
@@ -131,14 +122,6 @@ module Toby
             argument :id, GraphQL::Schema::Object::ID, required: true
             field :success, GraphQL::Types::Boolean, null: true
           end
-        end
-
-        def label(record, _context)
-          record.id
-        end
-
-        def search(input)
-          model.where(id: input)
         end
       end
     end
