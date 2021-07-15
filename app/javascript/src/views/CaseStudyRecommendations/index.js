@@ -1,9 +1,9 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import View from "src/components/View";
 import { Box, Skeleton, useBreakpoint } from "@advisable/donut";
 import Inbox from "./Inbox";
 import Shared from "./Shared";
+import Article from "./Article";
 import Archived from "./Archived";
 import Favorites from "./Favorites";
 import Navigation from "./Navigation";
@@ -27,9 +27,17 @@ export default function CaseStudyExplorer() {
         component={CreateSearch}
       />
       <Route>
-        <View>
+        <Box paddingLeft={{ _: null, l: "280px" }}>
           <Route path="/explore" exact={!isLargeScreen}>
-            <View.Sidebar width={["100%", "100%", "300px"]}>
+            <Box
+              left={0}
+              bg="white"
+              top="60px"
+              bottom="0px"
+              position="fixed"
+              width={["100%", "100%", "280px"]}
+              boxShadow="0 1px 20px rgba(14, 31, 91, 0.04)"
+            >
               <Box padding={4}>
                 {loading ? (
                   <>
@@ -44,26 +52,32 @@ export default function CaseStudyExplorer() {
                   <Navigation data={data} />
                 )}
               </Box>
-            </View.Sidebar>
-          </Route>
-          <View.Content>
-            <Box maxWidth={800} paddingY={12} paddingX={4} marginX="auto">
-              {loading ? (
-                <ViewLoading />
-              ) : (
-                <Switch>
-                  <Route path="/explore/shared" component={Shared} />
-                  <Route path="/explore/favorites" component={Favorites} />
-                  <Route path="/explore/archived" component={Archived} />
-                  <Route path="/explore/:id" component={Inbox} />
-                  {isLargeScreen && (
-                    <Redirect to={`/explore/${defaultSearch.id}`} />
-                  )}
-                </Switch>
-              )}
             </Box>
-          </View.Content>
-        </View>
+          </Route>
+          <Box>
+            <Switch>
+              <Route path="/explore/articles/:id" component={Article} />
+              <Route>
+                <Box maxWidth={800} paddingY={12} paddingX={4} marginX="auto">
+                  {loading ? (
+                    <ViewLoading />
+                  ) : (
+                    <Switch>
+                      <Route path="/explore/shared" component={Shared} />
+                      <Route path="/explore/favorites" component={Favorites} />
+                      <Route path="/explore/archived" component={Archived} />
+                      <Route path="/explore/articles/:id" component={Article} />
+                      <Route path="/explore/:id" component={Inbox} />
+                      {isLargeScreen && (
+                        <Redirect to={`/explore/${defaultSearch.id}`} />
+                      )}
+                    </Switch>
+                  )}
+                </Box>
+              </Route>
+            </Switch>
+          </Box>
+        </Box>
       </Route>
     </Switch>
   );

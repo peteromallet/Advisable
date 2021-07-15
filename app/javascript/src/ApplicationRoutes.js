@@ -39,7 +39,6 @@ const CaseStudyRecommendations = lazy(() =>
   import("./views/CaseStudyRecommendations"),
 );
 const Payment = lazy(() => import("./views/Payment"));
-const CaseStudy = lazy(() => import("./views/CaseStudy"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -67,7 +66,6 @@ const ApplicationRoutes = () => {
       <Header />
       <Suspense fallback={<Loading />}>
         <Switch>
-          <Route path="/case_studies/:id" component={CaseStudy} />
           <AuthenticatedRoute path="/set_password" component={SetPassword} />
           {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
           <Redirect

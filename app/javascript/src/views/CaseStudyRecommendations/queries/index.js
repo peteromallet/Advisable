@@ -8,6 +8,15 @@ import SHARED from "./sharedArticles.gql";
 import MEMBERS from "./members.gql";
 import DELETE from "./deleteSearch.gql";
 import SHARE from "./shareArticle.gql";
+import CASE_STUDY from "./getCaseStudy.gql";
+
+export function useCaseStudy(id) {
+  return useQuery(CASE_STUDY, {
+    variables: {
+      id,
+    },
+  });
+}
 
 export function useArchive({ article, searchId }, opts) {
   return useMutation(ASSIGN, {
