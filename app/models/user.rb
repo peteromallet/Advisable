@@ -103,7 +103,7 @@ class User < ApplicationRecord
       user: self,
       business_type: company.kind,
       goals: company.goals,
-      name: "Recommendations",
+      name: "Recommendations for #{company.name}",
       company_recomendation: true
     )
   end
