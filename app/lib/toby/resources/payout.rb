@@ -12,6 +12,12 @@ module Toby
       attribute :processed_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
+
+      action :process
+
+      def process
+        # Do something
+      end
     end
   end
 end
