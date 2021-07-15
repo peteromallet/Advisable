@@ -4,11 +4,13 @@ module Toby
   module Resources
     class BaseResource
       class << self
-        attr_reader :model, :model_s, :attributes
+        attr_reader :model, :model_s, :attributes, :actions
 
         def model_name(klass)
           @model = klass
           @model_s = model.to_s
+          @attributes = [Attributes::Id.new(:id, self, readonly: true)]
+          @actions = []
         end
 
         def query_name_collection
@@ -19,18 +21,20 @@ module Toby
           model_s.camelize(:lower)
         end
 
-        # query_name_create, query_name_update, query_name_delete, query_name_search
-        %i[create update delete search].each do |method|
+        # query_name_create query_name_update query_name_delete query_name_search query_name_action
+        %i[create update delete search action].each do |method|
           define_method("query_name_#{method}") do
             "#{method}#{model_s.camelize}"
           end
         end
 
         def attribute(name, type, **args)
-          @attributes ||= [Attributes::Id.new(:id, self, readonly: true)]
-
           args[:parent] = self.name.demodulize unless args.key?(:parent)
           @attributes << type.new(name, self, **args)
+        end
+
+        def action(name)
+          @actions << name
         end
 
         def label(record, _context)
@@ -63,15 +67,20 @@ module Toby
             end
 
             root.attributes.each do |attribute|
-              # define a field for each attribute
               field attribute.name, attribute.type, null: true
-              # Forward all of the getters for each attribute to the attribute instance.
               define_method(attribute.name) do
                 if attribute.respond_to?(:lazy_read_class)
                   attribute.lazy_read_class.new(attribute, context, object)
                 else
                   attribute.read(object)
                 end
+              end
+            end
+
+            root.actions.each do |action|
+              field :"_perform_#{action}", ::GraphQL::Types::Boolean, null: true
+              define_method(:"_perform_#{action}") do
+                object.public_send(action)
               end
             end
           end
