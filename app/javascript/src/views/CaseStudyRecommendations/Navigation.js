@@ -38,7 +38,7 @@ export default function ExploreNavigation({ data }) {
         <NavItem
           icon={Collection}
           to={`/explore/${companySearch.id}`}
-          count={companySearch.results.length}
+          count={companySearch.results.nodes.length}
         >
           Recommendations
         </NavItem>
@@ -48,7 +48,7 @@ export default function ExploreNavigation({ data }) {
           key={s.id}
           icon={Search}
           to={`/explore/${s.id}`}
-          count={s.results.length}
+          count={s.results.nodes.length}
         >
           {s.name}
         </NavItem>

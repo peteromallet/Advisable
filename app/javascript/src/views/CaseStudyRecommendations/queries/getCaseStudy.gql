@@ -1,19 +1,8 @@
+#import "./articleFields.gql"
 query getCaseStudy($id: ID!) {
   caseStudy(id: $id) {
-    id
-    title
-    subtitle
+    ...ArticleFields
     comment
-    isSaved
-    isArchived
-    skills {
-      id
-      primary
-      skill {
-        id
-        name
-      }
-    }
     specialist {
       id
       bio
