@@ -49,5 +49,28 @@ module Types
       payments = payments.with_status(status) if status.present?
       payments
     end
+
+    field :invoices, Types::PaymentInvoice.connection_type, null: true do
+      authorize :read?
+    end
+
+    def invoices
+      object.payments.with_status("succeeded").group_by { |p| [p.created_at.year, p.created_at.month] }.map do |(year, month), payments|
+        OpenStruct.new({year: year, month: month, payments: payments})
+      end
+    end
+
+    field :invoice, Types::PaymentInvoice, null: true do
+      authorize :read?
+      argument :month, String, required: true
+    end
+
+    def invoice(month: nil)
+      month = Date.parse(month)
+      OpenStruct.new({
+        month: month,
+        payments: object.payments.with_status("succeeded").where(created_at: month.all_month)
+      })
+    end
   end
 end
