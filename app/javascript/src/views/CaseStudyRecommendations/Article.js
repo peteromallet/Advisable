@@ -111,7 +111,7 @@ export default function CaseStudy() {
           <Button variant="gradient">Work with {specialist.firstName}</Button>
         </Sticky>
       </Box>
-      <Box maxWidth="680px" paddingBottom={20}>
+      <Box maxWidth="680px" paddingBottom={20} position="relative">
         <StyledArticleTitle>{caseStudy.title}</StyledArticleTitle>
         {caseStudy.comment ? (
           <Card padding={5} borderRadius="16px">

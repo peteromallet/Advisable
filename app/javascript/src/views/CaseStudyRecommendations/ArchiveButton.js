@@ -64,7 +64,7 @@ function ArchiveForm({ article, searchId, onArchive = () => {}, modal }) {
           input: {
             action: "archive",
             article: article.id,
-            searh: searchId,
+            search: searchId,
             feedback: feedback === "_OTHER" ? otherFeedback : feedback,
           },
         },
@@ -73,7 +73,7 @@ function ArchiveForm({ article, searchId, onArchive = () => {}, modal }) {
       modal.hide();
       onArchive();
     },
-    [archive, article, onArchive, modal],
+    [archive, article, onArchive, modal, searchId],
   );
 
   const primarySkill =
