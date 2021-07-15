@@ -803,4 +803,23 @@ RSpec.describe ZappierInteractorController, type: :request do
       end
     end
   end
+
+  describe "POST /send_finance_email" do
+    let(:params) { {email: "test@test.com", key: key} }
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zappier_interactor/send_finance_email", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    it "generates the csv" do
+      post("/zappier_interactor/send_finance_email", params: params)
+      expect(response).to have_http_status(:success)
+      expect(GenerateFinanceCsvJob).to have_been_enqueued.with("test@test.com")
+    end
+  end
 end
