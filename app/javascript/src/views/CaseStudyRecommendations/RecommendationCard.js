@@ -13,7 +13,7 @@ export default function RecommendationCard({
   search,
   sharedArticle,
 }) {
-  let url = `/case_Studies/${caseStudy.id}`;
+  let url = `/explore/articles/${caseStudy.id}`;
   if (search) {
     url = `${url}?search=${search.id}`;
   }
@@ -50,21 +50,17 @@ export default function RecommendationCard({
           )}
           <StyledRecommendationTitle
             mb={2}
-            target="_blank"
+            to={url}
             fontSize="2xl"
             fontWeight={600}
             className="title"
             lineHeight="24px"
             letterSpacing="-0.03rem"
-            href={url}
           >
             {caseStudy.title}
           </StyledRecommendationTitle>
-          <Text mb={4} fontSize="md" color="neutral500">
-            {caseStudy.specialist.name}
-          </Text>
           <Text
-            lineHeight="20px"
+            lineHeight="24px"
             color="neutral900"
             className="subtitle"
             marginBottom={6}
