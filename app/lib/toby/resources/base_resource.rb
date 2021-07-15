@@ -42,7 +42,7 @@ module Toby
         end
 
         def attribute(name, type, **args)
-          @attributes ||= [Attributes::Id.new(:id, self)]
+          @attributes ||= [Attributes::Id.new(:id, self, readonly: true)]
 
           args[:parent] = self.name.demodulize unless args.key?(:parent)
           @attributes << type.new(name, self, **args)
@@ -62,11 +62,11 @@ module Toby
               root.label(object, context)
             end
 
-            if root.model.ancestors.include?(Logidze::Model)
-              field :_history, [Toby::Types::Version], null: true
-              define_method(:_history) do
-                object.reload_log_data.data["h"]
-              end
+            field :_history, [Toby::Types::Version], null: true
+            define_method(:_history) do
+              return [] unless root.model.ancestors.include?(Logidze::Model)
+
+              object.reload_log_data.data["h"]
             end
 
             root.attributes.each do |attribute|
