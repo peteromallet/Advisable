@@ -1,6 +1,6 @@
 import React from "react";
 import filter from "lodash/filter";
-import { Text, Tabs } from "@advisable/donut";
+import { Heading, Tabs } from "@advisable/donut";
 import TalentCard from "./TalentCard";
 import { Cards } from "./styles";
 import Empty from "./Empty";
@@ -12,16 +12,7 @@ export default ({ onClick, applications }) => {
 
   return (
     <>
-      <Text
-        mb={5}
-        as="h2"
-        fontSize="4xl"
-        color="neutral900"
-        fontWeight="medium"
-        letterSpacing="-0.04rem"
-      >
-        Manage Talent
-      </Text>
+      <Heading mb={6}>Manage Talent</Heading>
       <Tabs label="Tasks">
         <Tabs.Tab title="Active Talent">
           <Cards>
