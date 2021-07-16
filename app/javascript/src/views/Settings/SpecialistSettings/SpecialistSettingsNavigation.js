@@ -1,24 +1,15 @@
 import React from "react";
-import styled from "styled-components";
 import { Calendar } from "@styled-icons/ionicons-outline/Calendar";
 import { Card } from "@styled-icons/ionicons-outline/Card";
 import { LockClosed } from "@styled-icons/ionicons-outline/LockClosed";
 import { PersonCircle } from "@styled-icons/ionicons-outline/PersonCircle";
 import { Text } from "@advisable/donut";
 import NavigationMenu from "src/components/NavigationMenu";
-import View from "src/components/View";
 
-const SidebarTitle = styled.div`
-  @media (max-width: 1024px) {
-    margin-left: 0;
-  }
-`;
-
-const SettingsSidebar = () => {
+const SpecialistSettingsNavigation = () => {
   return (
-    <View.Sidebar>
+    <>
       <Text
-        as={SidebarTitle}
         fontSize="xl"
         color="blue900"
         fontWeight="medium"
@@ -42,8 +33,8 @@ const SettingsSidebar = () => {
           Account
         </NavigationMenu.Item>
       </NavigationMenu>
-    </View.Sidebar>
+    </>
   );
 };
 
-export default SettingsSidebar;
+export default SpecialistSettingsNavigation;

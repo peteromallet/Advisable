@@ -3,7 +3,7 @@ import { Switch, Redirect } from "react-router-dom";
 import Route from "src/components/Route";
 import { Container, useBreakpoint } from "@advisable/donut";
 import View from "src/components/View";
-import Sidebar from "./Sidebar";
+import Navigation from "./SpecialistSettingsNavigation";
 import General from "./General";
 import Password from "./Password";
 import PaymentSettings from "./PaymentSettings";
@@ -17,7 +17,12 @@ function SpecialistSettings({ match }) {
       {/* On mobile we only show the navigation menu if the URL is exactly
       /settings. On desktop we want to display it as a sidebar on all settings
       pages. We use a Route with exact prop to achieve this. */}
-      <Route path={match.path} component={Sidebar} exact={!breakpointS} />
+      <Route path={match.path} exact={!breakpointS}>
+        <View.Sidebar>
+          <Navigation />
+        </View.Sidebar>
+      </Route>
+
       <View.Content>
         <Container
           pt={{ _: 4, s: 0, l: 12 }}
@@ -36,13 +41,7 @@ function SpecialistSettings({ match }) {
             <Route path="/settings/password" component={Password} />
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
-            {breakpointS && (
-              <Route
-                exact
-                path={match.path}
-                render={() => <Redirect to="/settings/general" />}
-              />
-            )}
+            {breakpointS && <Redirect to="/settings/general" />}
           </Switch>
         </Container>
       </View.Content>

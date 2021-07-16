@@ -5,7 +5,7 @@ import { Container, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import Route from "src/components/Route";
 import View from "src/components/View";
-import Sidebar from "./Sidebar";
+import ClientSettingsNavigation from "./ClientSettingsNavigation";
 import PaymentSettings from "./PaymentSettings";
 import Team from "./Team";
 import Invoices from "./Invoices";
@@ -24,7 +24,11 @@ const ClientSettings = ({ match }) => {
       {/* On mobile we only show the navigation menu if the URL is exactly
       /settings. On desktop we want to display it as a sidebar on all settings
       pages. We use a Route with exact prop to achieve this. */}
-      <Route path={match.path} component={Sidebar} exact={!breakpointS} />
+      <Route path={match.path} exact={!breakpointS}>
+        <View.Sidebar>
+          <ClientSettingsNavigation />
+        </View.Sidebar>
+      </Route>
       <View.Content>
         <Container
           pt={{ _: 4, s: 0, l: 12 }}
