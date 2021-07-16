@@ -133,13 +133,8 @@ export const project = (fields = {}) => {
     skills: [],
     user: null,
     acceptedTerms: true,
-    depositOwed: 0,
     applications: [],
     createdAt: "2020-06-24T12:00:00.000",
-    depositPaymentIntent: {
-      __typename: "PaymentIntent",
-      secret: "secret1234",
-    },
     ...fields,
   };
 };
