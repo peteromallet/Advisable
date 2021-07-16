@@ -10,10 +10,11 @@ module Toby
       field :query_name_destroy, String, null: false
       field :query_name_search, String, null: false
       field :attributes, [Toby::Types::AttributeInterface], null: false
+      field :actions, [Toby::Types::Action], null: false
       field :type, String, null: false
 
       def type
-        object.model.name
+        object.model_s
       end
     end
   end

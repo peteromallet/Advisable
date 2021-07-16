@@ -12,6 +12,14 @@ module Toby
       attribute :processed_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
+
+      action :process, label: "Mark as processed"
+
+      def self.process(object)
+        return if object.processed_at?
+
+        object.update(processed_at: Time.zone.now)
+      end
     end
   end
 end
