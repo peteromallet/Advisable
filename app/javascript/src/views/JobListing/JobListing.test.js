@@ -118,36 +118,6 @@ test("when the project is closed it renders the applications closed view", async
   await screen.findByText("projects.applicationsClosed.title");
 });
 
-test("Shows notice that the application will be used in advisable application", async () => {
-  const specialist = mockData.specialist({
-    applicationStage: "On Hold",
-  });
-
-  renderRoute({
-    route: "/invites/rec1234",
-    graphQLMocks: [
-      mockViewer(specialist),
-      mockQuery(
-        GET_APPLICATION,
-        { id: "rec1234" },
-        {
-          application: mockData.application({
-            specialist,
-            status: "Invited To Apply",
-            project: mockData.project({
-              user: mockData.user({
-                country: mockData.country(),
-              }),
-            }),
-          }),
-        },
-      ),
-    ],
-  });
-
-  await screen.findByText(/used as part of your advisable application/i);
-});
-
 test("It requires a specialist to be logged in", async () => {
   renderRoute({
     route: "/invites/rec1234",
