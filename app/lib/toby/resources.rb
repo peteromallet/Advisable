@@ -2,18 +2,25 @@
 
 module Toby
   module Resources
+    IGNORED_KLASSES = ["Toby::Resources::BaseResource"].freeze
+
     def self.resource_classes
-      @resource_classes ||= (Toby::Resources.constants - [:BaseResource]).flat_map do |klass|
-        klass = "Toby::Resources::#{klass}".constantize
-        if klass.is_a?(Class) && klass < BaseResource
+      @resource_classes ||= get_descendants_of(self)
+    end
+
+    def self.get_descendants_of(baseklass)
+      baseklass.constants.filter_map do |klass|
+        klassname = "#{baseklass.name}::#{klass}"
+        next if IGNORED_KLASSES.include?(klassname)
+
+        klass = klassname.constantize
+        case klass
+        when Class
           klass
-        else
-          # Only one level deep for now. this_is_fine.png
-          klass.constants.map do |kklass|
-            "#{klass.name}::#{kklass}".constantize
-          end
+        when Module
+          get_descendants_of(klass)
         end
-      end
+      end.flatten
     end
   end
 end
