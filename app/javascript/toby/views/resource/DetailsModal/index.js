@@ -14,6 +14,7 @@ import { generateShowQuery, generateUpdateMutation } from "../../../utilities";
 import { useMutation, useQuery } from "@apollo/client";
 import { pluralizeType } from "../../../utilities";
 import VersionHistory from "./VersionHistory";
+import ActionsMenu from "./ActionsMenu";
 
 function useRoutedModal(path, returnPath) {
   const modal = useDialogState();
@@ -121,6 +122,9 @@ function Details({ id, resource }) {
   return (
     <Box display="flex">
       <Box paddingRight={8} width="100%">
+        <Box display="flex" alignItems="center">
+          <ActionsMenu resource={resource} record={data.record} />
+        </Box>
         <Formik onSubmit={handleSubmit} initialValues={initialValues}>
           <Form>
             {resource.attributes.map((attr) => {
