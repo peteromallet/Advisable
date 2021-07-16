@@ -9,7 +9,7 @@ import {
 import { AnimatePresence } from "framer-motion";
 import { Container, useBreakpoint } from "@advisable/donut";
 import Loading from "src/components/Loading";
-import Sidebar from "./components/Sidebar";
+import Navigation from "./components/Navigation";
 import NotFound from "src/views/NotFound";
 import View from "src/components/View";
 // Steps
@@ -39,7 +39,9 @@ export default function CreateSavedSearch() {
 
   return (
     <View>
-      <Sidebar caseStudySearch={data.caseStudySearch} />
+      <View.Sidebar>
+        <Navigation caseStudySearch={data.caseStudySearch} />
+      </View.Sidebar>
       <View.Content>
         <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <AnimatePresence
