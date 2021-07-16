@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Avatar } from "@advisable/donut";
+import { Box, Heading, Text, Avatar } from "@advisable/donut";
 import { useParams, useLocation } from "react-router-dom";
 import View from "src/components/View";
 import MultistepMenu from "src/components/MultistepMenu";
@@ -29,16 +29,9 @@ const Sidebar = ({ data }) => {
           name={data.specialist.name}
         />
       </Box>
-      <Text
-        as="h1"
-        mb="xxs"
-        fontSize="xl"
-        color="blue800"
-        fontWeight="semibold"
-        letterSpacing="-0.02em"
-      >
+      <Heading mb={1} size="xl">
         {data.specialist.name}
-      </Text>
+      </Heading>
       <Text color="neutral600" letterSpacing="-0.02em" mb="xs">
         {data.specialist.location}
       </Text>
