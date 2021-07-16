@@ -8,7 +8,7 @@ module Toby
 
         def model_name(klass)
           @model = klass
-          @model_s = model.to_s
+          @model_s = model.to_s.tr("::", "")
           @attributes = [Attributes::Id.new(:id, self, readonly: true)]
           @actions = []
         end
@@ -21,8 +21,8 @@ module Toby
           model_s.camelize(:lower)
         end
 
-        # query_name_create query_name_update query_name_delete query_name_search query_name_action
-        %i[create update delete search action].each do |method|
+        # query_name_create query_name_update query_name_delete query_name_search
+        %i[create update delete search].each do |method|
           define_method("query_name_#{method}") do
             "#{method}#{model_s.camelize}"
           end
@@ -52,7 +52,7 @@ module Toby
         def type_class
           root = self
           Class.new(GraphQL::Schema::Object) do
-            graphql_name(root.model.name)
+            graphql_name(root.model_s)
 
             field :_label, String, null: false
             define_method(:_label) do
@@ -86,7 +86,7 @@ module Toby
         def define_input_type
           root = self
           Class.new(GraphQL::Schema::InputObject) do
-            graphql_name("#{root.model.name}Attributes")
+            graphql_name("#{root.model_s}Attributes")
             root.attributes.each do |attribute|
               next if attribute.readonly
 
@@ -99,7 +99,7 @@ module Toby
           root = self
           Class.new(Toby::Mutations::Update) do
             self.resource = root
-            graphql_name "Update#{root.model.name}"
+            graphql_name "Update#{root.model_s}"
             argument :id, GraphQL::Schema::Object::ID, required: true
             argument :attributes, root.input_type, required: true
             field :resource, root.type, null: true
@@ -110,7 +110,7 @@ module Toby
           root = self
           Class.new(Toby::Mutations::Create) do
             self.resource = root
-            graphql_name "Create#{root.model.name}"
+            graphql_name "Create#{root.model_s}"
             argument :attributes, root.input_type, required: true
             field :resource, root.type, null: true
           end
@@ -120,7 +120,7 @@ module Toby
           root = self
           Class.new(Toby::Mutations::Delete) do
             self.resource = root
-            graphql_name "Delete#{root.model.name}"
+            graphql_name "Delete#{root.model_s}"
             argument :id, GraphQL::Schema::Object::ID, required: true
             field :success, GraphQL::Types::Boolean, null: true
           end
@@ -130,7 +130,7 @@ module Toby
           root = self
           Class.new(Toby::Mutations::Action) do
             self.resource = root
-            graphql_name "#{root.model.name}Action"
+            graphql_name "#{root.model_s}Action"
             argument :id, GraphQL::Schema::Object::ID, required: true
             argument :name, String, required: true
             field :resource, root.type, null: true
