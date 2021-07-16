@@ -61,4 +61,20 @@ RSpec.describe StripeEvents::PaymentIntentSucceeded do
       expect(payment.reload.status).to eq("succeeded")
     end
   end
+
+  describe "no metadata" do
+    let(:metadata) { OpenStruct.new }
+
+    it "does nothing" do
+      expect(StripeEvents.process(event)).to eq(nil)
+    end
+  end
+
+  describe "unsupported payment typo" do
+    let(:metadata) { OpenStruct.new({payment_type: "charge"}) }
+
+    it "does nothing" do
+      expect(StripeEvents.process(event)).to eq(nil)
+    end
+  end
 end
