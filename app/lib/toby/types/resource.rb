@@ -15,6 +15,8 @@ module Toby
       def type
         object.model.name
       end
+
+      field :actions, [Toby::Types::Action], null: false
     end
   end
 end

@@ -34,7 +34,7 @@ module Toby
         end
 
         def action(name)
-          @actions << name
+          @actions << Toby::Action.new(name, self)
         end
 
         def label(record, _context)
@@ -74,13 +74,6 @@ module Toby
                 else
                   attribute.read(object)
                 end
-              end
-            end
-
-            root.actions.each do |action|
-              field :"_perform_#{action}", ::GraphQL::Types::Boolean, null: true
-              define_method(:"_perform_#{action}") do
-                object.public_send(action)
               end
             end
           end
@@ -130,6 +123,18 @@ module Toby
             graphql_name "Delete#{root.model.name}"
             argument :id, GraphQL::Schema::Object::ID, required: true
             field :success, GraphQL::Types::Boolean, null: true
+          end
+        end
+
+        def action_mutation
+          root = self
+          Class.new(Toby::Mutations::Action) do
+            self.resource = root
+            graphql_name "#{root.model.name}Action"
+            argument :id, GraphQL::Schema::Object::ID, required: true
+            argument :name, String, required: true
+            argument :args, GraphQL::Types::JSON, required: false
+            field :resource, root.type, null: true
           end
         end
       end
