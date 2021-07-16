@@ -4,6 +4,8 @@ class Payout < ApplicationRecord
   include Uid
   uid_prefix "pyo"
 
+  has_logidze
+
   belongs_to :specialist
   belongs_to :task, optional: true
 
