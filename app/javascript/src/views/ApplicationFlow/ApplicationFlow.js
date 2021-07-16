@@ -8,11 +8,11 @@ import { Container, useBreakpoint, useTheme } from "@advisable/donut";
 import usePathnameQueue from "src/utilities/usePathnameQueue";
 import Route from "src/components/Route";
 import View from "src/components/View";
+import ApplicationFlowNavigation from "./ApplicationFlowNavigation";
 import Terms from "./Terms";
 import Overview from "./Overview";
 import Questions from "./Questions";
 import References from "./References";
-import ApplicationFlowSidebar from "./ApplicationFlowSidebar";
 import SetupDots from "./SetupDots";
 
 const cardAnimations = {
@@ -132,11 +132,15 @@ const ApplicationFlow = ({ application, match }) => {
 
   return (
     <View>
-      <ApplicationFlowSidebar
-        application={application}
-        steps={STEPS}
-        applicationId={applicationId}
-      />
+      {largeScreen ? (
+        <View.Sidebar>
+          <ApplicationFlowNavigation
+            application={application}
+            steps={STEPS}
+            applicationId={applicationId}
+          />
+        </View.Sidebar>
+      ) : null}
       <View.Content>
         <Container paddingY={16} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           {!largeScreen && (

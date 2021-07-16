@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 import filter from "lodash/filter";
 import { useLocation } from "react-router";
 import { Text, Box } from "@advisable/donut";
-import View from "src/components/View";
 import Back from "src/components/Back";
 import MultistepMenu from "src/components/MultistepMenu";
 
-function ApplicationFlowSidebar({ application, steps, applicationId }) {
+function ApplicationFlowNavigation({ application, steps, applicationId }) {
   const location = useLocation();
 
   // Iterate through the STEPS and filter our any where hidden is true.
@@ -34,7 +33,7 @@ function ApplicationFlowSidebar({ application, steps, applicationId }) {
   });
 
   return (
-    <View.Sidebar width="320px">
+    <>
       <Box marginBottom="s">
         <Back to={`/invites/${applicationId}`}>View project details</Back>
       </Box>
@@ -57,14 +56,14 @@ function ApplicationFlowSidebar({ application, steps, applicationId }) {
         {application.project.description}
       </Text>
       <MultistepMenu>{multisteps}</MultistepMenu>
-    </View.Sidebar>
+    </>
   );
 }
 
-ApplicationFlowSidebar.propTypes = {
+ApplicationFlowNavigation.propTypes = {
   application: PropTypes.object,
   steps: PropTypes.array,
   applicationId: PropTypes.string,
 };
 
-export default ApplicationFlowSidebar;
+export default ApplicationFlowNavigation;
