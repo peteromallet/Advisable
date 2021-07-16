@@ -2,7 +2,7 @@
 
 module Types
   class ApplicationType < Types::BaseType
-    description "Represents a relatinpship between a freelancer and a client"
+    description "Represents a relationship between a freelancer and a client"
 
     def self.authorized?(application, context)
       policy = ApplicationPolicy.new(context[:current_user], application)
