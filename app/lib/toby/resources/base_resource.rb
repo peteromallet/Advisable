@@ -21,8 +21,8 @@ module Toby
           model_s.camelize(:lower)
         end
 
-        # query_name_create query_name_update query_name_delete query_name_search
-        %i[create update delete search].each do |method|
+        # query_name_create query_name_update query_name_delete query_name_search query_name_action
+        %i[create update delete search action].each do |method|
           define_method("query_name_#{method}") do
             "#{method}#{model_s.camelize}"
           end
@@ -130,7 +130,7 @@ module Toby
           root = self
           Class.new(Toby::Mutations::Action) do
             self.resource = root
-            graphql_name "#{root.model_s}Action"
+            graphql_name "Action#{root.model_s.camelize}"
             argument :id, GraphQL::Schema::Object::ID, required: true
             argument :name, String, required: true
             field :resource, root.type, null: true
