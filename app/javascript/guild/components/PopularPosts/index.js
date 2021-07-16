@@ -3,7 +3,7 @@ import { StyledPopularPosts } from "./styles";
 import LoadingPosts from "@guild/components/Posts/Loading";
 import PopularPost from "./components/PopularPost";
 
-const PopularPosts = ({ posts, loading }) => {
+function PopularPosts({ posts, loading }) {
   return (
     <StyledPopularPosts>
       {loading ? <LoadingPosts skeletonPosts={1} /> : null}
@@ -12,6 +12,10 @@ const PopularPosts = ({ posts, loading }) => {
       ))}
     </StyledPopularPosts>
   );
-};
+}
 
-export default PopularPosts;
+function areEqual({ posts: prev }, { posts: next }) {
+  return prev === next;
+}
+
+export default React.memo(PopularPosts, areEqual);
