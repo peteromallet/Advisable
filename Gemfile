@@ -83,6 +83,7 @@ group :development do
   gem "guard-rspec", require: false
   gem "letter_opener"
   gem "brakeman"
+  gem "benchmark-ips"
 end
 
 group :test do
