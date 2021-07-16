@@ -3,6 +3,8 @@
 class Payment < ApplicationRecord
   include Uid
 
+  has_logidze
+
   VALID_STATUSES = %w[requires_payment_method requires_confirmation requires_action processing requires_capture canceled succeeded failed pending].freeze
 
   belongs_to :company

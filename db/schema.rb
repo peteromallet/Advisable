@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_13_114940) do
+ActiveRecord::Schema.define(version: 2021_07_16_090611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -675,6 +675,7 @@ ActiveRecord::Schema.define(version: 2021_07_13_114940) do
     t.string "payment_intent_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
     t.index ["company_id"], name: "index_payments_on_company_id"
     t.index ["specialist_id"], name: "index_payments_on_specialist_id"
     t.index ["task_id"], name: "index_payments_on_task_id"
@@ -690,6 +691,7 @@ ActiveRecord::Schema.define(version: 2021_07_13_114940) do
     t.datetime "processed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
     t.index ["specialist_id"], name: "index_payouts_on_specialist_id"
     t.index ["task_id"], name: "index_payouts_on_task_id"
   end
@@ -1500,5 +1502,11 @@ ActiveRecord::Schema.define(version: 2021_07_13_114940) do
   SQL
   create_trigger :logidze_on_case_study_searches, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_case_study_searches BEFORE INSERT OR UPDATE ON public.case_study_searches FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_payments, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_payments BEFORE INSERT OR UPDATE ON public.payments FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_payouts, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_payouts BEFORE INSERT OR UPDATE ON public.payouts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
