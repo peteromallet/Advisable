@@ -1,12 +1,11 @@
 import * as React from "react";
 import { Box, Text } from "@advisable/donut";
 import Back from "src/components/Back";
-import View from "src/components/View";
 import MultistepMenu from "src/components/MultistepMenu";
 import { useMobile } from "src/components/Breakpoint";
 import { hasCompleteTasksStep } from "./validationSchema";
 
-let SideBar = (props) => {
+let Navigation = (props) => {
   const isMobile = useMobile();
   const { application } = props;
 
@@ -21,7 +20,7 @@ let SideBar = (props) => {
   const isSent = application.status === "Proposed";
 
   return (
-    <View.Sidebar>
+    <>
       <Box paddingBottom="m">
         <Back to="/applications">All Applications</Back>
       </Box>
@@ -74,8 +73,8 @@ let SideBar = (props) => {
           </MultistepMenu.Item>
         </MultistepMenu>
       )}
-    </View.Sidebar>
+    </>
   );
 };
 
-export default SideBar;
+export default Navigation;
