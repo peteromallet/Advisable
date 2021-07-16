@@ -9,17 +9,6 @@
 # considered an "account" once a password is set. The status of a specialists
 # application is stored in the application_stage column.
 #
-# == application_stage values
-# [Started] They have started a baseic application process but have not yet
-# submitted it.
-# [On Hold] Their application has been submitted and they are currently on hold
-# until we have a project we think is a good fit for them.
-# [Full Application] When a freelancer is 'On Hold' they can do what is called
-# a 'full application' and upload and validate 3 previous projects to become
-# instantly available to clients on Advisable. This status indicates that
-# a freelancer has submitted a full application.
-# [Accepted] Their application has been successfull.
-#
 class Specialist < ApplicationRecord
   self.ignored_columns += %i[referrer]
 

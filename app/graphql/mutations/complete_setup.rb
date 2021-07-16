@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# Updates the specialist application_stage from 'Started' to 'On Hold'
 module Mutations
   class CompleteSetup < Mutations::BaseMutation
+    description "Completes the specialist onboarding"
     field :specialist, Types::SpecialistType, null: true
 
     # The completeSetup mutation requires a specalist to be logged in.
