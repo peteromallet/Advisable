@@ -204,7 +204,7 @@ export function generateActionMutation(schemaData, resourceData) {
           id: new VariableType("id"),
           name: new VariableType("name"),
         },
-        __aliasFor: `trigger${resourceData.type}Action`,
+        __aliasFor: `action${resourceData.type}`,
         resource: node,
       },
     },
