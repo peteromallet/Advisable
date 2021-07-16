@@ -112,6 +112,7 @@ GEM
       multi_json (~> 1)
       statsd-ruby (~> 1.1)
     bcrypt (3.1.16)
+    benchmark-ips (2.9.1)
     bindex (0.8.1)
     bootsnap (1.7.5)
       msgpack (~> 1.0)
@@ -536,6 +537,7 @@ DEPENDENCIES
   aws-sdk-s3
   barnes
   bcrypt
+  benchmark-ips
   bootsnap
   brakeman
   capybara
