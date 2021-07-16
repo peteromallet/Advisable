@@ -13,7 +13,7 @@ module Toby
       field :type, String, null: false
 
       def type
-        object.model.name
+        object.model_s
       end
 
       field :actions, [Toby::Types::Action], null: false
