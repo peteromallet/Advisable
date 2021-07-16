@@ -1,13 +1,12 @@
 import React from "react";
 import { Box, Heading, Text, Avatar } from "@advisable/donut";
 import { useParams, useLocation } from "react-router-dom";
-import View from "src/components/View";
 import MultistepMenu from "src/components/MultistepMenu";
 import StarRating from "src/components/StarRating";
 import pluralize from "src/utilities/pluralize";
 import useViewer from "src/hooks/useViewer";
 
-const Sidebar = ({ data }) => {
+const Navigation = ({ data }) => {
   const params = useParams();
   const viewer = useViewer();
   const location = useLocation();
@@ -21,7 +20,7 @@ const Sidebar = ({ data }) => {
   };
 
   return (
-    <View.Sidebar>
+    <>
       <Box mb="m">
         <Avatar
           size="l"
@@ -98,8 +97,8 @@ const Sidebar = ({ data }) => {
           Send
         </MultistepMenu.Item>
       </MultistepMenu>
-    </View.Sidebar>
+    </>
   );
 };
 
-export default Sidebar;
+export default Navigation;
