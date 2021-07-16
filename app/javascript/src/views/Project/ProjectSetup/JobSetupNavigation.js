@@ -4,7 +4,6 @@ import DeleteDraftJob from "./DeleteDraftJob";
 import { useLocation, useParams } from "react-router-dom";
 import MultistepMenu from "src/components/MultistepMenu";
 import BackButton from "src/components/BackButton";
-import View from "src/components/View";
 import useViewer from "src/hooks/useViewer";
 import { setupProgress } from "./SetupSteps";
 
@@ -22,7 +21,7 @@ export default function JobSetupSidebar({ data }) {
   const canDelete = viewer.isTeamManager || project.isOwner;
 
   return (
-    <View.Sidebar>
+    <>
       <BackButton to="/projects" marginBottom="m" />
       <MultistepMenu>
         <MultistepMenu.Item
@@ -99,6 +98,6 @@ export default function JobSetupSidebar({ data }) {
           <DeleteDraftJob id={id} />
         </Box>
       ) : null}
-    </View.Sidebar>
+    </>
   );
 }
