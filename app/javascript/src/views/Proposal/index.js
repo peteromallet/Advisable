@@ -10,7 +10,7 @@ import Send from "./Send";
 import Sent from "./Sent";
 import Tasks from "./Tasks";
 import ProjectType from "./ProjectType";
-import Sidebar from "./Sidebar";
+import Navigation from "./Navigation";
 import Loading from "./Loading";
 import FETCH_APPLICATION from "./fetchApplication";
 import Notfound from "../NotFound";
@@ -34,7 +34,9 @@ const Proposals = ({ match }) => {
 
   return (
     <View>
-      <Sidebar application={application} />
+      <View.Sidebar>
+        <Navigation application={application} />
+      </View.Sidebar>
       <View.Content>
         <Container
           pt={{ _: 4, s: 0, l: 12 }}
