@@ -15,8 +15,10 @@ module Toby
 
       action :process
 
-      def process
-        # Do something
+      def self.process(object)
+        return if object.processed_at?
+
+        object.update(processed_at: Time.zone.now)
       end
     end
   end
