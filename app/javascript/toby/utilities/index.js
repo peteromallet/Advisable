@@ -187,6 +187,33 @@ export function generateUpdateMutation(schemaData, resourceData) {
   return gql(queryString);
 }
 
+export function generateActionMutation(schemaData, resourceData) {
+  const node = {};
+  resourceData.attributes.forEach((attr) => {
+    node[attr.name] = selectionForField(schemaData, resourceData, attr.name);
+  });
+
+  const queryObject = {
+    mutation: {
+      __variables: {
+        id: "ID!",
+        name: "String!",
+      },
+      update: {
+        __args: {
+          id: new VariableType("id"),
+          name: new VariableType("name"),
+        },
+        __aliasFor: `trigger${resourceData.type}Action`,
+        resource: node,
+      },
+    },
+  };
+
+  const queryString = jsonToGraphQLQuery(queryObject);
+  return gql(queryString);
+}
+
 export function getType(schema, type) {
   return schema.types.find((t) => t.name === type);
 }
