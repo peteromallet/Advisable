@@ -9,16 +9,12 @@ module Toby
         attr_accessor :resource
       end
 
-      def resolve(id:, name:, args: {})
+      def resolve(id:, name:)
         resource = self.class.resource
         model = resource.model.find(id)
 
         Logidze.with_responsible(current_account_id) do
-          if args.present?
-            resource.public_send(name, model, args)
-          else
-            resource.public_send(name, model)
-          end
+          resource.public_send(name, model)
           model.save!
         end
 

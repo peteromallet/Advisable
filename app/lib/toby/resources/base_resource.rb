@@ -133,7 +133,6 @@ module Toby
             graphql_name "#{root.model.name}Action"
             argument :id, GraphQL::Schema::Object::ID, required: true
             argument :name, String, required: true
-            argument :args, GraphQL::Types::JSON, required: false
             field :resource, root.type, null: true
           end
         end
