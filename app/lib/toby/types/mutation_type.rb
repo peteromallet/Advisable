@@ -11,6 +11,7 @@ module Toby
         field resource.query_name_update, mutation: resource.update_mutation
         field resource.query_name_create, mutation: resource.create_mutation
         field resource.query_name_delete, mutation: resource.delete_mutation
+        field resource.query_name_action, mutation: resource.action_mutation
       end
     end
   end

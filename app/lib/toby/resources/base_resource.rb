@@ -4,58 +4,55 @@ module Toby
   module Resources
     class BaseResource
       class << self
-        attr_reader :model, :model_s, :attributes
+        attr_reader :model, :model_s, :attributes, :actions
 
         def model_name(klass)
           @model = klass
-          @model_s = model.to_s
-        end
-
-        def query_names(**options)
-          options.each do |key, value|
-            instance_variable_set(:"@query_name_#{key}", value)
-          end
+          @model_s = model.to_s.tr("::", "")
+          @attributes = [Attributes::Id.new(:id, self, readonly: true)]
+          @actions = []
         end
 
         def query_name_collection
-          @query_name_collection || model_s.pluralize.camelize(:lower)
+          model_s.pluralize.camelize(:lower)
         end
 
         def query_name_item
-          @query_name_item || model_s.camelize(:lower)
+          model_s.camelize(:lower)
         end
 
-        def query_name_create
-          @query_name_create || "create#{model_s.camelize}"
-        end
-
-        def query_name_update
-          @query_name_update || "update#{model_s.camelize}"
-        end
-
-        def query_name_delete
-          @query_name_delete || "delete#{model_s.camelize}"
-        end
-
-        def query_name_search
-          @query_name_search || "search#{model_s.camelize}"
+        # query_name_create query_name_update query_name_delete query_name_search query_name_action
+        %i[create update delete search action].each do |method|
+          define_method("query_name_#{method}") do
+            "#{method}#{model_s.camelize}"
+          end
         end
 
         def attribute(name, type, **args)
-          @attributes ||= [Attributes::Id.new(:id, self, readonly: true)]
-
           args[:parent] = self.name.demodulize unless args.key?(:parent)
           @attributes << type.new(name, self, **args)
         end
 
-        def type
-          @type ||= define_type
+        def action(name, **args)
+          @actions << Toby::Action.new(name, self, **args)
         end
 
-        def define_type
+        def label(record, _context)
+          record.id
+        end
+
+        def search(input)
+          model.where(id: input)
+        end
+
+        def type
+          @type ||= Toby::Types.const_set(name.demodulize, type_class)
+        end
+
+        def type_class
           root = self
-          type_class = Class.new(GraphQL::Schema::Object) do
-            graphql_name(root.model.name)
+          Class.new(GraphQL::Schema::Object) do
+            graphql_name(root.model_s)
 
             field :_label, String, null: false
             define_method(:_label) do
@@ -66,13 +63,11 @@ module Toby
             define_method(:_history) do
               return [] unless root.model.ancestors.include?(Logidze::Model)
 
-              object.reload_log_data.data["h"]
+              object.reload_log_data&.data&.dig("h")
             end
 
             root.attributes.each do |attribute|
-              # define a field for each attribute
               field attribute.name, attribute.type, null: true
-              # Forward all of the getters for each attribute to the attribute instance.
               define_method(attribute.name) do
                 if attribute.respond_to?(:lazy_read_class)
                   attribute.lazy_read_class.new(attribute, context, object)
@@ -82,8 +77,6 @@ module Toby
               end
             end
           end
-
-          Toby::Types.const_set(name.demodulize, type_class)
         end
 
         def input_type
@@ -93,7 +86,7 @@ module Toby
         def define_input_type
           root = self
           Class.new(GraphQL::Schema::InputObject) do
-            graphql_name("#{root.model.name}Attributes")
+            graphql_name("#{root.model_s}Attributes")
             root.attributes.each do |attribute|
               next if attribute.readonly
 
@@ -106,7 +99,7 @@ module Toby
           root = self
           Class.new(Toby::Mutations::Update) do
             self.resource = root
-            graphql_name "Update#{root.model.name}"
+            graphql_name "Update#{root.model_s}"
             argument :id, GraphQL::Schema::Object::ID, required: true
             argument :attributes, root.input_type, required: true
             field :resource, root.type, null: true
@@ -117,7 +110,7 @@ module Toby
           root = self
           Class.new(Toby::Mutations::Create) do
             self.resource = root
-            graphql_name "Create#{root.model.name}"
+            graphql_name "Create#{root.model_s}"
             argument :attributes, root.input_type, required: true
             field :resource, root.type, null: true
           end
@@ -127,18 +120,21 @@ module Toby
           root = self
           Class.new(Toby::Mutations::Delete) do
             self.resource = root
-            graphql_name "Delete#{root.model.name}"
+            graphql_name "Delete#{root.model_s}"
             argument :id, GraphQL::Schema::Object::ID, required: true
             field :success, GraphQL::Types::Boolean, null: true
           end
         end
 
-        def label(record, _context)
-          record.id
-        end
-
-        def search(input)
-          model.where(id: input)
+        def action_mutation
+          root = self
+          Class.new(Toby::Mutations::Action) do
+            self.resource = root
+            graphql_name "Action#{root.model_s.camelize}"
+            argument :id, GraphQL::Schema::Object::ID, required: true
+            argument :name, String, required: true
+            field :resource, root.type, null: true
+          end
         end
       end
     end

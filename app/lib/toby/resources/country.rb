@@ -4,7 +4,6 @@ module Toby
   module Resources
     class Country < BaseResource
       model_name ::Country
-      # query_names collection: :accounts
       attribute :uid, Attributes::String
       attribute :name, Attributes::String
 
