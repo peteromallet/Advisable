@@ -3,7 +3,7 @@
 module StripeEvents
   class PaymentIntentSucceeded < StripeEvents::BaseEvent
     def process
-      return if metadata&.payment_type.blank? || !respond_to?("process_#{metadata.payment_type}", true)
+      return if metadata&.payment_type.nil? || !respond_to?("process_#{metadata.payment_type}", true)
 
       __send__("process_#{metadata.payment_type}")
     end
@@ -15,6 +15,8 @@ module StripeEvents
     end
 
     def metadata
+      return if intent.metadata.as_json.blank?
+
       intent.metadata
     end
 
