@@ -7,7 +7,6 @@ import NavigationMenu from "../../../components/NavigationMenu";
 import styled from "styled-components";
 import { Text } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
-import View from "src/components/View";
 
 const SidebarTitle = styled.div`
   @media (max-width: 1024px) {
@@ -15,11 +14,11 @@ const SidebarTitle = styled.div`
   }
 `;
 
-const SettingsSidebar = () => {
+const ClientSettingsNavigation = () => {
   const viewer = useViewer();
 
   return (
-    <View.Sidebar>
+    <>
       <Text
         as={SidebarTitle}
         fontSize="xl"
@@ -49,8 +48,8 @@ const SettingsSidebar = () => {
           Password
         </NavigationMenu.Item>
       </NavigationMenu>
-    </View.Sidebar>
+    </>
   );
 };
 
-export default SettingsSidebar;
+export default ClientSettingsNavigation;
