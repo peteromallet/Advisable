@@ -2,7 +2,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { Container, Text } from "@advisable/donut";
+import { Container, Heading } from "@advisable/donut";
 import Loading from "./Loading";
 import { GET_PROJECTS } from "./queries";
 import ProjectsList from "./ProjectsList";
@@ -51,16 +51,7 @@ const Projects = () => {
 
       {viewer.isAccepted ? (
         <>
-          <Text
-            mb={5}
-            as="h2"
-            fontSize="4xl"
-            color="neutral900"
-            fontWeight="medium"
-            letterSpacing="-0.04rem"
-          >
-            Your Projects
-          </Text>
+          <Heading mb={6}>Your Projects</Heading>
 
           {loading ? (
             <Loading />

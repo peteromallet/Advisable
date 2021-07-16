@@ -1,6 +1,6 @@
 import React from "react";
 import filter from "lodash/filter";
-import { Text, Tabs } from "@advisable/donut";
+import { Heading, Tabs } from "@advisable/donut";
 import ActiveProject from "./ActiveProject";
 import { Cards } from "./styles";
 import Empty from "./Empty";
@@ -12,16 +12,7 @@ export default ({ onClick, applications }) => {
 
   return (
     <>
-      <Text
-        mb="l"
-        as="h2"
-        fontSize="28px"
-        color="neutral900"
-        fontWeight="medium"
-        letterSpacing="-0.04rem"
-      >
-        Active Projects
-      </Text>
+      <Heading marginBottom={6}>Active Projects</Heading>
       <Tabs label="Clients">
         <Tabs.Tab title="Active Clients">
           <Cards>
