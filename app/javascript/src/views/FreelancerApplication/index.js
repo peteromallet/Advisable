@@ -6,7 +6,7 @@ import { Container, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
 import View from "src/components/View";
-import Sidebar from "./components/Sidebar";
+import Navigation from "./components/Navigation";
 import Welcome from "./steps/Welcome";
 import Introduction from "./steps/Introduction";
 import Overview from "./steps/Overview";
@@ -35,7 +35,11 @@ export default function FreelancerApplication() {
 
   return (
     <View>
-      {largeScreen ? <Sidebar specialist={specialist} /> : null}
+      {largeScreen ? (
+        <View.Sidebar>
+          <Navigation specialist={specialist} />
+        </View.Sidebar>
+      ) : null}
       <View.Content>
         <Container paddingY={12} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <AnimatePresence
