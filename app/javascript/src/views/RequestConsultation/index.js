@@ -15,7 +15,7 @@ import Topic from "./Topic";
 import Skills from "./Skills";
 import Availability from "./Availability";
 import CompanyInformation from "./CompanyInformation";
-import Sidebar from "./Sidebar";
+import Navigation from "./Navigation";
 import Send from "./Send";
 import Complete from "./Complete";
 import Authenticate from "./Authenticate";
@@ -66,7 +66,11 @@ const RequestConsultation = () => {
 
   return (
     <View>
-      {largeScreen ? <Sidebar data={data} /> : null}
+      {largeScreen ? (
+        <View.Sidebar>
+          <Navigation data={data} />
+        </View.Sidebar>
+      ) : null}
       <View.Content>
         <Container paddingY={12} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <Switch location={location} key={location.pathname}>
