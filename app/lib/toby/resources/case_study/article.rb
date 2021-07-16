@@ -8,7 +8,7 @@ module Toby
         attribute :uid, Attributes::String, readonly: true
         attribute :title, Attributes::String
 
-        action :create_guild_post
+        action :create_guild_post, label: "Post To Guild"
 
         def self.create_guild_post(object)
           Guild::CaseStudy.create_from_article!(object)
