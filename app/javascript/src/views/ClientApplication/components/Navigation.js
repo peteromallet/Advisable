@@ -1,13 +1,12 @@
 import React from "react";
 import { Text } from "@advisable/donut";
-import View from "src/components/View";
 import MultistepMenu from "src/components/MultistepMenu";
 import { validationSchema as companyOverviewValidationSchema } from "../steps/CompanyOverview";
 import { validationSchema as companyStageValidationSchema } from "../steps/CompanyStage";
 import { validationSchema as goalsValidationSchema } from "../steps/Goals";
 import { validationSchema as preferencesValidationSchema } from "../steps/Preferences";
 
-export default function Sidebar({ clientApplication }) {
+export default function Navigation({ clientApplication }) {
   const companyOverviewComplete =
     companyOverviewValidationSchema.isValidSync(clientApplication);
   const companyStageComplete =
@@ -17,7 +16,7 @@ export default function Sidebar({ clientApplication }) {
     preferencesValidationSchema.isValidSync(clientApplication);
 
   return (
-    <View.Sidebar>
+    <>
       <Text
         color="neutral400"
         textTransform="uppercase"
@@ -56,6 +55,6 @@ export default function Sidebar({ clientApplication }) {
           Preferences
         </MultistepMenu.Item>
       </MultistepMenu>
-    </View.Sidebar>
+    </>
   );
 }

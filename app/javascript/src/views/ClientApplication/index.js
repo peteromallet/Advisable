@@ -8,7 +8,7 @@ import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
 import View from "src/components/View";
 import Loading from "src/components/Loading";
-import Sidebar from "./components/Sidebar";
+import Navigation from "./components/Navigation";
 import { CLIENT_APPLICATION_DATA } from "./queries";
 // Steps
 import CompanyOverview from "./steps/CompanyOverview";
@@ -37,7 +37,11 @@ export default function ClientApplication() {
 
   return (
     <View>
-      {largeScreen ? <Sidebar clientApplication={clientApplication} /> : null}
+      {largeScreen ? (
+        <View.Sidebar>
+          <Navigation clientApplication={clientApplication} />
+        </View.Sidebar>
+      ) : null}
       <View.Content>
         <Container paddingY={12} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <AnimatePresence
