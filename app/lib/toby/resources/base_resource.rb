@@ -33,8 +33,8 @@ module Toby
           @attributes << type.new(name, self, **args)
         end
 
-        def action(name)
-          @actions << Toby::Action.new(name, self)
+        def action(name, **args)
+          @actions << Toby::Action.new(name, self, **args)
         end
 
         def label(record, _context)
