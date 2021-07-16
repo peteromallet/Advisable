@@ -6,7 +6,7 @@ import Loading from "src/components/Loading";
 import View from "src/components/View";
 import SetupDots from "./SetupDots";
 import SetupSteps from "./SetupSteps";
-import JobSetupSidebar from "./JobSetupSidebar";
+import JobSetupNavigation from "./JobSetupNavigation";
 import { GET_JOB } from "./queries";
 
 export default function JobSetup() {
@@ -33,7 +33,11 @@ export default function JobSetup() {
 
   return (
     <View>
-      {largeScreen ? <JobSetupSidebar data={data} /> : null}
+      {largeScreen ? (
+        <View.Sidebar>
+          <JobSetupNavigation data={data} />
+        </View.Sidebar>
+      ) : null}
       <View.Content>
         <Container paddingY={16} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           {!largeScreen && data.project.status === "Draft" && (
