@@ -1,12 +1,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { Text } from "@advisable/donut";
-import View from "src/components/View";
 import MultistepMenu from "src/components/MultistepMenu";
 import { validationSchema as skillsValidationSchema } from "../steps/Skills";
 import { validationSchema as goalsValidationSchema } from "../steps/Goals";
 
-export default function Sidebar({ caseStudySearch }) {
+export default function Navigation({ caseStudySearch }) {
   const location = useLocation();
   const skillsComplete = skillsValidationSchema.isValidSync(caseStudySearch);
   const goalsComplete = goalsValidationSchema.isValidSync(caseStudySearch);
@@ -15,7 +14,7 @@ export default function Sidebar({ caseStudySearch }) {
   const searchId = caseStudySearch?.id;
 
   return (
-    <View.Sidebar>
+    <>
       <Text
         color="neutral400"
         textTransform="uppercase"
@@ -54,6 +53,6 @@ export default function Sidebar({ caseStudySearch }) {
           Review
         </MultistepMenu.Item>
       </MultistepMenu>
-    </View.Sidebar>
+    </>
   );
 }
