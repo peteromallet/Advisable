@@ -15,7 +15,7 @@ const TalentCard = ({ onClick, application }) => {
           mx="auto"
           display="inline-block"
           name={application.specialist.name}
-          url={application.specialist.image?.url}
+          url={application.specialist.avatar}
         />
         <Text
           fontSize="l"

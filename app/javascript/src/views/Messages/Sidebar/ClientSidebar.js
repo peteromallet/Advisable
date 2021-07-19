@@ -60,7 +60,7 @@ const ClientSidebar = (props) => {
   return (
     <>
       <Box paddingBottom="m">
-        <Avatar size="l" name={specialist.name} url={specialist?.image?.url} />
+        <Avatar size="l" name={specialist.name} url={specialist?.avatar} />
       </Box>
       <Box paddingBottom="xxs">
         <Text size="l" weight="semibold" color="neutral900">
