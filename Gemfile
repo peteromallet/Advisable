@@ -31,6 +31,8 @@ gem "webpacker", "~> 5.1"
 gem "slim"
 gem "bootsnap", require: false
 
+gem "skylight"
+
 gem "omniauth"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
