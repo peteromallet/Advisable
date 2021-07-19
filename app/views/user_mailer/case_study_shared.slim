@@ -1,0 +1,10 @@
+p Hi #{@user.account.first_name},
+p Your teammate #{@shared_article.shared_by.account.first_name} shared a project with you on Advisable.
+
+- if @shared_article.message
+  p They left the following message:
+  p "#{@shared_article.message}"
+p In order to view this and discover more case studies, you can go <a target="_blank" clicktracking="off" href="#{magic_link(@user.account, case_study_url(@shared_article.article))}">here</a>.
+p If you have any problems, just let us know.
+p Thanks,
+p The Advisable Team.
