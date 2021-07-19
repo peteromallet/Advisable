@@ -105,7 +105,8 @@ RSpec.describe Mutations::AssignTask do
         expect(Stripe::PaymentIntent).not_to receive(:create)
         count = Payment.count
         AdvisableSchema.execute(query, context: context)
-        expect(Payment.count).to eq(count)
+        expect(Payment.count).to eq(count + 1)
+        expect(Payment.last.attributes).to include("amount" => 1000, "admin_fee" => 50, "status" => "pending", "company_id" => task.application.project.user.company_id, "specialist_id" => task.application.specialist_id, "task_id" => task.id)
       end
     end
   end

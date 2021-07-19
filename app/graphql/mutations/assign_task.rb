@@ -37,11 +37,6 @@ module Mutations
     private
 
     def create_payment!(task)
-      user = task.application.project.user
-
-      # TODO: Probably want to ping in Slack or something here?
-      return if user.company.project_payment_method == "Bank Transfer"
-
       if task.fixed_estimate?
         amount = task.estimate.to_i
       else
@@ -51,7 +46,7 @@ module Mutations
 
       return unless amount.positive?
 
-      payment = Payment.create!(company_id: user.company_id, specialist_id: task.application.specialist_id, amount: amount, task: task, status: "pending")
+      payment = Payment.create!(company_id: task.application.project.user.company_id, specialist_id: task.application.specialist_id, amount: amount, task: task, status: "pending")
       payment.create_in_stripe!
     end
   end
