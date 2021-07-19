@@ -89,7 +89,7 @@ Style/MethodCallWithArgsParentheses:
 # Let's discuss this one
 # I'd like to go double quotes everywhere, but am open to discussion
 Style/StringLiterals:
-  Enabled: false
+  Enabled: true
   EnforcedStyle: double_quotes
 
 Rails/SkipsModelValidations:
