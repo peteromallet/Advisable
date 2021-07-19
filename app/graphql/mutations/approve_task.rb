@@ -23,8 +23,10 @@ module Mutations
       ApiError.invalid_request(task.errors.full_messages.first) unless success
       task.sync_to_airtable
 
-      create_payout!(task)
-      create_payment!(task)
+      if task.final_cost.to_i.positive?
+        create_payout!(task)
+        create_payment!(task)
+      end
 
       {task: task}
     rescue Service::Error => e
