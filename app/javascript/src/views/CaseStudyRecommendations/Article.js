@@ -17,6 +17,8 @@ import CaseStudyContent from "src/components/CaseStudyContent";
 import { useCaseStudy } from "./queries";
 import Sticky from "react-stickynode";
 import ActionBar from "./ActionBar";
+import { isNotFound } from "../NotFound";
+import NotFound from "./NotFound";
 
 const StyledName = styled.a`
   display: block;
@@ -75,9 +77,14 @@ function CaseStudySummaryResults({ caseStudy }) {
 
 export default function CaseStudy() {
   const { id } = useParams();
-  const { data, loading } = useCaseStudy(id);
+  const { data, loading, error } = useCaseStudy(id);
 
   if (loading) return <>loading</>;
+
+  if (isNotFound(error)) {
+    return <NotFound />;
+  }
+
   const { caseStudy } = data;
   const { specialist } = caseStudy;
 
