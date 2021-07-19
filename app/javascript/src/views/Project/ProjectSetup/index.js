@@ -1,17 +1,13 @@
 import React from "react";
-import styled from "styled-components";
 import { useQuery } from "@apollo/client";
-import { Box, useBreakpoint, useTheme } from "@advisable/donut";
+import { Container, useBreakpoint, useTheme } from "@advisable/donut";
 import { useParams, useLocation } from "react-router-dom";
-import Loading from "components/Loading";
+import Loading from "src/components/Loading";
+import View from "src/components/View";
 import SetupDots from "./SetupDots";
 import SetupSteps from "./SetupSteps";
-import JobSetupSidebar from "./JobSetupSidebar";
+import JobSetupNavigation from "./JobSetupNavigation";
 import { GET_JOB } from "./queries";
-
-const PageWithSidebar = styled.div`
-  display: flex;
-`;
 
 export default function JobSetup() {
   const { id } = useParams();
@@ -36,24 +32,23 @@ export default function JobSetup() {
   if (loading) return <Loading />;
 
   return (
-    <PageWithSidebar>
-      {largeScreen && <JobSetupSidebar data={data} />}
-      <Box
-        mx="auto"
-        width="100%"
-        position="relative"
-        my={{ _: 0, m: "64px" }}
-        padding={{ _: "24px", m: "0" }}
-        maxWidth={{ _: "100%", m: "680px" }}
-      >
-        {!largeScreen && data.project.status === "Draft" && (
-          <SetupDots
-            marginBottom={{ _: "m", m: "l" }}
-            justifyContent={{ _: "start", m: "center" }}
-          />
-        )}
-        <SetupSteps data={data} />
-      </Box>
-    </PageWithSidebar>
+    <View>
+      {largeScreen ? (
+        <View.Sidebar>
+          <JobSetupNavigation data={data} />
+        </View.Sidebar>
+      ) : null}
+      <View.Content>
+        <Container paddingY={16} paddingX={[4, 4, 6, 8]} maxWidth="750px">
+          {!largeScreen && data.project.status === "Draft" && (
+            <SetupDots
+              marginBottom={{ _: "m", m: "l" }}
+              justifyContent={{ _: "start", m: "center" }}
+            />
+          )}
+          <SetupSteps data={data} />
+        </Container>
+      </View.Content>
+    </View>
   );
 }

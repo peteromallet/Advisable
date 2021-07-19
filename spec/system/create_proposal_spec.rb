@@ -31,7 +31,7 @@ RSpec.describe 'Submitting a proposal', type: :system do
     click_on 'Close Drawer'
     click_on 'Continue'
     fill_in 'proposalComment', with: 'This is a comment'
-    click_on 'Send Proposal'
+    click_on 'Submit'
     expect(page).to have_content('Your proposal has been sent!')
   end
 end

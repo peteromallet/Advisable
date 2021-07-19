@@ -1,11 +1,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { Card, Text } from "@advisable/donut";
+import { Text } from "@advisable/donut";
 import MultistepMenu from "src/components/MultistepMenu";
 import { validationSchema as skillsValidationSchema } from "../steps/Skills";
 import { validationSchema as goalsValidationSchema } from "../steps/Goals";
 
-export default function Sidebar({ caseStudySearch }) {
+export default function Navigation({ caseStudySearch }) {
   const location = useLocation();
   const skillsComplete = skillsValidationSchema.isValidSync(caseStudySearch);
   const goalsComplete = goalsValidationSchema.isValidSync(caseStudySearch);
@@ -14,23 +14,13 @@ export default function Sidebar({ caseStudySearch }) {
   const searchId = caseStudySearch?.id;
 
   return (
-    <Card
-      top="0"
-      left="0"
-      padding={6}
-      width="300px"
-      height="100vh"
-      position="fixed"
-      paddingTop="60px"
-      borderRadius="0px"
-    >
+    <>
       <Text
         color="neutral400"
         textTransform="uppercase"
         fontWeight="medium"
         fontSize="2xs"
         mb={4}
-        mt={6}
       >
         Create a Saved Search
       </Text>
@@ -63,6 +53,6 @@ export default function Sidebar({ caseStudySearch }) {
           Review
         </MultistepMenu.Item>
       </MultistepMenu>
-    </Card>
+    </>
   );
 }
