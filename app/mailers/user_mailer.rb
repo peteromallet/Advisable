@@ -46,6 +46,12 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def case_study_shared(shared_article)
+    @user = shared_article.shared_with
+    @shared_article = shared_article
+    mail(to: @user.account.email, subject: "#{shared_article.shared_by.name} shared a case study with you: #{shared_article.article.title}")
+  end
+
   private
 
   def application_url(application_id)
