@@ -10,6 +10,8 @@ import { Pencil } from "@styled-icons/heroicons-solid/Pencil";
 import ViewLoading from "./ViewLoading";
 import DeleteSearch from "./DeleteSearch";
 import commaSeparated from "src/utilities/commaSeparated";
+import NotFound from "./NotFound";
+import { isNotFound } from "../NotFound";
 
 function SavedSearchEmpty() {
   return (
@@ -48,11 +50,14 @@ function CompanyRecommendationsEmpty() {
 export default function ExploreInbox() {
   const { id } = useParams();
   const history = useHistory();
-  const { data, loading } = useCaseStudySearch({
+  const { data, loading, error } = useCaseStudySearch({
     variables: { id },
   });
 
   if (loading) return <ViewLoading />;
+  if (isNotFound(error)) {
+    return <NotFound />;
+  }
 
   const search = data.caseStudySearch;
   const company = data.currentCompany;
