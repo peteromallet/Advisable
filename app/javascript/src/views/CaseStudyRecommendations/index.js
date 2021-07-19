@@ -59,7 +59,7 @@ export default function CaseStudyExplorer() {
                       <Route path="/explore/archived" component={Archived} />
                       <Route path="/explore/articles/:id" component={Article} />
                       <Route path="/explore/:id" component={Inbox} />
-                      {isLargeScreen && (
+                      {isLargeScreen && defaultSearch && (
                         <Redirect to={`/explore/${defaultSearch.id}`} />
                       )}
                     </Switch>
