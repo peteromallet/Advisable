@@ -5,8 +5,6 @@ module Types
     description "Fields representing Project model"
 
     field :id, ID, null: false, method: :uid
-
-    field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
     field :name, String, null: false
 
     def name
@@ -33,9 +31,6 @@ module Types
     field :client_referral_url, String, null: true
     field :company_description, String, null: true
     field :currency, String, null: true
-    field :deposit_owed, Int, null: true do
-      authorize :read?
-    end
     field :candidate_count, Int, null: false do
       authorize :read?
     end
@@ -102,31 +97,12 @@ module Types
     field :optional_characteristics, [String], null: true
     field :required_characteristics, [String], null: true
 
-    field :deposit_payment_intent, Types::PaymentIntentType, null: true do
-      authorize :read?
-    end
-
-    def deposit_payment_intent
-      return Stripe::PaymentIntent.retrieve(object.deposit_payment_intent_id) if object.deposit_payment_intent_id
-
-      intent = object.deposit_payment_intent
-      object.update_columns(deposit_payment_intent_id: intent.id) # rubocop:disable Rails/SkipsModelValidations
-      intent
-    end
-
     field :application_count, Int, null: false do
       authorize :read?
     end
 
     def application_count
       applications.count
-    end
-
-    def application(**args)
-      by_airtable = object.applications.find_by_uid_or_airtable_id(args[:id])
-      return by_airtable if by_airtable
-
-      object.applications.find(args[:id])
     end
 
     field :goals, [String], null: true
