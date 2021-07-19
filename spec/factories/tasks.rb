@@ -5,7 +5,7 @@ FactoryBot.define do
     sequence(:uid) { "tas_#{SecureRandom.hex[0..14]}" }
     name { "MyString" }
     stage { "MyString" }
-    estimate { "9.99" }
+    estimate { 100 }
     due_date { "2019-04-03 21:14:30" }
     description { "MyString" }
     submitted_for_approval_comment { "MyString" }
