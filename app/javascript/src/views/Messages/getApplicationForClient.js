@@ -16,14 +16,12 @@ export default gql`
         id
         name
         city
+        avatar
         firstName
         linkedin
         country {
           id
           name
-        }
-        image {
-          url
         }
       }
     }

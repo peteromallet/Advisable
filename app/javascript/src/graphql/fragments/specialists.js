@@ -7,9 +7,7 @@ export const specialistFields = gql`
     firstName
     lastName
     city
-    image {
-      url
-    }
+    avatar
     country {
       id
       name
