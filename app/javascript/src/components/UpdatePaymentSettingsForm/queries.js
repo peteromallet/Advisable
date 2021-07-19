@@ -28,7 +28,7 @@ const paymentSettingsFields = gql`
 export const GET_PAYMENT_SETTINGS = gql`
   ${paymentSettingsFields}
 
-  query {
+  query PaymentSettings {
     viewer {
       ... on Specialist {
         ...paymentSettingsFields
