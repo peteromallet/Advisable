@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 
 export const FETCH_PROJECTS = gql`
-  query {
+  query ManagePreviousProjects {
     viewer {
       ... on Specialist {
         id
