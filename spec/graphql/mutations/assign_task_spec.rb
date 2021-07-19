@@ -96,6 +96,18 @@ RSpec.describe Mutations::AssignTask do
         end
       end
     end
+
+    context "when bank transfer is true" do
+      let(:task) { create(:task, stage: "Not Assigned", estimate: 1000, estimate_type: "Fixed") }
+
+      it "does not create a Payment" do
+        task.application.project.user.company.update(project_payment_method: "Bank Transfer")
+        expect(Stripe::PaymentIntent).not_to receive(:create)
+        count = Payment.count
+        AdvisableSchema.execute(query, context: context)
+        expect(Payment.count).to eq(count)
+      end
+    end
   end
 
   context "when the task does not have a name" do
