@@ -27,8 +27,19 @@ module Mutations
 
       success = current_account_responsible_for { task.update(stage: "Assigned", assigned_at: Time.zone.now) }
       ApiError.invalid_request(task.errors.full_messages.first) unless success
-
       task.sync_to_airtable
+
+      if task.fixed_estimate?
+        amount = task.estimate.to_i
+      else
+        hours = [task.flexible_estimate, task.estimate].select { |e| e.to_i.positive? }.min
+        amount = task.application.invoice_rate.to_i * hours.to_i
+      end
+
+      if amount.positive?
+        payment = Payment.create!(company: user.company, specialist: task.application.specialist, amount: amount, task: task, status: "pending")
+        payment.create_in_stripe!
+      end
 
       {task: task}
     end
