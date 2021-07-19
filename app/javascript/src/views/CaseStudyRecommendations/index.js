@@ -9,6 +9,7 @@ import Favorites from "./Favorites";
 import Navigation from "./Navigation";
 import CreateSearch from "./CreateSavedSearch";
 import { useCaseStudySearches } from "./queries";
+import View from "src/components/View";
 import ViewLoading from "./ViewLoading";
 
 export default function CaseStudyExplorer() {
@@ -27,34 +28,24 @@ export default function CaseStudyExplorer() {
         component={CreateSearch}
       />
       <Route>
-        <Box paddingLeft={{ _: null, l: "280px" }}>
+        <View>
           <Route path="/explore" exact={!isLargeScreen}>
-            <Box
-              left={0}
-              bg="white"
-              top="60px"
-              bottom="0px"
-              position="fixed"
-              width={["100%", "100%", "280px"]}
-              boxShadow="0 1px 20px rgba(14, 31, 91, 0.04)"
-            >
-              <Box padding={4}>
-                {loading ? (
-                  <>
-                    <Skeleton height="40px" marginBottom={2} />
-                    <Skeleton height="40px" marginBottom={4} />
-                    <Skeleton height="1px" marginBottom={4} />
-                    <Skeleton height="40px" marginBottom={2} />
-                    <Skeleton height="40px" marginBottom={2} />
-                    <Skeleton height="40px" marginBottom={2} />
-                  </>
-                ) : (
-                  <Navigation data={data} />
-                )}
-              </Box>
-            </Box>
+            <View.Sidebar>
+              {loading ? (
+                <>
+                  <Skeleton height="40px" marginBottom={2} />
+                  <Skeleton height="40px" marginBottom={4} />
+                  <Skeleton height="1px" marginBottom={4} />
+                  <Skeleton height="40px" marginBottom={2} />
+                  <Skeleton height="40px" marginBottom={2} />
+                  <Skeleton height="40px" marginBottom={2} />
+                </>
+              ) : (
+                <Navigation data={data} />
+              )}
+            </View.Sidebar>
           </Route>
-          <Box>
+          <View.Content>
             <Switch>
               <Route path="/explore/articles/:id" component={Article} />
               <Route>
@@ -76,8 +67,8 @@ export default function CaseStudyExplorer() {
                 </Box>
               </Route>
             </Switch>
-          </Box>
-        </Box>
+          </View.Content>
+        </View>
       </Route>
     </Switch>
   );
