@@ -1,46 +1,42 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { use100vh } from "react-div-100vh";
 import { StyledView, StyledViewContent, StyledSidebar } from "./styles";
 
-function ViewContent({ children }) {
-  return <StyledViewContent id="view">{children}</StyledViewContent>;
+function ViewContent({ children, ...props }) {
+  return (
+    <StyledViewContent id="view" {...props}>
+      {children}
+    </StyledViewContent>
+  );
 }
-
-ViewContent.propTypes = {
-  children: PropTypes.node,
-};
 
 function ViewSidebar({ children, ...props }) {
   return <StyledSidebar {...props}>{children}</StyledSidebar>;
 }
 
-ViewSidebar.defaultProps = {
-  width: "280px",
-};
-
-ViewSidebar.propTypes = {
-  children: PropTypes.node,
-};
-
-function View({ children }) {
+function View({ children, ...props }) {
   const height = use100vh();
   return (
     <StyledView
       style={{
-        height: height ? `${height - 58}px` : "100%",
+        height: height ? `${height - 60}px` : "100%",
       }}
+      {...props}
     >
       {children}
     </StyledView>
   );
 }
 
+ViewSidebar.defaultProps = {
+  padding: "24px",
+};
+
+View.defaultProps = {
+  sidebar: { _: "off", l: "on" },
+};
+
 View.Sidebar = ViewSidebar;
 View.Content = ViewContent;
-
-View.propTypes = {
-  children: PropTypes.node,
-};
 
 export default View;

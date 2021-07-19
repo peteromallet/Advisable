@@ -52,7 +52,7 @@ const Send = ({ application, history }) => {
             label="Include a short message"
             placeholder="Add a message..."
           />
-          <SubmitButton>Send Proposal</SubmitButton>
+          <SubmitButton>Submit</SubmitButton>
         </Form>
       </Formik>
     </Card>

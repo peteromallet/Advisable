@@ -2,17 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import filter from "lodash/filter";
 import isEmpty from "lodash/isEmpty";
+import { AnimatePresence, motion } from "framer-motion";
 import { Switch, Redirect, useLocation, matchPath } from "react-router-dom";
+import { Container, useBreakpoint, useTheme } from "@advisable/donut";
+import usePathnameQueue from "src/utilities/usePathnameQueue";
 import Route from "src/components/Route";
-import { Box, useBreakpoint, useTheme } from "@advisable/donut";
+import View from "src/components/View";
+import ApplicationFlowNavigation from "./ApplicationFlowNavigation";
 import Terms from "./Terms";
 import Overview from "./Overview";
 import Questions from "./Questions";
 import References from "./References";
-import ApplicationFlowSidebar from "./ApplicationFlowSidebar";
 import SetupDots from "./SetupDots";
-import { AnimatePresence, motion } from "framer-motion";
-import usePathnameQueue from "../../utilities/usePathnameQueue";
 
 const cardAnimations = {
   enter: ({ largeScreen, forwards }) => {
@@ -130,79 +131,77 @@ const ApplicationFlow = ({ application, match }) => {
   const currentStepKey = STEPS[currentStepIndex].key || location.pathname;
 
   return (
-    <Box display="flex">
-      {largeScreen && (
-        <ApplicationFlowSidebar
-          application={application}
-          steps={STEPS}
-          applicationId={applicationId}
-        />
-      )}
-      <Box
-        mx="auto"
-        width="100%"
-        position="relative"
-        my={{ _: 0, m: "64px" }}
-        padding={{ _: "24px", m: "0" }}
-        maxWidth={{ _: "100%", m: "680px" }}
-      >
-        {!largeScreen && (
-          <SetupDots
-            marginBottom={{ _: "m", m: "l" }}
-            justifyContent={{ _: "start", m: "center" }}
+    <View>
+      {largeScreen ? (
+        <View.Sidebar>
+          <ApplicationFlowNavigation
+            application={application}
+            steps={STEPS}
+            applicationId={applicationId}
           />
-        )}
-        <AnimatePresence
-          initial={false}
-          exitBeforeEnter
-          custom={{ largeScreen, forwards }}
-        >
-          <Switch location={location} key={currentStepKey}>
-            {STEPS.map((step, i) => {
-              const Component = step.component;
-              const previousStep = STEPS[i - 1];
-              const previousStepComplete = previousStep
-                ? previousStep.isComplete
-                : true;
+        </View.Sidebar>
+      ) : null}
+      <View.Content>
+        <Container paddingY={16} paddingX={[4, 4, 6, 8]} maxWidth="750px">
+          {!largeScreen && (
+            <SetupDots
+              marginBottom={{ _: "m", m: "l" }}
+              justifyContent={{ _: "start", m: "center" }}
+            />
+          )}
+          <AnimatePresence
+            initial={false}
+            exitBeforeEnter
+            custom={{ largeScreen, forwards }}
+          >
+            <Switch location={location} key={currentStepKey}>
+              {STEPS.map((step, i) => {
+                const Component = step.component;
+                const previousStep = STEPS[i - 1];
+                const previousStepComplete = previousStep
+                  ? previousStep.isComplete
+                  : true;
 
-              return (
-                <Route
-                  key={step.path}
-                  exact={step.exact}
-                  path={`/invites/:applicationId/apply${step.path}`}
-                  render={(props) =>
-                    previousStepComplete ? (
-                      <motion.div
-                        transition={{ duration: 0.4 }}
-                        variants={cardAnimations}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        custom={{ largeScreen, forwards }}
-                      >
-                        <Component
-                          steps={STEPS}
-                          currentStep={i}
-                          application={application}
-                          skipStep={() => skipStep(step)}
-                          {...props}
+                return (
+                  <Route
+                    key={step.path}
+                    exact={step.exact}
+                    path={`/invites/:applicationId/apply${step.path}`}
+                    render={(props) =>
+                      previousStepComplete ? (
+                        <motion.div
+                          transition={{ duration: 0.4 }}
+                          variants={cardAnimations}
+                          initial="enter"
+                          animate="center"
+                          exit="exit"
+                          custom={{ largeScreen, forwards }}
+                        >
+                          <Component
+                            steps={STEPS}
+                            currentStep={i}
+                            application={application}
+                            skipStep={() => skipStep(step)}
+                            {...props}
+                          />
+                        </motion.div>
+                      ) : (
+                        <Redirect
+                          to={`/invites/${applicationId}/apply${previousStep.path}`}
                         />
-                      </motion.div>
-                    ) : (
-                      <Redirect
-                        to={`/invites/${applicationId}/apply${previousStep.path}`}
-                      />
-                    )
-                  }
-                />
-              );
-            })}
-          </Switch>
-        </AnimatePresence>
-      </Box>
-    </Box>
+                      )
+                    }
+                  />
+                );
+              })}
+            </Switch>
+          </AnimatePresence>
+        </Container>
+      </View.Content>
+    </View>
   );
 };
+
 ApplicationFlow.propTypes = {
   application: PropTypes.object,
   match: PropTypes.object,

@@ -2,10 +2,11 @@ import React from "react";
 import { AnimatePresence } from "framer-motion";
 import { Switch, useLocation, useHistory } from "react-router-dom";
 import Route from "src/components/Route";
-import { Box, Container, useBreakpoint } from "@advisable/donut";
+import { Container, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
-import Sidebar from "./components/Sidebar";
+import View from "src/components/View";
+import Navigation from "./components/Navigation";
 import Welcome from "./steps/Welcome";
 import Introduction from "./steps/Introduction";
 import Overview from "./steps/Overview";
@@ -33,10 +34,14 @@ export default function FreelancerApplication() {
   const { specialist, countries, skills, industries } = data;
 
   return (
-    <div>
-      {largeScreen ? <Sidebar specialist={specialist} /> : null}
-      <Box paddingLeft={{ l: "300px" }}>
-        <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
+    <View>
+      {largeScreen ? (
+        <View.Sidebar>
+          <Navigation specialist={specialist} />
+        </View.Sidebar>
+      ) : null}
+      <View.Content>
+        <Container paddingY={12} paddingX={[4, 4, 6, 8]} maxWidth="750px">
           <AnimatePresence
             initial={false}
             custom={{ largeScreen, forwards }}
@@ -68,7 +73,7 @@ export default function FreelancerApplication() {
             </Switch>
           </AnimatePresence>
         </Container>
-      </Box>
-    </div>
+      </View.Content>
+    </View>
   );
 }

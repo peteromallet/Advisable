@@ -1,22 +1,52 @@
 import styled from "styled-components";
-import { compose, width, padding } from "styled-system";
+import { variant, compose, padding, display } from "styled-system";
 
-export const StyledView = styled.div`
-  display: flex;
-  position: relative;
+export const StyledSidebar = styled.div`
+  ${compose(padding, display)};
+
+  left: 0;
+  z-index: 3;
 `;
 
 export const StyledViewContent = styled.div`
-  flex: 1;
   height: 100%;
-  overflow-y: scroll;
 `;
 
-export const StyledSidebar = styled.div`
-  ${compose(width, padding)};
+const viewVariants = variant({
+  prop: "sidebar",
+  variants: {
+    on: {
+      [StyledSidebar]: {
+        position: "fixed",
+        top: "60px",
+        background: "white",
+        boxShadow: "0px 1px 20px rgba(14, 31, 91, 0.04)",
+        height: "calc(100vh - 60px)",
+        width: "300px",
+      },
+      [StyledViewContent]: {
+        paddingLeft: "300px",
+      },
+    },
+    off: {
+      [StyledSidebar]: {
+        position: "relative",
+        top: 0,
+        background: "transparent",
+        boxShadow: "none",
+        height: "auto",
+        width: "100%",
+      },
+      [StyledViewContent]: {
+        paddingLeft: "0",
+      },
+    },
+  },
+});
 
-  z-index: 3;
-  background: white;
-  height: calc(100vh - 60px);
-  box-shadow: 0px 1px 20px rgba(14, 31, 91, 0.04);
+export const StyledView = styled.div`
+  ${viewVariants}
+
+  display: block;
+  position: relative;
 `;

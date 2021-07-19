@@ -1,12 +1,12 @@
 import React from "react";
-import { Box, Text, Avatar } from "@advisable/donut";
+import { Box, Heading, Text, Avatar } from "@advisable/donut";
 import { useParams, useLocation } from "react-router-dom";
-import StarRating from "../../components/StarRating";
-import MultistepMenu from "../../components/MultistepMenu";
-import useViewer from "../../hooks/useViewer";
-import pluralize from "../../utilities/pluralize";
+import MultistepMenu from "src/components/MultistepMenu";
+import StarRating from "src/components/StarRating";
+import pluralize from "src/utilities/pluralize";
+import useViewer from "src/hooks/useViewer";
 
-const Sidebar = ({ data }) => {
+const Navigation = ({ data }) => {
   const params = useParams();
   const viewer = useViewer();
   const location = useLocation();
@@ -28,16 +28,9 @@ const Sidebar = ({ data }) => {
           name={data.specialist.name}
         />
       </Box>
-      <Text
-        as="h1"
-        mb="xxs"
-        fontSize="xl"
-        color="blue800"
-        fontWeight="semibold"
-        letterSpacing="-0.02em"
-      >
+      <Heading mb={1} size="xl">
         {data.specialist.name}
-      </Text>
+      </Heading>
       <Text color="neutral600" letterSpacing="-0.02em" mb="xs">
         {data.specialist.location}
       </Text>
@@ -108,4 +101,4 @@ const Sidebar = ({ data }) => {
   );
 };
 
-export default Sidebar;
+export default Navigation;

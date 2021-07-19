@@ -1,41 +1,28 @@
 import React from "react";
-import { Card, Text } from "@advisable/donut";
+import { Text } from "@advisable/donut";
 import MultistepMenu from "src/components/MultistepMenu";
 import { validationSchema as companyOverviewValidationSchema } from "../steps/CompanyOverview";
 import { validationSchema as companyStageValidationSchema } from "../steps/CompanyStage";
 import { validationSchema as goalsValidationSchema } from "../steps/Goals";
 import { validationSchema as preferencesValidationSchema } from "../steps/Preferences";
 
-export default function Sidebar({ clientApplication }) {
-  const companyOverviewComplete = companyOverviewValidationSchema.isValidSync(
-    clientApplication,
-  );
-  const companyStageComplete = companyStageValidationSchema.isValidSync(
-    clientApplication,
-  );
+export default function Navigation({ clientApplication }) {
+  const companyOverviewComplete =
+    companyOverviewValidationSchema.isValidSync(clientApplication);
+  const companyStageComplete =
+    companyStageValidationSchema.isValidSync(clientApplication);
   const goalsComplete = goalsValidationSchema.isValidSync(clientApplication);
-  const preferencesComplete = preferencesValidationSchema.isValidSync(
-    clientApplication,
-  );
+  const preferencesComplete =
+    preferencesValidationSchema.isValidSync(clientApplication);
 
   return (
-    <Card
-      top="0"
-      left="0"
-      padding={6}
-      width="300px"
-      height="100vh"
-      position="fixed"
-      paddingTop="60px"
-      borderRadius="0px"
-    >
+    <>
       <Text
         color="neutral400"
         textTransform="uppercase"
         fontWeight="medium"
         fontSize="2xs"
         mb={4}
-        mt={6}
       >
         Application
       </Text>
@@ -68,6 +55,6 @@ export default function Sidebar({ clientApplication }) {
           Preferences
         </MultistepMenu.Item>
       </MultistepMenu>
-    </Card>
+    </>
   );
 }
