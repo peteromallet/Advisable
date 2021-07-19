@@ -23,6 +23,7 @@ module Mutations
       attributes = optional.slice(:first_name, :last_name)
       attributes[:permissions] = optional[:team_manager] ? [:team_manager] : []
       account = Account.new(email: email, **attributes)
+      account.features = current_user.account.features
       account.save!
 
       new_user = current_user.invite_comember!(account, responsible: current_account_id)
