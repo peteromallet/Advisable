@@ -409,6 +409,23 @@ ActiveRecord::Schema.define(version: 2021_07_20_085655) do
     t.index ["user_id"], name: "index_consultations_on_user_id"
   end
 
+  create_table "conversation_participants", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "conversation_id", null: false
+    t.datetime "last_read_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_conversation_participants_on_account_id"
+    t.index ["conversation_id"], name: "index_conversation_participants_on_conversation_id"
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.string "uid", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uid"], name: "index_conversations_on_uid", unique: true
+  end
+
   create_table "countries", force: :cascade do |t|
     t.string "name"
     t.string "currency"
@@ -605,6 +622,18 @@ ActiveRecord::Schema.define(version: 2021_07_20_085655) do
     t.string "status"
     t.index ["project_id"], name: "index_matches_on_project_id"
     t.index ["specialist_id"], name: "index_matches_on_specialist_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string "uid", null: false
+    t.text "content"
+    t.bigint "author_id", null: false
+    t.bigint "conversation_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_messages_on_author_id"
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["uid"], name: "index_messages_on_uid", unique: true
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -1136,6 +1165,8 @@ ActiveRecord::Schema.define(version: 2021_07_20_085655) do
   add_foreign_key "consultations", "skills"
   add_foreign_key "consultations", "specialists"
   add_foreign_key "consultations", "users"
+  add_foreign_key "conversation_participants", "accounts"
+  add_foreign_key "conversation_participants", "conversations"
   add_foreign_key "event_attendees", "events"
   add_foreign_key "event_attendees", "specialists"
   add_foreign_key "events", "specialists", column: "host_id"
@@ -1156,6 +1187,8 @@ ActiveRecord::Schema.define(version: 2021_07_20_085655) do
   add_foreign_key "labels", "skills"
   add_foreign_key "matches", "projects"
   add_foreign_key "matches", "specialists"
+  add_foreign_key "messages", "accounts", column: "author_id"
+  add_foreign_key "messages", "conversations"
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
   add_foreign_key "off_platform_projects", "specialists"
