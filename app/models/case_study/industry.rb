@@ -27,7 +27,7 @@ end
 #
 #  index_case_study_industries_on_article_id   (article_id)
 #  index_case_study_industries_on_industry_id  (industry_id)
-#  index_case_study_industries_on_uid          (uid)
+#  index_case_study_industries_on_uid          (uid) UNIQUE
 #
 # Foreign Keys
 #

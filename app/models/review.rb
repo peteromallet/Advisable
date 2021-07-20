@@ -54,7 +54,7 @@ end
 #  id            :bigint           not null, primary key
 #  comment       :text
 #  ratings       :jsonb
-#  uid           :string
+#  uid           :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  airtable_id   :string
@@ -65,6 +65,7 @@ end
 #
 #  index_reviews_on_airtable_id    (airtable_id)
 #  index_reviews_on_specialist_id  (specialist_id)
+#  index_reviews_on_uid            (uid) UNIQUE
 #
 # Foreign Keys
 #

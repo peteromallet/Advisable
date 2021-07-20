@@ -32,10 +32,14 @@ end
 #  last_name     :string
 #  out_of_office :boolean
 #  slack         :string
-#  uid           :string
+#  uid           :string           not null
 #  username      :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  airtable_id   :string
 #  asana_id      :string
+#
+# Indexes
+#
+#  index_sales_people_on_uid  (uid) UNIQUE
 #

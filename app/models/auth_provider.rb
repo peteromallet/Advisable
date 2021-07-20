@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class AuthProvider < ApplicationRecord
-  LINKEDIN_ACCESS_TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken".freeze
+  LINKEDIN_ACCESS_TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken"
   belongs_to :account
 
   scope :linkedin_ads, -> { where(provider: "linkedin_ads") }
@@ -9,6 +11,7 @@ class AuthProvider < ApplicationRecord
 
   def refresh_linkedin_token!
     return if expires_at.nil? || expires_at.future?
+
     params = {
       grant_type: "refresh_token",
       refresh_token: refresh_token,
@@ -42,7 +45,7 @@ end
 #  provider      :string
 #  refresh_token :string
 #  token         :string
-#  uid           :string
+#  uid           :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  account_id    :bigint           not null

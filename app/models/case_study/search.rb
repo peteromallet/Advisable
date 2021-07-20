@@ -58,7 +58,7 @@ end
 #
 # Indexes
 #
-#  index_case_study_searches_on_uid      (uid)
+#  index_case_study_searches_on_uid      (uid) UNIQUE
 #  index_case_study_searches_on_user_id  (user_id)
 #
 # Foreign Keys
