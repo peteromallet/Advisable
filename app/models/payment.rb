@@ -82,7 +82,7 @@ end
 #  admin_fee         :integer
 #  amount            :integer
 #  status            :string
-#  uid               :string
+#  uid               :string           not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  company_id        :uuid             not null
@@ -95,6 +95,7 @@ end
 #  index_payments_on_company_id     (company_id)
 #  index_payments_on_specialist_id  (specialist_id)
 #  index_payments_on_task_id        (task_id)
+#  index_payments_on_uid            (uid) UNIQUE
 #
 # Foreign Keys
 #

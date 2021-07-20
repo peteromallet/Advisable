@@ -26,7 +26,7 @@ end
 #  source                :string
 #  status                :string
 #  topic                 :string
-#  uid                   :string
+#  uid                   :string           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  airtable_id           :string
@@ -43,7 +43,7 @@ end
 #  index_consultations_on_search_id      (search_id)
 #  index_consultations_on_skill_id       (skill_id)
 #  index_consultations_on_specialist_id  (specialist_id)
-#  index_consultations_on_uid            (uid)
+#  index_consultations_on_uid            (uid) UNIQUE
 #  index_consultations_on_user_id        (user_id)
 #
 # Foreign Keys

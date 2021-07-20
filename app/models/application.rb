@@ -171,7 +171,7 @@ end
 #  stopped_working_at          :datetime
 #  stopped_working_reason      :string
 #  trial_program               :boolean
-#  uid                         :string
+#  uid                         :string           not null
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
 #  airtable_id                 :string
@@ -183,7 +183,7 @@ end
 #  index_applications_on_project_id     (project_id)
 #  index_applications_on_specialist_id  (specialist_id)
 #  index_applications_on_status         (status)
-#  index_applications_on_uid            (uid)
+#  index_applications_on_uid            (uid) UNIQUE
 #
 # Foreign Keys
 #

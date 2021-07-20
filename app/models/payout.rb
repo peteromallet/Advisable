@@ -38,7 +38,7 @@ end
 #  processed_at  :datetime
 #  sourcing_fee  :integer
 #  status        :string
-#  uid           :string
+#  uid           :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  specialist_id :bigint           not null
@@ -48,6 +48,7 @@ end
 #
 #  index_payouts_on_specialist_id  (specialist_id)
 #  index_payouts_on_task_id        (task_id)
+#  index_payouts_on_uid            (uid) UNIQUE
 #
 # Foreign Keys
 #

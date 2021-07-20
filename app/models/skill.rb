@@ -66,7 +66,7 @@ end
 #  profile                    :boolean
 #  projects_count             :integer          default(0)
 #  specialists_count          :integer          default(0)
-#  uid                        :string
+#  uid                        :string           not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  airtable_id                :string
@@ -74,5 +74,5 @@ end
 # Indexes
 #
 #  index_skills_on_airtable_id  (airtable_id) UNIQUE
-#  index_skills_on_uid          (uid)
+#  index_skills_on_uid          (uid) UNIQUE
 #
