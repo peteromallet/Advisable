@@ -45,13 +45,13 @@ class PreviousProject < ApplicationRecord
   # Project skills
   has_many :project_skills, as: :project, dependent: :destroy
   has_many :skills, through: :project_skills
-  has_one :primary_project_skill, -> { where primary: true }, as: :project, class_name: 'ProjectSkill', inverse_of: :project
+  has_one :primary_project_skill, -> { where(primary: true) }, as: :project, class_name: 'ProjectSkill', inverse_of: :project
   has_one :primary_skill, through: :primary_project_skill, source: :skill
 
   # Project industries
   has_many :project_industries, as: :project, dependent: :destroy
   has_many :industries, through: :project_industries
-  has_one :primary_project_industry, -> { where primary: true }, as: :project, class_name: 'ProjectIndustry', inverse_of: :project
+  has_one :primary_project_industry, -> { where(primary: true) }, as: :project, class_name: 'ProjectIndustry', inverse_of: :project
   has_one :primary_industry, through: :primary_project_industry, source: :industry
 
   # Scopes
@@ -135,7 +135,7 @@ end
 #  public_use                  :boolean
 #  requirements                :text
 #  results                     :text
-#  uid                         :string
+#  uid                         :string           not null
 #  validated                   :boolean          default(FALSE)
 #  validated_by_client         :boolean
 #  validation_explanation      :string
@@ -155,6 +155,7 @@ end
 #  index_off_platform_projects_on_application_id  (application_id)
 #  index_off_platform_projects_on_reviewed_by_id  (reviewed_by_id)
 #  index_off_platform_projects_on_specialist_id   (specialist_id)
+#  index_off_platform_projects_on_uid             (uid) UNIQUE
 #
 # Foreign Keys
 #

@@ -31,7 +31,7 @@ end
 # Indexes
 #
 #  index_case_study_sections_on_article_id  (article_id)
-#  index_case_study_sections_on_uid         (uid)
+#  index_case_study_sections_on_uid         (uid) UNIQUE
 #
 # Foreign Keys
 #

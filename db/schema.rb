@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_16_090611) do
+ActiveRecord::Schema.define(version: 2021_07_20_085655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.string "last_name"
     t.string "password_digest"
     t.citext "email"
-    t.string "uid"
+    t.string "uid", null: false
     t.datetime "confirmed_at"
     t.string "confirmation_digest"
     t.string "reset_digest"
@@ -89,20 +89,21 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.bigint "specialist_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "uid"
+    t.string "uid", null: false
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["specialist_id"], name: "index_answers_on_specialist_id"
+    t.index ["uid"], name: "index_answers_on_uid", unique: true
   end
 
   create_table "application_references", force: :cascade do |t|
-    t.string "uid"
+    t.string "uid", null: false
     t.bigint "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "off_platform_project_id"
     t.index ["application_id"], name: "index_application_references_on_application_id"
     t.index ["off_platform_project_id"], name: "index_application_references_on_off_platform_project_id"
-    t.index ["uid"], name: "index_application_references_on_uid"
+    t.index ["uid"], name: "index_application_references_on_uid", unique: true
   end
 
   create_table "applications", force: :cascade do |t|
@@ -128,7 +129,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.string "proposal_comment"
     t.string "project_type"
     t.integer "monthly_limit"
-    t.string "uid"
+    t.string "uid", null: false
     t.string "stopped_working_reason"
     t.boolean "trial_program"
     t.datetime "invited_to_apply_at"
@@ -150,11 +151,11 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.index ["project_id"], name: "index_applications_on_project_id"
     t.index ["specialist_id"], name: "index_applications_on_specialist_id"
     t.index ["status"], name: "index_applications_on_status"
-    t.index ["uid"], name: "index_applications_on_uid"
+    t.index ["uid"], name: "index_applications_on_uid", unique: true
   end
 
   create_table "auth_providers", force: :cascade do |t|
-    t.string "uid"
+    t.string "uid", null: false
     t.string "provider"
     t.string "token"
     t.string "refresh_token"
@@ -210,7 +211,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.index ["editor_id"], name: "index_case_study_articles_on_editor_id"
     t.index ["interviewer_id"], name: "index_case_study_articles_on_interviewer_id"
     t.index ["specialist_id"], name: "index_case_study_articles_on_specialist_id"
-    t.index ["uid"], name: "index_case_study_articles_on_uid"
+    t.index ["uid"], name: "index_case_study_articles_on_uid", unique: true
   end
 
   create_table "case_study_companies", force: :cascade do |t|
@@ -222,7 +223,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
-    t.index ["uid"], name: "index_case_study_companies_on_uid"
+    t.index ["uid"], name: "index_case_study_companies_on_uid", unique: true
   end
 
   create_table "case_study_contents", force: :cascade do |t|
@@ -235,7 +236,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
     t.index ["section_id"], name: "index_case_study_contents_on_section_id"
-    t.index ["uid"], name: "index_case_study_contents_on_uid"
+    t.index ["uid"], name: "index_case_study_contents_on_uid", unique: true
   end
 
   create_table "case_study_industries", force: :cascade do |t|
@@ -247,7 +248,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_industries_on_article_id"
     t.index ["industry_id"], name: "index_case_study_industries_on_industry_id"
-    t.index ["uid"], name: "index_case_study_industries_on_uid"
+    t.index ["uid"], name: "index_case_study_industries_on_uid", unique: true
   end
 
   create_table "case_study_saved_articles", force: :cascade do |t|
@@ -280,7 +281,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.jsonb "log_data"
     t.jsonb "results"
     t.boolean "company_recomendation"
-    t.index ["uid"], name: "index_case_study_searches_on_uid"
+    t.index ["uid"], name: "index_case_study_searches_on_uid", unique: true
     t.index ["user_id"], name: "index_case_study_searches_on_user_id"
   end
 
@@ -293,7 +294,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_sections_on_article_id"
-    t.index ["uid"], name: "index_case_study_sections_on_uid"
+    t.index ["uid"], name: "index_case_study_sections_on_uid", unique: true
   end
 
   create_table "case_study_shared_articles", force: :cascade do |t|
@@ -303,10 +304,11 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.text "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "uid"
+    t.string "uid", null: false
     t.index ["article_id"], name: "index_case_study_shared_articles_on_article_id"
     t.index ["shared_by_id"], name: "index_case_study_shared_articles_on_shared_by_id"
     t.index ["shared_with_id"], name: "index_case_study_shared_articles_on_shared_with_id"
+    t.index ["uid"], name: "index_case_study_shared_articles_on_uid", unique: true
   end
 
   create_table "case_study_skills", force: :cascade do |t|
@@ -321,7 +323,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.index ["article_id"], name: "index_case_study_skills_on_article_id"
     t.index ["search_id"], name: "index_case_study_skills_on_search_id"
     t.index ["skill_id"], name: "index_case_study_skills_on_skill_id"
-    t.index ["uid"], name: "index_case_study_skills_on_uid"
+    t.index ["uid"], name: "index_case_study_skills_on_uid", unique: true
   end
 
   create_table "client_calls", force: :cascade do |t|
@@ -378,7 +380,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
   end
 
   create_table "consultations", force: :cascade do |t|
-    t.string "uid"
+    t.string "uid", null: false
     t.bigint "specialist_id"
     t.bigint "user_id"
     t.string "status"
@@ -403,7 +405,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.index ["search_id"], name: "index_consultations_on_search_id"
     t.index ["skill_id"], name: "index_consultations_on_skill_id"
     t.index ["specialist_id"], name: "index_consultations_on_specialist_id"
-    t.index ["uid"], name: "index_consultations_on_uid"
+    t.index ["uid"], name: "index_consultations_on_uid", unique: true
     t.index ["user_id"], name: "index_consultations_on_user_id"
   end
 
@@ -413,10 +415,11 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "uid"
+    t.string "uid", null: false
     t.boolean "eu"
     t.string "alpha2"
     t.string "dial_in_number"
+    t.index ["uid"], name: "index_countries_on_uid", unique: true
   end
 
   create_table "event_attendees", force: :cascade do |t|
@@ -445,6 +448,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.string "google_calendar_id"
     t.string "status"
     t.index ["host_id"], name: "index_events_on_host_id"
+    t.index ["uid"], name: "index_events_on_uid", unique: true
   end
 
   create_table "guild_comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -474,7 +478,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
 
   create_table "guild_post_images", force: :cascade do |t|
     t.uuid "guild_post_id"
-    t.string "uid"
+    t.string "uid", null: false
     t.string "string"
     t.integer "position"
     t.boolean "cover"
@@ -482,7 +486,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["guild_post_id"], name: "index_guild_post_images_on_guild_post_id"
     t.index ["string"], name: "index_guild_post_images_on_string"
-    t.index ["uid"], name: "index_guild_post_images_on_uid"
+    t.index ["uid"], name: "index_guild_post_images_on_uid", unique: true
   end
 
   create_table "guild_posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -524,13 +528,13 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
 
   create_table "industries", force: :cascade do |t|
     t.string "name"
-    t.string "uid"
+    t.string "uid", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "airtable_id"
     t.string "color"
     t.boolean "active"
-    t.index ["uid"], name: "index_industries_on_uid"
+    t.index ["uid"], name: "index_industries_on_uid", unique: true
   end
 
   create_table "interviews", force: :cascade do |t|
@@ -543,7 +547,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.bigint "user_id"
     t.string "availability_note"
     t.string "zoom_meeting_id"
-    t.string "uid"
+    t.string "uid", null: false
     t.datetime "call_requested_at"
     t.datetime "call_scheduled_at"
     t.datetime "requested_more_time_options_at"
@@ -552,6 +556,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.datetime "specialist_requested_reschedule_at"
     t.jsonb "log_data"
     t.index ["application_id"], name: "index_interviews_on_application_id"
+    t.index ["uid"], name: "index_interviews_on_uid", unique: true
     t.index ["user_id"], name: "index_interviews_on_user_id"
   end
 
@@ -641,7 +646,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.string "validation_explanation"
     t.string "company_type"
     t.boolean "public_use"
-    t.string "uid"
+    t.string "uid", null: false
     t.string "goal"
     t.string "contact_relationship"
     t.boolean "hide_from_profile"
@@ -662,10 +667,11 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
     t.index ["reviewed_by_id"], name: "index_off_platform_projects_on_reviewed_by_id"
     t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
+    t.index ["uid"], name: "index_off_platform_projects_on_uid", unique: true
   end
 
   create_table "payments", force: :cascade do |t|
-    t.string "uid"
+    t.string "uid", null: false
     t.integer "amount"
     t.integer "admin_fee"
     t.string "status"
@@ -679,10 +685,11 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.index ["company_id"], name: "index_payments_on_company_id"
     t.index ["specialist_id"], name: "index_payments_on_specialist_id"
     t.index ["task_id"], name: "index_payments_on_task_id"
+    t.index ["uid"], name: "index_payments_on_uid", unique: true
   end
 
   create_table "payouts", force: :cascade do |t|
-    t.string "uid"
+    t.string "uid", null: false
     t.bigint "specialist_id", null: false
     t.bigint "task_id"
     t.integer "amount"
@@ -694,6 +701,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.jsonb "log_data"
     t.index ["specialist_id"], name: "index_payouts_on_specialist_id"
     t.index ["task_id"], name: "index_payouts_on_task_id"
+    t.index ["uid"], name: "index_payouts_on_uid", unique: true
   end
 
   create_table "post_prompts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -777,7 +785,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.datetime "won_at"
     t.datetime "lost_at"
     t.string "campaign_name"
-    t.string "uid"
+    t.string "uid", null: false
     t.string "industry"
     t.string "company_type"
     t.boolean "industry_experience_required"
@@ -799,6 +807,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.string "lost_reason"
     t.string "project_start"
     t.index ["sales_status"], name: "index_projects_on_sales_status"
+    t.index ["uid"], name: "index_projects_on_uid", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -806,7 +815,8 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.string "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "uid"
+    t.string "uid", null: false
+    t.index ["uid"], name: "index_questions_on_uid", unique: true
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -817,9 +827,10 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.jsonb "ratings"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "uid"
+    t.string "uid", null: false
     t.index ["airtable_id"], name: "index_reviews_on_airtable_id"
     t.index ["specialist_id"], name: "index_reviews_on_specialist_id"
+    t.index ["uid"], name: "index_reviews_on_uid", unique: true
   end
 
   create_table "sales_people", force: :cascade do |t|
@@ -835,7 +846,8 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.string "airtable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "uid"
+    t.string "uid", null: false
+    t.index ["uid"], name: "index_sales_people_on_uid", unique: true
   end
 
   create_table "skill_similarities", force: :cascade do |t|
@@ -856,14 +868,14 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.datetime "updated_at", null: false
     t.string "category"
     t.boolean "profile"
-    t.string "uid"
+    t.string "uid", null: false
     t.boolean "active"
     t.integer "projects_count", default: 0
     t.integer "specialists_count", default: 0
     t.string "characteristic_placeholder"
     t.string "goal_placeholder"
     t.index ["airtable_id"], name: "index_skills_on_airtable_id", unique: true
-    t.index ["uid"], name: "index_skills_on_uid"
+    t.index ["uid"], name: "index_skills_on_uid", unique: true
   end
 
   create_table "specialist_industries", force: :cascade do |t|
@@ -898,7 +910,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.jsonb "ratings", default: {}
     t.integer "reviews_count"
     t.text "bio"
-    t.string "uid"
+    t.string "uid", null: false
     t.boolean "remote"
     t.string "application_stage"
     t.string "bank_holder_name"
@@ -948,7 +960,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.index ["country_id"], name: "index_specialists_on_country_id"
     t.index ["interviewer_id"], name: "index_specialists_on_interviewer_id"
     t.index ["referrer_id"], name: "index_specialists_on_referrer_id"
-    t.index ["uid"], name: "index_specialists_on_uid"
+    t.index ["uid"], name: "index_specialists_on_uid", unique: true
   end
 
   create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -963,7 +975,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
-    t.string "uid"
+    t.string "uid", null: false
     t.string "airtable_id"
     t.string "stage"
     t.integer "estimate"
@@ -991,7 +1003,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.index ["airtable_id"], name: "index_tasks_on_airtable_id"
     t.index ["application_id"], name: "index_tasks_on_application_id"
     t.index ["stage"], name: "index_tasks_on_stage"
-    t.index ["uid"], name: "index_tasks_on_uid"
+    t.index ["uid"], name: "index_tasks_on_uid", unique: true
   end
 
   create_table "toby_views", force: :cascade do |t|
@@ -1027,7 +1039,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.text "availability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "uid"
+    t.string "uid", null: false
     t.bigint "country_id"
     t.string "title"
     t.string "stripe_customer_id"
@@ -1060,11 +1072,11 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["country_id"], name: "index_users_on_country_id"
-    t.index ["uid"], name: "index_users_on_uid"
+    t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
   create_table "video_calls", force: :cascade do |t|
-    t.string "uid"
+    t.string "uid", null: false
     t.bigint "interview_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -1073,7 +1085,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_090611) do
     t.string "zoom_passcode"
     t.string "zoom_url"
     t.index ["interview_id"], name: "index_video_calls_on_interview_id"
-    t.index ["uid"], name: "index_video_calls_on_uid"
+    t.index ["uid"], name: "index_video_calls_on_uid", unique: true
   end
 
   create_table "webhooks", force: :cascade do |t|

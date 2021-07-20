@@ -17,7 +17,7 @@ module Guild
 
     def reduce_positions
       post.images.where('position > ?', position).find_each do |image|
-        image.update position: image.position - 1
+        image.update(position: image.position - 1)
       end
     end
 
@@ -35,7 +35,7 @@ end
 #  cover         :boolean
 #  position      :integer
 #  string        :string
-#  uid           :string
+#  uid           :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  guild_post_id :uuid
@@ -44,7 +44,7 @@ end
 #
 #  index_guild_post_images_on_guild_post_id  (guild_post_id)
 #  index_guild_post_images_on_string         (string)
-#  index_guild_post_images_on_uid            (uid)
+#  index_guild_post_images_on_uid            (uid) UNIQUE
 #
 # Foreign Keys
 #

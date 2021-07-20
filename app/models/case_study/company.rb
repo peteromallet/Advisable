@@ -31,5 +31,5 @@ end
 #
 # Indexes
 #
-#  index_case_study_companies_on_uid  (uid)
+#  index_case_study_companies_on_uid  (uid) UNIQUE
 #

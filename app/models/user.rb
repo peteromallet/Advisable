@@ -169,7 +169,7 @@ end
 #  time_zone                         :string
 #  title                             :string
 #  trustpilot_review_status          :string
-#  uid                               :string
+#  uid                               :string           not null
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
 #  account_id                        :bigint
@@ -185,7 +185,7 @@ end
 #  index_users_on_airtable_id  (airtable_id)
 #  index_users_on_company_id   (company_id)
 #  index_users_on_country_id   (country_id)
-#  index_users_on_uid          (uid)
+#  index_users_on_uid          (uid) UNIQUE
 #
 # Foreign Keys
 #

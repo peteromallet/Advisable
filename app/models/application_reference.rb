@@ -13,7 +13,7 @@ end
 # Table name: application_references
 #
 #  id                      :bigint           not null, primary key
-#  uid                     :string
+#  uid                     :string           not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  application_id          :bigint
@@ -23,7 +23,7 @@ end
 #
 #  index_application_references_on_application_id           (application_id)
 #  index_application_references_on_off_platform_project_id  (off_platform_project_id)
-#  index_application_references_on_uid                      (uid)
+#  index_application_references_on_uid                      (uid) UNIQUE
 #
 # Foreign Keys
 #
