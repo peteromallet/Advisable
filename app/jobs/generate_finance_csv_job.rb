@@ -9,7 +9,7 @@ class GenerateFinanceCsvJob < ApplicationJob
 
   SOURCE_CURRENCY = "EUR"
 
-  def perform(email)
+  def perform(recipient_email)
     csv_string = CSV.generate(write_headers: true, headers: HEADERS) do |csv|
       Payout.unprocessed.order(:specialist_id, :created_at).each do |payout|
         specialist = payout.specialist
@@ -41,6 +41,6 @@ class GenerateFinanceCsvJob < ApplicationJob
       end
     end
 
-    StaffMailer.finance_csv(email, csv_string).deliver_later
+    StaffMailer.finance_csv(recipient_email, csv_string).deliver_later
   end
 end
