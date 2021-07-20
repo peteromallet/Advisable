@@ -18,7 +18,7 @@ module Toby
       def self.process(object)
         return if object.processed_at?
 
-        object.update(processed_at: Time.zone.now)
+        object.update(processed_at: Time.zone.now, status: "processed")
       end
     end
   end
