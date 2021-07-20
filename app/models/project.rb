@@ -203,7 +203,7 @@ end
 #  specialist_description           :text
 #  status                           :string
 #  stop_candidate_proposed_emails   :boolean
-#  uid                              :string
+#  uid                              :string           not null
 #  won_at                           :datetime
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
@@ -215,6 +215,7 @@ end
 # Indexes
 #
 #  index_projects_on_sales_status  (sales_status)
+#  index_projects_on_uid           (uid) UNIQUE
 #  index_projects_on_user_id       (user_id)
 #
 # Foreign Keys

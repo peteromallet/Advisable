@@ -80,7 +80,7 @@ end
 #  submitted_for_approval_comment :string
 #  to_be_invited_at               :datetime
 #  trial                          :boolean
-#  uid                            :string
+#  uid                            :string           not null
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
 #  airtable_id                    :string
@@ -92,5 +92,5 @@ end
 #  index_tasks_on_airtable_id     (airtable_id)
 #  index_tasks_on_application_id  (application_id)
 #  index_tasks_on_stage           (stage)
-#  index_tasks_on_uid             (uid)
+#  index_tasks_on_uid             (uid) UNIQUE
 #

@@ -124,7 +124,7 @@ end
 #  reset_digest        :string
 #  reset_sent_at       :datetime
 #  test_account        :boolean
-#  uid                 :string
+#  uid                 :string           not null
 #  unsubscribed_from   :jsonb
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null

@@ -166,7 +166,7 @@ end
 #  sourcing_fee                      :integer
 #  travel_availability               :string
 #  trustpilot_review_status          :string
-#  uid                               :string
+#  uid                               :string           not null
 #  unavailable_until                 :date
 #  vat_number                        :string
 #  website                           :string
@@ -186,7 +186,7 @@ end
 #  index_specialists_on_country_id      (country_id)
 #  index_specialists_on_interviewer_id  (interviewer_id)
 #  index_specialists_on_referrer_id     (referrer_id)
-#  index_specialists_on_uid             (uid)
+#  index_specialists_on_uid             (uid) UNIQUE
 #
 # Foreign Keys
 #

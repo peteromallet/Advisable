@@ -35,7 +35,7 @@ end
 #  starts_at                          :datetime
 #  status                             :string
 #  time_zone                          :string
-#  uid                                :string
+#  uid                                :string           not null
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
 #  application_id                     :bigint
@@ -45,6 +45,7 @@ end
 # Indexes
 #
 #  index_interviews_on_application_id  (application_id)
+#  index_interviews_on_uid             (uid) UNIQUE
 #  index_interviews_on_user_id         (user_id)
 #
 # Foreign Keys

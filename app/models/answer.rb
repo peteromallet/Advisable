@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Answer < ApplicationRecord
   include Uid
 
@@ -11,7 +13,7 @@ end
 #
 #  id            :bigint           not null, primary key
 #  content       :string
-#  uid           :string
+#  uid           :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  question_id   :bigint           not null
@@ -21,6 +23,7 @@ end
 #
 #  index_answers_on_question_id    (question_id)
 #  index_answers_on_specialist_id  (specialist_id)
+#  index_answers_on_uid            (uid) UNIQUE
 #
 # Foreign Keys
 #

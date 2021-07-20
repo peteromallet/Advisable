@@ -86,6 +86,7 @@ end
 # Indexes
 #
 #  index_events_on_host_id  (host_id)
+#  index_events_on_uid      (uid) UNIQUE
 #
 # Foreign Keys
 #

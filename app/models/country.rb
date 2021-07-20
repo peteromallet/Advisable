@@ -28,8 +28,12 @@ end
 #  dial_in_number :string
 #  eu             :boolean
 #  name           :string
-#  uid            :string
+#  uid            :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  airtable_id    :string
+#
+# Indexes
+#
+#  index_countries_on_uid  (uid) UNIQUE
 #

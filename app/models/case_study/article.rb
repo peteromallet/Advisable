@@ -59,7 +59,7 @@ end
 #  index_case_study_articles_on_editor_id       (editor_id)
 #  index_case_study_articles_on_interviewer_id  (interviewer_id)
 #  index_case_study_articles_on_specialist_id   (specialist_id)
-#  index_case_study_articles_on_uid             (uid)
+#  index_case_study_articles_on_uid             (uid) UNIQUE
 #
 # Foreign Keys
 #

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class VideoCall < ApplicationRecord
   include Uid
 
-  belongs_to :interview, required: false
+  belongs_to :interview, optional: true
 end
 
 # == Schema Information
@@ -10,7 +12,7 @@ end
 #
 #  id              :bigint           not null, primary key
 #  fallback        :boolean
-#  uid             :string
+#  uid             :string           not null
 #  zoom_passcode   :string
 #  zoom_url        :string
 #  created_at      :datetime         not null
@@ -21,7 +23,7 @@ end
 # Indexes
 #
 #  index_video_calls_on_interview_id  (interview_id)
-#  index_video_calls_on_uid           (uid)
+#  index_video_calls_on_uid           (uid) UNIQUE
 #
 # Foreign Keys
 #

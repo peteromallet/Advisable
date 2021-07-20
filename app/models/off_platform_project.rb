@@ -34,7 +34,7 @@ class OffPlatformProject < PreviousProject; end
 #  public_use                  :boolean
 #  requirements                :text
 #  results                     :text
-#  uid                         :string
+#  uid                         :string           not null
 #  validated                   :boolean          default(FALSE)
 #  validated_by_client         :boolean
 #  validation_explanation      :string
@@ -54,6 +54,7 @@ class OffPlatformProject < PreviousProject; end
 #  index_off_platform_projects_on_application_id  (application_id)
 #  index_off_platform_projects_on_reviewed_by_id  (reviewed_by_id)
 #  index_off_platform_projects_on_specialist_id   (specialist_id)
+#  index_off_platform_projects_on_uid             (uid) UNIQUE
 #
 # Foreign Keys
 #

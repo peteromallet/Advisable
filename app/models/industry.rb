@@ -34,12 +34,12 @@ end
 #  active      :boolean
 #  color       :string
 #  name        :string
-#  uid         :string
+#  uid         :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  airtable_id :string
 #
 # Indexes
 #
-#  index_industries_on_uid  (uid)
+#  index_industries_on_uid  (uid) UNIQUE
 #
