@@ -38,6 +38,7 @@ const CaseStudyRecommendations = lazy(() =>
   import("./views/CaseStudyRecommendations"),
 );
 const Payment = lazy(() => import("./views/Payment"));
+const NewMessages = lazy(() => import("./views/NewMessages"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -174,6 +175,7 @@ const ApplicationRoutes = () => {
             path="/payments/:id"
             component={Payment}
           />
+          <AuthenticatedRoute path="/new_messages" component={NewMessages} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>
