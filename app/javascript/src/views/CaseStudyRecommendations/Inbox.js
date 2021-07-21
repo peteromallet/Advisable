@@ -106,7 +106,7 @@ export default function ExploreInbox() {
                 size="xs"
                 variant="subtle"
                 marginRight={1}
-                to={`/explore/new/${search.id}/skills`}
+                to={`/explore/${search.id}/skills`}
               >
                 <Pencil size={16} />
               </Button>
