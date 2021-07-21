@@ -1,0 +1,8 @@
+mutation finalizeCaseStudySearch($input: FinalizeCaseStudySearchInput!) {
+  finalizeCaseStudySearch(input: $input) {
+    search {
+      id
+      isFinalized
+    }
+  }
+}
