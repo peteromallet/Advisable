@@ -9,9 +9,7 @@ import {
 import { AnimatePresence } from "framer-motion";
 import { Container, useBreakpoint } from "@advisable/donut";
 import Loading from "src/components/Loading";
-import Navigation from "./components/Navigation";
 import NotFound from "src/views/NotFound";
-import View from "src/components/View";
 // Steps
 import Skills from "./steps/Skills";
 import Goals from "./steps/Goals";
@@ -38,40 +36,33 @@ export default function CreateSavedSearch() {
   if (error) return <NotFound />;
 
   return (
-    <View>
-      <View.Sidebar>
-        <Navigation caseStudySearch={data.caseStudySearch} />
-      </View.Sidebar>
-      <View.Content>
-        <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
-          <AnimatePresence
-            initial={false}
-            custom={{ largeScreen, forwards }}
-            exitBeforeEnter
-          >
-            <Switch location={location} key={location.pathname}>
-              <Route path={["/explore/new", "/explore/new/:id/skills"]} exact>
-                <Skills
-                  caseStudySearch={data.caseStudySearch}
-                  skills={data.skills}
-                />
-              </Route>
-              <Route path="/explore/new/:id/goals">
-                <Goals caseStudySearch={data.caseStudySearch} />
-              </Route>
-              <Route path="/explore/new/:id/preferences">
-                <Preferences
-                  id={data.caseStudySearch?.id}
-                  clientApplication={data.clientApplication}
-                />
-              </Route>
-              <Route path="/explore/new/:id/review">
-                <Review caseStudySearch={data.caseStudySearch} />
-              </Route>
-            </Switch>
-          </AnimatePresence>
-        </Container>
-      </View.Content>
-    </View>
+    <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
+      <AnimatePresence
+        initial={false}
+        custom={{ largeScreen, forwards }}
+        exitBeforeEnter
+      >
+        <Switch location={location} key={location.pathname}>
+          <Route path={["/explore/new", "/explore/new/:id/skills"]} exact>
+            <Skills
+              caseStudySearch={data.caseStudySearch}
+              skills={data.skills}
+            />
+          </Route>
+          <Route path="/explore/new/:id/goals">
+            <Goals caseStudySearch={data.caseStudySearch} />
+          </Route>
+          <Route path="/explore/new/:id/preferences">
+            <Preferences
+              id={data.caseStudySearch?.id}
+              clientApplication={data.clientApplication}
+            />
+          </Route>
+          <Route path="/explore/new/:id/review">
+            <Review caseStudySearch={data.caseStudySearch} />
+          </Route>
+        </Switch>
+      </AnimatePresence>
+    </Container>
   );
 }
