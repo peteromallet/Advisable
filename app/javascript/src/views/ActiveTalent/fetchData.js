@@ -21,9 +21,7 @@ export default gql`
           specialist {
             id
             name
-            image {
-              url
-            }
+            avatar
           }
         }
       }

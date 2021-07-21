@@ -39,11 +39,7 @@ const Sidebar = ({ data, history, tutorialModal }) => {
       <Sticky offset={98} enabled={!isMobile}>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <Box paddingBottom="l">
-            <Avatar
-              size="l"
-              name={specialist.name}
-              url={specialist?.image?.url}
-            />
+            <Avatar size="l" name={specialist.name} url={specialist?.avatar} />
           </Box>
           <Text
             fontSize="xl"
