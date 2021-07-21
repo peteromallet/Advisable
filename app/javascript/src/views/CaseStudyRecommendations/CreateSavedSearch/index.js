@@ -17,15 +17,19 @@ import Preferences from "./steps/Preferences";
 import Review from "./steps/Review";
 // Queries
 import { useSavedSearch } from "./queries/useSavedSearch";
+import { Redirect } from "react-router-dom";
+// Validation schemas
+import { validationSchema as skillsValidationSchema } from "./steps/Skills";
+import { validationSchema as goalsValidationSchema } from "./steps/Goals";
 
-const useSavedSearchId = () => {
+const useSavedSearchParams = () => {
   const location = useLocation();
-  const { id } = useParams();
-  return { id: id || location.state?.id };
+  const { id, step } = useParams();
+  return { id: id || location.state?.id, step };
 };
 
 export default function CreateSavedSearch() {
-  const { id } = useSavedSearchId();
+  const { id, step } = useSavedSearchParams();
   const location = useLocation();
   const history = useHistory();
   const largeScreen = useBreakpoint("lUp");
@@ -35,6 +39,23 @@ export default function CreateSavedSearch() {
   if (loading) return <Loading />;
   if (error) return <NotFound />;
 
+  // Detect the last step where user dropped off
+  if (step === "continue") {
+    const skillsComplete = skillsValidationSchema.isValidSync(
+      data.caseStudySearch,
+    );
+    const goalsComplete = goalsValidationSchema.isValidSync(
+      data.caseStudySearch,
+    );
+
+    let lastStep;
+    if (!skillsComplete) lastStep = "skills";
+    if (skillsComplete && !goalsComplete) lastStep = "goals";
+    if (goalsComplete) lastStep = "review";
+
+    return <Redirect to={`/explore/${id}/${lastStep}`} />;
+  }
+
   return (
     <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
       <AnimatePresence
@@ -43,22 +64,23 @@ export default function CreateSavedSearch() {
         exitBeforeEnter
       >
         <Switch location={location} key={location.pathname}>
-          <Route path={["/explore/new", "/explore/new/:id/skills"]} exact>
+          <Route path={["/explore/new", "/explore/:id/skills"]} exact>
             <Skills
               caseStudySearch={data.caseStudySearch}
+              popularSkills={data.popularCaseStudySkills}
               skills={data.skills}
             />
           </Route>
-          <Route path="/explore/new/:id/goals">
+          <Route path="/explore/:id/goals">
             <Goals caseStudySearch={data.caseStudySearch} />
           </Route>
-          <Route path="/explore/new/:id/preferences">
+          <Route path="/explore/:id/preferences">
             <Preferences
               id={data.caseStudySearch?.id}
               clientApplication={data.clientApplication}
             />
           </Route>
-          <Route path="/explore/new/:id/review">
+          <Route path="/explore/:id/review">
             <Review caseStudySearch={data.caseStudySearch} />
           </Route>
         </Switch>

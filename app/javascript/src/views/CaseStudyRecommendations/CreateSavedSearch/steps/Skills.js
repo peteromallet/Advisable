@@ -1,7 +1,7 @@
 import React from "react";
 import { array, object } from "yup";
 import { Formik, Form } from "formik";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Box, Combobox, Error } from "@advisable/donut";
@@ -26,7 +26,6 @@ export default function Skills({ caseStudySearch, skills }) {
   const [update] = useMutation(UPDATE_CASE_STUDY_SEARCH);
 
   const history = useHistory();
-  const location = useLocation();
 
   const initialValues = {
     skills: caseStudySearch?.skills.map((s) => s.skill) || [],
@@ -81,7 +80,7 @@ export default function Skills({ caseStudySearch, skills }) {
       // it when user clicks back button
       history.replace(location.pathname, { id: searchId });
     }
-    history.push(`/explore/new/${searchId}/goals`);
+    history.push(`/explore/${searchId}/goals`);
   };
 
   return (
