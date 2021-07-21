@@ -1,11 +1,11 @@
 import Talk from "talkjs";
 
-const createTalkSession = viewer => {
+const createTalkSession = (viewer) => {
   const user = new Talk.User({
     id: viewer.id,
     name: viewer.name,
     email: viewer.email,
-    photoUrl: viewer.image?.url,
+    photoUrl: viewer.avatar,
     role: viewer.__typename === "Specialist" ? "Specialist" : "Client",
   });
 
