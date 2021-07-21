@@ -4,11 +4,12 @@ import { gql, useSubscription } from "@apollo/client";
 const SUBSCRIPTION = gql`
   subscription MessageReceived {
     receivedMessage {
-      conversation {
-        id
-      }
       message {
         id
+        author {
+          name
+        }
+        content
       }
     }
   }
