@@ -15,6 +15,10 @@ const GET_SKILLS = gql`
       value: name
       label: name
     }
+    popularCaseStudySkills {
+      id
+      name
+    }
   }
 `;
 
