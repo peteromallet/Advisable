@@ -7,6 +7,7 @@ query ExplorerSearchRecommendations($id: ID!) {
   caseStudySearch(id: $id) {
     id
     name
+    isFinalized
     companyRecomendation
     skills {
       id

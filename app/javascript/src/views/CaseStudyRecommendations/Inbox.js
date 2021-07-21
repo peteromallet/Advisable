@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { Box, Text, Button } from "@advisable/donut";
 import CaseStudiesList from "./CaseStudiesList";
 import { useParams } from "react-router-dom";
@@ -67,6 +67,10 @@ export default function ExploreInbox() {
   const afterDelete = () => {
     history.replace("/explore");
   };
+
+  if (!search.isFinalized) {
+    return <Redirect to={`/explore/${id}/continue`} />;
+  }
 
   return (
     <>
