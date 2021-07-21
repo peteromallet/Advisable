@@ -29,7 +29,7 @@ export default function Preferences({ id, clientApplication }) {
   };
 
   const handleSubmit = () => {
-    history.push(`/explore/new/${id}/review`);
+    history.push(`/explore/${id}/review`);
   };
 
   return (

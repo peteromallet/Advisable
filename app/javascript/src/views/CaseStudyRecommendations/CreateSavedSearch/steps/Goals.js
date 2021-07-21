@@ -57,7 +57,7 @@ export default function Goals({ caseStudySearch }) {
       return;
     }
 
-    history.push(`/explore/new/${caseStudySearch.id}/preferences`);
+    history.push(`/explore/${caseStudySearch.id}/preferences`);
   };
 
   return (
