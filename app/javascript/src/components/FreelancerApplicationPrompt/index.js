@@ -53,6 +53,18 @@ const ApplicationSubmitted = () => (
   </PromptCard>
 );
 
+const OnHold = () => (
+  <PromptCard mb={10}>
+    <ProgressLine progress={1} />
+    <Header>Your application is currently on hold</Header>
+    <Description>
+      This means we are currently at high volumes of applicants or we are
+      focusing on other industries at this time. We will keep you posted on any
+      further update.
+    </Description>
+  </PromptCard>
+);
+
 const InvitedToInterview = () => {
   const { firstName, lastName, email, id } = useViewer();
   const fullName = `${firstName} ${lastName}`;
@@ -149,6 +161,8 @@ const ApplicationStage = ({ stage }) => {
       return <InterviewScheduled />;
     case "Interview Completed":
       return <InterviewCompleted />;
+    case "On Hold":
+      return <OnHold />;
     default:
       return null;
   }
