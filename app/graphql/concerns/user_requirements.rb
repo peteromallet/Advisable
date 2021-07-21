@@ -5,6 +5,11 @@ module UserRequirements
     context[:current_user]
   end
 
+  # Can return the user's account or admin's that's logged in as that user
+  def current_account_id
+    context[:current_account]&.id
+  end
+
   def current_company
     current_user&.company
   end
