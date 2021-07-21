@@ -104,6 +104,7 @@ class User < ApplicationRecord
       business_type: company.kind,
       goals: company.goals,
       name: "Recommendations for #{company.name}",
+      finalized_at: Time.zone.now,
       company_recomendation: true
     )
   end

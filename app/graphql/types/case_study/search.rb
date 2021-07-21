@@ -22,6 +22,11 @@ module Types
       end
       field :goals, [String], null: true
       field :results, Article.connection_type, null: true
+
+      field :is_finalized, Boolean, null: false
+      def is_finalized
+        object.finalized_at.present?
+      end
     end
   end
 end

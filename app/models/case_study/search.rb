@@ -48,6 +48,7 @@ end
 #  id                    :bigint           not null, primary key
 #  business_type         :string
 #  company_recomendation :boolean
+#  finalized_at          :datetime
 #  goals                 :jsonb
 #  name                  :string
 #  results               :jsonb
