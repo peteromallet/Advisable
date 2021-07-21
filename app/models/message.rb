@@ -6,6 +6,9 @@ class Message < ApplicationRecord
 
   belongs_to :author, class_name: "Account"
   belongs_to :conversation
+  has_many_attached :attachments
+
+  validates :content, presence: true
 end
 
 # == Schema Information
