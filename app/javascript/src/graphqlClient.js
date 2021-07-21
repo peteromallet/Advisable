@@ -1,11 +1,14 @@
-import { ApolloClient, from, createHttpLink, gql } from "@apollo/client";
+import { ApolloClient, from, split, createHttpLink, gql } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import { RetryLink } from "@apollo/client/link/retry";
+import { createConsumer } from "@rails/actioncable";
 import createCache from "./apolloCache";
 import * as Sentry from "@sentry/react";
+import ActionCableLink from "graphql-ruby-client/subscriptions/ActionCableLink";
 
 const cache = createCache();
+const cable = createConsumer();
 
 const authLink = setContext((_, { headers }) => {
   const csrfElement = document.querySelector("meta[name=csrf-token]");
@@ -82,9 +85,23 @@ const errorLink = onError(({ graphQLErrors, operation, networkError }) => {
   }
 });
 
+const hasSubscriptionOperation = ({ query: { definitions } }) => {
+  return definitions.some(
+    ({ kind, operation }) =>
+      kind === "OperationDefinition" && operation === "subscription",
+  );
+};
+
+const httpOrSubscriptionLink = split(
+  hasSubscriptionOperation,
+  new ActionCableLink({ cable }),
+  httpLink,
+);
+
 const client = new ApolloClient({
   cache,
-  link: from([retryLink, errorLink, authLink, httpLink]),
+  // link: from([retryLink, errorLink, authLink, httpLink]),
+  link: from([errorLink, authLink, httpOrSubscriptionLink]),
   defaultOptions: {
     mutate: {
       errorPolicy: "all",
