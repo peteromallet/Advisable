@@ -13,10 +13,14 @@ import Header from "../components/Header";
 import Description from "../components/Description";
 // Queries
 import UPDATE_CASE_STUDY_SEARCH from "../queries/updateCaseStudySearch.gql";
+import FINALIZE_CASE_STUDY_SEARCH from "../queries/finalizeCaseStudySearch.gql";
 
 export default function Review({ caseStudySearch }) {
   const [update] = useMutation(UPDATE_CASE_STUDY_SEARCH);
   const history = useHistory();
+  const [finalize] = useMutation(FINALIZE_CASE_STUDY_SEARCH, {
+    variables: { input: { id: caseStudySearch.id } },
+  });
 
   const initialValues = {
     name: caseStudySearch?.name || "",
@@ -34,6 +38,7 @@ export default function Review({ caseStudySearch }) {
       return;
     }
 
+    await finalize();
     history.push(`/explore/${caseStudySearch?.id}`);
   };
 
@@ -120,7 +125,7 @@ export default function Review({ caseStudySearch }) {
               variant="gradient"
               size="l"
             >
-              Confirm
+              Search
             </SubmitButton>
           </Form>
         )}
