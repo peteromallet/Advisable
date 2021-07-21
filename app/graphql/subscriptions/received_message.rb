@@ -2,10 +2,11 @@
 
 module Subscriptions
   class ReceivedMessage < Subscriptions::BaseSubscription
-    description "A message was received on current_user's conversation"
+    include UserRequirements
 
-    subscription_scope :current_user_id
-    field :conversation, Types::Conversation, null: false
+    description "A message was received on current_account's conversation"
+
+    subscription_scope :current_account_id
     field :message, Types::Message, null: false
 
     def subscribe
@@ -13,7 +14,9 @@ module Subscriptions
     end
 
     def update
-      {message: Message.last, conversation: Conversation.first}
+      return :no_response unless object.conversation.participants.pluck(:account_id).include?(current_account_id)
+
+      {message: object}
     end
   end
 end

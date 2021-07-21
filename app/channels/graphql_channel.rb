@@ -6,8 +6,6 @@ class GraphqlChannel < ApplicationCable::Channel
   end
 
   def execute(data)
-    # binding.pry
-
     result = execute_query(data)
 
     payload = {
@@ -39,8 +37,10 @@ class GraphqlChannel < ApplicationCable::Channel
 
   def context
     {
-      current_user_id: current_user&.id,
       current_user: current_user,
+      current_user_id: current_user&.id,
+      current_account: current_account,
+      current_account_id: current_account&.id,
       channel: self
     }
   end
