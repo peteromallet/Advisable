@@ -22,7 +22,7 @@ class Project < ApplicationRecord
   has_many :project_industries, as: :project, dependent: :destroy
   has_many :industries, through: :project_industries
 
-  has_one :primary_project_skill, -> { where(primary: true) }, class_name: 'ProjectSkill', as: :project, inverse_of: :project, dependent: :destroy
+  has_one :primary_project_skill, -> { where(primary: true) }, class_name: "ProjectSkill", as: :project, inverse_of: :project, dependent: :destroy
   has_one :primary_skill, through: :primary_project_skill, source: :skill
 
   belongs_to :user, optional: true
@@ -61,6 +61,10 @@ class Project < ApplicationRecord
 
   def deposit_is_paid?
     deposit == deposit_paid
+  end
+
+  def deposit_remaining
+    deposit - deposit_used
   end
 
   def characteristics
@@ -120,23 +124,23 @@ class Project < ApplicationRecord
   def deposit_payment_intent
     @deposit_payment_intent ||= Stripe::PaymentIntent.create(
       {
-        currency: 'usd',
+        currency: "usd",
         amount: deposit_owed,
         customer: user.company.stripe_customer_id,
-        setup_future_usage: 'off_session',
-        metadata: {payment_type: 'deposit', project: uid}
+        setup_future_usage: "off_session",
+        metadata: {payment_type: "deposit", project: uid}
       },
       {idempotency_key: "deposit_#{deposit_owed}_#{uid}"}
     )
   end
 
   def sales_person
-    Sentry.capture_message("#sales_person called on Project that was meant for Company", level: 'debug')
+    Sentry.capture_message("#sales_person called on Project that was meant for Company", level: "debug")
     user.company.sales_person
   end
 
   def owner
-    Sentry.capture_message("#owner called on Project that was meant for Company", level: 'debug')
+    Sentry.capture_message("#owner called on Project that was meant for Company", level: "debug")
     user.company.sales_person.username
   end
 
