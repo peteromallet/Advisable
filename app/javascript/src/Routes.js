@@ -8,7 +8,6 @@ import Login from "./views/Login";
 import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
 import ApplicationRoutes from "./ApplicationRoutes";
-import SubscriptionTest from "./views/SubscriptionTest";
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const VerifyProject = lazy(() => import("./views/VerifyProject"));
@@ -23,7 +22,6 @@ const Routes = () => {
     <Suspense fallback={<Loading />}>
       <Switch>
         <AuthenticatedRoute exact path="/" component={RootPath} />
-        <Route path="/subscriptions" component={SubscriptionTest} />
         <Route path="/login" component={Login} />
         <Route
           path="/reset_password"
