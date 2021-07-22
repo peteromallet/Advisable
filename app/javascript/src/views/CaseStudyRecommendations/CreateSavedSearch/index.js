@@ -6,6 +6,7 @@ import {
   useLocation,
   useParams,
 } from "react-router";
+import { Redirect } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { Container, useBreakpoint } from "@advisable/donut";
 import Loading from "src/components/Loading";
@@ -16,7 +17,6 @@ import Goals from "./steps/Goals";
 import Preferences from "./steps/Preferences";
 // Queries
 import { useSavedSearch } from "./queries/useSavedSearch";
-import { Redirect } from "react-router-dom";
 // Validation schemas
 import { validationSchema as skillsValidationSchema } from "./steps/Skills";
 import { validationSchema as goalsValidationSchema } from "./steps/Goals";
@@ -50,7 +50,7 @@ export default function CreateSavedSearch() {
     let lastStep;
     if (!skillsComplete) lastStep = "skills";
     if (skillsComplete && !goalsComplete) lastStep = "goals";
-    if (goalsComplete) lastStep = "review";
+    if (goalsComplete) lastStep = "preferences";
 
     return <Redirect to={`/explore/${id}/${lastStep}`} />;
   }
