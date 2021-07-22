@@ -3,15 +3,15 @@ import { object, array } from "yup";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { ArrowRight } from "@styled-icons/feather/ArrowRight";
-import { Box, Error } from "@advisable/donut";
+import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
+import { ArrowLeft } from "@styled-icons/heroicons-solid/ArrowLeft";
+import { Button, Box, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import CheckboxInput from "src/components/CheckboxInput";
 import SubmitButton from "src/components/SubmitButton";
 import AnimatedCard from "../components/AnimatedCard";
 import Header from "../components/Header";
 import Description from "../components/Description";
-import StepNumber from "../components/StepNumber";
 // Queries
 import UPDATE_CASE_STUDY_SEARCH from "../queries/updateCaseStudySearch.gql";
 
@@ -60,12 +60,24 @@ export default function Goals({ caseStudySearch }) {
     history.push(`/explore/${caseStudySearch.id}/preferences`);
   };
 
+  const handleBack = () => {
+    history.push(`/explore/${caseStudySearch.id}/skills`);
+  };
+
   return (
     <AnimatedCard>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {(formik) => (
           <Form>
-            <StepNumber>Step 2 of 3</StepNumber>
+            <Button
+              onClick={handleBack}
+              type="button"
+              variant="minimal"
+              size="xs"
+              prefix={<ArrowLeft />}
+            >
+              Back
+            </Button>
             <Header>Goals</Header>
             <Description>
               We’ll recommend you talent & projects that have helped similar
