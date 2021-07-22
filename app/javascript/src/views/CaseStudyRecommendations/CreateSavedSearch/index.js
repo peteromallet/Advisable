@@ -14,7 +14,6 @@ import NotFound from "src/views/NotFound";
 import Skills from "./steps/Skills";
 import Goals from "./steps/Goals";
 import Preferences from "./steps/Preferences";
-import Review from "./steps/Review";
 // Queries
 import { useSavedSearch } from "./queries/useSavedSearch";
 import { Redirect } from "react-router-dom";
@@ -79,9 +78,6 @@ export default function CreateSavedSearch() {
               id={data.caseStudySearch?.id}
               clientApplication={data.clientApplication}
             />
-          </Route>
-          <Route path="/explore/:id/review">
-            <Review caseStudySearch={data.caseStudySearch} />
           </Route>
         </Switch>
       </AnimatePresence>
