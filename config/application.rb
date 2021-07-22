@@ -9,6 +9,7 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 require_relative "../app/lib/app_profiler"
+
 module Advisable
   class Application < Rails::Application
     ORIGIN_HOST = ENV["ORIGIN"] || "https://#{ENV["HEROKU_APP_NAME"]}.herokuapp.com"
