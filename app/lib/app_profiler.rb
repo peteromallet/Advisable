@@ -13,17 +13,11 @@ end
 module AppProfiler
   module Storage
     class S3Storage < BaseStorage
-      class Location
-        attr_reader :url, :name
-
-        def initialize(url, name)
-          @url = CGI.escape(url)
-          @name = name
-        end
-      end
       class << self
         def upload(profile, _params = {})
           file = profile.file.open
+          filename = File.join("profiling", profile.context.to_s, profile.file.basename)
+          client = Aws::S3::Client.new
 
           ActiveSupport::Notifications.instrument(
             "s3_upload.app_profiler",
@@ -32,32 +26,25 @@ module AppProfiler
             client.put_object(
               body: StringIO.new(gzipped_reader(file).read),
               bucket: ENV["AWS_S3_BUCKET"],
-              key: filename(profile),
+              key: filename,
               content_type: "application/json",
               content_encoding: "gzip"
             )
 
             object = Aws::S3::Object.new(
-              key: filename(profile),
+              key: filename,
               bucket_name: ENV["AWS_S3_BUCKET"],
               client: client
             )
 
-            url = object.presigned_url(:get, expires_in: 3600)
-
-            Location.new(url, profile.file.basename)
+            OpenStruct.new(
+              url: CGI.escape(object.presigned_url(:get, expires_in: 3600)),
+              name: profile.file.basename
+            )
           end
         end
 
         private
-
-        def filename(profile)
-          File.join("profiling", profile.context.to_s, profile.file.basename)
-        end
-
-        def client
-          Aws::S3::Client.new
-        end
 
         def gzipped_reader(file)
           reader, writer = IO.pipe(binmode: true)
