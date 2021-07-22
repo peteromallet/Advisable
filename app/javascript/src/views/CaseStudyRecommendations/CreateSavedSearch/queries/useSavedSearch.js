@@ -17,7 +17,8 @@ const GET_SKILLS = gql`
     }
     popularCaseStudySkills {
       id
-      name
+      value: name
+      label: name
     }
   }
 `;
@@ -32,6 +33,11 @@ export const GET_SKILLS_CASE_STUDY_SEARCH = gql`
       businessType
     }
     skills {
+      id
+      value: name
+      label: name
+    }
+    popularCaseStudySkills {
       id
       value: name
       label: name

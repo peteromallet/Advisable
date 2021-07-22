@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
 import { Search } from "@styled-icons/heroicons-solid/Search";
-import { Box, Combobox, Error, theme } from "@advisable/donut";
+import { Box, Text, Combobox, Error, Tag, theme } from "@advisable/donut";
 import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
@@ -20,7 +20,7 @@ export const validationSchema = object().shape({
   skills: array().min(1, "Please select at least one skill").required(),
 });
 
-export default function Skills({ caseStudySearch, skills }) {
+export default function Skills({ caseStudySearch, skills, popularSkills }) {
   const client = useApolloClient();
   const [create] = useMutation(CREATE_CASE_STUDY_SEARCH);
   const [update] = useMutation(UPDATE_CASE_STUDY_SEARCH);
@@ -108,6 +108,24 @@ export default function Skills({ caseStudySearch, skills }) {
               />
             </Box>
             <Error>{formik.status}</Error>
+            <Text fontSize="l" color="neutral500" mb={2}>
+              Popular skills in the SaaS industry
+            </Text>
+            <Box paddingTop={2}>
+              {popularSkills.map((s) => (
+                <Tag
+                  size="s"
+                  key={s.value}
+                  marginRight={2}
+                  marginBottom={2}
+                  onClick={() =>
+                    formik.setFieldValue("skills", [...formik.values.skills, s])
+                  }
+                >
+                  {s.label}
+                </Tag>
+              ))}
+            </Box>
             <SubmitButton
               mt={4}
               suffix={<ArrowRight />}
