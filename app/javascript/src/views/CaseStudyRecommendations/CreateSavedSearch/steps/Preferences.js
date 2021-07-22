@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Box, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
@@ -10,9 +11,14 @@ import Header from "../components/Header";
 import StepNumber from "../components/StepNumber";
 import Description from "../components/Description";
 import AnimatedCard from "../components/AnimatedCard";
+// Queries
+import FINALIZE_CASE_STUDY_SEARCH from "../queries/finalizeCaseStudySearch.gql";
 
 export default function Preferences({ id, clientApplication }) {
   const history = useHistory();
+  const [finalize] = useMutation(FINALIZE_CASE_STUDY_SEARCH, {
+    variables: { input: { id } },
+  });
 
   const preferencesOptions = [
     `The company is ${clientApplication.businessType}`,
@@ -28,8 +34,9 @@ export default function Preferences({ id, clientApplication }) {
     preferences: [],
   };
 
-  const handleSubmit = () => {
-    history.push(`/explore/${id}/review`);
+  const handleSubmit = async () => {
+    await finalize();
+    history.push(`/explore/${id}`);
   };
 
   return (
@@ -37,7 +44,7 @@ export default function Preferences({ id, clientApplication }) {
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(formik) => (
           <Form>
-            <StepNumber>Step 3 of 4</StepNumber>
+            <StepNumber>Step 3 of 3</StepNumber>
             <Header>Preferences</Header>
             <Description>
               What’s important to you when searching for projects
@@ -58,7 +65,7 @@ export default function Preferences({ id, clientApplication }) {
               variant="gradient"
               size="l"
             >
-              Continue
+              Search for Case Studies
             </SubmitButton>
           </Form>
         )}

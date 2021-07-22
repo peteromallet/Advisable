@@ -92,7 +92,7 @@ export default function Skills({ caseStudySearch, skills }) {
       >
         {(formik) => (
           <Form>
-            <StepNumber>Step 1 of 4</StepNumber>
+            <StepNumber>Step 1 of 3</StepNumber>
             <Header>Skills</Header>
             <Box mb={6}>
               <FormField
