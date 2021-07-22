@@ -1,3 +1,4 @@
+import queryString from "query-string";
 import { ApolloClient, from, split, createHttpLink, gql } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
@@ -9,15 +10,30 @@ import ActionCableLink from "graphql-ruby-client/subscriptions/ActionCableLink";
 
 const cache = createCache();
 
+function extractProfileHeader(queryParams) {
+  let header = `mode=${queryParams.profile};`;
+  ["interval", "autoredirect", "context"].forEach((param) => {
+    if (queryParams[param]) header += `${param}=${queryParams[param]};`;
+  });
+  return header;
+}
+
 const authLink = setContext((_, { headers }) => {
+  const queryParams = queryString.parse(window.location.search);
   const csrfElement = document.querySelector("meta[name=csrf-token]");
 
+  const nextHeaders = {
+    ...headers,
+    "X-CSRF-Token": window?._CSRF || csrfElement.content,
+    "X-RELEASED-AT": process.env.RELEASED_AT,
+  };
+
+  if (queryParams.profile) {
+    nextHeaders["X-Profile"] = extractProfileHeader(queryParams);
+  }
+
   return {
-    headers: {
-      ...headers,
-      "X-CSRF-Token": window?._CSRF || csrfElement.content,
-      "X-RELEASED-AT": process.env.RELEASED_AT,
-    },
+    headers: nextHeaders,
   };
 });
 
