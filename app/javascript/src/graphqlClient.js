@@ -94,12 +94,12 @@ const hasSubscriptionOperation = ({ query: { definitions } }) => {
 const httpOrSubscriptionLink = split(
   hasSubscriptionOperation,
   new ActionCableLink({ cable }),
-  httpLink,
+  from([retryLink, httpLink]),
 );
 
 const client = new ApolloClient({
   cache,
-  link: from([retryLink, errorLink, authLink, httpOrSubscriptionLink]),
+  link: from([errorLink, authLink, httpOrSubscriptionLink]),
   defaultOptions: {
     mutate: {
       errorPolicy: "all",
