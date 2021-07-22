@@ -12,5 +12,10 @@ module Types
     def avatar
       object.specialist_or_user.resized_avatar_url
     end
+
+    field :is_viewer, Boolean, null: true
+    def is_viewer
+      current_user.account == object
+    end
   end
 end
