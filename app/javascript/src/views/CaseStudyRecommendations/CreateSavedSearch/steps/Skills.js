@@ -4,7 +4,8 @@ import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
-import { Box, Combobox, Error } from "@advisable/donut";
+import { Search } from "@styled-icons/heroicons-solid/Search";
+import { Box, Combobox, Error, theme } from "@advisable/donut";
 import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
@@ -101,8 +102,8 @@ export default function Skills({ caseStudySearch, skills }) {
                 value={formik.values.skills}
                 name="skills"
                 onChange={(s) => formik.setFieldValue("skills", s)}
-                label="What are the skills you're interested in?"
-                placeholder="e.g Facebook Marketing"
+                placeholder="Search for skills..."
+                prefix={<Search fill={theme.colors.neutral400} />}
                 options={skills}
               />
             </Box>
