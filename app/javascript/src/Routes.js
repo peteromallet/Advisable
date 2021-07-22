@@ -8,7 +8,6 @@ import Login from "./views/Login";
 import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
 import ApplicationRoutes from "./ApplicationRoutes";
-
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const VerifyProject = lazy(() => import("./views/VerifyProject"));

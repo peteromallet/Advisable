@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class AdvisableSchema < GraphQL::Schema
+  use GraphQL::Subscriptions::ActionCableSubscriptions
   max_depth 15
   query Types::QueryType
   mutation Types::MutationType
+  subscription Types::SubscriptionType
 
   rescue_from(ActiveRecord::RecordNotFound) do
     ApiError.invalid_request("NOT_FOUND", "Resouce was not found")
