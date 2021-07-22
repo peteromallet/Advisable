@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CurrentUser
   extend ActiveSupport::Concern
 
@@ -37,7 +39,7 @@ module CurrentUser
     end
 
     def redirect_without_magic_link_params
-      redirect_to params.permit!.except(:mlt, :mluid)
+      redirect_to(params.permit!.except(:mlt, :mluid))
     end
 
     def session_manager

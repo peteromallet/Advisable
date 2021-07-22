@@ -413,5 +413,19 @@ module Types
       requires_client!
       current_user.company.payments.find_by!(uid: id)
     end
+
+    field :conversations, Types::Conversation.connection_type, null: true
+    def conversations
+      requires_current_user!
+      current_user.account.conversations
+    end
+
+    field :conversation, Types::Conversation, null: true do
+      argument :id, ID, required: true
+    end
+    def conversation(id:)
+      requires_current_user!
+      current_user.account.conversations.find_by!(uid: id)
+    end
   end
 end

@@ -12,9 +12,5 @@ module Mutations
     def current_account_responsible_for(&block)
       Logidze.with_responsible(current_account_id, &block)
     end
-
-    def current_account_id
-      context[:current_account]&.id
-    end
   end
 end

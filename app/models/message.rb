@@ -6,6 +6,19 @@ class Message < ApplicationRecord
 
   belongs_to :author, class_name: "Account"
   belongs_to :conversation
+  has_many_attached :attachments
+
+  validates :content, presence: true
+
+  after_create :trigger_subscriptions
+
+  private
+
+  def trigger_subscriptions
+    conversation.participants.where.not(account_id: author_id).find_each do |participant|
+      AdvisableSchema.subscriptions.trigger("receivedMessage", {}, self, scope: participant.account_id)
+    end
+  end
 end
 
 # == Schema Information
