@@ -12,9 +12,7 @@ const cache = createCache();
 
 function extractProfileHeader(queryParams) {
   let header = `mode=${queryParams.profile};`;
-  ["interval", "autoredirect", "context"].forEach((param) => {
-    if (queryParams[param]) header += `${param}=${queryParams[param]};`;
-  });
+  if (queryParams["interval"]) header += `interval=${queryParams["interval"]};`;
   return header;
 }
 
