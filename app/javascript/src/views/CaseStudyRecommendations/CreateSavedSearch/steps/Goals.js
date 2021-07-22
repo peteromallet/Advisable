@@ -65,7 +65,7 @@ export default function Goals({ caseStudySearch }) {
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {(formik) => (
           <Form>
-            <StepNumber>Step 2 of 4</StepNumber>
+            <StepNumber>Step 2 of 3</StepNumber>
             <Header>Goals</Header>
             <Description>
               We’ll recommend you talent & projects that have helped similar
