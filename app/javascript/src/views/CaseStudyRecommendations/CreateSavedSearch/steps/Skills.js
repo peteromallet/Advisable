@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
 import { Search } from "@styled-icons/heroicons-solid/Search";
+import { Plus } from "@styled-icons/heroicons-solid/Plus";
 import { Box, Text, Combobox, Error, Tag, theme } from "@advisable/donut";
 import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
@@ -118,6 +119,7 @@ export default function Skills({ caseStudySearch, skills, popularSkills }) {
                   key={s.value}
                   marginRight={2}
                   marginBottom={2}
+                  icon={Plus}
                   onClick={() =>
                     formik.setFieldValue("skills", [...formik.values.skills, s])
                   }
