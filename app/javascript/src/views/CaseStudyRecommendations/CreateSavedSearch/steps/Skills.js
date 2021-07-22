@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { array, object } from "yup";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
@@ -21,10 +21,19 @@ export const validationSchema = object().shape({
   skills: array().min(1, "Please select at least one skill").required(),
 });
 
-export default function Skills({ caseStudySearch, skills, popularSkills }) {
+export default function Skills({
+  caseStudySearch,
+  skills,
+  popularCaseStudySkills,
+}) {
   const client = useApolloClient();
   const [create] = useMutation(CREATE_CASE_STUDY_SEARCH);
   const [update] = useMutation(UPDATE_CASE_STUDY_SEARCH);
+  const [popularSkills, setPopularSkills] = useState(
+    popularCaseStudySkills.filter(
+      (ps) => !caseStudySearch.skills.find((s) => s.skill.value === ps.value),
+    ),
+  );
 
   const history = useHistory();
 
@@ -84,6 +93,13 @@ export default function Skills({ caseStudySearch, skills, popularSkills }) {
     history.push(`/explore/${searchId}/goals`);
   };
 
+  const updatePopularSkills = (newValue) => {
+    const updatedPopularSkills = popularCaseStudySkills.filter(
+      (ps) => !newValue.find((s) => s.value === ps.value),
+    );
+    setPopularSkills(updatedPopularSkills);
+  };
+
   return (
     <AnimatedCard>
       <Formik
@@ -102,7 +118,10 @@ export default function Skills({ caseStudySearch, skills, popularSkills }) {
                 max={10}
                 value={formik.values.skills}
                 name="skills"
-                onChange={(s) => formik.setFieldValue("skills", s)}
+                onChange={(s) => {
+                  formik.setFieldValue("skills", s);
+                  updatePopularSkills(s);
+                }}
                 placeholder="Search for skills..."
                 prefix={<Search fill={theme.colors.neutral400} />}
                 options={skills}
@@ -120,9 +139,11 @@ export default function Skills({ caseStudySearch, skills, popularSkills }) {
                   marginRight={2}
                   marginBottom={2}
                   icon={Plus}
-                  onClick={() =>
-                    formik.setFieldValue("skills", [...formik.values.skills, s])
-                  }
+                  onClick={() => {
+                    const newValue = [...formik.values.skills, s];
+                    formik.setFieldValue("skills", newValue);
+                    updatePopularSkills(newValue);
+                  }}
                 >
                   {s.label}
                 </Tag>
