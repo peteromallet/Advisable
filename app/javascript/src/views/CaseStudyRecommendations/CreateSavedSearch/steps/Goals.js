@@ -6,11 +6,11 @@ import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
 import { ArrowLeft } from "@styled-icons/heroicons-solid/ArrowLeft";
 import { Button, Box, Error } from "@advisable/donut";
+import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import CheckboxInput from "src/components/CheckboxInput";
 import SubmitButton from "src/components/SubmitButton";
 import AnimatedCard from "../components/AnimatedCard";
-import Header from "../components/Header";
 import Description from "../components/Description";
 // Queries
 import UPDATE_CASE_STUDY_SEARCH from "../queries/updateCaseStudySearch.gql";
@@ -78,7 +78,7 @@ export default function Goals({ caseStudySearch }) {
             >
               Back
             </Button>
-            <Header>Goals</Header>
+            <Heading mb={2.5}>Goals</Heading>
             <Description>
               We’ll recommend you talent & projects that have helped similar
               companies achieve the goals you select.
