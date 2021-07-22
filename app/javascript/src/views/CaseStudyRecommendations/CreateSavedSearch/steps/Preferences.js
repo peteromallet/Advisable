@@ -5,10 +5,10 @@ import { useMutation } from "@apollo/client";
 import { ArrowLeft } from "@styled-icons/heroicons-solid/ArrowLeft";
 import { Search } from "@styled-icons/heroicons-solid/Search";
 import { Box, Error, Button } from "@advisable/donut";
+import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import CheckboxInput from "src/components/CheckboxInput";
-import Header from "../components/Header";
 import Description from "../components/Description";
 import AnimatedCard from "../components/AnimatedCard";
 // Queries
@@ -57,7 +57,7 @@ export default function Preferences({ id, clientApplication }) {
             >
               Back
             </Button>
-            <Header>Preferences</Header>
+            <Heading mb={2.5}>Preferences</Heading>
             <Description>
               What’s important to you when searching for projects
             </Description>

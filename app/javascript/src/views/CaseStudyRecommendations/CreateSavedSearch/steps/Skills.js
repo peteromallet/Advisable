@@ -5,10 +5,10 @@ import { useHistory } from "react-router-dom";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
 import { Box, Combobox, Error } from "@advisable/donut";
+import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import AnimatedCard from "../components/AnimatedCard";
-import Header from "../components/Header";
 // Queries
 import { GET_SKILLS_CASE_STUDY_SEARCH } from "../queries/useSavedSearch";
 import CREATE_CASE_STUDY_SEARCH from "../queries/createCaseStudySearch.gql";
@@ -91,7 +91,7 @@ export default function Skills({ caseStudySearch, skills }) {
       >
         {(formik) => (
           <Form>
-            <Header>Skills</Header>
+            <Heading mb={2.5}>What skills are you looking for?</Heading>
             <Box mb={6}>
               <FormField
                 isRequired
