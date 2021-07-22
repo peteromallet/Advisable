@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card, useBreakpoint, useTheme } from "@advisable/donut";
+import { Box, useBreakpoint, useTheme } from "@advisable/donut";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 
@@ -44,7 +44,7 @@ const AnimatedCard = (props) => {
   }, [isMobile]);
 
   return (
-    <Card
+    <Box
       as={motion.div}
       variants={cardAnimations}
       custom={{ largeScreen, forwards }}
