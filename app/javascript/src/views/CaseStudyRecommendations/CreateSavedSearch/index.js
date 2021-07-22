@@ -66,7 +66,7 @@ export default function CreateSavedSearch() {
           <Route path={["/explore/new", "/explore/:id/skills"]} exact>
             <Skills
               caseStudySearch={data.caseStudySearch}
-              popularSkills={data.popularCaseStudySkills}
+              popularCaseStudySkills={data.popularCaseStudySkills}
               skills={data.skills}
             />
           </Route>
