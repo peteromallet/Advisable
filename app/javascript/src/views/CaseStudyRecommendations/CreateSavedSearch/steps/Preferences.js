@@ -2,13 +2,13 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { ArrowRight } from "@styled-icons/feather/ArrowRight";
-import { Box, Error } from "@advisable/donut";
+import { ArrowLeft } from "@styled-icons/heroicons-solid/ArrowLeft";
+import { Search } from "@styled-icons/heroicons-solid/Search";
+import { Box, Error, Button } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import CheckboxInput from "src/components/CheckboxInput";
 import Header from "../components/Header";
-import StepNumber from "../components/StepNumber";
 import Description from "../components/Description";
 import AnimatedCard from "../components/AnimatedCard";
 // Queries
@@ -39,12 +39,24 @@ export default function Preferences({ id, clientApplication }) {
     history.push(`/explore/${id}`);
   };
 
+  const handleBack = () => {
+    history.push(`/explore/${id}/goals`);
+  };
+
   return (
     <AnimatedCard>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(formik) => (
           <Form>
-            <StepNumber>Step 3 of 3</StepNumber>
+            <Button
+              onClick={handleBack}
+              type="button"
+              variant="minimal"
+              size="xs"
+              prefix={<ArrowLeft />}
+            >
+              Back
+            </Button>
             <Header>Preferences</Header>
             <Description>
               What’s important to you when searching for projects
@@ -60,7 +72,7 @@ export default function Preferences({ id, clientApplication }) {
             <Error>{formik.status}</Error>
             <SubmitButton
               mt={4}
-              suffix={<ArrowRight />}
+              prefix={<Search />}
               disabled={formik.values.preferences.length === 0}
               variant="gradient"
               size="l"

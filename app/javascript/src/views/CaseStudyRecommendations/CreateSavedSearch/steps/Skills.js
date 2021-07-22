@@ -3,12 +3,11 @@ import { array, object } from "yup";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
 import { useApolloClient, useMutation } from "@apollo/client";
-import { ArrowRight } from "@styled-icons/feather/ArrowRight";
+import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
 import { Box, Combobox, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import AnimatedCard from "../components/AnimatedCard";
-import StepNumber from "../components/StepNumber";
 import Header from "../components/Header";
 // Queries
 import { GET_SKILLS_CASE_STUDY_SEARCH } from "../queries/useSavedSearch";
@@ -92,7 +91,6 @@ export default function Skills({ caseStudySearch, skills }) {
       >
         {(formik) => (
           <Form>
-            <StepNumber>Step 1 of 3</StepNumber>
             <Header>Skills</Header>
             <Box mb={6}>
               <FormField
