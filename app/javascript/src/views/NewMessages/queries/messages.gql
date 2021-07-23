@@ -1,6 +1,7 @@
 query ConversationMessages($id: ID!) {
   conversation(id: $id) {
     id
+    unreadMessageCount
     participants {
       id
       firstName
