@@ -8,6 +8,7 @@ import React, {
 import { Box, Stack, Button } from "@advisable/donut";
 import { useMessages, useUpdateLastRead } from "./queries";
 import Message from "./Message";
+import MessagesLoading from "./MessagesLoading";
 
 // Poll every 5 minutes as fallback if subscriptions fail
 const POLL = 300000;
@@ -62,6 +63,8 @@ export default function ConversationMessages({ conversation }) {
       },
     });
   };
+
+  if (!data && loading) return <MessagesLoading />;
 
   return (
     <>
