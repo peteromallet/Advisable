@@ -177,9 +177,7 @@ export default function MessageComposer({ conversation }) {
           <span>Send</span>
           <ArrowCircleRight />
         </StyledMessageButton>
-        <div>
-          <AddAttachmentsButton onSelect={addAttachments} />
-        </div>
+        <div>{/* <AddAttachmentsButton onSelect={addAttachments} /> */}</div>
       </Box>
     </StyledMessageComposer>
   );
