@@ -1,4 +1,10 @@
-import React, { useRef, useMemo, useEffect, useLayoutEffect } from "react";
+import React, {
+  useRef,
+  useMemo,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+} from "react";
 import { Box, Stack, Button } from "@advisable/donut";
 import { useMessages, useUpdateLastRead } from "./queries";
 import Message from "./Message";
@@ -29,11 +35,20 @@ export default function ConversationMessages({ conversation }) {
     return messageEdges[messageEdges.length - 1].node.id;
   }, [messageEdges]);
 
-  useEffect(() => {
+  const handleUpdateLastRead = useCallback(() => {
     if (conversation.unreadMessageCount > 0) {
       updateLastRead();
     }
   }, [conversation.unreadMessageCount, updateLastRead]);
+
+  useEffect(() => {
+    if (document.hasFocus()) {
+      handleUpdateLastRead();
+    }
+
+    window.addEventListener("focus", handleUpdateLastRead);
+    return () => window.removeEventListener("focus", handleUpdateLastRead);
+  }, [handleUpdateLastRead]);
 
   useLayoutEffect(() => {
     endOfMessagesRef.current?.scrollIntoView();
