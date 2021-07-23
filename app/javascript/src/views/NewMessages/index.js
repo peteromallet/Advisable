@@ -13,6 +13,9 @@ export default function NewMessages() {
   const { setTheme } = useTheme();
 
   const conversations = data?.conversations?.nodes || [];
+  const orderedConversations = [...conversations].sort((a, b) => {
+    return b.unreadMessageCount - a.unreadMessageCount;
+  });
 
   useLayoutEffect(() => {
     setTheme((t) => ({ ...t, background: "beige" }));
@@ -44,7 +47,7 @@ export default function NewMessages() {
           </Box>
           <SimpleBar style={{ height: "calc(100vh - 132px)" }}>
             <Box paddingX={4}>
-              {conversations.map((conversation) => (
+              {orderedConversations.map((conversation) => (
                 <ConversationLink
                   key={conversation.id}
                   conversation={conversation}

@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useSubscription } from "@apollo/client";
+import { matchPath, useLocation } from "react-router-dom";
 import CONVERSATIONS from "./conversations.gql";
 import MESSAGES from "./messages.gql";
 import SEND_MESSAGE from "./sendMessage.gql";
+import UPDATE_LAST_READ from "./updateLastRead.gql";
 import RECEIVED_MESSAGE from "./receivedMessage.gql";
 
 export function useConversations() {
@@ -39,6 +41,23 @@ export function useSendMessage(conversation) {
   });
 }
 
+export function useUpdateLastRead(conversation) {
+  return useMutation(UPDATE_LAST_READ, {
+    variables: {
+      conversation: conversation.id,
+    },
+    optimisticResponse: {
+      updateLastRead: {
+        __typename: "UpdateLastReadPayload",
+        conversation: {
+          ...conversation,
+          unreadMessageCount: 0,
+        },
+      },
+    },
+  });
+}
+
 async function updateConversationsList(client, message) {
   const existing = client.cache.readQuery({ query: CONVERSATIONS });
   const present = existing.conversations.nodes.find(
@@ -55,7 +74,7 @@ async function updateConversationsList(client, message) {
   });
 }
 
-function updateMessages(client, message) {
+function updateMessages(client, location, message) {
   const existing = client.cache.readQuery({
     query: MESSAGES,
     variables: { id: message.conversation.id },
@@ -63,30 +82,36 @@ function updateMessages(client, message) {
 
   if (!existing) return;
 
-  // const conversationPath = matchPath(location.pathname, {
-  //   path: "/new_messages/:id",
-  // });
+  const conversationPath = matchPath(location.pathname, {
+    path: "/new_messages/:id",
+  });
 
-  // const isViewingConversation =
-  //   conversationPath?.params?.id === message.conversation.id;
+  const isViewingConversation =
+    conversationPath?.params?.id === message.conversation.id;
 
-  client.cache.writeQuery({
-    query: MESSAGES,
-    variables: { id: message.conversation.id },
-    data: {
-      ...existing,
-      conversation: {
-        ...existing.conversation,
-        messages: {
-          ...existing.conversation.messages,
-          edges: [...existing.conversation.messages.edges, { node: message }],
-        },
+  client.cache.modify({
+    id: client.cache.identify(message.conversation),
+    fields: {
+      unreadMessageCount() {
+        return isViewingConversation
+          ? 0
+          : message.conversation.unreadMessageCount;
+      },
+      lastMessage() {
+        return message;
+      },
+      messages(previous) {
+        return {
+          ...previous,
+          edges: [...previous.edges, { node: message }],
+        };
       },
     },
   });
 }
 
 export function useReceivedMessage() {
+  const location = useLocation();
   return useSubscription(RECEIVED_MESSAGE, {
     onSubscriptionData({ client, subscriptionData }) {
       const message = subscriptionData.data?.receivedMessage?.message;
@@ -104,7 +129,7 @@ export function useReceivedMessage() {
       });
 
       updateConversationsList(client, message);
-      updateMessages(client, message);
+      updateMessages(client, location, message);
     },
   });
 }
