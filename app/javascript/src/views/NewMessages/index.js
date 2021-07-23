@@ -59,7 +59,14 @@ export default function NewMessages() {
       </Box>
       <Box width="100%" height="calc(100vh - 60px)">
         <Switch>
-          <Route path="/new_messages/:id" component={Conversation} />
+          {orderedConversations.map((conversation) => (
+            <Route
+              key={conversation.id}
+              path={`/new_messages/${conversation.id}`}
+            >
+              <Conversation conversation={conversation} />
+            </Route>
+          ))}
           {conversations.length > 0 && (
             <Redirect to={`/new_messages/${conversations[0].id}`} />
           )}
