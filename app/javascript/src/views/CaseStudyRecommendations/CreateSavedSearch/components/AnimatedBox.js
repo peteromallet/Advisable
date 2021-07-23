@@ -1,13 +1,13 @@
 import React from "react";
-import { Box, useBreakpoint } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 
 const cardAnimations = {
-  enter: ({ largeScreen, forwards }) => {
+  enter: ({ forwards }) => {
     return {
-      x: largeScreen ? 0 : forwards ? 80 : -80,
-      y: largeScreen ? (forwards ? 80 : -80) : 0,
+      x: forwards ? 80 : -80,
+      y: 0,
       opacity: 0,
     };
   },
@@ -17,10 +17,10 @@ const cardAnimations = {
     zIndex: 1,
     opacity: 1,
   },
-  exit: ({ largeScreen, forwards }) => {
+  exit: ({ forwards }) => {
     return {
-      y: largeScreen ? (forwards ? -80 : 80) : 0,
-      x: largeScreen ? 0 : forwards ? -80 : 80,
+      y: 0,
+      x: forwards ? -80 : 80,
       opacity: 0,
       zIndex: 1,
       transition: { duration: 0.3 },
@@ -30,14 +30,13 @@ const cardAnimations = {
 
 const AnimatedCard = (props) => {
   const history = useHistory();
-  const largeScreen = useBreakpoint("lUp");
   const forwards = history.action === "PUSH";
 
   return (
     <Box
       as={motion.div}
       variants={cardAnimations}
-      custom={{ largeScreen, forwards }}
+      custom={{ forwards }}
       initial="enter"
       animate="center"
       exit="exit"
