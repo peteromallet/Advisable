@@ -59,7 +59,7 @@ export default function Preferences({ id, clientApplication }) {
             </Button>
             <Heading mb={2.5}>Preferences</Heading>
             <Description>
-              What’s important to you when searching for projects
+              What’s important to you when searching for projects?
             </Description>
             <Box mb={6}>
               <FormField
