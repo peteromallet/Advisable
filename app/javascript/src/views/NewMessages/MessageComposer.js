@@ -1,5 +1,6 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { theme, Box, Text, Stack } from "@advisable/donut";
+import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 import { DocumentText } from "@styled-icons/heroicons-solid/DocumentText";
 import { XCircle } from "@styled-icons/heroicons-solid/XCircle";
@@ -76,7 +77,6 @@ const StyledMessageButton = styled(ComposerButton)`
 
 const MIN_ROWS = 2;
 const MAX_ROWS = 10;
-const LINE_HEIGHT = 20;
 
 function Attachment({ attachment, onRemove }) {
   return (
@@ -102,20 +102,12 @@ function Attachment({ attachment, onRemove }) {
 }
 
 export default function MessageComposer({ conversation }) {
-  const textarea = useRef(null);
   const container = useRef(null);
+  const textarea = useRef(null);
   const [send, { loading }] = useSendMessage(conversation);
   const { attachments, clearAttachments, addAttachments, removeAttachment } =
     useAttachments();
   const [value, setValue] = useState("");
-
-  useLayoutEffect(() => {
-    textarea.current.rows = MIN_ROWS;
-    const baseHeight = textarea.current.scrollHeight;
-    const currentRows = Math.floor(baseHeight / LINE_HEIGHT);
-    const rows = currentRows >= MAX_ROWS ? MAX_ROWS : currentRows;
-    textarea.current.rows = rows;
-  }, [value]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -141,11 +133,20 @@ export default function MessageComposer({ conversation }) {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13 && e.shiftKey) {
+      handleSubmit(e);
+    }
+  };
+
   return (
     <StyledMessageComposer onClick={handleClick} ref={container}>
-      <textarea
+      <TextareaAutosize
         value={value}
-        ref={textarea}
+        minRows={MIN_ROWS}
+        maxRows={MAX_ROWS}
+        ref={(tag) => (textarea.current = tag)}
+        onKeyDown={handleKeyDown}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Write a message..."
       />
