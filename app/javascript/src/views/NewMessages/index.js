@@ -14,7 +14,7 @@ export default function NewMessages() {
 
   const conversations = data?.conversations?.nodes || [];
   const orderedConversations = [...conversations].sort((a, b) => {
-    return b.unreadMessageCount - a.unreadMessageCount;
+    return a?.lastMessage?.createdAt < b?.lastMessage?.createdAt;
   });
 
   useLayoutEffect(() => {
