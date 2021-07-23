@@ -4,8 +4,12 @@ import { Avatar, Box, Text } from "@advisable/donut";
 import MessageComposer from "./MessageComposer";
 import commaSeparated from "src/utilities/commaSeparated";
 import ConversationMessages from "./ConversationMessages";
+import { useParams } from "react-router-dom";
 
-export default function Conversation({ conversation }) {
+export default function Conversation({ conversations }) {
+  const { id } = useParams();
+  const conversation = conversations.find((c) => c.id === id);
+
   return (
     <Box height="100%" display="flex" flexDirection="column">
       <Box

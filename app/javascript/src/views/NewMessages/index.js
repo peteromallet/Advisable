@@ -60,11 +60,8 @@ export default function NewMessages() {
       <Box width="100%" height="calc(100vh - 60px)">
         <Switch>
           {orderedConversations.map((conversation) => (
-            <Route
-              key={conversation.id}
-              path={`/new_messages/${conversation.id}`}
-            >
-              <Conversation conversation={conversation} />
+            <Route key={conversation.id} path="/new_messages/:id">
+              <Conversation conversations={conversations} />
             </Route>
           ))}
           {conversations.length > 0 && (
