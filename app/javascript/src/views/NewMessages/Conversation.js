@@ -1,29 +1,50 @@
-import React, { useRef, useLayoutEffect, useMemo } from "react";
+import React, { useRef, useLayoutEffect, useMemo, useEffect } from "react";
 import SimpleBar from "simplebar-react";
 import { Avatar, Box, Text, Stack } from "@advisable/donut";
 import MessageComposer from "./MessageComposer";
 import Message from "./Message";
-import { useMessages } from "./queries";
+import { useMessages, useUpdateLastRead } from "./queries";
 import { useParams } from "react-router-dom";
 import commaSeparated from "src/utilities/commaSeparated";
 
-export default function Conversation() {
-  const { id } = useParams();
+function ConversationMessages({ conversation }) {
   const endOfMessagesRef = useRef(null);
-  const { data, loading } = useMessages({
-    variables: { id },
-  });
-
-  useLayoutEffect(() => {
-    endOfMessagesRef.current?.scrollIntoView();
-  }, [data]);
+  const [updateLastRead] = useUpdateLastRead(conversation);
 
   const messageEdges = useMemo(() => {
-    const edges = data?.conversation?.messages?.edges || [];
+    const edges = conversation?.messages?.edges || [];
     return [...edges].sort((x, y) => {
       return x.node.createdAt - y.node.createdAt;
     });
-  }, [data]);
+  }, [conversation?.messages]);
+
+  useEffect(() => {
+    if (conversation.unreadMessageCount > 0) {
+      updateLastRead();
+    }
+  }, [conversation.unreadMessageCount, updateLastRead]);
+
+  useLayoutEffect(() => {
+    endOfMessagesRef.current?.scrollIntoView();
+  }, [messageEdges]);
+
+  return (
+    <>
+      <Stack paddingY={10} spacing="4xl" divider="neutral200">
+        {messageEdges.map((edge) => (
+          <Message key={edge.node.id} message={edge.node} />
+        ))}
+      </Stack>
+      <div ref={endOfMessagesRef} />
+    </>
+  );
+}
+
+export default function Conversation() {
+  const { id } = useParams();
+  const { data, loading } = useMessages({
+    variables: { id },
+  });
 
   const participants = data?.conversation?.participants || [];
 
@@ -65,14 +86,9 @@ export default function Conversation() {
       <Box height="0" width="100%" flexGrow={1} flexShrink={1}>
         <SimpleBar style={{ height: "100%" }}>
           <Box maxWidth="700px" mx="auto">
-            {!loading && (
-              <Stack paddingY={10} spacing="4xl" divider="neutral200">
-                {messageEdges.map((edge) => (
-                  <Message key={edge.node.id} message={edge.node} />
-                ))}
-              </Stack>
+            {data?.conversation && (
+              <ConversationMessages conversation={data.conversation} />
             )}
-            <div ref={endOfMessagesRef} />
           </Box>
         </SimpleBar>
       </Box>
