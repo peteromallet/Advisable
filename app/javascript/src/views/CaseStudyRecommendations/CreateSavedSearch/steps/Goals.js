@@ -87,6 +87,7 @@ export default function Goals({ caseStudySearch }) {
               <FormField
                 as={CheckboxInput}
                 name="goals"
+                environment="body"
                 options={GOALS}
                 optionsPerRow={2}
               />
