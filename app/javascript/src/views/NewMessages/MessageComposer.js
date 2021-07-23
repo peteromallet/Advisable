@@ -1,13 +1,14 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
-import { theme, Box } from "@advisable/donut";
-import { gql, useMutation } from "@apollo/client";
-// import { CONVERSATION } from "./Conversation";
-// import { MESSAGE_FIELDS } from "./queries";
+import { theme, Box, Text, Stack } from "@advisable/donut";
 import styled from "styled-components";
-import { PaperClip } from "@styled-icons/heroicons-solid/PaperClip";
+import { DocumentText } from "@styled-icons/heroicons-solid/DocumentText";
+import { XCircle } from "@styled-icons/heroicons-solid/XCircle";
 import { ArrowCircleRight } from "@styled-icons/heroicons-solid/ArrowCircleRight";
+import useAttachments from "./useAttachments";
+import AddAttachmentsButton from "./AddAttachmentsButton";
+import { useSendMessage } from "./queries";
 
-const StyledMessageComposer = styled.form`
+const StyledMessageComposer = styled.div`
   width: 100%;
   overflow: hidden;
   background: white;
@@ -73,66 +74,40 @@ const StyledMessageButton = styled(ComposerButton)`
   }
 `;
 
-const StyledAttachmentButton = styled(ComposerButton)`
-  color: ${theme.colors.neutral500};
-  background: transparent;
-
-  &:not(:disabled):hover {
-    color: ${theme.colors.neutral900};
-    background: ${theme.colors.neutral100};
-  }
-
-  &:not(:disabled):active {
-    opacity: 0.8;
-    transform: scale(1.1);
-  }
-`;
-
-// export const SEND_MESSAGE = gql`
-//   ${MESSAGE_FIELDS}
-
-//   mutation sendMessage($input: SendMessageInput!) {
-//     sendMessage(input: $input) {
-//       message {
-//         ...MessageFields
-//         conversation {
-//           id
-//           unreadMessages
-//         }
-//       }
-//     }
-//   }
-// `;
-
 const MIN_ROWS = 2;
 const MAX_ROWS = 10;
 const LINE_HEIGHT = 20;
 
+function Attachment({ attachment, onRemove }) {
+  return (
+    <Box
+      paddingY={3}
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+    >
+      <Box display="flex" alignItems="center">
+        <Box color="neutral500" marginRight={1}>
+          <DocumentText size={20} />
+        </Box>
+        <Text color="neutral800" fontSize="sm">
+          {attachment.file.name}
+        </Text>
+      </Box>
+      <Box>
+        <XCircle size={20} onClick={onRemove} />
+      </Box>
+    </Box>
+  );
+}
+
 export default function MessageComposer({ conversation }) {
   const textarea = useRef(null);
   const container = useRef(null);
+  const [send, { loading }] = useSendMessage(conversation);
+  const { attachments, clearAttachments, addAttachments, removeAttachment } =
+    useAttachments();
   const [value, setValue] = useState("");
-  // const [sendMessage] = useMutation(SEND_MESSAGE, {
-  //   update(cache, response) {
-  //     const message = response.data?.sendMessage?.message;
-
-  //     if (message) {
-  //       cache.writeQuery({
-  //         query: CONVERSATION,
-  //         variables: { id: conversation.id },
-  //         data: {
-  //           conversation: {
-  //             ...conversation,
-  //             messages: {
-  //               ...conversation.messages,
-  //               edges: [...conversation.messages.edges, { node: message }],
-  //             },
-  //           },
-  //         },
-  //       });
-  //     }
-  //   },
-  // });
 
   useLayoutEffect(() => {
     textarea.current.rows = MIN_ROWS;
@@ -144,17 +119,21 @@ export default function MessageComposer({ conversation }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // await sendMessage({
-    //   variables: {
-    //     input: {
-    //       conversation: conversation.id,
-    //       content: value,
-    //     },
-    //   },
-    // });
+    await send({
+      variables: {
+        input: {
+          conversation: conversation.id,
+          content: value,
+        },
+      },
+    });
 
     setValue("");
+    clearAttachments();
   };
+
+  const hasValue = value.trim().length > 0;
+  const hasAttachments = attachments.length > 0;
 
   const handleClick = (e) => {
     if (e.target === container.current) {
@@ -163,17 +142,25 @@ export default function MessageComposer({ conversation }) {
   };
 
   return (
-    <StyledMessageComposer
-      onClick={handleClick}
-      ref={container}
-      onSubmit={handleSubmit}
-    >
+    <StyledMessageComposer onClick={handleClick} ref={container}>
       <textarea
         value={value}
         ref={textarea}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Write a message..."
       />
+
+      {hasAttachments && (
+        <Stack px={4} divider="neutral100">
+          {attachments.map((a) => (
+            <Attachment
+              key={a.id}
+              attachment={a}
+              onRemove={() => removeAttachment(a.id)}
+            />
+          ))}
+        </Stack>
+      )}
 
       <Box
         height="52px"
@@ -182,14 +169,15 @@ export default function MessageComposer({ conversation }) {
         justifyContent="space-between"
         paddingX={2}
       >
-        <StyledMessageButton disabled={value.trim().length === 0}>
+        <StyledMessageButton
+          onClick={handleSubmit}
+          disabled={loading || (!hasValue && !hasAttachments)}
+        >
           <span>Send</span>
           <ArrowCircleRight />
         </StyledMessageButton>
         <div>
-          <StyledAttachmentButton>
-            <PaperClip />
-          </StyledAttachmentButton>
+          <AddAttachmentsButton onSelect={addAttachments} />
         </div>
       </Box>
     </StyledMessageComposer>
