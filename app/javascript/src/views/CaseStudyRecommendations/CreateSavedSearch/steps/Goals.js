@@ -80,7 +80,7 @@ export default function Goals({ caseStudySearch }) {
             </Button>
             <Heading mb={2.5}>Goals</Heading>
             <Description>
-              We’ll recommend you talent & projects that have helped similar
+              We’ll recommend you talent and projects that have helped similar
               companies achieve the goals you select.
             </Description>
             <Box mb={6}>
