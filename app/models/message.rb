@@ -12,9 +12,14 @@ class Message < ApplicationRecord
 
   validates :content, presence: true
 
-  after_create :announce_message
+  before_validation :strip_content
+  after_commit :announce_message, on: :create
 
   private
+
+  def strip_content
+    self.content = content&.strip
+  end
 
   def announce_message
     MessageNotifierJob.set(wait: NOTIFICATION_WAIT_TIME).perform_later(self)
