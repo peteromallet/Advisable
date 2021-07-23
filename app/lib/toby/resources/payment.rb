@@ -15,6 +15,12 @@ module Toby
       attribute :payment_intent_id, Attributes::String, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
+
+      action :mark_as_successful, label: "Mark as successful"
+
+      def self.mark_as_successful(object)
+        object.update(status: "succeeded")
+      end
     end
   end
 end
