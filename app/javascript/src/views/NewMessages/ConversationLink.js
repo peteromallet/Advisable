@@ -1,8 +1,14 @@
 import React from "react";
-import { DateTime } from "luxon";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { theme, Box, Text, Avatar, StyledAvatar } from "@advisable/donut";
+import {
+  theme,
+  Box,
+  Text,
+  Avatar,
+  StyledAvatar,
+  Badge,
+} from "@advisable/donut";
 import commaSeparated from "src/utilities/commaSeparated";
 
 const StyledAvatars = styled.div`
@@ -111,7 +117,7 @@ const StyledAvatars = styled.div`
 `;
 
 const StyledConversationLink = styled(NavLink)`
-  margin: 4px -4px;
+  margin: 8px -4px;
   display: flex;
   align-items: center;
   border-radius: 12px;
@@ -150,25 +156,19 @@ export default function ConversationLink({ conversation }) {
           />
         ))}
       </StyledAvatars>
-      <Box paddingLeft={2} minWidth="0">
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Text fontWeight={500} color="neutral900" marginBottom={1} $truncate>
-            {commaSeparated(others.map((p) => p.firstName))}
-          </Text>
-          {conversation.lastMessage ? (
-            <Box flexShrink={0}>
-              <Text color="neutral500" fontSize="2xs">
-                {DateTime.fromISO(conversation.lastMessage.createdAt).toFormat(
-                  "dd MMM, HH:mma",
-                )}
-              </Text>
-            </Box>
-          ) : null}
-        </Box>
+      <Box width="100%" paddingLeft={2} minWidth="0">
+        <Text fontWeight={500} color="neutral900" marginBottom={1.5} $truncate>
+          {commaSeparated(others.map((p) => p.firstName))}
+        </Text>
         <Text fontSize="sm" color="neutral600" $truncate>
           {conversation.lastMessage?.content || "-"}
         </Text>
       </Box>
+      {conversation.unreadMessageCount > 0 && (
+        <Box flexShrink={0} marginLeft={4}>
+          <Badge>{conversation.unreadMessageCount}</Badge>
+        </Box>
+      )}
     </StyledConversationLink>
   );
 }

@@ -6,19 +6,19 @@ module Types
 
     field :id, ID, null: false, method: :uid
 
-    field :participants, Types::Account.connection_type, null: false
+    field :participants, [Types::Account], null: false
     def participants
       ::Account.where(id: object.participants.select(:account_id))
     end
 
     field :messages, Types::Message.connection_type, null: true
     def messages
-      object.messages.order(created_at: :desc)
+      object.messages.order(created_at: :asc)
     end
 
     field :last_read_at, GraphQL::Types::ISO8601DateTime, null: false
     def last_read_at
-      participant&.last_read_at || Time.zone.now
+      participant&.last_read_at || object.created_at
     end
 
     field :last_message, Types::Message, null: true
