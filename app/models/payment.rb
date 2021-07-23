@@ -62,7 +62,7 @@ class Payment < ApplicationRecord
       project = task.application.project
       deposit_remaining = project.deposit_remaining
       if deposit_remaining >= amount_with_fee
-        update!(deposit: amount_with_fee, payment_method: "Deposit")
+        update!(deposit: amount_with_fee, payment_method: "Deposit", status: "succeeded")
         project.update!(deposit_used: project.deposit_used + amount_with_fee)
       elsif deposit_remaining.positive?
         update!(deposit: deposit_remaining)
