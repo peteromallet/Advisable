@@ -15,7 +15,9 @@ module Types
 
     field :total, Int, null: false
     def total
-      ::Payment.where(id: object.payments.map(&:id)).sum("amount + admin_fee")
+      payments_total = ::Payment.where(id: object.payments.map(&:id)).sum("amount + admin_fee")
+      deposits = ::Payment.where(id: object.payments.map(&:id)).sum("deposit")
+      payments_total - deposits
     end
   end
 end
