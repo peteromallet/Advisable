@@ -10,6 +10,7 @@ import {
 const Input = React.forwardRef(function Input(
   {
     size,
+    environment,
     prefix,
     suffix,
     error,
@@ -57,6 +58,7 @@ const Input = React.forwardRef(function Input(
       marginRight={marginRight}
       marginBottom={marginBottom}
       marginLeft={marginLeft}
+      environment={environment}
     >
       {prefix ? (
         <StyledInputDecoration onClick={handleDecorationClick}>
@@ -82,6 +84,7 @@ Input.defaultProps = {
   onBlur: () => {},
   onFocus: () => {},
   size: "md",
+  environment: "body",
 };
 
 export default Input;
