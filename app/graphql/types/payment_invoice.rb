@@ -12,5 +12,10 @@ module Types
     field :year, String, null: false
     field :month, String, null: false
     field :payments, [Types::Payment], null: false
+
+    field :total, Int, null: false
+    def total
+      ::Payment.where(id: object.payments.map(&:id)).sum("amount + admin_fee")
+    end
   end
 end
