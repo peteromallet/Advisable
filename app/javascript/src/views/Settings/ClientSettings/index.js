@@ -9,8 +9,9 @@ import ClientSettingsNavigation from "./ClientSettingsNavigation";
 import PaymentSettings from "./PaymentSettings";
 import Team from "./Team";
 import Invoices from "./Invoices";
+import OldInvoices from "./StripeInvoices";
 import Password from "./Password";
-import Invoice from "./Invoices/Invoice";
+import Invoice from "./StripeInvoices/Invoice";
 
 // Renders the settings view for a client user type.
 const ClientSettings = ({ match }) => {
@@ -40,7 +41,11 @@ const ClientSettings = ({ match }) => {
             <Route path="/settings/payments" component={PaymentSettings} />
             <Route path="/settings/team" component={Team} />
             <Route path="/settings/invoices" exact component={Invoices} />
-            <Route path="/settings/invoices/:invoice_id" component={Invoice} />
+            <Route
+              path="/settings/invoices/old/:invoice_id"
+              component={Invoice}
+            />
+            <Route path="/settings/invoices/old" component={OldInvoices} />
             <Route path="/settings/password" component={Password} />
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}

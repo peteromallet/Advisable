@@ -1,0 +1,12 @@
+query Invoices {
+  currentCompany {
+    invoices {
+      nodes {
+        id
+        year
+        month
+        total
+      }
+    }
+  }
+}
