@@ -65,6 +65,7 @@ export default function Preferences({ id, clientApplication }) {
               <FormField
                 as={CheckboxInput}
                 name="preferences"
+                environment="body"
                 options={preferencesOptions}
                 optionsPerRow={1}
               />

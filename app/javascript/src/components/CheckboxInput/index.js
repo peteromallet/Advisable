@@ -1,8 +1,45 @@
 import React from "react";
 import { darken } from "polished";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { variant } from "styled-system";
 import { theme, Box } from "@advisable/donut";
 import FormField from "src/components/FormField";
+
+const environmentWrapper = variant({
+  prop: "environment",
+  variants: {
+    body: {
+      backgroundColor: "#EAECF0",
+      "&:hover": {
+        background: darken(0.04, "#EAECF0"),
+      },
+      "&[data-selected='true']": {
+        borderColor: darken(0.06, "#EAECF0"),
+      },
+    },
+    card: {
+      backgroundColor: "#f5f5f8",
+      "&:hover": {
+        background: darken(0.04, "#f5f5f8"),
+      },
+      "&[data-selected='true']": {
+        borderColor: darken(0.06, "#f5f5f8"),
+      },
+    },
+  },
+});
+
+const environmentCheckbox = variant({
+  props: "environment",
+  variants: {
+    body: {
+      backgroundColor: "#EAECF0",
+    },
+    card: {
+      backgroundColor: "#f5f5f8",
+    },
+  },
+});
 
 const StyledCheckbox = styled.div`
   top: 50%;
@@ -11,23 +48,19 @@ const StyledCheckbox = styled.div`
   height: 20px;
   display: flex;
   margin-top: -10px;
-  background: white;
   border-radius: 50%;
   position: absolute;
   align-items: center;
   justify-content: center;
   color: ${theme.colors.neutral400};
   border: 2px solid ${theme.colors.neutral400};
-`;
 
-const StyledCheckboxWrapper_Selected = css`
-  border-color: ${theme.colors.neutral100};
-
-  ${StyledCheckbox} {
+  &[data-selected="true"] {
     color: white;
     border-color: ${theme.colors.blue800};
     background-color: ${theme.colors.blue800};
   }
+  ${environmentCheckbox}
 `;
 
 const StyledCheckboxWrapper = styled.label`
@@ -39,13 +72,8 @@ const StyledCheckboxWrapper = styled.label`
   border-radius: 12px;
   padding-left: 52px;
   display: block;
-  background-color: #f5f5f8;
   color: ${theme.colors.neutral900};
   border: 2px solid transparent;
-
-  &:hover {
-    background: ${darken(0.04, "#f5f5f8")};
-  }
 
   input {
     top: 0;
@@ -56,14 +84,17 @@ const StyledCheckboxWrapper = styled.label`
     position: absolute;
   }
 
-  ${(p) => p.$selected && StyledCheckboxWrapper_Selected};
+  ${environmentWrapper}
 `;
 
-function Checkbox({ children, ...rest }) {
+function Checkbox({ children, environment, ...rest }) {
   return (
-    <StyledCheckboxWrapper $selected={rest.checked}>
+    <StyledCheckboxWrapper
+      data-selected={rest.checked}
+      environment={environment}
+    >
       <input type="checkbox" {...rest} />
-      <StyledCheckbox>
+      <StyledCheckbox environment={environment} data-selected={rest.checked}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="10"
@@ -84,11 +115,12 @@ function Checkbox({ children, ...rest }) {
   );
 }
 
-export default function CheckboxInput({
+function CheckboxInput({
   name,
   options,
   optionsPerRow,
   alignWidth,
+  environment,
 }) {
   return (
     <Box
@@ -105,6 +137,7 @@ export default function CheckboxInput({
           type="checkbox"
           value={option?.value || option}
           as={Checkbox}
+          environment={environment}
           name={name}
           aria-label={option?.label || option}
         >
@@ -114,3 +147,9 @@ export default function CheckboxInput({
     </Box>
   );
 }
+
+CheckboxInput.defaultProps = {
+  environment: "card",
+};
+
+export default CheckboxInput;
