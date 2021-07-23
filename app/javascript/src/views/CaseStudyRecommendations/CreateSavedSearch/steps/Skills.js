@@ -31,9 +31,12 @@ export default function Skills({
   const [create] = useMutation(CREATE_CASE_STUDY_SEARCH);
   const [update] = useMutation(UPDATE_CASE_STUDY_SEARCH);
   const [popularSkills, setPopularSkills] = useState(
-    popularCaseStudySkills.filter(
-      (ps) => !caseStudySearch.skills.find((s) => s.skill.value === ps.value),
-    ),
+    caseStudySearch
+      ? popularCaseStudySkills.filter(
+          (ps) =>
+            !caseStudySearch.skills.find((s) => s.skill.value === ps.value),
+        )
+      : popularCaseStudySkills,
   );
 
   const history = useHistory();
