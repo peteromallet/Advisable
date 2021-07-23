@@ -8,7 +8,7 @@ module Mutations
     argument :content, String, required: true
     argument :conversation, ID, required: true
 
-    field :conversation, Types::Conversation, null: true
+    field :message, Types::Message, null: true
 
     def authorized?(conversation:, **_args)
       conversation = Conversation.find_by!(uid: conversation)
@@ -20,10 +20,10 @@ module Mutations
 
     def resolve(conversation:, content:, **args)
       conversation = Conversation.find_by!(uid: conversation)
-      conversation.messages.create!(content: content, author: current_account)
+      message = conversation.messages.create!(content: content, author: current_account)
       conversation.attachments.attach!(args[:attachments]) if args[:attachments]
       conversation.mark_as_read_for!(current_account)
-      {conversation: conversation}
+      {message: message}
     end
   end
 end

@@ -1,0 +1,21 @@
+query Conversations {
+  conversations {
+    nodes {
+      id
+      unreadMessageCount
+      participants {
+        id
+        firstName
+        lastName
+        name
+        avatar
+        isViewer
+      }
+      lastMessage {
+        id
+        content
+        createdAt
+      }
+    }
+  }
+}
