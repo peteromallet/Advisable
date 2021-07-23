@@ -18,8 +18,7 @@ module Mutations
 
     def resolve(conversation:)
       conversation = Conversation.find_by!(uid: conversation)
-      participant = conversation.participants.find_by(account_id: current_account_id)
-      participant&.update!(last_read_at: Time.zone.now)
+      conversation.mark_as_read_for!(current_account)
       {conversation: conversation}
     end
   end
