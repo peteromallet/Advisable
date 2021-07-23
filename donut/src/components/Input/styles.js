@@ -149,13 +149,24 @@ const size = variant({
   },
 });
 
+const environment = variant({
+  prop: "environment",
+  variants: {
+    body: {
+      background: "#EAECF0",
+    },
+    card: {
+      background: "#eff0f3",
+    },
+  },
+});
+
 export const StyledInput = styled.div`
   width: 100%;
   display: flex;
   box-sizing: border-box;
   border: 2px solid transparent;
   border-radius: ${BORDER_RADIUS}px;
-  background: #eff0f3;
   ${(props) => props.$error && StyledInput_Error};
   ${(props) => props.$disabled && StyledInput_Disabled};
 
@@ -164,6 +175,7 @@ export const StyledInput = styled.div`
     border-color: ${theme.colors.blue900};
   }
 
-  ${size}
+  ${environment};
+  ${size};
   ${margin};
 `;
