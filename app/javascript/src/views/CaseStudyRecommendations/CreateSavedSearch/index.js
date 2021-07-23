@@ -8,7 +8,7 @@ import {
 } from "react-router";
 import { Redirect } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { Container, useBreakpoint } from "@advisable/donut";
+import { Box, useBreakpoint } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import NotFound from "src/views/NotFound";
 // Steps
@@ -56,7 +56,7 @@ export default function CreateSavedSearch() {
   }
 
   return (
-    <Container paddingY={10} paddingX={[4, 4, 6, 8]} maxWidth="750px">
+    <Box>
       <AnimatePresence
         initial={false}
         custom={{ largeScreen, forwards }}
@@ -81,6 +81,6 @@ export default function CreateSavedSearch() {
           </Route>
         </Switch>
       </AnimatePresence>
-    </Container>
+    </Box>
   );
 }
