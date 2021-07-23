@@ -14,7 +14,10 @@ export default function NewMessages() {
 
   const conversations = data?.conversations?.nodes || [];
   const orderedConversations = [...conversations].sort((a, b) => {
-    return a?.lastMessage?.createdAt < b?.lastMessage?.createdAt;
+    return new Date(b.lastMessage?.createdAt) >
+      new Date(a.lastMessage?.createdAt)
+      ? 1
+      : -1;
   });
 
   useLayoutEffect(() => {
