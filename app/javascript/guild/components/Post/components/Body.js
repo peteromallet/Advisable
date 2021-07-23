@@ -1,6 +1,6 @@
 import React from "react";
 import { Pin } from "@styled-icons/ionicons-solid/Pin";
-import { Box, Text, Notice } from "@advisable/donut";
+import { Box, Text, Notice, Link } from "@advisable/donut";
 import Topics from "./Topics";
 import Markdown from "@guild/components/Markdown";
 import PostActions from "@guild/components/PostActions";
