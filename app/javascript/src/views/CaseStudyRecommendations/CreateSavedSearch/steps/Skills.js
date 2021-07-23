@@ -10,7 +10,7 @@ import { Box, Text, Combobox, Error, Tag, theme } from "@advisable/donut";
 import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import AnimatedCard from "../components/AnimatedCard";
+import AnimatedBox from "../components/AnimatedBox";
 import Description from "../components/Description";
 // Queries
 import { GET_SKILLS_CASE_STUDY_SEARCH } from "../queries/useSavedSearch";
@@ -105,7 +105,7 @@ export default function Skills({
   };
 
   return (
-    <AnimatedCard>
+    <AnimatedBox>
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -169,6 +169,6 @@ export default function Skills({
           </Form>
         )}
       </Formik>
-    </AnimatedCard>
+    </AnimatedBox>
   );
 }

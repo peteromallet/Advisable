@@ -10,7 +10,7 @@ import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import CheckboxInput from "src/components/CheckboxInput";
 import SubmitButton from "src/components/SubmitButton";
-import AnimatedCard from "../components/AnimatedCard";
+import AnimatedBox from "../components/AnimatedBox";
 import Description from "../components/Description";
 // Queries
 import UPDATE_CASE_STUDY_SEARCH from "../queries/updateCaseStudySearch.gql";
@@ -65,7 +65,7 @@ export default function Goals({ caseStudySearch }) {
   };
 
   return (
-    <AnimatedCard>
+    <AnimatedBox>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {(formik) => (
           <Form>
@@ -105,6 +105,6 @@ export default function Goals({ caseStudySearch }) {
           </Form>
         )}
       </Formik>
-    </AnimatedCard>
+    </AnimatedBox>
   );
 }
