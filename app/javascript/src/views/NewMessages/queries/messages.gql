@@ -1,0 +1,24 @@
+query ConversationMessages($id: ID!) {
+  conversation(id: $id) {
+    id
+    participants {
+      id
+      firstName
+      avatar
+    }
+    messages {
+      edges {
+        node {
+          id
+          content
+          createdAt
+          author {
+            id
+            name
+            avatar
+          }
+        }
+      }
+    }
+  }
+}
