@@ -1,5 +1,6 @@
 import React from "react";
 import { Avatar, Box, Text } from "@advisable/donut";
+import renderLineBreaks from "src/utilities/renderLineBreaks";
 
 export default function Message({ message }) {
   return (
@@ -32,7 +33,7 @@ export default function Message({ message }) {
           </Text>
         </Box>
         <Text autoLink color="neutral800" lineHeight="24px">
-          {message.content}
+          {renderLineBreaks(message.content)}
         </Text>
       </Box>
     </Box>
