@@ -11,6 +11,7 @@ import Heading from "src/components/Heading";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import AnimatedCard from "../components/AnimatedCard";
+import Description from "../components/Description";
 // Queries
 import { GET_SKILLS_CASE_STUDY_SEARCH } from "../queries/useSavedSearch";
 import CREATE_CASE_STUDY_SEARCH from "../queries/createCaseStudySearch.gql";
@@ -110,7 +111,10 @@ export default function Skills({
         {(formik) => (
           <Form>
             <Heading mb={2.5}>What skills are you looking for?</Heading>
-            <Box mb={6}>
+            <Description mb={8}>
+              Select the skills you are interested in below
+            </Description>
+            <Box mb={9}>
               <FormField
                 isRequired
                 as={Combobox}
@@ -128,11 +132,10 @@ export default function Skills({
                 options={skills}
               />
             </Box>
-            <Error>{formik.status}</Error>
-            <Text fontSize="l" color="neutral500" mb={2}>
+            <Text fontSize="l" color="neutral500" mb={1}>
               Popular skills in the SaaS industry
             </Text>
-            <Box paddingTop={2}>
+            <Box paddingTop={2} mb={4}>
               {popularSkills.map((s) => (
                 <Tag
                   size="s"
@@ -150,6 +153,7 @@ export default function Skills({
                 </Tag>
               ))}
             </Box>
+            <Error>{formik.status}</Error>
             <SubmitButton
               mt={4}
               suffix={<ArrowRight />}
