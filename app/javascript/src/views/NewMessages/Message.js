@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar, Box, Text } from "@advisable/donut";
 import renderLineBreaks from "src/utilities/renderLineBreaks";
+import { DateTime } from "luxon";
 
 export default function Message({ message }) {
   return (
@@ -29,7 +30,7 @@ export default function Message({ message }) {
             marginBottom={2}
             color="neutral400"
           >
-            20:32
+            {DateTime.fromISO(message.createdAt).toFormat("HH:MM")}
           </Text>
         </Box>
         <Text autoLink color="neutral800" lineHeight="24px">
