@@ -122,6 +122,7 @@ export default function Skills({
                   formik.setFieldValue("skills", s);
                   updatePopularSkills(s);
                 }}
+                environment="body"
                 placeholder="Search for skills..."
                 prefix={<Search fill={theme.colors.neutral400} />}
                 options={skills}
