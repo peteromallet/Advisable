@@ -1,0 +1,14 @@
+mutation SendMessage($input: SendMessageInput!) {
+  sendMessage(input: $input) {
+    message {
+      id
+      content
+      createdAt
+      author {
+        id
+        name
+        avatar
+      }
+    }
+  }
+}

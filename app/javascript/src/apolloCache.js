@@ -42,11 +42,11 @@ const createCache = () => {
           },
         },
       },
-      // CaseStudySearch: {
-      //   fields: {
-      //     results: relayStylePagination(),
-      //   },
-      // },
+      Conversation: {
+        fields: {
+          messages: relayStylePagination(),
+        },
+      },
       Specialist: {
         fields: {
           guildPosts: relayStylePagination(),

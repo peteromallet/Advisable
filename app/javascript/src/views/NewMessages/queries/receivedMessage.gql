@@ -1,0 +1,17 @@
+subscription ReceivedMessage {
+  receivedMessage {
+    message {
+      id
+      content
+      createdAt
+      author {
+        id
+        name
+        avatar
+      }
+      conversation {
+        id
+      }
+    }
+  }
+}
