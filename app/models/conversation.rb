@@ -6,6 +6,11 @@ class Conversation < ApplicationRecord
 
   has_many :messages, dependent: :destroy
   has_many :participants, class_name: "ConversationParticipant", dependent: :destroy
+
+  def mark_as_read_for!(account)
+    participant = participants.find_by(account_id: account.id)
+    participant&.update!(last_read_at: Time.zone.now)
+  end
 end
 
 # == Schema Information
