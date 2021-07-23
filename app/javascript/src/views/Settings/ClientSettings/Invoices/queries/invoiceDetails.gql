@@ -19,6 +19,7 @@ query InvoiceDetails($month: String!) {
         id
         amount
         adminFee
+        deposit
         createdAt
         task {
           id
