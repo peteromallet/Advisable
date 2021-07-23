@@ -87,6 +87,7 @@ function updateMessages(client, location, message) {
   });
 
   const isViewingConversation =
+    document.hasFocus() &&
     conversationPath?.params?.id === message.conversation.id;
 
   client.cache.modify({
@@ -115,19 +116,6 @@ export function useReceivedMessage() {
   return useSubscription(RECEIVED_MESSAGE, {
     onSubscriptionData({ client, subscriptionData }) {
       const message = subscriptionData.data?.receivedMessage?.message;
-
-      client.cache.modify({
-        id: client.cache.identify(message.conversation),
-        fields: {
-          lastMessage() {
-            return message;
-          },
-          unreadMessageCount(existing) {
-            return existing + 1;
-          },
-        },
-      });
-
       updateConversationsList(client, message);
       updateMessages(client, location, message);
     },
