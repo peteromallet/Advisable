@@ -6,7 +6,7 @@ module Types
 
     field :id, ID, null: false
     def id
-      "#{current_company.id}-#{object.year}-#{object.month}"
+      "#{object.year}-#{object.month}-01"
     end
 
     field :year, String, null: false
