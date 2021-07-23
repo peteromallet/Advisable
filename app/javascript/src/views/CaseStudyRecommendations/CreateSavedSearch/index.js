@@ -56,7 +56,7 @@ export default function CreateSavedSearch() {
   }
 
   return (
-    <Box>
+    <Box px={12}>
       <AnimatePresence
         initial={false}
         custom={{ largeScreen, forwards }}
