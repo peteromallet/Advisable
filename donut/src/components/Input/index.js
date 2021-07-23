@@ -84,7 +84,7 @@ Input.defaultProps = {
   onBlur: () => {},
   onFocus: () => {},
   size: "md",
-  environment: "body",
+  environment: "card",
 };
 
 export default Input;
