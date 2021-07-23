@@ -104,13 +104,16 @@ function Attachment({ attachment, onRemove }) {
 export default function MessageComposer({ conversation }) {
   const container = useRef(null);
   const textarea = useRef(null);
-  const [send, { loading }] = useSendMessage(conversation);
+  const [send] = useSendMessage(conversation);
   const { attachments, clearAttachments, addAttachments, removeAttachment } =
     useAttachments();
   const [value, setValue] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setValue("");
+    clearAttachments();
+
     await send({
       variables: {
         input: {
@@ -119,9 +122,6 @@ export default function MessageComposer({ conversation }) {
         },
       },
     });
-
-    setValue("");
-    clearAttachments();
   };
 
   const hasValue = value.trim().length > 0;
@@ -134,7 +134,7 @@ export default function MessageComposer({ conversation }) {
   };
 
   const handleKeyDown = (e) => {
-    if (e.keyCode === 13 && e.shiftKey) {
+    if (e.keyCode === 13 && e.metaKey) {
       handleSubmit(e);
     }
   };
@@ -172,7 +172,7 @@ export default function MessageComposer({ conversation }) {
       >
         <StyledMessageButton
           onClick={handleSubmit}
-          disabled={loading || (!hasValue && !hasAttachments)}
+          disabled={!hasValue && !hasAttachments}
         >
           <span>Send</span>
           <ArrowCircleRight />
