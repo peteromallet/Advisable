@@ -8,6 +8,7 @@ module Types
     field :status, String, null: true
     field :amount, Int, null: false
     field :admin_fee, Int, null: false
+    field :deposit, Int, null: true
 
     field :payment_intent, PaymentIntentType, null: false
     def payment_intent
