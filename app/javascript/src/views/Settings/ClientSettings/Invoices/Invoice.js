@@ -118,6 +118,16 @@ export default function Invoice() {
                 <Text fontSize="xs" fontWeight={500} color="neutral600">
                   +{currency(payment.adminFee)} Fee
                 </Text>
+                {Boolean(payment.deposit) && (
+                  <Text
+                    fontSize="xs"
+                    marginTop={1}
+                    fontWeight={500}
+                    color="neutral600"
+                  >
+                    - {currency(payment.deposit)} Deposit
+                  </Text>
+                )}
               </Box>
             </Box>
           ))}
