@@ -16,5 +16,9 @@ FactoryBot.define do
     trait :editor do
       permissions { ["editor"] }
     end
+
+    trait :admin do
+      permissions { ["admin"] }
+    end
   end
 end

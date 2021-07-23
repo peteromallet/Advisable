@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
 class BasePolicy
-  attr_reader :current_user, :record
+  attr_reader :current_user, :record, :current_account
 
-  def initialize(current_user, record)
+  def initialize(current_user, record, current_account = nil)
     @current_user = current_user
     @record = record
+    @current_account = current_account
   end
 
   # TODO: Stop using these 3 directly - make them private ▼
   def admin?
-    current_user&.account&.admin?
+    current_account&.admin? || current_user&.account&.admin?
   end
 
   def team_manager?
