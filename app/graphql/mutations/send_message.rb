@@ -22,6 +22,10 @@ module Mutations
       conversation = Conversation.find_by!(uid: conversation)
       conversation.messages.create!(content: content, author: current_account)
       conversation.attachments.attach!(args[:attachments]) if args[:attachments]
+
+      participant = conversation.participants.find_by(account_id: current_account_id)
+      participant&.update!(last_read_at: Time.zone.now)
+
       {conversation: conversation}
     end
   end

@@ -35,13 +35,17 @@ RSpec.describe Mutations::SendMessage do
     create(:conversation_participant, account: current_user.account, conversation: conversation) if current_user
   end
 
-  it "creates the message" do
+  it "creates the message and updates last_read_at" do
+    expect(conversation.participants.first.last_read_at).to be_nil
+
     response = AdvisableSchema.execute(query, context: context)
     messages = response["data"]["sendMessage"]["conversation"]["messages"]["nodes"]
     contents = messages.map { |message| message["content"] }
     authors = messages.map { |message| message["author"]["id"] }
+
     expect(contents).to include("This is the message content.")
     expect(authors).to include(current_user.account.uid)
+    expect(conversation.participants.first.last_read_at).not_to be_nil
   end
 
   context "when the current user is not logged in" do
@@ -64,16 +68,19 @@ RSpec.describe Mutations::SendMessage do
     end
   end
 
-  context "when the logged in account is an aadmin" do
+  context "when the logged in account is an admin" do
     let(:current_account) { create(:account, :admin) }
 
-    it "creates the message" do
+    it "creates the message but does not change last_read_at" do
+      expect(conversation.participants.first.last_read_at).to be_nil
+
       response = AdvisableSchema.execute(query, context: context)
       messages = response["data"]["sendMessage"]["conversation"]["messages"]["nodes"]
       contents = messages.map { |message| message["content"] }
       authors = messages.map { |message| message["author"]["id"] }
       expect(contents).to include("This is the message content.")
       expect(authors).to include(current_account.uid)
+      expect(conversation.participants.first.last_read_at).to be_nil
     end
   end
 end
