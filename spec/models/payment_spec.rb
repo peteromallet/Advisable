@@ -34,9 +34,10 @@ RSpec.describe Payment, type: :model do
     context "when deposit is bigger than amount" do
       let(:project) { create(:project, deposit: 2000) }
 
-      it "updates deposit_used, sets payment method to deposit and doesn't charge stripe" do
+      it "updates deposit_used, sets status to succeeded, payment method to deposit and doesn't charge stripe" do
         expect(Stripe::PaymentIntent).not_to receive(:create)
         payment.create_in_stripe!
+        expect(payment.status).to eq("succeeded")
         expect(payment.payment_method).to eq("Deposit")
         expect(project.deposit_used).to eq(payment.amount_with_fee)
       end
@@ -44,9 +45,10 @@ RSpec.describe Payment, type: :model do
       context "when a bit of deposit has been used already" do
         let(:project) { create(:project, deposit: 2000, deposit_used: 100) }
 
-        it "updates deposit_used, sets payment method to deposit and doesn't charge stripe" do
+        it "updates deposit_used, sets status to succeeded, payment method to deposit and doesn't charge stripe" do
           expect(Stripe::PaymentIntent).not_to receive(:create)
           payment.create_in_stripe!
+          expect(payment.status).to eq("succeeded")
           expect(payment.payment_method).to eq("Deposit")
           expect(project.deposit_used).to eq(payment.amount_with_fee + 100)
         end
