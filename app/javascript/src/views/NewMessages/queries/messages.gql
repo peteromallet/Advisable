@@ -1,8 +1,12 @@
-query ConversationMessages($id: ID!) {
+query ConversationMessages($id: ID!, $cursor: String) {
   conversation(id: $id) {
     id
     unreadMessageCount
-    messages {
+    messages(last: 50, before: $cursor) {
+      pageInfo {
+        hasPreviousPage
+        startCursor
+      }
       edges {
         node {
           id
