@@ -40,12 +40,12 @@ const ClientSettings = ({ match }) => {
           <Switch>
             <Route path="/settings/payments" component={PaymentSettings} />
             <Route path="/settings/team" component={Team} />
-            <Route path="/settings/invoices" exact component={Invoices} />
             <Route
               path="/settings/invoices/old/:invoice_id"
               component={Invoice}
             />
             <Route path="/settings/invoices/old" component={OldInvoices} />
+            <Route path="/settings/invoices" component={Invoices} />
             <Route path="/settings/password" component={Password} />
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}

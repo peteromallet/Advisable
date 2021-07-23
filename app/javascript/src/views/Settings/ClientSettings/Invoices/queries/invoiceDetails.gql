@@ -1,0 +1,35 @@
+query InvoiceDetails($month: String!) {
+  currentCompany {
+    id
+    name
+    address {
+      line1
+      line2
+      city
+      state
+      country
+      postcode
+    }
+    invoice(month: $month) {
+      id
+      year
+      month
+      total
+      payments {
+        id
+        amount
+        adminFee
+        createdAt
+        task {
+          id
+          name
+        }
+        specialist {
+          id
+          name
+          avatar
+        }
+      }
+    }
+  }
+}
