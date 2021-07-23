@@ -1,0 +1,8 @@
+mutation UpdateLastRead($conversation: ID!) {
+  updateLastRead(input: { conversation: $conversation }) {
+    conversation {
+      id
+      unreadMessageCount
+    }
+  }
+}
