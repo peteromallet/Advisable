@@ -118,13 +118,13 @@ export default function MessageComposer({ conversation }) {
       variables: {
         input: {
           conversation: conversation.id,
-          content: value,
+          content: value.trim().replace(/^\s+|\s+$/g, ""),
         },
       },
     });
   };
 
-  const hasValue = value.trim().length > 0;
+  const hasValue = value.trim().replace(/^\s+|\s+$/g, "").length > 0;
   const hasAttachments = attachments.length > 0;
 
   const handleClick = (e) => {
