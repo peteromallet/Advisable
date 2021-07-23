@@ -62,6 +62,7 @@ gem "pry-rails"
 # gem "pry-doc" Does not support Ruby 3 yet
 gem "pry-byebug", github: "deivid-rodriguez/pry-byebug" # Uses pry 0.14
 gem "ruby-progressbar", require: false
+gem "app_profiler"
 
 group :development, :test do
   gem "parallel_tests"
