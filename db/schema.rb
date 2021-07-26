@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_21_105726) do
+ActiveRecord::Schema.define(version: 2021_07_26_074400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -282,6 +282,7 @@ ActiveRecord::Schema.define(version: 2021_07_21_105726) do
     t.jsonb "results"
     t.boolean "company_recomendation"
     t.datetime "finalized_at"
+    t.jsonb "preferences"
     t.index ["uid"], name: "index_case_study_searches_on_uid", unique: true
     t.index ["user_id"], name: "index_case_study_searches_on_user_id"
   end

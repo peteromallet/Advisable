@@ -3,6 +3,7 @@ mutation finalizeCaseStudySearch($input: FinalizeCaseStudySearchInput!) {
     search {
       id
       isFinalized
+      preferences
     }
   }
 }

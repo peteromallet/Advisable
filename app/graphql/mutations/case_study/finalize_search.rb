@@ -7,10 +7,11 @@ module Mutations
       graphql_name "FinalizeCaseStudySearch"
 
       argument :id, ID, required: true
+      argument :preferences, [String], required: false
 
       field :search, Types::CaseStudy::Search, null: true
 
-      def authorized?(id:)
+      def authorized?(id:, **_)
         requires_client!
 
         search = ::CaseStudy::Search.find_by!(uid: id)
@@ -20,9 +21,9 @@ module Mutations
         ApiError.not_authorized("You do not have permission to finalize this search")
       end
 
-      def resolve(id:)
+      def resolve(id:, preferences:)
         search = ::CaseStudy::Search.find_by!(uid: id)
-        search.update(finalized_at: Time.zone.now)
+        search.update(finalized_at: Time.zone.now, preferences: preferences)
 
         {search: search}
       end

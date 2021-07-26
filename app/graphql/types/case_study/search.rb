@@ -16,16 +16,22 @@ module Types
       field :name, String, null: false
       field :company_recomendation, Boolean, null: true
       field :skills, [Skill], null: true
+      field :goals, [String], null: true
+      field :results, Article.connection_type, null: true
+
       field :primary_skill, Skill, null: true
       def primary_skill
         object.skills.find_by(primary: true)
       end
-      field :goals, [String], null: true
-      field :results, Article.connection_type, null: true
 
       field :is_finalized, Boolean, null: false
       def is_finalized
         object.finalized_at.present?
+      end
+
+      field :preferences, [String], null: false
+      def preferences
+        object.preferences || []
       end
     end
   end
