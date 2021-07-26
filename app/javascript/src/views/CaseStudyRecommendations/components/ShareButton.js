@@ -15,11 +15,11 @@ import {
   Text,
   Textarea,
 } from "@advisable/donut";
-import { useTeamMembers } from "../Settings/ClientSettings/Team/queries";
+import { useTeamMembers } from "../../Settings/ClientSettings/Team/queries";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
 import InviteTeamMember from "src/components/InviteTeamMember";
-import { useShareArticle } from "./queries";
+import { useShareArticle } from "../queries";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
 
