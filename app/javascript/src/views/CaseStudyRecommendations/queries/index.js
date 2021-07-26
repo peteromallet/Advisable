@@ -80,6 +80,15 @@ export function useFavorite({ article }, opts) {
         article: article.id,
       },
     },
+    optimisticResponse: {
+      assignCaseStudyArticle: {
+        __typename: "AssignCaseStudyArticlePayload",
+        article: {
+          ...article,
+          isSaved: isSaved ? "unsave" : "save",
+        },
+      },
+    },
     update(cache, response) {
       if (response.errors) return;
 
