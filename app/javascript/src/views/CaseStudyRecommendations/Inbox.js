@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { Box, Text, Button } from "@advisable/donut";
+import { Box, Text, Button, Heading } from "@advisable/donut";
 import CaseStudiesList from "./CaseStudiesList";
 import { useParams } from "react-router-dom";
 import { useCaseStudySearch } from "./queries";
@@ -77,14 +77,9 @@ export default function ExploreInbox() {
       <Box>
         <Box display="flex" alignItems="center">
           <Box flex={1}>
-            <Text
-              fontSize="5xl"
-              fontWeight={600}
-              letterSpacing="-0.04rem"
-              mb={2}
-            >
+            <Heading size="5xl" mb={2}>
               {search.name}
-            </Text>
+            </Heading>
             {search?.companyRecomendation ? (
               <Text size="lg" color="neutral800" lineHeight="24px">
                 These are pre-made recommendations from a diverse range of

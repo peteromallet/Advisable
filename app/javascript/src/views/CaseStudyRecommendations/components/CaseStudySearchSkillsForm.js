@@ -4,8 +4,15 @@ import { Formik, Form } from "formik";
 import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
 import { Search } from "@styled-icons/heroicons-solid/Search";
 import { Plus } from "@styled-icons/heroicons-solid/Plus";
-import { Box, Text, Combobox, Error, Tag, theme } from "@advisable/donut";
-import Heading from "src/components/Heading";
+import {
+  Box,
+  Text,
+  Combobox,
+  Error,
+  Tag,
+  Heading,
+  theme,
+} from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import AnimatedBox from "./AnimatedBox";
@@ -53,7 +60,9 @@ export default function CaseStudySearchSkillsForm({ initialValues, onSubmit }) {
       >
         {(formik) => (
           <Form>
-            <Heading mb={2.5}>What skills are you looking for?</Heading>
+            <Heading size="5xl" mb={2.5}>
+              What skills are you looking for?
+            </Heading>
             <Description mb={8}>
               Select the skills you are interested in below
             </Description>

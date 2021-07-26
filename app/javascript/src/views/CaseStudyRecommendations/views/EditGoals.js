@@ -4,8 +4,7 @@ import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
 import { ArrowLeft } from "@styled-icons/heroicons-solid/ArrowLeft";
-import { Button, Box, Error } from "@advisable/donut";
-import Heading from "src/components/Heading";
+import { Button, Box, Error, Heading } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import CheckboxInput from "src/components/CheckboxInput";
 import SubmitButton from "src/components/SubmitButton";
@@ -79,7 +78,9 @@ export default function EditGoals({ caseStudySearch }) {
                 Back
               </Button>
             )}
-            <Heading mb={2.5}>Goals</Heading>
+            <Heading size="5xl" mb={2.5}>
+              Goals
+            </Heading>
             <Description>
               We’ll recommend you talent and projects that have helped similar
               companies achieve the goals you select.
