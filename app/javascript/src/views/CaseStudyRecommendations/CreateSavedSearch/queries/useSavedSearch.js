@@ -46,6 +46,7 @@ export const GET_SKILLS_CASE_STUDY_SEARCH = gql`
       id
       name
       goals
+      preferences
       skills {
         id
         skill {

@@ -51,6 +51,7 @@ end
 #  finalized_at          :datetime
 #  goals                 :jsonb
 #  name                  :string
+#  preferences           :jsonb
 #  results               :jsonb
 #  uid                   :string           not null
 #  created_at            :datetime         not null

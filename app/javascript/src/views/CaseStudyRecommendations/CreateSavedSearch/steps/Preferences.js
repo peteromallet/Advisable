@@ -14,16 +14,14 @@ import AnimatedBox from "../components/AnimatedBox";
 // Queries
 import FINALIZE_CASE_STUDY_SEARCH from "../queries/finalizeCaseStudySearch.gql";
 
-export default function Preferences({ id, clientApplication }) {
+export default function Preferences({ id, caseStudySearch }) {
   const history = useHistory();
-  const [finalize] = useMutation(FINALIZE_CASE_STUDY_SEARCH, {
-    variables: { input: { id } },
-  });
+  const [finalize] = useMutation(FINALIZE_CASE_STUDY_SEARCH);
 
   const preferencesOptions = [
-    `The company is ${clientApplication.businessType}`,
-    `The company is ${clientApplication.companyType}`,
-    `The company is in the ${clientApplication.industry?.name} space`,
+    `The company is ${caseStudySearch.businessType}`,
+    `The company is ${caseStudySearch.companyType}`,
+    `The company is in the ${caseStudySearch.industry?.name} space`,
     // `The company is in [Location]`, // We don't know a location of a client
     `The freelancer is available right now`,
     `The cost of this project is within our overall budget`,
@@ -31,11 +29,21 @@ export default function Preferences({ id, clientApplication }) {
   ];
 
   const initialValues = {
-    preferences: [],
+    preferences: caseStudySearch.preferences,
   };
 
-  const handleSubmit = async () => {
-    await finalize();
+  const handleSubmit = async (values, { setStatus }) => {
+    setStatus(null);
+
+    const res = await finalize({
+      variables: { input: { id, ...values } },
+    });
+
+    if (res.errors) {
+      setStatus("Something went wrong, please try again");
+      return;
+    }
+
     history.push(`/explore/${id}`);
   };
 
