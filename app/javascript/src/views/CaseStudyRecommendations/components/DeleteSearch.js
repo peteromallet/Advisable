@@ -1,7 +1,7 @@
 import React from "react";
 import { Trash } from "@styled-icons/heroicons-solid/Trash";
 import { Modal, Text, Button, useModal } from "@advisable/donut";
-import { useDeleteSearch } from "./queries";
+import { useDeleteSearch } from "../queries";
 
 export default function DeleteSearch({ search, onDelete = () => {} }) {
   const modal = useModal();

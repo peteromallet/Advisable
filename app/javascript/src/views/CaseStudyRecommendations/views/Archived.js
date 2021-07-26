@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
-import CaseStudiesList from "./CaseStudiesList";
-import CardsSkeleton from "./CardsSkeleton";
-import { useArchivedArticles } from "./queries";
+import CaseStudiesList from "../components/CaseStudiesList";
+import CardsSkeleton from "../components/CardsSkeleton";
+import { useArchivedArticles } from "../queries";
 import inbox from "src/illustrations/box.svg";
 
 function ArchivedEmpty() {

@@ -12,7 +12,7 @@ import {
   useModal,
 } from "@advisable/donut";
 import { Archive } from "@styled-icons/heroicons-solid/Archive";
-import { useArchive } from "./queries";
+import { useArchive } from "../queries";
 import { Form, Formik, Field } from "formik";
 import SubmitButton from "src/components/SubmitButton";
 

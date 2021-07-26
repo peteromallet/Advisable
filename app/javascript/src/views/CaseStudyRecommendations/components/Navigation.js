@@ -10,7 +10,7 @@ import {
   StyledNavigationItem,
   StyledNavigationItemCount,
   StyledNewSearch,
-} from "./styles";
+} from "../styles";
 
 function NavItem({ icon, children, count, ...props }) {
   return (
@@ -48,7 +48,7 @@ export default function ExploreNavigation({ data }) {
           key={s.id}
           icon={Search}
           to={`/explore/${s.id}`}
-          count={s.results.nodes.length}
+          count={s.isFinalized ? s.results.nodes.length : 0}
         >
           {s.name}
         </NavItem>

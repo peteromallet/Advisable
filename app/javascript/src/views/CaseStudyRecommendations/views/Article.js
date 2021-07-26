@@ -14,10 +14,10 @@ import {
   theme,
 } from "@advisable/donut";
 import CaseStudyContent from "src/components/CaseStudyContent";
-import { useCaseStudy } from "./queries";
+import { useCaseStudy } from "../queries";
 import Sticky from "react-stickynode";
-import ActionBar from "./ActionBar";
-import { isNotFound } from "../NotFound";
+import ActionBar from "../components/ActionBar";
+import { isNotFound } from "../../NotFound";
 import NotFound from "./NotFound";
 
 const StyledName = styled.a`

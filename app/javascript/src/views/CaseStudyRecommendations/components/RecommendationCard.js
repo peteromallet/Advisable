@@ -6,7 +6,7 @@ import {
   StyledRecommendation,
   StyledRecommendationTitle,
   StyledRecommendationCardAvatar,
-} from "./styles";
+} from "../styles";
 
 export default function RecommendationCard({
   caseStudy,

@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Text, Stack } from "@advisable/donut";
-import CardsSkeleton from "./CardsSkeleton";
-import { useSharedArticles } from "./queries";
-import CaseStudyCard from "./RecommendationCard";
+import CardsSkeleton from "../components/CardsSkeleton";
+import { useSharedArticles } from "../queries";
+import CaseStudyCard from "../components/RecommendationCard";
 import inbox from "src/illustrations/empty_inbox.svg";
 
 function SharedEmpty() {

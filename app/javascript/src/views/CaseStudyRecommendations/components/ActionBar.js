@@ -1,7 +1,7 @@
 import React from "react";
 import queryString from "query-string";
 import styled from "styled-components";
-import CaseStudyActions from "../CaseStudyRecommendations/CaseStudyActions";
+import CaseStudyActions from "./CaseStudyActions";
 import { useLocation } from "react-router-dom";
 
 const StyledActionBarContainer = styled.div`

@@ -2,6 +2,7 @@ query ExplorerSidebar {
   caseStudySearches {
     id
     name
+    isFinalized
     companyRecomendation
     results {
       nodes {
