@@ -18,7 +18,7 @@ export default function DeleteSearch({ search, onDelete = () => {} }) {
       <Button size="xs" variant="subtle" onClick={modal.show}>
         <Trash size={16} />
       </Button>
-      <Modal modal={modal}>
+      <Modal modal={modal} label="Delete search">
         <Text fontSize="4xl" fontWeight={600} mb={2}>
           Are you sure?
         </Text>
