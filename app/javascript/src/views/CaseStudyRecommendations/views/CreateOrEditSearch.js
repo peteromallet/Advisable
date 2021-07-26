@@ -38,6 +38,12 @@ export default function CreateOrEditSearch() {
   const forwards = history.action === "PUSH";
   const caseStudySearch = data?.caseStudySearch;
 
+  // Fix animation glitch on create case study search
+  let animationLocation = location;
+  if (location.pathname.includes("skills")) {
+    animationLocation = { ...location, pathname: "/explore/new" };
+  }
+
   return (
     <Box px={4}>
       <AnimatePresence
@@ -45,7 +51,7 @@ export default function CreateOrEditSearch() {
         custom={{ largeScreen, forwards }}
         exitBeforeEnter
       >
-        <Switch location={location} key={location.pathname}>
+        <Switch location={animationLocation} key={animationLocation.pathname}>
           <Route path="/explore/new">
             <CreateSearch
               skills={formData?.data?.skills}
