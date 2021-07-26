@@ -1,3 +1,5 @@
+#import "./articleFields.gql"
+
 mutation createCaseStudySearch($input: CreateCaseStudySearchInput!) {
   createCaseStudySearch(input: $input) {
     search {
@@ -13,14 +15,9 @@ mutation createCaseStudySearch($input: CreateCaseStudySearchInput!) {
           label: name
         }
       }
-      results {
+      results(first: 12) {
         nodes {
-          id
-          specialist {
-            id
-            name
-            avatar
-          }
+          ...ArticleFields
         }
       }
     }

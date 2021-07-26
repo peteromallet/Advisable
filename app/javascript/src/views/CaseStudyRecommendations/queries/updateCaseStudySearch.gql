@@ -9,8 +9,7 @@ mutation updateCaseStudySearch($input: UpdateCaseStudySearchInput!) {
         id
         skill {
           id
-          value: name
-          label: name
+          name
         }
       }
     }

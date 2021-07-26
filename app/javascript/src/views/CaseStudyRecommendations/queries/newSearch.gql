@@ -1,0 +1,12 @@
+query NewSearch {
+  skills {
+    id
+    value: name
+    label: name
+  }
+  popularCaseStudySkills {
+    id
+    value: name
+    label: name
+  }
+}

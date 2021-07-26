@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
-import { useMutation } from "@apollo/client";
 import { ArrowLeft } from "@styled-icons/heroicons-solid/ArrowLeft";
 import { Search } from "@styled-icons/heroicons-solid/Search";
 import { Box, Error, Button } from "@advisable/donut";
@@ -12,31 +11,55 @@ import CheckboxInput from "src/components/CheckboxInput";
 import Description from "../components/Description";
 import AnimatedBox from "../components/AnimatedBox";
 // Queries
-import FINALIZE_CASE_STUDY_SEARCH from "../queries/finalizeCaseStudySearch.gql";
+import { useFinalizeCaseStudySearch, usePreferences } from "../queries";
 
-export default function Preferences({ id, caseStudySearch }) {
-  const history = useHistory();
-  const [finalize] = useMutation(FINALIZE_CASE_STUDY_SEARCH);
-
-  const preferencesOptions = [
-    `The company is ${caseStudySearch.businessType}`,
-    `The company is ${caseStudySearch.companyType}`,
-    `The company is in the ${caseStudySearch.industry?.name} space`,
-    // `The company is in [Location]`, // We don't know a location of a client
+function buildPreferences(data) {
+  let preferences = [
     `The freelancer is available right now`,
     `The cost of this project is within our overall budget`,
     `The freelancer’s hourly rate is within a specific amount`,
   ];
 
+  if (data?.currentCompany?.industry) {
+    preferences = [
+      `The company is in the ${data.currentCompany.industry.name} space`,
+      ...preferences,
+    ];
+  }
+
+  if (data?.currentCompany?.kind) {
+    preferences = [
+      `The company is ${data.currentCompany.kind}`,
+      ...preferences,
+    ];
+  }
+
+  if (data?.currentCompany?.businessType) {
+    preferences = [
+      `The company is ${data.currentCompany.businessType}`,
+      ...preferences,
+    ];
+  }
+
+  return preferences;
+}
+
+export default function EditPreferences({ caseStudySearch }) {
+  const history = useHistory();
+  const [finalize] = useFinalizeCaseStudySearch();
+  const { data, loading } = usePreferences();
+
   const initialValues = {
-    preferences: caseStudySearch.preferences,
+    preferences: caseStudySearch.preferences || [],
   };
+
+  if (loading) return <>loading...</>;
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
 
     const res = await finalize({
-      variables: { input: { id, ...values } },
+      variables: { input: { id: caseStudySearch.id, ...values } },
     });
 
     if (res.errors) {
@@ -44,11 +67,7 @@ export default function Preferences({ id, caseStudySearch }) {
       return;
     }
 
-    history.push(`/explore/${id}`);
-  };
-
-  const handleBack = () => {
-    history.push(`/explore/${id}/goals`);
+    history.push(`/explore/${caseStudySearch.id}`);
   };
 
   return (
@@ -56,15 +75,17 @@ export default function Preferences({ id, caseStudySearch }) {
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(formik) => (
           <Form>
-            <Button
-              onClick={handleBack}
-              type="button"
-              variant="minimal"
-              size="xs"
-              prefix={<ArrowLeft />}
-            >
-              Back
-            </Button>
+            {history.length > 1 && (
+              <Button
+                onClick={history.goBack}
+                type="button"
+                variant="minimal"
+                size="xs"
+                prefix={<ArrowLeft />}
+              >
+                Back
+              </Button>
+            )}
             <Heading mb={2.5}>Preferences</Heading>
             <Description>
               What’s important to you when searching for projects?
@@ -74,7 +95,7 @@ export default function Preferences({ id, caseStudySearch }) {
                 as={CheckboxInput}
                 name="preferences"
                 environment="body"
-                options={preferencesOptions}
+                options={buildPreferences(data)}
                 optionsPerRow={1}
               />
             </Box>

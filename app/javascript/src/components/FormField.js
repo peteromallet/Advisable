@@ -139,8 +139,8 @@ const FormField = ({
 
 FormField.propTypes = {
   label: PropTypes.string,
-  prefix: PropTypes.string,
-  suffix: PropTypes.string,
+  prefix: PropTypes.element,
+  suffix: PropTypes.element,
   description: PropTypes.string,
   widget: PropTypes.func,
 };

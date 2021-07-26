@@ -7,7 +7,7 @@ import Article from "./Article";
 import Archived from "./Archived";
 import Favorites from "./Favorites";
 import Navigation from "./Navigation";
-import CreateSearch from "./CreateSavedSearch";
+import CreateOrEditSearch from "./views/CreateOrEditSearch";
 import { useCaseStudySearches } from "./queries";
 import View from "src/components/View";
 import ViewLoading from "./ViewLoading";
@@ -50,18 +50,14 @@ export default function CaseStudyExplorer() {
                     <ViewLoading />
                   ) : (
                     <Switch>
-                      <Route
-                        path={[
-                          "/explore/new/:id",
-                          "/explore/new",
-                          "/explore/:id/:step",
-                        ]}
-                        component={CreateSearch}
-                      />
                       <Route path="/explore/shared" component={Shared} />
                       <Route path="/explore/favorites" component={Favorites} />
                       <Route path="/explore/archived" component={Archived} />
                       <Route path="/explore/articles/:id" component={Article} />
+                      <Route
+                        path={["/explore/new", "/explore/:id/:step"]}
+                        component={CreateOrEditSearch}
+                      />
                       <Route path="/explore/:id" component={Inbox} exact />
                       {isLargeScreen && defaultSearch && (
                         <Redirect to={`/explore/${defaultSearch.id}`} />
