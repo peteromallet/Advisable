@@ -26,6 +26,10 @@ module CaseStudy
       Article.where(id: attributes["results"]).where.not(id: user.archived_articles.pluck(:article_id))
     end
 
+    def refresh_results
+      self.results = (results + results_query(limit: RESULT_LIMIT).pluck(:id)).uniq
+    end
+
     def results_query(limit: nil, exclude: nil)
       query = Article.distinct
       query = query.limit(limit) if limit.present?

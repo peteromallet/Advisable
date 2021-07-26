@@ -23,7 +23,13 @@ module Mutations
 
       def resolve(id:, preferences:)
         search = ::CaseStudy::Search.find_by!(uid: id)
-        search.update(finalized_at: Time.zone.now, preferences: preferences)
+        search.finalized_at = Time.zone.now
+        search.preferences = preferences
+        search.refresh_results
+
+        current_account_responsible_for do
+          search.save
+        end
 
         {search: search}
       end
