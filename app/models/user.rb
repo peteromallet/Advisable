@@ -99,6 +99,8 @@ class User < ApplicationRecord
   end
 
   def create_company_recomendation_search
+    return if searches.exists?(company_recomendation: true)
+
     ::CaseStudy::Search.create!(
       user: self,
       business_type: company.kind,
