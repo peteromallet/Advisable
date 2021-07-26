@@ -1,0 +1,16 @@
+query CaseStudySearchFormDetails($id: ID!) {
+  caseStudySearch(id: $id) {
+    id
+    name
+    goals
+    preferences
+    isFinalized
+    skills {
+      id
+      skill {
+        id
+        name
+      }
+    }
+  }
+}

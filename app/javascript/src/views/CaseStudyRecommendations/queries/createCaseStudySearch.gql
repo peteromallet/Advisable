@@ -1,23 +1,24 @@
-#import "./articleFields.gql"
-
 mutation createCaseStudySearch($input: CreateCaseStudySearchInput!) {
   createCaseStudySearch(input: $input) {
     search {
       id
       name
       goals
+      preferences
+      isFinalized
       companyRecomendation
       skills {
         id
         skill {
           id
+          name
           value: name
           label: name
         }
       }
       results(first: 12) {
         nodes {
-          ...ArticleFields
+          id
         }
       }
     }

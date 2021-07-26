@@ -14,18 +14,24 @@ import CreateSearch from "../views/CreateSearch";
 import EditSkills from "../views/EditSkills";
 import EditGoals from "../views/EditGoals";
 import EditPreferences from "../views/EditPreferences";
-import { useCaseStudySearch } from "../queries";
+import {
+  useCaseStudySearchFormDetails,
+  useCreateOrEditSearch,
+} from "../queries";
 
 export default function CreateOrEditSearch() {
   const { id } = useParams();
   const history = useHistory();
   const location = useLocation();
   const largeScreen = useBreakpoint("lUp");
-  const { data, loading, error } = useCaseStudySearch({
+  const formData = useCreateOrEditSearch();
+  const { data, loading, error } = useCaseStudySearchFormDetails({
     skip: !id,
     variables: { id },
   });
-  if (loading) return <Loading />;
+
+  const isLoading = loading || formData.loading;
+  if (isLoading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
   if (error) return <>Something went wrong, please refresh the page</>;
 
@@ -41,16 +47,26 @@ export default function CreateOrEditSearch() {
       >
         <Switch location={location} key={location.pathname}>
           <Route path="/explore/new">
-            <CreateSearch />
+            <CreateSearch
+              skills={formData?.data?.skills}
+              popularSkills={formData?.data?.popularCaseStudySkills}
+            />
           </Route>
           <Route path="/explore/:id/skills">
-            <EditSkills caseStudySearch={caseStudySearch} />
+            <EditSkills
+              skills={formData?.data?.skills}
+              popularSkills={formData?.data?.popularCaseStudySkills}
+              caseStudySearch={caseStudySearch}
+            />
           </Route>
           <Route path="/explore/:id/goals">
             <EditGoals caseStudySearch={caseStudySearch} />
           </Route>
           <Route path="/explore/:id/preferences">
-            <EditPreferences caseStudySearch={caseStudySearch} />
+            <EditPreferences
+              currentCompany={formData?.data?.currentCompany}
+              caseStudySearch={caseStudySearch}
+            />
           </Route>
         </Switch>
       </AnimatePresence>

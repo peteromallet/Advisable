@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import CaseStudySearchSkillsForm from "../components/CaseStudySearchSkillsForm";
 import { useUpdateCaseStudySearch } from "../queries";
 
-export default function EditSkills({ caseStudySearch }) {
+export default function EditSkills({ skills, popularSkills, caseStudySearch }) {
   const { id } = useParams();
   const history = useHistory();
   const [update] = useUpdateCaseStudySearch();
@@ -38,6 +38,8 @@ export default function EditSkills({ caseStudySearch }) {
 
   return (
     <CaseStudySearchSkillsForm
+      skills={skills}
+      popularSkills={popularSkills}
       initialValues={{ skills: initialSkills }}
       onSubmit={handleSubmit}
     />

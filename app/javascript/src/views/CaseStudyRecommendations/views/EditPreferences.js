@@ -10,32 +10,29 @@ import CheckboxInput from "src/components/CheckboxInput";
 import Description from "../components/Description";
 import AnimatedBox from "../components/AnimatedBox";
 // Queries
-import { useFinalizeCaseStudySearch, usePreferences } from "../queries";
+import { useFinalizeCaseStudySearch } from "../queries";
 
-function buildPreferences(data) {
+function buildPreferences(currentCompany) {
   let preferences = [
     `The freelancer is available right now`,
     `The cost of this project is within our overall budget`,
     `The freelancer’s hourly rate is within a specific amount`,
   ];
 
-  if (data?.currentCompany?.industry) {
+  if (currentCompany?.industry) {
     preferences = [
-      `The company is in the ${data.currentCompany.industry.name} space`,
+      `The company is in the ${currentCompany.industry.name} space`,
       ...preferences,
     ];
   }
 
-  if (data?.currentCompany?.kind) {
-    preferences = [
-      `The company is ${data.currentCompany.kind}`,
-      ...preferences,
-    ];
+  if (currentCompany?.kind) {
+    preferences = [`The company is ${currentCompany.kind}`, ...preferences];
   }
 
-  if (data?.currentCompany?.businessType) {
+  if (currentCompany?.businessType) {
     preferences = [
-      `The company is ${data.currentCompany.businessType}`,
+      `The company is ${currentCompany.businessType}`,
       ...preferences,
     ];
   }
@@ -43,16 +40,13 @@ function buildPreferences(data) {
   return preferences;
 }
 
-export default function EditPreferences({ caseStudySearch }) {
+export default function EditPreferences({ currentCompany, caseStudySearch }) {
   const history = useHistory();
   const [finalize] = useFinalizeCaseStudySearch();
-  const { data, loading } = usePreferences();
 
   const initialValues = {
     preferences: caseStudySearch.preferences || [],
   };
-
-  if (loading) return <>loading...</>;
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
@@ -96,7 +90,7 @@ export default function EditPreferences({ caseStudySearch }) {
                 as={CheckboxInput}
                 name="preferences"
                 environment="body"
-                options={buildPreferences(data)}
+                options={buildPreferences(currentCompany)}
                 optionsPerRow={1}
               />
             </Box>
