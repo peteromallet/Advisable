@@ -8,7 +8,6 @@ import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import CheckboxInput from "src/components/CheckboxInput";
 import Description from "../components/Description";
-import AnimatedBox from "../components/AnimatedBox";
 // Queries
 import { useFinalizeCaseStudySearch } from "../queries";
 
@@ -64,49 +63,47 @@ export default function EditPreferences({ currentCompany, caseStudySearch }) {
   };
 
   return (
-    <AnimatedBox>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {(formik) => (
-          <Form>
-            {history.length > 1 && (
-              <Button
-                onClick={history.goBack}
-                type="button"
-                variant="minimal"
-                size="xs"
-                prefix={<ArrowLeft />}
-              >
-                Back
-              </Button>
-            )}
-            <Heading size="5xl" mb={2.5}>
-              Preferences
-            </Heading>
-            <Description>
-              What’s important to you when searching for projects?
-            </Description>
-            <Box mb={6}>
-              <FormField
-                as={CheckboxInput}
-                name="preferences"
-                environment="body"
-                options={buildPreferences(currentCompany)}
-                optionsPerRow={1}
-              />
-            </Box>
-            <Error>{formik.status}</Error>
-            <SubmitButton
-              mt={4}
-              prefix={<Search />}
-              disabled={formik.values.preferences.length === 0}
-              variant="gradient"
-              size="l"
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      {(formik) => (
+        <Form>
+          {history.length > 1 && (
+            <Button
+              onClick={history.goBack}
+              type="button"
+              variant="minimal"
+              size="xs"
+              prefix={<ArrowLeft />}
             >
-              Search for Case Studies
-            </SubmitButton>
-          </Form>
-        )}
-      </Formik>
-    </AnimatedBox>
+              Back
+            </Button>
+          )}
+          <Heading size="5xl" mb={2.5}>
+            Preferences
+          </Heading>
+          <Description>
+            What’s important to you when searching for projects?
+          </Description>
+          <Box mb={6}>
+            <FormField
+              as={CheckboxInput}
+              name="preferences"
+              environment="body"
+              options={buildPreferences(currentCompany)}
+              optionsPerRow={1}
+            />
+          </Box>
+          <Error>{formik.status}</Error>
+          <SubmitButton
+            mt={4}
+            prefix={<Search />}
+            disabled={formik.values.preferences.length === 0}
+            variant="gradient"
+            size="l"
+          >
+            Search for Case Studies
+          </SubmitButton>
+        </Form>
+      )}
+    </Formik>
   );
 }
