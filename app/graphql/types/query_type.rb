@@ -388,6 +388,7 @@ module Types
     field :case_study_searches, [Types::CaseStudy::Search], null: true, max_page_size: 20
 
     def case_study_searches
+      current_user.create_company_recomendation_search
       current_user.searches
     end
 
