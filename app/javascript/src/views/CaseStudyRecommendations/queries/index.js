@@ -8,7 +8,12 @@ import SHARED from "./sharedArticles.gql";
 import MEMBERS from "./members.gql";
 import DELETE from "./deleteSearch.gql";
 import SHARE from "./shareArticle.gql";
+import NEW_SEARCH from "./newSearch.gql";
 import CASE_STUDY from "./getCaseStudy.gql";
+import FINALIZE_SEARCH from "./finalizeCaseStudySEarch.gql";
+import CREATE_SEARCH from "./createCaseStudySearch.gql";
+import UPDATE_SEARCH from "./updateCaseStudySearch.gql";
+import PREFERENCES_INFO from "./getPreferences.gql";
 
 export function useCaseStudy(id) {
   return useQuery(CASE_STUDY, {
@@ -164,6 +169,32 @@ export function useDeleteSearch(search) {
   });
 }
 
+export function useCreateCaseStudySearch() {
+  return useMutation(CREATE_SEARCH, {
+    update(cache, { data }) {
+      const previous = cache.readQuery({ query: SIDEBAR });
+      cache.writeQuery({
+        query: SIDEBAR,
+        data: {
+          ...previous,
+          caseStudySearches: [
+            ...previous.caseStudySearches,
+            { ...data.createCaseStudySearch.search },
+          ],
+        },
+      });
+    },
+  });
+}
+
+export function useUpdateCaseStudySearch(opts) {
+  return useMutation(UPDATE_SEARCH, opts);
+}
+
+export function useFinalizeCaseStudySearch(opts) {
+  return useMutation(FINALIZE_SEARCH, opts);
+}
+
 export function useArchived(props, opts) {
   return useQuery(ARCHIVED, props, opts);
 }
@@ -190,4 +221,12 @@ export function useSharedArticles(opts) {
 
 export function useTeamMembers(opts) {
   return useQuery(MEMBERS, opts);
+}
+
+export function useNewSearch(opts) {
+  return useQuery(NEW_SEARCH, opts);
+}
+
+export function usePreferences(opts) {
+  return useQuery(PREFERENCES_INFO, opts);
 }

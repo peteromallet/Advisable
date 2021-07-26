@@ -69,7 +69,7 @@ export default function ExploreInbox() {
   };
 
   if (!search.isFinalized) {
-    return <Redirect to={`/explore/${id}/continue`} />;
+    return <Redirect to={`/explore/${id}/skills`} />;
   }
 
   return (

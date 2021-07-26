@@ -1,0 +1,11 @@
+query CaseStudySearchPreferences {
+  currentCompany {
+    id
+    kind
+    businessType
+    industry {
+      id
+      name
+    }
+  }
+}

@@ -1,7 +1,6 @@
 import React from "react";
 import { object, array } from "yup";
 import { Formik, Form } from "formik";
-import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
 import { ArrowLeft } from "@styled-icons/heroicons-solid/ArrowLeft";
@@ -13,7 +12,7 @@ import SubmitButton from "src/components/SubmitButton";
 import AnimatedBox from "../components/AnimatedBox";
 import Description from "../components/Description";
 // Queries
-import UPDATE_CASE_STUDY_SEARCH from "../queries/updateCaseStudySearch.gql";
+import { useUpdateCaseStudySearch } from "../queries";
 
 export const validationSchema = object().shape({
   goals: array().min(1, "Please add at least one goal").required(),
@@ -32,9 +31,9 @@ const GOALS = [
   "Improve Efficiency",
 ];
 
-export default function Goals({ caseStudySearch }) {
+export default function EditGoals({ caseStudySearch }) {
+  const [update] = useUpdateCaseStudySearch();
   const history = useHistory();
-  const [update] = useMutation(UPDATE_CASE_STUDY_SEARCH);
 
   const initialValues = {
     goals: caseStudySearch.goals || [],
@@ -61,7 +60,7 @@ export default function Goals({ caseStudySearch }) {
   };
 
   const handleBack = () => {
-    history.push(`/explore/${caseStudySearch.id}/skills`);
+    history.goBack();
   };
 
   return (
@@ -69,15 +68,17 @@ export default function Goals({ caseStudySearch }) {
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {(formik) => (
           <Form>
-            <Button
-              onClick={handleBack}
-              type="button"
-              variant="minimal"
-              size="xs"
-              prefix={<ArrowLeft />}
-            >
-              Back
-            </Button>
+            {history.length > 1 && (
+              <Button
+                onClick={handleBack}
+                type="button"
+                variant="minimal"
+                size="xs"
+                prefix={<ArrowLeft />}
+              >
+                Back
+              </Button>
+            )}
             <Heading mb={2.5}>Goals</Heading>
             <Description>
               We’ll recommend you talent and projects that have helped similar
