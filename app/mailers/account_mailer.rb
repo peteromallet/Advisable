@@ -12,4 +12,10 @@ class AccountMailer < ApplicationMailer
       f.html { body }
     end
   end
+
+  def notify_of_new_messages(account, messages)
+    @account = account
+    @messages = messages
+    mail(to: @account.email, subject: "New messages in conversation")
+  end
 end
