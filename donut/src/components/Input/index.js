@@ -10,7 +10,7 @@ import {
 const Input = React.forwardRef(function Input(
   {
     size,
-    environment,
+    inputColor,
     prefix,
     suffix,
     error,
@@ -58,7 +58,7 @@ const Input = React.forwardRef(function Input(
       marginRight={marginRight}
       marginBottom={marginBottom}
       marginLeft={marginLeft}
-      environment={environment}
+      inputColor={inputColor}
     >
       {prefix ? (
         <StyledInputDecoration onClick={handleDecorationClick}>
@@ -84,7 +84,7 @@ Input.defaultProps = {
   onBlur: () => {},
   onFocus: () => {},
   size: "md",
-  environment: "card",
+  inputColor: "gray",
 };
 
 export default Input;

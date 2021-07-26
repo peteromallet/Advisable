@@ -149,14 +149,29 @@ const size = variant({
   },
 });
 
-const environment = variant({
-  prop: "environment",
+const inputColor = variant({
+  prop: "inputColor",
   variants: {
-    body: {
-      background: "#EAECF0",
+    white: {
+      background: "white",
+      boxShadow: `0 4px 8px -4px ${rgba(theme.colors.neutral900, 0.2)}`,
+
+      "&[data-focused='true']": {
+        background: "white",
+        borderColor: "blue900",
+      },
+
+      [`${StyledInputControl}::placeholder`]: {
+        color: "neutral500",
+      },
     },
-    card: {
+    gray: {
       background: "#eff0f3",
+
+      "&[data-focused='true']": {
+        background: "#eff0f3",
+        borderColor: "blue900",
+      },
     },
   },
 });
@@ -170,12 +185,7 @@ export const StyledInput = styled.div`
   ${(props) => props.$error && StyledInput_Error};
   ${(props) => props.$disabled && StyledInput_Disabled};
 
-  &[data-focused="true"] {
-    background-color: #eff0f3;
-    border-color: ${theme.colors.blue900};
-  }
-
-  ${environment};
+  ${inputColor};
   ${size};
   ${margin};
 `;

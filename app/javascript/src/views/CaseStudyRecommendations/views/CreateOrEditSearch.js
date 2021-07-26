@@ -39,7 +39,7 @@ export default function CreateOrEditSearch() {
   const caseStudySearch = data?.caseStudySearch;
 
   return (
-    <Box px={12}>
+    <Box px={4}>
       <AnimatePresence
         initial={false}
         custom={{ largeScreen, forwards }}

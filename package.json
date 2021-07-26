@@ -28,6 +28,7 @@
     "@styled-icons/heroicons-solid": "^10.34.0",
     "@styled-icons/ionicons-outline": "^10.34.0",
     "@styled-icons/ionicons-solid": "^10.34.0",
+    "@styled-system/css": "^5.1.5",
     "babel-loader": "^8.2.2",
     "babel-plugin-styled-components": "^1.13.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
