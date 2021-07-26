@@ -197,8 +197,21 @@ export function useUpdateCaseStudySearch(opts) {
   return useMutation(UPDATE_SEARCH, opts);
 }
 
-export function useFinalizeCaseStudySearch(opts) {
-  return useMutation(FINALIZE_SEARCH, opts);
+export function useFinalizeCaseStudySearch() {
+  return useMutation(FINALIZE_SEARCH, {
+    update(cache, response) {
+      const search = response.data.finalizeCaseStudySearch.search;
+
+      cache.modify({
+        id: cache.identify(search),
+        fields: {
+          results() {
+            return search.results;
+          },
+        },
+      });
+    },
+  });
 }
 
 export function useArchived(props, opts) {

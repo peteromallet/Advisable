@@ -46,6 +46,7 @@ module Mutations
             end
           end
 
+          search.refresh_results
           search.save
         end
 

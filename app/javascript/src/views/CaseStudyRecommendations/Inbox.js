@@ -52,6 +52,7 @@ export default function ExploreInbox() {
   const history = useHistory();
   const { data, loading, error } = useCaseStudySearch({
     variables: { id },
+    fetchPolicy: "network-only",
   });
 
   if (loading) return <ViewLoading />;
