@@ -17,7 +17,6 @@ import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import AnimatedBox from "./AnimatedBox";
 import Description from "./Description";
-import { useNewSearch } from "../queries";
 
 export const validationSchema = object().shape({
   skills: array().min(1, "Please select at least one skill").required(),
@@ -46,11 +45,12 @@ function PopularSkills({ popularSkills, formik }) {
   ));
 }
 
-export default function CaseStudySearchSkillsForm({ initialValues, onSubmit }) {
-  const { data, loading } = useNewSearch();
-
-  if (loading) return <>loading...</>;
-
+export default function CaseStudySearchSkillsForm({
+  skills,
+  popularSkills,
+  initialValues,
+  onSubmit,
+}) {
   return (
     <AnimatedBox>
       <Formik
@@ -80,17 +80,14 @@ export default function CaseStudySearchSkillsForm({ initialValues, onSubmit }) {
                 environment="body"
                 placeholder="Search for skills..."
                 prefix={<Search fill={theme.colors.neutral400} />}
-                options={data.skills}
+                options={skills}
               />
             </Box>
             <Text fontSize="l" color="neutral500" mb={1}>
               Popular skills in the SaaS industry
             </Text>
             <Box paddingTop={2} mb={4}>
-              <PopularSkills
-                popularSkills={data.popularCaseStudySkills}
-                formik={formik}
-              />
+              <PopularSkills popularSkills={popularSkills} formik={formik} />
             </Box>
             <Error>{formik.status}</Error>
             <SubmitButton
