@@ -163,7 +163,7 @@ export default function ArchiveButton(props) {
 
   return (
     <>
-      <Modal modal={modal}>
+      <Modal modal={modal} label="Archive article">
         <ArchiveForm modal={modal} {...props} />
       </Modal>
       <StyledArchiveButton onClick={handleClick}>

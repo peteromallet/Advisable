@@ -202,7 +202,7 @@ export default function ShareButton({ article }) {
 
   return (
     <>
-      <Modal modal={modal}>
+      <Modal modal={modal} label="Share article">
         <ShareCaseStudyModal article={article} modal={modal} />
       </Modal>
       <StyledShareButton as={DialogDisclosure} {...modal}>

@@ -96,15 +96,16 @@ export default function CaseStudySearch() {
           </Box>
           {!search?.companyRecomendation && (
             <Box paddingLeft={8}>
-              <Button
-                as={Link}
-                size="xs"
-                variant="subtle"
-                marginRight={1}
-                to={`/explore/${search.id}/skills`}
-              >
-                <Pencil size={16} />
-              </Button>
+              <Box display="inline" marginRight={1}>
+                <Button
+                  as={Link}
+                  size="xs"
+                  variant="subtle"
+                  to={`/explore/${search.id}/skills`}
+                >
+                  <Pencil size={16} />
+                </Button>
+              </Box>
               <DeleteSearch search={search} onDelete={afterDelete} />
             </Box>
           )}
