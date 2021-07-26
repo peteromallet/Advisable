@@ -3,8 +3,7 @@ import { Formik, Form } from "formik";
 import { useHistory } from "react-router-dom";
 import { ArrowLeft } from "@styled-icons/heroicons-solid/ArrowLeft";
 import { Search } from "@styled-icons/heroicons-solid/Search";
-import { Box, Error, Button } from "@advisable/donut";
-import Heading from "src/components/Heading";
+import { Box, Error, Button, Heading } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import CheckboxInput from "src/components/CheckboxInput";
@@ -86,7 +85,9 @@ export default function EditPreferences({ caseStudySearch }) {
                 Back
               </Button>
             )}
-            <Heading mb={2.5}>Preferences</Heading>
+            <Heading size="5xl" mb={2.5}>
+              Preferences
+            </Heading>
             <Description>
               What’s important to you when searching for projects?
             </Description>
