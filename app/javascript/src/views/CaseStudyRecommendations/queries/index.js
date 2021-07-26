@@ -9,7 +9,7 @@ import MEMBERS from "./members.gql";
 import DELETE from "./deleteSearch.gql";
 import SHARE from "./shareArticle.gql";
 import CASE_STUDY from "./getCaseStudy.gql";
-import FINALIZE_SEARCH from "./finalizeCaseStudySEarch.gql";
+import FINALIZE_SEARCH from "./finalizeCaseStudySearch.gql";
 import CREATE_SEARCH from "./createCaseStudySearch.gql";
 import UPDATE_SEARCH from "./updateCaseStudySearch.gql";
 import CREATE_OR_EDIT from "./createOrEditSearch.gql";
