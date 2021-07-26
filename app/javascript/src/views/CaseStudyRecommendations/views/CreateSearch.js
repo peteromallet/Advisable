@@ -24,7 +24,7 @@ export default function CreateSearch({ skills, popularSkills }) {
     }
 
     const searchId = res.data?.createCaseStudySearch?.search.id;
-    history.replace(`/explore/${searchId}/skills`);
+    history.replace(`/explore/${searchId}/skills`, { ignoreAnimation: true });
     history.push(`/explore/${searchId}/goals`);
   };
 

@@ -1,18 +1,11 @@
 import React, { useMemo } from "react";
 import { array, object } from "yup";
 import { Formik, Form } from "formik";
+import css from "@styled-system/css";
 import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
 import { Search } from "@styled-icons/heroicons-solid/Search";
 import { Plus } from "@styled-icons/heroicons-solid/Plus";
-import {
-  Box,
-  Text,
-  Combobox,
-  Error,
-  Tag,
-  Heading,
-  theme,
-} from "@advisable/donut";
+import { Box, Text, Combobox, Error, Heading, theme } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import AnimatedBox from "./AnimatedBox";
@@ -29,19 +22,37 @@ function PopularSkills({ popularSkills, formik }) {
   }, [formik.values.skills, popularSkills]);
 
   return filtered.map((s) => (
-    <Tag
-      size="s"
+    <Box
       key={s.value}
-      marginRight={2}
-      marginBottom={2}
-      icon={Plus}
       onClick={() => {
         const newValue = [...formik.values.skills, s];
         formik.setFieldValue("skills", newValue);
       }}
+      marginRight={2}
+      marginBottom={2}
+      color="blue700"
+      border="1px solid"
+      borderColor="blue200"
+      alignItems="center"
+      display="inline-flex"
+      height="32px"
+      borderRadius="12px"
+      paddingLeft={2}
+      paddingRight={3}
+      fontSize="15px"
+      fontWeight={300}
+      css={css({
+        cursor: "pointer",
+        "&:hover": {
+          bg: "blue50",
+        },
+      })}
     >
-      {s.label}
-    </Tag>
+      <Plus size={20} />
+      <Box paddingLeft={0.5} marginTop="-1px">
+        {s.label}
+      </Box>
+    </Box>
   ));
 }
 
@@ -77,13 +88,13 @@ export default function CaseStudySearchSkillsForm({
                 onChange={(s) => {
                   formik.setFieldValue("skills", s);
                 }}
-                environment="body"
+                inputColor="white"
                 placeholder="Search for skills..."
                 prefix={<Search fill={theme.colors.neutral400} />}
                 options={skills}
               />
             </Box>
-            <Text fontSize="l" color="neutral500" mb={1}>
+            <Text fontSize="md" color="neutral500" mb={1}>
               Popular skills in the SaaS industry
             </Text>
             <Box paddingTop={2} mb={4}>
