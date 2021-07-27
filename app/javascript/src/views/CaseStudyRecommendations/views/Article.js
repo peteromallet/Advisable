@@ -12,13 +12,15 @@ import {
   Stack,
   theme,
 } from "@advisable/donut";
+import Loading from "src/components/Loading";
 import PassportAvatar from "src/components/PassportAvatar";
 import CaseStudyContent from "src/components/CaseStudyContent";
 import { useCaseStudy } from "../queries";
-import Sticky from "react-stickynode";
 import ActionBar from "../components/ActionBar";
 import { isNotFound } from "../../NotFound";
 import NotFound from "./NotFound";
+import useScrollToTop from "src/hooks/useScrollToTop";
+import { motion } from "framer-motion";
 
 const StyledName = styled.a`
   display: block;
@@ -76,10 +78,11 @@ function CaseStudySummaryResults({ caseStudy }) {
 }
 
 export default function CaseStudy() {
+  useScrollToTop();
   const { id } = useParams();
   const { data, loading, error } = useCaseStudy(id);
 
-  if (loading) return <>loading</>;
+  if (loading) return <Loading />;
 
   if (isNotFound(error)) {
     return <NotFound />;
@@ -89,14 +92,22 @@ export default function CaseStudy() {
   const { specialist } = caseStudy;
 
   return (
-    <Box padding={12} justifyContent="center" display="flex">
+    <Box
+      as={motion.div}
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      padding={12}
+      justifyContent="center"
+      display="flex"
+    >
       <Box
-        width="240px"
+        width="280px"
         flexShrink={0}
-        paddingRight={12}
+        paddingRight={16}
         display={{ _: "none", l: "block" }}
       >
-        <Sticky enabled top={108}>
+        <Box top="108px" position={{ _: null, l: "sticky" }}>
           <PassportAvatar
             size="xl"
             marginBottom={6}
@@ -123,7 +134,7 @@ export default function CaseStudy() {
           >
             Work with {specialist.firstName}
           </Button>
-        </Sticky>
+        </Box>
       </Box>
       <Box maxWidth="700px" position="relative">
         <StyledArticleTitle>{caseStudy.title}</StyledArticleTitle>

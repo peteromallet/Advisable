@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Upload } from "@styled-icons/heroicons-solid/Upload";
 import { DialogDisclosure } from "reakit/Dialog";
 import { Formik, Form } from "formik";
 import {
-  theme,
   Modal,
   Stack,
   Avatar,
@@ -22,50 +20,7 @@ import InviteTeamMember from "src/components/InviteTeamMember";
 import { useShareArticle } from "../queries";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
-
-const StyledShareButtonLabel = styled.div`
-  font-size: 13px;
-  color: ${theme.colors.neutral700};
-`;
-
-const StyledShareButtonIcon = styled.div`
-  width: 40px;
-  height: 40px;
-  display: flex;
-  border-radius: 50%;
-  margin-bottom: 8px;
-  align-items: center;
-  justify-content: center;
-  color: ${theme.colors.blue900};
-  background: ${theme.colors.neutral100};
-  transition: background 300ms;
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
-`;
-
-const StyledShareButton = styled.div`
-  width: 60px;
-  cursor: pointer;
-  align-items: center;
-  display: inline-flex;
-  flex-direction: column;
-  background: none;
-  border: none;
-  outline: none;
-  padding: 0;
-  margin: 0;
-  line-height: 1;
-
-  &:hover {
-    ${StyledShareButtonIcon} {
-      color: ${theme.colors.neutral600};
-      background: ${theme.colors.neutral200};
-    }
-  }
-`;
+import IconButton from "src/components/IconButton";
 
 function Member({ user, onSelect }) {
   return (
@@ -205,12 +160,12 @@ export default function ShareButton({ article }) {
       <Modal modal={modal} label="Share article">
         <ShareCaseStudyModal article={article} modal={modal} />
       </Modal>
-      <StyledShareButton as={DialogDisclosure} {...modal}>
-        <StyledShareButtonIcon>
-          <Upload />
-        </StyledShareButtonIcon>
-        <StyledShareButtonLabel>Share</StyledShareButtonLabel>
-      </StyledShareButton>
+      <IconButton
+        as={DialogDisclosure}
+        {...modal}
+        icon={Upload}
+        label="Share"
+      />
     </>
   );
 }
