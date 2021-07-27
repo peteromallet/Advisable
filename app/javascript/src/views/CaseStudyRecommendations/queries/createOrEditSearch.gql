@@ -8,7 +8,7 @@ query CreateOrEditSearch {
       name
     }
   }
-  skills {
+  caseStudySkills {
     id
     value: name
     label: name

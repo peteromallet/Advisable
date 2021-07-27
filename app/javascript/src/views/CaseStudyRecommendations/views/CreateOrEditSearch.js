@@ -32,13 +32,13 @@ export default function CreateOrEditSearch() {
       <Switch>
         <Route path="/explore/new">
           <CreateSearch
-            skills={formData?.data?.skills}
+            skills={formData?.data?.caseStudySkills}
             popularSkills={formData?.data?.popularCaseStudySkills}
           />
         </Route>
         <Route path="/explore/:id/skills">
           <EditSkills
-            skills={formData?.data?.skills}
+            skills={formData?.data?.caseStudySkills}
             popularSkills={formData?.data?.popularCaseStudySkills}
             caseStudySearch={caseStudySearch}
           />
