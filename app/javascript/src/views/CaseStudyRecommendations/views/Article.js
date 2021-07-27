@@ -1,7 +1,7 @@
 import React from "react";
 import truncate from "lodash/truncate";
 import styled from "styled-components";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router-dom";
 import { Check } from "@styled-icons/heroicons-solid/Check";
 import {
   Circle,
@@ -115,7 +115,14 @@ export default function CaseStudy() {
           >
             {truncate(specialist.bio, { length: 170 })}
           </Text>
-          <Button variant="gradient">Work with {specialist.firstName}</Button>
+          <Button
+            as={Link}
+            variant="gradient"
+            target="_blank"
+            to={`/request_consultation/${specialist.id}`}
+          >
+            Work with {specialist.firstName}
+          </Button>
         </Sticky>
       </Box>
       <Box maxWidth="680px" paddingBottom={20} position="relative">
