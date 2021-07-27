@@ -27,7 +27,7 @@ module CaseStudy
     end
 
     def refresh_results
-      self.results = (results + results_query(limit: RESULT_LIMIT).pluck(:id)).uniq
+      self.results = (attributes["results"] + results_query(limit: RESULT_LIMIT).pluck(:id)).uniq
     end
 
     def results_query(limit: nil, exclude: nil)
