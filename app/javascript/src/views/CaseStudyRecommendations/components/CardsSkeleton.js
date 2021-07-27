@@ -19,7 +19,7 @@ function CardSkeleton() {
 
 export default function CardsSkeleton() {
   return (
-    <Stack spacing="4xl" divider="neutral200">
+    <Stack spacing={16} divider="neutral100">
       <CardSkeleton />
       <CardSkeleton />
       <CardSkeleton />

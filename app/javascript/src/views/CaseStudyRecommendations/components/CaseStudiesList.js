@@ -4,7 +4,7 @@ import CaseStudyCard from "./RecommendationCard";
 
 export default function CaseStudiesList({ articles, search }) {
   return (
-    <Stack spacing="4xl" divider="neutral200">
+    <Stack spacing={16} divider="neutral100">
       {articles.map((caseStudy) => (
         <CaseStudyCard
           key={caseStudy.id}

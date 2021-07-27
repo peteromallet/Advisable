@@ -3,11 +3,8 @@ import css from "@styled-system/css";
 import { Text, Box, Circle } from "@advisable/donut";
 import CaseStudyActions from "./CaseStudyActions";
 import LogoMark from "src/components/LogoMark";
-import {
-  StyledRecommendation,
-  StyledRecommendationTitle,
-  StyledRecommendationCardAvatar,
-} from "../styles";
+import { StyledRecommendation, StyledRecommendationTitle } from "../styles";
+import PassportAvatar from "src/components/PassportAvatar";
 
 export default function RecommendationCard({
   caseStudy,
@@ -22,19 +19,19 @@ export default function RecommendationCard({
   return (
     <StyledRecommendation>
       <Box display="flex">
-        <StyledRecommendationCardAvatar
-          mr={6}
-          flexShrink={0}
-          style={{
-            backgroundImage: `url(${caseStudy.specialist.avatar})`,
-          }}
+        <PassportAvatar
+          size="xl"
+          marginRight={7}
+          src={caseStudy.specialist.avatar}
+          name={caseStudy.specialist.name}
         >
           <Circle
             size="40px"
             bg="white"
             position="absolute"
-            right="-8px"
-            top="-8px"
+            right="-4px"
+            top="-4px"
+            boxShadow="s"
           >
             {caseStudy.company?.favicon ? (
               <img src={caseStudy.company.favicon} width="16px" />
@@ -42,7 +39,8 @@ export default function RecommendationCard({
               <LogoMark size={16} color="subtle" />
             )}
           </Circle>
-        </StyledRecommendationCardAvatar>
+        </PassportAvatar>
+
         <Box>
           {sharedArticle && (
             <Text fontWeight={500} mb={2} color="neutral700">
@@ -53,16 +51,17 @@ export default function RecommendationCard({
             to={url}
             className="title"
             css={css({
-              fontSize: "2xl",
+              fontSize: "3xl",
               fontWeight: 600,
               marginBottom: 2,
-              lineHeight: "24px",
+              lineHeight: "28px",
               letterSpacing: "-0.03rem",
             })}
           >
             {caseStudy.title}
           </StyledRecommendationTitle>
           <Text
+            fontSize="17px"
             lineHeight="24px"
             color="neutral900"
             className="subtitle"

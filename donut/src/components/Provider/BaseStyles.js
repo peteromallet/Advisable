@@ -101,7 +101,6 @@ const BaseStyles = createGlobalStyle`
     min-height: 100%;
     overflow-x: hidden;
     background: ${(props) => BACKGROUND[props.theme.background]} !important;
-    transition: background-color 400ms;
   }
 
 

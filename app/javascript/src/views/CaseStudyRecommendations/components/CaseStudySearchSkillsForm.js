@@ -86,7 +86,6 @@ export default function CaseStudySearchSkillsForm({
               onChange={(s) => {
                 formik.setFieldValue("skills", s);
               }}
-              inputColor="white"
               placeholder="Search for skills..."
               prefix={<Search fill={theme.colors.neutral400} />}
               options={skills}

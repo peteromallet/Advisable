@@ -8,11 +8,11 @@ import {
   Box,
   Text,
   Card,
-  Avatar,
   Button,
   Stack,
   theme,
 } from "@advisable/donut";
+import PassportAvatar from "src/components/PassportAvatar";
 import CaseStudyContent from "src/components/CaseStudyContent";
 import { useCaseStudy } from "../queries";
 import Sticky from "react-stickynode";
@@ -22,9 +22,9 @@ import NotFound from "./NotFound";
 
 const StyledName = styled.a`
   display: block;
-  font-size: 20px;
-  line-height: 20px;
-  font-weight: 600;
+  font-size: 22px;
+  line-height: 24px;
+  font-weight: 550;
   margin-bottom: 8px;
   letter-spacing: -0.04rem;
   color: ${theme.colors.neutral800};
@@ -36,8 +36,8 @@ const StyledName = styled.a`
 `;
 
 const StyledArticleTitle = styled.h1`
-  font-size: 36px;
-  line-height: 40px;
+  font-size: 32px;
+  line-height: 36px;
   font-weight: 600;
   margin-bottom: 32px;
   letter-spacing: -0.06rem;
@@ -97,11 +97,11 @@ export default function CaseStudy() {
         display={{ _: "none", l: "block" }}
       >
         <Sticky enabled top={108}>
-          <Avatar
-            size="l"
-            name={specialist.name}
-            url={specialist.avatar}
-            marginBottom={4}
+          <PassportAvatar
+            size="xl"
+            marginBottom={6}
+            src={caseStudy.specialist.avatar}
+            name={caseStudy.specialist.name}
           />
           <StyledName target="_blank" href={`/freelancers/${specialist.id}`}>
             {specialist.name}
@@ -110,8 +110,8 @@ export default function CaseStudy() {
             fontSize="xs"
             fontWeight={350}
             lineHeight="20px"
-            paddingBottom={6}
-            color="neutral600"
+            paddingBottom={5}
+            color="neutral700"
           >
             {truncate(specialist.bio, { length: 170 })}
           </Text>
@@ -125,7 +125,7 @@ export default function CaseStudy() {
           </Button>
         </Sticky>
       </Box>
-      <Box maxWidth="680px" paddingBottom={20} position="relative">
+      <Box maxWidth="700px" position="relative">
         <StyledArticleTitle>{caseStudy.title}</StyledArticleTitle>
         {caseStudy.comment ? (
           <Card padding={5} borderRadius="16px">
