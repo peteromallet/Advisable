@@ -85,13 +85,13 @@ export function useFavorite({ article }, opts) {
         __typename: "AssignCaseStudyArticlePayload",
         article: {
           ...article,
-          isSaved: isSaved ? "unsave" : "save",
+          isSaved: isSaved ? false : true,
         },
       },
     },
     update(cache, response) {
       if (response.errors) return;
-
+      const newArticle = response.data.assignCaseStudyArticle.article;
       const existing = cache.readQuery({ query: SAVED });
       if (existing) {
         cache.writeQuery({
@@ -102,20 +102,11 @@ export function useFavorite({ article }, opts) {
                 ? existing.savedArticles.nodes.filter(
                     (a) => a.id !== article.id,
                   )
-                : [...existing.savedArticles.nodes, article],
+                : [...existing.savedArticles.nodes, newArticle],
             },
           },
         });
       }
-
-      cache.modify({
-        id: cache.identify(article),
-        fields: {
-          isSaved() {
-            return isSaved ? false : true;
-          },
-        },
-      });
     },
     ...opts,
   });
@@ -206,20 +197,14 @@ export function useUpdateCaseStudySearch(opts) {
   return useMutation(UPDATE_SEARCH, opts);
 }
 
-export function useFinalizeCaseStudySearch() {
+export function useFinalizeCaseStudySearch(search) {
   return useMutation(FINALIZE_SEARCH, {
-    update(cache, response) {
-      const search = response.data.finalizeCaseStudySearch.search;
-
-      cache.modify({
-        id: cache.identify(search),
-        fields: {
-          results() {
-            return search.results;
-          },
-        },
-      });
-    },
+    refetchQueries: [
+      {
+        query: CASE_STUDY_SEARCH,
+        variables: { id: search.id },
+      },
+    ],
   });
 }
 
