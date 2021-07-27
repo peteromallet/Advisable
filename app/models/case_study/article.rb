@@ -22,6 +22,7 @@ module CaseStudy
     has_one :guild_post, class_name: "::Guild::Post", dependent: :nullify
 
     scope :published, -> { where.not(published_at: nil) }
+    scope :by_score, -> { order('score DESC NULLS LAST') }
   end
 end
 

@@ -19,13 +19,13 @@ module CaseStudy
 
     def results
       refresh_results if attributes["results"].blank?
-      Article.where(id: attributes["results"]).where.not(id: user.archived_articles.pluck(:article_id))
+      Article.where(id: attributes["results"]).where.not(id: user.archived_articles.pluck(:article_id)).by_score
     end
 
     def refresh_results
       reload
       query = results_query(limit: RESULT_LIMIT, exclude: user.archived_articles.pluck(:article_id))
-      update(results: query.pluck(:id))
+      update(results: query.map(&:id))
     end
 
     def results_query(limit: nil, exclude: nil)
@@ -38,7 +38,7 @@ module CaseStudy
       elsif goals.present?
         query = query.where("goals ?| array[:goals]", goals: goals)
       end
-      query
+      query.by_score
     end
   end
 end
