@@ -12,7 +12,7 @@ class RefreshCaseStudySearchesJob < ApplicationJob
         next if amount_to_add <= 0
 
         existing_or_archived = existing_results + user_archived
-        new_results = search.results_query(limit: amount_to_add, exclude: existing_or_archived).pluck(:id)
+        new_results = search.results_query(limit: amount_to_add, exclude: existing_or_archived).map(&:id)
         next if new_results.none?
 
         search.update!(results: existing_results + new_results)
