@@ -1,59 +1,124 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { Switch, Route, useParams } from "react-router-dom";
-import { AnimateSharedLayout, motion } from "framer-motion";
-import INBOX from "./queries/getRecommendations.gql";
-import { Box, Container, Text } from "@advisable/donut";
-import RecommendationCard from "./RecommendationCard";
-import CaseStudyRecommendationsNavigation from "./Navigation";
-import ArchivedRecommendations from "./ArchivedRecommendations";
-import InboxEmpty from "./InboxEmpty";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { Box, Text, Button, Heading } from "@advisable/donut";
+import CaseStudiesList from "./CaseStudiesList";
+import { useParams } from "react-router-dom";
+import { useCaseStudySearch } from "./queries";
+import inbox from "src/illustrations/inbox.svg";
+import postbox from "src/illustrations/postbox.svg";
+import { Pencil } from "@styled-icons/heroicons-solid/Pencil";
+import ViewLoading from "./ViewLoading";
+import DeleteSearch from "./DeleteSearch";
+import commaSeparated from "src/utilities/commaSeparated";
+import NotFound from "./NotFound";
+import { isNotFound } from "../NotFound";
 
-export default function RecommendationsInbox() {
+function SavedSearchEmpty() {
+  return (
+    <Box paddingY={12} paddingX={4} maxWidth={400} mx="auto" textAlign="center">
+      <Box marginBottom={4}>
+        <img src={inbox} alt="" />
+      </Box>
+      <Text fontSize="lg" fontWeight={500} marginBottom={2}>
+        No Recommendations
+      </Text>
+      <Text fontSize="sm" color="neutral700" lineHeight="20px">
+        We will keep looking for recommendations for this search and will let
+        you know when we have more results.
+      </Text>
+    </Box>
+  );
+}
+
+function CompanyRecommendationsEmpty() {
+  return (
+    <Box paddingY={12} paddingX={4} maxWidth={400} mx="auto" textAlign="center">
+      <Box marginBottom={6}>
+        <img src={postbox} alt="" />
+      </Box>
+      <Text fontSize="lg" fontWeight={500} marginBottom={2}>
+        No Recommendations
+      </Text>
+      <Text fontSize="sm" color="neutral700" lineHeight="20px">
+        We dont have any company recommendations for you at this time. We will
+        keep searching and let you know when we find some.
+      </Text>
+    </Box>
+  );
+}
+
+export default function ExploreInbox() {
   const { id } = useParams();
-  const { loading, data } = useQuery(INBOX, {
+  const history = useHistory();
+  const { data, loading, error } = useCaseStudySearch({
     variables: { id },
+    fetchPolicy: "network-only",
   });
 
-  if (loading) return <>loading...</>;
+  if (loading) return <ViewLoading />;
+  if (isNotFound(error)) {
+    return <NotFound />;
+  }
 
   const search = data.caseStudySearch;
-  const caseStudies = search.results.edges.map((e) => e.node);
+  const company = data.currentCompany;
+  const articles = search.results.nodes;
+  const skills = search.skills.map((s) => s.skill.name);
+
+  const afterDelete = () => {
+    history.replace("/explore");
+  };
+
+  if (!search.isFinalized) {
+    return <Redirect to={`/explore/${id}/skills`} />;
+  }
 
   return (
-    <Container maxWidth="900px" py={10}>
-      <Box maxWidth="500px" marginX="auto" textAlign="center" mb={10}>
-        <Box maxWidth="440px" mx="auto" mb={6}>
-          <Text
-            fontSize="4xl"
-            fontWeight="550"
-            lineHeight="28px"
-            letterSpacing="-0.05rem"
-          >
-            {search.name}
-          </Text>
+    <>
+      <Box>
+        <Box display="flex" alignItems="center">
+          <Box flex={1}>
+            <Heading size="5xl" mb={2}>
+              {search.name}
+            </Heading>
+            {search?.companyRecomendation ? (
+              <Text size="lg" color="neutral800" lineHeight="24px">
+                These are pre-made recommendations from a diverse range of
+                projects that we think will be interesting to {company.name}{" "}
+                based on your goals, industry and more.
+              </Text>
+            ) : (
+              <Text size="lg" color="neutral800" lineHeight="24px">
+                These are {commaSeparated(skills)} recommendations that we think
+                will be a good fit for {company.name} based on your goals,
+                industry, and more.
+              </Text>
+            )}
+          </Box>
+          {!search?.companyRecomendation && (
+            <Box paddingLeft={8}>
+              <Button
+                as={Link}
+                size="xs"
+                variant="subtle"
+                marginRight={1}
+                to={`/explore/${search.id}/skills`}
+              >
+                <Pencil size={16} />
+              </Button>
+              <DeleteSearch search={search} onDelete={afterDelete} />
+            </Box>
+          )}
         </Box>
-        <CaseStudyRecommendationsNavigation inboxCount={caseStudies.length} />
+        <Box marginY={8} height="1px" bg="neutral200" />
       </Box>
-      <Box position="relative">
-        <Switch>
-          <Route path="/explore/:id/inbox">
-            {caseStudies.length === 0 && <InboxEmpty />}
-            <AnimateSharedLayout>
-              {caseStudies.map((c) => (
-                <motion.div initial={false} layoutId={c.id} key={c.id}>
-                  <Box paddingBottom={4}>
-                    <RecommendationCard caseStudy={c} search={search} />
-                  </Box>
-                </motion.div>
-              ))}
-            </AnimateSharedLayout>
-          </Route>
-          <Route path="/explore/:id/archived">
-            <ArchivedRecommendations />
-          </Route>
-        </Switch>
-      </Box>
-    </Container>
+      <CaseStudiesList articles={articles} search={search} />
+      {articles.length === 0 &&
+        (search.companyRecomendation ? (
+          <CompanyRecommendationsEmpty />
+        ) : (
+          <SavedSearchEmpty />
+        ))}
+    </>
   );
 }

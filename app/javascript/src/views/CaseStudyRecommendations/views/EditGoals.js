@@ -1,19 +1,17 @@
 import React from "react";
 import { object, array } from "yup";
 import { Formik, Form } from "formik";
-import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { ArrowRight } from "@styled-icons/feather/ArrowRight";
-import { Box, Error } from "@advisable/donut";
+import { ArrowRight } from "@styled-icons/heroicons-solid/ArrowRight";
+import { ArrowLeft } from "@styled-icons/heroicons-solid/ArrowLeft";
+import { Button, Box, Error, Heading } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import CheckboxInput from "src/components/CheckboxInput";
 import SubmitButton from "src/components/SubmitButton";
-import AnimatedCard from "../components/AnimatedCard";
-import Header from "../components/Header";
+import AnimatedBox from "../components/AnimatedBox";
 import Description from "../components/Description";
-import StepNumber from "../components/StepNumber";
 // Queries
-import UPDATE_CASE_STUDY_SEARCH from "../queries/updateCaseStudySearch.gql";
+import { useUpdateCaseStudySearch } from "../queries";
 
 export const validationSchema = object().shape({
   goals: array().min(1, "Please add at least one goal").required(),
@@ -32,9 +30,9 @@ const GOALS = [
   "Improve Efficiency",
 ];
 
-export default function Goals({ caseStudySearch }) {
+export default function EditGoals({ caseStudySearch }) {
+  const [update] = useUpdateCaseStudySearch();
   const history = useHistory();
-  const [update] = useMutation(UPDATE_CASE_STUDY_SEARCH);
 
   const initialValues = {
     goals: caseStudySearch.goals || [],
@@ -57,24 +55,41 @@ export default function Goals({ caseStudySearch }) {
       return;
     }
 
-    history.push(`/explore/new/${caseStudySearch.id}/preferences`);
+    history.push(`/explore/${caseStudySearch.id}/preferences`);
+  };
+
+  const handleBack = () => {
+    history.goBack();
   };
 
   return (
-    <AnimatedCard>
+    <AnimatedBox>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {(formik) => (
           <Form>
-            <StepNumber>Step 2 of 4</StepNumber>
-            <Header>Goals</Header>
+            {history.length > 1 && (
+              <Button
+                onClick={handleBack}
+                type="button"
+                variant="minimal"
+                size="xs"
+                prefix={<ArrowLeft />}
+              >
+                Back
+              </Button>
+            )}
+            <Heading size="5xl" mb={2.5}>
+              Goals
+            </Heading>
             <Description>
-              We’ll recommend you talent & projects that have helped similar
+              We’ll recommend you talent and projects that have helped similar
               companies achieve the goals you select.
             </Description>
             <Box mb={6}>
               <FormField
                 as={CheckboxInput}
                 name="goals"
+                environment="body"
                 options={GOALS}
                 optionsPerRow={2}
               />
@@ -92,6 +107,6 @@ export default function Goals({ caseStudySearch }) {
           </Form>
         )}
       </Formik>
-    </AnimatedCard>
+    </AnimatedBox>
   );
 }

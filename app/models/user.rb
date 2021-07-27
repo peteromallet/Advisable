@@ -99,11 +99,14 @@ class User < ApplicationRecord
   end
 
   def create_company_recomendation_search
+    return if searches.exists?(company_recomendation: true)
+
     ::CaseStudy::Search.create!(
       user: self,
       business_type: company.kind,
       goals: company.goals,
-      name: "Project recommendations for #{company.name}",
+      name: "Recommendations for #{company.name}",
+      finalized_at: Time.zone.now,
       company_recomendation: true
     )
   end

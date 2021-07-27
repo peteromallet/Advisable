@@ -6,7 +6,7 @@ const headingSize = variant({
   variants: {
     "5xl": {
       fontSize: "5xl",
-      fontWeight: 700,
+      fontWeight: 600,
       lineHeight: "32px",
       letterSpacing: "-0.04rem",
     },

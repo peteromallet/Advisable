@@ -1,10 +1,9 @@
+#import "./articleFields.gql"
+
 mutation assignSearchArticle($input: AssignCaseStudyArticleInput!) {
   assignCaseStudyArticle(input: $input) {
-    search {
-      id
-    }
     article {
-      id
+      ...ArticleFields
     }
   }
 }

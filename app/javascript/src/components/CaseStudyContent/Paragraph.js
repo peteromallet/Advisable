@@ -8,8 +8,8 @@ export default function CaseStudyParagraph({ text }) {
       fontWeight={350}
       fontSize="18px"
       lineHeight="24px"
-      paddingTop={4}
-      paddingBottom={5}
+      paddingTop={2}
+      paddingBottom={4}
       autoLink
     >
       {renderLineBreaks(text)}

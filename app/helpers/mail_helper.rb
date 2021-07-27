@@ -24,6 +24,10 @@ module MailHelper
     guild_post.shareable ? url : magic_link(account, url, expires_at: 1.day.from_now)
   end
 
+  def case_study_url(article)
+    "#{app_host}/explore/articles/#{article.uid}"
+  end
+
   def time_in_zone(timestamp, zone, format = "%d %B, %I:%M%P %Z")
     timestamp.in_time_zone(zone).strftime(format)
   end

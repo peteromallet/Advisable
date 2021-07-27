@@ -29,6 +29,13 @@ class UserMailerPreview < ActionMailer::Preview
     end
   end
 
+  def case_study_shared
+    ApplicationRecord.uncached do
+      shared_article = CaseStudy::SharedArticle.last
+      UserMailer.case_study_shared(shared_article)
+    end
+  end
+
   private
 
   def random_user

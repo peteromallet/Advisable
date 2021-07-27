@@ -1,0 +1,14 @@
+#import "./articleFields.gql"
+query ExplorerSharedArticles {
+  sharedArticles {
+    id
+    message
+    sharedBy {
+      id
+      name
+    }
+    article {
+      ...ArticleFields
+    }
+  }
+}

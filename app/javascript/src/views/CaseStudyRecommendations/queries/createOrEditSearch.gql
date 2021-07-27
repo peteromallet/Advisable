@@ -1,0 +1,21 @@
+query CreateOrEditSearch {
+  currentCompany {
+    id
+    kind
+    businessType
+    industry {
+      id
+      name
+    }
+  }
+  skills {
+    id
+    value: name
+    label: name
+  }
+  popularCaseStudySkills {
+    id
+    value: name
+    label: name
+  }
+}

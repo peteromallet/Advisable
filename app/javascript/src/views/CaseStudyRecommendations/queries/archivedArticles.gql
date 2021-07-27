@@ -1,0 +1,8 @@
+#import "./articleFields.gql"
+query ExplorerArchivedArticles {
+  archivedArticles {
+    nodes {
+      ...ArticleFields
+    }
+  }
+}

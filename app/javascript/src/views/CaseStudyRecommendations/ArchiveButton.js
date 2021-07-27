@@ -54,8 +54,8 @@ const StyledArchiveButton = styled.div`
   }
 `;
 
-function ArchiveForm({ search, article, onArchive = () => {}, modal }) {
-  const [archive] = useArchive();
+function ArchiveForm({ article, searchId, onArchive = () => {}, modal }) {
+  const [archive] = useArchive({ article, searchId });
 
   const handleSubmit = useCallback(
     async ({ feedback, otherFeedback }) => {
@@ -63,8 +63,8 @@ function ArchiveForm({ search, article, onArchive = () => {}, modal }) {
         variables: {
           input: {
             action: "archive",
-            search: search.id,
             article: article.id,
+            search: searchId,
             feedback: feedback === "_OTHER" ? otherFeedback : feedback,
           },
         },
@@ -73,8 +73,11 @@ function ArchiveForm({ search, article, onArchive = () => {}, modal }) {
       modal.hide();
       onArchive();
     },
-    [archive, search, article, onArchive, modal],
+    [archive, article, onArchive, modal, searchId],
   );
+
+  const primarySkill =
+    article.skills.find((s) => s.primary) || article.skills[0];
 
   return (
     <Formik
@@ -116,9 +119,9 @@ function ArchiveForm({ search, article, onArchive = () => {}, modal }) {
               as={Radio}
               type="radio"
               name="feedback"
-              value={`Not interested in ${article.primarySkill?.skill?.name}`}
+              value={`Not interested in ${primarySkill?.skill?.name}`}
             >
-              Not interested in {article.primarySkill?.skill?.name}
+              Not interested in {primarySkill?.skill?.name}
             </Field>
             <Field as={Radio} type="radio" name="feedback" value="_OTHER">
               Other

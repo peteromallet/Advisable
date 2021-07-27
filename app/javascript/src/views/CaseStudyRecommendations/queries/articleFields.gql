@@ -1,0 +1,24 @@
+fragment ArticleFields on CaseStudyArticle {
+  id
+  title
+  subtitle
+  isSaved
+  isArchived
+  skills {
+    id
+    primary
+    skill {
+      id
+      name
+    }
+  }
+  company {
+    id
+    logo
+  }
+  specialist {
+    id
+    name
+    avatar
+  }
+}

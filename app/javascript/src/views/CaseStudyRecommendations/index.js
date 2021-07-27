@@ -1,41 +1,75 @@
-import React, { useLayoutEffect } from "react";
-import { useTheme } from "@advisable/donut";
-import { Switch, Route, Redirect } from "react-router";
-import CaseStudy from "./CaseStudy";
-import Searches from "./Searches";
-import RecommendationsInbox from "./Inbox";
-import useFeatureFlag from "src/hooks/useFeatureFlag";
-import CreateSavedSearch from "./CreateSavedSearch";
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { Box, Skeleton, useBreakpoint } from "@advisable/donut";
+import Inbox from "./Inbox";
+import Shared from "./Shared";
+import Article from "./Article";
+import Archived from "./Archived";
+import Favorites from "./Favorites";
+import Navigation from "./Navigation";
+import CreateOrEditSearch from "./views/CreateOrEditSearch";
+import { useCaseStudySearches } from "./queries";
+import View from "src/components/View";
+import ViewLoading from "./ViewLoading";
 
-export default function CaseStudyRecommendations() {
-  const { setTheme } = useTheme();
-  const isExploreEnabled = useFeatureFlag("case_studies");
+export default function CaseStudyExplorer() {
+  const isLargeScreen = useBreakpoint("mUp");
 
-  useLayoutEffect(() => {
-    setTheme((t) => ({ ...t, background: "beige" }));
-    return () => setTheme((t) => ({ ...t, background: "default" }));
-  }, [setTheme]);
+  const { loading, data } = useCaseStudySearches();
 
-  if (!isExploreEnabled) {
-    return <Redirect to="/projects" />;
-  }
+  const defaultSearch =
+    data?.caseStudySearches?.find((s) => s.companyRecomendation) ||
+    data?.caseStudySearches?.[0];
 
   return (
     <Switch>
-      <Route path="/explore" exact>
-        <Searches />
+      <Route>
+        <View>
+          <Route path="/explore" exact={!isLargeScreen}>
+            <View.Sidebar>
+              {loading ? (
+                <>
+                  <Skeleton height="40px" marginBottom={2} />
+                  <Skeleton height="40px" marginBottom={4} />
+                  <Skeleton height="1px" marginBottom={4} />
+                  <Skeleton height="40px" marginBottom={2} />
+                  <Skeleton height="40px" marginBottom={2} />
+                  <Skeleton height="40px" marginBottom={2} />
+                </>
+              ) : (
+                <Navigation data={data} />
+              )}
+            </View.Sidebar>
+          </Route>
+          <View.Content>
+            <Switch>
+              <Route path="/explore/articles/:id" component={Article} />
+              <Route>
+                <Box maxWidth={800} paddingY={12} paddingX={4} marginX="auto">
+                  {loading ? (
+                    <ViewLoading />
+                  ) : (
+                    <Switch>
+                      <Route path="/explore/shared" component={Shared} />
+                      <Route path="/explore/favorites" component={Favorites} />
+                      <Route path="/explore/archived" component={Archived} />
+                      <Route path="/explore/articles/:id" component={Article} />
+                      <Route
+                        path={["/explore/new", "/explore/:id/:step"]}
+                        component={CreateOrEditSearch}
+                      />
+                      <Route path="/explore/:id" component={Inbox} exact />
+                      {isLargeScreen && defaultSearch && (
+                        <Redirect to={`/explore/${defaultSearch.id}`} />
+                      )}
+                    </Switch>
+                  )}
+                </Box>
+              </Route>
+            </Switch>
+          </View.Content>
+        </View>
       </Route>
-      <Route
-        path={["/explore/new/:id", "/explore/new"]}
-        component={CreateSavedSearch}
-      />
-      <Route
-        path="/explore/:id/(inbox|archived)"
-        component={RecommendationsInbox}
-      />
-      <Route path="/explore/:id/:caseStudyId" component={CaseStudy} />
-      <Redirect from="/explore/:id" to="/explore/:id/inbox" />
-      <Redirect to="/explore" />
     </Switch>
   );
 }

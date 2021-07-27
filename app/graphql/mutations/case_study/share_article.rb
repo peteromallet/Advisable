@@ -25,6 +25,7 @@ module Mutations
           shared_by: current_user
         )
         shared_article.message = args[:message] if args[:message].present?
+        UserMailer.case_study_shared(shared_article).deliver_later
 
         current_account_responsible_for { shared_article.save! }
 

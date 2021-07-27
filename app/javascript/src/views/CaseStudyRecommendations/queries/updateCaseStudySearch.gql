@@ -4,12 +4,12 @@ mutation updateCaseStudySearch($input: UpdateCaseStudySearchInput!) {
       id
       name
       goals
+      companyRecomendation
       skills {
         id
         skill {
           id
-          value: name
-          label: name
+          name
         }
       }
     }
