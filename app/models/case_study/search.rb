@@ -18,17 +18,14 @@ module CaseStudy
     end
 
     def results
-      if attributes["results"].blank?
-        query = results_query(limit: RESULT_LIMIT, exclude: user.archived_articles.pluck(:article_id))
-        update(results: query.pluck(:id))
-      end
-
+      refresh_results if attributes["results"].blank?
       Article.where(id: attributes["results"]).where.not(id: user.archived_articles.pluck(:article_id))
     end
 
     def refresh_results
-      existing = attributes["results"] || []
-      self.results = (existing + results_query(limit: RESULT_LIMIT).pluck(:id)).uniq
+      reload
+      query = results_query(limit: RESULT_LIMIT, exclude: user.archived_articles.pluck(:article_id))
+      update(results: query.pluck(:id))
     end
 
     def results_query(limit: nil, exclude: nil)
