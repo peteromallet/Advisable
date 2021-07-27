@@ -12,7 +12,7 @@
     <%# twitter  %>
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content='<%= @guild_post.title.truncate(55) %>'% />
-    <meta name="twitter:description" content='<%= @guild_post.body.truncate(195) %>' />
+    <meta name="twitter:description" content='<%= @guild_post.excerpt %>' />
     <meta name="twitter:image" content='<%= @guild_post.cover_image&.resized_image_url %>'>
 
     <%# linked in  %>
