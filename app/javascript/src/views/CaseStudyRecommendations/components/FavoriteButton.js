@@ -63,7 +63,9 @@ export default function FavoriteButton({ article }) {
       <StyledShareButtonIcon>
         <Bookmark />
       </StyledShareButtonIcon>
-      <StyledShareButtonLabel>Favorite</StyledShareButtonLabel>
+      <StyledShareButtonLabel>
+        {article.isSaved ? "Favorited" : "Favorite"}
+      </StyledShareButtonLabel>
     </StyledShareButton>
   );
 }

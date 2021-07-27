@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useFeatureFlag from "src/hooks/useFeatureFlag";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { Box, Skeleton, useBreakpoint } from "@advisable/donut";
+import { Box, Skeleton, useBreakpoint, useTheme } from "@advisable/donut";
 import CaseStudySearch from "./views/CaseStudySearch";
 import Shared from "./views/Shared";
 import Article from "./views/Article";
@@ -14,9 +14,15 @@ import View from "src/components/View";
 import ViewLoading from "./components/ViewLoading";
 
 export default function CaseStudyExplorer() {
+  const { setTheme } = useTheme();
   const isLargeScreen = useBreakpoint("mUp");
   const { loading, data } = useCaseStudySearches();
   const caseStudiesEnabled = useFeatureFlag("case_studies");
+
+  useEffect(() => {
+    setTheme((t) => ({ ...t, background: "white" }));
+    return () => setTheme((t) => ({ ...t, background: "default" }));
+  }, [setTheme]);
 
   if (!caseStudiesEnabled) {
     return <Redirect to="/" />;
@@ -31,7 +37,7 @@ export default function CaseStudyExplorer() {
       <Route>
         <View>
           <Route path="/explore" exact={!isLargeScreen}>
-            <View.Sidebar>
+            <View.Sidebar width="300px" padding={3}>
               {loading ? (
                 <>
                   <Skeleton height="40px" marginBottom={2} />
