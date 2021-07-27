@@ -1,0 +1,8 @@
+#import "./articleFields.gql"
+query ExplorerFavoriteArticles {
+  savedArticles {
+    nodes {
+      ...ArticleFields
+    }
+  }
+}

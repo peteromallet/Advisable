@@ -12,6 +12,7 @@ module Mutations
     argument :team_manager, Boolean, required: false
 
     field :user, Types::User, null: true
+    field :company, Types::CompanyType, null: true
 
     def authorized?(**_args)
       requires_team_manager!
@@ -22,12 +23,13 @@ module Mutations
       attributes = optional.slice(:first_name, :last_name)
       attributes[:permissions] = optional[:team_manager] ? [:team_manager] : []
       account = Account.new(email: email, **attributes)
+      account.features = current_user.account.features
       account.save!
 
       new_user = current_user.invite_comember!(account, responsible: current_account_id)
       UserMailer.invited_by_manager(current_user, new_user).deliver_later
 
-      {user: new_user}
+      {user: new_user, company: current_company}
     rescue ActiveRecord::RecordInvalid
       if account.errors.added?(:email, :taken, value: email)
         ApiError.invalid_request("EMAIL_TAKEN", "The email #{email} is already used by another account.")

@@ -42,19 +42,14 @@ const StyledInboxButton = styled.div`
   }
 `;
 
-export default function MoveToInboxButton({
-  search,
-  article,
-  onSuccess = () => {},
-}) {
-  const [unarchive] = useUnarchive();
+export default function MoveToInboxButton({ article, onSuccess = () => {} }) {
+  const [unarchive] = useUnarchive({ article });
 
   const handleClick = async () => {
     await unarchive({
       variables: {
         input: {
           action: "unarchive",
-          search: search.id,
           article: article.id,
         },
       },

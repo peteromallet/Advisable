@@ -1,19 +1,26 @@
-query recommendationsInbox($id: ID!) {
+#import "./articleFields.gql"
+query ExplorerSearchRecommendations($id: ID!) {
+  currentCompany {
+    id
+    name
+  }
   caseStudySearch(id: $id) {
     id
     name
-    results {
-      edges {
-        node {
-          id
-          title
-          subtitle
-          isArchived(id: $id)
-          specialist {
-            id
-            avatar
-          }
-        }
+    goals
+    preferences
+    isFinalized
+    companyRecomendation
+    skills {
+      id
+      skill {
+        id
+        name
+      }
+    }
+    results(first: 12) {
+      nodes {
+        ...ArticleFields
       }
     }
   }

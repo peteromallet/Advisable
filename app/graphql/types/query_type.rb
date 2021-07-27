@@ -372,6 +372,11 @@ module Types
         where(id: current_user.archived_articles.select(:article_id))
     end
 
+    field :shared_articles, [Types::CaseStudy::SharedArticle], null: false
+    def shared_articles
+      current_user.received_articles.where.not(article_id: current_user.archived_articles.select(:article_id))
+    end
+
     field :case_study_search, Types::CaseStudy::Search, null: true do
       argument :id, ID, required: true
     end
@@ -383,6 +388,7 @@ module Types
     field :case_study_searches, [Types::CaseStudy::Search], null: true, max_page_size: 20
 
     def case_study_searches
+      current_user.create_company_recomendation_search
       current_user.searches
     end
 

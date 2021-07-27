@@ -1,25 +1,24 @@
 import React from "react";
 import ShareButton from "./ShareButton";
 import ArchiveButton from "./ArchiveButton";
+import FavoriteButton from "./FavoriteButton";
 import MoveToInboxButton from "./MoveToInboxButton";
 
 export default function CaseStudyActions({
-  search,
+  searchId,
   caseStudy,
   onArchive,
   onUnarchive,
 }) {
   return (
     <>
-      {caseStudy.isArchived ? (
-        <MoveToInboxButton
-          search={search}
-          article={caseStudy}
-          onArchive={onUnarchive}
-        />
-      ) : (
+      {!caseStudy.isArchived && <FavoriteButton article={caseStudy} />}
+      {caseStudy.isArchived && (
+        <MoveToInboxButton article={caseStudy} onArchive={onUnarchive} />
+      )}
+      {searchId && !caseStudy.isArchived && (
         <ArchiveButton
-          search={search}
+          searchId={searchId}
           article={caseStudy}
           onArchive={onArchive}
         />

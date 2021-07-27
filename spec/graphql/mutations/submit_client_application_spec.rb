@@ -56,7 +56,7 @@ RSpec.describe(Mutations::SubmitClientApplication) do
       search = ::CaseStudy::Search.find_by(user: user)
       expect(search.goals).to match_array(goals)
       expect(search.business_type).to eq("Startup")
-      expect(search.name).to eq("Project recommendations for Test Company")
+      expect(search.name).to eq("Recommendations for Test Company")
     end
   end
 end

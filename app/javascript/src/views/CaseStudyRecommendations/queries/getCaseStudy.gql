@@ -1,12 +1,7 @@
-query getCaseStudy($searchId: ID!, $id: ID!) {
-  caseStudySearch(id: $searchId) {
-    id
-  }
+#import "./articleFields.gql"
+query getCaseStudy($id: ID!) {
   caseStudy(id: $id) {
-    id
-    title
-    isArchived(id: $searchId)
-    subtitle
+    ...ArticleFields
     comment
     specialist {
       id

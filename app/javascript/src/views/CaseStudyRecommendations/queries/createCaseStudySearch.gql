@@ -4,22 +4,21 @@ mutation createCaseStudySearch($input: CreateCaseStudySearchInput!) {
       id
       name
       goals
+      preferences
+      isFinalized
+      companyRecomendation
       skills {
         id
         skill {
           id
+          name
           value: name
           label: name
         }
       }
-      results {
+      results(first: 12) {
         nodes {
           id
-          specialist {
-            id
-            name
-            avatar
-          }
         }
       }
     }
