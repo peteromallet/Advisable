@@ -41,7 +41,7 @@ function buildPreferences(currentCompany) {
 
 export default function EditPreferences({ currentCompany, caseStudySearch }) {
   const history = useHistory();
-  const [finalize] = useFinalizeCaseStudySearch();
+  const [finalize] = useFinalizeCaseStudySearch(caseStudySearch);
 
   const initialValues = {
     preferences: caseStudySearch.preferences || [],
