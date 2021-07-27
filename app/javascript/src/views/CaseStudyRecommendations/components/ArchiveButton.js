@@ -12,7 +12,7 @@ import {
   useModal,
 } from "@advisable/donut";
 import { Archive } from "@styled-icons/heroicons-solid/Archive";
-import { useArchive } from "./queries";
+import { useArchive } from "../queries";
 import { Form, Formik, Field } from "formik";
 import SubmitButton from "src/components/SubmitButton";
 
@@ -163,7 +163,7 @@ export default function ArchiveButton(props) {
 
   return (
     <>
-      <Modal modal={modal}>
+      <Modal modal={modal} label="Archive article">
         <ArchiveForm modal={modal} {...props} />
       </Modal>
       <StyledArchiveButton onClick={handleClick}>

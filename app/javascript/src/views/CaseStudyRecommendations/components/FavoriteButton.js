@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Bookmark } from "@styled-icons/heroicons-solid/Bookmark";
 import { theme } from "@advisable/donut";
-import { useFavorite } from "./queries";
+import { useFavorite } from "../queries";
 
 const StyledShareButtonLabel = styled.div`
   font-size: 13px;

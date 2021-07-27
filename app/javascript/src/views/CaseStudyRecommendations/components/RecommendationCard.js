@@ -1,4 +1,5 @@
 import React from "react";
+import css from "@styled-system/css";
 import { Text, Box, Circle } from "@advisable/donut";
 import CaseStudyActions from "./CaseStudyActions";
 import LogoMark from "src/components/LogoMark";
@@ -6,7 +7,7 @@ import {
   StyledRecommendation,
   StyledRecommendationTitle,
   StyledRecommendationCardAvatar,
-} from "./styles";
+} from "../styles";
 
 export default function RecommendationCard({
   caseStudy,
@@ -49,13 +50,15 @@ export default function RecommendationCard({
             </Text>
           )}
           <StyledRecommendationTitle
-            mb={2}
             to={url}
-            fontSize="2xl"
-            fontWeight={600}
             className="title"
-            lineHeight="24px"
-            letterSpacing="-0.03rem"
+            css={css({
+              fontSize: "2xl",
+              fontWeight: 600,
+              marginBottom: 2,
+              lineHeight: "24px",
+              letterSpacing: "-0.03rem",
+            })}
           >
             {caseStudy.title}
           </StyledRecommendationTitle>
