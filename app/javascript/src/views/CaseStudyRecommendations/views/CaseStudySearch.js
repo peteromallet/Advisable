@@ -1,17 +1,17 @@
 import React from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { Box, Text, Button, Heading } from "@advisable/donut";
-import CaseStudiesList from "./CaseStudiesList";
+import CaseStudiesList from "../components/CaseStudiesList";
 import { useParams } from "react-router-dom";
-import { useCaseStudySearch } from "./queries";
+import { useCaseStudySearch } from "../queries";
 import inbox from "src/illustrations/inbox.svg";
 import postbox from "src/illustrations/postbox.svg";
 import { Pencil } from "@styled-icons/heroicons-solid/Pencil";
-import ViewLoading from "./ViewLoading";
-import DeleteSearch from "./DeleteSearch";
+import ViewLoading from "../components/ViewLoading";
+import DeleteSearch from "../components/DeleteSearch";
 import commaSeparated from "src/utilities/commaSeparated";
 import NotFound from "./NotFound";
-import { isNotFound } from "../NotFound";
+import { isNotFound } from "../../NotFound";
 
 function SavedSearchEmpty() {
   return (
@@ -47,12 +47,11 @@ function CompanyRecommendationsEmpty() {
   );
 }
 
-export default function ExploreInbox() {
+export default function CaseStudySearch() {
   const { id } = useParams();
   const history = useHistory();
   const { data, loading, error } = useCaseStudySearch({
     variables: { id },
-    fetchPolicy: "network-only",
   });
 
   if (loading) return <ViewLoading />;
@@ -97,15 +96,16 @@ export default function ExploreInbox() {
           </Box>
           {!search?.companyRecomendation && (
             <Box paddingLeft={8}>
-              <Button
-                as={Link}
-                size="xs"
-                variant="subtle"
-                marginRight={1}
-                to={`/explore/${search.id}/skills`}
-              >
-                <Pencil size={16} />
-              </Button>
+              <Box display="inline" marginRight={1}>
+                <Button
+                  as={Link}
+                  size="xs"
+                  variant="subtle"
+                  to={`/explore/${search.id}/skills`}
+                >
+                  <Pencil size={16} />
+                </Button>
+              </Box>
               <DeleteSearch search={search} onDelete={afterDelete} />
             </Box>
           )}

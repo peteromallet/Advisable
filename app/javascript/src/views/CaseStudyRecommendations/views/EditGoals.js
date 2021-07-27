@@ -8,7 +8,6 @@ import { Button, Box, Error, Heading } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import CheckboxInput from "src/components/CheckboxInput";
 import SubmitButton from "src/components/SubmitButton";
-import AnimatedBox from "../components/AnimatedBox";
 import Description from "../components/Description";
 // Queries
 import { useUpdateCaseStudySearch } from "../queries";
@@ -63,50 +62,48 @@ export default function EditGoals({ caseStudySearch }) {
   };
 
   return (
-    <AnimatedBox>
-      <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-        {(formik) => (
-          <Form>
-            {history.length > 1 && (
-              <Button
-                onClick={handleBack}
-                type="button"
-                variant="minimal"
-                size="xs"
-                prefix={<ArrowLeft />}
-              >
-                Back
-              </Button>
-            )}
-            <Heading size="5xl" mb={2.5}>
-              Goals
-            </Heading>
-            <Description>
-              We’ll recommend you talent and projects that have helped similar
-              companies achieve the goals you select.
-            </Description>
-            <Box mb={6}>
-              <FormField
-                as={CheckboxInput}
-                name="goals"
-                environment="body"
-                options={GOALS}
-                optionsPerRow={2}
-              />
-            </Box>
-            <Error>{formik.status}</Error>
-            <SubmitButton
-              mt={4}
-              suffix={<ArrowRight />}
-              disabled={formik.values.goals.length === 0}
-              variant="gradient"
-              size="l"
+    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+      {(formik) => (
+        <Form>
+          {history.length > 1 && (
+            <Button
+              onClick={handleBack}
+              type="button"
+              variant="minimal"
+              size="xs"
+              prefix={<ArrowLeft />}
             >
-              Continue
-            </SubmitButton>
-          </Form>
-        )}
-      </Formik>
-    </AnimatedBox>
+              Back
+            </Button>
+          )}
+          <Heading size="5xl" mb={2.5}>
+            Goals
+          </Heading>
+          <Description>
+            We’ll recommend you talent and projects that have helped similar
+            companies achieve the goals you select.
+          </Description>
+          <Box mb={6}>
+            <FormField
+              as={CheckboxInput}
+              name="goals"
+              environment="body"
+              options={GOALS}
+              optionsPerRow={2}
+            />
+          </Box>
+          <Error>{formik.status}</Error>
+          <SubmitButton
+            mt={4}
+            suffix={<ArrowRight />}
+            disabled={formik.values.goals.length === 0}
+            variant="gradient"
+            size="l"
+          >
+            Continue
+          </SubmitButton>
+        </Form>
+      )}
+    </Formik>
   );
 }

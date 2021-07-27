@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
-import CaseStudiesList from "./CaseStudiesList";
-import CardsSkeleton from "./CardsSkeleton";
-import { useSavedArticles } from "./queries";
+import CaseStudiesList from "../components/CaseStudiesList";
+import CardsSkeleton from "../components/CardsSkeleton";
+import { useSavedArticles } from "../queries";
 import illustration from "src/illustrations/empty_folder.svg";
 
 function FavouritesEmpty() {

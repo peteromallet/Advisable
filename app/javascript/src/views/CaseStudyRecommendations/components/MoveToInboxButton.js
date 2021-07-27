@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { InboxIn } from "@styled-icons/heroicons-solid/InboxIn";
 import { theme } from "@advisable/donut";
-import { useUnarchive } from "./queries";
+import { useUnarchive } from "../queries";
 
 const StyledInboxButtonLabel = styled.div`
   font-size: 13px;

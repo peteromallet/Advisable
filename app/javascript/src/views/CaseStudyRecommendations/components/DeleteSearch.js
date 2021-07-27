@@ -1,7 +1,7 @@
 import React from "react";
 import { Trash } from "@styled-icons/heroicons-solid/Trash";
 import { Modal, Text, Button, useModal } from "@advisable/donut";
-import { useDeleteSearch } from "./queries";
+import { useDeleteSearch } from "../queries";
 
 export default function DeleteSearch({ search, onDelete = () => {} }) {
   const modal = useModal();
@@ -18,7 +18,7 @@ export default function DeleteSearch({ search, onDelete = () => {} }) {
       <Button size="xs" variant="subtle" onClick={modal.show}>
         <Trash size={16} />
       </Button>
-      <Modal modal={modal}>
+      <Modal modal={modal} label="Delete search">
         <Text fontSize="4xl" fontWeight={600} mb={2}>
           Are you sure?
         </Text>

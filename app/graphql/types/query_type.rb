@@ -392,7 +392,7 @@ module Types
       current_user.searches
     end
 
-    field :case_study_skills, Types::Skill.connection_type, null: true
+    field :case_study_skills, [Types::Skill], null: true
 
     def case_study_skills
       ::Skill.where(id: ::CaseStudy::Skill.select(:skill_id).distinct)
