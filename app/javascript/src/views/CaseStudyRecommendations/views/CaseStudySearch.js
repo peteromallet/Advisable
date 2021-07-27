@@ -12,6 +12,7 @@ import DeleteSearch from "../components/DeleteSearch";
 import commaSeparated from "src/utilities/commaSeparated";
 import NotFound from "./NotFound";
 import { isNotFound } from "../../NotFound";
+import useScrollToTop from "src/hooks/useScrollToTop";
 
 function SavedSearchEmpty() {
   return (
@@ -48,6 +49,7 @@ function CompanyRecommendationsEmpty() {
 }
 
 export default function CaseStudySearch() {
+  useScrollToTop();
   const { id } = useParams();
   const history = useHistory();
   const { data, loading, error } = useCaseStudySearch({

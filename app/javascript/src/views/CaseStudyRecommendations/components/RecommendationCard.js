@@ -51,7 +51,7 @@ export default function RecommendationCard({
             to={url}
             className="title"
             css={css({
-              fontSize: "3xl",
+              fontSize: "2xl",
               fontWeight: 600,
               marginBottom: 2,
               lineHeight: "28px",
@@ -65,7 +65,7 @@ export default function RecommendationCard({
             lineHeight="24px"
             color="neutral900"
             className="subtitle"
-            marginBottom={6}
+            marginBottom={7}
           >
             {caseStudy.subtitle}
           </Text>
