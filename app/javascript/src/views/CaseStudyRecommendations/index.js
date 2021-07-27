@@ -1,4 +1,5 @@
 import React from "react";
+import useFeatureFlag from "src/hooks/useFeatureFlag";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Box, Skeleton, useBreakpoint } from "@advisable/donut";
 import Inbox from "./Inbox";
@@ -14,8 +15,12 @@ import ViewLoading from "./ViewLoading";
 
 export default function CaseStudyExplorer() {
   const isLargeScreen = useBreakpoint("mUp");
-
   const { loading, data } = useCaseStudySearches();
+  const caseStudiesEnabled = useFeatureFlag("case_studies");
+
+  if (!caseStudiesEnabled) {
+    return <Redirect to="/" />;
+  }
 
   const defaultSearch =
     data?.caseStudySearches?.find((s) => s.companyRecomendation) ||
