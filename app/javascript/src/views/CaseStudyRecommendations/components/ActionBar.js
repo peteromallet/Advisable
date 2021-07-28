@@ -3,6 +3,7 @@ import queryString from "query-string";
 import styled from "styled-components";
 import CaseStudyActions from "./CaseStudyActions";
 import { useLocation } from "react-router-dom";
+import { StyledIconButton } from "src/components/IconButton/styles";
 
 const StyledActionBarContainer = styled.div`
   bottom: 0;
@@ -21,6 +22,10 @@ const StyledActionBar = styled.div`
   padding: 20px;
   box-shadow: 0px 4px 12px rgba(24, 24, 64, 0.12),
     0px 12px 80px rgba(26, 26, 31, 0.16);
+
+  ${StyledIconButton} {
+    margin: 0 4px;
+  }
 `;
 
 export default function ActionBar({ caseStudy }) {

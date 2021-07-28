@@ -1,6 +1,7 @@
 import React from "react";
 import { Trash } from "@styled-icons/heroicons-solid/Trash";
 import { Modal, Text, Button, useModal } from "@advisable/donut";
+import IconButton from "src/components/IconButton";
 import { useDeleteSearch } from "../queries";
 
 export default function DeleteSearch({ search, onDelete = () => {} }) {
@@ -15,9 +16,7 @@ export default function DeleteSearch({ search, onDelete = () => {} }) {
 
   return (
     <>
-      <Button size="xs" variant="subtle" onClick={modal.show}>
-        <Trash size={16} />
-      </Button>
+      <IconButton size="sm" icon={Trash} onClick={modal.show} />
       <Modal modal={modal} label="Delete search">
         <Text fontSize="4xl" fontWeight={600} mb={2}>
           Are you sure?

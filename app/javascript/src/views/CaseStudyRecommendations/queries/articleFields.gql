@@ -15,6 +15,7 @@ fragment ArticleFields on CaseStudyArticle {
   company {
     id
     logo
+    favicon
   }
   specialist {
     id

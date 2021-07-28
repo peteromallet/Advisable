@@ -22,17 +22,14 @@ const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
           </NavItem>
         )}
         <NavItem onClick={onCloseNav} to="/projects">
-          Find Talent
+          Hire
         </NavItem>
         <NavItem onClick={onCloseNav} to="/manage">
-          Manage Talent
+          Manage
         </NavItem>
         <NavItem onClick={onCloseNav} to="/messages">
           {messageCount > 0 && <Badge>{messageCount}</Badge>}
           Messages
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/settings">
-          Settings
         </NavItem>
 
         {isMobile && (
