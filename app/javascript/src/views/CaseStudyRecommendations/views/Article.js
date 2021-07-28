@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 
 const StyledName = styled.a`
   display: block;
-  font-size: 22px;
+  font-size: 24px;
   line-height: 24px;
   font-weight: 550;
   margin-bottom: 8px;
@@ -101,7 +101,7 @@ export default function CaseStudy() {
       >
         <Box top="108px" position={{ _: null, l: "sticky" }}>
           <PassportAvatar
-            size="xl"
+            size="2xl"
             marginBottom={6}
             src={caseStudy.specialist.avatar}
             name={caseStudy.specialist.name}
