@@ -9,7 +9,7 @@ function IconButton({ icon, label, ...props }) {
   return (
     <StyledIconButton {...props}>
       <StyledIconButtonCircle>
-        {React.createElement(icon, { size: 20 })}
+        {React.createElement(icon)}
       </StyledIconButtonCircle>
       {label && <StyledIconButtonLabel>{label}</StyledIconButtonLabel>}
     </StyledIconButton>
@@ -17,6 +17,7 @@ function IconButton({ icon, label, ...props }) {
 }
 
 IconButton.defaultProps = {
+  size: "md",
   variant: "subtle",
 };
 

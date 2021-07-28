@@ -2,8 +2,6 @@ import styled from "styled-components";
 import { space, position, variant } from "styled-system";
 
 export const StyledIconButtonCircle = styled.div`
-  width: 40px;
-  height: 40px;
   display: flex;
   border-radius: 50%;
   align-items: center;
@@ -16,6 +14,32 @@ export const StyledIconButtonLabel = styled.span`
   font-size: 12px;
   font-weight: 500;
 `;
+
+const size = variant({
+  prop: "size",
+  variants: {
+    sm: {
+      [StyledIconButtonCircle]: {
+        width: "32px",
+        height: "32px",
+        svg: {
+          width: "16px",
+          height: "16px",
+        },
+      },
+    },
+    md: {
+      [StyledIconButtonCircle]: {
+        width: "40px",
+        height: "40px",
+        svg: {
+          width: "20px",
+          height: "20px",
+        },
+      },
+    },
+  },
+});
 
 const variants = variant({
   variants: {
@@ -59,6 +83,7 @@ const variants = variant({
 });
 
 export const StyledIconButton = styled.button`
+  ${size}
   ${space}
   ${position}
   ${variants}
