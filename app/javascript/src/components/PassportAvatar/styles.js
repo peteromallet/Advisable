@@ -30,9 +30,34 @@ export const StyledPassportAvatarInner = styled.div`
 const size = variant({
   prop: "size",
   variants: {
+    xs: {
+      width: "35px",
+      height: "40px",
+      borderRadius: "2px",
+    },
+    sm: {
+      width: "42px",
+      height: "48px",
+      borderRadius: "2px",
+    },
+    md: {
+      width: "56px",
+      height: "64px",
+      borderRadius: "2px",
+    },
+    lg: {
+      width: "84px",
+      height: "96px",
+      borderRadius: "2px",
+    },
     xl: {
-      width: "140px",
-      height: "164px",
+      width: "126px",
+      height: "144px",
+      borderRadius: "20px",
+    },
+    "2xl": {
+      width: "168px",
+      height: "192px",
       borderRadius: "20px",
     },
   },
