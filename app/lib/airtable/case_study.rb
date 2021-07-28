@@ -80,6 +80,8 @@ module Airtable
         article.comment = fields["Advisable Comment"]
         article.editor_note = fields["Editor Note"]
         article.goals = fields["Goals"]
+        article.score = fields["Score"]
+        article.confidential = fields["Okay With Sharing"] != "Yes"
         article.targeting = fields["Additional Targeting Data"]
         article.save!
 
