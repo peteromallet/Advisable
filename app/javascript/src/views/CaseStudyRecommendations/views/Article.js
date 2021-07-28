@@ -3,15 +3,7 @@ import truncate from "lodash/truncate";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
 import { Check } from "@styled-icons/heroicons-solid/Check";
-import {
-  Circle,
-  Box,
-  Text,
-  Card,
-  Button,
-  Stack,
-  theme,
-} from "@advisable/donut";
+import { Circle, Box, Text, Button, Stack, theme } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import PassportAvatar from "src/components/PassportAvatar";
 import CaseStudyContent from "src/components/CaseStudyContent";
@@ -139,11 +131,11 @@ export default function CaseStudy() {
       <Box maxWidth="700px" position="relative">
         <StyledArticleTitle>{caseStudy.title}</StyledArticleTitle>
         {caseStudy.comment ? (
-          <Card padding={5} borderRadius="16px">
+          <Box bg="neutral100" padding={5} borderRadius="16px">
             <Text fontSize="lg" lineHeight="20px" fontStyle="italic">
               &quot;{caseStudy.comment}&quot;
             </Text>
-          </Card>
+          </Box>
         ) : null}
         <Text
           fontSize="xl"
