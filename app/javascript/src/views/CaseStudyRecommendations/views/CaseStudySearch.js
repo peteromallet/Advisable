@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { Box, Text, Button, Heading } from "@advisable/donut";
+import { Box, Text, Heading } from "@advisable/donut";
 import CaseStudiesList from "../components/CaseStudiesList";
 import { useParams } from "react-router-dom";
 import { useCaseStudySearch } from "../queries";
@@ -12,6 +12,8 @@ import DeleteSearch from "../components/DeleteSearch";
 import commaSeparated from "src/utilities/commaSeparated";
 import NotFound from "./NotFound";
 import { isNotFound } from "../../NotFound";
+import useScrollToTop from "src/hooks/useScrollToTop";
+import IconButton from "src/components/IconButton";
 
 function SavedSearchEmpty() {
   return (
@@ -48,6 +50,7 @@ function CompanyRecommendationsEmpty() {
 }
 
 export default function CaseStudySearch() {
+  useScrollToTop();
   const { id } = useParams();
   const history = useHistory();
   const { data, loading, error } = useCaseStudySearch({
@@ -96,16 +99,13 @@ export default function CaseStudySearch() {
           </Box>
           {!search?.companyRecomendation && (
             <Box paddingLeft={8}>
-              <Box display="inline" marginRight={1}>
-                <Button
-                  as={Link}
-                  size="xs"
-                  variant="subtle"
-                  to={`/explore/${search.id}/skills`}
-                >
-                  <Pencil size={16} />
-                </Button>
-              </Box>
+              <IconButton
+                size="sm"
+                as={Link}
+                icon={Pencil}
+                marginRight={1}
+                to={`/explore/${search.id}/skills`}
+              />
               <DeleteSearch search={search} onDelete={afterDelete} />
             </Box>
           )}

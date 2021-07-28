@@ -4,16 +4,6 @@ import { space, typography } from "styled-system";
 import { NavLink, Link } from "react-router-dom";
 import { Box, theme } from "@advisable/donut";
 
-export const StyledRecommendationCardAvatar = styled(Box)`
-  width: 132px;
-  height: 168px;
-  border-radius: 16px;
-  background: ${theme.colors.neutral200};
-  background-size: cover;
-  background-position: center;
-  position: relative;
-`;
-
 export const StyledNavigationItem = styled(NavLink)`
   border: none;
   appearance: none;

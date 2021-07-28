@@ -14,7 +14,7 @@ export const validationSchema = object().shape({
   skills: array().min(1, "Please select at least one skill").required(),
 });
 
-function PopularSkills({ popularSkills, formik }) {
+function PopularSkills({ popularSkills, formik, disabled }) {
   const filtered = useMemo(() => {
     const names = formik.values.skills.map((s) => s.value);
     return popularSkills.filter((s) => !names.includes(s.value));
@@ -24,6 +24,7 @@ function PopularSkills({ popularSkills, formik }) {
     <Box
       key={s.value}
       onClick={() => {
+        if (disabled) return;
         const newValue = [...formik.values.skills, s];
         formik.setFieldValue("skills", newValue);
       }}
@@ -40,12 +41,16 @@ function PopularSkills({ popularSkills, formik }) {
       paddingRight={3}
       fontSize="15px"
       fontWeight={300}
-      css={css({
-        cursor: "pointer",
-        "&:hover": {
-          bg: "blue50",
-        },
-      })}
+      opacity={disabled ? 0.5 : 1}
+      css={
+        !disabled &&
+        css({
+          cursor: "pointer",
+          "&:hover": {
+            bg: "blue50",
+          },
+        })
+      }
     >
       <Plus size={20} />
       <Box paddingLeft={0.5} marginTop="-1px">
@@ -80,13 +85,12 @@ export default function CaseStudySearchSkillsForm({
               isRequired
               as={Combobox}
               multiple
-              max={10}
+              max={3}
               value={formik.values.skills}
               name="skills"
               onChange={(s) => {
                 formik.setFieldValue("skills", s);
               }}
-              inputColor="white"
               placeholder="Search for skills..."
               prefix={<Search fill={theme.colors.neutral400} />}
               options={skills}
@@ -96,7 +100,11 @@ export default function CaseStudySearchSkillsForm({
             Popular skills in the SaaS industry
           </Text>
           <Box paddingTop={2} mb={4}>
-            <PopularSkills popularSkills={popularSkills} formik={formik} />
+            <PopularSkills
+              disabled={formik.values.skills.length >= 3}
+              popularSkills={popularSkills}
+              formik={formik}
+            />
           </Box>
           <Error>{formik.status}</Error>
           <SubmitButton

@@ -3,28 +3,22 @@ import truncate from "lodash/truncate";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
 import { Check } from "@styled-icons/heroicons-solid/Check";
-import {
-  Circle,
-  Box,
-  Text,
-  Card,
-  Avatar,
-  Button,
-  Stack,
-  theme,
-} from "@advisable/donut";
+import { Circle, Box, Text, Button, Stack, theme } from "@advisable/donut";
+import Loading from "src/components/Loading";
+import PassportAvatar from "src/components/PassportAvatar";
 import CaseStudyContent from "src/components/CaseStudyContent";
 import { useCaseStudy } from "../queries";
-import Sticky from "react-stickynode";
 import ActionBar from "../components/ActionBar";
 import { isNotFound } from "../../NotFound";
 import NotFound from "./NotFound";
+import useScrollToTop from "src/hooks/useScrollToTop";
+import { motion } from "framer-motion";
 
 const StyledName = styled.a`
   display: block;
-  font-size: 20px;
-  line-height: 20px;
-  font-weight: 600;
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 550;
   margin-bottom: 8px;
   letter-spacing: -0.04rem;
   color: ${theme.colors.neutral800};
@@ -36,8 +30,8 @@ const StyledName = styled.a`
 `;
 
 const StyledArticleTitle = styled.h1`
-  font-size: 36px;
-  line-height: 40px;
+  font-size: 32px;
+  line-height: 36px;
   font-weight: 600;
   margin-bottom: 32px;
   letter-spacing: -0.06rem;
@@ -76,10 +70,11 @@ function CaseStudySummaryResults({ caseStudy }) {
 }
 
 export default function CaseStudy() {
+  useScrollToTop();
   const { id } = useParams();
   const { data, loading, error } = useCaseStudy(id);
 
-  if (loading) return <>loading</>;
+  if (loading) return <Loading />;
 
   if (isNotFound(error)) {
     return <NotFound />;
@@ -89,19 +84,27 @@ export default function CaseStudy() {
   const { specialist } = caseStudy;
 
   return (
-    <Box padding={12} justifyContent="center" display="flex">
+    <Box
+      as={motion.div}
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      padding={12}
+      justifyContent="center"
+      display="flex"
+    >
       <Box
-        width="240px"
+        width="280px"
         flexShrink={0}
-        paddingRight={12}
+        paddingRight={16}
         display={{ _: "none", l: "block" }}
       >
-        <Sticky enabled top={108}>
-          <Avatar
-            size="l"
-            name={specialist.name}
-            url={specialist.avatar}
-            marginBottom={4}
+        <Box top="108px" position={{ _: null, l: "sticky" }}>
+          <PassportAvatar
+            size="2xl"
+            marginBottom={6}
+            src={caseStudy.specialist.avatar}
+            name={caseStudy.specialist.name}
           />
           <StyledName target="_blank" href={`/freelancers/${specialist.id}`}>
             {specialist.name}
@@ -111,7 +114,7 @@ export default function CaseStudy() {
             fontWeight={350}
             lineHeight="20px"
             paddingBottom={6}
-            color="neutral600"
+            color="neutral700"
           >
             {truncate(specialist.bio, { length: 170 })}
           </Text>
@@ -123,16 +126,16 @@ export default function CaseStudy() {
           >
             Work with {specialist.firstName}
           </Button>
-        </Sticky>
+        </Box>
       </Box>
-      <Box maxWidth="680px" paddingBottom={20} position="relative">
+      <Box maxWidth="700px" position="relative">
         <StyledArticleTitle>{caseStudy.title}</StyledArticleTitle>
         {caseStudy.comment ? (
-          <Card padding={5} borderRadius="16px">
+          <Box bg="neutral100" padding={5} borderRadius="16px">
             <Text fontSize="lg" lineHeight="20px" fontStyle="italic">
               &quot;{caseStudy.comment}&quot;
             </Text>
-          </Card>
+          </Box>
         ) : null}
         <Text
           fontSize="xl"

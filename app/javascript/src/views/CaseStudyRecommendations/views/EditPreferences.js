@@ -26,7 +26,7 @@ function buildPreferences(currentCompany) {
   }
 
   if (currentCompany?.kind) {
-    preferences = [`The company is ${currentCompany.kind}`, ...preferences];
+    preferences = [`The company is a ${currentCompany.kind}`, ...preferences];
   }
 
   if (currentCompany?.businessType) {
@@ -81,7 +81,9 @@ export default function EditPreferences({ currentCompany, caseStudySearch }) {
             Preferences
           </Heading>
           <Description>
-            What’s important to you when searching for projects?
+            What’s important to you when searching for projects? We&apos;ll use
+            this information to decide how to improve our recommendation engine
+            in the future.
           </Description>
           <Box mb={6}>
             <FormField

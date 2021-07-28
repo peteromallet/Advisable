@@ -1,8 +1,6 @@
 import React, { useCallback } from "react";
-import styled from "styled-components";
 import {
   Box,
-  theme,
   Modal,
   Text,
   Button,
@@ -15,44 +13,7 @@ import { Archive } from "@styled-icons/heroicons-solid/Archive";
 import { useArchive } from "../queries";
 import { Form, Formik, Field } from "formik";
 import SubmitButton from "src/components/SubmitButton";
-
-const StyledArchiveButtonLabel = styled.div`
-  font-size: 13px;
-  color: ${theme.colors.neutral700};
-`;
-
-const StyledArchiveButtonIcon = styled.div`
-  width: 40px;
-  height: 40px;
-  display: flex;
-  border-radius: 50%;
-  margin-bottom: 8px;
-  align-items: center;
-  justify-content: center;
-  color: ${theme.colors.blue900};
-  background: ${theme.colors.neutral100};
-  transition: background 300ms;
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
-`;
-
-const StyledArchiveButton = styled.div`
-  width: 60px;
-  cursor: pointer;
-  align-items: center;
-  display: inline-flex;
-  flex-direction: column;
-
-  &:hover {
-    ${StyledArchiveButtonIcon} {
-      color: ${theme.colors.neutral600};
-      background: ${theme.colors.neutral200};
-    }
-  }
-`;
+import IconButton from "src/components/IconButton";
 
 function ArchiveForm({ article, searchId, onArchive = () => {}, modal }) {
   const [archive] = useArchive({ article, searchId });
@@ -166,12 +127,7 @@ export default function ArchiveButton(props) {
       <Modal modal={modal} label="Archive article">
         <ArchiveForm modal={modal} {...props} />
       </Modal>
-      <StyledArchiveButton onClick={handleClick}>
-        <StyledArchiveButtonIcon>
-          <Archive />
-        </StyledArchiveButtonIcon>
-        <StyledArchiveButtonLabel>Archive</StyledArchiveButtonLabel>
-      </StyledArchiveButton>
+      <IconButton icon={Archive} onClick={handleClick} label="Archive" />
     </>
   );
 }
