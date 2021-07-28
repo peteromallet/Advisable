@@ -25,10 +25,10 @@ module Mutations
         search = ::CaseStudy::Search.find_by!(uid: id)
         search.finalized_at = Time.zone.now
         search.preferences = preferences
-        search.refresh_results
 
         current_account_responsible_for do
           search.save
+          search.refresh_results
         end
 
         {search: search}

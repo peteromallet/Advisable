@@ -46,8 +46,8 @@ module Mutations
             end
           end
 
-          search.refresh_results
           search.save
+          search.refresh_results
         end
 
         {search: search.reload}
