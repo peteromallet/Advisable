@@ -16,25 +16,27 @@ module Featurable
   class_methods do
     def featurize(*flags)
       flags.map(&:to_s).each do |flag|
-        define_method "#{flag}?" do
+        define_method("#{flag}?") do
           !!features[flag] # rubocop:disable Style/DoubleNegation
         end
 
-        define_method "#{flag}=" do |param|
+        define_method("#{flag}=") do |param|
           features.merge!(flag => param)
         end
 
-        define_method "toggle_#{flag}" do
+        define_method("toggle_#{flag}") do
           public_send("#{flag}=", !features[flag])
         end
 
-        define_method "toggle_#{flag}!" do
+        define_method("toggle_#{flag}!") do
           public_send("toggle_#{flag}")
           save!
         end
+
+        scope("with_#{flag}_feature", -> { where("features @> ?", {flag => true}.to_json) })
       end
 
-      define_singleton_method :feature_flags do
+      define_singleton_method(:feature_flags) do
         flags
       end
     end
