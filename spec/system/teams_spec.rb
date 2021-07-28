@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Teams', type: :system do
@@ -11,7 +13,7 @@ RSpec.describe 'Teams', type: :system do
 
   it 'user can add a team member' do
     authenticate_as(manager)
-    email = Faker::Internet.email
+    email = "test@#{manager.account.domain}"
     visit "/settings/team"
     click_on 'Add team member'
     fill_in 'firstName', with: "Jane"
@@ -32,7 +34,7 @@ RSpec.describe 'Teams', type: :system do
   end
 
   it 'manager can demote another manager' do
-    non_manager.account.update permissions: ["team_manager"]
+    non_manager.account.update(permissions: ["team_manager"])
     authenticate_as(manager)
     visit "/settings/team"
     check "Demote #{non_manager.account.name}"
