@@ -25,7 +25,7 @@ function PassportAvatar({ src, name, children, color, ...props }) {
         </clipPath>
       </svg>
       <StyledPassportAvatarInner color={color} style={style}>
-        {initials}
+        {src ? null : initials}
       </StyledPassportAvatarInner>
       {children}
     </StyledPassportAvatar>
