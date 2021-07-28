@@ -5,15 +5,17 @@ import CaseStudyActions from "./CaseStudyActions";
 import LogoMark from "src/components/LogoMark";
 import { StyledRecommendation, StyledRecommendationTitle } from "../styles";
 import PassportAvatar from "src/components/PassportAvatar";
+import { useLocation } from "react-router-dom";
 
 export default function RecommendationCard({
   caseStudy,
   search,
   sharedArticle,
 }) {
-  let url = `/explore/articles/${caseStudy.id}`;
+  const location = useLocation();
+  let url = `/explore/articles/${caseStudy.id}?back=${location.pathname}`;
   if (search) {
-    url = `${url}?search=${search.id}`;
+    url = `${url}&search=${search.id}`;
   }
 
   return (

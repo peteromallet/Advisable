@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import queryString from "query-string";
 import useFeatureFlag from "src/hooks/useFeatureFlag";
 import {
   Switch,
@@ -30,6 +31,7 @@ export default function CaseStudyExplorer() {
   const isLargeScreen = useBreakpoint("mUp");
   const { loading, data } = useCaseStudySearches();
   const caseStudiesEnabled = useFeatureFlag("case_studies");
+  const queryParams = queryString.parse(location.search);
 
   useEffect(() => {
     setTheme((t) => ({ ...t, background: "white" }));
@@ -49,8 +51,8 @@ export default function CaseStudyExplorer() {
   });
 
   const goBack = () => {
-    if (history.length > 0) {
-      history.goBack();
+    if (queryParams.back) {
+      history.push(queryParams.back);
       return;
     }
 
