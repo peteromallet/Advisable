@@ -113,7 +113,7 @@ export default function CaseStudy() {
             fontSize="xs"
             fontWeight={350}
             lineHeight="20px"
-            paddingBottom={5}
+            paddingBottom={6}
             color="neutral700"
           >
             {truncate(specialist.bio, { length: 170 })}
