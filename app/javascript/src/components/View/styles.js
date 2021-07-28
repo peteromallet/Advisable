@@ -20,7 +20,8 @@ const viewVariants = variant({
         position: "fixed",
         top: "60px",
         background: "white",
-        boxShadow: "0px 1px 20px rgba(14, 31, 91, 0.08)",
+        boxShadow:
+          "0px 1px 20px rgba(14, 31, 91, 0.08), 0 0 1px rgba(14, 31, 91, 0.1)",
         height: "calc(100vh - 60px)",
         width: "280px",
       },
