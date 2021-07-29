@@ -31,6 +31,18 @@ class GraphqlController < ApplicationController
 
     super
   rescue ActionController::InvalidAuthenticityToken
+    Sentry.capture_message(
+      "Invalid CSRF token",
+      level: "debug",
+      extra: {
+        headers: headers,
+        tokens: request_authenticity_tokens,
+        real: real_csrf_token(session),
+        global: global_csrf_token(session),
+        session: cookies["_advisable_session"]
+      }
+    )
+
     render status: :unprocessable_entity, json: {message: "INVALID_CSRF"}
   end
 
