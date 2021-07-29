@@ -63,7 +63,7 @@ RSpec.describe(User, type: :model) do
       user.company.update(goals: %w[one two])
       new_user = user.invite_comember!(new_account)
       search = ::CaseStudy::Search.find_by(user: new_user)
-      expect(search.business_type).to eq(user.company.kind)
+      expect(search.business_type).to eq(user.company.business_type)
       expect(search.goals).to eq(%w[one two])
       expect(search.name).to eq("Recommendations for #{user.company.name}")
     end
@@ -74,7 +74,7 @@ RSpec.describe(User, type: :model) do
       user.company.update(goals: %w[one two])
       search = user.create_company_recomendation_search
       expect(search.goals).to match_array(%w[one two])
-      expect(search.business_type).to eq("Startup")
+      expect(search.business_type).to eq(user.company.business_type)
       expect(search.name).to eq("Recommendations for Test Company")
       expect(search.company_recomendation).to be_truthy
     end
