@@ -1,9 +1,25 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import * as Sentry from "@sentry/react";
 import { AlertTriangle } from "@styled-icons/feather/AlertTriangle";
 import { RefreshCw } from "@styled-icons/feather/RefreshCw";
 import { Circle, Box, Text, Button } from "@advisable/donut";
 import CollectFeedback from "./CollectFeedback";
+
+const CHUNK_LOAD_EXPIRY = 60000; // 1 min
+
+function markChunkLoadErrorTime() {
+  localStorage.setItem(
+    "chunkLoadError",
+    new Date().getTime() + CHUNK_LOAD_EXPIRY,
+  );
+}
+
+function handleChunkLoadWithrefresh() {
+  const timestamp = window.localStorage.getItem("chunkLoadError");
+  if (!timestamp) return true;
+  const isExpired = new Date().getTime() > timestamp;
+  return isExpired;
+}
 
 function ErrorMessage({ eventId }) {
   return (
@@ -37,14 +53,26 @@ function ErrorMessage({ eventId }) {
 // deployment is made while a user is on the site, by the time that they try
 // to navigate to a new flow, the new deployment may have changed the names
 // of these assets which results in a failed to load chunk error.
-// To handle these we display a message saying a new update has been released
+// To handle these errors we attempt to refresh the page for the user and to
+// update them to the new version of the app. We store a timestamp when we
+// attempt to refresh the page to prevent any chance of putting the user into
+// a refresh loop in the event that the error is due to something else. As a
+// fallback we display a message saying a new update has been released
 // and ask the user to upgrade by refreshing their browser, this will request
 // the most recent assets.
-//
-// We should eventually use service workers to reduce this error, or maintain
-// old versions for a certain amount of time
-// https://stackoverflow.com/questions/44601121/code-splitting-causes-chunks-to-fail-to-load-after-new-deployment-for-spa
 function UpdateAvailable() {
+  const shouldHandleRedirect = handleChunkLoadWithrefresh();
+
+  // Catch chunk load errors
+  useEffect(() => {
+    if (shouldHandleRedirect) {
+      markChunkLoadErrorTime();
+      window.location.reload();
+    }
+  }, [shouldHandleRedirect]);
+
+  if (shouldHandleRedirect) return null;
+
   return (
     <Box maxWidth={340} mx="auto" my="xxl" textAlign="center">
       <Circle bg="blue800" mb="m" color="white">
@@ -72,9 +100,9 @@ function UpdateAvailable() {
 }
 
 function RootErrorBoundaryFallback({ error, ...props }) {
-  // Catch chunk load errors
   const updateAvailable = error.name && error.name.match(/ChunkLoadError/);
   if (updateAvailable) return <UpdateAvailable />;
+
   return <ErrorMessage {...props} />;
 }
 
