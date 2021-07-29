@@ -1,7 +1,6 @@
 import React from "react";
 import Sticky from "../../components/Sticky";
-import { InformationCircle } from "@styled-icons/heroicons-solid/InformationCircle";
-import { Box, Text, Card, Notice } from "@advisable/donut";
+import { Box, Text, Card } from "@advisable/donut";
 import { List, Layout, BottomBar } from "src/components";
 import { useScreenSize } from "src/utilities/screenSizes";
 import ProjectAttributes from "./ProjectAttributes";
@@ -9,10 +8,7 @@ import Actions from "./Actions";
 
 let JobListing = ({ application, history }) => {
   const isMobile = useScreenSize("small");
-  const { project, specialist } = application;
-  const onHold = ["On Hold", "Full Application"].includes(
-    specialist.applicationStage,
-  );
+  const { project } = application;
 
   const gotoApply = () => {
     let url = `/invites/${application.id}/apply`;
@@ -66,18 +62,6 @@ let JobListing = ({ application, history }) => {
             <Text mb="32px" mt="8px" fontSize="s" color="neutral600">
               {project.industry} {project.companyType}
             </Text>
-          )}
-          {onHold && (
-            <Notice
-              mb="32px"
-              icon={<InformationCircle />}
-              title="Advisable application"
-              variant="cyan"
-            >
-              This project application will be used as part of your Advisable
-              application to figure out if we should accept you into our network
-              of freelancers
-            </Notice>
           )}
           <Text
             as="h6"

@@ -1,13 +1,11 @@
 // Renders the freelancers applications view.
 import React from "react";
-import { useHistory, Redirect } from "react-router-dom";
-import { Box, Notice } from "@advisable/donut";
+import { useHistory } from "react-router-dom";
+import { Box } from "@advisable/donut";
 import { useQuery } from "@apollo/client";
-import { RefreshCcw } from "@styled-icons/feather/RefreshCcw";
 import Loading from "../../components/Loading";
 import { GET_APPLICATIONS } from "./queries";
 import Empty from "./Empty";
-import AccountOnHold from "./AccountOnHold";
 import OpenApplications from "./OpenApplications";
 import ApplicationInvitations from "./ApplicationInvitations";
 import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
@@ -21,8 +19,6 @@ const Applications = () => {
   if (loading) return <Loading />;
 
   const viewer = data.viewer;
-  const onHold = viewer.applicationStage === "On Hold";
-  const fullApplicationPending = viewer.applicationStage === "Full Application";
   const isAccepted = viewer.applicationStage === "Accepted";
   const hasValidatedProjects = viewer.previousProjects?.nodes?.some(
     (proj) => proj.validationStatus === "Validated",
@@ -38,18 +34,6 @@ const Applications = () => {
   const hasApplications = applications.length;
   const hasInvitations = invitations.length > 0;
 
-  if (hasInvitations && (onHold || fullApplicationPending)) {
-    return <Redirect to={`/invites/${invitations[0].id}`} />;
-  }
-
-  if (onHold && invitations.length === 0) {
-    return <AccountOnHold />;
-  }
-
-  if (fullApplicationPending) {
-    return <Redirect to="/apply" />;
-  }
-
   const handleViewInvitation = (id) => {
     history.push(`/invites/${id}`);
   };
@@ -59,19 +43,7 @@ const Applications = () => {
       {isAccepted && !hasValidatedProjects ? <AcceptedStatusPrompt /> : null}
       <FreelancerApplicationPrompt />
       <AccountConfirmationPrompt />
-      {onHold && (
-        <Box mb="l">
-          <Notice
-            mb="m"
-            icon={<RefreshCcw />}
-            title="Your account is currently on hold"
-          >
-            We evaluate and accept freelancers as they apply for projects.
-          </Notice>
-        </Box>
-      )}
       <ApplicationInvitations
-        onHold={onHold}
         loading={loading}
         onViewInvitation={handleViewInvitation}
         applications={loading ? [] : invitations}
@@ -80,7 +52,6 @@ const Applications = () => {
         <Empty />
       )}
       <OpenApplications
-        onHold={onHold}
         loading={loading}
         specialist={viewer}
         applications={loading ? [] : applications}

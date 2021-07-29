@@ -7,7 +7,7 @@ import CallToActionBox from "../CallToActionBox";
 import useViewer from "src/hooks/useViewer";
 
 import { useModal } from "@advisable/donut";
-import ValidationModal from "src/components/ManagePreviousProjects/ValidationModal";
+import ValidationModal from "src/components/PreviousProjectValidationModal";
 import PreviousProjectFormModal, {
   usePreviousProjectModal,
 } from "src/components/PreviousProjectFormModal";

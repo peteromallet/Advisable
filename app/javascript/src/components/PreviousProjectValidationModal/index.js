@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, Text, Button } from "@advisable/donut";
 import CopyURL from "../CopyURL";
 
-export default function ValidationModal({
+export default function PreviousProjectValidationModal({
   modal,
   previousProject,
   title,
