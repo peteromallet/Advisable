@@ -5,7 +5,7 @@ import { Box, Text, Select, Stack, Button, useModal } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import { verificationValidationSchema } from "./validationSchemas";
 import Helper from "./Helper";
-import ValidationModal from "src/components/ManagePreviousProjects/ValidationModal";
+import ValidationModal from "src/components/PreviousProjectValidationModal";
 // Queries
 import { useUpdatePreviousProject } from "./queries";
 import { RELATIONSHIPS } from "./data";
@@ -13,11 +13,8 @@ import { RELATIONSHIPS } from "./data";
 export default function EditValidation({ data }) {
   const [updatePreviousProject] = useUpdatePreviousProject();
   const validationModal = useModal();
-  const {
-    contactName,
-    contactJobTitle,
-    contactRelationship,
-  } = data.previousProject;
+  const { contactName, contactJobTitle, contactRelationship } =
+    data.previousProject;
 
   const handleSaveChanges = async (values) => {
     await updatePreviousProject({

@@ -31,7 +31,6 @@ const FreelancerActiveApplication = lazy(() =>
 );
 const RequestConsultation = lazy(() => import("./views/RequestConsultation"));
 const Consultation = lazy(() => import("./views/Consultation"));
-const FullApplication = lazy(() => import("./views/FullApplication"));
 const Interview = lazy(() => import("./views/Interview"));
 const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
 const SetPassword = lazy(() => import("./views/SetPassword"));
@@ -129,11 +128,6 @@ const ApplicationRoutes = () => {
             specialistOnly
             path="/applications"
             component={Applications}
-          />
-          <AuthenticatedRoute
-            specialistOnly
-            path="/apply"
-            component={FullApplication}
           />
           <AuthenticatedRoute
             component={Proposal}
