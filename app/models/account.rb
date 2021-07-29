@@ -97,6 +97,10 @@ class Account < ApplicationRecord
     unsubscribed_from.include?("All") || unsubscribed_from.include?(subscription)
   end
 
+  def domain
+    email&.split("@")&.last
+  end
+
   private
 
   def strip_email

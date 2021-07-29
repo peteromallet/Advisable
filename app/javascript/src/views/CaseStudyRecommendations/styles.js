@@ -1,10 +1,25 @@
 import styled from "styled-components";
 import { rgba } from "polished";
-import { space, typography } from "styled-system";
+import { space, typography, variant } from "styled-system";
 import { NavLink, Link } from "react-router-dom";
 import { Box, theme } from "@advisable/donut";
 
+const navItemVariants = variant({
+  variants: {
+    default: {
+      opacity: 1,
+    },
+    subtle: {
+      opacity: 0.64,
+      "&:hover": {
+        opacity: 1,
+      },
+    },
+  },
+});
+
 export const StyledNavigationItem = styled(NavLink)`
+  ${navItemVariants};
   border: none;
   appearance: none;
   width: 100%;
@@ -12,6 +27,7 @@ export const StyledNavigationItem = styled(NavLink)`
   display: flex;
   padding: 0 12px;
   font-size: 16px;
+  text-align: left;
   border-radius: 12px;
   align-items: center;
   background: transparent;

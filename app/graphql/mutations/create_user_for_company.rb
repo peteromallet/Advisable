@@ -19,7 +19,9 @@ module Mutations
     end
 
     def resolve(email:, **optional)
+      email_blank?(email)
       email_blacklisted?(email)
+      email_matches_domain?(email)
       attributes = optional.slice(:first_name, :last_name)
       attributes[:permissions] = optional[:team_manager] ? [:team_manager] : []
       account = Account.new(email: email, **attributes)
@@ -31,13 +33,26 @@ module Mutations
 
       {user: new_user, company: current_company}
     rescue ActiveRecord::RecordInvalid
-      if account.errors.added?(:email, :taken, value: email)
-        ApiError.invalid_request("EMAIL_TAKEN", "The email #{email} is already used by another account.")
-      elsif account.errors.added?(:email, :blank)
-        ApiError.invalid_request("EMAIL_BLANK", "Email is required.")
-      else
-        raise
-      end
+      return ApiError.invalid_request("EMAIL_TAKEN", "The email #{email} is already used by another account.") if account.errors.added?(:email, :taken, value: email)
+
+      raise
+    end
+
+    private
+
+    def email_blank?(email)
+      ApiError.invalid_request("EMAIL_BLANK", "Email is required.") if email.blank?
+    end
+
+    def email_matches_domain?(email)
+      user_domain = current_user.account.domain
+      email_domain = email.split("@").last
+      return if user_domain == email_domain
+
+      ApiError.invalid_request("DOMAIN_MISMATCH", "The domain #{email_domain} does not match #{user_domain}", extensions: {
+        userDomain: user_domain,
+        emailDomain: email_domain
+      })
     end
   end
 end
