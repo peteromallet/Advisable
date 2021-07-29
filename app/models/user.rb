@@ -103,7 +103,7 @@ class User < ApplicationRecord
 
     ::CaseStudy::Search.create!(
       user: self,
-      business_type: company.kind,
+      business_type: company.business_type,
       goals: company.goals,
       name: "Recommendations for #{company.name}",
       finalized_at: Time.zone.now,
