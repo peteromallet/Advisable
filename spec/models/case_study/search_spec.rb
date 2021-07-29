@@ -39,14 +39,6 @@ RSpec.describe CaseStudy::Search, type: :model do
       expect(results.pluck(:id)).to match_array([article1.id, article2.id])
     end
 
-    it "includes articles with same business type" do
-      article1.update(company_type: "B2B")
-      article2.update(company_type: "B2C")
-      search = create(:case_study_search, business_type: "B2B")
-      results = search.results
-      expect(results.pluck(:id)).to match_array([article1.id])
-    end
-
     it "does not include archived" do
       article1.skills.create(skill: skill1)
       article2.skills.create(skill: skill1)
@@ -58,11 +50,11 @@ RSpec.describe CaseStudy::Search, type: :model do
     end
 
     it "stores the results and allows refreshing" do
-      article1.update(company_type: "B2B")
-      article2.update(company_type: "B2C")
+      article1.update(goals: %w[one two])
+      article2.update(goals: %w[three])
       search = create(
         :case_study_search,
-        business_type: "B2B",
+        goals: %w[one],
         results: [article1.id, article2.id, article3.id, article4.id]
       )
       create(:case_study_archived_article, user: search.user, article: article4)
