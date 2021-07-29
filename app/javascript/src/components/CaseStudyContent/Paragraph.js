@@ -5,9 +5,9 @@ import renderLineBreaks from "src/utilities/renderLineBreaks";
 export default function CaseStudyParagraph({ text }) {
   return (
     <Text
-      fontWeight={350}
+      fontWeight={400}
       fontSize="18px"
-      lineHeight="24px"
+      lineHeight="28px"
       paddingTop={2}
       paddingBottom={4}
       autoLink
