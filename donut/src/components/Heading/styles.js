@@ -4,6 +4,12 @@ import { variant, display, space, color, typography } from "styled-system";
 const headingSize = variant({
   prop: "$size",
   variants: {
+    "6xl": {
+      fontSize: "6xl",
+      fontWeight: 650,
+      lineHeight: "40px",
+      letterSpacing: "-0.05rem",
+    },
     "5xl": {
       fontSize: "5xl",
       fontWeight: 600,
