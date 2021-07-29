@@ -1,4 +1,6 @@
 import React from "react";
+import { Box } from "@advisable/donut";
+import SimpleBar from "simplebar-react";
 import { use100vh } from "react-div-100vh";
 import { StyledView, StyledViewContent, StyledSidebar } from "./styles";
 
@@ -10,8 +12,14 @@ function ViewContent({ children, ...props }) {
   );
 }
 
-function ViewSidebar({ children, ...props }) {
-  return <StyledSidebar {...props}>{children}</StyledSidebar>;
+function ViewSidebar({ children, padding, ...props }) {
+  return (
+    <StyledSidebar {...props}>
+      <SimpleBar style={{ height: "100%" }}>
+        <Box padding={padding}>{children}</Box>
+      </SimpleBar>
+    </StyledSidebar>
+  );
 }
 
 function View({ children, ...props }) {
