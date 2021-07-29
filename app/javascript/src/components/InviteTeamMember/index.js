@@ -39,8 +39,11 @@ export const INVITE_MEMBER = gql`
 
 const useInviteMember = () => {
   return useMutation(INVITE_MEMBER, {
-    update(cache, { data }) {
+    update(cache, { data, errors }) {
+      if (errors) return;
+
       const { user, company } = data.createUserForCompany;
+
       cache.modify({
         id: cache.identify(company),
         fields: {
@@ -81,7 +84,7 @@ export default function InviteTeamMember({ onInvite = () => {} }) {
     });
 
     if (errors) {
-      const errorCode = errors?.[0]?.extensions?.code;
+      const errorCode = errors?.[0];
       formik.setStatus(errorCode);
       formik.setSubmitting(false);
     } else {
@@ -125,7 +128,9 @@ export default function InviteTeamMember({ onInvite = () => {} }) {
               color="red600"
               borderRadius="12px"
             >
-              {t(`errors.${formik.status}`)}
+              {t(`errors.${formik.status?.extensions?.code}`, {
+                error: formik.status,
+              })}
             </Box>
           )}
         </Form>

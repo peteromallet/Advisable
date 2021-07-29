@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::CreateUserForCompany do
   let(:user) { create(:user, :team_manager) }
   let(:context) { {current_user: user} }
-  let(:email) { Faker::Internet.email }
+  let(:email) { "other@#{user.account.domain}" }
   let(:first_name) { Faker::Name.first_name }
   let(:last_name) { Faker::Name.last_name }
   let(:extra) { "" }
