@@ -73,6 +73,7 @@ const fontSizes = {
   "4xl": 28,
   xxxxl: 28,
   "5xl": 32,
+  "6xl": 40,
 };
 
 // Font weights

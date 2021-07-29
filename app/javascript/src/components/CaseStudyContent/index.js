@@ -15,7 +15,7 @@ const CONTENT_TYPES = {
 const StyledSectionTitle = styled.h4`
   font-weight: 500;
   font-size: 13px;
-  color: #958d86;
+  color: #9f9da6;
   margin-top: 60px;
   letter-spacing: 0.02rem;
   text-transform: uppercase;
