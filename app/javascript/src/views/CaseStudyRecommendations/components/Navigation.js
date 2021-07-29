@@ -6,13 +6,14 @@ import { InboxIn } from "@styled-icons/heroicons-solid/InboxIn";
 import { Archive } from "@styled-icons/heroicons-solid/Archive";
 import { Search } from "@styled-icons/heroicons-solid/Search";
 import { PlusCircle } from "@styled-icons/heroicons-solid/PlusCircle";
+import InviteTeamMember from "./InviteTeamMember";
 import {
   StyledNavigationItem,
   StyledNavigationItemCount,
   StyledNewSearch,
 } from "../styles";
 
-function NavItem({ icon, children, count, ...props }) {
+export function NavItem({ icon, children, count, ...props }) {
   return (
     <StyledNavigationItem {...props}>
       {icon ? React.createElement(icon) : null}
@@ -67,6 +68,8 @@ export default function ExploreNavigation({ data }) {
       <NavItem icon={Archive} to="/explore/archived">
         Archive
       </NavItem>
+      <Box height={1} bg="neutral100" marginY={6} />
+      <InviteTeamMember />
     </>
   );
 }
