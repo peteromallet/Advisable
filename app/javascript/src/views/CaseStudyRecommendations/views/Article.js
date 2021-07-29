@@ -46,7 +46,7 @@ export default function CaseStudy() {
 
   return (
     <Box
-      paddingTop={10}
+      paddingTop={14}
       maxWidth="1000px"
       paddingX={2}
       mx="auto"
