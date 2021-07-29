@@ -11,6 +11,9 @@ const navItemVariants = variant({
     },
     subtle: {
       opacity: 0.64,
+      "&:hover": {
+        opacity: 1,
+      },
     },
   },
 });
