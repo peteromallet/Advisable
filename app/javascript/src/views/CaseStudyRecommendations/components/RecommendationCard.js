@@ -2,10 +2,10 @@ import React from "react";
 import css from "@styled-system/css";
 import { Text, Box, Circle } from "@advisable/donut";
 import CaseStudyActions from "./CaseStudyActions";
-import LogoMark from "src/components/LogoMark";
 import { StyledRecommendation, StyledRecommendationTitle } from "../styles";
 import PassportAvatar from "src/components/PassportAvatar";
 import { useLocation } from "react-router-dom";
+import CompanyLogo from "./CompanyLogo";
 
 export default function RecommendationCard({
   caseStudy,
@@ -35,11 +35,7 @@ export default function RecommendationCard({
             top="-4px"
             boxShadow="s"
           >
-            {caseStudy.company?.favicon ? (
-              <img src={caseStudy.company.favicon} width="16px" />
-            ) : (
-              <LogoMark size={16} color="subtle" />
-            )}
+            <CompanyLogo src={caseStudy.company?.favicon} />
           </Circle>
         </PassportAvatar>
 
