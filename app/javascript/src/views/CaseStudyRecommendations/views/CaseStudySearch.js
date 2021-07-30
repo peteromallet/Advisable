@@ -104,6 +104,7 @@ export default function CaseStudySearch() {
                 as={Link}
                 icon={Pencil}
                 marginRight={1}
+                aria-label="Edit search"
                 to={`/explore/${search.id}/skills`}
               />
               <DeleteSearch search={search} onDelete={afterDelete} />
