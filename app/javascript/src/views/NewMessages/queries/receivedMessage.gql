@@ -9,6 +9,11 @@ subscription ReceivedMessage {
         name
         avatar
       }
+      attachments {
+        id
+        url
+        filename
+      }
       conversation {
         id
         unreadMessageCount
