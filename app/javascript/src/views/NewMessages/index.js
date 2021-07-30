@@ -1,15 +1,16 @@
 import React, { useLayoutEffect } from "react";
-import { Box, Heading, useTheme } from "@advisable/donut";
+import { Box, Heading, Text, useTheme } from "@advisable/donut";
 import ConversationLink from "./ConversationLink";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 import { useConversations, useReceivedMessage } from "./queries";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Conversation from "./Conversation";
+import NoConversations from "./components/NoConversations";
 
 export default function NewMessages() {
   useReceivedMessage();
-  const { data } = useConversations();
+  const { data, loading } = useConversations();
   const { setTheme } = useTheme();
 
   const conversations = data?.conversations?.nodes || [];
@@ -57,6 +58,16 @@ export default function NewMessages() {
                 />
               ))}
             </Box>
+            {!loading && orderedConversations.length === 0 && (
+              <Text
+                textAlign="center"
+                paddingY={8}
+                paddingX={4}
+                color="neutral400"
+              >
+                No conversations
+              </Text>
+            )}
           </SimpleBar>
         </Box>
       </Box>
@@ -70,6 +81,9 @@ export default function NewMessages() {
           {conversations.length > 0 && (
             <Redirect to={`/new_messages/${conversations[0].id}`} />
           )}
+          <Route>
+            <NoConversations />
+          </Route>
         </Switch>
       </Box>
     </Box>
