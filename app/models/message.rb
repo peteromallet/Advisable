@@ -13,13 +13,6 @@ class Message < ApplicationRecord
   validates :content, presence: true
 
   before_validation :strip_content
-  after_commit :announce_message, on: :create
-
-  private
-
-  def strip_content
-    self.content = content&.strip
-  end
 
   def announce_message
     MessageNotifierJob.set(wait: NOTIFICATION_WAIT_TIME).perform_later(self)
@@ -27,6 +20,12 @@ class Message < ApplicationRecord
     conversation.participants.where.not(account_id: author_id).find_each do |participant|
       AdvisableSchema.subscriptions.trigger("receivedMessage", {}, self, scope: participant.account_id)
     end
+  end
+
+  private
+
+  def strip_content
+    self.content = content&.strip
   end
 end
 
