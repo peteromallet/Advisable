@@ -149,43 +149,22 @@ const size = variant({
   },
 });
 
-const inputColor = variant({
-  prop: "inputColor",
-  variants: {
-    white: {
-      background: "white",
-      boxShadow: `0 4px 8px -4px ${rgba(theme.colors.neutral900, 0.2)}`,
-
-      "&[data-focused='true']": {
-        background: "white",
-        borderColor: "blue900",
-      },
-
-      [`${StyledInputControl}::placeholder`]: {
-        color: "neutral500",
-      },
-    },
-    gray: {
-      background: "#eff0f3",
-
-      "&[data-focused='true']": {
-        background: "#eff0f3",
-        borderColor: "blue900",
-      },
-    },
-  },
-});
-
 export const StyledInput = styled.div`
   width: 100%;
   display: flex;
+  background: #eff0f3;
   box-sizing: border-box;
   border: 2px solid transparent;
   border-radius: ${BORDER_RADIUS}px;
+
+  &[data-focused="true"] {
+    background: #eff0f3;
+    border-color: ${theme.colors.blue900};
+  }
+
   ${(props) => props.$error && StyledInput_Error};
   ${(props) => props.$disabled && StyledInput_Disabled};
 
-  ${inputColor};
   ${size};
   ${margin};
 `;
