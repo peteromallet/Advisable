@@ -16,7 +16,12 @@ export default function DeleteSearch({ search, onDelete = () => {} }) {
 
   return (
     <>
-      <IconButton size="sm" icon={Trash} onClick={modal.show} />
+      <IconButton
+        size="sm"
+        icon={Trash}
+        onClick={modal.show}
+        aria-label="Delete search"
+      />
       <Modal modal={modal} label="Delete search">
         <Text fontSize="4xl" fontWeight={600} mb={2}>
           Are you sure?
