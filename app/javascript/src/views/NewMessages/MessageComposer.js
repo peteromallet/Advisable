@@ -1,12 +1,11 @@
 import React, { useRef, useState } from "react";
-import { theme, Box, Text, Stack } from "@advisable/donut";
+import { theme, Box, Stack } from "@advisable/donut";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
-import { DocumentText } from "@styled-icons/heroicons-solid/DocumentText";
-import { XCircle } from "@styled-icons/heroicons-solid/XCircle";
 import { ArrowCircleRight } from "@styled-icons/heroicons-solid/ArrowCircleRight";
 import useAttachments from "./useAttachments";
 import AddAttachmentsButton from "./AddAttachmentsButton";
+import Attachment from "./components/Attachment";
 import { useSendMessage } from "./queries";
 
 const StyledMessageComposer = styled.div`
@@ -77,36 +76,18 @@ const StyledMessageButton = styled(ComposerButton)`
 
 const MIN_ROWS = 2;
 const MAX_ROWS = 10;
-
-function Attachment({ attachment, onRemove }) {
-  return (
-    <Box
-      paddingY={3}
-      display="flex"
-      alignItems="center"
-      justifyContent="space-between"
-    >
-      <Box display="flex" alignItems="center">
-        <Box color="neutral500" marginRight={1}>
-          <DocumentText size={20} />
-        </Box>
-        <Text color="neutral800" fontSize="sm">
-          {attachment.file.name}
-        </Text>
-      </Box>
-      <Box>
-        <XCircle size={20} onClick={onRemove} />
-      </Box>
-    </Box>
-  );
-}
-
 export default function MessageComposer({ conversation }) {
   const container = useRef(null);
   const textarea = useRef(null);
   const [send] = useSendMessage(conversation);
-  const { attachments, clearAttachments, addAttachments, removeAttachment } =
-    useAttachments();
+  const {
+    attachments,
+    signedIds,
+    clearAttachments,
+    addAttachments,
+    removeAttachment,
+    completeUpload,
+  } = useAttachments();
   const [value, setValue] = useState("");
 
   const handleSubmit = async (e) => {
@@ -119,6 +100,7 @@ export default function MessageComposer({ conversation }) {
         input: {
           conversation: conversation.id,
           content: value.trim().replace(/^\s+|\s+$/g, ""),
+          attachments: signedIds,
         },
       },
     });
@@ -157,6 +139,7 @@ export default function MessageComposer({ conversation }) {
             <Attachment
               key={a.id}
               attachment={a}
+              completeUpload={completeUpload}
               onRemove={() => removeAttachment(a.id)}
             />
           ))}
@@ -177,7 +160,7 @@ export default function MessageComposer({ conversation }) {
           <span>Send</span>
           <ArrowCircleRight />
         </StyledMessageButton>
-        <div>{/* <AddAttachmentsButton onSelect={addAttachments} /> */}</div>
+        <AddAttachmentsButton onSelect={addAttachments} />
       </Box>
     </StyledMessageComposer>
   );

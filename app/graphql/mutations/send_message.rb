@@ -21,7 +21,7 @@ module Mutations
     def resolve(conversation:, content:, **args)
       conversation = Conversation.find_by!(uid: conversation)
       message = conversation.messages.create!(content: content, author: current_account)
-      conversation.attachments.attach!(args[:attachments]) if args[:attachments]
+      message.attachments.attach(args[:attachments]) if args[:attachments]
       conversation.mark_as_read_for!(current_account)
       {message: message}
     end
