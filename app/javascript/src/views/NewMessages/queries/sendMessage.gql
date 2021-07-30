@@ -9,6 +9,11 @@ mutation SendMessage($input: SendMessageInput!) {
         name
         avatar
       }
+      attachments {
+        id
+        url
+        filename
+      }
     }
   }
 }
