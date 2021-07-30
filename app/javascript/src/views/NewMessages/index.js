@@ -81,9 +81,11 @@ export default function NewMessages() {
           {conversations.length > 0 && (
             <Redirect to={`/new_messages/${conversations[0].id}`} />
           )}
-          <Route>
-            <NoConversations />
-          </Route>
+          {!loading && (
+            <Route>
+              <NoConversations />
+            </Route>
+          )}
         </Switch>
       </Box>
     </Box>
