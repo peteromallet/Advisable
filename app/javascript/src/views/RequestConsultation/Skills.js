@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { useParams, useHistory, useLocation } from "react-router-dom";
 import { Card, Text, Button } from "@advisable/donut";
@@ -51,6 +51,21 @@ const RequestConsultationSkills = ({ data }) => {
     });
   };
 
+  const skills = useMemo(() => {
+    const collection = [];
+    specialist.skills.forEach((skill) => {
+      if (collection.includes(skill.name)) return;
+      collection.push(skill.name);
+    });
+
+    specialist.caseStudySkills.forEach((skill) => {
+      if (collection.includes(skill.name)) return;
+      collection.push(skill.name);
+    });
+
+    return collection;
+  }, [specialist.skills, specialist.caseStudySkills]);
+
   return (
     <Card borderRadius="12px" padding={[4, 6, 8]}>
       <Text
@@ -68,9 +83,9 @@ const RequestConsultationSkills = ({ data }) => {
         {specialist.firstName} about in a 30 minute consultation.
       </Text>
       <TagSelect
+        tags={skills}
         multiple={false}
         selected={location.state?.skill}
-        tags={specialist.skills.map((s) => s.name)}
         onChange={(skill) => handleSkillUpdate(skill)}
       />
       <Button

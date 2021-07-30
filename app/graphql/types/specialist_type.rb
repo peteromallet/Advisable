@@ -99,6 +99,8 @@ module Types
       end
     end
 
+    field :case_study_skills, [Types::Skill], null: false
+
     # Project skills returns all of the skills the specialist has used on actual projects.
     field :project_skills, Types::Skill.connection_type, null: false
 
