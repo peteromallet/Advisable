@@ -22,6 +22,7 @@ function PopularSkills({ popularSkills, formik, disabled }) {
 
   return filtered.map((s) => (
     <Box
+      as="button"
       key={s.value}
       onClick={() => {
         if (disabled) return;
@@ -30,6 +31,7 @@ function PopularSkills({ popularSkills, formik, disabled }) {
       }}
       marginRight={2}
       marginBottom={2}
+      bg="transparent"
       color="blue700"
       border="1px solid"
       borderColor="blue200"
