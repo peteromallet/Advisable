@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useReducer, useMemo } from "react";
 import generateID from "src/utilities/generateID";
 
 function attachmentsReducer(state, action) {
@@ -22,7 +22,7 @@ function attachmentsReducer(state, action) {
     case "COMPLETE": {
       return state.map((a) => {
         if (a.id === action.id) {
-          return { ...a, uploaded: true };
+          return { ...a, blob: action.blob };
         }
 
         return a;
@@ -48,9 +48,10 @@ export default function useAttachments() {
     });
   }, []);
 
-  const completeUpload = useCallback((id) => {
+  const completeUpload = useCallback((id, blob) => {
     return dispatch({
       id,
+      blob,
       type: "COMPLETE",
     });
   }, []);
@@ -61,9 +62,18 @@ export default function useAttachments() {
     });
   }, []);
 
+  const uploadedAttachments = useMemo(() => {
+    return state.filter((a) => Boolean(a.blob));
+  }, [state]);
+
+  const signedIds = useMemo(() => {
+    return uploadedAttachments.map((a) => a.blob.signed_id);
+  }, [uploadedAttachments]);
+
   return {
     attachments: state,
     dispatch,
+    signedIds,
     addAttachments,
     removeAttachment,
     completeUpload,

@@ -12,6 +12,11 @@ query ConversationMessages($id: ID!, $cursor: String) {
           id
           content
           createdAt
+          attachments {
+            id
+            url
+            filename
+          }
           author {
             id
             name
