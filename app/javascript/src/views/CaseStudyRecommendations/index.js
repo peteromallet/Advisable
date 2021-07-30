@@ -89,6 +89,7 @@ export default function CaseStudyExplorer() {
                   right="16px"
                   position="absolute"
                   onClick={goBack}
+                  aria-label="Go back"
                 />
               )}
               {!viewingArticle && !loading && <Navigation data={data} />}
