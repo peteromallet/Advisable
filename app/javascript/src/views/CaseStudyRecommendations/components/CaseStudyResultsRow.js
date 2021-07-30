@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
-import { BadgeCheck } from "@styled-icons/heroicons-solid/BadgeCheck";
+import { Box, Text, Circle } from "@advisable/donut";
+import { Flag } from "@styled-icons/heroicons-outline/Flag";
 
 export default function CaseStudyResultsRow({ caseStudy }) {
   const outcomeSection = caseStudy.sections.find((s) => s.type === "outcome");
@@ -25,9 +25,27 @@ export default function CaseStudyResultsRow({ caseStudy }) {
           textAlign="center"
           borderRadius="24px"
         >
-          <Box color="#00ADDC" marginBottom={1.5}>
-            <BadgeCheck size={28} />
-          </Box>
+          <Circle
+            size={40}
+            bg="white"
+            color="cyan500"
+            marginBottom={3}
+            position="relative"
+          >
+            <Flag size={24} />
+            <Circle
+              size={20}
+              color="white"
+              bg="cyan900"
+              fontSize="12px"
+              fontWeight={500}
+              position="absolute"
+              right="-4px"
+              bottom="-4px"
+            >
+              {index + 1}
+            </Circle>
+          </Circle>
           <Text fontSize="md" fontWeight={450} lineHeight="20px">
             {result}
           </Text>
