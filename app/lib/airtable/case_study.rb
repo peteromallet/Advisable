@@ -87,12 +87,12 @@ module Airtable
 
         Array(fields["Industry"]).each do |airtable_id|
           industry = ::Industry.find_by!(airtable_id: airtable_id)
-          ::CaseStudy::Industry.create!(industry: industry, article: article)
+          ::CaseStudy::Industry.find_or_create_by!(industry: industry, article: article)
         end
 
         Array(fields["Skills"]).each do |airtable_id|
           skill = ::Skill.find_by!(airtable_id: airtable_id)
-          ::CaseStudy::Skill.create!(skill: skill, article: article)
+          ::CaseStudy::Skill.find_or_create_by!(skill: skill, article: article)
         end
 
         primary_skill = ::Skill.find_by!(airtable_id: fields["Primary Skill"].first)
