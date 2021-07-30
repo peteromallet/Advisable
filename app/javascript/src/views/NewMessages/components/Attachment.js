@@ -13,7 +13,7 @@ export default function Attachment({ attachment, completeUpload, onRemove }) {
     [attachment.id, completeUpload],
   );
 
-  useUpload(attachment.file, handleSuccess);
+  const { percentage } = useUpload(attachment.file, handleSuccess);
 
   return (
     <Box
@@ -26,12 +26,26 @@ export default function Attachment({ attachment, completeUpload, onRemove }) {
         <Box color="neutral500" marginRight={1}>
           <DocumentText size={20} />
         </Box>
-        <Text color="neutral800" fontSize="sm">
+        <Text
+          color={attachment.blob ? "neutral800" : "neutral400"}
+          fontSize="sm"
+        >
           {attachment.file.name}
         </Text>
       </Box>
-      <Box>
+      <Box display="flex" alignItems="center">
+        {!attachment.blob && (
+          <Box width="80px" height="4px" borderRadius="4px" bg="neutral100">
+            <Box
+              style={{ width: `${percentage}%` }}
+              height="100%"
+              bg="blue400"
+              borderRadius="4px"
+            />
+          </Box>
+        )}
         <Box
+          marginLeft={3}
           color="neutral500"
           css={css({
             "&:hover": {
