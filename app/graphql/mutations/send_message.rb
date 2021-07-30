@@ -23,6 +23,8 @@ module Mutations
       message = conversation.messages.create!(content: content, author: current_account)
       message.attachments.attach(args[:attachments]) if args[:attachments]
       conversation.mark_as_read_for!(current_account)
+      message.reload.announce_message
+
       {message: message}
     end
   end
