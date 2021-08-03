@@ -15,10 +15,12 @@ class MessageNotifierJob < ApplicationJob
         any?
       next if new_ones
 
-      all_new = conversation.messages
+      new_messages = conversation.messages
       last_at = participant.last_read_at
-      all_new = all_new.where("created_at > ?", last_at) if last_at
-      AccountMailer.notify_of_new_messages(participant.account, all_new.pluck(:id)).deliver_later
+      new_messages = new_messages.where("created_at > ?", last_at) if last_at
+      next if new_messages.empty?
+
+      AccountMailer.notify_of_new_messages(participant.account, new_messages.pluck(:id)).deliver_later
     end
   end
 end
