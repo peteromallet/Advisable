@@ -43,5 +43,14 @@ RSpec.describe MessageNotifierJob do
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [jim.account, [message1.id, message2.id, message3.id]]})
       expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [michael.account, any_args]})
     end
+
+    it 'only sends messages to those who havent seen the message' do
+      message = create(:message, content: "Come to my office!", author: michael.account, conversation: conversation, created_at: 4.minutes.ago)
+      conversation.mark_as_read_for!(dwight.account)
+      described_class.new.perform(message)
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: array_including(jim.account)})
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: array_including(dwight.account)})
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: array_including(michael.account)})
+    end
   end
 end
