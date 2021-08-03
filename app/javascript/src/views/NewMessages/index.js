@@ -2,7 +2,6 @@ import React, { useLayoutEffect } from "react";
 import { Box, Heading, Text, useTheme } from "@advisable/donut";
 import ConversationLink from "./ConversationLink";
 import SimpleBar from "simplebar-react";
-import "simplebar/dist/simplebar.min.css";
 import { useConversations, useReceivedMessage } from "./queries";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Conversation from "./Conversation";

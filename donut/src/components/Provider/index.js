@@ -4,7 +4,6 @@ import Context from "./context";
 import { ThemeProvider } from "styled-components";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import theme from "../../theme";
-import "simplebar/dist/simplebar.min.css";
 
 const DonutProvider = ({ children }) => {
   const breakpoints = useBreakpoints();
