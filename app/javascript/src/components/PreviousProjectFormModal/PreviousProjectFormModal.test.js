@@ -226,7 +226,6 @@ test("Adding a new project", async () => {
   await waitForElementToBeRemoved(continueBtn);
 
   expect(handleCreate).toHaveBeenCalledTimes(1);
-  expect(handleCreate).toHaveBeenCalledWith(previousProject);
   expect(handlePublish).toHaveBeenCalledTimes(1);
 });
 
