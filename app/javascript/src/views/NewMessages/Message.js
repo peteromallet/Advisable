@@ -44,6 +44,7 @@ export default function Message({ message }) {
                 width="100%"
                 padding={2}
                 bg="neutral100"
+                paddingRight={3}
                 key={attachment.id}
                 borderRadius="8px"
                 display="flex"
@@ -72,10 +73,11 @@ export default function Message({ message }) {
                   <Text
                     as="a"
                     target="_blank"
+                    display="block"
                     href={attachment.url}
                     color="blue700"
                     fontWeight={500}
-                    fontSize="sm"
+                    fontSize="xs"
                   >
                     Download
                   </Text>
