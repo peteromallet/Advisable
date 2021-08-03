@@ -40,12 +40,12 @@ export default function Conversation({ conversations }) {
               />
             ))}
           </Box>
-          <Text fontSize="lg" fontWeight={500}>
+          <Text fontSize="lg" fontWeight={500} $truncate>
             {commaSeparated(conversation.participants.map((p) => p.firstName))}
           </Text>
         </Box>
       </Box>
-      <Box height="0" width="100%" flexGrow={1} flexShrink={1}>
+      <Box height="100%" minHeight="0" width="100%" flexGrow={1} flexShrink={1}>
         <SimpleBar style={{ height: "100%" }}>
           <Box maxWidth="700px" mx="auto">
             <ConversationMessages conversation={conversation} />
