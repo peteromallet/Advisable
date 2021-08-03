@@ -61,7 +61,6 @@ RSpec.describe 'Explore', type: :system do
     within("*[role='dialog']") do
       click_on("Archive")
     end
-    expect(page).not_to have_content(article1.title)
     click_link("Archive")
     expect(page).to have_content(article1.title)
     expect(user.reload.archived_articles).not_to be_empty

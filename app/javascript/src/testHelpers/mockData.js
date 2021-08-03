@@ -236,6 +236,7 @@ export const specialist = (fields = {}) => {
         nodes: [],
       },
       skills: [],
+      caseStudySkills: [],
       industries: [],
       previousProjectsCount: 0,
       guild: false,
