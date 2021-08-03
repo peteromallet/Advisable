@@ -331,7 +331,6 @@ export const previousProject = (fields = {}) => {
       contactFirstName: "John",
       contactLastName: "Doe",
       onPlatform: false,
-      contactEmail: null,
       contactJobTitle: "CEO",
       contactRelationship: "Managed the project",
       draft: false,
