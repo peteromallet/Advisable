@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { theme, Box, Stack } from "@advisable/donut";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
@@ -83,6 +83,7 @@ export default function MessageComposer({ conversation }) {
   const {
     attachments,
     signedIds,
+    uploading,
     clearAttachments,
     addAttachments,
     removeAttachment,
@@ -90,8 +91,20 @@ export default function MessageComposer({ conversation }) {
   } = useAttachments();
   const [value, setValue] = useState("");
 
+  const hasValue = useMemo(() => {
+    return value.trim().replace(/^\s+|\s+$/g, "").length > 0;
+  }, [value]);
+
+  const hasAttachments = useMemo(() => attachments.length > 0, [attachments]);
+  const canSend = useMemo(() => {
+    const hasContent = hasValue || hasAttachments;
+    return hasContent && !uploading;
+  }, [uploading, hasValue, hasAttachments]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!canSend) return;
+
     setValue("");
     clearAttachments();
 
@@ -105,9 +118,6 @@ export default function MessageComposer({ conversation }) {
       },
     });
   };
-
-  const hasValue = value.trim().replace(/^\s+|\s+$/g, "").length > 0;
-  const hasAttachments = attachments.length > 0;
 
   const handleClick = (e) => {
     if (e.target === container.current) {
@@ -153,10 +163,7 @@ export default function MessageComposer({ conversation }) {
         justifyContent="space-between"
         paddingX={2}
       >
-        <StyledMessageButton
-          onClick={handleSubmit}
-          disabled={!hasValue && !hasAttachments}
-        >
+        <StyledMessageButton disabled={!canSend} onClick={handleSubmit}>
           <span>Send</span>
           <ArrowCircleRight />
         </StyledMessageButton>
