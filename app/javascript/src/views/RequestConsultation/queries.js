@@ -17,6 +17,10 @@ export const GET_SPECIALIST = gql`
       ratings {
         overall
       }
+      caseStudySkills {
+        id
+        name
+      }
       skills(projectSkills: true, limit: 10) {
         id
         name

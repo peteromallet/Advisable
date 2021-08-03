@@ -54,6 +54,9 @@ class Specialist < ApplicationRecord
   has_many :articles, class_name: "CaseStudy::Article", dependent: :destroy
   has_many :referred, class_name: "Specialist", foreign_key: :referrer_id, inverse_of: :referrer, dependent: :nullify
 
+  has_many :article_skills, through: :articles, class_name: "CaseStudy::Skill", source: :skills
+  has_many :case_study_skills, through: :article_skills, source: :skill
+
   # We also have an 'image' column in the specalists table. This is a deprecated
   # column that we used to use to store the avatar from airtable in.
   has_one_attached :avatar
