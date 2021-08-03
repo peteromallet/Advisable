@@ -7,6 +7,8 @@ import useAttachments from "./useAttachments";
 import AddAttachmentsButton from "./AddAttachmentsButton";
 import Attachment from "./components/Attachment";
 import { useSendMessage } from "./queries";
+import { useNotifications } from "src/components/Notifications";
+import useNetworkConnection from "src/hooks/useNetworkConnection";
 
 const StyledMessageComposer = styled.div`
   width: 100%;
@@ -79,6 +81,8 @@ const MAX_ROWS = 10;
 export default function MessageComposer({ conversation }) {
   const container = useRef(null);
   const textarea = useRef(null);
+  const { error } = useNotifications();
+  const isOnline = useNetworkConnection();
   const [send] = useSendMessage(conversation);
   const {
     attachments,
@@ -108,7 +112,7 @@ export default function MessageComposer({ conversation }) {
     setValue("");
     clearAttachments();
 
-    await send({
+    const { errors } = await send({
       variables: {
         input: {
           conversation: conversation.id,
@@ -117,6 +121,10 @@ export default function MessageComposer({ conversation }) {
         },
       },
     });
+
+    if (errors) {
+      error("Failed to send message, please try again.");
+    }
   };
 
   const handleClick = (e) => {
@@ -133,42 +141,50 @@ export default function MessageComposer({ conversation }) {
 
   return (
     <StyledMessageComposer onClick={handleClick} ref={container}>
-      <TextareaAutosize
-        value={value}
-        minRows={MIN_ROWS}
-        maxRows={MAX_ROWS}
-        ref={(tag) => (textarea.current = tag)}
-        onKeyDown={handleKeyDown}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="Write a message..."
-      />
+      {isOnline ? (
+        <>
+          <TextareaAutosize
+            value={value}
+            minRows={MIN_ROWS}
+            maxRows={MAX_ROWS}
+            ref={(tag) => (textarea.current = tag)}
+            onKeyDown={handleKeyDown}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="Write a message..."
+          />
 
-      {hasAttachments && (
-        <Stack px={4} divider="neutral100">
-          {attachments.map((a) => (
-            <Attachment
-              key={a.id}
-              attachment={a}
-              completeUpload={completeUpload}
-              onRemove={() => removeAttachment(a.id)}
-            />
-          ))}
-        </Stack>
+          {hasAttachments && (
+            <Stack px={4} divider="neutral100">
+              {attachments.map((a) => (
+                <Attachment
+                  key={a.id}
+                  attachment={a}
+                  completeUpload={completeUpload}
+                  onRemove={() => removeAttachment(a.id)}
+                />
+              ))}
+            </Stack>
+          )}
+
+          <Box
+            height="52px"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            paddingX={2}
+          >
+            <StyledMessageButton disabled={!canSend} onClick={handleSubmit}>
+              <span>Send</span>
+              <ArrowCircleRight />
+            </StyledMessageButton>
+            <AddAttachmentsButton onSelect={addAttachments} />
+          </Box>
+        </>
+      ) : (
+        <Box textAlign="center" padding={4} color="neutral600">
+          Your connection has been lost, please refresh the page
+        </Box>
       )}
-
-      <Box
-        height="52px"
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        paddingX={2}
-      >
-        <StyledMessageButton disabled={!canSend} onClick={handleSubmit}>
-          <span>Send</span>
-          <ArrowCircleRight />
-        </StyledMessageButton>
-        <AddAttachmentsButton onSelect={addAttachments} />
-      </Box>
     </StyledMessageComposer>
   );
 }
