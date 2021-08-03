@@ -16,7 +16,7 @@ class MessageNotifierJob < ApplicationJob
       next if new_ones
 
       all_new = conversation.messages
-      last_at = participant.conversation.messages.where(author_id: participant.account_id).maximum(:created_at)
+      last_at = participant.last_read_at
       all_new = all_new.where("created_at > ?", last_at) if last_at
       AccountMailer.notify_of_new_messages(participant.account, all_new.pluck(:id)).deliver_later
     end
