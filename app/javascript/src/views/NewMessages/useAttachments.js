@@ -62,6 +62,10 @@ export default function useAttachments() {
     });
   }, []);
 
+  const pendingAttacthments = useMemo(() => {
+    return state.filter((a) => !a.blob);
+  }, [state]);
+
   const uploadedAttachments = useMemo(() => {
     return state.filter((a) => Boolean(a.blob));
   }, [state]);
@@ -70,9 +74,14 @@ export default function useAttachments() {
     return uploadedAttachments.map((a) => a.blob.signed_id);
   }, [uploadedAttachments]);
 
+  const uploading = useMemo(() => {
+    return pendingAttacthments.length !== 0;
+  }, [pendingAttacthments]);
+
   return {
     attachments: state,
     dispatch,
+    uploading,
     signedIds,
     addAttachments,
     removeAttachment,
