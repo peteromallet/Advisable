@@ -4,6 +4,15 @@ import renderLineBreaks from "src/utilities/renderLineBreaks";
 import { DocumentText } from "@styled-icons/heroicons-solid/DocumentText";
 import { DateTime } from "luxon";
 
+function dateForMessage(iso) {
+  const now = DateTime.now();
+  const date = DateTime.fromISO(iso);
+  if (date.hasSame(now, "day")) {
+    return date.toFormat("HH:mm");
+  }
+  return date.toFormat("dd MMM, yyyy");
+}
+
 export default function Message({ message }) {
   return (
     <Box display="flex" width="100%">
@@ -31,7 +40,7 @@ export default function Message({ message }) {
             marginBottom={2}
             color="neutral400"
           >
-            {DateTime.fromISO(message.createdAt).toFormat("HH:MM")}
+            {dateForMessage(message.createdAt)}
           </Text>
         </Box>
         <Text autoLink color="neutral800" lineHeight="24px">
