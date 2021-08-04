@@ -1,4 +1,5 @@
-import React, { useLayoutEffect } from "react";
+import { DateTime } from "luxon";
+import React, { useLayoutEffect, useMemo } from "react";
 import { Box, Heading, Text, useTheme } from "@advisable/donut";
 import ConversationLink from "./ConversationLink";
 import SimpleBar from "simplebar-react";
@@ -7,18 +8,27 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Conversation from "./Conversation";
 import NoConversations from "./components/NoConversations";
 
+function ConversationsList({ conversations }) {
+  const orderedConversations = useMemo(() => {
+    return [...conversations].sort((a, b) => {
+      return (
+        DateTime.fromISO(b.lastMessage?.createdAt) -
+        DateTime.fromISO(a.lastMessage?.createdAt)
+      );
+    });
+  }, [conversations]);
+
+  return orderedConversations.map((conversation) => (
+    <ConversationLink key={conversation.id} conversation={conversation} />
+  ));
+}
+
 export default function NewMessages() {
   useReceivedMessage();
   const { data, loading } = useConversations();
   const { setTheme } = useTheme();
 
   const conversations = data?.conversations?.nodes || [];
-  const orderedConversations = [...conversations].sort((a, b) => {
-    return new Date(b.lastMessage?.createdAt) >
-      new Date(a.lastMessage?.createdAt)
-      ? 1
-      : -1;
-  });
 
   useLayoutEffect(() => {
     setTheme((t) => ({ ...t, background: "beige" }));
@@ -50,14 +60,9 @@ export default function NewMessages() {
           </Box>
           <SimpleBar style={{ height: "calc(100vh - 132px)" }}>
             <Box paddingX={4}>
-              {orderedConversations.map((conversation) => (
-                <ConversationLink
-                  key={conversation.id}
-                  conversation={conversation}
-                />
-              ))}
+              <ConversationsList conversations={conversations} />
             </Box>
-            {!loading && orderedConversations.length === 0 && (
+            {!loading && conversations.length === 0 && (
               <Text
                 textAlign="center"
                 paddingY={8}
@@ -72,13 +77,13 @@ export default function NewMessages() {
       </Box>
       <Box width="100%" height="calc(100vh - 60px)">
         <Switch>
-          {orderedConversations.map((conversation) => (
-            <Route key={conversation.id} path="/new_messages/:id">
-              <Conversation conversations={conversations} />
-            </Route>
-          ))}
           {conversations.length > 0 && (
-            <Redirect to={`/new_messages/${conversations[0].id}`} />
+            <>
+              <Route path="/new_messages/:id">
+                <Conversation conversations={conversations} />
+              </Route>
+              <Redirect to={`/new_messages/${conversations[0].id}`} />
+            </>
           )}
           {!loading && (
             <Route>
