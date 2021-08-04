@@ -28,6 +28,10 @@ module MailHelper
     "#{app_host}/explore/articles/#{article.uid}"
   end
 
+  def conversation_url(conversation)
+    "#{app_host}/new_messages/#{conversation.uid}"
+  end
+
   def time_in_zone(timestamp, zone, format = "%d %B, %I:%M%P %Z")
     timestamp.in_time_zone(zone).strftime(format)
   end
