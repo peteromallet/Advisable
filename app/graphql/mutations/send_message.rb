@@ -7,6 +7,7 @@ module Mutations
     argument :attachments, [String], required: false
     argument :content, String, required: false
     argument :conversation, ID, required: true
+    argument :uid, String, required: false
 
     field :message, Types::Message, null: true
 
@@ -18,10 +19,10 @@ module Mutations
       ApiError.not_authorized("You do not have permission to send this message")
     end
 
-    def resolve(conversation:, content:, attachments:)
+    def resolve(conversation:, content:, attachments:, uid: nil)
       has_message_content?(content, attachments)
       conversation = Conversation.find_by!(uid: conversation)
-      message = conversation.messages.create!(content: content, author: current_account)
+      message = conversation.messages.create!(uid: uid, content: content, author: current_account)
       message.attachments.attach(attachments) if attachments
       conversation.mark_as_read_for!(current_account)
       message.reload.announce_message

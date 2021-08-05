@@ -6,7 +6,7 @@ import MessageComposer from "./MessageComposer";
 import ConversationMessages from "./ConversationMessages";
 import ConversationHeader from "./ConversationHeader";
 
-export default function Conversation({ conversations }) {
+export default function Conversation({ conversations, currentAccount }) {
   const { id } = useParams();
   const conversation = conversations.find((c) => c.id === id);
 
@@ -21,7 +21,10 @@ export default function Conversation({ conversations }) {
         </SimpleBar>
       </Box>
       <Box width="100%" paddingBottom={4} maxWidth="720px" px={4} mx="auto">
-        <MessageComposer conversation={conversation} />
+        <MessageComposer
+          conversation={conversation}
+          currentAccount={currentAccount}
+        />
       </Box>
     </Box>
   );
