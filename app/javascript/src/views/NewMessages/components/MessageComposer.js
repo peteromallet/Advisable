@@ -3,10 +3,10 @@ import { theme, Box, Stack } from "@advisable/donut";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 import { ArrowCircleRight } from "@styled-icons/heroicons-solid/ArrowCircleRight";
-import useAttachments from "./useAttachments";
+import useAttachments from "../hooks/useAttachments";
 import AddAttachmentsButton from "./AddAttachmentsButton";
-import Attachment from "./components/Attachment";
-import { useSendMessage } from "./queries";
+import Attachment from "./Attachment";
+import { useSendMessage } from "../queries";
 import { useNotifications } from "src/components/Notifications";
 import useNetworkConnection from "src/hooks/useNetworkConnection";
 
@@ -76,7 +76,7 @@ const StyledMessageButton = styled(ComposerButton)`
   }
 `;
 
-const MIN_ROWS = 2;
+const MIN_ROWS = 3;
 const MAX_ROWS = 10;
 export default function MessageComposer({ conversation }) {
   const container = useRef(null);
