@@ -3,6 +3,7 @@ import { Box, useBreakpoint, useTheme } from "@advisable/donut";
 import { useConversations, useReceivedMessage } from "./queries";
 import { Redirect, Switch } from "react-router-dom";
 import Route from "src/components/Route";
+import Loading from "src/components/Loading";
 import Conversation from "./components/Conversation";
 import NoConversations from "./components/NoConversations";
 import MessagesSidebar from "./components/MessagesSidebar";
@@ -29,6 +30,7 @@ export default function NewMessages() {
         <MessagesSidebar loading={loading} conversations={ordered} />
       </Route>
       <Box width="100%" height="calc(100vh - 60px)">
+        {loading && <Loading />}
         <Switch>
           {hasConversations && (
             <Route path="/new_messages/:id">
