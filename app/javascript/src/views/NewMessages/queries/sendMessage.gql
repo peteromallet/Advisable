@@ -4,6 +4,7 @@ mutation SendMessage($input: SendMessageInput!) {
       id
       content
       createdAt
+      status @client
       author {
         id
         name

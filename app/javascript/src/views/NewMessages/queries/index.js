@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useSubscription } from "@apollo/client";
+import {
+  useApolloClient,
+  useMutation,
+  useQuery,
+  useSubscription,
+} from "@apollo/client";
 import { matchPath, useLocation } from "react-router-dom";
 import CONVERSATIONS from "./conversations.gql";
 import MESSAGES from "./messages.gql";
@@ -15,7 +20,21 @@ export function useMessages(opts) {
 }
 
 export function useSendMessage(conversation) {
+  const client = useApolloClient();
+
   return useMutation(SEND_MESSAGE, {
+    onCompleted(data) {
+      const message = data.sendMessage.message;
+
+      client.cache.modify({
+        id: client.cache.identify(message),
+        fields: {
+          status() {
+            return "SENT";
+          },
+        },
+      });
+    },
     update(cache, response) {
       const message = response.data?.sendMessage?.message;
       if (message) {

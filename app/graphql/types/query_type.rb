@@ -56,6 +56,8 @@ module Types
       current_user
     end
 
+    field :current_account, Types::Account, null: true
+
     field :countries,
           [Types::CountryType],
           "Return the list of countries",

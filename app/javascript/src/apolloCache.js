@@ -47,6 +47,14 @@ const createCache = () => {
           messages: relayStylePagination(),
         },
       },
+      Message: {
+        fields: {
+          status(existing) {
+            if (existing === undefined) return "SENT";
+            return existing;
+          },
+        },
+      },
       Specialist: {
         fields: {
           guildPosts: relayStylePagination(),

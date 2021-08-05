@@ -1,4 +1,11 @@
 query Conversations {
+  currentAccount {
+    id
+    name
+    avatar
+    firstName
+    lastName
+  }
   conversations {
     nodes {
       id

@@ -9,6 +9,8 @@ import Attachment from "./Attachment";
 import { useSendMessage } from "../queries";
 import { useNotifications } from "src/components/Notifications";
 import useNetworkConnection from "src/hooks/useNetworkConnection";
+import generateID from "src/utilities/generateID";
+import { DateTime } from "luxon";
 
 const StyledMessageComposer = styled.div`
   width: 100%;
@@ -78,7 +80,7 @@ const StyledMessageButton = styled(ComposerButton)`
 
 const MIN_ROWS = 3;
 const MAX_ROWS = 10;
-export default function MessageComposer({ conversation }) {
+export default function MessageComposer({ conversation, currentAccount }) {
   const container = useRef(null);
   const textarea = useRef(null);
   const { error } = useNotifications();
@@ -92,6 +94,7 @@ export default function MessageComposer({ conversation }) {
     addAttachments,
     removeAttachment,
     completeUpload,
+    uploadedAttachments,
   } = useAttachments();
   const [value, setValue] = useState("");
 
@@ -112,12 +115,34 @@ export default function MessageComposer({ conversation }) {
     setValue("");
     clearAttachments();
 
+    const uid = generateID("msg");
+    const content = value.trim().replace(/^\s+|\s+$/g, "");
+
     const { errors } = await send({
       variables: {
         input: {
+          uid,
+          content,
           conversation: conversation.id,
-          content: value.trim().replace(/^\s+|\s+$/g, ""),
           attachments: signedIds,
+        },
+      },
+      optimisticResponse: {
+        sendMessage: {
+          __typename: "SendMessagePayload",
+          message: {
+            __typename: "Message",
+            id: uid,
+            content,
+            status: "SENDING",
+            author: currentAccount,
+            createdAt: DateTime.now().toISO(),
+            attachments: uploadedAttachments.map((attachment) => ({
+              id: generateID("att"),
+              url: null,
+              filename: attachment.file.name,
+            })),
+          },
         },
       },
     });
