@@ -1,7 +1,17 @@
 import React from "react";
 import SimpleBar from "simplebar-react";
-import { Box, Heading, Text } from "@advisable/donut";
+import { Box, Heading, Text, Skeleton } from "@advisable/donut";
 import ConversationsList from "./ConversationsList";
+
+function LoadingConversations() {
+  return (
+    <Box padding={3}>
+      <Skeleton height="60px" borderRadius="12px" marginBottom={2} />
+      <Skeleton height="60px" borderRadius="12px" marginBottom={2} />
+      <Skeleton height="60px" borderRadius="12px" />
+    </Box>
+  );
+}
 
 export default function MessagesSidebar({ loading, conversations }) {
   return (
@@ -27,6 +37,7 @@ export default function MessagesSidebar({ loading, conversations }) {
           <Heading size="2xl">Messages</Heading>
         </Box>
         <SimpleBar style={{ height: "calc(100vh - 132px)" }}>
+          {loading && <LoadingConversations />}
           <Box paddingX={4}>
             <ConversationsList conversations={conversations} />
           </Box>
