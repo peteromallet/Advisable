@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { PaperClip } from "@styled-icons/heroicons-solid/PaperClip";
-import { StyledSecondaryComposerButton } from "./styles";
+import { StyledSecondaryComposerButton } from "../styles";
 
 const Input = styled.input`
   display: none;
