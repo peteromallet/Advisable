@@ -1,26 +1,21 @@
-import React, {
-  useRef,
-  useMemo,
-  useEffect,
-  useLayoutEffect,
-  useCallback,
-} from "react";
+import React, { useRef, useMemo, useLayoutEffect } from "react";
 import { Box, Stack, Button } from "@advisable/donut";
-import { useMessages, useUpdateLastRead } from "../queries";
+import { useMessages } from "../queries";
 import Message from "./Message";
 import MessagesLoading from "./MessagesLoading";
+import useUpdateConversationLastRead from "../hooks/useUpdateConversationLastRead";
 
 // Poll every 5 minutes as fallback if subscriptions fail
 const POLL = 300000;
 
 export default function ConversationMessages({ conversation }) {
+  useUpdateConversationLastRead(conversation);
   const { data, loading, fetchMore } = useMessages({
     pollInterval: POLL,
     notifyOnNetworkStatusChange: true,
     variables: { id: conversation.id },
   });
   const endOfMessagesRef = useRef(null);
-  const [updateLastRead] = useUpdateLastRead(conversation);
   const hasPreviousMessages =
     data?.conversation?.messages?.pageInfo?.hasPreviousPage;
 
@@ -35,21 +30,6 @@ export default function ConversationMessages({ conversation }) {
     if (messageEdges.length === 0) return null;
     return messageEdges[messageEdges.length - 1].node.id;
   }, [messageEdges]);
-
-  const handleUpdateLastRead = useCallback(() => {
-    if (conversation.unreadMessageCount > 0) {
-      updateLastRead();
-    }
-  }, [conversation.unreadMessageCount, updateLastRead]);
-
-  useEffect(() => {
-    if (document.hasFocus()) {
-      handleUpdateLastRead();
-    }
-
-    window.addEventListener("focus", handleUpdateLastRead);
-    return () => window.removeEventListener("focus", handleUpdateLastRead);
-  }, [handleUpdateLastRead]);
 
   useLayoutEffect(() => {
     endOfMessagesRef.current?.scrollIntoView();
