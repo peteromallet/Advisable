@@ -12,6 +12,7 @@ query ConversationMessages($id: ID!, $cursor: String) {
           id
           content
           createdAt
+          status @client
           attachments {
             id
             url
