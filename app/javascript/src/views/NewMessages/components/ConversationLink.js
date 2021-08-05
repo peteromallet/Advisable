@@ -7,6 +7,7 @@ import {
   Text,
   Avatar,
   StyledAvatar,
+  StyledBadge,
   Badge,
 } from "@advisable/donut";
 import commaSeparated from "src/utilities/commaSeparated";
@@ -137,6 +138,10 @@ const StyledConversationLink = styled(NavLink)`
 
     ${StyledAvatar} {
       border-color: ${theme.colors.neutral100};
+    }
+
+    ${StyledBadge} {
+      display: none;
     }
   }
 `;
