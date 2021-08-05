@@ -93,14 +93,7 @@ async function updateConversationsList(client, message) {
   });
 }
 
-function updateMessages(client, location, message) {
-  const existing = client.cache.readQuery({
-    query: MESSAGES,
-    variables: { id: message.conversation.id },
-  });
-
-  if (!existing) return;
-
+function updateConversation(client, location, message) {
   const conversationPath = matchPath(location.pathname, {
     path: "/new_messages/:id",
   });
@@ -135,8 +128,8 @@ export function useReceivedMessage() {
   return useSubscription(RECEIVED_MESSAGE, {
     onSubscriptionData({ client, subscriptionData }) {
       const message = subscriptionData.data?.receivedMessage?.message;
+      updateConversation(client, location, message);
       updateConversationsList(client, message);
-      updateMessages(client, location, message);
     },
   });
 }
