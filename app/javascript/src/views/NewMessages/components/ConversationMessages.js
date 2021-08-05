@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import { Box, Stack, Button } from "@advisable/donut";
-import { useMessages, useUpdateLastRead } from "./queries";
+import { useMessages, useUpdateLastRead } from "../queries";
 import Message from "./Message";
 import MessagesLoading from "./MessagesLoading";
 
@@ -84,7 +84,7 @@ export default function ConversationMessages({ conversation }) {
           <Box flexShrink={1} height="1px" width="100%" bg="neutral200" />
         </Box>
       )}
-      <Stack paddingY={10} spacing="4xl" divider="neutral200">
+      <Stack paddingY={10} spacing="4xl" divider="neutral100">
         {messageEdges.map((edge) => (
           <Message key={edge.node.id} message={edge.node} />
         ))}

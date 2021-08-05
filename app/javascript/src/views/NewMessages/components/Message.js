@@ -43,7 +43,7 @@ export default function Message({ message }) {
             {dateForMessage(message.createdAt)}
           </Text>
         </Box>
-        <Text autoLink color="neutral800" lineHeight="24px">
+        <Text autoLink fontSize="17px" color="neutral900" lineHeight="24px">
           {renderLineBreaks(message.content)}
         </Text>
         {message.attachments.length > 0 && (
