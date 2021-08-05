@@ -86,6 +86,8 @@ export default function useAttachments() {
     addAttachments,
     removeAttachment,
     completeUpload,
+    pendingAttacthments,
+    uploadedAttachments,
     clearAttachments,
   };
 }

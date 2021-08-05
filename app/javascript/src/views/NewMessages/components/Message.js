@@ -15,7 +15,11 @@ function dateForMessage(iso) {
 
 export default function Message({ message }) {
   return (
-    <Box display="flex" width="100%">
+    <Box
+      display="flex"
+      width="100%"
+      opacity={message.status === "SENT" ? 1 : 0.4}
+    >
       <Box flexShrink="0" pr={3}>
         <Avatar
           bg="blue100"
@@ -79,17 +83,19 @@ export default function Message({ message }) {
                   </Text>
                 </Box>
                 <Box flexShrink={0}>
-                  <Text
-                    as="a"
-                    target="_blank"
-                    display="block"
-                    href={attachment.url}
-                    color="blue700"
-                    fontWeight={500}
-                    fontSize="xs"
-                  >
-                    Download
-                  </Text>
+                  {attachment.url && (
+                    <Text
+                      as="a"
+                      target="_blank"
+                      display="block"
+                      href={attachment.url}
+                      color="blue700"
+                      fontWeight={500}
+                      fontSize="xs"
+                    >
+                      Download
+                    </Text>
+                  )}
                 </Box>
               </Box>
             ))}
