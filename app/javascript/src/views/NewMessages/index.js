@@ -6,6 +6,7 @@ import Route from "src/components/Route";
 import Conversation from "./components/Conversation";
 import NoConversations from "./components/NoConversations";
 import MessagesSidebar from "./components/MessagesSidebar";
+import useOrderedConversations from "./hooks/useOrderedConversations";
 
 export default function NewMessages() {
   useReceivedMessage();
@@ -14,6 +15,8 @@ export default function NewMessages() {
   const isDesktop = useBreakpoint("lUp");
 
   const conversations = data?.conversations?.nodes || [];
+  const hasConversations = conversations.length > 0;
+  const ordered = useOrderedConversations(conversations);
 
   useLayoutEffect(() => {
     setTheme((t) => ({ ...t, background: "beige" }));
@@ -23,19 +26,17 @@ export default function NewMessages() {
   return (
     <Box display="flex">
       <Route path="/new_messages" exact={!isDesktop}>
-        <MessagesSidebar loading={loading} conversations={conversations} />
+        <MessagesSidebar loading={loading} conversations={ordered} />
       </Route>
       <Box width="100%" height="calc(100vh - 60px)">
         <Switch>
-          {conversations.length > 0 && (
-            <>
-              <Route path="/new_messages/:id">
-                <Conversation conversations={conversations} />
-              </Route>
-              {isDesktop && (
-                <Redirect to={`/new_messages/${conversations[0].id}`} />
-              )}
-            </>
+          {hasConversations && (
+            <Route path="/new_messages/:id">
+              <Conversation conversations={conversations} />
+            </Route>
+          )}
+          {hasConversations && isDesktop && (
+            <Redirect to={`/new_messages/${ordered[0].id}`} />
           )}
           {!loading && (
             <Route>
