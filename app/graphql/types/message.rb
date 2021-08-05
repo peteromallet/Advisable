@@ -2,6 +2,7 @@
 
 module Types
   class Message < Types::BaseType
+    graphql_name "Message"
     description "Type for the Message model."
 
     field :id, ID, null: false, method: :uid

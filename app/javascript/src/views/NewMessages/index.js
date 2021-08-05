@@ -32,7 +32,10 @@ export default function NewMessages() {
         <Switch>
           {hasConversations && (
             <Route path="/new_messages/:id">
-              <Conversation conversations={conversations} />
+              <Conversation
+                conversations={conversations}
+                currentAccount={data?.currentAccount}
+              />
             </Route>
           )}
           {hasConversations && isDesktop && (
