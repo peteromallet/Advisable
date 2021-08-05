@@ -1,4 +1,6 @@
-import React, { useRef, useMemo, useLayoutEffect } from "react";
+import SimpleBar from "simplebar-react";
+import { motion } from "framer-motion";
+import React, { useRef, useMemo, useEffect } from "react";
 import { Box, Stack, Button } from "@advisable/donut";
 import { useMessages } from "../queries";
 import Message from "./Message";
@@ -15,7 +17,8 @@ export default function ConversationMessages({ conversation }) {
     notifyOnNetworkStatusChange: true,
     variables: { id: conversation.id },
   });
-  const endOfMessagesRef = useRef(null);
+
+  const scrollRef = useRef(null);
   const hasPreviousMessages =
     data?.conversation?.messages?.pageInfo?.hasPreviousPage;
 
@@ -31,9 +34,12 @@ export default function ConversationMessages({ conversation }) {
     return messageEdges[messageEdges.length - 1].node.id;
   }, [messageEdges]);
 
-  useLayoutEffect(() => {
-    endOfMessagesRef.current?.scrollIntoView();
-  }, [lastMessageId]);
+  useEffect(() => {
+    const simpleBar = scrollRef.current;
+    if (!simpleBar) return;
+    const scrollView = simpleBar.getScrollElement();
+    scrollView.scrollTop = scrollView.scrollHeight;
+  }, [lastMessageId, scrollRef]);
 
   const loadMore = () => {
     fetchMore({
@@ -44,32 +50,42 @@ export default function ConversationMessages({ conversation }) {
     });
   };
 
-  if (!data && loading) return <MessagesLoading />;
+  const isLoading = !data && loading;
 
   return (
-    <>
-      {hasPreviousMessages && (
-        <Box display="flex" alignItems="center" paddingTop={8}>
-          <Box flexShrink={1} height="1px" width="100%" bg="neutral200" />
-          <Box flexShrink={0} px={4}>
-            <Button
-              loading={loading}
-              onClick={loadMore}
-              variant="dark"
-              size="xs"
-            >
-              Load previous messages
-            </Button>
+    <SimpleBar ref={scrollRef} style={{ height: "100%" }}>
+      <Box maxWidth="700px" mx="auto" px={4}>
+        {isLoading && <MessagesLoading />}
+        {!isLoading && (
+          <Box
+            as={motion.div}
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+          >
+            {hasPreviousMessages && (
+              <Box display="flex" alignItems="center" paddingTop={8}>
+                <Box flexShrink={1} height="1px" width="100%" bg="neutral200" />
+                <Box flexShrink={0} px={4}>
+                  <Button
+                    loading={loading}
+                    onClick={loadMore}
+                    variant="dark"
+                    size="xs"
+                  >
+                    Load previous messages
+                  </Button>
+                </Box>
+                <Box flexShrink={1} height="1px" width="100%" bg="neutral200" />
+              </Box>
+            )}
+            <Stack paddingY={10} spacing="4xl" divider="neutral100">
+              {messageEdges.map((edge) => (
+                <Message key={edge.node.id} message={edge.node} />
+              ))}
+            </Stack>
           </Box>
-          <Box flexShrink={1} height="1px" width="100%" bg="neutral200" />
-        </Box>
-      )}
-      <Stack paddingY={10} spacing="4xl" divider="neutral100">
-        {messageEdges.map((edge) => (
-          <Message key={edge.node.id} message={edge.node} />
-        ))}
-      </Stack>
-      <div ref={endOfMessagesRef} />
-    </>
+        )}
+      </Box>
+    </SimpleBar>
   );
 }
