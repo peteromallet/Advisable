@@ -16,6 +16,8 @@ class AccountMailer < ApplicationMailer
   def notify_of_new_messages(account, message_ids)
     @account = account
     @messages = Message.where(id: message_ids).order(:created_at)
-    mail(to: @account.email, subject: "New messages in conversation")
+    mail(to: @account.email, subject: "New messages in conversation") do |f|
+      f.html { render(layout: "email_v2") }
+    end
   end
 end

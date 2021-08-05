@@ -6,7 +6,7 @@ class AccountMailerPreview < ActionMailer::Preview
   end
 
   def notify_of_new_messages
-    AccountMailer.notify_of_new_messages(random_account, Message.where.not(author: random_account).pluck(:id))
+    AccountMailer.notify_of_new_messages(random_account, Message.last(5).pluck(:id))
   end
 
   private
