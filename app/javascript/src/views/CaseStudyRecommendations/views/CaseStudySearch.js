@@ -11,7 +11,9 @@ import ViewLoading from "../components/ViewLoading";
 import DeleteSearch from "../components/DeleteSearch";
 import commaSeparated from "src/utilities/commaSeparated";
 import NotFound from "./NotFound";
+import NotAuthorized from "./NotAuthorized";
 import { isNotFound } from "../../NotFound";
+import { isNotAuthorized } from "src/views/AccessDenied";
 import useScrollToTop from "src/hooks/useScrollToTop";
 import IconButton from "src/components/IconButton";
 
@@ -58,8 +60,13 @@ export default function CaseStudySearch() {
   });
 
   if (loading) return <ViewLoading />;
+
   if (isNotFound(error)) {
     return <NotFound />;
+  }
+
+  if (isNotAuthorized(error)) {
+    return <NotAuthorized />;
   }
 
   const search = data.caseStudySearch;
