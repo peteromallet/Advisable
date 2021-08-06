@@ -78,7 +78,12 @@ export default function ConversationMessages({ conversation }) {
                 <Box flexShrink={1} height="1px" width="100%" bg="neutral200" />
               </Box>
             )}
-            <Stack paddingY={10} spacing="4xl" divider="neutral100">
+            <Stack
+              paddingY={10}
+              spacing="4xl"
+              divider="neutral100"
+              id="messages"
+            >
               {messageEdges.map((edge) => (
                 <Message key={edge.node.id} message={edge.node} />
               ))}

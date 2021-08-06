@@ -150,7 +150,11 @@ export default function ConversationLink({ conversation }) {
   const others = conversation.participants.filter((p) => !p.isViewer);
 
   return (
-    <StyledConversationLink to={`/new_messages/${conversation.id}`}>
+    <StyledConversationLink
+      id={conversation.id}
+      data-testid="conversationLink"
+      to={`/new_messages/${conversation.id}`}
+    >
       <StyledAvatars data-count={others.length}>
         {others.map((p) => (
           <Avatar
@@ -171,7 +175,9 @@ export default function ConversationLink({ conversation }) {
       </Box>
       {conversation.unreadMessageCount > 0 && (
         <Box flexShrink={0} marginLeft={4}>
-          <Badge>{conversation.unreadMessageCount}</Badge>
+          <Badge data-testid="conversationUnreadCount">
+            {conversation.unreadMessageCount}
+          </Badge>
         </Box>
       )}
     </StyledConversationLink>
