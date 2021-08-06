@@ -18,7 +18,7 @@ module Toby
       attribute :updated_at, Attributes::DateTime, readonly: true
 
       def self.label(record, context)
-        Lazy::Label.new(::Account, record.id, context, value_column: :email)
+        Lazy::Label.new(::Account, record.id, context, value_column: :name)
       end
 
       def self.search(query)

@@ -65,13 +65,13 @@ export const StyledHeaderCell = styled.div`
   font-weight: 500;
   white-space: nowrap;
   align-items: center;
-  color: ${theme.colors.neutral700};
+  color: ${theme.colors.neutral900};
   border-right: 1px solid ${theme.colors.neutral200};
 `;
 
 export const StyledRow = styled.div`
   display: flex;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid ${theme.colors.neutral100};
 
   &:hover {
     cursor: pointer;
@@ -89,7 +89,7 @@ export const StyledCell = styled.div`
   overflow: hidden;
   white-space: nowrap;
   align-items: center;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid ${theme.colors.neutral100};
 `;
 
 export const StyledNavigation = styled.div`
