@@ -19,6 +19,8 @@ export default function Message({ message }) {
       display="flex"
       width="100%"
       opacity={message.status === "SENT" ? 1 : 0.4}
+      id={message.id}
+      data-status={message.status}
     >
       <Box flexShrink="0" pr={3}>
         <Avatar

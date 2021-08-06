@@ -14,14 +14,11 @@ RSpec.describe Mutations::SendMessage do
         conversation: "#{conversation.uid}",
         content: "This is the message content."
       }) {
-        conversation {
-          messages {
-            nodes {
-              content
-              author {
-                id
-              }
-            }
+        message {
+          id
+          content
+          author {
+            id
           }
         }
       }
@@ -37,14 +34,10 @@ RSpec.describe Mutations::SendMessage do
 
   it "creates the message and updates last_read_at" do
     expect(conversation.participants.first.last_read_at).to be_nil
-
     response = AdvisableSchema.execute(query, context: context)
-    messages = response["data"]["sendMessage"]["conversation"]["messages"]["nodes"]
-    contents = messages.map { |message| message["content"] }
-    authors = messages.map { |message| message["author"]["id"] }
-
-    expect(contents).to include("This is the message content.")
-    expect(authors).to include(current_user.account.uid)
+    message = response["data"]["sendMessage"]["message"]
+    expect(message["content"]).to eq("This is the message content.")
+    expect(message["author"]["id"]).to eq(current_user.account.uid)
     expect(conversation.participants.first.last_read_at).not_to be_nil
   end
 
@@ -73,13 +66,10 @@ RSpec.describe Mutations::SendMessage do
 
     it "creates the message but does not change last_read_at" do
       expect(conversation.participants.first.last_read_at).to be_nil
-
       response = AdvisableSchema.execute(query, context: context)
-      messages = response["data"]["sendMessage"]["conversation"]["messages"]["nodes"]
-      contents = messages.map { |message| message["content"] }
-      authors = messages.map { |message| message["author"]["id"] }
-      expect(contents).to include("This is the message content.")
-      expect(authors).to include(current_account.uid)
+      message = response["data"]["sendMessage"]["message"]
+      expect(message["content"]).to eq("This is the message content.")
+      expect(message["author"]["id"]).to eq(current_account.uid)
       expect(conversation.participants.first.last_read_at).to be_nil
     end
   end
