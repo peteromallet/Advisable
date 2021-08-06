@@ -127,7 +127,9 @@ export function generateCollectionQuery(schemaData, resourceData) {
 }
 
 export function generateShowQuery(schemaData, resourceData) {
-  const node = {};
+  const node = {
+    _label: true,
+  };
   resourceData.attributes.forEach((attr) => {
     node[attr.name] = selectionForField(schemaData, resourceData, attr.name);
   });
