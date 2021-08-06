@@ -19,7 +19,7 @@ module Mutations
       ApiError.not_authorized("You do not have permission to send this message")
     end
 
-    def resolve(conversation:, content:, attachments:, uid: nil)
+    def resolve(conversation:, content:, attachments: nil, uid: nil)
       has_message_content?(content, attachments)
       conversation = Conversation.find_by!(uid: conversation)
       message = conversation.messages.create!(uid: uid, content: content, author: current_account)

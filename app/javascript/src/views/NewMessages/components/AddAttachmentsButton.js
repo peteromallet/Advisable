@@ -11,7 +11,13 @@ export default function AddAttachmentsButton({ onSelect }) {
   const inputRef = useRef();
   return (
     <>
-      <Input ref={inputRef} type="file" multiple onChange={onSelect} />
+      <Input
+        ref={inputRef}
+        name="message-attachments"
+        type="file"
+        multiple
+        onChange={onSelect}
+      />
       <StyledSecondaryComposerButton onClick={() => inputRef.current.click()}>
         <PaperClip />
       </StyledSecondaryComposerButton>
