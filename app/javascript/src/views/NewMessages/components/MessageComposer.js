@@ -169,6 +169,7 @@ export default function MessageComposer({ conversation, currentAccount }) {
       {isOnline ? (
         <>
           <TextareaAutosize
+            name="message"
             value={value}
             minRows={MIN_ROWS}
             maxRows={MAX_ROWS}
