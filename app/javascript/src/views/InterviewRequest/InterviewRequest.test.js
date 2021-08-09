@@ -16,7 +16,7 @@ import {
 
 // Its always 20th may 2020 at midday
 Settings.now = () => new Date(2020, 4, 20, 12, 0, 0, 0).valueOf();
-Settings.defaultZoneName = "Europe/Berlin";
+Settings.defaultZone = "Europe/Berlin";
 
 const times = [
   DateTime.utc().plus({ days: 2 }).set({ hour: 10, minute: 0 }),
