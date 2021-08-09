@@ -78,7 +78,7 @@ const StyledMessageButton = styled(ComposerButton)`
   }
 `;
 
-const MIN_ROWS = 3;
+const MIN_ROWS = 4;
 const MAX_ROWS = 10;
 export default function MessageComposer({ conversation, currentAccount }) {
   const container = useRef(null);
@@ -200,7 +200,7 @@ export default function MessageComposer({ conversation, currentAccount }) {
             paddingX={2}
           >
             <StyledMessageButton disabled={!canSend} onClick={handleSubmit}>
-              <span>Send</span>
+              <span>Reply</span>
               <ArrowCircleRight />
             </StyledMessageButton>
             <AddAttachmentsButton onSelect={addAttachments} />
