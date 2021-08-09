@@ -21,11 +21,11 @@ import { GUILD_LAST_READ_QUERY } from "./queries";
 import { EVENTS_QUERY } from "@guild/views/Events/queries";
 import Notifications from "./Notifications";
 import { useTwilioChat } from "../TwilioProvider";
+import MainHeader from "src/components/Header";
 
 const TWO_MINUTES = 120000;
 
-const Header = () => {
-  const viewer = useViewer();
+function GuildHeader({ viewer }) {
   const location = useLocation();
   const isLargeScreen = useBreakpoint("mUp");
   const { unreadMessages } = useTwilioChat();
@@ -38,7 +38,9 @@ const Header = () => {
   });
   const hasUnreadNotifications = lastReadData?.viewer?.guildUnreadNotifications;
 
-  const { data: eventsData } = useQuery(EVENTS_QUERY, { skip: !viewer });
+  const { data: eventsData } = useQuery(EVENTS_QUERY, {
+    skip: !viewer,
+  });
   const eventsCount = eventsData?.events?.upcomingEventsCount;
 
   return (
@@ -118,6 +120,16 @@ const Header = () => {
       <Box height="60px" />
     </>
   );
+}
+
+const Header = () => {
+  const viewer = useViewer();
+
+  if (viewer?.isClient) {
+    return <MainHeader />;
+  }
+
+  return <GuildHeader viewer={viewer} />;
 };
 
 export default Header;
