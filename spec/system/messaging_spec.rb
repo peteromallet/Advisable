@@ -18,7 +18,7 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
     authenticate_as(dwight.specialist)
     visit("/new_messages")
     fill_in("message", with: "Hey There!")
-    click_on("Send")
+    click_on("Reply")
     within("#messages") do
       expect(page).to have_selector("[data-status='SENT']", text: "Hey There!")
     end
@@ -65,7 +65,7 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
     )
 
     fill_in("message", with: "Look at this!")
-    click_on("Send")
+    click_on("Reply")
     within("#messages") do
       expect(page).to have_selector("[data-status='SENT']", text: "Look at this!")
       expect(page).to have_content("01.jpg")
