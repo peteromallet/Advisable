@@ -80,7 +80,7 @@ export default function ConversationMessages({ conversation }) {
             )}
             <Stack
               paddingY={10}
-              spacing="4xl"
+              spacing="2xl"
               divider="neutral100"
               id="messages"
             >
