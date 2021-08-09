@@ -5,12 +5,13 @@ import { Box, Stack, Button } from "@advisable/donut";
 import { useMessages } from "../queries";
 import Message from "./Message";
 import MessagesLoading from "./MessagesLoading";
+import MessageComposer from "./MessageComposer";
 import useUpdateConversationLastRead from "../hooks/useUpdateConversationLastRead";
 
 // Poll every 5 minutes as fallback if subscriptions fail
 const POLL = 300000;
 
-export default function ConversationMessages({ conversation }) {
+export default function ConversationMessages({ conversation, currentAccount }) {
   useUpdateConversationLastRead(conversation);
   const { data, loading, fetchMore } = useMessages({
     pollInterval: POLL,
@@ -87,6 +88,10 @@ export default function ConversationMessages({ conversation }) {
               {messageEdges.map((edge) => (
                 <Message key={edge.node.id} message={edge.node} />
               ))}
+              <MessageComposer
+                conversation={conversation}
+                currentAccount={currentAccount}
+              />
             </Stack>
           </Box>
         )}
