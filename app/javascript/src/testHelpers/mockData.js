@@ -9,6 +9,7 @@ export const company = (fields = {}) => {
       name: "Test",
       users: [],
       bankTransfersEnabled: false,
+      address: bankHolderAddress(),
     },
     fields,
   );
@@ -463,6 +464,32 @@ export const clientApplication = (fields = {}) => {
   );
 };
 
+export const invoice = (fields = {}) => {
+  return {
+    __typename: "Invoice",
+    id: uniqueId("invoice"),
+    year: "2021",
+    month: "08",
+    total: 100000,
+    payments: [],
+    ...fields,
+  };
+};
+
+export const payment = (fields = {}) => {
+  return {
+    __typename: "Payment",
+    id: uniqueId("payment"),
+    amount: 50000,
+    adminFee: 5000,
+    deposit: 0,
+    createdAt: "2020-08-04T21:36:16Z",
+    task: null,
+    specialist: null,
+    ...fields,
+  };
+};
+
 export const invoices = (fields = {}) => {
   return merge(
     [
@@ -512,6 +539,8 @@ export default {
   company,
   country,
   project,
+  invoice,
+  payment,
   currency,
   industry,
   invoices,
