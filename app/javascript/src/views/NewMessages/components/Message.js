@@ -5,50 +5,45 @@ import { DocumentText } from "@styled-icons/heroicons-solid/DocumentText";
 import { DateTime } from "luxon";
 
 function dateForMessage(iso) {
-  const now = DateTime.now();
   const date = DateTime.fromISO(iso);
-  if (date.hasSame(now, "day")) {
-    return date.toFormat("HH:mm");
-  }
   return date.toFormat("dd MMM, yyyy");
 }
 
 export default function Message({ message }) {
   return (
     <Box
-      display="flex"
       width="100%"
       opacity={message.status === "SENT" ? 1 : 0.4}
       id={message.id}
       data-status={message.status}
+      bg="white"
+      boxShadow="xs"
+      padding={4}
+      borderRadius="12px"
     >
-      <Box flexShrink="0" pr={3}>
-        <Avatar
-          bg="blue100"
-          color="blue300"
-          size="s"
-          name={message.author.name}
-        />
-      </Box>
-      <Box width="100%">
-        <Box
-          width="100%"
-          display="flex"
-          alignItems="flex-end"
-          justifyContent="space-between"
-        >
-          <Text fontSize="18px" fontWeight={520} marginBottom={1}>
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box flexShrink="0" pr={3} display="flex">
+          <Avatar
+            bg="blue100"
+            color="blue300"
+            size="xs"
+            display="inline-flex"
+            name={message.author.name}
+          />
+        </Box>
+        <Box width="100%">
+          <Text fontSize="17px" fontWeight={520}>
             {message.author.name}
           </Text>
-          <Text
-            fontSize="xs"
-            fontWeight={400}
-            marginBottom={2}
-            color="neutral400"
-          >
+        </Box>
+        <Box flexShrink={0}>
+          <Text fontSize="xs" fontWeight={450} color="neutral400">
             {dateForMessage(message.createdAt)}
           </Text>
         </Box>
+      </Box>
+      <Box height="1px" bg="neutral100" marginY={4} />
+      <Box width="100%">
         <Text autoLink fontSize="17px" color="neutral900" lineHeight="24px">
           {renderLineBreaks(message.content)}
         </Text>
