@@ -1,5 +1,5 @@
-import React from "react";
-import { Box } from "@advisable/donut";
+import React, { useLayoutEffect } from "react";
+import { Box, useTheme } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import PassportAvatar from "src/components/PassportAvatar";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -8,6 +8,15 @@ import { useProfileData } from "./queries";
 
 export default function FreelancerProfileNew() {
   const { loading, data, error } = useProfileData();
+  const theme = useTheme();
+
+  // Set background color to white
+  useLayoutEffect(() => {
+    theme.updateTheme({ background: "white" });
+    return () => theme.updateTheme({ background: "default" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
 
