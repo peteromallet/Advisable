@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from "react";
 import { Map } from "@styled-icons/heroicons-outline/Map";
-import { Box, Text, useTheme } from "@advisable/donut";
+import { Button, Box, Text, useTheme } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import PassportAvatar from "src/components/PassportAvatar";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -56,9 +56,12 @@ export default function FreelancerProfileNew() {
           {data.specialist.location}
         </Text>
       </Box>
-      <Text fontSize="l" lineHeight="l" color="neutral700">
+      <Text fontSize="l" lineHeight="l" color="neutral700" mb={7}>
         {data.specialist.bio}
       </Text>
+      <Button variant="gradient" size="l">
+        Work together
+      </Button>
     </Box>
   );
 }
