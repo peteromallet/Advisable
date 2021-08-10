@@ -26,14 +26,14 @@ export default function NewMessages() {
 
   return (
     <Box display="flex">
-      <Route path="/new_messages" exact={!isDesktop}>
+      <Route path="/messages" exact={!isDesktop}>
         <MessagesSidebar loading={loading} conversations={ordered} />
       </Route>
       <Box width="100%" height="calc(100vh - 60px)">
         {loading && <Loading />}
         <Switch>
           {hasConversations && (
-            <Route path="/new_messages/:id">
+            <Route path="/messages/:id">
               <Conversation
                 conversations={conversations}
                 currentAccount={data?.currentAccount}
@@ -41,7 +41,7 @@ export default function NewMessages() {
             </Route>
           )}
           {hasConversations && isDesktop && (
-            <Redirect to={`/new_messages/${ordered[0].id}`} />
+            <Redirect to={`/messages/${ordered[0].id}`} />
           )}
           {!loading && (
             <Route>

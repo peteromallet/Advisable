@@ -10,13 +10,13 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
 
   it 'redirects to the first conversation' do
     authenticate_as(dwight.specialist)
-    visit("/new_messages")
-    expect(page).to have_current_path("/new_messages/#{conversation.uid}")
+    visit("/messages?version=2")
+    expect(page).to have_current_path("/messages/#{conversation.uid}")
   end
 
   it 'user can reply to a message' do
     authenticate_as(dwight.specialist)
-    visit("/new_messages")
+    visit("/messages?version=2")
     fill_in("message", with: "Hey There!")
     click_on("Reply")
     within("#messages") do
@@ -32,7 +32,7 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
     send_message(conversation, jim, "Hey There!")
     send_message(other, jim, "Other message!")
     authenticate_as(dwight.specialist)
-    visit("/new_messages")
+    visit("/messages?version=2")
 
     within("#messages") do
       expect(page).to have_content("Hey There!")
@@ -49,14 +49,14 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
 
   it 'user receives messages in realtime' do
     authenticate_as(dwight.specialist)
-    visit("/new_messages/#{conversation.uid}")
+    visit("/messages/#{conversation.uid}?version=2")
     send_message(conversation, jim, "Hey There!")
     expect(page).to have_content("Hey There!")
   end
 
   it 'user can send attachments' do
     authenticate_as(dwight.specialist)
-    visit("/new_messages/#{conversation.uid}")
+    visit("/messages/#{conversation.uid}?version=2")
 
     attach_file(
       'message-attachments',
@@ -81,7 +81,7 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
     send_message(conversation3, dwight, "Hello", created_at: 2.minutes.ago)
 
     authenticate_as(jim.specialist)
-    visit("/new_messages")
+    visit("/messages?version=2")
     expect(find("[data-testid='conversationLink']:nth-child(1)")['id']).to eq(conversation3.uid)
     expect(find("[data-testid='conversationLink']:nth-child(2)")['id']).to eq(conversation2.uid)
     expect(find("[data-testid='conversationLink']:nth-child(3)")['id']).to eq(conversation.uid)
@@ -95,7 +95,7 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
 
   it 'shows disconnected notice when browser goes offline' do
     authenticate_as(dwight.specialist)
-    visit("/new_messages/#{conversation.uid}")
+    visit("/messages/#{conversation.uid}?version=2")
     page.driver.browser.network_conditions = {offline: true, latency: 0, throughput: 0}
     expect(page).to have_content("Your connection has been lost, please refresh the page")
     page.driver.browser.network_conditions = {offline: false, latency: 0, throughput: 0}
@@ -106,7 +106,7 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
     send_message(conversation2, dwight, "Hey")
     send_message(conversation2, dwight, "How are you?")
     authenticate_as(michael.user)
-    visit("/new_messages/#{conversation.uid}")
+    visit("/messages/#{conversation.uid}?version=2")
     participant = conversation2.participants.find_by(account: michael)
     expect(participant.last_read_at).to be_nil
     expect(page).to have_selector("[data-testid='conversationUnreadCount']")

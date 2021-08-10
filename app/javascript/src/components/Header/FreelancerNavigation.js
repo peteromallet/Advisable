@@ -25,7 +25,7 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
         <NavItem onClick={onCloseNav} to={`/freelancers/${viewer.id}`}>
           Profile
         </NavItem>
-        <NavItem onClick={onCloseNav} to="/new_messages">
+        <NavItem onClick={onCloseNav} to="/messages">
           {messageCount > 0 && <Badge>{messageCount}</Badge>}
           Messages
         </NavItem>
