@@ -24,7 +24,8 @@ export function useSendMessage(conversation) {
 
   return useMutation(SEND_MESSAGE, {
     onCompleted(data) {
-      const message = data.sendMessage.message;
+      const message = data?.sendMessage?.message;
+      if (!message) return;
 
       client.cache.modify({
         id: client.cache.identify(message),
