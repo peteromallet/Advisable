@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { Box, useTheme } from "@advisable/donut";
+import { Box, Text, useTheme } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import PassportAvatar from "src/components/PassportAvatar";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -28,10 +28,19 @@ export default function FreelancerProfileNew() {
     >
       <CoverPhoto />
       <PassportAvatar
-        size="xl"
+        size="2xl"
         name={data.specialist.name}
         src={data.specialist.avatar}
       />
+      <Text
+        fontSize="5xl"
+        fontWeight="600"
+        color="neutral900"
+        lineHeights="4xl"
+        letterSpacing="-0.03rem"
+      >
+        {data.specialist.name}
+      </Text>
     </Box>
   );
 }
