@@ -27,7 +27,7 @@ const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
         <NavItem onClick={onCloseNav} to="/manage">
           Manage
         </NavItem>
-        <NavItem onClick={onCloseNav} to="/new_messages">
+        <NavItem onClick={onCloseNav} to="/messages">
           {messageCount > 0 && <Badge>{messageCount}</Badge>}
           Messages
         </NavItem>
