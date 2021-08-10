@@ -153,7 +153,7 @@ export default function ConversationLink({ conversation }) {
     <StyledConversationLink
       id={conversation.id}
       data-testid="conversationLink"
-      to={`/new_messages/${conversation.id}`}
+      to={`/messages/${conversation.id}`}
     >
       <StyledAvatars data-count={others.length}>
         {others.map((p) => (
