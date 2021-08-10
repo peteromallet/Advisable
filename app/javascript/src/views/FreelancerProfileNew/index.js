@@ -1,4 +1,5 @@
 import React, { useLayoutEffect } from "react";
+import { Map } from "@styled-icons/heroicons-outline/Map";
 import { Box, Text, useTheme } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import PassportAvatar from "src/components/PassportAvatar";
@@ -31,16 +32,30 @@ export default function FreelancerProfileNew() {
         size="2xl"
         name={data.specialist.name}
         src={data.specialist.avatar}
+        marginBottom={4}
       />
       <Text
         fontSize="5xl"
-        fontWeight="600"
+        fontWeight="semibold"
         color="neutral900"
-        lineHeights="4xl"
+        lineHeight="4xl"
         letterSpacing="-0.03rem"
+        marginBottom={1.5}
       >
         {data.specialist.name}
       </Text>
+      <Box display="flex" color="neutral400" alignItems="center">
+        <Map height="20px" width="20px" color="neutral500" />
+        <Text
+          fontSize="17px"
+          fontWeight="medium"
+          color="neutral400"
+          lineHeight="l"
+          marginLeft={1}
+        >
+          {data.specialist.location}
+        </Text>
+      </Box>
     </Box>
   );
 }
