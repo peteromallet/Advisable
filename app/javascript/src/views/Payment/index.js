@@ -1,10 +1,11 @@
 import React from "react";
-import { Container, Card, Box, Stack, Avatar, Text } from "@advisable/donut";
+import { Container, Card, Box, Stack, Text, Heading } from "@advisable/donut";
 import { usePayment } from "./queries";
 import currency from "src/utilities/currency";
 import Loading from "src/components/Loading";
-import PaymentSuccessful from "./PaymentSuccessful";
-import HandlePayment from "./HandlePayment";
+import PaymentSuccessful from "./components/PaymentSuccessful";
+import PassportAvatar from "src/components/PassportAvatar";
+import PaymentPending from "./components/PaymentPending";
 
 export default function Payment() {
   const { data, loading } = usePayment();
@@ -17,15 +18,16 @@ export default function Payment() {
     <Container maxWidth="600px" paddingY={12}>
       <Card padding={8} borderRadius="12px">
         <Box textAlign="center">
-          <Avatar
-            size="l"
+          <PassportAvatar
+            size="lg"
+            marginX="auto"
             marginBottom={3}
             name={data.payment.specialist.name}
-            url={data.payment.specialist.avatar}
+            src={data.payment.specialist.avatar}
           />
-          <Text fontSize="xl" fontWeight={500} marginBottom={2}>
+          <Heading size="2xl" fontWeight={550} marginBottom={2}>
             {data.payment.specialist.name}
-          </Text>
+          </Heading>
           <Text
             fontWeight={450}
             color="neutral700"
@@ -68,7 +70,7 @@ export default function Payment() {
         {payment?.status === "succeeded" ? (
           <PaymentSuccessful />
         ) : (
-          <HandlePayment payment={payment} />
+          <PaymentPending payment={payment} />
         )}
       </Card>
     </Container>
