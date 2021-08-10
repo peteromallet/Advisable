@@ -43,7 +43,7 @@ export default function NewMessages() {
           {hasConversations && isDesktop && (
             <Redirect to={`/messages/${ordered[0].id}`} />
           )}
-          {!loading && (
+          {!loading && isDesktop && (
             <Route>
               <NoConversations />
             </Route>
