@@ -44,7 +44,7 @@ export default function FreelancerProfileNew() {
       >
         {data.specialist.name}
       </Text>
-      <Box display="flex" color="neutral400" alignItems="center">
+      <Box display="flex" color="neutral400" alignItems="center" mb={4}>
         <Map height="20px" width="20px" color="neutral500" />
         <Text
           fontSize="17px"
@@ -56,6 +56,9 @@ export default function FreelancerProfileNew() {
           {data.specialist.location}
         </Text>
       </Box>
+      <Text fontSize="l" lineHeight="l" color="neutral700">
+        {data.specialist.bio}
+      </Text>
     </Box>
   );
 }
