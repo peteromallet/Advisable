@@ -1,7 +1,7 @@
 import SimpleBar from "simplebar-react";
 import { motion } from "framer-motion";
 import React, { useRef, useMemo, useEffect } from "react";
-import { Box, Stack, Button } from "@advisable/donut";
+import { Box, Stack, Button, useBreakpoint } from "@advisable/donut";
 import { useMessages } from "../queries";
 import Message from "./Message";
 import MessagesLoading from "./MessagesLoading";
@@ -12,12 +12,23 @@ import useUpdateConversationLastRead from "../hooks/useUpdateConversationLastRea
 const POLL = 300000;
 
 export default function ConversationMessages({ conversation, currentAccount }) {
+  const isDesktop = useBreakpoint("lUp");
   useUpdateConversationLastRead(conversation);
-  const { data, loading, fetchMore } = useMessages({
+  const { data, loading, fetchMore, refetch } = useMessages({
     pollInterval: POLL,
     notifyOnNetworkStatusChange: true,
     variables: { id: conversation.id },
   });
+
+  useEffect(() => {
+    function handleVisible() {
+      if (!isDesktop && document.hidden === false) {
+        refetch();
+      }
+    }
+
+    document.addEventListener("visibilitychange", handleVisible);
+  }, [refetch, isDesktop]);
 
   const scrollRef = useRef(null);
   const hasPreviousMessages =
