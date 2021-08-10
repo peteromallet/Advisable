@@ -4,6 +4,7 @@ query Payment($id: ID!) {
     status
     amount
     adminFee
+    paymentMethod
     task {
       id
       name
