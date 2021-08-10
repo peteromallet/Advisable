@@ -1,0 +1,7 @@
+#import "./fragments/specialistFields.gql"
+
+query GetProfileData($id: ID!) {
+  specialist(id: $id) {
+    ...SpecialistFields
+  }
+}

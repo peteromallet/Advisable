@@ -1,0 +1,25 @@
+fragment SpecialistFields on Specialist {
+  id
+  name
+  firstName
+  avatar
+  coverPhoto
+  location
+  bio
+  linkedin
+  website
+  city
+  guild
+  country {
+    id
+  }
+
+  reviews {
+    id
+    name
+    role
+    comment
+    companyName
+    avatar
+  }
+}
