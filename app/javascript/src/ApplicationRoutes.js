@@ -27,6 +27,7 @@ const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
 const Messages = lazy(() => import("./views/Messages"));
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
+const FreelancerProfileNew = lazy(() => import("./views/FreelancerProfileNew"));
 const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication"),
 );
@@ -58,7 +59,12 @@ function RedirectToSetPassword() {
   );
 }
 
-function VersionedRoute({ fallback, versions, ...props }) {
+function VersionedRoute({
+  fallback,
+  versions,
+  routeComponent = AuthenticatedRoute,
+  ...props
+}) {
   const location = useLocation();
   const versionNumber = useMemo(() => {
     const { version } = queryString.parse(location.search);
@@ -67,7 +73,10 @@ function VersionedRoute({ fallback, versions, ...props }) {
   }, [location, props.path]);
 
   const component = versions[versionNumber] || fallback;
-  return <AuthenticatedRoute {...props} component={component} />;
+  return React.createElement(routeComponent, {
+    ...props,
+    component,
+  });
 }
 
 const ApplicationRoutes = () => {
@@ -99,7 +108,12 @@ const ApplicationRoutes = () => {
             path="/freelancers/apply"
             component={FreelancerApplication}
           />
-          <Route path="/freelancers/:id" component={FreelancerProfile} />
+          <VersionedRoute
+            routeComponent={Route}
+            path="/freelancers/:id"
+            fallback={FreelancerProfile}
+            versions={{ 2: FreelancerProfileNew }}
+          />
           {/* Client routes */}
           <Redirect
             from="/project_setup/:projectID"
