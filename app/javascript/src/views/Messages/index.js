@@ -8,9 +8,11 @@ import { Container, Main } from "./styles";
 import TopBar from "./TopBar";
 import Sidebar from "./Sidebar";
 import createTalkSession from "../../utilities/createTalkSession";
+import { useLocation } from "react-router-dom";
 
-const Messages = ({ location }) => {
+const Messages = () => {
   const height = use100vh();
+  const location = useLocation();
   const isMobile = useBreakpoint("m");
   const container = React.useRef(null);
   const [applicationId, setAppliationId] = React.useState(null);

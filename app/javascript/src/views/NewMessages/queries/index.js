@@ -95,7 +95,7 @@ async function updateConversationsList(client, message) {
 
 function updateConversation(client, location, message) {
   const conversationPath = matchPath(location.pathname, {
-    path: "/new_messages/:id",
+    path: "/messages/:id",
   });
 
   const isViewingConversation =
