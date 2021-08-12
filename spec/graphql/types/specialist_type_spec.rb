@@ -58,9 +58,9 @@ RSpec.describe Types::SpecialistType do
       let(:context) { {current_user: create(:specialist)} }
 
       it 'prevents access' do
-        error = response['errors'][0][:code]
+        error = response['errors'][0]['extensions']['code']
         expect(response['data']['specialist']['applications']).to be_nil
-        expect(error).to eq('INVALID_PERMISSIONS')
+        expect(error).to eq('INVALID_PERMISSIONS_FOR_FIELD')
       end
     end
 
@@ -68,9 +68,9 @@ RSpec.describe Types::SpecialistType do
       let(:context) { {current_user: project.user} }
 
       it 'prevents access' do
-        error = response['errors'][0][:code]
+        error = response['errors'][0]['extensions']['code']
         expect(response['data']['specialist']['applications']).to be_nil
-        expect(error).to eq('INVALID_PERMISSIONS')
+        expect(error).to eq('INVALID_PERMISSIONS_FOR_FIELD')
       end
     end
 
@@ -99,9 +99,9 @@ RSpec.describe Types::SpecialistType do
       let(:context) { {current_user: create(:specialist)} }
 
       it "prevents access" do
-        error = response["errors"][0][:code]
+        error = response["errors"][0]['extensions']['code']
         expect(response["data"]["specialist"]["applications"]).to be_nil
-        expect(error).to eq("INVALID_PERMISSIONS")
+        expect(error).to eq("INVALID_PERMISSIONS_FOR_FIELD")
       end
     end
 
@@ -109,9 +109,9 @@ RSpec.describe Types::SpecialistType do
       let(:context) { {current_user: create(:user)} }
 
       it "prevents access" do
-        error = response["errors"][0][:code]
+        error = response["errors"][0]['extensions']['code']
         expect(response["data"]["specialist"]["applications"]).to be_nil
-        expect(error).to eq("INVALID_PERMISSIONS")
+        expect(error).to eq("INVALID_PERMISSIONS_FOR_FIELD")
       end
     end
 
