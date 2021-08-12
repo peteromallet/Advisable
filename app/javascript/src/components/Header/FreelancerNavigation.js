@@ -1,13 +1,11 @@
 import React from "react";
 import { X } from "@styled-icons/feather/X";
 import { useMobile } from "../../components/Breakpoint";
-import useMessageCount from "../../hooks/useMessageCount";
-import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";
+import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
 import useViewer from "../../hooks/useViewer";
 
 const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
   const isMobile = useMobile();
-  const messageCount = useMessageCount();
   const viewer = useViewer();
 
   return (
@@ -26,7 +24,6 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
           Profile
         </NavItem>
         <NavItem onClick={onCloseNav} to="/messages">
-          {messageCount > 0 && <Badge>{messageCount}</Badge>}
           Messages
         </NavItem>
 
