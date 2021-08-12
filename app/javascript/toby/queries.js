@@ -1,4 +1,6 @@
 import { useQuery, useMutation, gql } from "@apollo/client";
+import { useHistory } from "react-router-dom";
+import { pluralizeType } from "./utilities";
 
 const viewFragment = gql`
   fragment ViewFields on View {
@@ -76,6 +78,7 @@ const DELETE_VIEW = gql`
 `;
 
 export function useDeleteView(resource, view) {
+  const history = useHistory();
   return useMutation(DELETE_VIEW, {
     variables: {
       id: view.id,
@@ -83,16 +86,19 @@ export function useDeleteView(resource, view) {
     update(cache) {
       const data = cache.readQuery({
         query: VIEWS,
-        variables: { resource },
+        variables: { resource: resource.type },
       });
 
       cache.writeQuery({
         query: VIEWS,
-        variables: { resource },
+        variables: { resource: resource.type },
         data: {
           views: data.views.filter((v) => v.id !== view.id),
         },
       });
+    },
+    onCompleted() {
+      history.push(pluralizeType(resource.type));
     },
   });
 }

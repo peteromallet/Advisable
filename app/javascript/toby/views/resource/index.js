@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import queryString from "query-string";
-import { Box, Button } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 import { Adjustments } from "@styled-icons/heroicons-solid/Adjustments";
 import { motion } from "framer-motion";
 import { useHistory, useLocation } from "react-router-dom";
@@ -23,6 +23,8 @@ import DetailsModal from "./DetailsModal";
 import LoadingIndicator from "src/components/Loading";
 import Loading from "./Loading";
 import { useResourceViews, useUpdateViewFilter } from "../../queries";
+import HeaderButton from "../../components/HeaderButton";
+import ViewsDropdown from "./ViewsDropdown";
 
 export default function ResourceConfig({ resource }) {
   const { loading, data } = useResourceViews(resource.type);
@@ -71,15 +73,27 @@ function Resource({ resource, views }) {
 
   const updateFilters = useCallback(
     (newFilters) => {
-      setFilters(newFilters);
-
       if (currentView) {
         updateViewFilters({
           variables: {
             id: currentView.id,
             filters: newFilters,
           },
+          optimisticResponse: {
+            updateTobyView: {
+              __typename: "UpdateViewPayload",
+              view: {
+                ...currentView,
+                filters: newFilters.map((filter) => ({
+                  ...filter,
+                  __typename: "Filter",
+                })),
+              },
+            },
+          },
         });
+      } else {
+        setFilters(newFilters);
       }
     },
     [currentView, updateViewFilters],
@@ -107,18 +121,13 @@ function Resource({ resource, views }) {
     <StyledLayout>
       <DetailsModal resource={resource} />
       <StyledHeader>
-        <Navigation />
-        <Button
-          ml={2}
-          mt={2}
-          size="s"
-          prefix={<Adjustments />}
-          variant="subtle"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? "Close Filters" : "Open filters"}
-          {filters.length ? ` (${filters.length})` : null}
-        </Button>
+        <Navigation resource={resource} />
+        <Box display="flex" alignItems="center" paddingLeft="8px">
+          <ViewsDropdown views={views} resource={resource} filters={filters} />
+          <HeaderButton icon={Adjustments} onClick={() => setIsOpen(!isOpen)}>
+            Filters
+          </HeaderButton>
+        </Box>
       </StyledHeader>
       <StyledViewport>
         <FilterDrawer
