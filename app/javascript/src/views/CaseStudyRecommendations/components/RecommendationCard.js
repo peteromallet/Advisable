@@ -63,10 +63,29 @@ export default function RecommendationCard({
             lineHeight="24px"
             color="neutral900"
             className="subtitle"
-            marginBottom={7}
+            marginBottom={4}
           >
             {caseStudy.subtitle}
           </Text>
+          <Box marginBottom={6}>
+            {caseStudy.skills.map((as) => (
+              <Box
+                mb={2}
+                mr={3}
+                key={as.id}
+                fontSize="xs"
+                color="neutral700"
+                fontWeight={450}
+                display="inline-block"
+                py={1.5}
+                px={2}
+                borderRadius="8px"
+                bg="neutral100"
+              >
+                #{as.skill.name}
+              </Box>
+            ))}
+          </Box>
           {sharedArticle?.message && (
             <Box
               padding={3}
