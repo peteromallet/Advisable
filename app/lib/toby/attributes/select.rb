@@ -3,10 +3,10 @@
 module Toby
   module Attributes
     class Select < BaseAttribute
-      filter :is, Filters::Equals
-      filter :one_of, Filters::OneOf
-      filter :is_empty, Filters::CheckNil
-      filter :not_empty, Filters::CheckNotNil
+      filter 'equals...', Filters::Equals
+      filter 'is one of...', Filters::OneOf
+      filter 'is blank', Filters::CheckNil
+      filter 'is not blank', Filters::CheckNotNil
 
       extension_field :options, [GraphQL::Types::String]
 
