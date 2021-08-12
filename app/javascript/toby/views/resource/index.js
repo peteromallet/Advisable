@@ -126,6 +126,21 @@ function Resource({ resource, views }) {
           <ViewsDropdown views={views} resource={resource} filters={filters} />
           <HeaderButton icon={Adjustments} onClick={() => setIsOpen(!isOpen)}>
             Filters
+            {filters.length > 0 && (
+              <Box
+                paddingY={1}
+                paddingX={2}
+                borderRadius="8px"
+                bg="white"
+                fontSize="2xs"
+                fontWeight={600}
+                marginRight="-8px"
+                marginLeft="8px"
+                color="blue600"
+              >
+                {filters.length}
+              </Box>
+            )}
           </HeaderButton>
         </Box>
       </StyledHeader>
