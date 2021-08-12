@@ -1,6 +1,7 @@
+import css from "@styled-system/css";
 import React, { useMemo, useCallback } from "react";
-import { Box, Select, Button } from "@advisable/donut";
-import { Trash } from "@styled-icons/heroicons-solid/Trash";
+import { Text, Box, Select } from "@advisable/donut";
+import { XCircle } from "@styled-icons/heroicons-solid/XCircle";
 import FilterValue from "./filters";
 import { StyledFilter } from "./styles";
 
@@ -94,7 +95,36 @@ export default function Filter({
   };
 
   return (
-    <StyledFilter borderRadius="12px" bg="neutral100" padding={2}>
+    <StyledFilter borderRadius="12px" bg="neutral100" padding={3}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={3}
+      >
+        <Text fontSize="sm" fontWeight={550}>
+          {index > 0 ? "and" : "Where"}
+        </Text>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          width="24px"
+          height="24px"
+          margin="-4px"
+          borderRadius="8px"
+          onClick={handleRemove}
+          css={css({
+            color: "neutral500",
+            "&:hover": {
+              color: "neutral800",
+              bg: "neutral200",
+            },
+          })}
+        >
+          <XCircle size={20} />
+        </Box>
+      </Box>
       <Box display="flex" mb={2}>
         <Box pr={1} width="50%">
           <FilterAttribute
@@ -117,15 +147,6 @@ export default function Filter({
         filter={filter}
         onChange={handleChangeValue}
       />
-      <Button
-        mt={2}
-        prefix={<Trash />}
-        size="xs"
-        variant="subtle"
-        onClick={handleRemove}
-      >
-        Remove
-      </Button>
     </StyledFilter>
   );
 }
