@@ -18,7 +18,10 @@ export default function BookingContainer({ match }) {
   if (loading) return <Loading />;
   if (!data.application) return <NotFound />;
 
-  if (error?.graphQLErrors[0]?.code === "INVALID_PERMISSIONS") {
+  if (
+    error?.graphQLErrors[0]?.extensions?.code ===
+    "INVALID_PERMISSIONS_FOR_FIELD"
+  ) {
     return <AccessDenied />;
   }
 

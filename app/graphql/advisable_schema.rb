@@ -16,6 +16,6 @@ class AdvisableSchema < GraphQL::Schema
   end
 
   def self.unauthorized_field(error)
-    raise GraphQL::ExecutionError.new("Invalid permissions for #{error.field.graphql_name} field", options: {code: 'INVALID_PERMISSIONS'})
+    raise GraphQL::ExecutionError.new("Invalid permissions for #{error.field.graphql_name} field", extensions: {code: 'INVALID_PERMISSIONS_FOR_FIELD'})
   end
 end

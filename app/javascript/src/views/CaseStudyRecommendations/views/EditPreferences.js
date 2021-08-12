@@ -54,7 +54,7 @@ export default function EditPreferences({ currentCompany, caseStudySearch }) {
       variables: { input: { id: caseStudySearch.id, ...values } },
     });
 
-    if (res.errors) {
+    if (!res.data.finalizeCaseStudySearch && res.errors) {
       setStatus("Something went wrong, please try again");
       return;
     }
