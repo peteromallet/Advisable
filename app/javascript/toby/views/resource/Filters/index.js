@@ -4,15 +4,8 @@ import { Box, Stack } from "@advisable/donut";
 import Filter from "./Filter";
 import EmptyFilters from "./EmptyFilters";
 import { useSchema } from "../../../components/schema";
-import ViewSelect from "./ViewSelect";
 
-export default function FilterDrawer({
-  views,
-  filters,
-  resource,
-  open,
-  onApply,
-}) {
+export default function FilterDrawer({ filters, resource, open, onApply }) {
   const schemaData = useSchema();
   const attributesWithFilters = useMemo(
     () =>
@@ -76,7 +69,6 @@ export default function FilterDrawer({
         box-shadow: 2px 0 24px rgba(0, 0, 0, 0.2);
       `}
     >
-      <ViewSelect filters={filters} resource={resource} views={views} />
       {filters.length === 0 && <EmptyFilters />}
       <Stack spacing="xs" mb={2}>
         {filters.map((filter, index) => (
