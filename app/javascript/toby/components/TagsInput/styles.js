@@ -2,11 +2,9 @@ import styled from "styled-components";
 import { StyledInput, StyledTag } from "@advisable/donut";
 
 export const StyledTagsInput = styled(StyledInput)`
-  min-height: 40px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 8px;
-  padding-right: 8px;
+  min-height: 32px;
+  padding-left: 2px;
+  padding-right: 2px;
   flex-wrap: wrap;
   align-items: center;
 
