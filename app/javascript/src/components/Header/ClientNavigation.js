@@ -1,13 +1,12 @@
 import * as React from "react";
 import { X } from "@styled-icons/feather/X";
 import { useMobile } from "../../components/Breakpoint";
-import useMessageCount from "../../hooks/useMessageCount";
-import { CloseNav, NavContainer, Nav, NavItem, Badge } from "./styles";
+import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
 import useFeatureFlag from "src/hooks/useFeatureFlag";
+import MessageCount from "./MessageCount";
 
 const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
   const isMobile = useMobile();
-  const messageCount = useMessageCount();
   const isCaseStudiesEnabled = useFeatureFlag("case_studies");
 
   return (
@@ -28,7 +27,7 @@ const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
           Manage
         </NavItem>
         <NavItem onClick={onCloseNav} to="/messages">
-          {messageCount > 0 && <Badge>{messageCount}</Badge>}
+          <MessageCount />
           Messages
         </NavItem>
 
