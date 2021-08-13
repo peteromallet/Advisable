@@ -1,7 +1,7 @@
 import React from "react";
 import { StyledCover, StyledCoverInner } from "./styles";
 
-function PassportAvatar({ src, children, color, ...props }) {
+function CoverImage({ src, color, ...props }) {
   const style = {};
   if (src) {
     style.backgroundImage = `url(${src})`;
@@ -9,13 +9,7 @@ function PassportAvatar({ src, children, color, ...props }) {
 
   return (
     <StyledCover {...props}>
-      <svg
-        width={0}
-        height={0}
-        viewBox="0 0 1080 320"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg className="svgClip" width={0} height={0} viewBox="0 0 1080 320">
         <clipPath
           id="coverSquircle"
           clipPathUnits="objectBoundingBox"
@@ -25,14 +19,13 @@ function PassportAvatar({ src, children, color, ...props }) {
         </clipPath>
       </svg>
       <StyledCoverInner color={color} style={style} />
-      {children}
     </StyledCover>
   );
 }
 
-PassportAvatar.defaultProps = {
+CoverImage.defaultProps = {
   size: "md",
   color: "blue",
 };
 
-export default PassportAvatar;
+export default CoverImage;
