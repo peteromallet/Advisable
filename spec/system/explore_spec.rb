@@ -238,4 +238,13 @@ RSpec.describe 'Explore', type: :system do
     expect(page).to have_current_path("/explore/#{company_search.uid}")
     expect(user.reload.searches.count).to eq(1)
   end
+
+  context "when trying to view a search hey dont have access to" do
+    it "shows a not authorized error" do
+      search = create(:case_study_search)
+      authenticate_as(user)
+      visit("/explore/#{search.uid}")
+      expect(page).to have_content("Not Authorized")
+    end
+  end
 end
