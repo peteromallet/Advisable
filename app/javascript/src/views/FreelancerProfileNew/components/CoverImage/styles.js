@@ -25,6 +25,7 @@ export const StyledCoverInner = styled.div`
   clip-path: url(#coverSquircle);
   background-size: cover;
   background-position: center;
+  border-radius: 20px;
 `;
 
 export const StyledCover = styled.div`
