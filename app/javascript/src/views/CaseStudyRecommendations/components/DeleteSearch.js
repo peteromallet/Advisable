@@ -3,15 +3,21 @@ import { Trash } from "@styled-icons/heroicons-solid/Trash";
 import { Modal, Text, Button, useModal } from "@advisable/donut";
 import IconButton from "src/components/IconButton";
 import { useDeleteSearch } from "../queries";
+import { useNotifications } from "src/components/Notifications";
 
 export default function DeleteSearch({ search, onDelete = () => {} }) {
   const modal = useModal();
+  const { error } = useNotifications();
   const [deleteSearch, { loading }] = useDeleteSearch(search);
 
   const handleDelete = async () => {
-    await deleteSearch();
-    modal.hide();
-    onDelete();
+    const { errors } = await deleteSearch();
+    if (errors) {
+      error("Something went wrong, please try again.");
+    } else {
+      modal.hide();
+      onDelete();
+    }
   };
 
   return (
