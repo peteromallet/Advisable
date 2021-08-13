@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from "react";
 import { Box, useTheme } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
-import CoverPhoto from "./components/CoverPhoto";
+import CoverImage from "./components/CoverImage";
 import Sidebar from "./components/Sidebar";
 import { useProfileData } from "./queries";
 import CaseStudies from "./components/CaseStudies";
@@ -29,7 +29,7 @@ export default function FreelancerProfileNew() {
       mx={["12px", "32px", "32px", "auto"]}
       maxWidth={{ _: "100%", l: "1080px" }}
     >
-      <CoverPhoto />
+      <CoverImage src={data.specialist.coverPhoto} />
       <Box display="flex">
         <Sidebar data={data} />
         <Box>
