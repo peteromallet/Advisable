@@ -23,11 +23,7 @@ export default function FreelancerProfileNew() {
   if (isNotFound(error)) return <NotFound />;
 
   return (
-    <Box
-      pb={10}
-      mx={["12px", "32px", "32px", "auto"]}
-      maxWidth={{ _: "100%", l: "1080px" }}
-    >
+    <Box display="flex" flexDirection="column" alignItems="center" pb={10}>
       <CoverImage
         src={data.specialist.coverPhoto}
         size={["xs", "s", "m", "l", "xl"]}
