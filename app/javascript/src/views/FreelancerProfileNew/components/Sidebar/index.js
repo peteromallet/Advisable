@@ -10,8 +10,8 @@ export default function Sidebar({ data }) {
   const bio = data.specialist.bio.slice(0, 140);
 
   return (
-    <Box position="relative" top="-156px">
-      <Box position="sticky" top="108px" width="280px" mr={8} ml={7}>
+    <Box position="relative" top="-176px">
+      <Box position="sticky" top="108px" width="280px" mr={8}>
         <PassportAvatar
           size="2xl"
           name={data.specialist.name}
