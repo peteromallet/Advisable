@@ -1,7 +1,10 @@
 import React from "react";
 import { Map } from "@styled-icons/heroicons-outline/Map";
+import { LinkedinIn } from "@styled-icons/fa-brands/LinkedinIn";
+import { Globe } from "@styled-icons/heroicons-solid/Globe";
 import { Button, Box, Text } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
+import SocialIcon from "../SocialIcon";
 
 export default function Sidebar({ data }) {
   const bio = data.specialist.bio.slice(0, 140);
@@ -40,9 +43,17 @@ export default function Sidebar({ data }) {
         <Text fontSize="l" lineHeight="l" color="neutral700" mb={7}>
           {bio}
         </Text>
-        <Button variant="gradient" size="l">
+        <Button variant="gradient" size="l" mb={6}>
           Work together
         </Button>
+        <Box>
+          {data.specialist.linkedin ? (
+            <SocialIcon icon={LinkedinIn} href={data.specialist.linkedin} />
+          ) : null}
+          {data.specialist.website ? (
+            <SocialIcon icon={Globe} href={data.specialist.website} />
+          ) : null}
+        </Box>
       </Box>
     </Box>
   );
