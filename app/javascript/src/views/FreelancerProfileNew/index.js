@@ -24,12 +24,14 @@ export default function FreelancerProfileNew() {
 
   return (
     <Box
-      pt={7}
       pb={10}
       mx={["12px", "32px", "32px", "auto"]}
       maxWidth={{ _: "100%", l: "1080px" }}
     >
-      <CoverImage src={data.specialist.coverPhoto} />
+      <CoverImage
+        src={data.specialist.coverPhoto}
+        size={["xs", "s", "m", "l", "xl"]}
+      />
       <Box display="flex">
         <Sidebar data={data} />
         <Box>

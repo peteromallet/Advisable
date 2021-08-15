@@ -25,16 +25,50 @@ export const StyledCoverInner = styled.div`
   clip-path: url(#coverSquircle);
   background-size: cover;
   background-position: center;
-  border-radius: 20px;
 `;
+
+const size = variant({
+  prop: "size",
+  variants: {
+    xl: {
+      width: "1136px",
+      height: "416px",
+      padding: "28px",
+      outline: "1px solid red",
+    },
+    l: {
+      width: "1024px",
+      height: "368px",
+      padding: "20px",
+      outline: "1px solid green",
+    },
+    m: {
+      width: "100vw",
+      height: "33.3vw",
+      padding: "20px",
+      outline: "1px solid blue",
+    },
+    s: {
+      width: "100vw",
+      height: "33.3vw",
+      padding: "20px",
+      outline: "1px solid black",
+    },
+    xs: {
+      width: "100vw",
+      height: "33.3vw",
+      padding: "20px",
+      outline: "1px solid purple",
+    },
+  },
+});
 
 export const StyledCover = styled.div`
   ${space}
+  ${size}
 
   flex-shrink: 0;
   position: relative;
-  width: 1080px;
-  height: 320px;
 
   .svgClip {
     opacity: 0;
