@@ -1,11 +1,11 @@
 import React from "react";
 import { StyledCover, StyledCoverInner } from "./styles";
+import defaultCoverPhoto from "./defaultCoverPhoto.png";
 
 function CoverImage({ src, color, ...props }) {
-  const style = {};
-  if (src) {
-    style.backgroundImage = `url(${src})`;
-  }
+  const style = {
+    backgroundImage: `url(${src || defaultCoverPhoto})`,
+  };
 
   return (
     <StyledCover {...props}>
