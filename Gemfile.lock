@@ -321,6 +321,7 @@ GEM
       parallel
     parser (3.0.2.0)
       ast (~> 2.4.1)
+    pdfmonkey (0.5.0)
     pg (1.2.3)
     pghero (2.8.1)
       activerecord (>= 5)
@@ -585,6 +586,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   parallel_tests
   parser
+  pdfmonkey
   pg (>= 0.18, < 2.0)
   pghero
   pry
