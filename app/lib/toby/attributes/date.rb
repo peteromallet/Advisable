@@ -3,11 +3,11 @@
 module Toby
   module Attributes
     class Date < BaseAttribute
-      filter :is, Filters::DateEquals
-      filter :is_after, Filters::DateAfter
-      filter :is_before, Filters::DateBefore
-      filter :is_empty, Filters::CheckNil
-      filter :not_empty, Filters::CheckNotNil
+      filter 'equals...', Filters::DateEquals
+      filter 'is after...', Filters::DateAfter
+      filter 'is before...', Filters::DateBefore
+      filter 'is blank', Filters::CheckNil
+      filter 'is not blank', Filters::CheckNotNil
 
       def type
         GraphQL::Types::ISO8601Date

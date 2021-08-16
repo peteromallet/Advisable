@@ -6,7 +6,7 @@ module Toby
       def apply(records, attribute, value: [], **_opts)
         return records if value.empty?
 
-        records.where(attribute.name => value.first)
+        records.where("LOWER(#{attribute.name}) = LOWER(?)", value.first)
       end
     end
   end

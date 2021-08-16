@@ -3,9 +3,9 @@
 module Toby
   module Attributes
     class BelongsTo < BaseAttribute
-      filter :one_of, Filters::OneOf, nested: true
-      filter :is_empty, Filters::CheckNil
-      filter :not_empty, Filters::CheckNotNil
+      filter 'is one of...', Filters::OneOf, nested: true
+      filter 'is blank', Filters::CheckNil
+      filter 'is not blank', Filters::CheckNotNil
 
       # optional for when we don't follow the class == resource convention
       def model
