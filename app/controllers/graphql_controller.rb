@@ -37,8 +37,8 @@ class GraphqlController < ApplicationController
       extra: {
         headers: headers,
         tokens: request_authenticity_tokens,
-        real: real_csrf_token(session),
-        global: global_csrf_token(session),
+        real: Base64.encode64(real_csrf_token(session)),
+        global: Base64.encode64(global_csrf_token(session)),
         session: cookies["_advisable_session"]
       }
     )
