@@ -6,36 +6,32 @@ class GenerateInvoiceJob < ApplicationJob
   queue_as :default
 
   def perform(company, year, month)
+    date = Date.parse("1.#{month}.#{year}")
+    payments = company.payments.with_status("succeeded").where(created_at: date.all_month)
+
     data = {
-      billing_address: "1600 Pennsylvania Ave NW\nWashington, DC 20500\nUnited States",
-      client_name: "Secret Client",
-      invoice_date: "11/30/2048",
+      billing_address: company.address.inline,
+      client_name: company.name,
       issue_date: "12/31/2017",
       due_date: "12/31/2018",
-      invoice_number: "000001",
-      total: 7010,
-      deposit: 100.0,
-      lineItems: [
-        {
-          code: "000001",
-          description: "Product 1",
-          quantity: 6,
-          price: 30
-        },
-        {
-          code: "000002",
-          description: "Product 2",
-          quantity: 3,
-          price: 20
-        },
-        {
-          code: "000003",
-          description: "Product 3",
-          quantity: 7,
-          price: 60
-        }
-      ]
+      invoice_number: "#{company.id}-#{year}-#{month}",
+      total: payments.sum(&:amount_with_fee),
+      deposit: payments.sum(:deposit)
     }
+
+    line_items = payments.flat_map do |payment|
+      {
+        description: payment.task.description,
+        quantity: 1,
+        price: payment.amount
+      }
+    end
+    line_items << {
+      description: "Administration Fee",
+      quantity: 1,
+      price: payments.sum(:admin_fee)
+    }
+    data[:lineItems] = line_items
 
     document = Pdfmonkey::Document.generate!(TEMPLATE_ID, data)
 
