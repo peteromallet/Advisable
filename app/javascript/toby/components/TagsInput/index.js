@@ -57,7 +57,7 @@ export default function TagsInput({
   return (
     <StyledTagsInput data-focused={focused} onClick={handleClick}>
       {value.map((tag, i) => (
-        <Tag key={i} size="s" variant="dark">
+        <Tag key={i} size="s">
           {tag}
         </Tag>
       ))}

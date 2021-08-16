@@ -3,11 +3,11 @@
 module Toby
   module Attributes
     class Integer < BaseAttribute
-      filter :is, Filters::Equals
-      filter :less_than, Filters::LessThan
-      filter :greater_than, Filters::GreaterThan
-      filter :is_empty, Filters::CheckNil
-      filter :not_empty, Filters::CheckNotNil
+      filter 'equals...', Filters::Equals
+      filter 'is less than...', Filters::LessThan
+      filter 'is greater than...', Filters::GreaterThan
+      filter 'is blank', Filters::CheckNil
+      filter 'is not blank', Filters::CheckNotNil
 
       def type
         GraphQL::Types::Int

@@ -1,6 +1,8 @@
+import css from "@styled-system/css";
 import React, { useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Box, Stack } from "@advisable/donut";
+import { Box, Text, Stack } from "@advisable/donut";
+import { PlusCircle } from "@styled-icons/heroicons-solid/PlusCircle";
 import Filter from "./Filter";
 import EmptyFilters from "./EmptyFilters";
 import { useSchema } from "../../../components/schema";
@@ -84,7 +86,27 @@ export default function FilterDrawer({ filters, resource, open, onApply }) {
         ))}
       </Stack>
 
-      <button onClick={handleNewFilter}>+ Add</button>
+      <Box
+        onClick={handleNewFilter}
+        bg="neutral100"
+        display="flex"
+        paddingY={5}
+        paddingX={3}
+        justifyContent="center"
+        borderRadius="12px"
+        color="neutral800"
+        css={css({
+          cursor: "default",
+          "&:hover": {
+            bg: "neutral200",
+          },
+        })}
+      >
+        <PlusCircle size={16} />
+        <Text ml={1} fontWeight={500} fontSize="sm">
+          Add Filter
+        </Text>
+      </Box>
     </Box>
   );
 }
