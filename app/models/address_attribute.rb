@@ -5,14 +5,15 @@ class AddressAttribute
 
   def initialize(attributes = {})
     attributes.symbolize_keys!
-    KEYS.map { |key| self.send("#{key}=", attributes[key]) }
+    KEYS.map { |key| public_send("#{key}=", attributes[key]) }
   end
 
-  def as_json(options = {})
-    KEYS.inject({}) do |address, key|
-      address[key] = send(key)
-      address
-    end
+  def as_json(_options = {})
+    KEYS.index_with { |key| public_send(key) }
+  end
+
+  def inline
+    KEYS.filter_map { |key| public_send(key) }.join("\n")
   end
 
   def ==(other)
@@ -33,9 +34,9 @@ class AddressAttribute
     end
 
     def cast(value)
-      hash = value.class == Hash ? value : {}
+      hash = value.instance_of?(Hash) ? value : {}
 
-      if value.class == String
+      if value.instance_of?(String)
         decoded =
           begin
             ::ActiveSupport::JSON.decode(value)
