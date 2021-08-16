@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export default gql`
-  {
+  query FreelancerProjects {
     viewer {
       ... on Specialist {
         id
