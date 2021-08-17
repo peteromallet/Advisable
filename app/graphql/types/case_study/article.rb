@@ -7,10 +7,19 @@ module Types
       description "Type definition for CaseStudy::Article"
 
       field :id, ID, null: false, method: :uid
+
       field :specialist, Types::SpecialistType, null: true
+      def specialist
+        dataloader.with(::ActiveRecordSource, ::Specialist).load(object.specialist_id)
+      end
+
       field :company, Company, null: true do
         authorize :read_company?
       end
+      def company
+        dataloader.with(::ActiveRecordSource, ::Company).load(object.company_id)
+      end
+
       field :skills, [Skill], null: true
       field :industries, [Industry], null: true
       field :title, String, null: true

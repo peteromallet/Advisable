@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class AdvisableSchema < GraphQL::Schema
-  use GraphQL::Subscriptions::ActionCableSubscriptions
   max_depth 15
   query Types::QueryType
+  use GraphQL::Dataloader
+  use GraphQL::Subscriptions::ActionCableSubscriptions
   mutation Types::MutationType
   subscription Types::SubscriptionType
 
