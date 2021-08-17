@@ -20,8 +20,10 @@ class GenerateInvoiceJob < ApplicationJob
     }
 
     line_items = payments.flat_map do |payment|
+      description = payment.specialist.account.name
+      description += " - #{payment.task.name}" if payment.task&.name&.present?
       {
-        description: payment.task.description,
+        description: description,
         quantity: 1,
         price: payment.amount
       }
