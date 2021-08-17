@@ -6,7 +6,7 @@ import { DateTime } from "luxon";
 
 function dateForMessage(iso) {
   const date = DateTime.fromISO(iso);
-  return date.toFormat("dd MMM, yyyy");
+  return date.toFormat("dd MMM, yyyy HH:mm");
 }
 
 export default function Message({ message }) {
@@ -16,12 +16,17 @@ export default function Message({ message }) {
       opacity={message.status === "SENT" ? 1 : 0.4}
       id={message.id}
       data-status={message.status}
-      bg="white"
-      boxShadow="xs"
-      padding={4}
       borderRadius="12px"
+      bg="white"
+      boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;"
+      padding={4}
     >
-      <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        marginBottom={6}
+      >
         <Box flexShrink="0" pr={3} display="flex">
           <Avatar
             bg="blue100"
@@ -32,17 +37,16 @@ export default function Message({ message }) {
           />
         </Box>
         <Box width="100%">
-          <Text fontSize="17px" fontWeight={520}>
+          <Text fontSize="17px" fontWeight={550}>
             {message.author.name}
           </Text>
         </Box>
         <Box flexShrink={0}>
-          <Text fontSize="xs" fontWeight={450} color="neutral400">
+          <Text fontSize="xs" fontWeight={400} color="neutral500">
             {dateForMessage(message.createdAt)}
           </Text>
         </Box>
       </Box>
-      <Box height="1px" bg="neutral100" marginY={4} />
       <Box width="100%">
         <Text autoLink fontSize="17px" color="neutral900" lineHeight="24px">
           {renderLineBreaks(message.content)}
