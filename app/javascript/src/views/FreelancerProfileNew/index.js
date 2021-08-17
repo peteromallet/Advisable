@@ -28,7 +28,7 @@ export default function FreelancerProfileNew() {
         src={data.specialist.coverPhoto}
         size={["xs", "s", "m", "l", "xl"]}
       />
-      <Box display="flex">
+      <Box display="flex" flexDirection={{ _: "column", l: "row", xl: "row" }}>
         <Sidebar data={data} />
         <Box>
           <CaseStudies />
