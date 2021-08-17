@@ -7,7 +7,7 @@ class AccountMailer < ApplicationMailer
     mail(to: @account.email, subject: 'Reset password')
   end
 
-  def zappier_email(account, subject, body)
+  def zapier_email(account, subject, body)
     mail(to: account.email, subject: subject) do |f|
       f.html { body }
     end
