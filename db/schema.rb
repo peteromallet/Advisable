@@ -738,6 +738,16 @@ ActiveRecord::Schema.define(version: 2021_08_31_073613) do
     t.index ["uid"], name: "index_payouts_on_uid", unique: true
   end
 
+  create_table "pdf_invoices", force: :cascade do |t|
+    t.integer "month"
+    t.integer "year"
+    t.uuid "company_id", null: false
+    t.string "key"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_pdf_invoices_on_company_id"
+  end
+
   create_table "post_prompts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "prompt"
     t.string "cta"
@@ -1203,6 +1213,7 @@ ActiveRecord::Schema.define(version: 2021_08_31_073613) do
   add_foreign_key "payments", "tasks"
   add_foreign_key "payouts", "specialists"
   add_foreign_key "payouts", "tasks"
+  add_foreign_key "pdf_invoices", "companies"
   add_foreign_key "post_prompts", "labels"
   add_foreign_key "problematic_flags", "applications"
   add_foreign_key "problematic_flags", "users"
