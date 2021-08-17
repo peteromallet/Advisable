@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class AccountMailerPreview < ActionMailer::Preview
-  def zappier_email
-    AccountMailer.zappier_email(random_account, "test", "<h1>test</h1><p>ha!</p>")
+  def zapier_email
+    AccountMailer.zapier_email(random_account, "test", "<h1>test</h1><p>ha!</p>")
   end
 
   def notify_of_new_messages
