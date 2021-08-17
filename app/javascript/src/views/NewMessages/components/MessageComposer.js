@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState } from "react";
 import { theme, Box, Stack } from "@advisable/donut";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
-import { ArrowCircleRight } from "@styled-icons/heroicons-solid/ArrowCircleRight";
+import { PaperAirplane } from "@styled-icons/heroicons-solid/PaperAirplane";
 import useAttachments from "../hooks/useAttachments";
 import AddAttachmentsButton from "./AddAttachmentsButton";
 import Attachment from "./Attachment";
@@ -17,7 +17,8 @@ const StyledMessageComposer = styled.div`
   overflow: hidden;
   background: white;
   border-radius: 16px;
-  box-shadow: 0 2px 32px rgba(0, 0, 0, 0.08);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 
   textarea {
     margin: 0;
@@ -25,7 +26,7 @@ const StyledMessageComposer = styled.div`
     width: 100%;
     border: none;
     outline: none;
-    padding: 16px;
+    padding: 20px;
     font-size: 17px;
     font-weight: 450;
     letter-spacing: -0.01rem;
@@ -196,14 +197,16 @@ export default function MessageComposer({ conversation, currentAccount }) {
             height="52px"
             display="flex"
             alignItems="center"
-            justifyContent="space-between"
+            justifyContent="flex-end"
             paddingX={2}
           >
+            <Box marginRight={2}>
+              <AddAttachmentsButton onSelect={addAttachments} />
+            </Box>
             <StyledMessageButton disabled={!canSend} onClick={handleSubmit}>
-              <span>Reply</span>
-              <ArrowCircleRight />
+              <PaperAirplane />
+              <span>Send</span>
             </StyledMessageButton>
-            <AddAttachmentsButton onSelect={addAttachments} />
           </Box>
         </>
       ) : (
