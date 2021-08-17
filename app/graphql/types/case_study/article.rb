@@ -21,6 +21,10 @@ module Types
       end
 
       field :skills, [Skill], null: true
+      def skills
+        object.skills.order(created_at: :asc)
+      end
+
       field :industries, [Industry], null: true
       field :title, String, null: true
       field :subtitle, String, null: true
