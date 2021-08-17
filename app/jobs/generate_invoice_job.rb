@@ -24,16 +24,14 @@ class GenerateInvoiceJob < ApplicationJob
     if document.status == "success"
       res = Faraday.get(document.download_url)
       if res.status == 200
-        path = "invoices/#{company.name}/#{year}-#{month}.pdf"
-        tempfile = Tempfile.new(path, binmode: true)
+        key = "invoices/#{company.name}/#{year}-#{month}.pdf"
+        tempfile = Tempfile.new(key, binmode: true)
         tempfile.write(res.body)
         tempfile.close
-        obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: path)
+        obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: key)
         obj.upload_file(tempfile.path)
-
-        # DEBUG 👇️
-        # puts("Invoice: #{obj.presigned_url(:get, expires_in: 3600)}")
-        # DEBUG 👆️
+        pdf_invoice = PdfInvoice.find_or_initialize_by(company_id: company.id, year: year, month: month)
+        pdf_invoice.update(key: key)
       else
         Sentry.capture_message("Could not download invoice from pdfmonkey!", extra: {company: company, year: year, month: month})
       end
