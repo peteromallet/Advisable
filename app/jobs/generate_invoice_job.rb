@@ -16,30 +16,13 @@ class GenerateInvoiceJob < ApplicationJob
       due_date: "12/31/2018",
       invoice_number: "#{company.id}-#{year}-#{month}",
       total: payments.sum(&:amount_with_fee),
-      deposit: payments.sum(:deposit)
+      deposit: payments.sum(:deposit),
+      lineItems: line_items(payments)
     }
-
-    line_items = payments.flat_map do |payment|
-      description = payment.specialist.account.name
-      description += " - #{payment.task.name}" if payment.task&.name&.present?
-      {
-        description: description,
-        quantity: 1,
-        price: payment.amount
-      }
-    end
-    line_items << {
-      description: "Administration Fee",
-      quantity: 1,
-      price: payments.sum(:admin_fee)
-    }
-    data[:lineItems] = line_items
 
     document = Pdfmonkey::Document.generate!(TEMPLATE_ID, data)
-
     if document.status == "success"
       res = Faraday.get(document.download_url)
-
       if res.status == 200
         path = "invoices/#{company.name}/#{year}-#{month}.pdf"
         tempfile = Tempfile.new(path, binmode: true)
@@ -49,11 +32,31 @@ class GenerateInvoiceJob < ApplicationJob
         obj.upload_file(tempfile.path)
 
         # DEBUG 👇️
-        puts("Invoice: #{obj.presigned_url(:get, expires_in: 3600)}")
+        # puts("Invoice: #{obj.presigned_url(:get, expires_in: 3600)}")
         # DEBUG 👆️
-        return obj
+      else
+        Sentry.capture_message("Could not download invoice from pdfmonkey!", extra: {company: company, year: year, month: month})
       end
+    else
+      Sentry.capture_message("Something went wrong in invoice generation!", extra: {company: company, year: year, month: month})
     end
-    Sentry.capture_message("Something went wrong in invoice generation!", extra: {company: company, year: year, month: month})
+  end
+
+  private
+
+  def line_items(payments)
+    payments.flat_map do |payment|
+      description = payment.specialist.account.name
+      description += " - #{payment.task.name}" if payment.task&.name&.present?
+      {
+        description: description,
+        quantity: 1,
+        price: payment.amount
+      }
+    end + [{
+      description: "Administration Fee",
+      quantity: 1,
+      price: payments.sum(:admin_fee)
+    }]
   end
 end
