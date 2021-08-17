@@ -92,7 +92,7 @@ export default function ConversationMessages({ conversation, currentAccount }) {
             )}
             <Stack
               paddingY={10}
-              spacing="2xl"
+              spacing={10}
               divider="neutral100"
               id="messages"
             >

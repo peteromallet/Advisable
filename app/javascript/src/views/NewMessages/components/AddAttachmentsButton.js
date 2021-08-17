@@ -20,6 +20,7 @@ export default function AddAttachmentsButton({ onSelect }) {
       />
       <StyledSecondaryComposerButton onClick={() => inputRef.current.click()}>
         <PaperClip />
+        <span>Attachment</span>
       </StyledSecondaryComposerButton>
     </>
   );

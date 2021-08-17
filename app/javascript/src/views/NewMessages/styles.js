@@ -7,11 +7,11 @@ export const ComposerButton = styled.button`
   cursor: pointer;
   appearance: none;
   border-radius: 16px;
-  align-items: center;
   display: inline-flex;
+  padding: 0 12px;
+  place-items: center;
 
   span {
-    padding: 0 8px;
     font-size: 15px;
     font-weight: 500;
   }
@@ -23,12 +23,13 @@ export const ComposerButton = styled.button`
 
   svg {
     width: 20px;
+    margin-right: 4px;
   }
 `;
 
 export const StyledSecondaryComposerButton = styled(ComposerButton)`
-  color: ${theme.colors.neutral500};
-  background: transparent;
+  color: ${theme.colors.neutral700};
+  background: ${theme.colors.neutral100};
 
   &:not(:disabled):hover {
     color: ${theme.colors.neutral900};
