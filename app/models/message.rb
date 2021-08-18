@@ -10,8 +10,6 @@ class Message < ApplicationRecord
   belongs_to :conversation
   has_many_attached :attachments
 
-  # validates :content, presence: true
-
   before_validation :strip_content
 
   def announce_message
