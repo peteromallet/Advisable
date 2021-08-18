@@ -427,7 +427,7 @@ module Types
     field :conversations, Types::Conversation.connection_type, null: true
     def conversations
       requires_current_user!
-      current_user.account.conversations
+      current_user.account.conversations.includes(participants: :account)
     end
 
     field :conversation, Types::Conversation, null: true do
