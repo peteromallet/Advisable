@@ -99,17 +99,16 @@ module Talkjs
         )
 
         if message["attachment"]
-          cm.content = "Attachment"
           uri = URI.parse(message["attachment"]["url"])
           attachment = uri.open
           filename = CGI.unescape(uri.path)[%r{/([^/]*)$}, 1] # https://rubular.com/r/iYJ3GPmyvJ19oA
           cm.attachments.attach(io: attachment, filename: filename)
         end
 
-        if cm.content.present?
-          cm.save!
+        if cm.content.blank? && cm.attachments.empty?
+          Sentry.capture_message("Skipping weird message", extra: {message: message, conversation: conversation, takljs_id: id})
         else
-          puts "Weird message: #{message}"
+          cm.save!
         end
       end
     end
