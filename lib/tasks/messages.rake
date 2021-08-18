@@ -2,24 +2,29 @@
 
 module Talkjs
   class Migrator
-    attr_reader :api, :conversations
+    attr_reader :api
 
     def initialize
       @api = TalkjsApi.new
     end
 
     def migrate!
-      load_all_conversations
-      conversations.each do |conversation|
+      loop_through_all_conversations do |conversation|
         Talkjs::Conversation.new(api, conversation).migrate!
       end
     end
 
     private
 
-    def load_all_conversations
-      @conversations = api.conversations
-      # loop through via startedafter
+    def loop_through_all_conversations(&block)
+      last_id = nil
+      loop do
+        conversations = api.conversations(last_id)
+        break if conversations.empty?
+
+        conversations.each(&block)
+        last_id = conversations.last["id"]
+      end
     end
   end
 
