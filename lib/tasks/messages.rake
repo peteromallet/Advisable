@@ -88,7 +88,8 @@ module Talkjs
       messages.each do |message|
         cm = conversation.messages.build(
           author: participants[message["senderId"]],
-          content: message["text"]
+          content: message["text"],
+          created_at: Time.zone.at(message["createdAt"] / 1000)
         )
 
         if message["attachment"]
