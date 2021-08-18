@@ -4,13 +4,13 @@ class TalkjsApi
   API_ROOT = "https://api.talkjs.com/v1/#{ENV["TALKJS"]}/"
 
   def messages(conversation_id, starting_after_id = nil)
-    starting_after = starting_after_id.nil? ? "" : "?startingAfter=#{starting_after_id}"
+    starting_after = starting_after_id.nil? ? "" : "&startingAfter=#{starting_after_id}"
 
-    get_request("conversations/#{conversation_id}/messages?limit=100#{starting_after}")
+    get_request("conversations/#{conversation_id}/messages?limit=3#{starting_after}")
   end
 
   def conversations(starting_after_id = nil)
-    starting_after = starting_after_id.nil? ? "" : "?startingAfter=#{starting_after_id}"
+    starting_after = starting_after_id.nil? ? "" : "&startingAfter=#{starting_after_id}"
     get_request("conversations?limit=20#{starting_after}")
   end
 
@@ -34,7 +34,7 @@ class TalkjsApi
       raise ApiRequestError, response if retries > 2
 
       retries += 1
-      p response.headers
+      puts response.headers
       # maybe? sleep(response.headers["Retry-After"])
       sleep 2**retries
       get_request(url)
