@@ -5,8 +5,7 @@ class TalkjsApi
 
   def messages(conversation_id, starting_after_id = nil)
     starting_after = starting_after_id.nil? ? "" : "&startingAfter=#{starting_after_id}"
-
-    get_request("conversations/#{conversation_id}/messages?limit=3#{starting_after}")
+    get_request("conversations/#{conversation_id}/messages?limit=100#{starting_after}")
   end
 
   def conversations(starting_after_id = nil)
