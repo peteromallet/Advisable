@@ -55,7 +55,7 @@ class AccountsController < ApplicationController
       account.public_send("#{key}=", params[key].strip) if params[key].present?
     end
 
-    Logidze.with_responsible("Zappier Accounts") do
+    Logidze.with_responsible("Zapier Accounts") do
       account.save!
     end
   end

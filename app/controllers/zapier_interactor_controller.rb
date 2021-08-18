@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ZappierInteractorController < ApplicationController
+class ZapierInteractorController < ApplicationController
   include MagicLinkHelper
 
   ALLOWED_APPLICATION_FIELDS = %i[comment featured hidden hide_from_profile introduction rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source].freeze
@@ -157,7 +157,7 @@ class ZappierInteractorController < ApplicationController
 
   def send_email
     with_account do |account|
-      AccountMailer.zappier_email(account, params[:subject], params[:body]).deliver_later
+      AccountMailer.zapier_email(account, params[:subject], params[:body]).deliver_later
       render json: {status: "OK."}
     end
   end
