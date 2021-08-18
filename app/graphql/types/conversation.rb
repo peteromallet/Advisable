@@ -8,7 +8,7 @@ module Types
 
     field :participants, [Types::Account], null: false
     def participants
-      ::Account.where(id: object.participants.select(:account_id))
+      object.participants.map(&:account)
     end
 
     field :messages, Types::Message.connection_type, null: true
@@ -40,7 +40,7 @@ module Types
 
     # Can return `nil` if we're an admin logged in as that user
     def participant
-      object.participants.find_by(account_id: current_account_id)
+      object.participants.find { |p| p.account_id == current_account_id }
     end
   end
 end
