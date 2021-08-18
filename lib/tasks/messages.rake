@@ -35,14 +35,13 @@ module Talkjs
       @api = api
       @id = conversation["id"]
       load_participants(conversation)
-      @conversation = ::Conversation.create!
     end
 
     def migrate!
       return if irrelevant?
 
       puts "Migrating #{id}"
-
+      @conversation = ::Conversation.find_or_create_by!(idempotency_key: id)
       create_conversation_participants
       load_messages
       migrate_messages
@@ -69,7 +68,7 @@ module Talkjs
           @sales_person = SalesPerson.find(40)
           @participants[uid] = Account.find(20695)
         else
-          raise "Unknown participant #{uid}"
+          puts "Unknown participant #{uid}"
         end
       end
     end
@@ -80,7 +79,7 @@ module Talkjs
 
     def create_conversation_participants
       @participants.each_value do |participant|
-        ::ConversationParticipant.create!(conversation: conversation, account: participant)
+        ::ConversationParticipant.find_or_create_by!(conversation: conversation, account: participant)
       end
     end
 
@@ -97,13 +96,14 @@ module Talkjs
 
     def migrate_messages
       messages.each do |message|
-        cm = conversation.messages.build(
-          author: participants[message["senderId"]],
-          content: message["text"],
-          created_at: Time.zone.at(message["createdAt"] / 1000)
-        )
+        cm = conversation.messages.find_or_initialize_by(idempotency_key: message["id"])
+
+        cm.author = participants[message["senderId"]]
+        cm.content = message["text"]
+        cm.created_at = Time.zone.at(message["createdAt"] / 1000)
 
         if message["attachment"]
+          cm.attachments.purge
           uri = URI.parse(message["attachment"]["url"])
           attachment = uri.open
           filename = CGI.unescape(uri.path)[%r{/([^/]*)$}, 1] # https://rubular.com/r/iYJ3GPmyvJ19oA

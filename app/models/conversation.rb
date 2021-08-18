@@ -17,12 +17,14 @@ end
 #
 # Table name: conversations
 #
-#  id         :bigint           not null, primary key
-#  uid        :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id              :bigint           not null, primary key
+#  idempotency_key :string
+#  uid             :string           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 # Indexes
 #
-#  index_conversations_on_uid  (uid) UNIQUE
+#  index_conversations_on_idempotency_key  (idempotency_key)
+#  index_conversations_on_uid              (uid) UNIQUE
 #
