@@ -34,32 +34,20 @@ module Talkjs
     end
 
     def migrate!
-      if irrelevant?
-        puts "Skipping #{id}"
-        return
-      else
-        puts "Migrating #{id}"
-      end
+      return if irrelevant?
 
-      load_all_messages
+      puts "Migrating #{id}"
 
-      @participants.each_value do |participant|
-        ::ConversationParticipant.create!(conversation: conversation, account: participant)
-      end
-
-      messages.each do |message|
-        conversation.messages.create!(
-          author: participants[message["senderId"]],
-          content: message["text"]
-        )
-      end
+      create_conversation_participants
+      load_messages
+      migrate_messages
     end
 
     private
 
     def load_participants(conversation)
       @participants = {}
-      conversation["participants"].keys.each do |uid|
+      conversation["participants"].each_key do |uid|
         case uid
         when /^spe_/
           raise "Multiple specialists!" if specialist
@@ -85,9 +73,38 @@ module Talkjs
       specialist.nil? || specialist.application_stage != "Accepted" || user.nil?
     end
 
-    def load_all_messages
+    def create_conversation_participants
+      @participants.each_value do |participant|
+        ::ConversationParticipant.create!(conversation: conversation, account: participant)
+      end
+    end
+
+    def load_messages
       @messages = api.messages(id)
       # loop through via startedafter
+    end
+
+    def migrate_messages
+      messages.each do |message|
+        cm = conversation.messages.build(
+          author: participants[message["senderId"]],
+          content: message["text"]
+        )
+
+        if message["attachment"]
+          cm.content = "Attachment"
+          uri = URI.parse(message["attachment"]["url"])
+          attachment = uri.open
+          filename = CGI.unescape(uri.path)[%r{/([^/]*)$}, 1] # https://rubular.com/r/iYJ3GPmyvJ19oA
+          cm.attachments.attach(io: attachment, filename: filename)
+        end
+
+        if cm.content.present?
+          cm.save!
+        else
+          puts "Weird message: #{message}"
+        end
+      end
     end
   end
 end
