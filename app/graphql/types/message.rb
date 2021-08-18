@@ -6,7 +6,7 @@ module Types
     description "Type for the Message model."
 
     field :id, ID, null: false, method: :uid
-    field :content, String, null: false
+    field :content, String, null: true
     field :author, Types::Account, null: false
     field :conversation, Types::Conversation, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
