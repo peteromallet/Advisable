@@ -33,14 +33,9 @@ class TalkjsApi
       raise ApiRequestError, response if retries > 2
 
       retries += 1
-      puts response.headers
-      # maybe? sleep(response.headers["Retry-After"])
       sleep 2**retries
       get_request(url)
     else
-      # DEBUG 👇
-      File.write("error.html", response.body)
-      # DEBUG 👆
       raise ApiRequestError, response
     end
   end
