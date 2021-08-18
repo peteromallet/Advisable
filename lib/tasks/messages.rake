@@ -10,6 +10,8 @@ module Talkjs
 
     def migrate!
       loop_through_all_conversations do |conversation|
+        next if conversation["lastMessage"].blank?
+
         Talkjs::Conversation.new(api, conversation).migrate!
       end
     end
@@ -29,22 +31,24 @@ module Talkjs
   end
 
   class Conversation
-    attr_reader :conversation, :api, :id, :participants, :specialist, :user, :sales_person, :messages
+    attr_reader :conversation, :api, :id, :participants, :messages, :requirements
 
     def initialize(api, conversation)
       @api = api
       @id = conversation["id"]
+      @requirements = {has_user: false, has_specialist: false, specialist_accepted_stage: false}
       load_participants(conversation)
     end
 
     def migrate!
-      return if irrelevant?
+      return if requirements.values.any?(false)
 
       puts "Migrating #{id}"
       @conversation = ::Conversation.find_or_create_by!(idempotency_key: id)
       create_conversation_participants
       load_messages
       migrate_messages
+      conversation.destroy if conversation.messages.count.zero?
     end
 
     private
@@ -52,29 +56,8 @@ module Talkjs
     def load_participants(conversation)
       @participants = {}
       conversation["participants"].each_key do |uid|
-        case uid
-        when /^spe_/
-          raise "Multiple specialists!" if specialist
-
-          @specialist = Specialist.find_by(uid: uid)
-          @participants[uid] = specialist.account if specialist
-        when /^use_/
-          raise "Multiple users!" if user
-
-          @user = User.find_by(uid: uid)
-          @participants[uid] = user.account if user
-        when /^sal_/
-          # Hardcode to Marina
-          @sales_person = SalesPerson.find(40)
-          @participants[uid] = Account.find(20695)
-        else
-          puts "Unknown participant #{uid}"
-        end
+        @participants[uid] = account_for(uid)
       end
-    end
-
-    def irrelevant?
-      specialist.nil? || specialist.application_stage != "Accepted" || user.nil?
     end
 
     def create_conversation_participants
@@ -84,12 +67,14 @@ module Talkjs
     end
 
     def load_messages
-      @messages = api.messages(id)
+      @messages = []
+      last_id = nil
       loop do
-        new_messages = api.messages(id, messages.last["id"])
+        new_messages = api.messages(id, last_id)
         break if new_messages.empty?
 
-        @messages = messages + new_messages
+        last_id = new_messages.last["id"]
+        @messages += new_messages
       end
       @messages = messages.reverse
     end
@@ -98,7 +83,7 @@ module Talkjs
       messages.each do |message|
         cm = conversation.messages.find_or_initialize_by(idempotency_key: message["id"])
 
-        cm.author = participants[message["senderId"]]
+        cm.author = author_for(message["senderId"])
         cm.content = message["text"]
         cm.created_at = Time.zone.at(message["createdAt"] / 1000)
 
@@ -115,6 +100,39 @@ module Talkjs
         else
           cm.save!
         end
+      end
+    end
+
+    def account_for(uid)
+      case uid
+      when /^spe_/
+        specialist = Specialist.find_by(uid: uid) || Specialist.first
+        if specialist
+          @requirements[:has_specialist] = true
+          @requirements[:specialist_accepted_stage] = specialist.application_stage == "Accepted"
+          specialist.account
+        end
+      when /^use_/
+        user = User.find_by(uid: uid) || User.first
+        if user
+          requirements[:has_user] = true
+          user.account
+        end
+      when /^sal_/, /marina/
+        Account.find(20695) # Hardcode to Marina
+      when /jonathanbailey/
+        Account.find(28951) # Hardcode to Jonathan
+      else
+        puts "Unknown participant #{uid}"
+        nil
+      end
+    end
+
+    def author_for(uid)
+      if participants.key?(uid)
+        participants[uid]
+      else
+        @participants[uid] = account_for(uid)
       end
     end
   end
