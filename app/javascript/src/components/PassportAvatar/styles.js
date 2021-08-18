@@ -54,11 +54,26 @@ const size = variant({
       width: "126px",
       height: "144px",
       borderRadius: "20px",
+      ["svg"]: {
+        zIndex: 6,
+        width: "138px",
+        height: "158px",
+        top: "-2px",
+        left: "-2px",
+        strokeWidth: "2px",
+      },
     },
     "2xl": {
       width: "168px",
       height: "192px",
       borderRadius: "20px",
+      border: "1px solid green",
+      ["svg"]: {
+        zIndex: 6,
+        width: "174px",
+        height: "196px",
+        strokeWidth: "4px",
+      },
     },
   },
 });
@@ -72,7 +87,7 @@ export const StyledPassportAvatar = styled.div`
   position: relative;
 
   .svgClip {
-    opacity: 0;
+    opacity: 1;
     position: absolute;
   }
 `;
