@@ -110,6 +110,9 @@ Rails/SquishedSQLHeredocs:
 Rails/EnvironmentVariableAccess:
   AllowReads: true
 
+Rails/Output:
+  Enabled: false
+
 RSpec/ExampleLength:
   Enabled: false
 
