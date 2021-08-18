@@ -81,7 +81,13 @@ module Talkjs
 
     def load_messages
       @messages = api.messages(id)
-      # loop through via startedafter
+      loop do
+        new_messages = api.messages(id, messages.last["id"])
+        break if new_messages.empty?
+
+        @messages = messages + new_messages
+      end
+      @messages = messages.reverse
     end
 
     def migrate_messages
