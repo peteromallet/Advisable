@@ -33,6 +33,7 @@ end
 #
 #  id              :bigint           not null, primary key
 #  content         :text
+#  idempotency_key :string
 #  uid             :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -43,6 +44,7 @@ end
 #
 #  index_messages_on_author_id        (author_id)
 #  index_messages_on_conversation_id  (conversation_id)
+#  index_messages_on_idempotency_key  (idempotency_key)
 #  index_messages_on_uid              (uid) UNIQUE
 #
 # Foreign Keys

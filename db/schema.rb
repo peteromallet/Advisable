@@ -426,6 +426,8 @@ ActiveRecord::Schema.define(version: 2021_08_27_091555) do
     t.string "uid", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "idempotency_key"
+    t.index ["idempotency_key"], name: "index_conversations_on_idempotency_key"
     t.index ["uid"], name: "index_conversations_on_uid", unique: true
   end
 
@@ -634,8 +636,10 @@ ActiveRecord::Schema.define(version: 2021_08_27_091555) do
     t.bigint "conversation_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "idempotency_key"
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["idempotency_key"], name: "index_messages_on_idempotency_key"
     t.index ["uid"], name: "index_messages_on_uid", unique: true
   end
 
