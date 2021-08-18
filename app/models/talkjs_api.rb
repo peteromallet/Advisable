@@ -38,6 +38,9 @@ class TalkjsApi
       sleep 2**retries
       get_request(url)
     else
+      # DEBUG 👇
+      File.write("error.html", response.body)
+      # DEBUG 👆
       raise ApiRequestError, response
     end
   end
