@@ -1,8 +1,8 @@
 import React from "react";
-import { Avatar, Box, Stack, Text } from "@advisable/donut";
+import { Avatar, Box, Text } from "@advisable/donut";
 import renderLineBreaks from "src/utilities/renderLineBreaks";
-import { DocumentText } from "@styled-icons/heroicons-solid/DocumentText";
 import { DateTime } from "luxon";
+import MessageAttachment from "./MessageAttachment";
 
 function dateForMessage(iso) {
   const date = DateTime.fromISO(iso);
@@ -52,55 +52,16 @@ export default function Message({ message }) {
           {renderLineBreaks(message.content)}
         </Text>
         {message.attachments.length > 0 && (
-          <Stack marginTop={4} spacing={2}>
+          <Box
+            display="grid"
+            gridGap="12px"
+            marginTop={4}
+            gridTemplateColumns={{ _: "1fr 1fr", m: "1fr 1fr 1fr 1fr" }}
+          >
             {message.attachments.map((attachment) => (
-              <Box
-                width="100%"
-                padding={2}
-                bg="neutral100"
-                paddingRight={3}
-                key={attachment.id}
-                borderRadius="8px"
-                display="flex"
-                alignItems="center"
-              >
-                <Box
-                  flexShrink={0}
-                  marginTop="-1px"
-                  color="neutral600"
-                  paddingRight={1.5}
-                >
-                  <DocumentText size={16} />
-                </Box>
-                <Box width="100%" minWidth="0">
-                  <Text
-                    $truncate
-                    paddingY={1}
-                    fontSize="sm"
-                    fontWeight={500}
-                    color="neutral900"
-                  >
-                    {attachment.filename}
-                  </Text>
-                </Box>
-                <Box flexShrink={0}>
-                  {attachment.url && (
-                    <Text
-                      as="a"
-                      target="_blank"
-                      display="block"
-                      href={attachment.url}
-                      color="blue700"
-                      fontWeight={500}
-                      fontSize="xs"
-                    >
-                      Download
-                    </Text>
-                  )}
-                </Box>
-              </Box>
+              <MessageAttachment key={attachment.id} attachment={attachment} />
             ))}
-          </Stack>
+          </Box>
         )}
       </Box>
     </Box>
