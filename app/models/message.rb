@@ -12,10 +12,11 @@ class Message < ApplicationRecord
 
   before_validation :strip_content
 
-  def announce_message
+  def after_create_actions
     MessageNotifierJob.set(wait: NOTIFICATION_WAIT_TIME).perform_later(self)
 
     conversation.participants.where.not(account_id: author_id).find_each do |participant|
+      participant.update(unread_count: (participant.unread_count || 0) + 1)
       AdvisableSchema.subscriptions.trigger("receivedMessage", {}, self, scope: participant.account_id)
     end
   end

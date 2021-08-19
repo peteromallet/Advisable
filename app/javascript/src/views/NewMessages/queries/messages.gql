@@ -1,7 +1,7 @@
 query ConversationMessages($id: ID!, $cursor: String) {
   conversation(id: $id) {
     id
-    unreadMessageCount
+    unreadCount
     messages(last: 50, before: $cursor) {
       pageInfo {
         hasPreviousPage

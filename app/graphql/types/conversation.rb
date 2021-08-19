@@ -26,14 +26,9 @@ module Types
       object.messages.order(created_at: :asc).last
     end
 
-    field :unread_message_count, Int, null: false
-    def unread_message_count
-      return 0 if participant.nil?
-
-      object.messages.
-        where.not(author_id: current_account_id).
-        where(created_at: last_read_at..).
-        count
+    field :unread_count, Int, null: false
+    def unread_count
+      participant&.unread_count || 0
     end
 
     private
