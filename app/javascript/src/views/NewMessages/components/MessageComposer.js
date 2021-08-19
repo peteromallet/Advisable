@@ -29,6 +29,7 @@ const StyledMessageComposer = styled.div`
     padding: 20px;
     font-size: 17px;
     font-weight: 450;
+    line-height: 24px;
     letter-spacing: -0.01rem;
     height: auto !important;
     font-family: TTHoves, sans-serif;
@@ -50,7 +51,7 @@ const ComposerButton = styled.button`
   display: inline-flex;
 
   span {
-    padding: 0 8px;
+    padding: 0 8px 0 6px;
     font-size: 15px;
     font-weight: 500;
   }
@@ -62,6 +63,7 @@ const ComposerButton = styled.button`
 
   svg {
     width: 20px;
+    margin-left: 4px;
   }
 `;
 
@@ -79,8 +81,8 @@ const StyledMessageButton = styled(ComposerButton)`
   }
 `;
 
-const MIN_ROWS = 4;
-const MAX_ROWS = 10;
+const MIN_ROWS = 8;
+const MAX_ROWS = 12;
 export default function MessageComposer({ conversation, currentAccount }) {
   const container = useRef(null);
   const textarea = useRef(null);
@@ -193,20 +195,14 @@ export default function MessageComposer({ conversation, currentAccount }) {
             </Stack>
           )}
 
-          <Box
-            height="52px"
-            display="flex"
-            alignItems="center"
-            justifyContent="flex-end"
-            paddingX={2}
-          >
-            <Box marginRight={2}>
-              <AddAttachmentsButton onSelect={addAttachments} />
-            </Box>
+          <Box height="52px" display="flex" alignItems="center" paddingX={2}>
             <StyledMessageButton disabled={!canSend} onClick={handleSubmit}>
               <PaperAirplane />
               <span>Send</span>
             </StyledMessageButton>
+            <Box marginLeft={2}>
+              <AddAttachmentsButton onSelect={addAttachments} />
+            </Box>
           </Box>
         </>
       ) : (
