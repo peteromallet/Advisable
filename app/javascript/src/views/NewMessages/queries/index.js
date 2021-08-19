@@ -42,7 +42,7 @@ export function useSendMessage(conversation) {
         cache.modify({
           id: cache.identify(conversation),
           fields: {
-            unreadMessageCount() {
+            unreadCount() {
               return 0;
             },
             lastMessage() {
@@ -71,7 +71,7 @@ export function useUpdateLastRead(conversation) {
         __typename: "UpdateLastReadPayload",
         conversation: {
           ...conversation,
-          unreadMessageCount: 0,
+          unreadCount: 0,
         },
       },
     },
@@ -106,10 +106,10 @@ function updateConversation(client, location, message) {
   client.cache.modify({
     id: client.cache.identify(message.conversation),
     fields: {
-      unreadMessageCount() {
+      unreadCount() {
         return isViewingConversation
           ? 0
-          : message.conversation.unreadMessageCount;
+          : message.conversation.unreadCount;
       },
       lastMessage() {
         return message;

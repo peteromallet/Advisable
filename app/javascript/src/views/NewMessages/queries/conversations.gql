@@ -9,7 +9,7 @@ query Conversations {
   conversations {
     nodes {
       id
-      unreadMessageCount
+      unreadCount
       participants {
         id
         firstName
