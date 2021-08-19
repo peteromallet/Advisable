@@ -37,7 +37,7 @@ export default function FreelancerProfileNew() {
       />
       <Box
         display="flex"
-        flexDirection={{ _: "column", l: "row", xl: "row" }}
+        flexDirection={{ _: "column", l: "row" }}
         px={{ _: 9, l: 11, xl: 14 }}
         maxWidth={{ s: "700px", l: "none" }}
       >
