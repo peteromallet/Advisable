@@ -13,6 +13,10 @@ class Invoice < ApplicationRecord
     @date_range ||= Date.parse("1.#{month}.#{year}").all_month
   end
 
+  def payments
+    company.payments.with_status("succeeded").where(created_at: date_range)
+  end
+
   def pdf_url(regenerate: false)
     self.key = nil if regenerate
     GenerateInvoicePdfJob.perform_now(self) if key.blank?

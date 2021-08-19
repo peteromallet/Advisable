@@ -11,6 +11,7 @@ class Company < ApplicationRecord
   has_many :payments, dependent: :nullify
   has_many :users, dependent: :nullify
   has_many :accounts, through: :users
+  has_many :invoices, dependent: :destroy
 
   # WIP Company migration 👇️
   has_many :projects, through: :users
