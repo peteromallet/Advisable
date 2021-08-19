@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Invoice < ApplicationRecord
+  include Uid
   URL_EXPIRES_AT = 1.hour.to_i
 
   belongs_to :company
@@ -27,6 +28,7 @@ end
 #  id         :bigint           not null, primary key
 #  key        :string
 #  month      :integer          not null
+#  uid        :string
 #  year       :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -36,6 +38,7 @@ end
 #
 #  index_invoices_on_company_id                     (company_id)
 #  index_invoices_on_company_id_and_year_and_month  (company_id,year,month) UNIQUE
+#  index_invoices_on_uid                            (uid)
 #
 # Foreign Keys
 #
