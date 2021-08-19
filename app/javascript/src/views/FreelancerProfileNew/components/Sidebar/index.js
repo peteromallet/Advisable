@@ -26,6 +26,8 @@ const grid = variant({
       [StyledNameWrapper]: {
         gridRow: "2",
         gridColumn: "1",
+        paddingTop: 0,
+        marginBottom: 4,
       },
       [StyledBioWrapper]: {
         gridRow: "3",
@@ -43,6 +45,8 @@ const grid = variant({
       [StyledNameWrapper]: {
         gridRow: "1",
         gridColumn: "2",
+        paddingTop: 12,
+        marginBottom: 4,
       },
       [StyledBioWrapper]: {
         gridRow: "2",
@@ -60,6 +64,8 @@ const grid = variant({
       [StyledNameWrapper]: {
         gridRow: "1",
         gridColumn: "2",
+        paddingTop: 13,
+        marginBottom: 4,
       },
       [StyledBioWrapper]: {
         gridRow: "2",
@@ -100,7 +106,7 @@ export default function Sidebar({ data }) {
           >
             {data.specialist.name}
           </Text>
-          <Box display="flex" color="neutral400" alignItems="center" mb={4}>
+          <Box display="flex" color="neutral400" alignItems="center">
             <Map height="20px" width="20px" color="neutral500" />
             <Text
               fontSize="17px"
