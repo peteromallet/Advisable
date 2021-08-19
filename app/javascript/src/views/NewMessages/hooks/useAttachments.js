@@ -34,10 +34,10 @@ function attachmentsReducer(state, action) {
 export default function useAttachments() {
   const [state, dispatch] = useReducer(attachmentsReducer, []);
 
-  const addAttachments = useCallback((e) => {
+  const addAttachments = useCallback((files) => {
     return dispatch({
       type: "ADD",
-      files: e.target.files,
+      files,
     });
   }, []);
 
