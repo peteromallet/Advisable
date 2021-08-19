@@ -9,7 +9,7 @@ class Conversation < ApplicationRecord
 
   def mark_as_read_for!(account)
     participant = participants.find_by(account_id: account.id)
-    participant&.update!(last_read_at: Time.zone.now)
+    participant&.update!(last_read_at: Time.zone.now, unread_count: 0)
   end
 end
 
