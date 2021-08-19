@@ -1,5 +1,13 @@
 import React from "react";
-import { Heading, Card, Stack, Box, Text, Avatar } from "@advisable/donut";
+import {
+  Heading,
+  Card,
+  Stack,
+  Box,
+  Text,
+  Avatar,
+  Button,
+} from "@advisable/donut";
 import { useParams } from "react-router-dom";
 import { useInvoice } from "./queries";
 import currency from "src/utilities/currency";
@@ -141,7 +149,7 @@ export default function Invoice() {
           </Box>
         </Stack>
       )}
-      <Box paddingTop={6}>
+      <Box paddingTop={6} marginBottom={8}>
         <Text mb={1} fontSize="lg" fontWeight={550}>
           Advisable
         </Text>
@@ -159,6 +167,10 @@ export default function Invoice() {
           VAT: IE3547116BH
         </Text>
       </Box>
+
+      <Button as="a" target="_blank" href={invoice.pdfUrl} variant="subtle">
+        Download PDF
+      </Button>
     </Card>
   );
 }

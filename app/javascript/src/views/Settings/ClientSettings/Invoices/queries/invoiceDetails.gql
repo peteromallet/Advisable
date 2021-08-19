@@ -1,4 +1,4 @@
-query InvoiceDetails($month: String!) {
+query InvoiceDetails($id: ID!) {
   currentCompany {
     id
     name
@@ -10,11 +10,12 @@ query InvoiceDetails($month: String!) {
       country
       postcode
     }
-    invoice(month: $month) {
+    invoice(id: $id) {
       id
       year
       month
       total
+      pdfUrl
       payments {
         id
         amount
