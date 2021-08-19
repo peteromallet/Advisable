@@ -24,11 +24,11 @@ export function useTalkJSMessageCount() {
 }
 
 const CONVERSATIONS = gql`
-  query ConversationUnreadMessageCounts {
+  query ConversationUnreadCounts {
     conversations {
       nodes {
         id
-        unreadMessageCount
+        unreadCount
       }
     }
   }
@@ -39,6 +39,6 @@ export function useNativeMessageCount() {
   const conversations = data?.conversations?.nodes || [];
 
   return conversations.reduce((total, conversation) => {
-    return total + conversation.unreadMessageCount;
+    return total + conversation.unreadCount;
   }, 0);
 }

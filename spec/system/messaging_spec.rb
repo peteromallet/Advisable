@@ -130,6 +130,6 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
       author: author
     }.merge(extra))
 
-    message.announce_message
+    message.after_create_actions
   end
 end

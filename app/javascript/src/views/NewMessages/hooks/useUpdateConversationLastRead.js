@@ -5,10 +5,10 @@ export default function useUpdateConversationLastRead(conversation) {
   const [updateLastRead] = useUpdateLastRead(conversation);
 
   const handleUpdateLastRead = useCallback(() => {
-    if (conversation.unreadMessageCount > 0) {
+    if (conversation.unreadCount > 0) {
       updateLastRead();
     }
-  }, [conversation.unreadMessageCount, updateLastRead]);
+  }, [conversation.unreadCount, updateLastRead]);
 
   useEffect(() => {
     if (document.hasFocus()) {
