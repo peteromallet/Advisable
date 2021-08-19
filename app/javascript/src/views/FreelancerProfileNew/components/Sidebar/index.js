@@ -35,6 +35,7 @@ const grid = variant({
     m: {
       gridTemplateRows: "auto auto",
       gridTemplateColumns: "auto auto",
+      columnGap: 4,
       width: "auto",
       [StyledPassportAvatar]: {
         gridRow: "1 / last-line",
@@ -52,6 +53,7 @@ const grid = variant({
       gridTemplateRows: "auto auto",
       gridTemplateColumns: "auto 1fr",
       width: "auto",
+      columnGap: 3,
       [StyledPassportAvatar]: {
         gridRow: "1",
       },
