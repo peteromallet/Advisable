@@ -1,7 +1,14 @@
-import React, { useMemo, useRef, useState } from "react";
-import { theme, Box, Stack } from "@advisable/donut";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { theme, Text, Box, Stack } from "@advisable/donut";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
+import { CloudUpload } from "@styled-icons/heroicons-solid/CloudUpload";
 import { PaperAirplane } from "@styled-icons/heroicons-solid/PaperAirplane";
 import useAttachments from "../hooks/useAttachments";
 import AddAttachmentsButton from "./AddAttachmentsButton";
@@ -81,11 +88,40 @@ const StyledMessageButton = styled(ComposerButton)`
   }
 `;
 
+function DropToUpload() {
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current.scrollIntoView();
+  }, []);
+
+  return (
+    <Box
+      ref={ref}
+      margin={4}
+      paddingX={4}
+      paddingY={8}
+      display="flex"
+      justifyContent="center"
+      border="2px dashed"
+      borderColor="blue800"
+      bg="blue50"
+      borderRadius="16px"
+    >
+      <CloudUpload size={20} />
+      <Text marginLeft={2} color="blue900">
+        Drop files here to upload
+      </Text>
+    </Box>
+  );
+}
+
 const MIN_ROWS = 8;
 const MAX_ROWS = 12;
 export default function MessageComposer({ conversation, currentAccount }) {
   const container = useRef(null);
   const textarea = useRef(null);
+  const [dragging, setDragging] = useState(false);
   const { error } = useNotifications();
   const isOnline = useNetworkConnection();
   const [send] = useSendMessage(conversation);
@@ -143,6 +179,7 @@ export default function MessageComposer({ conversation, currentAccount }) {
             attachments: uploadedAttachments.map((attachment) => ({
               id: generateID("att"),
               url: null,
+              isImage: false,
               filename: attachment.file.name,
             })),
           },
@@ -167,8 +204,49 @@ export default function MessageComposer({ conversation, currentAccount }) {
     }
   };
 
+  const handleDrop = useCallback(
+    (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      setDragging(false);
+      addAttachments(e.dataTransfer.files);
+    },
+    [addAttachments],
+  );
+
+  const handleDragEnd = useCallback(() => {
+    setDragging(false);
+  }, []);
+
+  const handleDragOver = useCallback(
+    (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (!dragging) {
+        setDragging(true);
+      }
+    },
+    [dragging],
+  );
+
+  useEffect(() => {
+    document.addEventListener("drop", handleDrop);
+    document.addEventListener("dragover", handleDragOver);
+    document.addEventListener("mouseout", handleDragEnd);
+
+    return () => {
+      document.removeEventListener("drop", handleDrop);
+      document.removeEventListener("dragover", handleDragOver);
+      document.removeEventListener("mouseout", handleDragEnd);
+    };
+  }, [handleDrop, handleDragOver, handleDragEnd]);
+
   return (
-    <StyledMessageComposer onClick={handleClick} ref={container}>
+    <StyledMessageComposer
+      $dragging={dragging}
+      onClick={handleClick}
+      ref={container}
+    >
       {isOnline ? (
         <>
           <TextareaAutosize
@@ -181,6 +259,8 @@ export default function MessageComposer({ conversation, currentAccount }) {
             onChange={(e) => setValue(e.target.value)}
             placeholder="Write a message..."
           />
+
+          {dragging && <DropToUpload />}
 
           {hasAttachments && (
             <Stack px={4} divider="neutral100">
@@ -201,7 +281,9 @@ export default function MessageComposer({ conversation, currentAccount }) {
               <span>Send</span>
             </StyledMessageButton>
             <Box marginLeft={2}>
-              <AddAttachmentsButton onSelect={addAttachments} />
+              <AddAttachmentsButton
+                onSelect={(e) => addAttachments(e.target.files)}
+              />
             </Box>
           </Box>
         </>
