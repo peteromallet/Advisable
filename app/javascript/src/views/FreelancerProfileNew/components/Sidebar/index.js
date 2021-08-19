@@ -4,91 +4,19 @@ import { LinkedinIn } from "@styled-icons/fa-brands/LinkedinIn";
 import { Globe } from "@styled-icons/heroicons-solid/Globe";
 import { Button, Box, Text } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
-import { StyledPassportAvatar } from "src/components/PassportAvatar/styles";
 import SocialIcon from "../SocialIcon";
-import styled from "styled-components";
-import { variant } from "styled-system";
-
-const StyledNameWrapper = styled.div``;
-const StyledBioWrapper = styled.div``;
-
-const grid = variant({
-  prop: "layout",
-  variants: {
-    l: {
-      gridTemplateRows: "auto",
-      gridTemplateColumns: "auto",
-      width: "280px",
-      marginRight: 4,
-      [StyledPassportAvatar]: {
-        gridRow: "1",
-      },
-      [StyledNameWrapper]: {
-        gridRow: "2",
-        gridColumn: "1",
-        paddingTop: 0,
-        marginBottom: 4,
-      },
-      [StyledBioWrapper]: {
-        gridRow: "3",
-        gridColumn: "1",
-      },
-    },
-    m: {
-      gridTemplateRows: "auto auto",
-      gridTemplateColumns: "auto auto",
-      columnGap: 4,
-      width: "auto",
-      [StyledPassportAvatar]: {
-        gridRow: "1 / last-line",
-      },
-      [StyledNameWrapper]: {
-        gridRow: "1",
-        gridColumn: "2",
-        paddingTop: 12,
-        marginBottom: 4,
-      },
-      [StyledBioWrapper]: {
-        gridRow: "2",
-        gridColumn: "2",
-      },
-    },
-    s: {
-      gridTemplateRows: "auto auto",
-      gridTemplateColumns: "auto 1fr",
-      width: "auto",
-      columnGap: 3,
-      [StyledPassportAvatar]: {
-        gridRow: "1",
-      },
-      [StyledNameWrapper]: {
-        gridRow: "1",
-        gridColumn: "2",
-        paddingTop: 13,
-        marginBottom: 4,
-      },
-      [StyledBioWrapper]: {
-        gridRow: "2",
-        gridColumn: "1 / last-column",
-      },
-    },
-  },
-});
-
-const StickySidebar = styled(Box)`
-  ${grid}
-  display: grid;
-
-  position: sticky;
-  top: 108px;
-`;
+import {
+  StyledStickySidebar,
+  StyledNameWrapper,
+  StyledBioWrapper,
+} from "./styles";
 
 export default function Sidebar({ data }) {
   const bio = data.specialist.bio.slice(0, 140);
 
   return (
     <Box position="relative" mt={{ xs: "-64px", l: "-128px", xl: "-176px" }}>
-      <StickySidebar layout={["s", "s", "m", "l"]}>
+      <StyledStickySidebar layout={["s", "s", "m", "l"]}>
         <PassportAvatar
           size={["lg", "lg", "xl", "xl", "2xl"]}
           name={data.specialist.name}
@@ -147,7 +75,7 @@ export default function Sidebar({ data }) {
             </Box>
           </Box>
         </StyledBioWrapper>
-      </StickySidebar>
+      </StyledStickySidebar>
     </Box>
   );
 }
