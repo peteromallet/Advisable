@@ -14,8 +14,8 @@ class GenerateInvoicePdfJob < ApplicationJob
       issue_date: Time.zone.today.strftime("%d.%m.%Y"),
       due_date: Time.zone.today.strftime("%d.%m.%Y"),
       invoice_number: "#{invoice.company.id}-#{invoice.year}-#{invoice.month}",
-      total: payments.sum(&:amount_with_fee),
-      deposit: payments.sum(:deposit),
+      total: payments.sum(&:amount_with_fee) / 100.0,
+      deposit: payments.sum(:deposit) / 100.0,
       lineItems: line_items(payments)
     }
 
@@ -47,12 +47,12 @@ class GenerateInvoicePdfJob < ApplicationJob
       {
         description: description,
         quantity: 1,
-        price: payment.amount
+        price: payment.amount / 100.0
       }
     end + [{
       description: "Administration Fee",
       quantity: 1,
-      price: payments.sum(:admin_fee)
+      price: payments.sum(:admin_fee) / 100.0
     }]
   end
 end
