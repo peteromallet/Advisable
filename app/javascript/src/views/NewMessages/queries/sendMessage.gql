@@ -13,6 +13,7 @@ mutation SendMessage($input: SendMessageInput!) {
       attachments {
         id
         url
+        isImage
         filename
       }
     }
