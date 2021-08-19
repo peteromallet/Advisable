@@ -7,13 +7,9 @@ export default function CaseStudies() {
     <Box>
       <SectionTitle>Case Studies</SectionTitle>
       <Stack spacing={6}>
-        <Box width="720px" height="120px" bg="neutral100" borderRadius="12px" />
-        <Box width="720px" height="120px" bg="neutral100" borderRadius="12px" />
-        <Box width="720px" height="120px" bg="neutral100" borderRadius="12px" />
-        <Box width="720px" height="120px" bg="neutral100" borderRadius="12px" />
-        <Box width="720px" height="120px" bg="neutral100" borderRadius="12px" />
-        <Box width="720px" height="120px" bg="neutral100" borderRadius="12px" />
-        <Box width="720px" height="120px" bg="neutral100" borderRadius="12px" />
+        <Box height="120px" bg="neutral100" borderRadius="12px" />
+        <Box height="120px" bg="neutral100" borderRadius="12px" />
+        <Box height="120px" bg="neutral100" borderRadius="12px" />
       </Stack>
     </Box>
   );

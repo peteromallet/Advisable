@@ -57,7 +57,7 @@ const size = variant({
     xs: {
       width: "100vw",
       height: "33.3vw",
-      padding: "20px",
+      padding: "16px",
       outline: "1px solid purple",
     },
   },
