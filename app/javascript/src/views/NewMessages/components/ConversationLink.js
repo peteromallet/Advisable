@@ -173,10 +173,10 @@ export default function ConversationLink({ conversation }) {
           {conversation.lastMessage?.content || "-"}
         </Text>
       </Box>
-      {conversation.unreadMessageCount > 0 && (
+      {conversation.unreadCount > 0 && (
         <Box flexShrink={0} marginLeft={4}>
           <Badge data-testid="conversationUnreadCount">
-            {conversation.unreadMessageCount}
+            {conversation.unreadCount}
           </Badge>
         </Box>
       )}

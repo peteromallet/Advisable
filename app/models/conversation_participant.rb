@@ -11,6 +11,7 @@ end
 #
 #  id              :bigint           not null, primary key
 #  last_read_at    :datetime
+#  unread_count    :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  account_id      :bigint           not null

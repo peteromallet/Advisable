@@ -16,7 +16,7 @@ subscription ReceivedMessage {
       }
       conversation {
         id
-        unreadMessageCount
+        unreadCount
       }
     }
   }
