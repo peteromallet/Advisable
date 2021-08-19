@@ -13,6 +13,7 @@ class Message < ApplicationRecord
   before_validation :strip_content
 
   def after_create_actions
+    conversation.mark_as_read_for!(author)
     MessageNotifierJob.set(wait: NOTIFICATION_WAIT_TIME).perform_later(self)
 
     conversation.participants.where.not(account_id: author_id).find_each do |participant|
