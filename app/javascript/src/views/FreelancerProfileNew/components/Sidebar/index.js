@@ -79,14 +79,10 @@ export default function Sidebar({ data }) {
   const bio = data.specialist.bio.slice(0, 140);
 
   return (
-    <Box
-      position="relative"
-      top={{ _: "-64px", l: "-128px", xl: "-176px" }}
-      mb="-64px"
-    >
-      <StickySidebar layout={{ _: "s", m: "m", l: "l" }}>
+    <Box position="relative" mt={{ xs: "-64px", l: "-128px", xl: "-176px" }}>
+      <StickySidebar layout={["s", "s", "m", "l"]}>
         <PassportAvatar
-          size={{ _: "lg", m: "xl", xl: "2xl" }}
+          size={["lg", "lg", "xl", "xl", "2xl"]}
           name={data.specialist.name}
           src={data.specialist.avatar}
           marginBottom={4}
@@ -122,14 +118,14 @@ export default function Sidebar({ data }) {
           <Box
             display="flex"
             justifyContent="space-between"
-            flexDirection={{ _: "column", s: "row", l: "column" }}
+            flexDirection={["column", "row", "row", "column"]}
             alignItems={{ _: "center", l: "flex-start" }}
           >
             <Button
-              width={{ xs: "100%", s: "auto" }}
-              variant="gradient"
-              size={{ xs: "m", m: "l" }}
-              mb={6}
+              variant="dark"
+              width={["100%", "auto"]}
+              size={["m", "m", "l"]}
+              mb={[4, 0, 0, 6]}
             >
               Work together
             </Button>
