@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { Box, useTheme } from "@advisable/donut";
+import { Box, Stack, useTheme } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import CoverImage from "./components/CoverImage";
@@ -42,10 +42,10 @@ export default function FreelancerProfileNew() {
         maxWidth={{ s: "700px", l: "none" }}
       >
         <Sidebar data={data} />
-        <Box width="100%">
+        <Stack mt={{ _: 16, m: 12, l: 13 }} width="100%" spacing={11}>
           <CaseStudies />
           <Testimonials />
-        </Box>
+        </Stack>
       </Box>
     </Box>
   );
