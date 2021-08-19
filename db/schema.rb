@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_17_092744) do
+ActiveRecord::Schema.define(version: 2021_08_19_110223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -586,8 +586,10 @@ ActiveRecord::Schema.define(version: 2021_08_17_092744) do
     t.string "key"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "uid"
     t.index ["company_id", "year", "month"], name: "index_invoices_on_company_id_and_year_and_month", unique: true
     t.index ["company_id"], name: "index_invoices_on_company_id"
+    t.index ["uid"], name: "index_invoices_on_uid"
   end
 
   create_table "labelings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
