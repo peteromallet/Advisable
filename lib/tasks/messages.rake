@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Talkjs
+  LOCAL_TEST = false # enable if you want to import to random users
+  class UnknownParticipant < StandardError
+  end
+
   class Migrator
     attr_reader :api
 
@@ -38,13 +42,17 @@ module Talkjs
       @id = conversation["id"]
       @requirements = {has_user: false, has_specialist: false, specialist_accepted_stage: false}
       load_participants(conversation)
+    rescue Talkjs::UnknownParticipant => e
+      @requirements[:all_participants_known] = false
+      puts "Skipping conversation #{id} with unknown participant #{e.message}"
+      Sentry.capture_message("Unknown participant", extra: {conversation: id, participant: e.message})
     end
 
     def migrate!
-      return if requirements.values.any?(false)
+      return if requirements.values.any?(false) || ::Conversation.exists?(idempotency_key: id)
 
-      puts "Migrating #{id}"
-      @conversation = ::Conversation.find_or_create_by!(idempotency_key: id)
+      puts "Migrating conversation #{id}"
+      @conversation = ::Conversation.create!(idempotency_key: id)
       create_conversation_participants
       load_messages
       migrate_messages
@@ -96,6 +104,7 @@ module Talkjs
         end
 
         if cm.content.blank? && cm.attachments.empty?
+          puts "Skipping weird message #{message["id"]}"
           Sentry.capture_message("Skipping weird message", extra: {message: message, conversation: conversation, takljs_id: id})
         else
           cm.save!
@@ -106,14 +115,16 @@ module Talkjs
     def account_for(uid)
       case uid
       when /^spe_/
-        specialist = Specialist.find_by(uid: uid) || Specialist.first
+        specialist = Specialist.find_by(uid: uid)
+        specialist = Specialist.order("RANDOM()").first if specialist.nil? && LOCAL_TEST
         if specialist
           @requirements[:has_specialist] = true
           @requirements[:specialist_accepted_stage] = specialist.application_stage == "Accepted"
           specialist.account
         end
       when /^use_/
-        user = User.find_by(uid: uid) || User.first
+        user = User.find_by(uid: uid)
+        user = User.first if user.nil? && LOCAL_TEST
         if user
           requirements[:has_user] = true
           user.account
@@ -123,8 +134,7 @@ module Talkjs
       when /jonathanbailey/
         Account.find(28951) # Hardcode to Jonathan
       else
-        puts "Unknown participant #{uid}"
-        nil
+        raise Talkjs::UnknownParticipant, uid
       end
     end
 
