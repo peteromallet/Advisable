@@ -16,6 +16,7 @@ query ConversationMessages($id: ID!, $cursor: String) {
           attachments {
             id
             url
+            isImage
             filename
           }
           author {

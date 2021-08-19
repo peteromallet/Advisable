@@ -12,6 +12,7 @@ subscription ReceivedMessage {
       attachments {
         id
         url
+        isImage
         filename
       }
       conversation {
