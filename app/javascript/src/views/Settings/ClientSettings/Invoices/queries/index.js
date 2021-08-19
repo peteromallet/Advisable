@@ -7,6 +7,6 @@ export function useInvoices() {
   return useQuery(INVOICES);
 }
 
-export function useInvoice(month) {
-  return useQuery(INVOICE, { variables: { month } });
+export function useInvoice(id) {
+  return useQuery(INVOICE, { variables: { id } });
 }
