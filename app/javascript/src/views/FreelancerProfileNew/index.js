@@ -23,14 +23,26 @@ export default function FreelancerProfileNew() {
   if (isNotFound(error)) return <NotFound />;
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" pb={10}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems={{ _: "center", l: "stretch" }}
+      width={{ l: "1024px", xl: "1136px" }}
+      mx="auto"
+      pb={10}
+    >
       <CoverImage
         src={data.specialist.coverPhoto}
         size={["xs", "s", "m", "l", "xl"]}
       />
-      <Box display="flex" flexDirection={{ _: "column", l: "row", xl: "row" }}>
+      <Box
+        display="flex"
+        flexDirection={{ _: "column", l: "row", xl: "row" }}
+        px={{ _: 9, l: 11, xl: 14 }}
+        maxWidth={{ s: "700px", l: "none" }}
+      >
         <Sidebar data={data} />
-        <Box>
+        <Box width="100%">
           <CaseStudies />
           <Testimonials />
         </Box>
