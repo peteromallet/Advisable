@@ -15,7 +15,10 @@ export default function Sidebar({ data }) {
   const bio = data.specialist.bio.slice(0, 140);
 
   return (
-    <Box position="relative" mt={{ xs: "-64px", l: "-128px", xl: "-176px" }}>
+    <Box
+      position="relative"
+      mt={{ _: "-44px", m: "-60px", l: "-128px", xl: "-176px" }}
+    >
       <StyledStickySidebar layout={["s", "s", "m", "l"]}>
         <PassportAvatar
           size={["lg", "lg", "xl", "xl", "2xl"]}
@@ -25,19 +28,19 @@ export default function Sidebar({ data }) {
         />
         <StyledNameWrapper>
           <Text
-            fontSize="5xl"
+            fontSize={{ _: "2xl", m: "5xl" }}
             fontWeight="semibold"
             color="neutral900"
             lineHeight="4xl"
             letterSpacing="-0.03rem"
-            marginBottom={1.5}
+            marginBottom={{ xs: 0.5, m: 1.5 }}
           >
             {data.specialist.name}
           </Text>
           <Box display="flex" color="neutral400" alignItems="center">
             <Map height="20px" width="20px" color="neutral500" />
             <Text
-              fontSize="17px"
+              fontSize={{ _: "s", m: "17px" }}
               fontWeight="medium"
               color="neutral400"
               lineHeight="l"
@@ -48,7 +51,12 @@ export default function Sidebar({ data }) {
           </Box>
         </StyledNameWrapper>
         <StyledBioWrapper>
-          <Text fontSize="l" lineHeight="l" color="neutral700" mb={7}>
+          <Text
+            fontSize={{ _: "m", m: "l" }}
+            lineHeight="l"
+            color="neutral700"
+            mb={7}
+          >
             {bio}
           </Text>
           <Box
