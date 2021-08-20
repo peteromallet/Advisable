@@ -28,19 +28,26 @@ class CompanyFaviconFinderJob < ApplicationJob
 
     while company.favicon.blank? && icons_by_size.any?
       icon = icons_by_size.pop
-
-      if icon["href"].starts_with?("data:")
-        favicon_from_base64(icon["href"])
-      else
-        iconuri = URI.parse(icon["href"])
-        if iconuri.host.blank?
-          path = iconuri.path
-          iconuri = company_website
-          iconuri.path = path
-        end
-        favicon_from_uri(iconuri)
-      end
+      fetch_favicon(icon["href"])
     end
+  end
+
+  def fetch_favicon(href)
+    if href.starts_with?("data:")
+      favicon_from_base64(href)
+    else
+      href = "http:#{href}" if href.starts_with?("//")
+      href.gsub("../", "")
+      iconuri = URI.parse(href)
+      if iconuri.host.blank?
+        path = iconuri.path
+        iconuri = company_website.dup
+        iconuri.path = path
+      end
+      favicon_from_uri(iconuri)
+    end
+  rescue URI::InvalidComponentError
+    fetch_favicon("/#{href}")
   end
 
   def try_favicon_ico
@@ -52,7 +59,7 @@ class CompanyFaviconFinderJob < ApplicationJob
   def favicon_from_uri(iconuri)
     filename = File.basename(iconuri.path)
     res = Faraday.new(url: iconuri) { |f| f.use(FaradayMiddleware::FollowRedirects) }.get
-    return unless res.status == 200
+    return if !res.success? || res.headers["content-type"].exclude?("image")
 
     attach_favicon(filename, res.body)
   end
