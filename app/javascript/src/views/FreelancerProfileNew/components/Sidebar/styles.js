@@ -57,7 +57,7 @@ const layout = variant({
       [StyledNameWrapper]: {
         gridRow: "1",
         gridColumn: "2",
-        paddingTop: 13,
+        paddingTop: 8,
         marginBottom: 4,
       },
       [StyledBioWrapper]: {
