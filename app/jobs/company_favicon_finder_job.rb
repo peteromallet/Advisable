@@ -6,19 +6,15 @@ class CompanyFaviconFinderJob < ApplicationJob
   queue_as :default
 
   def perform(company, force: false)
-    return if company.website.blank? || (company.favicon.present? && !force)
+    company.favicon = nil if force
+    return if company.website.blank? || company.favicon.present?
 
     @company = company
     @company_website = parse_company_website
     @icons = icons_from_meta
 
-    if icons.any?
-      find_biggest_favicon
-    else
-      iconuri = company_website
-      iconuri.path = "/favicon.ico"
-      favicon_from_uri(iconuri)
-    end
+    find_favicon if icons.any?
+    try_favicon_ico if company.favicon.blank?
   end
 
   def icons_from_meta
@@ -27,20 +23,30 @@ class CompanyFaviconFinderJob < ApplicationJob
     doc.xpath('//link[@rel="icon" or @rel="shortcut icon" or @rel="apple-touch-icon" or @rel="apple-touch-icon-precomposed"]')
   end
 
-  def find_biggest_favicon
-    biggest = icons.max_by { |i| i.attributes["sizes"]&.value.to_i }
-    selected = biggest.presence || icons.first
-    if selected["href"].starts_with?("data:")
-      favicon_from_base64(selected["href"])
-    else
-      iconuri = URI.parse(selected["href"])
-      if iconuri.host.blank?
-        path = iconuri.path
-        iconuri = company_website
-        iconuri.path = path
+  def find_favicon
+    icons_by_size = icons.sort_by { |i| i.attributes["sizes"]&.value.to_i }
+
+    while company.favicon.blank? && icons_by_size.any?
+      icon = icons_by_size.pop
+
+      if icon["href"].starts_with?("data:")
+        favicon_from_base64(icon["href"])
+      else
+        iconuri = URI.parse(icon["href"])
+        if iconuri.host.blank?
+          path = iconuri.path
+          iconuri = company_website
+          iconuri.path = path
+        end
+        favicon_from_uri(iconuri)
       end
-      favicon_from_uri(iconuri)
     end
+  end
+
+  def try_favicon_ico
+    iconuri = company_website
+    iconuri.path = "/favicon.ico"
+    favicon_from_uri(iconuri)
   end
 
   def favicon_from_uri(iconuri)
