@@ -63,7 +63,7 @@ module Toby
             define_method(:_history) do
               return [] unless root.model.ancestors.include?(Logidze::Model)
 
-              object.reload_log_data&.data&.dig("h")
+              object.reload_log_data&.data&.dig("h") || []
             end
 
             root.attributes.each do |attribute|
