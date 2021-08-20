@@ -34,31 +34,26 @@ const size = variant({
       width: "1136px",
       height: "416px",
       padding: "28px",
-      outline: "1px solid red",
     },
     l: {
       width: "1024px",
       height: "368px",
       padding: "20px",
-      outline: "1px solid green",
     },
     m: {
       width: "100vw",
       height: "33.3vw",
       padding: "20px",
-      outline: "1px solid blue",
     },
     s: {
       width: "100vw",
       height: "33.3vw",
       padding: "20px",
-      outline: "1px solid black",
     },
     xs: {
       width: "100vw",
       height: "33.3vw",
-      padding: "16px",
-      outline: "1px solid purple",
+      padding: "12px",
     },
   },
 });
