@@ -6,19 +6,15 @@ class CompanyFaviconFinderJob < ApplicationJob
   queue_as :default
 
   def perform(company, force: false)
-    return if company.website.blank? || (company.favicon.present? && !force)
+    company.favicon = nil if force
+    return if company.website.blank? || company.favicon.present?
 
     @company = company
     @company_website = parse_company_website
     @icons = icons_from_meta
 
-    if icons.any?
-      find_biggest_favicon
-    else
-      iconuri = company_website
-      iconuri.path = "/favicon.ico"
-      favicon_from_uri(iconuri)
-    end
+    find_favicon if icons.any?
+    try_favicon_ico if company.favicon.blank?
   end
 
   def icons_from_meta
@@ -27,26 +23,43 @@ class CompanyFaviconFinderJob < ApplicationJob
     doc.xpath('//link[@rel="icon" or @rel="shortcut icon" or @rel="apple-touch-icon" or @rel="apple-touch-icon-precomposed"]')
   end
 
-  def find_biggest_favicon
-    biggest = icons.max_by { |i| i.attributes["sizes"]&.value.to_i }
-    selected = biggest.presence || icons.first
-    if selected["href"].starts_with?("data:")
-      favicon_from_base64(selected["href"])
+  def find_favicon
+    icons_by_size = icons.sort_by { |i| i.attributes["sizes"]&.value.to_i }
+
+    while company.favicon.blank? && icons_by_size.any?
+      icon = icons_by_size.pop
+      fetch_favicon(icon["href"])
+    end
+  end
+
+  def fetch_favicon(href)
+    if href.starts_with?("data:")
+      favicon_from_base64(href)
     else
-      iconuri = URI.parse(selected["href"])
+      href = "http:#{href}" if href.starts_with?("//")
+      href.gsub("../", "")
+      iconuri = URI.parse(href)
       if iconuri.host.blank?
         path = iconuri.path
-        iconuri = company_website
+        iconuri = company_website.dup
         iconuri.path = path
       end
       favicon_from_uri(iconuri)
     end
+  rescue URI::InvalidComponentError
+    fetch_favicon("/#{href}")
+  end
+
+  def try_favicon_ico
+    iconuri = company_website
+    iconuri.path = "/favicon.ico"
+    favicon_from_uri(iconuri)
   end
 
   def favicon_from_uri(iconuri)
     filename = File.basename(iconuri.path)
     res = Faraday.new(url: iconuri) { |f| f.use(FaradayMiddleware::FollowRedirects) }.get
-    return unless res.status == 200
+    return if !res.success? || res.headers["content-type"].exclude?("image")
 
     attach_favicon(filename, res.body)
   end
@@ -69,8 +82,8 @@ class CompanyFaviconFinderJob < ApplicationJob
     when URI::HTTP, URI::HTTPS
       uri.path = "/"
     when URI::Generic
-      # https://rubular.com/r/jcPny2GqaBObpW
-      domain = company.website.match(%r{(?<protocol>https?:)?(?<slashes>//)?(?<domain>\w*\.\w*)/?.*$})[:domain]
+      # https://rubular.com/r/Eu6qsxoakbGpsA
+      domain = company.website.match(%r{(?<protocol>https?:)?(?<slashes>//)?(?<www>www\.)?(?<domain>\w*\.\w*)/?.*$})[:domain]
       uri = URI.parse("http://#{domain}")
     else
       raise "unsupported url class (#{url.class}) for #{url}"
