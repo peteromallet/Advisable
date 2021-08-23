@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_19_060803) do
+ActiveRecord::Schema.define(version: 2021_08_23_073713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -632,7 +632,7 @@ ActiveRecord::Schema.define(version: 2021_08_19_060803) do
   create_table "messages", force: :cascade do |t|
     t.string "uid", null: false
     t.text "content"
-    t.bigint "author_id", null: false
+    t.bigint "author_id"
     t.bigint "conversation_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
