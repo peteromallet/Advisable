@@ -23,13 +23,13 @@
                 h5 style="font-size: 16px; font-family: arial; margin-top: 0; margin-bottom: 4px; font-weight: 600;" = message.author&.name || "Unknown"
                 p style="font-family: arial; font-size: 16px; line-height: 24px; color: #3E4D55; margin-top: 0; margin-bottom: 0;"
                   = message.content
-                
+
                 - message.attachments.each do |attachment|
                   div style="background: #eee; font-size: 15px; font-family: arial; padding: 8px 12px; border-radius: 8px; margin-top: 12px;"
                     = attachment.filename
-    
+
     div style="border-bottom: 1px solid #eee; margin: 20px 32px;"
-  
-  = render "emails/button", href: conversation_url(@messages.first.conversation) do
+
+  = render "emails/button", href: conversation_url(@conversation) do
     | Reply on Advisable
   = render "emails/spacing", height: "20px"
