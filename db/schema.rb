@@ -633,7 +633,7 @@ ActiveRecord::Schema.define(version: 2021_08_31_073613) do
   create_table "messages", force: :cascade do |t|
     t.string "uid", null: false
     t.text "content"
-    t.bigint "author_id", null: false
+    t.bigint "author_id"
     t.bigint "conversation_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
