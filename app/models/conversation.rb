@@ -11,6 +11,14 @@ class Conversation < ApplicationRecord
     participant = participants.find_by(account_id: account.id)
     participant&.update!(last_read_at: Time.zone.now, unread_count: 0)
   end
+
+  def new_message(author, content, attachments = [], uid = nil)
+    message = messages.create!(author: author, content: content, uid: uid)
+    message.attachments.attach(attachments) if attachments.present?
+    mark_as_read_for!(author)
+    message.reload.after_create_actions
+    message
+  end
 end
 
 # == Schema Information
