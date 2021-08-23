@@ -9,7 +9,7 @@ module Mutations
     argument :conversation, ID, required: true
     argument :uid, String, required: false
 
-    field :message, Types::Message, null: true
+    field :message, Types::UserMessage, null: true
 
     def authorized?(conversation:, **_args)
       conversation = Conversation.find_by!(uid: conversation)
