@@ -70,7 +70,7 @@ module Talkjs
 
     def create_conversation_participants
       @participants.each_value do |participant|
-        ::ConversationParticipant.find_or_create_by!(conversation: conversation, account: participant)
+        conversation.participants.find_or_create_by!(account: participant)
       end
     end
 
