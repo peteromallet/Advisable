@@ -6,7 +6,7 @@ class Message < ApplicationRecord
 
   NOTIFICATION_WAIT_TIME = 10.minutes
 
-  belongs_to :author, class_name: "Account"
+  belongs_to :author, class_name: "Account", optional: true
   belongs_to :conversation
   has_many_attached :attachments
 
@@ -38,7 +38,7 @@ end
 #  uid             :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  author_id       :bigint           not null
+#  author_id       :bigint
 #  conversation_id :bigint           not null
 #
 # Indexes
