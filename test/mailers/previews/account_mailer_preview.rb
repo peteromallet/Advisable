@@ -22,6 +22,5 @@ class AccountMailerPreview < ActionMailer::Preview
   def random_conversation
     message_conversations = Message.distinct.pluck(:conversation_id)
     @random_conversation ||= Conversation.where(id: message_conversations).order("RANDOM()").first
-    Conversation.find_by(uid: "cnv_FC6PcH7X94zgh6g")
   end
 end
