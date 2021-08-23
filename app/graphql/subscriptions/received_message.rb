@@ -7,7 +7,7 @@ module Subscriptions
     description "A message was received on current_account's conversation"
 
     subscription_scope :current_account_id
-    field :message, Types::Message, null: false
+    field :message, Types::MessageInterface, null: false
 
     def subscribe
       :no_response

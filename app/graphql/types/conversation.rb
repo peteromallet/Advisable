@@ -10,8 +10,7 @@ module Types
     def participants
       object.participants.map(&:account)
     end
-
-    field :messages, Types::Message.connection_type, null: true
+    field :messages, Types::MessageInterface.connection_type, null: true
     def messages
       object.messages.order(created_at: :asc)
     end
@@ -21,7 +20,7 @@ module Types
       participant&.last_read_at || object.created_at
     end
 
-    field :last_message, Types::Message, null: true
+    field :last_message, Types::MessageInterface, null: true
     def last_message
       object.messages.order(created_at: :asc).last
     end
