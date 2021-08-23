@@ -18,6 +18,16 @@ RSpec.describe MessageNotifierJob do
     expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [michael.account, [message.id]]})
   end
 
+  context "when it is a system message" do
+    it "sends the notification to everyone" do
+      message = create(:message, content: "Come to my office!", conversation: conversation)
+      described_class.new.perform(message)
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [dwight.account, [message.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [jim.account, [message.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [michael.account, [message.id]]})
+    end
+  end
+
   context "when multiple messages were created" do
     it "only sends one email" do
       message1 = create(:message, content: "Come to my office!", author: michael.account, conversation: conversation, created_at: 5.seconds.ago)
