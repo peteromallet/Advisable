@@ -21,33 +21,13 @@
       "note": ""
     },
     {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "1853fb4080f4728b6e99890802c7c53444b8cf76f74825665aeaa456222fc3ee",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/lib/toby/filters/string_contains.rb",
-      "line": 9,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "records.where(\"#{name.to_s.underscore} ilike ?\", \"%#{value.first}%\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Toby::Filters::StringContains",
-        "method": "s(:self).apply"
-      },
-      "user_input": "name.to_s.underscore",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
       "warning_type": "Format Validation",
       "warning_code": 30,
       "fingerprint": "1eb8cf36a789d5b0dcca3a2d5259106cc1b8d024eff80ea6a7467aa196c95527",
       "check_name": "ValidationRegex",
       "message": "Insufficient validation for `email` using `/@/`. Use `\\A` and `\\z` as anchors",
       "file": "app/models/account.rb",
-      "line": 20,
+      "line": 30,
       "link": "https://brakemanscanner.org/docs/warning_types/format_validation/",
       "code": null,
       "render_path": null,
@@ -57,6 +37,66 @@
       },
       "user_input": null,
       "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "29c2bb764927ae862658479cbfe8e074dcd899d991d6f05f6e046e0c461b1575",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/toby/filters/less_than.rb",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "records.where(\"#{attribute.name} < ? \", value.first)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Toby::Filters::LessThan",
+        "method": "apply"
+      },
+      "user_input": "attribute.name",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "4da323945ff653a8c15fa8b1e2eba12b144a66c7d415317dee7a7802d2c57485",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/toby/filters/string_contains.rb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "records.where(\"#{attribute.name.to_s.underscore} ILIKE ?\", \"%#{value.first}%\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Toby::Filters::StringContains",
+        "method": "apply"
+      },
+      "user_input": "attribute.name.to_s.underscore",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "5d850915b38a0aa777c950db4dd5d6f747d300f67903e3cdde82a7b7d6684ecc",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/toby/filters/greater_than.rb",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "records.where(\"#{attribute.name} > ? \", value.first)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Toby::Filters::GreaterThan",
+        "method": "apply"
+      },
+      "user_input": "attribute.name",
+      "confidence": "Weak",
       "note": ""
     },
     {
@@ -86,7 +126,7 @@
       "check_name": "MassAssignment",
       "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/controllers/concerns/current_user.rb",
-      "line": 40,
+      "line": 42,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
       "render_path": null,
@@ -106,7 +146,7 @@
       "check_name": "Redirect",
       "message": "Possible unprotected redirect",
       "file": "app/controllers/concerns/current_user.rb",
-      "line": 40,
+      "line": 42,
       "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
       "code": "redirect_to(params.permit!.except(:mlt, :mluid))",
       "render_path": null,
@@ -126,7 +166,7 @@
       "check_name": "Redirect",
       "message": "Possible unprotected redirect",
       "file": "app/controllers/auth_providers_controller.rb",
-      "line": 24,
+      "line": 37,
       "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
       "code": "redirect_to(request.env[\"omniauth.origin\"])",
       "render_path": null,
@@ -160,6 +200,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-08-16 08:19:18 +0100",
+  "updated": "2021-08-24 09:07:02 +0200",
   "brakeman_version": "5.1.1"
 }
