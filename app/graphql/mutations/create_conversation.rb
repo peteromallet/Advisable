@@ -45,7 +45,7 @@ module Mutations
       Conversation.joins(:participants).
         where(participants: {account: @participants}).
         group(:id).
-        having("COUNT(participants.id) = #{@participants.size}").
+        having("COUNT(participants.id) = ?", @participants.size).
         first
     end
 
