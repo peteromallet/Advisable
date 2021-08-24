@@ -90,19 +90,6 @@ class Specialist < ApplicationRecord
     save(validate: false)
   end
 
-  # Fallback to the airtable image if they have not uploaded an avatar
-  def avatar_or_image
-    if avatar.attached?
-      resized_avatar_url
-    else
-      url = image.try(:[], "url")
-      return if url.blank?
-
-      AttachImageJob.perform_later(self, url)
-      url
-    end
-  end
-
   # sourcing_fee value is stored in basis points integers: 8% -> 800 bp
   def sourcing_fee_percentage
     (sourcing_fee.presence || DEFAULT_SOURCING_FEE) / BigDecimal("10000")
