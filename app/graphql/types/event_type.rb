@@ -13,6 +13,9 @@ module Types
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :host, Types::SpecialistType, null: false
     field :attendees, Types::SpecialistType.connection_type, null: false
+    def attendees
+      dataloader.with(::ActiveRecordSource, ::Specialist).load_all(object.event_attendees.pluck(:specialist_id))
+    end
 
     field :id, ID, null: false, method: :uid
 
@@ -23,12 +26,12 @@ module Types
     def attending
       return false if current_user.blank?
 
-      object.attendees.exists?(current_user.id)
+      object.attendees.pluck(:id).include?(current_user.id)
     end
 
     field :attendees_count, Integer, null: false
     def attendees_count
-      object.attendees.count
+      object.attendees.size
     end
 
     field :published, Boolean, null: false

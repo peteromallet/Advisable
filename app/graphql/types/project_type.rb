@@ -102,7 +102,7 @@ module Types
     end
 
     def application_count
-      applications.count
+      applications.size
     end
 
     field :goals, [String], null: true
