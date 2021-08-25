@@ -66,7 +66,7 @@ module Types
       object.resume.attached? ? object.resume : nil
     end
 
-    field :avatar, String, null: true, method: :avatar_or_image do
+    field :avatar, String, null: true, method: :resized_avatar_url do
       description 'The specialists avatar'
     end
 
