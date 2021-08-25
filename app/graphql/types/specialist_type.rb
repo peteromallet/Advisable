@@ -273,11 +273,14 @@ module Types
     field :country, Types::CountryType, null: true do
       description 'The specialists country'
     end
+    def country
+      dataloader.with(::ActiveRecordSource, ::Country).load(object.country_id)
+    end
 
     field :location, String, null: true
 
     def location
-      "#{object.city}, #{object.country.try(:name)}"
+      "#{object.city}, #{country.try(:name)}"
     end
 
     field :has_setup_payments, Boolean, null: true do
