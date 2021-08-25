@@ -92,9 +92,8 @@ module Types
           object.skills
         end
 
-      sorted =
-        records.sort_by { |s| [s.projects_count, s.specialists_count] }.reverse!
-      sorted[0..(limit || sorted.count + 1) - 1].map do |skill|
+      sorted = records.sort_by { |s| [s.projects_count, s.specialists_count] }.reverse!
+      sorted[0..(limit || sorted.size + 1) - 1].map do |skill|
         OpenStruct.new(specialist: object, skill: skill)
       end
     end

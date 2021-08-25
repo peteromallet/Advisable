@@ -28,7 +28,7 @@ module Types
 
     field :attendees_count, Integer, null: false
     def attendees_count
-      object.attendees.count
+      object.attendees.size
     end
 
     field :published, Boolean, null: false
