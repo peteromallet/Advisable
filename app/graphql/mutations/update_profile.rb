@@ -5,6 +5,8 @@ module Mutations
   class UpdateProfile < Mutations::BaseMutation
     attr_reader :specialist, :attributes
 
+    description "Update a specialist's profile"
+
     argument :avatar, String, required: false
     argument :bio, String, required: false
     argument :city, String, required: false
@@ -54,7 +56,7 @@ module Mutations
 
       ApiError.invalid_request("FAILED_TO_UPDATE", specialist.errors.full_messages.first) unless success
 
-      specialist.sync_to_airtable
+      specialist.bg_sync_to_airtable
 
       {specialist: specialist}
     end
