@@ -20,32 +20,26 @@ module Airtable
 
       # Updates or creates an airtable record for the instance
       def sync_to_airtable(additional_fields = {})
-        airtable_class =
-          self.class.airtable || "Airtable::#{self.class}".constantize
-        airtable_record =
-          if airtable_id.present?
-            airtable_class.find(airtable_id)
-          else
-            airtable_class.new({})
-          end
-
+        airtable_record = airtable_id.present? ? airtable_class.find(airtable_id) : airtable_class.new({})
         airtable_record.push(self, additional_fields)
+      end
+
+      # Meant to be used as a drop in replacement for sync_to_airtable
+      # but it'll schedule a job that'll perform in background
+      def bg_sync_to_airtable(additional_fields = {})
+        AirtableSyncJob.perform_later(self, additional_fields)
       end
 
       def remove_from_airtable
         return if airtable_id.blank?
 
-        airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
         airtable_class.find(airtable_id).destroy
       rescue Airrecord::Error => e
         raise e unless e.message.include?("MODEL_ID_NOT_FOUND")
       end
 
       def sync_from_airtable
-        airtable_class =
-          self.class.airtable || "Airtable::#{self.class}".constantize
-        airtable_record = airtable_class.find(airtable_id)
-        airtable_record.sync
+        airtable_class.find(airtable_id).sync
       end
 
       def save_and_sync!
@@ -56,6 +50,12 @@ module Airtable
       def save_and_sync_with_responsible!(responsible_id)
         Logidze.with_responsible(responsible_id) { save! }
         sync_to_airtable
+      end
+
+      private
+
+      def airtable_class
+        @airtable_class = self.class.airtable || "Airtable::#{self.class}".constantize
       end
     end
   end
