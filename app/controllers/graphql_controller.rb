@@ -7,10 +7,12 @@ class GraphqlController < ApplicationController
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    result = AdvisableSchema.execute(
-      query,
-      variables: variables, context: graphql_context, operation_name: operation_name
-    )
+    result = with_query_tracing do
+      AdvisableSchema.execute(
+        query,
+        variables: variables, context: graphql_context, operation_name: operation_name
+      )
+    end
     render json: result
   end
 
@@ -24,6 +26,15 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def with_query_tracing
+    return yield unless Rails.env.development?
+
+    result = nil
+    queries = ::SqlSpy.track { result = yield }
+    Rails.logger.info(ActiveSupport::LogSubscriber.new.__send__(:color, "\nQuery Count: #{queries.size}\n", :red))
+    result
+  end
 
   def verify_authenticity_token
     return if ENV["GRAPHQL_PLAYGROUND"].present?
