@@ -6,12 +6,12 @@ module Resizable
   class_methods do
     def resize(attachments)
       attachments.each do |name, options|
-        define_method "resized_#{name}" do
+        define_method("resized_#{name}") do
           image = public_send(name)
           get_resized_image(image, options)
         end
 
-        define_method "resized_#{name}_url" do
+        define_method("resized_#{name}_url") do
           image = public_send("resized_#{name}")
           get_resized_image_url(image)
         end
@@ -20,18 +20,18 @@ module Resizable
 
     def resize_many(attachments)
       attachments.each do |name, options|
-        define_method "resized_#{name}" do
+        define_method("resized_#{name}") do
           images = public_send(name)
           images.map do |image|
             get_resized_image(image, options)
           end
         end
 
-        define_method "resized_#{name}_urls" do
+        define_method("resized_#{name}_urls") do
           public_send("resized_#{name}_mapping").values
         end
 
-        define_method "resized_#{name}_mapping" do
+        define_method("resized_#{name}_mapping") do
           mapping = instance_variable_get("@resized_#{name}_mapping")
           return mapping if mapping
 
@@ -52,13 +52,7 @@ module Resizable
   def get_resized_image(image, options)
     return if image.blank?
 
-    if image.variant(options).processed?
-      image.variant(options)
-    else
-      image = image.attachment unless image.is_a?(ActiveStorage::Attachment)
-      ResizeImageJob.perform_later(image, **options)
-      image
-    end
+    image.variant(options)
   rescue ActiveStorage::InvariableError
     image.purge
     Sentry.capture_message("Deleted image that wasn't really an image", level: "debug", extra: {object_class: self.class.name, object_id: id})
