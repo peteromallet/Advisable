@@ -87,6 +87,7 @@ group :development do
   gem "letter_opener"
   gem "brakeman"
   gem "benchmark-ips"
+  gem "sql_spy"
 end
 
 group :test do
