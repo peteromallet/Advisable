@@ -42,12 +42,8 @@ RSpec.describe Mutations::UpdateProfile do
     AdvisableSchema.execute(query, context: {current_user: specialist}.merge(extra_context))
   end
 
-  before do
-    allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
-  end
-
   it "syncs to airtable" do
-    expect_any_instance_of(Specialist).to receive(:sync_to_airtable)
+    expect_any_instance_of(Specialist).to receive(:bg_sync_to_airtable)
     response
   end
 
