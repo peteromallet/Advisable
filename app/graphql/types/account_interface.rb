@@ -5,7 +5,10 @@ module Types
     include Types::BaseInterface
 
     description "Fields that are common for all types that have an account"
-    delegate :account, to: :object
+
+    def account
+      dataloader.with(::ActiveRecordSource, ::Account).load(object.account_id)
+    end
 
     field :first_name, String, null: true
     field :last_name, String, null: true
