@@ -24,6 +24,12 @@ module Airtable
         airtable_record.push(self, additional_fields)
       end
 
+      # Meant to be used as a drop in replacement for sync_to_airtable
+      # but it'll schedule a job that'll perform in background
+      def bg_sync_to_airtable(additional_fields = {})
+        AirtableSyncJob.perform_later(self, additional_fields)
+      end
+
       def remove_from_airtable
         return if airtable_id.blank?
 

@@ -2,6 +2,7 @@
 production:
   :concurrency: <%= ENV.fetch("SIDEKIQ_CONCURRENCY", 1) %>
 :queues:
+  - critical
   - default
   - mailers
   - active_storage_purge
