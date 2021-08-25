@@ -30,6 +30,7 @@ gem "sentry-sidekiq"
 gem "webpacker", "~> 5.1"
 gem "slim"
 gem "bootsnap", require: false
+gem "dalli"
 
 gem "skylight"
 
