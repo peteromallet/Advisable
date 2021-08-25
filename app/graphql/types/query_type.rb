@@ -204,7 +204,7 @@ module Types
 
     def events
       requires_guild_user!
-      ::Event.list.includes(attendees: :account, host: :country)
+      ::Event.list.includes(attendees: :account, host: %i[account country])
     end
 
     field :event, Types::EventType, null: true do
@@ -212,7 +212,7 @@ module Types
     end
 
     def event(id:)
-      ::Event.includes(attendees: :account, host: :country).find_by!(uid: id)
+      ::Event.includes(attendees: :account, host: %i[account country]).find_by!(uid: id)
     end
 
     field :guild_post, Types::Guild::PostInterface, null: true do
