@@ -30,9 +30,9 @@ RSpec.describe Resizable do
 
   it "defines methods" do
     expect(dummy).to respond_to(:resized_avatar).
-      and respond_to(:resized_avatar_url).
-      and respond_to(:resized_cover_photo).
-      and respond_to(:resized_cover_photo_url)
+      and(respond_to(:resized_avatar_url).
+      and(respond_to(:resized_cover_photo).
+      and(respond_to(:resized_cover_photo_url))))
   end
 
   it "returns nil when empty" do
@@ -45,16 +45,15 @@ RSpec.describe Resizable do
   end
 
   context "when real world ActiveRecord" do
-    it "schedules ResizeImageJob" do
+    it "returns variant" do
       specialist.avatar.attach(avatar)
-      specialist.resized_avatar
-      expect(ResizeImageJob).to have_been_enqueued.with(specialist.avatar.attachment, resize_to_limit: [400, 400])
+      expect(specialist.resized_avatar).to be_a(ActiveStorage::VariantWithRecord)
     end
 
-    it "schedules ResizeImageJob on _url method" do
+    it "returns an url" do
       specialist.avatar.attach(avatar)
       specialist.resized_avatar_url
-      expect(ResizeImageJob).to have_been_enqueued.with(specialist.avatar.attachment, resize_to_limit: [400, 400])
+      expect(specialist.resized_avatar_url).to start_with("http")
     end
 
     context "when many" do
@@ -62,27 +61,21 @@ RSpec.describe Resizable do
       let(:file2) { Rails.root.join("spec/support/02.jpg") }
       let(:image2) { ActiveStorage::Blob.create_and_upload!(io: File.open(file2), filename: "02.jpg", content_type: "image/jpeg").signed_id }
 
-      it "schedules ResizeImageJobs" do
+      it "returns variants" do
         project.images.attach(avatar)
         project.images.attach(image2)
-        project.resized_images
 
-        project.images.attachments.each do |att|
-          expect(ResizeImageJob).to have_been_enqueued.with(att, resize_to_limit: [1600, 1600])
-        end
+        expect(project.resized_images).to all(be_a(ActiveStorage::VariantWithRecord))
       end
 
-      it "schedules ResizeImageJob on _urls method" do
+      it "returns urls" do
         project.images.attach(avatar)
         project.images.attach(image2)
-        project.resized_images_urls
 
-        project.images.attachments.each do |att|
-          expect(ResizeImageJob).to have_been_enqueued.with(att, resize_to_limit: [1600, 1600])
-        end
+        expect(project.resized_images_urls).to all(start_with("http"))
       end
 
-      it "schedules ResizeImageJob on _mapping method" do
+      it "works correctly with _mapping method" do
         project.images.attach(avatar)
         project.images.attach(image2)
         mapping = project.resized_images_mapping
@@ -96,7 +89,6 @@ RSpec.describe Resizable do
         keys = []
         project.images.attachments.each do |att|
           keys << att.blob_id
-          expect(ResizeImageJob).to have_been_enqueued.with(att, resize_to_limit: [1600, 1600])
         end
         expect(mapping.keys).to eq(keys)
       end
