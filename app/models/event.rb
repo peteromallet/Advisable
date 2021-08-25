@@ -36,9 +36,13 @@ class Event < ApplicationRecord
         END, starts_at ASC")
     )
   }
-  scope :upcoming, lambda {
-    where(ends_at: (Time.zone.now..))
-  }
+  scope :upcoming, -> { where(ends_at: (Time.zone.now..)) }
+  scope :for_graphql, lambda {
+                        includes(
+                          attendees: [{avatar_attachment: {blob: :variant_records}}, :account],
+                          host: [{avatar_attachment: {blob: :variant_records}}, :account, :country]
+                        )
+                      }
 
   private
 
