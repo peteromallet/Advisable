@@ -66,8 +66,11 @@ module Types
       object.resume.attached? ? object.resume : nil
     end
 
-    field :avatar, String, null: true, method: :resized_avatar_url do
-      description 'The specialists avatar'
+    field :avatar, String, null: true
+    def avatar
+      Rails.cache.fetch("account_avatar_#{object.account_id}", expires_in: 1.day) do
+        object.resized_avatar_url
+      end
     end
 
     field :cover_photo, String, null: true, method: :resized_cover_photo_url
@@ -92,9 +95,8 @@ module Types
           object.skills
         end
 
-      sorted =
-        records.sort_by { |s| [s.projects_count, s.specialists_count] }.reverse!
-      sorted[0..(limit || sorted.count + 1) - 1].map do |skill|
+      sorted = records.sort_by { |s| [s.projects_count, s.specialists_count] }.reverse!
+      sorted[0..(limit || sorted.size + 1) - 1].map do |skill|
         OpenStruct.new(specialist: object, skill: skill)
       end
     end
@@ -271,11 +273,14 @@ module Types
     field :country, Types::CountryType, null: true do
       description 'The specialists country'
     end
+    def country
+      dataloader.with(::ActiveRecordSource, ::Country).load(object.country_id)
+    end
 
     field :location, String, null: true
 
     def location
-      "#{object.city}, #{object.country.try(:name)}"
+      "#{object.city}, #{country.try(:name)}"
     end
 
     field :has_setup_payments, Boolean, null: true do
