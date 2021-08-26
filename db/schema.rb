@@ -183,6 +183,16 @@ ActiveRecord::Schema.define(version: 2021_09_10_082939) do
     t.index ["user_id"], name: "index_case_study_archived_articles_on_user_id"
   end
 
+  create_table "case_study_article_feedbacks", force: :cascade do |t|
+    t.bigint "article_id", null: false
+    t.bigint "skill_id"
+    t.text "feedback"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_case_study_article_feedbacks_on_article_id"
+    t.index ["skill_id"], name: "index_case_study_article_feedbacks_on_skill_id"
+  end
+
   create_table "case_study_articles", force: :cascade do |t|
     t.string "uid", null: false
     t.integer "score"
@@ -980,6 +990,7 @@ ActiveRecord::Schema.define(version: 2021_09_10_082939) do
     t.string "pid"
     t.string "campaign_name"
     t.string "campaign_source"
+    t.string "referrer"
     t.decimal "average_score"
     t.integer "project_count"
     t.string "phone"
@@ -1165,6 +1176,8 @@ ActiveRecord::Schema.define(version: 2021_09_10_082939) do
   add_foreign_key "auth_providers", "accounts"
   add_foreign_key "case_study_archived_articles", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_archived_articles", "users"
+  add_foreign_key "case_study_article_feedbacks", "case_study_articles", column: "article_id"
+  add_foreign_key "case_study_article_feedbacks", "case_study_skills", column: "skill_id"
   add_foreign_key "case_study_articles", "accounts", column: "editor_id"
   add_foreign_key "case_study_articles", "accounts", column: "interviewer_id"
   add_foreign_key "case_study_articles", "case_study_companies", column: "company_id"
