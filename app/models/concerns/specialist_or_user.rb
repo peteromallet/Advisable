@@ -7,9 +7,14 @@ module SpecialistOrUser
 
   included do
     belongs_to :account, dependent: :destroy
+    before_save :clear_avatar_cache
   end
 
   delegate :email, :first_name, :last_name, :name, to: :account
+
+  def cached_avatar_url
+    Rails.cache.fetch("account_avatar_#{account_id}") { resized_avatar_url }
+  end
 
   %i[find_by_email find_by_remember_token].each do |method|
     define_singleton_method(method) do |param|
@@ -29,5 +34,13 @@ module SpecialistOrUser
     define_singleton_method("#{method}!") do |param|
       public_send(method, param).presence || raise(ActiveRecord::RecordNotFound)
     end
+  end
+
+  private
+
+  def clear_avatar_cache
+    return if avatar.attachment&.persisted?
+
+    Rails.cache.delete("account_avatar_#{account_id}")
   end
 end
