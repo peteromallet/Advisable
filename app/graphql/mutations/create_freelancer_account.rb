@@ -62,7 +62,7 @@ module Mutations
       end
 
       if success
-        specialist.sync_to_airtable
+        specialist.bg_sync_to_airtable
         GeocodeAccountJob.perform_later(account, context[:client_ip])
         create_application_record(specialist, args[:pid])
         specialist.send_confirmation_email
@@ -95,7 +95,7 @@ module Mutations
       return if project.blank?
 
       application = specialist.applications.create(project: project, status: 'Invited To Apply')
-      application.sync_to_airtable({'Source' => 'new-signup'})
+      application.bg_sync_to_airtable({'Source' => 'new-signup'})
     end
   end
 end
