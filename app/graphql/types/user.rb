@@ -215,11 +215,6 @@ module Types
       object
     end
 
-    field :avatar, String, null: true
-    def avatar
-      Rails.cache.fetch("account_avatar_#{object.account_id}", expires_in: 1.day) do
-        object.resized_avatar_url
-      end
-    end
+    field :avatar, String, null: true, method: :cached_avatar_url
   end
 end
