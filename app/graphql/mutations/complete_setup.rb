@@ -23,7 +23,7 @@ module Mutations
       Logidze.with_responsible(specialist.account_id) do
         specialist.save
       end
-      specialist.sync_to_airtable
+      specialist.bg_sync_to_airtable
 
       {specialist: specialist}
     end
