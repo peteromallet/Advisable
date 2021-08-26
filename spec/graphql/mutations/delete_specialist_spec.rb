@@ -18,8 +18,8 @@ RSpec.describe Mutations::DeleteSpecialist do
   end
 
   it "marks the specialist's account for deletion and deletes magic links" do
-    expect(user).to receive(:sync_to_airtable)
     AdvisableSchema.execute(query, context: context)
+    expect(AirtableSyncJob).to have_been_enqueued.with(user, anything)
     expect(account.deleted_at).not_to be_nil
   end
 
