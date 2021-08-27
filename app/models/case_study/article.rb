@@ -36,6 +36,7 @@ end
 #  comment                :text
 #  company_type           :jsonb
 #  confidential           :boolean
+#  deleted_at             :datetime
 #  editor_note            :text
 #  excerpt                :string
 #  freelancer_edits       :text
