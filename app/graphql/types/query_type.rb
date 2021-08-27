@@ -361,7 +361,7 @@ module Types
       ::CaseStudy::Article.
         published.
         where(id: current_user.saved_articles.select(:article_id)).
-        where.not(id: current_user.archived_articles.select(:article_id))
+        exclude_archived_for(current_user)
     end
 
     field :archived_articles, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20

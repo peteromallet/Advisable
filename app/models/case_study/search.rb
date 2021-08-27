@@ -21,7 +21,7 @@ module CaseStudy
       refresh_results if attributes["results"].blank?
 
       Article.where(id: attributes["results"]).
-        where.not(id: user.archived_articles.pluck(:article_id)).
+        exclude_archived_for(user).
         available_specialists.
         by_score
     end
