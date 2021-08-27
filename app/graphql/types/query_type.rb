@@ -361,7 +361,7 @@ module Types
       ::CaseStudy::Article.
         published.
         where(id: current_user.saved_articles.select(:article_id)).
-        where.not(id: current_user.archived_articles.select(:article_id))
+        exclude_archived_for(current_user)
     end
 
     field :archived_articles, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20
@@ -380,14 +380,14 @@ module Types
     field :case_study_search, Types::CaseStudy::Search, null: true do
       argument :id, ID, required: true
     end
-
     def case_study_search(id:)
+      requires_client!
       ::CaseStudy::Search.find_by!(uid: id)
     end
 
     field :case_study_searches, [Types::CaseStudy::Search], null: true, max_page_size: 20
-
     def case_study_searches
+      requires_client!
       current_user.create_company_recomendation_search
       current_user.searches
     end

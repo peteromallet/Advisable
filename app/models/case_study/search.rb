@@ -19,7 +19,11 @@ module CaseStudy
 
     def results
       refresh_results if attributes["results"].blank?
-      Article.where(id: attributes["results"]).where.not(id: user.archived_articles.pluck(:article_id)).by_score
+
+      Article.where(id: attributes["results"]).
+        exclude_archived_for(user).
+        available_specialists.
+        by_score
     end
 
     def refresh_results
@@ -29,7 +33,7 @@ module CaseStudy
     end
 
     def results_query(limit: nil, exclude: nil)
-      query = Article.distinct
+      query = Article.distinct.published
       query = query.limit(limit) if limit.present?
       query = query.where.not(id: exclude) if exclude.present?
       if skills.any?
