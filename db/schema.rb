@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_26_074400) do
+ActiveRecord::Schema.define(version: 2021_08_27_091555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 2021_07_26_074400) do
     t.jsonb "targeting"
     t.text "editor_note"
     t.text "freelancer_edits"
+    t.datetime "deleted_at"
     t.index ["airtable_id"], name: "index_case_study_articles_on_airtable_id", unique: true
     t.index ["company_id"], name: "index_case_study_articles_on_company_id"
     t.index ["editor_id"], name: "index_case_study_articles_on_editor_id"
