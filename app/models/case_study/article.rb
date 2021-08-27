@@ -23,6 +23,7 @@ module CaseStudy
 
     scope :published, -> { where.not(published_at: nil) }
     scope :by_score, -> { order('score DESC NULLS LAST') }
+    scope :available_specialists, -> { joins(:specialist).merge(Specialist.available) }
   end
 end
 
