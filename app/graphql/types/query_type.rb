@@ -344,7 +344,7 @@ module Types
 
     field :case_studies, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20
     def case_studies
-      ::CaseStudy::Article.published
+      ::CaseStudy::Article.active.published
     end
 
     field :case_study, Types::CaseStudy::Article, null: true do
@@ -359,6 +359,7 @@ module Types
     def saved_articles
       requires_current_user!
       ::CaseStudy::Article.
+        active.
         published.
         where(id: current_user.saved_articles.select(:article_id)).
         exclude_archived_for(current_user)
@@ -368,6 +369,7 @@ module Types
     def archived_articles
       requires_current_user!
       ::CaseStudy::Article.
+        active.
         published.
         where(id: current_user.archived_articles.select(:article_id))
     end
