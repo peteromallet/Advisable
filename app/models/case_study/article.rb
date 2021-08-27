@@ -2,6 +2,7 @@
 
 module CaseStudy
   class Article < ApplicationRecord
+    include SoftDeleteable
     include Uid
     uid_prefix "csa"
 
