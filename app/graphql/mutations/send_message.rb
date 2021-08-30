@@ -24,7 +24,6 @@ module Mutations
       conversation = Conversation.find_by!(uid: conversation)
       message = conversation.messages.create!(uid: uid, content: content, author: current_account)
       message.attachments.attach(attachments) if attachments
-      conversation.mark_as_read_for!(current_account)
       message.reload.after_create_actions
 
       {message: message}

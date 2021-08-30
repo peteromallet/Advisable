@@ -13,10 +13,13 @@ class AccountMailer < ApplicationMailer
     end
   end
 
-  def notify_of_new_messages(account, message_ids)
+  def notify_of_new_messages(account, conversation, message_ids)
     @account = account
+    @conversation = conversation
     @messages = Message.where(id: message_ids).order(:created_at)
-    mail(to: @account.email, subject: "New messages in conversation") do |f|
+    reply_to = "#{conversation.uid}@#{ENV["MESSAGE_REPLIES_DOMAIN"]}"
+
+    mail(to: @account.email, reply_to: reply_to, subject: "New messages in conversation") do |f|
       f.html { render(layout: "email_v2") }
     end
   end

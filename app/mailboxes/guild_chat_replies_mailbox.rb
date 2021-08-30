@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GuildChatRepliesMailbox < ApplicationMailbox
   def process
     reply = EmailReplyParser.parse_reply(mail_body(mail))
@@ -12,25 +14,15 @@ class GuildChatRepliesMailbox < ApplicationMailbox
       @encoded = field.unparsed_value.match(/^<#{message_id_regexp}/)
     end
 
-    if (chat_metadata = @encoded.try(:[], :encoded))
+    chat_metadata = @encoded.try(:[], :encoded)
+    return unless chat_metadata
 
-      # The previous recipient is now the sender after replying to an email
-      sender_uid, recipient_uid, channel = chat_metadata.unpack1('m0').split(':')
-      ChatDirectMessageJob.perform_later(
-        message: reply,
-        sender_uid: sender_uid,
-        recipient_uid: recipient_uid
-      )
-    end
-  end
-
-  private
-
-  def mail_body(mail)
-    if mail.parts.present?
-      mail.parts.first.decoded
-    else
-      mail.decoded
-    end
+    # The previous recipient is now the sender after replying to an email
+    sender_uid, recipient_uid, _channel = chat_metadata.unpack1('m0').split(':')
+    ChatDirectMessageJob.perform_later(
+      message: reply,
+      sender_uid: sender_uid,
+      recipient_uid: recipient_uid
+    )
   end
 end

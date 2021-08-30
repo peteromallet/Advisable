@@ -29,7 +29,7 @@ module MailHelper
   end
 
   def conversation_url(conversation)
-    "#{app_host}/new_messages/#{conversation.uid}"
+    "#{app_host}/messages/#{conversation.uid}"
   end
 
   def time_in_zone(timestamp, zone, format = "%d %B, %I:%M%P %Z")
