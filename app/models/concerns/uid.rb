@@ -7,7 +7,8 @@ module Uid
 
   included do
     before_validation :generate_uid, on: :create, unless: :uid?
-    validates :uid, presence: true, uniqueness: true
+    validates :uid, presence: true
+    validates :uid, uniqueness: true, on: :create
     validate :valid_uid, on: :create
 
     # self.uid_prefix can be used to override the prefix for the uid.
