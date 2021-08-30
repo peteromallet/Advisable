@@ -12,7 +12,7 @@ class MessagesRepliesMailbox < ApplicationMailbox
       message.after_create_actions
     else
       Sentry.capture_message(
-        "#{author.email} tried to reply to a conversation that he doesn't participate in.",
+        "#{author.email} tried to reply to a conversation that they don't participate in.",
         extra: {author: author, conversation: conversation, mail: mail}
       )
     end
