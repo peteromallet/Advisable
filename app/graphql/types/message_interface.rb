@@ -18,10 +18,8 @@ module Types
       def resolve_type(object, _)
         if object.author_id.present?
           Types::UserMessage
-        elsif object.author_id.blank?
-          Types::SystemMessage
         else
-          raise "Unknown message type: #{object.inspect}"
+          Types::SystemMessage
         end
       end
     end
