@@ -170,7 +170,7 @@ export default function MessageComposer({ conversation, currentAccount }) {
         sendMessage: {
           __typename: "SendMessagePayload",
           message: {
-            __typename: "Message",
+            __typename: "UserMessage",
             id: uid,
             content,
             status: "SENDING",

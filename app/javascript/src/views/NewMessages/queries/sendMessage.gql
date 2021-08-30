@@ -4,17 +4,20 @@ mutation SendMessage($input: SendMessageInput!) {
       id
       content
       createdAt
-      status @client
-      author {
-        id
-        name
-        avatar
-      }
       attachments {
         id
         url
         isImage
         filename
+      }
+
+      ... on UserMessage {
+        status @client
+        author {
+          id
+          name
+          avatar
+        }
       }
     }
   }
