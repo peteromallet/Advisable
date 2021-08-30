@@ -95,6 +95,19 @@ RSpec.describe CaseStudy::Search, type: :model do
       end
     end
 
+    context "when article is soft_deleted" do
+      let(:article2) { create(:case_study_article, deleted_at: Time.current) }
+
+      it "excludes that article" do
+        article1.skills.create(skill: skill1)
+        article2.skills.create(skill: skill1)
+        search = create(:case_study_search)
+        search.skills.create(skill: skill1)
+        results = search.results
+        expect(results.pluck(:id)).to match_array([article1.id])
+      end
+    end
+
     context "when specialist is not available" do
       let(:unavailable) { create(:specialist, unavailable_until: Date.tomorrow) }
       let(:unavailable_yesterday) { create(:specialist, unavailable_until: Date.yesterday) }
