@@ -12,6 +12,8 @@ module Types
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :attachments, [Types::AttachmentType], null: true
 
+    orphan_types Types::UserMessage, Types::SystemMessage
+
     definition_methods do
       def resolve_type(object, _)
         if object.author_id.present?
