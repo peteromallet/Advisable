@@ -4,11 +4,6 @@ subscription ReceivedMessage {
       id
       content
       createdAt
-      author {
-        id
-        name
-        avatar
-      }
       attachments {
         id
         url
@@ -18,6 +13,14 @@ subscription ReceivedMessage {
       conversation {
         id
         unreadCount
+      }
+
+      ... on UserMessage {
+        author {
+          id
+          name
+          avatar
+        }
       }
     }
   }
