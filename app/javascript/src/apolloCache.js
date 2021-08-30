@@ -47,7 +47,7 @@ const createCache = () => {
           messages: relayStylePagination(),
         },
       },
-      Message: {
+      UserMessage: {
         fields: {
           status(existing) {
             if (existing === undefined) return "SENT";

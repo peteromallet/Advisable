@@ -12,17 +12,20 @@ query ConversationMessages($id: ID!, $cursor: String) {
           id
           content
           createdAt
-          status @client
           attachments {
             id
             url
             isImage
             filename
           }
-          author {
-            id
-            name
-            avatar
+
+          ... on UserMessage {
+            status @client
+            author {
+              id
+              name
+              avatar
+            }
           }
         }
       }
