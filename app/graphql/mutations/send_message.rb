@@ -22,9 +22,7 @@ module Mutations
     def resolve(conversation:, content:, attachments: nil, uid: nil)
       has_message_content?(content, attachments)
       conversation = Conversation.find_by!(uid: conversation)
-      message = conversation.messages.create!(uid: uid, content: content, author: current_account)
-      message.attachments.attach(attachments) if attachments
-      message.reload.after_create_actions
+      message = conversation.new_message!(current_account, content, attachments, uid)
 
       {message: message}
     end
