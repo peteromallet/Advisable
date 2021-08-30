@@ -167,6 +167,16 @@ class ZapierInteractorController < ApplicationController
     render json: {status: "OK."}
   end
 
+  def create_message
+    accounts = params[:uids].map do |uid|
+      find_account_by_uid(uid)
+    end
+    conversation = Conversation.by_accounts(accounts)
+    author = params[:author].present? ? find_account_by_uid(params[:author]) : nil
+    conversation.new_message!(author, params[:content])
+    render json: {status: "OK.", conversation: conversation.uid}
+  end
+
   private
 
   def find_and_update(model, attrs = {})
@@ -222,23 +232,23 @@ class ZapierInteractorController < ApplicationController
   end
 
   def with_account
-    yield(find_account_by_uid)
+    yield(find_account_by_uid(params[:uid]))
   rescue ActiveRecord::RecordNotFound
     render json: {error: "Account not found"}, status: :unprocessable_entity
   end
 
-  def find_account_by_uid
-    klass = case params[:uid]
+  def find_account_by_uid(uid)
+    klass = case uid
             when /^spe/
               Specialist
             when /^use/
               User
             when /^acc/
-              return Account.find_by!(uid: params[:uid])
+              return Account.find_by!(uid: uid)
             else
               raise ActiveRecord::RecordNotFound
             end
-    klass.public_send(:find_by!, uid: params[:uid]).account
+    klass.public_send(:find_by!, uid: uid).account
   end
 
   def verify_key!
