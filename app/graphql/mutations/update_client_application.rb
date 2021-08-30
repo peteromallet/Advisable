@@ -38,7 +38,7 @@ module Mutations
       end
 
       if success
-        current_user.sync_to_airtable
+        current_user.bg_sync_to_airtable
         {client_application: current_user}
       else
         ApiError.invalid_request('FAILED_TO_SAVE', company.errors.full_messages.first)
