@@ -22,7 +22,7 @@ module Mutations
     def resolve(conversation:, content:, attachments: nil, uid: nil)
       has_message_content?(content, attachments)
       conversation = Conversation.find_by!(uid: conversation)
-      message = conversation.new_message(current_account, content, attachments, uid)
+      message = conversation.new_message!(current_account, content, attachments, uid)
 
       {message: message}
     end
