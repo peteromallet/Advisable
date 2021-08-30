@@ -22,9 +22,9 @@ RSpec.describe MessageNotifierJob do
     it "sends the notification to everyone" do
       message = create(:message, content: "Come to my office!", conversation: conversation)
       described_class.new.perform(message)
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [dwight.account, [message.id]]})
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [jim.account, [message.id]]})
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [michael.account, [message.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [dwight.account, conversation, [message.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [jim.account, conversation, [message.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [michael.account, conversation, [message.id]]})
     end
   end
 
