@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Adds useful methods for feature flags support via JSONB.
-# You need to add `features` JSONB column in the model via a migration.
+# Adds soft delete functionality to ActiveRecord models.
+# You need to add `deleted_at` datetime column in the model via a migration.
 module SoftDeleteable
   extend ActiveSupport::Concern
 
