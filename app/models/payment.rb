@@ -41,6 +41,13 @@ class Payment < ApplicationRecord
           {idempotency_key: "#{uid}_off_session"}
         )
         update!(payment_intent_id: intent.id, status: intent.status, payment_method: "Stripe")
+
+        if intent.status != "succeeded"
+          Slack.message(
+            channel: "client_engagement",
+            text: " Payment for *#{company.name}* (#{company_id}) with *#{specialist.account.name}* (#{specialist.uid}) was not successful! Payment: #{uid}"
+          )
+        end
       end
     end
 
