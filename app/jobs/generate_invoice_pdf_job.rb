@@ -6,8 +6,7 @@ class GenerateInvoicePdfJob < ApplicationJob
   queue_as :default
 
   def perform(invoice)
-    payments = invoice.company.payments.with_status("succeeded").where(created_at: invoice.date_range)
-
+    payments = invoice.payments
     data = {
       billing_address: invoice.company.address.inline,
       client_name: invoice.company.name,
