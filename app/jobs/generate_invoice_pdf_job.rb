@@ -2,23 +2,25 @@
 
 class GenerateInvoicePdfJob < ApplicationJob
   TEMPLATE_ID = "81e7c7a3-7989-4f4c-aae8-03d0f0324811"
+  VAT_TEMPLATE_ID = "41FBCD83-E7E5-4CD1-B323-7BD9D16CF981"
 
   queue_as :default
 
   def perform(invoice)
-    payments = invoice.payments
     data = {
       billing_address: invoice.company.address.inline,
+      vat_number: invoice.company.vat_number,
       client_name: invoice.company.name,
       issue_date: Time.zone.today.strftime("%d.%m.%Y"),
       due_date: Time.zone.today.strftime("%d.%m.%Y"),
       invoice_number: "#{invoice.company.id}-#{invoice.year}-#{invoice.month}",
-      total: payments.sum(&:amount_with_fee) / 100.0,
-      deposit: payments.sum(:deposit) / 100.0,
-      lineItems: line_items(payments)
+      total: invoice.payments.sum(&:amount_with_fee) / 100.0,
+      deposit: invoice.payments.sum(:deposit) / 100.0,
+      lineItems: line_items(invoice.payments)
     }
 
-    document = Pdfmonkey::Document.generate!(TEMPLATE_ID, data)
+    template = invoice.company.vat_number&.starts_with?("IE") ? VAT_TEMPLATE_ID : TEMPLATE_ID
+    document = Pdfmonkey::Document.generate!(template, data)
     if document.status == "success"
       res = Faraday.get(document.download_url)
       if res.status == 200
