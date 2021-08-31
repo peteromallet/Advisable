@@ -34,7 +34,7 @@ end
 #  out_of_office :boolean
 #  slack         :string
 #  uid           :string           not null
-#  username      :string
+#  username      :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  airtable_id   :string
