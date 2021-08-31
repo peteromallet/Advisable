@@ -7,6 +7,7 @@ class SalesPerson < ApplicationRecord
 
   has_many :companies, dependent: :nullify
   has_many :interviewees, class_name: "Specialist", inverse_of: :interviewer, foreign_key: :interviewer_id, dependent: :nullify
+  validates :username, uniqueness: true, presence: true
 
   has_one_attached :image
   resize image: {resize_to_limit: [400, 400]}
@@ -41,5 +42,6 @@ end
 #
 # Indexes
 #
-#  index_sales_people_on_uid  (uid) UNIQUE
+#  index_sales_people_on_uid       (uid) UNIQUE
+#  index_sales_people_on_username  (username) UNIQUE
 #

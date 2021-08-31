@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_27_091555) do
+ActiveRecord::Schema.define(version: 2021_08_31_072511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -880,6 +880,7 @@ ActiveRecord::Schema.define(version: 2021_08_27_091555) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "uid", null: false
     t.index ["uid"], name: "index_sales_people_on_uid", unique: true
+    t.index ["username"], name: "index_sales_people_on_username", unique: true
   end
 
   create_table "skill_similarities", force: :cascade do |t|
