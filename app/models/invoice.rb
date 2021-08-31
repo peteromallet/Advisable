@@ -10,7 +10,9 @@ class Invoice < ApplicationRecord
   validates :month, uniqueness: {scope: %i[company_id year]}
 
   def date_range
-    @date_range ||= Date.parse("1.#{month}.#{year}").all_month
+    first_day = Date.new(year, month, 1)
+    first_day_next_month = first_day.next_month
+    @date_range ||= (first_day..first_day_next_month)
   end
 
   def payments
