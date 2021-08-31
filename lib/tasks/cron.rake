@@ -19,6 +19,7 @@ def clear_unavailable_until_today
 end
 
 def refresh_case_study_searches
+def topup_case_study_searches
   RefreshCaseStudySearchesJob.perform_now
 end
 
