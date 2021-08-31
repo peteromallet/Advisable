@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_31_072511) do
+ActiveRecord::Schema.define(version: 2021_08_31_073613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -869,7 +869,7 @@ ActiveRecord::Schema.define(version: 2021_08_31_072511) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.string "username"
+    t.string "username", null: false
     t.boolean "active"
     t.boolean "out_of_office"
     t.string "slack"
