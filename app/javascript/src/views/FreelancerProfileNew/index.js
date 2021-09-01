@@ -10,14 +10,12 @@ import Testimonials from "./components/Testimonials";
 
 export default function FreelancerProfileNew() {
   const { loading, data, error } = useProfileData();
-  const theme = useTheme();
+  const { setTheme } = useTheme();
 
-  // Set background color to white
   useLayoutEffect(() => {
-    theme.updateTheme({ background: "white" });
-    return () => theme.updateTheme({ background: "default" });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setTheme((t) => ({ ...t, background: "white" }));
+    return () => setTheme((t) => ({ ...t, background: "default" }));
+  }, [setTheme]);
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
