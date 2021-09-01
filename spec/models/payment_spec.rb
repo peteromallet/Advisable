@@ -30,7 +30,7 @@ RSpec.describe Payment, type: :model do
   describe "#send_receipt!" do
     let(:payment) { create(:payment) }
 
-    it 'sends an email receipt to the company' do
+    it "sends an email receipt to the company" do
       expect do
         payment.send_receipt!
       end.to have_enqueued_mail(UserMailer, :payment_receipt).once
