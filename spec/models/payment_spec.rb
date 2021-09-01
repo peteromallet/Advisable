@@ -27,6 +27,16 @@ RSpec.describe Payment, type: :model do
     end
   end
 
+  describe "#send_receipt!" do
+    let(:payment) { create(:payment) }
+
+    it "sends an email receipt to the company" do
+      expect do
+        payment.send_receipt!
+      end.to have_enqueued_mail(UserMailer, :payment_receipt).once
+    end
+  end
+
   describe "#create_in_stripe!" do
     let(:project) { create(:project) }
     let(:payment) { create(:payment, amount: 1000, task: create(:task, application: create(:application, project: project))) }
@@ -70,6 +80,7 @@ RSpec.describe Payment, type: :model do
 
       it "updates deposit_used, sets payment method to stripe and charges stripe" do
         allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee - 200), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
+        expect(payment).to receive(:send_receipt!)
         payment.create_in_stripe!
         expect(payment.payment_method).to eq("Stripe")
         expect(project.deposit_used).to eq(200)
@@ -91,6 +102,7 @@ RSpec.describe Payment, type: :model do
 
       it "charges stripe with full amount" do
         allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
+        expect(payment).to receive(:send_receipt!)
         payment.create_in_stripe!
         expect(payment.payment_method).to eq("Stripe")
         expect(project.deposit_used).to eq(0)
@@ -102,6 +114,7 @@ RSpec.describe Payment, type: :model do
 
       it "charges stripe with full amount" do
         allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
+        expect(payment).to receive(:send_receipt!)
         payment.create_in_stripe!
         expect(payment.payment_method).to eq("Stripe")
         expect(project.deposit_used).to eq(2000)
@@ -113,6 +126,7 @@ RSpec.describe Payment, type: :model do
 
       it "charges stripe with full amount" do
         allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
+        expect(payment).to receive(:send_receipt!)
         payment.create_in_stripe!
         expect(payment.payment_method).to eq("Stripe")
         expect(payment.deposit).to be_nil

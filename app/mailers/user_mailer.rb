@@ -62,6 +62,13 @@ class UserMailer < ApplicationMailer
     mail(to: invoice.company.billing_email, subject: "#{invoice.first_day.strftime("%B %Y")} invoice from Advisable")
   end
 
+  def payment_receipt(payment)
+    @payment = payment
+    mail(to: payment.company.billing_email, subject: "Your payment was successful") do |f|
+      f.html { render(layout: "email_v2") }
+    end
+  end
+
   private
 
   def application_url(application_id)
