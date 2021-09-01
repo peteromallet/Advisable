@@ -10,6 +10,14 @@ module SoftDeleteable
     scope :deleted, -> { where.not(deleted_at: nil) }
   end
 
+  def active?
+    deleted_at.blank?
+  end
+
+  def deleted?
+    deleted_at.present?
+  end
+
   def soft_delete!
     update!(deleted_at: Time.current)
   end
