@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Provides a simple class that takes the session and cookies objects and
 # provides methods for setting the user session. This is passed to the graphql
 # context to prevent us having to pass the session and cookies separately. This
@@ -12,6 +14,11 @@ class SessionManager
 
   def current_user
     @current_user ||= admin_override || current_account&.specialist_or_user
+    if @current_user.respond_to?(:deleted?) && @current_user.deleted?
+      logout
+      @current_user = nil
+    end
+    @current_user
   end
 
   def current_account
