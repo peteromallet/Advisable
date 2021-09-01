@@ -987,7 +987,6 @@ ActiveRecord::Schema.define(version: 2021_09_01_093424) do
     t.string "trustpilot_review_status"
     t.string "campaign_medium"
     t.string "application_status"
-    t.datetime "deleted_at"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"

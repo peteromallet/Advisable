@@ -17,7 +17,6 @@ module Toby
       attribute :skills, Attributes::HasManyThrough
       attribute :industries, Attributes::HasManyThrough
       attribute :unavailable_until, Attributes::Date
-      attribute :deleted_at, Attributes::DateTime
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 

@@ -5,6 +5,7 @@ class Account < ApplicationRecord
   include Tutorials
   include Permissionable
   include Featurable
+  include SoftDeletable
 
   SUBSCRIPTIONS = ["All", "SMS Alerts", "Automated Invitations", "Personal Invitations", "Onboarding Emails", "Status Surveys"].freeze
 
@@ -22,8 +23,6 @@ class Account < ApplicationRecord
   has_many :messages, dependent: :destroy, foreign_key: :author_id, inverse_of: :author
   has_many :conversation_participants, dependent: :destroy
   has_many :conversations, through: :conversation_participants
-
-  scope :active, -> { where(deleted_at: nil) }
 
   has_secure_password validations: false
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
