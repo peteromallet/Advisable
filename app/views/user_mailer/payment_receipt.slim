@@ -8,13 +8,13 @@ css:
   = render "emails/heading" do
     | Payment Receipt
   = render "emails/paragraph" do
-    | We have successfully processed payment for your work with #{@payment.specialist.name}. If you believe this charge to be in error or have any questions, please email support@advisable.com.
+    | We have successfully processed payment for your work with #{@payment.specialist.account.name}. If you believe this charge to be in error or have any questions, please email #{mail_to("finance@advisable.com")}.
 
   div style="padding: 0 32px;"
     table style="background: #eee; width: 100%; border-radius: 12px;"
       tr
         td style="padding: 15px; font-family: arial; border-bottom: 1px solid #ddd;"
-          | Payment for #{@payment.specialist.name}
+          | Payment for #{@payment.specialist.account.name}
         td style="padding: 15px; font-family: arial; border-bottom: 1px solid #ddd; text-align: right;"
           = number_to_currency(@payment.amount / 100.0)
       tr
@@ -30,5 +30,5 @@ css:
   
   = render "emails/spacing", height: "32px"
   = render "emails/paragraph" do
-    | If you have any questions, contact us at finance@advisable.com or call at +353 87 752 2224.
+    | If you have any questions, contact us at #{mail_to("finance@advisable.com")}.
 
