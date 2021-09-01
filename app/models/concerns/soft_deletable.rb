@@ -2,7 +2,7 @@
 
 # Adds soft delete functionality to ActiveRecord models.
 # You need to add `deleted_at` datetime column in the model via a migration.
-module SoftDeleteable
+module SoftDeletable
   extend ActiveSupport::Concern
 
   included do
