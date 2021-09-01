@@ -2,14 +2,19 @@
 
 module Types
   class AttachmentType < Types::BaseType
-    field :id, ID, null: false
-    field :url, String, null: true
-    field :filename, String, null: true
-    field :size, String, null: true
-    field :type, String, null: true
+    description "Represents an active storage attachment"
 
-    def size
-      object.byte_size
+    field :id, ID, null: false
+    field :filename, String, null: true
+    field :size, String, null: true, method: :byte_size
+    field :type, String, null: true, method: :content_type
+    field :is_image, Boolean, null: false, method: :image?
+
+    field :url, String, null: true
+    def url
+      object.url
+    rescue URI::InvalidURIError
+      nil
     end
   end
 end

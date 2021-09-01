@@ -56,6 +56,8 @@ module Types
       current_user
     end
 
+    field :current_account, Types::Account, null: true
+
     field :countries,
           [Types::CountryType],
           "Return the list of countries",
@@ -425,7 +427,7 @@ module Types
     field :conversations, Types::Conversation.connection_type, null: true
     def conversations
       requires_current_user!
-      current_user.account.conversations
+      current_user.account.conversations.includes(participants: :account)
     end
 
     field :conversation, Types::Conversation, null: true do
@@ -433,7 +435,7 @@ module Types
     end
     def conversation(id:)
       requires_current_user!
-      current_user.account.conversations.find_by!(uid: id)
+      current_user.account.conversations.includes(participants: :account).find_by!(uid: id)
     end
   end
 end

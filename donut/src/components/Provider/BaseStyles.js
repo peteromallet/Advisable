@@ -5,7 +5,7 @@ const BACKGROUND = {
   default: "#F8F8F9",
   white: "#FFFFFF",
   ghostWhite: "#F9FAFF",
-  beige: "#FBFAF9",
+  beige: "#FDFCFC",
 };
 
 const BaseStyles = createGlobalStyle`

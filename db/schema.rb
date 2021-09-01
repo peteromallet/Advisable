@@ -418,6 +418,7 @@ ActiveRecord::Schema.define(version: 2021_08_31_073613) do
     t.datetime "last_read_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "unread_count"
     t.index ["account_id"], name: "index_conversation_participants_on_account_id"
     t.index ["conversation_id"], name: "index_conversation_participants_on_conversation_id"
   end
@@ -426,6 +427,8 @@ ActiveRecord::Schema.define(version: 2021_08_31_073613) do
     t.string "uid", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "idempotency_key"
+    t.index ["idempotency_key"], name: "index_conversations_on_idempotency_key"
     t.index ["uid"], name: "index_conversations_on_uid", unique: true
   end
 
@@ -630,12 +633,14 @@ ActiveRecord::Schema.define(version: 2021_08_31_073613) do
   create_table "messages", force: :cascade do |t|
     t.string "uid", null: false
     t.text "content"
-    t.bigint "author_id", null: false
+    t.bigint "author_id"
     t.bigint "conversation_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "idempotency_key"
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["idempotency_key"], name: "index_messages_on_idempotency_key"
     t.index ["uid"], name: "index_messages_on_uid", unique: true
   end
 

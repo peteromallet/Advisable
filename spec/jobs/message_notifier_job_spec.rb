@@ -13,9 +13,19 @@ RSpec.describe MessageNotifierJob do
   it "sends the notification to everyone but the author" do
     message = create(:message, content: "Come to my office!", author: michael.account, conversation: conversation)
     described_class.new.perform(message)
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [dwight.account, [message.id]]})
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [jim.account, [message.id]]})
-    expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [michael.account, [message.id]]})
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [dwight.account, conversation, [message.id]]})
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [jim.account, conversation, [message.id]]})
+    expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [michael.account, conversation, [message.id]]})
+  end
+
+  context "when it is a system message" do
+    it "sends the notification to everyone" do
+      message = create(:message, content: "Come to my office!", conversation: conversation)
+      described_class.new.perform(message)
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [dwight.account, conversation, [message.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [jim.account, conversation, [message.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [michael.account, conversation, [message.id]]})
+    end
   end
 
   context "when multiple messages were created" do
@@ -26,8 +36,8 @@ RSpec.describe MessageNotifierJob do
       described_class.new.perform(message1)
       described_class.new.perform(message2)
       described_class.new.perform(message3)
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [dwight.account, [message1.id, message2.id, message3.id]]})
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [jim.account, [message1.id, message2.id, message3.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [dwight.account, conversation, [message1.id, message2.id, message3.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [jim.account, conversation, [message1.id, message2.id, message3.id]]})
       expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [michael.account, any_args]})
     end
 
@@ -39,8 +49,8 @@ RSpec.describe MessageNotifierJob do
       described_class.new.perform(message1)
       described_class.new.perform(message2)
       described_class.new.perform(message3)
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [dwight.account, [message2.id, message3.id]]})
-      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [jim.account, [message1.id, message2.id, message3.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [dwight.account, conversation, [message2.id, message3.id]]})
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [jim.account, conversation, [message1.id, message2.id, message3.id]]})
       expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "notify_of_new_messages", "deliver_now", {args: [michael.account, any_args]})
     end
 

@@ -1,5 +1,6 @@
 // ApplicationRoutes renders the routes that should be rendered with a header
-import React, { Suspense, lazy } from "react";
+import queryString from "query-string";
+import React, { Suspense, lazy, useMemo } from "react";
 import { Switch, Redirect, useLocation } from "react-router-dom";
 import Route from "src/components/Route";
 import NotFound from "./views/NotFound";
@@ -38,6 +39,7 @@ const CaseStudyRecommendations = lazy(() =>
   import("./views/CaseStudyRecommendations"),
 );
 const Payment = lazy(() => import("./views/Payment"));
+const NewMessages = lazy(() => import("./views/NewMessages"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -56,6 +58,18 @@ function RedirectToSetPassword() {
   );
 }
 
+function VersionedRoute({ fallback, versions, ...props }) {
+  const location = useLocation();
+  const versionNumber = useMemo(() => {
+    const { version } = queryString.parse(location.search);
+    if (version) sessionStorage.setItem(props.path, version);
+    return sessionStorage.getItem(props.path);
+  }, [location, props.path]);
+
+  const component = versions[versionNumber] || fallback;
+  return <AuthenticatedRoute {...props} component={component} />;
+}
+
 const ApplicationRoutes = () => {
   const viewer = useViewer();
   const location = useLocation();
@@ -71,7 +85,12 @@ const ApplicationRoutes = () => {
             from="/clients/signup"
             to={{ ...location, pathname: "/clients/join" }}
           />
-          <AuthenticatedRoute exact path="/messages" component={Messages} />
+          <VersionedRoute
+            name="messages"
+            path="/messages"
+            fallback={Messages}
+            versions={{ 2: NewMessages }}
+          />
           <AuthenticatedRoute
             path="/clients/apply"
             component={ClientApplication}
