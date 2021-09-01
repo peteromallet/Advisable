@@ -1,0 +1,10 @@
+#import "../../../views/NewMessages/queries/messageFields.gql"
+
+mutation CreateConversation($input: CreateConversationInput!) {
+  createConversation(input: $input) {
+    message {
+      id
+      ...MessageFields
+    }
+  }
+}

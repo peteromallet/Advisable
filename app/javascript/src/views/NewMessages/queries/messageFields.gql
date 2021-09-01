@@ -1,0 +1,23 @@
+fragment MessageFields on MessageInterface {
+  id
+  content
+  createdAt
+  attachments {
+    id
+    url
+    isImage
+    filename
+  }
+  conversation {
+    id
+    unreadCount
+  }
+
+  ... on UserMessage {
+    author {
+      id
+      name
+      avatar
+    }
+  }
+}

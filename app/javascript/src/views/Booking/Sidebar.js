@@ -54,6 +54,7 @@ const Sidebar = ({ data, history, tutorialModal }) => {
             {specialist.city}
             {specialist.country && `, ${specialist.country.name}`}
           </Text>
+
           <TalkModal
             dialog={dialog}
             conversationId={application.id}
