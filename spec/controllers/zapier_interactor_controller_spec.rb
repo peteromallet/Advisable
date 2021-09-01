@@ -822,4 +822,111 @@ RSpec.describe ZapierInteractorController, type: :request do
       expect(GenerateFinanceCsvJob).to have_been_enqueued.with("test@test.com")
     end
   end
+
+  describe "POST /create_message" do
+    let(:user) { create(:user) }
+    let(:account_ids) { [user.uid] }
+    let(:params) { {uids: account_ids, author: user.uid, content: "Content", key: key} }
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zapier_interactor/create_message", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    describe "creates a message" do
+      let(:account_ids) { [user.uid, second_uid] }
+
+      context "when specialist" do
+        let(:second) { create(:specialist) }
+        let(:second_uid) { second.uid }
+
+        it "creates the message between user and second" do
+          post("/zapier_interactor/create_message", params: params)
+          expect(response).to have_http_status(:success)
+          uid = JSON[response.body]["conversation"]
+          conversation = Conversation.find_by(uid: uid)
+          expect(conversation.messages.count).to eq(1)
+          expect(conversation.participants.pluck(:account_id)).to match_array([user.account_id, second.account_id])
+          message = conversation.messages.last
+          expect(message.author).to eq(user.account)
+          expect(message.content).to eq("Content")
+        end
+      end
+
+      context "when user" do
+        let(:second) { create(:user) }
+        let(:second_uid) { second.uid }
+
+        it "creates the message between user and second" do
+          post("/zapier_interactor/create_message", params: params)
+          expect(response).to have_http_status(:success)
+          uid = JSON[response.body]["conversation"]
+          conversation = Conversation.find_by(uid: uid)
+          expect(conversation.messages.count).to eq(1)
+          expect(conversation.participants.pluck(:account_id)).to match_array([user.account_id, second.account_id])
+          message = conversation.messages.last
+          expect(message.author).to eq(user.account)
+          expect(message.content).to eq("Content")
+        end
+      end
+
+      context "when account" do
+        let(:second) { create(:specialist) }
+        let(:second_uid) { second.account.uid }
+
+        it "creates the message between user and second" do
+          post("/zapier_interactor/create_message", params: params)
+          expect(response).to have_http_status(:success)
+          uid = JSON[response.body]["conversation"]
+          conversation = Conversation.find_by(uid: uid)
+          expect(conversation.messages.count).to eq(1)
+          expect(conversation.participants.pluck(:account_id)).to match_array([user.account_id, second.account_id])
+          message = conversation.messages.last
+          expect(message.author).to eq(user.account)
+          expect(message.content).to eq("Content")
+        end
+      end
+
+      context "with existing conversation" do
+        let(:second) { create(:specialist) }
+        let(:second_uid) { second.uid }
+
+        it "creates a message in existing conversation" do
+          conversation = Conversation.by_accounts([user.account, second.account])
+          conversation.new_message!(second.account, "Existing message")
+          post("/zapier_interactor/create_message", params: params)
+          expect(response).to have_http_status(:success)
+          uid = JSON[response.body]["conversation"]
+          conversation = Conversation.find_by(uid: uid)
+          expect(conversation.messages.count).to eq(2)
+          expect(conversation.participants.pluck(:account_id)).to match_array([user.account_id, second.account_id])
+          message = conversation.messages.last
+          expect(message.author).to eq(user.account)
+          expect(message.content).to eq("Content")
+        end
+      end
+
+      context "when no author" do
+        let(:params) { {uids: account_ids, content: "Content", key: key} }
+        let(:second) { create(:specialist) }
+        let(:second_uid) { second.uid }
+
+        it "creates a system message between user and second" do
+          post("/zapier_interactor/create_message", params: params)
+          expect(response).to have_http_status(:success)
+          uid = JSON[response.body]["conversation"]
+          conversation = Conversation.find_by(uid: uid)
+          expect(conversation.messages.count).to eq(1)
+          expect(conversation.participants.pluck(:account_id)).to match_array([user.account_id, second.account_id])
+          message = conversation.messages.last
+          expect(message.author).to be_nil
+          expect(message.content).to eq("Content")
+        end
+      end
+    end
+  end
 end

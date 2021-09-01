@@ -62,26 +62,6 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "4da323945ff653a8c15fa8b1e2eba12b144a66c7d415317dee7a7802d2c57485",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/lib/toby/filters/string_contains.rb",
-      "line": 9,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "records.where(\"#{attribute.name.to_s.underscore} ILIKE ?\", \"%#{value.first}%\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Toby::Filters::StringContains",
-        "method": "apply"
-      },
-      "user_input": "attribute.name.to_s.underscore",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
       "fingerprint": "5d850915b38a0aa777c950db4dd5d6f747d300f67903e3cdde82a7b7d6684ecc",
       "check_name": "SQL",
       "message": "Possible SQL injection",
@@ -137,6 +117,26 @@
       },
       "user_input": null,
       "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "a076635e0f62bf6fe13b9598355799aeb55d2c73108ab3d26ef04d02583b673c",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/toby/filters/string_contains.rb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "records.where(\"#{attribute.name.to_s.underscore} ilike ?\", \"%#{value.first}%\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Toby::Filters::StringContains",
+        "method": "apply"
+      },
+      "user_input": "attribute.name.to_s.underscore",
+      "confidence": "Weak",
       "note": ""
     },
     {
@@ -200,6 +200,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-08-24 09:07:02 +0200",
+  "updated": "2021-08-30 12:40:27 +0200",
   "brakeman_version": "5.1.1"
 }

@@ -103,6 +103,7 @@ Rails.application.routes.draw do
   post "zapier_interactor/post_case_study_to_guild"
   post "zapier_interactor/send_email"
   post "zapier_interactor/send_finance_email"
+  post "zapier_interactor/create_message"
 
   # match every other route to the frontend codebase
   root "application#frontend"

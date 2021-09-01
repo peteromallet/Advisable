@@ -7,17 +7,15 @@ module Subscriptions
     description "A message was received on current_account's conversation"
 
     subscription_scope :current_account_id
-    field :message, Types::Message, null: false
-
-    def authorized?
-      object.conversation.participants.pluck(:account_id).include?(current_account_id)
-    end
+    field :message, Types::MessageInterface, null: false
 
     def subscribe
       :no_response
     end
 
     def update
+      return :no_response unless object.conversation.participants.pluck(:account_id).include?(current_account_id)
+
       {message: object}
     end
   end

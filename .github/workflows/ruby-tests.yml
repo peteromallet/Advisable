@@ -35,6 +35,7 @@ jobs:
       ACCOUNTS_CREATE_KEY: testing-key
       RAILS_INBOUND_EMAIL_PASSWORD: testing123
       GUILD_REPLIES_DOMAIN: guild-replies
+      MESSAGE_REPLIES_DOMAIN: message-replies
       RSPEC_RETRY: 3
 
     services:

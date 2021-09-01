@@ -1,0 +1,24 @@
+mutation SendMessage($input: SendMessageInput!) {
+  sendMessage(input: $input) {
+    message {
+      id
+      content
+      createdAt
+      attachments {
+        id
+        url
+        isImage
+        filename
+      }
+
+      ... on UserMessage {
+        status @client
+        author {
+          id
+          name
+          avatar
+        }
+      }
+    }
+  }
+}

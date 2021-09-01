@@ -85,6 +85,10 @@ Style/MethodCallWithArgsParentheses:
     - raise
     - head
     - describe
+    - p
+    - puts
+    - pp
+    - sleep
 
 # Let's discuss this one
 # I'd like to go double quotes everywhere, but am open to discussion
@@ -105,6 +109,9 @@ Rails/SquishedSQLHeredocs:
 
 Rails/EnvironmentVariableAccess:
   AllowReads: true
+
+Rails/Output:
+  Enabled: false
 
 RSpec/ExampleLength:
   Enabled: false

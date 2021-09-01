@@ -1,0 +1,28 @@
+query Conversations {
+  currentAccount {
+    id
+    name
+    avatar
+    firstName
+    lastName
+  }
+  conversations {
+    nodes {
+      id
+      unreadCount
+      participants {
+        id
+        firstName
+        lastName
+        name
+        avatar
+        isViewer
+      }
+      lastMessage {
+        id
+        content
+        createdAt
+      }
+    }
+  }
+}
