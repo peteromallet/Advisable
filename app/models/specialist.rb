@@ -10,13 +10,12 @@
 # application is stored in the application_stage column.
 #
 class Specialist < ApplicationRecord
-  self.ignored_columns += %i[referrer]
-
   include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser
   include Subscriber
   include Resizable
+  include SoftDeleteable
   include ::Airtable::Syncable
   include ::Guild::SpecialistsConcern
 
@@ -119,6 +118,7 @@ end
 #  community_invited_to_call_at      :datetime
 #  community_score                   :integer
 #  community_status                  :string
+#  deleted_at                        :datetime
 #  encrypted_phone_number            :string
 #  encrypted_phone_number_iv         :string
 #  guild                             :boolean          default(FALSE)

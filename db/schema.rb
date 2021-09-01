@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_31_073613) do
+ActiveRecord::Schema.define(version: 2021_09_01_093424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -957,7 +957,6 @@ ActiveRecord::Schema.define(version: 2021_08_31_073613) do
     t.string "pid"
     t.string "campaign_name"
     t.string "campaign_source"
-    t.string "referrer"
     t.decimal "average_score"
     t.integer "project_count"
     t.string "phone"
@@ -988,6 +987,7 @@ ActiveRecord::Schema.define(version: 2021_08_31_073613) do
     t.string "trustpilot_review_status"
     t.string "campaign_medium"
     t.string "application_status"
+    t.datetime "deleted_at"
     t.index ["account_id"], name: "index_specialists_on_account_id"
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
