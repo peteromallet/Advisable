@@ -183,10 +183,6 @@ test("The client can change the project type", async () => {
   const limit = app.getByLabelText("Set a monthly hour cap (to 200-hour max)");
   fireEvent.change(limit, { target: { value: "100" } });
   let checkbox = app.getByLabelText(
-    "I accept that I will be charged 50% of the monthly limit immediately",
-  );
-  fireEvent.click(checkbox);
-  checkbox = app.getByLabelText(
     "I consent to being charged for all hours I approve within the monthly limit I have specified, until I stop working with Test",
   );
   fireEvent.click(checkbox);

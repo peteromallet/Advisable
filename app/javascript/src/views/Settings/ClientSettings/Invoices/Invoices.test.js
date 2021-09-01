@@ -42,7 +42,7 @@ test("Renders the list of invoice and user can click into them", async () => {
       ),
       mockQuery(
         QUERIES.INVOICE,
-        { month: invoice.id },
+        { id: invoice.id },
         {
           currentCompany: {
             ...company,
