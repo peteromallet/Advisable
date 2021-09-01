@@ -2,7 +2,7 @@
 
 module CaseStudy
   class Article < ApplicationRecord
-    include SoftDeleteable
+    include SoftDeletable
     include Uid
     uid_prefix "csa"
 
@@ -24,7 +24,7 @@ module CaseStudy
 
     scope :published, -> { where.not(published_at: nil) }
     scope :by_score, -> { order('score DESC NULLS LAST') }
-    scope :available_specialists, -> { joins(:specialist).merge(Specialist.available) }
+    scope :available_specialists, -> { joins(:specialist).merge(Specialist.available).joins(specialist: :account).merge(Account.active) }
     scope :exclude_archived_for, ->(user) { where.not(id: user.archived_articles.select(:article_id)) }
   end
 end

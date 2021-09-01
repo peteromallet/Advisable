@@ -7,6 +7,7 @@ module Toby
         model_name ::CaseStudy::Article
         attribute :uid, Attributes::String, readonly: true
         attribute :title, Attributes::String
+        attribute :deleted_at, Attributes::DateTime
 
         action :create_guild_post, label: "Post To Guild"
 
