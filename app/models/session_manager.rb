@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Provides a simple class that takes the session and cookies objects and
 # provides methods for setting the user session. This is passed to the graphql
 # context to prevent us having to pass the session and cookies separately. This
@@ -23,12 +25,18 @@ class SessionManager
             Account.find_by(uid: uid)
           else
             clear_browser_data
-            nil
           end
         else
           restore_session
         end
       end
+
+    if @current_account&.deleted?
+      @current_account.clear_remember_token
+      clear_browser_data
+    end
+
+    @current_account
   end
 
   def restore_session
@@ -58,7 +66,6 @@ class SessionManager
     else
       current_account&.clear_remember_token
       clear_browser_data
-      @current_account = nil
     end
   end
 
@@ -77,5 +84,6 @@ class SessionManager
   def clear_browser_data
     cookies.delete(:remember)
     session.delete(:account_uid)
+    @current_account = nil
   end
 end

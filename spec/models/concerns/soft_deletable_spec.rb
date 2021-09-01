@@ -2,16 +2,16 @@
 
 require "rails_helper"
 
-class DummySoftDeleteable < ApplicationRecord
-  include SoftDeleteable
+class DummySoftDeletable < ApplicationRecord
+  include SoftDeletable
 end
 
-RSpec.describe SoftDeleteable do
+RSpec.describe SoftDeletable do
   let(:article) { create(:case_study_article) }
 
   it "generates the expected set of methods" do
-    expect(DummySoftDeleteable.instance_methods).to include(:soft_delete!, :restore!)
-    expect(DummySoftDeleteable.methods(false)).to include(:active, :deleted)
+    expect(DummySoftDeletable.instance_methods).to include(:soft_delete!, :restore!)
+    expect(DummySoftDeletable.methods(false)).to include(:active, :deleted)
   end
 
   describe "#soft_delete!" do

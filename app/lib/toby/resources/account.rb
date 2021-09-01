@@ -14,6 +14,7 @@ module Toby
       attribute :permissions, Attributes::TextArray
       attribute :unsubscribed_from, Attributes::TextArray
       attribute :confirmed_at, Attributes::DateTime
+      attribute :deleted_at, Attributes::DateTime
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
