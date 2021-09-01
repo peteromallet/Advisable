@@ -1,4 +1,4 @@
-import { space } from "styled-system";
+import { layout, space } from "styled-system";
 import styled, { css } from "styled-components";
 import theme from "../../theme";
 
@@ -10,6 +10,7 @@ function halfRems(rems) {
 
 export const StyledStack = styled.div`
   ${space}
+  ${layout}
 `;
 
 const dividerStyles = css`
