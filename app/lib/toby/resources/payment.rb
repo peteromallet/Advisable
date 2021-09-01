@@ -19,7 +19,10 @@ module Toby
       action :mark_as_successful, label: "Mark as successful"
 
       def self.mark_as_successful(object)
+        return if status == "succeeded"
+
         object.update(status: "succeeded")
+        send_receipt!
       end
     end
   end

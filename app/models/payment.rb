@@ -28,6 +28,10 @@ class Payment < ApplicationRecord
     amount_with_fee - deposit.to_i
   end
 
+  def send_receipt!
+    UserMailer.payment_receipt(self).deliver_later
+  end
+
   def create_in_stripe!
     use_deposit!
 
@@ -42,7 +46,9 @@ class Payment < ApplicationRecord
         )
         update!(payment_intent_id: intent.id, status: intent.status, payment_method: "Stripe")
 
-        if intent.status != "succeeded"
+        if intent.status == "succeeded"
+          send_receipt!
+        else
           Slack.message(
             channel: "client_engagement",
             text: " Payment for *#{company.name}* (#{company_id}) with *#{specialist.account.name}* (#{specialist.uid}) was not successful! Payment: #{uid}"
