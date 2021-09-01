@@ -27,7 +27,7 @@ def create_invoices
   companies_with_payments = Company.where(id: last_months_payments.select(:company_id))
   companies_with_payments.each do |company|
     invoice = Invoice.create(company: company, year: yesterday.year, month: yesterday.month)
-    GenerateInvoicePdfJob.perform_later(invoice)
+    GenerateInvoicePdfJob.perform_later(invoice, notify: true)
   end
 end
 

@@ -76,6 +76,10 @@ class Company < ApplicationRecord
     }
   end
 
+  def billing_email
+    @billing_email ||= super.presence || users.joins(:account).merge(Account.with_permission("team_manager")).first.email
+  end
+
   # admin_fee value is stored in basis points integers: 5% -> 500 bp
   def admin_fee_percentage
     (admin_fee.presence || DEFAULT_ADMIN_FEE) / BigDecimal("10000")

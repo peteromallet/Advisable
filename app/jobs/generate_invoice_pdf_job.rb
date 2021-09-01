@@ -8,10 +8,11 @@ class GenerateInvoicePdfJob < ApplicationJob
 
   queue_as :default
 
-  def perform(invoice)
+  def perform(invoice, notify: false)
     @invoice = invoice
 
     generate_pdf
+    UserMailer.invoice_generated(invoice).deliver_later if notify
   end
 
   private
