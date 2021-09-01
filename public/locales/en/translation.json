@@ -137,7 +137,7 @@
     },
     "Flexible": {
       "label": "Flexible - Monthly Limit",
-      "clientDescription": "Your freelancer is working up to a maximum monthly limit of hours. You are charged 50% of these hours up front, then retrospectively for each timesheet your freelancer submits within this limit.",
+      "clientDescription": "Your freelancer is working up to a maximum monthly limit of hours.",
       "proposalDescription": "I want to propose a maximum monthly budget and work flexibly within that hourly limit."
     }
   },

@@ -472,6 +472,7 @@ export const invoice = (fields = {}) => {
     month: "08",
     total: 100000,
     payments: [],
+    pdfUrl: null,
     ...fields,
   };
 };
