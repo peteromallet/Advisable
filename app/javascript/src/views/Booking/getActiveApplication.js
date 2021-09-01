@@ -31,6 +31,10 @@ export default gql`
       }
       specialist {
         email
+        account {
+          id
+          firstName
+        }
         ...specialistFields
       }
     }

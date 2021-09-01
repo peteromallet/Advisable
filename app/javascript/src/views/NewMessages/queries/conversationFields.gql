@@ -1,0 +1,17 @@
+fragment ConversationFields on Conversation {
+  id
+  unreadCount
+  participants {
+    id
+    firstName
+    lastName
+    name
+    avatar
+    isViewer
+  }
+  lastMessage {
+    id
+    content
+    createdAt
+  }
+}
