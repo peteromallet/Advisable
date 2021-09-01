@@ -76,9 +76,7 @@ const PaymentTerms = ({ data }) => {
       </Text>
       <Text color="neutral700" size="s" lineHeight="s">
         When working with specialist’s on a flexible basis, we will
-        automatically bill your selected payment method 50% of the budgeted
-        hours at the start of each month. The remaining 50% will be billed when
-        the freelancer submits their timesheet at the end of the month.
+        automatically bill your selected payment method when approving a task.
       </Text>
       <Box width="100%" height={1} my="l" bg="neutral100" />
       <Text color="neutral700" size="s" lineHeight="s" mb="l">
