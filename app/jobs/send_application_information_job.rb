@@ -13,6 +13,7 @@ class SendApplicationInformationJob < ApplicationJob
 
     specialists = Specialist.
       joins(:account).
+      active.
       available.
       not_rejected.
       where(account: {deleted_at: nil}).
