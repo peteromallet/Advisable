@@ -39,6 +39,10 @@ module Toby
         options.fetch(:readonly, false)
       end
 
+      def sortable
+        options.fetch(:sortable, true)
+      end
+
       def read(resource)
         resource.public_send(name)
       end

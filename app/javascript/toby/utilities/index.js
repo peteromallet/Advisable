@@ -52,7 +52,7 @@ export function useSearchResource(resource) {
   return handleSearch;
 }
 
-export function useFetchResources(resource, filters) {
+export function useFetchResources(resource, filters, sort) {
   const [loading, setLoading] = useState(true);
   const schemaData = useSchema();
   const query = generateCollectionQuery(schemaData, resource);
@@ -66,9 +66,11 @@ export function useFetchResources(resource, filters) {
 
   const fetchRecords = useCallback(
     async function fetchRecords() {
-      fetch({ variables: { filters } });
+      fetch({
+        variables: { filters, sortBy: sort.sortBy, sortOrder: sort.sortOrder },
+      });
     },
-    [fetch, filters],
+    [fetch, filters, sort],
   );
 
   const fetchMoreRecords = useCallback(
@@ -104,12 +106,16 @@ export function generateCollectionQuery(schemaData, resourceData) {
       __variables: {
         cursor: "String",
         filters: "[FilterInput!]",
+        sortBy: "String",
+        sortOrder: "String",
       },
       records: {
         __args: {
           first: 100,
           after: new VariableType("cursor"),
           filters: new VariableType("filters"),
+          sortBy: new VariableType("sortBy"),
+          sortOrder: new VariableType("sortOrder"),
         },
         __aliasFor: resourceData.queryNameCollection,
         pageInfo: {

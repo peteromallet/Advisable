@@ -10,6 +10,10 @@ module Toby
       def input_type
         [GraphQL::Types::String]
       end
+
+      def sortable
+        false
+      end
     end
   end
 end
