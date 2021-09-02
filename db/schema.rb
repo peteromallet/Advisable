@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_01_093424) do
+ActiveRecord::Schema.define(version: 2021_09_02_070445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -267,6 +267,7 @@ ActiveRecord::Schema.define(version: 2021_09_01_093424) do
     t.text "feedback"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "resolved_at"
     t.index ["article_id"], name: "index_case_study_search_feedbacks_on_article_id"
     t.index ["search_id"], name: "index_case_study_search_feedbacks_on_search_id"
   end
