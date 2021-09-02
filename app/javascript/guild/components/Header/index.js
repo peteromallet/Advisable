@@ -18,7 +18,6 @@ import {
   StyledHamburger,
 } from "./styles";
 import { GUILD_LAST_READ_QUERY } from "./queries";
-import { EVENTS_QUERY } from "@guild/views/Events/queries";
 import Notifications from "./Notifications";
 import { useTwilioChat } from "../TwilioProvider";
 import MainHeader from "src/components/Header";
@@ -38,10 +37,8 @@ function GuildHeader({ viewer }) {
   });
   const hasUnreadNotifications = lastReadData?.viewer?.guildUnreadNotifications;
 
-  const { data: eventsData } = useQuery(EVENTS_QUERY, {
-    skip: !viewer,
-  });
-  const eventsCount = eventsData?.events?.upcomingEventsCount;
+  const eventsCount =
+    document.getElementById("guildData").dataset.upcomingEvents;
 
   return (
     <>
