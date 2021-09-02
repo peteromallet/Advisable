@@ -35,6 +35,7 @@ const RequestConsultation = lazy(() => import("./views/RequestConsultation"));
 const Consultation = lazy(() => import("./views/Consultation"));
 const Interview = lazy(() => import("./views/Interview"));
 const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
+const CaseStudy = lazy(() => import("./views/CaseStudy"));
 const SetPassword = lazy(() => import("./views/SetPassword"));
 const CaseStudyRecommendations = lazy(() =>
   import("./views/CaseStudyRecommendations"),
@@ -94,6 +95,7 @@ const ApplicationRoutes = () => {
             from="/clients/signup"
             to={{ ...location, pathname: "/clients/join" }}
           />
+          <Route path="/case_studies/:id" component={CaseStudy} />
           <VersionedRoute
             name="messages"
             path="/messages"
