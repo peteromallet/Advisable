@@ -9,6 +9,7 @@ const Input = styled.input`
 
 export default function AddAttachmentsButton({ onSelect }) {
   const inputRef = useRef();
+
   return (
     <>
       <Input
@@ -18,7 +19,10 @@ export default function AddAttachmentsButton({ onSelect }) {
         multiple
         onChange={onSelect}
       />
-      <StyledSecondaryComposerButton onClick={() => inputRef.current.click()}>
+      <StyledSecondaryComposerButton
+        type="button"
+        onClick={() => inputRef.current.click()}
+      >
         <PaperClip />
         <span>Attachment</span>
       </StyledSecondaryComposerButton>
