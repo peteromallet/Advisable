@@ -128,7 +128,7 @@
       "file": "app/lib/toby/filters/string_contains.rb",
       "line": 9,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "records.where(\"#{attribute.name.to_s.underscore} ilike ?\", \"%#{value.first}%\")",
+      "code": "records.where(\"#{attribute.name.to_s.underscore} ILIKE ?\", \"%#{value.first}%\")",
       "render_path": null,
       "location": {
         "type": "method",

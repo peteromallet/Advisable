@@ -25,7 +25,7 @@ module Toby
       end
 
       def self.search(query)
-        ::Specialist.joins(:account).where("accounts.email ilike ?", "%#{query}%")
+        ::Specialist.joins(:account).where("accounts.email ILIKE ?", "%#{query}%")
       end
     end
   end

@@ -11,7 +11,7 @@ module Toby
       end
 
       def self.search(query)
-        ::Industry.where("name ilike ?", "%#{query}%")
+        ::Industry.where("name ILIKE ?", "%#{query}%")
       end
     end
   end
