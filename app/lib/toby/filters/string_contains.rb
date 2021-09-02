@@ -6,7 +6,7 @@ module Toby
       def apply(records, attribute, value: [], **_opts)
         return records if value.empty?
 
-        records.where("#{attribute.name.to_s.underscore} ilike ?", "%#{value.first}%")
+        records.where("#{attribute.name.to_s.underscore} ILIKE ?", "%#{value.first}%")
       end
     end
   end

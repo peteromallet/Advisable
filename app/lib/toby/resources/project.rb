@@ -36,7 +36,7 @@ module Toby
       end
 
       def self.search(query)
-        ::Project.joins(user: :company).where("companies.name ilike ?", "%#{query}%")
+        ::Project.joins(user: :company).where("companies.name ILIKE ?", "%#{query}%")
       end
     end
   end

@@ -20,7 +20,7 @@ module Toby
       end
 
       def self.search(query)
-        ::Company.where("name ilike ?", "%#{query}%")
+        ::Company.where("name ILIKE ?", "%#{query}%")
       end
     end
   end
