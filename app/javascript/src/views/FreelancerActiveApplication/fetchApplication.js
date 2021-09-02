@@ -29,6 +29,10 @@ export default gql`
           name
           firstName
           companyName
+          account {
+            id
+            firstName
+          }
         }
       }
       specialist {
