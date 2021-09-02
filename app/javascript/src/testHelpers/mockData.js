@@ -47,6 +47,7 @@ export const user = (fields = {}) => {
       projectPaymentMethod: "Bank Transfer",
       location: "Dublin, Ireland",
       city: "Dublin",
+      account: null,
       invoiceSettings: {
         __typename: "InvoiceSettings",
         name: "Test Account",
@@ -236,6 +237,7 @@ export const specialist = (fields = {}) => {
         nodes: [],
       },
       skills: [],
+      account: null,
       caseStudySkills: [],
       industries: [],
       previousProjectsCount: 0,
@@ -503,12 +505,27 @@ export const invoices = (fields = {}) => {
   );
 };
 
+export const account = (fields = {}) => {
+  return merge(
+    {
+      __typename: "Account",
+      id: uniqueId("acc"),
+      firstName: "John",
+      lastName: "Doe",
+      name: "John Doe",
+      avatar: null,
+    },
+    fields,
+  );
+};
+
 export default {
   user,
   task,
   skill,
   search,
   review,
+  account,
   company,
   country,
   project,
