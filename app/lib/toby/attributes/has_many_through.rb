@@ -10,6 +10,10 @@ module Toby
         Toby::Lazy::Through
       end
 
+      def sortable
+        false
+      end
+
       def write(resource, value)
         klass = reflection.source_reflection.klass
         attribute = reflection.through_reflection.active_record_primary_key
