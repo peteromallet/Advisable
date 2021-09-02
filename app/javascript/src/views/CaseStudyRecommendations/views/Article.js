@@ -30,7 +30,7 @@ const StyledName = styled.a`
   }
 `;
 
-export default function CaseStudy() {
+export default function CaseStudy({ showActionBar = true }) {
   useScrollToTop();
   const { id } = useParams();
   const { data, loading, error } = useCaseStudy(id);
@@ -127,7 +127,7 @@ export default function CaseStudy() {
           <CaseStudyContent caseStudy={caseStudy} />
         </Box>
       </Box>
-      <ActionBar caseStudy={caseStudy} />
+      {showActionBar && <ActionBar caseStudy={caseStudy} />}
     </Box>
   );
 }
