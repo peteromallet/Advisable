@@ -17,6 +17,14 @@ module Toby
         attribute :results, Attributes::TextArray # this has to be improved somehow
 
         attribute :search_feedbacks, Attributes::HasMany
+
+        def self.label(record, context)
+          Lazy::Label.new(::CaseStudy::Search, record.id, context, value_column: :name)
+        end
+
+        def self.search(query)
+          ::CaseStudy::Search.where("name ILIKE ?", "%#{query}%")
+        end
       end
     end
   end
