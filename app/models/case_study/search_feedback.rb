@@ -2,6 +2,8 @@
 
 module CaseStudy
   class SearchFeedback < ApplicationRecord
+    has_logidze
+
     belongs_to :search
     belongs_to :article
 

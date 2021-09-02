@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_02_070445) do
+ActiveRecord::Schema.define(version: 2021_09_02_072405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -268,6 +268,7 @@ ActiveRecord::Schema.define(version: 2021_09_02_070445) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "resolved_at"
+    t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_search_feedbacks_on_article_id"
     t.index ["search_id"], name: "index_case_study_search_feedbacks_on_search_id"
   end
@@ -1556,6 +1557,9 @@ ActiveRecord::Schema.define(version: 2021_09_02_070445) do
   SQL
   create_trigger :logidze_on_case_study_searches, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_case_study_searches BEFORE INSERT OR UPDATE ON public.case_study_searches FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_search_feedbacks, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_search_feedbacks BEFORE INSERT OR UPDATE ON public.case_study_search_feedbacks FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_payments, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_payments BEFORE INSERT OR UPDATE ON public.payments FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
