@@ -83,6 +83,7 @@ module Airtable
         article.score = fields["Score"]
         article.confidential = fields["Okay With Sharing"] != "Yes"
         article.targeting = fields["Additional Targeting Data"]
+        article.published_at = Time.zone.now
         article.save!
 
         Array(fields["Industry"]).each do |airtable_id|
