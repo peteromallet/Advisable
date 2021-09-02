@@ -7,7 +7,7 @@ module Toby
         model_name ::CaseStudy::SearchFeedback
 
         attribute :article, Attributes::BelongsTo
-        # TODO: attribute :search, Attributes::BelongsTo
+        attribute :search, Attributes::BelongsTo
         attribute :feedback, Attributes::LongText
         attribute :resolved_at, Attributes::DateTime
 
