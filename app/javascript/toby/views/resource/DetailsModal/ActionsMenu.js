@@ -38,7 +38,7 @@ export default function ActionsMenu({ resource, record }) {
     return generateActionMutation(schemaData, resource);
   }, [schemaData, resource]);
 
-  if (resource.actions.length === 0) return null;
+  if (record._actions.length === 0) return null;
 
   return (
     <>
@@ -47,7 +47,7 @@ export default function ActionsMenu({ resource, record }) {
       </MenuButton>
       <Menu {...menu} aria-label="Actions">
         <Card padding={4}>
-          {resource.actions.map((action) => (
+          {record._actions.map((action) => (
             <Action
               key={action.name}
               action={action}
