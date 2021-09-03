@@ -16,6 +16,10 @@ module Toby
         reflection.inverse_of.association_foreign_key
       end
 
+      def sortable
+        false
+      end
+
       def via
         reflection.active_record_primary_key
       end

@@ -20,6 +20,10 @@ module Toby
         reflection.association_foreign_key
       end
 
+      def sortable
+        false
+      end
+
       def type
         "Toby::Types::#{model}"
       end

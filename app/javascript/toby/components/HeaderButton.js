@@ -23,7 +23,13 @@ export const StyledHeaderButton = styled.button`
   }
 
   svg {
-    margin-right: 8px;
+    margin-right: 6px;
+  }
+
+  span {
+    margin-top: -1px;
+    align-items: center;
+    display: inline-flex;
   }
 `;
 
@@ -48,7 +54,7 @@ export default function HeaderButton({ icon, children, ...props }) {
   return (
     <StyledHeaderButton {...props}>
       {React.createElement(icon, { size: 20 })}
-      {children}
+      <span>{children}</span>
     </StyledHeaderButton>
   );
 }
