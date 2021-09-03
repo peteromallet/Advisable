@@ -9,7 +9,7 @@ export function pluralizeType(type) {
   return pluralize(type.toLowerCase());
 }
 
-function generateSearchQuery(schemaData, resource) {
+function generateSearchQuery(resource) {
   const queryObject = {
     query: {
       __variables: {
@@ -33,9 +33,8 @@ function generateSearchQuery(schemaData, resource) {
 }
 
 export function useSearchResource(resource) {
-  const schema = useSchema();
   const client = useApolloClient();
-  const query = generateSearchQuery(schema, resource);
+  const query = generateSearchQuery(resource);
 
   const handleSearch = useCallback(
     (search) => {
@@ -162,8 +161,12 @@ export function generateShowQuery(schemaData, resourceData) {
           id: new VariableType("id"),
         },
         __aliasFor: resourceData.queryNameItem,
-        ...versionHistoryFields,
         ...node,
+        ...versionHistoryFields,
+        _actions: {
+          name: true,
+          label: true,
+        },
       },
     },
   };
@@ -223,6 +226,10 @@ export function generateActionMutation(schemaData, resourceData) {
         resource: {
           ...node,
           ...versionHistoryFields,
+          _actions: {
+            name: true,
+            label: true,
+          },
         },
       },
     },
