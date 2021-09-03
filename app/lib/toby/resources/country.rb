@@ -12,7 +12,7 @@ module Toby
       end
 
       def self.search(query)
-        ::Country.where("name ilike ?", "%#{query}%")
+        ::Country.where("name ILIKE ?", "%#{query}%")
       end
     end
   end

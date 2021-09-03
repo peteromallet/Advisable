@@ -23,7 +23,7 @@ module Toby
       end
 
       def self.search(query)
-        ::Account.where("email ilike ?", "%#{query}%")
+        ::Account.where("email ILIKE ?", "%#{query}%")
       end
     end
   end

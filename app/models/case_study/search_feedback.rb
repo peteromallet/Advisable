@@ -2,8 +2,13 @@
 
 module CaseStudy
   class SearchFeedback < ApplicationRecord
+    has_logidze
+
     belongs_to :search
     belongs_to :article
+
+    scope :resolved, -> { where.not(resolved_at: nil) }
+    scope :unresolved, -> { where(resolved_at: nil) }
   end
 end
 
@@ -11,12 +16,13 @@ end
 #
 # Table name: case_study_search_feedbacks
 #
-#  id         :bigint           not null, primary key
-#  feedback   :text
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  article_id :bigint           not null
-#  search_id  :bigint           not null
+#  id          :bigint           not null, primary key
+#  feedback    :text
+#  resolved_at :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  article_id  :bigint           not null
+#  search_id   :bigint           not null
 #
 # Indexes
 #
