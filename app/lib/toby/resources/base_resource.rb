@@ -59,11 +59,16 @@ module Toby
               root.label(object, context)
             end
 
-            field :_history, [Toby::Types::Version], null: true
+            field :_history, [Toby::Types::Version], null: false
             define_method(:_history) do
               return [] unless root.model.ancestors.include?(Logidze::Model)
 
               object.reload_log_data&.data&.dig("h") || []
+            end
+
+            field :_actions, [Toby::Types::Action], null: false
+            define_method(:_actions) do
+              root.actions
             end
 
             root.attributes.each do |attribute|
