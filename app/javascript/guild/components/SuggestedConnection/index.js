@@ -1,17 +1,14 @@
 import React from "react";
 import * as Sentry from "@sentry/react";
-import { useQuery } from "@apollo/client";
 import { Link as RouterLink } from "react-router-dom";
-import { SUGGESTED_CONNECTION_QUERY } from "./queries";
 import { Text, Card, Avatar, Box, Button } from "@advisable/donut";
 import Loading from "@advisable-main/components/Loading";
 import RecommendationReason from "./RecommendationReason";
 
-export default function SuggestedConnection() {
-  const { data, loading } = useQuery(SUGGESTED_CONNECTION_QUERY, {
-    fetchPolicy: "no-cache",
-  });
-  const specialistRecommendation = data?.specialistRecommendation;
+export default function SuggestedConnection({
+  loading,
+  specialistRecommendation,
+}) {
   const recommendation = specialistRecommendation?.recommendation;
 
   if (loading) return <Loading />;

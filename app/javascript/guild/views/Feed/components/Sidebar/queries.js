@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const SIDEBAR_QUERY = gql`
-  query sidebar {
+  query GuildSidebar {
     guildFeaturedMembers {
       id
       avatar
@@ -26,6 +26,33 @@ export const SIDEBAR_QUERY = gql`
         id
         name
         slug
+      }
+    }
+
+    specialistRecommendation {
+      recommendation {
+        id
+        name
+        avatar
+        firstName
+      }
+      ... on SkillsRecommendation {
+        skills {
+          id
+          name
+        }
+      }
+      ... on IndustryRecommendation {
+        industries {
+          id
+          name
+        }
+      }
+      ... on RandomRecommendation {
+        skills {
+          id
+          name
+        }
       }
     }
   }
