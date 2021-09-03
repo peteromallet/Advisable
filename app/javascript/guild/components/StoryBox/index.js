@@ -7,7 +7,7 @@ import LabelPost from "./LabelPost";
 export default function StoryBox({ loading, latestPrompt }) {
   const history = useHistory();
   const label = latestPrompt?.label;
-  const posts = label?.guildPosts?.edges?.map((e) => e.node) || [];
+  const posts = latestPrompt?.posts;
 
   const handleViewAll = () => history.push(`/topics/${label.slug}`);
   const handleCreateFromPrompt = () =>

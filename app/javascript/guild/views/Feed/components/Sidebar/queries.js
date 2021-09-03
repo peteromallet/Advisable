@@ -1,8 +1,6 @@
 import { gql } from "@apollo/client";
-import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
 
 export const SIDEBAR_QUERY = gql`
-  ${GuildPostFields}
   query sidebar {
     guildFeaturedMembers {
       id
@@ -15,21 +13,19 @@ export const SIDEBAR_QUERY = gql`
       prompt
       cta
       description
+      posts {
+        id
+        title
+        author {
+          id
+          name
+          avatar
+        }
+      }
       label {
         id
         name
         slug
-        guildPosts(first: 5) {
-          edges {
-            node {
-              ...GuildPostFields
-              author {
-                id
-                firstName
-              }
-            }
-          }
-        }
       }
     }
   }
