@@ -251,7 +251,7 @@ module Types
     field :latest_prompt, PostPromptType, null: true
 
     def latest_prompt
-      ::PostPrompt.featured.first
+      ::PostPrompt.featured.includes(:label).first
     end
 
     field :post_prompt, ::Types::PostPromptType, null: true do
