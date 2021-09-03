@@ -8,7 +8,7 @@ module Toby
       attribute :email, Lookups::Accounts::Email
       attribute :application_stage, Attributes::Select, options: ::Specialist::VALID_APPLICATION_STAGES
       attribute :account, Attributes::BelongsTo
-      attribute :consultation_url, Lookups::Specialists::ConsultationUrl
+      attribute :consultation_url, Lookups::Specialists::ConsultationUrl, sortable: false
       attribute :bio, Attributes::LongText
       attribute :linkedin, Attributes::String
       attribute :website, Attributes::String
