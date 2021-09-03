@@ -126,6 +126,18 @@ export function generateCollectionQuery(schemaData, resourceData) {
   return gql(jsonToGraphQLQuery(queryObject));
 }
 
+const versionHistoryFields = {
+  _history: {
+    number: true,
+    createdAt: true,
+    responsible: true,
+    changes: {
+      attribute: true,
+      value: true,
+    },
+  },
+};
+
 export function generateShowQuery(schemaData, resourceData) {
   const node = {
     _label: true,
@@ -144,15 +156,7 @@ export function generateShowQuery(schemaData, resourceData) {
           id: new VariableType("id"),
         },
         __aliasFor: resourceData.queryNameItem,
-        _history: {
-          number: true,
-          createdAt: true,
-          responsible: true,
-          changes: {
-            attribute: true,
-            value: true,
-          },
-        },
+        ...versionHistoryFields,
         ...node,
       },
     },
@@ -180,7 +184,10 @@ export function generateUpdateMutation(schemaData, resourceData) {
           attributes: new VariableType("attributes"),
         },
         __aliasFor: resourceData.queryNameUpdate,
-        resource: node,
+        resource: {
+          ...node,
+          ...versionHistoryFields,
+        },
       },
     },
   };
@@ -207,7 +214,10 @@ export function generateActionMutation(schemaData, resourceData) {
           name: new VariableType("name"),
         },
         __aliasFor: `action${resourceData.type}`,
-        resource: node,
+        resource: {
+          ...node,
+          ...versionHistoryFields,
+        },
       },
     },
   };
