@@ -20,7 +20,10 @@ export default function Sidebar() {
       <Sticky top={98} enabled>
         <Box paddingBottom={8}>
           <StoryBox loading={loading} latestPrompt={latestPrompt} />
-          <SuggestedConnection />
+          <SuggestedConnection
+            loading={loading}
+            specialistRecommendation={data?.specialistRecommendation}
+          />
           <FeaturedMembers
             loading={loading}
             featuredMembers={featuredMembers}
