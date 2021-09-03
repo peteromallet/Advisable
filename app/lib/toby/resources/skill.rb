@@ -11,7 +11,7 @@ module Toby
       end
 
       def self.search(query)
-        ::Skill.where("name ilike ?", "%#{query}%")
+        ::Skill.where("name ILIKE ?", "%#{query}%")
       end
     end
   end

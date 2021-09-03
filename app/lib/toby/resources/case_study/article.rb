@@ -14,6 +14,14 @@ module Toby
         def self.create_guild_post(object)
           Guild::CaseStudy.create_from_article!(object)
         end
+
+        def self.label(record, context)
+          Lazy::Label.new(::CaseStudy::Article, record.id, context, value_column: :title)
+        end
+
+        def self.search(query)
+          ::CaseStudy::Article.where("title ILIKE ?", "%#{query}%")
+        end
       end
     end
   end

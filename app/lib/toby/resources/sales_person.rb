@@ -15,7 +15,7 @@ module Toby
       end
 
       def self.search(query)
-        ::SalesPerson.where("username ilike ?", "%#{query}%")
+        ::SalesPerson.where("username ILIKE ?", "%#{query}%")
       end
     end
   end
