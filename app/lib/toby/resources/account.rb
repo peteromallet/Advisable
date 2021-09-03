@@ -7,7 +7,7 @@ module Toby
       attribute :uid, Attributes::String, readonly: true
       attribute :first_name, Attributes::String
       attribute :last_name, Attributes::String
-      attribute :name, Attributes::String, readonly: true
+      attribute :name, Attributes::String, readonly: true, sortable: false
       attribute :email, Attributes::String
       attribute :user, Attributes::HasOne
       attribute :specialist, Attributes::HasOne

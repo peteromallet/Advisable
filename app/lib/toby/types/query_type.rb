@@ -22,6 +22,8 @@ module Toby
       Resources.resource_classes.each do |resource|
         field resource.query_name_collection, resource.type.connection_type, null: false, resolver: Toby::Resolvers::Collection do
           argument :filters, [FilterInput], required: false
+          argument :sort_by, String, required: false
+          argument :sort_order, String, required: false
           resource_class resource
         end
 

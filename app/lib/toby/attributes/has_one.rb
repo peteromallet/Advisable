@@ -10,6 +10,10 @@ module Toby
         "Toby::Types::#{model}"
       end
 
+      def sortable
+        false
+      end
+
       def input_type
         GraphQL::Types::ID
       end

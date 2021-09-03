@@ -25,6 +25,8 @@ import Loading from "./Loading";
 import { useResourceViews, useUpdateViewFilter } from "../../queries";
 import HeaderButton from "../../components/HeaderButton";
 import ViewsDropdown from "./ViewsDropdown";
+import SortMenu from "./SortMenu";
+import useSort from "./useSort";
 
 export default function ResourceConfig({ resource }) {
   const { loading, data } = useResourceViews(resource.type);
@@ -48,6 +50,7 @@ function initializeViewFilters(view) {
 function Resource({ resource, views }) {
   const history = useHistory();
   const location = useLocation();
+  const sortState = useSort();
   const [updateViewFilters] = useUpdateViewFilter();
 
   const currentView = useMemo(() => {
@@ -62,6 +65,7 @@ function Resource({ resource, views }) {
   const { loading, data, fetchMore, error } = useFetchResources(
     resource,
     filters,
+    sortState,
   );
 
   const hasNextPage = data?.records.pageInfo.hasNextPage;
@@ -142,6 +146,7 @@ function Resource({ resource, views }) {
               </Box>
             )}
           </HeaderButton>
+          <SortMenu {...sortState} resource={resource} />
         </Box>
       </StyledHeader>
       <StyledViewport>

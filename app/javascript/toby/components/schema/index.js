@@ -42,8 +42,10 @@ const SCHEMA_INTROSPECTION = gql`
       attributes {
         name
         readonly
+        sortable
         description
         columnLabel
+        columnName
         filters {
           name
           type

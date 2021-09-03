@@ -16,6 +16,8 @@ module Toby
         object.name.to_s.camelize(:lower)
       end
 
+      field :column_name, GraphQL::Types::String, null: false, method: :name
+
       field :filters, [Toby::Types::ResourceFilterType], null: false
 
       def filters
@@ -23,6 +25,7 @@ module Toby
       end
 
       field :readonly, GraphQL::Types::Boolean, null: false
+      field :sortable, GraphQL::Types::Boolean, null: false
 
       field :column_label, GraphQL::Types::String, null: true
       def column_label
