@@ -8,9 +8,13 @@ module Types
     field :status, String, null: true
     field :amount, Int, null: false
     field :admin_fee, Int, null: false
+    field :deposit, Int, null: true
+    field :payment_method, String, null: true
 
-    field :payment_intent, PaymentIntentType, null: false
+    field :payment_intent, PaymentIntentType, null: true
     def payment_intent
+      return if object.payment_method == "Bank Transfer"
+
       Stripe::PaymentIntent.retrieve(object.payment_intent_id)
     end
 

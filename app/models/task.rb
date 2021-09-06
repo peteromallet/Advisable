@@ -32,7 +32,7 @@ class Task < ApplicationRecord
 
   validates :estimate_type, inclusion: {in: %w[Hourly Fixed]}, allow_nil: true
 
-  has_one :payment, dependent: :nullify
+  has_many :payments, dependent: :nullify
   has_one :payout, dependent: :nullify
   belongs_to :application
 

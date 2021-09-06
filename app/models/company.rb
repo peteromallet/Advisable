@@ -11,6 +11,7 @@ class Company < ApplicationRecord
   has_many :payments, dependent: :nullify
   has_many :users, dependent: :nullify
   has_many :accounts, through: :users
+  has_many :invoices, dependent: :destroy
 
   # WIP Company migration 👇️
   has_many :projects, through: :users
@@ -73,6 +74,10 @@ class Company < ApplicationRecord
       vat_number: vat_number,
       address: address
     }
+  end
+
+  def billing_email
+    @billing_email ||= super.presence || users.joins(:account).merge(Account.with_permission("team_manager")).first&.email
   end
 
   # admin_fee value is stored in basis points integers: 5% -> 500 bp
