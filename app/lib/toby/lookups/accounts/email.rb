@@ -21,10 +21,6 @@ module Toby
           Toby::Lazy::Single
         end
 
-        def column
-          :id
-        end
-
         def via
           :account_id
         end
