@@ -16,11 +16,20 @@ module Toby
       attribute :proposal_comment, Attributes::LongText
       attribute :rejection_reason, Attributes::String
       attribute :previous_projects, Attributes::HasManyThrough
+      attribute :tasks, Attributes::HasMany
       attribute :rejection_reason_comment, Attributes::LongText
       attribute :invitation_rejection_reason, Attributes::String
       attribute :applied_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
+
+      def self.label(record, context)
+        Lazy::Label.new(::Application, record.id, context, value_column: :uid)
+      end
+
+      def self.search(query)
+        ::Application.where("uid ILIKE ?", "%#{query}%")
+      end
     end
   end
 end
