@@ -13,7 +13,7 @@ module Toby
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
-      action :process, label: "Mark as processed"
+      action :process, label: "Mark as processed", if: ->(payout) { payout.processed_at.nil? }
 
       def self.process(object)
         return if object.processed_at?
