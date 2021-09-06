@@ -10,10 +10,6 @@ import SubmitButton from "src/components/SubmitButton";
 const validation = object().shape({
   projectType: string().required("Please select a project type"),
   acceptCharges: boolean().oneOf([true]),
-  acceptUpfrontCharges: boolean().when("projectType", {
-    is: "Flexible",
-    then: boolean().oneOf([true]),
-  }),
   monthlyLimit: number()
     .nullable()
     .when("projectType", {
@@ -36,7 +32,6 @@ const BookingTypeForm = ({
     projectType: "",
     monthlyLimit: undefined,
     acceptCharges: false,
-    acceptUpfrontCharges: false,
     ...initialValues,
   };
 
@@ -47,7 +42,7 @@ const BookingTypeForm = ({
     const cost = (hourlyRate * formik.values.monthlyLimit) / 2;
     return `${firstName} chrages ${currency(
       hourlyRate,
-    )} per hour. You will be charged ${currency(cost)}`;
+    )} per hour. This is a monthly limit of ${currency(cost)}`;
   };
 
   const handleSubmit = async (values, formik) => {
@@ -81,7 +76,6 @@ const BookingTypeForm = ({
               description="I want to work with them on predefined projects, with set deliverables and timelines."
               onChange={(e) => {
                 formik.setFieldValue("acceptCharges", false);
-                formik.setFieldValue("acceptUpfrontCharges", false);
                 formik.handleChange(e);
               }}
             />
@@ -96,7 +90,6 @@ const BookingTypeForm = ({
               description="I want to propose a maximum monthly limit of hours and work flexibly within that."
               onChange={(e) => {
                 formik.setFieldValue("acceptCharges", false);
-                formik.setFieldValue("acceptUpfrontCharges", false);
                 formik.handleChange(e);
               }}
             />
@@ -126,16 +119,6 @@ const BookingTypeForm = ({
                 label="Set a monthly hour cap (to 200-hour max)"
                 caption={calculateCost(formik)}
               />
-              <Box mt="m" mb="s">
-                <Field
-                  as={Checkbox}
-                  type="checkbox"
-                  name="acceptUpfrontCharges"
-                >
-                  I accept that I will be charged 50% of the monthly limit
-                  immediately
-                </Field>
-              </Box>
               <Box mb="m">
                 <Field as={Checkbox} type="checkbox" name="acceptCharges">
                   I consent to being charged for all hours I approve within the

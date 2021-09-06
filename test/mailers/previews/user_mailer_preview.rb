@@ -36,6 +36,14 @@ class UserMailerPreview < ActionMailer::Preview
     end
   end
 
+  def invoice_generated
+    UserMailer.invoice_generated(Invoice.order("RANDOM()").first)
+  end
+
+  def payment_receipt
+    UserMailer.payment_receipt(Payment.order("RANDOM()").first)
+  end
+
   private
 
   def random_user

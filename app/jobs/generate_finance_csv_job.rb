@@ -9,7 +9,7 @@ class GenerateFinanceCsvJob < ApplicationJob
 
   SOURCE_CURRENCY = "EUR"
 
-  def perform(email)
+  def perform(recipient_email)
     csv_string = CSV.generate(write_headers: true, headers: HEADERS) do |csv|
       Payout.unprocessed.order(:specialist_id, :created_at).each do |payout|
         specialist = payout.specialist
@@ -29,9 +29,9 @@ class GenerateFinanceCsvJob < ApplicationJob
           email,
           "payout##{payout.uid}",
           "PRIVATE",
-          payout.amount,
-          payout.amount_without_fee,
-          payout.sourcing_fee,
+          convert_from_cents(payout.amount),
+          convert_from_cents(payout.amount_without_fee),
+          convert_from_cents(payout.sourcing_fee),
           amount_currency,
           SOURCE_CURRENCY,
           specialist.bank_currency.presence || SOURCE_CURRENCY,
@@ -41,6 +41,12 @@ class GenerateFinanceCsvJob < ApplicationJob
       end
     end
 
-    StaffMailer.finance_csv(email, csv_string).deliver_later
+    StaffMailer.finance_csv(recipient_email, csv_string).deliver_later
+  end
+
+  private
+
+  def convert_from_cents(amount)
+    (amount / 100.0).round
   end
 end

@@ -1,0 +1,37 @@
+query InvoiceDetails($id: ID!) {
+  currentCompany {
+    id
+    name
+    address {
+      line1
+      line2
+      city
+      state
+      country
+      postcode
+    }
+    invoice(id: $id) {
+      id
+      year
+      month
+      total
+      pdfUrl
+      payments {
+        id
+        amount
+        adminFee
+        deposit
+        createdAt
+        task {
+          id
+          name
+        }
+        specialist {
+          id
+          name
+          avatar
+        }
+      }
+    }
+  }
+}

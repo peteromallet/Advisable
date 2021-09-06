@@ -52,6 +52,23 @@ class UserMailer < ApplicationMailer
     mail(to: @user.account.email, subject: "#{shared_article.shared_by.name} shared a case study with you: #{shared_article.article.title}")
   end
 
+  def invoice_generated(invoice)
+    @invoice = invoice
+
+    pdf = Faraday.get(invoice.pdf_url)
+    return unless pdf.success?
+
+    attachments["#{invoice.first_day.strftime("%Y-%m")}-advisable-invoice.pdf"] = {mime_type: "application/pdf", content: pdf.body}
+    mail(to: invoice.company.billing_email, subject: "#{invoice.first_day.strftime("%B %Y")} invoice from Advisable")
+  end
+
+  def payment_receipt(payment)
+    @payment = payment
+    mail(to: payment.company.billing_email, subject: "Your payment was successful") do |f|
+      f.html { render(layout: "email_v2") }
+    end
+  end
+
   private
 
   def application_url(application_id)

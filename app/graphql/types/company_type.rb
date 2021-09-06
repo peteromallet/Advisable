@@ -11,6 +11,8 @@ module Types
     field :kind, String, null: true
     field :business_type, String, null: true
     field :industry, Types::IndustryType, null: true
+    field :address, Types::AddressType, null: true
+    field :invoice_company_name, String, null: true
 
     field :sales_person, Types::SalesPersonType, null: true do
       authorize :read?
@@ -35,7 +37,7 @@ module Types
     # or statement here otherwise SQL will also exclude records where sales_status
     # is null.
     def projects
-      object.projects.where.not(sales_status: 'Lost').or(
+      object.projects.where.not(sales_status: "Lost").or(
         object.projects.where(sales_status: nil)
       ).order(created_at: :desc)
     end
@@ -55,23 +57,13 @@ module Types
       authorize :read?
     end
 
-    def invoices
-      object.payments.with_status("succeeded").group_by { |p| [p.created_at.year, p.created_at.month] }.map do |(year, month), payments|
-        OpenStruct.new({year: year, month: month, payments: payments})
-      end
-    end
-
     field :invoice, Types::PaymentInvoice, null: true do
       authorize :read?
-      argument :month, String, required: true
+      argument :id, ID, required: true
     end
 
-    def invoice(month: nil)
-      month = Date.parse(month)
-      OpenStruct.new({
-        month: month,
-        payments: object.payments.with_status("succeeded").where(created_at: month.all_month)
-      })
+    def invoice(id:)
+      object.invoices.find_by!(uid: id)
     end
   end
 end
