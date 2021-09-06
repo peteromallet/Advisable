@@ -5,14 +5,16 @@ module Toby
     class Base
       extend Forwardable
 
-      attr_reader :attribute, :id, :context
+      attr_reader :attribute, :id, :context, :column, :includes
 
-      def_delegators :attribute, :reflection, :column, :via
+      def_delegators :attribute, :reflection, :via
 
       def initialize(attribute, context, resource)
         @attribute = attribute
         @id = resource.public_send(via)
         @context = context
+        @column = attribute.try(:column) || :id
+        @includes = attribute.try(:includes)
         state[:pending] << id
       end
 
@@ -36,7 +38,8 @@ module Toby
       end
 
       def load_records
-        lazy_model.where(column => state[:pending]).each do |record|
+        ar = includes ? lazy_model.includes(includes) : lazy_model
+        ar.where(column => state[:pending]).each do |record|
           key = record.public_send(column)
           value = attribute.try(:lazy_read, record) || record
           state[:loaded][key] ||= []
