@@ -17,12 +17,15 @@ class GraphqlController < ApplicationController
   end
 
   def toby
-    render json: Toby::Schema.execute(
-      params[:query],
-      variables: ensure_hash(params[:variables]),
-      context: {session_manager: session_manager},
-      operation_name: params[:operationName]
-    )
+    result = with_query_tracing do
+      Toby::Schema.execute(
+        params[:query],
+        variables: ensure_hash(params[:variables]),
+        context: {session_manager: session_manager},
+        operation_name: params[:operationName]
+      )
+    end
+    render json: result
   end
 
   private
