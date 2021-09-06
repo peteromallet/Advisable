@@ -16,7 +16,7 @@ module Toby
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
-      action :mark_as_successful, label: "Mark as successful"
+      action :mark_as_successful, label: "Mark as successful", if: ->(payment) { payment.status != "succeeded" }
 
       def self.mark_as_successful(object)
         return if status == "succeeded"
