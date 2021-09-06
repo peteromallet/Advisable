@@ -37,11 +37,11 @@ module Toby
       attribute :updated_at, Attributes::DateTime, readonly: true
 
       def self.label(record, context)
-        Lazy::Label.new(::Task, record.id, context, value_column: :name)
+        Lazy::Label.new(::Task, record.id, context, value_column: :uid)
       end
 
       def self.search(query)
-        ::Task.where("name ILIKE ?", "%#{query}%")
+        ::Task.where("uid ILIKE ?", "%#{query}%")
       end
     end
   end
