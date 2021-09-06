@@ -19,10 +19,14 @@ class ApplicationController < ActionController::Base
     @guild_post = Guild::Post.published.find_by(shareable: true, id: params[:id]) if params[:id]
   end
 
+  def case_study
+    @case_study = CaseStudy::Article.find_by!(uid: params[:id])
+  end
+
   def internal
     return if current_account&.admin?
 
-    redirect_to "/"
+    redirect_to("/")
   end
 
   def toby
