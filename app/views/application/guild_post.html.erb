@@ -1,7 +1,7 @@
 <%= render "guild" %>
 
 <% if @guild_post %>
-  <% content_for :guild_post_meta do %>
+  <% content_for :meta_tags do %>
     <%# facebook  %>
     <meta property="og:type" content="article" />
     <meta property="og:title" content='<%= @guild_post.title.truncate(60) %>'% />
