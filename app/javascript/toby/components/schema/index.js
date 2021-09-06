@@ -35,10 +35,6 @@ const SCHEMA_INTROSPECTION = gql`
       queryNameItem
       queryNameUpdate
       queryNameSearch
-      actions {
-        name
-        label
-      }
       attributes {
         name
         readonly
