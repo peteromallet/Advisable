@@ -63,7 +63,16 @@ module Toby
             define_method(:_history) do
               return [] unless root.model.ancestors.include?(Logidze::Model)
 
-              object.reload_log_data&.data&.dig("h") || []
+              data = object.reload_log_data&.data&.dig("h")
+              return [] unless data
+
+              data.each do |version|
+                version["c"].each do |key, value|
+                  version["c"][key] = value.nil? ? "-" : value
+                end
+              end
+
+              data
             end
 
             field :_actions, [Toby::Types::Action], null: false
