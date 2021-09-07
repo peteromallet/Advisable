@@ -8,6 +8,7 @@ module Toby
       attribute :specialist, Attributes::BelongsTo
       attribute :amount, Attributes::Currency
       attribute :sourcing_fee, Attributes::Currency
+      attribute :amount_without_fee, Attributes::Currency, readonly: true
       attribute :status, Attributes::String
       attribute :processed_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
