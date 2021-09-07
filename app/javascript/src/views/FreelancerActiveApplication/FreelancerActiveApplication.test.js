@@ -21,7 +21,9 @@ jest.mock("../../utilities/generateID");
 test("Freelancer can create a task", async () => {
   generateID.mockReturnValue("tas_abc");
 
-  const user = mockData.user();
+  const user = mockData.user({
+    account: mockData.account(),
+  });
   const project = mockData.project({ user });
   const specialist = mockData.specialist();
   const application = mockData.application({
@@ -191,7 +193,7 @@ test("Freelancer can create a task", async () => {
 });
 
 test("Freelancer can mark a task as complete", async () => {
-  const user = mockData.user();
+  const user = mockData.user({ account: mockData.account() });
   const project = mockData.project({ user });
   const specialist = mockData.specialist();
 

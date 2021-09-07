@@ -23,8 +23,10 @@ RSpec.describe Mutations::CreateConversation do
         message {
           id
           content
-          author {
-            id
+          ... on UserMessage {
+            author {
+              id
+            }
           }
         }
       }
