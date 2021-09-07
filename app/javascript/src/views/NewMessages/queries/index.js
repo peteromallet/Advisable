@@ -78,10 +78,11 @@ export function useUpdateLastRead(conversation) {
   });
 }
 
-async function updateConversationsList(client, message) {
+export async function updateConversationsList(client, conversation) {
   const existing = client.cache.readQuery({ query: CONVERSATIONS });
+  if (!existing) return;
   const present = existing.conversations.nodes.find(
-    (n) => n.id === message.conversation.id,
+    (n) => n.id === conversation.id,
   );
   if (present) return;
   const { data } = await client.query({
@@ -94,7 +95,7 @@ async function updateConversationsList(client, message) {
   });
 }
 
-function updateConversation(client, location, message) {
+export function updateConversation(client, location, message) {
   const conversationPath = matchPath(location.pathname, {
     path: "/messages/:id",
   });
@@ -107,9 +108,7 @@ function updateConversation(client, location, message) {
     id: client.cache.identify(message.conversation),
     fields: {
       unreadCount() {
-        return isViewingConversation
-          ? 0
-          : message.conversation.unreadCount;
+        return isViewingConversation ? 0 : message.conversation.unreadCount;
       },
       lastMessage() {
         return message;
@@ -130,7 +129,7 @@ export function useReceivedMessage() {
     onSubscriptionData({ client, subscriptionData }) {
       const message = subscriptionData.data?.receivedMessage?.message;
       updateConversation(client, location, message);
-      updateConversationsList(client, message);
+      updateConversationsList(client, message.conversation);
     },
   });
 }

@@ -9,7 +9,7 @@ module Mutations
     argument :participants, [String], required: true
 
     field :conversation, Types::Conversation, null: false
-    field :message, Types::UserMessage, null: false
+    field :message, Types::MessageInterface, null: false
 
     def authorized?(**_args)
       requires_current_user!

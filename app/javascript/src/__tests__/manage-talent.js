@@ -36,7 +36,9 @@ test("Renders the manage view for a specialist", async () => {
             project: mockData.project({
               user: mockData.user(),
             }),
-            specialist: mockData.specialist(),
+            specialist: mockData.specialist({
+              account: mockData.account(),
+            }),
           }),
         },
       ),
@@ -69,7 +71,9 @@ test("Renders a tutorial video if it's the first time viewing", async () => {
               project: mockData.project({
                 user: mockData.user(),
               }),
-              specialist: mockData.specialist(),
+              specialist: mockData.specialist({
+                account: mockData.account(),
+              }),
             }),
           },
         },
@@ -115,7 +119,9 @@ test("Does not render a tutorial video if the user has completed it", async () =
               project: mockData.project({
                 user: mockData.user(),
               }),
-              specialist: mockData.specialist(),
+              specialist: mockData.specialist({
+                account: mockData.account(),
+              }),
             }),
           },
         },
@@ -151,7 +157,9 @@ test("The client can change the project type", async () => {
               isOwner: true,
               user: mockData.user(),
             }),
-            specialist: mockData.specialist(),
+            specialist: mockData.specialist({
+              account: mockData.account(),
+            }),
           }),
         },
       ),
@@ -198,7 +206,9 @@ test("The client can add a task", async () => {
 
   const user = mockData.user();
   const project = mockData.project({ user });
-  const specialist = mockData.specialist();
+  const specialist = mockData.specialist({
+    account: mockData.account(),
+  });
   const application = mockData.application({
     id: "rec1234",
     projectType: "Flexible",

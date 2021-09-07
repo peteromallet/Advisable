@@ -10,6 +10,8 @@ module Types
       dataloader.with(::ActiveRecordSource, ::Account).load(object.account_id)
     end
 
+    field :account, Types::Account, null: false
+
     field :first_name, String, null: true
     field :last_name, String, null: true
     field :name, String, null: true
