@@ -3,7 +3,7 @@
 require "csv"
 
 class GenerateFinanceCsvJob < ApplicationJob
-  HEADERS = %w[name recipientEmail paymentReference receiverType amountGross amountNet sourcingFee amountCurrency sourceCurrency targetCurrency IBAN type].freeze
+  HEADERS = %w[name recipientEmail paymentReference receiverType amountGross amountNet amountWithoutVAT amountVAT sourcingFee amountCurrency sourceCurrency targetCurrency IBAN type].freeze
 
   queue_as :default
 
@@ -29,8 +29,10 @@ class GenerateFinanceCsvJob < ApplicationJob
           email,
           "payout##{payout.uid}",
           "PRIVATE",
-          convert_from_cents(payout.amount),
+          convert_from_cents(payout.gross_amount),
           convert_from_cents(payout.amount_without_fee),
+          convert_from_cents(payout.amount),
+          convert_from_cents(payout.vat_amount),
           convert_from_cents(payout.sourcing_fee),
           amount_currency,
           SOURCE_CURRENCY,
