@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AccountsController < ApplicationController
+  ZAPIER_ACCOUNT_ID = 99999
+
   attr_reader :account
 
   skip_before_action :verify_authenticity_token
@@ -55,7 +57,7 @@ class AccountsController < ApplicationController
       account.public_send("#{key}=", params[key].strip) if params[key].present?
     end
 
-    Logidze.with_responsible("Zapier Accounts") do
+    Logidze.with_responsible(ZAPIER_ACCOUNT_ID) do
       account.save!
     end
   end
