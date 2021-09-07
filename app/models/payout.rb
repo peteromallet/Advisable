@@ -20,6 +20,18 @@ class Payout < ApplicationRecord
     amount - sourcing_fee
   end
 
+  def vat_rate
+    specialist.vat_number&.starts_with?("IE") ? 0.23 : 0.0
+  end
+
+  def vat_amount
+    amount * vat_rate
+  end
+
+  def gross_amount
+    amount + vat_amount
+  end
+
   private
 
   def set_sourcing_fee
