@@ -29,6 +29,7 @@ module Toby
       def self.retry_payment(object)
         return if object.status == "succeeded"
 
+        object.update!(retry: object.retry + 1)
         object.charge!
       end
     end
