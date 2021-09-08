@@ -13,7 +13,7 @@ module Toby
       end
 
       def column
-        reflection.inverse_of.association_foreign_key
+        reflection.inverse_of&.association_foreign_key || :id
       end
 
       def sortable
