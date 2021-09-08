@@ -15,7 +15,7 @@ class Invoice < ApplicationRecord
 
   def date_range
     first_day_next_month = first_day.next_month
-    @date_range ||= (first_day..first_day_next_month)
+    @date_range ||= (first_day...first_day_next_month)
   end
 
   def payments
