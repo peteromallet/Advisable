@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import queryString from "query-string";
 import { Box, Text } from "@advisable/donut";
@@ -201,7 +202,18 @@ function Resource({ resource, views }) {
                   <StyledRow key={node.id} onClick={openRecord(node.id)}>
                     {resource.attributes.map((attr) => (
                       <StyledCell key={attr.name}>
-                        <Attribute record={node} attribute={attr} />
+                        <Sentry.ErrorBoundary
+                          fallback={
+                            <Box display="inline-flex" alignItems="center">
+                              <Exclamation size={16} />
+                              <Text mt="-1px" ml={1}>
+                                Error
+                              </Text>
+                            </Box>
+                          }
+                        >
+                          <Attribute record={node} attribute={attr} />
+                        </Sentry.ErrorBoundary>
                       </StyledCell>
                     ))}
                   </StyledRow>
