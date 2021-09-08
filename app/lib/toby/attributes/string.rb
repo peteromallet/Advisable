@@ -16,6 +16,10 @@ module Toby
       def input_type
         GraphQL::Types::String
       end
+
+      def case_insensitive_compare?
+        true
+      end
     end
   end
 end
