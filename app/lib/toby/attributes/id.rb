@@ -13,6 +13,10 @@ module Toby
       def input_type
         GraphQL::Types::String
       end
+
+      def uuid?
+        resource.model.columns.find { |c| c.name == name.to_s }.sql_type == "uuid"
+      end
     end
   end
 end

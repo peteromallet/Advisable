@@ -1,6 +1,8 @@
+import * as Sentry from "@sentry/react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import queryString from "query-string";
-import { Box } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
+import { Exclamation } from "@styled-icons/heroicons-solid/Exclamation";
 import { Adjustments } from "@styled-icons/heroicons-solid/Adjustments";
 import { motion } from "framer-motion";
 import { useHistory, useLocation } from "react-router-dom";
@@ -21,6 +23,7 @@ import Navigation from "../../components/Navigation";
 import { Attribute } from "../../attributes";
 import DetailsModal from "./DetailsModal";
 import LoadingIndicator from "src/components/Loading";
+import { useNotifications } from "src/components/Notifications";
 import Loading from "./Loading";
 import { useResourceViews, useUpdateViewFilter } from "../../queries";
 import HeaderButton from "../../components/HeaderButton";
@@ -33,6 +36,22 @@ export default function ResourceConfig({ resource }) {
   if (loading) return <LoadingIndicator />;
 
   return <Resource resource={resource} views={data.views} />;
+}
+
+function APIError() {
+  return (
+    <Box
+      margin={4}
+      padding={4}
+      maxWidth="400px"
+      color="neutral800"
+      display="inline-flex"
+      alignItems="center"
+    >
+      <Exclamation size={20} />
+      <Text ml={2}>Failed to fetch records</Text>
+    </Box>
+  );
 }
 
 function initializeViewFilters(view) {
@@ -51,6 +70,7 @@ function Resource({ resource, views }) {
   const history = useHistory();
   const location = useLocation();
   const sortState = useSort();
+  const { error: notifyError } = useNotifications();
   const [updateViewFilters] = useUpdateViewFilter();
 
   const currentView = useMemo(() => {
@@ -74,6 +94,12 @@ function Resource({ resource, views }) {
   useEffect(() => {
     setFilters(initializeViewFilters(currentView));
   }, [currentView]);
+
+  useEffect(() => {
+    if (error) {
+      notifyError("Failed to load records");
+    }
+  }, [error, notifyError]);
 
   const updateFilters = useCallback(
     (newFilters) => {
@@ -109,10 +135,6 @@ function Resource({ resource, views }) {
   });
 
   const edges = data?.records.edges || [];
-
-  if (error) {
-    return <>Failed to load {resource.type}</>;
-  }
 
   const openRecord = (id) => () => {
     history.push({
@@ -174,15 +196,28 @@ function Resource({ resource, views }) {
               ))}
             </StyledHeaderRow>
             <Box>
-              {edges.map(({ node }) => (
-                <StyledRow key={node.id} onClick={openRecord(node.id)}>
-                  {resource.attributes.map((attr) => (
-                    <StyledCell key={attr.name}>
-                      <Attribute record={node} attribute={attr} />
-                    </StyledCell>
-                  ))}
-                </StyledRow>
-              ))}
+              {error && <APIError>The API returned an error</APIError>}
+              {!error &&
+                edges.map(({ node }) => (
+                  <StyledRow key={node.id} onClick={openRecord(node.id)}>
+                    {resource.attributes.map((attr) => (
+                      <StyledCell key={attr.name}>
+                        <Sentry.ErrorBoundary
+                          fallback={
+                            <Box display="inline-flex" alignItems="center">
+                              <Exclamation size={16} />
+                              <Text mt="-1px" ml={1}>
+                                Error
+                              </Text>
+                            </Box>
+                          }
+                        >
+                          <Attribute record={node} attribute={attr} />
+                        </Sentry.ErrorBoundary>
+                      </StyledCell>
+                    ))}
+                  </StyledRow>
+                ))}
               {loading && <Loading resource={resource} />}
             </Box>
           </Box>
