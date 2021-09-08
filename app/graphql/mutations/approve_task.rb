@@ -42,7 +42,7 @@ module Mutations
       return if amount.zero?
 
       payment = Payment.create!(company_id: task.application.project.user.company_id, specialist_id: task.application.specialist_id, amount: amount, task: task, status: "pending")
-      payment.create_in_stripe!
+      payment.charge!
     end
   end
 end
