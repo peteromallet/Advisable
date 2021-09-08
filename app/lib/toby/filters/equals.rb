@@ -3,10 +3,19 @@
 module Toby
   module Filters
     class Equals < BaseFilter
-      def apply(records, attribute, value: [], **_opts)
-        return records if value.empty?
+      include Helpers::Uuid
 
-        records.where("LOWER(#{attribute.name}) = LOWER(?)", value.first)
+      def apply(records, attribute, value: [], **_opts)
+        value = value.first(&:present?)
+        return records if value.blank?
+
+        if attribute.respond_to?(:uuid?) && attribute.uuid?
+          valid_uuid?(value) ? records.where("#{attribute.name} = ?", value) : records.none
+        elsif attribute.case_insensitive_compare?
+          records.where("LOWER(#{attribute.name}) = LOWER(?)", value)
+        else
+          records.where("#{attribute.name} = ?", value)
+        end
       end
     end
   end
