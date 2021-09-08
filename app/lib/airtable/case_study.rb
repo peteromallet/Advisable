@@ -126,7 +126,9 @@ module Airtable
     def attach_links(section, field)
       return if field.blank?
 
-      links = field.first.split("\n")
+      links = field.first.split("\n").reject(&:blank?)
+      return if links.blank?
+
       section.contents.new(type: "CaseStudy::LinksContent", content: {links: links}, position: content_position)
       increment_content_position
     end
