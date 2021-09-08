@@ -248,6 +248,7 @@ export const specialist = (fields = {}) => {
       bankHolderAddress: bankHolderAddress(),
       bankHolderName: null,
       vatNumber: null,
+      guildUnreadNotifications: [],
     },
     fields,
   );
