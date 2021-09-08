@@ -36,6 +36,7 @@ class CompanyFaviconFinderJob < ApplicationJob
     if href.starts_with?("data:")
       favicon_from_base64(href)
     else
+      href = href.strip
       href = "http:#{href}" if href.starts_with?("//")
       href.gsub("../", "")
       iconuri = URI.parse(href)
