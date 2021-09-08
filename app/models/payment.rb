@@ -32,7 +32,7 @@ class Payment < ApplicationRecord
     UserMailer.payment_receipt(self).deliver_later
   end
 
-  def create_in_stripe!
+  def charge!
     use_deposit!
 
     if amount_to_be_paid.positive?
