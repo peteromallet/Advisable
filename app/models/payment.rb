@@ -69,7 +69,7 @@ class Payment < ApplicationRecord
   private
 
   def use_deposit!
-    return unless task
+    return if task.nil? || deposit.to_i.positive?
 
     ActiveRecord::Base.transaction do
       project = task.application.project

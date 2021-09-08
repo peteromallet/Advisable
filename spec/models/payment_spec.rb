@@ -39,7 +39,8 @@ RSpec.describe Payment, type: :model do
 
   describe "#create_in_stripe!" do
     let(:project) { create(:project) }
-    let(:payment) { create(:payment, amount: 1000, task: create(:task, application: create(:application, project: project))) }
+    let(:task) { create(:task, application: create(:application, project: project)) }
+    let(:payment) { create(:payment, amount: 1000, task: task) }
 
     context "when deposit is bigger than amount" do
       let(:project) { create(:project, deposit: 2000) }
@@ -50,6 +51,18 @@ RSpec.describe Payment, type: :model do
         expect(payment.status).to eq("succeeded")
         expect(payment.payment_method).to eq("Deposit")
         expect(project.deposit_used).to eq(payment.amount_with_fee)
+      end
+
+      context "when deposit is not nil/0" do
+        let(:payment) { create(:payment, amount: 1000, task: task, deposit: 100) }
+
+        it "doesn't do any deposit logic, sets payment method to stripe and charges stripe" do
+          allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee - 100), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
+          expect(payment).to receive(:send_receipt!)
+          payment.create_in_stripe!
+          expect(payment.payment_method).to eq("Stripe")
+          expect(project.deposit_used).to eq(0)
+        end
       end
 
       context "when a bit of deposit has been used already" do
