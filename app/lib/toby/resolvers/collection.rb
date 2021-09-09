@@ -26,7 +26,7 @@ module Toby
           next if filter_class.nil?
 
           @records = if filter_class.block.present?
-                       filter_class.block.call(@records, args[:value])
+                       filter_class.block.call(@records, attribute, args[:value])
                      else
                        filter_class.apply(@records, attribute, value: args[:value])
                      end

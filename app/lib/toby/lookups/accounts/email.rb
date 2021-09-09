@@ -4,7 +4,7 @@ module Toby
   module Lookups
     module Accounts
       class Email < Attributes::String
-        filter :is, Filters::Equals do |records, value|
+        filter :is, Filters::Equals do |records, _attribute, value|
           records.includes(:account).
             where(accounts: {email: value[0]})
         end
