@@ -20,6 +20,10 @@ class Payment < ApplicationRecord
 
   scope :with_status, ->(status) { where(status: status) }
 
+  def retries
+    super.presence || 0
+  end
+
   def amount_with_fee
     amount + admin_fee
   end
@@ -32,7 +36,7 @@ class Payment < ApplicationRecord
     UserMailer.payment_receipt(self).deliver_later
   end
 
-  def create_in_stripe!
+  def charge!
     use_deposit!
 
     if amount_to_be_paid.positive?
@@ -42,7 +46,7 @@ class Payment < ApplicationRecord
       elsif payment_intent_id.blank?
         intent = Stripe::PaymentIntent.create(
           stripe_params.merge({confirm: true, off_session: true, payment_method: company.stripe_payment_method}),
-          {idempotency_key: "#{uid}_off_session"}
+          {idempotency_key: "#{uid}_off_session_#{retries}"}
         )
         update!(payment_intent_id: intent.id, status: intent.status, payment_method: "Stripe")
 
@@ -69,7 +73,7 @@ class Payment < ApplicationRecord
   private
 
   def use_deposit!
-    return unless task
+    return if task.nil? || deposit.to_i.positive?
 
     ActiveRecord::Base.transaction do
       project = task.application.project
@@ -89,7 +93,7 @@ class Payment < ApplicationRecord
 
     intent = Stripe::PaymentIntent.create(
       stripe_params.merge({setup_future_usage: "off_session"}),
-      {idempotency_key: "#{uid}_on_session"}
+      {idempotency_key: "#{uid}_on_session_#{retries}"}
     )
     update!(payment_intent_id: intent.id, status: intent.status, payment_method: "Stripe")
   rescue Stripe::StripeError => e
@@ -125,6 +129,7 @@ end
 #  amount            :integer
 #  deposit           :integer
 #  payment_method    :string
+#  retries           :integer
 #  status            :string
 #  uid               :string           not null
 #  created_at        :datetime         not null
