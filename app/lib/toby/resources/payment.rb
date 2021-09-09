@@ -11,6 +11,7 @@ module Toby
       attribute :payment_method, Attributes::Select, options: ::Payment::VALID_PAYMENT_METHODS
       attribute :amount, Attributes::Currency
       attribute :admin_fee, Attributes::Currency
+      attribute :amount_with_fee, Attributes::Currency, readonly: true
       attribute :deposit, Attributes::Currency
       attribute :payment_intent_id, Attributes::String, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
