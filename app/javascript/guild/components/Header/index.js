@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Chat } from "@styled-icons/heroicons-solid/Chat";
 import { Home } from "@styled-icons/heroicons-solid/Home";
 import { Calendar } from "@styled-icons/heroicons-outline/Calendar";
-import { useQuery } from "@apollo/client";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { Box, useBreakpoint } from "@advisable/donut";
 import CurrentUser from "./CurrentUser";
@@ -17,12 +16,9 @@ import {
   StyledHeaderBadgeNumber,
   StyledHamburger,
 } from "./styles";
-import { GUILD_LAST_READ_QUERY } from "./queries";
 import Notifications from "./Notifications";
 import { useTwilioChat } from "../TwilioProvider";
 import MainHeader from "src/components/Header";
-
-const TWO_MINUTES = 120000;
 
 function GuildHeader({ viewer }) {
   const location = useLocation();
@@ -30,12 +26,7 @@ function GuildHeader({ viewer }) {
   const { unreadMessages } = useTwilioChat();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const path = encodeURIComponent(`/guild${location.pathname}`);
-
-  const { data: lastReadData } = useQuery(GUILD_LAST_READ_QUERY, {
-    pollInterval: TWO_MINUTES,
-    skip: !viewer,
-  });
-  const hasUnreadNotifications = lastReadData?.viewer?.guildUnreadNotifications;
+  const hasUnreadNotifications = viewer?.guildUnreadNotifications;
 
   const eventsCount =
     document.getElementById("guildData").dataset.upcomingEvents;
