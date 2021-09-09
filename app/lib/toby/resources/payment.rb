@@ -17,12 +17,20 @@ module Toby
       attribute :updated_at, Attributes::DateTime, readonly: true
 
       action :mark_as_successful, label: "Mark as successful", if: ->(payment) { payment.status != "succeeded" }
+      action :retry_payment, label: "Retry payment", if: ->(payment) { payment.status != "succeeded" }
 
       def self.mark_as_successful(object)
-        return if status == "succeeded"
+        return if object.status == "succeeded"
 
         object.update(status: "succeeded")
         send_receipt!
+      end
+
+      def self.retry_payment(object)
+        return if object.status == "succeeded"
+
+        object.update!(retry: object.retry + 1)
+        object.charge!
       end
     end
   end

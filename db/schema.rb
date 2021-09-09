@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_02_072405) do
+ActiveRecord::Schema.define(version: 2021_09_08_124518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -736,6 +736,7 @@ ActiveRecord::Schema.define(version: 2021_09_02_072405) do
     t.jsonb "log_data"
     t.string "payment_method"
     t.integer "deposit"
+    t.integer "retries"
     t.index ["company_id"], name: "index_payments_on_company_id"
     t.index ["specialist_id"], name: "index_payments_on_specialist_id"
     t.index ["task_id"], name: "index_payments_on_task_id"
