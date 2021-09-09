@@ -4,7 +4,7 @@ module Toby
   module Lookups
     module Projects
       class SalesPerson < Attributes::String
-        filter :is, Filters::Equals do |records, value|
+        filter :is, Filters::Equals do |records, _attribute, value|
           records.includes(user: {company: :sales_person}).
             where(sales_person: {username: value[0]})
         end
