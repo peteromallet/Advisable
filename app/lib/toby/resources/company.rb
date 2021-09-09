@@ -10,6 +10,7 @@ module Toby
       attribute :billing_email, Attributes::String
       attribute :invoice_company_name, Attributes::String
       attribute :invoice_name, Attributes::String
+      attribute :admin_fee, Attributes::Integer
       attribute :kind, Attributes::String
       attribute :vat_number, Attributes::String
       attribute :created_at, Attributes::DateTime, readonly: true
