@@ -10,6 +10,7 @@ module Toby
       attribute :sourcing_fee, Attributes::Currency
       attribute :amount_without_fee, Attributes::Currency, readonly: true
       attribute :status, Attributes::String
+      attribute :task, Attributes::BelongsTo
       attribute :processed_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true

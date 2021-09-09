@@ -12,6 +12,7 @@ module Toby
       attribute :amount, Attributes::Currency
       attribute :admin_fee, Attributes::Currency
       attribute :deposit, Attributes::Currency
+      attribute :task, Attributes::BelongsTo
       attribute :payment_intent_id, Attributes::String, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
