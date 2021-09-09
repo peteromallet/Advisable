@@ -13,6 +13,7 @@ module Toby
       attribute :linkedin, Attributes::String
       attribute :website, Attributes::String
       attribute :hourly_rate, Attributes::Currency
+      attribute :sourcing_fee, Attributes::Integer
       attribute :country, Attributes::BelongsTo
       attribute :skills, Attributes::HasManyThrough
       attribute :industries, Attributes::HasManyThrough
