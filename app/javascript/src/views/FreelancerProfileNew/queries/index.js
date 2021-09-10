@@ -6,7 +6,7 @@ export const useProfileData = () => {
   const params = useParams();
   const response = useQuery(GET_PROFILE_DATA, {
     variables: {
-      id: params.id,
+      id: params.specialist_id,
     },
   });
   return response;
