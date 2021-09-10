@@ -5,6 +5,8 @@ module Toby
     class ViewType < GraphQL::Schema::Object
       field :id, ID, null: false
       field :name, String, null: false
+      field :sort_by, String, null: false
+      field :sort_order, String, null: false
       field :filters, [FilterType], null: false
 
       def filters
