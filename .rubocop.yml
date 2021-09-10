@@ -96,6 +96,9 @@ Style/StringLiterals:
   Enabled: false
   EnforcedStyle: double_quotes
 
+Naming/InclusiveLanguage:
+  Enabled: false
+
 Rails/SkipsModelValidations:
   Exclude:
     - "db/migrate/*"
