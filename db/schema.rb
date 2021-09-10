@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_08_124518) do
+ActiveRecord::Schema.define(version: 2021_09_10_082939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -1067,6 +1067,8 @@ ActiveRecord::Schema.define(version: 2021_09_08_124518) do
     t.jsonb "filters"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "sort_by"
+    t.string "sort_order"
     t.index ["resource"], name: "index_toby_views_on_resource"
   end
 
