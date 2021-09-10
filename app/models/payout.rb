@@ -25,11 +25,11 @@ class Payout < ApplicationRecord
   end
 
   def vat_amount
-    amount * vat_rate
+    amount_without_fee * vat_rate
   end
 
   def gross_amount
-    amount + vat_amount
+    amount_without_fee + vat_amount
   end
 
   private
