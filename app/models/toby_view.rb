@@ -11,6 +11,8 @@ end
 #  filters    :jsonb
 #  name       :string
 #  resource   :string
+#  sort_by    :string
+#  sort_order :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
