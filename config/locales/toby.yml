@@ -3,3 +3,6 @@ en:
     resources:
       specialist:
         hourly_rate: "This is their default hourly rate, however, it can be customized on a per application basis."
+        sourcing_fee: "Sourcing fee value is stored in basis points integers: 8% -> 800 bp. If left empty it defaults to 8%."
+      company:
+        admin_fee: "Admin fee value is stored in basis points integers: 5% -> 500 bp. If left empty it defaults to 5%."
