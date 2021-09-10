@@ -1,5 +1,12 @@
 const esbuild = require("esbuild");
+const dotenv = require("dotenv");
+const version = require("./config/webpack/buildVersion");
 const graphqlLoaderPlugin = require("@luckycatfactory/esbuild-graphql-loader");
+
+dotenv.config({ silent: true });
+
+// process.env.RELEASED_AT = new Date().toISOString();
+process.env.BUILD_TIME = version;
 
 esbuild
   .build({
@@ -27,13 +34,13 @@ esbuild
       ".mp3": "dataurl",
     },
     define: {
-      "process.env.SENTRY_FRONTEND_DSN": null,
-      "process.env.SENTRY_ENVIRONMENT": null,
-      "process.env.RELEASED_AT": null,
-      "process.env.BUILD_TIME": null,
-      "process.env.TALKJS": null,
-      "process.env.INTERCOM_APP_ID": null,
-      "process.env.NODE_ENV": null,
+      "process.env.SENTRY_FRONTEND_DSN": process.env.SENTRY_FRONTEND_DSN,
+      "process.env.SENTRY_ENVIRONMENT": process.env.SENTRY_ENVIRONMENT,
+      "process.env.RELEASED_AT": process.env.RELEASED_AT,
+      "process.env.BUILD_TIME": process.env.BUILD_TIME,
+      "process.env.TALKJS": process.env.TALKJS,
+      "process.env.INTERCOM_APP_ID": process.env.INTERCOM_APP_ID,
+      "process.env.NODE_ENV": process.env.NODE_ENV,
     },
   })
   .catch(() => {
