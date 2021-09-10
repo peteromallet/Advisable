@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useParams } from "react-router";
 import { Stack, Box } from "@advisable/donut";
-import Post from "@guild/components/Post";
+import Post from "guild/components/Post";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useGuildPosts } from "../queries";
 import Loading from "./Loading";

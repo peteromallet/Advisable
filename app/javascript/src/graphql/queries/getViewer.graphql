@@ -1,4 +1,4 @@
-#import "../fragments/viewerFields.graphql"
+#import ../fragments/viewerFields.graphql
 
 query viewer {
   viewer {

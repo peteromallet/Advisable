@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
+import GuildPostFields from "guild/graphql/fragments/guildPostFields";
 
 const projectFields = gql`
   fragment ProjectFields on PreviousProject {

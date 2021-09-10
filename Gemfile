@@ -55,6 +55,7 @@ gem "image_processing"
 gem "faker"
 gem "twilio-ruby"
 gem "graphql_playground-rails"
+gem 'jsbundling-rails'
 
 # Guild
 gem "email_reply_parser"

@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
-import illustration from "src/illustrations/messages";
+import illustration from "src/illustrations/messages.svg";
 
 export default function NoConversations() {
   return (

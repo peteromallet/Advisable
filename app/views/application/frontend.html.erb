@@ -1,12 +1,10 @@
 <div id='js-modal-root'></div>
+<%= javascript_include_tag "frontend", defer: true, type: "module" %>
 
 <% if flash.any? %>
   <script>
     window.flash = JSON.parse('<%== flash.to_hash.to_json %>')
   </script>
 <% end %>
-
-<%= javascript_packs_with_chunks_tag "application" %>
-<%= stylesheet_packs_with_chunks_tag "application" %>
 
 <%= render "noscript" %>

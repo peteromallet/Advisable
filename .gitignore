@@ -42,3 +42,5 @@ spec/cypress/videos/*
 stats.json
 .eslintcache
 nodes.md
+/app/assets/builds
+!/app/assets/builds/.keep

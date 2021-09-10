@@ -1,2 +1,2 @@
-<%= javascript_packs_with_chunks_tag "internal" %>
+<%= javascript_include_tag "internal", defer: true, type: "module" %>
 <%= render "noscript" %>

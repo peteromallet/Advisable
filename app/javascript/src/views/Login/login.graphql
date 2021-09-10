@@ -1,0 +1,9 @@
+#import ../../graphql/fragments/viewerFields.graphql
+
+mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    viewer {
+      ...ViewerFields
+    }
+  }
+}
