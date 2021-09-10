@@ -20,6 +20,8 @@ export default function FreelancerProfileNew() {
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
 
+  const { reviews } = data.specialist;
+
   return (
     <Box
       display="flex"
@@ -42,7 +44,7 @@ export default function FreelancerProfileNew() {
         <Sidebar data={data} />
         <Stack mt={{ _: 16, m: 12, l: 13 }} width="100%" spacing={11}>
           <CaseStudies />
-          <Testimonials />
+          {reviews.length ? <Testimonials reviews={reviews} /> : null}
         </Stack>
       </Box>
     </Box>
