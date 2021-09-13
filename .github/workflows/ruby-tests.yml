@@ -36,6 +36,7 @@ jobs:
       RAILS_INBOUND_EMAIL_PASSWORD: testing123
       GUILD_REPLIES_DOMAIN: guild-replies
       MESSAGE_REPLIES_DOMAIN: message-replies
+      CASE_STUDY_COVERS_BUCKET_NAME: case-study-covers
       RSPEC_RETRY: 3
 
     services:
