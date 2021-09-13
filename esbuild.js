@@ -5,7 +5,13 @@ const version = new Date().getTime();
 
 dotenv.config({ silent: true });
 
+const IS_DEV = process.argv.includes("--dev");
+
 process.env.BUILD_TIME = version;
+
+if (IS_DEV) {
+  console.debug("⚡ esbuild is running in watch mode");
+}
 
 esbuild
   .build({
@@ -17,8 +23,10 @@ esbuild
     ],
     outdir: "./app/assets/builds",
     bundle: true,
-    minify: true,
+    minify: IS_DEV ? false : true,
+    watch: IS_DEV ? true : false,
     splitting: true,
+    sourcemap: true,
     format: "esm",
     plugins: [
       graphqlLoaderPlugin.default({
