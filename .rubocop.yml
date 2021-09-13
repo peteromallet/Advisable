@@ -116,6 +116,9 @@ Rails/EnvironmentVariableAccess:
 Rails/Output:
   Enabled: false
 
+Rails/BulkChangeTable:
+  Enabled: false
+
 RSpec/ExampleLength:
   Enabled: false
 

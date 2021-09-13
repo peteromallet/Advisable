@@ -897,7 +897,11 @@ ActiveRecord::Schema.define(version: 2021_09_20_082651) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "uid", null: false
+    t.bigint "case_study_article_id"
+    t.string "first_name"
+    t.string "last_name"
     t.index ["airtable_id"], name: "index_reviews_on_airtable_id"
+    t.index ["case_study_article_id"], name: "index_reviews_on_case_study_article_id"
     t.index ["specialist_id"], name: "index_reviews_on_specialist_id"
     t.index ["uid"], name: "index_reviews_on_uid", unique: true
   end
@@ -1264,6 +1268,7 @@ ActiveRecord::Schema.define(version: 2021_09_20_082651) do
   add_foreign_key "project_industries", "industries"
   add_foreign_key "project_skills", "skills"
   add_foreign_key "projects", "users"
+  add_foreign_key "reviews", "case_study_articles"
   add_foreign_key "reviews", "specialists"
   add_foreign_key "skill_category_skills", "skill_categories"
   add_foreign_key "skill_category_skills", "skills"
