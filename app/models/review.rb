@@ -20,6 +20,10 @@ class Review < ApplicationRecord
   # After the record is saved we want to update the specialists average ratings
   after_save :update_specialist_ratings, if: :saved_change_to_ratings?
 
+  def name
+    @name ||= [first_name, last_name].select(&:present?).join(" ")
+  end
+
   private
 
   def update_specialist_ratings

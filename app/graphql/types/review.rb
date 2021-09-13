@@ -3,55 +3,42 @@
 module Types
   class Review < Types::BaseType
     include PreviousProjectHelper
+
+    description 'A type for Review'
+
+    field :id, ID, null: false, method: :uid
     field :comment, String, null: true
     field :type, String, null: true
     field :ratings, Types::Ratings, null: true
-    field :first_name, String, null: true
     field :specialist, Types::SpecialistType, null: false
-
-    field :id, ID, null: false, method: :uid
+    field :case_study_article, Types::CaseStudy::Article, null: true
 
     field :avatar, String, null: true
-
     def avatar
-      return unless project.is_a?(::PreviousProject)
-
-      project.resized_contact_image_url
+      if object.avatar.attached?
+        object.resized_avatar_url
+      else
+        object.project&.resized_contact_image_url
+      end
     end
 
     field :name, String, null: true
-
     def name
-      return project.user.account.name if project.is_a?(::Project)
-      return nil if project&.confidential?
-
-      project.contact_name
+      if object.name.present?
+        object.name
+      else
+        object.project&.confidential? ? nil : object.project.contact_name
+      end
     end
 
     field :role, String, null: true
-
     def role
-      if project.is_a?(::Project)
-        project.user.title
-      else
-        project.try(:contact_job_title)
-      end
+      object.project.try(:contact_job_title)
     end
 
     field :company_name, String, null: true
-
     def company_name
-      if project.is_a?(::Project)
-        project.user.company.name
-      else
-        previous_project_company_name(project)
-      end
-    end
-
-    private
-
-    def project
-      object.project
+      previous_project_company_name(object.project)
     end
   end
 end
