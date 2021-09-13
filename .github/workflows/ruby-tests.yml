@@ -82,7 +82,7 @@ jobs:
         run: bin/rails db:create db:migrate db:test:prepare
 
       - name: Compile assets
-        run: bin/rails webpacker:compile
+        run: bin/rails yarn build
 
       - name: Unit Tests
         run: bin/rspec --exclude-pattern "spec/system/**"

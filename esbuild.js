@@ -1,7 +1,7 @@
 const esbuild = require("esbuild");
 const dotenv = require("dotenv");
-const version = require("./config/webpack/buildVersion");
 const graphqlLoaderPlugin = require("@luckycatfactory/esbuild-graphql-loader");
+const version = new Date().getTime();
 
 dotenv.config({ silent: true });
 

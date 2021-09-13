@@ -27,7 +27,6 @@ gem "money"
 gem "sentry-ruby"
 gem "sentry-rails"
 gem "sentry-sidekiq"
-gem "webpacker", "~> 5.1"
 gem "slim"
 gem "bootsnap", require: false
 gem "dalli"
