@@ -25,6 +25,11 @@ module Types
         object.skills.order(created_at: :asc)
       end
 
+      field :cover_photo_url, String, null: true
+      def url
+        object.cover_photo.url
+      end
+
       field :industries, [Industry], null: true
       field :title, String, null: true
       field :subtitle, String, null: true
