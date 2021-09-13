@@ -1,73 +1,55 @@
-import React from "react";
-import Talk from "talkjs";
-import { use100vh } from "react-div-100vh";
-import queryString from "query-string";
-import { useBreakpoint } from "@advisable/donut";
-import useViewer from "../../hooks/useViewer";
-import { Container, Main } from "./styles";
-import TopBar from "./TopBar";
-import Sidebar from "./Sidebar";
-import createTalkSession from "../../utilities/createTalkSession";
-import { useLocation } from "react-router-dom";
+import React, { useLayoutEffect } from "react";
+import { Box, useBreakpoint, useTheme } from "@advisable/donut";
+import { useConversations, useReceivedMessage } from "./queries";
+import { Redirect, Switch } from "react-router-dom";
+import Route from "src/components/Route";
+import Loading from "src/components/Loading";
+import Conversation from "./components/Conversation";
+import NoConversations from "./components/NoConversations";
+import MessagesSidebar from "./components/MessagesSidebar";
+import useOrderedConversations from "./hooks/useOrderedConversations";
 
-const Messages = () => {
-  const height = use100vh();
-  const location = useLocation();
-  const isMobile = useBreakpoint("m");
-  const container = React.useRef(null);
-  const [applicationId, setAppliationId] = React.useState(null);
-  const queryParams = queryString.parse(location.search);
-  const viewer = useViewer();
+export default function Messages() {
+  useReceivedMessage();
+  const { data, loading } = useConversations();
+  const { setTheme } = useTheme();
+  const isDesktop = useBreakpoint("lUp");
 
-  React.useEffect(() => {
-    Talk.ready.then(() => {
-      const session = createTalkSession(viewer);
+  const conversations = data?.conversations?.nodes || [];
+  const hasConversations = conversations.length > 0;
+  const ordered = useOrderedConversations(conversations);
 
-      const inbox = session.createInbox({
-        showChatHeader: false,
-        showFeedHeader: false,
-      });
-
-      inbox.mount(container.current);
-
-      inbox.on("conversationSelected", (e) => {
-        if (e.conversation) {
-          setAppliationId(e.conversation.id);
-        } else {
-          setAppliationId(null);
-        }
-      });
-
-      if (queryParams.conversation) {
-        inbox.select(queryParams.conversation);
-      }
-    });
-  }, []);
+  useLayoutEffect(() => {
+    setTheme((t) => ({ ...t, background: "beige" }));
+    return () => setTheme((t) => ({ ...t, background: "default" }));
+  }, [setTheme]);
 
   return (
-    <>
-      {Boolean(applicationId) && isMobile && (
-        <TopBar applicationId={applicationId} />
-      )}
-      <Container>
-        <Main>
-          <div
-            style={{
-              height: isMobile ? height - 180 : height - 60,
-            }}
-          >
-            <div
-              ref={container}
-              style={{
-                height: "100%",
-              }}
-            />
-          </div>
-        </Main>
-        {Boolean(applicationId) && <Sidebar applicationId={applicationId} />}
-      </Container>
-    </>
+    <Box display="flex">
+      <Route path="/messages" exact={!isDesktop}>
+        <MessagesSidebar loading={loading} conversations={ordered} />
+      </Route>
+      <Box width="100%" height="calc(100vh - 60px)">
+        {loading && <Loading />}
+        <Switch>
+          {hasConversations && (
+            <Route path="/messages/:id">
+              <Conversation
+                conversations={conversations}
+                currentAccount={data?.currentAccount}
+              />
+            </Route>
+          )}
+          {hasConversations && isDesktop && (
+            <Redirect to={`/messages/${ordered[0].id}`} />
+          )}
+          {!loading && isDesktop && (
+            <Route>
+              <NoConversations />
+            </Route>
+          )}
+        </Switch>
+      </Box>
+    </Box>
   );
-};
-
-export default Messages;
+}
