@@ -9,7 +9,7 @@ RSpec.describe AttachCoverToArticleJob do
   before do
     allow(Aws::S3::Client).to receive(:new).and_return(s3_client)
     s3_client.stub_responses(:list_objects, {contents: [{key: "cover.jpg"}]})
-    stub_request(:get, /#{AttachCoverToArticleJob::BUCKET_NAME}.*amazonaws/o).to_return(body: "")
+    stub_request(:get, /#{ENV["CASE_STUDY_COVERS_BUCKET_NAME"]}.*amazonaws/o).to_return(body: "")
   end
 
   it "attaches a random photo" do

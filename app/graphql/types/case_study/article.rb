@@ -25,8 +25,8 @@ module Types
         object.skills.order(created_at: :asc)
       end
 
-      field :cover_photo_url, String, null: true
-      def url
+      field :cover_photo, String, null: true
+      def cover_photo
         object.cover_photo.url
       end
 
