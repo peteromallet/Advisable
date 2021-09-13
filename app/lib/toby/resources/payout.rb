@@ -7,6 +7,9 @@ module Toby
       attribute :uid, Attributes::String, readonly: true
       attribute :specialist, Attributes::BelongsTo
       attribute :amount, Attributes::Currency
+      attribute :vat_rate, Attributes::String, readonly: true
+      attribute :vat_amount, Attributes::Currency, readonly: true
+      attribute :gross_amount, Attributes::Currency, readonly: true
       attribute :sourcing_fee, Attributes::Currency
       attribute :amount_without_fee, Attributes::Currency, readonly: true
       attribute :status, Attributes::String
