@@ -59,6 +59,10 @@ const applicationDetails = gql`
       location
       website
       linkedin
+      account {
+        id
+        firstName
+      }
       reviews {
         id
         name
