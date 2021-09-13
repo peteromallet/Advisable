@@ -2,11 +2,11 @@ import React, { useState, useMemo } from "react";
 import commaSeparated from "src/utilities/commaSeparated";
 import { Box, Modal, Textarea, Heading, Stack, Button } from "@advisable/donut";
 import { useCreateConversation } from "./queries";
-import useAttachments from "src/views/NewMessages/hooks/useAttachments";
-import AddAttachmentsButton from "src/views/NewMessages/components/AddAttachmentsButton";
-import Attachment from "src/views/NewMessages/components/Attachment";
+import useAttachments from "src/views/Messages/hooks/useAttachments";
+import AddAttachmentsButton from "src/views/Messages/components/AddAttachmentsButton";
+import Attachment from "src/views/Messages/components/Attachment";
 
-export default function SendMessage({ dialog, participants }) {
+export default function SendMessageModal({ dialog, participants }) {
   const [content, setContent] = useState("");
   const [sendMessage, { loading }] = useCreateConversation();
   const {

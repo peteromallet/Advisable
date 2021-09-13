@@ -25,7 +25,6 @@ const JobListing = lazy(() => import("./views/JobListing"));
 const JobOpportunity = lazy(() => import("./views/JobOpportunity"));
 const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
-const Messages = lazy(() => import("./views/Messages"));
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const FreelancerProfileNew = lazy(() => import("./views/FreelancerProfileNew"));
 const FreelancerActiveApplication = lazy(() =>
@@ -41,7 +40,7 @@ const CaseStudyRecommendations = lazy(() =>
   import("./views/CaseStudyRecommendations"),
 );
 const Payment = lazy(() => import("./views/Payment"));
-const NewMessages = lazy(() => import("./views/NewMessages"));
+const Messages = lazy(() => import("./views/Messages"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -96,12 +95,7 @@ const ApplicationRoutes = () => {
             to={{ ...location, pathname: "/clients/join" }}
           />
           <Route path="/case_studies/:id" component={CaseStudy} />
-          <VersionedRoute
-            name="messages"
-            path="/messages"
-            fallback={Messages}
-            versions={{ 2: NewMessages }}
-          />
+          <AuthenticatedRoute path="/messages" component={Messages} />
           <AuthenticatedRoute
             path="/clients/apply"
             component={ClientApplication}
