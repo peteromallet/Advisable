@@ -47,8 +47,8 @@ export default function CaseStudy({ showActionBar = true }) {
   return (
     <Box
       paddingTop={14}
-      maxWidth="1000px"
-      paddingX={2}
+      maxWidth={{ m: "960px", _: "1080px" }}
+      paddingX={6}
       mx="auto"
       as={motion.div}
       initial={{ y: 20, opacity: 0 }}
@@ -56,7 +56,10 @@ export default function CaseStudy({ showActionBar = true }) {
       transition={{ duration: 0.3 }}
     >
       <Box maxWidth="700px" textAlign="center" mx="auto" marginBottom={10}>
-        <Heading size="6xl" marginBottom={6}>
+        <Heading
+          size={{ _: "4xl", s: "5xl", m: "6xl" }}
+          marginBottom={{ _: 4, m: 6 }}
+        >
           {caseStudy.title}
         </Heading>
         <Box maxWidth="500px" mx="auto">
@@ -69,6 +72,7 @@ export default function CaseStudy({ showActionBar = true }) {
               fontWeight={450}
               color="neutral500"
               display="inline-block"
+              letterSpacing="-0.01rem"
             >
               #{as.skill.name}
             </Text>
