@@ -23,7 +23,7 @@ if (process.env.SENTRY_FRONTEND_DSN) {
 
   Sentry.setContext("session", {
     page_load: new Date().toISOString(),
-    released_at: process.env.RELEASED_AT,
+    released_at: process.env.BUILD_TIME,
   });
 }
 

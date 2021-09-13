@@ -5,7 +5,6 @@ const version = new Date().getTime();
 
 dotenv.config({ silent: true });
 
-// process.env.RELEASED_AT = new Date().toISOString();
 process.env.BUILD_TIME = version;
 
 esbuild
@@ -36,7 +35,6 @@ esbuild
     define: {
       "process.env.SENTRY_FRONTEND_DSN": process.env.SENTRY_FRONTEND_DSN,
       "process.env.SENTRY_ENVIRONMENT": process.env.SENTRY_ENVIRONMENT,
-      "process.env.RELEASED_AT": process.env.RELEASED_AT,
       "process.env.BUILD_TIME": process.env.BUILD_TIME,
       "process.env.TALKJS": process.env.TALKJS,
       "process.env.INTERCOM_APP_ID": process.env.INTERCOM_APP_ID,

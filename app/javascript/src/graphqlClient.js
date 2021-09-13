@@ -23,7 +23,7 @@ const authLink = setContext((_, { headers }) => {
   const nextHeaders = {
     ...headers,
     "X-CSRF-Token": window?._CSRF || csrfElement.content,
-    "X-RELEASED-AT": process.env.RELEASED_AT,
+    "X-RELEASED-AT": process.env.BUILD_TIME,
   };
 
   if (queryParams.profile) {
