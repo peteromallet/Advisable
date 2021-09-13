@@ -86,6 +86,8 @@ module Airtable
         article.published_at = Time.zone.now
         article.save!
 
+        AttachCoverToArticleJob.perform_later(article)
+
         Array(fields["Industry"]).each do |airtable_id|
           industry = ::Industry.find_by!(airtable_id: airtable_id)
           ::CaseStudy::Industry.find_or_create_by!(industry: industry, article: article)
