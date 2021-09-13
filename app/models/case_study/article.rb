@@ -21,6 +21,7 @@ module CaseStudy
     has_many :archived_articles, dependent: :destroy
     has_many :saved_articles, dependent: :destroy
     has_one :guild_post, class_name: "::Guild::Post", dependent: :nullify
+    has_one_attached :cover_photo
 
     scope :published, -> { where.not(published_at: nil) }
     scope :by_score, -> { order('score DESC NULLS LAST') }
