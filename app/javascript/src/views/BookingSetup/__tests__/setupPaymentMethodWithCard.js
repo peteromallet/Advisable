@@ -34,7 +34,10 @@ test("User can complete booking setup", async () => {
   });
 
   let project = mockData.project({ projectType: null, user });
-  let specialist = mockData.specialist({ firstName: "Dennis" });
+  let specialist = mockData.specialist({
+    firstName: "Dennis",
+    account: mockData.account(),
+  });
   let application = mockData.application({
     status: "Applied",
     id: "rec1234",
