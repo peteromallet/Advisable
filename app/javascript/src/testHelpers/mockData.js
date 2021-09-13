@@ -48,7 +48,6 @@ export const user = (fields = {}) => {
       projectPaymentMethod: "Bank Transfer",
       location: "Dublin, Ireland",
       city: "Dublin",
-      account: null,
       invoiceSettings: {
         __typename: "InvoiceSettings",
         name: "Test Account",
@@ -63,6 +62,7 @@ export const user = (fields = {}) => {
         name: null,
         email: null,
       },
+      account: account(),
       country: country(),
     },
     fields,
@@ -238,7 +238,6 @@ export const specialist = (fields = {}) => {
         nodes: [],
       },
       skills: [],
-      account: null,
       caseStudySkills: [],
       industries: [],
       previousProjectsCount: 0,
@@ -249,6 +248,7 @@ export const specialist = (fields = {}) => {
       bankHolderName: null,
       vatNumber: null,
       guildUnreadNotifications: [],
+      account: account(),
     },
     fields,
   );

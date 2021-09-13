@@ -52,7 +52,7 @@ export default function SendMessageModal({ dialog, participants }) {
   const names = participants.map((p) => p.account.firstName);
 
   return (
-    <Modal modal={dialog}>
+    <Modal modal={dialog} label="Send message">
       <Heading size="3xl" mb={4}>
         Message {commaSeparated(names)}
       </Heading>

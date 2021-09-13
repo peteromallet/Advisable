@@ -42,6 +42,7 @@ function createTestData() {
         specialist: mockData.specialist({
           firstName: "Bob",
           name: "Bob Belcher",
+          account: mockData.account(),
         }),
       }),
       mockData.application({
@@ -49,6 +50,7 @@ function createTestData() {
         specialist: mockData.specialist({
           firstName: "Tina",
           name: "Tina Belcher",
+          account: mockData.account(),
         }),
       }),
     ],
@@ -72,6 +74,7 @@ function createTestData() {
           firstName: "Linda",
           name: "Linda Belcher",
           reviews: [mockData.review()],
+          account: mockData.account(),
         }),
       }),
       mockData.application({
@@ -83,6 +86,7 @@ function createTestData() {
         specialist: mockData.specialist({
           firstName: "Gene",
           name: "Gene Belcher",
+          account: mockData.account(),
         }),
       }),
       mockData.application({
@@ -102,6 +106,7 @@ function createTestData() {
         specialist: mockData.specialist({
           firstName: "Jimmy",
           name: "Jimmy Pesto",
+          account: mockData.account(),
         }),
       }),
     ],
