@@ -7,6 +7,7 @@ import Sidebar from "../components/Sidebar";
 import { useProfileData } from "../queries";
 import CaseStudies from "../components/CaseStudies";
 import Testimonials from "../components/Testimonials";
+import { Switch } from "react-router";
 
 export default function Profile() {
   const { loading, data, error } = useProfileData();
@@ -20,7 +21,7 @@ export default function Profile() {
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
 
-  const { reviews } = data.specialist;
+  const { reviews, caseStudies } = data.specialist;
   return (
     <Box
       display="flex"
@@ -42,7 +43,9 @@ export default function Profile() {
       >
         <Sidebar data={data} />
         <Stack mt={{ _: 16, m: 12, l: 13 }} width="100%" spacing={11}>
-          <CaseStudies />
+          {caseStudies.length ? (
+            <CaseStudies caseStudies={caseStudies} />
+          ) : null}
           {reviews.length ? <Testimonials reviews={reviews} /> : null}
         </Stack>
       </Box>
