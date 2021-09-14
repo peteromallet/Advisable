@@ -1,0 +1,19 @@
+table style="padding: 0 32px;"
+  tr
+    td style="vertical-align: top;" width="5%" class="avatarContainer"
+      table border="0" cellpadding="0" cellspacing="0" width="100%"
+        tr
+          td
+            div class="avatar" style="border-radius: 8px; display: block; width: 35px; height: 40px; background-size: cover; background-position: center; background-image: url('#{message.author&.specialist_or_user&.avatar&.url}');" clicktracking="off"
+
+    td width="80%"
+      table border="0" cellpadding="0" cellspacing="0" width="100%"
+        tr
+          td style="padding-left: 16px;"
+            h5 style="font-size: 16px; font-family: arial; margin-top: 0; margin-bottom: 4px; font-weight: 600;" = message.author&.name || "Unknown"
+            p style="font-family: arial; font-size: 16px; line-height: 24px; color: #3E4D55; margin-top: 0; margin-bottom: 0;"
+              = message.content
+
+            - message.attachments.each do |attachment|
+              div style="background: #eee; font-size: 15px; font-family: arial; padding: 8px 12px; border-radius: 8px; margin-top: 12px;"
+                = attachment.filename
