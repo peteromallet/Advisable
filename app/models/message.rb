@@ -12,6 +12,10 @@ class Message < ApplicationRecord
 
   before_validation :strip_content
 
+  def system_message?
+    author_id.blank?
+  end
+
   def after_create_actions
     conversation.mark_as_read_for!(author) if author_id
     MessageNotifierJob.set(wait: NOTIFICATION_WAIT_TIME).perform_later(self)
