@@ -9,7 +9,7 @@ module Types
     field :goal, String, null: true
     field :description, String, null: true
     field :specialist, Types::SpecialistType, null: false
-    field :reviews, [Types::Review], null: false
+    field :reviews, [Types::PreviousProjectReview], null: false
     field :primary_skill, Types::Skill, null: true
     field :primary_industry, Types::IndustryType, null: true
     field :skills, [Types::Skill], null: false
