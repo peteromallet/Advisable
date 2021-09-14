@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
 module Types
-  class Review < Types::BaseType
-    include PreviousProjectHelper
+  module ReviewInterface
+    include Types::BaseInterface
 
-    description 'A type for Review'
+    description "Fields that are common for all Review types"
 
     field :id, ID, null: false, method: :uid
     field :comment, String, null: true
     field :type, String, null: true
     field :ratings, Types::Ratings, null: true
     field :specialist, Types::SpecialistType, null: false
-    field :case_study_article, Types::CaseStudy::Article, null: true
 
     field :avatar, String, null: true
     def avatar
@@ -31,14 +30,6 @@ module Types
       end
     end
 
-    field :role, String, null: true
-    def role
-      object.project.try(:contact_job_title)
-    end
-
-    field :company_name, String, null: true
-    def company_name
-      previous_project_company_name(object.project)
-    end
+    orphan_types Types::PreviousProjectReview, Types::CaseStudyArticleReview
   end
 end
