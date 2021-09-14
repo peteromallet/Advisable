@@ -37,7 +37,6 @@ class Conversation < ApplicationRecord
   def new_message!(author, content, attachments = [], uid = nil)
     message = messages.create!(author: author, content: content, uid: uid)
     message.attachments.attach(attachments) if attachments.present?
-    mark_as_read_for!(author)
     message.reload.after_create_actions
     message
   end
