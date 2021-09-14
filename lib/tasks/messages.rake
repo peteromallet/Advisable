@@ -2,8 +2,6 @@
 
 module Talkjs
   LOCAL_TEST = false # enable if you want to import to random users
-  class UnknownParticipant < StandardError
-  end
 
   class Migrator
     attr_reader :api
@@ -42,10 +40,6 @@ module Talkjs
       @id = conversation["id"]
       @requirements = {has_user: false, has_specialist: false, specialist_accepted_stage: false}
       load_participants(conversation)
-    rescue Talkjs::UnknownParticipant => e
-      @requirements[:all_participants_known] = false
-      puts "Skipping conversation #{id} with unknown participant #{e.message}"
-      Sentry.capture_message("Unknown participant", extra: {conversation: id, participant: e.message})
     end
 
     def migrate!
@@ -70,6 +64,8 @@ module Talkjs
 
     def create_conversation_participants
       @participants.each_value do |participant|
+        next if participant.nil?
+
         conversation.participants.find_or_create_by!(account: participant)
       end
     end
@@ -129,12 +125,6 @@ module Talkjs
           requirements[:has_user] = true
           user.account
         end
-      when /^sal_/, /marina/
-        Account.find(20695) # Hardcode to Marina
-      when /jonathanbailey/
-        Account.find(28951) # Hardcode to Jonathan
-      else
-        raise Talkjs::UnknownParticipant, uid
       end
     end
 
