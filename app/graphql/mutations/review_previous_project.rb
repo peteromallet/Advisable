@@ -9,9 +9,9 @@ module Mutations
     argument :communication, Integer, required: false
     argument :previous_project, ID, required: true
     argument :quality_of_work, Integer, required: false
-    argument :skills, Integer, required: false # rubocop:disable GraphQL/ExtractInputType
+    argument :skills, Integer, required: false
 
-    field :review, Types::Review, null: true
+    field :review, Types::PreviousProjectReview, null: true
 
     def authorized?(**args)
       return false unless context[:oauth_viewer]
