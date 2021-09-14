@@ -8,7 +8,7 @@ module Types
 
     description 'A type for PreviousProject Review'
 
-    field :project, Types::PreviousProject, null: falsse
+    field :project, Types::PreviousProject, null: false
 
     field :role, String, null: true
     def role
