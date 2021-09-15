@@ -46,7 +46,7 @@ const RequestConsultation = () => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  if (viewer.isSpecialist) {
+  if (viewer?.isSpecialist) {
     return <Redirect to="/" />;
   }
 

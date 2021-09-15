@@ -6,11 +6,11 @@ import MessageButton from "src/views/FreelancerProfile/AboutSection/Info/Message
 export default function PrimaryButton({ specialist }) {
   const viewer = useViewer();
 
-  if (viewer.id === specialist.id) {
+  if (viewer?.id === specialist.id) {
     return null;
   }
 
-  if (viewer.isSpecialist) {
+  if (viewer?.isSpecialist) {
     return <MessageButton specialist={specialist} />;
   }
 
