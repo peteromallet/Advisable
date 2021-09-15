@@ -18,6 +18,7 @@ fragment SpecialistFields on Specialist {
     id
     companyType
     title
+    coverPhoto
     company {
       favicon
     }

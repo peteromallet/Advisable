@@ -7,7 +7,13 @@ export default function CaseStudy({ caseStudy }) {
 
   return (
     <Link to={`${location.pathname}/case_studies/${caseStudy.id}`}>
-      <Box p={7} bg="neutral100" borderRadius="20px">
+      <Box
+        p={7}
+        bg="neutral100"
+        backgroundImage={`url(${caseStudy.coverPhoto})`}
+        backgroundSize="cover"
+        borderRadius="20px"
+      >
         <Text
           textTransform="uppercase"
           fontSize="13px"
