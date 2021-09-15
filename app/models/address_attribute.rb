@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # Uses the rails attributes API to handle address data.
 class AddressAttribute
-  KEYS = %i[line1 line2 city state country postcode]
+  KEYS = %i[line1 line2 city state country postcode].freeze
   KEYS.map { |key| attr_accessor key }
 
   def initialize(attributes = {})
@@ -8,7 +10,7 @@ class AddressAttribute
     KEYS.map { |key| public_send("#{key}=", attributes[key]) }
   end
 
-  def as_json(_options = {})
+  def as_json
     KEYS.index_with { |key| public_send(key) }
   end
 

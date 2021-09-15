@@ -13,6 +13,7 @@ module Toby
       attribute :admin_fee, Attributes::Integer
       attribute :kind, Attributes::String
       attribute :vat_number, Attributes::String
+      attribute :billing_address, Attributes::String, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
