@@ -85,6 +85,11 @@ class Company < ApplicationRecord
     (admin_fee.presence || DEFAULT_ADMIN_FEE) / BigDecimal("10000")
   end
 
+  # Needed purely for Toby - remove once we support JSONB there
+  def billing_address
+    address.inline
+  end
+
   private
 
   def are_payments_setup
