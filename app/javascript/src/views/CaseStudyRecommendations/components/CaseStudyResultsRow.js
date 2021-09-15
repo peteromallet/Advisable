@@ -13,7 +13,7 @@ export default function CaseStudyResultsRow({ caseStudy }) {
   return (
     <Box
       display="grid"
-      gridGap={8}
+      gridGap={{ _: 4, l: 8 }}
       gridTemplateColumns={{ _: "1fr", m: "1fr 1fr 1fr" }}
     >
       {resultsBlock.results.map((result, index) => (

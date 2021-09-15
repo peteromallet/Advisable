@@ -5,8 +5,9 @@ import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 
 const StyledImage = styled.div`
   cursor: pointer;
+  width: 100%;
   height: 120px;
-  max-width: 160px;
+  max-width: 200px;
   border-radius: 12px;
   background-size: cover;
   background-position: center;
@@ -26,7 +27,7 @@ function CaseStudyImages({ images }) {
         gridGap="16px"
         gridTemplateColumns={{
           _: "1fr 1fr",
-          s: "1fr 1fr 1fr",
+          s: "1fr 1fr 1fr 1fr",
           m: "1fr 1fr 1fr 1fr",
         }}
       >
