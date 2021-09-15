@@ -22,6 +22,12 @@ fragment SpecialistFields on Specialist {
     company {
       favicon
     }
+    skills {
+      skill {
+        id
+        name
+      }
+    }
   }
 
   reviews {

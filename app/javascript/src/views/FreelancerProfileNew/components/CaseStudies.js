@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Stack } from "@advisable/donut";
 import SectionTitle from "./SectionTitle";
-import CaseStudy from "./CaseStudy";
+import CaseStudyCard from "./CaseStudyCard";
 
 export default function CaseStudies({ caseStudies }) {
   const cards = caseStudies.map((cs) => (
-    <CaseStudy caseStudy={cs} key={cs.id} />
+    <CaseStudyCard caseStudy={cs} key={cs.id} />
   ));
 
   return (
