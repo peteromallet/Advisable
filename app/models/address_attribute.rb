@@ -10,7 +10,7 @@ class AddressAttribute
     KEYS.map { |key| public_send("#{key}=", attributes[key]) }
   end
 
-  def as_json
+  def as_json(_options = {})
     KEYS.index_with { |key| public_send(key) }
   end
 
