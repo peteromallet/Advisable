@@ -990,7 +990,6 @@ ActiveRecord::Schema.define(version: 2021_09_10_082939) do
     t.string "pid"
     t.string "campaign_name"
     t.string "campaign_source"
-    t.string "referrer"
     t.decimal "average_score"
     t.integer "project_count"
     t.string "phone"
