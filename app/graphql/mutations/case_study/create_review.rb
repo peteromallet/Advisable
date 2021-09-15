@@ -38,8 +38,7 @@ module Mutations
           }
         )
 
-        # figure this out
-        # object.avatar.attach(io: oauth_viewer.image, filename: filename)
+        AttachImageJob.perform_later(review, oauth_viewer.image)
 
         {review: review}
       end
