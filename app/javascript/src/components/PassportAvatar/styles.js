@@ -38,17 +38,17 @@ const size = variant({
     sm: {
       width: "42px",
       height: "48px",
-      borderRadius: "2px",
+      borderRadius: "12px",
     },
     md: {
       width: "56px",
       height: "64px",
-      borderRadius: "2px",
+      borderRadius: "16px",
     },
     lg: {
       width: "84px",
       height: "96px",
-      borderRadius: "2px",
+      borderRadius: "20px",
     },
     xl: {
       width: "126px",
@@ -68,6 +68,7 @@ export const StyledPassportAvatar = styled.div`
   ${size}
 
   flex-shrink: 0;
+  overflow: hidden;
   position: relative;
 
   .svgClip {

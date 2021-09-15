@@ -30,6 +30,43 @@ const StyledName = styled.a`
   }
 `;
 
+function FreelancerDetails({ caseStudy }) {
+  const { specialist } = caseStudy;
+
+  return (
+    <Box>
+      <PassportAvatar
+        size="lg"
+        marginBottom={6}
+        src={caseStudy.specialist.avatar}
+        name={caseStudy.specialist.name}
+      />
+      <StyledName target="_blank" href={`/freelancers/${specialist.id}`}>
+        {specialist.name}
+      </StyledName>
+      <Text
+        fontSize="sm"
+        fontWeight={350}
+        lineHeight="20px"
+        paddingBottom={6}
+        color="neutral700"
+      >
+        {truncate(specialist.bio, { length: 110 })}
+      </Text>
+      <Button
+        as={Link}
+        variant="gradient"
+        target="_blank"
+        size={{ _: "l", l: "md" }}
+        width={{ _: "100%", md: null }}
+        to={`/request_consultation/${specialist.id}`}
+      >
+        Work Together
+      </Button>
+    </Box>
+  );
+}
+
 export default function CaseStudy({ showActionBar = true }) {
   useScrollToTop();
   const { id } = useParams();
@@ -42,13 +79,12 @@ export default function CaseStudy({ showActionBar = true }) {
   }
 
   const { caseStudy } = data;
-  const { specialist } = caseStudy;
 
   return (
     <Box
       paddingTop={14}
-      maxWidth="1000px"
-      paddingX={2}
+      maxWidth={{ m: "960px", _: "1080px" }}
+      paddingX={6}
       mx="auto"
       as={motion.div}
       initial={{ y: 20, opacity: 0 }}
@@ -56,7 +92,23 @@ export default function CaseStudy({ showActionBar = true }) {
       transition={{ duration: 0.3 }}
     >
       <Box maxWidth="700px" textAlign="center" mx="auto" marginBottom={10}>
-        <Heading size="6xl" marginBottom={6}>
+        <Box
+          mx="auto"
+          justifyContent="center"
+          display={{ _: "flex", m: "none" }}
+        >
+          <PassportAvatar
+            size="md"
+            marginBottom={4}
+            src={caseStudy.specialist.avatar}
+            name={caseStudy.specialist.name}
+          />
+        </Box>
+        <Heading
+          size={{ _: "4xl", s: "5xl", m: "6xl" }}
+          fontWeight={{ _: 700, m: 600 }}
+          marginBottom={{ _: 4, m: 6 }}
+        >
           {caseStudy.title}
         </Heading>
         <Box maxWidth="500px" mx="auto">
@@ -69,6 +121,7 @@ export default function CaseStudy({ showActionBar = true }) {
               fontWeight={450}
               color="neutral500"
               display="inline-block"
+              letterSpacing="-0.01rem"
             >
               #{as.skill.name}
             </Text>
@@ -86,32 +139,7 @@ export default function CaseStudy({ showActionBar = true }) {
           display={{ _: "none", l: "block" }}
         >
           <Box top="108px" position={{ _: null, l: "sticky" }}>
-            <PassportAvatar
-              size="lg"
-              marginBottom={6}
-              src={caseStudy.specialist.avatar}
-              name={caseStudy.specialist.name}
-            />
-            <StyledName target="_blank" href={`/freelancers/${specialist.id}`}>
-              {specialist.name}
-            </StyledName>
-            <Text
-              fontSize="sm"
-              fontWeight={350}
-              lineHeight="20px"
-              paddingBottom={6}
-              color="neutral700"
-            >
-              {truncate(specialist.bio, { length: 110 })}
-            </Text>
-            <Button
-              as={Link}
-              variant="gradient"
-              target="_blank"
-              to={`/request_consultation/${specialist.id}`}
-            >
-              Work Together
-            </Button>
+            <FreelancerDetails caseStudy={caseStudy} />
           </Box>
         </Box>
         <Box maxWidth="700px" position="relative">
@@ -123,9 +151,13 @@ export default function CaseStudy({ showActionBar = true }) {
               <AdvisableComment>{caseStudy.comment}</AdvisableComment>
             </Box>
           ) : null}
-          <Box height="1px" bg="neutral100" marginY={12} />
+          <Box height="1px" bg="neutral200" marginY={12} />
           <CaseStudyContent caseStudy={caseStudy} />
         </Box>
+      </Box>
+      <Box display={{ _: "block", l: "none" }} paddingBottom={12}>
+        <Box height="1px" bg="neutral200" marginBottom={12} />
+        <FreelancerDetails caseStudy={caseStudy} />
       </Box>
       {showActionBar && <ActionBar caseStudy={caseStudy} />}
     </Box>
