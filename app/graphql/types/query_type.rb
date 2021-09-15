@@ -421,7 +421,7 @@ module Types
 
     def payment(id:)
       requires_client!
-      current_user.company.payments.find_by!(uid: id)
+      ::Payment.find_by!(uid: id)
     end
 
     field :conversations, Types::Conversation.connection_type, null: true
