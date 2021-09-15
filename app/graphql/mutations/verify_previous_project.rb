@@ -1,21 +1,27 @@
-class Mutations::VerifyPreviousProject < Mutations::BaseMutation
-  argument :id, ID, required: true
+# frozen_string_literal: true
 
-  field :previous_project, Types::PreviousProject, null: true
+module Mutations
+  class VerifyPreviousProject < Mutations::BaseMutation
+    description "Verify previous project"
 
-  def authorized?(id:)
-    return false unless context[:oauth_viewer]
+    argument :id, ID, required: true
 
-    project = PreviousProject.find_by_uid!(id)
-    verifier = PreviousProject::Verifier.new(context[:oauth_viewer], project, responsible_id: current_account_id)
-    verifier.can_verify?
-  end
+    field :previous_project, Types::PreviousProject, null: true
 
-  def resolve(id:)
-    project = PreviousProject.find_by_uid!(id)
-    verifier = PreviousProject::Verifier.new(context[:oauth_viewer], project, responsible_id: current_account_id)
-    verifier.verify
+    def authorized?(id:)
+      return false unless oauth_viewer
 
-    {previous_project: project}
+      project = PreviousProject.find_by_uid!(id)
+      verifier = PreviousProject::Verifier.new(oauth_viewer, project, responsible_id: current_account_id)
+      verifier.can_verify?
+    end
+
+    def resolve(id:)
+      project = PreviousProject.find_by_uid!(id)
+      verifier = PreviousProject::Verifier.new(oauth_viewer, project, responsible_id: current_account_id)
+      verifier.verify
+
+      {previous_project: project}
+    end
   end
 end

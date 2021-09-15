@@ -1,24 +1,30 @@
-class Mutations::FailPreviousProjectVerification < Mutations::BaseMutation
-  argument :previous_project, ID, required: true
-  argument :reason, String, required: true
+# frozen_string_literal: true
 
-  field :previous_project, Types::PreviousProject, null: true
+module Mutations
+  class FailPreviousProjectVerification < Mutations::BaseMutation
+    description "Fail previous verification mutation"
 
-  def authorized?(previous_project:, reason:)
-    return false unless context[:oauth_viewer]
+    argument :previous_project, ID, required: true
+    argument :reason, String, required: true
 
-    project = PreviousProject.find_by_uid!(previous_project)
-    context[:oauth_viewer].can_validate_project?(project)
-  end
+    field :previous_project, Types::PreviousProject, null: true
 
-  def resolve(previous_project:, reason:)
-    project = PreviousProject.find_by_uid!(previous_project)
-    current_account_responsible_for do
-      project.update(validation_status: 'Validation Failed', validation_failed_reason: reason)
+    def authorized?(previous_project:, **_args)
+      return false unless oauth_viewer
+
+      project = PreviousProject.find_by_uid!(previous_project)
+      oauth_viewer.can_validate_project?(project)
     end
 
-    AttachImageJob.perform_later(project, context[:oauth_viewer].image)
+    def resolve(previous_project:, reason:)
+      project = PreviousProject.find_by_uid!(previous_project)
+      current_account_responsible_for do
+        project.update(validation_status: 'Validation Failed', validation_failed_reason: reason)
+      end
 
-    {previous_project: project}
+      AttachImageJob.perform_later(project, oauth_viewer.image)
+
+      {previous_project: project}
+    end
   end
 end
