@@ -6,11 +6,21 @@ import Loading from "src/components/Loading";
 import PaymentSuccessful from "./components/PaymentSuccessful";
 import PassportAvatar from "src/components/PassportAvatar";
 import PaymentPending from "./components/PaymentPending";
+import NotFound, { isNotFound } from "../NotFound";
+import AccessDenied, { isNotAuthorized } from "../AccessDenied";
 
 export default function Payment() {
-  const { data, loading } = usePayment();
+  const { data, loading, error } = usePayment();
 
   if (loading) return <Loading />;
+
+  if (isNotAuthorized(error)) {
+    return <AccessDenied />;
+  }
+
+  if (isNotFound(error)) {
+    return <NotFound />;
+  }
 
   const payment = data?.payment;
 
