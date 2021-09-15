@@ -10,6 +10,10 @@ module UserRequirements
     context[:current_account]
   end
 
+  def oauth_viewer
+    context[:oauth_viewer]
+  end
+
   # Can return the id of the user's account or admin's that's logged in as that user
   def current_account_id
     current_account&.id
@@ -53,5 +57,11 @@ module UserRequirements
     return true if current_user.account.team_manager?
 
     ApiError.invalid_request("MUST_BE_TEAM_MANAGER", "Current user must have team management permission.")
+  end
+
+  def requires_oauth_viewer!
+    return true if oauth_viewer.present?
+
+    ApiError.not_authenticated
   end
 end
