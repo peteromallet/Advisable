@@ -12,6 +12,6 @@ class PaymentPolicy < BasePolicy
   end
 
   def company_user?
-    record.company.user_ids.include?(current_user.id)
+    record.company_id == current_user.company_id
   end
 end
