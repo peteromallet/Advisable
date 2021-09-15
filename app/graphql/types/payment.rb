@@ -4,6 +4,12 @@ module Types
   class Payment < Types::BaseType
     description "Type for Payment model"
 
+    def self.authorized?(payment, context)
+      policy = PaymentPolicy.new(context[:current_user], payment)
+      ApiError.not_authorized("You do not have permission to view this payment") unless policy.read?
+      super
+    end
+
     field :id, ID, null: false, method: :uid
     field :status, String, null: true
     field :amount, Int, null: false
