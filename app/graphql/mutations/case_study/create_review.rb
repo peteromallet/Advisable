@@ -6,13 +6,9 @@ module Mutations
       description "Create a Review for a Case Study Article."
       graphql_name "CreateCaseStudyReview"
 
-      argument :adherence_to_schedule, Integer, required: false
       argument :article, ID, required: true
-      argument :availability, Integer, required: false
       argument :comment, String, required: false
-      argument :communication, Integer, required: false
-      argument :quality_of_work, Integer, required: false
-      argument :skills, Integer, required: false
+      argument :ratings, Types::ReviewRatingsInput, required: false
 
       field :review, Types::CaseStudyArticleReview, null: true
 
@@ -34,11 +30,11 @@ module Mutations
           comment: args[:comment],
           specialist: article.specialist,
           ratings: {
-            skills: args[:skills],
-            availability: args[:availability],
-            communication: args[:communication],
-            quality_of_work: args[:quality_of_work],
-            adherence_to_schedule: args[:adherence_to_schedule]
+            skills: args.dig(:ratings, :skills),
+            availability: args.dig(:ratings, :availability),
+            communication: args.dig(:ratings, :communication),
+            quality_of_work: args.dig(:ratings, :quality_of_work),
+            adherence_to_schedule: args.dig(:ratings, :adherence_to_schedule)
           }
         )
 

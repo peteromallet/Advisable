@@ -11,13 +11,15 @@ RSpec.describe Mutations::CaseStudy::CreateReview do
     <<-GRAPHQL
       mutation {
         createCaseStudyReview(input: {
-          adherenceToSchedule: 3,
           article: "#{article.uid}",
-          availability: 3,
           comment: "This is a comment",
-          communication: 3,
-          qualityOfWork: 3,
-          skills: 3
+          ratings: {
+            adherenceToSchedule: 3,
+            skills: 3,
+            availability: 3,
+            qualityOfWork: 3,
+            communication: 3
+          }
         }) {
           review {
             id
