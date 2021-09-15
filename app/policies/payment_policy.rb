@@ -5,6 +5,8 @@ class PaymentPolicy < BasePolicy
     specialist? || company_user? || admin?
   end
 
+  private
+
   def specialist?
     current_user == record.specialist
   end
