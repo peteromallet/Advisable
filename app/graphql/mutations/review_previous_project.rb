@@ -14,10 +14,10 @@ module Mutations
     field :review, Types::PreviousProjectReview, null: true
 
     def authorized?(**args)
-      return false unless context[:oauth_viewer]
+      return false unless oauth_viewer
 
       project = PreviousProject.find_by_uid!(args[:previous_project])
-      context[:oauth_viewer].can_validate_project?(project)
+      oauth_viewer.can_validate_project?(project)
     end
 
     def resolve(**args)

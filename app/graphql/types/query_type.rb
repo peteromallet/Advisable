@@ -132,10 +132,6 @@ module Types
 
     field :oauth_viewer, Types::OauthViewer, null: true
 
-    def oauth_viewer
-      context[:oauth_viewer]
-    end
-
     field :client_application, Types::ClientApplicationType, null: true
 
     def client_application
