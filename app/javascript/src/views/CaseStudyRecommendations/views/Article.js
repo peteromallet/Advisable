@@ -5,15 +5,15 @@ import { useParams } from "react-router-dom";
 import { Box, Text, theme, Heading } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import PassportAvatar from "src/components/PassportAvatar";
+import CaseStudyResultsRow from "src/components/CaseStudyResultsRow";
 import CaseStudyContent from "src/components/CaseStudyContent";
+import AdvisableComment from "src/components/AdvisableComment";
 import { useCaseStudy } from "../queries";
 import ActionBar from "../components/ActionBar";
 import { isNotFound } from "../../NotFound";
 import NotFound from "./NotFound";
 import useScrollToTop from "src/hooks/useScrollToTop";
 import { motion } from "framer-motion";
-import CaseStudyResultsRow from "../components/CaseStudyResultsRow";
-import AdvisableComment from "../components/AdvisableComment";
 import PrimaryButton from "./PrimaryButton";
 
 const StyledName = styled.a`
