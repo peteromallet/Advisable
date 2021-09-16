@@ -87,7 +87,7 @@ class Company < ApplicationRecord
 
   # Needed purely for Toby - remove once we support JSONB there
   def billing_address
-    address.inline
+    address.comma_separated
   end
 
   private
