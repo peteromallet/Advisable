@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useLocation } from "react-router";
+import { useParams } from "react-router";
 import { Box, Text, Link, theme } from "@advisable/donut";
 import CompanyLogo from "./CompanyLogo";
 
@@ -15,14 +15,14 @@ const StyledSkillTag = styled.div`
 `;
 
 export default function CaseStudyCard({ caseStudy }) {
-  const location = useLocation();
+  const params = useParams();
 
   const skills = caseStudy.skills.map(({ skill }) => (
     <StyledSkillTag key={skill.id}>{skill.name}</StyledSkillTag>
   ));
 
   return (
-    <Link to={`${location.pathname}/case_studies/${caseStudy.id}`}>
+    <Link to={`/freelancers/${params.id}/case_studies/${caseStudy.id}`}>
       <Box
         p={7}
         pb={12}
