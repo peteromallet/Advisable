@@ -4,22 +4,8 @@ import { Box } from "@advisable/donut";
 import { useParams } from "react-router-dom";
 import ConversationMessages from "./ConversationMessages";
 import ConversationHeader from "./ConversationHeader";
-
-function ConversationError() {
-  return (
-    <Box
-      my={8}
-      mx="auto"
-      padding={4}
-      width="400px"
-      bg="neutral100"
-      textAlign="center"
-      borderRadius="12px"
-    >
-      Failed to load conversation, please try again.
-    </Box>
-  );
-}
+import ConversationNotFound from "./ConversationNotFound";
+import ConversationError from "./ConversationError";
 
 export default function Conversation({ conversations, currentAccount }) {
   const { id } = useParams();
@@ -28,7 +14,9 @@ export default function Conversation({ conversations, currentAccount }) {
   return (
     <Box height="100%" display="flex" flexDirection="column">
       <Sentry.ErrorBoundary fallback={ConversationError}>
-        <ConversationHeader conversation={conversation} />
+        {conversation ? (
+          <ConversationHeader conversation={conversation} />
+        ) : null}
         <Box
           height="100%"
           minHeight="0"
@@ -36,10 +24,14 @@ export default function Conversation({ conversations, currentAccount }) {
           flexGrow={1}
           flexShrink={1}
         >
-          <ConversationMessages
-            conversation={conversation}
-            currentAccount={currentAccount}
-          />
+          {conversation ? (
+            <ConversationMessages
+              conversation={conversation}
+              currentAccount={currentAccount}
+            />
+          ) : (
+            <ConversationNotFound />
+          )}
         </Box>
       </Sentry.ErrorBoundary>
     </Box>
