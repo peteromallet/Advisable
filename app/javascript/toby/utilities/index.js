@@ -283,3 +283,11 @@ function selectionForField(schemaData, resourceData, fieldName) {
     _label: true,
   };
 }
+
+export function resourcePath(resource) {
+  return `/${pluralizeType(resource.type)}`;
+}
+
+export function recordPath(record) {
+  return `/${pluralizeType(record.__typename)}/${record.id}`;
+}

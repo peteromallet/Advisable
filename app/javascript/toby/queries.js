@@ -41,8 +41,16 @@ const CREATE_VIEW = gql`
     $name: String!
     $resource: String!
     $filters: [FilterInput!]
+    $sortBy: String
+    $sortOrder: String
   ) {
-    createTobyView(name: $name, resource: $resource, filters: $filters) {
+    createTobyView(
+      name: $name
+      resource: $resource
+      filters: $filters
+      sortBy: $sortBy
+      sortOrder: $sortOrder
+    ) {
       view {
         ...ViewFields
       }

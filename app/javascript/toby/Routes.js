@@ -3,7 +3,7 @@ import { Switch, Redirect } from "react-router-dom";
 import Route from "src/components/Route";
 import Resource from "./views/resource";
 import { useSchema } from "./components/schema";
-import { pluralizeType } from "./utilities";
+import { resourcePath } from "./utilities";
 
 export default function Routes() {
   const { resources } = useSchema();
@@ -11,11 +11,11 @@ export default function Routes() {
   return (
     <Switch>
       {resources.map((resource) => (
-        <Route key={resource.type} path={`/${pluralizeType(resource.type)}`}>
+        <Route key={resource.type} path={resourcePath(resource)}>
           <Resource resource={resource} />
         </Route>
       ))}
-      <Redirect to={`/${pluralizeType(resources[0].type)}`} />
+      <Redirect to={resourcePath(resources[0])} />
     </Switch>
   );
 }
