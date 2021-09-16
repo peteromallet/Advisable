@@ -5,6 +5,8 @@ const VIEWS = gql`
     views(resource: $resource) {
       id
       name
+      sortBy
+      sortOrder
     }
   }
 `;

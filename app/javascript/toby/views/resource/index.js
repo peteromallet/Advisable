@@ -25,11 +25,10 @@ import DetailsModal from "./DetailsModal";
 import LoadingIndicator from "src/components/Loading";
 import { useNotifications } from "src/components/Notifications";
 import Loading from "./Loading";
-import { useResourceViews, useUpdateViewFilter } from "../../queries";
+import { useResourceViews, useUpdateView } from "../../queries";
 import HeaderButton from "../../components/HeaderButton";
 import ViewsDropdown from "./ViewsDropdown";
 import SortMenu from "./SortMenu";
-import useSort from "./useSort";
 
 export default function ResourceConfig({ resource }) {
   const { loading, data } = useResourceViews(resource.type);
@@ -69,31 +68,40 @@ function initializeViewFilters(view) {
 function Resource({ resource, views }) {
   const history = useHistory();
   const location = useLocation();
-  const sortState = useSort();
   const { error: notifyError } = useNotifications();
-  const [updateViewFilters] = useUpdateViewFilter();
+  const [updateView] = useUpdateView();
 
   const currentView = useMemo(() => {
     const queryParams = queryString.parse(location.search);
     if (!queryParams.view) return null;
     return views.find((v) => v.id === queryParams.view);
   }, [views, location.search]);
-
-  const [filters, setFilters] = useState(initializeViewFilters(currentView));
+  const [sortBy, setSortBy] = useState(currentView?.sortBy || "created_at");
+  const [sortOrder, setSortOrder] = useState(currentView?.sortOrder || "ASC");
+  const [filters, setFilters] = useState(() =>
+    initializeViewFilters(currentView),
+  );
 
   const [isOpen, setIsOpen] = useState(false);
   const { loading, data, fetchMore, error } = useFetchResources(
     resource,
     filters,
-    sortState,
+    sortBy,
+    sortOrder,
   );
 
   const hasNextPage = data?.records.pageInfo.hasNextPage;
   const endCursor = data?.records.pageInfo.endCursor;
 
   useEffect(() => {
+    const queryParams = queryString.parse(location.search);
+    const currentView = queryParams.view
+      ? views.find((v) => v.id === queryParams.view)
+      : null;
+    setSortBy(currentView?.sortBy || "created_at");
+    setSortOrder(currentView?.sortOrder || "ASC");
     setFilters(initializeViewFilters(currentView));
-  }, [currentView]);
+  }, [location.search]);
 
   useEffect(() => {
     if (error) {
@@ -101,32 +109,28 @@ function Resource({ resource, views }) {
     }
   }, [error, notifyError]);
 
-  const updateFilters = useCallback(
-    (newFilters) => {
+  const handleUpdateView = useCallback(
+    (changes) => {
       if (currentView) {
-        updateViewFilters({
+        updateView({
           variables: {
             id: currentView.id,
-            filters: newFilters,
-          },
-          optimisticResponse: {
-            updateTobyView: {
-              __typename: "UpdateViewPayload",
-              view: {
-                ...currentView,
-                filters: newFilters.map((filter) => ({
-                  ...filter,
-                  __typename: "Filter",
-                })),
-              },
-            },
+            filters: changes.filters || currentView.filters,
+            sortBy: changes.sortBy || currentView.sortBy,
+            sortOrder: changes.sortOrder || currentView.sortOrder,
           },
         });
-      } else {
-        setFilters(newFilters);
       }
     },
-    [currentView, updateViewFilters],
+    [updateView, currentView],
+  );
+
+  const handleUpdateFilters = useCallback(
+    (newFilters) => {
+      setFilters(newFilters);
+      handleUpdateView({ filters: newFilters });
+    },
+    [handleUpdateView],
   );
 
   const scrollRef = useBottomScrollListener(() => {
@@ -168,7 +172,14 @@ function Resource({ resource, views }) {
               </Box>
             )}
           </HeaderButton>
-          <SortMenu {...sortState} resource={resource} />
+          <SortMenu
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+            resource={resource}
+            handleUpdateView={handleUpdateView}
+          />
         </Box>
       </StyledHeader>
       <StyledViewport>
@@ -177,7 +188,7 @@ function Resource({ resource, views }) {
           resource={resource}
           open={isOpen}
           filters={filters}
-          onApply={updateFilters}
+          onApply={handleUpdateFilters}
         />
         <StyledScrollContainer
           ref={scrollRef}
