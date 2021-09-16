@@ -1,7 +1,43 @@
 query getCaseStudy($id: ID!) {
   caseStudy(id: $id) {
-    comment
+    id
     title
     subtitle
+    comment
+    companyType
+    coverPhoto
+    company {
+      favicon
+    }
+    skills {
+      skill {
+        id
+        name
+      }
+    }
+
+    sections {
+      id
+      type
+      contents {
+        id
+        ... on Heading {
+          size
+          text
+        }
+        ... on Paragraph {
+          text
+        }
+        ... on Results {
+          results
+        }
+        ... on Images {
+          images {
+            id
+            url
+          }
+        }
+      }
+    }
   }
 }
