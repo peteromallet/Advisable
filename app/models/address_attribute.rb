@@ -18,6 +18,10 @@ class AddressAttribute
     KEYS.filter_map { |key| public_send(key) }.join("\n")
   end
 
+  def comma_separated
+    KEYS.filter_map { |key| public_send(key) }.join(", ")
+  end
+
   def ==(other)
     as_json == other.as_json
   end
