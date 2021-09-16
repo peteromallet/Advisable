@@ -20,7 +20,7 @@ module Toby
 
       # optional for when we don't follow the class == resource convention
       def model
-        options.fetch(:model) { name.to_s.camelize }
+        reflection.class_name
       end
 
       def column
@@ -28,7 +28,7 @@ module Toby
       end
 
       def via
-        reflection.association_foreign_key
+        reflection.foreign_key
       end
 
       def sortable
