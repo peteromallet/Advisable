@@ -15,7 +15,12 @@ export default function SystemMessage({ message }) {
       paddingX={4}
     >
       <Box width="100%">
-        <Text autoLink color="neutral800" lineHeight="24px">
+        <Text
+          autoLink
+          color="neutral800"
+          lineHeight="24px"
+          style={{ overflowWrap: "break-word" }}
+        >
           {renderLineBreaks(message.content)}
         </Text>
         {message.attachments.length > 0 && (

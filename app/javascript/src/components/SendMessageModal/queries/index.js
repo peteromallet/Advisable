@@ -3,7 +3,7 @@ import CREATE_CONVERSATION from "./createConversation.gql";
 import {
   updateConversation,
   updateConversationsList,
-} from "src/views/NewMessages/queries";
+} from "src/views/Messages/queries";
 import { useLocation } from "react-router-dom";
 
 export function useCreateConversation() {

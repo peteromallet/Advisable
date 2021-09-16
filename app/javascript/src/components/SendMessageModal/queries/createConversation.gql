@@ -1,4 +1,4 @@
-#import "../../../views/NewMessages/queries/messageFields.gql"
+#import "../../../views/Messages/queries/messageFields.gql"
 
 mutation CreateConversation($input: CreateConversationInput!) {
   createConversation(input: $input) {

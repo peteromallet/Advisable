@@ -48,7 +48,13 @@ export default function UserMessage({ message }) {
         </Box>
       </Box>
       <Box width="100%">
-        <Text autoLink fontSize="17px" color="neutral900" lineHeight="24px">
+        <Text
+          autoLink
+          fontSize="17px"
+          color="neutral900"
+          lineHeight="24px"
+          style={{ overflowWrap: "break-word" }}
+        >
           {renderLineBreaks(message.content)}
         </Text>
         {message.attachments.length > 0 && (
