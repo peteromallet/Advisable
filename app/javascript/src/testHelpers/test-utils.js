@@ -82,35 +82,6 @@ if (!SVGElement.prototype.getTotalLength) {
   SVGElement.prototype.getTotalLength = () => 1;
 }
 
-jest.mock("talkjs", () => {
-  class User {}
-  class Session {
-    getOrCreateConversation() {
-      return {
-        setParticipant: () => {},
-      };
-    }
-
-    createChatbox() {
-      return {
-        mount: () => {},
-      };
-    }
-
-    get unreads() {
-      return {
-        on: () => {},
-      };
-    }
-  }
-
-  return {
-    ready: Promise.resolve(),
-    User: User,
-    Session: Session,
-  };
-});
-
 export const mockElement = () => ({
   mount: jest.fn(),
   destroy: jest.fn(),

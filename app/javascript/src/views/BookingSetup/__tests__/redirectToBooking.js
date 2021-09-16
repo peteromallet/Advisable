@@ -20,7 +20,10 @@ test("User is redirected to booking step when application is already Working", a
   });
 
   let project = mockData.project({ projectType: null, user });
-  let specialist = mockData.specialist({ firstName: "Dennis" });
+  let specialist = mockData.specialist({
+    firstName: "Dennis",
+    account: mockData.account(),
+  });
   let application = mockData.application({
     status: "Working",
     id: "rec1234",

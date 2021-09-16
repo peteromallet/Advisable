@@ -9,7 +9,7 @@ import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Stack, Box, Button, Text } from "@advisable/donut";
 import VideoButton from "src/components/VideoButton";
 import AttributeList from "src/components/AttributeList";
-import TalkModal from "src/components/TalkModal";
+import SendMessageModal from "src/components/SendMessageModal";
 import { useMobile } from "src/components/Breakpoint";
 import currency from "src/utilities/currency";
 import StopWorking from "./StopWorking";
@@ -37,9 +37,8 @@ const Component = ({ data, tutorial, tutorialModal }) => {
           {application.project.primarySkill?.name}
         </Text>
         <Text>{application.project.user.companyName}</Text>
-        <TalkModal
+        <SendMessageModal
           dialog={dialog}
-          conversationId={application.id}
           participants={[application.project.user]}
         />
         <Stack spacing="sm" paddingTop="xl">

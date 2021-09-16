@@ -10,7 +10,7 @@ import currency from "src/utilities/currency";
 import VideoButton from "src/components/VideoButton";
 import AttributeList from "src/components/AttributeList";
 import { useMobile } from "src/components/Breakpoint";
-import TalkModal from "src/components/TalkModal";
+import SendMessageModal from "src/components/SendMessageModal";
 import ProjectTypeModal from "./ProjectTypeModal";
 import StopWorkingModal from "./StopWorkingModal";
 import useViewer from "src/hooks/useViewer";
@@ -55,9 +55,8 @@ const Sidebar = ({ data, history, tutorialModal }) => {
             {specialist.country && `, ${specialist.country.name}`}
           </Text>
 
-          <TalkModal
+          <SendMessageModal
             dialog={dialog}
-            conversationId={application.id}
             participants={[application.specialist]}
           />
 
