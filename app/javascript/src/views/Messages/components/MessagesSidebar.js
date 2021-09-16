@@ -1,4 +1,5 @@
 import React from "react";
+import * as Sentry from "@sentry/react";
 import SimpleBar from "simplebar-react";
 import { Box, Heading, Text, Skeleton } from "@advisable/donut";
 import ConversationsList from "./ConversationsList";
@@ -24,35 +25,43 @@ export default function MessagesSidebar({ loading, conversations }) {
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
       `}
     >
-      <Box display="flex" flexDirection="column" height="100%">
-        <Box
-          height="72px"
-          paddingX={6}
-          display="flex"
-          flexShrink={0}
-          alignItems="center"
-          borderBottom="1px solid"
-          borderColor="neutral100"
-        >
-          <Heading size="2xl">Messages</Heading>
-        </Box>
-        <SimpleBar style={{ height: "calc(100vh - 132px)" }}>
-          {loading && <LoadingConversations />}
-          <Box paddingX={4}>
-            <ConversationsList conversations={conversations} />
+      <Sentry.ErrorBoundary
+        fallback={
+          <>
+            Failed to load conversations list, please try refreshing the page.
+          </>
+        }
+      >
+        <Box display="flex" flexDirection="column" height="100%">
+          <Box
+            height="72px"
+            paddingX={6}
+            display="flex"
+            flexShrink={0}
+            alignItems="center"
+            borderBottom="1px solid"
+            borderColor="neutral100"
+          >
+            <Heading size="2xl">Messages</Heading>
           </Box>
-          {!loading && conversations.length === 0 && (
-            <Text
-              textAlign="center"
-              paddingY={8}
-              paddingX={4}
-              color="neutral400"
-            >
-              No conversations
-            </Text>
-          )}
-        </SimpleBar>
-      </Box>
+          <SimpleBar style={{ height: "calc(100vh - 132px)" }}>
+            {loading && <LoadingConversations />}
+            <Box paddingX={4}>
+              <ConversationsList conversations={conversations} />
+            </Box>
+            {!loading && conversations.length === 0 && (
+              <Text
+                textAlign="center"
+                paddingY={8}
+                paddingX={4}
+                color="neutral400"
+              >
+                No conversations
+              </Text>
+            )}
+          </SimpleBar>
+        </Box>
+      </Sentry.ErrorBoundary>
     </Box>
   );
 }
