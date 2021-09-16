@@ -5,7 +5,6 @@ module Toby
     class Message < BaseResource
       model_name ::Message
       attribute :uid, Attributes::String, readonly: true
-      attribute :idempotency_key, Attributes::String, readonly: true
       attribute :author, Attributes::BelongsTo
       attribute :conversation, Attributes::BelongsTo
       attribute :content, Attributes::LongText
