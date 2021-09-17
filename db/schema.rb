@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_17_111820) do
+ActiveRecord::Schema.define(version: 2021_09_17_121909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -663,6 +663,7 @@ ActiveRecord::Schema.define(version: 2021_09_17_111820) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "idempotency_key"
+    t.string "kind"
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["idempotency_key"], name: "index_messages_on_idempotency_key"
