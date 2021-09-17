@@ -15,7 +15,7 @@ export default function Article() {
   const { caseStudy } = data;
 
   return (
-    <Box maxWidth="700px" position="relative">
+    <Box position="relative">
       <Box marginBottom={12}>
         <CaseStudyCard caseStudy={caseStudy} />
       </Box>
