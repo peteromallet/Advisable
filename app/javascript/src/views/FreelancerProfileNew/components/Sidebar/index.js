@@ -1,18 +1,26 @@
 import React from "react";
+import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import { LinkedinIn } from "@styled-icons/fa-brands/LinkedinIn";
 import { Globe } from "@styled-icons/heroicons-solid/Globe";
-import { Button, Box, Text } from "@advisable/donut";
+import { Button, Box, Text, Link } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
 import SocialIcon from "../SocialIcon";
+import CoverImage from "../CoverImage";
 import {
   StyledStickySidebar,
+  StyledAvatarWrapper,
   StyledNameWrapper,
   StyledBioWrapper,
 } from "./styles";
 
 export default function Sidebar({ data }) {
   const bio = data.specialist.bio.slice(0, 140);
+  const params = useParams();
+  const id = params?.id;
+  const isArticle = !!matchPath(location.pathname, {
+    path: "/freelancers/:id/case_studies/:case_study_id",
+  });
 
   return (
     <Box
