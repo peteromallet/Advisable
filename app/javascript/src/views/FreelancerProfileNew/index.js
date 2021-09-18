@@ -1,6 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { Switch, Route, matchPath, useLocation } from "react-router";
 import { Box, Stack, useTheme } from "@advisable/donut";
+import useScrollToTop from "src/hooks/useScrollToTop";
 import Loading from "src/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import CoverImage from "./components/CoverImage";
@@ -11,6 +12,7 @@ import Article from "./components/Article";
 import { useProfileData } from "./queries";
 
 export default function Profile() {
+  useScrollToTop();
   const { loading, data, error } = useProfileData();
   const { setTheme } = useTheme();
   const location = useLocation();
