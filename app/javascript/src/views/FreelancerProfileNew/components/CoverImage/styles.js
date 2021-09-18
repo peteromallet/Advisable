@@ -30,6 +30,12 @@ export const StyledCoverInner = styled.div`
 const size = variant({
   prop: "size",
   variants: {
+    collapse: {
+      width: "100%",
+      height: "120px",
+      padding: "0px",
+      left: "-12px",
+    },
     xl: {
       width: "1136px",
       height: "416px",

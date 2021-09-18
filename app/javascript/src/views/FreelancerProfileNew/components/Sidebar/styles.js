@@ -1,7 +1,7 @@
-import { StyledPassportAvatar } from "src/components/PassportAvatar/styles";
 import styled from "styled-components";
 import { variant } from "styled-system";
 
+export const StyledAvatarWrapper = styled.div``;
 export const StyledNameWrapper = styled.div``;
 export const StyledBioWrapper = styled.div``;
 
@@ -13,7 +13,7 @@ const layout = variant({
       gridTemplateColumns: "auto",
       width: "280px",
       marginRight: 4,
-      [StyledPassportAvatar]: {
+      [StyledAvatarWrapper]: {
         gridRow: "1",
       },
       [StyledNameWrapper]: {
@@ -32,7 +32,7 @@ const layout = variant({
       gridTemplateColumns: "auto auto",
       columnGap: 4,
       width: "auto",
-      [StyledPassportAvatar]: {
+      [StyledAvatarWrapper]: {
         gridRow: "1 / last-line",
       },
       [StyledNameWrapper]: {
@@ -51,7 +51,7 @@ const layout = variant({
       gridTemplateColumns: "auto 1fr",
       width: "auto",
       columnGap: 3,
-      [StyledPassportAvatar]: {
+      [StyledAvatarWrapper]: {
         gridRow: "1",
       },
       [StyledNameWrapper]: {
@@ -68,10 +68,22 @@ const layout = variant({
   },
 });
 
+const type = variant({
+  prop: "type",
+  variants: {
+    profile: {
+      top: "108px",
+    },
+    article: {
+      top: "88px",
+    },
+  },
+});
+
 export const StyledStickySidebar = styled.div`
   ${layout}
+  ${type}
   display: grid;
 
   position: sticky;
-  top: 108px;
 `;

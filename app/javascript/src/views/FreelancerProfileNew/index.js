@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { Switch, Route } from "react-router";
+import { Switch, Route, matchPath, useLocation } from "react-router";
 import { Box, Stack, useTheme } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -13,6 +13,10 @@ import { useProfileData } from "./queries";
 export default function Profile() {
   const { loading, data, error } = useProfileData();
   const { setTheme } = useTheme();
+  const location = useLocation();
+  const isArticle = !!matchPath(location.pathname, {
+    path: "/freelancers/:id/case_studies/:case_study_id",
+  });
 
   useLayoutEffect(() => {
     setTheme((t) => ({ ...t, background: "white" }));
@@ -32,10 +36,12 @@ export default function Profile() {
       mx="auto"
       pb={10}
     >
-      <CoverImage
-        src={data.specialist.coverPhoto}
-        size={["xs", "s", "m", "l", "xl"]}
-      />
+      {isArticle ? null : (
+        <CoverImage
+          src={data.specialist.coverPhoto}
+          size={["xs", "s", "m", "l", "xl"]}
+        />
+      )}
       <Box
         display="flex"
         flexDirection={{ _: "column", l: "row" }}
