@@ -1,14 +1,16 @@
 import React from "react";
+import { useParams } from "react-router";
 import { Box, Text } from "@advisable/donut";
+import useScrollToTop from "src/hooks/useScrollToTop";
+import Loading from "src/components/Loading";
 import CaseStudyContent from "src/components/CaseStudyContent";
 import AdvisableComment from "src/components/AdvisableComment";
-import CaseStudyCard from "./CaseStudyCard";
 import CaseStudyResultsRow from "src/components/CaseStudyResultsRow";
+import CaseStudyCard from "./CaseStudyCard";
 import { useCaseStudy } from "../queries";
-import { useParams } from "react-router";
-import Loading from "src/components/Loading";
 
 export default function Article() {
+  useScrollToTop();
   const params = useParams();
   const { data, loading, error } = useCaseStudy(params.case_study_id);
   if (loading) return <Loading />;
