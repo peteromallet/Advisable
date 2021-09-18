@@ -33,33 +33,33 @@ const size = variant({
     collapse: {
       width: "100%",
       height: "120px",
-      padding: "0px",
+      px: "0px",
       left: "-12px",
     },
     xl: {
       width: "1136px",
       height: "416px",
-      padding: "28px",
+      px: "28px",
     },
     l: {
       width: "1024px",
       height: "368px",
-      padding: "20px",
+      px: "20px",
     },
     m: {
       width: "100vw",
       height: "33.3vw",
-      padding: "20px",
+      px: "20px",
     },
     s: {
       width: "100vw",
       height: "33.3vw",
-      padding: "20px",
+      px: "20px",
     },
     xs: {
       width: "100vw",
       height: "33.3vw",
-      padding: "12px",
+      px: "12px",
     },
   },
 });

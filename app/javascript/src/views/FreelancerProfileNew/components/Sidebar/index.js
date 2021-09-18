@@ -25,7 +25,7 @@ export default function Sidebar({ data }) {
   return (
     <Box
       position="relative"
-      mt={{ _: "-44px", m: "-60px", l: "-128px", xl: "-176px" }}
+      mt={{ _: "-24px", m: "-40px", l: "-108px", xl: "-148px" }}
     >
       <StyledStickySidebar layout={["s", "s", "m", "l"]}>
         <PassportAvatar

@@ -35,6 +35,7 @@ export default function Profile() {
       width={{ l: "1024px", xl: "1136px" }}
       mx="auto"
       pb={10}
+      pt={[3, 5, 5, 5, 7]}
     >
       {isArticle ? null : (
         <CoverImage
@@ -55,7 +56,11 @@ export default function Profile() {
             component={Article}
           />
           <Route>
-            <Stack mt={{ _: 16, m: 12, l: 13 }} width="100%" spacing={11}>
+            <Stack
+              mt={{ _: 14, m: 12, l: 19, xl: 20 }}
+              width="100%"
+              spacing={11}
+            >
               {caseStudies.length ? (
                 <CaseStudies caseStudies={caseStudies} />
               ) : null}
