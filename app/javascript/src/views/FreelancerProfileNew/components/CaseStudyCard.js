@@ -14,6 +14,17 @@ const StyledSkillTag = styled.div`
   margin-bottom: ${theme.space[2]};
 `;
 
+const StyledBackgroundImg = styled.img`
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+`;
+
 export default function CaseStudyCard({ caseStudy }) {
   const params = useParams();
 
@@ -26,48 +37,49 @@ export default function CaseStudyCard({ caseStudy }) {
       <Box
         p={7}
         pb={12}
-        display="flex"
         bg="neutral100"
-        backgroundImage={`url(${caseStudy.coverPhoto})`}
-        backgroundSize="cover"
-        backgroundPosition="center"
+        position="relative"
         borderRadius="20px"
+        overflow="hidden"
       >
-        <Box
-          minWidth="56px"
-          height="64px"
-          bg="white"
-          borderRadius="12px"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          mr={4}
-        >
-          <CompanyLogo src={caseStudy.company?.favicon} />
-        </Box>
-        <Box display="inline-block">
-          <Text
-            textTransform="uppercase"
-            fontSize="13px"
-            fontWeight="semibold"
-            letterSpacing="0.04rem"
-            lineHeight="l"
-            color="neutral700"
-            mb={1}
+        <StyledBackgroundImg src={caseStudy.coverPhoto} />
+        <Box position="relative" display="flex">
+          <Box
+            minWidth="56px"
+            height="64px"
+            bg="white"
+            borderRadius="12px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            mr={4}
           >
-            {caseStudy.companyType}
-          </Text>
-          <Text
-            fontSize="4xl"
-            fontWeight="semibold"
-            letterSpacing="-0.02rem"
-            color="neutral900"
-            mb={8}
-          >
-            {caseStudy.title}
-          </Text>
-          <Box display="flex" flexDirection="row" flexWrap="wrap">
-            {skills}
+            <CompanyLogo src={caseStudy.company?.favicon} />
+          </Box>
+          <Box>
+            <Text
+              textTransform="uppercase"
+              fontSize="13px"
+              fontWeight="semibold"
+              letterSpacing="0.04rem"
+              lineHeight="l"
+              color="neutral700"
+              mb={1}
+            >
+              {caseStudy.companyType}
+            </Text>
+            <Text
+              fontSize="4xl"
+              fontWeight="semibold"
+              letterSpacing="-0.02rem"
+              color="neutral900"
+              mb={8}
+            >
+              {caseStudy.title}
+            </Text>
+            <Box display="flex" flexDirection="row" flexWrap="wrap">
+              {skills}
+            </Box>
           </Box>
         </Box>
       </Box>
