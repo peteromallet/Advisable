@@ -11,12 +11,18 @@ export function useCaseStudy(id) {
   });
 }
 
-export const useProfileData = () => {
+export const useProfileData = (props) => {
   const params = useParams();
   const response = useQuery(GET_PROFILE_DATA, {
     variables: {
       id: params.id,
     },
+    ...props,
   });
+  return response;
+};
+
+export const usePartialProfileData = () => {
+  const response = useProfileData({ returnPartialData: true });
   return response;
 };
