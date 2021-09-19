@@ -7,33 +7,43 @@ import CaseStudyContent from "src/components/CaseStudyContent";
 import AdvisableComment from "src/components/AdvisableComment";
 import CaseStudyResultsRow from "src/components/CaseStudyResultsRow";
 import CaseStudyCard from "./CaseStudyCard";
-import { useCaseStudy } from "../queries";
+import { useCaseStudy, usePartialProfileData } from "../queries";
 
 export default function Article() {
   useScrollToTop();
   const params = useParams();
+  const partialData = usePartialProfileData();
   const { data, loading, error } = useCaseStudy(params.case_study_id);
-  if (loading) return <Loading />;
-  const { caseStudy } = data;
+  if (partialData.loading) return <Loading />;
+
+  const partialCaseStudy = partialData.data.specialist.caseStudies.find(
+    (cs) => cs.id === params.case_study_id,
+  );
 
   return (
     <Box position="relative">
       <Box marginBottom={12}>
-        <CaseStudyCard caseStudy={caseStudy} />
+        <CaseStudyCard caseStudy={partialCaseStudy} />
       </Box>
-      <Box marginBottom={12}>
-        <CaseStudyResultsRow caseStudy={caseStudy} />
-      </Box>
-      <Text fontSize="2xl" lineHeight="28px" fontWeight={450}>
-        {caseStudy.subtitle}
-      </Text>
-      {caseStudy.comment ? (
-        <Box marginTop={12}>
-          <AdvisableComment>{caseStudy.comment}</AdvisableComment>
-        </Box>
-      ) : null}
-      <Box height="1px" bg="neutral100" marginY={12} />
-      <CaseStudyContent caseStudy={caseStudy} />
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <Box marginBottom={12}>
+            <CaseStudyResultsRow caseStudy={data.caseStudy} />
+          </Box>
+          <Text fontSize="2xl" lineHeight="28px" fontWeight={450}>
+            {data.caseStudy.subtitle}
+          </Text>
+          {data.caseStudy.comment ? (
+            <Box marginTop={12}>
+              <AdvisableComment>{data.caseStudy.comment}</AdvisableComment>
+            </Box>
+          ) : null}
+          <Box height="1px" bg="neutral100" marginY={12} />
+          <CaseStudyContent caseStudy={data.caseStudy} />
+        </>
+      )}
     </Box>
   );
 }
