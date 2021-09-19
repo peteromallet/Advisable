@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from "react";
 import { Switch, Route, matchPath, useLocation } from "react-router";
-import { Box, Stack, useTheme } from "@advisable/donut";
+import { Box, Stack, useBreakpoint, useTheme } from "@advisable/donut";
 import useScrollToTop from "src/hooks/useScrollToTop";
 import Loading from "src/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -19,6 +19,7 @@ export default function Profile() {
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:id/case_studies/:case_study_id",
   });
+  const lUp = useBreakpoint("lUp");
 
   useLayoutEffect(() => {
     setTheme((t) => ({ ...t, background: "white" }));
@@ -51,7 +52,7 @@ export default function Profile() {
         px={{ xs: 7, s: 9, l: 11, xl: 14 }}
         maxWidth={{ s: "700px", l: "none" }}
       >
-        <Sidebar data={data} />
+        {isArticle && !lUp ? null : <Sidebar data={data} />}
         <Switch>
           <Route
             path="/freelancers/:id/case_studies/:case_study_id"
