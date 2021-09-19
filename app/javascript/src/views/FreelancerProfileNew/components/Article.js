@@ -21,7 +21,7 @@ export default function Article() {
   );
 
   return (
-    <Box position="relative">
+    <Box position="relative" width="100%">
       <Box marginBottom={12}>
         <CaseStudyCard caseStudy={partialCaseStudy} />
       </Box>

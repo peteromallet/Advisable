@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router";
-import { Box, Text, Link, theme } from "@advisable/donut";
+import useImageOnLoad from "src/hooks/useImageOnLoad";
+import { Box, Text, Link, Skeleton, theme } from "@advisable/donut";
 import CompanyLogo from "./CompanyLogo";
 
 const StyledSkillTag = styled.div`
@@ -25,18 +26,43 @@ const StyledBackgroundImg = styled.img`
   object-position: center;
 `;
 
+const LoadingSkeleton = () => (
+  <Box p={7} pb={12} bg="neutral50" borderRadius="20px">
+    <Box position="relative" display="flex">
+      <Skeleton minWidth="56px" height="64px" mr="16px" />
+      <Box width="100%">
+        <Skeleton width="80px" height="14px" mt={1.5} mb={2} />
+        <Skeleton width="85%" height="24px" mb={1.5} />
+        <Skeleton width="90%" height="24px" mb={1.5} />
+        <Skeleton width="35%" height="24px" mb={8} />
+        <Box display="flex">
+          <Skeleton width="35%" height="25px" mb={2} mr={2} />
+          <Skeleton width="32%" height="25px" mb={2} mr={2} />
+        </Box>
+      </Box>
+    </Box>
+  </Box>
+);
+
 export default function CaseStudyCard({ caseStudy }) {
   const params = useParams();
+  const { loaded, updated } = useImageOnLoad(caseStudy.coverPhoto);
 
   const skills = caseStudy.skills.map(({ skill }) => (
     <StyledSkillTag key={skill.id}>{skill.name}</StyledSkillTag>
   ));
 
+  if (!loaded) return <LoadingSkeleton />;
+
   return (
-    <Link to={`/freelancers/${params.id}/case_studies/${caseStudy.id}`}>
+    <Link
+      to={`/freelancers/${params.id}/case_studies/${caseStudy.id}`}
+      notInline="true"
+    >
       <Box
         p={7}
         pb={12}
+        width="100%"
         bg="neutral100"
         position="relative"
         borderRadius="20px"
