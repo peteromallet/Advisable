@@ -75,7 +75,7 @@ const type = variant({
       top: "108px",
     },
     article: {
-      top: "88px",
+      top: [null, null, null, "80px", "88px"],
     },
   },
 });
