@@ -924,6 +924,7 @@ RSpec.describe ZapierInteractorController, type: :request do
           expect(conversation.participants.pluck(:account_id)).to match_array([user.account_id, second.account_id])
           message = conversation.messages.last
           expect(message.author).to be_nil
+          expect(message).to be_system_message
           expect(message.content).to eq("Content")
         end
       end
