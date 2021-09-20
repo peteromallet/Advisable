@@ -25,6 +25,8 @@ export default function Sidebar({ data }) {
           name={data.specialist.name}
           src={data.specialist.avatar}
           marginBottom={4}
+          // stroke="true"
+          stroke="12px"
         />
         <StyledNameWrapper>
           <Text
