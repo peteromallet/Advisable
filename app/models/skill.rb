@@ -12,6 +12,8 @@ class Skill < ApplicationRecord
   has_many :previous_projects, through: :project_skills, source: :project, source_type: 'PreviousProject'
   has_many :consultations, dependent: :destroy
   has_many :case_study_skills, class_name: "CaseStudy::Skill", dependent: :destroy
+  has_many :skill_category_skills, dependent: :destroy
+  has_many :skill_categories, through: :skill_category_skills
   has_one :label, required: false, dependent: :nullify
 
   validates :name, presence: true
