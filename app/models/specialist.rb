@@ -10,8 +10,6 @@
 # application is stored in the application_stage column.
 #
 class Specialist < ApplicationRecord
-  self.ignored_columns += %i[referrer]
-
   include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser
