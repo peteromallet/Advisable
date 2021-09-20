@@ -8,6 +8,7 @@ module Toby
       attribute :author, Attributes::BelongsTo
       attribute :conversation, Attributes::BelongsTo
       attribute :content, Attributes::LongText
+      attribute :kind, Attributes::Select, options: ["", "system"]
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
     end

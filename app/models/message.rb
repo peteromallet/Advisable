@@ -13,7 +13,7 @@ class Message < ApplicationRecord
   before_validation :strip_content
 
   def system_message?
-    author_id.blank?
+    kind == "system"
   end
 
   def after_create_actions
@@ -40,6 +40,7 @@ end
 #  id              :bigint           not null, primary key
 #  content         :text
 #  idempotency_key :string
+#  kind            :string
 #  uid             :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

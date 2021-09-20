@@ -35,7 +35,8 @@ class Conversation < ApplicationRecord
   end
 
   def new_message!(author, content, attachments = [], uid = nil)
-    message = messages.create!(author: author, content: content, uid: uid)
+    kind = author.present? ? nil : "system"
+    message = messages.create!(author: author, content: content, uid: uid, kind: kind)
     message.attachments.attach(attachments) if attachments.present?
     message.reload.after_create_actions
     message
