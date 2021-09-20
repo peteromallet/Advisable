@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_17_121909) do
+ActiveRecord::Schema.define(version: 2021_09_20_082651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -664,8 +664,11 @@ ActiveRecord::Schema.define(version: 2021_09_17_121909) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "idempotency_key"
     t.string "kind"
+    t.uuid "guild_post_id"
+    t.jsonb "metadata"
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["guild_post_id"], name: "index_messages_on_guild_post_id"
     t.index ["idempotency_key"], name: "index_messages_on_idempotency_key"
     t.index ["uid"], name: "index_messages_on_uid", unique: true
   end
@@ -1246,6 +1249,7 @@ ActiveRecord::Schema.define(version: 2021_09_17_121909) do
   add_foreign_key "matches", "specialists"
   add_foreign_key "messages", "accounts", column: "author_id"
   add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "guild_posts"
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
   add_foreign_key "off_platform_projects", "specialists"
