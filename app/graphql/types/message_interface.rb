@@ -16,10 +16,10 @@ module Types
 
     definition_methods do
       def resolve_type(object, _)
-        if object.author_id.present?
-          Types::UserMessage
-        else
+        if object.system_message?
           Types::SystemMessage
+        else
+          Types::UserMessage
         end
       end
     end
