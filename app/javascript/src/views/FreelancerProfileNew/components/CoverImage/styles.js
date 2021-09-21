@@ -31,8 +31,10 @@ const size = variant({
   prop: "size",
   variants: {
     collapse: {
-      width: "100%",
-      height: "120px",
+      position: "absolute !important",
+      top: "0",
+      width: "304px",
+      height: "114px",
       px: "0px",
       left: "-12px",
     },
