@@ -65,7 +65,7 @@ RSpec.describe Mutations::CaseStudy::AssignArticle do
     end
   end
 
-  context "when shared article" do
+  context "when shared article", skip: "we're pretending these don't exist for now" do
     let(:shared_article) { create(:case_study_shared_article, shared_with: user) }
     let(:article) { shared_article.article }
 
