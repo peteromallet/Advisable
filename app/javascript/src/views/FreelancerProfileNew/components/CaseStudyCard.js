@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import { useParams } from "react-router";
 import useImageOnLoad from "src/hooks/useImageOnLoad";
@@ -16,10 +17,7 @@ const StyledSkillTag = styled.div`
 `;
 
 const StyledBackgroundImg = styled.img`
-  position: absolute;
   pointer-events: none;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -68,8 +66,25 @@ export default function CaseStudyCard({ caseStudy }) {
         borderRadius="20px"
         overflow="hidden"
       >
-        <StyledBackgroundImg src={caseStudy.coverPhoto} />
-        <Box position="relative" display="flex">
+        <Box
+          as={motion.div}
+          whileHover={{ scale: 1.02, y: 2, x: 4 }}
+          transition={{ duration: 0.2, type: "tween", stiffness: 100 }}
+          position="absolute"
+          left="0"
+          top="0"
+          width="100%"
+          height="100%"
+        >
+          <StyledBackgroundImg as={motion.img} src={caseStudy.coverPhoto} />
+        </Box>
+        <Box
+          position="relative"
+          display="flex"
+          css={`
+            pointer-events: none;
+          `}
+        >
           <Box
             minWidth="56px"
             height="64px"
