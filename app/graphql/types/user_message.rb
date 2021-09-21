@@ -7,6 +7,6 @@ module Types
     graphql_name "UserMessage"
     description "Type for the Message model when we have an account."
 
-    field :author, Types::Account, null: false
+    field :author, Types::Account, null: true
   end
 end
