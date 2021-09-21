@@ -139,4 +139,19 @@ RSpec.describe CaseStudy::Search, type: :model do
       end
     end
   end
+
+  describe "#archived" do
+    it "returns an array on nil" do
+      search =  create(:case_study_search, archived: nil)
+      expect(search.archived).to eq([])
+    end
+
+    it "uniques ids on save" do
+      search =  create(:case_study_search)
+      search.archived = [123, 123, 1234]
+      expect(search.archived).to eq([123, 123, 1234])
+      search.save!
+      expect(search.archived).to eq([123, 1234])
+    end
+  end
 end

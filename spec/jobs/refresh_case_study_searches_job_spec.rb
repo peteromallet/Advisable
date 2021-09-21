@@ -75,8 +75,7 @@ RSpec.describe RefreshCaseStudySearchesJob do
       article = create(:case_study_article)
       article.skills.create(skill: skill3)
     end
-    search1.update(results: [article1.id, article2.id])
-    create(:case_study_archived_article, user: search1.user, article: article1)
+    search1.update(results: [article1.id, article2.id], archived: [article1.id])
     search1.skills.create(skill: skill3)
     described_class.perform_now
     results = search1.reload.attributes["results"]
