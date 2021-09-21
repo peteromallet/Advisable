@@ -38,6 +38,16 @@ export const StyledAvatarImg = styled.img`
   object-fit: cover;
 `;
 
+export const StyledAvatarStroke = styled.div`
+  position: absolute;
+  top: calc(0px - var(--stroke));
+  left: calc(0px - var(--stroke));
+  background: white;
+  width: calc(100% + (var(--stroke) * 2));
+  height: calc(100% + (var(--stroke) * 2));
+  clip-path: url(#passportSquircle);
+`;
+
 const size = variant({
   prop: "$size",
   variants: {
