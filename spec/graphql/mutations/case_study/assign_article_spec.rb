@@ -28,12 +28,13 @@ RSpec.describe Mutations::CaseStudy::AssignArticle do
 
   describe "action: archive" do
     let(:action) { "archive" }
+    let(:extra) { "search: \"#{search.uid}\"" }
 
     it "archives the article to the search" do
       response = AdvisableSchema.execute(query, context: context)
       r_article = response["data"]["assignCaseStudyArticle"]["article"]
       expect(r_article["id"]).to eq(article.uid)
-      expect(::CaseStudy::ArchivedArticle.where(user: search.user, article: article)).not_to be_empty
+      expect(search.reload.archived).to include(article.id)
     end
 
     context "when feedback provided" do
@@ -53,14 +54,14 @@ RSpec.describe Mutations::CaseStudy::AssignArticle do
 
   describe "action: unarchive" do
     let(:action) { "unarchive" }
+    let(:extra) { "search: \"#{search.uid}\"" }
 
     it "unarchives the article to the search" do
-      create(:case_study_archived_article, user: search.user, article: article)
-      expect(::CaseStudy::ArchivedArticle.where(user: search.user)).not_to be_empty
+      search.update(archived: [article.id])
       response = AdvisableSchema.execute(query, context: context)
       r_article = response["data"]["assignCaseStudyArticle"]["article"]
       expect(r_article["id"]).to eq(article.uid)
-      expect(::CaseStudy::ArchivedArticle.where(user: search.user)).to be_empty
+      expect(search.reload.archived).not_to include(article.id)
     end
   end
 

@@ -13,6 +13,8 @@ module CaseStudy
     has_many :skills, dependent: :destroy
     has_many :search_feedbacks, dependent: :destroy
 
+    before_save :uniq_archived
+
     def name
       super.presence || (skills.primary.first || skills.first)&.skill&.name
     end
@@ -50,6 +52,12 @@ module CaseStudy
         query = query.where("goals ?| array[:goals]", goals: goals)
       end
       query.by_score
+    end
+
+    private
+
+    def uniq_archived
+      self.archived = archived.uniq
     end
   end
 end
