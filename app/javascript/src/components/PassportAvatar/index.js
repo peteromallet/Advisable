@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import possessive from "src/utilities/possesive";
 import { Box } from "@advisable/donut";
 import {
   StyledPassportAvatar,
@@ -6,19 +7,8 @@ import {
   StyledAvatarImg,
 } from "./styles";
 
-function PassportAvatar({
-  src,
-  name,
-  size,
-  stroke,
-  children,
-  color,
-  ...props
-}) {
-  const style = {};
-  if (src) {
-    style.backgroundImage = `url(https://pbs.twimg.com/profile_images/768332283161874432/TUwUwDJE_400x400.jpg)`;
-  }
+function PassportAvatar({ src, name, size, stroke, color, ...props }) {
+  const [error, setError] = useState(false);
 
   let initials = name[0];
   const nameSplit = name.split(" ");
@@ -55,7 +45,13 @@ function PassportAvatar({
       <StyledPassportAvatarInner color={color}>
         {initials}
       </StyledPassportAvatarInner>
-      <StyledAvatarImg src="https://pbs.twimg.com/profile_images/768332283161874432/TUwUwDJE_400x400.jpg" />
+      {src && !error ? (
+        <StyledAvatarImg
+          src={src}
+          alt={`${possessive(name)} profile picture`}
+          onError={() => setError(true)}
+        />
+      ) : null}
     </StyledPassportAvatar>
   );
 }
