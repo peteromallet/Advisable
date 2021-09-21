@@ -52,6 +52,7 @@ end
 # Table name: case_study_searches
 #
 #  id                    :bigint           not null, primary key
+#  archived              :jsonb
 #  business_type         :string
 #  company_recomendation :boolean
 #  finalized_at          :datetime
