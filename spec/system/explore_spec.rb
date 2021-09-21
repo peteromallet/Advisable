@@ -42,7 +42,7 @@ RSpec.describe 'Explore', type: :system do
 
   it 'user can archive an article from the index view' do
     authenticate_as(user)
-    expect(user.reload.archived_articles).to be_empty
+    expect(company_search.reload.archived).to be_empty
     visit "/explore/#{company_search.uid}"
     expect(page).to have_content(article1.title)
     first("button", text: "Archive").click
@@ -52,13 +52,12 @@ RSpec.describe 'Explore', type: :system do
     end
     click_link("Archive")
     expect(page).to have_content(article1.title)
-    expect(user.reload.archived_articles).not_to be_empty
+    expect(company_search.reload.archived).not_to be_empty
   end
 
   it 'user can share an article from the index view' do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     authenticate_as(user)
-    expect(user.reload.archived_articles).to be_empty
     visit "/explore/#{company_search.uid}"
     expect(page).to have_content(article1.title)
     first("button", text: "Share").click
@@ -106,7 +105,7 @@ RSpec.describe 'Explore', type: :system do
 
   it 'user can archive an article from the article view' do
     authenticate_as(user)
-    expect(user.reload.archived_articles).to be_empty
+    expect(company_search.reload.archived).to be_empty
     visit "/explore/articles/#{article1.uid}?search=#{company_search.uid}"
     expect(page).to have_content(article1.title)
     click_button("Archive")
@@ -118,7 +117,7 @@ RSpec.describe 'Explore', type: :system do
     click_on("Go back")
     click_link("Archive")
     expect(page).to have_content(article1.title)
-    expect(user.reload.archived_articles).not_to be_empty
+    expect(company_search.reload.archived).not_to be_empty
   end
 
   it 'user can share an article from the article view' do

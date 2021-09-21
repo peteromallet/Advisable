@@ -355,7 +355,7 @@ module Types
 
     field :shared_articles, [Types::CaseStudy::SharedArticle], null: false
     def shared_articles
-      current_user.received_articles.where.not(article_id: current_user.archived_articles.select(:article_id))
+      current_user.received_articles
     end
 
     field :case_study_search, Types::CaseStudy::Search, null: true do
