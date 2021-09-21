@@ -33,6 +33,11 @@ module Types
       def preferences
         object.preferences || []
       end
+
+      field :archived, Article.connection_type, null: false
+      def archived
+        CaseStudy::Article.where(id: object.archived)
+      end
     end
   end
 end
