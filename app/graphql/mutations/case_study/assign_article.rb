@@ -19,17 +19,18 @@ module Mutations
 
       def resolve(article:, action:, **args)
         article = ::CaseStudy::Article.find_by!(uid: article)
+        search = ::CaseStudy::Search.find_by!(uid: args[:search]) if args[:search]
 
         case action
         when "archive"
-          article.archived_articles.create!(user: current_user)
+          search.update!(archived: search.archived + [article.id])
         when "unarchive"
-          article.archived_articles.where(user: current_user).destroy_all
+          search.update!(archived: search.archived - [article.id])
         end
 
-        if args[:feedback] && args[:search]
+        if args[:feedback] && search
           ::CaseStudy::SearchFeedback.create!(
-            search: ::CaseStudy::Search.find_by!(uid: args[:search]),
+            search: search,
             article: article,
             feedback: args[:feedback]
           )
