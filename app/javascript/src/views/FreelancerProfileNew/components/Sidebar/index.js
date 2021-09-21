@@ -14,7 +14,7 @@ import {
   StyledBioWrapper,
 } from "./styles";
 
-export default function Sidebar({ data }) {
+export default function Sidebar({ data, ...props }) {
   const bio = data.specialist.bio.slice(0, 140);
   const params = useParams();
   const id = params?.id;
@@ -25,16 +25,26 @@ export default function Sidebar({ data }) {
   return (
     <Box
       position="relative"
-      mt={{ _: "-24px", m: "-40px", l: "-108px", xl: "-148px" }}
+      mt={!isArticle && { _: "-24px", m: "-40px", l: "-108px", xl: "-148px" }}
     >
-      <StyledStickySidebar layout={["s", "s", "m", "l"]}>
-        <PassportAvatar
-          size={["lg", "lg", "xl", "xl", "2xl"]}
-          name={data.specialist.name}
-          src={data.specialist.avatar}
-          marginBottom={4}
-          stroke="2px"
-        />
+      <StyledStickySidebar layout={["s", "s", "m", "l"]} {...props}>
+        <StyledAvatarWrapper>
+          {isArticle ? (
+            <Box position="relative">
+              <Box position="absolute" left="0" top="0" zIndex="2">
+                <Link to={`/freelancers/${id}`}>Go to profile</Link>
+              </Box>
+              <CoverImage src={data.specialist.coverPhoto} size="collapse" />
+            </Box>
+          ) : null}
+          <PassportAvatar
+            size={isArticle ? "lg" : ["lg", "lg", "xl", "xl", "2xl"]}
+            name={data.specialist.name}
+            src={data.specialist.avatar}
+            marginBottom={4}
+            marginTop={isArticle && 18}
+          />
+        </StyledAvatarWrapper>
         <StyledNameWrapper>
           <Text
             fontSize={{ _: "2xl", m: "5xl" }}
@@ -49,7 +59,7 @@ export default function Sidebar({ data }) {
           <Box display="flex" color="neutral400" alignItems="center">
             <Map height="20px" width="20px" color="neutral500" />
             <Text
-              fontSize={{ _: "s", m: "17px" }}
+              fontSize={{ _: "s", m: "m" }}
               fontWeight="medium"
               color="neutral400"
               lineHeight="l"
@@ -61,7 +71,7 @@ export default function Sidebar({ data }) {
         </StyledNameWrapper>
         <StyledBioWrapper>
           <Text
-            fontSize={{ _: "m", m: "l" }}
+            fontSize={{ _: "m", m: "m" }}
             lineHeight="l"
             color="neutral700"
             mb={7}

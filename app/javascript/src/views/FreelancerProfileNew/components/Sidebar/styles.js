@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { variant } from "styled-system";
+import { top, variant } from "styled-system";
 
 export const StyledAvatarWrapper = styled.div``;
 export const StyledNameWrapper = styled.div``;
@@ -68,22 +68,9 @@ const layout = variant({
   },
 });
 
-const type = variant({
-  prop: "type",
-  variants: {
-    profile: {
-      top: "108px",
-    },
-    article: {
-      top: [null, null, null, "80px", "88px"],
-    },
-  },
-});
-
 export const StyledStickySidebar = styled.div`
   ${layout}
-  ${type}
+  ${top}
   display: grid;
-
   position: sticky;
 `;

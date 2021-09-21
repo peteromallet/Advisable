@@ -1,7 +1,8 @@
 import React from "react";
 import { useParams } from "react-router";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, useBreakpoint } from "@advisable/donut";
 import useScrollToTop from "src/hooks/useScrollToTop";
+import NotFound, { isNotFound } from "src/views/NotFound";
 import Loading from "src/components/Loading";
 import CaseStudyContent from "src/components/CaseStudyContent";
 import AdvisableComment from "src/components/AdvisableComment";
@@ -14,9 +15,11 @@ export default function Article() {
   useScrollToTop();
   const params = useParams();
   const partialData = usePartialProfileData();
-  console.log("partialData", partialData);
   const { data, loading, error } = useCaseStudy(params.case_study_id);
+  const lUp = useBreakpoint("lUp");
+
   if (partialData.loading) return <Loading />;
+  if (isNotFound(error)) return <NotFound />;
 
   const partialCaseStudy = partialData.data.specialist.caseStudies.find(
     (cs) => cs.id === params.case_study_id,
@@ -29,7 +32,9 @@ export default function Article() {
       px={{ xs: 7, s: 9, l: 11, xl: 14 }}
       maxWidth={{ s: "700px", l: "none" }}
     >
-      <Sidebar data={partialData.data} />
+      {lUp ? (
+        <Sidebar data={partialData.data} top={{ l: "80px", xl: "88px" }} />
+      ) : null}
       <Box position="relative" width="100%">
         <Box marginBottom={12}>
           <CaseStudyCard caseStudy={partialCaseStudy} />

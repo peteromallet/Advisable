@@ -46,7 +46,7 @@ const LoadingSkeleton = () => (
 
 export default function CaseStudyCard({ caseStudy }) {
   const params = useParams();
-  const { loaded, updated } = useImageOnLoad(caseStudy.coverPhoto);
+  const { loaded } = useImageOnLoad(caseStudy.coverPhoto);
 
   const skills = caseStudy.skills.map(({ skill }) => (
     <StyledSkillTag key={skill.id}>{skill.name}</StyledSkillTag>
