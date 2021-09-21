@@ -33,12 +33,12 @@ export default function UserMessage({ message }) {
             color="blue300"
             size="xs"
             display="inline-flex"
-            name={message.author.name}
+            name={message.author?.name}
           />
         </Box>
         <Box width="100%">
           <Text fontSize="17px" fontWeight={550}>
-            {message.author.name}
+            {message.author?.name || "Deleted user"}
           </Text>
         </Box>
         <Box flexShrink={0}>
