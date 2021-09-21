@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { useParams } from "react-router";
+import { matchPath, useParams } from "react-router";
 import useImageOnLoad from "src/hooks/useImageOnLoad";
 import { Box, Text, Link, Skeleton, theme } from "@advisable/donut";
 import CompanyLogo from "./CompanyLogo";
@@ -46,6 +46,10 @@ export default function CaseStudyCard({ caseStudy }) {
   const params = useParams();
   const { loaded } = useImageOnLoad(caseStudy.coverPhoto);
 
+  const isArticle = !!matchPath(location.pathname, {
+    path: "/freelancers/:id/case_studies/:case_study_id",
+  });
+
   const skills = caseStudy.skills.map(({ skill }) => (
     <StyledSkillTag key={skill.id}>{skill.name}</StyledSkillTag>
   ));
@@ -53,7 +57,8 @@ export default function CaseStudyCard({ caseStudy }) {
   if (!loaded) return <LoadingSkeleton />;
 
   return (
-    <Link
+    <Box
+      as={isArticle ? null : Link}
       to={`/freelancers/${params.id}/case_studies/${caseStudy.id}`}
       notInline="true"
     >
@@ -67,7 +72,7 @@ export default function CaseStudyCard({ caseStudy }) {
         overflow="hidden"
       >
         <Box
-          as={motion.div}
+          as={isArticle ? null : motion.div}
           whileHover={{ scale: 1.02, y: 2, x: 4 }}
           transition={{ duration: 0.2, type: "tween", stiffness: 100 }}
           position="absolute"
@@ -124,6 +129,6 @@ export default function CaseStudyCard({ caseStudy }) {
           </Box>
         </Box>
       </Box>
-    </Link>
+    </Box>
   );
 }
