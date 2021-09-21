@@ -12,7 +12,7 @@ const layout = variant({
       gridTemplateRows: "auto",
       gridTemplateColumns: "auto",
       width: "280px",
-      marginRight: 4,
+      marginRight: 8,
       [StyledAvatarWrapper]: {
         gridRow: "1",
       },
