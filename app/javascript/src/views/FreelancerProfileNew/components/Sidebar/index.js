@@ -1,9 +1,9 @@
 import React from "react";
-import { matchPath, useParams } from "react-router";
+import { matchPath } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import { LinkedinIn } from "@styled-icons/fa-brands/LinkedinIn";
 import { Globe } from "@styled-icons/heroicons-solid/Globe";
-import { Button, Box, Text, Link } from "@advisable/donut";
+import { Button, Box, Text } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
 import SocialIcon from "../SocialIcon";
 import CoverImage from "../CoverImage";
@@ -13,11 +13,10 @@ import {
   StyledNameWrapper,
   StyledBioWrapper,
 } from "./styles";
+import BackButton from "../BackButton";
 
 export default function Sidebar({ data, ...props }) {
   const bio = data.specialist.bio.slice(0, 140);
-  const params = useParams();
-  const id = params?.id;
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:id/case_studies/:case_study_id",
   });
@@ -31,9 +30,7 @@ export default function Sidebar({ data, ...props }) {
         <StyledAvatarWrapper>
           {isArticle ? (
             <Box position="relative">
-              <Box position="absolute" left="0" top="0" zIndex="2">
-                <Link to={`/freelancers/${id}`}>Go to profile</Link>
-              </Box>
+              <BackButton>Go to profile</BackButton>
               <CoverImage src={data.specialist.coverPhoto} size="collapse" />
             </Box>
           ) : null}
