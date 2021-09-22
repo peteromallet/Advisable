@@ -48,9 +48,12 @@ module Types
       end
 
       field :is_archived, Boolean, null: false do
-        argument :search, ID, required: true
+        argument :search, ID, required: false
       end
-      def is_archived(search:)
+      def is_archived(search: nil)
+        # TODO: Thomas: remove this line and make arg required when we have a search on frontend always
+        return false if search.blank?
+
         search = CaseStudy::Search.find_by!(uid: search)
         search.archived.include?(object.id)
       end
