@@ -5,8 +5,6 @@ function useLoadImage(url) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
-
     if (!url) {
       setLoading(false);
     }
