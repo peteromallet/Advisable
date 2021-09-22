@@ -1,8 +1,8 @@
 import React from "react";
 import truncate from "lodash/truncate";
 import styled from "styled-components";
-import { Link, useParams } from "react-router-dom";
-import { Box, Text, Button, theme, Heading } from "@advisable/donut";
+import { useParams } from "react-router-dom";
+import { Box, Text, theme, Heading } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import PassportAvatar from "src/components/PassportAvatar";
 import CaseStudyContent from "src/components/CaseStudyContent";
@@ -14,6 +14,7 @@ import useScrollToTop from "src/hooks/useScrollToTop";
 import { motion } from "framer-motion";
 import CaseStudyResultsRow from "../components/CaseStudyResultsRow";
 import AdvisableComment from "../components/AdvisableComment";
+import PrimaryButton from "./PrimaryButton";
 
 const StyledName = styled.a`
   display: block;
@@ -53,16 +54,7 @@ function FreelancerDetails({ caseStudy }) {
       >
         {truncate(specialist.bio, { length: 110 })}
       </Text>
-      <Button
-        as={Link}
-        variant="gradient"
-        target="_blank"
-        size={{ _: "l", l: "md" }}
-        width={{ _: "100%", md: null }}
-        to={`/request_consultation/${specialist.id}`}
-      >
-        Work Together
-      </Button>
+      <PrimaryButton specialist={specialist} />
     </Box>
   );
 }
