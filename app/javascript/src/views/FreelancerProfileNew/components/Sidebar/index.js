@@ -4,7 +4,7 @@ import { Map } from "@styled-icons/heroicons-outline/Map";
 import { LinkedinIn } from "@styled-icons/fa-brands/LinkedinIn";
 import { Globe } from "@styled-icons/heroicons-solid/Globe";
 import { Button, Box, Text } from "@advisable/donut";
-import PassportAvatar from "src/components/PassportAvatar";
+import ProfilePicture from "../ProfilePicture";
 import SocialIcon from "../SocialIcon";
 import CoverImage from "../CoverImage";
 import {
@@ -34,13 +34,7 @@ export default function Sidebar({ data, ...props }) {
               <CoverImage src={data.specialist.coverPhoto} size="collapse" />
             </Box>
           ) : null}
-          <PassportAvatar
-            size={isArticle ? "lg" : ["lg", "lg", "xl", "xl", "2xl"]}
-            name={data.specialist.name}
-            src={data.specialist.avatar}
-            marginBottom={4}
-            marginTop={isArticle && 18}
-          />
+          <ProfilePicture specialist={data.specialist} />
         </StyledAvatarWrapper>
         <StyledNameWrapper>
           <Text
