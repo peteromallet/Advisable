@@ -7,6 +7,7 @@ export default function useHotjarUser(viewer) {
     if (viewer) {
       window.hj("identify", viewer.id, {
         name: viewer.name,
+        UserId: viewer.id,
       });
     } else {
       window.hj("identify", null);
