@@ -10,7 +10,7 @@ module Mutations
     field :previous_project, Types::PreviousProject, null: true
 
     def authorized?(previous_project:, **_args)
-      return false unless oauth_viewer
+      requires_oauth_viewer!
 
       project = PreviousProject.find_by_uid!(previous_project)
       oauth_viewer.can_validate_project?(project)
