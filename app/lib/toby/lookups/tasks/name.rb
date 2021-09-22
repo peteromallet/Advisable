@@ -4,6 +4,14 @@ module Toby
   module Lookups
     module Tasks
       class Name < Attributes::String
+        filter 'contains...', Filters::StringContains do |records, _attribute, value|
+          if value.any? && value.first.present?
+            records.where(task: Task.where("name ILIKE ?", "%#{value.first}%"))
+          else
+            records
+          end
+        end
+
         def self.lookup?
           true
         end
