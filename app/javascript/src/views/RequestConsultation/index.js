@@ -20,9 +20,11 @@ import Send from "./Send";
 import Complete from "./Complete";
 import Authenticate from "./Authenticate";
 import { useSpecialist } from "./queries";
+import useViewer from "src/hooks/useViewer";
 
 const RequestConsultation = () => {
-  const theme = useTheme();
+  const { setTheme } = useTheme();
+  const viewer = useViewer();
   const params = useParams();
   const location = useLocation();
   const { data, loading, error } = useSpecialist({
@@ -33,16 +35,20 @@ const RequestConsultation = () => {
   const largeScreen = useBreakpoint("lUp");
   React.useEffect(() => {
     if (!mediumAndUp) {
-      theme.updateTheme({ background: "white" });
+      setTheme((theme) => ({ ...theme, background: "white" }));
     }
-    return () => theme.updateTheme({ background: "default" });
-  }, []);
+    return () => setTheme((theme) => ({ ...theme, background: "default" }));
+  }, [mediumAndUp, setTheme]);
 
   const queryParams = queryString.parse(location.search);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  if (viewer?.isSpecialist) {
+    return <Redirect to="/" />;
+  }
 
   if (error?.graphQLErrors[0].extensions.code === "NOT_FOUND") {
     return <NotFound />;
