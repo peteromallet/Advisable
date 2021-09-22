@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { matchPath, useParams } from "react-router";
-import useImageOnLoad from "src/hooks/useImageOnLoad";
+import useLoadImage from "src/hooks/useLoadImage";
 import { Box, Text, Link, Skeleton, theme } from "@advisable/donut";
 import CompanyLogo from "./CompanyLogo";
 
@@ -44,7 +44,7 @@ const LoadingSkeleton = () => (
 
 export default function CaseStudyCard({ caseStudy }) {
   const params = useParams();
-  const { loaded } = useImageOnLoad(caseStudy.coverPhoto);
+  const coverPhoto = useLoadImage(caseStudy.coverPhoto);
 
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:id/case_studies/:case_study_id",
@@ -54,7 +54,7 @@ export default function CaseStudyCard({ caseStudy }) {
     <StyledSkillTag key={skill.id}>{skill.name}</StyledSkillTag>
   ));
 
-  if (!loaded) return <LoadingSkeleton />;
+  if (coverPhoto.isLoading) return <LoadingSkeleton />;
 
   return (
     <Box
@@ -71,18 +71,11 @@ export default function CaseStudyCard({ caseStudy }) {
         borderRadius="20px"
         overflow="hidden"
       >
-        <Box
-          as={isArticle ? null : motion.div}
-          whileHover={{ scale: 1.02, y: 2, x: 4 }}
-          transition={{ duration: 0.2, type: "tween", stiffness: 100 }}
-          position="absolute"
-          left="0"
-          top="0"
-          width="100%"
-          height="100%"
-        >
-          <StyledBackgroundImg as={motion.img} src={caseStudy.coverPhoto} />
-        </Box>
+        {coverPhoto.url ? (
+          <Box top="0" left="0" width="100%" height="100%" position="absolute">
+            <StyledBackgroundImg as={motion.img} src={coverPhoto.url} />
+          </Box>
+        ) : null}
         <Box
           position="relative"
           display="flex"
