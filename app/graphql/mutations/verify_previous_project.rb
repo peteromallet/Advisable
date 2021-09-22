@@ -9,7 +9,7 @@ module Mutations
     field :previous_project, Types::PreviousProject, null: true
 
     def authorized?(id:)
-      return false unless oauth_viewer
+      requires_oauth_viewer!
 
       project = PreviousProject.find_by_uid!(id)
       verifier = PreviousProject::Verifier.new(oauth_viewer, project, responsible_id: current_account_id)
