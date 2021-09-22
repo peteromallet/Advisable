@@ -51,19 +51,23 @@ const FileUploader = styled.div`
   display: flex;
   overflow: hidden;
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  bottom: 16px;
+  right: -8px;
   border-radius: 50%;
   align-items: center;
   justify-content: center;
-  color: ${theme.colors.neutral700};
+  /* color: ${rgba(theme.colors.blue500, 1)}; */
+  color: white;
   background: ${rgba(theme.colors.neutral200, 0.4)};
+  backdrop-filter: blur(8px);
+  border: 1px solid;
+  border-color: ${theme.colors.neutral300};
   transition: background 0.2s, color 0.2s, opacity 0.2s;
   opacity: 0;
 
   &:hover {
-    color: ${theme.colors.neutral800};
-    background: ${rgba(theme.colors.neutral200, 0.7)};
+    color: ${rgba(theme.colors.blue100, 1)};
+    background: ${rgba(theme.colors.neutral700, 0.6)};
   }
   ${Wrapper}:hover & {
     opacity: 1;
@@ -183,7 +187,7 @@ const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
           </BluredBackground>
         )}
       </AnimatePresence>
-      <Tooltip placement="top" content={TooltipContent}>
+      <Tooltip placement="right" content={TooltipContent}>
         <FileUploader>
           <Camera size={20} strokeWidth={2} />
           <input type="file" accept={accept} onChange={handleChange} />
