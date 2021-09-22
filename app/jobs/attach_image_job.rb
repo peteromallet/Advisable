@@ -17,7 +17,7 @@ class AttachImageJob < ApplicationJob
       object.contact_image.attach(io: file, filename: filename)
     when SalesPerson
       object.image.attach(io: file, filename: filename)
-    when User, Specialist
+    when User, Specialist, Review
       object.avatar.attach(io: file, filename: filename)
     else
       Sentry.capture_message("Don't know what to do with #{object.class.name}")

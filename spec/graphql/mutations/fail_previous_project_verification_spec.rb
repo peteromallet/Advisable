@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::FailPreviousProjectVerification do
   let(:contact_name) { "John Doe" }
-  let(:previous_project) {
+  let(:previous_project) do
     create(:previous_project, {
       validation_status: "Pending",
       contact_first_name: contact_name.split.first,
       contact_last_name: contact_name.split.last
     })
-  }
+  end
 
   let(:query) do
     <<-GRAPHQL
@@ -28,7 +30,7 @@ RSpec.describe Mutations::FailPreviousProjectVerification do
 
   let(:viewer_name) { "John Doe" }
 
-  let(:oauth_viewer) {
+  let(:oauth_viewer) do
     OauthViewer.new(
       {
         'uid' => 'test',
@@ -39,21 +41,17 @@ RSpec.describe Mutations::FailPreviousProjectVerification do
         'image' => ''
       }
     )
-  }
+  end
 
-  let(:request) {
+  let(:request) do
     AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
-  }
+  end
 
   it 'sets the validation_status to "Validation Failed" and saves the reason' do
     expect { request }.to change {
       previous_project.reload.validation_status
     }.from("Pending").to("Validation Failed")
     expect(previous_project.validation_failed_reason).to eq("testing")
-  end
-
-  it 'schedules a job to store the contact image' do
-    expect { request }.to have_enqueued_job(AttachImageJob)
   end
 
   context 'when the viewer is not the project contact' do
