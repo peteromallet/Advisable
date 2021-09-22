@@ -14,13 +14,14 @@ module Guild
     belongs_to :article, optional: true, class_name: "::CaseStudy::Article"
     has_one :account, through: :specialist
     has_many :reactions, as: :reactionable, dependent: :destroy
-    has_many :comments, -> { published }, foreign_key: 'guild_post_id', class_name: 'Guild::Comment', inverse_of: 'post'
-    has_many :parent_comments, -> { where(parent_comment_id: nil).published }, class_name: 'Guild::Comment', foreign_key: 'guild_post_id', inverse_of: 'post'
+    has_many :comments, -> { published }, foreign_key: 'guild_post_id', class_name: 'Guild::Comment', inverse_of: 'post', dependent: :destroy
+    has_many :parent_comments, -> { where(parent_comment_id: nil).published }, class_name: 'Guild::Comment', foreign_key: 'guild_post_id', inverse_of: 'post', dependent: :destroy
     has_many :images, class_name: 'Guild::PostImage', foreign_key: 'guild_post_id', inverse_of: 'post', dependent: :destroy
     has_many :engagements, class_name: 'Guild::PostEngagement', foreign_key: 'guild_post_id', dependent: :destroy, inverse_of: 'post'
     has_many :notifications, inverse_of: 'notifiable', foreign_key: 'notifiable_id', dependent: :destroy
     has_many :labelings, foreign_key: :guild_post_id, inverse_of: :guild_post, dependent: :destroy
     has_many :labels, through: :labelings
+    has_many :messages, foreign_key: :guild_post_id, inverse_of: :guild_post, dependent: :nullify
 
     scope :labeled_with, ->(labels) { includes(:labelings).where(labelings: {labels: labels}) }
 
