@@ -22,8 +22,6 @@ module Mutations
         project.update(validation_status: 'Validation Failed', validation_failed_reason: reason)
       end
 
-      AttachImageJob.perform_later(project, oauth_viewer.image)
-
       {previous_project: project}
     end
   end
