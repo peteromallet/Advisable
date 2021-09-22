@@ -2,6 +2,8 @@
 
 module Mutations
   class CreateUserFromProjectVerification < Mutations::BaseMutation
+    description 'Creates a new user from a previous project verification'
+
     include Mutations::Helpers::BlacklistedEmail
 
     argument :email, String, required: true
@@ -10,26 +12,18 @@ module Mutations
 
     field :user, Types::User, null: true
 
-    def authorized?(previous_project:, email:, fid:)
-      unless context[:oauth_viewer]
-        ApiError.invalid_request(
-          'notAuthenticated',
-          'Not logged into Linkedin'
-        )
-      end
-
-      true
+    def authorized?(**_args)
+      requires_oauth_viewer!
     end
 
     def resolve(previous_project:, email:, fid:)
       project = PreviousProject.find_by_uid(previous_project)
-      viewer = context[:oauth_viewer]
 
       email_blacklisted?(email)
       account = Account.new(
         email: email,
-        first_name: viewer.first_name,
-        last_name: viewer.last_name,
+        first_name: oauth_viewer.first_name,
+        last_name: oauth_viewer.last_name,
         permissions: [:team_manager]
       )
       account.save!
@@ -49,7 +43,7 @@ module Mutations
         campaign_source: 'validation'
       )
       user.save_and_sync_with_responsible!(current_account_id)
-      AttachImageJob.perform_later(user, viewer.image)
+      AttachImageJob.perform_later(user, oauth_viewer.image)
       {user: user}
     rescue ActiveRecord::RecordInvalid
       if account.errors.added?(:email, :taken, value: email)

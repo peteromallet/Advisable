@@ -91,7 +91,7 @@ module Types
         end
 
       sorted = records.sort_by { |s| [s.projects_count, s.specialists_count] }.reverse!
-      sorted[0..(limit || sorted.size + 1) - 1].map do |skill|
+      sorted[0..(limit || (sorted.size + 1)) - 1].map do |skill|
         OpenStruct.new(specialist: object, skill: skill)
       end
     end
@@ -127,7 +127,7 @@ module Types
     # Eventually the reviews and reviewsCount fields should be combined into
     # some kind of Connection type to support pagination and where the count
     # would be a field of the connection type.
-    field :reviews, [Types::Review], null: false do
+    field :reviews, [Types::PreviousProjectReview], null: false do
       description 'A list of reviews for the specialist'
     end
 
