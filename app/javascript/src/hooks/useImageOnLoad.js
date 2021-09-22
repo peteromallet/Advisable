@@ -1,3 +1,5 @@
+// DEPRECATED. Use useLoadImage hook instead.
+
 import { useEffect, useState } from "react";
 
 function useImageOnLoad(url) {
