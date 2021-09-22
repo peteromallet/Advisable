@@ -27,8 +27,29 @@ export const StyledPassportAvatarInner = styled.div`
   background-position: center;
 `;
 
+export const StyledAvatarImg = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: url(#passportSquircle);
+  object-position: center;
+  object-fit: cover;
+`;
+
+export const StyledAvatarStroke = styled.div`
+  position: absolute;
+  top: calc(0px - var(--stroke));
+  left: calc(0px - var(--stroke));
+  background: white;
+  width: calc(100% + (var(--stroke) * 2));
+  height: calc(100% + (var(--stroke) * 2));
+  clip-path: url(#passportSquircle);
+`;
+
 const size = variant({
-  prop: "size",
+  prop: "$size",
   variants: {
     xs: {
       width: "35px",
@@ -64,11 +85,10 @@ const size = variant({
 });
 
 export const StyledPassportAvatar = styled.div`
-  ${space}
   ${size}
+  ${space}
 
   flex-shrink: 0;
-  overflow: hidden;
   position: relative;
 
   .svgClip {
