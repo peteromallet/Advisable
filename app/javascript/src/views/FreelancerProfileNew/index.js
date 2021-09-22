@@ -31,7 +31,7 @@ export default function FreelancerProfile() {
     >
       <Switch>
         <Route path="/freelancers/:id/case_studies/:case_study_id">
-          <Article />
+          <Article profileData={data} />
         </Route>
         <Route>
           <Profile data={data} />

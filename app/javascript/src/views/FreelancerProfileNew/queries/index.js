@@ -21,8 +21,3 @@ export const useProfileData = (props) => {
   });
   return response;
 };
-
-export const usePartialProfileData = () => {
-  const response = useProfileData({ returnPartialData: true });
-  return response;
-};
