@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class SkillCategory < ApplicationRecord
+  include Sluggable
+  slug_from :name
+
   has_many :skill_category_skills, dependent: :destroy
   has_many :skills, through: :skill_category_skills
 
@@ -26,6 +29,11 @@ end
 #
 #  id         :bigint           not null, primary key
 #  name       :string
+#  slug       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_skill_categories_on_slug  (slug) UNIQUE
 #
