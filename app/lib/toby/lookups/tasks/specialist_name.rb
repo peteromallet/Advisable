@@ -4,7 +4,7 @@ module Toby
   module Lookups
     module Tasks
       class SpecialistName < Attributes::StringLookup
-        filter 'contains...', Filters::StringContains do |records, _attribute, value|
+        filter "contains...", Filters::StringContains do |records, _attribute, value|
           if value.any? && value.first.present?
             query = records.joins(application: {specialist: :account})
             names = value.first.split

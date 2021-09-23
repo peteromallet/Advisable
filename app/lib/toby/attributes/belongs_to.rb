@@ -3,20 +3,20 @@
 module Toby
   module Attributes
     class BelongsTo < BaseAttribute
-      filter 'contains...', Filters::StringContains do |records, attribute, value|
+      filter "contains...", Filters::StringContains do |records, attribute, value|
         resource = attribute.reflection_resource.constantize
         next records.none unless resource.respond_to?(:search)
 
         records.where(attribute.name => resource.search(value.first))
       end
 
-      filter 'is one of...', Filters::OneOf do |records, attribute, value|
+      filter "is one of...", Filters::OneOf do |records, attribute, value|
         column = attribute.reflection.association_foreign_key
         records.where(column => value)
       end
 
-      filter 'is blank', Filters::CheckNil
-      filter 'is not blank', Filters::CheckNotNil
+      filter "is blank", Filters::CheckNil
+      filter "is not blank", Filters::CheckNotNil
 
       # optional for when we don't follow the class == resource convention
       def model
