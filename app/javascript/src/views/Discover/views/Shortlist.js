@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Heading, Stack, Skeleton } from "@advisable/donut";
+import { AnimateSharedLayout, motion } from "framer-motion";
+import { Box, Heading, Skeleton } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
 import { useShortlist } from "../queries";
 import Recommendation from "../components/Recommendation";
@@ -23,7 +24,7 @@ export default function Shortlist() {
   };
 
   return (
-    <>
+    <AnimateSharedLayout>
       <Box display="flex" alignItems="center">
         <BackButton to="/explore" marginRight={4} />
         {loading ? (
@@ -38,20 +39,23 @@ export default function Shortlist() {
       {loading ? (
         <RecommendationsSkeleton />
       ) : (
-        <Stack spacing={20} divider="neutral100">
+        <Box marginBottom={16}>
           {recommendations.map((result, index) => (
-            <Recommendation
-              key={result.id}
-              number={index + 1}
-              onClick={handleClick}
-              recommendation={result}
-            />
+            <motion.div layoutId={result.id} key={result.id}>
+              <Box marginY={10}>
+                <Recommendation
+                  number={index + 1}
+                  onClick={handleClick}
+                  recommendation={result}
+                />
+              </Box>
+              <Box height="1px" bg="neutral100" />
+            </motion.div>
           ))}
-        </Stack>
+        </Box>
       )}
-      <Box height="1px" bg="neutral100" my={10} />
       {!loading && recommendations.length >= 5 && <MoreResults />}
       {!loading && recommendations.length < 5 && <NoMoreResults />}
-    </>
+    </AnimateSharedLayout>
   );
 }
