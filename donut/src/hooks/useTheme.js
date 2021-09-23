@@ -5,6 +5,7 @@ import appContext from "../components/Provider/context";
 const useTheme = () => {
   const theme = useContext(ThemeContext);
   const { setTheme } = useContext(appContext);
+
   const updateTheme = useCallback(
     (changes) => {
       setTheme({ ...theme, ...changes });
