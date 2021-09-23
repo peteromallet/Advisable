@@ -11,23 +11,15 @@ import matchFileType from "src/utilities/matchFileType";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
-const Wrapper = styled(Box)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`;
-
 const animation = keyframes`
   from {
-    background-color: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(3px);
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
   }
 
   to {
-    backdrop-filter: blur(4px);
-    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.5);
   }
 `;
 
@@ -69,9 +61,6 @@ const FileUploader = styled.div`
     color: ${rgba(theme.colors.blue100, 1)};
     background: ${rgba(theme.colors.neutral700, 0.6)};
   }
-  ${Wrapper}:hover & {
-    opacity: 1;
-  }
 
   input {
     top: 0;
@@ -85,6 +74,18 @@ const FileUploader = styled.div`
     border-radius: 50%;
     cursor: pointer;
     position: absolute;
+  }
+`;
+
+const Wrapper = styled(Box)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  &:hover ${FileUploader} {
+    opacity: 1;
   }
 `;
 
@@ -170,7 +171,9 @@ const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
             width="100%"
             height="100%"
             position="absolute"
-            css={``}
+            css={`
+              clip-path: url(#passportSquircle);
+            `}
           >
             <ProgressBar mt="s" mb="xs">
               <Box
