@@ -46,17 +46,4 @@ RSpec.describe(Mutations::SubmitClientApplication) do
       expect(error).to eq("APPLICATION_NOT_STARTED")
     end
   end
-
-  context "with case study search" do
-    let(:goals) { %w[one two] }
-
-    it "creates one with goals and company name" do
-      user.company.update(goals: goals)
-      request
-      search = ::CaseStudy::Search.find_by(user: user)
-      expect(search.goals).to match_array(goals)
-      expect(search.business_type).to eq(user.company.business_type)
-      expect(search.name).to eq("Recommendations for Test Company")
-    end
-  end
 end
