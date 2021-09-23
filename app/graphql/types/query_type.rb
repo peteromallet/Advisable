@@ -433,5 +433,17 @@ module Types
       requires_current_user!
       current_user.account.conversations.includes(participants: :account).find_by!(uid: id)
     end
+
+    field :skill_categories, [Types::SkillCategory], null: false
+    def skill_categories
+      SkillCategory.all
+    end
+
+    field :skill_category, Types::SkillCategory, null: true do
+      argument :slug, String, required: true
+    end
+    def skill_category(slug:)
+      SkillCategory.find_by!(slug: slug)
+    end
   end
 end
