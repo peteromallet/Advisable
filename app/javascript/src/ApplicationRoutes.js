@@ -36,9 +36,6 @@ const Interview = lazy(() => import("./views/Interview"));
 const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
 const CaseStudy = lazy(() => import("./views/CaseStudy"));
 const SetPassword = lazy(() => import("./views/SetPassword"));
-const CaseStudyRecommendations = lazy(() =>
-  import("./views/CaseStudyRecommendations"),
-);
 const Payment = lazy(() => import("./views/Payment"));
 const Messages = lazy(() => import("./views/Messages"));
 const GuildFeed = lazy(() => import("guild/views/Feed"));
@@ -46,6 +43,7 @@ const GuildPost = lazy(() => import("guild/views/Post"));
 const GuildFollows = lazy(() => import("guild/views/Follows"));
 const GuildEvent = lazy(() => import("guild/views/Event"));
 const GuildEvents = lazy(() => import("guild/views/Events"));
+const Discover = lazy(() => import("./views/Discover"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -198,11 +196,7 @@ const ApplicationRoutes = () => {
             path="/profile"
             component={RedirectToFreelancerProfile}
           />
-          <AuthenticatedRoute
-            clientOnly
-            path="/explore"
-            component={CaseStudyRecommendations}
-          />
+          <AuthenticatedRoute clientOnly path="/explore" component={Discover} />
           <AuthenticatedRoute
             clientOnly
             path="/payments/:id"

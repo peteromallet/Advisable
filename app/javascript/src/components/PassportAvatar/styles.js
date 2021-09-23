@@ -83,6 +83,11 @@ const size = variant({
       height: "192px",
       borderRadius: "20px",
     },
+    "3xl": {
+      width: "210px",
+      height: "240px",
+      borderRadius: "20px",
+    },
   },
 });
 
