@@ -6,12 +6,11 @@ module Mutations
       description "Create a Case Study Search as the current User."
       graphql_name "CreateCaseStudySearch"
 
+      argument :articles, [ID], required: false
       argument :business_type, String, required: false
       argument :goals, [String], required: false
       argument :name, String, required: false
       argument :preferences, [String], required: false
-      argument :primary_skill, String, required: false
-      argument :skills, [String], required: true
 
       field :search, Types::CaseStudy::Search, null: false
 
@@ -19,24 +18,21 @@ module Mutations
         requires_client!
       end
 
-      def resolve(skills:, **args)
+      def resolve(**args)
         search = current_account_responsible_for do
           search = ::CaseStudy::Search.create!(
             user: current_user,
             name: args[:name],
             goals: args[:goals],
+            preferences: args[:preferences],
             business_type: args[:business_type],
-            preferences: args[:preferences]
+            results: args[:articles]
           )
 
-          skills.each do |skill|
-            ::CaseStudy::Skill.create!(
-              search: search,
-              primary: args[:primary_skill] == skill,
-              skill: ::Skill.find_by!(name: skill)
-            )
+          skill_ids = ::CaseStudy::Skill.where(article_id: args[:articles]).distinct.pluck(:skill_id)
+          ::Skill.where(id: skill_ids).each do |skill|
+            ::CaseStudy::Skill.create!(search: search, skill: skill)
           end
-
           search
         end
 
