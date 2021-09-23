@@ -167,6 +167,8 @@ module Types
       description 'The calendly url for the guild specialist'
     end
 
+    field :case_studies, [Types::CaseStudy::Article], null: false, method: :articles
+
     # TODO: authenticated-application-flow - Simplify this query arguments once
     # we know application flow is authenticated only.
     field :previous_projects, Types::PreviousProject.connection_type, null: false do
