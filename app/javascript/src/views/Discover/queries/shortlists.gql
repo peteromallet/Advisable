@@ -1,0 +1,16 @@
+query Shortlists {
+  caseStudySearches {
+    id
+    name
+    results(first: 5) {
+      nodes {
+        id
+        specialist {
+          id
+          name
+          avatar
+        }
+      }
+    }
+  }
+}
