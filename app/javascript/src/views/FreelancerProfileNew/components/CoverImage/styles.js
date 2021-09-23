@@ -30,30 +30,38 @@ export const StyledCoverInner = styled.div`
 const size = variant({
   prop: "size",
   variants: {
+    collapse: {
+      position: "absolute !important",
+      top: "0",
+      width: "304px",
+      height: "114px",
+      px: "0px",
+      left: "-12px",
+    },
     xl: {
       width: "1136px",
-      height: "416px",
-      padding: "28px",
+      height: "360px",
+      px: "28px",
     },
     l: {
       width: "1024px",
-      height: "368px",
-      padding: "20px",
+      height: "328px",
+      px: "20px",
     },
     m: {
       width: "100vw",
-      height: "33.3vw",
-      padding: "20px",
+      height: "27.3vw",
+      px: "20px",
     },
     s: {
       width: "100vw",
-      height: "33.3vw",
-      padding: "20px",
+      height: "27.3vw",
+      px: "20px",
     },
     xs: {
       width: "100vw",
-      height: "33.3vw",
-      padding: "12px",
+      height: "27.3vw",
+      px: "12px",
     },
   },
 });

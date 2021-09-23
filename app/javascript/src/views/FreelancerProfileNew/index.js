@@ -1,14 +1,13 @@
 import React, { useLayoutEffect } from "react";
-import { Box, Stack, useTheme } from "@advisable/donut";
+import { Switch, Route } from "react-router";
+import { Box, useTheme } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
-import CoverImage from "./components/CoverImage";
-import Sidebar from "./components/Sidebar";
+import Article from "./views/Article";
+import Profile from "./views/Profile";
 import { useProfileData } from "./queries";
-import CaseStudies from "./components/CaseStudies";
-import Testimonials from "./components/Testimonials";
 
-export default function FreelancerProfileNew() {
+export default function FreelancerProfile() {
   const { loading, data, error } = useProfileData();
   const { setTheme } = useTheme();
 
@@ -20,8 +19,6 @@ export default function FreelancerProfileNew() {
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
 
-  const { reviews } = data.specialist;
-
   return (
     <Box
       display="flex"
@@ -30,23 +27,16 @@ export default function FreelancerProfileNew() {
       width={{ l: "1024px", xl: "1136px" }}
       mx="auto"
       pb={10}
+      pt={[3, 5, 5, 5, 7]}
     >
-      <CoverImage
-        src={data.specialist.coverPhoto}
-        size={["xs", "s", "m", "l", "xl"]}
-      />
-      <Box
-        display="flex"
-        flexDirection={{ _: "column", l: "row" }}
-        px={{ xs: 7, s: 9, l: 11, xl: 14 }}
-        maxWidth={{ s: "700px", l: "none" }}
-      >
-        <Sidebar data={data} />
-        <Stack mt={{ _: 16, m: 12, l: 13 }} width="100%" spacing={11}>
-          <CaseStudies />
-          {reviews.length ? <Testimonials reviews={reviews} /> : null}
-        </Stack>
-      </Box>
+      <Switch>
+        <Route path="/freelancers/:id/case_studies/:case_study_id">
+          <Article profileData={data} />
+        </Route>
+        <Route>
+          <Profile data={data} />
+        </Route>
+      </Switch>
     </Box>
   );
 }
