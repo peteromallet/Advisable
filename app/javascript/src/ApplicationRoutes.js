@@ -36,11 +36,9 @@ const Interview = lazy(() => import("./views/Interview"));
 const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
 const CaseStudy = lazy(() => import("./views/CaseStudy"));
 const SetPassword = lazy(() => import("./views/SetPassword"));
-const CaseStudyRecommendations = lazy(() =>
-  import("./views/CaseStudyRecommendations"),
-);
 const Payment = lazy(() => import("./views/Payment"));
 const Messages = lazy(() => import("./views/Messages"));
+const Discover = lazy(() => import("./views/Discover"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -193,11 +191,7 @@ const ApplicationRoutes = () => {
             path="/profile"
             component={RedirectToFreelancerProfile}
           />
-          <AuthenticatedRoute
-            clientOnly
-            path="/explore"
-            component={CaseStudyRecommendations}
-          />
+          <AuthenticatedRoute clientOnly path="/explore" component={Discover} />
           <AuthenticatedRoute
             clientOnly
             path="/payments/:id"
