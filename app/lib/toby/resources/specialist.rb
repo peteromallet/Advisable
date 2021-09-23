@@ -9,15 +9,17 @@ module Toby
       attribute :application_stage, Attributes::Select, options: ::Specialist::VALID_APPLICATION_STAGES
       attribute :account, Attributes::BelongsTo
       attribute :consultation_url, Lookups::Specialists::ConsultationUrl, sortable: false
+      attribute :unavailable_until, Attributes::Date
       attribute :bio, Attributes::LongText
+      attribute :skills, Attributes::HasManyThrough
+      attribute :industries, Attributes::HasManyThrough
       attribute :linkedin, Attributes::String
       attribute :website, Attributes::String
       attribute :hourly_rate, Attributes::Currency
       attribute :sourcing_fee, Attributes::Integer
       attribute :country, Attributes::BelongsTo
-      attribute :skills, Attributes::HasManyThrough
-      attribute :industries, Attributes::HasManyThrough
-      attribute :unavailable_until, Attributes::Date
+      attribute :iban, Attributes::String
+      attribute :bank_currency, Attributes::String
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
