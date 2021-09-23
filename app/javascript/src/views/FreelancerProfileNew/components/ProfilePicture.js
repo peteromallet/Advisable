@@ -38,6 +38,7 @@ export default function ProfilePicture({ specialist }) {
         size={isArticle ? "lg" : ["lg", "lg", "xl", "xl", "2xl"]}
         name={specialist.name}
         src={specialist.avatar}
+        stroke="2px"
       />
       {isOwner && !isArticle ? (
         <FileUpload onChange={submit} updated={updated} maxSizeInMB={1} />
