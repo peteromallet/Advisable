@@ -10,7 +10,6 @@ RSpec.describe 'Explore', type: :system do
 
   let!(:company_search) do
     create(:case_study_search, {
-      company_recomendation: true,
       user: user,
       finalized_at: Time.zone.now,
       results: [article1.id, article2.id]

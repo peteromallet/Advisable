@@ -17,7 +17,6 @@ module Mutations
       current_account_responsible_for do
         current_user.application_status = "Submitted"
         current_user.save!
-        current_user.create_company_recomendation_search
       end
 
       current_user.sync_to_airtable
