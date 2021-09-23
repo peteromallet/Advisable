@@ -51,7 +51,7 @@ export function useSearchResource(resource) {
   return handleSearch;
 }
 
-export function useFetchResources(resource, filters, sort) {
+export function useFetchResources(resource, filters, sortBy, sortOrder) {
   const [loading, setLoading] = useState(true);
   const schemaData = useSchema();
   const query = generateCollectionQuery(schemaData, resource);
@@ -66,10 +66,10 @@ export function useFetchResources(resource, filters, sort) {
   const fetchRecords = useCallback(
     async function fetchRecords() {
       fetch({
-        variables: { filters, sortBy: sort.sortBy, sortOrder: sort.sortOrder },
+        variables: { filters, sortBy, sortOrder },
       });
     },
-    [fetch, filters, sort],
+    [fetch, filters, sortBy, sortOrder],
   );
 
   const fetchMoreRecords = useCallback(
@@ -282,4 +282,12 @@ function selectionForField(schemaData, resourceData, fieldName) {
     id: true,
     _label: true,
   };
+}
+
+export function resourcePath(resource) {
+  return `/${pluralizeType(resource.type)}`;
+}
+
+export function recordPath(record) {
+  return `/${pluralizeType(record.__typename)}/${record.id}`;
 }

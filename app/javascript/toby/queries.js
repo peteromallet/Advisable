@@ -6,6 +6,8 @@ const viewFragment = gql`
   fragment ViewFields on View {
     id
     name
+    sortBy
+    sortOrder
     filters {
       attribute
       type
@@ -39,8 +41,16 @@ const CREATE_VIEW = gql`
     $name: String!
     $resource: String!
     $filters: [FilterInput!]
+    $sortBy: String
+    $sortOrder: String
   ) {
-    createTobyView(name: $name, resource: $resource, filters: $filters) {
+    createTobyView(
+      name: $name
+      resource: $resource
+      filters: $filters
+      sortBy: $sortBy
+      sortOrder: $sortOrder
+    ) {
       view {
         ...ViewFields
       }
@@ -103,11 +113,23 @@ export function useDeleteView(resource, view) {
   });
 }
 
-const UPDATE_VIEW_FILTERS = gql`
-  mutation updateView($id: ID!, $filters: [FilterInput!]) {
-    updateTobyView(id: $id, filters: $filters) {
+const UPDATE_VIEW = gql`
+  mutation updateView(
+    $id: ID!
+    $filters: [FilterInput!]
+    $sortBy: String
+    $sortOrder: String
+  ) {
+    updateTobyView(
+      id: $id
+      filters: $filters
+      sortBy: $sortBy
+      sortOrder: $sortOrder
+    ) {
       view {
         id
+        sortBy
+        sortOrder
         filters {
           attribute
           type
@@ -118,8 +140,8 @@ const UPDATE_VIEW_FILTERS = gql`
   }
 `;
 
-export function useUpdateViewFilter() {
-  return useMutation(UPDATE_VIEW_FILTERS);
+export function useUpdateView() {
+  return useMutation(UPDATE_VIEW);
 }
 
 const RENAME_VIEW = gql`

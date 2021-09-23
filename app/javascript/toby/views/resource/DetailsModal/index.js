@@ -1,18 +1,21 @@
-import React, { useMemo, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDialogState } from "reakit/Dialog";
 import { Formik, Form } from "formik";
 import { Modal, Box, Text, Tag } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import SubmitButton from "src/components/SubmitButton";
-import { matchPath, useHistory, useLocation } from "react-router";
+import { useHistory, useLocation, useRouteMatch } from "react-router";
 import { useSchema } from "../../../components/schema";
 import {
   attributeFormValueInitializer,
   AttributeInput,
 } from "../../../attributes";
-import { generateShowQuery, generateUpdateMutation } from "../../../utilities";
+import {
+  generateShowQuery,
+  generateUpdateMutation,
+  resourcePath,
+} from "../../../utilities";
 import { useMutation, useQuery } from "@apollo/client";
-import { pluralizeType } from "../../../utilities";
 import VersionHistory from "./VersionHistory";
 import ActionsMenu from "./ActionsMenu";
 
@@ -20,10 +23,7 @@ function useRoutedModal(path, returnPath) {
   const modal = useDialogState();
   const history = useHistory();
   const location = useLocation();
-
-  const match = useMemo(() => {
-    return matchPath(location.pathname, { path });
-  }, [location.pathname, path]);
+  const match = useRouteMatch(path);
 
   useEffect(() => {
     if (modal.visible && !match) {
@@ -174,14 +174,15 @@ function Details({ id, resource }) {
 }
 
 export default function DetailsModal({ resource }) {
-  const modal = useRoutedModal(
-    "/:resource/:id",
-    `/${pluralizeType(resource.type)}`,
-  );
+  const match = useRouteMatch("/:resource/:id");
+
+  const modal = useRoutedModal("/:resource/:id", resourcePath(resource));
 
   return (
     <Modal width={1000} modal={modal} label="Details">
-      {modal.visible && <Details id={modal.params.id} resource={resource} />}
+      {match?.params?.id && (
+        <Details id={match.params.id} resource={resource} />
+      )}
     </Modal>
   );
 }

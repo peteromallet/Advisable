@@ -19,9 +19,22 @@ export default function SortMenu({
   setSortBy,
   sortOrder,
   setSortOrder,
+  handleUpdateView,
 }) {
   const menu = useMenuState();
   const sortable = resource.attributes.filter((attr) => attr.sortable);
+
+  const handleChangeSortBy = (e) => {
+    const val = e.target.value;
+    setSortBy(val);
+    handleUpdateView({ sortBy: val });
+  };
+
+  const handleChangeSortOrder = (e) => {
+    const val = e.target.value;
+    setSortOrder(val);
+    handleUpdateView({ sortOrder: val });
+  };
 
   return (
     <>
@@ -35,7 +48,7 @@ export default function SortMenu({
               size="sm"
               marginBottom={2}
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
+              onChange={handleChangeSortBy}
             >
               {sortable.map((attr) => (
                 <option key={attr.columnName} value={attr.columnName}>
@@ -46,7 +59,7 @@ export default function SortMenu({
             <Select
               size="sm"
               value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
+              onChange={handleChangeSortOrder}
             >
               <option value="ASC">Ascending</option>
               <option value="DESC">Descending</option>
