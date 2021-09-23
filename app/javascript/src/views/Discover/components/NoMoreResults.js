@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Box, Text } from "@advisable/donut";
 import illustration from "src/illustrations/zest/candidate.svg";
 
-export default function MoreResults() {
+export default function NoMoreResults() {
   return (
     <Box
       px={8}
