@@ -90,23 +90,9 @@ class User < ApplicationRecord
     responsible = account_id if responsible.nil?
     Logidze.with_responsible(responsible) do
       user.save!
-      user.create_company_recomendation_search
     end
     user.sync_to_airtable
     user
-  end
-
-  def create_company_recomendation_search
-    return if searches.exists?(company_recomendation: true)
-
-    ::CaseStudy::Search.create!(
-      user: self,
-      business_type: company.business_type,
-      goals: company.goals,
-      name: "Recommendations for #{company.name}",
-      finalized_at: Time.zone.now,
-      company_recomendation: true
-    )
   end
 
   def disabled?
