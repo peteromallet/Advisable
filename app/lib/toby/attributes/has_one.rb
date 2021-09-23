@@ -3,8 +3,8 @@
 module Toby
   module Attributes
     class HasOne < HasMany
-      filter 'is one of...', Filters::Includes
-      filter 'is blank', Filters::HasNone
+      filter "is one of...", Filters::Includes
+      filter "is blank", Filters::HasNone
 
       def type
         "Toby::Types::#{model}"
