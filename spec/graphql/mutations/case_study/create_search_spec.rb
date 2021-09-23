@@ -5,18 +5,18 @@ require "rails_helper"
 RSpec.describe Mutations::CaseStudy::CreateSearch do
   let(:user) { create(:user) }
   let(:context) { {current_user: user} }
-  let(:primary_skill) { create(:skill, name: "Primary") }
-  let(:skill) { create(:skill, name: "Another") }
+  let(:article1) { create(:case_study_article, :with_skills) }
+  let(:article2) { create(:case_study_article, :with_skills) }
 
   let(:query) do
     <<-GRAPHQL
       mutation {
         createCaseStudySearch(input: {
+          articles: ["#{article1.id}", "#{article2.id}"],
           businessType: "B2B",
           goals: ["First", "Second"],
           name: "A Search",
-          primarySkill: "#{primary_skill.name}",
-          skills: ["#{skill.name}", "#{primary_skill.name}"],
+          preferences: ["One", "Two"],
         }) {
           search {
             id
@@ -31,9 +31,9 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     uid = response["data"]["createCaseStudySearch"]["search"]["id"]
     search = ::CaseStudy::Search.find_by!(uid: uid)
     expect(search.attributes.values_at("business_type", "goals", "name", "user_id")).to match_array(["B2B", %w[First Second], "A Search", user.id])
-    expect(search.skills.count).to eq(2)
-    expect(search.skills.primary.count).to eq(1)
-    expect(search.skills.primary.first.skill.name).to eq("Primary")
+    expect(search.skills.pluck(:skill_id)).to match_array([article1.skills.pluck(:skill_id), article2.skills.pluck(:skill_id)].flatten)
+    expect(search.preferences).to eq(%w[One Two])
+    expect(search.results).to match_array([article1, article2])
   end
 
   context "when current_user is specialist" do
