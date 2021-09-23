@@ -5,14 +5,7 @@ import SuperEllipse from "react-superellipse";
 import { Circle } from "@advisable/donut";
 import { useImage } from "react-image";
 import { ErrorBoundary } from "react-error-boundary";
-
-const StyledRecommendationAvatar = styled.div(
-  css({
-    width: "180px",
-    height: "220px",
-    position: "relative",
-  }),
-);
+import { variant } from "styled-system";
 
 const StyledRecommendationAvatarSquircle = styled(SuperEllipse)(
   css({
@@ -27,11 +20,10 @@ const StyledRecommendationAvatarOverlay = styled.div({
   left: "0",
   width: "100%",
   height: "100%",
+  padding: "20px",
   position: "absolute",
   display: "flex",
   alignItems: "flex-end",
-  paddingLeft: "20px",
-  paddingBottom: "20px",
   background:
     "linear-gradient(180deg, rgba(21, 20, 20, 0) 46%, rgba(21, 20, 20, 0.6) 100%)",
 });
@@ -39,9 +31,7 @@ const StyledRecommendationAvatarOverlay = styled.div({
 const StyledRecommendationAvatarName = styled.h4(
   css({
     color: "white",
-    fontSize: "26px",
     fontWeight: 600,
-    lineHeight: "28px",
     letterSpacing: "-0.02em",
     textShadow: "0 1px 4px rgba(0, 0, 0, 0.2)",
   }),
@@ -55,6 +45,35 @@ const StyledRecommendationAvatarImage = styled.img(
   }),
 );
 
+const size = variant({
+  prop: "$size",
+  variants: {
+    lg: {
+      width: "190px",
+      height: "220px",
+      [StyledRecommendationAvatarName]: {
+        fontSize: "26px",
+        lineHeight: "26px",
+      },
+    },
+    md: {
+      width: "170px",
+      height: "198px",
+      [StyledRecommendationAvatarName]: {
+        fontSize: "24px",
+        lineHeight: "24px",
+      },
+    },
+  },
+});
+
+const StyledRecommendationAvatar = styled.div(
+  size,
+  css({
+    position: "relative",
+  }),
+);
+
 function AvatarImage({ src }) {
   const image = useImage({ srcList: [src] });
 
@@ -65,9 +84,13 @@ function AvatarImage({ src }) {
   );
 }
 
-export default function RecommendationAvatar({ number, specialist }) {
+export default function RecommendationAvatar({
+  number,
+  specialist,
+  size = "lg",
+}) {
   return (
-    <StyledRecommendationAvatar>
+    <StyledRecommendationAvatar $size={size}>
       <Circle
         size="48px"
         bg="white"
