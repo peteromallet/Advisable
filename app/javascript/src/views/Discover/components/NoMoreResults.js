@@ -1,10 +1,21 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Box, Text } from "@advisable/donut";
 import illustration from "src/illustrations/zest/candidate.svg";
 
 export default function MoreResults() {
   return (
-    <Box maxWidth="500px" px={8} paddingBottom={8} mx="auto" textAlign="center">
+    <Box
+      px={8}
+      mx="auto"
+      as={motion.div}
+      maxWidth="500px"
+      paddingBottom={8}
+      textAlign="center"
+      layoutId="noMoreResults"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
       <img src={illustration} width="132px" />
       <Text
         marginTop={5}

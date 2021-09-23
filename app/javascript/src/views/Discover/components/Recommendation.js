@@ -6,6 +6,7 @@ import { ChatAlt } from "@styled-icons/heroicons-solid/ChatAlt";
 import { Trash } from "@styled-icons/heroicons-solid/Trash";
 import { Box, Text, Button } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
+import { useArchiveArticle } from "../queries";
 
 const StyledRecommendationTitle = styled(Text)(
   css({
@@ -30,8 +31,15 @@ const StyledRecommendation = styled(SuperEllipse)(
 );
 
 export default function Recommendation({ recommendation, number, onClick }) {
+  const [archive] = useArchiveArticle(recommendation);
+
   const handleClick = () => {
     onClick(recommendation);
+  };
+
+  const handleArchive = (e) => {
+    e.stopPropagation();
+    archive();
   };
 
   return (
@@ -54,7 +62,11 @@ export default function Recommendation({ recommendation, number, onClick }) {
             <Button prefix={<ChatAlt />} mr={3}>
               Message
             </Button>
-            <Button prefix={<Trash />} variant="outlined">
+            <Button
+              prefix={<Trash />}
+              variant="outlined"
+              onClick={handleArchive}
+            >
               Remove
             </Button>
           </Box>
