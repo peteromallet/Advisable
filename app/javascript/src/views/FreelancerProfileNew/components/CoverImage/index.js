@@ -1,10 +1,37 @@
 import React from "react";
+import useImageOnLoad from "src/hooks/useImageOnLoad";
+import { useNotifications } from "src/components/Notifications";
 import { StyledCover, StyledCoverInner } from "./styles";
 import defaultCoverPhoto from "./defaultCoverPhoto.png";
+import FileUpload from "../FileUpload";
+import { useSetCoverPhoto } from "../../queries";
+import { matchPath, useParams } from "react-router";
+import useViewer from "src/hooks/useViewer";
 
 function CoverImage({ src, color, ...props }) {
+  const params = useParams();
+  const viewer = useViewer();
+  const isOwner = viewer?.id === params.id;
+
+  const isArticle = !!matchPath(location.pathname, {
+    path: "/freelancers/:id/case_studies/:case_study_id",
+  });
+  const [updatePicture] = useSetCoverPhoto();
+  const image = src || defaultCoverPhoto;
+  const { loaded, updated } = useImageOnLoad(image);
+
+  const notifications = useNotifications();
+
   const style = {
     backgroundImage: `url(${src || defaultCoverPhoto})`,
+  };
+
+  const submit = async (blob) => {
+    await updatePicture({
+      variables: { input: { blob: blob.signed_id } },
+    });
+
+    notifications.notify("Cover picture has been updated");
   };
 
   return (
@@ -19,6 +46,9 @@ function CoverImage({ src, color, ...props }) {
         </clipPath>
       </svg>
       <StyledCoverInner color={color} style={style} />
+      {isOwner && !isArticle ? (
+        <FileUpload onChange={submit} updated={updated} maxSizeInMB={5} />
+      ) : null}
     </StyledCover>
   );
 }
