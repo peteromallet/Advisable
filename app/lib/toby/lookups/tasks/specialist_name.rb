@@ -4,6 +4,20 @@ module Toby
   module Lookups
     module Tasks
       class SpecialistName < Attributes::String
+        filter 'contains...', Filters::StringContains do |records, _attribute, value|
+          if value.any? && value.first.present?
+            query = records.joins(application: {specialist: :account})
+            names = value.first.split
+            names.each do |name|
+              query = query.where("accounts.first_name ILIKE ?", "%#{name}%").
+                or(query.where("accounts.last_name ILIKE ?", "%#{name}%"))
+            end
+            query
+          else
+            records
+          end
+        end
+
         def self.lookup?
           true
         end
