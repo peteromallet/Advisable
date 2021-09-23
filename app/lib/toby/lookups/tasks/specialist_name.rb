@@ -3,7 +3,7 @@
 module Toby
   module Lookups
     module Tasks
-      class SpecialistName < Attributes::String
+      class SpecialistName < Attributes::StringLookup
         filter 'contains...', Filters::StringContains do |records, _attribute, value|
           if value.any? && value.first.present?
             query = records.joins(application: {specialist: :account})
@@ -16,14 +16,6 @@ module Toby
           else
             records
           end
-        end
-
-        def self.lookup?
-          true
-        end
-
-        def readonly
-          true
         end
 
         def lazy_read_class

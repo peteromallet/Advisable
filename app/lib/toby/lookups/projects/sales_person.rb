@@ -3,18 +3,10 @@
 module Toby
   module Lookups
     module Projects
-      class SalesPerson < Attributes::String
+      class SalesPerson < Attributes::StringLookup
         filter :is, Filters::Equals do |records, _attribute, value|
           records.includes(user: {company: :sales_person}).
             where(sales_person: {username: value[0]})
-        end
-
-        def self.lookup?
-          true
-        end
-
-        def readonly
-          true
         end
 
         def lazy_read_class

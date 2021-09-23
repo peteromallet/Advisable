@@ -3,21 +3,13 @@
 module Toby
   module Lookups
     module Tasks
-      class Name < Attributes::String
+      class Name < Attributes::StringLookup
         filter 'contains...', Filters::StringContains do |records, _attribute, value|
           if value.any? && value.first.present?
             records.where(task: Task.where("name ILIKE ?", "%#{value.first}%"))
           else
             records
           end
-        end
-
-        def self.lookup?
-          true
-        end
-
-        def readonly
-          true
         end
 
         def lazy_read_class
