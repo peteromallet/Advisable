@@ -3,15 +3,7 @@
 module Toby
   module Lookups
     module Consultations
-      class RequestUrl < Attributes::String
-        def self.lookup?
-          true
-        end
-
-        def readonly
-          true
-        end
-
+      class RequestUrl < Attributes::StringLookup
         def read(record)
           "#{ENV["ORIGIN"]}/request_consultation/#{record.specialist.uid}?consultation=#{record.uid}"
         end

@@ -3,15 +3,7 @@
 module Toby
   module Lookups
     module Tasks
-      class InvoiceRate < Attributes::String
-        def self.lookup?
-          true
-        end
-
-        def readonly
-          true
-        end
-
+      class InvoiceRate < Attributes::StringLookup
         def lazy_read_class
           Toby::Lazy::Single
         end

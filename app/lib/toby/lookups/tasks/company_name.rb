@@ -3,15 +3,7 @@
 module Toby
   module Lookups
     module Tasks
-      class CompanyName < Attributes::String
-        def self.lookup?
-          true
-        end
-
-        def readonly
-          true
-        end
-
+      class CompanyName < Attributes::StringLookup
         def lazy_read_class
           Toby::Lazy::Single
         end
