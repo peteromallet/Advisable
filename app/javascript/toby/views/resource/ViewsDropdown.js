@@ -55,7 +55,7 @@ const StyledMenuItem = styled.button`
 `;
 
 const CreateView = React.forwardRef(function CreateViewModal(
-  { resource, onCreate, filters, ...props },
+  { resource, onCreate, filters, sortBy, sortOrder, ...props },
   ref,
 ) {
   const modal = useModal();
@@ -70,6 +70,8 @@ const CreateView = React.forwardRef(function CreateViewModal(
         name: value,
         resource: resource.type,
         filters,
+        sortBy,
+        sortOrder,
       },
     });
     onCreate(response);
@@ -213,7 +215,13 @@ function ViewOptions({ resource, view }) {
   );
 }
 
-export default function ViewsDropdown({ views, resource, filters }) {
+export default function ViewsDropdown({
+  views,
+  resource,
+  filters,
+  sortBy,
+  sortOrder,
+}) {
   const history = useHistory();
   const location = useLocation();
   const menu = useMenuState();
@@ -279,6 +287,8 @@ export default function ViewsDropdown({ views, resource, filters }) {
           as={CreateView}
           resource={resource}
           filters={filters}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
           onCreate={handleCreateNewView}
         />
       </StyledDropdown>
