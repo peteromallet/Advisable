@@ -27,6 +27,12 @@ export const StyledCoverInner = styled.div`
   background-position: center;
 `;
 
+export const StyledContentWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
 const size = variant({
   prop: "size",
   variants: {
