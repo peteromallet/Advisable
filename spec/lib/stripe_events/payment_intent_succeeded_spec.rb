@@ -57,8 +57,11 @@ RSpec.describe StripeEvents::PaymentIntentSucceeded do
 
     it "updates the status" do
       expect(payment.status).to eq("pending")
+      expect(payment.charged_at).to be_nil
       StripeEvents.process(event)
-      expect(payment.reload.status).to eq("succeeded")
+      payment.reload
+      expect(payment.status).to eq("succeeded")
+      expect(payment.charged_at).to be_present
     end
   end
 

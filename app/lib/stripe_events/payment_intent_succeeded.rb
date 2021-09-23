@@ -36,7 +36,7 @@ module StripeEvents
 
     def process_payment
       payment = Payment.find_by!(uid: metadata.payment)
-      payment.update(status: intent.status)
+      payment.update(status: intent.status, charged_at: Time.zone.now)
       UpdateCompanysPaymentMethodJob.perform_later(payment.company, intent.payment_method)
     end
   end
