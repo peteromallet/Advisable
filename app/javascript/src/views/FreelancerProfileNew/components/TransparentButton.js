@@ -1,10 +1,12 @@
 import React from "react";
-import { Camera } from "@styled-icons/feather/Camera";
 import styled from "styled-components";
 import { rgba } from "polished";
 import { theme } from "@advisable/donut";
+import { position } from "styled-system";
 
 export const StyledButton = styled.div`
+  ${position}
+
   width: 42px;
   height: 42px;
   display: flex;
@@ -21,32 +23,18 @@ export const StyledButton = styled.div`
   border: 1px solid;
   border-color: ${theme.colors.neutral300};
   transition: background 0.2s, color 0.2s, opacity 0.2s;
-  opacity: 0;
+  opacity: 1;
 
   &:hover {
     color: ${rgba(theme.colors.blue100, 1)};
     background: ${rgba(theme.colors.neutral700, 0.6)};
   }
-
-  input {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    cursor: pointer;
-    position: absolute;
-  }
 `;
 
-export default function TransparentButton(props) {
-  return (
-    <StyledButton {...props}>
-      <Camera size={20} strokeWidth={2} />
-    </StyledButton>
-  );
+function TransparentButton({ children, ...props }) {
+  return <StyledButton {...props}>{children}</StyledButton>;
 }
+
+TransparentButton.Styled = StyledButton;
+
+export default TransparentButton;

@@ -1,80 +1,23 @@
-import React, { useState } from "react";
-import { Box, Text, Tooltip, theme } from "@advisable/donut";
-import { useNotifications } from "src/components/Notifications";
-import { rgba } from "polished";
-import { DirectUpload } from "@rails/activestorage";
+import React from "react";
+import useFileUpload from "../hooks/useFileUpload";
+import { Box, Text, Tooltip } from "@advisable/donut";
 import { Camera } from "@styled-icons/feather/Camera";
-import { AnimatePresence, motion } from "framer-motion";
-import styled, { keyframes } from "styled-components";
-import filesExceedLimit from "src/utilities/filesExceedLimit";
-import matchFileType from "src/utilities/matchFileType";
+import styled from "styled-components";
+import TransparentButton from "./TransparentButton";
+import FileUploadProgressBar from "./FileUploadProgressBar";
 
-const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
-
-const animation = keyframes`
-  from {
-    background-color: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(6px);
-  }
-
-  to {
-    backdrop-filter: blur(8px);
-    background-color: rgba(255, 255, 255, 0.5);
-  }
-`;
-
-const BluredBackground = styled(Box)`
-  animation: ${animation} 0.8s ease infinite alternate;
-`;
-
-const ProgressBar = styled(Box)`
-  height: 2px;
-  width: 180px;
-  max-width: 60%;
-  overflow: hidden;
-  border-radius: 1px;
-  background: ${theme.colors.blue100};
-  box-shadow: 0 0 1px 0 ${rgba(theme.colors.neutral900, 0.3)};
-`;
-
-const FileUploader = styled.div`
-  width: 42px;
-  height: 42px;
-  display: flex;
-  overflow: hidden;
-  position: absolute;
-  bottom: 16px;
-  right: -8px;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  /* color: ${rgba(theme.colors.blue500, 1)}; */
-  color: white;
-  background: ${rgba(theme.colors.neutral200, 0.4)};
-  backdrop-filter: blur(8px);
-  border: 1px solid;
-  border-color: ${theme.colors.neutral300};
-  transition: background 0.2s, color 0.2s, opacity 0.2s;
+const StyledInput = styled.input`
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   opacity: 0;
-
-  &:hover {
-    color: ${rgba(theme.colors.blue100, 1)};
-    background: ${rgba(theme.colors.neutral700, 0.6)};
-  }
-
-  input {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    cursor: pointer;
-    position: absolute;
-  }
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
 `;
 
 const Wrapper = styled(Box)`
@@ -84,67 +27,23 @@ const Wrapper = styled(Box)`
   width: 100%;
   height: 100%;
 
-  &:hover ${FileUploader} {
+  & ${TransparentButton.Styled} {
+    opacity: 0;
+  }
+
+  &:hover ${TransparentButton.Styled} {
     opacity: 1;
   }
 `;
 
 const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
-  const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [processing, setProcessing] = useState(false);
-  const { error } = useNotifications();
   const accept = ".png, .jpg, .jpeg";
-
-  const progressHandler = {
-    directUploadWillStoreFileWithXHR(request) {
-      request.upload.addEventListener("progress", (e) => {
-        const p = Math.round((100 * e.loaded) / e.total);
-        setUploadProgress(p);
-      });
-    },
-  };
-
-  const upload = (file) => {
-    const u = new DirectUpload(file, DIRECT_UPLOAD_URL, progressHandler);
-
-    u.create(async (error, blob) => {
-      if (error) {
-        console.error(error);
-      } else {
-        setProcessing(true);
-        setUploading(false);
-        setUploadProgress(0);
-        await onChange(blob);
-        setProcessing(false);
-      }
-    });
-  };
-
-  const handleChange = (e) => {
-    if (!e.target?.value) return false;
-    const files = Array.from(e.target.files);
-
-    // Check file type
-    if (!matchFileType(files, accept)) {
-      error(`Please select one of the following file types: ${accept}`);
-      return false;
-    }
-    // Check file size
-    if (filesExceedLimit(files, maxSizeInMB)) {
-      error(`File size cannot exceed ${maxSizeInMB} MB`);
-      return false;
-    }
-
-    setUploading(true);
-    files.forEach((file) => upload(file));
-  };
-
-  const progress =
-    (uploadProgress / 100) * 80 ||
-    (processing && 90) ||
-    (updated === false && 100) ||
-    0;
+  const { handleChange, progress, uploading, processing } = useFileUpload({
+    onChange,
+    updated,
+    maxSizeInMB,
+    accept,
+  });
 
   const TooltipContent = (
     <Box>
@@ -157,45 +56,20 @@ const FileUpload = ({ onChange, updated, maxSizeInMB = 2 }) => {
 
   return (
     <Wrapper>
-      <AnimatePresence>
-        {(uploading || processing || updated === false) && (
-          <BluredBackground
-            as={motion.div}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            flexDirection="column"
-            width="100%"
-            height="100%"
-            position="absolute"
-            css={`
-              clip-path: url(#passportSquircle);
-            `}
-          >
-            <ProgressBar mt="s" mb="xs">
-              <Box
-                style={{ width: `${progress}%` }}
-                height="100%"
-                bg="blue500"
-              />
-            </ProgressBar>
-            <Text fontSize="xxs" color="neutral800">
-              {uploading && "Uploading"}
-              {processing && "Processing"}
-              {updated === false && "Displaying"}
-            </Text>
-          </BluredBackground>
-        )}
-      </AnimatePresence>
-      <Tooltip placement="right" content={TooltipContent}>
-        <FileUploader>
-          <Camera size={20} strokeWidth={2} />
-          <input type="file" accept={accept} onChange={handleChange} />
-        </FileUploader>
-      </Tooltip>
+      <FileUploadProgressBar
+        progress={progress}
+        uploading={uploading}
+        processing={processing}
+        updated={updated}
+      />
+      <TransparentButton position="absolute" bottom="16px" right="-8px">
+        <Tooltip placement="right" content={TooltipContent}>
+          <Box>
+            <Camera size={20} strokeWidth={2} />
+            <StyledInput type="file" accept={accept} onChange={handleChange} />
+          </Box>
+        </Tooltip>
+      </TransparentButton>
     </Wrapper>
   );
 };
