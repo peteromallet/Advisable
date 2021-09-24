@@ -5,13 +5,13 @@ import { position, variant } from "styled-system";
 
 const animation = keyframes`
   from {
-    background: ${rgba(theme.colors.neutral300, 0.4)};
-    backdrop-filter: blur(4px);
+    background: ${rgba(theme.colors.blue200, 0.45)};
+    backdrop-filter: blur(6px);
   }
 
   to {
-    backdrop-filter: blur(6px);
-    background: ${rgba(theme.colors.neutral300, 0.5)};
+    backdrop-filter: blur(5px);
+    background: ${rgba(theme.colors.blue200, 0.55)};
   }
 `;
 
