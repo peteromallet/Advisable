@@ -60,7 +60,7 @@ RSpec.describe RefreshCaseStudySearchesJob do
   it "doesn't save more than RESULT_LIMIT results" do
     search1.skills.create(skill: skill3)
     expect(search1.reload.results).to be_empty
-    (CaseStudy::Search::RESULT_LIMIT + 5).times do
+    (CaseStudy::Search::RESULT_LIMIT + 2).times do
       article = create(:case_study_article)
       article.skills.create(skill: skill3)
     end
@@ -71,7 +71,7 @@ RSpec.describe RefreshCaseStudySearchesJob do
   it "doesn't overwrite existing results and adds enough to have at most 12 active" do
     article1.skills.create(skill: skill3)
     article2.skills.create(skill: skill3)
-    (CaseStudy::Search::RESULT_LIMIT + 5).times do
+    (CaseStudy::Search::RESULT_LIMIT + 2).times do
       article = create(:case_study_article)
       article.skills.create(skill: skill3)
     end
