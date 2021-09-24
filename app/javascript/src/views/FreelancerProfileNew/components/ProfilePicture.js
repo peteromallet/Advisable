@@ -5,12 +5,12 @@ import { useNotifications } from "src/components/Notifications";
 import { Box } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
 import FileUpload from "./FileUpload";
-import useImageOnLoad from "src/hooks/useImageOnLoad";
 import { useUpdateProfile } from "../queries";
+import useLoadImage from "src/hooks/useLoadImage";
 
 export default function ProfilePicture({ specialist }) {
   const [updateAvatar] = useUpdateProfile();
-  const { updated } = useImageOnLoad(specialist.avatar);
+  const { updated } = useLoadImage(specialist.avatar);
   const notifications = useNotifications();
   const params = useParams();
   const viewer = useViewer();
