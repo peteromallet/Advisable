@@ -127,6 +127,7 @@ end
 #  id                :bigint           not null, primary key
 #  admin_fee         :integer
 #  amount            :integer
+#  charged_at        :datetime
 #  deposit           :integer
 #  payment_method    :string
 #  retries           :integer

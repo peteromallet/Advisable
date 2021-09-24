@@ -16,6 +16,7 @@ module Toby
       attribute :task, Attributes::BelongsTo
       attribute :task_name, Lookups::Tasks::Name
       attribute :payment_intent_id, Attributes::String, readonly: true
+      attribute :charged_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
@@ -25,7 +26,7 @@ module Toby
       def self.mark_as_successful(object)
         return if object.status == "succeeded"
 
-        object.update(status: "succeeded")
+        object.update(status: "succeeded", charged_at: Time.zone.now)
         send_receipt!
       end
 
