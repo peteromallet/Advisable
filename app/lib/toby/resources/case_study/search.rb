@@ -10,7 +10,6 @@ module Toby
         attribute :user, Attributes::BelongsTo
         attribute :name, Attributes::String
         attribute :business_type, Attributes::String
-        attribute :company_recomendation, Attributes::Boolean
         attribute :finalized_at, Attributes::DateTime
         attribute :goals, Attributes::TextArray
         # attribute :preferences, Attributes::TextArray
