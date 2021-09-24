@@ -1,0 +1,6 @@
+query getCountries {
+  countries {
+    value: id
+    label: name
+  }
+}
