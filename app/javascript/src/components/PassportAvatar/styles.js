@@ -33,6 +33,8 @@ export const StyledAvatarImg = styled.img`
   left: 0;
   width: 100%;
   height: 100%;
+  opacity: ${(props) => (props.isLoading ? 0 : 1)};
+  transition: opacity 200ms;
   clip-path: url(#passportSquircle);
   object-position: center;
   object-fit: cover;
