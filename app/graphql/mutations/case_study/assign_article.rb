@@ -25,10 +25,6 @@ module Mutations
           article.archived_articles.create!(user: current_user)
         when "unarchive"
           article.archived_articles.where(user: current_user).destroy_all
-        when "save"
-          article.saved_articles.create!(user: current_user)
-        when "unsave"
-          article.saved_articles.where(user: current_user).destroy_all
         end
 
         if args[:feedback] && args[:search]
