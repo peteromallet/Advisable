@@ -41,7 +41,12 @@ export default function ProfilePicture({ specialist }) {
         stroke="2px"
       />
       {isOwner && !isArticle ? (
-        <FileUpload onChange={submit} updated={updated} maxSizeInMB={1} />
+        <FileUpload
+          onChange={submit}
+          updated={updated}
+          maxSizeInMB={1}
+          type="avatar"
+        />
       ) : null}
     </Box>
   );
