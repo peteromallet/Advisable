@@ -40,17 +40,6 @@ RSpec.describe 'Explore', type: :system do
     expect(page).to have_current_path("/explore/#{company_search.uid}")
   end
 
-  it 'user can favorite an article from the index view' do
-    authenticate_as(user)
-    expect(user.reload.saved_articles).to be_empty
-    visit "/explore/#{company_search.uid}"
-    first("button", text: "Favorite").click
-    click_link("Favorites")
-    expect(page).to have_content(article1.title)
-    expect(page).to have_content("Favorited")
-    expect(user.reload.saved_articles).not_to be_empty
-  end
-
   it 'user can archive an article from the index view' do
     authenticate_as(user)
     expect(user.reload.archived_articles).to be_empty
@@ -113,18 +102,6 @@ RSpec.describe 'Explore', type: :system do
     expect(page).to have_current_path("/explore/articles/#{article1.uid}?back=/explore/#{company_search.uid}&search=#{company_search.uid}")
     click_button("Go back")
     expect(page).to have_current_path("/explore/#{company_search.uid}")
-  end
-
-  it 'user can favorite an article from the article view' do
-    authenticate_as(user)
-    expect(user.reload.saved_articles).to be_empty
-    visit "/explore/articles/#{article1.uid}"
-    expect(page).to have_content(article1.title)
-    click_on("Favorite")
-    click_on("Go back")
-    click_link("Favorites")
-    expect(page).to have_content(article1.title)
-    expect(user.reload.saved_articles).not_to be_empty
   end
 
   it 'user can archive an article from the article view' do

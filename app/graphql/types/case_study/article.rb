@@ -47,11 +47,6 @@ module Types
         object.sections.by_position
       end
 
-      field :is_saved, Boolean, null: false
-      def is_saved
-        object.saved_articles.exists?(user: current_user)
-      end
-
       field :is_archived, Boolean, null: false
       def is_archived
         object.archived_articles.exists?(user: current_user)
