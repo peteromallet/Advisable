@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 
 function useLoadImage(url) {
   const [isLoading, setLoading] = useState(true);
+  const [updated, setUpdated] = useState();
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    setUpdated((u) => u && false);
     if (!url) {
       setLoading(false);
     }
@@ -12,6 +14,7 @@ function useLoadImage(url) {
     const img = new Image();
     img.onload = () => {
       setLoading(false);
+      setUpdated(true);
     };
 
     img.onerror = (e) => {
@@ -22,7 +25,7 @@ function useLoadImage(url) {
     img.src = url;
   }, [url]);
 
-  return { isLoading, url, error };
+  return { isLoading, updated, url, error };
 }
 
 export default useLoadImage;
