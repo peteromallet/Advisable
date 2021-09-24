@@ -66,19 +66,18 @@ end
 #
 # Table name: case_study_searches
 #
-#  id                    :bigint           not null, primary key
+#  id            :bigint           not null, primary key
 #  archived              :jsonb
-#  business_type         :string
-#  company_recomendation :boolean
-#  finalized_at          :datetime
-#  goals                 :jsonb
-#  name                  :string
-#  preferences           :jsonb
-#  results               :jsonb
-#  uid                   :string           not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  user_id               :bigint           not null
+#  business_type :string
+#  finalized_at  :datetime
+#  goals         :jsonb
+#  name          :string
+#  preferences   :jsonb
+#  results       :jsonb
+#  uid           :string           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  user_id       :bigint           not null
 #
 # Indexes
 #
