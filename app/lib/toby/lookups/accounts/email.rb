@@ -3,18 +3,10 @@
 module Toby
   module Lookups
     module Accounts
-      class Email < Attributes::String
+      class Email < Attributes::StringLookup
         filter :is, Filters::Equals do |records, _attribute, value|
           records.includes(:account).
             where(accounts: {email: value[0]})
-        end
-
-        def self.lookup?
-          true
-        end
-
-        def readonly
-          true
         end
 
         def lazy_read_class

@@ -16,9 +16,10 @@ module Toby
       attribute :due_date, Attributes::DateTime
       attribute :estimate, Attributes::Currency
       attribute :estimate_type, Attributes::String
+      attribute :hours_worked, Attributes::Integer
+      attribute :invoice_rate, Lookups::Tasks::InvoiceRate
       attribute :final_cost, Attributes::Currency
       attribute :flexible_estimate, Attributes::Currency
-      attribute :hours_worked, Attributes::Integer
       attribute :repeat, Attributes::String
       attribute :stage, Attributes::String
       attribute :submitted_for_approval_comment, Attributes::String

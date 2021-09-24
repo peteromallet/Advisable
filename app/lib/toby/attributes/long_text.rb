@@ -3,10 +3,10 @@
 module Toby
   module Attributes
     class LongText < BaseAttribute
-      filter 'equals...', Filters::Equals
-      filter 'contains...', Filters::StringContains
-      filter 'is blank', Filters::CheckNil
-      filter 'is not blank', Filters::CheckNotNil
+      filter "equals...", Filters::Equals
+      filter "contains...", Filters::StringContains
+      filter "is blank", Filters::CheckNil
+      filter "is not blank", Filters::CheckNotNil
 
       def type
         GraphQL::Types::String
