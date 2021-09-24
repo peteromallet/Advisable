@@ -14,7 +14,6 @@ module Types
 
       field :id, ID, null: false, method: :uid
       field :name, String, null: false
-      field :company_recomendation, Boolean, null: true
       field :skills, [Skill], null: true
       field :goals, [String], null: true
       field :results, Article.connection_type, null: true
