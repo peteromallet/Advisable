@@ -3,13 +3,9 @@
 module Toby
   module Lookups
     module Tasks
-      class CompanyName < Attributes::StringLookup
+      class InvoiceRate < Attributes::StringLookup
         def lazy_read_class
           Toby::Lazy::Single
-        end
-
-        def includes
-          {project: {user: :company}}
         end
 
         def via
@@ -21,7 +17,7 @@ module Toby
         end
 
         def lazy_read(application)
-          application&.project&.user&.company&.name
+          application&.invoice_rate
         end
       end
     end

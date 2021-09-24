@@ -3,11 +3,11 @@
 module Toby
   module Attributes
     class String < BaseAttribute
-      filter 'equals...', Filters::Equals
-      filter 'is one of...', Filters::OneOf
-      filter 'contains...', Filters::StringContains
-      filter 'is blank', Filters::CheckNil
-      filter 'is not blank', Filters::CheckNotNil
+      filter "equals...", Filters::Equals
+      filter "is one of...", Filters::OneOf
+      filter "contains...", Filters::StringContains
+      filter "is blank", Filters::CheckNil
+      filter "is not blank", Filters::CheckNotNil
 
       def type
         GraphQL::Types::String

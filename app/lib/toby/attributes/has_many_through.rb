@@ -3,8 +3,8 @@
 module Toby
   module Attributes
     class HasManyThrough < HasMany
-      filter 'includes...', Filters::Includes
-      filter 'are blank', Filters::HasNone
+      filter "includes...", Filters::Includes
+      filter "are blank", Filters::HasNone
 
       def lazy_read_class
         Toby::Lazy::Through
