@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_23_110902) do
+ActiveRecord::Schema.define(version: 2021_09_24_081426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -260,15 +260,6 @@ ActiveRecord::Schema.define(version: 2021_09_23_110902) do
     t.index ["article_id"], name: "index_case_study_industries_on_article_id"
     t.index ["industry_id"], name: "index_case_study_industries_on_industry_id"
     t.index ["uid"], name: "index_case_study_industries_on_uid", unique: true
-  end
-
-  create_table "case_study_saved_articles", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "article_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["article_id"], name: "index_case_study_saved_articles_on_article_id"
-    t.index ["user_id"], name: "index_case_study_saved_articles_on_user_id"
   end
 
   create_table "case_study_search_feedbacks", force: :cascade do |t|
@@ -1210,8 +1201,6 @@ ActiveRecord::Schema.define(version: 2021_09_23_110902) do
   add_foreign_key "case_study_contents", "case_study_sections", column: "section_id"
   add_foreign_key "case_study_industries", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "industries"
-  add_foreign_key "case_study_saved_articles", "case_study_articles", column: "article_id"
-  add_foreign_key "case_study_saved_articles", "users"
   add_foreign_key "case_study_search_feedbacks", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_search_feedbacks", "case_study_searches", column: "search_id"
   add_foreign_key "case_study_searches", "users"

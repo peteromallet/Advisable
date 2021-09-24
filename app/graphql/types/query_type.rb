@@ -353,16 +353,6 @@ module Types
       ::CaseStudy::Article.find_by!(uid: id)
     end
 
-    field :saved_articles, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20
-    def saved_articles
-      requires_current_user!
-      ::CaseStudy::Article.
-        active.
-        published.
-        where(id: current_user.saved_articles.select(:article_id)).
-        exclude_archived_for(current_user)
-    end
-
     field :archived_articles, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20
     def archived_articles
       requires_current_user!

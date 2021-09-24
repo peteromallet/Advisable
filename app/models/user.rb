@@ -42,7 +42,6 @@ class User < ApplicationRecord
   has_many :sent_articles, class_name: "CaseStudy::SharedArticle", foreign_key: :shared_by_id, inverse_of: :shared_by, dependent: :nullify
   has_many :received_articles, class_name: "CaseStudy::SharedArticle", foreign_key: :shared_with_id, inverse_of: :shared_with, dependent: :destroy
   has_many :archived_articles, class_name: "CaseStudy::ArchivedArticle", dependent: :destroy
-  has_many :saved_articles, class_name: "CaseStudy::SavedArticle", dependent: :destroy
 
   belongs_to :company, optional: true
   belongs_to :country, optional: true

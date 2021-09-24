@@ -51,17 +51,6 @@ RSpec.describe Mutations::CaseStudy::AssignArticle do
     end
   end
 
-  describe "action: save" do
-    let(:action) { "save" }
-
-    it "saves the article to the search" do
-      response = AdvisableSchema.execute(query, context: context)
-      r_article = response["data"]["assignCaseStudyArticle"]["article"]
-      expect(r_article["id"]).to eq(article.uid)
-      expect(::CaseStudy::SavedArticle.where(user: search.user, article: article)).not_to be_empty
-    end
-  end
-
   describe "action: unarchive" do
     let(:action) { "unarchive" }
 
@@ -72,19 +61,6 @@ RSpec.describe Mutations::CaseStudy::AssignArticle do
       r_article = response["data"]["assignCaseStudyArticle"]["article"]
       expect(r_article["id"]).to eq(article.uid)
       expect(::CaseStudy::ArchivedArticle.where(user: search.user)).to be_empty
-    end
-  end
-
-  describe "action: unsave" do
-    let(:action) { "unsave" }
-
-    it "unsaves the article to the search" do
-      create(:case_study_saved_article, user: search.user, article: article)
-      expect(::CaseStudy::SavedArticle.where(user: search.user)).not_to be_empty
-      response = AdvisableSchema.execute(query, context: context)
-      r_article = response["data"]["assignCaseStudyArticle"]["article"]
-      expect(r_article["id"]).to eq(article.uid)
-      expect(::CaseStudy::SavedArticle.where(user: search.user)).to be_empty
     end
   end
 
