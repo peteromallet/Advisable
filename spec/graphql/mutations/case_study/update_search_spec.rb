@@ -37,16 +37,6 @@ RSpec.describe Mutations::CaseStudy::UpdateSearch do
     expect(search.attributes.values_at("business_type", "goals", "name", "user_id")).to match_array(["B2B", %w[First Second], "A Search", user.id])
   end
 
-  context "when company recomendation" do
-    let(:search) { create(:case_study_search, company_recomendation: true) }
-
-    it "does not allow to update a search" do
-      response = AdvisableSchema.execute(query, context: context)
-      error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthorized")
-    end
-  end
-
   context "when skills passed in" do
     let(:args) do
       <<-GRAPHQL
