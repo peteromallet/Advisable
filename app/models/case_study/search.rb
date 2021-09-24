@@ -67,7 +67,7 @@ end
 # Table name: case_study_searches
 #
 #  id            :bigint           not null, primary key
-#  archived              :jsonb
+#  archived      :jsonb
 #  business_type :string
 #  finalized_at  :datetime
 #  goals         :jsonb

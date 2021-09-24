@@ -262,15 +262,6 @@ ActiveRecord::Schema.define(version: 2021_09_24_112831) do
     t.index ["uid"], name: "index_case_study_industries_on_uid", unique: true
   end
 
-  create_table "case_study_saved_articles", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "article_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["article_id"], name: "index_case_study_saved_articles_on_article_id"
-    t.index ["user_id"], name: "index_case_study_saved_articles_on_user_id"
-  end
-
   create_table "case_study_search_feedbacks", force: :cascade do |t|
     t.bigint "search_id", null: false
     t.bigint "article_id", null: false
@@ -295,6 +286,7 @@ ActiveRecord::Schema.define(version: 2021_09_24_112831) do
     t.jsonb "results"
     t.datetime "finalized_at"
     t.jsonb "preferences"
+    t.jsonb "archived"
     t.index ["uid"], name: "index_case_study_searches_on_uid", unique: true
     t.index ["user_id"], name: "index_case_study_searches_on_user_id"
   end
