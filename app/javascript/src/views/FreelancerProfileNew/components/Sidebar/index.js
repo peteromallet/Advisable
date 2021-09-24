@@ -1,9 +1,10 @@
 import React from "react";
-import { matchPath } from "react-router";
+import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import { LinkedinIn } from "@styled-icons/fa-brands/LinkedinIn";
 import { Globe } from "@styled-icons/heroicons-solid/Globe";
-import { Button, Box, Text } from "@advisable/donut";
+import useViewer from "src/hooks/useViewer";
+import { Box, Text } from "@advisable/donut";
 import ProfilePicture from "../ProfilePicture";
 import SocialIcon from "../SocialIcon";
 import CoverImage from "../CoverImage";
@@ -14,12 +15,21 @@ import {
   StyledBioWrapper,
 } from "./styles";
 import BackButton from "../BackButton";
+// CTA button
+import EditInfo from "../EditInfo";
+import MessageButton from "../MessageButton";
+import WorkTogetherButton from "../WorkTogetherButton";
 
 export default function Sidebar({ data, ...props }) {
   const bio = data.specialist.bio.slice(0, 140);
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:id/case_studies/:case_study_id",
   });
+
+  const viewer = useViewer();
+  const params = useParams();
+  const viewerIsGuild = viewer?.guild || false;
+  const isOwner = viewer?.id === params.id;
 
   return (
     <Box
@@ -75,14 +85,17 @@ export default function Sidebar({ data, ...props }) {
             flexDirection={["column", "row", "row", "column"]}
             alignItems={{ _: "center", l: "flex-start" }}
           >
-            <Button
-              variant="dark"
-              width={["100%", "auto"]}
-              size={["m", "m", "l"]}
-              mb={[4, 0, 0, 6]}
-            >
-              Work together
-            </Button>
+            {isOwner ? (
+              <EditInfo specialist={data.specialist}>Edit Info</EditInfo>
+            ) : null}
+            {!isOwner && !viewerIsGuild ? (
+              <WorkTogetherButton id={data.specialist?.id}>
+                Work together
+              </WorkTogetherButton>
+            ) : null}
+            {!isOwner && viewerIsGuild ? (
+              <MessageButton specialist={data.specialist} />
+            ) : null}
             <Box>
               {data.specialist.linkedin ? (
                 <SocialIcon icon={LinkedinIn} href={data.specialist.linkedin} />
