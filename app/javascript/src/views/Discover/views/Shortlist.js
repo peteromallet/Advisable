@@ -27,12 +27,12 @@ export default function Shortlist() {
     <AnimateSharedLayout>
       <Box display="flex" alignItems="center">
         <BackButton to="/explore" marginRight={4} />
-        {loading ? (
-          <Skeleton height="36px" width="220px" />
-        ) : (
+        {!loading || shortlist?.name ? (
           <Heading fontSize="36px" fontWeight={650} letterSpacing="-0.06rem">
             {shortlist.name}
           </Heading>
+        ) : (
+          <Skeleton height="36px" width="220px" />
         )}
       </Box>
       <Box height="1px" bg="neutral100" my={8} />

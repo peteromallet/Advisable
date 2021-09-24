@@ -64,6 +64,14 @@ const size = variant({
         lineHeight: "24px",
       },
     },
+    sm: {
+      width: "140px",
+      height: "162px",
+      [StyledRecommendationAvatarName]: {
+        fontSize: "18px",
+        lineHeight: "20px",
+      },
+    },
   },
 });
 
@@ -91,20 +99,23 @@ export default function RecommendationAvatar({
 }) {
   return (
     <StyledRecommendationAvatar $size={size}>
-      <Circle
-        size="48px"
-        bg="white"
-        position="absolute"
-        top="12px"
-        left="12px"
-        zIndex={2}
-        fontSize="20px"
-        fontWeight="600"
-        color="blue700"
-        boxShadow="s"
-      >
-        {number}
-      </Circle>
+      {number ? (
+        <Circle
+          size="48px"
+          bg="white"
+          position="absolute"
+          top="12px"
+          left="12px"
+          zIndex={2}
+          fontSize="20px"
+          fontWeight="600"
+          color="blue700"
+          boxShadow="s"
+        >
+          {number}
+        </Circle>
+      ) : null}
+
       <StyledRecommendationAvatarSquircle r1={0.02} r2={0.4}>
         <StyledRecommendationAvatarOverlay>
           <StyledRecommendationAvatarName>

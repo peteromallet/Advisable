@@ -10,10 +10,10 @@ import { useArchiveArticle } from "../queries";
 
 const StyledRecommendationTitle = styled(Text)(
   css({
-    fontSize: "4xl",
     fontWeight: 560,
     marginBottom: 3,
     lineHeight: "28px",
+    paddingRight: "32px",
     letterSpacing: "-0.025em",
   }),
 );
@@ -47,19 +47,20 @@ export default function Recommendation({ recommendation, number, onClick }) {
       <Box display="flex" alignItems="center">
         <Box flexShrink={0}>
           <RecommendationAvatar
-            specialist={recommendation.specialist}
             number={number}
+            size={{ _: "md", l: "lg" }}
+            specialist={recommendation.specialist}
           />
         </Box>
-        <Box paddingLeft={8}>
-          <StyledRecommendationTitle>
+        <Box paddingLeft={6}>
+          <StyledRecommendationTitle fontSize={{ _: "24px", l: "28px" }}>
             {recommendation.title}
           </StyledRecommendationTitle>
           <Text fontSize="lg" lineHeight="24px" marginBottom={6}>
             {recommendation.comment}
           </Text>
           <Box>
-            <Button prefix={<ChatAlt />} mr={3}>
+            <Button variant="gradient" prefix={<ChatAlt />} mr={3}>
               Message
             </Button>
             <Button
