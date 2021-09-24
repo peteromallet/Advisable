@@ -1,0 +1,56 @@
+query Article($id: ID!) {
+  caseStudy(id: $id) {
+    id
+    title
+    subtitle
+    skills {
+      id
+      primary
+      skill {
+        id
+        name
+      }
+    }
+    company {
+      id
+      logo
+      favicon
+    }
+    specialist {
+      id
+      name
+      avatar
+    }
+    comment
+    specialist {
+      id
+      bio
+      avatar
+      name
+      firstName
+    }
+    sections {
+      id
+      type
+      contents {
+        id
+        ... on Heading {
+          size
+          text
+        }
+        ... on Paragraph {
+          text
+        }
+        ... on Results {
+          results
+        }
+        ... on Images {
+          images {
+            id
+            url
+          }
+        }
+      }
+    }
+  }
+}
