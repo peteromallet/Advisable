@@ -13,8 +13,14 @@ module Mutations
       field :article, Types::CaseStudy::Article, null: false
       field :search, Types::CaseStudy::Search, null: false
 
-      def authorized?(**_args)
+      def authorized?(search:, **_args)
         requires_client!
+
+        search = ::CaseStudy::Search.find_by!(uid: search)
+        policy = ::CaseStudy::SearchPolicy.new(current_user, search)
+        return true if policy.archive_article?
+
+        ApiError.not_authorized("You do not have permission to archive article on this search")
       end
 
       def resolve(article:, search:, **args)

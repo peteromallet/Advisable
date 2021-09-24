@@ -52,6 +52,16 @@ RSpec.describe Mutations::CaseStudy::ArchiveArticle do
     end
   end
 
+  context "when current_user is not search owner" do
+    let(:context) { {current_user: create(:user)} }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("notAuthorized")
+    end
+  end
+
   context "when current_user is specialist" do
     let(:user) { create(:specialist) }
 
