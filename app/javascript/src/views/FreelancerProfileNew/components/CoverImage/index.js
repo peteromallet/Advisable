@@ -1,14 +1,14 @@
 import React from "react";
 import { matchPath, useParams } from "react-router";
 import useViewer from "src/hooks/useViewer";
-import useImageOnLoad from "src/hooks/useImageOnLoad";
 import { useNotifications } from "src/components/Notifications";
-import { StyledCover, StyledCoverInner, StyledContentWrapper } from "./styles";
+import { StyledCover, StyledCoverImage, StyledContentWrapper } from "./styles";
 import defaultCoverPhoto from "./defaultCoverPhoto.png";
 import FileUpload from "../FileUpload";
 import { useSetCoverPhoto } from "../../queries";
+import useLoadImage from "src/hooks/useLoadImage";
 
-function CoverImage({ src, color, ...props }) {
+function CoverImage({ src, ...props }) {
   const params = useParams();
   const viewer = useViewer();
   const isOwner = viewer?.id === params.id;
@@ -18,13 +18,9 @@ function CoverImage({ src, color, ...props }) {
   });
   const [updatePicture] = useSetCoverPhoto();
   const image = src || defaultCoverPhoto;
-  const { loaded, updated } = useImageOnLoad(image);
+  const { isLoading, updated, error } = useLoadImage(image);
 
   const notifications = useNotifications();
-
-  const style = {
-    backgroundImage: `url(${src || defaultCoverPhoto})`,
-  };
 
   const submit = async (blob) => {
     await updatePicture({
@@ -46,7 +42,10 @@ function CoverImage({ src, color, ...props }) {
         </clipPath>
       </svg>
       <StyledContentWrapper>
-        <StyledCoverInner color={color} style={style} />
+        <StyledCoverImage
+          isLoading={isLoading}
+          src={error ? defaultCoverPhoto : image}
+        />
         {isOwner && !isArticle ? (
           <FileUpload
             onChange={submit}
