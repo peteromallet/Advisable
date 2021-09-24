@@ -31,6 +31,8 @@ export const StyledContentWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  clip-path: url(#coverSquircle);
+  background-color: ${theme.colors.blue50};
 `;
 
 const size = variant({
