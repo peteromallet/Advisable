@@ -8,9 +8,6 @@ module CaseStudy
     alias assign_article? read?
     alias delete? read?
     alias finalize? read?
-
-    def update?
-      !record.company_recomendation && read?
-    end
+    alias update? read?
   end
 end
