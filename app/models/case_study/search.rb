@@ -13,24 +13,33 @@ module CaseStudy
     has_many :skills, dependent: :destroy
     has_many :search_feedbacks, dependent: :destroy
 
+    before_save :uniq_archived
+
     def name
-      attributes["name"].presence || (skills.primary.first || skills.first)&.skill&.name
+      super.presence || (skills.primary.first || skills.first)&.skill&.name
+    end
+
+    def archived
+      super.presence || []
     end
 
     def results
       refresh_results if attributes["results"].blank?
 
       Article.published.active.
-        where(id: attributes["results"]).
-        exclude_archived_for(user).
+        where(id: active_result_ids).
         available_specialists.
         by_score
     end
 
     def refresh_results
       reload
-      query = results_query(limit: RESULT_LIMIT, exclude: user.archived_articles.pluck(:article_id))
+      query = results_query(limit: RESULT_LIMIT, exclude: archived)
       update(results: query.map(&:id))
+    end
+
+    def active_result_ids
+      attributes["results"] - archived
     end
 
     def results_query(limit: nil, exclude: nil)
@@ -44,6 +53,12 @@ module CaseStudy
       end
       query.by_score
     end
+
+    private
+
+    def uniq_archived
+      self.archived = archived.uniq
+    end
   end
 end
 
@@ -52,6 +67,7 @@ end
 # Table name: case_study_searches
 #
 #  id                    :bigint           not null, primary key
+#  archived              :jsonb
 #  business_type         :string
 #  company_recomendation :boolean
 #  finalized_at          :datetime

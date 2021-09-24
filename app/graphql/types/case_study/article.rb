@@ -47,9 +47,12 @@ module Types
         object.sections.by_position
       end
 
-      field :is_archived, Boolean, null: false
-      def is_archived
-        object.archived_articles.exists?(user: current_user)
+      field :is_archived, Boolean, null: false do
+        argument :search, ID, required: true
+      end
+      def is_archived(search:)
+        search = CaseStudy::Search.find_by!(uid: search)
+        search.archived.include?(object.id)
       end
 
       field :shares, [SharedArticle], null: true
