@@ -1,12 +1,12 @@
 import React from "react";
+import { matchPath, useParams } from "react-router";
+import useViewer from "src/hooks/useViewer";
 import useImageOnLoad from "src/hooks/useImageOnLoad";
 import { useNotifications } from "src/components/Notifications";
 import { StyledCover, StyledCoverInner, StyledContentWrapper } from "./styles";
 import defaultCoverPhoto from "./defaultCoverPhoto.png";
 import FileUpload from "../FileUpload";
 import { useSetCoverPhoto } from "../../queries";
-import { matchPath, useParams } from "react-router";
-import useViewer from "src/hooks/useViewer";
 
 function CoverImage({ src, color, ...props }) {
   const params = useParams();
@@ -52,6 +52,7 @@ function CoverImage({ src, color, ...props }) {
             onChange={submit}
             updated={updated}
             maxSizeInMB={5}
+            type="cover"
           />
         ) : null}
       </StyledContentWrapper>
