@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_123023) do
+ActiveRecord::Schema.define(version: 2021_09_23_110902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -751,6 +751,7 @@ ActiveRecord::Schema.define(version: 2021_09_22_123023) do
     t.string "payment_method"
     t.integer "deposit"
     t.integer "retries"
+    t.datetime "charged_at"
     t.index ["company_id"], name: "index_payments_on_company_id"
     t.index ["specialist_id"], name: "index_payments_on_specialist_id"
     t.index ["task_id"], name: "index_payments_on_task_id"
