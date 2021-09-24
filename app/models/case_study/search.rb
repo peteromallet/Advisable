@@ -5,7 +5,7 @@ module CaseStudy
     include Uid
     uid_prefix "csr"
 
-    RESULT_LIMIT = 12
+    RESULT_LIMIT = 5
 
     has_logidze
 
