@@ -11,11 +11,9 @@ Rails.application.routes.draw do
     mount GraphqlPlayground::Rails::Engine, as: "toby_playground", at: "/toby_playground", graphql_path: "/toby_graphql"
   end
 
-  if ENV["TOBY"]
-    post "/toby_graphql", to: "graphql#toby"
-    get "/toby", to: "application#toby"
-    get "/toby/*toby", to: "application#toby"
-  end
+  post "/toby_graphql", to: "graphql#toby"
+  get "/toby", to: "application#toby"
+  get "/toby/*toby", to: "application#toby"
 
   namespace :admin do
     mount Sidekiq::Web => "/sidekiq", constraints: AdminConstraint.new
