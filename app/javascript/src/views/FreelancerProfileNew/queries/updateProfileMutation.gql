@@ -1,0 +1,9 @@
+#import "./fragments/specialistFields.gql"
+
+mutation UpdateProfile($input: UpdateProfileInput!) {
+  updateProfile(input: $input) {
+    specialist {
+      ...SpecialistFields
+    }
+  }
+}

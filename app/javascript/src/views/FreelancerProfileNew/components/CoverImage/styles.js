@@ -1,30 +1,23 @@
 import styled from "styled-components";
+import { theme } from "@advisable/donut";
 import { space, variant } from "styled-system";
 
-const colors = variant({
-  prop: "color",
-  variants: {
-    blue: {
-      bg: "blue100",
-      color: "blue300",
-    },
-  },
-});
-
-export const StyledCoverInner = styled.div`
-  ${colors}
+export const StyledCoverImage = styled.img`
+  border-radius: 12px;
+  object-fit: cover;
   width: 100%;
   height: 100%;
-  flex-shrink: 0;
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  align-items: center;
-  justify-content: center;
+  opacity: ${(props) => (props.isLoading ? 0 : 1)};
   clip-path: url(#coverSquircle);
-  background-size: cover;
-  background-position: center;
+  transition: opacity 400ms;
+`;
+
+export const StyledContentWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  clip-path: url(#coverSquircle);
+  background-color: ${theme.colors.blue50};
 `;
 
 const size = variant({

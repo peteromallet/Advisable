@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import useLoadImage from "src/hooks/useLoadImage";
 import possessive from "src/utilities/possesive";
 import {
   StyledPassportAvatar,
@@ -8,7 +9,7 @@ import {
 } from "./styles";
 
 function PassportAvatar({ src, name, size, stroke, color, ...props }) {
-  const [error, setError] = useState(false);
+  const { isLoading, error } = useLoadImage(src);
 
   let initials = name[0];
   const nameSplit = name.split(" ");
@@ -39,7 +40,7 @@ function PassportAvatar({ src, name, size, stroke, color, ...props }) {
         <StyledAvatarImg
           src={src}
           alt={`${possessive(name)} profile picture`}
-          onError={() => setError(true)}
+          isLoading={isLoading}
         />
       ) : null}
     </StyledPassportAvatar>

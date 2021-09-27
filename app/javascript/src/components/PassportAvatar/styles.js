@@ -33,6 +33,8 @@ export const StyledAvatarImg = styled.img`
   left: 0;
   width: 100%;
   height: 100%;
+  opacity: ${(props) => (props.isLoading ? 0 : 1)};
+  transition: opacity 200ms;
   clip-path: url(#passportSquircle);
   object-position: center;
   object-fit: cover;
@@ -88,8 +90,9 @@ export const StyledPassportAvatar = styled.div`
   ${size}
   ${space}
 
-  flex-shrink: 0;
+  display: inherit;
   position: relative;
+  flex-shrink: 0;
 
   .svgClip {
     opacity: 0;
