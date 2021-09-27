@@ -6,11 +6,10 @@ module Types
 
     description "Fields that are common for all types that have an account"
 
+    field :account, Types::Account, null: false
     def account
       dataloader.with(::ActiveRecordSource, ::Account).load(object.account_id)
     end
-
-    field :account, Types::Account, null: false
 
     field :first_name, String, null: true
     field :last_name, String, null: true
@@ -18,21 +17,26 @@ module Types
     delegate :name, :first_name, :last_name, to: :account
 
     field :needs_to_set_a_password, Boolean, null: true
-
     def needs_to_set_a_password
       account.password_digest.blank?
     end
 
     field :confirmed, Boolean, null: false
-
     def confirmed
       account.confirmed_at.present?
     end
 
     field :features, [String], null: true
-
     def features
       account.features.keys
+    end
+
+    field :conversation_with, Types::Conversation, null: true do
+      argument :id, ID, required: true
+    end
+    def conversation_with(id:)
+      account = Account.find_by_uid!(id)
+      Conversation.find_existing_with([current_user.account, account])
     end
   end
 end
