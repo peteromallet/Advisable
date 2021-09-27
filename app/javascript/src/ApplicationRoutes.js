@@ -59,7 +59,7 @@ function RedirectToSetPassword() {
   );
 }
 
-function VersionedRoute({
+export function VersionedRoute({
   fallback,
   versions,
   routeComponent = AuthenticatedRoute,
