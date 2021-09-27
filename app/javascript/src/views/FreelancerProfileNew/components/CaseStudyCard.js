@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
+import { useImage } from "react-image";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { matchPath, useParams } from "react-router";
-import useLoadImage from "src/hooks/useLoadImage";
 import { Box, Text, Link, Skeleton, theme } from "@advisable/donut";
 import CompanyLogo from "./CompanyLogo";
 
@@ -42,9 +42,20 @@ const LoadingSkeleton = () => (
   </Box>
 );
 
+const CaseStudyBackgroundImage = React.memo(function CaseStudyBackgroundImage({
+  url,
+}) {
+  const { src } = useImage({ srcList: url });
+
+  return (
+    <Box top="0" left="0" width="100%" height="100%" position="absolute">
+      <StyledBackgroundImg as={motion.img} src={src} />
+    </Box>
+  );
+});
+
 export default function CaseStudyCard({ caseStudy }) {
   const params = useParams();
-  const coverPhoto = useLoadImage(caseStudy.coverPhoto);
 
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:id/case_studies/:case_study_id",
@@ -54,74 +65,72 @@ export default function CaseStudyCard({ caseStudy }) {
     <StyledSkillTag key={skill.id}>{skill.name}</StyledSkillTag>
   ));
 
-  if (coverPhoto.isLoading) return <LoadingSkeleton />;
-
   return (
-    <Box
-      as={isArticle ? null : Link}
-      to={`/freelancers/${params.id}/case_studies/${caseStudy.id}`}
-      notInline="true"
-    >
+    <Suspense fallback={<LoadingSkeleton />}>
       <Box
-        p={7}
-        pb={12}
-        width="100%"
-        bg="neutral100"
-        position="relative"
-        borderRadius="20px"
-        overflow="hidden"
+        as={isArticle ? null : Link}
+        to={`/freelancers/${params.id}/case_studies/${caseStudy.id}`}
+        notInline="true"
       >
-        {coverPhoto.url ? (
-          <Box top="0" left="0" width="100%" height="100%" position="absolute">
-            <StyledBackgroundImg as={motion.img} src={coverPhoto.url} />
-          </Box>
-        ) : null}
         <Box
+          p={7}
+          pb={12}
+          width="100%"
+          bg="neutral100"
           position="relative"
-          display="flex"
-          css={`
-            pointer-events: none;
-          `}
+          borderRadius="20px"
+          overflow="hidden"
         >
+          {caseStudy.coverPhoto ? (
+            <CaseStudyBackgroundImage url={caseStudy.coverPhoto} />
+          ) : null}
           <Box
-            minWidth="56px"
-            height="64px"
-            bg="white"
-            borderRadius="12px"
+            position="relative"
             display="flex"
-            alignItems="center"
-            justifyContent="center"
-            mr={4}
+            css={`
+              pointer-events: none;
+            `}
           >
-            <CompanyLogo src={caseStudy.company?.favicon} />
-          </Box>
-          <Box>
-            <Text
-              textTransform="uppercase"
-              fontSize="13px"
-              fontWeight="semibold"
-              letterSpacing="0.04rem"
-              lineHeight="l"
-              color="neutral700"
-              mb={1}
+            <Box
+              minWidth="56px"
+              height="64px"
+              bg="white"
+              borderRadius="12px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              mr={4}
             >
-              {caseStudy.companyType}
-            </Text>
-            <Text
-              fontSize="4xl"
-              fontWeight="semibold"
-              letterSpacing="-0.02rem"
-              color="neutral900"
-              mb={8}
-            >
-              {caseStudy.title}
-            </Text>
-            <Box display="flex" flexDirection="row" flexWrap="wrap">
-              {skills}
+              <CompanyLogo src={caseStudy.company?.favicon} />
+            </Box>
+            <Box>
+              <Text
+                textTransform="uppercase"
+                fontSize="13px"
+                fontWeight="semibold"
+                letterSpacing="0.04rem"
+                lineHeight="l"
+                color="neutral700"
+                mb={1}
+              >
+                {caseStudy.companyType}
+              </Text>
+              <Text
+                fontSize="4xl"
+                fontWeight="semibold"
+                letterSpacing="-0.02rem"
+                color="neutral900"
+                mb={8}
+              >
+                {caseStudy.title}
+              </Text>
+              <Box display="flex" flexDirection="row" flexWrap="wrap">
+                {skills}
+              </Box>
             </Box>
           </Box>
         </Box>
       </Box>
-    </Box>
+    </Suspense>
   );
 }
