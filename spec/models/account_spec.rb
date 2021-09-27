@@ -18,6 +18,38 @@ RSpec.describe Account, type: :model do
     expect(account).to be_valid
   end
 
+  describe "find_by_uid!" do
+    context "when specialist" do
+      let!(:specialist) { create(:specialist) }
+
+      it "returns the account" do
+        expect(described_class.find_by_uid!(specialist.uid)).to eq(specialist.account)
+      end
+    end
+
+    context "when user" do
+      let!(:user) { create(:user) }
+
+      it "returns the account" do
+        expect(described_class.find_by_uid!(user.uid)).to eq(user.account)
+      end
+    end
+
+    context "when account" do
+      let!(:account) { create(:account) }
+
+      it "returns the account" do
+        expect(described_class.find_by_uid!(account.uid)).to eq(account)
+      end
+    end
+
+    context "when other" do
+      it "raises a not_found error" do
+        expect { described_class.find_by_uid!("asd_1234") }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
   describe "#has_password?" do
     it "returns true when there is a password_digest" do
       inst = create(factory, password: "testing123")
