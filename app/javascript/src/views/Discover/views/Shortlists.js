@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Box, Button, Heading, Stack } from "@advisable/donut";
 import NoShortlists from "../components/NoShortlists";
 import { useShortlists } from "../queries";
@@ -16,7 +17,9 @@ export default function Shortlists() {
         <Heading fontSize="36px" fontWeight={650} letterSpacing="-0.06rem">
           Discover
         </Heading>
-        <Button variant="dark">New Shortlist</Button>
+        <Button as={Link} to="/explore/new" variant="dark">
+          New Shortlist
+        </Button>
       </Box>
       <Box height="1px" bg="neutral100" my={8} />
       {!loading && shortlists.length === 0 && <NoShortlists />}
