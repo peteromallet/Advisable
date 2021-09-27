@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { top, variant } from "styled-system";
+import { theme } from "@advisable/donut";
 
 export const StyledAvatarWrapper = styled.div``;
 export const StyledNameWrapper = styled.div``;
@@ -73,4 +74,19 @@ export const StyledStickySidebar = styled.div`
   ${top}
   display: grid;
   position: sticky;
+`;
+
+export const StyledShowMore = styled.span`
+  font-weight: ${theme.fontWeights.semibold};
+  cursor: pointer;
+  position: static;
+  transform: none;
+  user-select: none;
+  padding: 4px 4px;
+  border-radius: 8px;
+  color: ${theme.colors.neutral700};
+
+  &:hover {
+    background: ${theme.colors.neutral100};
+  }
 `;
