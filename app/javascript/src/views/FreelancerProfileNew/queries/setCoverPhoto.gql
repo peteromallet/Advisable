@@ -1,0 +1,9 @@
+#import "./fragments/specialistFields.gql"
+
+mutation SetCoverPhoto($input: SetCoverPhotoInput!) {
+  setCoverPhoto(input: $input) {
+    specialist {
+      ...SpecialistFields
+    }
+  }
+}
