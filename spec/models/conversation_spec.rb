@@ -19,7 +19,7 @@ RSpec.describe Conversation, type: :model do
     end
 
     it "can take a uid" do
-      message = conversation.new_message!(user.account, "Test", [], "msg_123456789012345")
+      message = conversation.new_message!(user.account, "Test", [], uid: "msg_123456789012345")
       expect(message.uid).to eq("msg_123456789012345")
     end
 
