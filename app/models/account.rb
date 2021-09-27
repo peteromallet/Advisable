@@ -32,19 +32,6 @@ class Account < ApplicationRecord
 
   register_permissions :admin, :team_manager, :editor
 
-  def self.find_by_uid!(uid)
-    case uid
-    when /^spe_/
-      Specialist.find_by!(uid: uid).account
-    when /^use_/
-      User.find_by!(uid: uid).account
-    when /^acc_/
-      find_by!(uid: uid)
-    else
-      raise ActiveRecord::RecordNotFound
-    end
-  end
-
   def specialist_or_user
     specialist || user
   end
