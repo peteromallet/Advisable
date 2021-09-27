@@ -4,6 +4,7 @@ import GET_PROFILE_DATA from "./getProfileData.gql";
 import CASE_STUDY from "./getCaseStudy.gql";
 import UPDATE_PROFILE from "./updateProfileMutation.gql";
 import SET_COVER_PHOTO from "./setCoverPhoto.gql";
+import GET_COUNTRIES from "./getCountries.gql";
 
 export function useCaseStudy(id) {
   return useQuery(CASE_STUDY, {
@@ -31,5 +32,10 @@ export const useUpdateProfile = () => {
 
 export const useSetCoverPhoto = () => {
   const response = useMutation(SET_COVER_PHOTO);
+  return response;
+};
+
+export const useCountries = () => {
+  const response = useQuery(GET_COUNTRIES);
   return response;
 };
