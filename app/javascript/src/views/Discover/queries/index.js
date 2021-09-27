@@ -1,8 +1,9 @@
-import { useApolloClient, useQuery } from "@apollo/client";
+import { useApolloClient, useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router";
 import ARTICLE from "./article.gql";
 import SHORTLIST from "./shortlist.gql";
 import SHORTLISTS from "./shortlists.gql";
+import ARCHIVE_ARTICLE from "./archiveArticle.gql";
 
 export function useShortlist() {
   const { id } = useParams();
@@ -21,24 +22,21 @@ export function useArticle() {
   return useQuery(ARTICLE, { variables: { id: articleId } });
 }
 
-export function useArchiveArticle(article) {
+export function useArchiveArticle(search) {
   const client = useApolloClient();
 
-  const handler = () => {
-    client.cache.modify({
-      id: "CaseStudySearch:csr_MP74ibrVBsNcfot",
-      fields: {
-        results(previous, { readField }) {
-          return {
-            ...previous,
-            nodes: previous.nodes.filter((node) => {
-              return article.id !== readField("id", node);
-            }),
-          };
-        },
-      },
-    });
-  };
+  return useMutation(ARCHIVE_ARTICLE, {
+    onCompleted(data) {
+      const results = data?.archiveCaseStudyArticle?.search?.results;
 
-  return [handler];
+      client.cache.modify({
+        id: client.cache.identify(search),
+        fields: {
+          results() {
+            return results;
+          },
+        },
+      });
+    },
+  });
 }

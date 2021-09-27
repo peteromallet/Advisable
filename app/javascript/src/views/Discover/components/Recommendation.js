@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import css from "@styled-system/css";
 import SuperEllipse from "react-superellipse";
 import { ChatAlt } from "@styled-icons/heroicons-solid/ChatAlt";
-import { Trash } from "@styled-icons/heroicons-solid/Trash";
 import { Box, Text, Button } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
-import { useArchiveArticle } from "../queries";
+import ArchiveButton from "./ArchiveButton";
 
 const StyledRecommendationTitle = styled(Text)(
   css({
@@ -30,49 +29,48 @@ const StyledRecommendation = styled(SuperEllipse)(
   }),
 );
 
-export default function Recommendation({ recommendation, number, onClick }) {
-  const [archive] = useArchiveArticle(recommendation);
+export default function Recommendation({
+  recommendation,
+  search,
+  number,
+  onClick,
+}) {
+  const container = useRef(null);
 
-  const handleClick = () => {
-    onClick(recommendation);
-  };
-
-  const handleArchive = (e) => {
-    e.stopPropagation();
-    archive();
+  const handleClick = (e) => {
+    if (container.current.contains(e.target)) {
+      onClick(recommendation);
+    }
   };
 
   return (
-    <StyledRecommendation onClick={handleClick}>
-      <Box display="flex" alignItems="center">
-        <Box flexShrink={0}>
-          <RecommendationAvatar
-            number={number}
-            size={{ _: "md", l: "lg" }}
-            specialist={recommendation.specialist}
-          />
-        </Box>
-        <Box paddingLeft={6}>
-          <StyledRecommendationTitle fontSize={{ _: "24px", l: "28px" }}>
-            {recommendation.title}
-          </StyledRecommendationTitle>
-          <Text fontSize="lg" lineHeight="24px" marginBottom={6}>
-            {recommendation.comment}
-          </Text>
-          <Box>
-            <Button variant="gradient" prefix={<ChatAlt />} mr={3}>
-              Message
-            </Button>
-            <Button
-              prefix={<Trash />}
-              variant="outlined"
-              onClick={handleArchive}
-            >
-              Remove
-            </Button>
+    <div ref={container}>
+      <StyledRecommendation onClick={handleClick}>
+        <Box display="flex" alignItems="center">
+          <Box flexShrink={0}>
+            <RecommendationAvatar
+              number={number}
+              size={{ _: "md", l: "lg" }}
+              name={recommendation.specialist.name}
+              src={recommendation.specialist.avatar}
+            />
+          </Box>
+          <Box paddingLeft={6}>
+            <StyledRecommendationTitle fontSize={{ _: "24px", l: "28px" }}>
+              {recommendation.title}
+            </StyledRecommendationTitle>
+            <Text fontSize="lg" lineHeight="24px" marginBottom={6}>
+              {recommendation.comment}
+            </Text>
+            <Box>
+              <Button variant="gradient" prefix={<ChatAlt />} mr={3}>
+                Message
+              </Button>
+              <ArchiveButton article={recommendation} search={search} />
+            </Box>
           </Box>
         </Box>
-      </Box>
-    </StyledRecommendation>
+      </StyledRecommendation>
+    </div>
   );
 }

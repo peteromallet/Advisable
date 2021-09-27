@@ -1,3 +1,5 @@
+#import "./articleFields.gql"
+
 query Shortlist($id: ID!) {
   currentCompany {
     id
@@ -8,14 +10,7 @@ query Shortlist($id: ID!) {
     name
     results(first: 5) {
       nodes {
-        id
-        title
-        comment
-        specialist {
-          id
-          name
-          avatar
-        }
+        ...ArticleFields
       }
     }
   }

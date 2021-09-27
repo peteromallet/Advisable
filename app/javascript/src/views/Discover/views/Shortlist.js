@@ -45,6 +45,7 @@ export default function Shortlist() {
               <Box marginY={10}>
                 <Recommendation
                   number={index + 1}
+                  search={shortlist}
                   onClick={handleClick}
                   recommendation={result}
                 />
