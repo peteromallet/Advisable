@@ -12,7 +12,7 @@ const StyledSocialIcon = styled.div`
 
 export default function SocialIcon({ icon: Icon, href }) {
   return (
-    <Link.External href={href} target="_blank" mr={1}>
+    <Link.External href={href} target="_blank" mr={1.5}>
       <StyledSocialIcon>
         <Icon size={28} />
       </StyledSocialIcon>
