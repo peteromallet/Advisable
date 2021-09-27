@@ -54,6 +54,11 @@ export function useCaseStudySearchFormDetails(opts) {
 
 export function useCreateCaseStudySearch() {
   return useMutation(CREATE_SEARCH, {
+    refetchQueries: [
+      {
+        query: SHORTLISTS,
+      },
+    ],
     update(cache, { data }) {
       const search = data.createCaseStudySearch.search;
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Text, Button } from "@advisable/donut";
 import illustration from "src/illustrations/zest/candidate.svg";
+import { Link } from "react-router-dom";
 
 export default function NoShortlists() {
   return (
@@ -19,7 +20,9 @@ export default function NoShortlists() {
         Find a specialist to hire by creating your first shortlist. We&apos;ll
         recommend you 5 people at a time to choose from.
       </Text>
-      <Button size="l">Create a shortlist</Button>
+      <Link to="/explore/new">
+        <Button size="l">Create a shortlist</Button>
+      </Link>
     </Box>
   );
 }
