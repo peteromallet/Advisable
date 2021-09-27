@@ -77,7 +77,7 @@ export const StyledStickySidebar = styled.div`
 `;
 
 export const StyledShowMore = styled.span`
-  font-weight: 600;
+  font-weight: ${theme.fontWeights.semibold};
   cursor: pointer;
   position: static;
   transform: none;
