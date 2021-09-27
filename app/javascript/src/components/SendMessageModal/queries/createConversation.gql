@@ -5,6 +5,11 @@ mutation CreateConversation($input: CreateConversationInput!) {
     message {
       id
       ...MessageFields
+
+      conversation {
+        id
+        unreadCount
+      }
     }
   }
 }

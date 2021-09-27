@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class GuildPostMessage < Types::BaseType
+  class GuildPostMessage < Types::UserMessage
     implements Types::MessageInterface
 
     graphql_name "GuildPostMessage"
