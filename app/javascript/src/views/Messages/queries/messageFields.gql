@@ -8,12 +8,22 @@ fragment MessageFields on MessageInterface {
     isImage
     filename
   }
-  conversation {
-    id
-    unreadCount
+
+  ... on GuildPostMessage {
+    calendlyUrl
+    post {
+      id
+      title
+    }
+    author {
+      id
+      name
+      avatar
+    }
   }
 
   ... on UserMessage {
+    status @client
     author {
       id
       name

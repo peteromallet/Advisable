@@ -27,7 +27,22 @@ module Mutations
           metadata: metadata
         })
 
+        create_post_engagement!(post)
+        update_calendly_url(args[:calendly_url])
+
         {message: message}
+      end
+
+      private
+
+      def create_post_engagement!(post)
+        post.engagements.find_or_create_by(specialist: current_user)
+      end
+
+      def update_calendly_url(url)
+        return if url.blank?
+
+        current_user.update(guild_calendly_link: url)
       end
     end
   end
