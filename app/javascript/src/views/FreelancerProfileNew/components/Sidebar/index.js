@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
-import { LinkedinIn } from "@styled-icons/fa-brands/LinkedinIn";
+import { Linkedin } from "@styled-icons/fa-brands/Linkedin";
+import { Twitter } from "@styled-icons/fa-brands/Twitter";
+import { Medium } from "@styled-icons/fa-brands/Medium";
+import { Instagram } from "@styled-icons/fa-brands/instagram";
 import { Globe } from "@styled-icons/heroicons-solid/Globe";
 import useViewer from "src/hooks/useViewer";
 import { Box, Text } from "@advisable/donut";
@@ -111,7 +114,16 @@ export default function Sidebar({ data, ...props }) {
             ) : null}
             <Box>
               {specialist.linkedin ? (
-                <SocialIcon icon={LinkedinIn} href={specialist.linkedin} />
+                <SocialIcon icon={Linkedin} href={specialist.linkedin} />
+              ) : null}
+              {specialist.twitter ? (
+                <SocialIcon icon={Twitter} href={specialist.twitter} />
+              ) : null}
+              {specialist.instagram ? (
+                <SocialIcon icon={Instagram} href={specialist.instagram} />
+              ) : null}
+              {specialist.medium ? (
+                <SocialIcon icon={Medium} href={specialist.medium} />
               ) : null}
               {specialist.website ? (
                 <SocialIcon icon={Globe} href={specialist.website} />
