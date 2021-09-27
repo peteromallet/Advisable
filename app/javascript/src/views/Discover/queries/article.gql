@@ -1,5 +1,8 @@
-query Article($id: ID!) {
-  caseStudy(id: $id) {
+query Article($searchId: ID!, $articleId: ID!) {
+  caseStudySearch(id: $searchId) {
+    id
+  }
+  caseStudy(id: $articleId) {
     id
     title
     subtitle
