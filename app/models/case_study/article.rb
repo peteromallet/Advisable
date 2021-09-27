@@ -23,7 +23,7 @@ module CaseStudy
     has_one_attached :cover_photo
 
     scope :published, -> { where.not(published_at: nil) }
-    scope :by_score, -> { order('score DESC NULLS LAST') }
+    scope :by_score, -> { order('score DESC NULLS LAST').order(id: :desc) }
     scope :available_specialists, -> { joins(:specialist).merge(Specialist.available).joins(specialist: :account).merge(Account.active) }
   end
 end

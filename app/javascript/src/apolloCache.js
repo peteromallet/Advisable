@@ -83,6 +83,11 @@ const createCache = () => {
           },
         },
       },
+      // CaseStudySearch: {
+      //   fields: {
+
+      //   }
+      // },
       Project: {
         fields: {
           deposit: {

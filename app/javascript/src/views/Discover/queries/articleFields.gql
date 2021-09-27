@@ -1,0 +1,18 @@
+fragment ArticleFields on CaseStudyArticle {
+  id
+  title
+  comment
+  skills {
+    id
+    primary
+    skill {
+      id
+      name
+    }
+  }
+  specialist {
+    id
+    name
+    avatar
+  }
+}

@@ -17,7 +17,7 @@ export default function ShortlistArticle() {
   return (
     <>
       <Box display="flex">
-        <Box width="220px" flexShrink={0}>
+        <Box width="200px" flexShrink={0}>
           <Box position="sticky" top="108px">
             <BackButton to={`/explore/${id}`} marginBottom={4} />
             <RecommendationAvatar
@@ -39,7 +39,7 @@ export default function ShortlistArticle() {
             <ConnectButton specialist={data.caseStudy.specialist} />
           </Box>
         </Box>
-        <Box paddingLeft={10}>
+        <Box paddingLeft={12}>
           <Article article={data.caseStudy} />
         </Box>
       </Box>

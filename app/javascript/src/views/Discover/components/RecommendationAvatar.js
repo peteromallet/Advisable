@@ -94,7 +94,8 @@ function AvatarImage({ src }) {
 
 export default function RecommendationAvatar({
   number,
-  specialist,
+  src,
+  name,
   size = "lg",
 }) {
   return (
@@ -117,14 +118,16 @@ export default function RecommendationAvatar({
       ) : null}
 
       <StyledRecommendationAvatarSquircle r1={0.02} r2={0.4}>
-        <StyledRecommendationAvatarOverlay>
-          <StyledRecommendationAvatarName>
-            {specialist.name}
-          </StyledRecommendationAvatarName>
-        </StyledRecommendationAvatarOverlay>
-        {specialist.avatar && (
+        {name && (
+          <StyledRecommendationAvatarOverlay>
+            <StyledRecommendationAvatarName>
+              {name}
+            </StyledRecommendationAvatarName>
+          </StyledRecommendationAvatarOverlay>
+        )}
+        {src && (
           <Suspense fallback={null}>
-            <AvatarImage src={specialist.avatar} />
+            <AvatarImage src={src} />
           </Suspense>
         )}
 
