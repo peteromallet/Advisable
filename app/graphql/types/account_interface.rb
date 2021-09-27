@@ -35,5 +35,13 @@ module Types
     def unread_notifications
       account.unread_notifications?
     end
+    
+    field :conversation_with, Types::Conversation, null: true do
+      argument :id, ID, required: true
+    end
+    def conversation_with(id:)
+      account = Account.find_by_uid!(id)
+      Conversation.find_existing_with([current_user.account, account])
+    end
   end
 end
