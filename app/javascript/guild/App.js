@@ -8,10 +8,11 @@ import useViewer from "@advisable-main/hooks/useViewer";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Header from "@guild/components/Header";
 import { NotificationsProvider } from "components/Notifications";
-
+import { VersionedRoute } from "src/ApplicationRoutes";
 import Feed from "./views/Feed";
 import Post from "./views/Post";
 import Messages from "./views/Messages";
+import NewMessages from "src/views/Messages";
 import Events from "./views/Events";
 import Event from "./views/Event";
 import TwilioProvider from "./components/TwilioProvider";
@@ -33,6 +34,7 @@ const GuildOrRedirectFreelancerProfile = () => {
 };
 
 const App = () => {
+  console.log("GIULD");
   return (
     <ApplicationProvider>
       <RootErrorBoundary>
@@ -56,10 +58,11 @@ const App = () => {
                   component={Feed}
                 />
                 <Route exact path="/posts/:postId" component={Post} />
-                <AuthenticatedRoute
-                  exact
+                <VersionedRoute
+                  routeComponent={Route}
                   path="/messages/:conversationId?"
-                  component={Messages}
+                  fallback={Messages}
+                  versions={{ 2: NewMessages }}
                 />
                 <AuthenticatedRoute
                   exact
