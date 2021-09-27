@@ -6,8 +6,8 @@ import { useArticle } from "../queries";
 import RecommendationAvatar from "../components/RecommendationAvatar";
 import BackButton from "src/components/BackButton";
 import { useHistory, useParams } from "react-router";
-import ConnectButton from "src/components/ConnectButton";
 import ArchiveButton from "../components/ArchiveButton";
+import MessageFreelancerButton from "../components/MessageButton";
 
 export default function ShortlistArticle() {
   const { id } = useParams();
@@ -43,7 +43,7 @@ export default function ShortlistArticle() {
               {truncate(data.caseStudy.specialist.bio, { length: 110 })}
             </Text>
             <Box marginBottom={3}>
-              <ConnectButton specialist={data.caseStudy.specialist} />
+              <MessageFreelancerButton specialist={data.caseStudy.specialist} />
             </Box>
             <ArchiveButton
               article={data.caseStudy}

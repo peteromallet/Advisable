@@ -2,10 +2,10 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 import css from "@styled-system/css";
 import SuperEllipse from "react-superellipse";
-import { ChatAlt } from "@styled-icons/heroicons-solid/ChatAlt";
-import { Box, Text, Button } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
 import ArchiveButton from "./ArchiveButton";
+import MessageFreelancerButton from "./MessageButton";
 
 const StyledRecommendationTitle = styled(Text)(
   css({
@@ -43,6 +43,10 @@ export default function Recommendation({
     }
   };
 
+  const stopActionPropagation = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <div ref={container}>
       <StyledRecommendation onClick={handleClick}>
@@ -62,10 +66,11 @@ export default function Recommendation({
             <Text fontSize="lg" lineHeight="24px" marginBottom={6}>
               {recommendation.comment}
             </Text>
-            <Box>
-              <Button variant="gradient" prefix={<ChatAlt />} mr={3}>
-                Message
-              </Button>
+            <Box onClick={stopActionPropagation}>
+              <MessageFreelancerButton
+                mr={3}
+                specialist={recommendation.specialist}
+              />
               <ArchiveButton article={recommendation} search={search} />
             </Box>
           </Box>
