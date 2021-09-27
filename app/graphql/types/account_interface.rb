@@ -31,12 +31,9 @@ module Types
       account.features.keys
     end
 
-    field :conversation_with, Types::Conversation, null: true do
-      argument :id, ID, required: true
-    end
-    def conversation_with(id:)
-      account = Account.find_by_uid!(id)
-      Conversation.find_existing_with([current_user.account, account])
+    field :conversation, Types::Conversation, null: true
+    def conversation
+      Conversation.find_existing_with([current_user.account, object.account])
     end
   end
 end
