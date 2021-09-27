@@ -7,6 +7,9 @@ fragment SpecialistFields on Specialist {
   location
   bio
   linkedin
+  twitter
+  instagram
+  medium
   website
   city
   guild

@@ -127,7 +127,9 @@ end
 #  iban                              :string
 #  ideal_project                     :string
 #  image                             :jsonb
+#  instagram                         :string
 #  linkedin                          :string
+#  medium                            :string
 #  member_of_week_email              :integer
 #  number_of_projects                :string
 #  phone                             :string
@@ -143,6 +145,7 @@ end
 #  sourcing_fee                      :integer
 #  travel_availability               :string
 #  trustpilot_review_status          :string
+#  twitter                           :string
 #  uid                               :string           not null
 #  unavailable_until                 :date
 #  vat_number                        :string
