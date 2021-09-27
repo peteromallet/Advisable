@@ -4,7 +4,9 @@ import { Map } from "@styled-icons/heroicons-outline/Map";
 import { LinkedinIn } from "@styled-icons/fa-brands/LinkedinIn";
 import { Globe } from "@styled-icons/heroicons-solid/Globe";
 import useViewer from "src/hooks/useViewer";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, useModal } from "@advisable/donut";
+import { useDialogState, DialogDisclosure, Dialog } from "reakit/Dialog";
+
 import ProfilePicture from "../ProfilePicture";
 import SocialIcon from "../SocialIcon";
 import CoverImage from "../CoverImage";
@@ -19,9 +21,18 @@ import BackButton from "../BackButton";
 import EditInfo from "../EditInfo";
 import MessageButton from "../MessageButton";
 import WorkTogetherButton from "../WorkTogetherButton";
+import styled from "styled-components";
+
+const StyledShowMore = styled.span`
+  font-weight: 600;
+  cursor: pointer;
+  position: static;
+  transform: none;
+  user-select: none;
+`;
 
 export default function Sidebar({ data, ...props }) {
-  const bio = data.specialist.bio.slice(0, 140);
+  const bio = data.specialist.bio.slice(0, 160);
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:id/case_studies/:case_study_id",
   });
@@ -30,6 +41,8 @@ export default function Sidebar({ data, ...props }) {
   const params = useParams();
   const viewerIsGuild = viewer?.guild || false;
   const isOwner = viewer?.id === params.id;
+
+  const bioModal = useDialogState({ modal: false });
 
   return (
     <Box
@@ -78,6 +91,12 @@ export default function Sidebar({ data, ...props }) {
             mb={7}
           >
             {bio}
+            <DialogDisclosure as={StyledShowMore} {...bioModal}>
+              see more
+            </DialogDisclosure>
+            <Dialog {...bioModal} aria-label="Welcome">
+              {data.specialist.bio}
+            </Dialog>
           </Text>
           <Box
             display="flex"
