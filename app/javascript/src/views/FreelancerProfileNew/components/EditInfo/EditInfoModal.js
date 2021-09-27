@@ -10,7 +10,6 @@ import {
   Select,
   useBreakpoint,
 } from "@advisable/donut";
-import BioLengthWidget from "./BioLengthWiget";
 import { useNotifications } from "src/components/Notifications";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
@@ -20,7 +19,7 @@ import { useUpdateProfile, useCountries } from "../../queries";
 const validationSchema = object().shape({
   city: string(),
   country: string(),
-  bio: string(),
+  bio: string().max(160, "Must be not more than 160 characters"),
   linkedin: string().url(),
   website: string().url(),
 });
@@ -109,9 +108,9 @@ function EditInfoModal({ modal, specialist }) {
               name="bio"
               minRows={5}
               label="About me"
-              description="Add a short 2 - 3 sentence bio to describe who you are. A well structured bio demonstrates your experience and expertise by referencing past projects and achievements, including notable clients or numeric results. You will have a chance to customize this each time you apply for a project."
-              placeholder="Add a short 2 - 3 sentence bio to describe who you are."
-              widget={BioLengthWidget}
+              description="Add a short title to describe who you are"
+              placeholder="Add a short title to describe who you are"
+              charLimit={160}
             />
           </Box>
           <Box mb="l">
