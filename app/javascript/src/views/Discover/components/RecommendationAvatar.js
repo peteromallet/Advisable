@@ -75,6 +75,14 @@ export const size = variant({
         lineHeight: "20px",
       },
     },
+    xs: {
+      width: "120px",
+      height: "140px",
+      [StyledRecommendationAvatarName]: {
+        fontSize: "16px",
+        lineHeight: "20px",
+      },
+    },
   },
 });
 
