@@ -28,7 +28,7 @@ module Mutations
 
         current_account_responsible_for do
           search.save
-          search.refresh_results
+          search.refresh_results!
         end
 
         {search: search}
