@@ -1,13 +1,13 @@
 import React from "react";
-import { AnimateSharedLayout, motion } from "framer-motion";
+import { AnimateSharedLayout } from "framer-motion";
 import { Box, Heading, Skeleton } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
 import { useShortlist } from "../queries";
-import Recommendation from "../components/Recommendation";
 import MoreResults from "../components/MoreResults";
 import NoMoreResults from "../components/NoMoreResults";
 import { useHistory, useParams } from "react-router";
 import RecommendationsSkeleton from "../components/RecommendationsSkeleton";
+import Recommendations from "../components/Recommendations";
 
 export default function Shortlist() {
   const { id } = useParams();
@@ -40,19 +40,11 @@ export default function Shortlist() {
         <RecommendationsSkeleton />
       ) : (
         <Box marginBottom={16}>
-          {recommendations.map((result, index) => (
-            <motion.div layoutId={result.id} key={result.id}>
-              <Box marginY={10}>
-                <Recommendation
-                  number={index + 1}
-                  search={shortlist}
-                  onClick={handleClick}
-                  recommendation={result}
-                />
-              </Box>
-              <Box height="1px" bg="neutral100" />
-            </motion.div>
-          ))}
+          <Recommendations
+            shortlist={shortlist}
+            recommendations={recommendations}
+            onClick={handleClick}
+          />
         </Box>
       )}
       {!loading && recommendations.length >= 5 && <MoreResults />}
