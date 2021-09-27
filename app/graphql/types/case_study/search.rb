@@ -16,7 +16,14 @@ module Types
       field :name, String, null: false
       field :skills, [Skill], null: true
       field :goals, [String], null: true
-      field :results, Article.connection_type, null: true
+
+      field :results, Article.connection_type, null: true do
+        argument :refresh_results, Boolean, required: false
+      end
+      def results(refresh_results: false)
+        object.refresh_results! if refresh_results
+        object.results
+      end
 
       field :primary_skill, Skill, null: true
       def primary_skill

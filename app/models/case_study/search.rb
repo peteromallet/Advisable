@@ -24,7 +24,7 @@ module CaseStudy
     end
 
     def results
-      refresh_results if attributes["results"].blank?
+      refresh_results! if attributes["results"].blank?
 
       Article.published.active.
         where(id: active_result_ids).
@@ -32,10 +32,10 @@ module CaseStudy
         by_score
     end
 
-    def refresh_results
+    def refresh_results!
       reload
       query = results_query(limit: RESULT_LIMIT, exclude: archived)
-      update(results: query.map(&:id))
+      update!(results: query.map(&:id))
     end
 
     def active_result_ids
