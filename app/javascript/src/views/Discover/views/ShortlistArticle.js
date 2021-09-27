@@ -5,14 +5,20 @@ import Article from "src/components/Article";
 import { useArticle } from "../queries";
 import RecommendationAvatar from "../components/RecommendationAvatar";
 import BackButton from "src/components/BackButton";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import ConnectButton from "src/components/ConnectButton";
+import ArchiveButton from "../components/ArchiveButton";
 
 export default function ShortlistArticle() {
   const { id } = useParams();
+  const history = useHistory();
   const { data, loading } = useArticle();
 
   if (loading) return <>loading</>;
+
+  const handleArchive = () => {
+    history.push(`/explore/${id}`);
+  };
 
   return (
     <>
@@ -36,7 +42,14 @@ export default function ShortlistArticle() {
             <Text lineHeight="20px" color="neutral800" marginBottom={6}>
               {truncate(data.caseStudy.specialist.bio, { length: 110 })}
             </Text>
-            <ConnectButton specialist={data.caseStudy.specialist} />
+            <Box marginBottom={3}>
+              <ConnectButton specialist={data.caseStudy.specialist} />
+            </Box>
+            <ArchiveButton
+              article={data.caseStudy}
+              search={data.caseStudySearch}
+              onArchive={handleArchive}
+            />
           </Box>
         </Box>
         <Box paddingLeft={12}>

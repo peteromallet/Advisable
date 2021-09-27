@@ -14,7 +14,7 @@ import SubmitButton from "src/components/SubmitButton";
 import { Trash } from "@styled-icons/heroicons-solid/Trash";
 import { useArchiveArticle } from "../queries";
 
-function ArchiveForm({ article, search, modal }) {
+function ArchiveForm({ article, search, modal, onArchive = () => {} }) {
   const [archive] = useArchiveArticle(search, article);
 
   const handleSubmit = async (values) => {
@@ -29,6 +29,7 @@ function ArchiveForm({ article, search, modal }) {
     });
 
     modal.hide();
+    onArchive();
   };
 
   const primarySkill =
@@ -105,7 +106,7 @@ function ArchiveForm({ article, search, modal }) {
   );
 }
 
-export default function ArchiveButton({ search, article }) {
+export default function ArchiveButton({ search, article, onArchive }) {
   const modal = useDialogState();
 
   const handleClick = async (e) => {
@@ -116,7 +117,12 @@ export default function ArchiveButton({ search, article }) {
   return (
     <>
       <Modal modal={modal} label="Archive article">
-        <ArchiveForm search={search} article={article} modal={modal} />
+        <ArchiveForm
+          search={search}
+          article={article}
+          modal={modal}
+          onArchive={onArchive}
+        />
       </Modal>
       <Button variant="outlined" prefix={<Trash />} onClick={handleClick}>
         Remove

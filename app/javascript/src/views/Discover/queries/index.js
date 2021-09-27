@@ -18,8 +18,10 @@ export function useShortlists() {
 }
 
 export function useArticle() {
-  const { articleId } = useParams();
-  return useQuery(ARTICLE, { variables: { id: articleId } });
+  const { id, articleId } = useParams();
+  return useQuery(ARTICLE, {
+    variables: { searchId: id, articleId: articleId },
+  });
 }
 
 export function useArchiveArticle(search) {
