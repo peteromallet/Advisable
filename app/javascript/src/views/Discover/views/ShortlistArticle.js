@@ -27,7 +27,7 @@ export default function ShortlistArticle() {
           <Box position="sticky" top="108px">
             <BackButton to={`/explore/${id}`} marginBottom={4} />
             <RecommendationAvatar
-              size="sm"
+              size="xs"
               src={data.caseStudy.specialist.avatar}
             />
             <Text
