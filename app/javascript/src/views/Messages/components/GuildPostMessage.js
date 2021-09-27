@@ -51,23 +51,6 @@ export default function GuildPostMessage({ message }) {
         </Box>
       </Box>
       <Box width="100%">
-        {message.post && (
-          <Link to={`/posts/${message.post.id}`}>
-            <Box
-              padding={3}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              bg="neutral100"
-              marginBottom={5}
-              color="neutral900"
-              borderRadius="8px"
-            >
-              <Text fontWeight={500}>{message.post.title}</Text>
-              <ChevronRight size={20} />
-            </Box>
-          </Link>
-        )}
         <Text
           autoLink
           fontSize="17px"
@@ -77,6 +60,23 @@ export default function GuildPostMessage({ message }) {
         >
           {renderLineBreaks(message.content)}
         </Text>
+        {message.post && (
+          <Link to={`/posts/${message.post.id}`}>
+            <Box
+              padding={3}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              bg="neutral100"
+              marginTop={5}
+              color="neutral900"
+              borderRadius="8px"
+            >
+              <Text fontWeight={500}>{message.post.title}</Text>
+              <ChevronRight size={20} />
+            </Box>
+          </Link>
+        )}
       </Box>
       {!isAuthor && message.calendlyUrl && (
         <Button
