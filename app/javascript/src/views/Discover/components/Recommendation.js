@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import css from "@styled-system/css";
-import SuperEllipse from "react-superellipse";
 import { Box, Text } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
 import ArchiveButton from "./ArchiveButton";
@@ -14,17 +13,24 @@ const StyledRecommendationTitle = styled(Text)(
     lineHeight: "28px",
     paddingRight: "32px",
     letterSpacing: "-0.025em",
+    transition: "color 200ms",
   }),
 );
 
-const StyledRecommendation = styled(SuperEllipse)(
+const StyledRecommendation = styled.div(
   css({
     padding: "20px",
     margin: "-20px",
     cursor: "pointer",
-    transition: "background 200ms",
+    borderRadius: "32px",
+    border: "2px solid transparent",
+    transition: "border-color 200ms, box-shadow 200ms",
     "&:hover": {
-      bg: "neutral100",
+      borderColor: "neutral100",
+      boxShadow: "0 8px 24px -8px rgba(0, 0, 0, 0.12)",
+      [StyledRecommendationTitle]: {
+        color: "blue700",
+      },
     },
   }),
 );
@@ -60,7 +66,7 @@ export default function Recommendation({
             />
           </Box>
           <Box paddingLeft={6}>
-            <StyledRecommendationTitle fontSize={{ _: "24px", l: "28px" }}>
+            <StyledRecommendationTitle fontSize={{ _: "24px", l: "26px" }}>
               {recommendation.title}
             </StyledRecommendationTitle>
             <Text fontSize="lg" lineHeight="24px" marginBottom={6}>

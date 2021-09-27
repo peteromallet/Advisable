@@ -48,15 +48,15 @@ const StyledRecommendationAvatarImage = styled.img(
   }),
 );
 
-const size = variant({
+export const size = variant({
   prop: "$size",
   variants: {
     lg: {
       width: "190px",
       height: "220px",
       [StyledRecommendationAvatarName]: {
-        fontSize: "26px",
-        lineHeight: "26px",
+        fontSize: "28px",
+        lineHeight: "28px",
       },
     },
     md: {

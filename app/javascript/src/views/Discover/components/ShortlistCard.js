@@ -1,19 +1,21 @@
 import React from "react";
 import css from "@styled-system/css";
 import styled from "styled-components";
-import SuperEllipse from "react-superellipse";
 import { Box, Text } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
 import { useHistory } from "react-router";
 
-const StyledShortlistCard = styled(SuperEllipse)(
+const StyledShortlistCard = styled.div(
   css({
     padding: "20px",
     margin: "-20px",
     cursor: "pointer",
-    transition: "background 200ms",
+    border: "2px solid transparent",
+    borderRadius: "24px",
+    transition: "border-color 200ms, box-shadow 200ms",
     "&:hover": {
-      bg: "neutral100",
+      borderColor: "neutral100",
+      boxShadow: "0 8px 24px -8px rgba(0, 0, 0, 0.12)",
     },
   }),
 );
@@ -24,6 +26,8 @@ export default function ShortlistCard({ shortlist }) {
   const handleClick = () => {
     history.push(`/explore/${shortlist.id}`);
   };
+
+  const placeholders = [...Array(5 - shortlist.results.nodes.length).keys()];
 
   return (
     <StyledShortlistCard r1={0.005} r2={0.3} onClick={handleClick}>
@@ -40,9 +44,15 @@ export default function ShortlistCard({ shortlist }) {
           <Box key={result.id}>
             <RecommendationAvatar
               size="md"
-              specialist={result.specialist}
               number={index + 1}
+              src={result.specialist.avatar}
+              name={result.specialist.name}
             />
+          </Box>
+        ))}
+        {placeholders.map((n) => (
+          <Box key={n}>
+            <RecommendationAvatar size="md" />
           </Box>
         ))}
       </Box>
