@@ -9,13 +9,14 @@ import { useHistory, useParams } from "react-router";
 import ArchiveButton from "../components/ArchiveButton";
 import MessageFreelancerButton from "../components/MessageButton";
 import { Link } from "react-router-dom";
+import Loading from "src/components/Loading";
 
 export default function ShortlistArticle() {
   const { id } = useParams();
   const history = useHistory();
   const { data, loading } = useArticle();
 
-  if (loading) return <>loading</>;
+  if (loading) return <Loading />;
 
   const handleArchive = () => {
     history.push(`/explore/${id}`);
