@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_23_110902) do
+ActiveRecord::Schema.define(version: 2021_09_28_064735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -901,6 +901,8 @@ ActiveRecord::Schema.define(version: 2021_09_23_110902) do
     t.bigint "case_study_article_id"
     t.string "first_name"
     t.string "last_name"
+    t.string "company_name"
+    t.string "relationship"
     t.index ["airtable_id"], name: "index_reviews_on_airtable_id"
     t.index ["case_study_article_id"], name: "index_reviews_on_case_study_article_id"
     t.index ["specialist_id"], name: "index_reviews_on_specialist_id"
