@@ -86,7 +86,7 @@ export default function Sidebar({ data, ...props }) {
             fontSize={{ _: "m", m: "m" }}
             lineHeight="l"
             color="neutral700"
-            mb={7}
+            mb={5}
           >
             {bio}
             {bioIsExceed ? (
@@ -101,17 +101,19 @@ export default function Sidebar({ data, ...props }) {
             flexDirection={["column", "row", "row", "column"]}
             alignItems={{ _: "center", l: "flex-start" }}
           >
-            {isOwner ? (
-              <EditInfo specialist={specialist}>Edit Info</EditInfo>
-            ) : null}
-            {!isOwner && !viewerIsGuild ? (
-              <WorkTogetherButton id={specialist?.id}>
-                Work together
-              </WorkTogetherButton>
-            ) : null}
-            {!isOwner && viewerIsGuild ? (
-              <MessageButton specialist={specialist} />
-            ) : null}
+            <Box mb={[4, 0, 0, 10]}>
+              {isOwner ? (
+                <EditInfo specialist={specialist}>Edit Info</EditInfo>
+              ) : null}
+              {!isOwner && !viewerIsGuild ? (
+                <WorkTogetherButton id={specialist?.id}>
+                  Work together
+                </WorkTogetherButton>
+              ) : null}
+              {!isOwner && viewerIsGuild ? (
+                <MessageButton specialist={specialist} />
+              ) : null}
+            </Box>
             <Box>
               {specialist.linkedin ? (
                 <SocialIcon icon={Linkedin} href={specialist.linkedin} />
