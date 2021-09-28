@@ -24,7 +24,7 @@ export default function MessageFreelancerButton({ specialist, ...props }) {
       prefix={<ChatAlt />}
       {...props}
     >
-      Message
+      Connect
     </Button>
   );
 }
