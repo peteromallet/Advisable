@@ -1,7 +1,7 @@
 import React from "react";
 import { object, string } from "yup";
 import { Form, Formik } from "formik";
-import { Box } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { useNotifications } from "src/components/Notifications";
@@ -55,6 +55,15 @@ export default function SocialProfilesForm({ specialist, modal }) {
       validationSchema={validationSchema}
     >
       <Form>
+        <Text
+          as="h2"
+          fontSize="xxxl"
+          fontWeight="medium"
+          color="neutral900"
+          mb="l"
+        >
+          Edit social profiles
+        </Text>
         <Box mb="l" mt={5}>
           <FormField
             name="linkedin"
