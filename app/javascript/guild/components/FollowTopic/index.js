@@ -22,7 +22,7 @@ const FollowTopic = ({ topicId }) => {
 
   return (
     <Box marginBottom="lg">
-      <Link to={"/feed"}>
+      <Link to="/guild">
         <Button
           prefix={<ArrowBack />}
           size="xs"

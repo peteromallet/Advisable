@@ -41,6 +41,9 @@ const CaseStudyRecommendations = lazy(() =>
 );
 const Payment = lazy(() => import("./views/Payment"));
 const Messages = lazy(() => import("./views/Messages"));
+const GuildFeed = lazy(() => import("guild/views/Feed"));
+const GuildPost = lazy(() => import("guild/views/Post"));
+const GuildFollows = lazy(() => import("guild/views/Follows"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -202,6 +205,22 @@ const ApplicationRoutes = () => {
             clientOnly
             path="/payments/:id"
             component={Payment}
+          />
+          <AuthenticatedRoute
+            specialistOnly
+            path="/guild/posts/:postId"
+            component={GuildPost}
+          />
+          <AuthenticatedRoute
+            exact
+            path="/guild/topics"
+            specialistOnly
+            component={GuildFollows}
+          />
+          <AuthenticatedRoute
+            path="/guild"
+            specialistOnly
+            component={GuildFeed}
           />
           <Route component={NotFound} />
         </Switch>
