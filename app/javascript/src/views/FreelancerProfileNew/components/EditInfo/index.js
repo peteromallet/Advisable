@@ -1,5 +1,4 @@
 import React from "react";
-import { Pencil } from "@styled-icons/heroicons-solid/Pencil";
 import { Button, useModal, DialogDisclosure } from "@advisable/donut";
 import EditInfoModal from "./EditInfoModal";
 
@@ -14,7 +13,6 @@ function EditInfoDialog({ children, specialist }) {
         variant="subtle"
         width={["100%", "auto"]}
         size={["m", "m", "l"]}
-        prefix={<Pencil />}
       >
         {children}
       </DialogDisclosure>

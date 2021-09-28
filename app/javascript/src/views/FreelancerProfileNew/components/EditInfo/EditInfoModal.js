@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Tabs } from "@advisable/donut";
-import SocialProfilesForm from "./SocialProfilesForm";
+import SocialProfilesForm from "../SocialProfilesForm";
 import AboutMeForm from "./AboutMeForm";
 
 function EditInfoModal({ modal, specialist }) {
