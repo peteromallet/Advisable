@@ -25,9 +25,9 @@ export default function Shortlist() {
     history.push(`/explore/${id}/${recommendation.id}`);
   };
 
-  const handleLoadMore = (data) => {
-    const results = data?.refreshCaseStudySearch?.results?.nodes || [];
-    if (results >= 5) return;
+  const handleLoadMore = (_, { data }) => {
+    const results = data?.refreshCaseStudySearch?.search?.results?.nodes || [];
+    if (results.length >= 5) return;
     setShowLoadMore(false);
   };
 
