@@ -13,7 +13,7 @@ import { Linkedin } from "@styled-icons/fa-brands/Linkedin";
 import { Pencil } from "@styled-icons/heroicons-solid/Pencil";
 import { Twitter } from "@styled-icons/fa-brands/Twitter";
 import { Medium } from "@styled-icons/fa-brands/Medium";
-import { Instagram } from "@styled-icons/fa-brands/instagram";
+import { Instagram } from "@styled-icons/fa-brands/Instagram";
 import { Globe } from "@styled-icons/heroicons-solid/Globe";
 import SocialProfilesForm from "./SocialProfilesForm";
 import useViewer from "src/hooks/useViewer";
