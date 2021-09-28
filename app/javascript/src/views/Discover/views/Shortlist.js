@@ -8,6 +8,7 @@ import NoMoreResults from "../components/NoMoreResults";
 import { useHistory, useParams } from "react-router";
 import RecommendationsSkeleton from "../components/RecommendationsSkeleton";
 import Recommendations from "../components/Recommendations";
+import DeleteSearch from "../components/DeleteSearch";
 
 export default function Shortlist() {
   const { id } = useParams();
@@ -32,19 +33,22 @@ export default function Shortlist() {
 
   return (
     <AnimateSharedLayout>
-      <Box display="flex" alignItems="center">
-        <BackButton to="/explore" marginRight={4} />
-        {!loading || shortlist?.name ? (
-          <Heading
-            fontSize={{ _: "28px", m: "36px" }}
-            fontWeight={650}
-            letterSpacing="-0.06rem"
-          >
-            {shortlist.name}
-          </Heading>
-        ) : (
-          <Skeleton height="36px" width="220px" />
-        )}
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box display="flex" alignItems="center">
+          <BackButton to="/explore" marginRight={4} />
+          {!loading || shortlist?.name ? (
+            <Heading
+              fontSize={{ _: "28px", m: "36px" }}
+              fontWeight={650}
+              letterSpacing="-0.06rem"
+            >
+              {shortlist.name}
+            </Heading>
+          ) : (
+            <Skeleton height="36px" width="220px" />
+          )}
+        </Box>
+        {shortlist && <DeleteSearch search={shortlist} />}
       </Box>
       <Box height="1px" bg="neutral100" my={8} />
       {loading ? (
