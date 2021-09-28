@@ -100,6 +100,26 @@
       "note": ""
     },
     {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "3668d587b0da5bd9ecfff5e78ec405ab41c9bf014657287da6ff78d8593587d9",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/application_controller.rb",
+      "line": 59,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(\"/review/#{PreviousProject.find_by!(:uid => params[:uid]).specialist.uid}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ApplicationController",
+        "method": "verify_project_redirect"
+      },
+      "user_input": "PreviousProject.find_by!(:uid => params[:uid]).specialist.uid",
+      "confidence": "High",
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "4da323945ff653a8c15fa8b1e2eba12b144a66c7d415317dee7a7802d2c57485",
@@ -280,6 +300,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-09-08 11:42:46 +0200",
+  "updated": "2021-09-28 11:08:29 +0200",
   "brakeman_version": "5.1.1"
 }
