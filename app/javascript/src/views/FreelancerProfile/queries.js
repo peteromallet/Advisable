@@ -54,6 +54,9 @@ const specialistFields = gql`
     website
     city
     guild
+    account {
+      id
+    }
     country {
       id
     }
