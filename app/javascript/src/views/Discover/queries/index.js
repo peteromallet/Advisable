@@ -1,4 +1,9 @@
-import { useApolloClient, useQuery, useMutation } from "@apollo/client";
+import {
+  useApolloClient,
+  useQuery,
+  useMutation,
+  makeReference,
+} from "@apollo/client";
 import { useParams } from "react-router";
 import ARTICLE from "./article.gql";
 import SHORTLIST from "./shortlist.gql";
@@ -10,6 +15,7 @@ import SEARCH_FORM_DETAILS from "./caseStudySearchFormDetails.gql";
 import CREATE_SEARCH from "./createCaseStudySearch.gql";
 import CREATE_OR_EDIT from "./createOrEditSearch.gql";
 import REFRESH_RESULTS from "./refreshResults.gql";
+import DELETE from "./deleteSearch.gql";
 
 export function useShortlist() {
   const { id } = useParams();
@@ -98,4 +104,26 @@ export function useUpdateCaseStudySearch(opts) {
 
 export function useRefreshResults() {
   return useMutation(REFRESH_RESULTS);
+}
+
+export function useDeleteSearch(search) {
+  return useMutation(DELETE, {
+    variables: {
+      input: {
+        id: search.id,
+      },
+    },
+    update(cache) {
+      cache.modify({
+        id: cache.identify(makeReference("ROOT_QUERY")),
+        fields: {
+          caseStudySearches(existing, { readField }) {
+            return existing.filter((ref) => {
+              return search.id !== readField("id", ref);
+            });
+          },
+        },
+      });
+    },
+  });
 }
