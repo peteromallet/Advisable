@@ -15,14 +15,17 @@ module Mutations
     argument :first_name, String, required: false
     argument :hourly_rate, Int, required: false
     argument :industries, [String], required: false
+    argument :instagram, String, required: false
     argument :last_name, String, required: false
     argument :linkedin, String, required: false
+    argument :medium, String, required: false
     argument :number_of_projects, String, required: false
     argument :primarily_freelance, Boolean, required: false
     argument :public_use, Boolean, required: false
     argument :remote, Boolean, required: false
     argument :resume, String, required: false
     argument :skills, [String], required: false
+    argument :twitter, String, required: false
     argument :website, String, required: false
 
     argument :ideal_project, String, required: false
@@ -68,8 +71,11 @@ module Mutations
         :bio,
         :city,
         :remote,
+        :medium,
         :website,
+        :twitter,
         :linkedin,
+        :instagram,
         :public_use,
         :hourly_rate,
         :number_of_projects,
