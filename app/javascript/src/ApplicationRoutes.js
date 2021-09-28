@@ -44,6 +44,8 @@ const Messages = lazy(() => import("./views/Messages"));
 const GuildFeed = lazy(() => import("guild/views/Feed"));
 const GuildPost = lazy(() => import("guild/views/Post"));
 const GuildFollows = lazy(() => import("guild/views/Follows"));
+const GuildEvent = lazy(() => import("guild/views/Event"));
+const GuildEvents = lazy(() => import("guild/views/Events"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -217,6 +219,9 @@ const ApplicationRoutes = () => {
             specialistOnly
             component={GuildFollows}
           />
+          <Route exact path="/events/:eventId" component={GuildEvent} />
+          <AuthenticatedRoute exact path="/events" component={GuildEvents} />
+          <Redirect from="/guild/events/:eventId" to="/events/:eventId" />
           <AuthenticatedRoute
             path="/guild"
             specialistOnly
