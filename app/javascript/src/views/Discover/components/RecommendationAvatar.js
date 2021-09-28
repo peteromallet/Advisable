@@ -48,6 +48,20 @@ const StyledRecommendationAvatarImage = styled.img(
   }),
 );
 
+const StyledRecommendationNumber = styled(Circle)(
+  css({
+    size: "48px",
+    position: "absolute",
+    top: "12px",
+    left: "12px",
+    zIndex: 2,
+    fontSize: "20px",
+    fontWeight: "600",
+    color: "blue800",
+    boxShadow: "s",
+  }),
+);
+
 export const size = variant({
   prop: "$size",
   variants: {
@@ -78,9 +92,17 @@ export const size = variant({
     xs: {
       width: "120px",
       height: "140px",
+      [StyledRecommendationNumber]: {
+        size: "36px",
+        fontSize: "18px",
+      },
+      [StyledRecommendationAvatarOverlay]: {
+        padding: 4,
+      },
       [StyledRecommendationAvatarName]: {
-        fontSize: "16px",
+        fontSize: "18px",
         lineHeight: "20px",
+        fontWeight: 550,
       },
     },
   },
@@ -112,20 +134,9 @@ export default function RecommendationAvatar({
   return (
     <StyledRecommendationAvatar $size={size}>
       {number ? (
-        <Circle
-          size="48px"
-          bg="white"
-          position="absolute"
-          top="12px"
-          left="12px"
-          zIndex={2}
-          fontSize="20px"
-          fontWeight="600"
-          color="blue700"
-          boxShadow="s"
-        >
+        <StyledRecommendationNumber bg="white">
           {number}
-        </Circle>
+        </StyledRecommendationNumber>
       ) : null}
 
       <StyledRecommendationAvatarSquircle r1={0.02} r2={0.4}>

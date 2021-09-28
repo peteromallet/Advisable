@@ -9,6 +9,7 @@ export default function Shortlists() {
   const { data, loading, error } = useShortlists();
   if (error) return <>error</>;
 
+  const company = data?.currentCompany;
   const shortlists = data?.caseStudySearches || [];
 
   return (
@@ -28,7 +29,11 @@ export default function Shortlists() {
       {!loading && shortlists.length > 0 && (
         <Stack spacing={16} divider="neutral100">
           {shortlists.map((shortlist) => (
-            <ShortlistCard key={shortlist.id} shortlist={shortlist} />
+            <ShortlistCard
+              key={shortlist.id}
+              shortlist={shortlist}
+              company={company}
+            />
           ))}
         </Stack>
       )}
