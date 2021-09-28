@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AnimateSharedLayout } from "framer-motion";
 import { Box, Heading, Skeleton } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
@@ -12,6 +12,7 @@ import Recommendations from "../components/Recommendations";
 export default function Shortlist() {
   const { id } = useParams();
   const history = useHistory();
+  const [showLoadMore, setShowLoadMore] = useState(true);
   const { loading, data, error } = useShortlist();
 
   if (error) return <>Failed to load page. Please try refreshing the page.</>;
@@ -21,6 +22,12 @@ export default function Shortlist() {
 
   const handleClick = (recommendation) => {
     history.push(`/explore/${id}/${recommendation.id}`);
+  };
+
+  const handleLoadMore = (data) => {
+    const results = data?.refreshCaseStudySearch?.results?.nodes || [];
+    if (results >= 5) return;
+    setShowLoadMore(false);
   };
 
   return (
@@ -47,8 +54,13 @@ export default function Shortlist() {
           />
         </Box>
       )}
-      {!loading && recommendations.length >= 5 && <MoreResults />}
-      {!loading && recommendations.length < 5 && <NoMoreResults />}
+      {!loading && showLoadMore && (
+        <MoreResults
+          count={recommendations.length}
+          onLoadMore={handleLoadMore}
+        />
+      )}
+      {!loading && !showLoadMore && <NoMoreResults />}
     </AnimateSharedLayout>
   );
 }

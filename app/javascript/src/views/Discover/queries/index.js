@@ -9,6 +9,7 @@ import UPDATE_SEARCH from "./updateCaseStudySearch.gql";
 import SEARCH_FORM_DETAILS from "./caseStudySearchFormDetails.gql";
 import CREATE_SEARCH from "./createCaseStudySearch.gql";
 import CREATE_OR_EDIT from "./createOrEditSearch.gql";
+import REFRESH_RESULTS from "./refreshResults.gql";
 
 export function useShortlist() {
   const { id } = useParams();
@@ -29,18 +30,21 @@ export function useArticle() {
   });
 }
 
-export function useArchiveArticle(search) {
+export function useArchiveArticle(search, article) {
   const client = useApolloClient();
 
   return useMutation(ARCHIVE_ARTICLE, {
-    onCompleted(data) {
-      const results = data?.archiveCaseStudyArticle?.search?.results;
-
+    update() {
       client.cache.modify({
         id: client.cache.identify(search),
         fields: {
-          results() {
-            return results;
+          results(existing, { readField }) {
+            return {
+              ...existing,
+              nodes: existing.nodes.filter((ref) => {
+                return article.id !== readField("id", ref);
+              }),
+            };
           },
         },
       });
@@ -90,4 +94,8 @@ export function useFinalizeCaseStudySearch(search) {
 
 export function useUpdateCaseStudySearch(opts) {
   return useMutation(UPDATE_SEARCH, opts);
+}
+
+export function useRefreshResults() {
+  return useMutation(REFRESH_RESULTS);
 }

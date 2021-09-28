@@ -9,5 +9,6 @@ module CaseStudy
     alias delete? read?
     alias finalize? read?
     alias update? read?
+    alias refresh? read?
   end
 end
