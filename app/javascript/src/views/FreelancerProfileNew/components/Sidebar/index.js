@@ -1,16 +1,10 @@
 import React, { useState } from "react";
 import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
-import { Linkedin } from "@styled-icons/fa-brands/Linkedin";
-import { Twitter } from "@styled-icons/fa-brands/Twitter";
-import { Medium } from "@styled-icons/fa-brands/Medium";
-import { Instagram } from "@styled-icons/fa-brands/instagram";
-import { Globe } from "@styled-icons/heroicons-solid/Globe";
 import useViewer from "src/hooks/useViewer";
 import { Box, Text } from "@advisable/donut";
 
 import ProfilePicture from "../ProfilePicture";
-import SocialIcon from "../SocialIcon";
 import CoverImage from "../CoverImage";
 import {
   StyledStickySidebar,
@@ -24,6 +18,7 @@ import BackButton from "../BackButton";
 import EditInfo from "../EditInfo";
 import MessageButton from "../MessageButton";
 import WorkTogetherButton from "../WorkTogetherButton";
+import SocialProfilesIcons from "../SocialProfilesIcons";
 
 export const TRUNCATE_LIMIT = 160;
 
@@ -40,7 +35,9 @@ export default function Sidebar({ data, ...props }) {
 
   const [isExpanded, setExpanded] = useState(false);
   const bioIsExceed = specialist.bio.length > TRUNCATE_LIMIT;
-  const bio = isExpanded ? specialist.bio : specialist.bio.slice(0, 160);
+  const bio = isExpanded
+    ? specialist.bio
+    : specialist.bio.slice(0, TRUNCATE_LIMIT);
 
   return (
     <Box
@@ -114,23 +111,7 @@ export default function Sidebar({ data, ...props }) {
                 <MessageButton specialist={specialist} />
               ) : null}
             </Box>
-            <Box>
-              {specialist.linkedin ? (
-                <SocialIcon icon={Linkedin} href={specialist.linkedin} />
-              ) : null}
-              {specialist.twitter ? (
-                <SocialIcon icon={Twitter} href={specialist.twitter} />
-              ) : null}
-              {specialist.instagram ? (
-                <SocialIcon icon={Instagram} href={specialist.instagram} />
-              ) : null}
-              {specialist.medium ? (
-                <SocialIcon icon={Medium} href={specialist.medium} />
-              ) : null}
-              {specialist.website ? (
-                <SocialIcon icon={Globe} href={specialist.website} />
-              ) : null}
-            </Box>
+            <SocialProfilesIcons specialist={specialist} />
           </Box>
         </StyledBioWrapper>
       </StyledStickySidebar>

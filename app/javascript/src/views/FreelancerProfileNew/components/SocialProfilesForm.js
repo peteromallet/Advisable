@@ -5,7 +5,7 @@ import { Box } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { useNotifications } from "src/components/Notifications";
-import { useUpdateProfile } from "../../queries";
+import { useUpdateProfile } from "../queries";
 
 const validationSchema = object().shape({
   linkedin: string().url(),
