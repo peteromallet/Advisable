@@ -72,7 +72,15 @@ export default function GuildPostMessage({ message }) {
               color="neutral900"
               borderRadius="8px"
             >
-              <Text fontWeight={500}>{message.post.title}</Text>
+              <Box>
+                {!isAuthor && message.calendlyUrl && (
+                  <Text fontWeight={500} marginBottom={2}>
+                    {message.author?.name} wants to connect with you over your
+                    post
+                  </Text>
+                )}
+                <Text fontWeight={400}>{message.post.title}</Text>
+              </Box>
               <ChevronRight size={20} />
             </Box>
           </Link>
