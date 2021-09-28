@@ -65,7 +65,7 @@ export default function MoreResults({ count, onLoadMore }) {
         loading={loading}
         variant={isMax ? "dark" : "primary"}
       >
-        Load More
+        Discover more
       </Button>
     </Box>
   );
