@@ -101,7 +101,13 @@ export default function MessageButton({ specialist }) {
 
   return (
     <>
-      <Button onClick={dialog.toggle} prefix={<Chatbubble />} variant="primary">
+      <Button
+        onClick={dialog.toggle}
+        prefix={<Chatbubble />}
+        variant="dark"
+        width={["100%", "auto"]}
+        size={["m", "m", "l"]}
+      >
         Message
       </Button>
       <Modal modal={dialog} label="Send message">
