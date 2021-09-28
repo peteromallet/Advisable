@@ -1,14 +1,7 @@
-#import "./articleFields.gql"
-
 mutation ArchiveArticle($input: ArchiveCaseStudyArticleInput!) {
   archiveCaseStudyArticle(input: $input) {
     search {
       id
-      results(first: 5, refreshResults: true) {
-        nodes {
-          ...ArticleFields
-        }
-      }
     }
   }
 }
