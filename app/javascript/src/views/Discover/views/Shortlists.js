@@ -17,9 +17,11 @@ export default function Shortlists() {
         <Heading fontSize="36px" fontWeight={650} letterSpacing="-0.06rem">
           Discover
         </Heading>
-        <Button as={Link} to="/explore/new" variant="dark">
-          New Shortlist
-        </Button>
+        {shortlists.length > 0 && (
+          <Button as={Link} to="/explore/new" variant="dark">
+            New Shortlist
+          </Button>
+        )}
       </Box>
       <Box height="1px" bg="neutral100" my={8} />
       {!loading && shortlists.length === 0 && <NoShortlists />}
