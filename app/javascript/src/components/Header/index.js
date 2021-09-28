@@ -72,7 +72,6 @@ const Header = () => {
             display="flex"
             alignItems="center"
           >
-            {viewer?.isSpecialist && <Notifications />}
             {viewer && !isMobile && (
               <CurrentUser user={viewer} onLogout={handleLogout} />
             )}
