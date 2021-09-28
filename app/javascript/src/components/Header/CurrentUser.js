@@ -23,7 +23,9 @@ const CurrentUser = ({ user, onLogout }) => {
         {user.companyName && <span>{user.companyName}</span>}
       </CurrentUserToggle>
       <CurrentUserDropdown open={open}>
-        {user.guild && isAccepted && <a href="/guild">Guild</a>}
+        {viewer.isSpecialist && isAccepted && (
+          <Link to="/profile">Your profile</Link>
+        )}
         <Link to="/settings">Settings</Link>
         {isAdmin && <a href="/admin">Admin</a>}
         {isAdmin && <a href="/toby">Toby</a>}
