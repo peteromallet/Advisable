@@ -24,14 +24,24 @@ export default function ShortlistArticle() {
 
   return (
     <>
-      <Box display="flex">
-        <Box width="200px" flexShrink={0}>
+      <Box display={{ _: "block", s: "flex" }}>
+        <Box
+          width={{ s: "200px" }}
+          textAlign={{ _: "center", s: "left" }}
+          flexShrink={0}
+          marginBottom={12}
+        >
           <Box position="sticky" top="108px">
             <BackButton to={`/explore/${id}`} marginBottom={4} />
-            <RecommendationAvatar
-              size="xs"
-              src={data.caseStudy.specialist.avatar}
-            />
+            <Box
+              display="flex"
+              justifyContent={{ _: "center", s: "flex-start" }}
+            >
+              <RecommendationAvatar
+                size="xs"
+                src={data.caseStudy.specialist.avatar}
+              />
+            </Box>
             <Link
               to={`/freelancers/${data.caseStudy.specialist.id}`}
               target="_blank"
@@ -51,16 +61,20 @@ export default function ShortlistArticle() {
               {truncate(data.caseStudy.specialist.bio, { length: 110 })}
             </Text>
             <Box marginBottom={3}>
-              <MessageFreelancerButton specialist={data.caseStudy.specialist} />
+              <MessageFreelancerButton
+                width={{ _: "100%", s: "auto" }}
+                specialist={data.caseStudy.specialist}
+              />
             </Box>
             <ArchiveButton
+              width={{ _: "100%", s: "auto" }}
               article={data.caseStudy}
               search={data.caseStudySearch}
               onArchive={handleArchive}
             />
           </Box>
         </Box>
-        <Box paddingLeft={12}>
+        <Box paddingLeft={{ _: 0, s: 12 }}>
           <Article article={data.caseStudy} />
         </Box>
       </Box>

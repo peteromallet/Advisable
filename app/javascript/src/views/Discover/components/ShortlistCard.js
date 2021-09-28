@@ -32,27 +32,36 @@ export default function ShortlistCard({ shortlist, company }) {
 
   return (
     <StyledShortlistCard r1={0.005} r2={0.3} onClick={handleClick}>
-      <Box display="flex" justifyContent="space-between">
-        <Box maxWidth="240px">
+      <Box display={{ _: "block", l: "flex" }} justifyContent="space-between">
+        <Box maxWidth={{ l: "240px" }} paddingRight={2}>
           <Text
-            fontSize="4xl"
+            fontSize={{ _: "3xl", m: "4xl" }}
             fontWeight={600}
             marginBottom={2}
             letterSpacing="-0.032em"
           >
             {shortlist.name}
           </Text>
-          <Text lineHeight="20px" color="neutral700">
+          <Text lineHeight="20px" color="neutral700" marginBottom={5}>
             Recommendations of {shortlist.skills[0]?.skill?.name?.toLowerCase()}{" "}
             specialists relevant for {company.industry?.name?.toLowerCase()}{" "}
             {pluralize(company.kind?.toLowerCase())}.
           </Text>
         </Box>
-        <Box display="flex">
+        <Box
+          display="grid"
+          gridGap={{
+            _: "12px",
+          }}
+          gridTemplateColumns={{
+            _: "1fr 1fr 1fr",
+            s: "1fr 1fr 1fr 1fr 1fr",
+          }}
+        >
           {shortlist.results.nodes.map((result, index) => (
-            <Box key={result.id} marginLeft={2}>
+            <Box key={result.id}>
               <RecommendationAvatar
-                size="xs"
+                size={{ _: "2xs", m: "xs" }}
                 number={index + 1}
                 src={result.specialist.avatar}
                 name={result.specialist.name}
@@ -60,8 +69,8 @@ export default function ShortlistCard({ shortlist, company }) {
             </Box>
           ))}
           {placeholders.map((n) => (
-            <Box key={n} marginLeft={2}>
-              <RecommendationAvatar size="xs" />
+            <Box key={n}>
+              <RecommendationAvatar size={{ _: "2xs", m: "xs" }} />
             </Box>
           ))}
         </Box>

@@ -105,6 +105,22 @@ export const size = variant({
         fontWeight: 550,
       },
     },
+    "2xs": {
+      width: "80px",
+      height: "92px",
+      [StyledRecommendationNumber]: {
+        size: "24px",
+        fontSize: "12px",
+      },
+      [StyledRecommendationAvatarOverlay]: {
+        padding: 2,
+      },
+      [StyledRecommendationAvatarName]: {
+        fontSize: "14px",
+        lineHeight: "16px",
+        fontWeight: 550,
+      },
+    },
   },
 });
 

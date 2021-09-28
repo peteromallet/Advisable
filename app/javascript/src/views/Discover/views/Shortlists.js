@@ -1,12 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Button, Heading, Stack } from "@advisable/donut";
+import { PlusSm } from "@styled-icons/heroicons-solid";
+import { Box, Button, Heading, Stack, useBreakpoint } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import NoShortlists from "../components/NoShortlists";
 import { useShortlists } from "../queries";
 import ShortlistCard from "../components/ShortlistCard";
 
 export default function Shortlists() {
+  const mUp = useBreakpoint("mUp");
   const { data, loading, error } = useShortlists();
   if (error) return <>error</>;
 
@@ -21,12 +23,21 @@ export default function Shortlists() {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Heading fontSize="36px" fontWeight={650} letterSpacing="-0.06rem">
+        <Heading
+          fontSize={{ _: "28px", m: "36px" }}
+          fontWeight={650}
+          letterSpacing="-0.06rem"
+        >
           Discover
         </Heading>
         {shortlists.length > 0 && (
-          <Button as={Link} to="/explore/new" variant="dark">
-            New Shortlist
+          <Button
+            as={Link}
+            prefix={mUp ? <PlusSm /> : null}
+            to="/explore/new"
+            variant="dark"
+          >
+            {mUp ? <>New Shortlist</> : <PlusSm />}
           </Button>
         )}
       </Box>

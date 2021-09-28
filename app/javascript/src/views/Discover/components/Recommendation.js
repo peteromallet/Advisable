@@ -10,7 +10,6 @@ const StyledRecommendationTitle = styled(Text)(
   css({
     fontWeight: 560,
     marginBottom: 3,
-    lineHeight: "28px",
     paddingRight: "32px",
     letterSpacing: "-0.025em",
     transition: "color 200ms",
@@ -56,8 +55,8 @@ export default function Recommendation({
   return (
     <div ref={container}>
       <StyledRecommendation onClick={handleClick}>
-        <Box display="flex" alignItems="center">
-          <Box flexShrink={0}>
+        <Box display={{ _: "block", s: "flex" }} alignItems="center">
+          <Box flexShrink={0} marginRight={6} marginBottom={{ _: 5, m: 0 }}>
             <RecommendationAvatar
               number={number}
               size={{ _: "md", l: "lg" }}
@@ -65,11 +64,18 @@ export default function Recommendation({
               src={recommendation.specialist.avatar}
             />
           </Box>
-          <Box paddingLeft={6}>
-            <StyledRecommendationTitle fontSize={{ _: "24px", l: "26px" }}>
+          <Box>
+            <StyledRecommendationTitle
+              fontSize={{ _: "22px", m: "24px", l: "26px" }}
+              lineHeight={{ _: "24px", l: "28px" }}
+            >
               {recommendation.title}
             </StyledRecommendationTitle>
-            <Text fontSize="lg" lineHeight="24px" marginBottom={6}>
+            <Text
+              fontSize={{ _: "md", m: "lg" }}
+              lineHeight="24px"
+              marginBottom={6}
+            >
               {recommendation.comment}
             </Text>
             <Box onClick={stopActionPropagation}>
