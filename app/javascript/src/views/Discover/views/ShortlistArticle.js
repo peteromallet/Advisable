@@ -8,6 +8,7 @@ import BackButton from "src/components/BackButton";
 import { useHistory, useParams } from "react-router";
 import ArchiveButton from "../components/ArchiveButton";
 import MessageFreelancerButton from "../components/MessageButton";
+import { Link } from "react-router-dom";
 
 export default function ShortlistArticle() {
   const { id } = useParams();
@@ -30,15 +31,21 @@ export default function ShortlistArticle() {
               size="xs"
               src={data.caseStudy.specialist.avatar}
             />
-            <Text
-              marginTop={5}
-              marginBottom={2}
-              fontSize="3xl"
-              fontWeight={600}
-              letterSpacing="-0.032em"
+            <Link
+              to={`/freelancers/${data.caseStudy.specialist.id}`}
+              target="_blank"
             >
-              {data.caseStudy.specialist.name}
-            </Text>
+              <Text
+                marginTop={5}
+                marginBottom={2}
+                fontSize="3xl"
+                fontWeight={600}
+                letterSpacing="-0.032em"
+                color="neutral900"
+              >
+                {data.caseStudy.specialist.name}
+              </Text>
+            </Link>
             <Text lineHeight="20px" color="neutral800" marginBottom={6}>
               {truncate(data.caseStudy.specialist.bio, { length: 110 })}
             </Text>
