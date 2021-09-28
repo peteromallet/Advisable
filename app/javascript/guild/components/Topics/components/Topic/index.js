@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import truncate from "lodash/truncate";
 
 const Topic = ({ topic }) => (
-  <StyledTopic as={NavLink} to={`/topics/${topic.slug}`}>
+  <StyledTopic as={NavLink} to={`/guild/topics/${topic.slug}`}>
     <span>
       <Hashtag />
       {truncate(topic.slug, { length: 24 })}

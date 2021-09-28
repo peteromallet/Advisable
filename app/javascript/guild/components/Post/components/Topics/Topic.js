@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 const Topic = ({ topic }) => {
   const history = useHistory();
-  const handleClick = () => history.push(`/topics/${topic.slug}`);
+  const handleClick = () => history.push(`/guild/topics/${topic.slug}`);
 
   return (
     <Text

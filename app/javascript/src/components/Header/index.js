@@ -3,12 +3,11 @@ import React, { Fragment } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { Header as Wrapper, Spacer, Logo, Hamburger, Login } from "./styles";
 import CurrentUser from "./CurrentUser";
-import { Box, useBreakpoint } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 import { useMobile } from "src/components/Breakpoint";
 import AnonymousNavigation from "./AnonymousNavigation";
 import ClientNavigation from "./ClientNavigation";
 import FreelancerNavigation from "./FreelancerNavigation";
-import GuildToggle from "src/components/GuildToggle";
 import useLogoURL from "../ApplicationProvider/useLogoURL";
 import useViewer from "src/hooks/useViewer";
 import LogoMark from "src/components/LogoMark";
@@ -24,7 +23,6 @@ const LOGOUT = gql`
 const Header = () => {
   const viewer = useViewer();
   const isMobile = useMobile();
-  const isMedium = useBreakpoint("mUp");
   const [logout] = useMutation(LOGOUT, { variables: { input: {} } });
   const [navOpen, setNavOpen] = React.useState(false);
   const logoURL = useLogoURL();
@@ -73,11 +71,6 @@ const Header = () => {
             display="flex"
             alignItems="center"
           >
-            {viewer && isMedium && viewer.guild && viewer.isAccepted ? (
-              <GuildToggle url="/guild" mr={3}>
-                Switch to guild
-              </GuildToggle>
-            ) : null}
             {viewer && !isMobile && (
               <CurrentUser user={viewer} onLogout={handleLogout} />
             )}

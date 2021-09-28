@@ -28,14 +28,15 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
           <MessageCount />
           Messages
         </NavItem>
+        <NavItem onClick={onCloseNav} to="/guild">
+          Guild
+        </NavItem>
+        <NavItem onClick={onCloseNav} to="/events">
+          Events
+        </NavItem>
 
         {isMobile && (
           <>
-            {viewer?.guild && (
-              <NavItem as="a" href="/guild">
-                Guild
-              </NavItem>
-            )}
             <NavItem as="a" href="/settings">
               Settings
             </NavItem>

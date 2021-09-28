@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, useBreakpoint } from "@advisable/donut";
-import { useParams } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import Sticky from "react-stickynode";
 import Posts from "@guild/components/Posts";
 import Topics from "@guild/components/Topics";
@@ -10,7 +10,7 @@ import Sidebar from "./components/Sidebar";
 
 const Feed = () => {
   const lUp = useBreakpoint("lUp");
-  const { topicId } = useParams();
+  const { topicId } = useRouteMatch("/guild/topics/:topicId")?.params || {};
   const MemoizedTopicPosts = React.memo(TopicPosts);
 
   return (
