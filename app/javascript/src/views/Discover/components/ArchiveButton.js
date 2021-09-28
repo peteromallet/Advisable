@@ -106,7 +106,12 @@ function ArchiveForm({ article, search, modal, onArchive = () => {} }) {
   );
 }
 
-export default function ArchiveButton({ search, article, onArchive }) {
+export default function ArchiveButton({
+  search,
+  article,
+  onArchive,
+  ...props
+}) {
   const modal = useDialogState();
 
   const handleClick = async (e) => {
@@ -124,7 +129,12 @@ export default function ArchiveButton({ search, article, onArchive }) {
           onArchive={onArchive}
         />
       </Modal>
-      <Button variant="outlined" prefix={<Trash />} onClick={handleClick}>
+      <Button
+        variant="outlined"
+        prefix={<Trash />}
+        onClick={handleClick}
+        {...props}
+      >
         Remove
       </Button>
     </>

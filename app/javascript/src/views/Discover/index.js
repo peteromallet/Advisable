@@ -16,7 +16,7 @@ export default function Discover() {
   }, [pathname]);
 
   return (
-    <Box marginY={12} marginX={8}>
+    <Box marginY={{ _: 8, m: 12 }} marginX={{ _: 4, m: 8 }}>
       <Box maxWidth="920px" mx="auto">
         <Switch>
           <Route

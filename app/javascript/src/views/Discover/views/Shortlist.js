@@ -35,7 +35,11 @@ export default function Shortlist() {
       <Box display="flex" alignItems="center">
         <BackButton to="/explore" marginRight={4} />
         {!loading || shortlist?.name ? (
-          <Heading fontSize="36px" fontWeight={650} letterSpacing="-0.06rem">
+          <Heading
+            fontSize={{ _: "28px", m: "36px" }}
+            fontWeight={650}
+            letterSpacing="-0.06rem"
+          >
             {shortlist.name}
           </Heading>
         ) : (
