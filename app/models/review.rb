@@ -59,9 +59,11 @@ end
 #
 #  id                    :bigint           not null, primary key
 #  comment               :text
+#  company_name          :string
 #  first_name            :string
 #  last_name             :string
 #  ratings               :jsonb
+#  relationship          :string
 #  uid                   :string           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
