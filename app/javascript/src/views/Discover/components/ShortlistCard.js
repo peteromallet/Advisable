@@ -35,7 +35,7 @@ export default function ShortlistCard({ shortlist, company }) {
       <Box display={{ _: "block", l: "flex" }} justifyContent="space-between">
         <Box maxWidth={{ l: "240px" }} paddingRight={2}>
           <Text
-            fontSize={{ _: "3xl", m: "4xl" }}
+            fontSize="3xl"
             fontWeight={600}
             marginBottom={2}
             letterSpacing="-0.032em"
