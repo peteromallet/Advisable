@@ -4,9 +4,9 @@ module Mutations
   class ReviewSpecialist < Mutations::BaseMutation
     description "Creates a review for a Specialist"
 
-    argument :comment, String, required: false
+    argument :comment, String, required: true
     argument :company_name, String, required: false
-    argument :ratings, Types::ReviewRatingsInput, required: true
+    argument :ratings, Types::ReviewRatingsInput, required: false
     argument :relationship, String, required: false
     argument :specialist, ID, required: true
 
