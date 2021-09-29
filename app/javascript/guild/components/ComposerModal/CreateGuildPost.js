@@ -2,7 +2,6 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { PeopleCircle } from "@styled-icons/ionicons-outline/PeopleCircle";
 import { HelpBuoy } from "@styled-icons/ionicons-outline/HelpBuoy";
-import { BarChart } from "@styled-icons/ionicons-outline/BarChart";
 import { DocumentText } from "@styled-icons/ionicons-outline/DocumentText";
 import Loader from "components/Loader";
 import { useHistory, useLocation } from "react-router-dom";

@@ -25,7 +25,7 @@ export default function Review({ guildPost, onPublish }) {
   const [shareable, setShareable] = useState(guildPost.shareable);
   const { pathWithState } = useLocationStages();
   const { progress } = useProgressSteps();
-  const nextPath = `/posts/${guildPost.id}`;
+  const nextPath = `/guild/posts/${guildPost.id}`;
 
   const handleSubmit = async () => {
     const { data } = await updateGuildPost({
@@ -57,7 +57,7 @@ export default function Review({ guildPost, onPublish }) {
           fontSize="l"
           fontWeight="medium"
           to={pathWithState(
-            `/composer/${guildPost.id}/${
+            `/guild/composer/${guildPost.id}/${
               guildPost.audienceType !== "none" ? "targeting" : "audience"
             }`,
           )}
@@ -87,7 +87,10 @@ export default function Review({ guildPost, onPublish }) {
         </Stack>
 
         <Box mt="l">
-          <EditButton to={`/composer/${guildPost.id}/post`} resource="Post" />
+          <EditButton
+            to={`/guild/composer/${guildPost.id}/post`}
+            resource="Post"
+          />
           <Box height={1} bg="neutral100" my="l" />
           {guildPost.audienceType !== "none" && (
             <>
@@ -111,7 +114,7 @@ export default function Review({ guildPost, onPublish }) {
                   ))}
                 </GuildBox>
                 <EditButton
-                  to={`/composer/${guildPost.id}/targeting`}
+                  to={`/guild/composer/${guildPost.id}/targeting`}
                   resource="Targeting"
                 />
               </Stack>

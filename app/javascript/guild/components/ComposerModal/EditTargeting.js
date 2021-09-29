@@ -25,7 +25,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
   const [updateGuildPost] = useUpdateGuildPostWriteCache();
   const { pathWithState } = useLocationStages();
   const { progress } = useProgressSteps();
-  const nextPath = `/composer/${guildPost.id}/review`;
+  const nextPath = `/guild/composer/${guildPost.id}/review`;
 
   const handleSubmit = async ({ guildTopicNames }) => {
     await updateGuildPost({
@@ -106,7 +106,7 @@ export default function EditTargeting({ guildPost, selectDataQuery }) {
                 mb="s"
                 fontSize="l"
                 fontWeight="medium"
-                to={pathWithState(`/composer/${guildPost.id}/audience`)}
+                to={pathWithState(`/guild/composer/${guildPost.id}/audience`)}
               >
                 <Box display="inline-block" mr="xxs">
                   <ArrowLeft size={20} strokeWidth={2} />

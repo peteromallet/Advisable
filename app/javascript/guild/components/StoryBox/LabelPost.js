@@ -19,7 +19,7 @@ export default function LabelPost({ post }) {
         fontSize="sm"
         color="neutral900"
         letterSpacing="-0.01rem"
-        to={`/posts/${post.id}`}
+        to={`/guild/posts/${post.id}`}
         css={`
           min-width: 0;
           display: block;

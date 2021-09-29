@@ -11,6 +11,7 @@ import FreelancerNavigation from "./FreelancerNavigation";
 import useLogoURL from "../ApplicationProvider/useLogoURL";
 import useViewer from "src/hooks/useViewer";
 import LogoMark from "src/components/LogoMark";
+import Notifications from "./Notifications";
 
 const LOGOUT = gql`
   mutation logout($input: LogoutInput!) {
@@ -71,6 +72,7 @@ const Header = () => {
             display="flex"
             alignItems="center"
           >
+            {viewer?.isSpecialist && <Notifications />}
             {viewer && !isMobile && (
               <CurrentUser user={viewer} onLogout={handleLogout} />
             )}

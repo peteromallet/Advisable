@@ -22,7 +22,7 @@ export default function EditGuildPost({ guildPost }) {
     });
 
     if (!response.errors) {
-      navigate(`/composer/${id}/images`);
+      navigate(`/guild/composer/${id}/images`);
     }
 
     return response;

@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { useDialogState } from "reakit/Dialog";
 import { useHistory, useLocation } from "react-router-dom";
 
-const CREATE_PATH = "/composer";
+const CREATE_PATH = "/guild/composer";
 export const PATH_REGEX = /\/composer\/?.*/;
 
 export function useComposerModal(initialPath) {
