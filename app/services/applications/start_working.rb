@@ -25,7 +25,6 @@ module Applications
 
       if success
         application.create_previous_project if application.previous_project.blank?
-        Applications::FlexibleInvoice.call(application: application) if project_type == 'Flexible'
         application.sync_to_airtable
         return application
       end
