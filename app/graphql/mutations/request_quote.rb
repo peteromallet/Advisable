@@ -16,9 +16,15 @@ module Mutations
 
     def resolve(**args)
       task = Task.find_by_uid!(args[:task])
-      {task: Tasks::RequestQuote.call(task: task, responsible_id: current_account_id)}
-    rescue Service::Error => e
-      ApiError.service_error(e)
+
+      ApiError.invalid_request("tasks.cantRequestQuote") unless ["Not Assigned", "Requested To Start"].include?(task.stage)
+      ApiError.invalid_request("tasks.nameRequired") if task.name.blank?
+      ApiError.invalid_request("tasks.descriptionRequired") if task.description.blank?
+
+      task.assign_attributes(stage: "Quote Requested", quote_requested_at: Time.zone.now)
+      task.save_and_sync_with_responsible!(current_account_id)
+
+      {task: task}
     end
   end
 end
