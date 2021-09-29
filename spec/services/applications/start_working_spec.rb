@@ -31,34 +31,6 @@ RSpec.describe Applications::StartWorking do
     end.to change(application, :project_type).from(nil).to(project_type)
   end
 
-  context "when project type is 'Flexible" do
-    before do
-      allow(Applications::FlexibleInvoice).to receive(:call)
-    end
-
-    it 'sets the monthly limit' do
-      expect do
-        described_class.call(
-          application: application,
-          project_type: 'Flexible',
-          monthly_limit: monthly_limit
-        )
-      end.to change { application.reload.monthly_limit }.from(nil).to(
-        monthly_limit
-      )
-    end
-
-    it 'calls the FlexibleInvoice service' do
-      expect(Applications::FlexibleInvoice).to receive(:call)
-
-      described_class.call(
-        application: application,
-        project_type: 'Flexible',
-        monthly_limit: monthly_limit
-      )
-    end
-  end
-
   it 'syncs with airtable' do
     expect(application).to receive(:sync_to_airtable)
     described_class.call(
