@@ -2,6 +2,8 @@
 
 module Mutations
   class UpdateApplication < Mutations::BaseMutation
+    PERMITTED_ATTRIBUTES = %i[introduction availability invoice_rate accepts_fee accepts_terms project_type monthly_limit trial_program auto_apply].freeze
+
     description "Used to update an application record during the application process"
 
     class ApplicationQuestionInputType < GraphQL::Schema::InputObject
@@ -35,88 +37,52 @@ module Mutations
     end
 
     def resolve(**args)
-      @application = Application.find_by!(uid: args[:id])
-      @attributes = attributes(args)
-      @application.assign_attributes(permitted_attributes)
-      apply_question_answers
-      create_references
-      @application.save_and_sync_with_responsible!(current_account_id)
-      specialist.update(bio: args[:introduction]) if args[:persist_bio] && args[:introduction].present?
-      {application: @application}
-    rescue Service::Error => e
-      ApiError.service_error(e)
+      application = Application.find_by!(uid: args[:id])
+      attributes = massage_attributes(args)
+      application.assign_attributes(attributes.slice(*PERMITTED_ATTRIBUTES))
+      add_q_and_a(application, attributes[:questions]) if attributes[:questions].present?
+      create_references(application, attributes[:references]) if attributes[:references].present?
+      application.save_and_sync_with_responsible!(current_account_id)
+      application.specialist.update(bio: args[:introduction]) if args[:persist_bio] && args[:introduction].present?
+
+      {application: application}
     end
 
     private
 
-    def attributes(args)
+    def massage_attributes(args)
       questions = (args[:questions] || []).map { |qa| {question: qa.question, answer: qa.answer} }
       args.except(:id, :questions).merge({questions: questions})
     end
 
-    def permitted_attributes
-      @attributes.slice(:introduction, :availability, :invoice_rate, :accepts_fee, :accepts_terms, :project_type, :monthly_limit, :trial_program, :auto_apply)
-    end
+    def add_q_and_a(application, questions)
+      application_questions = application.questions || []
 
-    def specialist
-      @specialist ||= @application.specialist
-    end
-
-    # Iterate through the supplied questions assigning each answer based off
-    # of the question.
-    def apply_question_answers
-      return unless @attributes[:questions]
-
-      application_questions = @application.questions || []
-      # iterate through the passed questions. This should be an array of hashes
-      # with 'question' and 'answer' keys.
-      @attributes[:questions].each do |hash|
-        unless (
-                 # Check that the passed quesion is in the projects questions array.
-                 @application.project.questions || []
-               ).include?(hash[:question])
-          raise Service::Error, :invalid_question
-        end
-
-        # Check if the question has already been answered
-        index =
-          application_questions.find_index do |q|
-            q["question"] == hash[:question]
-          end
-
-        # Override the answer if it has already been answered
+      questions.each do |qa|
+        ApiError.invalid_request("invalid_question") unless (application.project.questions || []).include?(qa[:question])
+        index = application_questions.find_index { |q| q["question"] == qa[:question] }
         if index.present?
-          application_questions[index] = hash
+          application_questions[index] = qa
         else
-          # If it hasnt already been answered then add it to the application
-          # questions array
-          application_questions.push(hash)
+          application_questions.push(qa)
         end
       end
 
-      @application.questions = application_questions
+      application.questions = application_questions
     end
 
-    def reference_projects
-      @reference_projects ||=
-        @attributes[:references].map do |id|
-          project = specialist.previous_projects.find_by(uid: id)
-          raise Service::Error, :invalid_reference if project.blank?
-
-          project
-        end
-    end
-
-    # iterate through the attributes[:references] array and create relationships
-    # for each id.
-    def create_references
-      return unless @attributes[:references]
+    def create_references(application, references)
+      reference_projects = references.map do |id|
+        application.specialist.previous_projects.find_by!(uid: id)
+      end
 
       reference_projects.each do |project|
-        @application.application_references.find_or_create_by(previous_project: project)
+        application.application_references.find_or_create_by(previous_project: project)
       end
 
-      @application.application_references.where.not(previous_project: reference_projects).delete_all
+      application.application_references.where.not(previous_project: reference_projects).delete_all
+    rescue ActiveRecord::RecordNotFound
+      ApiError.invalid_request("invalid_reference")
     end
   end
 end
