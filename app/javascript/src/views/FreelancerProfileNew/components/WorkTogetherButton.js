@@ -7,12 +7,7 @@ function WorkTogetherButton({ id, children }) {
 
   return (
     <Link to={{ ...location, pathname: `/request_consultation/${id}` }}>
-      <Button
-        variant="dark"
-        width={["100%", "auto"]}
-        size={["m", "m", "l"]}
-        mb={[4, 0, 0, 6]}
-      >
+      <Button variant="dark" width={["100%", "auto"]} size={["m", "m", "l"]}>
         {children}
       </Button>
     </Link>

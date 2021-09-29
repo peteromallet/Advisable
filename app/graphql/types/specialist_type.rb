@@ -38,11 +38,16 @@ module Types
       description 'The specialists linkedin URL'
     end
 
-    def linkedin
-      url = object.linkedin
-      return nil if url.blank?
+    field :twitter, String, null: true do
+      description 'The specialists twitter URL'
+    end
 
-      url.starts_with?('http') ? url : "https://#{url}"
+    field :instagram, String, null: true do
+      description 'The specialists instagram URL'
+    end
+
+    field :medium, String, null: true do
+      description 'The specialists medium URL'
     end
 
     field :website, String, null: true do

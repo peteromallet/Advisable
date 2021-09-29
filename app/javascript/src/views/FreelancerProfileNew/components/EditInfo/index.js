@@ -13,7 +13,6 @@ function EditInfoDialog({ children, specialist }) {
         variant="subtle"
         width={["100%", "auto"]}
         size={["m", "m", "l"]}
-        mb={[4, 0, 0, 6]}
       >
         {children}
       </DialogDisclosure>

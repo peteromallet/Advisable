@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
-import { LinkedinIn } from "@styled-icons/fa-brands/LinkedinIn";
-import { Globe } from "@styled-icons/heroicons-solid/Globe";
 import useViewer from "src/hooks/useViewer";
 import { Box, Text } from "@advisable/donut";
 
 import ProfilePicture from "../ProfilePicture";
-import SocialIcon from "../SocialIcon";
 import CoverImage from "../CoverImage";
 import {
   StyledStickySidebar,
@@ -21,6 +18,7 @@ import BackButton from "../BackButton";
 import EditInfo from "../EditInfo";
 import MessageButton from "../MessageButton";
 import WorkTogetherButton from "../WorkTogetherButton";
+import SocialProfilesIcons from "../SocialProfilesIcons";
 
 export const TRUNCATE_LIMIT = 160;
 
@@ -37,7 +35,9 @@ export default function Sidebar({ data, ...props }) {
 
   const [isExpanded, setExpanded] = useState(false);
   const bioIsExceed = specialist.bio.length > TRUNCATE_LIMIT;
-  const bio = isExpanded ? specialist.bio : specialist.bio.slice(0, 160);
+  const bio = isExpanded
+    ? specialist.bio
+    : specialist.bio.slice(0, TRUNCATE_LIMIT);
 
   return (
     <Box
@@ -83,7 +83,7 @@ export default function Sidebar({ data, ...props }) {
             fontSize={{ _: "m", m: "m" }}
             lineHeight="l"
             color="neutral700"
-            mb={7}
+            mb={5}
           >
             {bio}
             {bioIsExceed ? (
@@ -98,25 +98,20 @@ export default function Sidebar({ data, ...props }) {
             flexDirection={["column", "row", "row", "column"]}
             alignItems={{ _: "center", l: "flex-start" }}
           >
-            {isOwner ? (
-              <EditInfo specialist={specialist}>Edit Info</EditInfo>
-            ) : null}
-            {!isOwner && !viewerIsGuild ? (
-              <WorkTogetherButton id={specialist?.id}>
-                Work together
-              </WorkTogetherButton>
-            ) : null}
-            {!isOwner && viewerIsGuild ? (
-              <MessageButton specialist={specialist} />
-            ) : null}
-            <Box>
-              {specialist.linkedin ? (
-                <SocialIcon icon={LinkedinIn} href={specialist.linkedin} />
+            <Box mb={[4, 0, 0, 10]}>
+              {isOwner ? (
+                <EditInfo specialist={specialist}>Edit Info</EditInfo>
               ) : null}
-              {specialist.website ? (
-                <SocialIcon icon={Globe} href={specialist.website} />
+              {!isOwner && !viewerIsGuild ? (
+                <WorkTogetherButton id={specialist?.id}>
+                  Work together
+                </WorkTogetherButton>
+              ) : null}
+              {!isOwner && viewerIsGuild ? (
+                <MessageButton specialist={specialist} />
               ) : null}
             </Box>
+            <SocialProfilesIcons specialist={specialist} />
           </Box>
         </StyledBioWrapper>
       </StyledStickySidebar>
