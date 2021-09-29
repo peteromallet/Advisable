@@ -16,11 +16,17 @@ module Mutations
     end
 
     def resolve(**args)
-      task = Task.find_by_uid!(args[:task])
-      task = Tasks::RequestToStart.call(task: task, responsible_id: current_account_id)
+      task = Task.find_by!(uid: args[:task])
+
+      ApiError.invalid_request("tasks.cantRequestToStart", "Stage must be 'Not Assigned'") if task.stage != "Not Assigned"
+      ApiError.invalid_request("tasks.nameRequired") if task.name.blank?
+      ApiError.invalid_request("tasks.descriptionRequired") if task.description.blank?
+      ApiError.invalid_request("tasks.cantRequestToStart", "Application status is not 'Working'") if task.application.status != "Working"
+
+      task.stage = "Requested To Start"
+      task.save_and_sync_with_responsible!(current_account_id)
+
       {task: task}
-    rescue Service::Error => e
-      ApiError.service_error(e)
     end
   end
 end
