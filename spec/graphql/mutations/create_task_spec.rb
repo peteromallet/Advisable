@@ -71,16 +71,4 @@ RSpec.describe Mutations::CreateTask do
       expect(error['extensions']['code']).to eq('notAuthorized')
     end
   end
-
-  context 'when a Service::Error is thrown' do
-    before do
-      error = Service::Error.new('service_error')
-      allow(Tasks::Create).to receive(:call).and_raise(error)
-    end
-
-    it 'returns an error' do
-      error = response['errors'][0]
-      expect(error['message']).to eq('service_error')
-    end
-  end
 end
