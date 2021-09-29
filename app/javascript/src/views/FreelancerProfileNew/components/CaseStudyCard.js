@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import { rgba } from "polished";
 import { useImage } from "react-image";
 import { motion } from "framer-motion";
 import styled from "styled-components";
@@ -6,14 +7,29 @@ import { matchPath, useParams } from "react-router";
 import { Box, Text, Link, Skeleton, theme } from "@advisable/donut";
 import CompanyLogo from "./CompanyLogo";
 
+const StyledCaseStudyCard = styled(Box)`
+  transition: transform 200ms, box-shadow 200ms;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px -16px ${rgba(theme.colors.blue800, 0.08)},
+      0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)};
+  }
+`;
+
 const StyledSkillTag = styled.div`
-  background: rgba(0, 13, 32, 0.08);
-  color: rgba(0, 0, 0, 0.58);
-  line-height: ${theme.lineHeights.xs};
-  padding: 4px 12px;
+  line-height: 1;
+  padding: 6px 12px 7px 12px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  position: relative;
+  letter-spacing: -0.012em;
   border-radius: 8px;
   margin-right: ${theme.space[2]};
   margin-bottom: ${theme.space[2]};
+  background: rgba(255, 255, 255, 0.72);
+  color: ${rgba(theme.colors.blue900, 0.72)};
 `;
 
 const StyledBackgroundImg = styled.img`
@@ -72,9 +88,9 @@ export default function CaseStudyCard({ caseStudy }) {
         to={`/freelancers/${params.id}/case_studies/${caseStudy.id}`}
         notInline="true"
       >
-        <Box
-          p={7}
-          pb={12}
+        <StyledCaseStudyCard
+          p={8}
+          pb={10}
           width="100%"
           bg="neutral100"
           position="relative"
@@ -106,30 +122,31 @@ export default function CaseStudyCard({ caseStudy }) {
             <Box>
               <Text
                 textTransform="uppercase"
-                fontSize="13px"
+                fontSize="12px"
                 fontWeight="semibold"
-                letterSpacing="0.04rem"
-                lineHeight="l"
+                letterSpacing="0.02rem"
+                lineHeight="16px"
                 color="neutral700"
-                mb={1}
+                mb={1.5}
               >
                 {caseStudy.companyType}
               </Text>
               <Text
                 fontSize="4xl"
-                fontWeight="semibold"
-                letterSpacing="-0.02rem"
+                fontWeight={600}
+                letterSpacing="-0.032rem"
                 color="neutral900"
-                mb={8}
+                marginBottom={6}
               >
                 {caseStudy.title}
               </Text>
+
               <Box display="flex" flexDirection="row" flexWrap="wrap">
                 {skills}
               </Box>
             </Box>
           </Box>
-        </Box>
+        </StyledCaseStudyCard>
       </Box>
     </Suspense>
   );
