@@ -1,3 +1,5 @@
+#import "./messageFields.gql"
+
 query ConversationMessages($id: ID!, $cursor: String) {
   conversation(id: $id) {
     id
@@ -9,24 +11,7 @@ query ConversationMessages($id: ID!, $cursor: String) {
       }
       edges {
         node {
-          id
-          content
-          createdAt
-          attachments {
-            id
-            url
-            isImage
-            filename
-          }
-
-          ... on UserMessage {
-            status @client
-            author {
-              id
-              name
-              avatar
-            }
-          }
+          ...MessageFields
         }
       }
     }

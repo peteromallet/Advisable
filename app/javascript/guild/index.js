@@ -5,6 +5,7 @@ import Root from "./Root";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 import { createBrowserHistory } from "history";
+import "simplebar/dist/simplebar.min.css";
 
 const history = createBrowserHistory({ basename: "/guild" });
 
