@@ -18,17 +18,27 @@ class GraphqlController < ApplicationController
 
   def toby
     result = with_query_tracing do
-      Toby::Schema.execute(
-        params[:query],
-        variables: ensure_hash(params[:variables]),
-        context: {session_manager: session_manager},
-        operation_name: params[:operationName]
-      )
+      if params[:query].starts_with?("query IntrospectionQuery")
+        Rails.cache.fetch("toby_introspection_query_#{ENV["HEROKU_RELEASE_VERSION"]}") do
+          toby_query
+        end
+      else
+        toby_query
+      end
     end
     render json: result
   end
 
   private
+
+  def toby_query
+    Toby::Schema.execute(
+      params[:query],
+      variables: ensure_hash(params[:variables]),
+      context: {session_manager: session_manager},
+      operation_name: params[:operationName]
+    ).as_json
+  end
 
   def with_query_tracing
     return yield unless Rails.env.development?
