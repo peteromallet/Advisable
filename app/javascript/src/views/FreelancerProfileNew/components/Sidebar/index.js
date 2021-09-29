@@ -20,7 +20,7 @@ import MessageButton from "../MessageButton";
 import WorkTogetherButton from "../WorkTogetherButton";
 import SocialProfilesIcons from "../SocialProfilesIcons";
 
-export const TRUNCATE_LIMIT = 160;
+export const TRUNCATE_LIMIT = 145;
 
 export default function Sidebar({ data, ...props }) {
   const isArticle = !!matchPath(location.pathname, {
@@ -57,20 +57,23 @@ export default function Sidebar({ data, ...props }) {
         <StyledNameWrapper>
           <Text
             fontSize={{ _: "2xl", m: "5xl" }}
-            fontWeight="semibold"
+            fontWeight={600}
             color="neutral900"
-            lineHeight="4xl"
-            letterSpacing="-0.03rem"
+            lineHeight={{ _: "24px", m: "32px" }}
+            letterSpacing="-0.028em"
             marginBottom={{ xs: 0.5, m: 1.5 }}
           >
             {specialist.name}
           </Text>
-          <Box display="flex" color="neutral400" alignItems="center">
-            <Map height="20px" width="20px" color="neutral500" />
+          <Box display="flex" color="neutral500" alignItems="center">
+            <Box flexShrink={0}>
+              <Map height="20px" width="20px" />
+            </Box>
             <Text
-              fontSize={{ _: "s", m: "m" }}
-              fontWeight="medium"
-              color="neutral400"
+              $truncate
+              fontSize={{ _: "s", m: "l" }}
+              letterSpacing="-0.016em"
+              color="neutral600"
               lineHeight="l"
               marginLeft={1}
             >
@@ -83,12 +86,12 @@ export default function Sidebar({ data, ...props }) {
             fontSize={{ _: "m", m: "m" }}
             lineHeight="l"
             color="neutral700"
-            mb={5}
+            marginBottom={7}
           >
             {bio}
             {bioIsExceed ? (
               <StyledShowMore onClick={() => setExpanded((e) => !e)}>
-                {isExpanded ? "see less" : "see more"}
+                {isExpanded ? <>see&#32;less</> : <>see&#32;more</>}
               </StyledShowMore>
             ) : null}
           </Text>
