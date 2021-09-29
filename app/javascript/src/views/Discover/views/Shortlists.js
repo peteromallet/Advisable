@@ -44,7 +44,7 @@ export default function Shortlists() {
       <Box height="1px" bg="neutral100" my={8} />
       {!loading && shortlists.length === 0 && <NoShortlists />}
       {!loading && shortlists.length > 0 && (
-        <Stack spacing={16} divider="neutral100">
+        <Stack spacing={8} divider="neutral100">
           {shortlists.map((shortlist) => (
             <ShortlistCard
               key={shortlist.id}

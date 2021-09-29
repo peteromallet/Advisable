@@ -6,6 +6,7 @@ import Shortlist from "./views/Shortlist";
 import Shortlists from "./views/Shortlists";
 import ShortlistArticle from "./views/ShortlistArticle";
 import CreateOrEditSearch from "./views/CreateOrEditSearch";
+import Page from "src/components/Page";
 
 export default function Discover() {
   useBackground("white");
@@ -16,8 +17,8 @@ export default function Discover() {
   }, [pathname]);
 
   return (
-    <Box marginY={{ _: 8, m: 12 }} marginX={{ _: 4, m: 8 }}>
-      <Box maxWidth="920px" mx="auto">
+    <Page width="960px">
+      <Box paddingY={{ _: 8, m: 12 }} paddingX={{ _: 4, m: 8 }}>
         <Switch>
           <Route
             path={[
@@ -33,6 +34,6 @@ export default function Discover() {
           <Route path="/explore" component={Shortlists} />
         </Switch>
       </Box>
-    </Box>
+    </Page>
   );
 }

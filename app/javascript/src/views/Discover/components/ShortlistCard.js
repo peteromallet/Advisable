@@ -9,7 +9,7 @@ import { useHistory } from "react-router";
 const StyledShortlistCard = styled.div(
   css({
     padding: "20px",
-    margin: "-20px",
+    marginX: "-20px",
     cursor: "pointer",
     border: "2px solid transparent",
     borderRadius: "24px",
