@@ -55,31 +55,6 @@ RSpec.describe Mutations::SetTypeForProject do
     end
   end
 
-  context "when setting the project type to 'Flexible'" do
-    let(:application) do
-      create(:application, project_type: 'Fixed', monthly_limit: monthly_limit)
-    end
-    let(:project_type) { 'Flexible' }
-
-    it 'calls the flexible invoice service' do
-      expect(Applications::FlexibleInvoice).to receive(:call)
-      AdvisableSchema.execute(query, context: context)
-    end
-  end
-
-  context 'when only updating the monthly limit' do
-    let(:application) do
-      create(:application, project_type: 'Flexible', monthly_limit: 100)
-    end
-    let(:project_type) { 'Flexible' }
-    let(:monthly_limit) { 400 }
-
-    it 'calls the flexible invoice service' do
-      expect(Applications::FlexibleInvoice).to receive(:call)
-      AdvisableSchema.execute(query, context: context)
-    end
-  end
-
   context 'when the user is not the owner of the project' do
     let(:context) { {current_user: create(:user)} }
 
