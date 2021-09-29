@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useParams } from "react-router";
 import { Box, Text, useBreakpoint } from "@advisable/donut";
 import useScrollToTop from "src/hooks/useScrollToTop";
@@ -45,8 +45,13 @@ export default function Article({ profileData }) {
   const params = useParams();
   const lUp = useBreakpoint("lUp");
 
-  const partialCaseStudy = profileData.specialist.caseStudies.find(
-    (cs) => cs.id === params.case_study_id,
+  const partialCaseStudy = useMemo(
+    () =>
+      profileData.specialist.caseStudies.find(
+        (cs) => cs.id === params.case_study_id,
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [params.case_study_id],
   );
 
   return (
