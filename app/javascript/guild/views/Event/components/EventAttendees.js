@@ -20,6 +20,7 @@ export default function EventAttendees({ attendees = [], attendeesCount = 0 }) {
     <Box
       display="grid"
       gridGap="20px"
+      data-testid="attendees"
       gridTemplateColumns="repeat(auto-fill, minmax(55px, 1fr))"
     >
       {attendees.map((attendee) => (

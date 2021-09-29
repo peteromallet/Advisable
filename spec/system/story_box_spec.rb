@@ -16,7 +16,7 @@ RSpec.describe 'Story box', type: :system do
   end
 
   it "has a story box" do
-    visit "/guild/feed"
+    visit "/guild"
     expect(page).to have_content(label.description)
     expect(page).to have_content(label.slug)
     expect(page).to have_link("View all")

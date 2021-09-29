@@ -208,7 +208,7 @@ const ApplicationRoutes = () => {
             path="/payments/:id"
             component={Payment}
           />
-          <AuthenticatedRoute
+          <Route
             specialistOnly
             path="/guild/posts/:postId"
             component={GuildPost}

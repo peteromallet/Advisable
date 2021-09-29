@@ -9,14 +9,13 @@ RSpec.describe "Guild view post", type: :system do
   let(:post_path) { "/guild/posts/#{guild_post.id}" }
 
   context "when not logged in" do
-    it "is redirected to login page with the post link" do
+    it "is redirected to login page" do
       visit(post_path)
       expect(page).to have_content("Please sign in to your account")
-      expect(page).to have_current_path("/login?redirect=#{post_path}")
     end
 
     it "is not redirected to login page when post is public" do
-      guild_post.update! shareable: true
+      guild_post.update!(shareable: true)
       visit(post_path)
       expect(page).not_to have_content("Please sign in to your account")
       expect(page).to have_content(guild_post.title)

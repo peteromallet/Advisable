@@ -13,7 +13,7 @@ export default function EditImages({ guildPost }) {
   const [images, dispatch] = useImageReducer(guildPost?.images);
   const { progress } = useProgressSteps();
 
-  const nextPath = `/composer/${guildPost.id}/audience`;
+  const nextPath = `/guild/composer/${guildPost.id}/audience`;
 
   const handleContinue = () => {
     progress("EDIT_IMAGES", nextPath);
@@ -26,7 +26,7 @@ export default function EditImages({ guildPost }) {
           mb="s"
           fontSize="l"
           fontWeight="medium"
-          to={pathWithState(`/composer/${guildPost.id}/post`)}
+          to={pathWithState(`/guild/composer/${guildPost.id}/post`)}
         >
           <Box display="inline-block" mr="xxs">
             <ArrowLeft size={20} strokeWidth={2} />

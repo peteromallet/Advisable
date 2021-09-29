@@ -54,7 +54,7 @@ const TYPES = [
 export default function EditAudience({ guildPost }) {
   const { navigate, pathWithState } = useLocationStages();
   const [updateGuildPost] = useUpdateGuildPostWriteCache();
-  const nextPath = `/composer/${guildPost.id}/targeting`;
+  const nextPath = `/guild/composer/${guildPost.id}/targeting`;
 
   const initialValues = {
     audienceType: guildPost.audienceType || "",
@@ -95,7 +95,7 @@ export default function EditAudience({ guildPost }) {
           mb="s"
           fontSize="l"
           fontWeight="medium"
-          to={pathWithState(`/composer/${guildPost.id}/images`)}
+          to={pathWithState(`/guild/composer/${guildPost.id}/images`)}
         >
           <Box display="inline-block" mr="xxs">
             <ArrowLeft size={20} strokeWidth={2} />
