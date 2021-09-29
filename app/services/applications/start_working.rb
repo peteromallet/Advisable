@@ -13,11 +13,11 @@ module Applications
     end
 
     def call
-      raise Service::Error, 'INVALID_PROJECT_TYPE' unless %w[Fixed Flexible].include?(project_type)
+      raise Service::Error, "INVALID_PROJECT_TYPE" unless %w[Fixed Flexible].include?(project_type)
 
-      application.status = 'Working'
+      application.status = "Working"
       application.project_type = project_type
-      application.monthly_limit = monthly_limit if project_type == 'Flexible'
+      application.monthly_limit = monthly_limit if project_type == "Flexible"
 
       success = Logidze.with_responsible(current_account_id) do
         application.save
