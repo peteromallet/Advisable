@@ -90,6 +90,8 @@ RSpec.describe Mutations::UpdateApplication do
 
   context "when updating the references" do
     let(:previous_project) { create(:previous_project, specialist: specialist) }
+    let(:previous_project2) { create(:previous_project, specialist: specialist) }
+
     let(:query) do
       <<-GRAPHQL
       mutation {
@@ -106,18 +108,23 @@ RSpec.describe Mutations::UpdateApplication do
       }
       GRAPHQL
     end
-    let(:previous_project2) do
-      create(:previous_project, specialist: specialist)
-    end
 
-    before do
-      create(:application, specialist: specialist)
-    end
+    before { create(:application, specialist: specialist) }
 
     it "adds the references" do
       expect { AdvisableSchema.execute(query, context: context) }.to change {
         application.reload.application_references.count
       }.by(2)
+    end
+
+    context "when an invalid ID is passed" do
+      let(:previous_project2) { OpenStruct.new(uid: "invalid") }
+
+      it "returns an error" do
+        response = AdvisableSchema.execute(query, context: context)
+        error = response["errors"][0]
+        expect(error["extensions"]["code"]).to eq("invalid_reference")
+      end
     end
   end
 
