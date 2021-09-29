@@ -15,6 +15,9 @@ fragment ViewerFields on ViewerUnion {
     applicationStage
     completedTutorials
     needsToSetAPassword
+    account {
+      id
+    }
     clientApplication {
       id
       status
@@ -42,5 +45,8 @@ fragment ViewerFields on ViewerUnion {
     avatar
     guild
     guildCalendlyLink
+    account {
+      id
+    }
   }
 }

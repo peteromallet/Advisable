@@ -17,6 +17,7 @@ const combineValues = (existing, incoming) => {
 const createCache = () => {
   return new InMemoryCache({
     possibleTypes: {
+      MessageInterface: ["UserMessage", "SystemMessage", "GuildPostMessage"],
       ViewerUnion: ["User", "Specialist"],
       PostInterface: [
         "GuildPostAdviceRequired",

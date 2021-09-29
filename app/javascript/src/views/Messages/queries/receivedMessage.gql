@@ -4,6 +4,11 @@ subscription ReceivedMessage {
   receivedMessage {
     message {
       ...MessageFields
+
+      conversation {
+        id
+        unreadCount
+      }
     }
   }
 }

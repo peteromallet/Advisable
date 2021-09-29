@@ -8,7 +8,7 @@ import useViewer from "src/hooks/useViewer";
 import FormField from "components/FormField";
 import { Textarea, Text, Paragraph } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
-import { useCreateChatDirectMessage } from "./queries";
+import { useCreateChatDirectMessage, useSendPostMessage } from "./queries";
 
 const validationSchema = object().shape({
   message: string().required("Please write a message"),
@@ -21,6 +21,7 @@ export default function RequestVideoCallModal({ post, onSend = () => {} }) {
   const viewer = useViewer();
   const client = useApolloClient();
   const notifications = useNotifications();
+  const [sendPostMessage] = useSendPostMessage();
   const [sendMessage] = useCreateChatDirectMessage();
   const firstName = post.author.firstName;
 
@@ -29,17 +30,33 @@ export default function RequestVideoCallModal({ post, onSend = () => {} }) {
     guildCalendlyLink: viewer.guildCalendlyLink || "",
   };
 
+  const versionTwo = sessionStorage.getItem("/messages/:conversationId?");
+
   const handleSubmit = async (values) => {
-    const response = await sendMessage({
-      variables: {
-        input: {
-          recipientId: post.author.id,
-          guildPostId: post.id,
-          body: values.message,
-          guildCalendlyLink: values.guildCalendlyLink,
+    let response;
+
+    if (versionTwo) {
+      response = await sendPostMessage({
+        variables: {
+          input: {
+            post: post.id,
+            content: values.message,
+            calendlyUrl: values.guildCalendlyLink,
+          },
         },
-      },
-    });
+      });
+    } else {
+      response = await sendMessage({
+        variables: {
+          input: {
+            recipientId: post.author.id,
+            guildPostId: post.id,
+            body: values.message,
+            guildCalendlyLink: values.guildCalendlyLink,
+          },
+        },
+      });
+    }
 
     if (!response.errors) {
       client.cache.modify({

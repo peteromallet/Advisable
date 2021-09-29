@@ -15,26 +15,49 @@ export const CREATE_CHAT_DIRECT_MESSAGE = gql`
   }
 `;
 
+const CREATE_CONVERSATION = gql`
+  mutation CreateConversationFromProfile($input: CreateConversationInput!) {
+    createConversation(input: $input) {
+      conversation {
+        id
+      }
+    }
+  }
+`;
+
 const validationSchema = object({
   body: string().required("Please write your message"),
 });
 
 function MessageForm({ specialist, onSend }) {
   const [send] = useMutation(CREATE_CHAT_DIRECT_MESSAGE);
+  const [createConversation] = useMutation(CREATE_CONVERSATION);
+  const versionTwo = sessionStorage.getItem("/messages/:conversationId?");
 
   const initialValues = {
     body: "",
   };
 
   const handleSubmit = async (values) => {
-    await send({
-      variables: {
-        input: {
-          body: values.body,
-          recipientId: specialist.id,
+    if (versionTwo) {
+      await createConversation({
+        variables: {
+          input: {
+            participants: [specialist.account.id],
+            content: values.body,
+          },
         },
-      },
-    });
+      });
+    } else {
+      await send({
+        variables: {
+          input: {
+            body: values.body,
+            recipientId: specialist.id,
+          },
+        },
+      });
+    }
 
     onSend();
   };
@@ -78,14 +101,7 @@ export default function MessageButton({ specialist }) {
 
   return (
     <>
-      <Button
-        onClick={dialog.toggle}
-        prefix={<Chatbubble />}
-        variant="dark"
-        width={["100%", "auto"]}
-        size={["m", "m", "l"]}
-        mb={[4, 0, 0, 6]}
-      >
+      <Button onClick={dialog.toggle} prefix={<Chatbubble />} variant="primary">
         Message
       </Button>
       <Modal modal={dialog} label="Send message">
