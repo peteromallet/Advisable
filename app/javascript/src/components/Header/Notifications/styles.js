@@ -1,17 +1,19 @@
 import styled from "styled-components";
-import { Box } from "@advisable/donut";
+import { Box, theme } from "@advisable/donut";
 
 export const StyledNotificationsButton = styled.div`
   width: 32px;
   height: 32px;
-  color: white;
+  color: ${theme.colors.neutral500};
   display: flex;
-  border-radius: 12px;
+  outline: none;
+  border-radius: 16px;
   align-items: center;
   justify-content: center;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.08);
+    color: ${theme.colors.neutral900};
+    background: ${theme.colors.neutral100};
   }
 `;
 

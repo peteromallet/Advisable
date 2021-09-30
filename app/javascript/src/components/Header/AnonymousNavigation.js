@@ -1,7 +1,8 @@
 import * as React from "react";
 import { X } from "@styled-icons/feather/X";
 import { useMobile } from "../../components/Breakpoint";
-import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
+import { CloseNav, NavContainer, Nav } from "./styles";
+import NavigationLink from "./NavigationLink";
 
 const AnonymousNavigation = ({ navOpen, onCloseNav }) => {
   const isMobile = useMobile();
@@ -13,9 +14,9 @@ const AnonymousNavigation = ({ navOpen, onCloseNav }) => {
           <X />
         </CloseNav>
         {isMobile && (
-          <NavItem onClick={onCloseNav} to="/login">
+          <NavigationLink onClick={onCloseNav} to="/login">
             Login
-          </NavItem>
+          </NavigationLink>
         )}
       </Nav>
     </NavContainer>

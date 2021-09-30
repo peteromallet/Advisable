@@ -1,39 +1,68 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
 import {
-  CurrentUserWrapper,
+  StyledDropdown,
   CurrentUserToggle,
-  CurrentUserDropdown,
+  StyledDropdownLink,
 } from "./styles";
+import { ChevronDown } from "@styled-icons/heroicons-outline";
 import useViewer from "../../hooks/useViewer";
+import { Box, Avatar } from "@advisable/donut";
 
 const CurrentUser = ({ user, onLogout }) => {
   const viewer = useViewer();
-  const [open, setOpen] = useState(false);
-  const handleBlur = () => setOpen(false);
-  const handleFocus = () => setOpen(true);
+  const popover = usePopoverState({
+    placement: "top-end",
+  });
   const isClient = viewer?.__typename === "User";
   let isAdmin = isClient && viewer?.isAdmin;
   const isAccepted = viewer?.isAccepted;
 
   return (
-    <CurrentUserWrapper tabIndex="0" onFocus={handleFocus} onBlur={handleBlur}>
-      <CurrentUserToggle>
-        <strong>{user.firstName}</strong>
-        {user.companyName && <span>{user.companyName}</span>}
-      </CurrentUserToggle>
-      <CurrentUserDropdown open={open}>
-        {viewer.isSpecialist && isAccepted && (
-          <Link to="/profile">Your profile</Link>
+    <>
+      <PopoverDisclosure {...popover}>
+        {(props) => (
+          <CurrentUserToggle {...props}>
+            <Avatar
+              size="xs"
+              name={user.name}
+              url={user.avatar}
+              marginRight={2}
+            />
+            <ChevronDown size={12} />
+          </CurrentUserToggle>
         )}
-        <Link to="/settings">Settings</Link>
-        {isAdmin && <a href="/admin">Admin</a>}
-        {isAdmin && <a href="/toby">Toby</a>}
-        <a href="#" onClick={onLogout}>
-          Logout
-        </a>
-      </CurrentUserDropdown>
-    </CurrentUserWrapper>
+      </PopoverDisclosure>
+      <Popover {...popover} aria-label="User menu">
+        {(props) => (
+          <StyledDropdown {...props}>
+            <Box width="200px" paddingY={3}>
+              {viewer.isSpecialist && isAccepted && (
+                <StyledDropdownLink to="/profile" onClick={popover.hide}>
+                  Profile
+                </StyledDropdownLink>
+              )}
+              <StyledDropdownLink to="/settings" onClick={popover.hide}>
+                Settings
+              </StyledDropdownLink>
+              {isAdmin && (
+                <StyledDropdownLink as="a" href="/admin">
+                  Admin
+                </StyledDropdownLink>
+              )}
+              {isAdmin && (
+                <StyledDropdownLink as="a" href="/toby">
+                  Toby
+                </StyledDropdownLink>
+              )}
+              <StyledDropdownLink as="a" href="#" onClick={onLogout}>
+                Logout
+              </StyledDropdownLink>
+            </Box>
+          </StyledDropdown>
+        )}
+      </Popover>
+    </>
   );
 };
 

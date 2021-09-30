@@ -1,7 +1,7 @@
 // Renders the primary header for the app
-import React, { Fragment } from "react";
+import React from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Header as Wrapper, Spacer, Logo, Hamburger, Login } from "./styles";
+import { StyledHeader, Logo, Hamburger, Login } from "./styles";
 import CurrentUser from "./CurrentUser";
 import { Box } from "@advisable/donut";
 import { useMobile } from "src/components/Breakpoint";
@@ -34,52 +34,47 @@ const Header = () => {
   };
 
   return (
-    <Fragment>
-      <Spacer />
-      <Wrapper>
-        <React.Fragment>
-          <Hamburger onClick={() => setNavOpen(true)}>
-            <div />
-            <div />
-            <div />
-          </Hamburger>
-          <Logo href={logoURL}>
-            <LogoMark color="white" size={24} />
-          </Logo>
-          {viewer && viewer.isClient && viewer.isAccepted && (
-            <ClientNavigation
-              navOpen={navOpen}
-              onCloseNav={() => setNavOpen(false)}
-              onLogout={handleLogout}
-            />
-          )}
-          {viewer && viewer.isSpecialist && viewer.isAccepted && (
-            <FreelancerNavigation
-              navOpen={navOpen}
-              onLogout={handleLogout}
-              onCloseNav={() => setNavOpen(false)}
-            />
-          )}
-          {!viewer && (
-            <AnonymousNavigation
-              onCloseNav={() => setNavOpen(false)}
-              navOpen={navOpen}
-            />
-          )}
-          <Box
-            position="absolute"
-            right="25px"
-            display="flex"
-            alignItems="center"
-          >
-            {viewer && !isMobile && (
-              <CurrentUser user={viewer} onLogout={handleLogout} />
-            )}
-            {!viewer && !isMobile && <Login to="/login">Login</Login>}
-          </Box>
-        </React.Fragment>
-      </Wrapper>
-    </Fragment>
+    <StyledHeader>
+      <Box>
+        <Logo href={logoURL}>
+          <LogoMark size={24} />
+        </Logo>
+        <Hamburger onClick={() => setNavOpen(true)}>
+          <div />
+          <div />
+          <div />
+        </Hamburger>
+      </Box>
+      <Box flexGrow={1}>
+        {viewer && viewer.isClient && viewer.isAccepted && (
+          <ClientNavigation
+            navOpen={navOpen}
+            onCloseNav={() => setNavOpen(false)}
+            onLogout={handleLogout}
+          />
+        )}
+        {viewer && viewer.isSpecialist && viewer.isAccepted && (
+          <FreelancerNavigation
+            navOpen={navOpen}
+            onLogout={handleLogout}
+            onCloseNav={() => setNavOpen(false)}
+          />
+        )}
+        {!viewer && (
+          <AnonymousNavigation
+            onCloseNav={() => setNavOpen(false)}
+            navOpen={navOpen}
+          />
+        )}
+      </Box>
+      <Box display="flex" alignItems="center" css="gap: 8px;">
+        {viewer?.isSpecialist && <Notifications />}
+        {viewer && !isMobile && (
+          <CurrentUser user={viewer} onLogout={handleLogout} />
+        )}
+        {!viewer && !isMobile && <Login to="/login">Login</Login>}
+      </Box>
+    </StyledHeader>
   );
 };
 

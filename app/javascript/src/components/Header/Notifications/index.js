@@ -11,6 +11,8 @@ import { GuildBox } from "@guild/styles";
 import { relativeDate } from "@guild/utils";
 import { Bell } from "@styled-icons/heroicons-outline";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
+import { StyledDropdown } from "../styles";
+import NotificationIllustration from "src/illustrations/zest/notification";
 
 const AuthorDetails = ({ author }) => (
   <GuildBox flexCenterBoth spaceChildrenVertical={8}>
@@ -105,13 +107,19 @@ const Notifications = ({ open, closeNotifications }) => {
   }, [refetch, open]);
 
   return (
-    <Box py={4} px={6} display="flex" flexDirection="column">
+    <Box
+      width="400px"
+      maxHeight="50vh"
+      padding={4}
+      display="flex"
+      flexDirection="column"
+    >
       <Text
         fontSize="3xl"
-        color="blue900"
+        color="neutral90"
         marginBottom={4}
-        fontWeight="medium"
-        letterSpacing="-0.02rem"
+        fontWeight={500}
+        letterSpacing="-0.03em"
       >
         Notifications
       </Text>
@@ -123,11 +131,12 @@ const Notifications = ({ open, closeNotifications }) => {
           notifications={notificationItems}
         />
       ) : (
-        <NotificationItem pb="l" alignItems="center" justifyContent="center">
-          <Text size="m" fontWeight="500" color="catalinaBlue100">
-            {"No Notifications"}
+        <Box paddingY={4} textAlign="center">
+          <NotificationIllustration width="120px" />
+          <Text marginTop={4} size="m" fontWeight="500" color="neutral900">
+            You have no notifications
           </Text>
-        </NotificationItem>
+        </Box>
       )}
     </Box>
   );
@@ -154,7 +163,6 @@ export default function NotificationsMenu() {
         {(props) => (
           <StyledNotificationsButton
             {...props}
-            color="white"
             data-testid={hasUnread ? "unreadNotifications" : "notifications"}
           >
             <Bell size={24} />
@@ -163,18 +171,12 @@ export default function NotificationsMenu() {
       </PopoverDisclosure>
       <Popover {...popover} aria-label="Notifications">
         {(props) => (
-          <Box
-            maxHeight="50vh"
-            width="80%"
-            maxWidth="400px"
-            tabIndex={0}
-            {...props}
-          >
+          <StyledDropdown tabIndex={0} {...props}>
             <Notifications
               open={popover.visible}
               closeNotifications={popover.hide}
             />
-          </Box>
+          </StyledDropdown>
         )}
       </Popover>
     </>

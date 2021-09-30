@@ -1,9 +1,10 @@
 import * as React from "react";
 import { X } from "@styled-icons/feather/X";
 import { useMobile } from "../../components/Breakpoint";
-import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
+import { CloseNav, NavContainer, Nav } from "./styles";
 import useFeatureFlag from "src/hooks/useFeatureFlag";
 import MessageCount from "./MessageCount";
+import NavigationLink from "./NavigationLink";
 
 const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
   const isMobile = useMobile();
@@ -16,25 +17,25 @@ const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
           <X />
         </CloseNav>
         {isCaseStudiesEnabled && (
-          <NavItem onClick={onCloseNav} to="/explore">
+          <NavigationLink onClick={onCloseNav} to="/explore">
             Explore
-          </NavItem>
+          </NavigationLink>
         )}
-        <NavItem onClick={onCloseNav} to="/projects">
+        <NavigationLink onClick={onCloseNav} to="/projects">
           Hire
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/manage">
+        </NavigationLink>
+        <NavigationLink onClick={onCloseNav} to="/manage">
           Manage
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/messages">
+        </NavigationLink>
+        <NavigationLink onClick={onCloseNav} to="/messages">
           <MessageCount />
           Messages
-        </NavItem>
+        </NavigationLink>
 
         {isMobile && (
-          <NavItem as="a" href="#" onClick={onLogout}>
+          <NavigationLink as="a" href="#" onClick={onLogout}>
             Logout
-          </NavItem>
+          </NavigationLink>
         )}
       </Nav>
     </NavContainer>
