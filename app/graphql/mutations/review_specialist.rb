@@ -32,6 +32,9 @@ module Mutations
           adherence_to_schedule: args.dig(:ratings, :adherence_to_schedule)
         }
       )
+
+      AttachImageJob.perform_later(review, oauth_viewer.image)
+
       {review: review}
     end
   end
