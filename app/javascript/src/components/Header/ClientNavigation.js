@@ -1,44 +1,33 @@
 import * as React from "react";
-import { X } from "@styled-icons/feather/X";
-import { useMobile } from "../../components/Breakpoint";
-import { CloseNav, NavContainer, Nav } from "./styles";
 import useFeatureFlag from "src/hooks/useFeatureFlag";
 import MessageCount from "./MessageCount";
 import NavigationLink from "./NavigationLink";
+import Logout from "./Logout";
+import { StyledNav } from "./styles";
 
-const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
-  const isMobile = useMobile();
+const ClientNavigation = ({ onCloseNav, isMobile }) => {
   const isCaseStudiesEnabled = useFeatureFlag("case_studies");
 
   return (
-    <NavContainer isOpen={navOpen}>
-      <Nav>
-        <CloseNav onClick={onCloseNav}>
-          <X />
-        </CloseNav>
-        {isCaseStudiesEnabled && (
-          <NavigationLink onClick={onCloseNav} to="/explore">
-            Explore
-          </NavigationLink>
-        )}
-        <NavigationLink onClick={onCloseNav} to="/projects">
-          Hire
+    <StyledNav>
+      {isCaseStudiesEnabled && (
+        <NavigationLink onClick={onCloseNav} to="/explore">
+          Explore
         </NavigationLink>
-        <NavigationLink onClick={onCloseNav} to="/manage">
-          Manage
-        </NavigationLink>
-        <NavigationLink onClick={onCloseNav} to="/messages">
-          <MessageCount />
-          Messages
-        </NavigationLink>
+      )}
+      <NavigationLink onClick={onCloseNav} to="/projects">
+        Hire
+      </NavigationLink>
+      <NavigationLink onClick={onCloseNav} to="/manage">
+        Manage
+      </NavigationLink>
+      <NavigationLink onClick={onCloseNav} to="/messages">
+        <MessageCount />
+        Messages
+      </NavigationLink>
 
-        {isMobile && (
-          <NavigationLink as="a" href="#" onClick={onLogout}>
-            Logout
-          </NavigationLink>
-        )}
-      </Nav>
-    </NavContainer>
+      {isMobile && <Logout as="a">Logout</Logout>}
+    </StyledNav>
   );
 };
 

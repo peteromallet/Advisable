@@ -1,69 +1,63 @@
 import React from "react";
-import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
-import {
-  StyledDropdown,
-  CurrentUserToggle,
-  StyledDropdownLink,
-} from "./styles";
+import { CurrentUserToggle, StyledDropdownLink } from "./styles";
+import { Link } from "react-router-dom";
 import { ChevronDown } from "@styled-icons/heroicons-outline";
 import useViewer from "../../hooks/useViewer";
 import { Box, Avatar } from "@advisable/donut";
+import Logout from "./Logout";
+import Popover, { usePopoverState } from "./Popover";
 
-const CurrentUser = ({ user, onLogout }) => {
+export default function CurrentUser() {
   const viewer = useViewer();
-  const popover = usePopoverState({
-    placement: "top-end",
-  });
-  const isClient = viewer?.__typename === "User";
-  let isAdmin = isClient && viewer?.isAdmin;
-  const isAccepted = viewer?.isAccepted;
+  const popover = usePopoverState();
 
   return (
-    <>
-      <PopoverDisclosure {...popover}>
-        {(props) => (
-          <CurrentUserToggle {...props}>
-            <Avatar
-              size="xs"
-              name={user.name}
-              url={user.avatar}
-              marginRight={2}
-            />
-            <ChevronDown size={12} />
-          </CurrentUserToggle>
+    <Popover
+      state={popover}
+      label="User menu"
+      disclosure={
+        <CurrentUserToggle>
+          <Avatar
+            size="xs"
+            name={viewer.name}
+            url={viewer.avatar}
+            marginRight={2}
+          />
+          <ChevronDown size={12} />
+        </CurrentUserToggle>
+      }
+    >
+      <Box width="200px" paddingBottom={3}>
+        <Box
+          fontWeight={500}
+          paddingX={5}
+          marginBottom={2}
+          paddingY={3}
+          borderBottom="1px solid"
+          borderColor="neutral100"
+        >
+          {viewer.name}
+        </Box>
+        {viewer.isSpecialist && viewer.isAccepted && (
+          <StyledDropdownLink as={Link} to="/profile" onClick={popover.hide}>
+            Profile
+          </StyledDropdownLink>
         )}
-      </PopoverDisclosure>
-      <Popover {...popover} aria-label="User menu">
-        {(props) => (
-          <StyledDropdown {...props}>
-            <Box width="200px" paddingY={3}>
-              {viewer.isSpecialist && isAccepted && (
-                <StyledDropdownLink to="/profile" onClick={popover.hide}>
-                  Profile
-                </StyledDropdownLink>
-              )}
-              <StyledDropdownLink to="/settings" onClick={popover.hide}>
-                Settings
-              </StyledDropdownLink>
-              {isAdmin && (
-                <StyledDropdownLink as="a" href="/admin">
-                  Admin
-                </StyledDropdownLink>
-              )}
-              {isAdmin && (
-                <StyledDropdownLink as="a" href="/toby">
-                  Toby
-                </StyledDropdownLink>
-              )}
-              <StyledDropdownLink as="a" href="#" onClick={onLogout}>
-                Logout
-              </StyledDropdownLink>
-            </Box>
-          </StyledDropdown>
+        <StyledDropdownLink as={Link} to="/settings" onClick={popover.hide}>
+          Settings
+        </StyledDropdownLink>
+        {viewer.isAdmin && (
+          <StyledDropdownLink as="a" href="/admin">
+            Admin
+          </StyledDropdownLink>
         )}
-      </Popover>
-    </>
+        {viewer.isAdmin && (
+          <StyledDropdownLink as="a" href="/toby">
+            Toby
+          </StyledDropdownLink>
+        )}
+        <Logout as={StyledDropdownLink}>Logout</Logout>
+      </Box>
+    </Popover>
   );
-};
-
-export default CurrentUser;
+}

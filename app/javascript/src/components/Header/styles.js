@@ -1,8 +1,10 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { flexbox } from "styled-system";
 import { theme, Box, Link } from "@advisable/donut";
 
 export const StyledHeader = styled.header`
+  ${flexbox};
   top: 0;
   left: 0;
   z-index: 5;
@@ -12,108 +14,52 @@ export const StyledHeader = styled.header`
   position: sticky;
   background: white;
   align-items: center;
-  padding: 0 15px 0 25px;
+  padding: 0 24px 0 24px;
   box-shadow: 0px 1px 4px ${theme.colors.blue800}20;
 `;
 
-export const Logo = styled.a`
-  @media (max-width: 800px) {
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-  }
-`;
-
 export const Hamburger = styled.button`
-  display: none;
+  padding: 0;
+  width: 20px;
+  border: none;
+  outline: none;
+  display: block;
+  appearance: none;
+  position: relative;
+  background: transparent;
 
-  @media screen and (max-width: 800px) {
-    top: 20px;
-    left: 16px;
-    padding: 0;
-    width: 20px;
-    border: none;
-    opacity: 0.8;
-    outline: none;
-    display: block;
-    appearance: none;
-    position: absolute;
-    background: transparent;
+  div {
+    width: 100%;
+    height: 2px;
+    border-radius: 1px;
+    margin-bottom: 5px;
+    background: ${theme.colors.neutral900};
 
-    &:active {
-      opacity: 1;
-    }
-
-    div {
-      width: 100%;
-      height: 2px;
-      background: white;
-      border-radius: 1px;
-      margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 `;
 
 export const CloseNav = styled.button`
-  display: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
   appearance: none;
   background: white;
+  position: relative;
+  border-radius: 50%;
+  margin-bottom: 12px;
+  place-items: center;
+  color: ${theme.colors.neutral900};
+  border: 1px solid ${theme.colors.neutral500};
+`;
 
-  @media (max-width: 800px) {
-    width: 40px;
-    height: 40px;
+export const StyledNav = styled.nav`
+  display: flex;
+
+  @media (max-width: ${theme.breakpoints.m}) {
     display: block;
-    position: relative;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    color: ${theme.colors.neutral400};
-    border: 1px solid ${theme.colors.neutral300};
-
-    svg {
-      top: 50%;
-      left: 50%;
-      position: absolute;
-      transform: translate(-50%, -50%);
-    }
-  }
-`;
-
-export const Nav = styled.nav`
-  @media (max-width: 800px) {
-    width: 100%;
-    height: 100vh;
-    background: white;
-    padding: 20px 20px 20px 20px;
-    box-shadow: 0 0 50px rgb(0, 0, 0, 0.15);
-    transform: translate(-100%, 0);
-    transition: transform 300ms;
-  }
-`;
-
-export const NavContainer = styled.div`
-  @media (max-width: 800px) {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    background: rgba(0, 0, 0, 0.4);
-    transition: opacity 300ms;
-
-    visibility: hidden;
-    opacity: 0;
-
-    ${(props) =>
-      props.isOpen &&
-      css`
-        opacity: 1;
-        visibility: visible;
-
-        ${Nav} {
-          transform: translate(0, 0);
-        }
-      `}
   }
 `;
 
@@ -130,29 +76,27 @@ export const NavItem = styled(NavLink)`
   height: var(--header-height);
   color: ${theme.colors.neutral700};
 
-  span {
-    padding: 2px 0;
-    transition: color 200ms;
-    background-size: 300% 100%;
-    background-image: linear-gradient(
-      135deg,
-      ${theme.colors.blue700} 0%,
-      ${theme.colors.cyan700} 33%,
-      ${theme.colors.neutral700} 66%,
-      ${theme.colors.neutral700} 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-position: 100% 0%;
-    transition: background-position 400ms;
-  }
+  transition: color 200ms;
+  background-size: 300% 100%;
+  background-image: linear-gradient(
+    135deg,
+    ${theme.colors.blue700} 0%,
+    ${theme.colors.cyan700} 33%,
+    ${theme.colors.neutral700} 66%,
+    ${theme.colors.neutral700} 100%
+  );
 
-  &:hover span,
-  &.active span {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-position: 100% 0%;
+  transition: background-position 400ms;
+
+  &:hover,
+  &.active {
     background-position: 0% 0%;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: ${theme.breakpoints.m}) {
     height: auto;
     padding: 20px 0;
     line-height: 1;
@@ -176,15 +120,17 @@ export const NavItem = styled(NavLink)`
 
 export const Badge = styled.div`
   color: white;
-  height: 18px;
-  padding: 0 6px;
+  height: 20px;
+  display: grid;
+  padding: 0 8px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 550;
   margin-right: 8px;
-  border-radius: 4px;
-  background: #ff4672;
-  align-items: center;
-  display: inline-flex;
+  place-items: center;
+  border-radius: 12px;
+  letter-spacing: 0.04em;
+  background: ${theme.colors.blue400};
+  -webkit-text-fill-color: currentcolor;
 `;
 
 export const CurrentUserToggle = styled.div`
@@ -222,15 +168,16 @@ export const StyledDropdown = styled(Box)`
     0 2px 8px ${theme.colors.neutral900}12;
 `;
 
-export const StyledDropdownLink = styled(Link)`
+export const StyledDropdownLink = styled.div`
   display: block;
   font-size: 16px;
+  cursor: pointer;
   font-weight: 450;
   padding: 8px 20px;
-  color: ${theme.colors.neutral700};
+  color: ${theme.colors.neutral600};
 
   &:hover {
     color: ${theme.colors.neutral900};
-    background: ${theme.colors.neutral100};
+    background: ${theme.colors.neutral50};
   }
 `;

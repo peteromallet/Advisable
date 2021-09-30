@@ -5,8 +5,8 @@
 const BREAKPOINTS = {
   s: "(max-width: 640px)",
   sUp: "(min-width: 640px)",
-  m: "(max-width: 860px)",
-  mUp: "(min-width: 860px)",
+  m: "(max-width: 768px)",
+  mUp: "(min-width: 768px)",
   l: "(max-width: 1024px)",
   lUp: "(min-width: 1024px)",
   xl: "(max-width: 1280px)",
