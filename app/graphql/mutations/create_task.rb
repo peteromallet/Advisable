@@ -2,6 +2,8 @@
 
 module Mutations
   class CreateTask < Mutations::BaseMutation
+    description "Create a task"
+
     argument :application, ID, required: true
     argument :description, String, required: false
     argument :due_date, GraphQL::Types::ISO8601Date, required: false
@@ -24,14 +26,15 @@ module Mutations
 
     def resolve(**args)
       application = Application.find_by_uid_or_airtable_id!(args[:application])
-      task = Tasks::Create.call(
-        application: application,
-        attributes: args.except(:application, :id).merge({uid: args[:id]}),
-        responsible_id: current_account_id
-      )
+
+      task = application.tasks.new(args.except(:application, :id).merge({
+        uid: args[:id],
+        stage: "Not Assigned"
+      }))
+
+      task.save_and_sync_with_responsible!(current_account_id)
+
       {task: task}
-    rescue Service::Error => e
-      ApiError.service_error(e)
     end
   end
 end

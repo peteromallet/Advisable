@@ -33,7 +33,7 @@ RSpec.describe Mutations::ResendInterviewRequest do
     expect(interview.reload.more_time_options_added_at).to be_within(1.second).of(Time.zone.now)
   end
 
-  context "when a Service::Error is thrown" do
+  context "when an error is thrown" do
     it "includes it in the response" do
       allow_any_instance_of(Interview).to receive(:save).and_return(false)
       response = AdvisableSchema.execute(query, context: context)

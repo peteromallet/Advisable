@@ -17,8 +17,15 @@ module Mutations
     end
 
     def resolve(**args)
+      ApiError.invalid_request("INVALID_PROJECT_TYPE") unless %w[Fixed Flexible].include?(args[:project_type])
+
       application = Application.find_by_uid_or_airtable_id!(args[:application])
-      application = Applications::StartWorking.call(application: application, project_type: args[:project_type], monthly_limit: args[:monthly_limit], current_account_id: current_account_id)
+      application.status = "Working"
+      application.project_type = args[:project_type]
+      application.monthly_limit = args[:monthly_limit] if args[:project_type] == "Flexible"
+      application.save_and_sync_with_responsible!(current_account_id)
+      application.create_previous_project if application.previous_project.blank?
+
       {application: application}
     end
   end
