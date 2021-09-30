@@ -1,0 +1,29 @@
+query Notifications {
+  guildNotifications(first: 20) {
+    nodes {
+      __typename
+      id
+      createdAt
+      ... on SuggestedPostNotification {
+        specialist {
+          id
+          name
+        }
+        guildPost {
+          id
+          title
+        }
+      }
+      ... on PostReactionNotification {
+        specialist {
+          id
+          name
+        }
+        guildPost {
+          id
+          title
+        }
+      }
+    }
+  }
+}
