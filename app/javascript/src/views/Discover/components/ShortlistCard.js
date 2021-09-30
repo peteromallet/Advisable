@@ -4,7 +4,7 @@ import css from "@styled-system/css";
 import styled from "styled-components";
 import { Box, Text } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
-import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 const StyledShortlistCard = styled.div(
   css({
@@ -21,31 +21,46 @@ const StyledShortlistCard = styled.div(
   }),
 );
 
+function shortlistDescription(shortlist, company) {
+  const skill = shortlist.skills?.[0]?.skill?.name?.toLowerCase();
+  let output = `Recommendations of ${skill} specialists relevant for`;
+  if (company.industry || company.kind) {
+    const industry = company.industry?.name?.toLowerCase();
+    const companyType = company.kind
+      ? pluralize(company.kind?.toLowerCase())
+      : "companies";
+    if (industry) output += ` ${industry}`;
+    if (companyType) output += ` ${companyType}`;
+  } else {
+    output += " your company.";
+  }
+
+  return output;
+}
+
 export default function ShortlistCard({ shortlist, company }) {
-  const history = useHistory();
-
-  const handleClick = () => {
-    history.push(`/explore/${shortlist.id}`);
-  };
-
   const placeholders = [...Array(5 - shortlist.results.nodes.length).keys()];
 
   return (
-    <StyledShortlistCard r1={0.005} r2={0.3} onClick={handleClick}>
-      <Box display={{ _: "block", l: "flex" }} justifyContent="space-between">
+    <StyledShortlistCard r1={0.005} r2={0.3}>
+      <Box
+        as={Link}
+        to={`/explore/${shortlist.id}`}
+        display={{ _: "block", l: "flex" }}
+        justifyContent="space-between"
+      >
         <Box maxWidth={{ l: "240px" }} paddingRight={2}>
           <Text
             fontSize="3xl"
             fontWeight={600}
             marginBottom={2}
+            color="neutral900"
             letterSpacing="-0.032em"
           >
             {shortlist.name}
           </Text>
           <Text lineHeight="20px" color="neutral700" marginBottom={5}>
-            Recommendations of {shortlist.skills[0]?.skill?.name?.toLowerCase()}{" "}
-            specialists relevant for {company.industry?.name?.toLowerCase()}{" "}
-            {pluralize(company.kind?.toLowerCase())}.
+            {shortlistDescription(shortlist, company)}
           </Text>
         </Box>
         <Box
