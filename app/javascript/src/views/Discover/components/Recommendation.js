@@ -66,6 +66,7 @@ export default function Recommendation({
           </Box>
           <Box>
             <StyledRecommendationTitle
+              data-testid="title"
               fontSize={{ _: "22px", m: "24px", l: "26px" }}
               lineHeight={{ _: "24px", l: "28px" }}
             >

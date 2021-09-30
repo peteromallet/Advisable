@@ -9,6 +9,7 @@ import { useHistory, useParams } from "react-router";
 import RecommendationsSkeleton from "../components/RecommendationsSkeleton";
 import Recommendations from "../components/Recommendations";
 import DeleteSearch from "../components/DeleteSearch";
+import AccessDenied, { isNotAuthorized } from "src/views/AccessDenied";
 
 export default function Shortlist() {
   const { id } = useParams();
@@ -16,6 +17,7 @@ export default function Shortlist() {
   const [showLoadMore, setShowLoadMore] = useState(true);
   const { loading, data, error } = useShortlist();
 
+  if (isNotAuthorized(error)) return <AccessDenied />;
   if (error) return <>Failed to load page. Please try refreshing the page.</>;
 
   const shortlist = data?.caseStudySearch;
