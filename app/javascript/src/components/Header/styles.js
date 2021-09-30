@@ -126,24 +126,30 @@ export const NavItem = styled(NavLink)`
   position: relative;
   display: inline-flex;
   text-decoration: none;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.016em;
   height: var(--header-height);
   color: ${theme.colors.neutral700};
 
   span {
     padding: 2px 0;
     transition: color 200ms;
+    background-size: 300% 100%;
+    background-image: linear-gradient(
+      135deg,
+      ${theme.colors.blue700} 0%,
+      ${theme.colors.cyan700} 33%,
+      ${theme.colors.neutral700} 66%,
+      ${theme.colors.neutral700} 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-position: 100% 0%;
+    transition: background-position 400ms;
   }
 
   &:hover span,
   &.active span {
-    background: linear-gradient(
-      45deg,
-      ${theme.colors.blue800},
-      ${theme.colors.cyan700}
-    );
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-position: 0% 0%;
   }
 
   @media (max-width: 800px) {
