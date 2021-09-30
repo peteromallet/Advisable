@@ -31,9 +31,8 @@ class Event < ApplicationRecord
       Arel.sql("
         CASE
           WHEN featured = true THEN 0
-          WHEN starts_at > NOW() THEN 1
-          ELSE 2
-        END, starts_at ASC")
+          ELSE 1
+        END, starts_at DESC")
     )
   }
   scope :upcoming, -> { where(ends_at: (Time.zone.now..)) }
