@@ -52,7 +52,7 @@ RSpec.describe Event, type: :model do
       expect(described_class.list).to include(in_progress)
     end
 
-    it "orders by featured first, asc upcoming second, and asc ended last" do
+    it "orders by featured first, asc upcoming second" do
       upcoming1 = create(:event, starts_at: 1.day.from_now, ends_at: 2.days.from_now)
       upcoming2 = create(:event, starts_at: 2.days.from_now, ends_at: 3.days.from_now)
       ended1 = create(:event, starts_at: 3.days.ago, ends_at: 2.days.ago)
@@ -61,7 +61,7 @@ RSpec.describe Event, type: :model do
 
       expect(described_class.list).to eq(
         [
-          featured, upcoming1, upcoming2, ended1, ended2
+          featured, upcoming2, upcoming1, ended2, ended1
         ]
       )
     end
