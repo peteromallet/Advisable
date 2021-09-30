@@ -1,24 +1,19 @@
 import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
-import { theme, Link } from "@advisable/donut";
+import { theme, Box, Link } from "@advisable/donut";
 
-export const Spacer = styled.div`
-  width: 100%;
-  height: 60px;
-`;
-
-export const Header = styled.header`
+export const StyledHeader = styled.header`
   top: 0;
   left: 0;
   z-index: 5;
   width: 100%;
-  height: 60px;
+  height: var(--header-height);
   display: flex;
-  position: fixed;
-  background: ${theme.colors.blue600};
+  position: sticky;
+  background: white;
   align-items: center;
   padding: 0 15px 0 25px;
-  box-shadow: 0px 2px 3px rgba(0, 25, 116, 0.14);
+  box-shadow: 0px 1px 4px ${theme.colors.blue800}20;
 `;
 
 export const Logo = styled.a`
@@ -123,24 +118,32 @@ export const NavContainer = styled.div`
 `;
 
 export const NavItem = styled(NavLink)`
-  height: 60px;
-  color: #aabdff;
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 480;
   align-items: center;
   user-select: none;
-  margin-left: 28px;
+  margin-left: 32px;
   position: relative;
   display: inline-flex;
   text-decoration: none;
+  letter-spacing: -0.02em;
+  height: var(--header-height);
+  color: ${theme.colors.neutral700};
 
-  &:hover {
-    color: white;
+  span {
+    padding: 2px 0;
+    transition: color 200ms;
   }
 
-  &.active {
-    color: white;
-    box-shadow: inset 0 -2px white;
+  &:hover span,
+  &.active span {
+    background: linear-gradient(
+      45deg,
+      ${theme.colors.blue800},
+      ${theme.colors.cyan700}
+    );
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   @media (max-width: 800px) {
@@ -178,76 +181,11 @@ export const Badge = styled.div`
   display: inline-flex;
 `;
 
-export const CurrentUserWrapper = styled.div`
-  outline: none;
-`;
-
 export const CurrentUserToggle = styled.div`
-  color: white;
   cursor: pointer;
-  border-radius: 6px;
-  padding: 5px 30px 5px 10px;
-
-  strong {
-    display: block;
-    font-size: 15px;
-    font-weight: 500;
-  }
-
-  span {
-    color: ${theme.colors.blue200};
-    font-size: 13px;
-  }
-
-  &::after {
-    top: 50%;
-    content: "";
-    width: 0px;
-    height: 0px;
-    right: 10px;
-    position: absolute;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 4px solid rgba(255, 255, 255, 0.2);
-  }
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    &::after {
-      border-top-color: rgba(255, 255, 255, 0.3);
-    }
-  }
-`;
-
-export const CurrentUserDropdown = styled.div`
-  right: 0;
-  top: 45px;
-  width: 200px;
-  padding: 8px 0;
-  background: white;
-  position: absolute;
-  border-radius: 8px;
-  box-shadow: 0px 10px 30px rgba(14, 29, 78, 0.1);
-  transform-origin: 80% 0;
-  transition: opacity 250ms cubic-bezier(0, 1, 0.4, 1),
-    transform 250ms cubic-bezier(0.18, 1.25, 0.4, 1);
-
-  opacity: ${(props) => (props.open ? "1" : "0")};
-  pointer-events: ${(props) => (props.open ? "all" : "none")};
-  transform: ${(props) => (props.open ? "scale(1)" : "scale(0.7)")};
-
-  a {
-    color: #4d5880;
-    display: block;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 10px 20px;
-    text-decoration: none;
-
-    &:hover {
-      background-color: #f4f5fb;
-    }
-  }
+  display: flex;
+  outline: none;
+  align-items: center;
 `;
 
 export const Login = styled(Link)`
@@ -268,4 +206,25 @@ export const Login = styled(Link)`
 
 export const Logout = styled(Login)`
   font-weight: 500;
+`;
+
+export const StyledDropdown = styled(Box)`
+  outline: none;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px -12px ${theme.colors.neutral900}24,
+    0 2px 8px ${theme.colors.neutral900}12;
+`;
+
+export const StyledDropdownLink = styled(Link)`
+  display: block;
+  font-size: 16px;
+  font-weight: 450;
+  padding: 8px 20px;
+  color: ${theme.colors.neutral700};
+
+  &:hover {
+    color: ${theme.colors.neutral900};
+    background: ${theme.colors.neutral100};
+  }
 `;

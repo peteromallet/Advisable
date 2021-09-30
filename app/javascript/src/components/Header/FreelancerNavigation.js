@@ -1,7 +1,8 @@
 import React from "react";
 import { X } from "@styled-icons/feather/X";
 import { useMobile } from "../../components/Breakpoint";
-import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
+import { CloseNav, NavContainer, Nav } from "./styles";
+import NavigationLink from "./NavigationLink";
 import MessageCount from "./MessageCount";
 
 const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
@@ -13,31 +14,31 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
         <CloseNav onClick={onCloseNav}>
           <X />
         </CloseNav>
-        <NavItem onClick={onCloseNav} to="/applications">
+        <NavigationLink onClick={onCloseNav} to="/applications">
           Applications
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/clients">
+        </NavigationLink>
+        <NavigationLink onClick={onCloseNav} to="/clients">
           Active Projects
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/messages">
+        </NavigationLink>
+        <NavigationLink onClick={onCloseNav} to="/messages">
           <MessageCount />
           Messages
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/guild">
+        </NavigationLink>
+        <NavigationLink onClick={onCloseNav} to="/guild">
           Guild
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/events">
+        </NavigationLink>
+        <NavigationLink onClick={onCloseNav} to="/events">
           Events
-        </NavItem>
+        </NavigationLink>
 
         {isMobile && (
           <>
-            <NavItem as="a" href="/settings">
+            <NavigationLink as="a" href="/settings">
               Settings
-            </NavItem>
-            <NavItem as="a" href="#" onClick={onLogout}>
+            </NavigationLink>
+            <NavigationLink as="a" href="#" onClick={onLogout}>
               Logout
-            </NavItem>
+            </NavigationLink>
           </>
         )}
       </Nav>
