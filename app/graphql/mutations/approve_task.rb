@@ -29,8 +29,6 @@ module Mutations
       end
 
       {task: task}
-    rescue Service::Error => e
-      ApiError.service_error(e)
     end
 
     def create_payout!(task)
