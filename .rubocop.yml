@@ -157,3 +157,6 @@ GraphQL/ExtractInputType:
 
 GraphQL/OrderedFields:
   Enabled: false
+
+GraphQL/ObjectDescription:
+  Enabled: false

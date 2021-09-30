@@ -79,7 +79,7 @@ RSpec.describe Mutations::SendProposal do
     end
   end
 
-  context "when a Service::Error is thrown" do
+  context "when an error is thrown" do
     it "includes it in the response" do
       allow_any_instance_of(Application).to receive(:save).and_return(false)
       response = AdvisableSchema.execute(query, context: context)

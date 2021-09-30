@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::UpdateApplication do
   let(:specialist) { create(:specialist) }
   let(:context) { {current_user: specialist} }
-  let(:project) { create(:project, questions: ['This is a question?']) }
+  let(:project) { create(:project, questions: ["This is a question?"]) }
   let(:application) { create(:application, {specialist: specialist, introduction: false, project: project, questions: []}) }
   let(:extra) { "" }
   let(:response_fields) { "" }
@@ -29,31 +29,31 @@ RSpec.describe Mutations::UpdateApplication do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
   end
 
-  context 'when updating the introduction' do
+  context "when updating the introduction" do
     let(:extra) { "introduction: \"This is the intro\"" }
     let(:response_fields) { "introduction" }
 
-    it 'updates the introduction' do
+    it "updates the introduction" do
       response = AdvisableSchema.execute(query, context: context)
-      intro = response['data']['updateApplication']['application']['introduction']
-      expect(intro).to eq('This is the intro')
+      intro = response["data"]["updateApplication"]["application"]["introduction"]
+      expect(intro).to eq("This is the intro")
     end
   end
 
-  context 'when updating the availability' do
+  context "when updating the availability" do
     let(:extra) { "availability: \"2 Weeks\"" }
     let(:response_fields) { "availability" }
 
-    it 'updates the availability' do
+    it "updates the availability" do
       response = AdvisableSchema.execute(query, context: context)
       availability =
-        response['data']['updateApplication']['application']['availability']
-      expect(availability).to eq('2 Weeks')
+        response["data"]["updateApplication"]["application"]["availability"]
+      expect(availability).to eq("2 Weeks")
     end
   end
 
-  context 'when updating questions' do
-    let(:question) { 'This is a question?' }
+  context "when updating questions" do
+    let(:question) { "This is a question?" }
     let(:query) do
       <<-GRAPHQL
       mutation {
@@ -71,25 +71,27 @@ RSpec.describe Mutations::UpdateApplication do
       GRAPHQL
     end
 
-    it 'updates the questions' do
+    it "updates the questions" do
       expect { AdvisableSchema.execute(query, context: context) }.to change {
         application.reload.questions
-      }.from([]).to([{'question' => 'This is a question?', 'answer' => 'This is an answer'}])
+      }.from([]).to([{"question" => "This is a question?", "answer" => "This is an answer"}])
     end
 
-    context 'when an invalid question is passed' do
-      let(:question) { 'Not a question?' }
+    context "when an invalid question is passed" do
+      let(:question) { "Not a question?" }
 
-      it 'returns an error' do
+      it "returns an error" do
         response = AdvisableSchema.execute(query, context: context)
-        error = response['errors'][0]
-        expect(error['extensions']['code']).to eq('invalid_question')
+        error = response["errors"][0]
+        expect(error["extensions"]["code"]).to eq("invalid_question")
       end
     end
   end
 
-  context 'when updating the references' do
+  context "when updating the references" do
     let(:previous_project) { create(:previous_project, specialist: specialist) }
+    let(:previous_project2) { create(:previous_project, specialist: specialist) }
+
     let(:query) do
       <<-GRAPHQL
       mutation {
@@ -106,18 +108,23 @@ RSpec.describe Mutations::UpdateApplication do
       }
       GRAPHQL
     end
-    let(:previous_project2) do
-      create(:previous_project, specialist: specialist)
-    end
 
-    before do
-      create(:application, specialist: specialist)
-    end
+    before { create(:application, specialist: specialist) }
 
-    it 'adds the references' do
+    it "adds the references" do
       expect { AdvisableSchema.execute(query, context: context) }.to change {
         application.reload.application_references.count
       }.by(2)
+    end
+
+    context "when an invalid ID is passed" do
+      let(:previous_project2) { OpenStruct.new(uid: "invalid") }
+
+      it "returns an error" do
+        response = AdvisableSchema.execute(query, context: context)
+        error = response["errors"][0]
+        expect(error["extensions"]["code"]).to eq("invalid_reference")
+      end
     end
   end
 
@@ -161,15 +168,15 @@ RSpec.describe Mutations::UpdateApplication do
         GRAPHQL
       end
 
-      it 'updates the rate' do
+      it "updates the rate" do
         response = AdvisableSchema.execute(query, context: context)
-        rate = response['data']['updateApplication']['application']['invoiceRate']
+        rate = response["data"]["updateApplication"]["application"]["invoiceRate"]
         expect(rate).to eq(10000)
       end
     end
   end
 
-  context 'when updating accepts_fee' do
+  context "when updating accepts_fee" do
     let(:query) do
       <<-GRAPHQL
       mutation {
@@ -185,14 +192,14 @@ RSpec.describe Mutations::UpdateApplication do
       GRAPHQL
     end
 
-    it 'updates accepts_fee attribute' do
+    it "updates accepts_fee attribute" do
       response = AdvisableSchema.execute(query, context: context)
-      accepts = response['data']['updateApplication']['application']['acceptsFee']
+      accepts = response["data"]["updateApplication"]["application"]["acceptsFee"]
       expect(accepts).to be_truthy
     end
   end
 
-  context 'when updating accepts_terms' do
+  context "when updating accepts_terms" do
     let(:query) do
       <<-GRAPHQL
       mutation {
@@ -208,9 +215,9 @@ RSpec.describe Mutations::UpdateApplication do
       GRAPHQL
     end
 
-    it 'updates accepts_fee attribute' do
+    it "updates accepts_fee attribute" do
       response = AdvisableSchema.execute(query, context: context)
-      accepts = response['data']['updateApplication']['application']['acceptsTerms']
+      accepts = response["data"]["updateApplication"]["application"]["acceptsTerms"]
       expect(accepts).to be_truthy
     end
   end
@@ -259,6 +266,16 @@ RSpec.describe Mutations::UpdateApplication do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("INVALID_APPLICATION")
+    end
+  end
+
+  context "when application doesn't exist" do
+    let(:application) { OpenStruct.new(uid: "not-a-uid") }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context: context)
+      error = response["errors"].first["extensions"]["code"]
+      expect(error).to eq("NOT_FOUND")
     end
   end
 end
