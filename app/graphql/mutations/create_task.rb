@@ -35,8 +35,6 @@ module Mutations
       task.save_and_sync_with_responsible!(current_account_id)
 
       {task: task}
-    rescue Service::Error => e
-      ApiError.service_error(e)
     end
   end
 end
