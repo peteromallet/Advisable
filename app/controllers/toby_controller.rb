@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class TobyController < ApplicationController
-  include CurrentUser
   before_action :admin?
 
   def index
