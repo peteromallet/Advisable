@@ -24,7 +24,7 @@ class GraphqlFileParser
   end
 
   def self.import(path)
-    cache_key = "#{path}_#{ENV["HEROKU_SLUG_COMMIT"]}"
+    cache_key = "#{path}_#{ENV["HEROKU_RELEASE_VERSION"]}"
     Rails.cache.fetch(cache_key) do
       query = File.read(path)
 

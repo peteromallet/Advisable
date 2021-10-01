@@ -5,19 +5,24 @@ class TobyController < ApplicationController
   before_action :admin?
 
   def index
-    prefetch_toby_query("app/javascript/toby/components/resources/resources.graphql", cache_key: "toby_resources_#{current_account.id}")
-    prefetch_toby_query("app/javascript/toby/components/schema/introspection.graphql", cache_key: "toby_introspection")
+    prefetch_query("schema/introspection.graphql")
+    prefetch_query("resources/resources.graphql", per_account: true)
   end
 
   private
 
-  def prefetch_toby_query(path, cache_key: nil)
-    prefetch_query(
-      path,
-      schema: Toby::Schema,
-      context: {session_manager: session_manager},
-      cache_key: cache_key
-    )
+  def prefetch_query(path, per_account: false)
+    @prefetched_queries ||= []
+
+    query = GraphqlFileParser.import("app/javascript/toby/components/#{path}")
+    cache_key = "#{path}_#{ENV["HEROKU_RELEASE_VERSION"]}"
+    cache_key = "#{cache_key}_#{current_account.id}" if per_account
+
+    result = Rails.cache.fetch(cache_key) do
+      Toby::Schema.execute(query, context: {session_manager: session_manager}).to_h
+    end
+
+    @prefetched_queries << {query: query, result: result}
   end
 
   def admin?
