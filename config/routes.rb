@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   end
 
   post "/toby_graphql", to: "graphql#toby"
-  get "/toby", to: "application#toby"
-  get "/toby/*toby", to: "application#toby"
+  get "/toby", to: "toby#index"
+  get "/toby/*toby", to: "toby#index"
 
   namespace :admin do
     mount Sidekiq::Web => "/sidekiq", constraints: AdminConstraint.new
