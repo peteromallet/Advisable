@@ -54,23 +54,11 @@ class ApplicationController < ActionController::Base
     prefetch_query("app/javascript/src/graphql/queries/getViewer.graphql")
   end
 
-  def prefetch_query(path, variables: {}, schema: AdvisableSchema, context: graphql_context, cache_key: nil)
+  def prefetch_query(path)
     @prefetched_queries ||= []
     query = GraphqlFileParser.import(path)
-
-    result = if cache_key.blank?
-               schema.execute(query, variables: variables, context: context).to_h
-             else
-               Rails.cache.fetch("#{cache_key}_#{ENV["HEROKU_RELEASE_VERSION"]}") do
-                 schema.execute(query, variables: variables, context: context).to_h
-               end
-             end
-
-    @prefetched_queries << {
-      query: query,
-      variables: variables,
-      result: result
-    }
+    result = AdvisableSchema.execute(query, context: graphql_context)
+    @prefetched_queries << {query: query, result: result}
   end
 
   def graphql_context
