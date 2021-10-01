@@ -53,7 +53,6 @@ if (window.prefetchedQueries) {
   window.prefetchedQueries.forEach((prefetchedQuery) => {
     client.writeQuery({
       query: gql(prefetchedQuery.query),
-      variables: prefetchedQuery.variables,
       data: prefetchedQuery.result.data,
     });
   });
