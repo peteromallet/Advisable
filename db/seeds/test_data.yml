@@ -1,0 +1,5864 @@
+---
+:advisable:
+- :first_name: Alex
+  :last_name: Lazar
+  :avatar: alex_lazar.jpg
+  :email: alex.lazar@advisable.com
+  :bio: "☕️ \U0001F973 \U0001F468‍\U0001F3A8 \U0001F5A5 \U0001F5B1 \U0001F44E\U0001F3FC
+    \U0001F615 \U0001F504"
+- :first_name: Annie
+  :last_name: Nguyen
+  :email: annie.nguyen@advisable.com
+  :avatar: annie_nguyen.jpg
+  :bio: Explains the jokes that Miha can't.
+- :first_name: John
+  :last_name: O'Malley
+  :email: john.omalley@advisable.com
+  :avatar: john_omalley.jpg
+  :bio: CEO's brother
+:skills:
+- :name: Brand Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_J7z2mPUHesypNHl
+  :active: true
+  :airtable_id: rec02WushWhHY61Sc
+- :name: Dairy Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_7hhmpehl8USQpTW
+  :active: true
+  :airtable_id: rec0RS3gmvnjbacpg
+- :name: Shopify
+  :category: Marketing
+  :profile: true
+  :uid: ski_QoftewGfyFyB1Ip
+  :active: true
+  :airtable_id: rec0YfHv3PS3ULEyo
+- :name: App Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_IcXUNjjBh8fA1QZ
+  :active: true
+  :airtable_id: rec0dB5LYQjopKnGx
+- :name: Acquisition Programs
+  :category: Marketing
+  :profile: true
+  :uid: ski_zE6ZhmeExKSJMmJ
+  :active: true
+  :airtable_id: rec0eNpn3yHWMSBqZ
+- :name: Mass Email Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_y4ZvTVBzMVlOg4Z
+  :active: true
+  :airtable_id: rec0s7bBQxGYkiqWQ
+- :name: Product Communication
+  :category: Marketing
+  :profile: true
+  :uid: ski_cQQilZlAXXCQoCc
+  :active: true
+  :airtable_id: rec0zXyzSaqT5qIl6
+- :name: Display Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_bQ4cXMurlf4LqV9
+  :active: true
+  :airtable_id: rec0zeoyx8PxDOBVJ
+- :name: Data-Driven Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_aTQY4bpAOAn8gbn
+  :active: true
+  :airtable_id: rec10qHYHMNpdRhAo
+- :name: Customer Analysis
+  :category: Marketing
+  :profile: true
+  :uid: ski_X7EcaB7Ce1j4O66
+  :active: true
+  :airtable_id: rec11dLzVAjnQcr05
+- :name: International Growth
+  :category: Marketing
+  :profile: true
+  :uid: ski_dzsIWRe7ENsvCBl
+  :active: true
+  :airtable_id: rec11nidirduowozn
+- :name: Lead Generation
+  :category: Marketing
+  :profile: true
+  :uid: ski_Mn9vkGYiwHSQ6nS
+  :active: true
+  :airtable_id: rec16x8LIIGGaEznu
+- :name: Content Design
+  :category: Marketing
+  :profile: true
+  :uid: ski_xSiH8A8MwPQhDy5
+  :active: true
+  :airtable_id: rec1DavKq9nG7HfsY
+- :name: Campaign Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_d62Da591rPXqzJt
+  :active: true
+  :airtable_id: rec1ZqZW2Dm4dVwdE
+- :name: Facebook Advertising
+  :category:
+  :profile: false
+  :uid: ski_ezgGaH8CXWulMb6
+  :active:
+  :airtable_id: rec1bq1Q8PIgbH8tl
+- :name: Biotechnology Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_aRw9ZyMBY96Zw3q
+  :active: true
+  :airtable_id: rec1jom0R5VGMqrgl
+- :name: Franchising
+  :category: Marketing
+  :profile: true
+  :uid: ski_xoEDxnclBPH8dV5
+  :active: true
+  :airtable_id: rec1wuPPVQ5tPZ0L8
+- :name: Promotional Design
+  :category: Marketing
+  :profile: true
+  :uid: ski_4vQnIRlVRxMJ7pj
+  :active: true
+  :airtable_id: rec2GCvNytF8jVbfH
+- :name: B2B Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_UwQYscQSmnausEI
+  :active: true
+  :airtable_id: rec2KP9rc7GUa9Lvp
+- :name: Consumer Insights
+  :category: Marketing
+  :profile: true
+  :uid: ski_kCWmVoBR1Yeke0q
+  :active: true
+  :airtable_id: rec2Rf983gfIUquxP
+- :name: Attribution Modeling
+  :category: Marketing
+  :profile: true
+  :uid: ski_asOLWbL9QeKDQA2
+  :active: true
+  :airtable_id: rec2S8rKlVS1yKgQG
+- :name: Inbound Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_HNEPIFKQDr8qMRa
+  :active: true
+  :airtable_id: rec2ZqdMqyhOfPNS4
+- :name: Influencer Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_eXeIaNp5FYxQ3IM
+  :active: true
+  :airtable_id: rec2aOXx0SCswfaZT
+- :name: Oil & Energy Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Y98UxOTqHrpQtTy
+  :active: true
+  :airtable_id: rec2lbDFpvbGOBeK7
+- :name: Lead Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_XjReul7G6mKfqRb
+  :active: true
+  :airtable_id: rec36k0JUJQrSdle8
+- :name: Adobe Premiere Pro
+  :category: Marketing
+  :profile: true
+  :uid: ski_BmAn6DLdQEYiUKa
+  :active: true
+  :airtable_id: rec38p4gyVl4mBGwQ
+- :name: Attraction Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_k4XrDk79mv2TGZ4
+  :active: true
+  :airtable_id: rec3LRV1rcJFRiVll
+- :name: Market Research
+  :category: Marketing
+  :profile: true
+  :uid: ski_9L4kulkzMl9pSi3
+  :active: true
+  :airtable_id: rec3Neo2731w1EPFJ
+- :name: Publishing Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_pv2Dxr9FHT9lR6a
+  :active: true
+  :airtable_id: rec3SZfz5OXo9lVhA
+- :name: Diversity Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_pNGsq1mZbmunlg2
+  :active: true
+  :airtable_id: rec3adG1udR70AZMs
+- :name: Promotional Analysis
+  :category: Marketing
+  :profile: true
+  :uid: ski_0ISuSfIPXSBcj3W
+  :active: true
+  :airtable_id: rec3bw38OkfYq7Ndh
+- :name: Event Based Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_KRYuzKY917spmbv
+  :active: true
+  :airtable_id: rec3l3JzCQsRvjA4X
+- :name: Motorsports Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_r78WoPo4DPVgAFM
+  :active: true
+  :airtable_id: rec3qB8UR7vtDJHKL
+- :name: Media Monitoring
+  :category: Marketing
+  :profile: true
+  :uid: ski_lz3JVSOeFEd1h6u
+  :active: true
+  :airtable_id: rec4AT5SxUdYNOn5e
+- :name: Video Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_brTeteNitq7tPtW
+  :active: true
+  :airtable_id: rec4KVmmO6BcsVoUD
+- :name: Storytelling
+  :category: Marketing
+  :profile: true
+  :uid: ski_Ks5zJ8gIgWu3CKL
+  :active: true
+  :airtable_id: rec4NYjLGDipzU5uA
+- :name: Digital Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_FNRH2mzm79yMosH
+  :active: true
+  :airtable_id: rec4TDGYLDMfo7cKj
+- :name: SharpSpring
+  :category: Marketing
+  :profile: true
+  :uid: ski_VHCnWGhpO4jcIRx
+  :active: true
+  :airtable_id: rec4btqoW8RxVdJ7W
+- :name: Geomarketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_CdOKGcPWslD7SKQ
+  :active: true
+  :airtable_id: rec4e2TxKMmwo8OG7
+- :name: Twitter Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_ranOjH0RtDSolpw
+  :active: true
+  :airtable_id: rec4hcO4KQJEwpBeN
+- :name: Wellness and Fitness Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_7EDSLRTt2jcOdU2
+  :active: true
+  :airtable_id: rec4mzqZJ9fUxhiPy
+- :name: Online Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_QT0M7e7osiQe2Eb
+  :active: true
+  :airtable_id: rec55gx7ndaQc2LQQ
+- :name: Ad Tech
+  :category: Marketing
+  :profile: true
+  :uid: ski_L22AAzpgszUFFop
+  :active: true
+  :airtable_id: rec56XpbMBOFCgPqO
+- :name: Employer Branding
+  :category: Marketing
+  :profile: true
+  :uid: ski_MiKO3XQWphb5llN
+  :active: true
+  :airtable_id: rec5BXWzVcE2i53H3
+- :name: Aviation & Aerospace Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_ZxHktthxtwBY1O0
+  :active: true
+  :airtable_id: rec5EUpYVZ7g2rkDj
+- :name: Real-Time Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_K67rYlhdeyY5fzz
+  :active: true
+  :airtable_id: rec5ExgacCA9q47a3
+- :name: Online Product Launches
+  :category: Marketing
+  :profile: true
+  :uid: ski_2SYrWp00s4EQz7g
+  :active: true
+  :airtable_id: rec5KIsYDVMqfSRSd
+- :name: Video Games Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_yrvsGfQayiI3gN8
+  :active: true
+  :airtable_id: rec5LqnywdmMBD6tA
+- :name: Customer Acquisition
+  :category: Marketing
+  :profile: true
+  :uid: ski_zvKA3eVidwwljZP
+  :active: true
+  :airtable_id: rec5PU4s3Qx8xcnr8
+- :name: Art Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_lCBnmiVBmHJPyG3
+  :active: true
+  :airtable_id: rec5aayoFxTNCU8iT
+- :name: Predictive Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_fIWiaSPPD9Lx7Gv
+  :active: true
+  :airtable_id: rec5bjBLKBNe8peHc
+- :name: Book Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_LbvOT86zseKseCA
+  :active: true
+  :airtable_id: rec5dvFkKj3VJ4OOL
+- :name: Consumer Services Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_EtzoU5nc4F9C7ii
+  :active: true
+  :airtable_id: rec5pRMA4dbvWgMvJ
+- :name: Technology Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Z9e7isBSYDIWrIy
+  :active: true
+  :airtable_id: rec61janljQHsF1yU
+- :name: Content Partnerships
+  :category: Marketing
+  :profile: true
+  :uid: ski_aaKiFI1oofwJJOB
+  :active: true
+  :airtable_id: rec6meJEgCoaCsgo3
+- :name: Product Adoption
+  :category: Marketing
+  :profile: true
+  :uid: ski_aM6XB2IkUPjMBpw
+  :active: true
+  :airtable_id: rec6sFGf8Quhouhhq
+- :name: Relationship Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_XK6NbLXZs4TM8qd
+  :active: true
+  :airtable_id: rec7HHtGUATSo2mjB
+- :name: Advertising Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_e6VHRstSApXSLsV
+  :active: true
+  :airtable_id: rec7ImeUUOg6yoHL8
+- :name: Zoho
+  :category: Marketing
+  :profile: true
+  :uid: ski_0QCinLmjbSce3hq
+  :active: true
+  :airtable_id: rec7OfMxlbDlNahzf
+- :name: Facebook Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_TbCK9Z5XE6NW3NC
+  :active: true
+  :airtable_id: rec7SI0GWhSiRxxOy
+- :name: Retargeting
+  :category: Marketing
+  :profile: true
+  :uid: ski_PAKKa1X7uaAIRUy
+  :active: true
+  :airtable_id: rec7faX1kykS0YUc1
+- :name: Integrated Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_neZLnFBmNaf27LS
+  :active: true
+  :airtable_id: rec80eeTopYPGJx4f
+- :name: Customer Journeys
+  :category: Marketing
+  :profile: true
+  :uid: ski_fgai3TW2FVJ3QOm
+  :active: true
+  :airtable_id: rec8911gEnT7rPTtx
+- :name: Launch Events
+  :category: Marketing
+  :profile: true
+  :uid: ski_bOp8Gj3Yawv3gOJ
+  :active: true
+  :airtable_id: rec8HyAjj1YTXDnHH
+- :name: User Generated Content
+  :category: Marketing
+  :profile: true
+  :uid: ski_UY4qHjZCR1IQG0S
+  :active: true
+  :airtable_id: rec8TBTrVHCBeocoE
+- :name: Magento
+  :category: Marketing
+  :profile: true
+  :uid: ski_nS3cQ9J3p41ZZZ2
+  :active: true
+  :airtable_id: rec8VnCoY6fDO5mcS
+- :name: Content Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_axW1nTBDQzoyd3Q
+  :active: true
+  :airtable_id: rec8Vwoub3VXCllWJ
+- :name: Interactive Web Content
+  :category: Marketing
+  :profile: true
+  :uid: ski_e9gXO1YvUvs149w
+  :active: true
+  :airtable_id: rec8cOg8IJMEE25ts
+- :name: Nanotechnology Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_smRuKfIWrlR6rnJ
+  :active: true
+  :airtable_id: rec8hlmqeD1dABpFc
+- :name: Cost Effective Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_CAeckZxlketlsaW
+  :active: true
+  :airtable_id: rec8l1EmTT7TZRGB3
+- :name: Brand Development
+  :category:
+  :profile: false
+  :uid: ski_JJ3PPkjiC4X2rum
+  :active:
+  :airtable_id: rec8yh9sRQ9Ot0MlI
+- :name: Direct Response Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_YT24wDPksgTWvm4
+  :active: true
+  :airtable_id: rec92PZr5MtHsnaci
+- :name: Broadcast Media Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_BY889yY7RkeHCVU
+  :active: true
+  :airtable_id: rec9LyOWkKyrplGny
+- :name: Property Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_l4DdinHo8uP2EMb
+  :active: true
+  :airtable_id: rec9xeorLyOguLWFi
+- :name: Marketing Reporting
+  :category: Marketing
+  :profile: true
+  :uid: ski_ZpqeBUTBsH2AmJ7
+  :active: true
+  :airtable_id: recA11LJA6vt7dmFA
+- :name: Channel Branding
+  :category: Marketing
+  :profile: true
+  :uid: ski_w3DBaVb71BJOffz
+  :active: true
+  :airtable_id: recA2bl3C43iNymQx
+- :name: Microsoft Dynamics
+  :category: Marketing
+  :profile: true
+  :uid: ski_VWVhFSzCf9iX7hY
+  :active: true
+  :airtable_id: recA9HqQQiziAqHNU
+- :name: Big Data Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_0WPadvxRNvL14Pa
+  :active: true
+  :airtable_id: recACHjqJzYZbs3sq
+- :name: Communications Planning
+  :category: Marketing
+  :profile: true
+  :uid: ski_7XwrcWAYa97u7vi
+  :active: true
+  :airtable_id: recALRIEI6XzJ201Q
+- :name: Link Building
+  :category: Marketing
+  :profile: true
+  :uid: ski_Gd96jTBZJBytGsh
+  :active: true
+  :airtable_id: recAMkvV3orv73Oq4
+- :name: Free-To-Play
+  :category: Marketing
+  :profile: true
+  :uid: ski_0OAPXOI1ykaUdGJ
+  :active: true
+  :airtable_id: recAYoNKDIO93byaF
+- :name: Telecommunications Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_BQ9YaERZA6oSsPa
+  :active: true
+  :airtable_id: recAhG6cEpqnfrnSi
+- :name: Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_fMQAAh1EvCU844q
+  :active: true
+  :airtable_id: recAlm6EqMSfyXSMh
+- :name: Education Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_ncf4w1INvJCbc9H
+  :active: true
+  :airtable_id: recAxqjZJFZPBSpJX
+- :name: Contextual Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_RdXN3XFqGSkwtto
+  :active: true
+  :airtable_id: recAzJpJEcLzn2Ps5
+- :name: Personal Branding
+  :category: Marketing
+  :profile: true
+  :uid: ski_BQ0m8NFu7nX1TLq
+  :active: true
+  :airtable_id: recB3RuEtxnJkcQOv
+- :name: New Media Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_4kPr669FtIe1RTZ
+  :active: true
+  :airtable_id: recBgiVOXTeN5cMbV
+- :name: Web Marketing Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_QPpiPdosKu3lVAs
+  :active: true
+  :airtable_id: recBheYGjUtbSpQfC
+- :name: Interactive Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_N1yRavl9P13jQYz
+  :active: true
+  :airtable_id: recBj3Awb9tDdJWX6
+- :name: Network Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_AKdspgiriBaqy1q
+  :active: true
+  :airtable_id: recBnKJTW4TcXosBx
+- :name: Political Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_GM54YTO6KfnedpM
+  :active: true
+  :airtable_id: recBqdZwXBxqrEsQN
+- :name: Place Branding
+  :category: Marketing
+  :profile: true
+  :uid: ski_Ftn3l6uhbSV6BZO
+  :active: true
+  :airtable_id: recBtvcvvwL3niwbO
+- :name: Product Life Cycle
+  :category: Marketing
+  :profile: true
+  :uid: ski_JSWYhGMPHB4gE1Q
+  :active: true
+  :airtable_id: recBzIpdTMLOwCRLA
+- :name: Brand Communications
+  :category: Marketing
+  :profile: true
+  :uid: ski_kIwju56i4o6TBQY
+  :active: true
+  :airtable_id: recCFzDbE4dvBqq9I
+- :name: Engagement Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_bJVIdEUcYwIRigk
+  :active: true
+  :airtable_id: recCI0VTH4mWesHAo
+- :name: Geotargeting
+  :category: Marketing
+  :profile: true
+  :uid: ski_5S7CgIUpcMlyf6k
+  :active: true
+  :airtable_id: recCL8qhw2focIICi
+- :name: Youtube Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_eIq5GgPV5UeuA6l
+  :active: true
+  :airtable_id: recCLFhYFlA9pPIyQ
+- :name: Online Publishing
+  :category: Marketing
+  :profile: true
+  :uid: ski_UgBMfMUoBDVTdFi
+  :active: true
+  :airtable_id: recCU8hK0zw86Tdn8
+- :name: E-Commerce
+  :category: Marketing
+  :profile: true
+  :uid: ski_otewLWgvioQrzI9
+  :active: true
+  :airtable_id: recCtraJqlZnoVyic
+- :name: On-Page Optimization
+  :category: Marketing
+  :profile: true
+  :uid: ski_QQPBlydWEaUG1M3
+  :active: true
+  :airtable_id: recD1LIQwf27W2DGo
+- :name: Brand Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_neYsBy1qsoKCfHr
+  :active: true
+  :airtable_id: recD5Vj6HCpilZEdX
+- :name: Facebook Ads
+  :category: Marketing
+  :profile: true
+  :uid: ski_rK6kq4G54NqnYJm
+  :active: true
+  :airtable_id: recD8IvI4WOPL2hVI
+- :name: New Media Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_yUb72DGNFtUXBeJ
+  :active: true
+  :airtable_id: recD8duqIHffE9o8y
+- :name: Brand Measurement
+  :category: Marketing
+  :profile: true
+  :uid: ski_H1tTj05dLD0v0sx
+  :active: true
+  :airtable_id: recDDP4IYZ2jcvqzM
+- :name: Market Analysis
+  :category: Marketing
+  :profile: true
+  :uid: ski_jZqlXrazKlUl8FJ
+  :active: true
+  :airtable_id: recDNPel8VIIRIWm5
+- :name: Affiliate Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_hs7zl3oKzHjgjgu
+  :active: true
+  :airtable_id: recDNUYJdAFcinlwe
+- :name: Market Pricing
+  :category: Marketing
+  :profile: true
+  :uid: ski_CWXzMorcWDzKI3G
+  :active: true
+  :airtable_id: recDlCQk6gq0yRXti
+- :name: Competitive Intelligence
+  :category: Marketing
+  :profile: true
+  :uid: ski_S0WnJIY9hI2cP2m
+  :active: true
+  :airtable_id: recDmhGG3Z5W3E9pD
+- :name: Campaign Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_T5NKeacce5K78Ci
+  :active: true
+  :airtable_id: recDqExMeph4SLksU
+- :name: Search Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_rJvJuRjB7ZGFKZ8
+  :active: true
+  :airtable_id: recDvDSah3JckI48C
+- :name: Digital Media
+  :category: Marketing
+  :profile: true
+  :uid: ski_QjOTsySeOtZyE1C
+  :active: true
+  :airtable_id: recE22SsJer0ILqlx
+- :name: Aggressive Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_gnDjztP9zBfzQzb
+  :active: true
+  :airtable_id: recEI5MU9vd5rf9rv
+- :name: Wordpress
+  :category: Marketing
+  :profile: true
+  :uid: ski_P7esAJ0iPGP0OJZ
+  :active: true
+  :airtable_id: recELrykFOKIlhoe3
+- :name: Retail Branding
+  :category: Marketing
+  :profile: true
+  :uid: ski_Tqc00lbIOILmbp6
+  :active: true
+  :airtable_id: recERSfQ0vlM9Iu89
+- :name: E-Commerce Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_NJkaFeWTQJC6NbS
+  :active: true
+  :airtable_id: recEWTGqniQ4GinvA
+- :name: One-to-one Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_meVKbdS7kuzwjjf
+  :active: true
+  :airtable_id: recEmKnQg71E0FXMb
+- :name: Creative Writing
+  :category: Marketing
+  :profile: true
+  :uid: ski_hrXJLyzPkxi7U80
+  :active: true
+  :airtable_id: recEttWXcynAIP46r
+- :name: Transit Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_JVLJDttNNIgFB7O
+  :active: true
+  :airtable_id: recEwIk3bM0wh00Uh
+- :name: Multi-level Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_kdeL6o2PbrPU68j
+  :active: true
+  :airtable_id: recF3FT9slT80ooat
+- :name: Adobe Creative Cloud
+  :category: Marketing
+  :profile: true
+  :uid: ski_zuA8YzObTgM8wOQ
+  :active: true
+  :airtable_id: recF4GZVR8tCLAMrI
+- :name: Trade Promotion Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_1BZa1w1STzLq2qk
+  :active: true
+  :airtable_id: recFH2P3c7xHH4C42
+- :name: Salesforce.com
+  :category: Marketing
+  :profile: true
+  :uid: ski_NDLYmokB7wA63Hl
+  :active: true
+  :airtable_id: recFNarxoG4xUDLrU
+- :name: Youth Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_K4SFwqtnWXDEtEw
+  :active: true
+  :airtable_id: recFRY0d4oh7SJmya
+- :name: Video Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_JH9hNBmatdpsS3e
+  :active: true
+  :airtable_id: recFTVRmuDvnnM8dc
+- :name: Creative Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_2bTY3NF98rDhWsi
+  :active: true
+  :airtable_id: recFhf73JElvYJhwu
+- :name: Field Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_5DT1IfHw1iYCffy
+  :active: true
+  :airtable_id: recFqQO5W2FGqwStj
+- :name: A/B Testing
+  :category: Marketing
+  :profile: true
+  :uid: ski_ZRS5OGrCJH6Qr1u
+  :active: false
+  :airtable_id: recFrtk46gxBTzVNe
+- :name: Wine and Spirits Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_19Cj15ejx5VZHsw
+  :active: true
+  :airtable_id: recFwEFyORckntcRV
+- :name: Mobile Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_OIQgkXkssa3jnWy
+  :active: true
+  :airtable_id: recG1LP7AhU97CmzP
+- :name: On-Premise Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_bib49Uos2x98bhX
+  :active: true
+  :airtable_id: recG6nGnDNDG8zMR7
+- :name: Landing Page Optimization
+  :category: Marketing
+  :profile: true
+  :uid: ski_Sl5vAIbAVJaSBVU
+  :active: true
+  :airtable_id: recG7BXQCk89lLkDO
+- :name: Product Launch
+  :category: Marketing
+  :profile: true
+  :uid: ski_zNgK3IdYdMudPQe
+  :active: true
+  :airtable_id: recG9VJjord2zWtxN
+- :name: Revenue Forecasting
+  :category: Marketing
+  :profile: true
+  :uid: ski_DpD1kqX9QOmHGzU
+  :active: true
+  :airtable_id: recGATqAOpOYmXduf
+- :name: Market Penetration
+  :category: Marketing
+  :profile: true
+  :uid: ski_9HiuQQjrew7vEuV
+  :active: true
+  :airtable_id: recGLACVyDNbwf1d2
+- :name: Web Development
+  :category:
+  :profile: false
+  :uid: ski_ZmWFruS1mxwHxom
+  :active:
+  :airtable_id: recGLTJkUtKDQo7FM
+- :name: Integrated Brand Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_1qsYgBY3rUDkzbG
+  :active: true
+  :airtable_id: recGVe0GVAF0nzdOn
+- :name: Online Video Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_k1376eRK5MAa911
+  :active: true
+  :airtable_id: recGW6mYAwTA4vYsm
+- :name: Marketing Mix
+  :category: Marketing
+  :profile: true
+  :uid: ski_UX5O3jiXE1WNE96
+  :active: true
+  :airtable_id: recGXWQcvsbBMJn1v
+- :name: HootSuite
+  :category: Marketing
+  :profile: true
+  :uid: ski_JlFwfjSlb461tED
+  :active: true
+  :airtable_id: recGY6mARFofpMGnc
+- :name: Branded Content Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_82qnWn6kNu5y0Pj
+  :active: true
+  :airtable_id: recGYxexvPYoJJ9E4
+- :name: Consumer Branding
+  :category: Marketing
+  :profile: true
+  :uid: ski_TVeXFmAlPJykYyw
+  :active: true
+  :airtable_id: recGb7RCbZqwpP0cz
+- :name: Cooperative Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_tSBGHZbbsFK01x7
+  :active: true
+  :airtable_id: recGsSw7MLvxVeQ0b
+- :name: Corporate Videos
+  :category: Marketing
+  :profile: true
+  :uid: ski_H5iCrqIJkmHeMa4
+  :active: true
+  :airtable_id: recGt5xqieMUGK4IS
+- :name: Digital Marketing Experience
+  :category: Marketing
+  :profile: true
+  :uid: ski_yIPmkfVh2awM1SP
+  :active: true
+  :airtable_id: recGtXIK0iMDFZOj3
+- :name: Attribution
+  :category: Marketing
+  :profile: true
+  :uid: ski_SE15J7uT4TgyTfa
+  :active: true
+  :airtable_id: recGxgKwONg91sekh
+- :name: MailChimp
+  :category: Marketing
+  :profile: true
+  :uid: ski_5MSEMHgSbBfeBuD
+  :active: true
+  :airtable_id: recH5AELdefWl72su
+- :name: Interactive Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_wILWWxh96slfGPW
+  :active: true
+  :airtable_id: recH7pHjJ3ohPIBYo
+- :name: Adobe Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_WdfGZ8rhyx6e2xh
+  :active: true
+  :airtable_id: recHIjdyOPaQw2RDt
+- :name: Entertainment Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_b5k0PS8mNkkQde5
+  :active: true
+  :airtable_id: recHKyymXsz0mvvcT
+- :name: Amazon Marketplace
+  :category: Marketing
+  :profile: true
+  :uid: ski_24guv2pJnwGEwNK
+  :active: true
+  :airtable_id: recHLCtabHXzaJNey
+- :name: Vertical Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_j65PAp4Oe0LbcFt
+  :active: true
+  :airtable_id: recHN55zQovc52pML
+- :name: Amazon Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Ry8MI7aOhgwvdTq
+  :active: true
+  :airtable_id: recHXyovuDQWCZAXw
+- :name: Creative Content Creation
+  :category:
+  :profile: false
+  :uid: ski_nS2DWwEap6bDRqr
+  :active:
+  :airtable_id: recHdJFzP8OZAb988
+- :name: Web Design
+  :category:
+  :profile: false
+  :uid: ski_jLMCGXQkxY4Ap3d
+  :active:
+  :airtable_id: recHnqq8Z0B2WUvW6
+- :name: Social Communication
+  :category: Marketing
+  :profile: true
+  :uid: ski_KH2ybzOOu2cj3vU
+  :active: true
+  :airtable_id: recI2k9vbBecT04id
+- :name: Paid Search
+  :category: Marketing
+  :profile: true
+  :uid: ski_dZtI162KElNWP7j
+  :active: true
+  :airtable_id: recI3uixWTazzZPtM
+- :name: Direct Sales
+  :category: Marketing
+  :profile: true
+  :uid: ski_UtJcu5nw3jLTIDH
+  :active: true
+  :airtable_id: recI6WSB6z78kWQLc
+- :name: Lead Optimisation
+  :category: Marketing
+  :profile: true
+  :uid: ski_PVarBQrBfpe2KGl
+  :active: true
+  :airtable_id: recIGUDy4wuZTwvFB
+- :name: Press Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_iLXzz9v3BawXvhZ
+  :active: true
+  :airtable_id: recILNwncMrSrn3ge
+- :name: Social Media Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_ItpabvDdJjlA1jR
+  :active: true
+  :airtable_id: recIMfJksTi13f6RN
+- :name: Ad Targeting
+  :category: Marketing
+  :profile: true
+  :uid: ski_RHsrVjipEviSgfD
+  :active: true
+  :airtable_id: recIVG1CChyaNfjJi
+- :name: Sales Automation
+  :category: Marketing
+  :profile: true
+  :uid: ski_7zV01naQRCQo6eD
+  :active: true
+  :airtable_id: recIW9Wzq4FZAoSCI
+- :name: School Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_LgmcHH6G2SpGpzN
+  :active: true
+  :airtable_id: recIatf4ErBWBP6gJ
+- :name: Video Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_4TtBVeRL57WwTOW
+  :active: true
+  :airtable_id: recIkD6XQGCcXoTMb
+- :name: Newspapers Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_N0haeSu9GpXSUjd
+  :active: true
+  :airtable_id: recJ63Fzlrsq7SvcO
+- :name: Promotional Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_YEUCydUD0yDxp8U
+  :active: true
+  :airtable_id: recJBgMYBkooaBCYT
+- :name: Tobacco Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_xh89KEBC5z0c7aD
+  :active: true
+  :airtable_id: recJPIitkVXnd5fZJ
+- :name: Construction Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_J44sm6H6h7cB0ZS
+  :active: true
+  :airtable_id: recJUGmgqb9YDjInZ
+- :name: Enterprise Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_C3sI1iLulLIHbh6
+  :active: true
+  :airtable_id: recJUuLIrMJ7rKvnA
+- :name: Finance Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_BZ4NY8eP5Lyxc4v
+  :active: true
+  :airtable_id: recJXaDb3eTOCtZLR
+- :name: Blog Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_MlmavITXqsPZhfB
+  :active: true
+  :airtable_id: recJcpWdauMVqYyy6
+- :name: Insurance Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_hG1dxnv0S7wS0d6
+  :active: true
+  :airtable_id: recJe0qFZzJwAWr82
+- :name: Experiential Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_C5ZEH5RrI85B5Yc
+  :active: true
+  :airtable_id: recJjm5d3mUSadfaX
+- :name: Alliance Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_0YAmsCwLoM01qfU
+  :active: true
+  :airtable_id: recJmUHazh4QthO9J
+- :name: Squarespace
+  :category: Marketing
+  :profile: true
+  :uid: ski_dcaQOCtkluZIMSX
+  :active: true
+  :airtable_id: recJusrktuzLCyI8Q
+- :name: Gamification
+  :category: Marketing
+  :profile: true
+  :uid: ski_m0oCKX6T8iqG3s7
+  :active: true
+  :airtable_id: recJvJtFWJSoJ5EpQ
+- :name: Google Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_m9Xdm5d3RTzUOYt
+  :active: true
+  :airtable_id: recK1tRULu4UxTxax
+- :name: Business Supplies Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_8A6H90bnXgUfmuC
+  :active: true
+  :airtable_id: recK7uTrvCDZ15hKJ
+- :name: ROI Justification
+  :category: Marketing
+  :profile: true
+  :uid: ski_bo1NKXojigOaRzN
+  :active: true
+  :airtable_id: recK8PHErdHyZoXVs
+- :name: Channel Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_phkmgd237DVwtgO
+  :active: true
+  :airtable_id: recKIgRkwQEQ6nsDZ
+- :name: Social Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_utMBIqiOlSi6JVU
+  :active: true
+  :airtable_id: recKMRsbhsW57Gpr4
+- :name: Behavioral Targeting
+  :category: Marketing
+  :profile: true
+  :uid: ski_S38uBuu8lqimMQe
+  :active: true
+  :airtable_id: recKbNZF0azUki9li
+- :name: Account Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_2V1rM8d5SepUCMp
+  :active: false
+  :airtable_id: recKdmQftgTHcgikm
+- :name: Merchandising
+  :category: Marketing
+  :profile: true
+  :uid: ski_WjAH2rph9oeZWAH
+  :active: true
+  :airtable_id: recKgwPe9sm7a9ltm
+- :name: Mobile Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_d4WfbBIVsXw30E0
+  :active: true
+  :airtable_id: recKo1zBNKiVvtA24
+- :name: Performance Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_KHvEk7NqCrMl0QZ
+  :active: true
+  :airtable_id: recKvE0OhgSfnENQJ
+- :name: Joint Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_AXT3C9PHpXXvkqk
+  :active: true
+  :airtable_id: recKyz7DuaJbO79Z8
+- :name: Brand Design
+  :category: Marketing
+  :profile: true
+  :uid: ski_k6zsX2NtSO5RIiH
+  :active: true
+  :airtable_id: recL6igCdba240AIU
+- :name: Marketing Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_wBASdmlTQuhYINs
+  :active: true
+  :airtable_id: recL8XrhpbLt7IVNC
+- :name: Travel Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_BLCRebCbOQ8IrD7
+  :active: true
+  :airtable_id: recLDtsq8mV7f5hGk
+- :name: Bluetooth Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_ahcac5qaPNRfHKd
+  :active: true
+  :airtable_id: recLZASlTxEoAOo77
+- :name: 1-to-1 Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_ayUrxIw9eRWjfUi
+  :active: false
+  :airtable_id: recLbQAZIgrZIBK5V
+- :name: Community Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_2q6qHmSLhHbw1nV
+  :active: true
+  :airtable_id: recLbyipS17s1AuSZ
+- :name: Content Modeling
+  :category: Marketing
+  :profile: true
+  :uid: ski_XkhszkK1ccSmIIC
+  :active: true
+  :airtable_id: recLyaltRTGbGtTWC
+- :name: Conversion Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_FQoyZ7n84o6WEAl
+  :active: true
+  :airtable_id: recM5hYp18hMlCEOo
+- :name: Kickstarter
+  :category: Marketing
+  :profile: true
+  :uid: ski_e9Di6Xu0u7vuWcY
+  :active: true
+  :airtable_id: recMKHyyFR1shxS5S
+- :name: Outbound Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_qIeNOSzJ36vomIS
+  :active: true
+  :airtable_id: recMbSPoXpO1TLAEs
+- :name: Mortgage Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_ftT9r59mqZQG4B7
+  :active: true
+  :airtable_id: recMlyCAhYfn2Whcx
+- :name: Personalization
+  :category: Marketing
+  :profile: true
+  :uid: ski_oeghAGHe1Zsgxet
+  :active: true
+  :airtable_id: recMtXl8GyISF8RfR
+- :name: Local Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_vOaWdq49ABuLUUz
+  :active: true
+  :airtable_id: recMwOAoAmkvLIrKm
+- :name: Special Events
+  :category: Marketing
+  :profile: true
+  :uid: ski_PEx1bBGVziEAQpV
+  :active: true
+  :airtable_id: recMynIG3WohijKmG
+- :name: LinkedIn Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_LWVTzptgQMF80ZR
+  :active: true
+  :airtable_id: recN6Hi5a9Kwf2GBN
+- :name: Grassroots Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_hNu5ZWANrgs4PpT
+  :active: true
+  :airtable_id: recNBm2KWfvXPqEMs
+- :name: Startup Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_kcmnXcoBDicCygt
+  :active: true
+  :airtable_id: recNLHujoZeH0VlBI
+- :name: Multicultural Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_UgEDCH9mYlwU8WK
+  :active: true
+  :airtable_id: recNNnpeRPBwXHaPR
+- :name: Charity Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_kDq2NeZnVbYa33Y
+  :active: true
+  :airtable_id: recNOOhR92WayVRoy
+- :name: Renewables & Environment Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_mmB9X8SZiVdpZQF
+  :active: true
+  :airtable_id: recNTwrpWwBS1YtkJ
+- :name: Online Brand Building
+  :category: Marketing
+  :profile: true
+  :uid: ski_OMLuCJoZAn8GrnX
+  :active: true
+  :airtable_id: recNWdio0Y7772tFU
+- :name: Email Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_CzR1GfAZ1tEX7WB
+  :active: true
+  :airtable_id: recNYbTDAKbgTYqjf
+- :name: Animation Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_zzEXMz6knZkIiWr
+  :active: true
+  :airtable_id: recNZ6XgPTitVcHVe
+- :name: Amazon Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_QsmL1thJW28DrOZ
+  :active: true
+  :airtable_id: recNm1SYfxkmtc3Cp
+- :name: Advertising Operations
+  :category: Marketing
+  :profile: true
+  :uid: ski_nP07qYErf7uHcBQ
+  :active: true
+  :airtable_id: recO8enelfcmJmaaF
+- :name: Quora
+  :category: Marketing
+  :profile: true
+  :uid: ski_4hpgfi29sjtKllv
+  :active: true
+  :airtable_id: recOBCxl9iQARTHOo
+- :name: In-store Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_AWX6silTseo76V5
+  :active: true
+  :airtable_id: recORftM40M1xLSAK
+- :name: Trade Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_vvuDNu57K3ff4lZ
+  :active: true
+  :airtable_id: recOSp5zkGfkt7spD
+- :name: Philanthropy Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_LPAjxk7K98L0eqd
+  :active: true
+  :airtable_id: recOerPALAwCOHsQG
+- :name: Campaign Tracking
+  :category: Marketing
+  :profile: true
+  :uid: ski_treLt1cCnOa8qlg
+  :active: true
+  :airtable_id: recOfGdQQivFfPPTt
+- :name: Pardot
+  :category: Marketing
+  :profile: true
+  :uid: ski_x3pjDyji4Woc3ry
+  :active: true
+  :airtable_id: recOlV6VIBNYFWFGw
+- :name: Market Testing
+  :category: Marketing
+  :profile: true
+  :uid: ski_decAkJ6AInKmjIT
+  :active: true
+  :airtable_id: recOlXUPQmc5kRejC
+- :name: Destination Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Jne9pOsnX5Vrc4z
+  :active: true
+  :airtable_id: recOnhTUHGf1r6q78
+- :name: Google AdWords
+  :category: Marketing
+  :profile: true
+  :uid: ski_lyDBsJhzdSQYuS4
+  :active: true
+  :airtable_id: recOoyp7yDIVnWxCK
+- :name: Brand Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_D493w8NNjawdPZf
+  :active: false
+  :airtable_id: recOxJEazJMeTsTlU
+- :name: Conversion Rate Optimisation (CRO)
+  :category:
+  :profile: false
+  :uid: ski_fT8ZytWOtyELA9q
+  :active:
+  :airtable_id: recP1gepjHdMivSnk
+- :name: Online Marketing Analysis
+  :category: Marketing
+  :profile: true
+  :uid: ski_bwQ2Q7ODNFdJ4aZ
+  :active: true
+  :airtable_id: recP8QhpNHidyQxQB
+- :name: Partner Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_8d0AnZF1MHZvlJc
+  :active: true
+  :airtable_id: recPCNBrpvJ3ESBwx
+- :name: Event Planning
+  :category: Marketing
+  :profile: true
+  :uid: ski_iPQ5Yz42PB12B92
+  :active: true
+  :airtable_id: recPl4TAdyNEHPO2k
+- :name: Distribution Strategies
+  :category: Marketing
+  :profile: true
+  :uid: ski_oSvRRMg9Kzyd1Cp
+  :active: true
+  :airtable_id: recQC7pq0B4Fd3Z0T
+- :name: Corporate Design
+  :category: Marketing
+  :profile: true
+  :uid: ski_wBath3aKox8EgGC
+  :active: true
+  :airtable_id: recQTvkxKL5hs7Rk1
+- :name: Link Analysis
+  :category: Marketing
+  :profile: true
+  :uid: ski_GpWvBZlxfLaBP6w
+  :active: true
+  :airtable_id: recQW89IpZKKE0sgT
+- :name: Customer Outreach
+  :category: Marketing
+  :profile: true
+  :uid: ski_Qzn8vTatG4oTWV6
+  :active: true
+  :airtable_id: recQZvszCoblCosPQ
+- :name: Lead Scoring
+  :category: Marketing
+  :profile: true
+  :uid: ski_fp8WnQHU0AmnqEV
+  :active: true
+  :airtable_id: recQjxwVpKjkAPjvu
+- :name: User Acquisition
+  :category: Marketing
+  :profile: true
+  :uid: ski_NrjfJWKakb5su0c
+  :active: true
+  :airtable_id: recQkwuoO2ris3VyI
+- :name: Online Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_zcZgYjKpdVxKJjV
+  :active: true
+  :airtable_id: recQpSwXyxxxkTmV3
+- :name: In-game Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_RCIQuDyKAUo9YVs
+  :active: true
+  :airtable_id: recQt5RqsPcrP2WRr
+- :name: Product Placement
+  :category: Marketing
+  :profile: true
+  :uid: ski_excxDv18VWHjReM
+  :active: true
+  :airtable_id: recQujPlGePqMmDAA
+- :name: Music Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_PGKKWa8MlNbBdND
+  :active: true
+  :airtable_id: recQyD2q0yV9f1sD0
+- :name: Display Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_pKy7mVn8e2c7tIl
+  :active: true
+  :airtable_id: recR2oIAcoPc8wH8h
+- :name: Sponsorship Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_ayWkxCm6IugUxIb
+  :active: true
+  :airtable_id: recR7R7NAitAj7Otz
+- :name: Tourism Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_eIw8DLVmyGIpFrU
+  :active: true
+  :airtable_id: recRImBxGjhgznqeR
+- :name: Google Audience Center
+  :category: Marketing
+  :profile: true
+  :uid: ski_YdfBU7YkDNMmsyW
+  :active: true
+  :airtable_id: recRKVa1M5SGHdYYU
+- :name: Youtube Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_cFsrPMVEGPKRHaJ
+  :active: true
+  :airtable_id: recRRbYLCd45baxIl
+- :name: Sports Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Rb1sqIH1bCVAc3j
+  :active: true
+  :airtable_id: recRVmhZ9K7EQCS4q
+- :name: Visual Identity
+  :category: Marketing
+  :profile: true
+  :uid: ski_3rXSh6E7ZxERUZM
+  :active: true
+  :airtable_id: recRh2f0TZPfZg4Sa
+- :name: Corporate Social Responsibility
+  :category: Marketing
+  :profile: true
+  :uid: ski_yvREvzLw6ZsFD7X
+  :active: true
+  :airtable_id: recRkJ05MN8HXQQXZ
+- :name: Acquisition Campaigns
+  :category: Marketing
+  :profile: true
+  :uid: ski_8FWLLcmi9PDJEi6
+  :active: true
+  :airtable_id: recS893uehGG5L719
+- :name: Custom Content Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_K8cGyHufHHkUWzp
+  :active: true
+  :airtable_id: recS8LMsPePxZOtqL
+- :name: Social Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_4NLGE4sDQGyAd0b
+  :active: true
+  :airtable_id: recSFlZlYDm1L72DE
+- :name: Market Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_8GgZ7JnddNDbDQf
+  :active: true
+  :airtable_id: recSKQvD11vF95T95
+- :name: Drip Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_121zdKTmV7GAQml
+  :active: true
+  :airtable_id: recScsJuJYiFogXvg
+- :name: Event Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_5g4dAjWuglmtKzW
+  :active: true
+  :airtable_id: recSe1tuKgKNYhBFW
+- :name: User Adoption
+  :category: Marketing
+  :profile: true
+  :uid: ski_r5AY7pjQj5keGNM
+  :active: true
+  :airtable_id: recSjDs1objDk77i4
+- :name: Automotive Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_aFsRSyXvMu4zpVc
+  :active: true
+  :airtable_id: recSl0d0oP5rvnH92
+- :name: Marketing Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_vp8SahlvirB8CnX
+  :active: true
+  :airtable_id: recSpgORWKal5xVKk
+- :name: Customer Focused Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_f8sEmGZTZor6UYX
+  :active: true
+  :airtable_id: recSsNc3xovOm3n6n
+- :name: Google Ads
+  :category:
+  :profile: false
+  :uid: ski_qxh7Le4Q2ZCIEg4
+  :active:
+  :airtable_id: recTSB5rmHwuTDhmf
+- :name: Home Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_y5zHbAI9zz4mpeY
+  :active: true
+  :airtable_id: recTVbMFuIAD15xGJ
+- :name: Mass Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_YNgrKzUWplx6H1r
+  :active: true
+  :airtable_id: recTmbJCQr9UvYzJv
+- :name: Global Brand Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_3xLg40uOJfMSrTw
+  :active: true
+  :airtable_id: recTphhHGyOf9E0PO
+- :name: Ad Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_FNdyBuPA1YQX8Jt
+  :active: true
+  :airtable_id: recTweha6hoSiG9GW
+- :name: Search Engine Optimization (SEO) Copywriting
+  :category: Marketing
+  :profile: true
+  :uid: ski_xGchIFZF8yuUMAD
+  :active: true
+  :airtable_id: recTwmPk6FIT1BRii
+- :name: Targeted Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_NK5GwqaxXNRJePq
+  :active: true
+  :airtable_id: recTy7YIYK5O8m3gt
+- :name: Lifestyle Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_CaFngMiNECdrE84
+  :active: true
+  :airtable_id: recU2H2qZG5RDFl15
+- :name: Demand Generation
+  :category: Marketing
+  :profile: true
+  :uid: ski_EiR6bHcbd35PajL
+  :active: true
+  :airtable_id: recU3IOwDoy7AhW5B
+- :name: Cross Selling
+  :category: Marketing
+  :profile: true
+  :uid: ski_AvpZ1S0L8RMPfhI
+  :active: true
+  :airtable_id: recU4ThZchBwVMEam
+- :name: Athlete Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_0L9ekUNiW6Jo0SE
+  :active: true
+  :airtable_id: recU69ok8H6ef6rDf
+- :name: Marketing Compliance
+  :category: Marketing
+  :profile: true
+  :uid: ski_RAjoKPlSUVq7nOK
+  :active: true
+  :airtable_id: recUC6lfsYz1EAKYP
+- :name: Media Planning
+  :category: Marketing
+  :profile: true
+  :uid: ski_6x8PZgJwmkqwr0d
+  :active: true
+  :airtable_id: recUE9Bx45t4WTeXL
+- :name: Location Based Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_GXjr3YaSCbRZBE1
+  :active: true
+  :airtable_id: recUHaBEJBT4xlqKE
+- :name: SEO Audits
+  :category: Marketing
+  :profile: true
+  :uid: ski_H99PGMyOmz9sZTB
+  :active: true
+  :airtable_id: recURLeHw6yZypZp5
+- :name: Up-Selling
+  :category: Marketing
+  :profile: true
+  :uid: ski_1N9Fg5MMc6TKpQB
+  :active: true
+  :airtable_id: recUWfswpM8hRUUyR
+- :name: Cross Channel Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_chZgf6qXpnti2cu
+  :active: true
+  :airtable_id: recUmc2zkM8nFxZlG
+- :name: Marketing Automation
+  :category: Marketing
+  :profile: true
+  :uid: ski_sl5T2SylnV3WH7p
+  :active: true
+  :airtable_id: recUrCWUwMGSKGT0Y
+- :name: Mobile Campaigns
+  :category: Marketing
+  :profile: true
+  :uid: ski_85T9qVroW6aw2At
+  :active: true
+  :airtable_id: recV0SqkLxEJo5KQo
+- :name: Product Positioning
+  :category: Marketing
+  :profile: true
+  :uid: ski_CdiJGDsv7ahh70L
+  :active: true
+  :airtable_id: recV33O0bvHHD2vjA
+- :name: Database Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_MUOF3hdnl1XPIua
+  :active: true
+  :airtable_id: recVHxAuawk1bZYez
+- :name: Email Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_RysLSSHYphtVUfr
+  :active: true
+  :airtable_id: recVR6qcUrX6oMFtm
+- :name: Fashion Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_VzuRcWVkh4Jnq08
+  :active: true
+  :airtable_id: recVSKOreJOzgHhzW
+- :name: Tableau
+  :category: Marketing
+  :profile: true
+  :uid: ski_obwk40KcNUjAYvO
+  :active: true
+  :airtable_id: recVa69XKEQMO8RPz
+- :name: Portfolio Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_wCvhWqUkwszY3Gd
+  :active: true
+  :airtable_id: recVhCLS5FDtf7KBX
+- :name: Loyalty Programs
+  :category: Marketing
+  :profile: true
+  :uid: ski_DoShUUxk5BObwHV
+  :active: true
+  :airtable_id: recVjH0YIKHVwYvXf
+- :name: Co-Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_9RSpAApUKu9QJ5g
+  :active: true
+  :airtable_id: recVkaDZMImP81kXV
+- :name: Rebranding
+  :category: Marketing
+  :profile: true
+  :uid: ski_u9QfYuCVs7MzWCs
+  :active: true
+  :airtable_id: recVoeOA15JaNdvCh
+- :name: Marketing Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_5dXJGhkox4wVRTq
+  :active: true
+  :airtable_id: recVv21MlAHPsbGDt
+- :name: Loyalty Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_hOpjBfoJBYDeaiZ
+  :active: true
+  :airtable_id: recW5IjBMOzkVwsz3
+- :name: City Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_kCUIKeeCPvmmpO3
+  :active: true
+  :airtable_id: recWfrjgG2DzSUgz8
+- :name: Survey Design
+  :category: Marketing
+  :profile: true
+  :uid: ski_S5IXdKGGN1R1gQ0
+  :active: true
+  :airtable_id: recWnVQR9BeFAnMIP
+- :name: Cultural Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_M76BydDZaLNrnPT
+  :active: true
+  :airtable_id: recX1lhVUvt9WiaS2
+- :name: Offline Media
+  :category: Marketing
+  :profile: true
+  :uid: ski_eG4DMOHivnFvIZR
+  :active: true
+  :airtable_id: recX4xF0KpFOw4z42
+- :name: Yahoo Search Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_SofhTAxIT1qQmYL
+  :active: true
+  :airtable_id: recXAJNPiPfziwrpu
+- :name: Audio Branding
+  :category: Marketing
+  :profile: true
+  :uid: ski_1EsuQrCu20EguAx
+  :active: true
+  :airtable_id: recXEarGMzKXTAxPu
+- :name: Website Branding
+  :category: Marketing
+  :profile: true
+  :uid: ski_u70gA4sp3zgTxrO
+  :active: true
+  :airtable_id: recXGaSPTepM31ZBK
+- :name: National Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_eLKnM6zFzbOONAA
+  :active: true
+  :airtable_id: recXJczchHSEpjcgT
+- :name: Advertising
+  :category:
+  :profile: false
+  :uid: ski_1Cyp0LOESZbMGar
+  :active: true
+  :airtable_id: recXKOkJwpZqaXXOU
+- :name: Performing Arts Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_XYBylEhte02OAZD
+  :active: true
+  :airtable_id: recXbqJat6nR08Oec
+- :name: Business Planning
+  :category: Marketing
+  :profile: true
+  :uid: ski_VTY5ywe7PEJZRb0
+  :active: true
+  :airtable_id: recXh5wz8WOc87ny3
+- :name: Customer Research
+  :category: Marketing
+  :profile: true
+  :uid: ski_TL38UPi5YAnm7E0
+  :active: true
+  :airtable_id: recXlQogjJwslZviM
+- :name: Copy Editing
+  :category: Marketing
+  :profile: true
+  :uid: ski_1YFTT7WGx6ZHgd4
+  :active: true
+  :airtable_id: recXqrIjg2HbtV3ur
+- :name: Search Engine Marketing (SEM)
+  :category: Marketing
+  :profile: true
+  :uid: ski_rSflfhyMjfgv2yd
+  :active: true
+  :airtable_id: recXvSHvMdixIPW9f
+- :name: Sprout Social
+  :category: Marketing
+  :profile: true
+  :uid: ski_SQ7KdV0NfxrmSNZ
+  :active: true
+  :airtable_id: recYBE8lEIj0hNXLb
+- :name: Trend Analysis
+  :category: Marketing
+  :profile: true
+  :uid: ski_YhgwlOjyb3HKBnu
+  :active: true
+  :airtable_id: recYHvsEBC62xMSpO
+- :name: Cloud Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_X11yyHoMrROqW6L
+  :active: true
+  :airtable_id: recYJ9BeB1yw4YrwZ
+- :name: Program Development Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_TuDGNVSSxDsuPfc
+  :active: true
+  :airtable_id: recYMMIZ1hsuv8oEm
+- :name: Content Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_qFIDvmWN2LWOin5
+  :active: true
+  :airtable_id: recYRPxjsH0YOCDj9
+- :name: Growth Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_7Le1s0uSe4oef0h
+  :active: true
+  :airtable_id: recYSSDscqMWHwMzY
+- :name: Corporate Communications
+  :category: Marketing
+  :profile: true
+  :uid: ski_wSK2G0chtq4x89O
+  :active: true
+  :airtable_id: recYUzinvSgWACmDZ
+- :name: Prospect Research
+  :category: Marketing
+  :profile: true
+  :uid: ski_QAVdtTHLTdGo9zz
+  :active: true
+  :airtable_id: recYeQtZf0CRbXp3N
+- :name: New Market Expansion
+  :category: Marketing
+  :profile: true
+  :uid: ski_6WNfhkSWxuaGS9X
+  :active: true
+  :airtable_id: recYocUfiIidgaGCy
+- :name: Ad Optimization
+  :category: Marketing
+  :profile: true
+  :uid: ski_6y47SRUn437u6cP
+  :active: true
+  :airtable_id: recYv9czGOT60uP8V
+- :name: Computer Software Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_nTiaLDiUu1xS5GY
+  :active: true
+  :airtable_id: recZ3YEjIM2VAgT4k
+- :name: Proposal Writing
+  :category: Marketing
+  :profile: true
+  :uid: ski_LzA1t0Phma4nzWy
+  :active: true
+  :airtable_id: recZ87NAvrnTKLIFi
+- :name: Copywriting
+  :category: Marketing
+  :profile: true
+  :uid: ski_FNt7h4xaw0maeBg
+  :active: true
+  :airtable_id: recZXay1rjLFlT1jH
+- :name: Outdoor Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_cdhEIYkuuH97qCa
+  :active: true
+  :airtable_id: recZmkQOrR4vKlleF
+- :name: Guerrilla Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_O8r5ls5pifBeuJb
+  :active: true
+  :airtable_id: recZom18cAhJme366
+- :name: Written Communication
+  :category: Marketing
+  :profile: true
+  :uid: ski_myjmrmhKkqcWhCQ
+  :active: true
+  :airtable_id: recZt4uUSPRNsFOtt
+- :name: Sales Acquisition
+  :category: Marketing
+  :profile: true
+  :uid: ski_pbEGjX5NitQz8ec
+  :active: true
+  :airtable_id: recZvwUNSkVu4weOs
+- :name: YouTube
+  :category: Marketing
+  :profile: true
+  :uid: ski_vyt3ZjUmkSDzemW
+  :active: true
+  :airtable_id: reca3KP4RXEC19V2i
+- :name: Consumer Electronics Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_cmgPJI7wpw7ajO7
+  :active: true
+  :airtable_id: reca7pLE2tzHetsnM
+- :name: Social Media
+  :category: Marketing
+  :profile: true
+  :uid: ski_lOac1xiFfna20N3
+  :active: true
+  :airtable_id: recaFAjxy8oUAsDMn
+- :name: Microsoft Excel
+  :category: Marketing
+  :profile: true
+  :uid: ski_w1A3sPfqZCXIiel
+  :active: true
+  :airtable_id: recaPDoraJSpDGfUV
+- :name: Multi-media Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_NnsXQOLogxb10IG
+  :active: true
+  :airtable_id: recacLYlsirwsS9Pr
+- :name: Copy Testing
+  :category: Marketing
+  :profile: true
+  :uid: ski_pEBvxhbRBbedB3M
+  :active: true
+  :airtable_id: recao4vh5y5ZWnZ9O
+- :name: Direct-Response Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_1vX2H4vwMzzfRUF
+  :active: true
+  :airtable_id: recaobIAwNmyAs6zI
+- :name: Print Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_O3Bvfnuotb8WfvX
+  :active: true
+  :airtable_id: recaq5qov1aTkTkgb
+- :name: Google Shopping
+  :category: Marketing
+  :profile: true
+  :uid: ski_47wSyyleRw79yiq
+  :active: true
+  :airtable_id: recbVeA9GVM0yQL0u
+- :name: Revenue Cycle Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_b2TFkuwIRJBVExo
+  :active: true
+  :airtable_id: recbl5METtuOxWYQ1
+- :name: Customer Retention
+  :category: Marketing
+  :profile: true
+  :uid: ski_VralV9aRusOTUnn
+  :active: true
+  :airtable_id: recblMOyOXGHgbPd0
+- :name: Webflow
+  :category: Marketing
+  :profile: true
+  :uid: ski_1VvloxrUL26ayt8
+  :active: true
+  :airtable_id: recbm9cJWc2aaKiWR
+- :name: Market Planning
+  :category: Marketing
+  :profile: true
+  :uid: ski_KmCRUaOcxDugRu7
+  :active: true
+  :airtable_id: recbnzAjJ7tlOI9s0
+- :name: Snapchat Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Gn43ctQ3n4YWCYF
+  :active: true
+  :airtable_id: recbpGJPTnbfdVc5N
+- :name: Online Content Creation
+  :category: Marketing
+  :profile: true
+  :uid: ski_mqD4k6dgAa5oGhu
+  :active: true
+  :airtable_id: recbuVwPBcXfSdLOM
+- :name: Press Releases
+  :category: Marketing
+  :profile: true
+  :uid: ski_VEGjMc04qa1uQ16
+  :active: true
+  :airtable_id: recbx3RFwOxOG9nD8
+- :name: Staffing and Recruiting Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_IBcEFFXWr5RrEKB
+  :active: true
+  :airtable_id: recc0ycIyJf6aR5Bp
+- :name: Alternative Medicine Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_K7o42ip5xy9IAC8
+  :active: true
+  :airtable_id: recc6qbjEMde6qf2C
+- :name: Medical Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_rOHGzENUR6hWEvQ
+  :active: true
+  :airtable_id: recc7k5OdB0uyWBzL
+- :name: Small Business Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_J4OSQX2NS2a8os1
+  :active: true
+  :airtable_id: recc9OzbdGgrOex6W
+- :name: Market Trends
+  :category: Marketing
+  :profile: true
+  :uid: ski_B2ZeZt3PTlrzfKp
+  :active: true
+  :airtable_id: reccCwowtmPFZsWr3
+- :name: User Research
+  :category:
+  :profile: false
+  :uid: ski_MpNPQ4r2XoeMU5P
+  :active:
+  :airtable_id: reccIgHyXP8B9caaJ
+- :name: Account Based Marketing
+  :category:
+  :profile: false
+  :uid: ski_lYjMxS83o75XpHs
+  :active:
+  :airtable_id: reccIkezpG0q310yF
+- :name: Digital Direct Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_qwlKBEnFv26vrqw
+  :active: true
+  :airtable_id: reccQ5Zov6U0muP6e
+- :name: Mobile Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_pmHoLMdu9jTES6H
+  :active: true
+  :airtable_id: recccYU3Pk35BqMaj
+- :name: Beverages Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_eTi3agBjtHOYOto
+  :active: true
+  :airtable_id: recceSEozwhuEfx0N
+- :name: Defense & Space Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_9Tz0hG98Tc8bYj5
+  :active: true
+  :airtable_id: recczQzMw4LKBh1p6
+- :name: Branding Research
+  :category: Marketing
+  :profile: true
+  :uid: ski_ja2pyWKZCIARWjo
+  :active: true
+  :airtable_id: recd4TJoDKjEFLvJB
+- :name: Brand Positioning
+  :category: Marketing
+  :profile: true
+  :uid: ski_0DXOBx0kDGxetGv
+  :active: true
+  :airtable_id: recd8Qz7qNOtvPKB5
+- :name: Product Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_WlQh9HE1GAc4jQn
+  :active: true
+  :airtable_id: recd9IRy9p3RTQ5Lw
+- :name: Media Buying
+  :category: Marketing
+  :profile: true
+  :uid: ski_rBR2K75cuGctEst
+  :active: true
+  :airtable_id: recdCSoTb47Y8xI2v
+- :name: Sales Operations
+  :category: Marketing
+  :profile: true
+  :uid: ski_Z9VXa6PQONqXovW
+  :active: true
+  :airtable_id: recdH2GPK1j68U6DV
+- :name: Seminar Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_UsjeKBRlwY6rUGJ
+  :active: true
+  :airtable_id: recdIq5MpNFiKDy0K
+- :name: Rural Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_5I3dGgyxPrRrWxD
+  :active: true
+  :airtable_id: recdWlW1SWxhgkM41
+- :name: Wix
+  :category: Marketing
+  :profile: true
+  :uid: ski_4VGi7x79nFc1t9P
+  :active: true
+  :airtable_id: recdaskv4avSg2DQi
+- :name: Gambling & Casinos Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_cPcuA8At98T0GDh
+  :active: true
+  :airtable_id: recdwsxIJeSFfgnbW
+- :name: Adobe Marketing Cloud
+  :category: Marketing
+  :profile: true
+  :uid: ski_XlJer8XufNDAipR
+  :active: true
+  :airtable_id: rece6TGvmLlFfTnM9
+- :name: Reputation Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_snxaz1dsQIa3cYy
+  :active: true
+  :airtable_id: rece7yL9ERmLzkdlM
+- :name: Agricultural Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_1cjy5aqB5n8YSk9
+  :active: true
+  :airtable_id: rece8ymB66B3LuDXe
+- :name: Business Growth Strategies
+  :category: Marketing
+  :profile: true
+  :uid: ski_mR83ZopzusMbHlV
+  :active: true
+  :airtable_id: receKPzvRVhOxS1z2
+- :name: Reputation Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_8TheqaysNqvSMfj
+  :active: true
+  :airtable_id: recePX5BPeYWZivaE
+- :name: Competitive Analysis
+  :category: Marketing
+  :profile: true
+  :uid: ski_vaHxBNHhi3zjRej
+  :active: true
+  :airtable_id: recePpGNxQVFXjRbZ
+- :name: Interactive Storytelling
+  :category: Marketing
+  :profile: true
+  :uid: ski_lPOM7v2czqD20A6
+  :active: true
+  :airtable_id: receRDdN4jy0M9zPQ
+- :name: Jewelry Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_cMm0pH1ZEsWoAEF
+  :active: true
+  :airtable_id: receeYFujlrqQ6bpC
+- :name: Brand Activation
+  :category: Marketing
+  :profile: true
+  :uid: ski_ajEgNTHLdfNP0kO
+  :active: true
+  :airtable_id: recegEELUezhdjJzd
+- :name: Competitive Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_fT7n49tbQBbG9BU
+  :active: true
+  :airtable_id: receivPZ0dOXx2l0H
+- :name: Corporate Social Media
+  :category: Marketing
+  :profile: true
+  :uid: ski_hN56smyhz7cTOK8
+  :active: true
+  :airtable_id: receqOhZ2GNEDlR8S
+- :name: Search Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_6KJCHjAR92W23At
+  :active: true
+  :airtable_id: recf1NffsiQhLII5I
+- :name: Campaign Execution
+  :category: Marketing
+  :profile: true
+  :uid: ski_eSDVd33yzuc3BqL
+  :active: true
+  :airtable_id: recf90QZRt1oM2nbA
+- :name: Transportation Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_0WWM8xLb4weM0q5
+  :active: true
+  :airtable_id: recfEcmHc15IRJxe2
+- :name: Campaign Strategy Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_Rpbhw3JCM5GUurf
+  :active: true
+  :airtable_id: recfFWOd18pSnqvBP
+- :name: Print Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_eIldBeI5Hje6fz5
+  :active: true
+  :airtable_id: recfO1YEnTZ7mDr4k
+- :name: Spotify Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_nSsMO5ECgbAIYK5
+  :active: true
+  :airtable_id: recfQEp6FWQIG3jLj
+- :name: Airlines Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_WnpbmJPvDRMZvuI
+  :active: true
+  :airtable_id: recfSyeNQXyNybZij
+- :name: Catalog Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_F79nv5yXqpbJABA
+  :active: true
+  :airtable_id: recflTx8stL1VCvjh
+- :name: Association Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_emRaBtSgS2qyvrN
+  :active: true
+  :airtable_id: recfxe8qfcGShIvrk
+- :name: Content Management System (CMS)
+  :category: Marketing
+  :profile: true
+  :uid: ski_RIJK8UIixf23DsN
+  :active: true
+  :airtable_id: recg27KFeNt2piMuB
+- :name: Human Resources Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_rQQwEsnHUZFdJDL
+  :active: true
+  :airtable_id: recgGs946elh4FjLt
+- :name: Marketo
+  :category: Marketing
+  :profile: true
+  :uid: ski_FqbUioVZukrHYf8
+  :active: true
+  :airtable_id: recgNJLvC21eLovgi
+- :name: Ad Tracking
+  :category: Marketing
+  :profile: true
+  :uid: ski_ylt1ro4raJjWOp4
+  :active: true
+  :airtable_id: recgUUJ56P06fHvQD
+- :name: SEO Copywriting
+  :category: Marketing
+  :profile: true
+  :uid: ski_pKkUyUfMOmQ4Cmr
+  :active: true
+  :airtable_id: recgbR8cNqSMRpZHl
+- :name: Co-Branding
+  :category: Marketing
+  :profile: true
+  :uid: ski_qowHi9JImpIi5L4
+  :active: true
+  :airtable_id: recgdzOFMkiCOLpjv
+- :name: Word Of Mouth Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_mCgjzaZLCVwIfls
+  :active: true
+  :airtable_id: recghWHu3V4M4nm6z
+- :name: Content Production
+  :category: Marketing
+  :profile: true
+  :uid: ski_zU0p3t1wUMz0Iie
+  :active: true
+  :airtable_id: recgiw9sE8wc4AkdY
+- :name: Marketing Procurement
+  :category: Marketing
+  :profile: true
+  :uid: ski_LvHduujM8pdjkPa
+  :active: true
+  :airtable_id: recgm2EK28EnngeYD
+- :name: Launching New Brands
+  :category: Marketing
+  :profile: true
+  :uid: ski_GfAqOtGtBn5fQnw
+  :active: true
+  :airtable_id: recgnSpoHKHqznUHq
+- :name: Customer Intelligence
+  :category: Marketing
+  :profile: true
+  :uid: ski_UdSe8G17FmGSOCk
+  :active: true
+  :airtable_id: recgx8G9iNGq0j5zY
+- :name: Email Design
+  :category: Marketing
+  :profile: true
+  :uid: ski_fKoD7WN1kWKfvwM
+  :active: true
+  :airtable_id: recgxj5fL47ktm2Ie
+- :name: Japanese Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_nODuSFL8u6q6Ovv
+  :active: true
+  :airtable_id: rech5v3c0i1kCaZRr
+- :name: Technical SEO
+  :category: Marketing
+  :profile: true
+  :uid: ski_ADWhNvt5XF9mRyy
+  :active: true
+  :airtable_id: rech6SCpvVVaT6MD2
+- :name: Product Design
+  :category:
+  :profile: false
+  :uid: ski_b0YVHbekGuEKM3T
+  :active:
+  :airtable_id: rechMWtH3EjkX47T4
+- :name: Content Sourcing
+  :category: Marketing
+  :profile: true
+  :uid: ski_6HPfpIAnFoICJr4
+  :active: true
+  :airtable_id: rechPL1NDuLaFdled
+- :name: Shopper Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_kss0edklkJRtiC1
+  :active: true
+  :airtable_id: rechWbkG4RkyITO2X
+- :name: Marketing Operations
+  :category: Marketing
+  :profile: true
+  :uid: ski_aPii9EeCisyr6td
+  :active: true
+  :airtable_id: rechY7hdAQqY0mt9s
+- :name: Conference Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_RRTzfxFmgIvRgOu
+  :active: true
+  :airtable_id: rechjWCHC8JniHQbE
+- :name: C-Level Communications
+  :category: Marketing
+  :profile: true
+  :uid: ski_sYRz6XCq36aDXw8
+  :active: true
+  :airtable_id: rechsLWOZrflKwazb
+- :name: Marketing Plan Creation
+  :category: Marketing
+  :profile: true
+  :uid: ski_aJiVeR4wSFYDTBj
+  :active: true
+  :airtable_id: rechtb58VOBukXR9S
+- :name: Design Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_TsN2f6kS1abjIj5
+  :active: true
+  :airtable_id: rechwOynqmKiAqkwW
+- :name: Online Conversion
+  :category: Marketing
+  :profile: true
+  :uid: ski_ptRnZzqwpxS7h4f
+  :active: true
+  :airtable_id: reci1ycxZSbMiPgEg
+- :name: B2C Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_9zryTDHB10sxyaw
+  :active: true
+  :airtable_id: reciCBh5b3u2lSPYh
+- :name: Ad Exchanges
+  :category: Marketing
+  :profile: true
+  :uid: ski_xIgAwSmAlQQxRUx
+  :active: false
+  :airtable_id: reciL3EHItqzuZ6pv
+- :name: Off-Page SEO
+  :category: Marketing
+  :profile: true
+  :uid: ski_Gs4ddazIjQwKg7J
+  :active: true
+  :airtable_id: recibRgygrcBfaCk0
+- :name: Closed Loop Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Ye7Q0yEdnd4pP61
+  :active: true
+  :airtable_id: recj8dtbuWPczFUTJ
+- :name: Corporate Media
+  :category: Marketing
+  :profile: true
+  :uid: ski_aeyKI77tr0l6hW6
+  :active: true
+  :airtable_id: recjAc2TEEzptnPJB
+- :name: Channel Strategy Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_ocCQW9VXfqMD28L
+  :active: true
+  :airtable_id: recjIUUJYTpllMcIz
+- :name: Film Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_yYJmAW1I7JhrDTZ
+  :active: true
+  :airtable_id: recjQiABVzfd52kKG
+- :name: Doubleclick
+  :category: Marketing
+  :profile: true
+  :uid: ski_4Y9wfYeOxHKCM5D
+  :active: true
+  :airtable_id: recjfZZwAnG6q6h6b
+- :name: Data Analysis
+  :category:
+  :profile: false
+  :uid: ski_niJXh9Q7hLo5lqj
+  :active:
+  :airtable_id: recjsTVI9i0dt2pYV
+- :name: Channel Growth
+  :category: Marketing
+  :profile: true
+  :uid: ski_TA4Kooi6MQmdFyz
+  :active: true
+  :airtable_id: recjuPrmW7VtGwghn
+- :name: Strategic Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_H1HTADJBV6lYgZc
+  :active: true
+  :airtable_id: recjv2pWaVqkxW8PY
+- :name: Pipeline Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_zZU3WtM86vBmQFI
+  :active: true
+  :airtable_id: recjxVHntUE0LeDq0
+- :name: Audience Segmentation
+  :category: Marketing
+  :profile: true
+  :uid: ski_6MbSRMbLpF7zFak
+  :active: true
+  :airtable_id: reck0eUWf76dPIDz1
+- :name: Statistics
+  :category: Marketing
+  :profile: true
+  :uid: ski_ftgDc0Tgc0LqLrq
+  :active: true
+  :airtable_id: reck5VJEHlMnXj7lB
+- :name: New Media
+  :category: Marketing
+  :profile: true
+  :uid: ski_uv7h5pDtDB31UaX
+  :active: true
+  :airtable_id: reck901SOVjXqlNFp
+- :name: Branded Entertainment
+  :category: Marketing
+  :profile: true
+  :uid: ski_PaqZznMqGKEtWgw
+  :active: true
+  :airtable_id: reckDZmcnJE2zPKR4
+- :name: Brand Ambassador Programmes
+  :category: Marketing
+  :profile: true
+  :uid: ski_PDXK0uwdGMwkInw
+  :active: true
+  :airtable_id: reckM20UNmyeeZ9ED
+- :name: Email Campaigning
+  :category: Marketing
+  :profile: true
+  :uid: ski_YdfY7hr9C47ZW3x
+  :active: true
+  :airtable_id: reckNdLxFkT6n95Df
+- :name: Prospect Qualification
+  :category: Marketing
+  :profile: true
+  :uid: ski_IDYf1xyTNebABso
+  :active: true
+  :airtable_id: reckXSMzEw21dQVXD
+- :name: Email List Building
+  :category: Marketing
+  :profile: true
+  :uid: ski_Nv5HpOJCmqqcG4H
+  :active: true
+  :airtable_id: reckYwHrp9ckiN4b8
+- :name: Digital Communication Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_UzEzOb1Zv0wqV3R
+  :active: true
+  :airtable_id: reckdLmQK2YWDyQXC
+- :name: Pull Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_SWJ1K2J8Mt6ee6q
+  :active: true
+  :airtable_id: recki1XfuLNqemxB4
+- :name: Marketing Activation
+  :category: Marketing
+  :profile: true
+  :uid: ski_axJ34v5R90vHzTy
+  :active: true
+  :airtable_id: reckl0tEhLn99FEZb
+- :name: Pricing Strategies
+  :category: Marketing
+  :profile: true
+  :uid: ski_cgj2PPiNl1tcKV6
+  :active: true
+  :airtable_id: reckmQC8CRndsubpb
+- :name: Information Technology Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_9AWacZiP1UmqSET
+  :active: true
+  :airtable_id: reckvvmmTQtt5hCAb
+- :name: Community Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_U31K8JD293SocbN
+  :active: true
+  :airtable_id: recl7bmsYg7nwBATg
+- :name: Media Production
+  :category: Marketing
+  :profile: true
+  :uid: ski_0PLaQO7aYoWP4Io
+  :active: true
+  :airtable_id: reclD4fT6V1VifaoD
+- :name: Unbounce
+  :category: Marketing
+  :profile: true
+  :uid: ski_twWFMtmFvu06F8b
+  :active: true
+  :airtable_id: reclKPalwO5Wsue2p
+- :name: Launching Start-ups
+  :category: Marketing
+  :profile: true
+  :uid: ski_jnS5U9LpGbA63a6
+  :active: true
+  :airtable_id: reclg9U5KuaF3Xyf5
+- :name: Strategic Branding
+  :category: Marketing
+  :profile: true
+  :uid: ski_OByKfszmnmU7Q9a
+  :active: true
+  :airtable_id: reclixcFTZ5bKuHHC
+- :name: Hispanic Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_1XCHHpbLDC4wypN
+  :active: true
+  :airtable_id: reclj4M30wOnKTltY
+- :name: Website Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_ckQV87EKzscuppH
+  :active: true
+  :airtable_id: reclliZ6QVyteSYxS
+- :name: Integrated Multi-Channel Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_ffdNnR1GyBPBdvi
+  :active: true
+  :airtable_id: recltLrWk6CJjQ3eH
+- :name: Sales Channel Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_XUbxOJWZ1bhEEKd
+  :active: true
+  :airtable_id: recluvG6nxR9PMgRU
+- :name: Real Estate Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_0rKjwc9Lrv5g1d8
+  :active: true
+  :airtable_id: recm6Ngu66qrzXnbK
+- :name: Offline Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_8Kz6AjhnAOujGUb
+  :active: true
+  :airtable_id: recmHGmlfhkRCfGEQ
+- :name: Web Content Optimization
+  :category: Marketing
+  :profile: true
+  :uid: ski_VxDHxJIje52ZbZL
+  :active: true
+  :airtable_id: recmLsm5l3rykAePl
+- :name: Remarketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_I2YToB15Yfk64CY
+  :active: true
+  :airtable_id: recmOLiSjLPel4B80
+- :name: Marketing Communications
+  :category: Marketing
+  :profile: true
+  :uid: ski_zkdixYytNOZr6Su
+  :active: true
+  :airtable_id: recmUj72ivBV4nxHC
+- :name: Bing Ads
+  :category: Marketing
+  :profile: true
+  :uid: ski_4gmFhQN1md2M7J0
+  :active: true
+  :airtable_id: recmfbJIh0vCaoLjo
+- :name: Neuromarketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_SVBkxWw5ntOxIMI
+  :active: true
+  :airtable_id: recmiQg4ej0t3Wp1J
+- :name: Food Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Vi6ud5thbSzyfKY
+  :active: true
+  :airtable_id: recmkMx9ea6fJzRG4
+- :name: B2B Marketing Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_A3nluNkZrif7VIs
+  :active: true
+  :airtable_id: recmnIHuatjhfw4B1
+- :name: Conversational Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_vdK55uds7hZ6e0Z
+  :active: true
+  :airtable_id: recmqeij0lxS6Q3Xn
+- :name: Brand Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_Y7pS1ESKQ2lMXPa
+  :active: true
+  :airtable_id: recmrWG3EHqgd3RVX
+- :name: Project Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_AtL6TJTm1KYtQEo
+  :active: true
+  :airtable_id: recmu3dGPyUYAUSwf
+- :name: Consumer Relations
+  :category: Marketing
+  :profile: true
+  :uid: ski_OYVCq93mwQBK4PF
+  :active: true
+  :airtable_id: recnNc28QGpZGPrqo
+- :name: User Experience Design
+  :category: Marketing
+  :profile: true
+  :uid: ski_l39IQot1MTSjXOk
+  :active: true
+  :airtable_id: recnQcyIqJoK9OF0S
+- :name: Instagram
+  :category: Marketing
+  :profile: true
+  :uid: ski_vLQRxZW1CSwq9Jv
+  :active: true
+  :airtable_id: recnSkgCZrrQniSdt
+- :name: Local Search Optimization
+  :category: Marketing
+  :profile: true
+  :uid: ski_293GyICin5KEDg5
+  :active: true
+  :airtable_id: recnXIMbxM3dO7hoI
+- :name: Revenue Modeling
+  :category: Marketing
+  :profile: true
+  :uid: ski_5PoxrIH743gL0ps
+  :active: true
+  :airtable_id: recnhUxRXrOHI1sqg
+- :name: Media Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_3BTnqmTei6gd6Rc
+  :active: true
+  :airtable_id: recnuOAwnPzn6GaPF
+- :name: Multilingual Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_n01sRHaGGeVj3h7
+  :active: true
+  :airtable_id: recnux2sr1mtMfPKS
+- :name: Technical Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Xlt8nvWqvXBVw0l
+  :active: true
+  :airtable_id: recnxUFmb9OcwRj6O
+- :name: Luxury Brand Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_GowB7POe2ZuvK4f
+  :active: true
+  :airtable_id: recnzamfLSHqg4gYg
+- :name: Quantitative Research
+  :category: Marketing
+  :profile: true
+  :uid: ski_RiImh86bDAJ336t
+  :active: true
+  :airtable_id: reco432GLCaTAqxNU
+- :name: Niche Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_IkhWfv8qoYtS2mM
+  :active: true
+  :airtable_id: recoAiltac5ATbGjc
+- :name: Social Media Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_eCN1a71XrM3zpgA
+  :active: true
+  :airtable_id: recoI6VhRZfxaCF5A
+- :name: Brand Tracking
+  :category: Marketing
+  :profile: true
+  :uid: ski_WcBFOjn5MP44Vh8
+  :active: true
+  :airtable_id: recoKnYVtgZ6GeGhR
+- :name: Radio Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_lSfx9BKztIRpcIt
+  :active: true
+  :airtable_id: recofQ1pvNXNlPSgs
+- :name: Adsense
+  :category: Marketing
+  :profile: true
+  :uid: ski_dYf72t9mhbkeE6J
+  :active: true
+  :airtable_id: reconMQaHAAISj2AJ
+- :name: Acquisition Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_f9tPfmfPza5PPg6
+  :active: false
+  :airtable_id: recoq77Aw6e6PCKtH
+- :name: HubSpot
+  :category: Marketing
+  :profile: true
+  :uid: ski_4JT8TIDoLJiSFPk
+  :active: true
+  :airtable_id: recotR6cCxHf01EOk
+- :name: SMS Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_xDambiGYzEBZxdo
+  :active: true
+  :airtable_id: recp9zsuAZ4VoxoiT
+- :name: Promo Videos
+  :category: Marketing
+  :profile: true
+  :uid: ski_RfivR9h3gelWRY1
+  :active: true
+  :airtable_id: recpCeTHNiWZMrs7A
+- :name: Restaurant Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_biT3kdmWqnvB7PP
+  :active: true
+  :airtable_id: recpGLuEbhQXB2PFm
+- :name: Semiconductors Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_wILga6TlkpU5YnA
+  :active: true
+  :airtable_id: recpPzAPOncp63mAg
+- :name: Viral Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_dte1iRQYg1o9ZLm
+  :active: true
+  :airtable_id: recpqkAiet4pZgdG0
+- :name: Reverse Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_zdkrHCd9aEey0Zk
+  :active: true
+  :airtable_id: recptCeRm22EyvMiP
+- :name: Media Placement
+  :category: Marketing
+  :profile: true
+  :uid: ski_K79OJouQswPAQ3Y
+  :active: true
+  :airtable_id: recptKSJfPxIE1c5w
+- :name: Professional Services Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_s2cmbgMUR4TXLMw
+  :active: true
+  :airtable_id: recpwanedfglk4COO
+- :name: Online Lead Generation
+  :category: Marketing
+  :profile: true
+  :uid: ski_zTYYfQGqPPUiz27
+  :active: true
+  :airtable_id: recq9hVgNgj5w9AvZ
+- :name: Face-to-face Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_5RnkHU3gNhol4h8
+  :active: true
+  :airtable_id: recqF4pZ47t2nyJTB
+- :name: Global Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_kK6m8yR0rLyKXEn
+  :active: true
+  :airtable_id: recqQjdWgTA3ZVyE0
+- :name: Motion Pictures and Film Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_CCIS1CUS304fNcr
+  :active: true
+  :airtable_id: recqXkj81LSMKUix1
+- :name: Conversion Tracking
+  :category: Marketing
+  :profile: true
+  :uid: ski_kA2JXjJibUs7gHV
+  :active: true
+  :airtable_id: recqfX0U4vGnXTzs4
+- :name: Furniture Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_YN7EinwqSkHTi7c
+  :active: true
+  :airtable_id: recqgjSmpqfggP4d0
+- :name: Corporate Identity
+  :category: Marketing
+  :profile: true
+  :uid: ski_Q9MrE0ppYTAxjqy
+  :active: true
+  :airtable_id: recqhWQxvInn1Q4v1
+- :name: Snapchat
+  :category: Marketing
+  :profile: true
+  :uid: ski_LtX8pUnLJtfi8Kn
+  :active: true
+  :airtable_id: recqkhU4SXktdvGWI
+- :name: Pinterest
+  :category: Marketing
+  :profile: true
+  :uid: ski_z5IWu2HjTJjV5L0
+  :active: true
+  :airtable_id: recql92Uo5PMXuET8
+- :name: Text Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_iIP4oFR1FOG9fhs
+  :active: true
+  :airtable_id: recqptffkmTCbc4jl
+- :name: Information Services Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_k08CsDQVBvLLNtL
+  :active: true
+  :airtable_id: recr2LBfjCLx78yL3
+- :name: Communications Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_TZqZByTqDcVfLsj
+  :active: true
+  :airtable_id: recr5rQwnDd0XH6rc
+- :name: Commercial Real Estate Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_XKi3Ng6fwf6qWFI
+  :active: true
+  :airtable_id: recr5zWkaUTg99gRr
+- :name: Cross Media Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_8ky7OFyp5TQ6ZpR
+  :active: true
+  :airtable_id: recr6WgWWMwoaNLbO
+- :name: Content Curation
+  :category: Marketing
+  :profile: true
+  :uid: ski_jpuGxLDbvHZG2IC
+  :active: true
+  :airtable_id: recrCyS4saVXuUuqP
+- :name: Eloqua
+  :category: Marketing
+  :profile: true
+  :uid: ski_QCtX7HgJVHwrOxe
+  :active: true
+  :airtable_id: recrIsrHJdiD6YOLt
+- :name: Email Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_3Z4cAAOLw0E5xjV
+  :active: true
+  :airtable_id: recrsg6J0LwX6FFvw
+- :name: Medical Devices Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_0GyXtO9QyLAr3si
+  :active: true
+  :airtable_id: recruh5rJQ2yFJUSx
+- :name: Media Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_QpVaJftsaMHDO96
+  :active: true
+  :airtable_id: recrxfxcUHzM3gYX6
+- :name: KPI Reporting
+  :category: Marketing
+  :profile: true
+  :uid: ski_n2NqC1xaOwB8E2k
+  :active: true
+  :airtable_id: recs9uaEdhr6ljiP6
+- :name: Content Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_HUThwEkivnigBbq
+  :active: true
+  :airtable_id: recsC3EwKnGT0WMsb
+- :name: Brand Protection
+  :category: Marketing
+  :profile: true
+  :uid: ski_mpQMmM80YAcFvws
+  :active: true
+  :airtable_id: recsGgtQJ5ojnVZwN
+- :name: Brand Identity
+  :category: Marketing
+  :profile: true
+  :uid: ski_CArsVWlJZbJSjo0
+  :active: true
+  :airtable_id: recsQdrEhzWjRSgb7
+- :name: Banking Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_U9i16qTCciX4X05
+  :active: true
+  :airtable_id: recskLPibI04XpZuE
+- :name: Web Content Creation
+  :category: Marketing
+  :profile: true
+  :uid: ski_f5HmBzWGeAElw1m
+  :active: true
+  :airtable_id: recsmyb2UNRZOAtlD
+- :name: New Market Growth
+  :category: Marketing
+  :profile: true
+  :uid: ski_X5GqabrnhSwxFeg
+  :active: true
+  :airtable_id: recsoa2nA8AAszvZ4
+- :name: Sales Compensation Planning
+  :category: Marketing
+  :profile: true
+  :uid: ski_FVng36WvwY3Xrgo
+  :active: true
+  :airtable_id: recswKSqgPjveywBq
+- :name: Non-profit Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_KbBwvYErdsbTsDG
+  :active: true
+  :airtable_id: rect1c2F8kHlfqQ3m
+- :name: Cosmetics Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_I5fSl0QNmHunfzh
+  :active: true
+  :airtable_id: rect33eXayFEcqxqr
+- :name: New Account Generation
+  :category: Marketing
+  :profile: true
+  :uid: ski_KgfJphPBq95cb32
+  :active: true
+  :airtable_id: rect5ZJ64r92ABJS1
+- :name: Dental Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_9Hzb5yYSh6d3QdW
+  :active: true
+  :airtable_id: rectCs8gmiTpnCIzx
+- :name: Prezi
+  :category: Marketing
+  :profile: true
+  :uid: ski_AlH2U9rWJJVaJqF
+  :active: true
+  :airtable_id: rectEPsyhDQZpIh3P
+- :name: Web Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_ontZqP38NIhZWXY
+  :active: true
+  :airtable_id: rectMUdRXGCASMHbf
+- :name: Brand Health
+  :category: Marketing
+  :profile: true
+  :uid: ski_C2hp11JSejS1l1J
+  :active: true
+  :airtable_id: rectXDirLfvlaEZFm
+- :name: Computer Hardware Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_fzGBIHncAaDxaiV
+  :active: true
+  :airtable_id: rectZONJM1J5Uz7WD
+- :name: Brand Extensions
+  :category: Marketing
+  :profile: true
+  :uid: ski_D9ccFX17y6avhoN
+  :active: false
+  :airtable_id: recto33s1w4flgFbc
+- :name: Community Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_ox08tRHxbquAeg7
+  :active: true
+  :airtable_id: recuF5ibwmqFYfrOR
+- :name: Strategic Brand Positioning
+  :category: Marketing
+  :profile: true
+  :uid: ski_IQTc4081rO3QyrQ
+  :active: true
+  :airtable_id: recuHyeVzmvkrerYA
+- :name: Localization
+  :category: Marketing
+  :profile: true
+  :uid: ski_wpI0RoAtPCIEH0V
+  :active: true
+  :airtable_id: recuPLTO0tRJwrWnX
+- :name: Brand Asset Management
+  :category: Marketing
+  :profile: true
+  :uid: ski_QrKX6nPecH9V8Uo
+  :active: true
+  :airtable_id: recuY2s4ArU2314SI
+- :name: Energy Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Dm5Gvu5DDwyH9x0
+  :active: true
+  :airtable_id: recua5KWHWsAgxLY4
+- :name: Advertising Research
+  :category: Marketing
+  :profile: true
+  :uid: ski_yhlVvY5x13XNAA6
+  :active: true
+  :airtable_id: recuqQs6bzEpqmKoo
+- :name: Google AdSense
+  :category: Marketing
+  :profile: true
+  :uid: ski_rGOB85eihbu0sqj
+  :active: true
+  :airtable_id: recuqsiQb4Gdce5Nl
+- :name: Partner Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_L5jKB89Xm4i7PNs
+  :active: true
+  :airtable_id: recutHo1LkDb1G5JJ
+- :name: Growth Hacking
+  :category: Marketing
+  :profile: true
+  :uid: ski_BcV1tXVaMp9HciX
+  :active: true
+  :airtable_id: recv22vYQtGAMOMpk
+- :name: Linkedin Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_6R3VhmVerlpSxPq
+  :active: true
+  :airtable_id: recvEJDTYiKzUWVYD
+- :name: Digital Music Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_cFw3AXkQREhKbLf
+  :active: true
+  :airtable_id: recvQi8z5V7bqabpv
+- :name: B2B Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_JbERYt16Gp4QnEf
+  :active: true
+  :airtable_id: recvSC50ym5xuc9zr
+- :name: Search Engine Optimization (SEO)
+  :category: Marketing
+  :profile: true
+  :uid: ski_6xhtLYEyRMwbq8z
+  :active: true
+  :airtable_id: recvSmQYxxdQmYItP
+- :name: Quantitative Analytics
+  :category: Marketing
+  :profile: true
+  :uid: ski_KJg1r9FRBeCwPy4
+  :active: true
+  :airtable_id: recvYTLxw5Wnw7f3z
+- :name: Pay-Per-Click (PPC)
+  :category: Marketing
+  :profile: true
+  :uid: ski_XR7nr9l3Tzosrjp
+  :active: true
+  :airtable_id: recvZE8XLsAkoyXae
+- :name: Keyword Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_YLAP6pV6E9HcRWB
+  :active: true
+  :airtable_id: recvfH4YvfM3COXrg
+- :name: Google Merchant Center
+  :category: Marketing
+  :profile: true
+  :uid: ski_xv1euiIVEKNILbT
+  :active: true
+  :airtable_id: recvfzBcaPI4yT6W5
+- :name: Corporate Branding
+  :category: Marketing
+  :profile: true
+  :uid: ski_FwlWVl9x8VY3qvs
+  :active: true
+  :airtable_id: recvgLFFA6AcWg7JS
+- :name: Marketing Effectiveness
+  :category: Marketing
+  :profile: true
+  :uid: ski_GPL50iveqdyMolG
+  :active: true
+  :airtable_id: recvvtJjEgljDq0Lc
+- :name: Customer Relationship Management (CRM)
+  :category: Marketing
+  :profile: true
+  :uid: ski_sYnTgiaJ2FKEsyr
+  :active: true
+  :airtable_id: recvzYCgDOXLzY1wM
+- :name: Health Care Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Ka4cdwNZAS6kqzK
+  :active: true
+  :airtable_id: recvztSveeXQA0b87
+- :name: Digital Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_wj2WBEWwIWuS6Pa
+  :active: true
+  :airtable_id: recw8Q2SC03eK2SMZ
+- :name: A Test Skill
+  :category:
+  :profile: false
+  :uid: ski_SdIRvpFSpbvZgNe
+  :active:
+  :airtable_id: recwA4M6ohNzgsD80
+- :name: Public Relations (PR)
+  :category: Marketing
+  :profile: true
+  :uid: ski_wAPTSSCRLlFpdDj
+  :active: true
+  :airtable_id: recwHJHB4EcGiQVQA
+- :name: Optimizely
+  :category: Marketing
+  :profile: true
+  :uid: ski_V4s5yOpUsJJIjXO
+  :active: true
+  :airtable_id: recwUuizoBERMHqgQ
+- :name: Spotify
+  :category: Marketing
+  :profile: true
+  :uid: ski_Q0xigfIAAslU34W
+  :active: true
+  :airtable_id: recwbBr7rsYo7LEHa
+- :name: Ad Serving
+  :category: Marketing
+  :profile: true
+  :uid: ski_pjI3TLD4G7zlJpq
+  :active: true
+  :airtable_id: recwuoLrdWprnGL9I
+- :name: Multi-channel Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Jwa9pGDp6p4JY4G
+  :active: true
+  :airtable_id: recwyrOKuQfth006S
+- :name: Promotional Writing
+  :category: Marketing
+  :profile: true
+  :uid: ski_s3DatbZ8uXxa5Vp
+  :active: true
+  :airtable_id: recx0f1SoTjMsqQnB
+- :name: Qualitative Research
+  :category: Marketing
+  :profile: true
+  :uid: ski_T9D3fRddoyQ4cFO
+  :active: true
+  :airtable_id: recx2Jb2tAQ3nnw8R
+- :name: Street Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_QlIdRVgBDeiJKeN
+  :active: true
+  :airtable_id: recx8MZv9ripn9Tjx
+- :name: Promotional Videos
+  :category: Marketing
+  :profile: true
+  :uid: ski_22I4QE969bCyRB9
+  :active: true
+  :airtable_id: recx9FzpBVyL0fg0Q
+- :name: Advertising Law
+  :category:
+  :profile: false
+  :uid: ski_Ttd7e7tIm2LGbCz
+  :active: true
+  :airtable_id: recxHgT0FEWB3EFpw
+- :name: Message Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_7rvSn74s9jF4ayD
+  :active: true
+  :airtable_id: recxRCZ3QSvj5T4zT
+- :name: Recruitment Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_xWOUApMRZ2CHsbS
+  :active: true
+  :airtable_id: recxRdsaLpxzJsFC9
+- :name: Software As A Service (SaaS) Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_SyZlJVLRh6fTheb
+  :active: true
+  :airtable_id: recxWsBmPK5gGCbMl
+- :name: Strategic Content Development
+  :category: Marketing
+  :profile: true
+  :uid: ski_afrIStykF5CbDKM
+  :active: true
+  :airtable_id: recxeRWmC4763ngmy
+- :name: Financial Services Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_iaIN23GNYofxch3
+  :active: true
+  :airtable_id: recxoVP00U3f5NiJl
+- :name: Ad Networks
+  :category: Marketing
+  :profile: true
+  :uid: ski_ONv0hs6cq5c0LZ5
+  :active: true
+  :airtable_id: recxveDrM3H4adW2m
+- :name: E-Commerce Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_kjc5GUevr3jNZZD
+  :active: true
+  :airtable_id: recxwq8CWhye4qPIS
+- :name: Online Retail
+  :category: Marketing
+  :profile: true
+  :uid: ski_VZTx8kYeKuvDpI4
+  :active: true
+  :airtable_id: recyPF6a4KWd9e0qR
+- :name: International Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_VO8PBiLNE6fu1qQ
+  :active: true
+  :airtable_id: recyg8M1F6dq1YAPM
+- :name: Casino Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_Rt0h0kMCNPYKpl8
+  :active: true
+  :airtable_id: recyjr3oZOo9kz81A
+- :name: Below the Line Advertising
+  :category: Marketing
+  :profile: true
+  :uid: ski_TSqqSmPzBo10yhg
+  :active: true
+  :airtable_id: recynrw92Z5TfKHu6
+- :name: Go-to-market Strategy
+  :category: Marketing
+  :profile: true
+  :uid: ski_SWFh8O6rLUsVAJz
+  :active: true
+  :airtable_id: recyrAXePFrNkhfQa
+- :name: Pharmaceuticals Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_DNolc8AlwoLdshK
+  :active: true
+  :airtable_id: recysWc4PRXOvHhwC
+- :name: Product Introduction
+  :category: Marketing
+  :profile: true
+  :uid: ski_hy5Nv7b9gxoL2by
+  :active: true
+  :airtable_id: recyvA29XX650bUy8
+- :name: Fine Art Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_YrLyDm4oqa6QtWk
+  :active: true
+  :airtable_id: recyx4ZsPyM4sc8Zc
+- :name: Market Sizing
+  :category: Marketing
+  :profile: true
+  :uid: ski_itTaK4O9f1lxhOa
+  :active: true
+  :airtable_id: recyzRpGxugGp78nT
+- :name: Organic Growth Strategies
+  :category: Marketing
+  :profile: true
+  :uid: ski_t0mUKgvWM86Tv6A
+  :active: true
+  :airtable_id: reczA65G1D4YNKba6
+- :name: Customer Segmentation
+  :category: Marketing
+  :profile: true
+  :uid: ski_hYaT7HP2BlVAmvE
+  :active: true
+  :airtable_id: reczCZD9Uk9pc7vKK
+- :name: Outsourced Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_0HFJbsJ2USy5zGQ
+  :active: true
+  :airtable_id: reczFrzZ9rQMchsAP
+- :name: Direct Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_UVkUIeQl8F6ra6Z
+  :active: true
+  :airtable_id: reczGT5XMb5cOEnDP
+- :name: Multivariate Testing
+  :category: Marketing
+  :profile: true
+  :uid: ski_IH3QTEAM350youu
+  :active: true
+  :airtable_id: reczM4sfqOfl8m6nq
+- :name: Ad Design
+  :category:
+  :profile: false
+  :uid: ski_RW8CaxnWUi19x9D
+  :active:
+  :airtable_id: reczTDjGePMD7JR3T
+- :name: CPG Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_qcYe2XFn0qphFbc
+  :active: true
+  :airtable_id: reczlAZxaHCp0Qd9n
+- :name: Local Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_1LhWi5uXSc4M0ii
+  :active: true
+  :airtable_id: reczvmrmHBtfcXLSk
+- :name: Ethical Marketing
+  :category: Marketing
+  :profile: true
+  :uid: ski_IwPkIiI7Mng8DkW
+  :active: true
+  :airtable_id: reczvunKOWzhFKG8h
+:industries:
+- :name: Consumer
+  :color: red
+  :active: false
+  :uid: ind_FZBbHiToSQDrJMu
+  :airtable_id: rec00eC0eI9LcKF1m
+- :name: Semiconductor
+  :color: blue
+  :active: false
+  :uid: ind_mIcwst4oQzBD90y
+  :airtable_id: rec0Ii8hERS4gdvFu
+- :name: Video
+  :color: neutral
+  :active: false
+  :uid: ind_sI5FtQ6Fm9B5rqd
+  :airtable_id: rec0TKHyOGnLwPVeN
+- :name: Chemicals
+  :color: blue
+  :active: false
+  :uid: ind_8nW1BzdCW9oeGOi
+  :airtable_id: rec0egnG5rTXUPQCP
+- :name: UX Design
+  :color: orange
+  :active: false
+  :uid: ind_nKZ7ypPpb7wTfgT
+  :airtable_id: rec0k4o9gs5MelYmb
+- :name: Identity Management
+  :color: orange
+  :active: false
+  :uid: ind_8oCIxhdPXHiVoJA
+  :airtable_id: rec0mLKT2bbGPn7Sf
+- :name: Search Engine
+  :color: neutral
+  :active: false
+  :uid: ind_z0IaoiX7PcpQ0jm
+  :airtable_id: rec0qQdaKwhGJavT8
+- :name: Ad Retargeting
+  :color: orange
+  :active: false
+  :uid: ind_XWk37fYKXVQ2xx9
+  :airtable_id: rec0xwLvCkyfn7JOI
+- :name: Social Impact
+  :color: blue
+  :active: false
+  :uid: ind_sQgQyYbNDMGJoM9
+  :airtable_id: rec0yJW2IPdEdFbB7
+- :name: Nanotechnology
+  :color: neutral
+  :active: false
+  :uid: ind_U7BaCrCrZxfpEt3
+  :airtable_id: rec13wQsyKQOyvkBq
+- :name: Education Management
+  :color: neutral
+  :active: false
+  :uid: ind_n3ecE5JFrBY4c8J
+  :airtable_id: rec17pDbr2dTuRaTV
+- :name: Gambling & Casinos
+  :color: orange
+  :active: false
+  :uid: ind_AFe9fkjuRTGplc5
+  :airtable_id: rec1CqCdPwCTojIk2
+- :name: Business Supplies and Equipment
+  :color: cyan
+  :active: false
+  :uid: ind_1VdOIFMLM6G9cZH
+  :airtable_id: rec1NDCDlxgFiGflH
+- :name: Government Relations
+  :color: cyan
+  :active: false
+  :uid: ind_fY3dqSN79iFqjLM
+  :airtable_id: rec1RhwidHUc7prwY
+- :name: Language Learning
+  :color: purple
+  :active: false
+  :uid: ind_tPsNrVKEA3Bbr1b
+  :airtable_id: rec1RvQMVxUUWKgvn
+- :name: Banking
+  :color: purple
+  :active: false
+  :uid: ind_i8U66uDnWCrtds2
+  :airtable_id: rec1V5rp5nSwiQ2s9
+- :name: Professional Training & Coaching
+  :color: yellow
+  :active: false
+  :uid: ind_adD1DkNvdXbJ464
+  :airtable_id: rec1lfLcCBkk2f8zD
+- :name: Recreational Facilities and Services
+  :color: cyan
+  :active: false
+  :uid: ind_IAiRPrt8J2qenPH
+  :airtable_id: rec1m0AZliAUaVvav
+- :name: Executive Office
+  :color: cyan
+  :active: false
+  :uid: ind_yPSREAtNkZpNYHi
+  :airtable_id: rec1mPZBzth4Stedy
+- :name: Association
+  :color: neutral
+  :active: false
+  :uid: ind_MiYqCI5Pb88jXD8
+  :airtable_id: rec1pKee5UeHDgKZe
+- :name: Lead Generation
+  :color: blue
+  :active: false
+  :uid: ind_yg6mFhAZnc5jGhJ
+  :airtable_id: rec1pt4jQScVfqkFc
+- :name: Consumer Electronics
+  :color: red
+  :active: false
+  :uid: ind_YGZ1yDOF2tTp3QF
+  :airtable_id: rec1tdErS4fWmxncV
+- :name: Telecommunications
+  :color: neutral
+  :active: false
+  :uid: ind_JpqxrPygHDfBLHh
+  :airtable_id: rec2PJ0mXIwt2rOXN
+- :name: Leisure
+  :color: purple
+  :active: false
+  :uid: ind_UQRLwHl9O6fTuZx
+  :airtable_id: rec2bOHeGWfmB8Kx5
+- :name: Religious Institutions
+  :color: blue
+  :active: false
+  :uid: ind_Vjc6T6AkyEsGwc2
+  :airtable_id: rec2k8yIf75NC0tnB
+- :name: Solar
+  :color: yellow
+  :active: false
+  :uid: ind_2jAwxQZFVSLJnFL
+  :airtable_id: rec2nlHMqb4j1Gxzp
+- :name: Consulting
+  :color: blue
+  :active: false
+  :uid: ind_xADpAkfq5NjM2g2
+  :airtable_id: rec36FWGcp8RyQHJU
+- :name: Therapeutics
+  :color: cyan
+  :active: false
+  :uid: ind_j19AflGMlAyskBZ
+  :airtable_id: rec3AUys21oAhQOgC
+- :name: GovTech
+  :color: cyan
+  :active: false
+  :uid: ind_wpFCYghQOQDA0iI
+  :airtable_id: rec3DmUZfpb754LTO
+- :name: Ticketing
+  :color: red
+  :active: false
+  :uid: ind_R48Mi7kPUVbNfNZ
+  :airtable_id: rec3EOeDJSpU3qA2E
+- :name: Outsourcing
+  :color: orange
+  :active: false
+  :uid: ind_0JG8IzOTCQwQzup
+  :airtable_id: rec3b2id7RRFwWaIR
+- :name: Consumer Reviews
+  :color: orange
+  :active: false
+  :uid: ind_8Fpfy6u3HwLdwMg
+  :airtable_id: rec3bAZ0yjLM730u2
+- :name: Internet of Things
+  :color: neutral
+  :active: false
+  :uid: ind_MWEJTUIPcA6eRyp
+  :airtable_id: rec3bNUaXwmhz6AcR
+- :name: Charter Schools
+  :color: cyan
+  :active: false
+  :uid: ind_a4495jJTiEWAS94
+  :airtable_id: rec3pt1H2RTAdUi8g
+- :name: Angel Investment
+  :color: orange
+  :active: false
+  :uid: ind_sFH3I57ObDsc5p3
+  :airtable_id: rec46Oi3zF9sSdTeJ
+- :name: Food Production
+  :color: orange
+  :active: false
+  :uid: ind_tnHOo3DkrAWXEGz
+  :airtable_id: rec4Ab8jikuVWeJaC
+- :name: Building Material
+  :color: purple
+  :active: false
+  :uid: ind_QyvVaMb2A09AkAH
+  :airtable_id: rec4SFPLaSTrpmXir
+- :name: Fantasy Sports
+  :color: yellow
+  :active: false
+  :uid: ind_E1NQE0NzCXbWTzc
+  :airtable_id: rec4ekvthh0b4I6DS
+- :name: Fleet Management
+  :color: neutral
+  :active: false
+  :uid: ind_1ZanF4vRG9dozlx
+  :airtable_id: rec4gzHa1AzlWpang
+- :name: Luxury Goods & Jewelry
+  :color: orange
+  :active: false
+  :uid: ind_K5ksIQdD5lKVDAK
+  :airtable_id: rec4obX1x796R55KX
+- :name: Courier Service
+  :color: neutral
+  :active: false
+  :uid: ind_p167l4r3UxW7qpo
+  :airtable_id: rec54fkz7FnqGia3k
+- :name: Management Consulting
+  :color: red
+  :active: false
+  :uid: ind_z09Q0wXFlB505K8
+  :airtable_id: rec59xWB00AkjekWF
+- :name: Market Research
+  :color: green
+  :active: false
+  :uid: ind_Mb9B8KRKVtJRYvZ
+  :airtable_id: rec5gGUmbA4mEBNE5
+- :name: Logistics and Supply Chain
+  :color: orange
+  :active: false
+  :uid: ind_p33qHK5z9UmUqY4
+  :airtable_id: rec5j7dMdDiVmGFC5
+- :name: Text Analytics
+  :color: red
+  :active: false
+  :uid: ind_ph9ACzCFbQ1ZSp0
+  :airtable_id: rec5lYkaaEWEV0G9b
+- :name: Independent Music
+  :color: purple
+  :active: false
+  :uid: ind_DPFHiHidW9p1xCY
+  :airtable_id: rec684NsotPJVt0Ow
+- :name: Consumer Services
+  :color: cyan
+  :active: false
+  :uid: ind_tzNTso0304jflLQ
+  :airtable_id: rec68tNXhWhBPCCAv
+- :name: Computer Hardware
+  :color: red
+  :active: false
+  :uid: ind_IZPI2kWxFrsV7qC
+  :airtable_id: rec69GFMOa6Dm8nr4
+- :name: Nonprofit Organization Management
+  :color: red
+  :active: false
+  :uid: ind_37J1umCPjbe3AKA
+  :airtable_id: rec6PdDUz9AxHiBbJ
+- :name: Facilities Services
+  :color: cyan
+  :active: false
+  :uid: ind_2RxWKwYfxzdPvzc
+  :airtable_id: rec6eXpG8cUX8CuHz
+- :name: Legal Services
+  :color: red
+  :active: false
+  :uid: ind_q2itJQBnSdM8tNN
+  :airtable_id: rec6inetBuWBJSzLG
+- :name: Developer APIs
+  :color: blue
+  :active: false
+  :uid: ind_lWYfWcdH8Y9FuSi
+  :airtable_id: rec6rNIwHzcWlC06o
+- :name: Venture Capital
+  :color: neutral
+  :active: false
+  :uid: ind_5z3777loYCjHfTF
+  :airtable_id: rec71kqwMMFQrWxgz
+- :name: Mineral
+  :color: neutral
+  :active: false
+  :uid: ind_ArMLJFQQnu3PBjE
+  :airtable_id: rec7HlJJwVf2eTKlo
+- :name: Augmented Reality
+  :color: green
+  :active: false
+  :uid: ind_c5XPlQWBUxyZjuk
+  :airtable_id: rec7NH35lCkx6Isu5
+- :name: Film Production
+  :color: cyan
+  :active: false
+  :uid: ind_U3cpPYvaAcIZU2p
+  :airtable_id: rec7PCMqaZa6NmizK
+- :name: Writing and Editing
+  :color: blue
+  :active: false
+  :uid: ind_DaWCFjrJzgNLZFA
+  :airtable_id: rec7PrtBN6gRlXv6Z
+- :name: Film
+  :color: red
+  :active: false
+  :uid: ind_0AabqQjR0ReEYW7
+  :airtable_id: rec7TrcCBoDwcUTym
+- :name: Compliance
+  :color: green
+  :active: false
+  :uid: ind_xlp4krxJase8eJv
+  :airtable_id: rec7VIjSguP7I79nc
+- :name: Medical Devices
+  :color: purple
+  :active: false
+  :uid: ind_H8XUurBN7KCbIQi
+  :airtable_id: rec7ajODTKZJ859MY
+- :name: 3D Printing
+  :color: green
+  :active: false
+  :uid: ind_muv33ILBcegv0VB
+  :airtable_id: rec7epQ3FdAbcrbSu
+- :name: Amusement Park and Arcade
+  :color: green
+  :active: false
+  :uid: ind_PottRwEUFY560Qq
+  :airtable_id: rec7koKxB2fWVPsxv
+- :name: Website Development
+  :color: yellow
+  :active: false
+  :uid: ind_OCAmo1SqPzGjNpA
+  :airtable_id: rec7kyhlJHCbRisk0
+- :name: Affiliate Marketing
+  :color: red
+  :active: false
+  :uid: ind_zKFzuWXiGXfT4Xd
+  :airtable_id: rec7l0cqkCIoMJbY1
+- :name: Retail
+  :color: green
+  :active: true
+  :uid: ind_YX9nOgaVSaWvjQr
+  :airtable_id: rec7qBuPv8GCBALl8
+- :name: Brand Marketing
+  :color: neutral
+  :active: false
+  :uid: ind_9H7hy3R7LBS4C5P
+  :airtable_id: rec7qW3ZNLNAZNXS9
+- :name: Assistive Technology
+  :color: purple
+  :active: false
+  :uid: ind_4pV2K9N1n319uaC
+  :airtable_id: rec7r5oKH0sFr2ywh
+- :name: Program Development
+  :color: blue
+  :active: false
+  :uid: ind_BnWlIYuL16nskU4
+  :airtable_id: rec8CSGgGRYYFkHVw
+- :name: Casual Games
+  :color: red
+  :active: false
+  :uid: ind_bJ3QrGAO1sBv8vM
+  :airtable_id: rec8U46jemxgndVIN
+- :name: Data Visualization
+  :color: purple
+  :active: false
+  :uid: ind_0MGkPzlx5wUEWE2
+  :airtable_id: rec8mBGgGlD6p1hzr
+- :name: Mechanical Engineering
+  :color: blue
+  :active: false
+  :uid: ind_diKdmC4CPfJ6bK5
+  :airtable_id: rec8uWEKDpPL22xGH
+- :name: Rehabilitation
+  :color: cyan
+  :active: false
+  :uid: ind_n435eUXC7dR4VkP
+  :airtable_id: rec8ukFGE5oLk0FAk
+- :name: Ad Server
+  :color: red
+  :active: false
+  :uid: ind_fLKfVZDz2hy5KMS
+  :airtable_id: rec8xj2uCABVxCVfj
+- :name: Legal Tech
+  :color: neutral
+  :active: false
+  :uid: ind_X1pOeefuf88YPWm
+  :airtable_id: rec9B18Yv6ehZAf2M
+- :name: Renewables & Environment
+  :color: green
+  :active: false
+  :uid: ind_WLQFnkCOHCEoRTA
+  :airtable_id: rec9PmJhSBsGZlXiT
+- :name: Home Decor
+  :color: cyan
+  :active: false
+  :uid: ind_r158Uzw7zBzs5Vz
+  :airtable_id: rec9U7evG61GL9JLv
+- :name: Equestrian
+  :color: neutral
+  :active: false
+  :uid: ind_KWWhyQkBd3mpnXb
+  :airtable_id: rec9WfT4Hu2G5v0ZA
+- :name: Call Center
+  :color: neutral
+  :active: false
+  :uid: ind_KxMTBMUnhrkUm96
+  :airtable_id: rec9fe4adTTaAIDio
+- :name: Recruitment
+  :color: green
+  :active: false
+  :uid: ind_x8FCFQ6eOyVQd7f
+  :airtable_id: rec9ry9JBhHSk6Lsk
+- :name: Mobile Apps
+  :color: purple
+  :active: false
+  :uid: ind_dU9NwSodZrpKavl
+  :airtable_id: rec9xvJ8Y0pB6qM9H
+- :name: Internet
+  :color: orange
+  :active: false
+  :uid: ind_m9ZcnDFQ3s8Q8cC
+  :airtable_id: recA68C7aqllUemYa
+- :name: Enterprise Software
+  :color: green
+  :active: false
+  :uid: ind_s6iOHOssPL8ltc0
+  :airtable_id: recATk2Tt6kOnlg2c
+- :name: Investment Management
+  :color: green
+  :active: false
+  :uid: ind_2nMEmPwlnZV1Uuu
+  :airtable_id: recAU86Hox7hfIW8b
+- :name: Online Portals
+  :color: neutral
+  :active: false
+  :uid: ind_p0dXOQcRAPBizgB
+  :airtable_id: recAb68mVvPhDNY9S
+- :name: CivicTech
+  :color: green
+  :active: false
+  :uid: ind_Y7cLstOtQVUHDFA
+  :airtable_id: recAcq2KPumuvljyu
+- :name: Local Business
+  :color: neutral
+  :active: false
+  :uid: ind_yWV9l2EdzZrgSyV
+  :airtable_id: recAefFe51ScrAa3M
+- :name: Semiconductors
+  :color: green
+  :active: false
+  :uid: ind_FHlK8CmB5fh0r3X
+  :airtable_id: recAgJ64BttNtpcs2
+- :name: Food and Beverage
+  :color: neutral
+  :active: false
+  :uid: ind_CYowNWUdUKMWMWR
+  :airtable_id: recAhKPraMbv2oksF
+- :name: Direct Sales
+  :color: neutral
+  :active: false
+  :uid: ind_2iZhIytG59jv7je
+  :airtable_id: recAmphacaqIxhAlU
+- :name: Commercial Insurance
+  :color: purple
+  :active: false
+  :uid: ind_46USjFGWTbRU6lP
+  :airtable_id: recAmrXfhb33cwOk1
+- :name: Analytics
+  :color: purple
+  :active: false
+  :uid: ind_887hAUhLn5n1ZCD
+  :airtable_id: recAv62wy1FIFsebT
+- :name: EdTech
+  :color: orange
+  :active: false
+  :uid: ind_4gzZr0lxsxkhGUp
+  :airtable_id: recB1uNs9GW7jb4mp
+- :name: Oil and Gas
+  :color: neutral
+  :active: false
+  :uid: ind_GBqsa3zuz70LWCY
+  :airtable_id: recB8gs5spxvFa8Oy
+- :name: Celebrity,
+  :color: purple
+  :active: false
+  :uid: ind_dXeNdXr5YkyBjYw
+  :airtable_id: recBScwICAqM2jm4h
+- :name: Video Streaming
+  :color: purple
+  :active: false
+  :uid: ind_0pmLjFDfH6ENcn4
+  :airtable_id: recBtCfDqxQXQFWJP
+- :name: Commercial Real Estate
+  :color: cyan
+  :active: false
+  :uid: ind_7ViQNRohzUxUvaj
+  :airtable_id: recC3gGfDWK8hue7W
+- :name: Bakery
+  :color: blue
+  :active: false
+  :uid: ind_i31UQUON50mGAeJ
+  :airtable_id: recC4TA5sNI0HHh0y
+- :name: Electronic Health Record (EHR)
+  :color: green
+  :active: false
+  :uid: ind_LoPX9M2LLjLmX4x
+  :airtable_id: recCCwyGRkTk5PY2u
+- :name: Non Profit
+  :color: purple
+  :active: false
+  :uid: ind_1yt9vW4yZoJ4djk
+  :airtable_id: recCIGK0P5DTxt0pH
+- :name: Plastics and Rubber Manufacturing
+  :color: neutral
+  :active: false
+  :uid: ind_mxVnKLnVyjYRrin
+  :airtable_id: recCTY6dcZ4DjUwsf
+- :name: Service Industry
+  :color: orange
+  :active: false
+  :uid: ind_paV1kyTAaUnaIgW
+  :airtable_id: recCVMXzU5BYKcmD9
+- :name: Children
+  :color: orange
+  :active: false
+  :uid: ind_ootd7GQXERxLdPe
+  :airtable_id: recCltgkFDtkDntFv
+- :name: Corporate Training
+  :color: orange
+  :active: false
+  :uid: ind_V0IH6ECPZPt2g4G
+  :airtable_id: recCm0FSjmP7MWjRj
+- :name: SEO
+  :color: purple
+  :active: false
+  :uid: ind_haUbEFaB6MipxDV
+  :airtable_id: recCsUOi8PMx5d3iz
+- :name: Assisted Living
+  :color: purple
+  :active: false
+  :uid: ind_fkME9sgr2IlNArs
+  :airtable_id: recCwiYFOrgMIq6mM
+- :name: Paper & Forest Products
+  :color: blue
+  :active: false
+  :uid: ind_wt46u5evga36hVl
+  :airtable_id: recD6ZRCf1S2CVio6
+- :name: Industrial Manufacturing
+  :color: cyan
+  :active: false
+  :uid: ind_WHyGsZl25uTwVgf
+  :airtable_id: recD8VqB4BHYvwGFg
+- :name: Marketing
+  :color: blue
+  :active: false
+  :uid: ind_GFlRWgn8404Qf9u
+  :airtable_id: recDJpmtTPvCA227u
+- :name: Think Tanks
+  :color: blue
+  :active: false
+  :uid: ind_QXosHMDg0YcwJJb
+  :airtable_id: recDQjIW2APpmJClb
+- :name: Architecture
+  :color: green
+  :active: false
+  :uid: ind_XYsqzGQ809UzdpV
+  :airtable_id: recDRXexafOod2qZW
+- :name: Cosmetic Surgery
+  :color: yellow
+  :active: false
+  :uid: ind_YUqb4xwnJhTF2VZ
+  :airtable_id: recDVwAvpHcrFgsge
+- :name: Video Advertising
+  :color: red
+  :active: false
+  :uid: ind_BzuUr4BWItQVSag
+  :airtable_id: recDeHWzh52Gni3V9
+- :name: Home Improvement
+  :color: green
+  :active: false
+  :uid: ind_AgGNUlIHbW5eV6O
+  :airtable_id: recEJ6KHdkmEjwHZd
+- :name: Coffee
+  :color: purple
+  :active: false
+  :uid: ind_xowdHej3zRu4I2k
+  :airtable_id: recEc9DwPJEr3TK1e
+- :name: Primary/Secondary Education
+  :color: neutral
+  :active: false
+  :uid: ind_PiSfSg1D9mYX0Ck
+  :airtable_id: recF92Ob8b4SY3adg
+- :name: Public Transportation
+  :color: yellow
+  :active: false
+  :uid: ind_WRnniPz0iKaa1nJ
+  :airtable_id: recF99qiYk9vFQi92
+- :name: Mining & Metals
+  :color: yellow
+  :active: false
+  :uid: ind_f9ezIJJvXluCS7r
+  :airtable_id: recFmZtDQGHua8EHI
+- :name: Wellness
+  :color: green
+  :active: false
+  :uid: ind_heuZfagjGbvzVf6
+  :airtable_id: recFrQUCftDETTxbG
+- :name: Cloud Data Services
+  :color: green
+  :active: false
+  :uid: ind_U5s9wYAv8vG6Czl
+  :airtable_id: recFu5hnWsh1IpI2R
+- :name: Digital Media
+  :color: blue
+  :active: false
+  :uid: ind_UufShIRNFTHDbbV
+  :airtable_id: recG5rxT5FIxA6ZRL
+- :name: Software Engineering
+  :color: orange
+  :active: false
+  :uid: ind_9UmT6CxIXMHtqVq
+  :airtable_id: recG9jlWH9ALvoZPw
+- :name: Social Shopping
+  :color: blue
+  :active: false
+  :uid: ind_x7qein15ZkRJjZd
+  :airtable_id: recGCxnnxoiHNPj8H
+- :name: Google
+  :color: purple
+  :active: false
+  :uid: ind_G7cPcUvbqX3W17v
+  :airtable_id: recGaeaDGfeSAK906
+- :name: B2B
+  :color: cyan
+  :active: false
+  :uid: ind_uEZml0WIkzxTxOE
+  :airtable_id: recGcGUImxpbvpBBk
+- :name: Supermarkets
+  :color: yellow
+  :active: false
+  :uid: ind_5xJJUMotKKVfK86
+  :airtable_id: recGjyidLSsBP51JO
+- :name: Music
+  :color: red
+  :active: false
+  :uid: ind_lDsSUj8vcBFED6d
+  :airtable_id: recGkVg8y7ZXQozlS
+- :name: Laundry and Dry-cleaning
+  :color: cyan
+  :active: false
+  :uid: ind_ldt8y8vpJBP7I7g
+  :airtable_id: recGmcXxGpfmGWhJe
+- :name: Waste Management
+  :color: purple
+  :active: false
+  :uid: ind_3YjHCU3kT28rp1D
+  :airtable_id: recGxhaE1G9cqjyit
+- :name: Email Marketing
+  :color: neutral
+  :active: false
+  :uid: ind_2kUjXUuuzqI9Lny
+  :airtable_id: recGypYgpBgjTLUDf
+- :name: Technology
+  :color: red
+  :active: true
+  :uid: ind_XZfYrJvN5Ebaza3
+  :airtable_id: recGzNlQXRzJO0gaj
+- :name: Franchise
+  :color: purple
+  :active: false
+  :uid: ind_tePPOvPObkKkS3U
+  :airtable_id: recH1adFTGUMU4Eq6
+- :name: Resorts
+  :color: green
+  :active: false
+  :uid: ind_m8bG9hYE7Mo66XQ
+  :airtable_id: recH90xqwB3vIQ2La
+- :name: Gambling
+  :color: purple
+  :active:
+  :uid: ind_p5luFSBbOabo3ab
+  :airtable_id: recHW1HGRSusQA3NW
+- :name: Travel Agency
+  :color: red
+  :active: false
+  :uid: ind_2llc2zKeDMK27kZ
+  :airtable_id: recHdt3qcanmjqQUJ
+- :name: Art
+  :color: neutral
+  :active: false
+  :uid: ind_ce26ooj4Vri31aK
+  :airtable_id: recHeQ5Gd56Gd1K8T
+- :name: Energy Efficiency
+  :color: yellow
+  :active: false
+  :uid: ind_AUdL5MSdRWFobgg
+  :airtable_id: recHirWAQBWaZFQmV
+- :name: Casino
+  :color: cyan
+  :active: false
+  :uid: ind_JGbBcZIdhICGUS7
+  :airtable_id: recHneLzAiwId4fTM
+- :name: Medical
+  :color: cyan
+  :active: false
+  :uid: ind_xs8iAaV6WqWtfu9
+  :airtable_id: recHw0vouw80jiZ6g
+- :name: Lifestyle
+  :color: purple
+  :active: false
+  :uid: ind_KTCNVZz3vlrmdCt
+  :airtable_id: recI1xz8Sy2tJmy8I
+- :name: Computer & Network Security
+  :color: blue
+  :active: false
+  :uid: ind_1pb6QoRyhMs7hM0
+  :airtable_id: recIFBxExE94eV7xD
+- :name: Stock Exchanges
+  :color: purple
+  :active: false
+  :uid: ind_Ix0NSo0QH2oN8Xg
+  :airtable_id: recILrkkmStoVhPla
+- :name: Concerts
+  :color: green
+  :active: false
+  :uid: ind_PEtRhBLK6Eu65F3
+  :airtable_id: recIOZdjg6MqBtkVi
+- :name: Food Delivery
+  :color: green
+  :active: false
+  :uid: ind_XO32RFuAC9qLabz
+  :airtable_id: recIPezssgKRFB0qT
+- :name: Food & Beverages
+  :color: green
+  :active: false
+  :uid: ind_RisISrGH6VqtvW8
+  :airtable_id: recIXXnhaZt6vpQ5t
+- :name: Design
+  :color: blue
+  :active: false
+  :uid: ind_B7Wlh816JtOxQ3g
+  :airtable_id: recIjFeeA0AhJQryF
+- :name: Data Storage
+  :color: neutral
+  :active: false
+  :uid: ind_kNrtoxYtjkmfom0
+  :airtable_id: recIlpBJFPLvSZtTw
+- :name: Psychology
+  :color: blue
+  :active: false
+  :uid: ind_IcmaqiBuzWvpPb4
+  :airtable_id: recImwYwjX5C1CNnu
+- :name: Customer Service
+  :color: orange
+  :active: false
+  :uid: ind_F6lmgcOe5N1ywu7
+  :airtable_id: recIuE6VUlwYn1pXE
+- :name: Museums and Historical Sites
+  :color: orange
+  :active: false
+  :uid: ind_MnOxTVX1xpstxBM
+  :airtable_id: recIuECb2crL0jkg7
+- :name: Employment
+  :color: orange
+  :active: false
+  :uid: ind_sSEapG7hxDB2ybj
+  :airtable_id: recIuFSK6jsI69n46
+- :name: Machinery
+  :color: orange
+  :active: false
+  :uid: ind_JzKiEHvIdvvmnsK
+  :airtable_id: recJ6D7192egxwre9
+- :name: Hospital & Health Care
+  :color: orange
+  :active: false
+  :uid: ind_iRrXxMhr2WIkUKt
+  :airtable_id: recJ9SM1Wyvesohe2
+- :name: Shopping Mall
+  :color: red
+  :active: false
+  :uid: ind_Xk3TT1aaXqxyZNh
+  :airtable_id: recJARQgo8JEXnDdn
+- :name: Health Diagnostics
+  :color: cyan
+  :active: false
+  :uid: ind_rMWxEMV2fvFE1A1
+  :airtable_id: recJhKGbC3VLppwcy
+- :name: Performing Arts
+  :color: cyan
+  :active: false
+  :uid: ind_qLoZcyUYaTaXIxY
+  :airtable_id: recJllVcbJrvRyTb4
+- :name: Pharmaceutical
+  :color: cyan
+  :active: false
+  :uid: ind_W5MEFk8kDyaroC3
+  :airtable_id: recK26RuUhcpFYWu7
+- :name: Arts and Crafts
+  :color: green
+  :active: false
+  :uid: ind_EHpoESTnA3INgVZ
+  :airtable_id: recKAnZmxQeqGvaOm
+- :name: Event Management
+  :color: red
+  :active: false
+  :uid: ind_rHdFLjy3LeNLiJz
+  :airtable_id: recKLH5yF0xzaQ3fY
+- :name: Real Estate Investment
+  :color: purple
+  :active: false
+  :uid: ind_rhxZIeSmwpEQE7g
+  :airtable_id: recKVQV57hhdHckV0
+- :name: Music Streaming
+  :color: orange
+  :active: false
+  :uid: ind_O5NweW6aUm8K6L3
+  :airtable_id: recKfEF5X8LshZMcW
+- :name: Industrial Engineering
+  :color: green
+  :active: false
+  :uid: ind_yEn2uXqmtsaqNeo
+  :airtable_id: recKfRur0dF7EdyJf
+- :name: Software
+  :color: yellow
+  :active: true
+  :uid: ind_MGXKD8zRwzGkY1Q
+  :airtable_id: recKhe2qR11HdCdzE
+- :name: Ad Network
+  :color: red
+  :active: false
+  :uid: ind_1jqVZvN5wR8LfPJ
+  :airtable_id: recKraxVKtkAuCBhh
+- :name: Big Data
+  :color: yellow
+  :active: false
+  :uid: ind_WAEtv1uG4Wax52J
+  :airtable_id: recL0HkjI73X3LxgC
+- :name: Field Support
+  :color: red
+  :active: false
+  :uid: ind_6Ly3fpjsSRhAnFV
+  :airtable_id: recL4Lc3XS2KYQXpJ
+- :name: Communities
+  :color: yellow
+  :active: false
+  :uid: ind_U0ocuBGxNcfOMYj
+  :airtable_id: recLEUCKTvLIrM39F
+- :name: Alternative Dispute Resolution
+  :color: red
+  :active: false
+  :uid: ind_AthylD3L0JenHTL
+  :airtable_id: recLU0kdRQWpNROrE
+- :name: Data Integration
+  :color: red
+  :active: false
+  :uid: ind_Pyac74o4DvGILvg
+  :airtable_id: recLXe3U52DJ65YMC
+- :name: Professional Services
+  :color: blue
+  :active: false
+  :uid: ind_0UgYrYgNvJXEkP3
+  :airtable_id: recLe6xeHjzZ56QC1
+- :name: Graphic Design
+  :color: red
+  :active: false
+  :uid: ind_ocD4NAJBlk3K0Qd
+  :airtable_id: recLgn6OQlQcQnV5O
+- :name: Social Media Advertising
+  :color: green
+  :active: false
+  :uid: ind_D6zX1VlqnH2wLjG
+  :airtable_id: recLifV6g6PnqgvqS
+- :name: Music Education
+  :color: orange
+  :active: false
+  :uid: ind_NoLlummnzY2YprA
+  :airtable_id: recLnTmSyRDLML0ty
+- :name: Cosmetics
+  :color: blue
+  :active: false
+  :uid: ind_D0KgF55CTCzpPWx
+  :airtable_id: recLzOcQeWteIAuXa
+- :name: Biopharma
+  :color: purple
+  :active: false
+  :uid: ind_cqd2sEurOMRsd8O
+  :airtable_id: recMMCpqWfSRK6kmb
+- :name: Import and Export
+  :color: green
+  :active: false
+  :uid: ind_jcJvn5pMDgGkO4s
+  :airtable_id: recMMzD6U69VQ5oLq
+- :name: Direct Marketing
+  :color: neutral
+  :active: false
+  :uid: ind_CG8WGBe9sBBcrWt
+  :airtable_id: recMOoTi5qNKfr87g
+- :name: Creative Agency
+  :color: orange
+  :active: false
+  :uid: ind_Lt3WkvgT3EfkWcV
+  :airtable_id: recMTAveNjXuboFW6
+- :name: User Acquisition
+  :color: orange
+  :active: false
+  :uid: ind_X8CIHyfXANAOyPC
+  :airtable_id: recMhGWPvHom1cKUv
+- :name: Venture Capital & Private Equity
+  :color: cyan
+  :active: false
+  :uid: ind_zhefOobwFEasfky
+  :airtable_id: recN43Zb750LbwXCC
+- :name: Risk Management
+  :color: yellow
+  :active: false
+  :uid: ind_CD8K8IIPbkuSamM
+  :airtable_id: recN4AhFits9D5umc
+- :name: Warehousing
+  :color: orange
+  :active: false
+  :uid: ind_PFlpjNaYHMvL6Zk
+  :airtable_id: recNQA5GZLMIOccd9
+- :name: Consumer Research
+  :color: orange
+  :active: false
+  :uid: ind_tWnjuQ4JLUDd501
+  :airtable_id: recNdgZMQGPqIXKAP
+- :name: Public Safety
+  :color: cyan
+  :active: false
+  :uid: ind_H2SWvICyOXukp6a
+  :airtable_id: recNkbgO7p1LaDDlk
+- :name: Meeting Software
+  :color: blue
+  :active: false
+  :uid: ind_WHPvZZ2zFItl5Hg
+  :airtable_id: recNoVOR4HvCBP8No
+- :name: Aviation & Aerospace
+  :color: neutral
+  :active: false
+  :uid: ind_LEYaviSprn4K5tR
+  :airtable_id: recNqmzBSB3jyHdPc
+- :name: Web Apps
+  :color: neutral
+  :active: false
+  :uid: ind_DqE73ZGuQIVHtmg
+  :airtable_id: recO7EgKbI77JlGl2
+- :name: Local Advertising
+  :color: cyan
+  :active: false
+  :uid: ind_LlyJ6iMZuQLDcOQ
+  :airtable_id: recO9rG8DQjspnDYz
+- :name: SEM
+  :color: green
+  :active: false
+  :uid: ind_XJGTXOWPTPRJyTE
+  :airtable_id: recOGGyerr7tb0rZ3
+- :name: Smart Building
+  :color: orange
+  :active: false
+  :uid: ind_fo4M5Sidq3QFYcu
+  :airtable_id: recOH4b7s4W6yXNuc
+- :name: Enterprise Resource Planning (ERP)
+  :color: neutral
+  :active: false
+  :uid: ind_D3JhY7OEl0HZrs0
+  :airtable_id: recObbx5HRkakwSGb
+- :name: Gaming
+  :color: green
+  :active: false
+  :uid: ind_qJReWusylamOisg
+  :airtable_id: recOkcWBKOGmSw4ZI
+- :name: Shipbuilding
+  :color: red
+  :active: false
+  :uid: ind_EDtSMfnuvxCb13h
+  :airtable_id: recP0JqvG9LrxMvn5
+- :name: Individual & Family Services
+  :color: green
+  :active: false
+  :uid: ind_TmHcXbEHD76y8oM
+  :airtable_id: recP0oaC1dJ9CcTp8
+- :name: Non-Profit Education
+  :color: yellow
+  :active: false
+  :uid: ind_afS482keenlesNa
+  :airtable_id: recPOCkEEskW6j15C
+- :name: Business Information Systems
+  :color: purple
+  :active: false
+  :uid: ind_uStvyAcjrY7CCvo
+  :airtable_id: recPWNzu8dKfrgqQw
+- :name: Recreation
+  :color: blue
+  :active: false
+  :uid: ind_e8APavXzGbmOTUx
+  :airtable_id: recPWk7uEfEYfvNN3
+- :name: Rental
+  :color: cyan
+  :active: false
+  :uid: ind_Ts046VCThnOmMWD
+  :airtable_id: recPXkUWTf6l8Wo8d
+- :name: Personal Health
+  :color: red
+  :active: false
+  :uid: ind_Mit1hxA68cd5woy
+  :airtable_id: recPbIfQEn8yPI7OJ
+- :name: Advertising
+  :color: neutral
+  :active: false
+  :uid: ind_xzCBcL8PCemDvrW
+  :airtable_id: recPqNvATLNhfWoBj
+- :name: Packaging Services
+  :color: orange
+  :active: false
+  :uid: ind_JriGKtuNs8wL2ey
+  :airtable_id: recPvdw7koTDbspXR
+- :name: Web Design
+  :color: blue
+  :active: false
+  :uid: ind_kIYKLeyctH6S1N9
+  :airtable_id: recPwT1rLo6qecCFX
+- :name: Marketing Agency
+  :color: neutral
+  :active: false
+  :uid: ind_uaViY5HHElwABBJ
+  :airtable_id: recPz8h1ZVKJ282vI
+- :name: Restaurants
+  :color: neutral
+  :active: false
+  :uid: ind_dj67AdlrikA5UQQ
+  :airtable_id: recQ80cV54jQDREnY
+- :name: Electronics
+  :color: purple
+  :active: false
+  :uid: ind_na3751DcnA7HH2p
+  :airtable_id: recQBGGNuY1dwyL60
+- :name: Personal Development
+  :color: orange
+  :active: false
+  :uid: ind_7k2Y0dn5ptUNc6N
+  :airtable_id: recQCnYq3BRuxcTxM
+- :name: Recycling
+  :color: blue
+  :active: false
+  :uid: ind_FcI4pESJ6KkcCJi
+  :airtable_id: recQENKrNxTX5E0v3
+- :name: Adventure Travel
+  :color: green
+  :active: false
+  :uid: ind_XMfdNYkEXc0VTHE
+  :airtable_id: recQIJELomDcCtYls
+- :name: Audio
+  :color: orange
+  :active: false
+  :uid: ind_Lik0Ts8IDzj6XiN
+  :airtable_id: recQbqLoOKU7RFyhd
+- :name: News
+  :color: purple
+  :active: false
+  :uid: ind_SFPFFg6ebvr7q4w
+  :airtable_id: recQdccZg2uNxxvdd
+- :name: Medical Technology
+  :color: cyan
+  :active: false
+  :uid: ind_FWhxaNKjciPEiQ1
+  :airtable_id: recQmRIyjPOEgi6bL
+- :name: Wine and Spirits
+  :color: green
+  :active: false
+  :uid: ind_x2XnqrSkPzSOlFY
+  :airtable_id: recR0Hguk1Hett2Th
+- :name: Information Technology
+  :color: blue
+  :active: false
+  :uid: ind_2KRPZfUouCWuYNn
+  :airtable_id: recR3Sjtpz7umkmgL
+- :name: Consumer Goods
+  :color: red
+  :active: false
+  :uid: ind_iKUr9zeAkS64zLx
+  :airtable_id: recRDCUsMWrTZvGnx
+- :name: Landscaping
+  :color: cyan
+  :active: false
+  :uid: ind_KVeO86C7LTUIcVz
+  :airtable_id: recRYGwVzxABXXQmr
+- :name: Public Relations
+  :color: blue
+  :active: false
+  :uid: ind_qBIK6t4f2vjTrlK
+  :airtable_id: recRYq5QaXpHrG76x
+- :name: Trade Shows
+  :color: yellow
+  :active: false
+  :uid: ind_vqJ3fJClkS3RffW
+  :airtable_id: recRgdtxWxWHeCKER
+- :name: Privacy
+  :color: neutral
+  :active: false
+  :uid: ind_NkphhZCur5Kt34D
+  :airtable_id: recRjir30di0df8pC
+- :name: Broadcast Media
+  :color: cyan
+  :active: false
+  :uid: ind_OYEmrZ0WnKnQlnv
+  :airtable_id: recRpsvoOOYe1u5gO
+- :name: Snack Food
+  :color: neutral
+  :active: false
+  :uid: ind_wg3P4D5oTC6dTTg
+  :airtable_id: recRqorwVo1vHKyQ4
+- :name: Sharing Economy
+  :color: red
+  :active: false
+  :uid: ind_HNBNAMkvJ2wRV0J
+  :airtable_id: recRrgjUfAjkbVCGg
+- :name: Fast-Moving Consumer Goods
+  :color: blue
+  :active: false
+  :uid: ind_1ihIshEHetnb6Gy
+  :airtable_id: recS8GVhVEMIGAyYF
+- :name: Personal Branding
+  :color: purple
+  :active: false
+  :uid: ind_7zDIXivHhQEhLrJ
+  :airtable_id: recSG2KQuktrTjbFo
+- :name: Photography
+  :color: yellow
+  :active: false
+  :uid: ind_4ckUcOy68Kels5H
+  :airtable_id: recSScQkKdrzTakwQ
+- :name: Real Estate
+  :color: green
+  :active: false
+  :uid: ind_WOjsXEquOzYpJhx
+  :airtable_id: recSch8R3FZ404yVQ
+- :name: Defense & Space
+  :color: purple
+  :active: false
+  :uid: ind_vlzwTp552gws5ff
+  :airtable_id: recSf27VxzvDG9aRt
+- :name: Manufacturing
+  :color: orange
+  :active: false
+  :uid: ind_piufdnwEyud7Nd7
+  :airtable_id: recSf8xx56n6hmlLp
+- :name: Mining Technology
+  :color: orange
+  :active: false
+  :uid: ind_eoQjGu8oS6Fkg9B
+  :airtable_id: recSlwbfcuBgiO1pc
+- :name: Apparel
+  :color: red
+  :active: false
+  :uid: ind_2YqU7M4SzITAMfs
+  :airtable_id: recSo22wDLYJPRDdI
+- :name: Database
+  :color: purple
+  :active: false
+  :uid: ind_fCAeyxuWGXercy1
+  :airtable_id: recSpARnjm6Up1X0t
+- :name: Non-Profit Organization Management
+  :color: red
+  :active: false
+  :uid: ind_O2wCorPXY57L06k
+  :airtable_id: recSpXy5e4EHbKobN
+- :name: Home Health Care
+  :color: cyan
+  :active: false
+  :uid: ind_BliAJGqfTnjBVwE
+  :airtable_id: recSusXuuDs2SfkVx
+- :name: Genetics
+  :color: purple
+  :active: false
+  :uid: ind_9LUR77uxTfW1QWR
+  :airtable_id: recT32MPThr505ZtD
+- :name: SaaS
+  :color: orange
+  :active: true
+  :uid: ind_RxacLT3nQDMArnw
+  :airtable_id: recTCh7Ra8oxujtjc
+- :name: Cyber Security
+  :color: green
+  :active: false
+  :uid: ind_DS852cqPppgV2gx
+  :airtable_id: recTPlGlyBUfzWHlA
+- :name: Universities
+  :color: neutral
+  :active: false
+  :uid: ind_3wqjxvpotpHDXpV
+  :airtable_id: recTT85XixmfaWwFV
+- :name: Package/Freight Delivery
+  :color: neutral
+  :active: false
+  :uid: ind_4YTmdP5n866gWPM
+  :airtable_id: recTTrZxsnCutlKVV
+- :name: Product Design
+  :color: neutral
+  :active: false
+  :uid: ind_feWDttEcJCeoR2W
+  :airtable_id: recTconHFCnhTdAzv
+- :name: Clinical Trials
+  :color: purple
+  :active: false
+  :uid: ind_JvV1fLNS0DYNKVK
+  :airtable_id: recTt6jZrc3nJ1z0W
+- :name: Computer Games
+  :color: cyan
+  :active: false
+  :uid: ind_kfYeJCJD8K9el7s
+  :airtable_id: recU09CLshgjDsoQF
+- :name: Investment Banking
+  :color: cyan
+  :active: false
+  :uid: ind_1llnBMskgL7Q0pZ
+  :airtable_id: recUBOagwFgIMLcEs
+- :name: Wealth Management
+  :color: red
+  :active: false
+  :uid: ind_nyhGT5WISelu1SQ
+  :airtable_id: recUGQxlrv0UjMWX4
+- :name: Religion
+  :color: blue
+  :active: false
+  :uid: ind_TyH0B9Yplf2FPVY
+  :airtable_id: recUR4ISpG4nVBXW0
+- :name: Mechanical or Industrial Engineering
+  :color: red
+  :active: false
+  :uid: ind_4hhyVYxCnMqhnfq
+  :airtable_id: recUT1ajmCdpefIRj
+- :name: Plastics
+  :color: cyan
+  :active: false
+  :uid: ind_mvYA3S1Xf8mS98O
+  :airtable_id: recUVJ4dm7dtGfxN9
+- :name: Artificial Intelligence
+  :color: orange
+  :active: false
+  :uid: ind_IPcVP2C5IjuFVSO
+  :airtable_id: recUdoiGhOyqM3xfv
+- :name: Supply Chain Management
+  :color: yellow
+  :active: false
+  :uid: ind_NNKgCxstnBKv7UT
+  :airtable_id: recUgxHwS0T5J8tSu
+- :name: Continuing Education
+  :color: red
+  :active: false
+  :uid: ind_GyDZo04o5RiMzRH
+  :airtable_id: recUwaB3hC4nn849J
+- :name: Publishing
+  :color: orange
+  :active: false
+  :uid: ind_eT5VtuwvfVmpvMj
+  :airtable_id: recV2XXdUMKEoaBv9
+- :name: Home Renovation
+  :color: green
+  :active: false
+  :uid: ind_9UtepI4l4H0iP4w
+  :airtable_id: recV3nSZXIfmLMuDb
+- :name: Property Management
+  :color: purple
+  :active: false
+  :uid: ind_5XMvGN5RJFdHVuB
+  :airtable_id: recVNfvs2TW88YBXs
+- :name: Industrial Automation
+  :color: blue
+  :active: false
+  :uid: ind_n970qtGgt4Yt3DK
+  :airtable_id: recVlAHHT3eWMksEF
+- :name: Research
+  :color: blue
+  :active: false
+  :uid: ind_GN5I2COwmO99Zdb
+  :airtable_id: recVoyiUyvMMiqzN3
+- :name: Windows
+  :color: blue
+  :active: false
+  :uid: ind_YJmrro1kTpwVWyj
+  :airtable_id: recVrd07QsArcTF6o
+- :name: Translation and Localization
+  :color: blue
+  :active: false
+  :uid: ind_Us437tFk8lNaDnA
+  :airtable_id: recVytlxs19897x9W
+- :name: Journalism/Pharmaceuticals
+  :color: neutral
+  :active: false
+  :uid: ind_28n7HBb5ERzghdD
+  :airtable_id: recVzDN3jQ1YNNiZC
+- :name: Retirement
+  :color: green
+  :active: false
+  :uid: ind_jGeBSJuLJ005oo7
+  :airtable_id: recW9Hd29BK4lvSzR
+- :name: Pharmaceuticals
+  :color: yellow
+  :active: false
+  :uid: ind_QbhbULrNgdSZDFt
+  :airtable_id: recWBZVS6JObcWze7
+- :name: Architecture & Planning
+  :color: neutral
+  :active: false
+  :uid: ind_m3uxPCtJlldrMd2
+  :airtable_id: recWEaGoYMurpINR0
+- :name: Blockchain
+  :color: yellow
+  :active: false
+  :uid: ind_CymyeT6RJVaGfdC
+  :airtable_id: recWTAsuQhpSBk8tn
+- :name: Dating
+  :color: orange
+  :active: false
+  :uid: ind_sTwWogt8OXkgKVB
+  :airtable_id: recWbM34L1UVMmLQU
+- :name: Energy Management
+  :color: orange
+  :active: false
+  :uid: ind_72f05sr8KPGTjfX
+  :airtable_id: recWlGGFbZorX0i8J
+- :name: Marine Technology
+  :color: orange
+  :active: false
+  :uid: ind_mtAO8JMW83opav4
+  :airtable_id: recX2U8qI1G6adHvt
+- :name: Shipping
+  :color: blue
+  :active: false
+  :uid: ind_IBTxzPRniu7C7wL
+  :airtable_id: recXGoPLBdRjutcAm
+- :name: Ranching
+  :color: purple
+  :active: false
+  :uid: ind_y6yTnLIhs3fIUJ9
+  :airtable_id: recXSloJZCrNIcC2U
+- :name: Tour Operator
+  :color: cyan
+  :active: false
+  :uid: ind_3avwUirDQuTcA78
+  :airtable_id: recXjc1gX0itmbQ3U
+- :name: Handmade
+  :color: cyan
+  :active: false
+  :uid: ind_Os0hpRk4C1MKpBT
+  :airtable_id: recXvJvFCn3UJRIAR
+- :name: Law Enforcement
+  :color: green
+  :active: false
+  :uid: ind_lddZY0Got6bhHmw
+  :airtable_id: recY1Zv895frs0g4I
+- :name: Toys
+  :color: red
+  :active: false
+  :uid: ind_yV6jZoZOjsUZ2iH
+  :airtable_id: recY3gG4LTGRJGvIM
+- :name: IT Management
+  :color: yellow
+  :active: false
+  :uid: ind_5RuSmG0pHSdxdv7
+  :airtable_id: recYB3Sa7PbcJ1H1p
+- :name: Hotel
+  :color: blue
+  :active: false
+  :uid: ind_Ip0Ew84f1OTGFvr
+  :airtable_id: recYBtQKFI4QP1KFk
+- :name: B2C
+  :color: cyan
+  :active: false
+  :uid: ind_fBoEgfm5aOfwDLm
+  :airtable_id: recYDnTFmKBKvPcE1
+- :name: Business Travel
+  :color: neutral
+  :active: false
+  :uid: ind_WAXqOdaw2CPU4bT
+  :airtable_id: recYFIxZmO7Ww7TqR
+- :name: Coworking
+  :color: green
+  :active: false
+  :uid: ind_XUXk42IkAP0Z9kK
+  :airtable_id: recYPx790QUN8VRG6
+- :name: Information Technology and Services
+  :color: neutral
+  :active: false
+  :uid: ind_dbaTVJXOOiUbK22
+  :airtable_id: recYSE4eF0m29F5XW
+- :name: Wholesale
+  :color: blue
+  :active: false
+  :uid: ind_iAGCdPMdiU0Qzq9
+  :airtable_id: recYpJGpG24GEl4bG
+- :name: Sports
+  :color: red
+  :active: false
+  :uid: ind_RYQHDPng3ta9giq
+  :airtable_id: recZ4f7V7jkw2OPPn
+- :name: Motion Pictures and Film
+  :color: neutral
+  :active: false
+  :uid: ind_0d58saFyvfI05qy
+  :airtable_id: recZ5hHsB8FBAw18S
+- :name: Social Network
+  :color: neutral
+  :active: false
+  :uid: ind_J7LAJscg8Ye2QgQ
+  :airtable_id: recZBzRwbEzx7qemj
+- :name: Hardware
+  :color: red
+  :active: false
+  :uid: ind_JQUXHAUes9jxJKe
+  :airtable_id: recZGoYYQWAZ4VIkd
+- :name: Veterinary
+  :color: blue
+  :active: false
+  :uid: ind_lNSqMHNOskJdTpw
+  :airtable_id: recZQrP1EeVVy3eX7
+- :name: Information Services
+  :color: yellow
+  :active: false
+  :uid: ind_zYObYMQN4hCLD46
+  :airtable_id: recZUvcEpCh0seIEO
+- :name: IT Infrastructure
+  :color: blue
+  :active: false
+  :uid: ind_M8LUKhvmLuHGzPI
+  :airtable_id: recZZrACVlO2u6Svi
+- :name: Craft Beer
+  :color: yellow
+  :active: false
+  :uid: ind_dT9cjWq859QAQtQ
+  :airtable_id: recZatLewK0SAYs5b
+- :name: Theatre
+  :color: orange
+  :active: false
+  :uid: ind_L8nUlX45yIPGa85
+  :airtable_id: recZd0DlswQzlCInz
+- :name: Water Purification
+  :color: orange
+  :active: false
+  :uid: ind_ufYpvJj7EuZdcjo
+  :airtable_id: recZlVuuDAqJmifbd
+- :name: Fishery
+  :color: blue
+  :active: false
+  :uid: ind_6Sl9QiD9skv0I7V
+  :airtable_id: recZmqRyoZQqVb84G
+- :name: Marketing and Advertising
+  :color: purple
+  :active: false
+  :uid: ind_mP948t16c3T3jB8
+  :airtable_id: recZnzOEQ0QMdRlYE
+- :name: Wedding
+  :color: orange
+  :active: false
+  :uid: ind_EL8SCqwfmSUg4jV
+  :airtable_id: recZvbjkJ3BQlzuGy
+- :name: Developer Tools
+  :color: cyan
+  :active: false
+  :uid: ind_upnnxf9lpYCEEQY
+  :airtable_id: recZx3FvhTy0B0OI3
+- :name: Judiciary
+  :color: neutral
+  :active: false
+  :uid: ind_D4nZoMa1TxNTAkG
+  :airtable_id: recaCm90oBj2BlMvb
+- :name: Digital Marketing
+  :color: cyan
+  :active: true
+  :uid: ind_gFZVHcViMRBsq3K
+  :airtable_id: recaGZhQbqKix0Jqd
+- :name: Interior Design
+  :color: yellow
+  :active: false
+  :uid: ind_AILX5TYm9hZ2vDx
+  :airtable_id: recaO3fyAFwCzkSIH
+- :name: Printing
+  :color: neutral
+  :active: false
+  :uid: ind_78qMciUHrceoP7L
+  :airtable_id: recaOQJo81FnMXhBM
+- :name: Private Social Networking
+  :color: purple
+  :active: false
+  :uid: ind_FPE2YZF5Tqoa4UQ
+  :airtable_id: recakKUQXBrckMP3O
+- :name: Human Resources
+  :color: neutral
+  :active: false
+  :uid: ind_eCVsvtntWHE30GM
+  :airtable_id: recakP5nPzFUxqLZG
+- :name: Outsourcing/Offshoring
+  :color: cyan
+  :active: false
+  :uid: ind_oDeeS05RXNtfbBT
+  :airtable_id: recanP0ap2jbOWdwG
+- :name: Marketplace
+  :color: purple
+  :active: false
+  :uid: ind_grtQhoxn7oCGuYb
+  :airtable_id: recbCOJgNHtB6rrxO
+- :name: FMCG
+  :color: neutral
+  :active: false
+  :uid: ind_CxIQaUha4uz2L2R
+  :airtable_id: recbFiyE893F0udFp
+- :name: Network Hardware
+  :color: yellow
+  :active: false
+  :uid: ind_831328EuRu1FihX
+  :airtable_id: recbH8LqUE4H2nrj5
+- :name: Finance
+  :color: cyan
+  :active: false
+  :uid: ind_YPjQgAaeyAvnIbO
+  :airtable_id: recbM3HZwOny1xaWz
+- :name: Subscription Service
+  :color: purple
+  :active: false
+  :uid: ind_XaOLWo0vSoJSf1N
+  :airtable_id: recbMKTmYjYuVxbsH
+- :name: Organic Food
+  :color: neutral
+  :active: false
+  :uid: ind_7oSkTVkbAVpb5dG
+  :airtable_id: recbPdJSfmb5J9syc
+- :name: Last Mile Transportation
+  :color: green
+  :active: false
+  :uid: ind_hkEc32LnHf8c1Rr
+  :airtable_id: recbcdiqYupaXPmvA
+- :name: Funding Platform
+  :color: cyan
+  :active: false
+  :uid: ind_8p83syxgs5l6H8R
+  :airtable_id: recbdQsQMUKac143u
+- :name: Translation Service
+  :color: orange
+  :active: false
+  :uid: ind_ZtNrSoBqQb0vfzE
+  :airtable_id: recbqfE8SKztClQt4
+- :name: Business Development
+  :color: green
+  :active: false
+  :uid: ind_fOFFcHTXq1WPF3F
+  :airtable_id: recbwXotNPFbvebfq
+- :name: Computer
+  :color: purple
+  :active: false
+  :uid: ind_A9FMzt5wgP9dImX
+  :airtable_id: recc2NO4rZnHta9LZ
+- :name: Aerospace
+  :color: yellow
+  :active: false
+  :uid: ind_2t2dVI7FaBGAwk9
+  :airtable_id: recc5ZoFVy3bg05S3
+- :name: International Affairs
+  :color: green
+  :active: false
+  :uid: ind_9kUoB6Vp1GonNWn
+  :airtable_id: reccJj8VM92vsOP40
+- :name: Personal Finance
+  :color: red
+  :active: false
+  :uid: ind_gkhiQxBSdQwPTpY
+  :airtable_id: reccW8JpA9LddpkSn
+- :name: Civil Engineering
+  :color: green
+  :active: false
+  :uid: ind_wXInfLmp8n5DVJT
+  :airtable_id: reccboHo2F7A7FFfE
+- :name: Chemical
+  :color: red
+  :active: false
+  :uid: ind_GaAFqTrJNVNCeMj
+  :airtable_id: recceE4s7gN8eODxl
+- :name: E-Commerce Platforms
+  :color: yellow
+  :active: false
+  :uid: ind_I2caAHey30FLXXR
+  :airtable_id: reccv906mhDetrlWs
+- :name: Advanced Materials
+  :color: orange
+  :active: false
+  :uid: ind_ZmaHWbQHxvc2l5c
+  :airtable_id: reccvadB7583BFLyW
+- :name: Accounting
+  :color: yellow
+  :active: false
+  :uid: ind_3IQMB3GNQCRymaS
+  :airtable_id: reccvySUIXp1VkH9z
+- :name: Digital Entertainment
+  :color: neutral
+  :active: false
+  :uid: ind_IbotJ0ZaQsL0nOK
+  :airtable_id: recd9KVmDXarEpMB6
+- :name: Online Auctions
+  :color: neutral
+  :active: false
+  :uid: ind_vw0xbYyCGUzGbNm
+  :airtable_id: recdBZqgcNV5SwIii
+- :name: Local Shopping
+  :color: blue
+  :active: false
+  :uid: ind_PuFlPsipY2bMRG5
+  :airtable_id: recdMYdLxOmmriUCX
+- :name: Sporting Goods
+  :color: purple
+  :active:
+  :uid: ind_Nc9fuSeoZtKAhE0
+  :airtable_id: recdNMiNf0lGFMXsi
+- :name: Video Editing
+  :color: orange
+  :active: false
+  :uid: ind_4raunWMBL2YdcQq
+  :airtable_id: recdPknFd8RjCcmxl
+- :name: Insurance
+  :color: neutral
+  :active:
+  :uid: ind_C45tWfTskUgvImY
+  :airtable_id: recdS5RURSWWhcqAh
+- :name: Apparel & Fashion
+  :color: neutral
+  :active: false
+  :uid: ind_WkD4DgzMfRVhQ74
+  :airtable_id: recdSvw358c7O32ua
+- :name: Elder Care
+  :color: yellow
+  :active: false
+  :uid: ind_9irWO7zOXa73V7h
+  :airtable_id: recdh5pBN48nepG4K
+- :name: E-Commerce
+  :color: neutral
+  :active: true
+  :uid: ind_TexVyzeJesyH6SF
+  :airtable_id: recdiMBu8YoZAVTvI
+- :name: Dairy
+  :color: cyan
+  :active: false
+  :uid: ind_01H10LdW2VDcuQ2
+  :airtable_id: recdmoVdx4Xxtgb3q
+- :name: Sustainability
+  :color: yellow
+  :active: false
+  :uid: ind_YMKIlryRQN257bZ
+  :airtable_id: recdrxdHxI0RR3XI1
+- :name: Biometrics
+  :color: green
+  :active: false
+  :uid: ind_I9rT9UcYJ9ssGCQ
+  :airtable_id: rece5IyaOObYNx6sx
+- :name: Military
+  :color: orange
+  :active: false
+  :uid: ind_sz3m5qFY4f5LLm9
+  :airtable_id: rece6HoljR4q7EqH1
+- :name: InsurTech
+  :color: green
+  :active: false
+  :uid: ind_dlwkhFAEmia2GAm
+  :airtable_id: rece8UlvUu6sywsiX
+- :name: Utilities
+  :color: orange
+  :active: false
+  :uid: ind_Qkzqj1ycUYPKCEx
+  :airtable_id: receHMvDM8L4Iwj5e
+- :name: Events Services
+  :color: orange
+  :active: false
+  :uid: ind_zA5MzoXKUb9IXWX
+  :airtable_id: receU0YBf5hthMKXm
+- :name: Social Entrepreneurship
+  :color: red
+  :active: false
+  :uid: ind_qacxbbmKaETjIvx
+  :airtable_id: receWRevxaxwUf7UA
+- :name: Apps
+  :color: blue
+  :active: false
+  :uid: ind_0RbVuQ45Z78KfTl
+  :airtable_id: rececmuze5SZgwia7
+- :name: Fashion
+  :color: neutral
+  :active: false
+  :uid: ind_9AiaTOBi7uH5mOB
+  :airtable_id: recerDANeHKP0HCu0
+- :name: Social Media
+  :color: orange
+  :active: false
+  :uid: ind_gm29yzkink4xSpl
+  :airtable_id: reces1pXE1nAHLvlq
+- :name: Developer Platform
+  :color: green
+  :active: false
+  :uid: ind_2ocJQytQZysmowE
+  :airtable_id: recew6TUDDMbE8qWu
+- :name: Software As A Service (SaaS)
+  :color: blue
+  :active: false
+  :uid: ind_pveNF6o8lUscFVH
+  :airtable_id: recexRmnrQ8khFFbU
+- :name: Payments
+  :color: orange
+  :active: false
+  :uid: ind_uZnu4NDUuK8hmGK
+  :airtable_id: recf5tGKn8XWxM6h9
+- :name: Parenting,
+  :color: blue
+  :active: false
+  :uid: ind_uDwfBINy0zxrYYN
+  :airtable_id: recfEf98F7Sky85ZY
+- :name: Hospitality
+  :color: cyan
+  :active: false
+  :uid: ind_TMcmysflAap4qWN
+  :airtable_id: recfHHKZ1uEaCUAtk
+- :name: Railroad Manufacture
+  :color: blue
+  :active: false
+  :uid: ind_McsHTefcEGWTlau
+  :airtable_id: recfM2FntyohEJYyN
+- :name: A/B Testing
+  :color: orange
+  :active: false
+  :uid: ind_pAO9LhSXXTv55hV
+  :airtable_id: recfwgIYcID7UIDUs
+- :name: Machine Learning
+  :color: neutral
+  :active: false
+  :uid: ind_dmov0rBp3XqOZeT
+  :airtable_id: recgSVHZZur1VI2XT
+- :name: Edutainment
+  :color: red
+  :active: false
+  :uid: ind_J9iM0tgOSEmsZjv
+  :airtable_id: recgVHii9aLsGERXr
+- :name: Property Development
+  :color: yellow
+  :active: false
+  :uid: ind_QVx6kSBkfX8mqOl
+  :airtable_id: recgj0PIAGi771nAA
+- :name: Newspapers
+  :color: purple
+  :active: false
+  :uid: ind_NT3UA5S3fEz5fZw
+  :airtable_id: recgmz9o1X6dbZep9
+- :name: Coupons
+  :color: orange
+  :active: false
+  :uid: ind_bHUI25JWUVuVlQW
+  :airtable_id: recgrRKsTY8InfDYm
+- :name: Mobile Marketing SaaS
+  :color: green
+  :active: false
+  :uid: ind_Xy1Scj9S9mWhOlS
+  :airtable_id: recguhq9gzi72TubD
+- :name: Consumer Packaged Goods (CPG)
+  :color: neutral
+  :active: false
+  :uid: ind_ibUSNV5kK2n5mrc
+  :airtable_id: recgz4uOQuJLcs3MD
+- :name: Medical Practice
+  :color: purple
+  :active: false
+  :uid: ind_5HWsKdgUuMowrIN
+  :airtable_id: rech28Yavz5FEPHD6
+- :name: Virtual Reality
+  :color: yellow
+  :active: false
+  :uid: ind_hIYBVAkbIMxUMNM
+  :airtable_id: rech2DTniYgv5FVTm
+- :name: Home and Garden
+  :color: red
+  :active: false
+  :uid: ind_iIwEZr0cZQTQEQ6
+  :airtable_id: rech4AuWKPYwflb6c
+- :name: Construction
+  :color: blue
+  :active: false
+  :uid: ind_sYwB4sWNA2OVYWW
+  :airtable_id: rechC6RKT6JpuLVBN
+- :name: Description
+  :color: cyan
+  :active: false
+  :uid: ind_ZCxvoMk0gIVblqL
+  :airtable_id: rechS3mfkzp3u0bXH
+- :name: Security and Investigations
+  :color: neutral
+  :active: false
+  :uid: ind_HwlNywfaBkjbJ8v
+  :airtable_id: rechXJs0u8jCiQ2li
+- :name: Communications Infrastructure
+  :color: yellow
+  :active: false
+  :uid: ind_omJHfEsNjLw9sTu
+  :airtable_id: rechYSfTgpd8KbgGQ
+- :name: Retail Technology
+  :color: green
+  :active: false
+  :uid: ind_sfVgE0cxVe0tIrJ
+  :airtable_id: recheqPBmhMrWTRoc
+- :name: Wearables
+  :color: blue
+  :active: false
+  :uid: ind_bmGHSy9gAYGbEq3
+  :airtable_id: rechtV5zcfiMlBF8h
+- :name: Building Materials
+  :color: neutral
+  :active: false
+  :uid: ind_xFyaTi8R9OBSpFq
+  :airtable_id: reciDsLVVINPGaExZ
+- :name: Distillery
+  :color: yellow
+  :active: false
+  :uid: ind_JNzSox1Nr5Pvgd9
+  :airtable_id: reciFtqSt6O185Xej
+- :name: Outdoors
+  :color: neutral
+  :active: false
+  :uid: ind_IJwDzXut4pYBZTU
+  :airtable_id: reciI21PDm6WEFpX3
+- :name: Web Browsers
+  :color: cyan
+  :active: false
+  :uid: ind_ck5dcUF8AjWanVB
+  :airtable_id: reciODIds1ATc8mpa
+- :name: Blogging Platforms
+  :color: yellow
+  :active: false
+  :uid: ind_PsO2oLVFHwqz5v9
+  :airtable_id: reciQfHPIMeL9efOY
+- :name: Food Processing
+  :color: orange
+  :active: false
+  :uid: ind_VRJiD1ksEbLXYAf
+  :airtable_id: reciX9hd6fkXtTqel
+- :name: Advertising Platforms
+  :color: green
+  :active: false
+  :uid: ind_kwHnWJQP7uLB6Z1
+  :airtable_id: recifThWmmt1IfHw6
+- :name: Fine Art
+  :color: orange
+  :active: false
+  :uid: ind_irpVsWqXH5YHIjj
+  :airtable_id: recimGPS6maiv95BV
+- :name: Cloud Computing
+  :color: purple
+  :active: false
+  :uid: ind_hguji0g93AewNKV
+  :airtable_id: recj5BV5r25BfgdhM
+- :name: Education
+  :color: neutral
+  :active: true
+  :uid: ind_jkDp7qTqRq4wsGy
+  :airtable_id: recj8QRUqYWcRXetu
+- :name: Content
+  :color: purple
+  :active: false
+  :uid: ind_fJZfdUQaP7nWe4R
+  :airtable_id: recjGfOYLpBnX6hFH
+- :name: Social Recruiting
+  :color: blue
+  :active: false
+  :uid: ind_9DQ1ZIazxStAq4W
+  :airtable_id: recjRKDpPSVwAnOmG
+- :name: Textiles
+  :color: neutral
+  :active: false
+  :uid: ind_33LL9QxaWgdTj25
+  :airtable_id: recjXSpV1I30ZucjF
+- :name: Product Research
+  :color: yellow
+  :active: false
+  :uid: ind_dqkSKtcxtk4tkyF
+  :airtable_id: recjaA0dPzDmXmEsr
+- :name: Tobacco
+  :color: neutral
+  :active: false
+  :uid: ind_lu2Qssv3Rs2BKu1
+  :airtable_id: recjcRGNahE4ivbnr
+- :name: Data Mining
+  :color: green
+  :active: false
+  :uid: ind_FQxTIEu7YaeBkAv
+  :airtable_id: recjgZexkMcjjARyQ
+- :name: International Trade and Development
+  :color: purple
+  :active: false
+  :uid: ind_4tdTTSauGZka1GR
+  :airtable_id: reck62BK417aAQZtZ
+- :name: Laser
+  :color: yellow
+  :active: false
+  :uid: ind_wSrGMyOVvjenGKP
+  :airtable_id: reckCDwJvMVlMXTMa
+- :name: VoIP
+  :color: purple
+  :active: false
+  :uid: ind_MxFJgRKZbhCycar
+  :airtable_id: reckD2tQ9Ol8DkTGN
+- :name: Public Policy
+  :color: blue
+  :active: false
+  :uid: ind_uhTRP2LIzeSUwVa
+  :airtable_id: reckU0cSRLM1eZZnh
+- :name: Transportation
+  :color: green
+  :active: false
+  :uid: ind_AN8HM2EjUlDjntm
+  :airtable_id: reckUiszjL4U3mQKw
+- :name: eSports
+  :color: blue
+  :active: false
+  :uid: ind_aEDJQWwvWKA6tIG
+  :airtable_id: reckg4wx4K2uKPb2l
+- :name: Energy
+  :color: green
+  :active: false
+  :uid: ind_4NQDhMmNqboMMmj
+  :airtable_id: recksLJG23suzTE6Q
+- :name: Hedge Funds
+  :color: cyan
+  :active: false
+  :uid: ind_TxQnGbD7dZr4Eto
+  :airtable_id: reckto5t10UIx8x3M
+- :name: Civic & Social Organization
+  :color: purple
+  :active: false
+  :uid: ind_z0qUnDvV9TNxgh2
+  :airtable_id: recl7KVXSCSLSdB4i
+- :name: Government Administration
+  :color: yellow
+  :active: false
+  :uid: ind_eLL8UfMDrTGxNG6
+  :airtable_id: reclBsfaY2AYbANkR
+- :name: Fitness
+  :color: red
+  :active: false
+  :uid: ind_87aazuR0Q4F1Pwu
+  :airtable_id: reclGjTSRzH3TQIDK
+- :name: Computer Networking
+  :color: orange
+  :active: false
+  :uid: ind_i1b07ZTkoFeSULA
+  :airtable_id: reclU1XsfFCiKSHMQ
+- :name: Electrical/Electronic Manufacturing
+  :color: cyan
+  :active: false
+  :uid: ind_MUGGIGC5Gc1Xfik
+  :airtable_id: reclUtueNRUYmx6fi
+- :name: Life Science
+  :color: orange
+  :active: false
+  :uid: ind_JS1QLyPXVFKqQxN
+  :airtable_id: reclXYjPjCVwDlK4G
+- :name: Information and Communications Technology (ICT)
+  :color: cyan
+  :active: false
+  :uid: ind_cLaTqCv0zN0qjLz
+  :airtable_id: reclkkqnygESQMwu6
+- :name: Recruiting
+  :color: cyan
+  :active:
+  :uid: ind_pVPeGOKdtWvtzxJ
+  :airtable_id: recmJ5DWEL8kZTR3S
+- :name: Test and Measurement
+  :color: blue
+  :active: false
+  :uid: ind_5160CeMefEZUWCF
+  :airtable_id: recmQjYEhPO1EI6cg
+- :name: Small and Medium Businesses
+  :color: yellow
+  :active: false
+  :uid: ind_atHz7g6QWcvFRBz
+  :airtable_id: recmUbT9srqQwm12h
+- :name: Lighting
+  :color: blue
+  :active: false
+  :uid: ind_GRJNfhBT8SB39g5
+  :airtable_id: recmgbN6VyE7zzHIt
+- :name: Entertainment
+  :color: neutral
+  :active: false
+  :uid: ind_LrR9ZR9xWe9pUmg
+  :airtable_id: recml59PTAzZcZphZ
+- :name: Security
+  :color: neutral
+  :active: false
+  :uid: ind_nEMeTFKjUqneYYo
+  :airtable_id: recmrdHCiL0x6FB0e
+- :name: Messaging
+  :color: purple
+  :active: false
+  :uid: ind_c60e9l46gY4cQt7
+  :airtable_id: recnlOsW8Dsf8QhQj
+- :name: Cryptocurrency
+  :color: cyan
+  :active: false
+  :uid: ind_IQ02b53dFYwleEb
+  :airtable_id: reco50DgjPUPTyOak
+- :name: Airlines/Aviation
+  :color: cyan
+  :active: false
+  :uid: ind_35n2zFyc0p9UbCq
+  :airtable_id: recoPqSRIyAppN7k4
+- :name: Mining
+  :color: red
+  :active: false
+  :uid: ind_KJKvXV79534KYyx
+  :airtable_id: recoWrSqjl0pYl9ob
+- :name: Optical Communication
+  :color: blue
+  :active: false
+  :uid: ind_PyFtZ9a2U6wY0BL
+  :airtable_id: recod93YMZuRLwcPe
+- :name: Events
+  :color: orange
+  :active:
+  :uid: ind_rkdkbIeYyJpEYYU
+  :airtable_id: recojuBR7dx1Fi0t8
+- :name: Auctions
+  :color: yellow
+  :active: false
+  :uid: ind_BYJuCZiWb2Xy7UB
+  :airtable_id: recotHmFuly6bIS2n
+- :name: Health Insurance
+  :color: cyan
+  :active: false
+  :uid: ind_mlB0IKBNgucPpjO
+  :airtable_id: recoxAX28b4rmHAYJ
+- :name: App Marketing
+  :color: purple
+  :active: false
+  :uid: ind_5q0hfASJBhrNMNB
+  :airtable_id: recp4rLnLs1rG4tIf
+- :name: Content Marketing
+  :color: yellow
+  :active: false
+  :uid: ind_JV4iYJZfZ5TOIpA
+  :airtable_id: recpD61rtJfRmNWVz
+- :name: Online Media
+  :color: blue
+  :active: false
+  :uid: ind_dpkoVx6tAu5T6Hq
+  :airtable_id: recpDgqk5QavINWGF
+- :name: Staffing Agency
+  :color: red
+  :active: false
+  :uid: ind_FQYymX8kXqXiJ7A
+  :airtable_id: recpEcCGA8pq9p4mu
+- :name: Museums and Institutions
+  :color: cyan
+  :active: false
+  :uid: ind_Djl0oVQbpnXZm5j
+  :airtable_id: recpUY53LWw9Zlq42
+- :name: Transaction Processing
+  :color: cyan
+  :active: false
+  :uid: ind_U8TsIyuVe2zfkVK
+  :airtable_id: recpcY0qJjlFyMbyP
+- :name: Sales
+  :color: red
+  :active: false
+  :uid: ind_wV8rvJZYtZNRVX6
+  :airtable_id: recpkEyIPVsDTzdz6
+- :name: Social Media Marketing
+  :color: green
+  :active: false
+  :uid: ind_AXWEg86U7eN4Ba2
+  :airtable_id: recpmteSaObnqo2Yd
+- :name: Self-Storage
+  :color: yellow
+  :active: false
+  :uid: ind_I5x729Gci4zzPw6
+  :airtable_id: recptZEQiImiXsgvs
+- :name: Biotechnology
+  :color: purple
+  :active: false
+  :uid: ind_8o3nd43SItW0xg6
+  :airtable_id: recpy1Vl96mIkZb1A
+- :name: Management Information Systems
+  :color: red
+  :active: false
+  :uid: ind_yMRMcdjoLdbZFwy
+  :airtable_id: recq0mcGiwnMXooKj
+- :name: Child Care
+  :color: cyan
+  :active: false
+  :uid: ind_RRJJjMZVfYMXxvh
+  :airtable_id: recq2XZCakaFfGIlM
+- :name: STEM Education
+  :color: orange
+  :active: false
+  :uid: ind_4tYKzysPmz3Evi6
+  :airtable_id: recqBHVd6ONe2rrIV
+- :name: Freelance
+  :color: orange
+  :active: false
+  :uid: ind_D59FLJTBfkZoy3W
+  :airtable_id: recqI63lUBHU3RRJA
+- :name: Travel
+  :color: green
+  :active: false
+  :uid: ind_nbxN9yC3eqqPMzv
+  :airtable_id: recqcUTaAWbjAvwEi
+- :name: Government
+  :color: purple
+  :active: false
+  :uid: ind_bqhLIwjQguK3fdU
+  :airtable_id: recqdQYs6yLexwaOq
+- :name: Packaging and Containers
+  :color: yellow
+  :active: false
+  :uid: ind_PuyRyyhMlLUXryf
+  :airtable_id: recqnIz0qmGjOKbD2
+- :name: Shopping
+  :color: orange
+  :active: false
+  :uid: ind_pZeXbvpZTREr6Gu
+  :airtable_id: recr1i2WNY8pvwWU7
+- :name: Predictive Analytics
+  :color: blue
+  :active: false
+  :uid: ind_FqVhUqlz6Iglx6G
+  :airtable_id: recr5jvHYQ4oPU42g
+- :name: Vocational Education
+  :color: cyan
+  :active: false
+  :uid: ind_6OnpgSDosFRNhgm
+  :airtable_id: recrBxP05uQVUkTPi
+- :name: Office Supplies
+  :color: purple
+  :active:
+  :uid: ind_CQ07EO1uLf9xrZf
+  :airtable_id: recrDBu0NpAPQexvp
+- :name: Mobile Devices
+  :color: neutral
+  :active: false
+  :uid: ind_YcU9nC0WuTes5BT
+  :airtable_id: recrTQVw0eDNMBZ6b
+- :name: Nutrition
+  :color: neutral
+  :active: false
+  :uid: ind_AZVCZ49jU8BCSaI
+  :airtable_id: recrV8x5X1UBfXcEI
+- :name: Financial Exchanges
+  :color: cyan
+  :active: false
+  :uid: ind_MDpHYqVdAye10Mu
+  :airtable_id: recrYIPcJZwFJVViG
+- :name: Advice
+  :color: blue
+  :active: false
+  :uid: ind_RL3xmUl0ocRLIfS
+  :airtable_id: recrdCnN94vJhcoCC
+- :name: Animation
+  :color: blue
+  :active: false
+  :uid: ind_XM26kvLaqf8yGAw
+  :airtable_id: recrtGu55hpDDbqTY
+- :name: Higher Education
+  :color: orange
+  :active: false
+  :uid: ind_CiunkCbR1U6dYSK
+  :airtable_id: recs33dlaDAPMI57M
+- :name: Business Intelligence
+  :color: orange
+  :active: false
+  :uid: ind_a4VT471M2pMPlFB
+  :airtable_id: recs7GOac3P3AZVlR
+- :name: Automotive
+  :color: blue
+  :active: false
+  :uid: ind_pahGLvahHOwK1e0
+  :airtable_id: recs8RrYXw5VgFkic
+- :name: Political Organization
+  :color: neutral
+  :active: false
+  :uid: ind_mbgsL2USCLt8uIf
+  :airtable_id: recsJ3OaYyoFHZ0Wr
+- :name: Clean Energy
+  :color: blue
+  :active: false
+  :uid: ind_TPZGtWXHnBUcDJ7
+  :airtable_id: recsT5E0hOrWUFxK4
+- :name: Online Games
+  :color: purple
+  :active: false
+  :uid: ind_SqAO9pNFnVnKZL1
+  :airtable_id: recsTBDyJurMCyvri
+- :name: Facility Management
+  :color: yellow
+  :active: false
+  :uid: ind_XWOl0RZ0fF5S8zf
+  :airtable_id: recsffaIpt7dAUXf8
+- :name: Quality Assurance
+  :color: neutral
+  :active: false
+  :uid: ind_55hbBk16VQTqgY6
+  :airtable_id: rect3HLQmzvDnj94S
+- :name: Alternative Medicine
+  :color: red
+  :active: false
+  :uid: ind_XGTbTUoxUpUZVSn
+  :airtable_id: rectGP7aGStN2JDf7
+- :name: Young Adults
+  :color: purple
+  :active: false
+  :uid: ind_2ZxpoMiip2hI5nd
+  :airtable_id: rectLiyUyJQaQyrB5
+- :name: Pet
+  :color: purple
+  :active: false
+  :uid: ind_fZj2Z5BUzPWrpGD
+  :airtable_id: recthABZvvhyffWTw
+- :name: mHealth
+  :color: cyan
+  :active: false
+  :uid: ind_Gz0Zp7V1YukmTWW
+  :airtable_id: recttKI0gMYm8q1PE
+- :name: Farming
+  :color: blue
+  :active: false
+  :uid: ind_n5hyIDvqtJ6L6P3
+  :airtable_id: recu1B8TKWIGZNYCL
+- :name: Environmental Services
+  :color: red
+  :active: false
+  :uid: ind_a0uLt534HAAPvu0
+  :airtable_id: recu7ZHDFhMPgZG3m
+- :name: Wireless
+  :color: yellow
+  :active: false
+  :uid: ind_9NIp3bZLEPdlJAH
+  :airtable_id: recu9MLVdhHpeCbii
+- :name: Home Services
+  :color: yellow
+  :active: false
+  :uid: ind_TsLCrWacItsbQhs
+  :airtable_id: recuEwicIXYxSoV3C
+- :name: Logistics
+  :color: red
+  :active: false
+  :uid: ind_CecVl9GtWnVlly2
+  :airtable_id: recuF40iIEb4w63U6
+- :name: Maritime
+  :color: cyan
+  :active: false
+  :uid: ind_k4nGMIB19wtox6W
+  :airtable_id: recuKM1BPTvu8GxfD
+- :name: Charity
+  :color: yellow
+  :active: false
+  :uid: ind_7u8MpIKz8BapIG6
+  :airtable_id: recuTCJNJtjCHLzsN
+- :name: Mobile Advertising
+  :color: yellow
+  :active: false
+  :uid: ind_YzZCBRVtX4C2tGJ
+  :airtable_id: recuWQB9uKgJCGhxS
+- :name: Video Games
+  :color: blue
+  :active: false
+  :uid: ind_lEHNM4ebvyhxfCy
+  :airtable_id: recufREdVzItynpOn
+- :name: Web Development
+  :color: red
+  :active: false
+  :uid: ind_PY7r2f9k7EtYI38
+  :airtable_id: recukoEo9xbRvFJJg
+- :name: Oil & Energy
+  :color: cyan
+  :active: false
+  :uid: ind_EjoICgKz8cpVCqN
+  :airtable_id: recuwqi2cNSmdRTHv
+- :name: FinTech
+  :color: red
+  :active: false
+  :uid: ind_i1PhsQ2Cpxvply0
+  :airtable_id: recuxt4URiGppWsaN
+- :name: Legal
+  :color: purple
+  :active: false
+  :uid: ind_aK6Dp9XsejL5QDi
+  :airtable_id: recv3dn8lgEm7Rvma
+- :name: university
+  :color: green
+  :active: false
+  :uid: ind_c14xjWHs3eHkkpH
+  :airtable_id: recv9wsDPfSWqCa0O
+- :name: Jewelry
+  :color: neutral
+  :active: false
+  :uid: ind_dln6Mro2BLStrBG
+  :airtable_id: recvDRD7CLVDEYIbA
+- :name: Mobile
+  :color: purple
+  :active: false
+  :uid: ind_9HavqCwYsJasP4J
+  :airtable_id: recvEjxQwVdW8av4B
+- :name: Transportation/Trucking/Railroad
+  :color: purple
+  :active: false
+  :uid: ind_eSFOwTCuCw7DmMM
+  :airtable_id: recvNfrW7A9iABEEp
+- :name: Training
+  :color: neutral
+  :active: false
+  :uid: ind_02toyEvaQb3cWye
+  :airtable_id: recvWoyuEYAuX0Ige
+- :name: Philanthropy
+  :color: orange
+  :active: false
+  :uid: ind_aRyFgCm3MdHOIzU
+  :airtable_id: recvfjFc2w5DhgAAj
+- :name: Staffing and Recruiting
+  :color: neutral
+  :active: false
+  :uid: ind_IAJu60JvlIaOrLi
+  :airtable_id: recvqCGWSrPyJKOkT
+- :name: Environmental Consulting
+  :color: purple
+  :active: false
+  :uid: ind_2g9rHNp6yfhU9ue
+  :airtable_id: recvrhPR6WOdEsWyy
+- :name: Furniture
+  :color: green
+  :active: false
+  :uid: ind_7RuYW8diqoow7cW
+  :airtable_id: recvx7wOKrd4Vi6hG
+- :name: Cannabis
+  :color: green
+  :active: false
+  :uid: ind_K8PWEJruZp9Y8X9
+  :airtable_id: recw4voCngjkPyLQv
+- :name: Libraries
+  :color: blue
+  :active: false
+  :uid: ind_UpRxEM82BSYDh32
+  :airtable_id: recw8taDuwVO7iNaK
+- :name: Golf
+  :color: orange
+  :active: false
+  :uid: ind_toshHsPvmtqBGab
+  :airtable_id: recwHCP7KTqdVd3GJ
+- :name: CRM
+  :color: yellow
+  :active: false
+  :uid: ind_9ppMeYykIg7OFR6
+  :airtable_id: recwJP7wtCFRyTjqG
+- :name: Residential
+  :color: orange
+  :active: false
+  :uid: ind_3PR3gkTVugNvH2T
+  :airtable_id: recwKNbt2aSXHoHOk
+- :name: Infrastructure
+  :color: green
+  :active: false
+  :uid: ind_fswhXZc1jytQkMf
+  :airtable_id: recwMcDiDkeiT7fuZ
+- :name: Financial Services
+  :color: orange
+  :active: true
+  :uid: ind_XQGxWBpqcHN3QuN
+  :airtable_id: recwORvgJ8WhdL8im
+- :name: 3D Technology
+  :color: blue
+  :active: false
+  :uid: ind_9wUy9QTY6Sw8L7d
+  :airtable_id: recwVv62XMuv1gIGV
+- :name: Public Relations and Communications
+  :color: blue
+  :active: false
+  :uid: ind_Du6i7huQ2l7OWLy
+  :airtable_id: recwYW4EF5dPYl3UN
+- :name: Fund-Raising
+  :color: red
+  :active: false
+  :uid: ind_0MhSf0RK8DfguI7
+  :airtable_id: recwcCNhqNZjSCfGT
+- :name: Tourism
+  :color: orange
+  :active: false
+  :uid: ind_YfEFcfMggoDSkf0
+  :airtable_id: recwidkdxxNYnsgZu
+- :name: Life Insurance
+  :color: green
+  :active: false
+  :uid: ind_do4nb52pQh93mHW
+  :airtable_id: recwkCxMfIRREtlwo
+- :name: Air Transportation
+  :color: purple
+  :active: false
+  :uid: ind_SLbenw8aGDXefnO
+  :airtable_id: recwr3soVuVU54v2l
+- :name: Computer Software
+  :color: purple
+  :active: false
+  :uid: ind_ME6tjxTTQtUQf38
+  :airtable_id: recx0jkcwz30H6jCV
+- :name: Commercial
+  :color: green
+  :active: false
+  :uid: ind_SEYvrMUNE1zruuU
+  :airtable_id: recx4vlZ6ofIN8dIs
+- :name: Dental
+  :color: red
+  :active: false
+  :uid: ind_94ft1vfpvaYy30Z
+  :airtable_id: recx7teT4wPBn7sRM
+- :name: Mental Health Care
+  :color: blue
+  :active: false
+  :uid: ind_wz7JcxGzsNaZDw4
+  :airtable_id: recxAdGRedUEGwc8W
+- :name: Health Care
+  :color: green
+  :active: true
+  :uid: ind_p7VaHQoBghskyDM
+  :airtable_id: recxB9jP4X2BPqO02
+- :name: Vacation Rental
+  :color: blue
+  :active: false
+  :uid: ind_jIiLLU0ZLnAogjb
+  :airtable_id: recxIt11ze42lAy3q
+- :name: Consumer Software
+  :color: red
+  :active: false
+  :uid: ind_5csJ8syJa2RjwFn
+  :airtable_id: recxMTtBFQFDdmJ8b
+- :name: Politics
+  :color: neutral
+  :active: false
+  :uid: ind_oxtFQ3iGCo66VbK
+  :airtable_id: recxooknInNLWzgZr
+- :name: Professional Networking
+  :color: neutral
+  :active: false
+  :uid: ind_vULKgBfioGjBkQV
+  :airtable_id: recy4DqlZcG8qYjmq
+- :name: Law Practice
+  :color: yellow
+  :active: false
+  :uid: ind_0ISoYFCqYKSv9d3
+  :airtable_id: recyPGgcc82r40ZHc
+- :name: Beauty
+  :color: cyan
+  :active: false
+  :uid: ind_bw8rrNYM116mM8X
+  :airtable_id: recydtTAMZqr1lVzW
+- :name: Marketing Automation
+  :color: neutral
+  :active: false
+  :uid: ind_A28h3snL9YpfNHF
+  :airtable_id: recyxMu68WvXAkgwn
+- :name: Media and Entertainment
+  :color: cyan
+  :active: false
+  :uid: ind_zKrRI3E11hCH4Bv
+  :airtable_id: reczLO5Nn5s5tZ2U9
+- :name: Dietary Supplements
+  :color: orange
+  :active: false
+  :uid: ind_qe8ZWYcvcIqpNUZ
+  :airtable_id: reczLbB6BRX5854cK
+- :name: Machinery Manufacturing
+  :color: blue
+  :active: false
+  :uid: ind_CsklVelvfXLT8AI
+  :airtable_id: reczOV5i8scphaRep
+- :name: Media Production
+  :color: red
+  :active: false
+  :uid: ind_sUr9tA3pu2BPTUm
+  :airtable_id: reczOxvinIEEaNoX7
+- :name: Medical Device
+  :color: red
+  :active: false
+  :uid: ind_Lv3SemEwZc9k0xw
+  :airtable_id: reczY9g2v4nIAEjHE
+- :name: Agriculture
+  :color: blue
+  :active: false
+  :uid: ind_W9eslL39Th7XHCO
+  :airtable_id: reczaZfmMLWfETiGJ
+- :name: Legislative Office
+  :color: yellow
+  :active: false
+  :uid: ind_5haeQQPnqoiIdyR
+  :airtable_id: reczfz70N19zauEYX
+- :name: Content Creators
+  :color: neutral
+  :active: false
+  :uid: ind_ZyCOcDLPlEygCFA
+  :airtable_id: reczlH2JzaDFXp0Pq
+- :name: Capital Markets
+  :color: cyan
+  :active: false
+  :uid: ind_5HlBUiJEFX8jT5a
+  :airtable_id: reczqGHxynF7xRoFP
+- :name: E-Learning
+  :color: neutral
+  :active: false
+  :uid: ind_azLYrf8GbfBesWP
+  :airtable_id: reczxD3qMGKPci1vv
