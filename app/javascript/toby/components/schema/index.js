@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo } from "react";
 import { useQuery } from "@apollo/client";
-import SCHEMA_INTROSPECTION from "./introspectionQuery.graphql";
+import SCHEMA_INTROSPECTION from "./introspection.graphql";
 import { useResources } from "../resources";
 
 export const SchemaContext = createContext();
