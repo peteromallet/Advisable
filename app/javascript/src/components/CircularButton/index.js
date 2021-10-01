@@ -1,8 +1,8 @@
 import React from "react";
+import css from "@styled-system/css";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { variant } from "styled-system";
-import { theme } from "@advisable/donut";
 
 const StyledCircularButtonIcon = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ const StyledCircularButtonLabel = styled.span`
 `;
 
 const size = variant({
-  prop: "size",
+  prop: "$size",
   variants: {
     sm: {
       [StyledCircularButtonIcon]: {
@@ -94,7 +94,7 @@ const circleVariants = {
     scale: 1,
   },
   hover: {
-    scale: 1.1,
+    scale: 1.08,
   },
   pressed: {
     scale: 0.9,
@@ -122,14 +122,11 @@ export default React.forwardRef(function CircularButton(
   };
   return (
     <StyledCircularButton
-      ref={ref}
-      size={size || "md"}
-      color={color}
+      $size={size}
       onClick={onClick}
       whileHover="hover"
       whileTap="pressed"
-      animate={colorAnimation}
-      initial={colorAnimation}
+      as={motion.button}
       {...props}
     >
       <StyledCircularButtonIcon>
@@ -145,4 +142,6 @@ export default React.forwardRef(function CircularButton(
       {label && <StyledCircularButtonLabel>{label}</StyledCircularButtonLabel>}
     </StyledCircularButton>
   );
-});
+}
+
+export default CircularButton;
