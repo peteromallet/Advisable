@@ -266,7 +266,6 @@ export function getNestedResource(schemadata, resource, attributeName) {
 // Returns the query selection for a given field. If the field is a scalar type
 // we just return true which the json-to-graphql package will use to query for.
 function selectionForField(schemaData, resourceData, fieldName) {
-  console.log(schemaData);
   const type = getType(schemaData.schema, resourceData.type);
   const field = type.fields.find((f) => f.name === fieldName);
   // if its a scalar type just return true

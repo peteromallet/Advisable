@@ -24,15 +24,18 @@ class GraphqlFileParser
   end
 
   def self.import(path)
-    query = File.read(path)
+    cache_key = "#{path}_#{ENV["HEROKU_SLUG_COMMIT"]}"
+    Rails.cache.fetch(cache_key) do
+      query = File.read(path)
 
-    query.gsub!(IMPORT_REGEX) do |import_statement|
-      import_path = import_statement[IMPORT_REGEX, 1]
-      import(File.join(File.dirname(path), import_path))
+      query.gsub!(IMPORT_REGEX) do |import_statement|
+        import_path = import_statement[IMPORT_REGEX, 1]
+        import(File.join(File.dirname(path), import_path))
+      end
+
+      parsed = GraphQL.parse(query)
+      parsed = AddTypename.new(parsed).visit
+      parsed.to_query_string.strip.delete("\n").gsub(/\s+/, " ")
     end
-
-    parsed = GraphQL.parse(query)
-    parsed = AddTypename.new(parsed).visit
-    parsed.to_query_string.strip.delete("\n").gsub(/\s+/, " ")
   end
 end
