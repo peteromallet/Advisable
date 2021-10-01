@@ -2,11 +2,11 @@ import React from "react";
 import { Switch, Redirect } from "react-router-dom";
 import Route from "src/components/Route";
 import Resource from "./views/resource";
-import { useSchema } from "./components/schema";
 import { resourcePath } from "./utilities";
+import { useResources } from "./components/resources";
 
 export default function Routes() {
-  const { resources } = useSchema();
+  const resources = useResources();
 
   return (
     <Switch>
