@@ -3,6 +3,8 @@
 require "rails_helper"
 
 class DummyFeaturable < ApplicationRecord
+  self.table_name = :accounts
+
   include Featurable
   featurize :admin, :guest
 end
@@ -18,18 +20,18 @@ RSpec.describe Featurable do
   end
 
   describe "method functionality" do
-    let(:account) { build_stubbed(:account) }
+    let(:dummy) { DummyFeaturable.new }
 
     it "toggles groups enabled" do
-      expect(account.test?).to eq(false)
-      account.toggle_test
-      expect(account.test?).to eq(true)
+      expect(dummy.admin?).to eq(false)
+      dummy.toggle_admin
+      expect(dummy.admin?).to eq(true)
     end
 
     it "sets groups enabled" do
-      expect(account.test?).to eq(false)
-      account.test = true
-      expect(account.test?).to eq(true)
+      expect(dummy.admin?).to eq(false)
+      dummy.admin = true
+      expect(dummy.admin?).to eq(true)
     end
   end
 end
