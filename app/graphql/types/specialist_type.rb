@@ -262,16 +262,6 @@ module Types
       object.account.email
     end
 
-    field :talk_signature, String, null: false do
-      authorize :specialist?
-      description 'A unique signature used to for identification with talkjs'
-    end
-
-    def talk_signature
-      user_id = context[:current_user].uid
-      OpenSSL::HMAC.hexdigest('SHA256', ENV['TALKJS_SECRET'], user_id)
-    end
-
     field :country, Types::CountryType, null: true do
       description 'The specialists country'
     end

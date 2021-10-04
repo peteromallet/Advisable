@@ -7,21 +7,30 @@ class UnresponsivenessReport < ApplicationRecord
   belongs_to :reporter, class_name: "Account"
 
   memoize def last_message_by_specialist_at
-    last_message_by(application.specialist.uid)
+    last_message_by(specialist_account)
   end
 
   memoize def last_message_by_client_at
-    last_message_by(application.project.user.uid)
+    last_message_by(user_account)
   end
 
   private
 
-  def last_message_by(uid)
-    messages = TalkjsApi.new.messages(application.uid)
-    last_message = messages.find { |m| m["senderId"] == uid }
-    Time.zone.at(last_message["createdAt"] / 1000) if last_message
-  rescue ApiRequestError
-    nil
+  def specialist_account
+    @specialist_account ||= application.specialist.account
+  end
+
+  def user_account
+    @user_account ||= application.project.user.account
+  end
+
+  def last_message_by(account)
+    conversation = Conversation.find_existing_with([user_account, specialist_account])
+    messages = conversation&.messages
+    return unless messages
+
+    last_message = messages.where(author_id: account.id).order(created_at: :desc).first
+    last_message&.created_at
   end
 end
 

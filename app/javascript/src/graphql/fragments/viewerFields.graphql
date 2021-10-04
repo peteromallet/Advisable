@@ -11,7 +11,6 @@ fragment ViewerFields on ViewerUnion {
     confirmed
     createdAt
     companyName
-    talkSignature
     applicationStage
     completedTutorials
     needsToSetAPassword
@@ -37,7 +36,6 @@ fragment ViewerFields on ViewerUnion {
     firstName
     lastName
     confirmed
-    talkSignature
     applicationStage
     completedTutorials
     needsToSetAPassword
