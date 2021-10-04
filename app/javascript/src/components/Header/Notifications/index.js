@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
-import { GUILD_NOTIFICATIONS_QUERY } from "./queries";
+import { GUILD_NOTIFICATIONS_QUERY, GUILD_UPDATE_LAST_READ } from "./queries";
 import truncate from "lodash/truncate";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import * as Sentry from "@sentry/react";
 import Loading from "@advisable-main/components/Loading";
+import useViewer from "src/hooks/useViewer";
 import { Box, Avatar, Text, Link, Stack } from "@advisable/donut";
-import { NotificationItem } from "./styles";
+import { StyledNotificationsButton, NotificationItem } from "./styles";
 import { GuildBox } from "@guild/styles";
 import { relativeDate } from "@guild/utils";
+import { Bell } from "@styled-icons/heroicons-outline";
+import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
 
 const AuthorDetails = ({ author }) => (
   <GuildBox flexCenterBoth spaceChildrenVertical={8}>
@@ -38,7 +41,7 @@ const Notification = ({
           <Text size="s" color="neutral600" mb={1} lineHeight="1.1rem">
             {type === "PostReactionNotification" ? (
               <Link
-                to={`/freelancers/${specialist.id}/guild`}
+                to={`/freelancers/${specialist.id}`}
                 fontWeight="medium"
                 variant="dark"
                 onClick={closeNotifications}
@@ -50,7 +53,7 @@ const Notification = ({
             {message}
 
             <Link
-              to={`/posts/${guildPost?.id}`}
+              to={`/guild/posts/${guildPost?.id}`}
               fontWeight="medium"
               variant="dark"
               onClick={closeNotifications}
@@ -130,4 +133,50 @@ const Notifications = ({ open, closeNotifications }) => {
   );
 };
 
-export default Notifications;
+export default function NotificationsMenu() {
+  const viewer = useViewer();
+  const hasUnread = viewer.guildUnreadNotifications;
+  const popover = usePopoverState({
+    placement: "top-end",
+  });
+
+  const [guildUpdateLastRead] = useMutation(GUILD_UPDATE_LAST_READ);
+
+  useEffect(() => {
+    if (popover.visible && hasUnread) {
+      guildUpdateLastRead();
+    }
+  }, [hasUnread, popover.visible, guildUpdateLastRead]);
+
+  return (
+    <>
+      <PopoverDisclosure {...popover}>
+        {(props) => (
+          <StyledNotificationsButton
+            {...props}
+            color="white"
+            data-testid={hasUnread ? "unreadNotifications" : "notifications"}
+          >
+            <Bell size={24} />
+          </StyledNotificationsButton>
+        )}
+      </PopoverDisclosure>
+      <Popover {...popover} aria-label="Notifications">
+        {(props) => (
+          <Box
+            maxHeight="50vh"
+            width="80%"
+            maxWidth="400px"
+            tabIndex={0}
+            {...props}
+          >
+            <Notifications
+              open={popover.visible}
+              closeNotifications={popover.hide}
+            />
+          </Box>
+        )}
+      </Popover>
+    </>
+  );
+}

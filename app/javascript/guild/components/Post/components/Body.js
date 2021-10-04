@@ -7,7 +7,7 @@ import PostActions from "@guild/components/PostActions";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ResolvedNotice from "./ResolvedNotice";
 import PopularNotice from "./PopularNotice";
-import { guildPostUrl, isGuildPath } from "@guild/utils";
+import { isGuildPath } from "@guild/utils";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 
 export default function Body({
@@ -19,7 +19,7 @@ export default function Body({
   walkthrough = false,
   popularOrAuthorReactions = false,
 }) {
-  const url = guildPostUrl(post.id);
+  const url = `/guild/posts/${post.id}`;
   const history = useHistory();
   const handleOpen = () => {
     // We need to use an actual page load while the guild pack is separate.

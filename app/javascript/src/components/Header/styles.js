@@ -239,7 +239,7 @@ export const CurrentUserDropdown = styled.div`
   a {
     color: #4d5880;
     display: block;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     padding: 10px 20px;
     text-decoration: none;

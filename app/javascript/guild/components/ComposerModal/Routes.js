@@ -55,7 +55,7 @@ function Routes({ onPublish, selectDataQuery, guildPost, postPrompt }) {
 
       <Route path="*composer/:id/targeting">
         {guildPost?.audienceType === "none" ? (
-          <Redirect to={`/composer/${guildPost.id}/review`} />
+          <Redirect to={`/guild/composer/${guildPost.id}/review`} />
         ) : (
           <EditTargeting
             guildPost={guildPost}

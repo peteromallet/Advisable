@@ -4,11 +4,11 @@ import { Link as RouterLink } from "react-router-dom";
 import { Box, Card, Text, Avatar, Link, Stack } from "@advisable/donut";
 import Topics from "@guild/components/Post/components/Topics";
 import PostTypeTag from "@guild/components/PostTypeTag";
-import { guildPostUrl, isGuildPath } from "@guild/utils";
+import { isGuildPath } from "@guild/utils";
 import pluralize from "src/utilities/pluralize";
 
 const PopularPost = ({ post }) => {
-  const url = guildPostUrl(post.id);
+  const url = `/guild/posts/${post.id}`;
 
   return (
     <Sentry.ErrorBoundary>

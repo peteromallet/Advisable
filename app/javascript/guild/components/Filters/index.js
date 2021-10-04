@@ -16,7 +16,7 @@ const Filters = ({ postTypeFilter, setPostTypeFilter, yourPosts }) => {
   const client = useApolloClient();
   const sUp = useBreakpoint("sUp");
   const [expanded, toggleExpanded] = useToggle();
-  const composerModal = useComposerModal("/composer");
+  const composerModal = useComposerModal("/guild/composer");
 
   const postTypeFilters = [
     "For You",

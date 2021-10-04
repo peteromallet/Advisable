@@ -7,14 +7,6 @@ import SubmitButton from "components/SubmitButton";
 import { useNotifications } from "components/Notifications";
 import { Button, Text, Modal, useModal, Textarea } from "@advisable/donut";
 
-export const CREATE_CHAT_DIRECT_MESSAGE = gql`
-  mutation createChatDirectMessage($input: CreateChatDirectMessageInput!) {
-    createChatDirectMessage(input: $input) {
-      enqueued
-    }
-  }
-`;
-
 const CREATE_CONVERSATION = gql`
   mutation CreateConversationFromProfile($input: CreateConversationInput!) {
     createConversation(input: $input) {
@@ -30,34 +22,21 @@ const validationSchema = object({
 });
 
 function MessageForm({ specialist, onSend }) {
-  const [send] = useMutation(CREATE_CHAT_DIRECT_MESSAGE);
   const [createConversation] = useMutation(CREATE_CONVERSATION);
-  const versionTwo = sessionStorage.getItem("/messages/:conversationId?");
 
   const initialValues = {
     body: "",
   };
 
   const handleSubmit = async (values) => {
-    if (versionTwo) {
-      await createConversation({
-        variables: {
-          input: {
-            participants: [specialist.account.id],
-            content: values.body,
-          },
+    await createConversation({
+      variables: {
+        input: {
+          participants: [specialist.account.id],
+          content: values.body,
         },
-      });
-    } else {
-      await send({
-        variables: {
-          input: {
-            body: values.body,
-            recipientId: specialist.id,
-          },
-        },
-      });
-    }
+      },
+    });
 
     onSend();
   };

@@ -31,3 +31,16 @@ export const GUILD_NOTIFICATIONS_QUERY = gql`
     }
   }
 `;
+
+export const GUILD_UPDATE_LAST_READ = gql`
+  mutation guildUpdateLastRead {
+    guildUpdateLastRead(input: {}) {
+      viewer {
+        ... on Specialist {
+          id
+          guildUnreadNotifications
+        }
+      }
+    }
+  }
+`;
