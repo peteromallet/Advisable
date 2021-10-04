@@ -4,9 +4,9 @@ require "open-uri"
 
 class TestData
   def self.create_seed_data_v2
-    country = Country.find_or_create_by(name: "Ireland")
-    company = Company.find_or_create_by(name: "Advisable")
     sales_person = SalesPerson.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, username: Faker::Internet.username)
+    country = Country.find_or_create_by(name: "Ireland")
+    company = Company.find_or_create_by(name: "Advisable", sales_person: sales_person)
     now = Time.zone.now
     yml = YAML.load_file("db/seeds/test_data.yml")
 
@@ -32,6 +32,7 @@ class TestData
             last_name: "#{advisable[:last_name]} Specialist",
             password_digest: "$2a$12$4COpROFiSO8HSEzpDRbwjOvjklTclASMbHz5L8FdUsmo1e/nQFCWm", # testing123
             permissions: [],
+            features: {},
             confirmed_at: 1.hour.ago,
             updated_at: now,
             created_at: now
@@ -54,6 +55,7 @@ class TestData
             last_name: advisable[:last_name],
             password_digest: "$2a$12$4COpROFiSO8HSEzpDRbwjOvjklTclASMbHz5L8FdUsmo1e/nQFCWm", # testing123
             permissions: %w[admin team_manager editor],
+            features: {case_studies: true},
             confirmed_at: 1.hour.ago,
             updated_at: now,
             created_at: now
@@ -62,7 +64,7 @@ class TestData
             uid: User.generate_uid,
             company_id: company.id,
             country_id: country.id,
-            sales_person_id: sales_person.id,
+            contact_status: "Application Accepted",
             updated_at: now,
             created_at: now
           }
