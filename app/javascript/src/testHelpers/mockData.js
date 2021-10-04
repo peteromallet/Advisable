@@ -34,6 +34,7 @@ export const user = (fields = {}) => {
       talkSignature: "1234",
       timeZone: "Europe/Dublin",
       features: [],
+      avatar: null,
       createdAt: new Date().toISOString(),
       paymentMethod: null,
       paymentsSetup: true,
