@@ -6,7 +6,7 @@ import { Formik, Form, Field } from "formik";
 import { Send } from "@styled-icons/ionicons-solid/Send";
 import SubmitButton from "components/SubmitButton";
 import { Textarea, Text } from "@advisable/donut";
-import { useCreateChatDirectMessage, useSendPostMessage } from "./queries";
+import { useSendPostMessage } from "./queries";
 
 const validationSchema = object().shape({
   message: string().required("Please write a message"),
@@ -15,37 +15,21 @@ const validationSchema = object().shape({
 export default function MessageModal({ post, onSend = () => {} }) {
   const client = useApolloClient();
   const notifications = useNotifications();
-  const [sendMessage] = useCreateChatDirectMessage();
   const [sendPostMessage] = useSendPostMessage();
 
   const initialValues = {
     message: "",
   };
 
-  const versionTwo = sessionStorage.getItem("/messages/:conversationId?");
-
   const handleSubmit = async (values) => {
-    let response;
-    if (versionTwo) {
-      response = await sendPostMessage({
-        variables: {
-          input: {
-            post: post.id,
-            content: values.message,
-          },
+    const response = await sendPostMessage({
+      variables: {
+        input: {
+          post: post.id,
+          content: values.message,
         },
-      });
-    } else {
-      response = await sendMessage({
-        variables: {
-          input: {
-            recipientId: post.author.id,
-            guildPostId: post.id,
-            body: values.message,
-          },
-        },
-      });
-    }
+      },
+    });
 
     if (!response.errors) {
       client.cache.modify({

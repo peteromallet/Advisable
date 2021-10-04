@@ -19,7 +19,7 @@ RSpec.describe 'Event view', type: :system do
         ENV['TZ'] = override_tz
         Capybara.using_session(override_tz) do
           Time.use_zone(override_tz) do
-            visit "/guild/events/#{event.uid}"
+            visit "/events/#{event.uid}"
             expect(page).to have_content(event.title)
             expect(page).to have_content(event.description)
 
@@ -35,20 +35,21 @@ RSpec.describe 'Event view', type: :system do
       end
 
       it 'can be registered or unregistered for' do
-        visit "/guild/events/#{event.uid}"
-        expect(page).not_to have_content('Attendees')
-        find(:xpath, ".//button[contains(text(), 'Register for event')]").click
-        expect(page).to have_content('Attendees')
-        expect(page).to have_content(specialist.first_name)
+        other_account = create(:account, first_name: "Other")
+        event.attendees << create(:specialist, account: other_account)
+        visit "/events/#{event.uid}"
+        click_on("Register for event")
+        attendees = page.find(:css, "*[data-testid=attendees]")
+        expect(attendees).to have_content(specialist.first_name)
 
-        find(:xpath, ".//button[contains(text(), 'Unregister')]").click
-        expect(page).not_to have_content(specialist.first_name)
+        click_on("Unregister")
+        expect(attendees).not_to have_content(specialist.first_name)
       end
 
       it "does not display a register button if the viewer is the host" do
         event.update!(host: specialist)
 
-        visit "/guild/events/#{event.uid}"
+        visit "/events/#{event.uid}"
         expect(page).to have_content(event.title)
         expect(page).to have_button('Register for event', disabled: true)
       end
@@ -57,28 +58,28 @@ RSpec.describe 'Event view', type: :system do
         attendees = create_list(:specialist, 110)
         event.attendees << attendees
 
-        visit "/guild/events/#{event.uid}"
+        visit "/events/#{event.uid}"
         expect(page).to have_content('+ 10')
       end
 
       context "with event status notices" do
         it "has a notice if event is starting soon" do
           event.update!(starts_at: 55.minutes.from_now, ends_at: 1.hour.from_now)
-          visit "/guild/events/#{event.uid}"
+          visit "/events/#{event.uid}"
 
           expect(page).to have_content("This event is starting soon")
         end
 
         it "has a notice if the event is in progress" do
           event.update!(starts_at: 5.minutes.ago, ends_at: 1.hour.from_now)
-          visit "/guild/events/#{event.uid}"
+          visit "/events/#{event.uid}"
 
           expect(page).to have_content("This event is in progress")
         end
 
         it "has a notice if the event has ended" do
           event.update!(starts_at: 10.minutes.ago, ends_at: 5.minutes.ago)
-          visit "/guild/events/#{event.uid}"
+          visit "/events/#{event.uid}"
           expect(page).to have_content("This event has ended")
         end
       end
@@ -87,7 +88,7 @@ RSpec.describe 'Event view', type: :system do
         it "changes from Unregister to Join" do
           event.update!(starts_at: 5.seconds.from_now, ends_at: 5.minutes.from_now)
           event.attendees << specialist
-          visit "/guild/events/#{event.uid}"
+          visit "/events/#{event.uid}"
 
           expect(page).to have_button('Unregister')
           expect(page).to have_button('Join', wait: 10)
@@ -97,7 +98,7 @@ RSpec.describe 'Event view', type: :system do
 
         it "removes the Join button if ended" do
           event.update!(starts_at: Time.zone.now, ends_at: 5.seconds.from_now)
-          visit "/guild/events/#{event.uid}"
+          visit "/events/#{event.uid}"
 
           expect(page).to have_button('Join')
           expect(page).not_to have_button('Join', wait: 10)
@@ -109,14 +110,14 @@ RSpec.describe 'Event view', type: :system do
 
   context "when not logged in" do
     it "is still viewable" do
-      visit "/guild/events/#{event.uid}"
+      visit "/events/#{event.uid}"
 
       expect(page).to have_button('Register for event')
       expect(page).to have_content(event.title)
     end
 
     it "is redirected to login page when the attempting to join the event" do
-      visit "/guild/events/#{event.uid}"
+      visit "/events/#{event.uid}"
 
       click_on('Register for event')
       expect(page).to have_content("Please sign in to your account")

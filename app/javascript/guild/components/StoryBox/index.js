@@ -9,9 +9,9 @@ export default function StoryBox({ loading, latestPrompt }) {
   const label = latestPrompt?.label;
   const posts = latestPrompt?.posts;
 
-  const handleViewAll = () => history.push(`/topics/${label.slug}`);
+  const handleViewAll = () => history.push(`/guild/topics/${label.slug}`);
   const handleCreateFromPrompt = () =>
-    history.push(`/composer/prompt/${latestPrompt.id}`);
+    history.push(`/guild/composer/prompt/${latestPrompt.id}`);
 
   if (loading) return <Loading />;
 

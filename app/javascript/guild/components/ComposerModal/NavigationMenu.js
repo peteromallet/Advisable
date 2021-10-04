@@ -5,7 +5,9 @@ import useProgressSteps from "./useProgressSteps";
 import { yourPostValidationSchema } from "./validationSchemas";
 
 const NavigationMenu = ({ guildPost, postPrompt }) => {
-  const urlPrefix = ["/composer", guildPost?.id].filter(Boolean).join("/");
+  const urlPrefix = ["/guild/composer", guildPost?.id]
+    .filter(Boolean)
+    .join("/");
   return (
     <SetupMenu
       guildPost={guildPost}

@@ -1,4 +1,5 @@
-<%= render "guild" %>
+<%= javascript_packs_with_chunks_tag "application" %>
+<%= stylesheet_packs_with_chunks_tag "application" %>
 
 <% if @guild_post %>
   <% content_for :meta_tags do %>

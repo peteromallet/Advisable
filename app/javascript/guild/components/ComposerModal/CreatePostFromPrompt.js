@@ -18,7 +18,7 @@ export default function CreatePostFromPrompt({ postPrompt }) {
       },
     });
     const guildPost = response.data?.createGuildPost.guildPost;
-    navigate(`/composer/${guildPost?.id}/images`);
+    navigate(`/guild/composer/${guildPost?.id}/images`);
   };
 
   const initialValues = {
