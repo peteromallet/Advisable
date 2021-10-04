@@ -79,9 +79,9 @@ export const NavItem = styled(NavLink)`
   transition: color 200ms;
   background-size: 300% 100%;
   background-image: linear-gradient(
-    135deg,
-    ${theme.colors.blue700} 0%,
-    ${theme.colors.cyan700} 33%,
+    116deg,
+    #c32ad1 0%,
+    ${theme.colors.blue600} 33%,
     ${theme.colors.neutral700} 66%,
     ${theme.colors.neutral700} 100%
   );
@@ -89,7 +89,7 @@ export const NavItem = styled(NavLink)`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-position: 100% 0%;
-  transition: background-position 400ms;
+  transition: background-position 200ms;
 
   &:hover,
   &.active {
