@@ -89,10 +89,14 @@ export const NavItem = styled(NavLink)`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-position: 100% 0%;
-  transition: background-position 200ms;
+  transition: background-position 200ms, opacity 200ms;
 
-  &:hover,
+  &:hover {
+    opacity: 0.6;
+  }
+
   &.active {
+    opacity: 1;
     background-position: 0% 0%;
   }
 
