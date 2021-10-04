@@ -29,12 +29,6 @@ class ApplicationController < ActionController::Base
     redirect_to("/")
   end
 
-  def toby
-    return if current_account&.admin?
-
-    redirect_to(current_account ? "/" : "/login?redirect=/toby")
-  end
-
   def client_ip
     request.env['HTTP_X_FORWARDED_FOR'].try(:split, ',').try(:first) ||
       request.env['REMOTE_ADDR']
@@ -60,17 +54,11 @@ class ApplicationController < ActionController::Base
     prefetch_query("app/javascript/src/graphql/queries/getViewer.graphql")
   end
 
-  def prefetch_query(path, variables = {})
+  def prefetch_query(path)
     @prefetched_queries ||= []
-    cache_key = "#{path}_#{ENV["HEROKU_SLUG_COMMIT"]}"
-    query = Rails.cache.fetch(cache_key) { GraphqlFileParser.import(path) }
-    result = AdvisableSchema.execute(query, variables: variables, context: graphql_context)
-
-    @prefetched_queries << {
-      query: query,
-      variables: variables,
-      result: result
-    }
+    query = GraphqlFileParser.import(path)
+    result = AdvisableSchema.execute(query, context: graphql_context)
+    @prefetched_queries << {query: query, result: result}
   end
 
   def graphql_context

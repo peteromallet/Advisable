@@ -1,0 +1,25 @@
+query TobyResources {
+  resources {
+    type
+    queryNameCollection
+    queryNameItem
+    queryNameUpdate
+    queryNameSearch
+    attributes {
+      name
+      readonly
+      sortable
+      description
+      columnLabel
+      columnName
+      filters {
+        name
+        type
+        nested
+      }
+      ... on SelectAttribute {
+        options
+      }
+    }
+  }
+}

@@ -1,10 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useMenuState, MenuButton, Menu } from "reakit/Menu";
-import { useSchema } from "../schema";
 import { Menu as MenuIcon } from "@styled-icons/heroicons-solid/Menu";
 import { Table } from "@styled-icons/heroicons-solid/Table";
 import { pluralizeType } from "../../utilities";
+import { useResources } from "../resources";
 import {
   StyledNavigation,
   StyledCurrentResource,
@@ -13,7 +13,7 @@ import {
 } from "../../styles";
 
 export default function Navigation({ resource }) {
-  const { resources } = useSchema();
+  const resources = useResources();
   const menu = useMenuState();
 
   return (

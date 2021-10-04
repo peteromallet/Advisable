@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Provider as DonutProvider } from "@advisable/donut";
 import client from "./apolloClient";
 import Routes from "./Routes";
+import Resources from "./components/resources";
 import Schema from "./components/schema";
 import { NotificationsProvider } from "src/components/Notifications";
 import { BaseStyles } from "./styles";
@@ -15,9 +16,11 @@ const Root = () => {
         <NotificationsProvider>
           <DonutProvider>
             <BaseStyles />
-            <Schema>
-              <Routes />
-            </Schema>
+            <Resources>
+              <Schema>
+                <Routes />
+              </Schema>
+            </Resources>
           </DonutProvider>
         </NotificationsProvider>
       </Router>
