@@ -7,6 +7,7 @@ import Shortlists from "./views/Shortlists";
 import ShortlistArticle from "./views/ShortlistArticle";
 import CreateOrEditSearch from "./views/CreateOrEditSearch";
 import Page from "src/components/Page";
+import ErrorBoundary from "src/components/ErrorBoundary";
 
 export default function Discover() {
   useBackground("white");
@@ -17,23 +18,28 @@ export default function Discover() {
   }, [pathname]);
 
   return (
-    <Page width="960px">
-      <Box paddingY={{ _: 8, m: 12 }} paddingX={{ _: 4, m: 8 }}>
-        <Switch>
-          <Route
-            path={[
-              "/explore/new",
-              "/explore/:id/skills",
-              "/explore/:id/goals",
-              "/explore/:id/preferences",
-            ]}
-            component={CreateOrEditSearch}
-          />
-          <Route path="/explore/:id/:articleId" component={ShortlistArticle} />
-          <Route path="/explore/:id" component={Shortlist} />
-          <Route path="/explore" component={Shortlists} />
-        </Switch>
-      </Box>
-    </Page>
+    <ErrorBoundary>
+      <Page width="960px">
+        <Box paddingY={{ _: 8, m: 12 }} paddingX={{ _: 4, m: 8 }}>
+          <Switch>
+            <Route
+              path={[
+                "/explore/new",
+                "/explore/:id/skills",
+                "/explore/:id/goals",
+                "/explore/:id/preferences",
+              ]}
+              component={CreateOrEditSearch}
+            />
+            <Route
+              path="/explore/:id/:articleId"
+              component={ShortlistArticle}
+            />
+            <Route path="/explore/:id" component={Shortlist} />
+            <Route path="/explore" component={Shortlists} />
+          </Switch>
+        </Box>
+      </Page>
+    </ErrorBoundary>
   );
 }
