@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import * as Sentry from "@sentry/react";
-import { AlertTriangle } from "@styled-icons/feather/AlertTriangle";
 import { RefreshCw } from "@styled-icons/feather/RefreshCw";
 import { Circle, Box, Text, Button } from "@advisable/donut";
 import CollectFeedback from "./CollectFeedback";
+import DisconnectIllustration from "src/illustrations/zest/disconnect";
 
 const CHUNK_LOAD_EXPIRY = 60000; // 1 min
 
@@ -23,25 +23,31 @@ function handleChunkLoadWithrefresh() {
 
 function ErrorMessage({ eventId }) {
   return (
-    <Box maxWidth={320} mx="auto" my="xxl" textAlign="center">
-      <Circle bg="blue100" mb="m" color="blue800">
-        <AlertTriangle size={30} strokeWidth={2} />
-      </Circle>
-      <Text
-        mb="s"
-        as="h1"
-        fontSize={32}
-        color="blue900"
-        fontWeight="bold"
-        letterSpacing="-0.05em"
-      >
-        Oops..
-      </Text>
-      <Text fontSize="s" lineHeight="s" color="neutral800" mb="l">
-        An unexpected error has occurred. We have been notified and are working
-        to fix the problem.
-      </Text>
-      <CollectFeedback eventId={eventId} />
+    <Box
+      paddingY={4}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      minHeight="calc(100vh - 120px)"
+    >
+      <Box maxWidth="400px" textAlign="center">
+        <DisconnectIllustration width="240px" />
+        <Text
+          mb="s"
+          as="h1"
+          fontSize="6xl"
+          color="neutral900"
+          fontWeight={700}
+          letterSpacing="-0.05em"
+        >
+          Oops..
+        </Text>
+        <Text lineHeight="20px" color="neutral900" mb={8}>
+          An unexpected error has occurred. We have been notified and are
+          working to fix the problem.
+        </Text>
+        <CollectFeedback eventId={eventId} />
+      </Box>
     </Box>
   );
 }
