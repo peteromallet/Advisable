@@ -7,8 +7,10 @@ import useLogoURL from "../ApplicationProvider/useLogoURL";
 import LogoMark from "src/components/LogoMark";
 import Notifications from "./Notifications";
 import Navigation from "./Navigation";
+import useViewer from "src/hooks/useViewer";
 
 export default function MobileHeader() {
+  const viewer = useViewer();
   const [navOpen, setNavOpen] = React.useState(false);
   const logoURL = useLogoURL();
 
@@ -44,9 +46,7 @@ export default function MobileHeader() {
           <LogoMark size={24} />
         </a>
       </Box>
-      <Box>
-        <Notifications />
-      </Box>
+      <Box>{viewer?.isSpecialist && <Notifications />}</Box>
     </StyledHeader>
   );
 }
