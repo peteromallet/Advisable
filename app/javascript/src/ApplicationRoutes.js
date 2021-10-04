@@ -30,6 +30,7 @@ const FreelancerProfileNew = lazy(() => import("./views/FreelancerProfileNew"));
 const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication"),
 );
+const TestimonialFlow = lazy(() => import("./views/TestimonialFlow"));
 const RequestConsultation = lazy(() => import("./views/RequestConsultation"));
 const Consultation = lazy(() => import("./views/Consultation"));
 const Interview = lazy(() => import("./views/Interview"));
@@ -105,6 +106,7 @@ const ApplicationRoutes = () => {
             path="/clients/apply"
             component={ClientApplication}
           />
+          <Route path="/review/:id" component={TestimonialFlow} />
           <AuthenticatedRoute
             path="/freelancers/apply"
             component={FreelancerApplication}
