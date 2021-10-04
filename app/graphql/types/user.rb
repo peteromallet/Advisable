@@ -157,15 +157,6 @@ module Types
 
     field :id, ID, null: false, method: :uid
 
-    field :talk_signature, String, null: false do
-      authorize :user?
-    end
-
-    def talk_signature
-      user_id = context[:current_user].uid
-      OpenSSL::HMAC.hexdigest("SHA256", ENV["TALKJS_SECRET"], user_id)
-    end
-
     field :projects, [Types::ProjectType], null: true, deprecation_reason: "Moved to Company" do
       authorize :user?, :admin?
     end

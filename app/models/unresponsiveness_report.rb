@@ -16,6 +16,7 @@ class UnresponsivenessReport < ApplicationRecord
 
   private
 
+  # FIX THIS!!!
   def last_message_by(uid)
     messages = TalkjsApi.new.messages(application.uid)
     last_message = messages.find { |m| m["senderId"] == uid }
