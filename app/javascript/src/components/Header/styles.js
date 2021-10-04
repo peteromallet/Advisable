@@ -76,26 +76,29 @@ export const NavItem = styled(NavLink)`
   height: var(--header-height);
   color: ${theme.colors.neutral700};
 
-  transition: color 200ms;
-  background-size: 300% 100%;
-  background-image: linear-gradient(
-    116deg,
-    #c32ad1 0%,
-    ${theme.colors.blue600} 33%,
-    ${theme.colors.neutral700} 66%,
-    ${theme.colors.neutral700} 100%
-  );
+  span {
+    padding: 4px 0;
+    background-size: 300% 100%;
+    background-image: linear-gradient(
+      116deg,
+      #c32ad1 0%,
+      ${theme.colors.blue600} 33%,
+      ${theme.colors.neutral700} 66%,
+      ${theme.colors.neutral700} 100%
+    );
 
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-position: 100% 0%;
-  transition: background-position 200ms, opacity 200ms;
-
-  &:hover {
-    opacity: 0.6;
+    background-position: 100% 0%;
+    transition: background-position 200ms, opacity 200ms;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
-  &.active {
+  &:hover span {
+    opacity: 0.5;
+    background-position: 0% 0%;
+  }
+
+  &.active span {
     opacity: 1;
     background-position: 0% 0%;
   }
