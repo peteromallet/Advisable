@@ -21,11 +21,7 @@ const CollectFeedback = ({ eventId }) => {
   };
 
   return (
-    <Button
-      variant="subtle"
-      prefix={<MessageCircle />}
-      onClick={handleFeedback}
-    >
+    <Button variant="dark" prefix={<MessageCircle />} onClick={handleFeedback}>
       Report feedback
     </Button>
   );
