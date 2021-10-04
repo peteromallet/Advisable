@@ -61,7 +61,7 @@ export default function GuildPostMessage({ message }) {
           {renderLineBreaks(message.content)}
         </Text>
         {message.post && (
-          <Link to={`/posts/${message.post.id}`}>
+          <Link to={`/guild/posts/${message.post.id}`}>
             <Box
               padding={3}
               display="flex"
