@@ -26,7 +26,6 @@ RSpec.describe Mutations::RemoveUserFromCompany do
 
   before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
-    allow_any_instance_of(TalkjsApi).to receive(:conversations_by).and_return([])
   end
 
   it "removes the user from the company" do
