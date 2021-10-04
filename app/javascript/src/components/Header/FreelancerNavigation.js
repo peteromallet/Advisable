@@ -3,6 +3,7 @@ import { X } from "@styled-icons/feather/X";
 import { useMobile } from "../../components/Breakpoint";
 import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
 import useViewer from "../../hooks/useViewer";
+import MessageCount from "./MessageCount";
 
 const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
   const isMobile = useMobile();
@@ -24,6 +25,7 @@ const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
           Profile
         </NavItem>
         <NavItem onClick={onCloseNav} to="/messages">
+          <MessageCount />
           Messages
         </NavItem>
 
