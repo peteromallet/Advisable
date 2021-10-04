@@ -176,28 +176,6 @@ module Types
       ::Recommendation.recommend(current_user)
     end
 
-    # Guild
-    field :chat_grant, Types::ChatGrantType, null: true do
-      description "Access token grant for twilio chat client"
-    end
-
-    def chat_grant
-      requires_current_user!
-
-      grant = Twilio::JWT::AccessToken::ChatGrant.new
-      grant.service_sid = ENV.fetch("TWILIO_CHAT_SERVICE_SID")
-      token = Twilio::JWT::AccessToken.new(
-        ENV.fetch("TWILIO_SID"),
-        ENV.fetch("TWILIO_API_KEY_SID"),
-        ENV.fetch("TWILIO_API_KEY_SECRET"),
-        [grant],
-        identity: current_user.uid,
-        ttl: 86_400
-      )
-
-      {identity: current_user.uid, access_token: token.to_jwt}
-    end
-
     field :events, Types::EventConnection, null: true, connection: true
 
     def events
