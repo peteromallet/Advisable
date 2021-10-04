@@ -10,8 +10,8 @@ RSpec.describe RefreshCaseStudySearchesJob do
   let(:search2) { create(:case_study_search, user: user) }
   let(:search3) { create(:case_study_search, user: user2) }
   let(:search4) { create(:case_study_search, user: user_without_access) }
-  let(:article1) { create(:case_study_article) }
-  let(:article2) { create(:case_study_article) }
+  let(:article1) { create(:case_study_article, score: 90) }
+  let(:article2) { create(:case_study_article, score: 85) }
   let(:skill1) { create(:skill) }
   let(:skill2) { create(:skill) }
   let(:skill3) { create(:skill) }
