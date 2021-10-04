@@ -1,6 +1,6 @@
 import { ApolloClient, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { InMemoryCache } from "@apollo/client";
+import { gql, InMemoryCache } from "@apollo/client";
 
 const createCache = () => {
   return new InMemoryCache({
@@ -47,5 +47,15 @@ const client = new ApolloClient({
     },
   },
 });
+
+// write any prefetched queries to the cache
+if (window.prefetchedQueries) {
+  window.prefetchedQueries.forEach((prefetchedQuery) => {
+    client.writeQuery({
+      query: gql(prefetchedQuery.query),
+      data: prefetchedQuery.result.data,
+    });
+  });
+}
 
 export default client;
