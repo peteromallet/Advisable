@@ -19,7 +19,7 @@ export default function MessagesSidebar({ loading, conversations }) {
     <Box
       flexShrink="0"
       bg="white"
-      height="calc(100vh - 60px)"
+      height="calc(100vh - var(--header-height))"
       width={{ _: "100%", l: "380px" }}
       css={`
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
@@ -44,7 +44,9 @@ export default function MessagesSidebar({ loading, conversations }) {
           >
             <Heading size="2xl">Messages</Heading>
           </Box>
-          <SimpleBar style={{ height: "calc(100vh - 132px)" }}>
+          <SimpleBar
+            style={{ height: "calc(100vh - var(--header-height) - 72px)" }}
+          >
             {loading && <LoadingConversations />}
             <Box paddingX={4}>
               <ConversationsList conversations={conversations} />
