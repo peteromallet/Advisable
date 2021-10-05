@@ -26,7 +26,14 @@ const ClientNavigation = ({ onCloseNav, isMobile }) => {
         Messages
       </NavigationLink>
 
-      {isMobile && <Logout as="a">Logout</Logout>}
+      {isMobile && (
+        <>
+          <NavigationLink as="a" href="/settings">
+            Settings
+          </NavigationLink>
+          <NavigationLink as={Logout}>Logout</NavigationLink>
+        </>
+      )}
     </StyledNav>
   );
 };

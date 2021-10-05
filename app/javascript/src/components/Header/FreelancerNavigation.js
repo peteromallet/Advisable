@@ -2,8 +2,9 @@ import React from "react";
 import NavigationLink from "./NavigationLink";
 import MessageCount from "./MessageCount";
 import { StyledNav } from "./styles";
+import Logout from "./Logout";
 
-const FreelancerNavigation = ({ onCloseNav, onLogout, isMobile }) => {
+const FreelancerNavigation = ({ onCloseNav, isMobile }) => {
   return (
     <StyledNav>
       <NavigationLink onClick={onCloseNav} to="/applications">
@@ -32,9 +33,8 @@ const FreelancerNavigation = ({ onCloseNav, onLogout, isMobile }) => {
           <NavigationLink as="a" href="/settings">
             Settings
           </NavigationLink>
-          <NavigationLink as="a" href="#" onClick={onLogout}>
-            Logout
-          </NavigationLink>
+          <NavigationLink as={Logout}>Logout</NavigationLink>
+          {/* <Logout as="a">Logout</Logout> */}
         </>
       )}
     </StyledNav>
