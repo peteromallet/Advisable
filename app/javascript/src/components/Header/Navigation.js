@@ -4,16 +4,16 @@ import AnonymousNavigation from "./AnonymousNavigation";
 import ClientNavigation from "./ClientNavigation";
 import FreelancerNavigation from "./FreelancerNavigation";
 
-export default function Navigation() {
+export default function Navigation(props) {
   const viewer = useViewer();
 
   if (viewer?.isClient && viewer.isAccepted) {
-    return <ClientNavigation />;
+    return <ClientNavigation {...props} />;
   }
 
   if (viewer?.isSpecialist && viewer.isAccepted) {
-    return <FreelancerNavigation />;
+    return <FreelancerNavigation {...props} />;
   }
 
-  return <AnonymousNavigation />;
+  return <AnonymousNavigation {...props} />;
 }
