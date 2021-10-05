@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
 // Hooks
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useHistory, useParams, useLocation, Redirect } from "react-router-dom";
 import { useReviewSpecialist } from "../queries";
 // Components
 import { Text, Textarea, Select } from "@advisable/donut";
@@ -16,7 +16,9 @@ const valiadtionSchema = object().shape({
   comment: string().required("Please write a review"),
 });
 
-function ReviewComment({ specialist }) {
+function ReviewComment({ data }) {
+  const { specialist, oauthViewer } = data;
+
   // React Router data
   const { id } = useParams();
   const history = useHistory();
@@ -40,6 +42,10 @@ function ReviewComment({ specialist }) {
     });
     history.push(`/verify_project/${id}/complete`);
   };
+
+  if (!oauthViewer) {
+    return <Redirect to={`/review/${specialist.id}`} />;
+  }
 
   return (
     <>

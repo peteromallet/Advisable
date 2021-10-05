@@ -4,14 +4,13 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import isEmpty from "lodash/isEmpty";
 // Hooks
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useHistory, useParams, useLocation, Redirect } from "react-router-dom";
 // Components
 import { Box, Text, Button, Stack, InputError } from "@advisable/donut";
-import StarRatingField from "./StarRatingField";
+import StarRatingField from "../components/StarRatingField";
 import SubmitButton from "src/components/SubmitButton";
 
-// Formik validation Yup schema
-const reviewStarsValidationSchema = Yup.object().shape({
+const validationSchema = Yup.object().shape({
   adherenceToSchedule: Yup.number().required(),
   availability: Yup.number().required(),
   communication: Yup.number().required(),
@@ -19,7 +18,9 @@ const reviewStarsValidationSchema = Yup.object().shape({
   skills: Yup.number().required(),
 });
 
-function ReviewStars({ specialist }) {
+function ReviewRatings({ data }) {
+  const { specialist, oauthViewer } = data;
+
   // React Router data
   const { id } = useParams();
   const history = useHistory();
@@ -39,7 +40,7 @@ function ReviewStars({ specialist }) {
   // Trigger on continue button
   const handleContinue = (values) => {
     // Preserve Formik's state in the location state, to handle browser's back button
-    history.replace(`/review/${id}`, { ratings: values });
+    history.replace(`/review/${id}/ratings`, { ratings: values });
     // Relocate to comment step and pass stars ratings there
     history.push(`/review/${id}/comment`, {
       ratings: values,
@@ -50,6 +51,10 @@ function ReviewStars({ specialist }) {
   const handleSkip = () => {
     history.push(`/review/${id}/comment`);
   };
+
+  if (!oauthViewer) {
+    return <Redirect to={`/review/${specialist.id}`} />;
+  }
 
   return (
     <>
@@ -70,7 +75,7 @@ function ReviewStars({ specialist }) {
       <Formik
         initialValues={initialValues}
         onSubmit={handleContinue}
-        validationSchema={reviewStarsValidationSchema}
+        validationSchema={validationSchema}
         validateOnChange={false}
       >
         {(formik) => (
@@ -124,8 +129,8 @@ function ReviewStars({ specialist }) {
   );
 }
 
-ReviewStars.propTypes = {
+ReviewRatings.propTypes = {
   specialist: PropTypes.object.isRequired,
 };
 
-export default ReviewStars;
+export default ReviewRatings;

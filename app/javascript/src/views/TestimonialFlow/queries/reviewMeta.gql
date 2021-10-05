@@ -5,6 +5,7 @@ query reviewMeta($id: ID!) {
     firstName
   }
   specialist(id: $id) {
+    id
     name
     firstName
   }
