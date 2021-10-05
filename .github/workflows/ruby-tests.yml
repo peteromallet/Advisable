@@ -27,8 +27,6 @@ jobs:
       TWILIO_SID: ${{ secrets.TWILIO_SID }}
       TWILIO_API_KEY_SID: ${{ secrets.TWILIO_API_KEY_SID }}
       TWILIO_API_KEY_SECRET: ${{ secrets.TWILIO_API_KEY_SECRET }}
-      TWILIO_CHAT_SERVICE_SID: ${{ secrets.TWILIO_CHAT_SERVICE_SID }}
-      TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
       API_ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }}
       ACCOUNTS_CREATE_KEY: testing-key
       RAILS_INBOUND_EMAIL_PASSWORD: testing123
