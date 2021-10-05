@@ -1,0 +1,8 @@
+mutation ReviewSpecialist($input: ReviewSpecialistInput!) {
+  review {
+    id
+    avatar
+    comment
+    companyName
+  }
+}
