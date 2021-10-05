@@ -4,27 +4,27 @@ import MessageCount from "./MessageCount";
 import { StyledNav } from "./styles";
 import Logout from "./Logout";
 
-const FreelancerNavigation = ({ onCloseNav, isMobile }) => {
+const FreelancerNavigation = ({ closeNav, isMobile }) => {
   return (
     <StyledNav>
-      <NavigationLink onClick={onCloseNav} to="/applications">
+      <NavigationLink onClick={closeNav} to="/applications">
         Applications
       </NavigationLink>
-      <NavigationLink onClick={onCloseNav} to="/clients">
+      <NavigationLink onClick={closeNav} to="/clients">
         Projects
       </NavigationLink>
       <NavigationLink
         prefix={<MessageCount />}
-        onClick={onCloseNav}
+        onClick={closeNav}
         to="/messages"
       >
         <MessageCount />
         Messages
       </NavigationLink>
-      <NavigationLink onClick={onCloseNav} to="/guild">
+      <NavigationLink onClick={closeNav} to="/guild">
         Guild
       </NavigationLink>
-      <NavigationLink onClick={onCloseNav} to="/events">
+      <NavigationLink onClick={closeNav} to="/events">
         Events
       </NavigationLink>
 
@@ -34,7 +34,6 @@ const FreelancerNavigation = ({ onCloseNav, isMobile }) => {
             Settings
           </NavigationLink>
           <NavigationLink as={Logout}>Logout</NavigationLink>
-          {/* <Logout as="a">Logout</Logout> */}
         </>
       )}
     </StyledNav>

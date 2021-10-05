@@ -14,6 +14,10 @@ export default function MobileHeader() {
   const [navOpen, setNavOpen] = React.useState(false);
   const logoURL = useLogoURL();
 
+  const handleCloseNav = () => {
+    return setNavOpen(false);
+  };
+
   return (
     <StyledHeader justifyContent="space-between">
       <Box>
@@ -37,7 +41,7 @@ export default function MobileHeader() {
               <X />
             </CloseNav>
 
-            <Navigation isMobile />
+            <Navigation isMobile closeNav={handleCloseNav} />
           </Box>
         )}
       </Box>
