@@ -37,7 +37,7 @@ export default function MobileHeader() {
               <X />
             </CloseNav>
 
-            <Navigation />
+            <Navigation isMobile />
           </Box>
         )}
       </Box>
