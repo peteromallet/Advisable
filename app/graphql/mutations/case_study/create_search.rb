@@ -9,6 +9,7 @@ module Mutations
       argument :business_type, String, required: false
       argument :goals, [String], required: false
       argument :name, String, required: false
+      argument :preferences, [String], required: false
       argument :primary_skill, String, required: false
       argument :skills, [String], required: true
 
@@ -24,7 +25,8 @@ module Mutations
             user: current_user,
             name: args[:name],
             goals: args[:goals],
-            business_type: args[:business_type]
+            business_type: args[:business_type],
+            preferences: args[:preferences]
           )
 
           skills.each do |skill|
