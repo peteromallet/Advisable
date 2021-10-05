@@ -5,7 +5,7 @@ class Payment < ApplicationRecord
 
   has_logidze
 
-  VALID_STATUSES = %w[requires_payment_method requires_confirmation requires_action processing requires_capture canceled succeeded failed pending].freeze
+  VALID_STATUSES = %w[requires_payment_method requires_confirmation requires_action processing requires_capture canceled succeeded failed pending refunded].freeze
   VALID_PAYMENT_METHODS = ["Bank Transfer", "Stripe", "Deposit"].freeze
 
   belongs_to :company
@@ -67,6 +67,14 @@ class Payment < ApplicationRecord
     Sentry.capture_exception(e, extra: {stripe_error: e.json_body[:error]})
     Slack.message(channel: "payments", text: "Something went wrong with the payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})! Payment: #{uid}")
     create_on_session_intent!
+    self
+  end
+
+  def refund!
+    Stripe::Refund.create({payment_intent: payment_intent_id, metadata: {payment_type: "payment", payment: uid}})
+  rescue Stripe::StripeError => e
+    Sentry.capture_exception(e, extra: {stripe_error: e.json_body[:error]})
+    Slack.message(channel: "payments", text: "Something went wrong with refundment of payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})! Payment: #{uid}")
     self
   end
 
