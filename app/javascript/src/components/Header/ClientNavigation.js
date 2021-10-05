@@ -5,23 +5,23 @@ import NavigationLink from "./NavigationLink";
 import Logout from "./Logout";
 import { StyledNav } from "./styles";
 
-const ClientNavigation = ({ onCloseNav, isMobile }) => {
+const ClientNavigation = ({ closeNav, isMobile }) => {
   const isCaseStudiesEnabled = useFeatureFlag("case_studies");
 
   return (
     <StyledNav>
       {isCaseStudiesEnabled && (
-        <NavigationLink onClick={onCloseNav} to="/explore">
+        <NavigationLink onClick={closeNav} to="/explore">
           Explore
         </NavigationLink>
       )}
-      <NavigationLink onClick={onCloseNav} to="/projects">
+      <NavigationLink onClick={closeNav} to="/projects">
         Hire
       </NavigationLink>
-      <NavigationLink onClick={onCloseNav} to="/manage">
+      <NavigationLink onClick={closeNav} to="/manage">
         Manage
       </NavigationLink>
-      <NavigationLink onClick={onCloseNav} to="/messages">
+      <NavigationLink onClick={closeNav} to="/messages">
         <MessageCount />
         Messages
       </NavigationLink>
