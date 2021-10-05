@@ -1,4 +1,5 @@
 import {
+  gql,
   useApolloClient,
   useQuery,
   useMutation,
@@ -15,7 +16,9 @@ import SEARCH_FORM_DETAILS from "./caseStudySearchFormDetails.gql";
 import CREATE_SEARCH from "./createCaseStudySearch.gql";
 import CREATE_OR_EDIT from "./createOrEditSearch.gql";
 import REFRESH_RESULTS from "./refreshResults.gql";
+import SKILL_CATEGORIES from "./skillCategories.gql";
 import DELETE from "./deleteSearch.gql";
+import CATEGORY_ARTICLES from "./categoryArticles.gql";
 
 export function useShortlist() {
   const { id } = useParams();
@@ -72,11 +75,20 @@ export function useCreateCaseStudySearch() {
     update(cache, { data }) {
       const search = data.createCaseStudySearch.search;
 
-      cache.writeQuery({
-        query: SEARCH_FORM_DETAILS,
-        variables: { id: search.id },
-        data: {
-          caseStudySearch: search,
+      cache.modify({
+        fields: {
+          caseStudySearches(existing = []) {
+            const newRef = cache.writeFragment({
+              data: search,
+              fragment: gql`
+                fragment NewShortlist on CaseStudySearch {
+                  id
+                }
+              `,
+            });
+
+            return [...existing, newRef];
+          },
         },
       });
     },
@@ -126,4 +138,12 @@ export function useDeleteSearch(search) {
       });
     },
   });
+}
+
+export function useSkillCategories() {
+  return useQuery(SKILL_CATEGORIES);
+}
+
+export function useCategoryArticles(props) {
+  return useQuery(CATEGORY_ARTICLES, props);
 }

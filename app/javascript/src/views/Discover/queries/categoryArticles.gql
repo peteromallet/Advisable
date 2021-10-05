@@ -1,0 +1,25 @@
+query CategoryQrticles($slug: String!, $after: String) {
+  skillCategory(slug: $slug) {
+    id
+    articles(first: 8, after: $after) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        node {
+          id
+          title
+          subtitle
+          skills {
+            id
+            skill {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

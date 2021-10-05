@@ -333,7 +333,7 @@ module Types
     field :case_study_searches, [Types::CaseStudy::Search], null: true, max_page_size: 20
     def case_study_searches
       requires_client!
-      current_user.searches
+      current_user.searches.order(created_at: :asc)
     end
 
     field :case_study_skills, [Types::Skill], null: true
@@ -380,14 +380,14 @@ module Types
 
     field :skill_categories, [Types::SkillCategory], null: false
     def skill_categories
-      SkillCategory.all
+      ::SkillCategory.all
     end
 
     field :skill_category, Types::SkillCategory, null: true do
       argument :slug, String, required: true
     end
     def skill_category(slug:)
-      SkillCategory.find_by!(slug: slug)
+      ::SkillCategory.find_by!(slug: slug)
     end
   end
 end
