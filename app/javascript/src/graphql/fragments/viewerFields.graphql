@@ -14,6 +14,7 @@ fragment ViewerFields on ViewerUnion {
     applicationStage
     completedTutorials
     needsToSetAPassword
+    avatar
     account {
       id
     }

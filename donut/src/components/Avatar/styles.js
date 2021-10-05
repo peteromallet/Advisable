@@ -9,8 +9,8 @@ const size = variant({
       height: 24,
     },
     xs: {
-      width: 30,
-      height: 30,
+      width: 32,
+      height: 32,
       fontSize: "12px",
     },
     s: {

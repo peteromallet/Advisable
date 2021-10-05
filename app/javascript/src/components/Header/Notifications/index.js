@@ -1,22 +1,19 @@
-import React, { useEffect } from "react";
-import { GUILD_NOTIFICATIONS_QUERY, GUILD_UPDATE_LAST_READ } from "./queries";
+import React, { useCallback, useMemo } from "react";
 import truncate from "lodash/truncate";
-import { useQuery, useMutation } from "@apollo/client";
 import * as Sentry from "@sentry/react";
 import Loading from "@advisable-main/components/Loading";
 import useViewer from "src/hooks/useViewer";
 import { Box, Avatar, Text, Link, Stack } from "@advisable/donut";
-import { StyledNotificationsButton, NotificationItem } from "./styles";
-import { GuildBox } from "@guild/styles";
+import {
+  StyledNotificationsButton,
+  NotificationItem,
+  StyledNotificationBadge,
+} from "./styles";
 import { relativeDate } from "@guild/utils";
 import { Bell } from "@styled-icons/heroicons-outline";
-import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
-
-const AuthorDetails = ({ author }) => (
-  <GuildBox flexCenterBoth spaceChildrenVertical={8}>
-    <Avatar size="s" name={author.name} url={author.avatar} />
-  </GuildBox>
-);
+import NotificationIllustration from "src/illustrations/zest/notification";
+import Popover, { usePopoverState } from "../Popover";
+import { useNotifications, useUpdateLastRead } from "./queries";
 
 const Notification = ({
   createdAt,
@@ -35,7 +32,7 @@ const Notification = ({
     <Sentry.ErrorBoundary fallback={null}>
       <NotificationItem>
         <Box mr={4}>
-          <AuthorDetails author={specialist} />
+          <Avatar size="s" name={specialist.name} url={specialist.avatar} />
         </Box>
         <Box flex={1}>
           <Text size="s" color="neutral600" mb={1} lineHeight="1.1rem">
@@ -65,7 +62,7 @@ const Notification = ({
             fontSize="xxs"
             fontWeight="light"
             letterSpacing="-0.01em"
-            color="darkGrey"
+            color="neutral700"
           >
             {relativeDate(createdAt)}
           </Text>
@@ -77,44 +74,43 @@ const Notification = ({
 
 function NotificationsList({ notifications, closeNotifications }) {
   return (
-    <Stack spacing={4}>
-      {notifications.map((notification, key) => {
-        return (
-          <Notification
-            key={key}
-            closeNotifications={closeNotifications}
-            {...notification}
-          />
-        );
-      })}
-    </Stack>
-  );
-}
-
-const Notifications = ({ open, closeNotifications }) => {
-  const { data, loading, refetch } = useQuery(GUILD_NOTIFICATIONS_QUERY, {
-    fetchPolicy: "cache-and-network",
-    skip: !open,
-  });
-  const notificationItems = data?.guildNotifications?.nodes;
-
-  useEffect(() => {
-    if (open) {
-      refetch();
-    }
-  }, [refetch, open]);
-
-  return (
-    <Box py={4} px={6} display="flex" flexDirection="column">
+    <>
       <Text
         fontSize="3xl"
-        color="blue900"
-        marginBottom={4}
-        fontWeight="medium"
-        letterSpacing="-0.02rem"
+        color="neutral90"
+        marginBottom={5}
+        fontWeight={500}
+        letterSpacing="-0.03em"
       >
         Notifications
       </Text>
+      <Stack spacing={4}>
+        {notifications.map((notification) => {
+          return (
+            <Notification
+              key={notification.id}
+              closeNotifications={closeNotifications}
+              {...notification}
+            />
+          );
+        })}
+      </Stack>
+    </>
+  );
+}
+
+const Notifications = ({ closeNotifications }) => {
+  const { data, loading } = useNotifications();
+  const notificationItems = data?.guildNotifications?.nodes;
+
+  return (
+    <Box
+      width="400px"
+      maxHeight="50vh"
+      padding={5}
+      display="flex"
+      flexDirection="column"
+    >
       {loading ? (
         <Loading />
       ) : notificationItems && notificationItems.length ? (
@@ -123,11 +119,12 @@ const Notifications = ({ open, closeNotifications }) => {
           notifications={notificationItems}
         />
       ) : (
-        <NotificationItem pb="l" alignItems="center" justifyContent="center">
-          <Text size="m" fontWeight="500" color="catalinaBlue100">
-            {"No Notifications"}
+        <Box paddingY={4} textAlign="center">
+          <NotificationIllustration width="120px" />
+          <Text marginTop={4} size="m" fontWeight="500" color="neutral900">
+            You have no notifications
           </Text>
-        </NotificationItem>
+        </Box>
       )}
     </Box>
   );
@@ -135,48 +132,29 @@ const Notifications = ({ open, closeNotifications }) => {
 
 export default function NotificationsMenu() {
   const viewer = useViewer();
-  const hasUnread = viewer.guildUnreadNotifications;
-  const popover = usePopoverState({
-    placement: "top-end",
-  });
+  const popover = usePopoverState();
+  const [guildUpdateLastRead] = useUpdateLastRead();
+  const hasUnread = useMemo(() => viewer.guildUnreadNotifications, [viewer]);
 
-  const [guildUpdateLastRead] = useMutation(GUILD_UPDATE_LAST_READ);
-
-  useEffect(() => {
-    if (popover.visible && hasUnread) {
-      guildUpdateLastRead();
-    }
-  }, [hasUnread, popover.visible, guildUpdateLastRead]);
+  const handleOpen = useCallback(() => {
+    if (hasUnread) guildUpdateLastRead();
+  }, [guildUpdateLastRead, hasUnread]);
 
   return (
-    <>
-      <PopoverDisclosure {...popover}>
-        {(props) => (
-          <StyledNotificationsButton
-            {...props}
-            color="white"
-            data-testid={hasUnread ? "unreadNotifications" : "notifications"}
-          >
-            <Bell size={24} />
-          </StyledNotificationsButton>
-        )}
-      </PopoverDisclosure>
-      <Popover {...popover} aria-label="Notifications">
-        {(props) => (
-          <Box
-            maxHeight="50vh"
-            width="80%"
-            maxWidth="400px"
-            tabIndex={0}
-            {...props}
-          >
-            <Notifications
-              open={popover.visible}
-              closeNotifications={popover.hide}
-            />
-          </Box>
-        )}
-      </Popover>
-    </>
+    <Popover
+      state={popover}
+      label="Notifications"
+      onOpen={handleOpen}
+      disclosure={
+        <StyledNotificationsButton
+          data-testid={hasUnread ? "unreadNotifications" : "notifications"}
+        >
+          {hasUnread && <StyledNotificationBadge />}
+          <Bell size={24} />
+        </StyledNotificationsButton>
+      }
+    >
+      {popover.visible && <Notifications />}
+    </Popover>
   );
 }

@@ -38,7 +38,7 @@ export const StyledSidebar = styled.div`
   width: 250px;
   padding: 20px;
   position: fixed;
-  height: calc(100vh - 60px);
+  height: calc(100vh - var(--header-height));
   background: ${theme.colors.neutral50};
 
   &::after {

@@ -33,6 +33,7 @@ export const user = (fields = {}) => {
       completedTutorials: [],
       timeZone: "Europe/Dublin",
       features: [],
+      avatar: null,
       createdAt: new Date().toISOString(),
       paymentMethod: null,
       paymentsSetup: true,

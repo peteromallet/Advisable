@@ -9,6 +9,10 @@ const BACKGROUND = {
 };
 
 const BaseStyles = createGlobalStyle`
+  body {
+    --header-height: 68px;
+  }
+
   :root {
     font-variation-settings: "ital" 0, "slnt" 0;
   }

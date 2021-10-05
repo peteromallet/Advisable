@@ -1,43 +1,40 @@
 import * as React from "react";
-import { X } from "@styled-icons/feather/X";
-import { useMobile } from "../../components/Breakpoint";
-import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
 import useFeatureFlag from "src/hooks/useFeatureFlag";
 import MessageCount from "./MessageCount";
+import NavigationLink from "./NavigationLink";
+import Logout from "./Logout";
+import { StyledNav } from "./styles";
 
-const ClientNavigation = ({ navOpen, onCloseNav, onLogout }) => {
-  const isMobile = useMobile();
+const ClientNavigation = ({ closeNav, isMobile }) => {
   const isCaseStudiesEnabled = useFeatureFlag("case_studies");
 
   return (
-    <NavContainer isOpen={navOpen}>
-      <Nav>
-        <CloseNav onClick={onCloseNav}>
-          <X />
-        </CloseNav>
-        {isCaseStudiesEnabled && (
-          <NavItem onClick={onCloseNav} to="/explore">
-            Explore
-          </NavItem>
-        )}
-        <NavItem onClick={onCloseNav} to="/projects">
-          Hire
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/manage">
-          Manage
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/messages">
-          <MessageCount />
-          Messages
-        </NavItem>
+    <StyledNav>
+      {isCaseStudiesEnabled && (
+        <NavigationLink onClick={closeNav} to="/explore">
+          Explore
+        </NavigationLink>
+      )}
+      <NavigationLink onClick={closeNav} to="/projects">
+        Hire
+      </NavigationLink>
+      <NavigationLink onClick={closeNav} to="/manage">
+        Manage
+      </NavigationLink>
+      <NavigationLink onClick={closeNav} to="/messages">
+        <MessageCount />
+        Messages
+      </NavigationLink>
 
-        {isMobile && (
-          <NavItem as="a" href="#" onClick={onLogout}>
-            Logout
-          </NavItem>
-        )}
-      </Nav>
-    </NavContainer>
+      {isMobile && (
+        <>
+          <NavigationLink as="a" href="/settings">
+            Settings
+          </NavigationLink>
+          <NavigationLink as={Logout}>Logout</NavigationLink>
+        </>
+      )}
+    </StyledNav>
   );
 };
 

@@ -1,0 +1,10 @@
+mutation UpdateNotificationsLastRead {
+  guildUpdateLastRead(input: {}) {
+    viewer {
+      ... on Specialist {
+        id
+        guildUnreadNotifications
+      }
+    }
+  }
+}

@@ -1,47 +1,42 @@
 import React from "react";
-import { X } from "@styled-icons/feather/X";
-import { useMobile } from "../../components/Breakpoint";
-import { CloseNav, NavContainer, Nav, NavItem } from "./styles";
+import NavigationLink from "./NavigationLink";
 import MessageCount from "./MessageCount";
+import { StyledNav } from "./styles";
+import Logout from "./Logout";
 
-const FreelancerNavigation = ({ navOpen, onCloseNav, onLogout }) => {
-  const isMobile = useMobile();
-
+const FreelancerNavigation = ({ closeNav, isMobile }) => {
   return (
-    <NavContainer isOpen={navOpen}>
-      <Nav>
-        <CloseNav onClick={onCloseNav}>
-          <X />
-        </CloseNav>
-        <NavItem onClick={onCloseNav} to="/applications">
-          Applications
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/clients">
-          Active Projects
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/messages">
-          <MessageCount />
-          Messages
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/guild">
-          Guild
-        </NavItem>
-        <NavItem onClick={onCloseNav} to="/events">
-          Events
-        </NavItem>
+    <StyledNav>
+      <NavigationLink onClick={closeNav} to="/applications">
+        Applications
+      </NavigationLink>
+      <NavigationLink onClick={closeNav} to="/clients">
+        Projects
+      </NavigationLink>
+      <NavigationLink
+        prefix={<MessageCount />}
+        onClick={closeNav}
+        to="/messages"
+      >
+        <MessageCount />
+        Messages
+      </NavigationLink>
+      <NavigationLink onClick={closeNav} to="/guild">
+        Guild
+      </NavigationLink>
+      <NavigationLink onClick={closeNav} to="/events">
+        Events
+      </NavigationLink>
 
-        {isMobile && (
-          <>
-            <NavItem as="a" href="/settings">
-              Settings
-            </NavItem>
-            <NavItem as="a" href="#" onClick={onLogout}>
-              Logout
-            </NavItem>
-          </>
-        )}
-      </Nav>
-    </NavContainer>
+      {isMobile && (
+        <>
+          <NavigationLink as="a" href="/settings">
+            Settings
+          </NavigationLink>
+          <NavigationLink as={Logout}>Logout</NavigationLink>
+        </>
+      )}
+    </StyledNav>
   );
 };
 
