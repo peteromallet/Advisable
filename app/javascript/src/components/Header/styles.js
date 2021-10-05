@@ -65,6 +65,7 @@ export const StyledNav = styled.nav`
 
 export const NavItem = styled(NavLink)`
   font-size: 16px;
+  cursor: pointer;
   font-weight: 480;
   align-items: center;
   user-select: none;
