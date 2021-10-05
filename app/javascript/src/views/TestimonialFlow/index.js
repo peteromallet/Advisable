@@ -3,6 +3,7 @@ import { useReviewMeta } from "./queries";
 import { useParams } from "react-router";
 import { Box, Text } from "@advisable/donut";
 import Loading from "src/components/Loading";
+import Logo from "src/components/Logo";
 import AuthenticateWithLinkedin from "./components/AuthenticateWithLinkedin";
 import NotFound, { isNotFound } from "../NotFound";
 import ReviewFlow from "./components/ReviewFlow";
@@ -15,7 +16,10 @@ export default function TestimonialFlow() {
   if (isNotFound(error)) return <NotFound />;
 
   return (
-    <Box>
+    <>
+      <Box textAlign="center" py="40px">
+        <Logo />
+      </Box>
       {data.oauthViewer ? (
         <ReviewFlow specialist={data.specialist} />
       ) : (
@@ -31,6 +35,6 @@ export default function TestimonialFlow() {
           <AuthenticateWithLinkedin />
         </Box>
       )}
-    </Box>
+    </>
   );
 }
