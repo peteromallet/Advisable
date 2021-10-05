@@ -1,0 +1,11 @@
+query reviewMeta($id: ID!) {
+  oauthViewer {
+    name
+    image
+    firstName
+  }
+  specialist(id: $id) {
+    name
+    firstName
+  }
+}
