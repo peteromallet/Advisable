@@ -29,7 +29,7 @@ export default function Messages() {
       <Route path="/messages" exact={!isDesktop}>
         <MessagesSidebar loading={loading} conversations={ordered} />
       </Route>
-      <Box width="100%" height="calc(100vh - 60px)">
+      <Box width="100%" height="calc(100vh - var(--header-height))">
         {loading && <Loading />}
         <Switch>
           {hasConversations && (
