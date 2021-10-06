@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { Box, Text, Button, Link } from "@advisable/donut";
 import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
 import possessive from "src/utilities/possesive";
-import MockTestimonials from "../components/MockTestimonials";
+import MockTestimonials from "../components/Illustration";
 
 export const StyledTextMask = styled.div`
   left: 0;
