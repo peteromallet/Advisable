@@ -1,8 +1,10 @@
 mutation ReviewSpecialist($input: ReviewSpecialistInput!) {
-  review {
-    id
-    avatar
-    comment
-    companyName
+  reviewSpecialist(input: $input) {
+    review {
+      id
+      avatar
+      comment
+      companyName
+    }
   }
 }
