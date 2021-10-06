@@ -4,8 +4,7 @@
   :last_name: Lazar
   :avatar: alex_lazar.jpg
   :email: alex.lazar@advisable.com
-  :bio: "☕️ \U0001F973 \U0001F468‍\U0001F3A8 \U0001F5A5 \U0001F5B1 \U0001F44E\U0001F3FC
-    \U0001F615 \U0001F504"
+  :bio: "Coffee Party Artist Computer Mouse No Confused Repeat"
 - :first_name: Annie
   :last_name: Nguyen
   :email: annie.nguyen@advisable.com
@@ -16,6 +15,36 @@
   :email: john.omalley@advisable.com
   :avatar: john_omalley.jpg
   :bio: CEO's brother
+- :first_name: Jonathan
+  :last_name: Bailey
+  :email: jonathan.bailey@advisable.com
+  :avatar: jonathan_bailey.jpg
+  :bio: Business Development and Product Management
+- :first_name: Marina
+  :last_name: Krizman
+  :email: marina.krizman@advisable.com
+  :avatar: marina_krizman.jpg
+  :bio: Average Business Developer
+- :first_name: Miha
+  :last_name: Rekar
+  :email: miha.rekar@advisable.com
+  :avatar: miha_rekar.jpg
+  :bio: Joke explainer
+- :first_name: Peter
+  :last_name: O'Malley
+  :email: peter.omalley@advisable.com
+  :avatar: peter_omalley.jpg
+  :bio: CEO
+- :first_name: Thomas
+  :last_name: Cullen
+  :email: thomas.cullen@advisable.com
+  :avatar: thomas_cullen.jpg
+  :bio: The other Irish guy
+- :first_name: Yurko
+  :last_name: Turskiy
+  :email: yurko.turskiy@advisable.com
+  :avatar: yurko_turskiy.jpg
+  :bio: Breadstick
 :skills:
 - :name: Brand Marketing
   :category: Marketing
