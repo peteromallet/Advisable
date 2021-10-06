@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Redirect } from "react-router-dom";
 import { Box, Text, Button, Link } from "@advisable/donut";
 import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
-import possessive from "src/utilities/possesive";
 import MockTestimonials from "../components/Illustration";
 
 export const StyledTextMask = styled.div`
@@ -35,7 +34,7 @@ function ReviewIntro({ data }) {
           fontWeight="semibold"
           letterSpacing="-0.02em"
         >
-          Almost there!
+          Want to leave a testimonial for {specialist.name}?
         </Text>
         <Text
           fontSize="16px"
@@ -44,8 +43,8 @@ function ReviewIntro({ data }) {
           color="neutral900"
           mb={6}
         >
-          Your testimonial will be shown on {possessive(specialist.firstName)}{" "}
-          profile and will be used to help them find clients on Advisable.
+          This will display your name, and profile photo publicly associated
+          with their online profile and content on Advisable.
         </Text>
       </Box>
       {oauthViewer ? (
