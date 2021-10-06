@@ -30,8 +30,7 @@ class CompanyDashboard < Administrate::BaseDashboard
     invoice_name: Field::String,
     invoice_company_name: Field::String,
     billing_email: Field::String,
-    vat_number: Field::String,
-    bank_transfers_enabled: Field::Boolean
+    vat_number: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -56,7 +55,6 @@ class CompanyDashboard < Administrate::BaseDashboard
     updated_at
     stripe_customer_id
     payments_setup
-    bank_transfers_enabled
     project_payment_method
     invoice_name
     invoice_company_name
@@ -76,7 +74,6 @@ class CompanyDashboard < Administrate::BaseDashboard
     updated_at
     stripe_customer_id
     payments_setup
-    bank_transfers_enabled
     project_payment_method
     invoice_name
     invoice_company_name

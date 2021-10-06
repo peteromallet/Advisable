@@ -9,7 +9,6 @@ export const company = (fields = {}) => {
       name: "Test",
       users: [],
       kind: "Startup",
-      bankTransfersEnabled: false,
       address: bankHolderAddress(),
     },
     fields,
@@ -38,7 +37,6 @@ export const user = (fields = {}) => {
       createdAt: new Date().toISOString(),
       paymentMethod: null,
       paymentsSetup: true,
-      bankTransfersEnabled: true,
       applicationStage: "Application Accepted",
       clientApplication: {
         id: uniqueId("app"),
