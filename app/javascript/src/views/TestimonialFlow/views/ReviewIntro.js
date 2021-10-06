@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import { Text, Button, Link } from "@advisable/donut";
 import LoginWithLinkedin from "../components/LoginWithLinkedin";
 import possessive from "src/utilities/possesive";
+import MockTestimonials from "../components/MockTestimonials";
 
 export const StyledTextMask = styled.div`
   left: 0;
@@ -33,10 +34,11 @@ function ReviewIntro({ data }) {
       >
         Authenticate with your LinkedIn account
       </Text>
-      <Text fontSize="16px" lineHeight="24px" color="neutral900" mb="40px">
+      <Text fontSize="16px" lineHeight="24px" color="neutral900" mb={8}>
         Your review will be shown on {possessive(specialist.firstName)} profile
         and will be used to help them find clients on Advisable.
       </Text>
+      <MockTestimonials />
       {oauthViewer ? (
         <Button
           as={Link}

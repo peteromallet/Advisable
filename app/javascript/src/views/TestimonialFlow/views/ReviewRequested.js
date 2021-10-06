@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Box, Text, Avatar, Button, Link } from "@advisable/donut";
+import { Text, Button, Link } from "@advisable/donut";
 import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
 import possessive from "src/utilities/possesive";
+import MockTestimonials from "../components/MockTestimonials";
 
 export const StyledTextMask = styled.div`
   left: 0;
@@ -28,23 +29,11 @@ function ReviewRequested({ data }) {
       >
         {specialist.firstName} has requested a review from you
       </Text>
-      <Text fontSize="16px" lineHeight="24px" color="neutral900" mb="40px">
+      <Text fontSize="16px" lineHeight="24px" color="neutral900" mb={8}>
         Your review will be shown on {possessive(specialist.firstName)} profile
         and will be used to help them find clients on Advisable.
       </Text>
-      <Box height={1} bg="blue100" mt="16px" mb="16px" />
-      <Box display="flex" alignItems="center">
-        <Avatar size="s" url={specialist.avatar} name={specialist.name} />
-        <Box pl="12px">
-          <Text fontSize="16px" color="blue900" fontWeight="medium" mb="2px">
-            {specialist.name}
-          </Text>
-          <Text color="neutral600" fontSize="14px">
-            {specialist.location}
-          </Text>
-        </Box>
-      </Box>
-      <Box height={1} bg="blue100" mt="16px" mb="20px" />
+      <MockTestimonials />
       {oauthViewer ? (
         <Button
           as={Link}
