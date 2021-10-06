@@ -65,5 +65,16 @@ module Types
     def invoice(id:)
       object.invoices.find_by!(uid: id)
     end
+
+    field :candidates, Types::ApplicationType.connection_type, null: false do
+      description <<~GRAPHQL
+        Returns applications that are in hireable state. i.e the client has
+        requested a consultation with them.
+      GRAPHQL
+    end
+
+    def candidates
+      object.applications.active
+    end
   end
 end
