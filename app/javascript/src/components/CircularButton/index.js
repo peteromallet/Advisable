@@ -4,50 +4,89 @@ import styled from "styled-components";
 import { variant } from "styled-system";
 import { theme } from "@advisable/donut";
 
-const size = variant({
-  prop: "size",
-  variants: {
-    md: {
-      width: "40px",
-      height: "40px",
-    },
-    lg: {
-      width: "52px",
-      height: "52px",
-    },
-    xl: {
-      width: "64px",
-      height: "64px",
-    },
-  },
-});
-
-const StyledCircularButton = styled(motion.button)`
-  ${size};
-
-  border: none;
+const StyledCircularButtonIcon = styled.div`
   display: flex;
-  outline: none;
-  appearance: none;
   position: relative;
   align-items: center;
-  background: transparent;
   justify-content: center;
 
   svg {
     z-index: 2;
-    width: 24px;
-    height: 24px;
+    position: relative;
   }
 `;
 
 const StyledCircularButtonBackground = styled(motion.div)`
+  top: 0;
+  left: 0;
   z-index: 1;
   width: 100%;
   height: 100%;
   border-radius: 50%;
   position: absolute;
   background: ${theme.colors.neutral100};
+`;
+
+const StyledCircularButtonLabel = styled.span`
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+`;
+
+const size = variant({
+  prop: "size",
+  variants: {
+    sm: {
+      [StyledCircularButtonIcon]: {
+        width: "36px",
+        height: "36px",
+        svg: {
+          width: "20px",
+        },
+      },
+    },
+    md: {
+      [StyledCircularButtonIcon]: {
+        width: "40px",
+        height: "40px",
+        svg: {
+          width: "20px",
+        },
+      },
+    },
+    lg: {
+      [StyledCircularButtonIcon]: {
+        width: "52px",
+        height: "52px",
+        svg: {
+          width: "24px",
+        },
+      },
+    },
+    xl: {
+      [StyledCircularButtonIcon]: {
+        width: "64px",
+        height: "64px",
+        svg: {
+          width: "24px",
+        },
+      },
+    },
+  },
+});
+
+const StyledCircularButton = styled(motion.button)`
+  ${size};
+  border: none;
+  display: flex;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  align-items: center;
+  flex-direction: column;
+  background: transparent;
+  justify-content: center;
 `;
 
 const circleVariants = {
@@ -69,7 +108,7 @@ const spring = {
 };
 
 export default React.forwardRef(function CircularButton(
-  { icon, bg, color, onClick, size, ...props },
+  { icon, bg, color, onClick, size, label, ...props },
   ref,
 ) {
   const colorAnimation = {
@@ -93,14 +132,17 @@ export default React.forwardRef(function CircularButton(
       initial={colorAnimation}
       {...props}
     >
-      {icon}
-      <StyledCircularButtonBackground
-        bg={bg}
-        variants={circleVariants}
-        transition={spring}
-        initial={backgroundAnimation}
-        animate={backgroundAnimation}
-      />
+      <StyledCircularButtonIcon>
+        {icon}
+        <StyledCircularButtonBackground
+          bg={bg}
+          variants={circleVariants}
+          transition={spring}
+          initial={backgroundAnimation}
+          animate={backgroundAnimation}
+        />
+      </StyledCircularButtonIcon>
+      {label && <StyledCircularButtonLabel>{label}</StyledCircularButtonLabel>}
     </StyledCircularButton>
   );
 });

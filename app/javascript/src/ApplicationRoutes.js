@@ -9,6 +9,7 @@ import Loading from "./components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
+import Hire from "./views/Hire";
 
 const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
@@ -135,6 +136,7 @@ const ApplicationRoutes = () => {
             path="/projects"
             component={Projects}
           />
+          <AuthenticatedRoute clientOnly path="/hire" component={Hire} />
           <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
           <AuthenticatedRoute
             path="/book/:applicationId"
