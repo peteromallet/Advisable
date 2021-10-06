@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { useReviewMeta } from "./queries";
 import { useParams, Switch } from "react-router-dom";
 import { Box, Text, Container, Card } from "@advisable/donut";
@@ -20,7 +20,7 @@ export default function TestimonialFlow() {
   if (isNotFound(error)) return <NotFound />;
 
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <Box textAlign="center" py="40px">
         <Logo />
       </Box>
@@ -42,6 +42,6 @@ export default function TestimonialFlow() {
           </Switch>
         </Card>
       </Container>
-    </>
+    </Suspense>
   );
 }
