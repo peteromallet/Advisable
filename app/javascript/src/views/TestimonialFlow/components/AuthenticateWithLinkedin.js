@@ -17,8 +17,7 @@ function AuthenticateWithLinkedin() {
         lineHeight="22px"
         fontWeight="medium"
       >
-        Please login with LinkedIn to unlock the full details and review this
-        project
+        Please login with LinkedIn to leave a testimonial
       </Text>
       <LoginWithLinkedin />
     </Box>
