@@ -37,6 +37,8 @@ class Payment < ApplicationRecord
   end
 
   def charge!
+    return if status == "succeeded"
+
     use_deposit!
 
     if amount_to_be_paid.positive?
