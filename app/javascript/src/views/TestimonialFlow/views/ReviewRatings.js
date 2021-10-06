@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import isEmpty from "lodash/isEmpty";
@@ -128,9 +127,5 @@ function ReviewRatings({ data }) {
     </>
   );
 }
-
-ReviewRatings.propTypes = {
-  specialist: PropTypes.object.isRequired,
-};
 
 export default ReviewRatings;
