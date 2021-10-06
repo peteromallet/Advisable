@@ -73,7 +73,7 @@ RSpec.describe StripeEvents::PaymentIntentSucceeded do
     end
   end
 
-  describe "unsupported payment typo" do
+  describe "unsupported payment type" do
     let(:metadata) { OpenStruct.new({payment_type: "charge"}) }
 
     it "does nothing" do
