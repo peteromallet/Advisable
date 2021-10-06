@@ -3,7 +3,7 @@
 module StripeEvents
   class ChargeRefunded < StripeEvents::BaseEvent
     def process
-      return if metadata&.payment.nil? || !intent.refunded
+      return if metadata&.payment.nil? || !charge.refunded
 
       payment = Payment.find_by!(uid: metadata.payment)
       payment.update(status: "refunded")
@@ -11,14 +11,14 @@ module StripeEvents
 
     private
 
-    def intent
+    def charge
       event.data.object
     end
 
     def metadata
-      return if intent.metadata.as_json.blank?
+      return if charge.metadata.as_json.blank?
 
-      intent.metadata
+      charge.metadata
     end
   end
 end
