@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
 // Hooks
@@ -31,7 +30,7 @@ function ReviewComment({ data }) {
   const initialValues = { companyName: "", relationship: "", comment: "" };
 
   const handleSubmit = async (values) => {
-    await reviewSpecialist({
+    const response = await reviewSpecialist({
       variables: {
         input: {
           specialist: id,
@@ -40,7 +39,9 @@ function ReviewComment({ data }) {
         },
       },
     });
-    history.push(`/verify_project/${id}/complete`);
+    history.push(`/review/${specialist.id}/complete`, {
+      review: response.data?.reviewSpecialist?.review,
+    });
   };
 
   if (!oauthViewer) {
@@ -106,9 +107,5 @@ function ReviewComment({ data }) {
     </>
   );
 }
-
-ReviewComment.propTypes = {
-  specialist: PropTypes.object.isRequired,
-};
 
 export default ReviewComment;
