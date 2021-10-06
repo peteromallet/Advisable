@@ -6,7 +6,6 @@ module Toby
       model_name ::Company
       attribute :name, Attributes::String
       attribute :sales_person, Attributes::BelongsTo
-      attribute :bank_transfers_enabled, Attributes::Boolean
       attribute :billing_email, Attributes::String
       attribute :invoice_company_name, Attributes::String
       attribute :invoice_name, Attributes::String
