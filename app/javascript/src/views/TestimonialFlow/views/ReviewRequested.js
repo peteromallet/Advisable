@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Text, Button, Link } from "@advisable/donut";
+import { Box, Text, Button, Link } from "@advisable/donut";
 import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
 import possessive from "src/utilities/possesive";
 import MockTestimonials from "../components/MockTestimonials";
@@ -19,21 +19,30 @@ function ReviewRequested({ data }) {
 
   return (
     <>
-      <Text
-        mb="16px"
-        color="blue900"
-        fontSize={{ _: "24px", m: "30px" }}
-        lineHeight={{ _: "28px", m: "32px" }}
-        fontWeight="medium"
-        letterSpacing="-0.02em"
-      >
-        {specialist.firstName} has requested a review from you
-      </Text>
-      <Text fontSize="16px" lineHeight="24px" color="neutral900" mb={8}>
-        Your review will be shown on {possessive(specialist.firstName)} profile
-        and will be used to help them find clients on Advisable.
-      </Text>
       <MockTestimonials />
+      <Box width={{ _: "100%", s: "80%" }} mx="auto">
+        <Text
+          mb={2}
+          color="blue900"
+          textAlign="center"
+          fontSize={{ _: "24px", m: "30px" }}
+          lineHeight={{ _: "28px", m: "32px" }}
+          fontWeight="medium"
+          letterSpacing="-0.02em"
+        >
+          {specialist.firstName} has requested a testimonial from you
+        </Text>
+        <Text
+          fontSize="16px"
+          textAlign="center"
+          lineHeight="24px"
+          color="neutral900"
+          mb={6}
+        >
+          Your testimonial will be shown on {possessive(specialist.firstName)}{" "}
+          profile and will be used to help them find clients on Advisable.
+        </Text>
+      </Box>
       {oauthViewer ? (
         <Button
           as={Link}

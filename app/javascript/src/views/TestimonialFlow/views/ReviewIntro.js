@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Redirect } from "react-router-dom";
-import { Text, Button, Link } from "@advisable/donut";
-import LoginWithLinkedin from "../components/LoginWithLinkedin";
+import { Box, Text, Button, Link } from "@advisable/donut";
+import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
 import possessive from "src/utilities/possesive";
 import MockTestimonials from "../components/MockTestimonials";
 
@@ -24,21 +24,30 @@ function ReviewIntro({ data }) {
 
   return (
     <>
-      <Text
-        mb="16px"
-        color="blue900"
-        fontSize={{ _: "24px", m: "30px" }}
-        lineHeight={{ _: "28px", m: "32px" }}
-        fontWeight="medium"
-        letterSpacing="-0.02em"
-      >
-        Authenticate with your LinkedIn account
-      </Text>
-      <Text fontSize="16px" lineHeight="24px" color="neutral900" mb={8}>
-        Your review will be shown on {possessive(specialist.firstName)} profile
-        and will be used to help them find clients on Advisable.
-      </Text>
       <MockTestimonials />
+      <Box width={{ _: "100%", s: "80%" }} mx="auto">
+        <Text
+          mb={2}
+          color="blue900"
+          textAlign="center"
+          fontSize={{ _: "24px", m: "30px" }}
+          lineHeight={{ _: "28px", m: "32px" }}
+          fontWeight="medium"
+          letterSpacing="-0.02em"
+        >
+          Almost there!
+        </Text>
+        <Text
+          fontSize="16px"
+          textAlign="center"
+          lineHeight="24px"
+          color="neutral900"
+          mb={6}
+        >
+          Your testimonial will be shown on {possessive(specialist.firstName)}{" "}
+          profile and will be used to help them find clients on Advisable.
+        </Text>
+      </Box>
       {oauthViewer ? (
         <Button
           as={Link}
@@ -50,7 +59,7 @@ function ReviewIntro({ data }) {
           Leave a Review
         </Button>
       ) : (
-        <LoginWithLinkedin />
+        <AuthenticateWithLinkedin />
       )}
     </>
   );
