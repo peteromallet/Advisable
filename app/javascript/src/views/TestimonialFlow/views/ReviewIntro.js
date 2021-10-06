@@ -25,14 +25,14 @@ function ReviewIntro({ data }) {
   return (
     <>
       <MockTestimonials />
-      <Box width={{ _: "100%", s: "80%" }} mx="auto">
+      <Box width={{ _: "100%", s: "80%" }} mx="auto" mt="-12px">
         <Text
           mb={2}
           color="blue900"
           textAlign="center"
           fontSize={{ _: "24px", m: "30px" }}
           lineHeight={{ _: "28px", m: "32px" }}
-          fontWeight="medium"
+          fontWeight="semibold"
           letterSpacing="-0.02em"
         >
           Almost there!
