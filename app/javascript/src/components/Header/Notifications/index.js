@@ -132,12 +132,12 @@ const Notifications = ({ closeNotifications }) => {
 export default function NotificationsMenu() {
   const viewer = useViewer();
   const popover = usePopoverState();
-  const [guildUpdateLastRead] = useUpdateLastRead();
+  const [updateLastReadNotification] = useUpdateLastRead();
   const hasUnread = useMemo(() => viewer.unreadNotifications, [viewer]);
 
   const handleOpen = useCallback(() => {
-    if (hasUnread) guildUpdateLastRead();
-  }, [guildUpdateLastRead, hasUnread]);
+    if (hasUnread) updateLastReadNotification();
+  }, [updateLastReadNotification, hasUnread]);
 
   return (
     <Popover
