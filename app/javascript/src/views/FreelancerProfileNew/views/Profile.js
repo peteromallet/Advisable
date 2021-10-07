@@ -24,7 +24,11 @@ export default function Profile({ data }) {
         <Sidebar data={data} top="88px" />
         <Stack mt={{ _: 14, m: 12, l: 19, xl: 20 }} width="100%" spacing={11}>
           {caseStudies.length ? (
-            <CaseStudies caseStudies={caseStudies} />
+            <CaseStudies
+              caseStudies={caseStudies}
+              specialist={data.specialist}
+            />
+          ) : null}
           ) : null}
           {reviews.length ? <Testimonials reviews={reviews} /> : null}
         </Stack>
