@@ -26,7 +26,7 @@ module Mutations
             goals: args[:goals],
             preferences: args[:preferences],
             business_type: args[:business_type],
-            results: args[:articles]
+            results: ::CaseStudy::Article.where(uid: args[:articles]).pluck(:id)
           )
 
           skill_ids = ::CaseStudy::Skill.where(article_id: args[:articles]).distinct.pluck(:skill_id)
