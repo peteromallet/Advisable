@@ -314,7 +314,7 @@ module Types
     end
 
     def guild_notifications
-      requires_guild_user!
+      requires_specialist!
       current_user.guild_notifications
     end
 
