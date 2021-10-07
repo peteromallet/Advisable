@@ -6,15 +6,12 @@ class RefreshCaseStudySearchesJob < ApplicationJob
     users.each do |user|
       updated_searches = {}
       user.searches.each do |search|
-        existing_results = search[:results] || []
-        amount_to_add = CaseStudy::Search::RESULT_LIMIT - (existing_results - search.archived).size
-        next if amount_to_add <= 0
-
-        existing_or_archived = existing_results + search.archived
-        new_results = search.results_query(limit: amount_to_add, exclude: existing_or_archived).map(&:id)
+        existing_results = search.result_ids
+        search.refresh_results!
+        refreshed_results = search.result_ids
+        new_results = refreshed_results - existing_results
         next if new_results.none?
 
-        search.update!(results: existing_results + new_results)
         updated_searches[search.id] = new_results
       end
 
