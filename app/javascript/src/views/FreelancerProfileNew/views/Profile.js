@@ -29,8 +29,9 @@ export default function Profile({ data }) {
               specialist={data.specialist}
             />
           ) : null}
+          {reviews.length ? (
+            <Testimonials reviews={reviews} specialist={data.specialist} />
           ) : null}
-          {reviews.length ? <Testimonials reviews={reviews} /> : null}
         </Stack>
       </Box>
     </>
