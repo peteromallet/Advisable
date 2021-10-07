@@ -9,7 +9,7 @@ import {
 } from "./styles";
 
 function PassportAvatar({ src, name, size, stroke, color, ...props }) {
-  const { isLoading, error } = useLoadImage(src);
+  const { error } = useLoadImage(src);
 
   let initials = name[0];
   const nameSplit = name.split(" ");
@@ -40,7 +40,6 @@ function PassportAvatar({ src, name, size, stroke, color, ...props }) {
         <StyledAvatarImg
           src={src}
           alt={`${possessive(name)} profile picture`}
-          isLoading={isLoading}
         />
       ) : null}
     </StyledPassportAvatar>
