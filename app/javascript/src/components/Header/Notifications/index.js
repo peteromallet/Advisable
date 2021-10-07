@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import truncate from "lodash/truncate";
 import * as Sentry from "@sentry/react";
+import SimpleBar from "simplebar-react";
 import Loading from "@advisable-main/components/Loading";
 import useViewer from "src/hooks/useViewer";
 import { Box, Avatar, Text, Link, Stack } from "@advisable/donut";
@@ -104,28 +105,26 @@ const Notifications = ({ closeNotifications }) => {
   const notificationItems = data?.guildNotifications?.nodes;
 
   return (
-    <Box
-      width="400px"
-      maxHeight="50vh"
-      padding={5}
-      display="flex"
-      flexDirection="column"
-    >
-      {loading ? (
-        <Loading />
-      ) : notificationItems && notificationItems.length ? (
-        <NotificationsList
-          closeNotifications={closeNotifications}
-          notifications={notificationItems}
-        />
-      ) : (
-        <Box paddingY={4} textAlign="center">
-          <NotificationIllustration width="120px" />
-          <Text marginTop={4} size="m" fontWeight="500" color="neutral900">
-            You have no notifications
-          </Text>
+    <Box width="400px">
+      <SimpleBar style={{ maxHeight: "60vh" }}>
+        <Box padding={5} display="flex" flexDirection="column">
+          {loading ? (
+            <Loading />
+          ) : notificationItems && notificationItems.length ? (
+            <NotificationsList
+              closeNotifications={closeNotifications}
+              notifications={notificationItems}
+            />
+          ) : (
+            <Box paddingY={4} textAlign="center">
+              <NotificationIllustration width="120px" />
+              <Text marginTop={4} size="m" fontWeight="500" color="neutral900">
+                You have no notifications
+              </Text>
+            </Box>
+          )}
         </Box>
-      )}
+      </SimpleBar>
     </Box>
   );
 };
