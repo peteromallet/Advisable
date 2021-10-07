@@ -10,7 +10,16 @@ query CategoryQrticles($slug: String!, $after: String) {
         node {
           id
           title
-          subtitle
+          comment
+          company {
+            id
+            favicon
+          }
+          specialist {
+            id
+            avatar
+            name
+          }
           skills {
             id
             skill {

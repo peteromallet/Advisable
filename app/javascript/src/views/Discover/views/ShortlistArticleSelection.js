@@ -4,6 +4,7 @@ import BackButton from "src/components/BackButton";
 import { useCategoryArticles } from "../queries";
 import { useHistory, useLocation, useParams } from "react-router";
 import { ArrowSmRight, InformationCircle } from "@styled-icons/heroicons-solid";
+import ArticleSelection from "../components/ArticleSelection";
 
 export default function ShortlistArticleSelection() {
   const { slug } = useParams();
@@ -53,46 +54,26 @@ export default function ShortlistArticleSelection() {
   return (
     <>
       <BackButton to="/explore/new" marginBottom={4} />
-      <Heading
-        fontSize="6xl"
-        letterSpacing="-0.04em"
-        marginBottom={3}
-        lineHeight="40px"
-      >
-        Which of the following case studies would you be interested in reading?
-      </Heading>
+      <Box maxWidth="800px" marginBottom={3}>
+        <Heading fontSize="6xl" letterSpacing="-0.04em" lineHeight="40px">
+          Which of the following projects seem similar to what you’re looking
+          for?
+        </Heading>
+      </Box>
       <Box maxWidth="600px" marginBottom={8}>
         <Text fontSize="lg" lineHeight="24px">
           We help your find freelancers by showcasing the projects they have
-          done for others similar to you.
+          done for companies similar to yours.
         </Text>
       </Box>
       <Box display="grid" gridTemplateColumns="1fr 1fr" gridGap="28px">
         {articles.map((article) => (
-          <Box
+          <ArticleSelection
             key={article.id}
-            padding={6}
-            border="2px solid"
-            borderRadius="24px"
-            onClick={() => selectArticle(article)}
-            css={`
-              cursor: pointer;
-            `}
-            borderColor={
-              selected.includes(article.id) ? "blue600" : "neutral100"
-            }
-          >
-            <Text
-              fontWeight={600}
-              fontSize="2xl"
-              marginBottom={3}
-              letterSpacing="-0.03em"
-              lineHeight="24px"
-            >
-              {article.title}
-            </Text>
-            <Text lineHeight="20px">{article.subtitle}</Text>
-          </Box>
+            article={article}
+            onSelect={() => selectArticle(article)}
+            isSelected={selected.includes(article.id)}
+          />
         ))}
       </Box>
 
@@ -133,19 +114,27 @@ export default function ShortlistArticleSelection() {
           justifyContent="space-between"
         >
           <Box>
-            {selected.length < 3 && (
-              <Box
-                display="flex"
-                alignItems="center"
-                textAlign="center"
-                color="neutral800"
+            <Box
+              display="flex"
+              alignItems="center"
+              textAlign="center"
+              color="neutral900"
+              marginBottom={2}
+            >
+              <InformationCircle size={20} />
+              <Text
+                marginLeft={1}
+                fontWeight={550}
+                fontSize="17px"
+                letterSpacing="-0.012em"
               >
-                <InformationCircle size={24} />
-                <Text marginLeft={2}>
-                  Please select at least 3 case studies to continue
-                </Text>
-              </Box>
-            )}
+                Please select at least 3 case studies to continue
+              </Text>
+            </Box>
+            <Text color="neutral800">
+              Don&apos;t worry, we&apos;ll save the projects you have selected
+              for later.
+            </Text>
           </Box>
           <Button
             marginLeft={3}
