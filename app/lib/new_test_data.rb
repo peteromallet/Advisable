@@ -9,14 +9,14 @@ class NewTestData
   attr_reader :yml, :now, :sales_person, :country, :company
 
   def self.seed_from_airtable!
+    purge_and_migrate!
+
     yml = YAML.load_file("db/seeds/test_data.yml")
 
-    Skill.delete_all
     Airtable::Skill.sync(filter: nil)
     attrs = %i[name category profile uid active airtable_id]
     yml[:skills] = Skill.pluck(*attrs).map { |p| attrs.zip(p).to_h }
 
-    Industry.delete_all
     Airtable::Industry.sync(filter: nil)
     attrs = %i[name color active uid airtable_id]
     yml[:industries] = Industry.pluck(*attrs).map { |p| attrs.zip(p).to_h }
@@ -87,13 +87,21 @@ class NewTestData
   def populate_case_studies
     populate_cs_companies
     populate_cs_articles
-    populate_cs_skills_and_industries
+    populate_cs_article_stuff
+    populate_cs_contents
   end
 
   def populate_cs_companies
     companies = []
     AMOUNT_OF_CASE_STUDIES.times do
-      companies << {name: Faker::Company.unique.name, uid: CaseStudy::Company.generate_uid, created_at: now, updated_at: now}
+      companies << {
+        name: Faker::Company.name,
+        business_type: "B2B",
+        website: Faker::Internet.url,
+        uid: CaseStudy::Company.generate_uid,
+        created_at: now,
+        updated_at: now
+      }
     end
     @companies = CaseStudy::Company.upsert_all(companies).pluck("id")
   end
@@ -101,19 +109,59 @@ class NewTestData
   def populate_cs_articles
     articles = []
     AMOUNT_OF_CASE_STUDIES.times do |i|
-      articles << {title: Faker::Hipster.unique.sentence, subtitle: Faker::Hipster.sentence, uid: CaseStudy::Article.generate_uid, created_at: now, updated_at: now, company_id: @companies[i], specialist_id: @specialists.sample}
+      articles << {
+        title: Faker::Book.title,
+        subtitle: Faker::Hipster.sentence,
+        confidential: [true, false].sample,
+        company_type: ["Major Corporation", "Growth-Stage Startup", "Medium-Sized Business", "Startup", "Non-Profit", "Small Business", "Government", "Education Institution", "Individual Entrepreneur", "Governement"].sample(rand(1..3)),
+        goals: ["Rebranding", "Improve Retention", "Generate Leads", "Increase Brand Awareness", "Improve Conversion", "Increase Web Traffic", "Improve Profitability", "Improve Processes", "Analyse Existing Activities", "Improve Efficiency", "Develop Strategy", "Increase Brand Awarenes", "Improve Process"].sample(rand(1..3)),
+        score: rand(100),
+        company_id: @companies[i],
+        specialist_id: @specialists.sample,
+        uid: CaseStudy::Article.generate_uid,
+        published_at: now,
+        created_at: now,
+        updated_at: now
+      }
     end
     @articles = CaseStudy::Article.upsert_all(articles).pluck("id")
   end
 
-  def populate_cs_skills_and_industries
-    skills = industries = []
-    AMOUNT_OF_CASE_STUDIES.times do |i|
-      skills += @skills.sample(rand(3..5)).map.with_index { |s, j| {skill_id: s, uid: CaseStudy::Skill.generate_uid, created_at: now, updated_at: now, primary: j.zero?, article_id: @articles[i]} }
-      industries += @industries.sample(rand(3..5)).map { |ind| {industry_id: ind, uid: CaseStudy::Industry.generate_uid, created_at: now, updated_at: now, article_id: @articles[i]} }
+  def populate_cs_article_stuff
+    skills = industries = sections = []
+    main_sections = [{type: "background", position: 0}, {type: "overview", position: 1}, {type: "outcome", position: 2}]
+    @articles.each do |article|
+      skills += @skills.sample(rand(3..5)).map.with_index { |s, i| {skill_id: s, uid: CaseStudy::Skill.generate_uid, created_at: now, updated_at: now, primary: i.zero?, article_id: article} }
+      industries += @industries.sample(rand(3..5)).map { |i| {industry_id: i, uid: CaseStudy::Industry.generate_uid, created_at: now, updated_at: now, article_id: article} }
+      sections += main_sections.map { |s| s.merge(uid: CaseStudy::Section.generate_uid, created_at: now, updated_at: now, article_id: article) }
     end
     @skills = CaseStudy::Skill.upsert_all(skills).pluck("id")
     @industries = CaseStudy::Industry.upsert_all(industries).pluck("id")
+    @sections = CaseStudy::Section.upsert_all(sections, returning: %w[id type]).pluck("id", "type")
+  end
+
+  def populate_cs_contents
+    contents = []
+    @sections.each do |section, type|
+      case type
+      when "background"
+        contents << {type: "CaseStudy::HeadingContent", content: {size: "h1", text: Faker::Marketing.buzzwords.titleize}, position: 0, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+        contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Lorem.paragraphs.join("\n\n")}, position: 1, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+      when "overview"
+        contents << {type: "CaseStudy::HeadingContent", content: {size: "h1", text: Faker::Marketing.buzzwords.titleize}, position: 2, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+        (1..7).each do |i|
+          contents << {type: "CaseStudy::HeadingContent", content: {size: "h2", text: Faker::Marketing.buzzwords.titleize}, position: (i * 2) + 1, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+          contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Lorem.paragraphs.join("\n\n")}, position: (i * 2) + 2, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+        end
+      when "outcome"
+        results = []
+        rand(2..5).times { results << Faker::Marketing.buzzwords }
+        contents << {type: "CaseStudy::HeadingContent", content: {size: "h1", text: Faker::Marketing.buzzwords.titleize}, position: 17, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+        contents << {type: "CaseStudy::ResultsContent", content: {results: results}, position: 18, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+        contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Lorem.paragraphs.join("\n\n")}, position: 19, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+      end
+    end
+    CaseStudy::Content.upsert_all(contents)
   end
 
   memoize def advisable_data
