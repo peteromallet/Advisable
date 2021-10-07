@@ -257,7 +257,7 @@ test("can see wide review", async () => {
     graphQLMocks,
   });
   await app.findByText(review.name);
-  await app.findByText(`${review.role} at ${review.companyName}`);
+  await app.findByText(review.companyName);
   await app.findByText(review.comment);
 });
 
@@ -276,7 +276,7 @@ test("can see tablet review", async () => {
     graphQLMocks,
   });
   await app.findByText(review.name);
-  await app.findByText(`${review.role} at ${review.companyName}`);
+  await app.findByText(review.companyName);
   await app.findByText(review.comment);
 });
 
@@ -294,7 +294,7 @@ test("can see mobile review", async () => {
     graphQLMocks,
   });
   await app.findByText(review.name);
-  await app.findByText(`${review.role} at ${review.companyName}`);
+  await app.findByText(review.companyName);
   await app.findByText(review.comment);
 });
 
