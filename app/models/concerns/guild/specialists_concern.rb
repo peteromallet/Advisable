@@ -27,14 +27,6 @@ module Guild
         guild_notifications.unread.any?
       end
 
-      # TODO: Remove once guildActivity query is no longer being called
-      def guild_activity
-        @guild_activity ||= [
-          guild_post_comments.limit(10),
-          guild_post_reactions.limit(10)
-        ].flatten.sort { |a, b| b.created_at <=> a.created_at }
-      end
-
       private
 
       def guild_joined_callbacks
