@@ -1,5 +1,5 @@
 mutation UpdateNotificationsLastRead {
-  guildUpdateLastRead(input: {}) {
+  updateLastReadNotification(input: {}) {
     viewer {
       ... on Specialist {
         id
