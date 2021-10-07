@@ -64,7 +64,7 @@ const specialistFields = gql`
     reviews {
       id
       name
-      role
+      relationship
       comment
       companyName
       avatar
