@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { useReviewMeta } from "./queries";
 import { useParams, Switch } from "react-router-dom";
-import { Box, Text, Container, Card } from "@advisable/donut";
+import { Box, Container } from "@advisable/donut";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import Loading from "src/components/Loading";
 import Route from "src/components/Route";
