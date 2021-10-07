@@ -1,9 +1,10 @@
 import React from "react";
-import { Box, Stack } from "@advisable/donut";
+import { Link, Box, Stack } from "@advisable/donut";
 import SectionTitle from "./SectionTitle";
 import CaseStudyCard from "./CaseStudyCard";
+import SectionActionButton from "./SectionActionButton";
 
-export default function CaseStudies({ caseStudies }) {
+export default function CaseStudies({ caseStudies, specialist }) {
   const cards = caseStudies.map((cs) => (
     <CaseStudyCard caseStudy={cs} key={cs.id} />
   ));
@@ -14,6 +15,14 @@ export default function CaseStudies({ caseStudies }) {
       <Stack spacing={6} mt={3}>
         {cards}
       </Stack>
+      <SectionActionButton
+        as={Link.External}
+        href={`https://csi.advisable.com/freelancer/onboarding?specialist_id=${specialist.id}&contact_name=${specialist.firstName}`}
+        target="_blank"
+        mt={6}
+      >
+        Add a Case Study
+      </SectionActionButton>
     </Box>
   );
 }
