@@ -254,15 +254,6 @@ module Types
       ::Guild::Post.popular
     end
 
-    field :guild_activity, Types::Guild::ActivityUnion.connection_type, deprecation_reason: "Use guildNotifications query instead", null: true, max_page_size: 20 do
-      description "Returns a list of guild activity notifications"
-    end
-
-    def guild_activity
-      requires_guild_user!
-      current_user.guild_activity
-    end
-
     field :top_labels, Types::LabelType.connection_type, null: true, max_page_size: 20 do
       description "Returns a list of the top labels"
     end
@@ -314,7 +305,7 @@ module Types
     end
 
     def guild_notifications
-      requires_guild_user!
+      requires_specialist!
       current_user.guild_notifications
     end
 
