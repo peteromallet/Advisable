@@ -100,6 +100,16 @@ class Account < ApplicationRecord
     email&.split("@")&.last
   end
 
+  def mark_all_notifications_as_read!
+    return unless unread_notifications?
+
+    notifications.unread.update_all(read_at: Time.zone.now) # rubocop:disable Rails/SkipsModelValidations
+  end
+
+  def unread_notifications?
+    notifications.unread.any?
+  end
+
   private
 
   def strip_email

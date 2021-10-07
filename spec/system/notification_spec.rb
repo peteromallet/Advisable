@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Guild notifications', type: :system do
+RSpec.describe 'Notification', type: :system do
   let(:specialist) { create(:specialist, :guild) }
   let(:other_specialist) { create(:specialist, :guild) }
   let(:unread_selector) { "//div[@data-testid='unreadNotifications']" }
@@ -21,8 +21,8 @@ RSpec.describe 'Guild notifications', type: :system do
   end
 
   it "displays all notifications as read when read" do
-    notification = specialist.guild_notifications.last
-    notification.update! read_at: Time.zone.at(0)
+    notification = specialist.account.notifications.last
+    notification.update!(read_at: Time.zone.at(0))
 
     visit "/guild/feed"
     expect(page).not_to have_selector(:xpath, unread_selector)

@@ -36,11 +36,11 @@ RSpec.describe Mutations::Guild::UpdateLastRead do
     end
 
     it "updates guild unread notifications as read" do
-      unread_notification = guild_post.specialist.guild_notifications.first
+      unread_notification = guild_post.specialist.account.notifications.first
 
       freeze_time do
         expect { touch_read_at }.to change {
-          specialist.reload.guild_unread_notifications
+          specialist.account.reload.unread_notifications?
         }.from(true).to(false)
 
         expect(unread_notification.reload.read_at).to eq(Time.current)

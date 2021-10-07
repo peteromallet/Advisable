@@ -298,16 +298,16 @@ module Types
       current_user.subscribed_labels.order(created_at: :desc)
     end
 
-    field :guild_notifications,
-          Types::NotificationInterface.connection_type,
-          null: true, max_page_size: 20 do
+    field :guild_notifications, Types::NotificationInterface.connection_type, null: true, max_page_size: 20, deprecation_reason: "Use #notifications instead" do
       description "Returns a list of guild notifications"
     end
 
-    def guild_notifications
+    field :notifications, Types::NotificationInterface.connection_type, null: true, max_page_size: 20
+    def notifications
       requires_specialist!
-      current_user.guild_notifications
+      current_account.notifications
     end
+    alias guild_notifications notifications
 
     field :case_studies, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20
     def case_studies
