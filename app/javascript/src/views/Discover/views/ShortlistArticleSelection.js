@@ -25,12 +25,6 @@ export default function ShortlistArticleSelection() {
   };
 
   const hasMore = data?.skillCategory?.articles?.pageInfo?.hasNextPage || false;
-  const skills = selected.reduce((collection, id) => {
-    const article = articles.find((a) => a.id === id);
-    const names = article?.skills?.map((cs) => cs.skill.name) || [];
-    const filtered = names.filter((name) => !collection.includes(name));
-    return [...collection, ...filtered];
-  }, []);
 
   const handleLoadMore = () => {
     fetchMore({
@@ -42,18 +36,18 @@ export default function ShortlistArticleSelection() {
   };
 
   const handleContinue = () => {
+    const selectedArticles = data.skillCategory.articles.edges.filter((e) => {
+      return selected.includes(e.node.id);
+    });
+
     const state = {
+      name: selectedArticles[0].node.skills?.[0]?.skill?.name || "My shortlist",
       skillCategory: slug,
       articles: selected,
-      skills,
     };
 
     history.replace({ ...location, state });
-
-    history.push({
-      state,
-      pathname: "/explore/new/goals",
-    });
+    history.push("/explore/new/goals", state);
   };
 
   return (

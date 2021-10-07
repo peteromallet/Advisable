@@ -24,10 +24,10 @@ const GOALS = [
 export default function ShortlistGoals() {
   const history = useHistory();
   const location = useLocation();
-  const skills = location?.state?.skills || [];
+  const articles = location?.state?.articles || [];
   const skillCategory = location?.state?.skillCategory;
 
-  if (skills.length === 0) {
+  if (articles.length === 0) {
     return <Redirect to={`/explore/new/${skillCategory}`} />;
   }
 

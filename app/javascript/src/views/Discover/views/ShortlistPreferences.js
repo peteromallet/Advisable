@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { ArrowSmRight } from "@styled-icons/heroicons-solid";
-import { useHistory, useLocation } from "react-router";
+import { useHistory, useLocation, Redirect } from "react-router";
 import BackButton from "src/components/BackButton";
 import { Heading, Box, Text } from "@advisable/donut";
 import FormField from "src/components/FormField";
@@ -19,14 +19,21 @@ export default function ShortlistPreferences() {
   const [createShortlist] = useCreateCaseStudySearch();
   const history = useHistory();
   const location = useLocation();
+  const articles = location?.state?.articles || [];
+  const skillCategory = location?.state?.skillCategory;
+
+  if (articles.length === 0) {
+    return <Redirect to={`/explore/new/${skillCategory}`} />;
+  }
 
   const handleSubmit = async (values) => {
     const response = await createShortlist({
       variables: {
         input: {
+          name: location.state.name,
           goals: location.state.goals,
-          skills: location.state.skills,
           preferences: values.preferences,
+          articles: location.state.articles,
         },
       },
     });
