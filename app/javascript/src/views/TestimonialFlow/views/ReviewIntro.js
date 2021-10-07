@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Redirect } from "react-router-dom";
-import { Card, Box, Text, Button, Link } from "@advisable/donut";
+import { Card, Box, Text } from "@advisable/donut";
 import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
 import MockTestimonials from "../components/Illustration";
 
@@ -47,19 +47,7 @@ function ReviewIntro({ data }) {
           with their online profile and content on Advisable.
         </Text>
       </Box>
-      {oauthViewer ? (
-        <Button
-          as={Link}
-          to={{
-            pathname: `/review/${specialist.id}/ratings`,
-          }}
-          size="l"
-        >
-          Leave a Review
-        </Button>
-      ) : (
-        <AuthenticateWithLinkedin />
-      )}
+      <AuthenticateWithLinkedin />
     </Card>
   );
 }
