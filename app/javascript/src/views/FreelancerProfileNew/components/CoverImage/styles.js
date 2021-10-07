@@ -25,6 +25,7 @@ const size = variant({
   variants: {
     collapse: {
       position: "absolute !important",
+      pointerEvents: "none",
       top: "0",
       width: "304px",
       height: "114px",
