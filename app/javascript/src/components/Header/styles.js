@@ -11,11 +11,15 @@ export const StyledHeader = styled.header`
   width: 100%;
   height: var(--header-height);
   display: flex;
-  position: sticky;
+  position: fixed;
   background: white;
   align-items: center;
   padding: 0 24px 0 24px;
   box-shadow: 0px 1px 4px ${theme.colors.blue800}20;
+`;
+
+export const StyledHeaderSpacer = styled.div`
+  height: var(--header-height);
 `;
 
 export const Hamburger = styled.button`
