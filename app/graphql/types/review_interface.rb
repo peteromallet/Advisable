@@ -11,6 +11,8 @@ module Types
     field :type, String, null: true
     field :ratings, Types::Ratings, null: true
     field :specialist, Types::SpecialistType, null: false
+    field :company_name, String, null: true
+    field :relationship, String, null: true
 
     field :avatar, String, null: true
     def avatar
@@ -31,5 +33,15 @@ module Types
     end
 
     orphan_types Types::PreviousProjectReview, Types::CaseStudyArticleReview
+
+    definition_methods do
+      def resolve_type(object, _)
+        if object.project_id.present?
+          Types::PreviousProjectReview
+        else
+          Types::Review
+        end
+      end
+    end
   end
 end

@@ -132,7 +132,7 @@ module Types
     # Eventually the reviews and reviewsCount fields should be combined into
     # some kind of Connection type to support pagination and where the count
     # would be a field of the connection type.
-    field :reviews, [Types::PreviousProjectReview], null: false do
+    field :reviews, [Types::ReviewInterface], null: false do
       description 'A list of reviews for the specialist'
     end
 
