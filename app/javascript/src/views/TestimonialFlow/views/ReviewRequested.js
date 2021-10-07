@@ -44,15 +44,17 @@ function ReviewRequested({ data }) {
         </Text>
       </Box>
       {oauthViewer ? (
-        <Button
-          as={Link}
-          to={{
-            pathname: `/review/${specialist.id}/ratings`,
-          }}
-          size="l"
-        >
-          Leave a Review
-        </Button>
+        <Box display="flex" justifyContent="center">
+          <Button
+            as={Link}
+            to={{
+              pathname: `/review/${specialist.id}/ratings`,
+            }}
+            size="l"
+          >
+            Leave a Review
+          </Button>
+        </Box>
       ) : (
         <AuthenticateWithLinkedin data={data} />
       )}
