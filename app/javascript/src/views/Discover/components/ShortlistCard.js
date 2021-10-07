@@ -42,7 +42,7 @@ export default function ShortlistCard({ shortlist, company }) {
   const placeholders = [...Array(5 - shortlist.results.nodes.length).keys()];
 
   return (
-    <StyledShortlistCard r1={0.005} r2={0.3}>
+    <StyledShortlistCard>
       <Box
         as={Link}
         to={`/explore/${shortlist.id}`}

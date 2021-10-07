@@ -20,16 +20,18 @@ module Mutations
 
       def resolve(**args)
         search = current_account_responsible_for do
+          selected = ::CaseStudy::Article.where(uid: args[:articles]).pluck(:id)
+
           search = ::CaseStudy::Search.create!(
             user: current_user,
             name: args[:name],
             goals: args[:goals],
             preferences: args[:preferences],
             business_type: args[:business_type],
-            results: ::CaseStudy::Article.where(uid: args[:articles]).pluck(:id)
+            results: selected
           )
 
-          skill_ids = ::CaseStudy::Skill.where(article_id: args[:articles]).distinct.pluck(:skill_id)
+          skill_ids = ::CaseStudy::Skill.where(article_id: selected).distinct.pluck(:skill_id)
           ::Skill.where(id: skill_ids).each do |skill|
             ::CaseStudy::Skill.create!(search: search, skill: skill)
           end
