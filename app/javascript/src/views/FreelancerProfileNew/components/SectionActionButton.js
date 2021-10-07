@@ -9,6 +9,7 @@ const StyledAddButton = styled(Box)(
     height: "68px",
     width: "100%",
     display: "flex",
+    userSelect: "none",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: "20px",
