@@ -102,7 +102,7 @@ function NotificationsList({ notifications, closeNotifications }) {
 
 const Notifications = ({ closeNotifications }) => {
   const { data, loading } = useNotifications();
-  const notificationItems = data?.guildNotifications?.nodes;
+  const notificationItems = data?.notifications?.nodes;
 
   return (
     <Box width="400px">
@@ -132,12 +132,12 @@ const Notifications = ({ closeNotifications }) => {
 export default function NotificationsMenu() {
   const viewer = useViewer();
   const popover = usePopoverState();
-  const [guildUpdateLastRead] = useUpdateLastRead();
-  const hasUnread = useMemo(() => viewer.guildUnreadNotifications, [viewer]);
+  const [updateLastReadNotification] = useUpdateLastRead();
+  const hasUnread = useMemo(() => viewer.unreadNotifications, [viewer]);
 
   const handleOpen = useCallback(() => {
-    if (hasUnread) guildUpdateLastRead();
-  }, [guildUpdateLastRead, hasUnread]);
+    if (hasUnread) updateLastReadNotification();
+  }, [updateLastReadNotification, hasUnread]);
 
   return (
     <Popover

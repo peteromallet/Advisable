@@ -1,5 +1,5 @@
 query Notifications {
-  guildNotifications(first: 20) {
+  notifications(first: 20) {
     nodes {
       __typename
       id

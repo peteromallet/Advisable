@@ -15,7 +15,7 @@ module Mutations
 
       def resolve(**_args)
         viewer = current_user
-        viewer.touch_guild_notifications_read_at
+        current_user.account.mark_all_notifications_as_read!
 
         {viewer: viewer}
       end
