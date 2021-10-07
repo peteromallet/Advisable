@@ -2,14 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Mutations::Guild::UpdateLastRead do
-  let(:specialist) { create(:specialist, :guild) }
+RSpec.describe Mutations::UpdateLastReadNotification do
+  let(:specialist) { create(:specialist) }
   let(:guild_post) { create(:guild_post, specialist: specialist) }
-  let(:response_keys) { %w[guildUpdateLastRead viewer] }
   let(:query) do
     <<-GRAPHQL
     mutation {
-      guildUpdateLastRead(input: {}) {
+      updateLastReadNotification(input: {}) {
         viewer {
           ... on Specialist {
             unreadNotifications
@@ -20,22 +19,21 @@ RSpec.describe Mutations::Guild::UpdateLastRead do
     GRAPHQL
   end
 
-  it_behaves_like "guild specialist"
-
   describe "notifications" do
     subject(:touch_read_at) do
       resp = AdvisableSchema.execute(query, context: {current_user: specialist})
-      resp.dig("data", *response_keys)
+      pp resp
+      resp.dig("data", "updateLastReadNotification", "viewer")
     end
 
-    let(:other) { create(:specialist, :guild) }
+    let(:other) { create(:specialist) }
 
     before do
       reaction = guild_post.reactions.create(specialist: other)
       reaction.create_notification!
     end
 
-    it "updates guild unread notifications as read" do
+    it "updates unread notifications as read" do
       unread_notification = guild_post.specialist.account.notifications.first
 
       freeze_time do

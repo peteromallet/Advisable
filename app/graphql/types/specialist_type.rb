@@ -164,8 +164,11 @@ module Types
       time_ago_in_words(object.guild_joined_date || Time.now.utc)
     end
 
-    field :guild_unread_notifications, Boolean, null: true do
+    field :guild_unread_notifications, Boolean, null: true, deprecation_reason: "Use #unread_notifications instead" do
       description 'Whether the guild specialist has unread notifications'
+    end
+    def guild_unread_notifications
+      object.account.unread_notifications?
     end
 
     field :guild_calendly_link, String, null: true do
