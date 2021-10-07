@@ -11,7 +11,6 @@ import ReviewComment from "./views/ReviewComment";
 import ReviewRatings from "./views/ReviewRatings";
 import ReviewComplete from "./views/ReviewComplete";
 import ReviewIntro from "./views/ReviewIntro";
-import ReviewRequested from "./views/ReviewRequested";
 
 export default function TestimonialFlow() {
   const params = useParams();
@@ -35,9 +34,6 @@ export default function TestimonialFlow() {
           </Route>
           <Route path="/review/:id/complete">
             <ReviewComplete data={data} />
-          </Route>
-          <Route path="/review/:id/requested">
-            <ReviewRequested data={data} />
           </Route>
           <Route>
             <ReviewIntro data={data} />
