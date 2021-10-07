@@ -40,7 +40,7 @@ fragment ViewerFields on ViewerUnion {
     applicationStage
     completedTutorials
     needsToSetAPassword
-    guildUnreadNotifications
+    unreadNotifications
     avatar
     guild
     guildCalendlyLink
