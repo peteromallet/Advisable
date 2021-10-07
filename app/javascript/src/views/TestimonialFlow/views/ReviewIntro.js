@@ -1,7 +1,8 @@
 import React from "react";
+import queryString from "query-string";
 import styled from "styled-components";
-import { Redirect } from "react-router-dom";
-import { Card, Box, Text } from "@advisable/donut";
+import { Redirect, useLocation } from "react-router-dom";
+import { Card, Box, Text, Button, Link } from "@advisable/donut";
 import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
 import MockTestimonials from "../components/Illustration";
 
@@ -16,8 +17,11 @@ export const StyledTextMask = styled.div`
 
 function ReviewIntro({ data }) {
   const { specialist, oauthViewer } = data;
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
+  const requested = queryParams.requested === "true";
 
-  if (oauthViewer) {
+  if (oauthViewer && !requested) {
     return <Redirect to={`/review/${data.specialist?.id}/ratings`} />;
   }
 
@@ -34,7 +38,9 @@ function ReviewIntro({ data }) {
           fontWeight="semibold"
           letterSpacing="-0.02em"
         >
-          Want to leave a testimonial for {specialist.name}?
+          {requested
+            ? `${specialist.firstName} has requested a testimonial from you`
+            : `Want to leave a testimonial for ${specialist.name}?`}
         </Text>
         <Text
           fontSize="16px"
@@ -47,7 +53,21 @@ function ReviewIntro({ data }) {
           with their online profile and content on Advisable.
         </Text>
       </Box>
-      <AuthenticateWithLinkedin />
+      {oauthViewer ? (
+        <Box display="flex" justifyContent="center">
+          <Button
+            as={Link}
+            to={{
+              pathname: `/review/${specialist.id}/ratings`,
+            }}
+            size="l"
+          >
+            Leave a Review
+          </Button>
+        </Box>
+      ) : (
+        <AuthenticateWithLinkedin data={data} />
+      )}
     </Card>
   );
 }
