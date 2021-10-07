@@ -26,25 +26,23 @@ export default function TestimonialFlow() {
         <Logo />
       </Box>
       <Container maxWidth="700px" pb="20px">
-        <Card padding={["m", "l"]}>
-          <Switch>
-            <Route path="/review/:id/ratings">
-              <ReviewRatings data={data} />
-            </Route>
-            <Route path="/review/:id/comment">
-              <ReviewComment data={data} />
-            </Route>
-            <Route path="/review/:id/complete">
-              <ReviewComplete data={data} />
-            </Route>
-            <Route path="/review/:id/requested">
-              <ReviewRequested data={data} />
-            </Route>
-            <Route>
-              <ReviewIntro data={data} />
-            </Route>
-          </Switch>
-        </Card>
+        <Switch>
+          <Route path="/review/:id/ratings">
+            <ReviewRatings data={data} />
+          </Route>
+          <Route path="/review/:id/comment">
+            <ReviewComment data={data} />
+          </Route>
+          <Route path="/review/:id/complete">
+            <ReviewComplete data={data} />
+          </Route>
+          <Route path="/review/:id/requested">
+            <ReviewRequested data={data} />
+          </Route>
+          <Route>
+            <ReviewIntro data={data} />
+          </Route>
+        </Switch>
       </Container>
     </Suspense>
   );

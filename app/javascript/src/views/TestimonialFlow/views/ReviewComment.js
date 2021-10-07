@@ -5,7 +5,7 @@ import { Formik, Form } from "formik";
 import { useHistory, useParams, useLocation, Redirect } from "react-router-dom";
 import { useReviewSpecialist } from "../queries";
 // Components
-import { Text, Textarea, Select } from "@advisable/donut";
+import { Card, Text, Textarea, Select } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
 
@@ -49,7 +49,7 @@ function ReviewComment({ data }) {
   }
 
   return (
-    <>
+    <Card padding={["m", "l"]}>
       <Text
         mb={3}
         color="blue900"
@@ -104,7 +104,7 @@ function ReviewComment({ data }) {
           </SubmitButton>
         </Form>
       </Formik>
-    </>
+    </Card>
   );
 }
 

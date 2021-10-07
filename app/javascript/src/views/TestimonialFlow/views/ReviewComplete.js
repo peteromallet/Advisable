@@ -1,59 +1,81 @@
 import React from "react";
-import { Button, Box, Text, Link } from "@advisable/donut";
-import possessive from "src/utilities/possesive";
-import { useLocation, Redirect } from "react-router-dom";
-import Testimonial from "src/views/FreelancerProfileNew/components/Testimonial";
-
-function Review({ review }) {
-  return (
-    <Box>
-      <Testimonial review={review} />
-    </Box>
-  );
-}
+import { motion } from "framer-motion";
+import {
+  Card,
+  Circle,
+  Container,
+  Button,
+  Box,
+  Text,
+  Link,
+} from "@advisable/donut";
+import { Lock } from "@styled-icons/feather/Lock";
+import { Redirect } from "react-router-dom";
 
 export default function ReviewComplete({ data }) {
   const { specialist, oauthViewer } = data;
-
-  const location = useLocation();
-  const review = location.state?.review;
 
   if (!oauthViewer) {
     return <Redirect to={`/review/${specialist.id}`} />;
   }
 
   return (
-    <Box>
-      <Text
-        mb={3}
-        color="blue900"
-        fontWeight="medium"
-        letterSpacing="-0.02em"
-        fontSize={{ _: "24px", m: "30px" }}
-        lineHeight={{ _: "28px", m: "32px" }}
+    <Container>
+      <Box textAlign="center" maxWidth="520px" mx="auto">
+        <Text
+          mb="12px"
+          color="blue900"
+          fontWeight="medium"
+          letterSpacing="-0.02em"
+          fontSize={{ _: "24px", m: "30px" }}
+          lineHeight={{ _: "28px", m: "32px" }}
+        >
+          Thanks {oauthViewer.firstName}!
+        </Text>
+        <Text
+          fontSize="16px"
+          lineHeight="24px"
+          color="neutral900"
+          marginBottom="50px"
+        >
+          We have hundreds more world-class freelancers with experience working
+          with companies like yours
+        </Text>
+      </Box>
+      <Card
+        mx="auto"
+        elevation="l"
+        as={motion.div}
+        maxWidth="460px"
+        padding={["m", "l"]}
+        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 30 }}
+        transition={{ delay: 0.5 }}
       >
-        Thanks! Your testimonial has been listed.
-      </Text>
-      <Text
-        fontSize="16px"
-        lineHeight="24px"
-        color="neutral900"
-        marginBottom={4}
-      >
-        You can see it in {possessive(specialist.firstName)} profile. Meanwhile,
-        we have hundreds more world-class freelancers with experience that you
-        might look for. Check them out!
-      </Text>
-      {review ? (
-        <>
-          <Box height="1px" bg="neutral200" width="100%" mb={4} />
-          <Review review={review} />
-          <Box height="1px" bg="neutral200" width="100%" mt={4} mb={5} />
-        </>
-      ) : null}
-      <Button as={Link} to="/clients/join" size="l" ml="auto">
-        Join Advisable
-      </Button>
-    </Box>
+        <Box textAlign="center">
+          <Circle bg="blue900" color="white" mb="20px">
+            <Lock size={24} strokeWidth={2} />
+          </Circle>
+          <Text
+            mb="xs"
+            color="blue900"
+            fontSize="20px"
+            lineHeight="24px"
+            fontWeight="medium"
+            letterSpacing="-0.02em"
+          >
+            Unlock acccess to world-class talent
+          </Text>
+          <Text fontSize="15px" lineHeight="m" mb="l" color="neutral700">
+            Across 600+ different marketing skills, get instant recommendations
+            of top talent with experience in different areas, backed by a no
+            questions asked money-back guarantee.
+          </Text>
+          <Button as={Link} to="/clients/join" size="l">
+            Join Advisable
+          </Button>
+        </Box>
+      </Card>
+    </Container>
   );
 }

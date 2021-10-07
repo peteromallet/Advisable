@@ -5,7 +5,7 @@ import isEmpty from "lodash/isEmpty";
 // Hooks
 import { useHistory, useParams, useLocation, Redirect } from "react-router-dom";
 // Components
-import { Box, Text, Button, Stack, InputError } from "@advisable/donut";
+import { Card, Box, Text, Button, Stack, InputError } from "@advisable/donut";
 import StarRatingField from "../components/StarRatingField";
 import SubmitButton from "src/components/SubmitButton";
 
@@ -56,7 +56,7 @@ function ReviewRatings({ data }) {
   }
 
   return (
-    <>
+    <Card padding={["m", "l"]}>
       <Text
         mb="12px"
         color="blue900"
@@ -124,7 +124,7 @@ function ReviewRatings({ data }) {
           </Form>
         )}
       </Formik>
-    </>
+    </Card>
   );
 }
 

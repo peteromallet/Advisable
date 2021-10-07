@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Box, Text, Button, Link } from "@advisable/donut";
+import { Card, Box, Text, Button, Link } from "@advisable/donut";
 import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
 import possessive from "src/utilities/possesive";
 import MockTestimonials from "../components/Illustration";
@@ -18,7 +18,7 @@ function ReviewRequested({ data }) {
   const { specialist, oauthViewer } = data;
 
   return (
-    <>
+    <Card padding={["m", "l"]}>
       <MockTestimonials />
       <Box width={{ _: "100%", s: "80%" }} mx="auto">
         <Text
@@ -56,7 +56,7 @@ function ReviewRequested({ data }) {
       ) : (
         <AuthenticateWithLinkedin data={data} />
       )}
-    </>
+    </Card>
   );
 }
 

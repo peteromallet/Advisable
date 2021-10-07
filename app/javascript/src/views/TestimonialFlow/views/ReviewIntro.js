@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Redirect } from "react-router-dom";
-import { Box, Text, Button, Link } from "@advisable/donut";
+import { Card, Box, Text, Button, Link } from "@advisable/donut";
 import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
 import MockTestimonials from "../components/Illustration";
 
@@ -22,7 +22,7 @@ function ReviewIntro({ data }) {
   }
 
   return (
-    <>
+    <Card padding={["m", "l"]}>
       <MockTestimonials />
       <Box width={{ _: "100%", s: "80%" }} mx="auto" mt="-12px">
         <Text
@@ -60,7 +60,7 @@ function ReviewIntro({ data }) {
       ) : (
         <AuthenticateWithLinkedin />
       )}
-    </>
+    </Card>
   );
 }
 
