@@ -12,7 +12,7 @@ RSpec.describe Mutations::Guild::UpdateLastRead do
       guildUpdateLastRead(input: {}) {
         viewer {
           ... on Specialist {
-            guildUnreadNotifications
+            unreadNotifications
           }
         }
       }
@@ -44,7 +44,7 @@ RSpec.describe Mutations::Guild::UpdateLastRead do
         }.from(true).to(false)
 
         expect(unread_notification.reload.read_at).to eq(Time.current)
-        expect(touch_read_at['guildUnreadNotifications']).to eq(false)
+        expect(touch_read_at['unreadNotifications']).to eq(false)
       end
     end
   end

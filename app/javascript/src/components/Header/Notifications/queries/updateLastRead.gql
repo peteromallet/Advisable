@@ -3,7 +3,7 @@ mutation UpdateNotificationsLastRead {
     viewer {
       ... on Specialist {
         id
-        guildUnreadNotifications
+        unreadNotifications
       }
     }
   }
