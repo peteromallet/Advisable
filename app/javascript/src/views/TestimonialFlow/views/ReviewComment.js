@@ -3,6 +3,7 @@ import { object, string } from "yup";
 import { Formik, Form } from "formik";
 // Hooks
 import { useHistory, useParams, useLocation, Redirect } from "react-router-dom";
+import { useNotifications } from "src/components/Notifications";
 import { useReviewSpecialist } from "../queries";
 // Components
 import { Card, Text, Textarea, Select } from "@advisable/donut";
@@ -17,6 +18,7 @@ const valiadtionSchema = object().shape({
 
 function ReviewComment({ data }) {
   const { specialist, oauthViewer } = data;
+  const { error } = useNotifications();
 
   // React Router data
   const { id } = useParams();
@@ -39,9 +41,14 @@ function ReviewComment({ data }) {
         },
       },
     });
-    history.push(`/review/${specialist.id}/complete`, {
-      review: response.data?.reviewSpecialist?.review,
-    });
+
+    if (response.error) {
+      error("Something went wrong. Please try again.");
+    } else {
+      history.push(`/review/${specialist.id}/complete`, {
+        review: response.data?.reviewSpecialist?.review,
+      });
+    }
   };
 
   if (!oauthViewer) {
