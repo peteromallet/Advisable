@@ -42,7 +42,7 @@ export default function Profile({ data }) {
           {reviews.length > 0 && (
             <Testimonials reviews={reviews} specialist={data.specialist} />
           )}
-          {caseStudies.length === 0 && isOwner && <TestimonialsEmptyState />}
+          {reviews.length === 0 && <TestimonialsEmptyState />}
         </Stack>
       </Box>
     </>
