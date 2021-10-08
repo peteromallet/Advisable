@@ -49,13 +49,8 @@ function ValidationComplete({ data }) {
         formik.setStatus("Something went wrong");
       }
     } else {
-      const {
-        firstName,
-        lastName,
-        companyName,
-        companyType,
-        industry,
-      } = data.createUserFromProjectVerification.user;
+      const { firstName, lastName, companyName, companyType, industry } =
+        data.createUserFromProjectVerification.user;
       const url = `https://advisable.com/clients/signup?fid=${fid}&fn=${firstName}&ln=${lastName}show_contact_page=0&email=${values.email}&field90540872=${companyName}&field90540873=${industry.name}&field90540874=${companyType}`;
       window.location.href = url;
     }
