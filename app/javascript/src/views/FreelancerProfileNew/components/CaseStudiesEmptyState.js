@@ -1,16 +1,15 @@
 import React from "react";
-import { Box, Text, Button, Link, theme } from "@advisable/donut";
+import { Circle, Box, Text, Link, theme } from "@advisable/donut";
 import PaintRollerIllustration from "src/illustrations/zest/paintroller";
+import { Plus } from "@styled-icons/heroicons-outline";
+import EmptyStateActionCard from "./EmptyStateActionCard";
 
 export default function CaseStudiesEmptyState({ specialist }) {
   return (
-    <Box
-      border="2px solid"
-      bg="neutral50"
-      borderColor="neutral100"
-      paddingX={8}
-      paddingY={12}
-      borderRadius="16px"
+    <EmptyStateActionCard
+      target="_blank"
+      as={Link.External}
+      href={`https://csi.advisable.com/freelancer/onboarding?specialist_id=${specialist.id}&contact_name=${specialist.firstName}`}
     >
       <Box maxWidth="320px" marginX="auto" textAlign="center">
         <PaintRollerIllustration
@@ -18,24 +17,27 @@ export default function CaseStudiesEmptyState({ specialist }) {
           marginBottom={5}
           color={theme.colors.blue300}
         />
-        <Text fontWeight={500} marginBottom={0.5} lineHeight="20px">
+        <Text
+          fontWeight={500}
+          marginBottom={0.5}
+          lineHeight="20px"
+          color="blue500"
+        >
           Add your first case study!
         </Text>
-        <Text
-          fontSize="sm"
-          marginBottom={4}
-          lineHeight="20px"
-          color="neutral700"
-        >
-          Add case studies to showcase your work and find new clients.
+        <Text fontSize="sm" lineHeight="20px" color="neutral700" mb={5}>
+          Showcase your work and find new clients.
         </Text>
-        <Link.External
-          target="_blank"
-          href={`https://csi.advisable.com/freelancer/onboarding?specialist_id=${specialist.id}&contact_name=${specialist.firstName}`}
+        <Circle
+          border="2px solid"
+          borderColor="neutral200"
+          color="neutral200"
+          size={44}
+          p={1.5}
         >
-          <Button variant="ghost">Add a case study</Button>
-        </Link.External>
+          <Plus />
+        </Circle>
       </Box>
-    </Box>
+    </EmptyStateActionCard>
   );
 }
