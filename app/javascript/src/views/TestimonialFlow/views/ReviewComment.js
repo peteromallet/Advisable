@@ -6,7 +6,7 @@ import { useHistory, useParams, useLocation, Redirect } from "react-router-dom";
 import { useNotifications } from "src/components/Notifications";
 import { useReviewSpecialist } from "../queries";
 // Components
-import { Card, Text, Textarea, Select } from "@advisable/donut";
+import { Card, Text, Heading, Textarea, Select } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
 
@@ -56,18 +56,17 @@ function ReviewComment({ data }) {
   }
 
   return (
-    <Card padding={["m", "l"]}>
-      <Text
+    <Card padding={[6, 8]} borderRadius="16px">
+      <Heading
         mb={3}
-        color="blue900"
         fontSize={{ _: "24px", m: "30px" }}
         lineHeight={{ _: "28px", m: "32px" }}
-        fontWeight="medium"
-        letterSpacing="-0.02em"
+        fontWeight={600}
+        letterSpacing="-0.03em"
       >
         What did you love about working with {specialist.firstName}?
-      </Text>
-      <Text fontSize="16px" lineHeight="24px" color="neutral900" mb="l">
+      </Heading>
+      <Text fontSize="lg" lineHeight="24px" color="neutral900" mb={6}>
         This will help {specialist.firstName} find new opportunities on
         Advisable.
       </Text>

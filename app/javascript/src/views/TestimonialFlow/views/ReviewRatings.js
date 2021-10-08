@@ -5,7 +5,15 @@ import isEmpty from "lodash/isEmpty";
 // Hooks
 import { useHistory, useParams, useLocation, Redirect } from "react-router-dom";
 // Components
-import { Card, Box, Text, Button, Stack, InputError } from "@advisable/donut";
+import {
+  Card,
+  Box,
+  Heading,
+  Text,
+  Button,
+  Stack,
+  InputError,
+} from "@advisable/donut";
 import StarRatingField from "../components/StarRatingField";
 import SubmitButton from "src/components/SubmitButton";
 
@@ -56,19 +64,18 @@ function ReviewRatings({ data }) {
   }
 
   return (
-    <Card padding={["m", "l"]}>
-      <Text
-        mb="12px"
-        color="blue900"
+    <Card padding={[6, 8]} borderRadius="16px">
+      <Heading
+        mb={3}
         fontSize={{ _: "24px", m: "30px" }}
         lineHeight={{ _: "28px", m: "32px" }}
-        fontWeight="medium"
-        letterSpacing="-0.02em"
+        fontWeight={600}
+        letterSpacing="-0.03em"
       >
         How was your experience working with {specialist.firstName} on this
         project?
-      </Text>
-      <Text fontSize="16px" lineHeight="24px" color="neutral900" mb="40px">
+      </Heading>
+      <Text fontSize="lg" lineHeight="24px" color="neutral900" mb="40px">
         How would you rate them in the following areas?
       </Text>
       <Formik
