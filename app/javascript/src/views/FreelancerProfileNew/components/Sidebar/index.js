@@ -3,7 +3,6 @@ import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import useViewer from "src/hooks/useViewer";
 import { Box, Text } from "@advisable/donut";
-
 import ProfilePicture from "../ProfilePicture";
 import CoverImage from "../CoverImage";
 import {
