@@ -8,6 +8,7 @@ import Sidebar from "../components/Sidebar";
 import CaseStudies from "../components/CaseStudies";
 import CaseStudiesEmptyState from "../components/CaseStudiesEmptyState";
 import Testimonials from "../components/Testimonials";
+import TestimonialsEmptyState from "../components/TestimonialsEmptyState";
 
 export default function Profile({ data }) {
   useScrollToTop();
@@ -38,9 +39,10 @@ export default function Profile({ data }) {
           {caseStudies.length === 0 && isOwner && (
             <CaseStudiesEmptyState specialist={data.specialist} />
           )}
-          {reviews.length ? (
+          {reviews.length > 0 && (
             <Testimonials reviews={reviews} specialist={data.specialist} />
-          ) : null}
+          )}
+          {caseStudies.length === 0 && isOwner && <TestimonialsEmptyState />}
         </Stack>
       </Box>
     </>

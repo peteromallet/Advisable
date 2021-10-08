@@ -5,9 +5,9 @@ import PaintRollerIllustration from "src/illustrations/zest/paintroller";
 export default function CaseStudiesEmptyState({ specialist }) {
   return (
     <Box
-      border="1px dashed"
+      border="2px solid"
       bg="neutral50"
-      borderColor="neutral200"
+      borderColor="neutral100"
       paddingX={8}
       paddingY={12}
       borderRadius="16px"
