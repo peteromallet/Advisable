@@ -16,7 +16,7 @@ import { Plus } from "@styled-icons/heroicons-outline";
 import TestimonialLinkModal from "./TestimonialLinkModal";
 import EmptyStateActionCard from "./EmptyStateActionCard";
 
-function CardWrapper({ isOwner, modal, children }) {
+function CardWrapper({ isOwner, modal, children, ...props }) {
   const { id } = useParams();
 
   if (isOwner) {
@@ -32,6 +32,7 @@ function CardWrapper({ isOwner, modal, children }) {
         href={`/review/${id}`}
         target="_blank"
         rel="noreferrer"
+        {...props}
       >
         {children}
       </EmptyStateActionCard>
@@ -39,14 +40,14 @@ function CardWrapper({ isOwner, modal, children }) {
   }
 }
 
-export default function TestimonialsEmptyState() {
+export default function TestimonialsEmptyState(props) {
   const modal = useModal();
   const { id } = useParams();
   const viewer = useViewer();
   const isOwner = viewer?.id === id;
 
   return (
-    <CardWrapper modal={modal} isOwner={isOwner}>
+    <CardWrapper modal={modal} isOwner={isOwner} {...props}>
       <Box maxWidth="320px" marginX="auto" textAlign="center">
         <PencilIllustration width="220px" color={theme.colors.blue300} />
         {isOwner ? (
