@@ -89,9 +89,15 @@ function ReviewComment({ data }) {
             name="relationship"
             label="What was your relationship to them?"
           >
-            <option>They worked on the project with me</option>
-            <option>They worked at the company but not the project</option>
-            <option>They managed the project</option>
+            <option value="They worked on the project with me">
+              I worked on the project with them
+            </option>
+            <option value="They worked at the company but not the project">
+              I worked at the company but not on the project
+            </option>
+            <option value="They managed the project">
+              I managed the project
+            </option>
           </FormField>
           <FormField
             minRows={8}
