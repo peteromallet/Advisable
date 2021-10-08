@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading, Modal, Text } from "@advisable/donut";
+import { Heading, Modal, Text, theme } from "@advisable/donut";
 import CopyURL from "src/components/CopyURL";
 import { useParams } from "react-router-dom";
 
@@ -8,7 +8,7 @@ export default function TestimonialLinkModal({ modal }) {
   const { id } = params;
 
   return (
-    <Modal modal={modal}>
+    <Modal modal={modal} title="modal with a link to the testimonial flow">
       <Heading size="3xl" mb={3}>
         Just send the link to your client
       </Heading>
@@ -16,7 +16,9 @@ export default function TestimonialLinkModal({ modal }) {
         You will see your testimonial on the profile, once your client fill down
         a very simple form.
       </Text>
-      <CopyURL>{`${location.origin}/review/${id}/`}</CopyURL>
+      <CopyURL
+        bg={theme.colors.blue100}
+      >{`${location.origin}/review/${id}/`}</CopyURL>
     </Modal>
   );
 }
