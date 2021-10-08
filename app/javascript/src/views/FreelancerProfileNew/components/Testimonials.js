@@ -1,34 +1,10 @@
 import React from "react";
-import {
-  Box,
-  Text,
-  Link,
-  Stack,
-  Modal,
-  Heading,
-  useModal,
-  DialogDisclosure,
-} from "@advisable/donut";
-import CopyURL from "src/components/CopyURL";
+import { Box, Link, Stack, useModal, DialogDisclosure } from "@advisable/donut";
 import SectionActionButton from "./SectionActionButton";
 import SectionTitle from "./SectionTitle";
 import Testimonial from "./Testimonial";
 import useViewer from "src/hooks/useViewer";
-
-function TestimonialLinkModal({ modal, url }) {
-  return (
-    <Modal modal={modal}>
-      <Heading size="3xl" mb={3}>
-        Just send the link to your client
-      </Heading>
-      <Text mb={6} lineHeight="m" color="neutral800">
-        You will see your testimonial on the profile, once your client fill down
-        a very simple form.
-      </Text>
-      <CopyURL>{url}</CopyURL>
-    </Modal>
-  );
-}
+import TestimonialLinkModal from "./TestimonialLinkModal";
 
 export default function Testimonials({ reviews, specialist }) {
   const viewer = useViewer();
@@ -50,10 +26,7 @@ export default function Testimonials({ reviews, specialist }) {
           <DialogDisclosure as={SectionActionButton} mt={6} {...modal}>
             Request a Testimonial
           </DialogDisclosure>
-          <TestimonialLinkModal
-            modal={modal}
-            url={`${location.origin}/review/${specialist.id}/`}
-          />
+          <TestimonialLinkModal modal={modal} />
         </>
       ) : (
         <SectionActionButton
