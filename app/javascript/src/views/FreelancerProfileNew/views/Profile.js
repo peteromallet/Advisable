@@ -44,7 +44,7 @@ export default function Profile({ data }) {
             <Testimonials reviews={reviews} specialist={data.specialist} />
           )}
           {reviews.length === 0 && <TestimonialsEmptyState />}
-          {reviews.length === 0 && caseStudies.length === 0 && (
+          {reviews.length === 0 && caseStudies.length === 0 && !isOwner && (
             <GeneralEmptyState specialist={data.specialist} />
           )}
         </Stack>
