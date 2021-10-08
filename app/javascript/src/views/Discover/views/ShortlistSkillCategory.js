@@ -26,7 +26,11 @@ export default function ShortlistSkillCategory() {
           one you are interested in.
         </Text>
       </Box>
-      <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="20px">
+      <Box
+        display="grid"
+        gridTemplateColumns={["1fr", "1fr 1fr", "1fr 1fr", "1fr 1fr 1fr"]}
+        gridGap={{ _: "12px", m: "20px" }}
+      >
         {categories.map((c) => (
           <Link to={`/explore/new/${c.slug}`} key={c.slug}>
             <Box padding={5} borderRadius="12px" bg="neutral100">
