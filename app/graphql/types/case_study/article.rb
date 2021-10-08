@@ -17,7 +17,7 @@ module Types
         authorize :read_company?
       end
       def company
-        dataloader.with(::ActiveRecordSource, ::Company).load(object.company_id)
+        dataloader.with(::ActiveRecordSource, ::CaseStudy::Company).load(object.company_id)
       end
 
       field :skills, [Skill], null: true
