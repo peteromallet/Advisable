@@ -1,10 +1,18 @@
-import React from "react";
+import React, { Suspense } from "react";
 import css from "@styled-system/css";
 import SuperEllipse from "react-superellipse";
 import { Box, Circle, Text, theme } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
-import LogoMark from "src/components/LogoMark";
 import { PlusSm } from "@styled-icons/heroicons-solid";
+import { useImage } from "react-image";
+import { ErrorBoundary } from "react-error-boundary";
+import LogoMark from "src/components/LogoMark";
+
+function FaviconImage({ src }) {
+  const { src: imgSrc } = useImage({ srcList: src });
+
+  return <Box as="img" src={imgSrc} width="32px" borderRadius="8px" />;
+}
 
 export default function ArticleSelection({ article, onSelect, isSelected }) {
   return (
@@ -27,40 +35,44 @@ export default function ArticleSelection({ article, onSelect, isSelected }) {
     >
       <Box marginBottom={4} display="inline-flex" position="relative">
         <RecommendationAvatar src={article.specialist.avatar} size="3xs" />
-        <Box
-          as={SuperEllipse}
-          r1={0.02}
-          r2={0.4}
-          width="60px"
-          height="72px"
-          bg="neutral100"
-          display="flex"
-          marginLeft={2}
-          alignItems="center"
-          justifyContent="center"
-        >
-          {article.company?.favicon ? (
-            <img src={article.company.favicon} width="32px" />
-          ) : (
-            <LogoMark color="subtle" />
-          )}
-        </Box>
-        <Circle
-          size="32px"
-          bg="white"
-          boxShadow="m"
-          position="absolute"
-          left="50%"
-          top="50%"
-          color="blue800"
-          border="2px solid"
-          borderColor="white"
-          css={css({
-            transform: "translate(-50%, -50%)",
-          })}
-        >
-          <PlusSm size={20} />
-        </Circle>
+        {article.company?.favicon && (
+          <>
+            <Box
+              as={SuperEllipse}
+              r1={0.02}
+              r2={0.4}
+              width="60px"
+              height="72px"
+              bg="neutral100"
+              display="flex"
+              marginLeft={2}
+              alignItems="center"
+              justifyContent="center"
+            >
+              <ErrorBoundary fallback={<LogoMark color="subtle" />}>
+                <Suspense fallback={null}>
+                  <FaviconImage src={article.company.favicon} />
+                </Suspense>
+              </ErrorBoundary>
+            </Box>
+            <Circle
+              size="32px"
+              bg="white"
+              boxShadow="m"
+              position="absolute"
+              left="50%"
+              top="50%"
+              color="blue800"
+              border="2px solid"
+              borderColor="white"
+              css={css({
+                transform: "translate(-50%, -50%)",
+              })}
+            >
+              <PlusSm size={20} />
+            </Circle>
+          </>
+        )}
       </Box>
       <Text
         marginBottom={2}
