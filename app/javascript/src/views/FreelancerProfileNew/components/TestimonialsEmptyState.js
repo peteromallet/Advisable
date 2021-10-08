@@ -1,31 +1,31 @@
 import React from "react";
 import {
   Box,
+  Circle,
   Text,
   theme,
-  Button,
   useModal,
   DialogDisclosure,
 } from "@advisable/donut";
-import TestimonialLinkModal from "./TestimonialLinkModal";
 import PencilIllustration from "src/illustrations/zest/pencil";
+import { Plus } from "@styled-icons/heroicons-outline";
+import TestimonialLinkModal from "./TestimonialLinkModal";
+import EmptyStateActionCard from "./EmptyStateActionCard";
 
 export default function TestimonialsEmptyState() {
   const modal = useModal();
 
   return (
-    <Box
-      border="2px solid"
-      bg="neutral50"
-      borderColor="neutral100"
-      paddingX={8}
-      paddingY={12}
-      borderRadius="16px"
-    >
+    <DialogDisclosure as={EmptyStateActionCard} {...modal}>
       <Box maxWidth="320px" marginX="auto" textAlign="center">
         <PencilIllustration width="220px" color={theme.colors.blue300} />
-        <Text fontWeight={500} marginBottom={0.5} lineHeight="20px">
-          Request testimonials from clients!
+        <Text
+          fontWeight={500}
+          marginBottom={0.5}
+          lineHeight="20px"
+          color="blue500"
+        >
+          Request testimonials from a client!
         </Text>
         <Text
           fontSize="sm"
@@ -33,13 +33,20 @@ export default function TestimonialsEmptyState() {
           lineHeight="20px"
           color="neutral700"
         >
-          Add case studies to showcase your work and find new clients.
+          Send the link to your clients and ask them to write a testimonial for
+          you.
         </Text>
-        <DialogDisclosure as={Button} variant="ghost" {...modal}>
-          Request a Testimonial
-        </DialogDisclosure>
+        <Circle
+          border="2px solid"
+          borderColor="neutral200"
+          color="neutral200"
+          size={44}
+          p={1.5}
+        >
+          <Plus />
+        </Circle>
         <TestimonialLinkModal modal={modal} />
       </Box>
-    </Box>
+    </DialogDisclosure>
   );
 }
