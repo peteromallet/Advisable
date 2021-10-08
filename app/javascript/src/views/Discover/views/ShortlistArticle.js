@@ -1,5 +1,6 @@
 import React from "react";
 import truncate from "lodash/truncate";
+import css from "@styled-system/css";
 import { Box, Text } from "@advisable/donut";
 import Article from "src/components/Article";
 import { useArticle } from "../queries";
@@ -53,6 +54,11 @@ export default function ShortlistArticle() {
                 fontWeight={600}
                 letterSpacing="-0.032em"
                 color="neutral900"
+                css={css({
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
+                })}
               >
                 {data.caseStudy.specialist.name}
               </Text>
