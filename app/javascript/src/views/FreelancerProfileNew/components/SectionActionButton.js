@@ -19,9 +19,11 @@ const StyledAddButton = styled(Box)(
     cursor: "pointer",
     border: "2px solid transparent",
     borderColor: "neutral100",
-    transition: "border-color 200ms, box-shadow 200ms, color 200ms",
+    transition:
+      "border-color 200ms, box-shadow 200ms, color 200ms, transform 200ms",
 
     "&:hover": {
+      transform: "translateY(-2px)",
       borderColor: "neutral200",
       boxShadow: "0 8px 24px -8px rgba(0, 0, 0, 0.12)",
       color: "neutral600",
