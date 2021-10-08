@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Link, Stack, useModal, DialogDisclosure } from "@advisable/donut";
+import { Box, Stack, useModal, DialogDisclosure } from "@advisable/donut";
 import SectionActionButton from "./SectionActionButton";
 import SectionTitle from "./SectionTitle";
 import Testimonial from "./Testimonial";
 import useViewer from "src/hooks/useViewer";
 import TestimonialLinkModal from "./TestimonialLinkModal";
+import TestimonialsEmptyState from "./TestimonialsEmptyState";
 
 export default function Testimonials({ reviews, specialist }) {
   const viewer = useViewer();
@@ -29,14 +30,7 @@ export default function Testimonials({ reviews, specialist }) {
           <TestimonialLinkModal modal={modal} />
         </>
       ) : (
-        <SectionActionButton
-          as={Link.External}
-          href={`/review/${specialist.id}`}
-          target="_blank"
-          mt={6}
-        >
-          Leave a Testimonial
-        </SectionActionButton>
+        <TestimonialsEmptyState mt={6} />
       )}
     </Box>
   );
