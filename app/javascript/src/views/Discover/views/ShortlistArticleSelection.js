@@ -69,7 +69,11 @@ export default function ShortlistArticleSelection() {
       </Box>
 
       {loading && <Loading />}
-      <Box display="grid" gridTemplateColumns="1fr 1fr" gridGap="28px">
+      <Box
+        display="grid"
+        gridTemplateColumns={{ _: "1fr", m: "1fr 1fr" }}
+        gridGap="28px"
+      >
         {articles.map((article) => (
           <ArticleSelection
             key={article.id}
@@ -120,7 +124,6 @@ export default function ShortlistArticleSelection() {
             <Box
               display="flex"
               alignItems="center"
-              textAlign="center"
               color="neutral900"
               marginBottom={2}
             >
