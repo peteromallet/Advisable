@@ -7,6 +7,7 @@ import FormField from "src/components/FormField";
 import CheckboxInput from "src/components/CheckboxInput";
 import SubmitButton from "src/components/SubmitButton";
 import BackButton from "src/components/BackButton";
+import { useCreateCaseStudySearch } from "../queries";
 
 const GOALS = [
   "Generate Leads",
@@ -24,6 +25,7 @@ const GOALS = [
 export default function ShortlistGoals() {
   const history = useHistory();
   const location = useLocation();
+  const [createShortlist] = useCreateCaseStudySearch();
   const articles = location?.state?.articles || [];
   const skillCategory = location?.state?.skillCategory;
 
@@ -31,18 +33,23 @@ export default function ShortlistGoals() {
     return <Redirect to={`/explore/new/${skillCategory}`} />;
   }
 
-  const handleSubmit = (values) => {
-    const state = { ...location.state, goals: values.goals };
-    history.replace({ ...location, state });
-
-    history.push({
-      state,
-      pathname: "/explore/new/preferences",
+  const handleSubmit = async (values) => {
+    const response = await createShortlist({
+      variables: {
+        input: {
+          name: location.state.name,
+          goals: values.goals,
+          articles: location.state.articles,
+        },
+      },
     });
+
+    const search = response?.data?.createCaseStudySearch?.search;
+    history.push(`/explore/${search.id}`);
   };
 
   const initialValues = {
-    goals: location.state?.goals || [],
+    goals: [],
   };
 
   return (
@@ -85,7 +92,7 @@ export default function ShortlistGoals() {
             size="l"
             suffix={<ArrowSmRight />}
           >
-            Continue
+            Create shortlist
           </SubmitButton>
         </Form>
       </Formik>
