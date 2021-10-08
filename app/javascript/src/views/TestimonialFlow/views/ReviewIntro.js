@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Redirect } from "react-router-dom";
-import { Card, Box, Text } from "@advisable/donut";
+import { Card, Box, Text, Heading } from "@advisable/donut";
 import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
 import MockTestimonials from "../components/Illustration";
 
@@ -22,12 +22,11 @@ function ReviewIntro({ data }) {
   }
 
   return (
-    <Card padding={["m", "l"]}>
+    <Card padding={["m", "l"]} borderRadius="16px">
       <MockTestimonials />
-      <Box width={{ _: "100%", s: "90%" }} mx="auto" mt="-12px">
-        <Text
+      <Box width={{ _: "100%", s: "90%" }} mx="auto">
+        <Heading
           mb={2}
-          color="blue900"
           textAlign="center"
           fontSize={{ _: "24px", m: "30px" }}
           lineHeight={{ _: "28px", m: "32px" }}
@@ -35,7 +34,7 @@ function ReviewIntro({ data }) {
           letterSpacing="-0.02em"
         >
           Leave a testimonial for {specialist.name}
-        </Text>
+        </Heading>
         <Text
           fontSize="16px"
           textAlign="center"
