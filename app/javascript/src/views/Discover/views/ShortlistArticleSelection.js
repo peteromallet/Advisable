@@ -5,13 +5,14 @@ import { useCategoryArticles } from "../queries";
 import { useHistory, useLocation, useParams } from "react-router";
 import { ArrowSmRight, InformationCircle } from "@styled-icons/heroicons-solid";
 import ArticleSelection from "../components/ArticleSelection";
+import Loading from "src/components/Loading";
 
 export default function ShortlistArticleSelection() {
   const { slug } = useParams();
   const history = useHistory();
   const location = useLocation();
   const [selected, setSelected] = useState(location.state?.articles || []);
-  const { data, fetchMore } = useCategoryArticles({
+  const { data, loading, fetchMore } = useCategoryArticles({
     variables: { slug },
   });
   const articles =
@@ -66,6 +67,8 @@ export default function ShortlistArticleSelection() {
           done for companies similar to yours.
         </Text>
       </Box>
+
+      {loading && <Loading />}
       <Box display="grid" gridTemplateColumns="1fr 1fr" gridGap="28px">
         {articles.map((article) => (
           <ArticleSelection
