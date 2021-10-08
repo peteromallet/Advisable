@@ -8,12 +8,36 @@ import {
   Heading,
   useModal,
   DialogDisclosure,
+  Link,
 } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import PencilIllustration from "src/illustrations/zest/pencil";
 import { Plus } from "@styled-icons/heroicons-outline";
 import TestimonialLinkModal from "./TestimonialLinkModal";
 import EmptyStateActionCard from "./EmptyStateActionCard";
+
+function CardWrapper({ isOwner, modal, children }) {
+  const { id } = useParams();
+
+  if (isOwner) {
+    return (
+      <DialogDisclosure as={EmptyStateActionCard} {...modal}>
+        {children}
+      </DialogDisclosure>
+    );
+  } else {
+    return (
+      <EmptyStateActionCard
+        as={Link.External}
+        href={`/review/${id}`}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {children}
+      </EmptyStateActionCard>
+    );
+  }
+}
 
 export default function TestimonialsEmptyState() {
   const modal = useModal();
@@ -22,7 +46,7 @@ export default function TestimonialsEmptyState() {
   const isOwner = viewer?.id === id;
 
   return (
-    <DialogDisclosure as={EmptyStateActionCard} {...modal}>
+    <CardWrapper modal={modal} isOwner={isOwner}>
       <Box maxWidth="320px" marginX="auto" textAlign="center">
         <PencilIllustration width="220px" color={theme.colors.blue300} />
         {isOwner ? (
@@ -72,6 +96,6 @@ export default function TestimonialsEmptyState() {
         </Circle>
         <TestimonialLinkModal modal={modal} />
       </Box>
-    </DialogDisclosure>
+    </CardWrapper>
   );
 }
