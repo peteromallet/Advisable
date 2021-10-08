@@ -9,6 +9,7 @@ import CaseStudies from "../components/CaseStudies";
 import CaseStudiesEmptyState from "../components/CaseStudiesEmptyState";
 import Testimonials from "../components/Testimonials";
 import TestimonialsEmptyState from "../components/TestimonialsEmptyState";
+import GeneralEmptyState from "../components/GeneralEmptyState";
 
 export default function Profile({ data }) {
   useScrollToTop();
@@ -43,6 +44,9 @@ export default function Profile({ data }) {
             <Testimonials reviews={reviews} specialist={data.specialist} />
           )}
           {reviews.length === 0 && <TestimonialsEmptyState />}
+          {reviews.length === 0 && caseStudies.length === 0 && (
+            <GeneralEmptyState specialist={data.specialist} />
+          )}
         </Stack>
       </Box>
     </>
