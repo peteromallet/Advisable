@@ -35,6 +35,8 @@ module Mutations
           ::Skill.where(id: skill_ids).each do |skill|
             ::CaseStudy::Skill.create!(search: search, skill: skill)
           end
+
+          search.refresh_results!
           search
         end
 
