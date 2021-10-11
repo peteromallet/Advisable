@@ -6,16 +6,16 @@ import styled from "styled-components";
 import { matchPath, useParams } from "react-router";
 import { Box, Text, Link, Skeleton, theme } from "@advisable/donut";
 import CompanyLogo from "./CompanyLogo";
+import { variant } from "styled-system";
+import css from "@styled-system/css";
 
-const StyledCaseStudyCard = styled(Box)`
-  transition: transform 200ms, box-shadow 200ms;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 40px -16px ${rgba(theme.colors.blue800, 0.08)},
-      0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)};
-  }
-`;
+const StyledContentWrapper = styled.div(
+  css({
+    position: "relative",
+    display: "flex",
+    pointerEvents: "none",
+  }),
+);
 
 const StyledSkillTag = styled.div`
   line-height: 1;
@@ -39,6 +39,38 @@ const StyledBackgroundImg = styled.img`
   object-fit: cover;
   object-position: center;
 `;
+
+const StyledCaseStudyCard = styled.div(
+  variant({
+    prop: "type",
+    variants: {
+      profile: {
+        transition: "transform 200ms, box-shadow 200ms",
+        "&:hover": {
+          transform: "translateY(-2px)",
+          boxShadow: `
+          0 16px 40px -16px ${rgba(theme.colors.blue800, 0.08)},
+          0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)}
+        `,
+        },
+      },
+      article: {
+        [StyledContentWrapper]: {
+          pointerEvents: "auto",
+        },
+      },
+    },
+  }),
+  css({
+    padding: 8,
+    pb: 10,
+    width: "100%",
+    bg: "neutral100",
+    position: "relative",
+    borderRadius: "20px",
+    overflow: "hidden",
+  }),
+);
 
 const LoadingSkeleton = () => (
   <Box p={7} pb={12} bg="neutral50" borderRadius="20px">
@@ -88,25 +120,11 @@ export default function CaseStudyCard({ caseStudy }) {
         to={`/freelancers/${params.id}/case_studies/${caseStudy.id}`}
         notInline="true"
       >
-        <StyledCaseStudyCard
-          p={8}
-          pb={10}
-          width="100%"
-          bg="neutral100"
-          position="relative"
-          borderRadius="20px"
-          overflow="hidden"
-        >
+        <StyledCaseStudyCard type={isArticle ? "article" : "profile"}>
           {caseStudy.coverPhoto ? (
             <CaseStudyBackgroundImage url={caseStudy.coverPhoto} />
           ) : null}
-          <Box
-            position="relative"
-            display="flex"
-            css={`
-              pointer-events: none;
-            `}
-          >
+          <StyledContentWrapper>
             <Box
               minWidth="56px"
               height="64px"
@@ -145,7 +163,7 @@ export default function CaseStudyCard({ caseStudy }) {
                 {skills}
               </Box>
             </Box>
-          </Box>
+          </StyledContentWrapper>
         </StyledCaseStudyCard>
       </Box>
     </Suspense>
