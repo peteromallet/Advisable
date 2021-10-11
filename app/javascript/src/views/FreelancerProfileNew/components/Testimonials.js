@@ -12,9 +12,9 @@ export default function Testimonials({ reviews, specialist }) {
   const isOwner = viewer?.id === specialist.id;
   const modal = useModal();
 
-  const testimonials = reviews.map((r) => (
-    <Testimonial key={r.id} review={r} />
-  ));
+  const testimonials = reviews.map(
+    (r) => !!r.comment && <Testimonial key={r.id} review={r} />,
+  );
 
   return (
     <Box>
