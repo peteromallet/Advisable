@@ -32,6 +32,7 @@ class NewTestData
     purge_and_migrate!
 
     @yml = YAML.load_file("db/seeds/test_data.yml")
+    @unsplash_images = Dir.glob("#{IMAGES_PATH}*.jpg")
     download_images if missing_images_count.positive?
     @now = Time.zone.now
     @sales_person = SalesPerson.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, username: Faker::Internet.username)
@@ -68,10 +69,11 @@ class NewTestData
       File.open(file_path, "wb") { |f| f.write(res.body) }
       progressbar.increment
     end
+    @unsplash_images = Dir.glob("#{IMAGES_PATH}*.jpg")
   end
 
   def missing_images_count
-    AMOUNT_OF_RANDOM_IMAGES - Dir.glob("#{IMAGES_PATH}/*.jpg").count
+    AMOUNT_OF_RANDOM_IMAGES - Dir.glob("#{IMAGES_PATH}*.jpg").count
   end
 
   def populate_skills
@@ -115,6 +117,7 @@ class NewTestData
     populate_cs_articles
     populate_cs_article_stuff
     populate_cs_contents
+    attach_images_to_cs_contents
   end
 
   def populate_cs_companies
@@ -169,26 +172,44 @@ class NewTestData
 
   def populate_cs_contents
     contents = []
+    @content_position = 0
     @sections.each do |section, type|
       case type
       when "background"
-        contents << {type: "CaseStudy::HeadingContent", content: {size: "h1", text: Faker::Marketing.buzzwords.titleize}, position: 0, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
-        contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Hipster.paragraph(sentence_count: 12, random_sentences_to_add: 8)}, position: 1, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+        contents << content_hash("CaseStudy::HeadingContent", {size: "h1", text: Faker::Marketing.buzzwords.titleize}, section)
+        contents << content_hash("CaseStudy::ParagraphContent", {text: Faker::Hipster.paragraph(sentence_count: 12, random_sentences_to_add: 8)}, section)
+        contents << content_hash("CaseStudy::ImagesContent", nil, section) if rand(1..3).even? # 1/3 chance
       when "overview"
-        contents << {type: "CaseStudy::HeadingContent", content: {size: "h1", text: Faker::Marketing.buzzwords.titleize}, position: 2, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
-        (1..7).each do |i|
-          contents << {type: "CaseStudy::HeadingContent", content: {size: "h2", text: Faker::Marketing.buzzwords.titleize}, position: (i * 2) + 1, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
-          contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Hipster.paragraph(sentence_count: 12, random_sentences_to_add: 8)}, position: (i * 2) + 2, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+        contents << content_hash("CaseStudy::HeadingContent", {size: "h1", text: Faker::Marketing.buzzwords.titleize}, section)
+        7.times do
+          contents << content_hash("CaseStudy::HeadingContent", {size: "h2", text: Faker::Marketing.buzzwords.titleize}, section)
+          contents << content_hash("CaseStudy::ParagraphContent", {text: Faker::Hipster.paragraph(sentence_count: 12, random_sentences_to_add: 8)}, section)
+          contents << content_hash("CaseStudy::ImagesContent", nil, section) if rand(1..3).even? # 1/3 chance
         end
       when "outcome"
         results = []
         rand(2..5).times { results << Faker::Marketing.buzzwords }
-        contents << {type: "CaseStudy::HeadingContent", content: {size: "h1", text: Faker::Marketing.buzzwords.titleize}, position: 17, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
-        contents << {type: "CaseStudy::ResultsContent", content: {results: results}, position: 18, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
-        contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Hipster.paragraph(sentence_count: 12, random_sentences_to_add: 8)}, position: 19, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+        contents << content_hash("CaseStudy::HeadingContent", {size: "h1", text: Faker::Marketing.buzzwords.titleize}, section)
+        contents << content_hash("CaseStudy::ResultsContent", {results: results}, section)
+        contents << content_hash("CaseStudy::ParagraphContent", {text: Faker::Hipster.paragraph(sentence_count: 12, random_sentences_to_add: 8)}, section)
+        contents << content_hash("CaseStudy::ImagesContent", nil, section) if rand(1..3).even? # 1/3 chance
+        @content_position = 0
       end
     end
     CaseStudy::Content.upsert_all(contents)
+  end
+
+  def content_hash(type, content, section_id)
+    @content_position += 1
+    {type: type, content: content, position: @content_position, created_at: now, updated_at: now, section_id: section_id, uid: CaseStudy::Content.generate_uid}
+  end
+
+  def attach_images_to_cs_contents
+    CaseStudy::ImagesContent.find_each do |content|
+      @unsplash_images.sample(rand(1..5)).each do |image|
+        content.images.attach(io: File.open(image), filename: image.split("/").last)
+      end
+    end
   end
 
   memoize def advisable_data
