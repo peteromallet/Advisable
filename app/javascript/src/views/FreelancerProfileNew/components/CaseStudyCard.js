@@ -1,13 +1,14 @@
 import React, { Suspense } from "react";
 import { rgba } from "polished";
+import css from "@styled-system/css";
 import { useImage } from "react-image";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { variant } from "styled-system";
+import SuperEllipse from "react-superellipse";
 import { matchPath, useParams } from "react-router";
 import { Box, Text, Link, Skeleton, theme } from "@advisable/donut";
-import CompanyLogo from "./CompanyLogo";
-import { variant } from "styled-system";
-import css from "@styled-system/css";
+import LogoMark from "src/components/LogoMark";
 
 const StyledContentWrapper = styled.div(
   css({
@@ -17,20 +18,74 @@ const StyledContentWrapper = styled.div(
   }),
 );
 
-const StyledSkillTag = styled.div`
-  line-height: 1;
-  padding: 6px 12px 7px 12px;
-  display: inline-flex;
-  align-items: center;
-  font-weight: 500;
-  position: relative;
-  letter-spacing: -0.012em;
-  border-radius: 8px;
-  margin-right: ${theme.space[2]};
-  margin-bottom: ${theme.space[2]};
-  background: rgba(255, 255, 255, 0.72);
-  color: ${rgba(theme.colors.blue900, 0.72)};
-`;
+const StyledCompanyType = styled(Text)(
+  css({
+    textTransform: "uppercase",
+    fontSize: "12px",
+    fontWeight: ["medium", 550],
+    letterSpacing: "0.02rem",
+    lineHeight: "16px",
+    color: "neutral700",
+    mt: 0.5,
+    mb: 1,
+  }),
+);
+
+const StyledTitle = styled(Text)(
+  css({
+    fontSize: ["xl", "4xl"],
+    fontWeight: [550, 600],
+    letterSpacing: "-0.032rem",
+    color: "neutral900",
+    marginBottom: 6,
+  }),
+);
+
+const StyledSkillTag = styled.div(
+  css({
+    lineHeight: 1,
+    padding: ["4px 8px 5px 8px", "6px 12px 7px 12px"],
+    fontSize: ["2xs", "m"],
+    display: "inline-flex",
+    alignItems: "center",
+    fontWeight: 450,
+    position: "relative",
+    letterSpacing: "-0.012em",
+    borderRadius: "8px",
+    marginRight: [1, 2],
+    marginBottom: [1, 2],
+    background: "rgba(255, 255, 255, 0.72)",
+    color: rgba(theme.colors.blue900, 0.72),
+  }),
+);
+
+const StyledLogoSquircle = styled(SuperEllipse)(
+  css({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: ["42px", "56px"],
+    minWidth: ["42px", "56px"],
+    height: ["48px", "64px"],
+    bg: "white",
+    marginRight: [2, 4],
+    svg: {
+      width: "100%",
+    },
+  }),
+);
+
+const StyledFaviconWrapper = styled.div(
+  css({
+    borderRadius: "2px",
+    overflow: "hidden",
+    width: "24px",
+    height: "24px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }),
+);
 
 const StyledBackgroundImg = styled.img`
   pointer-events: none;
@@ -62,8 +117,8 @@ const StyledCaseStudyCard = styled.div(
     },
   }),
   css({
-    padding: 8,
-    pb: 10,
+    padding: [4, 8],
+    pb: [6, 10],
     width: "100%",
     bg: "neutral100",
     position: "relative",
@@ -125,40 +180,22 @@ export default function CaseStudyCard({ caseStudy }) {
             <CaseStudyBackgroundImage url={caseStudy.coverPhoto} />
           ) : null}
           <StyledContentWrapper>
-            <Box
-              minWidth="56px"
-              height="64px"
-              bg="white"
-              borderRadius="12px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              mr={4}
-            >
-              <CompanyLogo src={caseStudy.company?.favicon} />
-            </Box>
+            <StyledLogoSquircle r1={0.1} r2={0.362}>
+              <StyledFaviconWrapper>
+                {caseStudy.company?.favicon ? (
+                  <img
+                    src={caseStudy.company?.favicon}
+                    width="24px"
+                    height="24px"
+                  />
+                ) : (
+                  <LogoMark size={16} color="subtle" />
+                )}
+              </StyledFaviconWrapper>
+            </StyledLogoSquircle>
             <Box>
-              <Text
-                textTransform="uppercase"
-                fontSize="12px"
-                fontWeight="semibold"
-                letterSpacing="0.02rem"
-                lineHeight="16px"
-                color="neutral700"
-                mb={1.5}
-              >
-                {caseStudy.companyType}
-              </Text>
-              <Text
-                fontSize="4xl"
-                fontWeight={600}
-                letterSpacing="-0.032rem"
-                color="neutral900"
-                marginBottom={6}
-              >
-                {caseStudy.title}
-              </Text>
-
+              <StyledCompanyType>{caseStudy.companyType}</StyledCompanyType>
+              <StyledTitle>{caseStudy.title}</StyledTitle>
               <Box display="flex" flexDirection="row" flexWrap="wrap">
                 {skills}
               </Box>
