@@ -3,23 +3,9 @@ import { Formik, Form } from "formik";
 import { ArrowSmRight } from "@styled-icons/heroicons-solid";
 import { Redirect, useHistory, useLocation } from "react-router";
 import { Heading, Box, Text } from "@advisable/donut";
-import FormField from "src/components/FormField";
-import CheckboxInput from "src/components/CheckboxInput";
 import SubmitButton from "src/components/SubmitButton";
 import BackButton from "src/components/BackButton";
-
-const GOALS = [
-  "Generate Leads",
-  "Increase Brand Awareness",
-  "Improve Conversion",
-  "Rebranding",
-  "Increase Web Traffic",
-  "Improve Retention",
-  "Improve Profitability",
-  "Improve Processes",
-  "Analyse Existing Activities",
-  "Improve Efficiency",
-];
+import GoalsFields from "../components/GoalsFields";
 
 export default function ShortlistGoals() {
   const history = useHistory();
@@ -67,13 +53,7 @@ export default function ShortlistGoals() {
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         <Form>
           <Box mb={6}>
-            <FormField
-              as={CheckboxInput}
-              name="goals"
-              environment="body"
-              options={GOALS}
-              optionsPerRow={2}
-            />
+            <GoalsFields />
           </Box>
           <SubmitButton
             mt={4}

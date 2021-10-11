@@ -58,10 +58,11 @@ export default function ShortlistArticleSelection() {
       <BackButton to="/explore/new" marginBottom={4} />
       <Box maxWidth="800px" marginBottom={3}>
         <Heading
-          fontSize={{ _: "4xl", m: "6xl" }}
-          letterSpacing="-0.04em"
-          fontWeight={{ _: 650, m: 600 }}
-          lineHeight={{ _: "32px", m: "44px" }}
+          fontWeight={600}
+          fontSize={{ _: "5xl", m: "6xl" }}
+          letterSpacing={{ _: "-0.05em", m: "-0.04em" }}
+          marginBottom={3}
+          lineHeight={{ _: "36px", m: "40px" }}
         >
           Which of the following projects seem similar to what you’re looking
           for?
