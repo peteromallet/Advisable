@@ -8,8 +8,6 @@ import { GET_PROJECTS } from "./queries";
 import ProjectsList from "./ProjectsList";
 import dataLayer from "src/utilities/dataLayer";
 import useViewer from "src/hooks/useViewer";
-import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
-import ClientApplicationPrompt from "src/components/ClientApplicationPrompt";
 import useFeatureFlag from "src/hooks/useFeatureFlag";
 import ExplorerEmptyView from "./ExplorerEmptyView";
 
@@ -54,9 +52,6 @@ const Projects = () => {
 
   return (
     <Container py="xl">
-      <ClientApplicationPrompt />
-      <AccountConfirmationPrompt />
-
       {viewer.isAccepted ? (
         <>
           <Heading mb={6}>Your Projects</Heading>
