@@ -1,0 +1,17 @@
+#import "./articleFields.gql"
+
+query Shortlist($id: ID!) {
+  currentCompany {
+    id
+    name
+  }
+  caseStudySearch(id: $id) {
+    id
+    name
+    results(first: 5) {
+      nodes {
+        ...ArticleFields
+      }
+    }
+  }
+}

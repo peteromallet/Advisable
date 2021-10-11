@@ -18,16 +18,13 @@ module CaseStudy
     has_many :contents, through: :sections
     has_many :search_feedbacks, dependent: :destroy
     has_many :shares, class_name: "SharedArticle", dependent: :destroy
-    has_many :archived_articles, dependent: :destroy
-    has_many :saved_articles, dependent: :destroy
     has_one :review, class_name: "::Review", foreign_key: :case_study_article, inverse_of: :case_study_article, dependent: :destroy
     has_one :guild_post, class_name: "::Guild::Post", dependent: :nullify
     has_one_attached :cover_photo
 
     scope :published, -> { where.not(published_at: nil) }
-    scope :by_score, -> { order('score DESC NULLS LAST') }
+    scope :by_score, -> { order('score DESC NULLS LAST').order(id: :desc) }
     scope :available_specialists, -> { joins(:specialist).merge(Specialist.available).joins(specialist: :account).merge(Account.active) }
-    scope :exclude_archived_for, ->(user) { where.not(id: user.archived_articles.select(:article_id)) }
   end
 end
 

@@ -12,7 +12,7 @@ const ClientNavigation = ({ closeNav, isMobile }) => {
     <StyledNav>
       {isCaseStudiesEnabled && (
         <NavigationLink onClick={closeNav} to="/explore">
-          Explore
+          Discover
         </NavigationLink>
       )}
       <NavigationLink onClick={closeNav} to="/projects">

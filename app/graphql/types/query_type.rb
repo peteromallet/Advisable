@@ -322,28 +322,9 @@ module Types
       ::CaseStudy::Article.find_by!(uid: id)
     end
 
-    field :saved_articles, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20
-    def saved_articles
-      requires_current_user!
-      ::CaseStudy::Article.
-        active.
-        published.
-        where(id: current_user.saved_articles.select(:article_id)).
-        exclude_archived_for(current_user)
-    end
-
-    field :archived_articles, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20
-    def archived_articles
-      requires_current_user!
-      ::CaseStudy::Article.
-        active.
-        published.
-        where(id: current_user.archived_articles.select(:article_id))
-    end
-
     field :shared_articles, [Types::CaseStudy::SharedArticle], null: false
     def shared_articles
-      current_user.received_articles.where.not(article_id: current_user.archived_articles.select(:article_id))
+      current_user.received_articles
     end
 
     field :case_study_search, Types::CaseStudy::Search, null: true do
@@ -357,7 +338,6 @@ module Types
     field :case_study_searches, [Types::CaseStudy::Search], null: true, max_page_size: 20
     def case_study_searches
       requires_client!
-      current_user.create_company_recomendation_search
       current_user.searches
     end
 

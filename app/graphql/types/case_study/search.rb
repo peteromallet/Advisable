@@ -14,10 +14,16 @@ module Types
 
       field :id, ID, null: false, method: :uid
       field :name, String, null: false
-      field :company_recomendation, Boolean, null: true
       field :skills, [Skill], null: true
       field :goals, [String], null: true
-      field :results, Article.connection_type, null: true
+
+      field :results, Article.connection_type, null: true do
+        argument :refresh_results, Boolean, required: false
+      end
+      def results(refresh_results: false)
+        object.refresh_results! if refresh_results
+        object.results
+      end
 
       field :primary_skill, Skill, null: true
       def primary_skill
@@ -32,6 +38,11 @@ module Types
       field :preferences, [String], null: false
       def preferences
         object.preferences || []
+      end
+
+      field :archived, Article.connection_type, null: false
+      def archived
+        CaseStudy::Article.where(id: object.archived)
       end
     end
   end

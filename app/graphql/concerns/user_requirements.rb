@@ -5,13 +5,13 @@ module UserRequirements
     context[:current_user]
   end
 
+  def oauth_viewer
+    context[:oauth_viewer]
+  end
+
   # Can return the user's account or admin's that's logged in as that user
   def current_account
     context[:current_account]
-  end
-
-  def oauth_viewer
-    context[:oauth_viewer]
   end
 
   # Can return the id of the user's account or admin's that's logged in as that user

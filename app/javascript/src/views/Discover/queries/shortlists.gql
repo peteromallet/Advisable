@@ -1,0 +1,30 @@
+query Shortlists {
+  currentCompany {
+    kind
+    industry {
+      id
+      name
+    }
+  }
+  caseStudySearches {
+    id
+    name
+    skills {
+      id
+      skill {
+        id
+        name
+      }
+    }
+    results(first: 5) {
+      nodes {
+        id
+        specialist {
+          id
+          name
+          avatar
+        }
+      }
+    }
+  }
+}

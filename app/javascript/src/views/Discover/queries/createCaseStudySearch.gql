@@ -1,0 +1,25 @@
+mutation createCaseStudySearch($input: CreateCaseStudySearchInput!) {
+  createCaseStudySearch(input: $input) {
+    search {
+      id
+      name
+      goals
+      preferences
+      isFinalized
+      skills {
+        id
+        skill {
+          id
+          name
+          value: name
+          label: name
+        }
+      }
+      results(first: 5) {
+        nodes {
+          id
+        }
+      }
+    }
+  }
+}

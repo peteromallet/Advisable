@@ -41,8 +41,6 @@ class User < ApplicationRecord
   has_many :searches, class_name: "CaseStudy::Search", dependent: :destroy
   has_many :sent_articles, class_name: "CaseStudy::SharedArticle", foreign_key: :shared_by_id, inverse_of: :shared_by, dependent: :nullify
   has_many :received_articles, class_name: "CaseStudy::SharedArticle", foreign_key: :shared_with_id, inverse_of: :shared_with, dependent: :destroy
-  has_many :archived_articles, class_name: "CaseStudy::ArchivedArticle", dependent: :destroy
-  has_many :saved_articles, class_name: "CaseStudy::SavedArticle", dependent: :destroy
 
   belongs_to :company, optional: true
   belongs_to :country, optional: true
@@ -92,23 +90,9 @@ class User < ApplicationRecord
     responsible = account_id if responsible.nil?
     Logidze.with_responsible(responsible) do
       user.save!
-      user.create_company_recomendation_search
     end
     user.sync_to_airtable
     user
-  end
-
-  def create_company_recomendation_search
-    return if searches.exists?(company_recomendation: true)
-
-    ::CaseStudy::Search.create!(
-      user: self,
-      business_type: company.business_type,
-      goals: company.goals,
-      name: "Recommendations for #{company.name}",
-      finalized_at: Time.zone.now,
-      company_recomendation: true
-    )
   end
 
   def disabled?
