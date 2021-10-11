@@ -4,8 +4,7 @@ import PassportAvatar from "src/components/PassportAvatar";
 import TestimonialQuoteIcon from "./TestimonialQuoteIcon";
 
 export default function Testimonial({ review }) {
-  const { name, role, companyName } = review;
-  const title = name ? `${role} at ${companyName}` : companyName;
+  const { name, companyName } = review;
 
   return (
     <Box bg="#F3F1F0" p={4} borderRadius="20px" position="relative">
@@ -30,7 +29,7 @@ export default function Testimonial({ review }) {
             {review.name}
           </Text>
           <Text fontSize="xs" color="neutral600" lineHeight="2xs">
-            {title}
+            {companyName}
           </Text>
         </Box>
       </Box>
