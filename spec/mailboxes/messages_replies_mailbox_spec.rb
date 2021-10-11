@@ -15,11 +15,7 @@ RSpec.describe MessagesRepliesMailbox do
     before { conversation.participants.create!(account: account) }
 
     it "creates a message in conversation" do
-      mail = Mail.new(
-        from: account.email,
-        to: destination,
-        body: "This is a test message"
-      )
+      mail = Mail.new(from: account.email, to: destination, body: "This is a test message")
       mail_processed = process(mail)
 
       expect(mail_processed).to have_been_delivered
@@ -29,15 +25,39 @@ RSpec.describe MessagesRepliesMailbox do
 
   context "when account is not a participant" do
     it "creates a message in conversation" do
-      mail = Mail.new(
-        from: account.email,
-        to: destination,
-        body: "This is a test message"
-      )
+      mail = Mail.new(from: account.email, to: destination, body: "This is a test message")
       mail_processed = process(mail)
 
       expect(mail_processed).to have_been_delivered
       expect(conversation.messages.pluck(:content)).not_to include("This is a test message")
+    end
+  end
+
+  context "when account with + in the email is a participant" do
+    let!(:account_with_plus) { create(:account, email: account.email.sub("@", "+guild@")) }
+
+    before { conversation.participants.create!(account: account_with_plus) }
+
+    it "creates a message in conversation" do
+      mail = Mail.new(from: account.email, to: destination, body: "This is a test message")
+      mail_processed = process(mail)
+
+      expect(mail_processed).to have_been_delivered
+      expect(conversation.messages.pluck(:content)).to include("This is a test message")
+    end
+  end
+
+  context "when account with + in the email is the sender" do
+    let!(:account_with_plus) { create(:account, email: account.email.sub("@", "+guild@")) }
+
+    before { conversation.participants.create!(account: account) }
+
+    it "creates a message in conversation" do
+      mail = Mail.new(from: account_with_plus.email, to: destination, body: "This is a test message")
+      mail_processed = process(mail)
+
+      expect(mail_processed).to have_been_delivered
+      expect(conversation.messages.pluck(:content)).to include("This is a test message")
     end
   end
 end
