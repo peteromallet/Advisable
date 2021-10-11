@@ -15,6 +15,8 @@
 
 # Ignore uploaded files in development
 /storage/*
+/db/seeds/assets/images/*
+!/db/seeds/assets/images/.keep
 
 /node_modules
 /yarn-error.log
