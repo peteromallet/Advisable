@@ -19,8 +19,8 @@ import EditInfo from "../EditInfo";
 import MessageButton from "../MessageButton";
 import WorkTogetherButton from "../WorkTogetherButton";
 import SocialProfilesIcons from "../SocialProfilesIcons";
-
-export const TRUNCATE_LIMIT = 145;
+// Constant values
+import { TRUNCATE_LIMIT } from "../../values";
 
 export default function Sidebar({ data, ...props }) {
   const isArticle = !!matchPath(location.pathname, {
