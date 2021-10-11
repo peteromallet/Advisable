@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import css from "@styled-system/css";
 import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import useViewer from "src/hooks/useViewer";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, Link } from "@advisable/donut";
 import ProfilePicture from "../ProfilePicture";
 import CoverImage from "../CoverImage";
 import {
@@ -55,12 +56,23 @@ export default function Sidebar({ data, ...props }) {
         </StyledAvatarWrapper>
         <StyledNameWrapper>
           <Text
+            as={isArticle && Link}
+            to={`/freelancers/${specialist.id}`}
             fontSize={{ _: "2xl", m: "5xl" }}
             fontWeight={600}
             color="neutral900"
             lineHeight={{ _: "24px", m: "32px" }}
             letterSpacing="-0.028em"
             marginBottom={{ xs: 0.5, m: 1.5 }}
+            css={
+              isArticle &&
+              css({
+                "&:hover": {
+                  color: "neutral900",
+                  textDecoration: "underline",
+                },
+              })
+            }
           >
             {specialist.name}
           </Text>
