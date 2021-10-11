@@ -112,7 +112,7 @@ export default function Sidebar({ data, ...props }) {
             flexDirection={["column", "row", "row", "column"]}
             alignItems={{ _: "center", l: "flex-start" }}
           >
-            <Box mb={[4, 0, 0, 10]}>
+            <Box mb={[4, 0, 0, 10]} width="100%">
               {isOwner ? (
                 <EditInfo specialist={specialist}>Edit Info</EditInfo>
               ) : null}
