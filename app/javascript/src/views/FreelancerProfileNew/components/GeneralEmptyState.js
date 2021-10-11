@@ -4,7 +4,14 @@ import EmptyBoxIllustration from "src/illustrations/zest/emptybox";
 
 export default function GeneralEmptyState({ specialist }) {
   return (
-    <Box p={8}>
+    <Box
+      p={8}
+      bg="white"
+      border="2px solid"
+      borderColor="neutral100"
+      py={20}
+      borderRadius="20px"
+    >
       <Box
         display="flex"
         alignItems="center"
@@ -13,7 +20,7 @@ export default function GeneralEmptyState({ specialist }) {
         marginX="auto"
         textAlign="center"
       >
-        <EmptyBoxIllustration width="112px" color={theme.colors.neutral300} />
+        <EmptyBoxIllustration width="200px" color={theme.colors.blue300} />
         <Text
           fontWeight={500}
           marginBottom={0.5}
@@ -29,8 +36,8 @@ export default function GeneralEmptyState({ specialist }) {
           lineHeight="20px"
           color="neutral700"
         >
-          Come back later when {specialist.firstName} update their profile with
-          some content.
+          It looks like {specialist.firstName} hasn&apos;t any projects to their
+          profile yet.
         </Text>
       </Box>
     </Box>
