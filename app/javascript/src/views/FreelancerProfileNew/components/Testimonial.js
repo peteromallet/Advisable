@@ -6,7 +6,7 @@ import TestimonialQuoteIcon from "./TestimonialQuoteIcon";
 export default function Testimonial({ review }) {
   return (
     <Box bg="#F3F1F0" p={5} borderRadius="20px" position="relative">
-      <Box position="absolute" right="16px" top="16px">
+      <Box position="absolute" right="20px" top="20px">
         <TestimonialQuoteIcon />
       </Box>
       <Box display="flex" alignItems="center" marginBottom={3}>
