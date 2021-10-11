@@ -56,8 +56,8 @@ class NewTestData
   end
 
   def populate_industries
-    industries_data = yml[:industries].map do |skill|
-      skill.merge(created_at: now, updated_at: now)
+    industries_data = yml[:industries].map do |industry|
+      industry.merge(created_at: now, updated_at: now)
     end
     @industries = Industry.insert_all(industries_data).map { |i| i["id"] }
   end
