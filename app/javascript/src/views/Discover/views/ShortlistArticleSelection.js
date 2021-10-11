@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Text, Heading, Button } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
 import { useCategoryArticles } from "../queries";
-import { useHistory, useLocation, useParams } from "react-router";
+import { Redirect, useHistory, useLocation, useParams } from "react-router";
 import { ArrowSmRight, InformationCircle } from "@styled-icons/heroicons-solid";
 import ArticleSelection from "../components/ArticleSelection";
 import Loading from "src/components/Loading";
@@ -15,6 +15,11 @@ export default function ShortlistArticleSelection() {
   const { data, loading, fetchMore } = useCategoryArticles({
     variables: { slug },
   });
+
+  if (!location.state?.category) {
+    return <Redirect to="/explore/new" />;
+  }
+
   const articles =
     data?.skillCategory?.articles?.edges?.map((edge) => edge.node) || [];
 
@@ -38,12 +43,8 @@ export default function ShortlistArticleSelection() {
   };
 
   const handleContinue = () => {
-    const selectedArticles = data.skillCategory.articles.edges.filter((e) => {
-      return selected.includes(e.node.id);
-    });
-
     const state = {
-      name: selectedArticles[0].node.skills?.[0]?.skill?.name || "My shortlist",
+      category: location.state.category,
       skillCategory: slug,
       articles: selected,
     };

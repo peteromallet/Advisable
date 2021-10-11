@@ -4,26 +4,14 @@ import { ArrowSmRight } from "@styled-icons/heroicons-solid";
 import { Redirect, useHistory, useLocation } from "react-router";
 import { Heading, Box, Text } from "@advisable/donut";
 import FormField from "src/components/FormField";
-import CheckboxInput from "src/components/CheckboxInput";
 import SubmitButton from "src/components/SubmitButton";
 import BackButton from "src/components/BackButton";
+import { useCreateCaseStudySearch } from "../queries";
 
-const GOALS = [
-  "Generate Leads",
-  "Increase Brand Awareness",
-  "Improve Conversion",
-  "Rebranding",
-  "Increase Web Traffic",
-  "Improve Retention",
-  "Improve Profitability",
-  "Improve Processes",
-  "Analyse Existing Activities",
-  "Improve Efficiency",
-];
-
-export default function ShortlistGoals() {
+export default function ShortlistName() {
   const history = useHistory();
   const location = useLocation();
+  const [createShortlist] = useCreateCaseStudySearch();
   const articles = location?.state?.articles || [];
   const skillCategory = location?.state?.skillCategory;
 
@@ -32,13 +20,22 @@ export default function ShortlistGoals() {
   }
 
   const handleSubmit = async (values) => {
-    const state = { ...location.state, goals: values.goals };
-    history.replace({ ...location, state });
-    history.push("/explore/new/name", state);
+    const response = await createShortlist({
+      variables: {
+        input: {
+          name: values.name,
+          goals: location.state.goals,
+          articles: location.state.articles,
+        },
+      },
+    });
+
+    const search = response?.data?.createCaseStudySearch?.search;
+    history.push(`/explore/${search.id}`);
   };
 
   const initialValues = {
-    goals: [],
+    name: location.state.category.name,
   };
 
   return (
@@ -47,7 +44,7 @@ export default function ShortlistGoals() {
         marginBottom={4}
         to={{
           ...location,
-          pathname: `/explore/new/${skillCategory}`,
+          pathname: `/explore/new/goals`,
         }}
       />
       <Heading
@@ -56,24 +53,17 @@ export default function ShortlistGoals() {
         marginBottom={3}
         lineHeight="40px"
       >
-        Do you have any specific goals?
+        What would you like to call this shortlist?
       </Heading>
       <Box maxWidth="680px" marginBottom={8}>
         <Text fontSize="lg" lineHeight="24px">
-          We’ll recommend you freelancers that have helped similar companies
-          achieve the goals you select.
+          Nearly there! Let&apos;s give your shortlist a name.
         </Text>
       </Box>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         <Form>
-          <Box mb={6}>
-            <FormField
-              as={CheckboxInput}
-              name="goals"
-              environment="body"
-              options={GOALS}
-              optionsPerRow={2}
-            />
+          <Box mb={6} maxWidth="400px">
+            <FormField name="name" autoFocus />
           </Box>
           <SubmitButton
             mt={4}
@@ -81,7 +71,7 @@ export default function ShortlistGoals() {
             size="l"
             suffix={<ArrowSmRight />}
           >
-            Continue
+            Create shortlist
           </SubmitButton>
         </Form>
       </Formik>
