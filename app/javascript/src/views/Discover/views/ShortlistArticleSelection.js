@@ -3,7 +3,7 @@ import { Box, Text, Heading, Button } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
 import { useCategoryArticles } from "../queries";
 import { Redirect, useHistory, useLocation, useParams } from "react-router";
-import { ArrowSmRight, InformationCircle } from "@styled-icons/heroicons-solid";
+import { ArrowSmRight } from "@styled-icons/heroicons-solid";
 import ArticleSelection from "../components/ArticleSelection";
 import Loading from "src/components/Loading";
 
@@ -57,7 +57,12 @@ export default function ShortlistArticleSelection() {
     <>
       <BackButton to="/explore/new" marginBottom={4} />
       <Box maxWidth="800px" marginBottom={3}>
-        <Heading fontSize="6xl" letterSpacing="-0.04em" lineHeight="40px">
+        <Heading
+          fontSize={{ _: "4xl", m: "6xl" }}
+          letterSpacing="-0.04em"
+          fontWeight={{ _: 650, m: 600 }}
+          lineHeight={{ _: "32px", m: "44px" }}
+        >
           Which of the following projects seem similar to what you’re looking
           for?
         </Heading>
@@ -115,37 +120,28 @@ export default function ShortlistArticleSelection() {
           width="100%"
           marginX="auto"
           maxWidth="920px"
-          height="100px"
-          display="flex"
-          paddingX={4}
+          display={{ _: "block", s: "flex" }}
+          padding={4}
           alignItems="center"
           justifyContent="space-between"
         >
-          <Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              color="neutral900"
-              marginBottom={2}
+          <Box paddingY={2} marginRight={3}>
+            <Text
+              fontWeight={550}
+              fontSize="17px"
+              letterSpacing="-0.012em"
+              marginBottom={1}
             >
-              <InformationCircle size={20} />
-              <Text
-                marginLeft={1}
-                fontWeight={550}
-                fontSize="17px"
-                letterSpacing="-0.012em"
-              >
-                Please select at least 3 case studies to continue
-              </Text>
-            </Box>
-            <Text color="neutral800">
+              Please select at least 3 case studies to continue
+            </Text>
+            <Text color="neutral800" display={{ _: "none", s: "block" }}>
               Don&apos;t worry, we&apos;ll save the projects you have selected
               for later.
             </Text>
           </Box>
           <Button
-            marginLeft={3}
             size="l"
+            width={{ _: "100%", s: "auto" }}
             variant="gradient"
             suffix={<ArrowSmRight />}
             disabled={selected.length < 3}

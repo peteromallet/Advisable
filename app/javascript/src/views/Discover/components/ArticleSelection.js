@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import css from "@styled-system/css";
 import SuperEllipse from "react-superellipse";
-import { Box, Circle, Text, theme } from "@advisable/donut";
+import { Box, Circle, Text } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
 import { PlusSm } from "@styled-icons/heroicons-solid";
 import { useImage } from "react-image";
@@ -24,7 +24,6 @@ export default function ArticleSelection({ article, onSelect, isSelected }) {
       onClick={onSelect}
       css={css({
         cursor: "pointer",
-        outline: isSelected && `1px solid ${theme.colors.blue600}`,
         transition: "transform 200ms, box-shadow 200ms",
         "&:hover": {
           transform: "translateY(-1px)",

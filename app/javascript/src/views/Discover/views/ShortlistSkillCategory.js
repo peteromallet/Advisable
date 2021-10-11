@@ -14,10 +14,11 @@ export default function ShortlistSkillCategory() {
     <>
       <BackButton to="/explore" marginBottom={4} />
       <Heading
-        fontSize="6xl"
-        letterSpacing="-0.04em"
+        fontWeight={650}
+        fontSize={{ _: "5xl", m: "6xl" }}
+        letterSpacing={{ _: "-0.05em", m: "-0.04em" }}
         marginBottom={3}
-        lineHeight="40px"
+        lineHeight={{ _: "36px", m: "40px" }}
       >
         What are you looking for?
       </Heading>
