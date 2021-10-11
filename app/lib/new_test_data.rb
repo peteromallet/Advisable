@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "ruby-progressbar"
+require "csv"
 
 # rubocop:disable Rails/SkipsModelValidations
 class NewTestData
@@ -13,8 +14,6 @@ class NewTestData
   attr_reader :yml, :now, :sales_person, :country, :company
 
   def self.seed_from_airtable!
-    purge_and_migrate!
-
     yml = YAML.load_file("db/seeds/test_data.yml")
 
     Airtable::Skill.sync(filter: nil)
@@ -28,12 +27,25 @@ class NewTestData
     File.write("db/seeds/test_data.yml", yml.to_yaml)
   end
 
+  def self.seed_skill_categories_from_csv!
+    csv = CSV.read("db/seeds/skill_categories.csv", headers: true)
+
+    categories = {}
+    csv.each do |row|
+      categories[row["Skill Group"]] ||= []
+      categories[row["Skill Group"]] << row["Skill"]
+    end
+
+    yml = YAML.load_file("db/seeds/test_data.yml")
+    yml[:skill_categories] = categories
+    File.write("db/seeds/test_data.yml", yml.to_yaml)
+  end
+
   def initialize
     purge_and_migrate!
 
     @yml = YAML.load_file("db/seeds/test_data.yml")
     @unsplash_images = Dir.glob("#{IMAGES_PATH}*.jpg")
-    download_images if missing_images_count.positive?
     @now = Time.zone.now
     @sales_person = SalesPerson.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, username: Faker::Internet.username)
     @country = Country.find_or_create_by(name: "Ireland")
@@ -41,6 +53,7 @@ class NewTestData
   end
 
   def seed!
+    download_images if missing_images_count.positive?
     populate_skills
     populate_industries
     populate_advisable
