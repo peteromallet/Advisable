@@ -72,7 +72,6 @@ export const GET_APPLICATION = gql`
         reviews {
           id
           name
-          role
           avatar
           companyName
           comment

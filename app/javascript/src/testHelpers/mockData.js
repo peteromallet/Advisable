@@ -402,6 +402,7 @@ export const review = (fields = {}) => {
       name: "Jane Doe",
       firstName: "Jane",
       role: "CEO",
+      relationship: "Old friends",
       avatar: null,
       companyName: "Acme Inc",
       ratings: {

@@ -15,7 +15,6 @@ module Types
       object.project.try(:contact_job_title)
     end
 
-    field :company_name, String, null: true
     def company_name
       previous_project_company_name(object.project)
     end

@@ -143,16 +143,15 @@ const StyledReview = styled.div`
 `;
 
 const Review = ({ review, size }) => {
-  const { role, name, companyName } = review;
-  const title = name ? `${role} at ${companyName}` : companyName;
+  const { name, companyName } = review;
   return (
     <StyledReview size={size}>
       <Box gridArea="avatar">
         <Avatar name={review.name} url={review.avatar} />
       </Box>
       <Box gridArea="name" alignSelf="center">
-        <StyledName>{name || role}</StyledName>
-        <StyledTitle>{title}</StyledTitle>
+        <StyledName>{name}</StyledName>
+        <StyledTitle>{companyName}</StyledTitle>
       </Box>
       <StyledCommentWrapper>
         <StyledComment>
