@@ -19,7 +19,7 @@ export default function Testimonials({ reviews, specialist }) {
   return (
     <Box>
       <SectionTitle>Testimonials</SectionTitle>
-      <Stack spacing={6} mt={3}>
+      <Stack spacing={5} mt={3}>
         {testimonials}
       </Stack>
       {isOwner ? (

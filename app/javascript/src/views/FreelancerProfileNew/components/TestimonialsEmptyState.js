@@ -53,9 +53,11 @@ export default function TestimonialsEmptyState(props) {
         {isOwner ? (
           <>
             <Text
-              fontWeight={500}
-              marginBottom={0.5}
+              fontWeight={550}
+              marginBottom={1}
               lineHeight="20px"
+              letterSpacing="-0.02em"
+              fontSize="l"
               color="blue500"
             >
               Request testimonials from a client!

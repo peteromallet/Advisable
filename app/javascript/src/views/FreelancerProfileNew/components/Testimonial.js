@@ -4,35 +4,35 @@ import PassportAvatar from "src/components/PassportAvatar";
 import TestimonialQuoteIcon from "./TestimonialQuoteIcon";
 
 export default function Testimonial({ review }) {
-  const { name, companyName } = review;
-
   return (
-    <Box bg="#F3F1F0" p={4} borderRadius="20px" position="relative">
+    <Box bg="#F3F1F0" p={5} borderRadius="20px" position="relative">
       <Box position="absolute" right="16px" top="16px">
         <TestimonialQuoteIcon />
       </Box>
-      <Box display="flex" alignItems="center" mb={1.5}>
+      <Box display="flex" alignItems="center" marginBottom={3}>
         <PassportAvatar
-          size="md"
+          size="sm"
           src={review.avatar}
           name={review.name}
-          mr={2}
+          mr={3}
         />
         <Box>
           <Text
+            mb={0.5}
             fontSize="l"
-            fontWeight={600}
-            color="neutral700"
-            mb={1.5}
             lineHeight="l"
+            fontWeight={550}
+            color="neutral900"
+            letterSpacing="-0.02em"
           >
             {review.name}
           </Text>
-          <Text fontSize="xs" color="neutral600" lineHeight="2xs">
-            {companyName}
+          <Text fontSize="sm" color="neutral800" lineHeight="2xs">
+            {review.companyName}
           </Text>
         </Box>
       </Box>
+
       <Text
         fontStyle="italic"
         color="neutral800"
