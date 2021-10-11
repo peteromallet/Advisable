@@ -55,6 +55,7 @@ class NewTestData
   def seed!
     download_images if missing_images_count.positive?
     populate_skills
+    populate_skill_categories
     populate_industries
     populate_advisable
     populate_case_studies
@@ -93,14 +94,29 @@ class NewTestData
     skills_data = yml[:skills].map do |skill|
       skill.merge(created_at: now, updated_at: now)
     end
-    @skills = Skill.insert_all(skills_data).map { |s| s["id"] }
+    @skills = Skill.insert_all(skills_data, returning: %w[id name]).pluck("name", "id").to_h
+  end
+
+  def populate_skill_categories
+    categories_data = yml[:skill_categories].map do |category, _skills|
+      {name: category, slug: category.parameterize, created_at: now, updated_at: now}
+    end
+    categories = SkillCategory.upsert_all(categories_data, returning: %w[id name], unique_by: :slug).pluck("name", "id").to_h
+
+    skill_category_skills_data = yml[:skill_categories].flat_map do |category, skills|
+      skills.map do |skill|
+        {skill_id: @skills[skill], skill_category_id: categories[category], created_at: now, updated_at: now}
+      end
+    end
+
+    SkillCategorySkill.insert_all(skill_category_skills_data)
   end
 
   def populate_industries
     industries_data = yml[:industries].map do |industry|
       industry.merge(created_at: now, updated_at: now)
     end
-    @industries = Industry.insert_all(industries_data).map { |i| i["id"] }
+    @industries = Industry.insert_all(industries_data).pluck("id")
   end
 
   def populate_advisable
@@ -172,14 +188,15 @@ class NewTestData
 
   def populate_cs_article_stuff
     skills = industries = sections = []
+    skill_ids = @skills.values
     main_sections = [{type: "background", position: 0}, {type: "overview", position: 1}, {type: "outcome", position: 2}]
     @articles.each do |article|
-      skills += @skills.sample(rand(3..5)).map.with_index { |s, i| {skill_id: s, uid: CaseStudy::Skill.generate_uid, created_at: now, updated_at: now, primary: i.zero?, article_id: article} }
+      skills += skill_ids.sample(rand(3..5)).map.with_index { |s, i| {skill_id: s, uid: CaseStudy::Skill.generate_uid, created_at: now, updated_at: now, primary: i.zero?, article_id: article} }
       industries += @industries.sample(rand(3..5)).map { |i| {industry_id: i, uid: CaseStudy::Industry.generate_uid, created_at: now, updated_at: now, article_id: article} }
       sections += main_sections.map { |s| s.merge(uid: CaseStudy::Section.generate_uid, created_at: now, updated_at: now, article_id: article) }
     end
-    @skills = CaseStudy::Skill.upsert_all(skills).pluck("id")
-    @industries = CaseStudy::Industry.upsert_all(industries).pluck("id")
+    CaseStudy::Skill.upsert_all(skills)
+    CaseStudy::Industry.upsert_all(industries)
     @sections = CaseStudy::Section.upsert_all(sections, returning: %w[id type]).pluck("id", "type")
   end
 
