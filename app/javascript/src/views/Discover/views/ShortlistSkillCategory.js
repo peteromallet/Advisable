@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Text, Heading } from "@advisable/donut";
+import css from "@styled-system/css";
+import { Box, Text, Heading, theme } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
 import { useSkillCategories } from "../queries";
 import Loading from "src/components/Loading";
@@ -14,7 +15,7 @@ export default function ShortlistSkillCategory() {
     <>
       <BackButton to="/explore" marginBottom={4} />
       <Heading
-        fontWeight={650}
+        fontWeight={600}
         fontSize={{ _: "5xl", m: "6xl" }}
         letterSpacing={{ _: "-0.05em", m: "-0.04em" }}
         marginBottom={3}
@@ -42,7 +43,19 @@ export default function ShortlistSkillCategory() {
               state: { category: c },
             }}
           >
-            <Box padding={5} borderRadius="12px" bg="neutral100">
+            <Box
+              padding={5}
+              borderRadius="12px"
+              css={css({
+                cursor: "pointer",
+                transition: "transform 200ms, box-shadow 200ms",
+                boxShadow: `0 0 0 1px ${theme.colors.neutral200}`,
+                "&:hover": {
+                  transform: "translateY(-1px)",
+                  boxShadow: `0 0 0 2px ${theme.colors.neutral200}, 0 4px 28px -4px rgba(0, 0, 0, 0.16)`,
+                },
+              })}
+            >
               <Text
                 fontSize="xl"
                 fontWeight={550}

@@ -1,10 +1,10 @@
 import React from "react";
-import pluralize from "pluralize";
 import css from "@styled-system/css";
 import styled from "styled-components";
 import { Box, Text } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
 import { Link } from "react-router-dom";
+import { shortlistDescription } from "../utilities";
 
 const StyledShortlistCard = styled.div(
   css({
@@ -20,23 +20,6 @@ const StyledShortlistCard = styled.div(
     },
   }),
 );
-
-function shortlistDescription(shortlist, company) {
-  const skill = shortlist.skills?.[0]?.skill?.name?.toLowerCase();
-  let output = `Recommendations of ${skill} specialists relevant for`;
-  if (company.industry || company.kind) {
-    const industry = company.industry?.name?.toLowerCase();
-    const companyType = company.kind
-      ? pluralize(company.kind?.toLowerCase())
-      : "companies";
-    if (industry) output += ` ${industry}`;
-    if (companyType) output += ` ${companyType}`;
-  } else {
-    output += " your company.";
-  }
-
-  return output;
-}
 
 export default function ShortlistCard({ shortlist, company }) {
   const placeholders = [...Array(5 - shortlist.results.nodes.length).keys()];

@@ -26,7 +26,7 @@ export default function ArticleSelection({ article, onSelect, isSelected }) {
         cursor: "pointer",
         transition: "transform 200ms, box-shadow 200ms",
         boxShadow: isSelected
-          ? `0 0 0 2px ${theme.colors.blue500}, 0 12px 52px -20px rgba(0, 0, 0, 0.24)`
+          ? `0 0 0 2px ${theme.colors.blue500}, 0 12px 52px -20px rgba(0, 0, 0, 0.24), 0 2px 24px ${theme.colors.blue100}`
           : `0 0 0 1px ${theme.colors.neutral200}`,
         transform: isSelected ? "translateY(-3px)" : null,
         "&:hover": {
