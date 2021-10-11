@@ -21,7 +21,7 @@ export default function TestimonialsEmptyState() {
         <PencilIllustration width="220px" color={theme.colors.blue300} />
         <Text
           fontWeight={550}
-          marginBottom={1}
+          marginBottom={0.5}
           lineHeight="20px"
           letterSpacing="-0.02em"
           fontSize="l"

@@ -18,9 +18,11 @@ export default function CaseStudiesEmptyState({ specialist }) {
           color={theme.colors.blue300}
         />
         <Text
-          fontWeight={500}
+          fontWeight={550}
           marginBottom={0.5}
           lineHeight="20px"
+          letterSpacing="-0.02em"
+          fontSize="l"
           color="blue500"
         >
           Add your first case study!
