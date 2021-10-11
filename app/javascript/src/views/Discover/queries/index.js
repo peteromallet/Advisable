@@ -10,11 +10,7 @@ import ARTICLE from "./article.gql";
 import SHORTLIST from "./shortlist.gql";
 import SHORTLISTS from "./shortlists.gql";
 import ARCHIVE_ARTICLE from "./archiveArticle.gql";
-import FINALIZE_SEARCH from "./finalizeCaseStudySearch.gql";
-import UPDATE_SEARCH from "./updateCaseStudySearch.gql";
-import SEARCH_FORM_DETAILS from "./caseStudySearchFormDetails.gql";
 import CREATE_SEARCH from "./createCaseStudySearch.gql";
-import CREATE_OR_EDIT from "./createOrEditSearch.gql";
 import REFRESH_RESULTS from "./refreshResults.gql";
 import SKILL_CATEGORIES from "./skillCategories.gql";
 import DELETE from "./deleteSearch.gql";
@@ -61,10 +57,6 @@ export function useArchiveArticle(search, article) {
   });
 }
 
-export function useCaseStudySearchFormDetails(opts) {
-  return useQuery(SEARCH_FORM_DETAILS, opts);
-}
-
 export function useCreateCaseStudySearch() {
   return useMutation(CREATE_SEARCH, {
     refetchQueries: [
@@ -93,25 +85,6 @@ export function useCreateCaseStudySearch() {
       });
     },
   });
-}
-
-export function useCreateOrEditSearch(opts) {
-  return useQuery(CREATE_OR_EDIT, opts);
-}
-
-export function useFinalizeCaseStudySearch(search) {
-  return useMutation(FINALIZE_SEARCH, {
-    refetchQueries: [
-      {
-        query: SHORTLIST,
-        variables: { id: search.id },
-      },
-    ],
-  });
-}
-
-export function useUpdateCaseStudySearch(opts) {
-  return useMutation(UPDATE_SEARCH, opts);
 }
 
 export function useRefreshResults() {
