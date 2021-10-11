@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import css from "@styled-system/css";
 import SuperEllipse from "react-superellipse";
-import { Box, Circle, Text } from "@advisable/donut";
+import { Box, Circle, Text, theme } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
 import { PlusSm } from "@styled-icons/heroicons-solid";
 import { useImage } from "react-image";
@@ -19,18 +19,23 @@ export default function ArticleSelection({ article, onSelect, isSelected }) {
     <Box
       key={article.id}
       padding={6}
-      border="1px solid"
+      // border="1px solid"
       borderRadius="24px"
       onClick={onSelect}
       css={css({
         cursor: "pointer",
         transition: "transform 200ms, box-shadow 200ms",
+        boxShadow: isSelected
+          ? `0 0 0 2px ${theme.colors.blue500}, 0 12px 52px -20px rgba(0, 0, 0, 0.24)`
+          : `0 0 0 1px ${theme.colors.neutral200}`,
+        transform: isSelected ? "translateY(-3px)" : null,
         "&:hover": {
-          transform: "translateY(-1px)",
-          boxShadow: "0 8px 40px -8px rgba(0, 0, 0, 0.2)",
+          transform: isSelected ? null : "translateY(-1px)",
+          boxShadow: isSelected
+            ? null
+            : `0 0 0 2px ${theme.colors.neutral200}, 0 4px 28px -4px rgba(0, 0, 0, 0.16)`,
         },
       })}
-      borderColor={isSelected ? "blue600" : "neutral200"}
     >
       <Box marginBottom={4} display="inline-flex" position="relative">
         <RecommendationAvatar src={article.specialist.avatar} size="3xs" />
