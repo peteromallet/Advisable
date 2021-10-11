@@ -34,7 +34,13 @@ export default function ShortlistSkillCategory() {
         gridGap={{ _: "12px", m: "20px" }}
       >
         {categories.map((c) => (
-          <Link to={`/explore/new/${c.slug}`} key={c.slug}>
+          <Link
+            key={c.slug}
+            to={{
+              pathname: `/explore/new/${c.slug}`,
+              state: { category: c },
+            }}
+          >
             <Box padding={5} borderRadius="12px" bg="neutral100">
               <Text
                 fontSize="xl"
