@@ -2,10 +2,11 @@ import React from "react";
 import { Box, Text, Heading } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
 import { useSkillCategories } from "../queries";
+import Loading from "src/components/Loading";
 import { Link } from "react-router-dom";
 
 export default function ShortlistSkillCategory() {
-  const { data } = useSkillCategories();
+  const { data, loading } = useSkillCategories();
 
   const categories = data?.skillCategories || [];
 
@@ -26,6 +27,7 @@ export default function ShortlistSkillCategory() {
           one you are interested in.
         </Text>
       </Box>
+      {loading && <Loading />}
       <Box
         display="grid"
         gridTemplateColumns={["1fr", "1fr 1fr", "1fr 1fr", "1fr 1fr 1fr"]}
