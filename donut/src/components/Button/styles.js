@@ -134,6 +134,25 @@ export const VARIANTS = {
       color: ${theme.colors.neutral400};
     }
   `,
+  outlined: css`
+    background: transparent;
+    color: ${theme.colors.neutral700};
+    border: 1px solid ${theme.colors.neutral500};
+
+    &:not(:disabled):hover {
+      color: ${theme.colors.neutral900};
+      border-color: ${theme.colors.neutral900};
+    }
+
+    &:not(:disabled):active {
+      color: ${theme.colors.neutral600};
+      border-color: ${theme.colors.neutral600};
+    }
+
+    ${Loading} {
+      color: #242473;
+    }
+  `,
 };
 
 const buttonSize = variant({
@@ -180,8 +199,8 @@ const buttonSize = variant({
       fontSize: 17,
       lineHeight: "40px",
       fontWeight: 500,
-      paddingLeft: "24px",
-      paddingRight: "24px",
+      paddingLeft: "16px",
+      paddingRight: "16px",
       svg: {
         width: 20,
         height: 20,

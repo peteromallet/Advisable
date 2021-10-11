@@ -1,0 +1,14 @@
+#import "./articleFields.gql"
+
+mutation RefreshSearchResults($input: RefreshCaseStudySearchInput!) {
+  refreshCaseStudySearch(input: $input) {
+    search {
+      id
+      results(first: 5) {
+        nodes {
+          ...ArticleFields
+        }
+      }
+    }
+  }
+}

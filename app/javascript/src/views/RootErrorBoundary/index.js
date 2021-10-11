@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import * as Sentry from "@sentry/react";
 import { RefreshCw } from "@styled-icons/feather/RefreshCw";
 import { Circle, Box, Text, Button } from "@advisable/donut";
-import CollectFeedback from "./CollectFeedback";
-import DisconnectIllustration from "src/illustrations/zest/disconnect";
+import { PageError } from "src/components/ErrorBoundary";
 
 const CHUNK_LOAD_EXPIRY = 60000; // 1 min
 
@@ -19,37 +18,6 @@ function handleChunkLoadWithrefresh() {
   if (!timestamp) return true;
   const isExpired = new Date().getTime() > timestamp;
   return isExpired;
-}
-
-function ErrorMessage({ eventId }) {
-  return (
-    <Box
-      paddingY={4}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      minHeight="calc(100vh - 120px)"
-    >
-      <Box maxWidth="400px" textAlign="center">
-        <DisconnectIllustration width="240px" />
-        <Text
-          mb="s"
-          as="h1"
-          fontSize="6xl"
-          color="neutral900"
-          fontWeight={700}
-          letterSpacing="-0.05em"
-        >
-          Oops..
-        </Text>
-        <Text lineHeight="20px" color="neutral900" mb={8}>
-          An unexpected error has occurred. We have been notified and are
-          working to fix the problem.
-        </Text>
-        <CollectFeedback eventId={eventId} />
-      </Box>
-    </Box>
-  );
 }
 
 // When a user visits a url on the app, their browser downloads the assets for
@@ -109,7 +77,7 @@ function RootErrorBoundaryFallback({ error, ...props }) {
   const updateAvailable = error.name && error.name.match(/ChunkLoadError/);
   if (updateAvailable) return <UpdateAvailable />;
 
-  return <ErrorMessage {...props} />;
+  return <PageError {...props} />;
 }
 
 export default function RootErrorBoundary({ children }) {
