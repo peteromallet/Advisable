@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
+require "ruby-progressbar"
+
 # rubocop:disable Rails/SkipsModelValidations
 class NewTestData
+  AMOUNT_OF_RANDOM_IMAGES = 100
   AMOUNT_OF_CASE_STUDIES = 100
+  IMAGES_PATH = "db/seeds/assets/images/"
 
   extend Memoist
 
@@ -28,6 +32,7 @@ class NewTestData
     purge_and_migrate!
 
     @yml = YAML.load_file("db/seeds/test_data.yml")
+    download_images if missing_images_count.positive?
     @now = Time.zone.now
     @sales_person = SalesPerson.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, username: Faker::Internet.username)
     @country = Country.find_or_create_by(name: "Ireland")
@@ -46,6 +51,27 @@ class NewTestData
   def purge_and_migrate!
     ActiveRecord::Tasks::DatabaseTasks.purge_current
     ActiveRecord::Tasks::DatabaseTasks.migrate
+  end
+
+  def download_images
+    FileUtils.mkdir_p(IMAGES_PATH)
+    progressbar = ProgressBar.create(format: "Downloading images: %a %b\u{15E7}%i %p%% %e", progress_mark: " ", remainder_mark: "\u{FF65}", total: missing_images_count)
+    while missing_images_count.positive?
+      url = "https://source.unsplash.com/featured/"
+      res = Faraday.new(url: url) { |f| f.use(FaradayMiddleware::FollowRedirects) }.get
+
+      raise "Couldn't download images from Unsplash" unless res.success?
+
+      file_path = "#{IMAGES_PATH}/#{res.headers["x-imgix-id"]}.jpg"
+      next if File.exist?(file_path)
+
+      File.open(file_path, "wb") { |f| f.write(res.body) }
+      progressbar.increment
+    end
+  end
+
+  def missing_images_count
+    AMOUNT_OF_RANDOM_IMAGES - Dir.glob("#{IMAGES_PATH}/*.jpg").count
   end
 
   def populate_skills
@@ -110,8 +136,9 @@ class NewTestData
     articles = []
     AMOUNT_OF_CASE_STUDIES.times do |i|
       articles << {
-        title: Faker::Book.title,
+        title: Faker::Hipster.sentence(word_count: 12, random_words_to_add: 4),
         subtitle: Faker::Hipster.sentence,
+        comment: Faker::Hipster.sentence,
         confidential: [true, false].sample,
         company_type: ["Major Corporation", "Growth-Stage Startup", "Medium-Sized Business", "Startup", "Non-Profit", "Small Business", "Government", "Education Institution", "Individual Entrepreneur", "Governement"].sample(rand(1..3)),
         goals: ["Rebranding", "Improve Retention", "Generate Leads", "Increase Brand Awareness", "Improve Conversion", "Increase Web Traffic", "Improve Profitability", "Improve Processes", "Analyse Existing Activities", "Improve Efficiency", "Develop Strategy", "Increase Brand Awarenes", "Improve Process"].sample(rand(1..3)),
@@ -146,19 +173,19 @@ class NewTestData
       case type
       when "background"
         contents << {type: "CaseStudy::HeadingContent", content: {size: "h1", text: Faker::Marketing.buzzwords.titleize}, position: 0, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
-        contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Lorem.paragraphs.join("\n\n")}, position: 1, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+        contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Hipster.paragraph(sentence_count: 12, random_sentences_to_add: 8)}, position: 1, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
       when "overview"
         contents << {type: "CaseStudy::HeadingContent", content: {size: "h1", text: Faker::Marketing.buzzwords.titleize}, position: 2, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
         (1..7).each do |i|
           contents << {type: "CaseStudy::HeadingContent", content: {size: "h2", text: Faker::Marketing.buzzwords.titleize}, position: (i * 2) + 1, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
-          contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Lorem.paragraphs.join("\n\n")}, position: (i * 2) + 2, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+          contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Hipster.paragraph(sentence_count: 12, random_sentences_to_add: 8)}, position: (i * 2) + 2, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
         end
       when "outcome"
         results = []
         rand(2..5).times { results << Faker::Marketing.buzzwords }
         contents << {type: "CaseStudy::HeadingContent", content: {size: "h1", text: Faker::Marketing.buzzwords.titleize}, position: 17, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
         contents << {type: "CaseStudy::ResultsContent", content: {results: results}, position: 18, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
-        contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Lorem.paragraphs.join("\n\n")}, position: 19, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
+        contents << {type: "CaseStudy::ParagraphContent", content: {text: Faker::Hipster.paragraph(sentence_count: 12, random_sentences_to_add: 8)}, position: 19, created_at: now, updated_at: now, section_id: section, uid: CaseStudy::Content.generate_uid}
       end
     end
     CaseStudy::Content.upsert_all(contents)
