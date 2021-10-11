@@ -18,7 +18,6 @@ const FreelancerNavigation = ({ closeNav, isMobile }) => {
         onClick={closeNav}
         to="/messages"
       >
-        <MessageCount />
         Messages
       </NavigationLink>
       <NavigationLink onClick={closeNav} to="/guild">

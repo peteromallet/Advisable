@@ -133,7 +133,7 @@ export const NavItem = styled(NavLink)`
 export const Badge = styled.div`
   color: white;
   height: 20px;
-  display: grid;
+  display: inline-grid;
   padding: 0 8px;
   font-size: 12px;
   font-weight: 550;
@@ -141,8 +141,7 @@ export const Badge = styled.div`
   place-items: center;
   border-radius: 12px;
   letter-spacing: 0.04em;
-  background: ${theme.colors.blue400};
-  -webkit-text-fill-color: currentcolor;
+  background: ${theme.colors.blue500};
 `;
 
 export const CurrentUserToggle = styled.div`
