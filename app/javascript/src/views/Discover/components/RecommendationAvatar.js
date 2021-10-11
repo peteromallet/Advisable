@@ -134,11 +134,7 @@ const StyledRecommendationAvatar = styled.div(
 function AvatarImage({ src }) {
   const image = useImage({ srcList: [src] });
 
-  return (
-    <ErrorBoundary fallback={null}>
-      <StyledRecommendationAvatarImage src={image.src} />
-    </ErrorBoundary>
-  );
+  return <StyledRecommendationAvatarImage src={image.src} />;
 }
 
 export default function RecommendationAvatar({
@@ -165,7 +161,9 @@ export default function RecommendationAvatar({
         )}
         {src && (
           <Suspense fallback={null}>
-            <AvatarImage src={src} />
+            <ErrorBoundary fallback={<></>}>
+              <AvatarImage src={src} />
+            </ErrorBoundary>
           </Suspense>
         )}
 
