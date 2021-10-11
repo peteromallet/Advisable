@@ -24,6 +24,8 @@ RSpec.describe MessagesRepliesMailbox do
   end
 
   context "when account is not a participant" do
+    before { conversation.participants.create!(account: create(:account)) }
+
     it "creates a message in conversation" do
       mail = Mail.new(from: account.email, to: destination, body: "This is a test message")
       mail_processed = process(mail)
