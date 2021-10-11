@@ -1,20 +1,10 @@
 import React from "react";
-import {
-  Box,
-  Text,
-  theme,
-  Circle,
-  useModal,
-  DialogDisclosure,
-} from "@advisable/donut";
+import { Box, Text, theme, Circle, DialogDisclosure } from "@advisable/donut";
 import PencilIllustration from "src/illustrations/zest/pencil";
 import { Plus } from "@styled-icons/heroicons-outline";
-import TestimonialLinkModal from "./TestimonialLinkModal";
 import EmptyStateActionCard from "./EmptyStateActionCard";
 
-export default function TestimonialsEmptyState() {
-  const modal = useModal();
-
+export default function TestimonialsEmptyState({ modal }) {
   return (
     <DialogDisclosure as={EmptyStateActionCard} {...modal}>
       <Box maxWidth="320px" marginX="auto" textAlign="center">
@@ -47,7 +37,6 @@ export default function TestimonialsEmptyState() {
         >
           <Plus />
         </Circle>
-        <TestimonialLinkModal modal={modal} />
       </Box>
     </DialogDisclosure>
   );

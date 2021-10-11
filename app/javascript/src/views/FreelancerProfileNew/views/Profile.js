@@ -1,14 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import useViewer from "src/hooks/useViewer";
-import { Box, Stack } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 import useScrollToTop from "src/hooks/useScrollToTop";
 import CoverImage from "../components/CoverImage";
 import Sidebar from "../components/Sidebar";
 import CaseStudies from "../components/CaseStudies";
-import CaseStudiesEmptyState from "../components/CaseStudiesEmptyState";
 import Testimonials from "../components/Testimonials";
-import TestimonialsEmptyState from "../components/TestimonialsEmptyState";
 import GeneralEmptyState from "../components/GeneralEmptyState";
 
 export default function Profile({ data }) {
@@ -30,24 +28,13 @@ export default function Profile({ data }) {
         maxWidth={{ s: "700px", l: "none" }}
       >
         <Sidebar data={data} top="88px" />
-        <Stack mt={{ _: 14, m: 12, l: 19, xl: 20 }} width="100%" spacing={11}>
-          {caseStudies.length > 0 && (
-            <CaseStudies
-              caseStudies={caseStudies}
-              specialist={data.specialist}
-            />
-          )}
-          {caseStudies.length === 0 && isOwner && (
-            <CaseStudiesEmptyState specialist={data.specialist} />
-          )}
-          {reviews.length > 0 && (
-            <Testimonials reviews={reviews} specialist={data.specialist} />
-          )}
-          {reviews.length === 0 && isOwner && <TestimonialsEmptyState />}
+        <Box width="100%" mt={{ _: 14, m: 12, l: 19, xl: 20 }}>
+          <CaseStudies caseStudies={caseStudies} specialist={data.specialist} />
+          <Testimonials reviews={reviews} specialist={data.specialist} />
           {reviews.length === 0 && caseStudies.length === 0 && !isOwner && (
             <GeneralEmptyState specialist={data.specialist} />
           )}
-        </Stack>
+        </Box>
       </Box>
     </>
   );
