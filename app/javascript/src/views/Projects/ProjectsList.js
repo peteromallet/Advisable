@@ -1,28 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Box } from "@advisable/donut";
-import NewProject from "./NewProject";
 import Project from "./Project";
-import useFeatureFlag from "src/hooks/useFeatureFlag";
 
-const ProjectsList = ({ projects, onCreate }) => {
-  const explorerEnabled = useFeatureFlag("case_studies");
-
+const ProjectsList = ({ projects }) => {
   return (
     <Box
       display="grid"
       gridGap="24px"
       gridTemplateColumns={["1fr", "1fr 1fr", "1fr 1fr", "1fr 1fr 1fr"]}
     >
-      {!explorerEnabled && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <NewProject onCreate={onCreate} />
-        </motion.div>
-      )}
       {projects.map((project, i) => (
         <motion.div
           key={project.id}
