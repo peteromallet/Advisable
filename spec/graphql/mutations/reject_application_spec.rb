@@ -37,6 +37,10 @@ RSpec.describe Mutations::RejectApplication do
     }.from("Applied").to("Application Rejected")
   end
 
+  it "doesn't send a message when no message argument is provided" do
+    expect { request }.not_to change(Message, :count)
+  end
+
   context "when a message argument is provided" do
     let(:message) { "Not sure you have what it takes to be assistant to the regional manager" }
 
