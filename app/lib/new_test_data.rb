@@ -41,8 +41,8 @@ class NewTestData
     File.write("db/seeds/test_data.yml", yml.to_yaml)
   end
 
-  def initialize
-    purge_and_migrate!
+  def initialize(purge: false)
+    purge_and_migrate! if purge
 
     @yml = YAML.load_file("db/seeds/test_data.yml")
     @unsplash_images = Dir.glob("#{IMAGES_PATH}*.jpg")
