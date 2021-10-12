@@ -4,6 +4,7 @@ import Page from "src/components/Page";
 import { useCandidates } from "./queries";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import CandidateCard from "./components/CandidateCard";
+import NoCandidates from "./components/NoCandidates";
 
 export default function Hire() {
   const { data, loading } = useCandidates();
@@ -29,6 +30,7 @@ export default function Hire() {
               <CandidateCard key={application.id} application={application} />
             ))}
           </Box>
+          {!loading && candidates.length === 0 && <NoCandidates />}
         </Box>
       </Page>
     </ErrorBoundary>
