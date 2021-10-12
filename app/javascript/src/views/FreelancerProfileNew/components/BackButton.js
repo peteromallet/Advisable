@@ -15,10 +15,11 @@ const StyledBackButton = styled.div`
   padding: 0 16px;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.56);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(10px);
   border-radius: 24px;
   color: ${theme.colors.neutral600};
-  transition: backdrop-filter 0.2s;
+  transition: color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 0 0 ${theme.colors.neutral400};
 
   & span {
     font-size: ${theme.fontSizes.l}px;
@@ -33,7 +34,6 @@ const StyledBackButton = styled.div`
   &:hover {
     color: ${theme.colors.neutral800};
     box-shadow: 0 0 0 1px ${theme.colors.neutral400};
-    backdrop-filter: blur(16px);
   }
 `;
 

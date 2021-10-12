@@ -18,7 +18,7 @@ function CoverImage({ src, ...props }) {
   });
   const [updatePicture] = useSetCoverPhoto();
   const image = src || defaultCoverPhoto;
-  const { isLoading, updated, error } = useLoadImage(image);
+  const { updated, error } = useLoadImage(image);
 
   const notifications = useNotifications();
 
@@ -42,10 +42,7 @@ function CoverImage({ src, ...props }) {
         </clipPath>
       </svg>
       <StyledContentWrapper>
-        <StyledCoverImage
-          isLoading={isLoading}
-          src={error ? defaultCoverPhoto : image}
-        />
+        <StyledCoverImage src={error ? defaultCoverPhoto : image} />
         {isOwner && !isArticle ? (
           <FileUpload
             onChange={submit}

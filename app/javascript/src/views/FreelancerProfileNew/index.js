@@ -26,7 +26,7 @@ export default function FreelancerProfile() {
       alignItems={{ _: "center", l: "stretch" }}
       width={{ l: "1024px", xl: "1136px" }}
       mx="auto"
-      pb={10}
+      pb={20}
       pt={[3, 5, 5, 5, 7]}
     >
       <Switch>

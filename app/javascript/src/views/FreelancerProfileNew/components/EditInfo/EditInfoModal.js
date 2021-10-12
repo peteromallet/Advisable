@@ -15,11 +15,16 @@ import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 // Queries
 import { useUpdateProfile, useCountries } from "../../queries";
+// Constant values
+import { TRUNCATE_LIMIT } from "../../values";
 
 const validationSchema = object().shape({
   city: string(),
   country: string(),
-  bio: string().max(160, "Must be not more than 160 characters"),
+  bio: string().max(
+    TRUNCATE_LIMIT,
+    `Must be not more than ${TRUNCATE_LIMIT} characters`,
+  ),
 });
 
 function EditInfoModal({ modal, specialist }) {
@@ -106,7 +111,7 @@ function EditInfoModal({ modal, specialist }) {
               label="About me"
               description="Add a short title to describe who you are"
               placeholder="Add a short title to describe who you are"
-              charLimit={160}
+              charLimit={TRUNCATE_LIMIT}
             />
           </Box>
           <SubmitButton>Update</SubmitButton>
