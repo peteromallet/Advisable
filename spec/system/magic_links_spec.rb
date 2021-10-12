@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "magic links", type: :system do
@@ -8,7 +10,7 @@ RSpec.describe "magic links", type: :system do
 
   it "authenticates the user and uses the magic link" do
     visit "/projects?mlt=#{magic_link.token}&mluid=#{account.uid}&another=param"
-    expect(page).to have_content("Find new talent")
+    expect(page).to have_content("You have no projects")
     expect(page).to have_current_path("/projects?another=param")
     expect(account.reload.confirmed_at).not_to be_nil
   end

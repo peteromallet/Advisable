@@ -16,11 +16,4 @@ RSpec.describe("Projects view", type: :system) do
     visit "/projects"
     expect(page).to have_content(project.primary_skill.name)
   end
-
-  it 'allows a user to create a new project' do
-    authenticate_as(user)
-    visit "/projects"
-    find("*[aria-label='Find a new freelancer']").click
-    expect(page).to have_content("What skills should this specialist have?")
-  end
 end
