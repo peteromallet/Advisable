@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Heading } from "@advisable/donut";
+import { Box, Heading, useBackground } from "@advisable/donut";
 import Page from "src/components/Page";
 import { useCandidates } from "./queries";
 import Loading from "src/components/Loading";
@@ -8,6 +8,7 @@ import CandidateCard from "./components/CandidateCard";
 import NoCandidates from "./components/NoCandidates";
 
 export default function Hire() {
+  useBackground("beige");
   const { data, loading } = useCandidates();
 
   const candidates = data?.currentCompany?.candidates?.nodes || [];
@@ -23,7 +24,7 @@ export default function Hire() {
           >
             Hire
           </Heading>
-          <Box height="1px" bg="neutral200" my={8} />
+          <Box height="1px" bg="neutral100" my={8} />
           {loading && <Loading />}
           <Box
             display="grid"
