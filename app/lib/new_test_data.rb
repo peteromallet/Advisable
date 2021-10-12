@@ -60,6 +60,7 @@ class NewTestData
     populate_skills
     populate_skill_categories
     populate_industries
+    populate_labels
     populate_advisable
     populate_case_studies
   end
@@ -120,7 +121,25 @@ class NewTestData
     industries_data = yml[:industries].map do |industry|
       industry.merge(created_at: now, updated_at: now)
     end
-    @industries = Industry.insert_all(industries_data).pluck("id")
+    @industries = Industry.insert_all(industries_data, returning: %w[id name]).pluck("name", "id").to_h
+    @industry_ids = @industries.values
+  end
+
+  def populate_labels
+    labels_data = []
+    @skills.each do |name, id|
+      labels_data << {name: name, slug: name.parameterize, skill_id: id, industry_id: nil, country_id: nil, created_at: now, updated_at: now, published_at: now}
+    end
+
+    @industries.each do |name, id|
+      labels_data << {name: name, slug: name.parameterize, skill_id: nil, industry_id: id, country_id: nil, created_at: now, updated_at: now, published_at: now}
+    end
+
+    Country.pluck(:name, :id) do |name, id|
+      labels_data << {name: name, slug: name.parameterize, skill_id: nil, industry_id: nil, country_id: id, created_at: now, updated_at: now, published_at: now}
+    end
+
+    Label.insert_all(labels_data)
   end
 
   def populate_advisable
@@ -154,7 +173,7 @@ class NewTestData
 
     application_data = []
     @projects.each_with_index do |project, i|
-      application_data << {project_id: project, specialist_id: @specialists[i], status: "Working", uid: Application.generate_uid, created_at: now, updated_at: now, started_working_at: now - 1.week}
+      application_data << {project_id: project, project_type: "Fixed", specialist_id: @specialists[i], status: "Working", uid: Application.generate_uid, created_at: now, updated_at: now, started_working_at: now - 1.week}
     end
     @applications = Application.insert_all(application_data).pluck("id")
 
@@ -218,7 +237,7 @@ class NewTestData
     main_sections = [{type: "background", position: 0}, {type: "overview", position: 1}, {type: "outcome", position: 2}]
     @articles.each do |article|
       skills += @skill_ids.sample(rand(3..5)).map.with_index { |s, i| {skill_id: s, uid: CaseStudy::Skill.generate_uid, created_at: now, updated_at: now, primary: i.zero?, article_id: article} }
-      industries += @industries.sample(rand(3..5)).map { |i| {industry_id: i, uid: CaseStudy::Industry.generate_uid, created_at: now, updated_at: now, article_id: article} }
+      industries += @industry_ids.sample(rand(3..5)).map { |i| {industry_id: i, uid: CaseStudy::Industry.generate_uid, created_at: now, updated_at: now, article_id: article} }
       sections += main_sections.map { |s| s.merge(uid: CaseStudy::Section.generate_uid, created_at: now, updated_at: now, article_id: article) }
     end
     CaseStudy::Skill.upsert_all(skills)
@@ -281,6 +300,7 @@ class NewTestData
             permissions: [],
             features: {},
             confirmed_at: 1.hour.ago,
+            completed_tutorials: %w[fixed_projects flexible_projects guild],
             updated_at: now,
             created_at: now
           },
@@ -293,6 +313,7 @@ class NewTestData
             bank_holder_name: "Advisable",
             bank_holder_address: "Advisable street",
             bank_currency: "EUR",
+            guild: true,
             updated_at: now,
             created_at: now
           }
@@ -307,6 +328,7 @@ class NewTestData
             permissions: %w[admin team_manager editor],
             features: {case_studies: true},
             confirmed_at: 1.hour.ago,
+            completed_tutorials: %w[fixed_projects flexible_projects recommendations],
             updated_at: now,
             created_at: now
           },
