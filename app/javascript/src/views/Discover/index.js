@@ -16,7 +16,7 @@ import ClientApplicationPrompt from "src/components/ClientApplicationPrompt";
 import useViewer from "src/hooks/useViewer";
 
 export default function Discover() {
-  useBackground("white");
+  useBackground("beige");
   const viewer = useViewer();
   const { pathname } = useLocation();
 

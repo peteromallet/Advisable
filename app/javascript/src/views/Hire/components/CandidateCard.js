@@ -25,7 +25,8 @@ export default function CandidateCard({ application }) {
       borderRadius="24px"
       key={application.id}
       css={`
-        box-shadow: 0 2px 4px ${rgba(theme.colors.neutral900, 0.04)},
+        box-shadow: 0 0 20px ${rgba(theme.colors.neutral900, 0.04)},
+          0 2px 4px ${rgba(theme.colors.neutral900, 0.04)},
           0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)},
           0 8px 16px -4px ${rgba(theme.colors.neutral900, 0.04)},
           0 16px 32px -8px ${rgba(theme.colors.neutral900, 0.04)},
