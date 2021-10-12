@@ -16,14 +16,29 @@ RSpec.describe Mutations::RequestConsultation do
       }) {
         consultation {
           id
+          message {
+            id
+          }
         }
       }
     }
     GRAPHQL
   end
 
-  it "creates a new consultation" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change(Consultation, :count).by(1)
+  it "creates a new consultation and message" do
+    c_count = Consultation.count
+    m_count = Message.count
+    response = AdvisableSchema.execute(query, context: context)
+    expect(Consultation.count).to eq(c_count + 1)
+    expect(Message.count).to eq(m_count + 1)
+
+    uid = response["data"]["requestConsultation"]["consultation"]["id"]
+    consultation = Consultation.find_by!(uid: uid)
+    expect(consultation.specialist).to eq(specialist)
+
+    message_uid = response["data"]["requestConsultation"]["consultation"]["message"]["id"]
+    message = Message.find_by!(uid: message_uid)
+    expect(message.content).to eq("Wanna work for me, bro?")
   end
 
   context "when there's a case study article" do
