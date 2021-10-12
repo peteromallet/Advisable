@@ -25,7 +25,15 @@ export default function Hire() {
           </Heading>
           <Box height="1px" bg="neutral200" my={8} />
           {loading && <Loading />}
-          <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="20px">
+          <Box
+            display="grid"
+            gridTemplateColumns={{
+              _: "1fr",
+              m: "1fr 1fr",
+              l: "1fr 1fr 1fr",
+            }}
+            gridGap="20px"
+          >
             {candidates.map((application) => (
               <CandidateCard key={application.id} application={application} />
             ))}
