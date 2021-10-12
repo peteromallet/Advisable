@@ -161,7 +161,7 @@ end
 #
 # Indexes
 #
-#  index_specialists_on_account_id      (account_id)
+#  index_specialists_on_account_id      (account_id) UNIQUE
 #  index_specialists_on_airtable_id     (airtable_id)
 #  index_specialists_on_country_id      (country_id)
 #  index_specialists_on_interviewer_id  (interviewer_id)
