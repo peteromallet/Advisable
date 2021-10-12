@@ -158,6 +158,7 @@ function Proposed({ application }) {
 const STATUSES = {
   "Application Accepted": ApplicationAccepted,
   "Interview Scheduled": InterviewScheduled,
+  "Interview Completed": InterviewScheduled,
   Proposed,
 };
 
