@@ -23,7 +23,7 @@ export default function Hire() {
           >
             Hire
           </Heading>
-          <Box height="1px" bg="neutral100" my={8} />
+          <Box height="1px" bg="neutral200" my={8} />
           <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="20px">
             {candidates.map((application) => (
               <CandidateCard key={application.id} application={application} />
