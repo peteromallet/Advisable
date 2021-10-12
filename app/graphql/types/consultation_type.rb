@@ -8,18 +8,15 @@ module Types
       super
     end
 
-    field :id, ID, null: false
     field :status, String, null: true
     field :topic, String, null: true
     field :user, Types::User, null: false
     field :specialist, Types::SpecialistType, null: false
     field :interview, Types::Interview, null: true
+    field :id, ID, null: false, method: :uid
+    field :message, Types::ConsultationRequestMessage, null: false
+
     field :viewer_is_specialist, Boolean, null: true
-
-    def id
-      object.uid
-    end
-
     def viewer_is_specialist
       object.specialist == current_user
     end
