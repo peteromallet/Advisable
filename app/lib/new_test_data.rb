@@ -25,14 +25,12 @@ class NewTestData
   end
 
   def self.upload_yml_file
-    return unless File.exist?(YML_PATH)
-
     obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: YML_NAME)
     obj.upload_file(YML_PATH)
   end
 
   def self.seed_from_airtable!
-    yml = self.class.yml_file
+    yml = yml_file
 
     Airtable::Skill.sync(filter: nil)
     attrs = %i[name category profile uid active airtable_id]
@@ -43,6 +41,7 @@ class NewTestData
     yml[:industries] = Industry.pluck(*attrs).map { |p| attrs.zip(p).to_h }
 
     File.write(YML_PATH, yml.to_yaml)
+    upload_yml_file
   end
 
   def initialize(purge: false)
