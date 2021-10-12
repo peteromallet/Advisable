@@ -2,14 +2,13 @@ import React from "react";
 import { Box, Heading } from "@advisable/donut";
 import Page from "src/components/Page";
 import { useCandidates } from "./queries";
+import Loading from "src/components/Loading";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import CandidateCard from "./components/CandidateCard";
 import NoCandidates from "./components/NoCandidates";
 
 export default function Hire() {
   const { data, loading } = useCandidates();
-
-  if (loading) return <>loading</>;
 
   const candidates = data?.currentCompany?.candidates?.nodes || [];
 
@@ -25,6 +24,7 @@ export default function Hire() {
             Hire
           </Heading>
           <Box height="1px" bg="neutral200" my={8} />
+          {loading && <Loading />}
           <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="20px">
             {candidates.map((application) => (
               <CandidateCard key={application.id} application={application} />
