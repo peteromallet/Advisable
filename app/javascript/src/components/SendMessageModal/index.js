@@ -4,9 +4,11 @@ import { Box, Modal, Textarea, Heading, Stack, Button } from "@advisable/donut";
 import { useCreateConversation } from "./queries";
 import useAttachments from "src/views/Messages/hooks/useAttachments";
 import AddAttachmentsButton from "src/views/Messages/components/AddAttachmentsButton";
+import { useNotifications } from "src/components/Notifications";
 import Attachment from "src/views/Messages/components/Attachment";
 
 export default function SendMessageModal({ dialog, participants }) {
+  const { notify } = useNotifications();
   const [content, setContent] = useState("");
   const [sendMessage, { loading }] = useCreateConversation();
   const {
@@ -34,6 +36,7 @@ export default function SendMessageModal({ dialog, participants }) {
       },
     });
 
+    notify("Your message has been sent");
     dialog.hide();
   };
 

@@ -4,7 +4,7 @@ import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import SendMessageModal from "src/components/SendMessageModal";
 import CircularButton from "src/components/CircularButton";
 
-export default function MessageAction({ application }) {
+export default function MessageAction({ application, ...props }) {
   const dialog = useDialogState();
 
   return (
@@ -19,6 +19,7 @@ export default function MessageAction({ application }) {
         label="Message"
         icon={<ChatAlt />}
         as={CircularButton}
+        {...props}
       />
     </>
   );
