@@ -7,14 +7,32 @@ require "csv"
 class NewTestData
   AMOUNT_OF_RANDOM_IMAGES = 100
   AMOUNT_OF_CASE_STUDIES = 100
+  YML_NAME = "test_data.yml"
+  YML_PATH = "db/seeds/#{YML_NAME}".freeze
   IMAGES_PATH = "db/seeds/assets/images/"
 
   extend Memoist
 
   attr_reader :yml, :now, :sales_person, :country, :company
 
+  def self.yml_file
+    unless File.exist?(YML_PATH)
+      obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: YML_NAME)
+      obj.download_file(YML_PATH)
+    end
+
+    YAML.load_file(YML_PATH)
+  end
+
+  def self.upload_yml_file
+    return unless File.exist?(YML_PATH)
+
+    obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: YML_NAME)
+    obj.upload_file(YML_PATH)
+  end
+
   def self.seed_from_airtable!
-    yml = YAML.load_file("db/seeds/test_data.yml")
+    yml = self.class.yml_file
 
     Airtable::Skill.sync(filter: nil)
     attrs = %i[name category profile uid active airtable_id]
@@ -24,27 +42,13 @@ class NewTestData
     attrs = %i[name color active uid airtable_id]
     yml[:industries] = Industry.pluck(*attrs).map { |p| attrs.zip(p).to_h }
 
-    File.write("db/seeds/test_data.yml", yml.to_yaml)
-  end
-
-  def self.seed_skill_categories_from_csv!
-    csv = CSV.read("db/seeds/skill_categories.csv", headers: true)
-
-    categories = {}
-    csv.each do |row|
-      categories[row["Skill Group"]] ||= []
-      categories[row["Skill Group"]] << row["Skill"]
-    end
-
-    yml = YAML.load_file("db/seeds/test_data.yml")
-    yml[:skill_categories] = categories
-    File.write("db/seeds/test_data.yml", yml.to_yaml)
+    File.write(YML_PATH, yml.to_yaml)
   end
 
   def initialize(purge: false)
     purge_and_migrate! if purge
 
-    @yml = YAML.load_file("db/seeds/test_data.yml")
+    @yml = self.class.yml_file
     @unsplash_images = Dir.glob("#{IMAGES_PATH}*.jpg")
     @now = Time.zone.now
     @sales_person = SalesPerson.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, username: Faker::Internet.username)
