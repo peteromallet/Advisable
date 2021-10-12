@@ -98,6 +98,7 @@ class NewTestData
       skill.merge(created_at: now, updated_at: now)
     end
     @skills = Skill.insert_all(skills_data, returning: %w[id name]).pluck("name", "id").to_h
+    @skill_ids = @skills.values
   end
 
   def populate_skill_categories
@@ -142,6 +143,29 @@ class NewTestData
       path = "db/seeds/assets/avatars/#{yml[:advisable][i][:avatar]}"
       user.avatar.attach(io: File.open(path), filename: yml[:advisable][i][:avatar])
     end
+
+    project_data = []
+    @users.each_with_index do |user, i|
+      possesive = yml[:advisable][i][:first_name]
+      possesive = possesive.end_with?("s") ? "#{possesive}'" : "#{possesive}'s"
+      project_data << {name: "#{possesive} Project", user_id: user, uid: Project.generate_uid, created_at: now, updated_at: now, hired_count: 1, sales_status: "Won"}
+    end
+    @projects = Project.insert_all(project_data).pluck("id")
+
+    application_data = []
+    @projects.each_with_index do |project, i|
+      application_data << {project_id: project, specialist_id: @specialists[i], status: "Working", uid: Application.generate_uid, created_at: now, updated_at: now, started_working_at: now - 1.week}
+    end
+    @applications = Application.insert_all(application_data).pluck("id")
+
+    project_skills_data = []
+    @projects.each do |project|
+      project_skills_data << {project_id: project, project_type: "Project", skill_id: @skill_ids.sample, primary: true, created_at: now, updated_at: now}
+      @skill_ids.sample(rand(1..5)).each do |skill_id|
+        project_skills_data << {project_id: project, project_type: "Project", skill_id: skill_id, primary: false, created_at: now, updated_at: now}
+      end
+    end
+    @project_skills = ProjectSkill.insert_all(project_skills_data).pluck("id")
   end
 
   def populate_case_studies
@@ -191,10 +215,9 @@ class NewTestData
 
   def populate_cs_article_stuff
     skills = industries = sections = []
-    skill_ids = @skills.values
     main_sections = [{type: "background", position: 0}, {type: "overview", position: 1}, {type: "outcome", position: 2}]
     @articles.each do |article|
-      skills += skill_ids.sample(rand(3..5)).map.with_index { |s, i| {skill_id: s, uid: CaseStudy::Skill.generate_uid, created_at: now, updated_at: now, primary: i.zero?, article_id: article} }
+      skills += @skill_ids.sample(rand(3..5)).map.with_index { |s, i| {skill_id: s, uid: CaseStudy::Skill.generate_uid, created_at: now, updated_at: now, primary: i.zero?, article_id: article} }
       industries += @industries.sample(rand(3..5)).map { |i| {industry_id: i, uid: CaseStudy::Industry.generate_uid, created_at: now, updated_at: now, article_id: article} }
       sections += main_sections.map { |s| s.merge(uid: CaseStudy::Section.generate_uid, created_at: now, updated_at: now, article_id: article) }
     end
@@ -267,6 +290,9 @@ class NewTestData
             application_stage: "Accepted",
             country_id: country.id,
             city: "Scranton",
+            bank_holder_name: "Advisable",
+            bank_holder_address: "Advisable street",
+            bank_currency: "EUR",
             updated_at: now,
             created_at: now
           }
