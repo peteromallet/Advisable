@@ -7,11 +7,9 @@ import Loading from "./Loading";
 import { GET_PROJECTS } from "./queries";
 import ProjectsList from "./ProjectsList";
 import dataLayer from "src/utilities/dataLayer";
-import useViewer from "src/hooks/useViewer";
 import ExplorerEmptyView from "./ExplorerEmptyView";
 
 const Projects = () => {
-  const viewer = useViewer();
   const location = useLocation();
   const { loading, data } = useQuery(GET_PROJECTS);
 
@@ -50,20 +48,16 @@ const Projects = () => {
 
   return (
     <Container py="xl">
-      {viewer.isAccepted ? (
-        <>
-          <Heading mb={6}>Your Projects</Heading>
+      <Heading mb={6}>Your Projects</Heading>
 
-          {loading ? (
-            <Loading />
-          ) : (
-            <ProjectsList
-              projects={data.currentCompany.projects}
-              onCreate={handleCreate}
-            />
-          )}
-        </>
-      ) : null}
+      {loading ? (
+        <Loading />
+      ) : (
+        <ProjectsList
+          projects={data.currentCompany.projects}
+          onCreate={handleCreate}
+        />
+      )}
     </Container>
   );
 };
