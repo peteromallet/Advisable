@@ -1,0 +1,26 @@
+query Propposal($id: ID!) {
+  application(id: $id) {
+    id
+    proposedAt
+    projectType
+    proposalComment
+    specialist {
+      id
+      avatar
+      firstName
+      name
+      account {
+        id
+        firstName
+      }
+    }
+    tasks {
+      id
+      name
+      dueDate
+      estimate
+      estimateType
+      flexibleEstimate
+    }
+  }
+}

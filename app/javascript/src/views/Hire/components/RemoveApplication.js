@@ -7,7 +7,7 @@ import { Field, Form, Formik } from "formik";
 import SubmitButton from "src/components/SubmitButton";
 import { useRejectApplication } from "../queries";
 
-function RemoveApplicationForm({ dialog, application }) {
+function RemoveApplicationForm({ dialog, application, onRemove = () => {} }) {
   const [removeApplication] = useRejectApplication();
   const handleSubmit = async (values) => {
     await removeApplication({
@@ -20,6 +20,7 @@ function RemoveApplicationForm({ dialog, application }) {
     });
 
     dialog.hide();
+    onRemove(application);
   };
 
   const firstName = application.specialist.firstName;
@@ -60,7 +61,7 @@ function RemoveApplicationForm({ dialog, application }) {
   );
 }
 
-export default function RemoveApplication({ application }) {
+export default function RemoveApplication({ application, onRemove, ...props }) {
   const dialog = useDialogState();
   const firstName = application.specialist.firstName;
 
@@ -69,11 +70,17 @@ export default function RemoveApplication({ application }) {
       <DialogDisclosure
         {...dialog}
         as={CircularButton}
+        size="sm"
         label="Remove"
         icon={<Trash />}
+        {...props}
       />
       <Modal padding={[4, 6, 8]} modal={dialog} label={`Reject ${firstName}`}>
-        <RemoveApplicationForm application={application} dialog={dialog} />
+        <RemoveApplicationForm
+          application={application}
+          dialog={dialog}
+          onRemove={onRemove}
+        />
       </Modal>
     </>
   );

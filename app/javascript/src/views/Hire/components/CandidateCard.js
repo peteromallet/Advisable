@@ -1,22 +1,15 @@
 import React, { useMemo } from "react";
 import { DateTime } from "luxon";
-import { Badge, Box, Text, theme } from "@advisable/donut";
+import { Badge, Box, Link, Text, theme } from "@advisable/donut";
 import RecommendationAvatar from "../../Discover/components/RecommendationAvatar";
-import CircularButton from "src/components/CircularButton";
-import { BadgeCheck, Calendar } from "@styled-icons/heroicons-solid";
-import { useHistory } from "react-router";
+import { Calendar } from "@styled-icons/heroicons-solid";
 import { Call } from "@styled-icons/ionicons-solid/Call";
 import MessageAction from "./MessageAction";
 import { rgba } from "polished";
 import RemoveApplication from "./RemoveApplication";
+import HireAction from "./HireAction";
 
 export default function CandidateCard({ application }) {
-  const history = useHistory();
-
-  const handleHire = () => {
-    history.push(`/book/${application.id}`);
-  };
-
   return (
     <Box
       bg="white"
@@ -63,14 +56,7 @@ export default function CandidateCard({ application }) {
             justifyContent="center"
             paddingY={4}
           >
-            <CircularButton
-              size="sm"
-              icon={<BadgeCheck />}
-              label="Hire"
-              onClick={handleHire}
-              bg="blue100"
-              color="blue800"
-            />
+            <HireAction application={application} />
           </Box>
           <Box
             display="flex"
@@ -134,10 +120,17 @@ function InterviewScheduled({ application }) {
       <Badge variant="neutral" prefix={<Calendar />} marginBottom={2}>
         Call scheduled
       </Badge>
-      <Text fontSize="sm" lineHeight="20px">
+      <Text fontSize="sm" lineHeight="20px" marginBottom={3}>
         You have a call with {application.specialist.firstName} scheduled for{" "}
         {interviewDate}.
       </Text>
+      <Link
+        fontSize="sm"
+        variant="underlined"
+        to={`/interviews/${application.interview?.id}`}
+      >
+        Manage interview
+      </Link>
     </StatusWrapper>
   );
 }
@@ -148,10 +141,17 @@ function Proposed({ application }) {
       <Badge prefix={<Calendar />} marginBottom={2}>
         Sent a proposal
       </Badge>
-      <Text fontSize="sm" lineHeight="20px">
+      <Text fontSize="sm" lineHeight="20px" marginBottom={3}>
         {application.specialist.firstName} has sent you a proposal and is
         waiting for your response.
       </Text>
+      <Link
+        fontSize="sm"
+        variant="underlined"
+        to={`/hire/proposals/${application.id}`}
+      >
+        View proposal
+      </Link>
     </StatusWrapper>
   );
 }
