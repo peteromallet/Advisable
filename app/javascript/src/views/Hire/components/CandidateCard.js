@@ -1,12 +1,14 @@
 import React, { useMemo } from "react";
 import { DateTime } from "luxon";
-import { Badge, Box, Text } from "@advisable/donut";
+import { Badge, Box, Text, theme } from "@advisable/donut";
 import RecommendationAvatar from "../../Discover/components/RecommendationAvatar";
 import CircularButton from "src/components/CircularButton";
-import { BadgeCheck, Calendar, Trash } from "@styled-icons/heroicons-solid";
+import { BadgeCheck, Calendar } from "@styled-icons/heroicons-solid";
 import { useHistory } from "react-router";
 import { Call } from "@styled-icons/ionicons-solid/Call";
 import MessageAction from "./MessageAction";
+import { rgba } from "polished";
+import RemoveApplication from "./RemoveApplication";
 
 export default function CandidateCard({ application }) {
   const history = useHistory();
@@ -18,15 +20,21 @@ export default function CandidateCard({ application }) {
   return (
     <Box
       bg="white"
-      boxShadow="s"
       display="flex"
       flexDirection="column"
       borderRadius="24px"
       key={application.id}
+      css={`
+        box-shadow: 0 2px 4px ${rgba(theme.colors.neutral900, 0.04)},
+          0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)},
+          0 8px 16px -4px ${rgba(theme.colors.neutral900, 0.04)},
+          0 16px 32px -8px ${rgba(theme.colors.neutral900, 0.04)},
+          0 32px 64px -16px ${rgba(theme.colors.neutral900, 0.04)};
+      `}
     >
       <Box flex={1}>
         <Box padding={5} display="flex" flexDirection="column">
-          <Box marginBottom={4}>
+          <Box marginBottom={3}>
             <RecommendationAvatar
               size="2xs"
               src={application.specialist.avatar}
@@ -78,7 +86,7 @@ export default function CandidateCard({ application }) {
             justifyContent="center"
             paddingY={4}
           >
-            <CircularButton size="sm" icon={<Trash />} label="Remove" />
+            <RemoveApplication application={application} />
           </Box>
         </Box>
       </Box>
