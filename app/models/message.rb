@@ -10,6 +10,8 @@ class Message < ApplicationRecord
   belongs_to :author, class_name: "Account", optional: true
   belongs_to :guild_post, class_name: "Guild::Post", optional: true
   belongs_to :agreement, optional: true
+  belongs_to :conversation
+  has_one :consultation, dependent: :nullify
   has_many_attached :attachments
 
   before_validation :strip_content
