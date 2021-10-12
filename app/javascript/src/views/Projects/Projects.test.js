@@ -61,28 +61,3 @@ test("Redirects to login page if not logged in", async () => {
 
   await screen.findByText(/welcome back/i);
 });
-
-test("Renders a account confirmation prompt", async () => {
-  const user = mockData.user({
-    confirmed: false,
-    industry: mockData.industry(),
-  });
-  const company = mockData.company({ projects: [] });
-
-  renderRoute({
-    route: "/projects",
-    graphQLMocks: [
-      mockViewer(user),
-      mockQuery(
-        GET_PROJECTS,
-        {},
-        {
-          currentCompany: company,
-          viewer: user,
-        },
-      ),
-    ],
-  });
-
-  await screen.findByText(/please confirm your account/i);
-});
