@@ -144,7 +144,7 @@ end
 #
 # Indexes
 #
-#  index_users_on_account_id   (account_id)
+#  index_users_on_account_id   (account_id) UNIQUE
 #  index_users_on_airtable_id  (airtable_id)
 #  index_users_on_company_id   (company_id)
 #  index_users_on_country_id   (country_id)
