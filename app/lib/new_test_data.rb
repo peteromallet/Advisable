@@ -171,7 +171,7 @@ class NewTestData
     articles = []
     AMOUNT_OF_CASE_STUDIES.times do |i|
       articles << {
-        title: Faker::Hipster.sentence(word_count: 12, random_words_to_add: 4),
+        title: Faker::Hipster.sentence(word_count: 6, random_words_to_add: 4),
         subtitle: Faker::Hipster.sentence,
         comment: Faker::Hipster.sentence,
         confidential: [true, false].sample,
