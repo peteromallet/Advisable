@@ -103,18 +103,18 @@ export const VARIANTS = {
     }
   `,
   ghost: css`
-    color: #3f3bff;
+    color: ${theme.colors.blue500};
 
     &:not(:disabled):hover {
-      background: ${rgba("#3f3bff", 0.04)};
+      background: ${rgba(theme.colors.blue500, 0.04)};
     }
 
     &:not(:disabled):active {
-      background: ${rgba("#3f3bff", 0.08)};
+      background: ${rgba(theme.colors.blue900, 0.08)};
     }
 
     ${Loading} {
-      color: #3f3bff;
+      color: ${theme.colors.blue600};
     }
 
     &[data-loading="true"] {

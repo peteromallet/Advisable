@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import css from "@styled-system/css";
 import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import useViewer from "src/hooks/useViewer";
-import { Box, Text } from "@advisable/donut";
-
+import { Box, Text, Link } from "@advisable/donut";
 import ProfilePicture from "../ProfilePicture";
 import CoverImage from "../CoverImage";
 import {
@@ -19,8 +19,8 @@ import EditInfo from "../EditInfo";
 import MessageButton from "../MessageButton";
 import WorkTogetherButton from "../WorkTogetherButton";
 import SocialProfilesIcons from "../SocialProfilesIcons";
-
-export const TRUNCATE_LIMIT = 160;
+// Constant values
+import { TRUNCATE_LIMIT } from "../../values";
 
 export default function Sidebar({ data, ...props }) {
   const isArticle = !!matchPath(location.pathname, {
@@ -56,21 +56,35 @@ export default function Sidebar({ data, ...props }) {
         </StyledAvatarWrapper>
         <StyledNameWrapper>
           <Text
+            as={isArticle && Link}
+            to={`/freelancers/${specialist.id}`}
             fontSize={{ _: "2xl", m: "5xl" }}
-            fontWeight="semibold"
+            fontWeight={600}
             color="neutral900"
-            lineHeight="4xl"
-            letterSpacing="-0.03rem"
+            lineHeight={{ _: "24px", m: "32px" }}
+            letterSpacing="-0.028em"
             marginBottom={{ xs: 0.5, m: 1.5 }}
+            css={
+              isArticle &&
+              css({
+                "&:hover": {
+                  color: "neutral900",
+                  textDecoration: "underline",
+                },
+              })
+            }
           >
             {specialist.name}
           </Text>
-          <Box display="flex" color="neutral400" alignItems="center">
-            <Map height="20px" width="20px" color="neutral500" />
+          <Box display="flex" color="neutral500" alignItems="center">
+            <Box flexShrink={0}>
+              <Map height="20px" width="20px" />
+            </Box>
             <Text
-              fontSize={{ _: "s", m: "m" }}
-              fontWeight="medium"
-              color="neutral400"
+              $truncate
+              fontSize={{ _: "s", m: "l" }}
+              letterSpacing="-0.016em"
+              color="neutral600"
               lineHeight="l"
               marginLeft={1}
             >
@@ -83,12 +97,12 @@ export default function Sidebar({ data, ...props }) {
             fontSize={{ _: "m", m: "m" }}
             lineHeight="l"
             color="neutral700"
-            mb={5}
+            marginBottom={7}
           >
             {bio}
             {bioIsExceed ? (
               <StyledShowMore onClick={() => setExpanded((e) => !e)}>
-                {isExpanded ? "see less" : "see more"}
+                {isExpanded ? <>see&#32;less</> : <>see&#32;more</>}
               </StyledShowMore>
             ) : null}
           </Text>
@@ -98,7 +112,7 @@ export default function Sidebar({ data, ...props }) {
             flexDirection={["column", "row", "row", "column"]}
             alignItems={{ _: "center", l: "flex-start" }}
           >
-            <Box mb={[4, 0, 0, 10]}>
+            <Box mb={[4, 0, 0, 10]} width="100%">
               {isOwner ? (
                 <EditInfo specialist={specialist}>Edit Info</EditInfo>
               ) : null}

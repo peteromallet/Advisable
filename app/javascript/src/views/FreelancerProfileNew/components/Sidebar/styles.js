@@ -3,7 +3,9 @@ import { top, variant } from "styled-system";
 import { theme } from "@advisable/donut";
 
 export const StyledAvatarWrapper = styled.div``;
-export const StyledNameWrapper = styled.div``;
+export const StyledNameWrapper = styled.div`
+  min-width: 0;
+`;
 export const StyledBioWrapper = styled.div``;
 
 const layout = variant({
@@ -77,14 +79,16 @@ export const StyledStickySidebar = styled.div`
 `;
 
 export const StyledShowMore = styled.span`
-  font-weight: ${theme.fontWeights.semibold};
+  font-weight: 550;
   cursor: pointer;
   position: static;
   transform: none;
   user-select: none;
-  padding: 4px 4px;
+  padding: 2px 8px;
+  margin-left: -4px;
   border-radius: 8px;
-  color: ${theme.colors.neutral700};
+  letter-spacing: -0.012em;
+  color: ${theme.colors.neutral800};
 
   &:hover {
     background: ${theme.colors.neutral100};

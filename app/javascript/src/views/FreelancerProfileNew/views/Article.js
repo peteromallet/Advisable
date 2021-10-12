@@ -5,7 +5,6 @@ import useScrollToTop from "src/hooks/useScrollToTop";
 import { isNotFound } from "src/views/NotFound";
 import Loading from "src/components/Loading";
 import CaseStudyContent from "src/components/CaseStudyContent";
-import AdvisableComment from "src/components/AdvisableComment";
 import CaseStudyResultsRow from "src/components/CaseStudyResultsRow";
 import Sidebar from "../components/Sidebar";
 import CaseStudyCard from "../components/CaseStudyCard";
@@ -29,11 +28,6 @@ function ArticleContent() {
       <Text fontSize="2xl" lineHeight="28px" fontWeight={450}>
         {data.caseStudy.subtitle}
       </Text>
-      {data.caseStudy.comment ? (
-        <Box marginTop={12}>
-          <AdvisableComment>{data.caseStudy.comment}</AdvisableComment>
-        </Box>
-      ) : null}
       <Box height="1px" bg="neutral100" marginY={12} />
       <CaseStudyContent caseStudy={data.caseStudy} />
     </>
