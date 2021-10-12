@@ -37,12 +37,19 @@ module Mutations
       interview.status = "Call Scheduled"
       current_account_responsible_for { interview.save! }
 
+      update_application(interview)
       update_specialist_number(interview.application.specialist, args[:phone_number]) if args[:phone_number]
 
       {interview: interview}
     end
 
     private
+
+    def update_application(interview)
+      return if interview.application.blank?
+
+      interview.application.update(status: "Interview Scheduled")
+    end
 
     def create_video_call(interview)
       return if interview.video_call.present?
