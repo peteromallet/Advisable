@@ -20,7 +20,7 @@ module Mutations
       application = Application.find_by_uid_or_airtable_id!(args[:id])
       application.status = "Application Rejected"
       application.save_and_sync_with_responsible!(current_account_id)
-      send_message(application, args[:message]) if args[:message]
+      send_message(application, args[:message]) if args[:message].present?
 
       {application: application}
     end
