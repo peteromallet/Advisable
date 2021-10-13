@@ -16,6 +16,7 @@ module Mutations
     def resolve(consultation:)
       ActiveRecord::Base.transaction do
         consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
+        create_system_message(consultation)
         project = get_project(consultation)
         application = create_application(project, consultation.specialist)
         interview = create_interview(application)
@@ -29,6 +30,17 @@ module Mutations
     end
 
     private
+
+    def create_system_message(consultation)
+      return if consultation.messages.none?
+
+      Message.create(
+        conversation: consultation.messages.first.conversation,
+        consultation: consultation,
+        content: "consultations.accepted",
+        kind: "system"
+      )
+    end
 
     def get_project(consultation)
       user = consultation.user
