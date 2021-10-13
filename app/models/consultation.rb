@@ -33,7 +33,6 @@ end
 #  updated_at            :datetime         not null
 #  airtable_id           :string
 #  interview_id          :bigint
-#  message_id            :bigint
 #  search_id             :bigint
 #  skill_id              :bigint
 #  specialist_id         :bigint
@@ -43,7 +42,6 @@ end
 #
 #  index_consultations_on_airtable_id    (airtable_id)
 #  index_consultations_on_interview_id   (interview_id)
-#  index_consultations_on_message_id     (message_id)
 #  index_consultations_on_search_id      (search_id)
 #  index_consultations_on_skill_id       (skill_id)
 #  index_consultations_on_specialist_id  (specialist_id)
@@ -53,7 +51,6 @@ end
 # Foreign Keys
 #
 #  fk_rails_...  (interview_id => interviews.id)
-#  fk_rails_...  (message_id => messages.id)
 #  fk_rails_...  (skill_id => skills.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #  fk_rails_...  (user_id => users.id)
