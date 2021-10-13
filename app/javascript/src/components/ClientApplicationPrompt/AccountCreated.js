@@ -21,28 +21,29 @@ function Section({ number, header, description }) {
     <Box display="flex" flexDirection={{ _: "row", m: "column" }}>
       <Box>
         <Circle
-          bg="orange200"
-          size={40}
-          color="orange800"
+          bg="orange100"
+          size={52}
+          color="orange700"
           mb={4}
           mr={{ _: 4, m: 0 }}
         >
-          <Text fontWeight="bold" fontSize="m">
+          <Text fontWeight={600} fontSize="xl">
             {number}
           </Text>
         </Circle>
       </Box>
       <Box>
         <Text
-          fontWeight="medium"
+          fontWeight={550}
           fontSize="17px"
           lineHeight="s"
-          mb={2}
+          mb={1}
           color="neutral900"
+          letterSpacing="-0.02em"
         >
           {header}
         </Text>
-        <Text fontSize="sm" lineHeight="xs" color="neutral600">
+        <Text fontSize="sm" lineHeight="20px" color="neutral700">
           {description}
         </Text>
       </Box>
@@ -54,12 +55,16 @@ function ClientContent() {
   return (
     <>
       <StyledHeader mb={3} fontSize={["3xl", "40px"]} fontWeight="semibold">
-        Join Advisable
+        Discover unique talent
       </StyledHeader>
-      <StyledDescription mb={[8, 8, 10, 14]} lineHeight="s" color="neutral800">
-        You have created an account, however, you have not completed your
-        application. Please submit an application in order to gain access to top
-        tier projects and freelancers.
+      <StyledDescription
+        mb={[8, 8, 10, 14]}
+        fontSize="lg"
+        lineHeight="24px"
+        color="neutral800"
+      >
+        We&apos;re currently only giving relevant companies access to our
+        Discover tool. You can apply below if you&apos;re interested!
       </StyledDescription>
       <Box
         display="grid"
@@ -71,18 +76,18 @@ function ClientContent() {
       >
         <Section
           number={1}
-          header="Access to world-class projects"
-          description="Get recommendations of case studies that our freelancers have executed for leading companies."
+          header="Discover the best"
+          description="Get recommendations of unique people and explore their best projects."
         />
         <Section
           number={2}
           header="Learn from the best"
-          description="Discover the strategies that our freelancers executed to help top companies."
+          description="Learn from the strategies that our talent has executed for top companies."
         />
         <Section
           number={3}
           header="Hire the best"
-          description="Hire the freelancers who have executed projects at leading companies."
+          description="Hire the freelancers you discover to help you achieve your mission."
         />
       </Box>
       <Button
