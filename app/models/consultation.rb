@@ -9,7 +9,7 @@ class Consultation < ApplicationRecord
   belongs_to :skill, optional: true
   belongs_to :search, optional: true
   belongs_to :interview, optional: true
-  belongs_to :message, optional: true
+  has_many :messages, dependent: :destroy
 end
 
 # == Schema Information
