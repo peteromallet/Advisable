@@ -8,6 +8,7 @@ import Login from "./views/Login";
 import Signup from "./views/Signup";
 import RootPath from "./views/RootPath";
 import ApplicationRoutes from "./ApplicationRoutes";
+const CaseStudyReview = lazy(() => import("./views/CaseStudyReview"));
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const VerifyProject = lazy(() => import("./views/VerifyProject"));
@@ -47,6 +48,10 @@ const Routes = () => {
         <Route path="/clients/join" component={ClientJoin} />
         <Route path="/freelancers/join" component={FreelancerJoin} />
         <Route path="/verify_project/:id" component={VerifyProject} />
+        <Route
+          path="/review/:id/case_studies/:article_id"
+          component={CaseStudyReview}
+        />
         <Route path="/review/:id" component={TestimonialFlow} />
         <Route component={ApplicationRoutes} />
       </Switch>
