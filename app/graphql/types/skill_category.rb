@@ -7,7 +7,7 @@ module Types
     field :id, ID, null: false, method: :slug
     field :slug, String, null: false
     field :name, String, null: false
-    field :description, String, null: false
+    field :description, String, null: true
 
     field :articles, Types::CaseStudy::Article.connection_type, null: false
     def articles
