@@ -16,7 +16,7 @@ class AuthProvidersController < ApplicationController
       params = URI.decode_www_form(uri.query || "") << ["authorization_failed", "Authorization failed. Please try again."]
       uri.query = URI.encode_www_form(params.to_h)
     else
-      Sentry.capture_message("Something went wrong when with oauth.")
+      Sentry.capture_message("Something went wrong when authorizing with oauth.", level: "debug")
       uri = "/"
     end
 
