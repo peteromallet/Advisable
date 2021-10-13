@@ -1,22 +1,28 @@
 import React from "react";
-import { Box, Text, Heading } from "@advisable/donut";
-import CircularButton from "src/components/CircularButton";
-import { ArrowLeft } from "@styled-icons/heroicons-solid";
+import { Text, Heading, Link } from "@advisable/donut";
 import LoginForm from "src/views/Login/LoginForm";
 
 export default function RequestConsultationLogin({ specialist, setStep }) {
   return (
     <>
-      <Box position="absolute" top="12px" left="12px">
-        <CircularButton onClick={() => setStep("SIGNUP")} icon={ArrowLeft} />
-      </Box>
-      <Heading textAlign="center" marginBottom={2} letterSpacing="-0.04em">
+      <Heading marginBottom={2} letterSpacing="-0.04em">
         Welcome back
       </Heading>
-      <Text textAlign="center" fontSize="l" marginBottom={6}>
+      <Text fontSize="l" marginBottom={6}>
         Login to your account to connect with {specialist.firstName}.
       </Text>
       <LoginForm />
+
+      <Text marginTop={6} fontWeight={500} marginBottom={1}>
+        Don&apos;t have an account?
+      </Text>
+      <Link.External
+        href="#"
+        variant="underlined"
+        onClick={() => setStep("SIGNUP")}
+      >
+        Create an account
+      </Link.External>
     </>
   );
 }
