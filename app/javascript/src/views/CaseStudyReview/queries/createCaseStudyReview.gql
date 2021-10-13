@@ -1,0 +1,7 @@
+mutation CreateCaseStudyReview($input: CreateCaseStudyReviewInput!) {
+  createCaseStudyReview(input: $input) {
+    review {
+      id
+    }
+  }
+}
