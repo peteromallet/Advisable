@@ -415,10 +415,8 @@ ActiveRecord::Schema.define(version: 2021_12_08_080911) do
     t.datetime "advisable_rejected_at"
     t.bigint "search_id"
     t.string "rejection_reason"
-    t.bigint "message_id"
     t.index ["airtable_id"], name: "index_consultations_on_airtable_id"
     t.index ["interview_id"], name: "index_consultations_on_interview_id"
-    t.index ["message_id"], name: "index_consultations_on_message_id"
     t.index ["search_id"], name: "index_consultations_on_search_id"
     t.index ["skill_id"], name: "index_consultations_on_skill_id"
     t.index ["specialist_id"], name: "index_consultations_on_specialist_id"
@@ -639,8 +637,11 @@ ActiveRecord::Schema.define(version: 2021_12_08_080911) do
     t.uuid "guild_post_id"
     t.jsonb "metadata"
     t.bigint "consultation_id"
+<<<<<<< HEAD
     t.bigint "agreement_id"
     t.index ["agreement_id"], name: "index_messages_on_agreement_id"
+=======
+>>>>>>> daaf5c20f (Turn the belongs_to the other way)
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["consultation_id"], name: "index_messages_on_consultation_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
@@ -1149,7 +1150,6 @@ ActiveRecord::Schema.define(version: 2021_12_08_080911) do
   add_foreign_key "companies", "industries"
   add_foreign_key "companies", "sales_people"
   add_foreign_key "consultations", "interviews"
-  add_foreign_key "consultations", "messages"
   add_foreign_key "consultations", "skills"
   add_foreign_key "consultations", "specialists"
   add_foreign_key "consultations", "users"
@@ -1174,7 +1174,10 @@ ActiveRecord::Schema.define(version: 2021_12_08_080911) do
   add_foreign_key "matches", "projects"
   add_foreign_key "matches", "specialists"
   add_foreign_key "messages", "accounts", column: "author_id"
+<<<<<<< HEAD
   add_foreign_key "messages", "agreements"
+=======
+>>>>>>> daaf5c20f (Turn the belongs_to the other way)
   add_foreign_key "messages", "consultations"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "guild_posts"
