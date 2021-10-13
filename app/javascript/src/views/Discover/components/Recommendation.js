@@ -50,7 +50,9 @@ export default function Recommendation({
   };
 
   const stopActionPropagation = (e) => {
-    e.stopPropagation();
+    if (container.current.contains(e.target)) {
+      e.stopPropagation();
+    }
   };
 
   return (

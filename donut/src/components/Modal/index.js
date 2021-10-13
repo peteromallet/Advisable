@@ -44,29 +44,26 @@ function Modal({
             aria-label={label}
             hideOnClickOutside={hideOnClickOutside}
           >
-            {(dialogProps) => (
-              <AnimatePresence>
-                {modal.visible && !loading && (
-                  <StyledDialog
-                    {...dialogProps}
-                    $width={width}
-                    padding={padding}
-                    transition={{ duration: 0.4 }}
-                    initial={{ opacity: 0, y: 32 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 32 }}
-                    oAnimationComplete={modal.stopAnimation}
-                  >
-                    {showCloseButton ? (
-                      <Box position="absolute" top="12px" right="12px">
-                        <CircularButton onClick={modal.hide} icon={X} />
-                      </Box>
-                    ) : null}
-                    {children}
-                  </StyledDialog>
-                )}
-              </AnimatePresence>
-            )}
+            <AnimatePresence>
+              {modal.visible && !loading && (
+                <StyledDialog
+                  $width={width}
+                  padding={padding}
+                  transition={{ duration: 0.4 }}
+                  initial={{ opacity: 0, y: 32 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 32 }}
+                  oAnimationComplete={modal.stopAnimation}
+                >
+                  {showCloseButton ? (
+                    <Box position="absolute" top="12px" right="12px">
+                      <CircularButton onClick={modal.hide} icon={X} />
+                    </Box>
+                  ) : null}
+                  {children}
+                </StyledDialog>
+              )}
+            </AnimatePresence>
           </Dialog>
         </StyledDialogBackdrop>
       )}

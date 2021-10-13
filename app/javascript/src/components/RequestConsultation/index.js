@@ -1,21 +1,27 @@
 import React from "react";
-import { Modal, useModal, Button } from "@advisable/donut";
+import { ChatAlt } from "@styled-icons/heroicons-solid/ChatAlt";
+import { Modal, useModal, Button, DialogDisclosure } from "@advisable/donut";
 import RequestConsultationModal from "./RequestConsultationModal";
 
-export default function RequestConsultation({ specialist }) {
-  const modal = useModal();
+export default function RequestConsultation({
+  specialist,
+  children = "Connect",
+  ...props
+}) {
+  const dialog = useModal();
 
   return (
     <>
       <Modal
-        modal={modal}
+        width={600}
+        modal={dialog}
         label={`Request consultation with ${specialist.name}`}
       >
-        <RequestConsultationModal />
+        <RequestConsultationModal dialog={dialog} specialist={specialist} />
       </Modal>
-      <Modal.Disclosure as={Button} {...modal}>
-        Connect
-      </Modal.Disclosure>
+      <DialogDisclosure as={Button} prefix={<ChatAlt />} {...dialog} {...props}>
+        {children}
+      </DialogDisclosure>
     </>
   );
 }
