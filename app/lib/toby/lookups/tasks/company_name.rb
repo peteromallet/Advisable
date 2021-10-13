@@ -4,6 +4,19 @@ module Toby
   module Lookups
     module Tasks
       class CompanyName < Attributes::StringLookup
+        filter "contains...", Filters::StringContains do |records, _attribute, value|
+          if value.any? && value.first.present?
+            query = records.joins(application: {project: {user: :company}})
+            names = value.first.split
+            names.each do |name|
+              query = query.where("companies.name ILIKE ?", "%#{name}%")
+            end
+            query
+          else
+            records
+          end
+        end
+
         def lazy_read_class
           Toby::Lazy::Single
         end
