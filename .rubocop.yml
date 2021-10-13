@@ -82,6 +82,7 @@ Style/MethodCallWithArgsParentheses:
     - to
     - not_to
     - render
+    - redirect_to
     - raise
     - head
     - describe
