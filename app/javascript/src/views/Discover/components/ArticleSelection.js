@@ -93,6 +93,7 @@ export default function ArticleSelection({ article, onSelect, isSelected }) {
         marginBottom={3}
         letterSpacing="-0.03em"
         lineHeight="28px"
+        data-testid="articleTitle"
       >
         {article.title}
       </Text>
