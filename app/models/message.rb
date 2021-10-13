@@ -9,7 +9,7 @@ class Message < ApplicationRecord
   belongs_to :author, class_name: "Account", optional: true
   belongs_to :guild_post, class_name: "Guild::Post", optional: true
   belongs_to :conversation
-  has_one :consultation, dependent: :nullify
+  belongs_to :consultation, optional: true
   has_many_attached :attachments
 
   before_validation :strip_content
@@ -52,12 +52,14 @@ end
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  author_id       :bigint
+#  consultation_id :bigint
 #  conversation_id :bigint           not null
 #  guild_post_id   :uuid
 #
 # Indexes
 #
 #  index_messages_on_author_id        (author_id)
+#  index_messages_on_consultation_id  (consultation_id)
 #  index_messages_on_conversation_id  (conversation_id)
 #  index_messages_on_guild_post_id    (guild_post_id)
 #  index_messages_on_idempotency_key  (idempotency_key)
@@ -66,6 +68,7 @@ end
 # Foreign Keys
 #
 #  fk_rails_...  (author_id => accounts.id)
+#  fk_rails_...  (consultation_id => consultations.id)
 #  fk_rails_...  (conversation_id => conversations.id)
 #  fk_rails_...  (guild_post_id => guild_posts.id)
 #
