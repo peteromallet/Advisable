@@ -1,0 +1,16 @@
+query Availability {
+  viewer {
+    ... on User {
+      id
+      availability
+      interviews {
+        id
+        startsAt
+        specialist {
+          id
+          firstName
+        }
+      }
+    }
+  }
+}

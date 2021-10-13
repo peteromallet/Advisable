@@ -103,6 +103,7 @@ export const StyledPassportAvatar = styled.div`
   display: inherit;
   position: relative;
   flex-shrink: 0;
+  transform: translate3d(0, 0, 0);
 
   .svgClip {
     opacity: 0;

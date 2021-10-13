@@ -15,7 +15,6 @@ export const StyledDialogBackdrop = styled(motion.div)`
   display: grid;
   place-items: center;
   overflow-y: scroll;
-  padding-bottom: 64px;
   -webkit-backdrop-filter: blur(2px);
   background: ${rgba(theme.colors.neutral100, 0.9)};
 
