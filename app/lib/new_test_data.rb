@@ -57,10 +57,10 @@ class NewTestData
 
   def seed!
     download_images if missing_images_count.positive?
-    populate_skills
-    populate_skill_categories
-    populate_industries
-    populate_labels
+    populate_skills if Skill.none?
+    populate_skill_categories if SkillCategory.none?
+    populate_industries if Industry.none?
+    populate_labels if Label.none?
     populate_advisable
     populate_case_studies
   end
@@ -179,8 +179,8 @@ class NewTestData
 
     project_skills_data = []
     @projects.each do |project|
-      project_skills_data << {project_id: project, project_type: "Project", skill_id: @skill_ids.sample, primary: true, created_at: now, updated_at: now}
-      @skill_ids.sample(rand(1..5)).each do |skill_id|
+      project_skills_data << {project_id: project, project_type: "Project", skill_id: skill_ids.sample, primary: true, created_at: now, updated_at: now}
+      skill_ids.sample(rand(1..5)).each do |skill_id|
         project_skills_data << {project_id: project, project_type: "Project", skill_id: skill_id, primary: false, created_at: now, updated_at: now}
       end
     end
@@ -236,8 +236,8 @@ class NewTestData
     skills = industries = sections = []
     main_sections = [{type: "background", position: 0}, {type: "overview", position: 1}, {type: "outcome", position: 2}]
     @articles.each do |article|
-      skills += @skill_ids.sample(rand(3..5)).map.with_index { |s, i| {skill_id: s, uid: CaseStudy::Skill.generate_uid, created_at: now, updated_at: now, primary: i.zero?, article_id: article} }
-      industries += @industry_ids.sample(rand(3..5)).map { |i| {industry_id: i, uid: CaseStudy::Industry.generate_uid, created_at: now, updated_at: now, article_id: article} }
+      skills += skill_ids.sample(rand(3..5)).map.with_index { |s, i| {skill_id: s, uid: CaseStudy::Skill.generate_uid, created_at: now, updated_at: now, primary: i.zero?, article_id: article} }
+      industries += industry_ids.sample(rand(3..5)).map { |i| {industry_id: i, uid: CaseStudy::Industry.generate_uid, created_at: now, updated_at: now, article_id: article} }
       sections += main_sections.map { |s| s.merge(uid: CaseStudy::Section.generate_uid, created_at: now, updated_at: now, article_id: article) }
     end
     CaseStudy::Skill.upsert_all(skills)
@@ -285,6 +285,14 @@ class NewTestData
         content.images.attach(io: File.open(image), filename: image.split("/").last)
       end
     end
+  end
+
+  def skill_ids
+    @skill_ids ||= Skill.pluck(:id)
+  end
+
+  def industry_ids
+    @industry_ids ||= Industry.pluck(:id)
   end
 
   memoize def advisable_data
