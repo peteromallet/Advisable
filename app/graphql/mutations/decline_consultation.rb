@@ -16,12 +16,26 @@ module Mutations
 
     def resolve(consultation:, reason: nil)
       consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
+      create_system_message(consultation)
       consultation.update(
         status: "Specialist Rejected",
         rejected_at: Time.zone.now,
         rejection_reason: reason
       )
       {consultation: consultation}
+    end
+
+    private
+
+    def create_system_message(consultation)
+      return if consultation.messages.none?
+
+      Message.create(
+        conversation: consultation.messages.first.conversation,
+        consultation: consultation,
+        content: "consultations.declined",
+        kind: "system"
+      )
     end
   end
 end
