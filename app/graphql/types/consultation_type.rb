@@ -14,7 +14,12 @@ module Types
     field :specialist, Types::SpecialistType, null: false
     field :interview, Types::Interview, null: true
     field :id, ID, null: false, method: :uid
-    field :message, Types::ConsultationRequestMessage, null: false
+    field :messages, [Types::ConsultationRequestMessage], null: true
+
+    field :message, Types::ConsultationRequestMessage, null: true
+    def message
+      object.messages.first
+    end
 
     field :viewer_is_specialist, Boolean, null: true
     def viewer_is_specialist
