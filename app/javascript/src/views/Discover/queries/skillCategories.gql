@@ -3,5 +3,6 @@ query SkillCategories {
     id
     slug
     name
+    description
   }
 }

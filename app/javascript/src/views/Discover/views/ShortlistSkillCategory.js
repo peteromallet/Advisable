@@ -45,6 +45,7 @@ export default function ShortlistSkillCategory() {
           >
             <Box
               padding={5}
+              height="100%"
               borderRadius="12px"
               css={css({
                 cursor: "pointer",
@@ -71,7 +72,7 @@ export default function ShortlistSkillCategory() {
                 lineHeight="20px"
                 color="neutral800"
               >
-                A brief description of what is inside the skill category
+                {c.description}
               </Text>
             </Box>
           </Link>
