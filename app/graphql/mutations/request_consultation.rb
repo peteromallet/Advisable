@@ -17,16 +17,17 @@ module Mutations
       specialist = Specialist.find_by!(uid: args[:specialist])
 
       conversation = Conversation.by_accounts([specialist.account, current_user.account])
-      message = conversation.messages.create!(
-        content: args[:message],
-        author: current_user.account
-      )
 
       consultation = current_user.consultations.create!(
         status: "Request Completed",
         specialist: specialist,
-        message: message,
         skill: specialist.articles.first&.skills&.primary&.first&.skill
+      )
+
+      conversation.messages.create!(
+        consultation: consultation,
+        content: args[:message],
+        author: current_user.account
       )
 
       {consultation: consultation}
