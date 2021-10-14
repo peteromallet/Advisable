@@ -19,6 +19,7 @@ class Skill < ApplicationRecord
   validates :name, presence: true
   validates :airtable_id, presence: true
 
+  scope :active, -> { where(active: true) }
   scope :popular, -> { order(projects_count: :desc, specialists_count: :desc) }
 
   # rubocop:disable Rails/SkipsModelValidations

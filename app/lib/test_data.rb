@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Security/Open
+require "open-uri"
 
 class TestData
   def self.stock_image
@@ -333,4 +333,3 @@ class TestData
     project.update_application_counts
   end
 end
-# rubocop:enable Security/Open

@@ -2,7 +2,7 @@
 
 class RefreshCaseStudySearchesJob < ApplicationJob
   def perform
-    users = User.joins(:account).merge(Account.with_case_studies_feature).where(id: CaseStudy::Search.distinct.select(:user_id))
+    users = User.joins(:account).accepted.where(id: CaseStudy::Search.distinct.select(:user_id))
     users.each do |user|
       updated_searches = {}
       user.searches.each do |search|

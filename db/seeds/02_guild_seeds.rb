@@ -11,7 +11,7 @@ require "open-uri"
 Rails.logger.info "Creating labels"
 
 current_time = Time.zone.now
-Skill.where(active: true).find_each do |skill|
+Skill.active.find_each do |skill|
   Label.create(name: skill.name, skill: skill, published_at: current_time)
 end
 
