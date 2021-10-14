@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   def internal
     return if current_account&.admin?
 
-    redirect_to("/")
+    redirect_to "/"
   end
 
   def client_ip
@@ -46,6 +46,12 @@ class ApplicationController < ActionController::Base
     else
       Sentry.set_user(id: nil)
     end
+  end
+
+  def verify_project_redirect
+    Sentry.capture_message("Redirecting project verification!", level: "debug")
+    project = PreviousProject.find_by!(uid: params[:uid])
+    redirect_to "/review/#{project.specialist.uid}"
   end
 
   protected

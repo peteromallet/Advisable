@@ -90,6 +90,7 @@ Style/MethodCallWithArgsParentheses:
     - puts
     - pp
     - sleep
+    - redirect_to
 
 # Let's discuss this one
 # I'd like to go double quotes everywhere, but am open to discussion

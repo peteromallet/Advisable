@@ -99,6 +99,8 @@ Rails.application.routes.draw do
   post "zapier_interactor/send_finance_email"
   post "zapier_interactor/create_message"
 
+  get "verify_project/:uid", to: "application#verify_project_redirect"
+
   # match every other route to the frontend codebase
   root "application#frontend"
   get "/case_studies/:id", to: "application#case_study", as: :public_case_study
