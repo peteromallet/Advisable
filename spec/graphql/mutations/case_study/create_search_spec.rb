@@ -12,7 +12,7 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     <<-GRAPHQL
       mutation {
         createCaseStudySearch(input: {
-          articles: ["#{article1.id}", "#{article2.id}"],
+          articles: ["#{article1.uid}", "#{article2.uid}"],
           businessType: "B2B",
           goals: ["First", "Second"],
           name: "A Search",
@@ -26,11 +26,17 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     GRAPHQL
   end
 
+  def request
+    AdvisableSchema.execute(query, context: context)
+  end
+
   it "creates a new search" do
-    response = AdvisableSchema.execute(query, context: context)
-    uid = response["data"]["createCaseStudySearch"]["search"]["id"]
+    uid = request["data"]["createCaseStudySearch"]["search"]["id"]
     search = ::CaseStudy::Search.find_by!(uid: uid)
-    expect(search.attributes.values_at("business_type", "goals", "name", "user_id")).to match_array(["B2B", %w[First Second], "A Search", user.id])
+    expect(search.business_type).to eq("B2B")
+    expect(search.goals).to match_array(%w[First Second])
+    expect(search.name).to eq("A Search")
+    expect(search.user_id).to eq(user.id)
     expect(search.skills.pluck(:skill_id)).to match_array([article1.skills.pluck(:skill_id), article2.skills.pluck(:skill_id)].flatten)
     expect(search.preferences).to eq(%w[One Two])
     expect(search.results).to match_array([article1, article2])
@@ -40,8 +46,7 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     let(:user) { create(:specialist) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
-      error = response["errors"][0]["extensions"]["code"]
+      error = request["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end
   end
@@ -50,8 +55,7 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
-      error = response["errors"][0]["extensions"]["code"]
+      error = request["errors"][0]["extensions"]["code"]
       expect(error).to eq("notAuthenticated")
     end
   end
