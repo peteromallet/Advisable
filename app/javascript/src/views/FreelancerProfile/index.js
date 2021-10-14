@@ -18,9 +18,11 @@ export default function FreelancerProfile() {
 
   return (
     <ErrorBoundary>
-      <Helmet>
-        <title>Advisable | {data?.specialist?.name}</title>
-      </Helmet>
+      {data?.specialist && (
+        <Helmet>
+          <title>Advisable | {data?.specialist?.name}</title>
+        </Helmet>
+      )}
       <Box
         display="flex"
         flexDirection="column"
