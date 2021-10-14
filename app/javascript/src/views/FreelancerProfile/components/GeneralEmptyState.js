@@ -36,8 +36,8 @@ export default function GeneralEmptyState({ specialist }) {
           lineHeight="20px"
           color="neutral700"
         >
-          It looks like {specialist.firstName} hasn&apos;t any projects to their
-          profile yet.
+          It looks like {specialist.firstName} hasn&apos;t added any projects to
+          their profile yet.
         </Text>
       </Box>
     </Box>
