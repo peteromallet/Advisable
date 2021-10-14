@@ -130,6 +130,7 @@ if (window.prefetchedQueries) {
     client.writeQuery({
       query: gql(prefetchedQuery.query),
       data: prefetchedQuery.result.data,
+      variables: prefetchedQuery.variables,
     });
   });
 }
