@@ -1,6 +1,6 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { Switch, Route } from "react-router";
-import { Box, useTheme } from "@advisable/donut";
+import { Box, useBackground } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import Article from "./views/Article";
@@ -10,12 +10,7 @@ import ErrorBoundary from "src/components/ErrorBoundary";
 
 export default function FreelancerProfile() {
   const { loading, data, error } = useProfileData();
-  const { setTheme } = useTheme();
-
-  useLayoutEffect(() => {
-    setTheme((t) => ({ ...t, background: "white" }));
-    return () => setTheme((t) => ({ ...t, background: "default" }));
-  }, [setTheme]);
+  useBackground("white");
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
