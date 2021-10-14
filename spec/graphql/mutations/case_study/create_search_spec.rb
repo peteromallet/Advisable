@@ -26,11 +26,8 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     GRAPHQL
   end
 
-  def request
-    AdvisableSchema.execute(query, context: context)
-  end
-
   it "creates a new search" do
+    request = AdvisableSchema.execute(query, context: context)
     uid = request["data"]["createCaseStudySearch"]["search"]["id"]
     search = ::CaseStudy::Search.find_by!(uid: uid)
     expect(search.business_type).to eq("B2B")
@@ -46,6 +43,7 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     let(:user) { create(:specialist) }
 
     it "returns an error" do
+      request = AdvisableSchema.execute(query, context: context)
       error = request["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end
@@ -55,6 +53,7 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
+      request = AdvisableSchema.execute(query, context: context)
       error = request["errors"][0]["extensions"]["code"]
       expect(error).to eq("notAuthenticated")
     end
