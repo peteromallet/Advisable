@@ -25,7 +25,6 @@ const JobListing = lazy(() => import("./views/JobListing"));
 const JobOpportunity = lazy(() => import("./views/JobOpportunity"));
 const ApplicationFlow = lazy(() => import("./views/ApplicationFlow"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
-const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const FreelancerProfileNew = lazy(() => import("./views/FreelancerProfileNew"));
 const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication"),
@@ -107,12 +106,7 @@ const ApplicationRoutes = () => {
             path="/freelancers/apply"
             component={FreelancerApplication}
           />
-          <VersionedRoute
-            routeComponent={Route}
-            path="/freelancers/:id"
-            fallback={FreelancerProfile}
-            versions={{ 2: FreelancerProfileNew }}
-          />
+          <Route path="/freelancers/:id" component={FreelancerProfileNew} />
           {/* Client routes */}
           <Redirect
             from="/project_setup/:projectID"
