@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
-import illustration from "src/illustrations/messages";
+import { Box, Text, theme } from "@advisable/donut";
+import MessagesIllustration from "src/illustrations/zest/messages";
 
 export default function NoConversations() {
   return (
@@ -14,8 +14,18 @@ export default function NoConversations() {
       flexDirection="column"
       justifyContent="center"
     >
-      <Box as="img" src={illustration} width="140px" marginBottom={6} />
-      <Text fontSize="lg" fontWeight={500} marginBottom={1} color="neutral900">
+      <MessagesIllustration
+        width="200px"
+        marginBottom={6}
+        color={theme.colors.orange300}
+      />
+      <Text
+        fontSize="lg"
+        fontWeight={550}
+        marginBottom={1}
+        color="neutral900"
+        letterSpacing="-0.02em"
+      >
         No messages
       </Text>
       <Text color="neutral600">You don&apos;t have any messages yet.</Text>
