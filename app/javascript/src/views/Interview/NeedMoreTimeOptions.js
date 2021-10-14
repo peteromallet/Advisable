@@ -4,6 +4,7 @@ import useViewer from "../../hooks/useViewer";
 import UpdateAvailabilityForm from "./UpdateAvailabilityForm";
 import { useNotifications } from "components/Notifications";
 import { useResendInterviewRequest } from "./queries";
+import BackButton from "src/components/BackButton";
 
 export default function NeedMoreTimeOptions({ interview }) {
   const viewer = useViewer();
@@ -53,6 +54,9 @@ function NeedMoreTimeOptionsAsClient({ interview }) {
   return (
     <Container paddingY="xl">
       <Card padding={["xl", "2xl"]}>
+        <Box marginBottom={4}>
+          <BackButton to="/hire" />
+        </Box>
         <Text fontSize="4xl" fontWeight="medium" marginBottom="xs">
           {interview.specialist.firstName} has requested more time options for
           this interview

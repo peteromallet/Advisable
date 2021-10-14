@@ -1,7 +1,9 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { Box, Card, Text, Paragraph } from "@advisable/donut";
+import { theme, Box, Card, Text, Paragraph } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
+import CalendarIllustration from "src/illustrations/zest/calendar";
+import BackButton from "src/components/BackButton";
 
 export default function ClientRequestedReschedule({ interview }) {
   const { id } = interview;
@@ -14,6 +16,10 @@ export default function ClientRequestedReschedule({ interview }) {
   return (
     <Box maxWidth="500px" marginX="auto" paddingY="xl">
       <Card padding={["xl", "2xl"]}>
+        <Box marginBottom={2}>
+          <BackButton to="/hire" />
+        </Box>
+        <CalendarIllustration width="200px" color={theme.colors.blue200} />
         <Text
           fontSize="3xl"
           fontWeight="medium"

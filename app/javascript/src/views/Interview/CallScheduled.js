@@ -1,9 +1,10 @@
 import React from "react";
 import { DateTime } from "luxon";
 import { Link } from "react-router-dom";
-import { Calendar } from "@styled-icons/ionicons-outline/Calendar";
-import { Circle, Box, Card, Button, Text } from "@advisable/donut";
+import { Box, Card, Button, Text, theme } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
+import CalendarIllustration from "src/illustrations/zest/calendar";
+import BackButton from "src/components/BackButton";
 
 export default function CallScheduled({ interview }) {
   const viewer = useViewer();
@@ -17,12 +18,11 @@ export default function CallScheduled({ interview }) {
 
   return (
     <Box maxWidth="500px" marginX="auto" paddingY="4xl">
-      <Card padding={["xl", "2xl"]}>
-        <Box textAlign="center">
+      <Card padding={["xl", "2xl"]} borderRadius="20px">
+        <Box>
+          <BackButton to="/hire" marginBottom={2} />
           <Box marginBottom="xl">
-            <Circle size={64} bg="neutral100" marginBottom="lg">
-              <Calendar size={24} />
-            </Circle>
+            <CalendarIllustration width="200px" color={theme.colors.blue200} />
             <Text fontSize="xl" lineHeight="xl">
               Your interview with {recipient} is scheduled to take place on{" "}
               {datetime}

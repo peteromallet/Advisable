@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
+import BackButton from "src/components/BackButton";
 import { Box, Card, Text, Paragraph, Textarea } from "@advisable/donut";
 import FormField from "components/FormField";
 import SubmitButton from "components/SubmitButton";
@@ -23,6 +24,7 @@ export default function RequestRescheduleAsSpecialist({ interview }) {
   return (
     <Box maxWidth="500px" marginX="auto" paddingY="xl">
       <Card padding={["xl", "2xl"]} borderRadius="12px">
+        <BackButton to={`/interviews/${interview.id}`} marginBottom={4} />
         <Text
           fontSize="3xl"
           marginBottom="xs"

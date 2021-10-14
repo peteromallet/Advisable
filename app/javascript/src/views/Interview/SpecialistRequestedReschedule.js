@@ -4,6 +4,7 @@ import useViewer from "../../hooks/useViewer";
 import { useNotifications } from "components/Notifications";
 import UpdateAvailabilityForm from "./UpdateAvailabilityForm";
 import { useResendInterviewRequest } from "./queries";
+import BackButton from "src/components/BackButton";
 
 export default function SpecialistRequestedReschedule({ interview }) {
   const viewer = useViewer();
@@ -54,6 +55,9 @@ function SpecialistRequestedRescheduleAsClient({ interview }) {
   return (
     <Container paddingY="xl">
       <Card padding={["xl", "2xl"]}>
+        <Box marginBottom={4}>
+          <BackButton to="/hire" />
+        </Box>
         <Text fontSize="4xl" fontWeight="medium" marginBottom="xs">
           {interview.specialist.firstName} has requested to reschedule your
           interview.
