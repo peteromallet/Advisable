@@ -1,0 +1,12 @@
+<% content_for :title, "Advisable | #{@specialist.account.name}"%>
+
+<% if @specialist %>
+  <% content_for :meta_tags do %>
+    <meta name="description" content="<%= @specialist.bio %>">
+  <% end %>
+<% end %>
+
+<%= javascript_packs_with_chunks_tag "application" %>
+<%= stylesheet_packs_with_chunks_tag "application" %>
+
+<%= render "noscript" %>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import { Switch, Route } from "react-router";
 import { Box, useBackground } from "@advisable/donut";
 import Loading from "src/components/Loading";
@@ -17,6 +18,9 @@ export default function FreelancerProfile() {
 
   return (
     <ErrorBoundary>
+      <Helmet>
+        <title>Advisable | {data?.specialist?.name}</title>
+      </Helmet>
       <Box
         display="flex"
         flexDirection="column"

@@ -11,7 +11,7 @@
       <!-- End Google Tag Manager -->
     <% end %>
 
-    <title>Advisable</title>
+    <title><%= yield :title || "Advisable" %></title>
     <%= csrf_meta_tags %> <%= csp_meta_tag %>
 
     <%= yield :meta_tags %>
@@ -107,6 +107,7 @@ mixpanel.init("<%= ENV["MIXPANEL"] %>", {"api_host": "https://api-eu.mixpanel.co
 
     <% if @prefetched_queries&.any? %>
       <script>
+      window.test = true
         window.prefetchedQueries = <%= @prefetched_queries.to_json.html_safe %>
       </script>
     <% end %>
