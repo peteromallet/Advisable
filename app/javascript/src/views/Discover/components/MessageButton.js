@@ -2,7 +2,7 @@ import React from "react";
 import { ChatAlt } from "@styled-icons/heroicons-solid/ChatAlt";
 import { Button, Link } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
-import MessageButton from "src/views/FreelancerProfile/AboutSection/Info/MessageButton";
+import MessageButton from "src/views/FreelancerProfile/components/MessageButton";
 
 export default function MessageFreelancerButton({ specialist, ...props }) {
   const viewer = useViewer();
