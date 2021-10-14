@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   def freelancer_profile
     @specialist = Specialist.find_by(uid: params[:id])
-    prefetch_query("app/javascript/src/views/FreelancerProfileNew/queries/getProfileData.gql", variables: {
+    prefetch_query("app/javascript/src/views/FreelancerProfile/queries/getProfileData.gql", variables: {
       id: params[:id]
     })
   end
