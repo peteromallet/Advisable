@@ -15,6 +15,7 @@ export default function Profile({ data }) {
   const viewer = useViewer();
   const isOwner = viewer?.id === id;
   const { reviews, caseStudies } = data.specialist;
+
   return (
     <>
       <CoverImage
