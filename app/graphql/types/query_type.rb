@@ -70,13 +70,13 @@ module Types
     field :skills, [Types::Skill], "Returns a list of skills", null: false
 
     def skills
-      ::Skill.where(active: true)
+      ::Skill.active
     end
 
     field :popular_skills, Types::Skill.connection_type, null: false
 
     def popular_skills
-      ::Skill.where(active: true).popular
+      ::Skill.active.popular
     end
 
     field :popular_guild_countries, [Types::LabelType], null: false

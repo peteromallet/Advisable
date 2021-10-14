@@ -31,6 +31,7 @@ class User < ApplicationRecord
   belongs_to :country, optional: true
 
   scope :active, -> { joins(:account).where(accounts: {disabled_at: nil}) }
+  scope :accepted, -> { where(application_status: "Application Accepted") }
 
   serialize :available_payment_methods, Array
 
