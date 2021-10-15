@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { margin } from "styled-system";
+import { theme } from "@advisable/donut";
 
 export const StyledBackButton = styled.div`
   ${margin};
@@ -8,8 +9,8 @@ export const StyledBackButton = styled.div`
   height: 40px;
   border-radius: 50%;
   position: relative;
-  background: #f5f5f8;
   display: inline-flex;
+  background: ${theme.colors.neutral100};
 
   a {
     top: 0;

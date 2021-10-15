@@ -23,8 +23,12 @@ module CaseStudy
       super.presence || []
     end
 
+    def result_ids
+      attributes["results"] || []
+    end
+
     def results
-      refresh_results! if attributes["results"].blank?
+      refresh_results! if result_ids.blank?
 
       Article.published.active.
         where(id: active_result_ids).
@@ -33,13 +37,16 @@ module CaseStudy
     end
 
     def refresh_results!
-      reload
-      query = results_query(limit: RESULT_LIMIT, exclude: archived)
-      update!(results: query.map(&:id))
+      amount_to_add = RESULT_LIMIT - (result_ids - archived).size
+      return if amount_to_add <= 0
+
+      existing_or_archived = result_ids + archived
+      new_results = results_query(limit: amount_to_add, exclude: existing_or_archived).map(&:id)
+      update!(results: result_ids + new_results)
     end
 
     def active_result_ids
-      attributes["results"] - archived
+      result_ids - archived
     end
 
     def results_query(limit: nil, exclude: nil)

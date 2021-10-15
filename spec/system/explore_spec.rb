@@ -6,7 +6,8 @@ RSpec.describe 'Discover', type: :system do
   let(:account) { create(:account, permissions: ["team_manager"], features: {"case_studies" => true}) }
   let(:user) { create(:user, account: account) }
   let(:article1) { create(:case_study_article, title: "Article One", score: 100) }
-  let(:article2) { create(:case_study_article, score: 90) }
+  let(:article2) { create(:case_study_article, title: "Article Two", score: 90) }
+  let(:article3) { create(:case_study_article, title: "Article Three", score: 90) }
   let!(:search) do
     create(:case_study_search, {
       name: "Test list",
@@ -92,30 +93,39 @@ RSpec.describe 'Discover', type: :system do
   end
 
   it 'user can create a new shortlist' do
-    twitter_ads = create(:skill, name: "Twitter Ads")
-    facebook_ads = create(:skill, name: "Facebook Ads")
-    create(:case_study_skill, article: article1, skill: twitter_ads)
-    create(:case_study_skill, article: article1, skill: facebook_ads)
+    branding = create(:skill_category, name: "Branding")
+    brand_marketing = create(:skill, name: "Brand Marketing")
+    brand_strategy = create(:skill, name: "Brand Strategy")
+    brand_marketing.skill_categories << branding
+    brand_strategy.skill_categories << branding
+
+    [article1, article2, article3].each do |article|
+      create(:case_study_skill, article: article, skill: [brand_marketing, brand_strategy].sample)
+    end
 
     authenticate_as(user)
     visit '/explore'
     click_on("New Shortlist")
     # Skills
-    click_on("Facebook Ads")
-    click_on("Twitter Ads")
+    click_on("Branding")
+    # Article selection
+    first("[data-testid='articleTitle']", text: "Article One").click
+    first("[data-testid='articleTitle']", text: "Article Two").click
+    expect(page).to have_button('Continue', disabled: true)
+    first("[data-testid='articleTitle']", text: "Article Three").click
     click_on("Continue")
     # Goals
     find("label", text: "Increase Web Traffic").click
     find("label", text: "Rebranding").click
     find("label", text: "Improve Process").click
     click_on("Continue")
-    # Preferences
-    find("label", text: "The freelancer is available right now").click
-    find("label", text: "The cost of this project is within our overall budget").click
-    click_on("Search for specialists")
+    # Name
+    fill_in("name", with: "My shortlist")
+    click_on("Create shortlist")
     # Results
     expect(page).to have_content(article1.title)
-    expect(page).not_to have_content(article2.title)
+    expect(page).to have_content(article2.title)
+    expect(page).to have_content(article3.title)
   end
 
   it 'user can delete a search' do

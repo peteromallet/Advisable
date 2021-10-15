@@ -5,9 +5,12 @@ import Route from "src/components/Route";
 import Shortlist from "./views/Shortlist";
 import Shortlists from "./views/Shortlists";
 import ShortlistArticle from "./views/ShortlistArticle";
-import CreateOrEditSearch from "./views/CreateOrEditSearch";
 import Page from "src/components/Page";
 import ErrorBoundary from "src/components/ErrorBoundary";
+import ShortlistArticleSelection from "./views/ShortlistArticleSelection";
+import ShortlistSkillCategory from "./views/ShortlistSkillCategory";
+import ShortlistGoals from "./views/ShortlistGoals";
+import ShortlistName from "./views/ShortlistName";
 
 export default function Discover() {
   useBackground("white");
@@ -22,15 +25,13 @@ export default function Discover() {
       <Page width="960px">
         <Box paddingY={{ _: 8, m: 12 }} paddingX={{ _: 4, m: 8 }}>
           <Switch>
+            <Route path="/explore/new/goals" component={ShortlistGoals} />
+            <Route path="/explore/new/name" component={ShortlistName} />
             <Route
-              path={[
-                "/explore/new",
-                "/explore/:id/skills",
-                "/explore/:id/goals",
-                "/explore/:id/preferences",
-              ]}
-              component={CreateOrEditSearch}
+              path="/explore/new/:slug"
+              component={ShortlistArticleSelection}
             />
+            <Route path="/explore/new" component={ShortlistSkillCategory} />
             <Route
               path="/explore/:id/:articleId"
               component={ShortlistArticle}
