@@ -4,6 +4,7 @@ import { theme, Box, Card, Text, Paragraph } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import CalendarIllustration from "src/illustrations/zest/calendar";
 import BackButton from "src/components/BackButton";
+import InviteToInterview from "./InviteToInterview";
 
 export default function CallRequested({ interview }) {
   const { id } = interview;
@@ -34,6 +35,8 @@ export default function CallRequested({ interview }) {
           will let you know once they have scheduled a call for one of these
           times.
         </Paragraph>
+
+        <InviteToInterview interview={interview} />
       </Card>
     </Box>
   );

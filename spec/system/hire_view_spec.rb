@@ -5,14 +5,6 @@ require "rails_helper"
 RSpec.describe "Hire view", type: :system do
   let(:application) { create(:application, status: "Application Accepted") }
 
-  it "User can hire a candidate" do
-    authenticate_as(application.project.user)
-    visit("/hire")
-    expect(page).to have_content(application.specialist.account.name)
-    click_on("Hire")
-    expect(page).to have_current_path("/book/#{application.uid}")
-  end
-
   it "User can message a candidate" do
     authenticate_as(application.project.user)
     visit("/hire")
