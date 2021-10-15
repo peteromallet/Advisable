@@ -12,6 +12,11 @@ RSpec.describe RefreshCaseStudySearchesJob do
   let(:search4) { create(:case_study_search, user: user_without_access) }
   let(:article1) { create(:case_study_article, score: 90) }
   let(:article2) { create(:case_study_article, score: 85) }
+  let(:article3) { create(:case_study_article, score: 75) }
+  let(:article4) { create(:case_study_article, score: 65) }
+  let(:article5) { create(:case_study_article, score: 55) }
+  let(:article6) { create(:case_study_article, score: 45) }
+  let(:article7) { create(:case_study_article, score: 35) }
   let(:skill1) { create(:skill) }
   let(:skill2) { create(:skill) }
   let(:skill3) { create(:skill) }
@@ -68,19 +73,21 @@ RSpec.describe RefreshCaseStudySearchesJob do
     expect(search1.reload.results.size).to eq(CaseStudy::Search::RESULT_LIMIT)
   end
 
-  it "doesn't overwrite existing results and adds enough to have at most 12 active" do
-    article1.skills.create(skill: skill3)
-    article2.skills.create(skill: skill3)
-    (CaseStudy::Search::RESULT_LIMIT + 2).times do
-      article = create(:case_study_article)
-      article.skills.create(skill: skill3)
+  context "when existing results" do
+    before do
+      1.upto(7) do |i|
+        public_send("article#{i}").skills.create(skill: skill3)
+      end
+      search1.skills.create(skill: skill3)
     end
-    search1.update(results: [article1.id, article2.id], archived: [article1.id])
-    search1.skills.create(skill: skill3)
-    described_class.perform_now
-    results = search1.reload.attributes["results"]
-    expect(results.size).to eq(CaseStudy::Search::RESULT_LIMIT + 1)
-    expect(results).to include(article1.id, article2.id)
-    expect(search1.reload.results.size).to eq(CaseStudy::Search::RESULT_LIMIT)
+
+    it "leaves existing ones in place even if low score should push them out" do
+      search1.update(results: [article5.id, article6.id, article7.id], archived: [article5.id])
+      described_class.perform_now
+      results = search1.reload.attributes["results"]
+      expect(results.size).to eq(CaseStudy::Search::RESULT_LIMIT + 1)
+      expect(results).to include(article5.id, article6.id, article7.id)
+      expect(search1.reload.results.size).to eq(CaseStudy::Search::RESULT_LIMIT)
+    end
   end
 end

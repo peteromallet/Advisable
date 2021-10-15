@@ -62,6 +62,11 @@ const createCache = () => {
           previousProjects: relayStylePagination(),
         },
       },
+      SkillCategory: {
+        fields: {
+          articles: relayStylePagination(),
+        },
+      },
       ClientApplication: {
         fields: {
           skills: {

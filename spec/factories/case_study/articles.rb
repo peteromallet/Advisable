@@ -14,5 +14,9 @@ FactoryBot.define do
     specialist
     interviewer { association :account }
     editor { association :account }
+
+    trait :with_skills do
+      skills { [association(:case_study_skill), association(:case_study_skill)] }
+    end
   end
 end

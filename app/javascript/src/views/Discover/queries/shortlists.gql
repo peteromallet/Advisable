@@ -1,5 +1,6 @@
 query Shortlists {
   currentCompany {
+    id
     kind
     industry {
       id

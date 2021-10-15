@@ -1,4 +1,5 @@
 import {
+  gql,
   useApolloClient,
   useQuery,
   useMutation,
@@ -9,13 +10,11 @@ import ARTICLE from "./article.gql";
 import SHORTLIST from "./shortlist.gql";
 import SHORTLISTS from "./shortlists.gql";
 import ARCHIVE_ARTICLE from "./archiveArticle.gql";
-import FINALIZE_SEARCH from "./finalizeCaseStudySearch.gql";
-import UPDATE_SEARCH from "./updateCaseStudySearch.gql";
-import SEARCH_FORM_DETAILS from "./caseStudySearchFormDetails.gql";
 import CREATE_SEARCH from "./createCaseStudySearch.gql";
-import CREATE_OR_EDIT from "./createOrEditSearch.gql";
 import REFRESH_RESULTS from "./refreshResults.gql";
+import SKILL_CATEGORIES from "./skillCategories.gql";
 import DELETE from "./deleteSearch.gql";
+import CATEGORY_ARTICLES from "./categoryArticles.gql";
 
 export function useShortlist() {
   const { id } = useParams();
@@ -58,10 +57,6 @@ export function useArchiveArticle(search, article) {
   });
 }
 
-export function useCaseStudySearchFormDetails(opts) {
-  return useQuery(SEARCH_FORM_DETAILS, opts);
-}
-
 export function useCreateCaseStudySearch() {
   return useMutation(CREATE_SEARCH, {
     refetchQueries: [
@@ -72,34 +67,24 @@ export function useCreateCaseStudySearch() {
     update(cache, { data }) {
       const search = data.createCaseStudySearch.search;
 
-      cache.writeQuery({
-        query: SEARCH_FORM_DETAILS,
-        variables: { id: search.id },
-        data: {
-          caseStudySearch: search,
+      cache.modify({
+        fields: {
+          caseStudySearches(existing = []) {
+            const newRef = cache.writeFragment({
+              data: search,
+              fragment: gql`
+                fragment NewShortlist on CaseStudySearch {
+                  id
+                }
+              `,
+            });
+
+            return [...existing, newRef];
+          },
         },
       });
     },
   });
-}
-
-export function useCreateOrEditSearch(opts) {
-  return useQuery(CREATE_OR_EDIT, opts);
-}
-
-export function useFinalizeCaseStudySearch(search) {
-  return useMutation(FINALIZE_SEARCH, {
-    refetchQueries: [
-      {
-        query: SHORTLIST,
-        variables: { id: search.id },
-      },
-    ],
-  });
-}
-
-export function useUpdateCaseStudySearch(opts) {
-  return useMutation(UPDATE_SEARCH, opts);
 }
 
 export function useRefreshResults() {
@@ -126,4 +111,12 @@ export function useDeleteSearch(search) {
       });
     },
   });
+}
+
+export function useSkillCategories() {
+  return useQuery(SKILL_CATEGORIES);
+}
+
+export function useCategoryArticles(props) {
+  return useQuery(CATEGORY_ARTICLES, props);
 }

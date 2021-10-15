@@ -121,6 +121,14 @@ export const size = variant({
         fontWeight: 550,
       },
     },
+    "3xs": {
+      width: "60px",
+      height: "72px",
+      [StyledRecommendationNumber]: {
+        size: "24px",
+        fontSize: "12px",
+      },
+    },
   },
 });
 

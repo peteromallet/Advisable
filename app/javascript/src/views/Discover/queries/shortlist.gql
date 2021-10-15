@@ -3,11 +3,23 @@
 query Shortlist($id: ID!) {
   currentCompany {
     id
+    kind
     name
+    industry {
+      id
+      name
+    }
   }
   caseStudySearch(id: $id) {
     id
     name
+    skills {
+      id
+      skill {
+        id
+        name
+      }
+    }
     results(first: 5) {
       nodes {
         ...ArticleFields

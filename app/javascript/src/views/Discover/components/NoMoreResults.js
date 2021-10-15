@@ -28,7 +28,7 @@ export default function NoMoreResults() {
       </Text>
       <Text lineHeight="20px">
         It looks like we don’t have any more recommendations for you at this
-        time. We have hundred’s of case studies added every week and will let
+        time. We have lots of new of case studies added every week and will let
         you know when we have another recommendation.
       </Text>
     </Box>

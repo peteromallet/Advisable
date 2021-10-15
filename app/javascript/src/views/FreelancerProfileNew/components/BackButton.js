@@ -14,12 +14,11 @@ const StyledBackButton = styled.div`
   width: 100%;
   padding: 0 16px;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.56);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(4px);
   border-radius: 24px;
   color: ${theme.colors.neutral600};
-  transition: color 0.2s, box-shadow 0.2s;
-  box-shadow: 0 0 0 0 ${theme.colors.neutral400};
+  background-color: ${theme.colors.neutral100};
+  transition: backdrop-filter 0.2s;
 
   & span {
     font-size: ${theme.fontSizes.l}px;
