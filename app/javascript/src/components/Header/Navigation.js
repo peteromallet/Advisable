@@ -7,7 +7,7 @@ import FreelancerNavigation from "./FreelancerNavigation";
 export default function Navigation(props) {
   const viewer = useViewer();
 
-  if (viewer?.isClient && viewer.isAccepted) {
+  if (viewer?.isClient) {
     return <ClientNavigation {...props} />;
   }
 

@@ -8,6 +8,7 @@ export const company = (fields = {}) => {
       id: uniqueId("company"),
       name: "Test",
       users: [],
+      kind: "Startup",
       bankTransfersEnabled: false,
       address: bankHolderAddress(),
     },

@@ -27,7 +27,7 @@ global.IntersectionObserver = class IntersectionObserver {
   }
 };
 
-const TIMEOUT = 30000;
+const TIMEOUT = 20000;
 configure({ asyncUtilTimeout: TIMEOUT });
 
 window.focus = jest.fn();
