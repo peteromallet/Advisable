@@ -22,7 +22,6 @@ RSpec.describe Mutations::UpdateLastReadNotification do
   describe "notifications" do
     subject(:touch_read_at) do
       resp = AdvisableSchema.execute(query, context: {current_user: specialist})
-      pp resp
       resp.dig("data", "updateLastReadNotification", "viewer")
     end
 
