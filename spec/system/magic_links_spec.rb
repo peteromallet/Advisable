@@ -4,14 +4,14 @@ require "rails_helper"
 
 RSpec.describe "magic links", type: :system do
   let(:account) { create(:account, confirmed_at: nil) }
-  let(:magic_link) { create(:magic_link, account: account, path: "/projects") }
+  let(:magic_link) { create(:magic_link, account: account, path: "/explore") }
 
   before { create(:user, account: account) }
 
   it "authenticates the user and uses the magic link" do
-    visit "/projects?mlt=#{magic_link.token}&mluid=#{account.uid}&another=param"
-    expect(page).to have_content("You have no projects")
-    expect(page).to have_current_path("/projects?another=param")
+    visit "/explore?mlt=#{magic_link.token}&mluid=#{account.uid}&another=param"
+    expect(page).to have_content("You haven't created any shortlists")
+    expect(page).to have_current_path("/explore?another=param")
     expect(account.reload.confirmed_at).not_to be_nil
   end
 
@@ -23,24 +23,24 @@ RSpec.describe "magic links", type: :system do
   end
 
   context "when the magic link has expired" do
-    let(:magic_link) { create(:magic_link, expires_at: 1.hour.ago, account: account, path: "/projects") }
+    let(:magic_link) { create(:magic_link, expires_at: 1.hour.ago, account: account, path: "/explore") }
 
     it "does not authenticate the user" do
-      visit "/projects?mlt=#{magic_link.token}&mluid=#{account.uid}"
+      visit "/explore?mlt=#{magic_link.token}&mluid=#{account.uid}"
       expect(page).to have_current_path("/login")
     end
   end
 
   context "when given an invalid token" do
     it "ignores it" do
-      visit "/projects?mlt=invalidToken&mluid=#{account.uid}"
+      visit "/explore?mlt=invalidToken&mluid=#{account.uid}"
       expect(page).to have_current_path("/login")
     end
   end
 
   context "when given a valid token but invalid uid" do
     it "ignores it" do
-      visit "/projects?mlt=#{magic_link.token}&mluid=invalidUID"
+      visit "/explore?mlt=#{magic_link.token}&mluid=invalidUID"
       expect(page).to have_current_path("/login")
     end
   end
