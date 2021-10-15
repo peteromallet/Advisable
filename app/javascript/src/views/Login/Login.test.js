@@ -2,7 +2,7 @@ import { fireEvent } from "@testing-library/react";
 import VIEWER from "../../graphql/queries/getViewer.graphql";
 import { renderRoute, mockData } from "test-utils";
 import LOGIN from "./login";
-import { GET_PROJECTS } from "../Projects/queries";
+import SHORTLISTS from "../Discover/queries/shortlists.gql";
 
 test("User can login", async () => {
   const user = mockData.user({ industry: mockData.industry() });
@@ -52,12 +52,14 @@ test("User can login", async () => {
       },
       {
         request: {
-          query: GET_PROJECTS,
+          query: SHORTLISTS,
         },
         result: {
           data: {
-            currentCompany: mockData.company({ projects: [] }),
-            viewer: user,
+            currentCompany: mockData.company({
+              industry: mockData.industry(),
+            }),
+            caseStudySearches: [],
           },
         },
       },
@@ -70,7 +72,7 @@ test("User can login", async () => {
   fireEvent.change(password, { target: { value: "testing123" } });
   let login = await app.findByLabelText("Login");
   fireEvent.click(login);
-  await app.findByText(/projects/i);
+  await app.findByText(/shortlists/i);
 });
 
 test("User is redirected if already logged in", async () => {
@@ -91,19 +93,21 @@ test("User is redirected if already logged in", async () => {
       },
       {
         request: {
-          query: GET_PROJECTS,
+          query: SHORTLISTS,
         },
         result: {
           data: {
-            currentCompany: mockData.company({ projects: [] }),
-            viewer: user,
+            currentCompany: mockData.company({
+              industry: mockData.industry(),
+            }),
+            caseStudySearches: [],
           },
         },
       },
     ],
   });
 
-  await app.findByText("Find new talent");
+  await app.findByText(/shortlists/);
 });
 
 test("It shows API errors", async () => {

@@ -21,12 +21,12 @@ RSpec.describe "Internal application view", type: :system do
   end
 
   context "when not an admin" do
-    it "redirects to the projects page" do
+    it "redirects to explorer" do
       user.account.update(permissions: [])
       authenticate_as(user)
       visit "/internal/applications/#{application.uid}"
       expect(page).not_to have_content(application.specialist.account.name)
-      expect(page).to have_current_path("/projects")
+      expect(page).to have_current_path("/explore")
     end
   end
 end

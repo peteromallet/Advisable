@@ -11,7 +11,7 @@ import {
 } from "test-utils";
 import Signup from "./index";
 import SIGNUP from "./signup";
-import { GET_PROJECTS } from "../Projects/queries";
+import SHORTLISTS from "../Discover/queries/shortlists.gql";
 
 const previousLocation = window.location;
 
@@ -50,11 +50,13 @@ test("User can signup", async () => {
       ),
       mockViewer(user),
       mockQuery(
-        GET_PROJECTS,
+        SHORTLISTS,
         {},
         {
-          currentCompany: mockData.company({ projects: [] }),
-          viewer: user,
+          currentCompany: mockData.company({
+            industry: mockData.industry(),
+          }),
+          caseStudySearches: [],
         },
       ),
     ],
@@ -67,7 +69,7 @@ test("User can signup", async () => {
   userEvent.type(password, "testing123");
   userEvent.type(passwordConfirmation, "testing123");
   userEvent.click(screen.getByLabelText(/signup/i));
-  await screen.findByText(/projects/i);
+  await screen.findByText(/shortlists/i);
 });
 
 test("Displays a notice if one is passed", async () => {

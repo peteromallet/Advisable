@@ -7,17 +7,11 @@ import Loading from "./Loading";
 import { GET_PROJECTS } from "./queries";
 import ProjectsList from "./ProjectsList";
 import dataLayer from "src/utilities/dataLayer";
-import useViewer from "src/hooks/useViewer";
-import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
-import ClientApplicationPrompt from "src/components/ClientApplicationPrompt";
-import useFeatureFlag from "src/hooks/useFeatureFlag";
 import ExplorerEmptyView from "./ExplorerEmptyView";
 
 const Projects = () => {
-  const viewer = useViewer();
   const location = useLocation();
   const { loading, data } = useQuery(GET_PROJECTS);
-  const explorerEnabled = useFeatureFlag("case_studies");
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -48,29 +42,22 @@ const Projects = () => {
   };
 
   const hasProjects = (data?.currentCompany?.projects || []).length > 0;
-  if (explorerEnabled && !loading && !hasProjects) {
+  if (!loading && !hasProjects) {
     return <ExplorerEmptyView />;
   }
 
   return (
     <Container py="xl">
-      <ClientApplicationPrompt />
-      <AccountConfirmationPrompt />
+      <Heading mb={6}>Your Projects</Heading>
 
-      {viewer.isAccepted ? (
-        <>
-          <Heading mb={6}>Your Projects</Heading>
-
-          {loading ? (
-            <Loading />
-          ) : (
-            <ProjectsList
-              projects={data.currentCompany.projects}
-              onCreate={handleCreate}
-            />
-          )}
-        </>
-      ) : null}
+      {loading ? (
+        <Loading />
+      ) : (
+        <ProjectsList
+          projects={data.currentCompany.projects}
+          onCreate={handleCreate}
+        />
+      )}
     </Container>
   );
 };
