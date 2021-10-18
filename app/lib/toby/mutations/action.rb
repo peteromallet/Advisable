@@ -13,14 +13,19 @@ module Toby
         resource = self.class.resource
         model = resource.model.find(id)
 
-        Logidze.with_responsible(current_account_id) do
-          resource.public_send(name, model)
-          model.save!
+        if resource.method(name).parameters.count == 1
+          Logidze.with_responsible(current_account_id) do
+            resource.public_send(name, model)
+            model.save!
+          end
+          model.sync_to_airtable if model.respond_to?(:sync_to_airtable) && model.airtable_id.present?
+          {resource: model}
+        else
+          result = resource.public_send(name, model, context)
+
+          # result => {:redirect_to=>"/"}
+          {result: result}
         end
-
-        model.sync_to_airtable if model.respond_to?(:sync_to_airtable) && model.airtable_id.present?
-
-        {resource: model}
       end
     end
   end
