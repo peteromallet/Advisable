@@ -24,9 +24,8 @@ export default function CaseStudies({ caseStudies, specialist }) {
       <Stack spacing={6} mt={3}>
         {cards}
       </Stack>
-      {isEmpty ? (
-        <CaseStudiesEmptyState specialist={specialist} />
-      ) : (
+      {isEmpty && <CaseStudiesEmptyState specialist={specialist} />}
+      {!isEmpty && isOwner && (
         <SectionActionButton
           as={Link.External}
           href={`https://csi.advisable.com/freelancer/onboarding?specialist_id=${specialist.id}&contact_name=${specialist.firstName}`}

@@ -28,9 +28,8 @@ export default function Testimonials({ reviews }) {
       <Stack spacing={5} mt={3}>
         {testimonials}
       </Stack>
-      {isEmpty ? (
-        <TestimonialsEmptyState modal={modal} />
-      ) : (
+      {isEmpty && <TestimonialsEmptyState modal={modal} />}
+      {!isEmpty && isOwner && (
         <DialogDisclosure as={SectionActionButton} mt={6} {...modal}>
           Request a Testimonial
         </DialogDisclosure>
