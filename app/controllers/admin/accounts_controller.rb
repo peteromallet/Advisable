@@ -32,12 +32,11 @@ module Admin
     # end
 
     def resource_params
-      attrs = params.require(:account).permit(
+      params.require(:account).permit(
         *dashboard.permitted_attributes,
-        permissions: [], completed_tutorials: [], features: []
+        permissions: [],
+        completed_tutorials: []
       )
-      attrs[:features] = (attrs[:features] || []).index_with(true)
-      attrs
     end
   end
 end
