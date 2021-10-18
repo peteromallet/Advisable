@@ -1,8 +1,8 @@
 import React from "react";
 import { Redirect, useParams } from "react-router-dom";
-import { Box, Text, Heading, Card, Link } from "@advisable/donut";
-import { ExternalLink } from "@styled-icons/heroicons-outline";
+import { Text, Heading, Card } from "@advisable/donut";
 import possessive from "src/utilities/possesive";
+import CaseStudyLink from "../components/CaseStudyLink";
 import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
 import Reviewed from "./Reviewed";
 
@@ -33,46 +33,11 @@ export default function ReviewIntro({ data }) {
         Your review will be shown on {possessive(specialist.firstName)} profile
         and will be used to help them find projects on Advisable.
       </Text>
-      <Box
-        as={Link}
+      <CaseStudyLink
         to={`/freelancers/${specialist.id}/case_studies/${article_id}`}
-        target="_blank"
-        display="flex"
-        border="2px solid"
-        borderColor="neutral100"
-        borderRadius="12px"
-        alignItems="flex-start"
-        justifyContent="flex-start"
-        flexDirection="row"
-        mb={4}
-        p={4}
-        css={`
-          gap: 12px;
-        `}
       >
-        <Box color="neutral200" height="48px" minWidth="48px">
-          <ExternalLink color="neutral200" />
-        </Box>
-        <Box>
-          <Text
-            color="neutral500"
-            textTransform="uppercase"
-            fontSize="2xs"
-            fontWeight={450}
-          >
-            Case Study
-          </Text>
-          <Text
-            fontSize={{ _: "20px", m: "22px" }}
-            color="blue900"
-            lineHeight="26px"
-            fontWeight="medium"
-            letterSpacing="-0.01em"
-          >
-            {caseStudy.title}
-          </Text>
-        </Box>
-      </Box>
+        {caseStudy.title}
+      </CaseStudyLink>
       <AuthenticateWithLinkedin data={data} />
     </Card>
   );
