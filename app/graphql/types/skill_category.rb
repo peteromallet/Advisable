@@ -13,7 +13,7 @@ module Types
     def articles
       similar_skills = object.skills_with_similar
       cs_skills = ::CaseStudy::Skill.where(skills: similar_skills)
-      ::CaseStudy::Article.where(skills: cs_skills).by_score
+      ::CaseStudy::Article.searchable.where(skills: cs_skills).by_score
     end
   end
 end
