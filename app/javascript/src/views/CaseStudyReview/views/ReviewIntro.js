@@ -2,8 +2,8 @@ import React from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { Text, Heading, Card } from "@advisable/donut";
 import possessive from "src/utilities/possesive";
+import AuthenticateWithLinkedin from "src/components/AuthenticateWithLinkedin";
 import CaseStudyLink from "../components/CaseStudyLink";
-import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
 import Reviewed from "./Reviewed";
 
 export default function ReviewIntro({ data }) {
