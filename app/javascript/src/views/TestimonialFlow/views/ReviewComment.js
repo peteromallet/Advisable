@@ -42,7 +42,7 @@ function ReviewComment({ data }) {
       },
     });
 
-    if (response.error) {
+    if (response.errors) {
       error("Something went wrong. Please try again.");
     } else {
       history.push(`/review/${specialist.id}/complete`);
