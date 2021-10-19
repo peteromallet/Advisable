@@ -6,20 +6,23 @@ function AuthenticateWithLinkedin() {
   return (
     <Box
       bg="blue50"
-      padding={{ _: "20px", m: "40px" }}
+      padding={{ _: 5, m: 14 }}
       textAlign="center"
       borderRadius="20px"
     >
       <Text
-        mb="20px"
-        fontSize="17px"
-        color="blue900"
-        lineHeight="22px"
-        fontWeight="medium"
+        mb={5}
+        fontSize="l"
+        color="neutral900"
+        lineHeight="m"
+        fontWeight={550}
       >
         Authenticate with LinkedIn to validate your identity
       </Text>
       <LoginWithLinkedin />
+      <Text color="neutral500" fontStyle="italic" mt={2} fontSize="xs">
+        *This won&apos;t create an account
+      </Text>
     </Box>
   );
 }
