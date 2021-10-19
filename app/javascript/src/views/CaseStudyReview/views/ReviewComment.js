@@ -9,6 +9,7 @@ import { useCreateReview } from "../queries";
 import { Card, Text, Heading, Textarea } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
+import Reviewed from "./Reviewed";
 
 const valiadtionSchema = object().shape({
   comment: string().required("Please write a review"),
@@ -49,6 +50,9 @@ function ReviewComment({ data }) {
     }
   };
 
+  if (data.caseStudy.review) {
+    return <Reviewed />;
+  }
   if (!oauthViewer) {
     return (
       <Redirect to={`/review/${specialist.id}/case_studies/${article_id}`} />
