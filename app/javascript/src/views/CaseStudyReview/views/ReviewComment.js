@@ -19,7 +19,7 @@ function ReviewComment({ data }) {
   const { error } = useNotifications();
 
   // React Router data
-  const { id, article_id } = useParams();
+  const { article_id } = useParams();
   const history = useHistory();
   const location = useLocation();
 
@@ -27,20 +27,20 @@ function ReviewComment({ data }) {
   const [createReview] = useCreateReview();
 
   // Describe Formik initial state
-  const initialValues = { companyName: "", relationship: "", comment: "" };
+  const initialValues = { comment: "" };
 
   const handleSubmit = async (values) => {
     const response = await createReview({
       variables: {
         input: {
-          specialist: id,
+          article: article_id,
           ratings: location.state?.ratings,
           ...values,
         },
       },
     });
 
-    if (response.error) {
+    if (response.errors) {
       error("Something went wrong. Please try again.");
     } else {
       history.push(
