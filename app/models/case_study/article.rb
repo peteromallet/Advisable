@@ -41,6 +41,7 @@ end
 #  excerpt                :string
 #  freelancer_edits       :text
 #  goals                  :jsonb
+#  hide_from_search       :boolean          default(FALSE)
 #  published_at           :datetime
 #  score                  :integer
 #  specialist_approved_at :datetime
