@@ -16,6 +16,7 @@ import {
 } from "@advisable/donut";
 import StarRatingField from "../components/StarRatingField";
 import SubmitButton from "src/components/SubmitButton";
+import Reviewed from "./Reviewed";
 
 const validationSchema = Yup.object().shape({
   adherenceToSchedule: Yup.number().required(),
@@ -61,6 +62,9 @@ function ReviewRatings({ data }) {
     history.push(`/review/${id}/case_studies/${article_id}/comment`);
   };
 
+  if (data.caseStudy.review) {
+    return <Reviewed />;
+  }
   if (!oauthViewer) {
     return (
       <Redirect to={`/review/${specialist.id}/case_studies/${article_id}`} />
