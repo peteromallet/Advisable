@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(version: 2021_10_19_074645) do
     t.text "editor_note"
     t.text "freelancer_edits"
     t.datetime "deleted_at"
-    t.boolean "hide_from_search"
+    t.boolean "hide_from_search", default: false
     t.index ["airtable_id"], name: "index_case_study_articles_on_airtable_id", unique: true
     t.index ["company_id"], name: "index_case_study_articles_on_company_id"
     t.index ["editor_id"], name: "index_case_study_articles_on_editor_id"
