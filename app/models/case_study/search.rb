@@ -27,6 +27,14 @@ module CaseStudy
       attributes["results"] || []
     end
 
+    def existing_or_archived
+      result_ids + archived
+    end
+
+    def active_result_ids
+      result_ids - archived
+    end
+
     def results
       refresh_results! if result_ids.blank?
 
@@ -40,13 +48,22 @@ module CaseStudy
       amount_to_add = RESULT_LIMIT - (result_ids - archived).size
       return if amount_to_add <= 0
 
-      existing_or_archived = result_ids + archived
       new_results = results_query(limit: amount_to_add, exclude: existing_or_archived).map(&:id)
       update!(results: result_ids + new_results)
     end
 
-    def active_result_ids
-      result_ids - archived
+    def weighted_results(limit: nil, exclude: nil)
+      skill_counts = CaseStudy::Skill.where(article_id: selected).group(:skill_id).count
+      relevant = results_query(exclude: exclude).pluck(:id, :score)
+      relevant_skills = CaseStudy::Skill.where(article_id: relevant.map(&:first)).pluck(:article_id, :skill_id).group_by(&:first)
+      weighted = relevant.sort_by do |article_id, article_score|
+        score = article_score / 10.0
+        relevant_skills[article_id].each do |_article_id, skill_id|
+          score += skill_counts[skill_id] if skill_counts[skill_id]
+        end
+        score
+      end.last(limit)
+      Article.where(id: weighted.map(&:first))
     end
 
     def results_query(limit: nil, exclude: nil)
@@ -58,7 +75,7 @@ module CaseStudy
       elsif goals.present?
         query = query.where("goals ?| array[:goals]", goals: goals)
       end
-      query.by_score
+      query
     end
 
     private
@@ -81,6 +98,7 @@ end
 #  name          :string
 #  preferences   :jsonb
 #  results       :jsonb
+#  selected      :jsonb
 #  uid           :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
