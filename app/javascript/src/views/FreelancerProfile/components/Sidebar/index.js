@@ -8,6 +8,7 @@ import ProfilePicture from "../ProfilePicture";
 import CoverImage from "../CoverImage";
 import {
   StyledStickySidebar,
+  StyledArticleAvatarWrapper,
   StyledAvatarWrapper,
   StyledNameWrapper,
   StyledBioWrapper,
@@ -40,20 +41,21 @@ export default function Sidebar({ data, ...props }) {
     : specialist.bio?.slice(0, TRUNCATE_LIMIT);
 
   return (
-    <Box
-      position="relative"
-      mt={!isArticle && { _: "-24px", m: "-40px", l: "-108px", xl: "-148px" }}
-    >
-      <StyledStickySidebar layout={["s", "s", "m", "l"]} {...props}>
-        <StyledAvatarWrapper>
-          {isArticle ? (
+    <Box position="relative">
+      <StyledStickySidebar {...props}>
+        {isArticle ? (
+          <StyledArticleAvatarWrapper>
             <Box position="relative">
               <BackButton>Go to profile</BackButton>
               <CoverImage src={specialist.coverPhoto} size="collapse" />
             </Box>
-          ) : null}
-          <ProfilePicture specialist={specialist} />
-        </StyledAvatarWrapper>
+            <ProfilePicture specialist={specialist} />
+          </StyledArticleAvatarWrapper>
+        ) : (
+          <StyledAvatarWrapper>
+            <ProfilePicture specialist={specialist} />
+          </StyledAvatarWrapper>
+        )}
         <StyledNameWrapper>
           <Text
             as={isArticle && Link}
