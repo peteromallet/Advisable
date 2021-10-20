@@ -89,6 +89,7 @@ Rails.application.routes.draw do
   post "zapier_interactor/update_user"
   post "zapier_interactor/update_specialist"
   post "zapier_interactor/update_project"
+  post "zapier_interactor/update_task"
   post "zapier_interactor/attach_previous_project_image"
   post "zapier_interactor/create_magic_link"
   post "zapier_interactor/enable_guild"
