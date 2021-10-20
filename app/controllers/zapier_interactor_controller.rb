@@ -8,6 +8,7 @@ class ZapierInteractorController < ApplicationController
   ALLOWED_USER_FIELDS = %i[campaign_name campaign_medium campaign_source trustpilot_review_status].freeze
   ALLOWED_SPECIALIST_FIELDS = %i[campaign_name campaign_source application_stage application_status campaign_medium case_study_status trustpilot_review_status].freeze
   ALLOWED_PROJECT_FIELDS = %i[status sales_status estimated_budget remote required_characteristics goals description deposit company_description stop_candidate_proposed_emails level_of_expertise_required likelihood_to_confirm lost_reason project_start].freeze
+  TASK_STAGE_MAPPING = {"Quote Requested" => :quote_requested_at, "Quote Provided" => :quote_provided_at, "Assigned" => :assigned_at, "Submitted" => :submitted_at, "Approved" => :approved_at, "Working" => :started_working_at}.freeze
 
   skip_before_action :verify_authenticity_token
   before_action :verify_key!
@@ -73,6 +74,14 @@ class ZapierInteractorController < ApplicationController
       end
 
       project.update!(attrs)
+    end
+  end
+
+  def update_task
+    find_and_update(Task) do |task|
+      task.stage = params[:stage]
+      task.assign_attributes(TASK_STAGE_MAPPING[task.stage] => Time.current) if TASK_STAGE_MAPPING[task.stage]
+      task.save!
     end
   end
 
