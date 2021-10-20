@@ -517,6 +517,45 @@ RSpec.describe ZapierInteractorController, type: :request do
     end
   end
 
+  describe "POST /update_task" do
+    let(:task) { create(:task) }
+    let(:stage) { "Approved" }
+    let(:params) { {stage: stage, uid: task.uid, key: key} }
+
+    before { allow_any_instance_of(Task).to receive(:sync_to_airtable) }
+
+    it "updates the task and datetime field and syncs to airtable" do
+      post("/zapier_interactor/update_task", params: params)
+      expect(response).to have_http_status(:success)
+      task.reload
+      expect(task.stage).to eq("Approved")
+      expect(task.approved_at).to be_within(1.second).of(Time.zone.now)
+      expect(task.quote_requested_at).to be_nil
+    end
+
+    context "when stage doesn't have a corresponding datetime field" do
+      let(:stage) { "Deleted" }
+
+      it "updates the task and no datetime field and syncs to airtable" do
+        post("/zapier_interactor/update_task", params: params)
+        expect(response).to have_http_status(:success)
+        task.reload
+        expect(task.stage).to eq("Deleted")
+        expect(task.approved_at).to be_nil
+        expect(task.quote_requested_at).to be_nil
+      end
+    end
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zapier_interactor/update_task", params: params)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
   describe "POST /attach_previous_project_image" do
     let(:previous_project) { create(:previous_project) }
     let(:image) { "http://path.to/image.jpg" }
