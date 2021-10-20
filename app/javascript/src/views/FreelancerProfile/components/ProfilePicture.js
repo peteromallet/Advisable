@@ -8,6 +8,19 @@ import FileUpload from "./FileUpload";
 import { useUpdateProfile } from "../queries";
 import useLoadImage from "src/hooks/useLoadImage";
 
+function ArticleProfilePicture({ specialist }) {
+  return (
+    <Box marginTop={18} marginBottom={4} display="inline-block">
+      <PassportAvatar
+        size={"lg"}
+        name={specialist.name}
+        src={specialist.avatar}
+        stroke={"2px"}
+      />
+    </Box>
+  );
+}
+
 export default function ProfilePicture({ specialist }) {
   const [updateAvatar] = useUpdateProfile();
   const { updated } = useLoadImage(specialist.avatar);
@@ -27,27 +40,24 @@ export default function ProfilePicture({ specialist }) {
     notifications.notify("Profile picture has been updated");
   };
 
-  return (
-    <Box
-      position="relative"
-      display="inline-block"
-      marginBottom={4}
-      marginTop={isArticle && 18}
-    >
+  return isArticle ? (
+    <ArticleProfilePicture specialist={specialist} />
+  ) : (
+    <Box position="absolute" left="0" bottom="0" display="inline-block">
       <PassportAvatar
-        size={isArticle ? "lg" : ["lg", "lg", "xl", "xl", "2xl"]}
+        size={["lg", "lg", "xl", "xl", "2xl"]}
         name={specialist.name}
         src={specialist.avatar}
-        stroke={isArticle ? "2px" : "4px"}
+        stroke="4px"
       />
-      {isOwner && !isArticle ? (
+      {isOwner && (
         <FileUpload
           onChange={submit}
           updated={updated}
           maxSizeInMB={1}
           type="avatar"
         />
-      ) : null}
+      )}
     </Box>
   );
 }

@@ -1,82 +1,50 @@
+import css from "@styled-system/css";
 import styled from "styled-components";
-import { top, variant } from "styled-system";
+import { top } from "styled-system";
 import { theme } from "@advisable/donut";
 
-export const StyledAvatarWrapper = styled.div``;
-export const StyledNameWrapper = styled.div`
-  min-width: 0;
-`;
-export const StyledBioWrapper = styled.div``;
+export const StyledArticleAvatarWrapper = styled.div(
+  css({
+    gridRow: "1",
+    position: "relative",
+  }),
+);
+export const StyledAvatarWrapper = styled.div(
+  css({
+    position: "relative",
+    marginBottom: 4,
+    gridRow: ["1", "1", "1 / last-line", "1"],
+    height: ["72px", "72px", "104px", "36px", "44px"],
+    width: ["84px", "84px", "126px", "126px", "168px"],
+  }),
+);
+export const StyledNameWrapper = styled.div(
+  css({
+    gridRow: ["1", "1", "1", "2"],
+    gridColumn: ["2", "2", "2", "1"],
+    paddingTop: [2, 2, 2, 2, 0],
+    marginBottom: 4,
+  }),
+);
+export const StyledBioWrapper = styled.div(
+  css({
+    gridRow: ["2", "2", "2", "3"],
+    gridColumn: ["1 / last-column", "1 / last-column", "2", "1"],
+  }),
+);
 
-const layout = variant({
-  prop: "layout",
-  variants: {
-    l: {
-      gridTemplateRows: "auto",
-      gridTemplateColumns: "auto",
-      width: "280px",
-      marginRight: 8,
-      [StyledAvatarWrapper]: {
-        gridRow: "1",
-      },
-      [StyledNameWrapper]: {
-        gridRow: "2",
-        gridColumn: "1",
-        paddingTop: 0,
-        marginBottom: 4,
-      },
-      [StyledBioWrapper]: {
-        gridRow: "3",
-        gridColumn: "1",
-      },
-    },
-    m: {
-      gridTemplateRows: "auto auto",
-      gridTemplateColumns: "auto auto",
-      columnGap: 4,
-      width: "auto",
-      [StyledAvatarWrapper]: {
-        gridRow: "1 / last-line",
-      },
-      [StyledNameWrapper]: {
-        gridRow: "1",
-        gridColumn: "2",
-        paddingTop: 12,
-        marginBottom: 4,
-      },
-      [StyledBioWrapper]: {
-        gridRow: "2",
-        gridColumn: "2",
-      },
-    },
-    s: {
-      gridTemplateRows: "auto auto",
-      gridTemplateColumns: "auto 1fr",
-      width: "auto",
-      columnGap: 3,
-      [StyledAvatarWrapper]: {
-        gridRow: "1",
-      },
-      [StyledNameWrapper]: {
-        gridRow: "1",
-        gridColumn: "2",
-        paddingTop: 8,
-        marginBottom: 4,
-      },
-      [StyledBioWrapper]: {
-        gridRow: "2",
-        gridColumn: "1 / last-column",
-      },
-    },
-  },
-});
-
-export const StyledStickySidebar = styled.div`
-  ${layout}
-  ${top}
-  display: grid;
-  position: sticky;
-`;
+export const StyledStickySidebar = styled.div(
+  top,
+  css({
+    display: "grid",
+    position: "sticky",
+    gridTemplateRows: ["auto auto", "auto auto", "auto auto", "auto"],
+    gridTemplateColumns: ["auto 1fr", "auto 1fr", "auto auto", "auto"],
+    width: ["auto", "auto", "auto", "280px"],
+    columnGap: [3, 3, 4],
+    marginRight: [0, 0, 0, 8],
+  }),
+);
 
 export const StyledShowMore = styled.span`
   font-weight: 550;
