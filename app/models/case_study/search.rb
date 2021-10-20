@@ -48,12 +48,14 @@ module CaseStudy
       amount_to_add = RESULT_LIMIT - (result_ids - archived).size
       return if amount_to_add <= 0
 
-      new_results = results_query(limit: amount_to_add, exclude: existing_or_archived).map(&:id)
+      new_results = weighted_results(limit: amount_to_add, exclude: existing_or_archived).map(&:id)
       update!(results: result_ids + new_results)
     end
 
-    def weighted_results(limit: nil, exclude: nil)
-      skill_counts = CaseStudy::Skill.where(article_id: selected).group(:skill_id).count
+    def weighted_results(limit: RESULT_LIMIT, exclude: nil)
+      return results_query(limit: nil, exclude: nil) if skills.none?
+
+      skill_counts = selected ? CaseStudy::Skill.where(article_id: selected).group(:skill_id).count : {}
       relevant = results_query(exclude: exclude).pluck(:id, :score)
       relevant_skills = CaseStudy::Skill.where(article_id: relevant.map(&:first)).pluck(:article_id, :skill_id).group_by(&:first)
       weighted = relevant.sort_by do |article_id, article_score|
@@ -62,8 +64,8 @@ module CaseStudy
           score += skill_counts[skill_id] if skill_counts[skill_id]
         end
         score
-      end.last(limit)
-      Article.where(id: weighted.map(&:first))
+      end.reverse.first(limit)
+      Article.find(weighted.map(&:first))
     end
 
     def results_query(limit: nil, exclude: nil)
