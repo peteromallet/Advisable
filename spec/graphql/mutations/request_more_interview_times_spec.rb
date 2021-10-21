@@ -35,6 +35,11 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
     expect(interview.reload.requested_more_time_options_at).to be_within(1.second).of(Time.zone.now)
   end
 
+  it "sends the email to the specialist" do
+    response
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "need_more_time_options", "deliver_now", {args: [interview]})
+  end
+
   context "when the status is not 'Call Requested'" do
     let(:interview) { create(:interview, user: user, status: "Call Completed") }
 

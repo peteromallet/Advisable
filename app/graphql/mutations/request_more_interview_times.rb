@@ -41,6 +41,8 @@ module Mutations
         )
       end
 
+      SpecialistMailer.need_more_time_options(interview).deliver_later
+
       {interview: interview}
     end
   end
