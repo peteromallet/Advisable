@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class SpecialistMailerPreview < ActionMailer::Preview
   def verify_project
     project = PreviousProject.last
@@ -18,6 +19,10 @@ class SpecialistMailerPreview < ActionMailer::Preview
   def project_paused
     application = Application.order(Arel.sql("RANDOM()")).first
     SpecialistMailer.project_paused(application.project, application)
+  end
+
+  def more_time_options_added
+    SpecialistMailer.more_time_options_added(random_interview)
   end
 
   private

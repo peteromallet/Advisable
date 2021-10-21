@@ -59,4 +59,17 @@ class SpecialistMailer < ApplicationMailer
       format.html { render layout: false }
     end
   end
+
+  def more_time_options_added(interview)
+    @interview = interview
+    @sales_person = interview.user.company.sales_person
+    project_name = [interview.application.project&.primary_skill&.name, "project"].join(" ")
+    mail(
+      from: @sales_person.email_with_name,
+      to: interview.specialist.account.email,
+      subject: "More times added: Introductory call for #{project_name}"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
 end
