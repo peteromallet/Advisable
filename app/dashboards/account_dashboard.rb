@@ -15,7 +15,6 @@ class AccountDashboard < Administrate::BaseDashboard
     last_name: Field::String,
     email: Field::String,
     permissions: PermissionsField,
-    features: FeaturesField,
     completed_tutorials: TutorialsField,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -44,7 +43,6 @@ class AccountDashboard < Administrate::BaseDashboard
     user
     specialist
     permissions
-    features
     completed_tutorials
     created_at
     updated_at
@@ -58,7 +56,6 @@ class AccountDashboard < Administrate::BaseDashboard
     last_name
     email
     permissions
-    features
     completed_tutorials
   ].freeze
 
