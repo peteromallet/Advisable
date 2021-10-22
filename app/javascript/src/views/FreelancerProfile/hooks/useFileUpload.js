@@ -3,19 +3,21 @@ import { useNotifications } from "src/components/Notifications";
 import { DirectUpload } from "@rails/activestorage";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
 import matchFileType from "src/utilities/matchFileType";
+import useLoadImage from "src/hooks/useLoadImage";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
 export default function useFileUpload({
   onChange,
-  updated,
   maxSizeInMB = 2,
   accept,
+  src,
 }) {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [processing, setProcessing] = useState(false);
   const { error } = useNotifications();
+  const { updated } = useLoadImage(src);
 
   const progressHandler = {
     directUploadWillStoreFileWithXHR(request) {
