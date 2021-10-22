@@ -16,8 +16,8 @@ export default function useFileUpload({
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [processing, setProcessing] = useState(false);
-  const { error } = useNotifications();
-  const { updated } = useLoadImage(src);
+  const notifications = useNotifications();
+  const { updated, error } = useLoadImage(src);
 
   const progressHandler = {
     directUploadWillStoreFileWithXHR(request) {
@@ -50,12 +50,14 @@ export default function useFileUpload({
 
     // Check file type
     if (!matchFileType(files, accept)) {
-      error(`Please select one of the following file types: ${accept}`);
+      notifications.error(
+        `Please select one of the following file types: ${accept}`,
+      );
       return false;
     }
     // Check file size
     if (filesExceedLimit(files, maxSizeInMB)) {
-      error(`File size cannot exceed ${maxSizeInMB} MB`);
+      notifications.error(`File size cannot exceed ${maxSizeInMB} MB`);
       return false;
     }
 
@@ -69,5 +71,13 @@ export default function useFileUpload({
     (updated === false && 100) ||
     0;
 
-  return { handleChange, progress, uploading, processing, accept };
+  return {
+    handleChange,
+    progress,
+    uploading,
+    processing,
+    accept,
+    updated,
+    error,
+  };
 }
