@@ -4,11 +4,15 @@ import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
 import { StyledCover, StyledCoverImage, StyledContentWrapper } from "./styles";
 import defaultCoverPhoto from "./defaultCoverPhoto.png";
-import FileUpload from "../FileUpload";
 import { useSetCoverPhoto } from "../../queries";
-import useLoadImage from "src/hooks/useLoadImage";
+import PictureActionArea from "../PictureActionArea";
+import FileUploadInput from "../FileUploadInput";
+import ProgressBar from "../ProgressBar";
+import useFileUpload from "../../hooks/useFileUpload";
 
 function CoverImage({ src, ...props }) {
+  const maxSizeInMB = 5;
+  const accept = ".png, .jpg, .jpeg";
   const params = useParams();
   const viewer = useViewer();
   const isOwner = viewer?.id === params.id;
@@ -18,7 +22,6 @@ function CoverImage({ src, ...props }) {
   });
   const [updatePicture] = useSetCoverPhoto();
   const image = src || defaultCoverPhoto;
-  const { updated, error } = useLoadImage(image);
 
   const notifications = useNotifications();
 
@@ -29,6 +32,14 @@ function CoverImage({ src, ...props }) {
 
     notifications.notify("Cover picture has been updated");
   };
+
+  const { handleChange, progress, uploading, processing, updated, error } =
+    useFileUpload({
+      src: image,
+      onChange: submit,
+      maxSizeInMB,
+      accept,
+    });
 
   return (
     <StyledCover {...props}>
@@ -44,12 +55,22 @@ function CoverImage({ src, ...props }) {
       <StyledContentWrapper>
         <StyledCoverImage src={error ? defaultCoverPhoto : image} />
         {isOwner && !isArticle ? (
-          <FileUpload
-            onChange={submit}
-            updated={updated}
-            maxSizeInMB={5}
-            type="cover"
-          />
+          <>
+            <ProgressBar
+              progress={progress}
+              uploading={uploading}
+              processing={processing}
+              updated={updated}
+              type="cover"
+            />
+            <PictureActionArea type="cover" />
+            <FileUploadInput
+              handleChange={handleChange}
+              accept={accept}
+              maxSizeInMB={maxSizeInMB}
+              type="cover"
+            />
+          </>
         ) : null}
       </StyledContentWrapper>
     </StyledCover>
