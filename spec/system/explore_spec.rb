@@ -24,7 +24,7 @@ RSpec.describe 'Discover', type: :system do
   end
 
   context "when logged in as specialist" do
-    it "/explore redirects to /appliications" do
+    it "/explore redirects to /applications" do
       authenticate_as(create(:specialist, application_stage: "Accepted"))
       visit '/explore'
       expect(page).to have_content("You have not applied to any projects yet")
