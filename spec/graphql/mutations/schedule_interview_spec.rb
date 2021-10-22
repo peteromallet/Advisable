@@ -54,6 +54,12 @@ RSpec.describe Mutations::ScheduleInterview do
     }.from(nil).to(user.availability.first)
   end
 
+  it "enqueues the emails to the specialist and user to be sent 1 hour before the interview" do
+    request
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_reminder", "deliver_now", {args: [interview]}).at(user.availability.first - 1.hour)
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "interview_reminder", "deliver_now", {args: [interview]}).at(user.availability.first - 1.hour)
+  end
+
   it "sets the specialist phone number" do
     expect do
       request
