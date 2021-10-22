@@ -306,7 +306,7 @@ class NewTestData
             last_name: "#{advisable[:last_name]} Specialist",
             password_digest: "$2a$12$4COpROFiSO8HSEzpDRbwjOvjklTclASMbHz5L8FdUsmo1e/nQFCWm", # testing123
             permissions: [],
-            features: {},
+            features: [],
             confirmed_at: 1.hour.ago,
             completed_tutorials: %w[fixed_projects flexible_projects guild],
             updated_at: now,
@@ -334,7 +334,7 @@ class NewTestData
             last_name: advisable[:last_name],
             password_digest: "$2a$12$4COpROFiSO8HSEzpDRbwjOvjklTclASMbHz5L8FdUsmo1e/nQFCWm", # testing123
             permissions: %w[admin team_manager editor],
-            features: {case_studies: true},
+            features: [],
             confirmed_at: 1.hour.ago,
             completed_tutorials: %w[fixed_projects flexible_projects recommendations],
             updated_at: now,
