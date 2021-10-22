@@ -1,12 +1,14 @@
 import React from "react";
 import { matchPath, useParams } from "react-router";
+import { Box } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
-import { Box } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
-import FileUpload from "./FileUpload";
+import useFileUpload from "../hooks/useFileUpload";
+import PictureActionArea from "./PictureActionArea";
+import FileUploadInput from "./FileUploadInput";
+import ProgressBar from "./ProgressBar";
 import { useUpdateProfile } from "../queries";
-import useLoadImage from "src/hooks/useLoadImage";
 
 function ArticleProfilePicture({ specialist }) {
   return (
@@ -22,8 +24,8 @@ function ArticleProfilePicture({ specialist }) {
 }
 
 export default function ProfilePicture({ specialist }) {
+  const accept = ".png, .jpg, .jpeg";
   const [updateAvatar] = useUpdateProfile();
-  const { updated } = useLoadImage(specialist.avatar);
   const notifications = useNotifications();
   const params = useParams();
   const viewer = useViewer();
@@ -34,11 +36,23 @@ export default function ProfilePicture({ specialist }) {
   });
 
   const submit = async (blob) => {
-    await updateAvatar({
+    const response = await updateAvatar({
       variables: { input: { avatar: blob.signed_id } },
     });
-    notifications.notify("Profile picture has been updated");
+    if (response.errors) {
+      notifications.error("Something went wrong. Please try again.");
+    } else {
+      notifications.notify("Profile picture has been updated");
+    }
   };
+
+  const { handleChange, progress, uploading, processing, updated } =
+    useFileUpload({
+      src: specialist.avatar,
+      onChange: submit,
+      maxSizeInMB: 1,
+      accept,
+    });
 
   return isArticle ? (
     <ArticleProfilePicture specialist={specialist} />
@@ -51,12 +65,22 @@ export default function ProfilePicture({ specialist }) {
         stroke="4px"
       />
       {isOwner && (
-        <FileUpload
-          onChange={submit}
-          updated={updated}
-          maxSizeInMB={1}
-          type="avatar"
-        />
+        <>
+          <ProgressBar
+            progress={progress}
+            uploading={uploading}
+            processing={processing}
+            updated={updated}
+            type="avatar"
+          />
+          <PictureActionArea type="avatar" />
+          <FileUploadInput
+            handleChange={handleChange}
+            accept={accept}
+            maxSizeInMB={1}
+            type="avatar"
+          />
+        </>
       )}
     </Box>
   );
