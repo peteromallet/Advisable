@@ -81,6 +81,19 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def interview_reminder(interview)
+    @interview = interview
+    @sales_person = interview.user.company.sales_person
+    mail(
+      from: @sales_person.email_with_name,
+      to: interview.user.account.email,
+      bcc: @sales_person.email_with_name,
+      subject: "Your call with #{interview.specialist.account.name} in 1 hour"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
+
   private
 
   def application_url(application_id)

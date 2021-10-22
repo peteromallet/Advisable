@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class UserMailerPreview < ActionMailer::Preview
-  def interview_reschedule_request
-    UserMailer.interview_reschedule_request(random_interview)
-  end
-
   def invited_by_manager
     UserMailer.invited_by_manager(User.first, User.last)
   end
@@ -44,8 +40,10 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.payment_receipt(Payment.order("RANDOM()").first)
   end
 
-  def need_more_time_options
-    UserMailer.need_more_time_options(random_interview)
+  %i[interview_reschedule_request need_more_time_options interview_reminder].each do |method|
+    define_method(method) do
+      UserMailer.public_send(method, random_interview)
+    end
   end
 
   private
