@@ -3,7 +3,6 @@
 class Account < ApplicationRecord
   include Uid
   include Tutorials
-  include Permissionable
   include Featurable
   include SoftDeletable
 
@@ -30,7 +29,7 @@ class Account < ApplicationRecord
 
   before_validation :strip_email
 
-  register_permissions :admin, :team_manager, :editor
+  featurize :admin, :team_manager, :editor, column: :permissions
 
   def specialist_or_user
     specialist || user
