@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { matchPath, useParams } from "react-router";
 import { Box } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
@@ -31,6 +31,8 @@ export default function ProfilePicture({ specialist }) {
   const viewer = useViewer();
   const isOwner = viewer?.id === params.id;
 
+  const [isExpanded, setExpanded] = useState();
+
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:id/case_studies/:case_study_id",
   });
@@ -44,6 +46,10 @@ export default function ProfilePicture({ specialist }) {
     } else {
       notifications.notify("Profile picture has been updated");
     }
+  };
+
+  const handleClick = () => {
+    setExpanded((state) => !state);
   };
 
   const { handleChange, progress, uploading, processing, updated } =
@@ -64,6 +70,27 @@ export default function ProfilePicture({ specialist }) {
         src={specialist.avatar}
         stroke="4px"
       />
+      {isExpanded && (
+        <Box
+          position="fixed"
+          zIndex="10"
+          onClick={handleClick}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          width="100%"
+          height="100%"
+          top="0"
+          left="0"
+          bg="rgba(0,0,0,0.6)"
+        >
+          <PassportAvatar
+            size="8xl"
+            name={specialist.name}
+            src={specialist.avatar}
+          />
+        </Box>
+      )}
       {isOwner && (
         <>
           <ProgressBar
@@ -73,7 +100,7 @@ export default function ProfilePicture({ specialist }) {
             updated={updated}
             type="avatar"
           />
-          <PictureActionArea type="avatar" />
+          <PictureActionArea type="avatar" onClick={handleClick} />
           <FileUploadInput
             handleChange={handleChange}
             accept={accept}

@@ -86,6 +86,11 @@ const size = variant({
       height: "240px",
       borderRadius: "20px",
     },
+    "8xl": {
+      width: "410px",
+      height: "440px",
+      borderRadius: "20px",
+    },
   },
 });
 
