@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AddPublishedToTaggable < ActiveRecord::Migration[6.1]
-  class MigrationTopic < ApplicationRecord
+  class MigrationTopic < ActiveRecord::Base
     self.table_name = :tags
   end
 

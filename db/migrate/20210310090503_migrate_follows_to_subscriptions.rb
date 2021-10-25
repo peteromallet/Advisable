@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class MigrateFollowsToSubscriptions < ActiveRecord::Migration[6.1]
-  class MigrationFollow < ApplicationRecord
+  class MigrationFollow < ActiveRecord::Base
     self.table_name = :follows
   end
 
-  class MigrationSubscription < ApplicationRecord
+  class MigrationSubscription < ActiveRecord::Base
     self.table_name = :subscriptions
   end
 

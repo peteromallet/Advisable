@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CopySpecialistGuildDataToColumns < ActiveRecord::Migration[6.1]
-  class MigrationSpecialist < ApplicationRecord
+  class MigrationSpecialist < ActiveRecord::Base
     self.table_name = :specialists
   end
 

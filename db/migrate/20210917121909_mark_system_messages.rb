@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MarkSystemMessages < ActiveRecord::Migration[6.1]
-  class MigrationMessage < ApplicationRecord
+  class MigrationMessage < ActiveRecord::Base
     self.table_name = :messages
   end
 

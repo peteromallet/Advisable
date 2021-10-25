@@ -8,7 +8,7 @@ class MigrateTutorialNaming < ActiveRecord::Migration[6.1]
     "RECOMMENDATIONS" => "recommendations"
   }.freeze
 
-  class MigrationAccount < ApplicationRecord
+  class MigrationAccount < ActiveRecord::Base
     self.table_name = :accounts
   end
 
