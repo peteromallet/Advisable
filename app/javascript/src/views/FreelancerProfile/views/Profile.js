@@ -24,11 +24,10 @@ export default function Profile({ data }) {
       />
       <Box
         display="flex"
-        flexDirection={{ _: "column", l: "row" }}
+        flexDirection={{ _: "column-reverse", l: "row-reverse" }}
         px={{ xs: 7, s: 9, l: 11, xl: 14 }}
         maxWidth={{ s: "700px", l: "none" }}
       >
-        <Sidebar data={data} top={{ l: "196px", xl: "236px" }} />
         <Box width="100%" mt={{ _: 14, m: 12, l: 19, xl: 20 }}>
           <CaseStudies caseStudies={caseStudies} specialist={data.specialist} />
           <Testimonials reviews={reviews} specialist={data.specialist} />
@@ -36,6 +35,7 @@ export default function Profile({ data }) {
             <GeneralEmptyState specialist={data.specialist} />
           )}
         </Box>
+        <Sidebar data={data} top={{ l: "196px", xl: "236px" }} />
       </Box>
     </>
   );
