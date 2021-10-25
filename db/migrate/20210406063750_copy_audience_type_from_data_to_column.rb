@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CopyAudienceTypeFromDataToColumn < ActiveRecord::Migration[6.1]
-  class MigrationPost < ApplicationRecord
+  class MigrationPost < ActiveRecord::Base
     self.table_name = :guild_posts
     self.inheritance_column = :dont_care_about_type
   end
