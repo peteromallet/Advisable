@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TobyController < ApplicationController
+  layout "toby"
+  skip_before_action :prefetch_viewer
   before_action :admin?
 
   def index
