@@ -35,7 +35,8 @@ module Toby
 
       def self.login_as(object, context)
         context[:session_manager].session[:admin_override] = object.uid
-        {redirect_to: '/'}
+
+        {url: Advisable::Application::ORIGIN_HOST}
       end
     end
   end
