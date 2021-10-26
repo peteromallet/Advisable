@@ -3,7 +3,9 @@
 module Toby
   module Lookups
     module Consultations
-      class RequestUrl < Attributes::StringLookup
+      class RequestUrl < Attributes::String
+        include Lookup
+
         def read(record)
           "#{ENV["ORIGIN"]}/request_consultation/#{record.specialist.uid}?consultation=#{record.uid}"
         end
