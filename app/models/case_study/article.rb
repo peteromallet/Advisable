@@ -23,6 +23,7 @@ module CaseStudy
     has_one_attached :cover_photo
 
     scope :published, -> { where.not(published_at: nil) }
+    scope :searchable, -> { active.published.where(hide_from_search: false) }
     scope :by_score, -> { order('score DESC NULLS LAST').order(id: :desc) }
     scope :available_specialists, -> { joins(:specialist).merge(Specialist.available).joins(specialist: :account).merge(Account.active) }
   end
@@ -41,6 +42,7 @@ end
 #  excerpt                :string
 #  freelancer_edits       :text
 #  goals                  :jsonb
+#  hide_from_search       :boolean          default(FALSE)
 #  published_at           :datetime
 #  score                  :integer
 #  specialist_approved_at :datetime

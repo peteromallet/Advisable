@@ -30,7 +30,7 @@ module CaseStudy
     def results
       refresh_results! if result_ids.blank?
 
-      Article.published.active.
+      Article.searchable.
         where(id: active_result_ids).
         available_specialists.
         by_score
@@ -50,7 +50,7 @@ module CaseStudy
     end
 
     def results_query(limit: nil, exclude: nil)
-      query = Article.distinct.published.active
+      query = Article.distinct.searchable
       query = query.limit(limit) if limit.present?
       query = query.where.not(id: exclude) if exclude.present?
       if skills.any?

@@ -84,6 +84,7 @@ module Airtable
         article.confidential = fields["Okay With Sharing"] != "Yes"
         article.targeting = fields["Additional Targeting Data"]
         article.published_at = Time.zone.now
+        article.hide_from_search = fields["Hidden from Search"] == "Yes"
         article.save!
 
         AttachCoverToArticleJob.perform_later(article)
