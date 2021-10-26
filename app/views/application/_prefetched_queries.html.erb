@@ -1,0 +1,5 @@
+<% if @prefetched_queries&.any? %>
+  <script>
+    window.prefetchedQueries = <%= @prefetched_queries.to_json.html_safe %>
+  </script>
+<% end %>
