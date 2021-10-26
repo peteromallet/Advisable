@@ -1,8 +1,19 @@
-p Hi,
+- hello = ["Hi", @invoice.company.invoice_name.presence].compact.join(" ")
+
+p #{hello},
+
 p
-  ' Attached you will find the invoice for
+  ' Your invoice for
   = @invoice.first_day.strftime("%B %Y")
-  '.
+  '  is available. This is for all payments collected within this month.
+  br
+  ' Please note all payments have already been collected and there is no further action required from you.
+
+p
+  ' You can also find this and all previous invoices in your
+  a href="#{root_url}settings/invoices" settings
+  ' .
+
 p
   ' Thanks,
   br
