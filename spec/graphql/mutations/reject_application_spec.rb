@@ -42,12 +42,12 @@ RSpec.describe Mutations::RejectApplication do
   end
 
   context "when a message argument is provided" do
-    let(:message) { "Not sure you have what it takes to be assistant to the regional manager" }
+    let(:message) { "Michael! Michael! Michael!" }
 
     it "sends the specialist a message" do
       request
       message_record = Message.last
-      expect(message_record.content).to eq(message)
+      expect(message_record.content).to eq("Michael! Michael! Michael!")
     end
   end
 
