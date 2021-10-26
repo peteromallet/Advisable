@@ -34,10 +34,10 @@ export default function Sidebar({ data, ...props }) {
   const { specialist } = data;
 
   const [isExpanded, setExpanded] = useState(false);
-  const bioIsExceed = specialist.bio.length > TRUNCATE_LIMIT;
+  const bioIsExceed = specialist.bio?.length > TRUNCATE_LIMIT;
   const bio = isExpanded
     ? specialist.bio
-    : specialist.bio.slice(0, TRUNCATE_LIMIT);
+    : specialist.bio?.slice(0, TRUNCATE_LIMIT);
 
   return (
     <Box
