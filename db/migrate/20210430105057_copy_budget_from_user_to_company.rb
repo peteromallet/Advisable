@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class CopyBudgetFromUserToCompany < ActiveRecord::Migration[6.1]
-  class MigrationUser < ApplicationRecord
+  class MigrationUser < ActiveRecord::Base
     self.table_name = :users
   end
 
-  class MigrationCompany < ApplicationRecord
+  class MigrationCompany < ActiveRecord::Base
     self.table_name = :companies
   end
 

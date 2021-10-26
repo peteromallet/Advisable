@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PopulateInvoiceRateOnApplication < ActiveRecord::Migration[6.1]
-  class MigrationApplication < ApplicationRecord
+  class MigrationApplication < ActiveRecord::Base
     self.table_name = :applications
   end
 
