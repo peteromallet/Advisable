@@ -13,6 +13,9 @@ export default {
   initializeFormValue: function (record, attribute) {
     return record[attribute.name]?.id || undefined;
   },
+  copy: function (attribute, record) {
+    return record[attribute.name] || "";
+  },
   input: function BelongsToAttributeInput({ resource, attribute, record }) {
     const schema = useSchema();
     const [, , { setValue }] = useField(attribute.name);

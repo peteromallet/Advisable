@@ -34,6 +34,9 @@ function UrlAttributeInput({ attribute, record }) {
 export default {
   render: UrlAttribute,
   input: UrlAttributeInput,
+  copy: function (attribute, record) {
+    return record[attribute.name] || "";
+  },
   initializeFormValue: function (record, attribute) {
     return record[attribute.name] || "";
   },
