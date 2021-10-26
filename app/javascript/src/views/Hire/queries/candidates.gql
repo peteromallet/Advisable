@@ -1,0 +1,27 @@
+query Candidates {
+  currentCompany {
+    id
+    candidates {
+      nodes {
+        id
+        status
+        interview {
+          id
+          status
+          startsAt
+        }
+        specialist {
+          id
+          name
+          avatar
+          location
+          firstName
+          account {
+            id
+            firstName
+          }
+        }
+      }
+    }
+  }
+}

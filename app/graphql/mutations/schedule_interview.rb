@@ -37,6 +37,7 @@ module Mutations
       interview.status = "Call Scheduled"
       current_account_responsible_for { interview.save! }
 
+      interview.application.update(status: "Interview Scheduled") if interview.application.blank?
       update_specialist_number(interview.application.specialist, args[:phone_number]) if args[:phone_number]
 
       {interview: interview}

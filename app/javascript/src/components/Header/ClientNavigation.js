@@ -10,7 +10,7 @@ const ClientNavigation = ({ closeNav, isMobile }) => {
       <NavigationLink onClick={closeNav} to="/explore">
         Discover
       </NavigationLink>
-      <NavigationLink onClick={closeNav} to="/projects">
+      <NavigationLink onClick={closeNav} to="/hire">
         Hire
       </NavigationLink>
       <NavigationLink onClick={closeNav} to="/manage">

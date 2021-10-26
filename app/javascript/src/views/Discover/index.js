@@ -16,7 +16,7 @@ import ClientApplicationPrompt from "src/components/ClientApplicationPrompt";
 import useViewer from "src/hooks/useViewer";
 
 export default function Discover() {
-  useBackground("white");
+  useBackground("beige");
   const viewer = useViewer();
   const { pathname } = useLocation();
 
@@ -26,7 +26,7 @@ export default function Discover() {
 
   return (
     <ErrorBoundary>
-      <Page width="960px">
+      <Page width="1020px">
         <Box paddingY={{ _: 8, m: 12 }} paddingX={{ _: 4, m: 8 }}>
           <ClientApplicationPrompt />
           <AccountConfirmationPrompt />

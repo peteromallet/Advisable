@@ -30,7 +30,7 @@ export const VARIANTS = variant({
       bg: theme.colors.cyan100,
     },
     neutral: {
-      color: theme.colors.blue900,
+      color: theme.colors.neutral900,
       bg: theme.colors.neutral100,
     },
     orange: {

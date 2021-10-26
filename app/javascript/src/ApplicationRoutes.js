@@ -9,6 +9,7 @@ import Loading from "./components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
+import Hire from "./views/Hire";
 
 const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
@@ -18,8 +19,6 @@ const FreelancerApplication = lazy(() =>
 );
 const ClientApplication = lazy(() => import("./views/ClientApplication"));
 const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
-const Projects = lazy(() => import("./views/Projects"));
-const Project = lazy(() => import("./views/Project"));
 const Booking = lazy(() => import("./views/Booking"));
 const JobListing = lazy(() => import("./views/JobListing"));
 const JobOpportunity = lazy(() => import("./views/JobOpportunity"));
@@ -129,12 +128,12 @@ const ApplicationRoutes = () => {
             to="/interviews/:interviewID"
           />
           <AuthenticatedRoute path="/interviews/:id" component={Interview} />
-          <Route path="/projects/:id" component={Project} />
-          <AuthenticatedRoute
-            clientOnly
-            path="/projects"
-            component={Projects}
+          <Redirect
+            from="/projects/:projectId/candidates/:id/proposal"
+            to="/hire/proposals/:id"
           />
+          <Redirect from="/projects" to="/hire" />
+          <AuthenticatedRoute clientOnly path="/hire" component={Hire} />
           <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
           <AuthenticatedRoute
             path="/book/:applicationId"
