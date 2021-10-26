@@ -34,8 +34,12 @@ const ATTRIBUTES = {
   LongTextAttribute,
 };
 
+export function handlerForAttribute(attribute) {
+  return ATTRIBUTES[attribute.__typename];
+}
+
 export function Attribute({ record, attribute }) {
-  const handler = ATTRIBUTES[attribute.__typename];
+  const handler = handlerForAttribute(attribute);
 
   if (!handler) {
     console.error("No attribute handler found", attribute);
