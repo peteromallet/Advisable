@@ -166,6 +166,46 @@ RSpec.describe CaseStudy::Search, type: :model do
     end
   end
 
+  describe "#weighted_results" do
+    let(:article1) { create(:case_study_article, score: 50) }
+    let(:article2) { create(:case_study_article, score: 80) }
+    let(:article3) { create(:case_study_article, score: 70) }
+    let(:selected1) { create(:case_study_article) }
+    let(:selected2) { create(:case_study_article) }
+    let(:selected3) { create(:case_study_article) }
+    let(:selected) { [selected1, selected2, selected3].pluck(:id) }
+    let(:skill1) { create(:skill) }
+    let(:skill2) { create(:skill) }
+    let(:skill3) { create(:skill) }
+
+    # Logic: https://www.notion.so/advisable/Scoring-Weighting-5f1c4c4f52b942ebb1675a372ab07ef5
+    it "includes articles weighted by logic given" do
+      selected1.skills.create(skill: skill1)
+      selected1.skills.create(skill: skill2)
+      selected1.skills.create(skill: skill3)
+      selected2.skills.create(skill: skill1)
+      selected3.skills.create(skill: skill1)
+
+      article3.skills.create(skill: skill3)
+      article2.skills.create(skill: skill2)
+      article1.skills.create(skill: skill1)
+      article1.skills.create(skill: skill2)
+      article1.skills.create(skill: skill3)
+
+      search = create(:case_study_search)
+      search.skills.create(skill: skill1)
+      search.skills.create(skill: skill2)
+      search.skills.create(skill: skill3)
+
+      results = search.weighted_results(exclude: selected)
+      expect(results.pluck(:id)).to eq([article2.id, article3.id, article1.id])
+
+      search.update(selected: selected)
+      results = search.weighted_results(exclude: selected)
+      expect(results.pluck(:id)).to eq([article1.id, article2.id, article3.id])
+    end
+  end
+
   describe "#archived" do
     it "returns an array on nil" do
       search =  create(:case_study_search, archived: nil)

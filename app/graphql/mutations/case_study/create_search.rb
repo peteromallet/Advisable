@@ -28,6 +28,7 @@ module Mutations
             goals: args[:goals],
             preferences: args[:preferences],
             business_type: args[:business_type],
+            selected: selected,
             results: selected
           )
 
