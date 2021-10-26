@@ -13,7 +13,7 @@ module Toby
 
         action :create_guild_post, label: "Post To Guild"
 
-        def self.create_guild_post(object)
+        def self.create_guild_post(object, _context)
           Guild::CaseStudy.create_from_article!(object)
         end
 
