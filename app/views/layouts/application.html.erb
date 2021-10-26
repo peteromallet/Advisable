@@ -107,7 +107,6 @@ mixpanel.init("<%= ENV["MIXPANEL"] %>", {"api_host": "https://api-eu.mixpanel.co
 
     <% if @prefetched_queries&.any? %>
       <script>
-      window.test = true
         window.prefetchedQueries = <%= @prefetched_queries.to_json.html_safe %>
       </script>
     <% end %>
