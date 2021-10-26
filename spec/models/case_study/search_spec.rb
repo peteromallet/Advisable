@@ -93,6 +93,32 @@ RSpec.describe CaseStudy::Search, type: :model do
       end
     end
 
+    context "when article is soft deleted" do
+      let(:article2) { create(:case_study_article, deleted_at: Date.yesterday) }
+
+      it "excludes that article" do
+        article1.skills.create(skill: skill1)
+        article2.skills.create(skill: skill1)
+        search = create(:case_study_search)
+        search.skills.create(skill: skill1)
+        results = search.results
+        expect(results.pluck(:id)).to match_array([article1.id])
+      end
+    end
+
+    context "when article is hidden from search" do
+      let(:article2) { create(:case_study_article, hide_from_search: true) }
+
+      it "excludes that article" do
+        article1.skills.create(skill: skill1)
+        article2.skills.create(skill: skill1)
+        search = create(:case_study_search)
+        search.skills.create(skill: skill1)
+        results = search.results
+        expect(results.pluck(:id)).to match_array([article1.id])
+      end
+    end
+
     context "when article is soft_deleted" do
       let(:article2) { create(:case_study_article, deleted_at: Time.current) }
 
