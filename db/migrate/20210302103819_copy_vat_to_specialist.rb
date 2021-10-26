@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class CopyVatToSpecialist < ActiveRecord::Migration[6.1]
-  class MigrationAccount < ApplicationRecord
+  class MigrationAccount < ActiveRecord::Base
     self.table_name = :accounts
   end
 
-  class MigrationSpecialist < ApplicationRecord
+  class MigrationSpecialist < ActiveRecord::Base
     self.table_name = :specialists
   end
 

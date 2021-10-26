@@ -121,6 +121,10 @@ Rails/Output:
 Rails/BulkChangeTable:
   Enabled: false
 
+Rails/ApplicationRecord:
+  Exclude:
+  - "db/migrate/**/*"
+
 RSpec/ExampleLength:
   Enabled: false
 
