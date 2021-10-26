@@ -1,0 +1,11 @@
+query Task($id: ID!) {
+  task(id: $id) {
+    id
+    name
+    dueDate
+    estimate
+    description
+    estimateType
+    flexibleEstimate
+  }
+}

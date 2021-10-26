@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Card, Text, Paragraph } from "@advisable/donut";
 import UpdateAvailablityForm from "./UpdateAvailabilityForm";
 import { useRequestInterviewReschedule } from "./queries";
+import BackButton from "src/components/BackButton";
 
 export default function RequestRescheduleAsClient({ interview }) {
   const [requestReschedule] = useRequestInterviewReschedule();
@@ -19,6 +20,7 @@ export default function RequestRescheduleAsClient({ interview }) {
   return (
     <Container paddingY="xl">
       <Card padding={["xl", "2xl"]}>
+        <BackButton to={`/interviews/${interview.id}`} marginBottom={4} />
         <Text
           fontSize="4xl"
           marginBottom="xs"

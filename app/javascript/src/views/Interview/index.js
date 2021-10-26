@@ -23,8 +23,8 @@ function InterviewState({ interview }) {
       return <CallScheduled interview={interview} />;
     }
 
-    case "Call Complete": {
-      return <>This interview has been complete.</>;
+    case "Call Completed": {
+      return <CallScheduled interview={interview} />;
     }
 
     case "Client Requested Reschedule": {
