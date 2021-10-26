@@ -1,7 +1,6 @@
-p
-  ' Hi
-  = @invoice.company.invoice_name
-  ' ,
+- hello = ["Hi", @invoice.company.invoice_name.presence].compact.join(" ")
+
+p #{hello},
 
 p
   ' Your invoice for
