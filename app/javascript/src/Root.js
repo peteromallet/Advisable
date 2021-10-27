@@ -5,6 +5,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { Router } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import client from "./graphqlClient";
+import BaseLineGridOverlay from "./components/BaseLineGridOverlay";
 
 const keys = JSON.parse(document.getElementById("keys").dataset.value);
 const stripePromise = loadStripe(keys.stripePublicKey);
@@ -17,6 +18,7 @@ const Root = ({ history }) => {
     <ApolloProvider client={client}>
       <Router history={history}>
         <Elements stripe={stripePromise}>
+          <BaseLineGridOverlay />
           <App />
         </Elements>
       </Router>
