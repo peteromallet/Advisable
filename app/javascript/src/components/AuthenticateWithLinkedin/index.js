@@ -11,18 +11,22 @@ function AuthenticateWithLinkedin() {
       borderRadius="20px"
     >
       <Text
-        mb={5}
+        mb={1}
         fontSize="l"
         color="neutral900"
         lineHeight="m"
         fontWeight={550}
+        letterSpacing="-0.02em"
       >
         Authenticate with LinkedIn to validate your identity
       </Text>
+      <Box maxWidth="300px" mx="auto" mb={6}>
+        <Text fontSize="sm" lineHeight="20px" color="neutral800">
+          This won&apos;t create an account. We only use this to validate your
+          identity.
+        </Text>
+      </Box>
       <LoginWithLinkedin />
-      <Text color="neutral500" fontStyle="italic" mt={2} fontSize="xs">
-        *This won&apos;t create an account
-      </Text>
     </Box>
   );
 }
