@@ -3,7 +3,9 @@
 module Toby
   module Lookups
     module Tasks
-      class CompanyName < Attributes::StringLookup
+      class CompanyName < Attributes::String
+        include Lookup
+
         filter "contains...", Filters::StringContains do |records, _attribute, value|
           if value.any? && value.first.present?
             query = records.joins(application: {project: {user: :company}})
