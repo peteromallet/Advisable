@@ -29,9 +29,9 @@ export default function ReviewIntro({ data }) {
       >
         {specialist.firstName} has requested a review from you on a case study
       </Heading>
-      <Text fontSize="16px" lineHeight="24px" color="neutral900" mb={6}>
-        Your review will be shown on {possessive(specialist.firstName)} profile
-        and will be used to help them find projects on Advisable.
+      <Text fontSize="17px" lineHeight="24px" color="neutral900" mb={6}>
+        Your review will be shown on {possessive(specialist.firstName)} public
+        profile and will be used to help them find projects on Advisable.
       </Text>
       <CaseStudyLink
         to={`/freelancers/${specialist.id}/case_studies/${article_id}`}
