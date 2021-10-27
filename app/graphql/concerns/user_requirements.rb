@@ -45,6 +45,13 @@ module UserRequirements
     ApiError.invalid_request("MUST_BE_SPECIALIST", "Current user must be a Specialist.")
   end
 
+  def requires_accepted_specialist!
+    requires_specialist!
+    return true if current_user.application_stage == "Accepted"
+
+    ApiError.invalid_request("MUST_BE_ACCEPTED_SPECIALIST", "Current user must be an accepted Specialist.")
+  end
+
   def requires_guild_user!
     requires_specialist!
     return true if current_user.guild
