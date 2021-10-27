@@ -24,21 +24,21 @@ module Toby
       action :retry_payment, label: "Retry payment", if: ->(payment) { payment.status != "succeeded" }
       action :refund_payment, label: "Refund payment", if: ->(payment) { payment.status == "succeeded" }
 
-      def self.mark_as_successful(object)
+      def self.mark_as_successful(object, _context)
         return if object.status == "succeeded"
 
-        object.update(status: "succeeded", charged_at: Time.zone.now)
+        object.update!(status: "succeeded", charged_at: Time.zone.now)
         object.send_receipt!
       end
 
-      def self.retry_payment(object)
+      def self.retry_payment(object, _context)
         return if object.status == "succeeded"
 
         object.update!(retries: object.retries + 1)
         object.charge!
       end
 
-      def self.refund_payment(object)
+      def self.refund_payment(object, _context)
         return unless object.status == "succeeded"
 
         object.refund!
