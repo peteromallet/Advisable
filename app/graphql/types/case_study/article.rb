@@ -56,7 +56,7 @@ module Types
       end
 
       field :shares, [SharedArticle], null: true
-      field :review, Types::CaseStudyArticleReview, null: false
+      field :review, Types::CaseStudyArticleReview, null: true
     end
   end
 end

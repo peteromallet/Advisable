@@ -1,0 +1,19 @@
+query GetCaseStudy($article_id: ID!, $id: ID!) {
+  oauthViewer {
+    name
+    image
+    firstName
+  }
+  specialist(id: $id) {
+    id
+    name
+    firstName
+  }
+  caseStudy(id: $article_id) {
+    title
+    id
+    review {
+      id
+    }
+  }
+}

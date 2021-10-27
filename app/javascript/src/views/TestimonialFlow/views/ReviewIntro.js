@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Redirect } from "react-router-dom";
 import { Card, Box, Text, Heading } from "@advisable/donut";
-import AuthenticateWithLinkedin from "../components/AuthenticateWithLinkedin";
+import AuthenticateWithLinkedin from "src/components/AuthenticateWithLinkedin";
 import MockTestimonials from "../components/Illustration";
 
 export const StyledTextMask = styled.div`
