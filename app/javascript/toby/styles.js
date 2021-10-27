@@ -45,6 +45,7 @@ export const StyledScrollContainer = styled.div`
 
 export const StyledHeaderRow = styled.div`
   top: 0px;
+  z-index: 5;
   display: flex;
   position: sticky;
   flex-wrap: nowrap;
