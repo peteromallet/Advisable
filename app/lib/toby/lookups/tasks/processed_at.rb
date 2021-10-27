@@ -3,7 +3,9 @@
 module Toby
   module Lookups
     module Tasks
-      class ProcessedAt < Attributes::StringLookup
+      class ProcessedAt < Attributes::String
+        include Lookup
+
         def lazy_read_class
           Toby::Lazy::Single
         end
