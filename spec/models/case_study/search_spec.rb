@@ -204,6 +204,18 @@ RSpec.describe CaseStudy::Search, type: :model do
       results = search.weighted_results(exclude: selected)
       expect(results.pluck(:id)).to eq([article1.id, article2.id, article3.id])
     end
+
+    it "works without score" do
+      article1.update(score: nil)
+      selected1.skills.create(skill: skill1)
+      article1.skills.create(skill: skill1)
+
+      search = create(:case_study_search)
+      search.skills.create(skill: skill1)
+
+      results = search.weighted_results
+      expect(results.pluck(:id)).to eq([selected1.id, article1.id])
+    end
   end
 
   describe "#archived" do
