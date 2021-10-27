@@ -1,0 +1,10 @@
+query CompanyInfo {
+  currentCompany {
+    id
+    name
+    industry {
+      id
+      name
+    }
+  }
+}

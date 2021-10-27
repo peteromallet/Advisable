@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Text, Heading, Button } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
-import { useCategoryArticles } from "../queries";
+import { useCategoryArticles, useCurrentCompany } from "../queries";
 import { Redirect, useHistory, useLocation, useParams } from "react-router";
 import { ArrowSmRight } from "@styled-icons/heroicons-solid";
 import ArticleSelection from "../components/ArticleSelection";
@@ -11,6 +11,7 @@ export default function ShortlistArticleSelection() {
   const { slug } = useParams();
   const history = useHistory();
   const location = useLocation();
+  const { data: companyData } = useCurrentCompany();
   const [selected, setSelected] = useState(location.state?.articles || []);
   const { data, loading, fetchMore } = useCategoryArticles({
     variables: { slug },
@@ -56,7 +57,7 @@ export default function ShortlistArticleSelection() {
   return (
     <>
       <BackButton to="/explore/new" marginBottom={4} />
-      <Box maxWidth="800px" marginBottom={3}>
+      <Box marginBottom={3}>
         <Heading
           fontWeight={600}
           fontSize={{ _: "5xl", m: "6xl" }}
@@ -64,14 +65,17 @@ export default function ShortlistArticleSelection() {
           marginBottom={3}
           lineHeight={{ _: "36px", m: "40px" }}
         >
-          Which of the following projects seem similar to what you’re looking
-          for?
+          Which of the following {location.state.category.name} projects seem
+          similar to what you’re looking for?
         </Heading>
       </Box>
-      <Box maxWidth="600px" marginBottom={8}>
+      <Box maxWidth="760px" marginBottom={8}>
         <Text fontSize="lg" lineHeight="24px">
-          We help your find freelancers by showcasing the projects they have
-          done for companies similar to yours.
+          These are 
+          {location.state.category.name} projects that we think are relevant to{" "}
+          {companyData?.currentCompany?.industry?.name} companies like{" "}
+          {companyData?.currentCompany?.name}. We’ll use your selections to help
+          figure out what recommendations to make
         </Text>
       </Box>
 
