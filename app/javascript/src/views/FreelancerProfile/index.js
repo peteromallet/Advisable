@@ -1,58 +1,46 @@
 import React from "react";
-// Hooks
-import useLogoURL from "src/components/ApplicationProvider/useLogoURL";
-import { useParams, Switch } from "react-router-dom";
-import Route from "src/components/Route";
-import useInitialScroll from "./useInitialScroll";
-import useViewer from "src/hooks/useViewer";
-import { useQuery } from "@apollo/client";
-// Components
-import NotFound, { isNotFound } from "../NotFound";
+import { Helmet } from "react-helmet";
+import { Switch, Route } from "react-router";
+import { Box, useBackground } from "@advisable/donut";
 import Loading from "src/components/Loading";
-import AboutSection from "./AboutSection";
-import { Box } from "@advisable/donut";
-import MainProfile from "./MainProfile";
-import GuildProfile from "./GuildProfile";
-// Queries
-import { GET_PROFILE } from "./queries";
+import NotFound, { isNotFound } from "src/views/NotFound";
+import Article from "./views/Article";
+import Profile from "./views/Profile";
+import { useProfileData } from "./queries";
+import ErrorBoundary from "src/components/ErrorBoundary";
 
-function FreelancerProfile() {
-  useLogoURL("https://advisable.com");
-  const params = useParams();
-  const viewer = useViewer();
-  const isOwner = viewer?.id === params.id;
-  const { loading, data, error } = useQuery(GET_PROFILE, {
-    variables: {
-      id: params.id,
-      isOwner,
-    },
-  });
-  useInitialScroll(data);
+export default function FreelancerProfile() {
+  const { loading, data, error } = useProfileData();
+  useBackground("white");
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
 
   return (
-    <Box
-      pb="2xl"
-      mx={["12px", "32px", "32px", "auto"]}
-      maxWidth={{ _: "100%", l: "960px" }}
-    >
-      <AboutSection
-        specialist={data.specialist}
-        isOwner={isOwner}
-        viewer={viewer}
-      />
-      <Switch>
-        <Route path="/freelancers/:id/guild">
-          <GuildProfile specialist={data.specialist} />
-        </Route>
-        <Route path="/freelancers/:id">
-          <MainProfile isOwner={isOwner} data={data} />
-        </Route>
-      </Switch>
-    </Box>
+    <ErrorBoundary>
+      {data?.specialist && (
+        <Helmet>
+          <title>Advisable | {data?.specialist?.name}</title>
+        </Helmet>
+      )}
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems={{ _: "center", l: "stretch" }}
+        width={{ l: "1024px", xl: "1136px" }}
+        mx="auto"
+        pb={20}
+        pt={[3, 5, 5, 5, 7]}
+      >
+        <Switch>
+          <Route path="/freelancers/:id/case_studies/:case_study_id">
+            <Article profileData={data} />
+          </Route>
+          <Route>
+            <Profile data={data} />
+          </Route>
+        </Switch>
+      </Box>
+    </ErrorBoundary>
   );
 }
-
-export default FreelancerProfile;

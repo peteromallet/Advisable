@@ -11,7 +11,7 @@
       <!-- End Google Tag Manager -->
     <% end %>
 
-    <title>Advisable</title>
+    <title><%= yield :title || "Advisable" %></title>
     <%= csrf_meta_tags %> <%= csp_meta_tag %>
 
     <%= yield :meta_tags %>
@@ -105,11 +105,7 @@ mixpanel.init("<%= ENV["MIXPANEL"] %>", {"api_host": "https://api-eu.mixpanel.co
     </script>
     <% end %>
 
-    <% if @prefetched_queries&.any? %>
-      <script>
-        window.prefetchedQueries = <%= @prefetched_queries.to_json.html_safe %>
-      </script>
-    <% end %>
+    <%= render "prefetched_queries" %>
 
     <% if current_account&.admin? %>
       <script>
@@ -140,5 +136,18 @@ mixpanel.init("<%= ENV["MIXPANEL"] %>", {"api_host": "https://api-eu.mixpanel.co
       </script>
       <noscript> <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=<%= ENV["LINKEDIN_PARTNER_ID"] %>&fmt=gif" /> </noscript>
     <% end %>
+
+    <% if flash.any? %>
+      <script>
+        window.flash = JSON.parse('<%== flash.to_hash.to_json %>')
+      </script>
+    <% end %>
+
+
+    <%= javascript_packs_with_chunks_tag "application" %>
+    <%= stylesheet_packs_with_chunks_tag "application" %>
+    <noscript>
+      Please enable javascript to view this application
+    </noscript>
   </body>
 </html>

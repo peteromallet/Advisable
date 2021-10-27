@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   include CurrentUser
 
   before_action :set_sentry_context
-  before_action :prefetch_viewer, only: %i[frontend guild]
-  before_action :authenticate_with_magic_link, only: %i[frontend guild guild_post]
+  before_action :prefetch_viewer
+  before_action :authenticate_with_magic_link, only: %i[frontend guild_post]
 
   def frontend
     respond_to(&:html)
@@ -13,7 +13,12 @@ class ApplicationController < ActionController::Base
     render status: :not_found, json: {error: 'Not Found'}
   end
 
-  def guild; end
+  def freelancer_profile
+    @specialist = Specialist.find_by(uid: params[:id])
+    prefetch_query("app/javascript/src/views/FreelancerProfile/queries/getProfileData.gql", variables: {
+      id: params[:id]
+    })
+  end
 
   def guild_post
     @guild_post = Guild::Post.published.find_by(shareable: true, id: params[:id]) if params[:id]
@@ -21,12 +26,6 @@ class ApplicationController < ActionController::Base
 
   def case_study
     @case_study = CaseStudy::Article.find_by!(uid: params[:id])
-  end
-
-  def internal
-    return if current_account&.admin?
-
-    redirect_to "/"
   end
 
   def client_ip
@@ -60,11 +59,11 @@ class ApplicationController < ActionController::Base
     prefetch_query("app/javascript/src/graphql/queries/getViewer.graphql")
   end
 
-  def prefetch_query(path)
+  def prefetch_query(path, variables: {})
     @prefetched_queries ||= []
     query = GraphqlFileParser.import(path)
-    result = AdvisableSchema.execute(query, context: graphql_context)
-    @prefetched_queries << {query: query, result: result}
+    result = AdvisableSchema.execute(query, context: graphql_context, variables: variables)
+    @prefetched_queries << {query: query, result: result, variables: variables}
   end
 
   def graphql_context

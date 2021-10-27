@@ -73,8 +73,6 @@ Rails.application.routes.draw do
   get "/guild/posts/:id", to: "application#guild_post", as: :guild_post
 
   # Routes for internal tooling
-  get "/internal", to: "application#internal", as: :internal_root
-  get "/internal/*guild_path", to: "application#internal"
   post "/projects/send_invites"
   post "/projects/create_linkedin_ad"
 
@@ -105,5 +103,6 @@ Rails.application.routes.draw do
   # match every other route to the frontend codebase
   root "application#frontend"
   get "/case_studies/:id", to: "application#case_study", as: :public_case_study
+  get "/freelancers/:id", to: "application#freelancer_profile", as: :freelancer_profile
   get "*path", to: "application#frontend", constraints: ->(req) { req.path.exclude?("rails/") }
 end
