@@ -13,14 +13,19 @@ function Action({ action, mutation, record, menu, ...props }) {
   const [trigger, { loading }] = useMutation(mutation);
 
   const handle = async () => {
-    await trigger({
+    const response = await trigger({
       variables: {
         id: record.id,
         name: action.name,
       },
     });
+
     menu.hide();
     notify(`Action ran successfully`);
+
+    if (response?.data?.action?.url) {
+      window.open(response.data.action.url, "_blank").focus();
+    }
   };
 
   return (

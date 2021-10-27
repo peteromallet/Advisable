@@ -22,16 +22,16 @@ module Toby
       action :process, label: "Mark as processed", if: ->(payout) { payout.processed_at.nil? }
       action :unprocess, label: "Mark as pending", unless: ->(payout) { payout.processed_at.nil? }
 
-      def self.process(object)
+      def self.process(object, _context)
         return if object.processed_at?
 
-        object.update(processed_at: Time.zone.now, status: "processed")
+        object.update!(processed_at: Time.zone.now, status: "processed")
       end
 
-      def self.unprocess(object)
+      def self.unprocess(object, _context)
         return unless object.processed_at?
 
-        object.update(processed_at: nil, status: "pending")
+        object.update!(processed_at: nil, status: "pending")
       end
     end
   end

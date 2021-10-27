@@ -13,7 +13,7 @@ module Toby
 
         action :resolve, label: "Mark as resolved"
 
-        def self.resolve(object)
+        def self.resolve(object, _context)
           object.update!(resolved_at: Time.zone.now)
         end
       end

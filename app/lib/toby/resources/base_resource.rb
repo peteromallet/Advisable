@@ -150,6 +150,7 @@ module Toby
             argument :id, GraphQL::Schema::Object::ID, required: true
             argument :name, String, required: true
             field :resource, root.type, null: true
+            field :url, String, null: true
           end
         end
       end

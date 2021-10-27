@@ -217,12 +217,13 @@ export function generateActionMutation(schemaData, resourceData) {
         id: "ID!",
         name: "String!",
       },
-      update: {
+      action: {
         __args: {
           id: new VariableType("id"),
           name: new VariableType("name"),
         },
         __aliasFor: `action${resourceData.type}`,
+        url: true,
         resource: {
           ...node,
           ...versionHistoryFields,

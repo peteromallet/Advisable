@@ -12,15 +12,10 @@ module Toby
       def resolve(id:, name:)
         resource = self.class.resource
         model = resource.model.find(id)
-
-        Logidze.with_responsible(current_account_id) do
-          resource.public_send(name, model)
-          model.save!
+        result = Logidze.with_responsible(current_account_id) do
+          resource.public_send(name, model, context)
         end
-
-        model.sync_to_airtable if model.respond_to?(:sync_to_airtable) && model.airtable_id.present?
-
-        {resource: model}
+        result.is_a?(Hash) ? result : {resource: model}
       end
     end
   end
