@@ -59,7 +59,7 @@ module CaseStudy
       relevant = results_query(exclude: exclude).pluck(:id, :score)
       relevant_skills = CaseStudy::Skill.where(article_id: relevant.map(&:first)).pluck(:article_id, :skill_id).group_by(&:first)
       weighted = relevant.sort_by do |article_id, article_score|
-        score = article_score / 10.0
+        score = article_score.to_i / 10.0
         relevant_skills[article_id].each do |_article_id, skill_id|
           score += skill_counts[skill_id] if skill_counts[skill_id]
         end
