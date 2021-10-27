@@ -12,6 +12,7 @@ export function pluralizeType(type) {
 function generateSearchQuery(resource) {
   const queryObject = {
     query: {
+      __name: `Toby_${resource.queryNameSearch}`,
       __variables: {
         query: "String!",
       },
@@ -102,6 +103,7 @@ export function generateCollectionQuery(schemaData, resourceData) {
 
   const queryObject = {
     query: {
+      __name: `Toby_${resourceData.queryNameCollection}`,
       __variables: {
         cursor: "String",
         filters: "[FilterInput!]",
@@ -153,6 +155,7 @@ export function generateShowQuery(schemaData, resourceData) {
 
   const queryObject = {
     query: {
+      __name: `Toby_${resourceData.queryNameItem}`,
       __variables: {
         id: "ID!",
       },
@@ -183,6 +186,7 @@ export function generateUpdateMutation(schemaData, resourceData) {
 
   const queryObject = {
     mutation: {
+      __name: `Toby_${resourceData.queryNameUpdate}`,
       __variables: {
         id: "ID!",
         attributes: `${resourceData.type}Attributes!`,
@@ -213,6 +217,7 @@ export function generateActionMutation(schemaData, resourceData) {
 
   const queryObject = {
     mutation: {
+      __name: `Toby_${resourceData.type}_action`,
       __variables: {
         id: "ID!",
         name: "String!",
