@@ -14,7 +14,8 @@ module Types
     field :first_name, String, null: true
     field :last_name, String, null: true
     field :name, String, null: true
-    delegate :name, :first_name, :last_name, to: :account
+    field :features, [String], null: true
+    delegate :name, :first_name, :last_name, :features, to: :account
 
     field :needs_to_set_a_password, Boolean, null: true
     def needs_to_set_a_password
@@ -24,11 +25,6 @@ module Types
     field :confirmed, Boolean, null: false
     def confirmed
       account.confirmed_at.present?
-    end
-
-    field :features, [String], null: true
-    def features
-      account.features.keys
     end
 
     field :unread_notifications, Boolean, null: false

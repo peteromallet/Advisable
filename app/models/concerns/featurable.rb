@@ -1,43 +1,44 @@
 # frozen_string_literal: true
 
 # Adds useful methods for feature flags support via JSONB.
-# You need to add `features` JSONB column in the model via a migration.
+# You need to add JSONB column in the model.
+# It's `features` by default but you can pass in `column` option.
 module Featurable
   extend ActiveSupport::Concern
 
-  included do
-    store_accessor :features
-  end
-
   def features
-    self["features"] ||= {}
+    self["features"] ||= []
   end
 
   class_methods do
-    def featurize(*flags)
-      flags.map(&:to_s).each do |flag|
-        define_method("#{flag}?") do
-          !!features[flag] # rubocop:disable Style/DoubleNegation
+    def featurize(*features, column: :features)
+      features.map(&:to_s).each do |feature|
+        define_method("#{feature}?") do
+          public_send(column).include?(feature)
         end
 
-        define_method("#{flag}=") do |param|
-          features.merge!(flag => param)
+        define_method("toggle_#{feature}") do
+          current = public_send(column)
+          value = if current.include?(feature)
+                    current - [feature]
+                  else
+                    current + [feature]
+                  end
+          public_send("#{column}=", value)
         end
 
-        define_method("toggle_#{flag}") do
-          public_send("#{flag}=", !features[flag])
-        end
-
-        define_method("toggle_#{flag}!") do
-          public_send("toggle_#{flag}")
+        define_method("toggle_#{feature}!") do
+          public_send("toggle_#{feature}")
           save!
         end
-
-        scope("with_#{flag}_feature", -> { where("features @> ?", {flag => true}.to_json) })
       end
 
-      define_singleton_method(:feature_flags) do
-        flags
+      define_singleton_method("all_#{column}") do
+        features
+      end
+
+      define_singleton_method("with_#{column.to_s.singularize}") do |feature|
+        where("#{column} ? :feature", feature: feature)
       end
     end
   end

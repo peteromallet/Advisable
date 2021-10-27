@@ -67,7 +67,7 @@
       "check_name": "ValidationRegex",
       "message": "Insufficient validation for `email` using `/@/`. Use `\\A` and `\\z` as anchors",
       "file": "app/models/account.rb",
-      "line": 29,
+      "line": 28,
       "link": "https://brakemanscanner.org/docs/warning_types/format_validation/",
       "code": null,
       "render_path": null,
@@ -106,7 +106,7 @@
       "check_name": "Redirect",
       "message": "Possible unprotected redirect",
       "file": "app/controllers/application_controller.rb",
-      "line": 59,
+      "line": 54,
       "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
       "code": "redirect_to(\"/review/#{PreviousProject.find_by!(:uid => params[:uid]).specialist.uid}\")",
       "render_path": null,
@@ -280,6 +280,26 @@
       "note": ""
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "d725d37ab4cf31d445ac3fdf1c1bb955eb40572e5632b52103f1760677c59bee",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/featurable.rb",
+      "line": 41,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "where(\"#{column} ? :feature\", :feature => feature)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Featurable",
+        "method": "featurize"
+      },
+      "user_input": "column",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "Redirect",
       "warning_code": 18,
       "fingerprint": "e2713b0d8b3b2089ea5a74c3210f9141dfc5d9acad63e44a4e16b9ed8cebc0ab",
@@ -300,6 +320,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-09-28 11:08:29 +0200",
+  "updated": "2021-10-22 09:53:19 +0200",
   "brakeman_version": "5.1.1"
 }
