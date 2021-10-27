@@ -1,17 +1,11 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import calendly from "src/utilities/calendly";
+import React from "react";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
-import { Text, Button } from "@advisable/donut";
+import { Text, Button, Link } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import PromptCard from "./PromptCard";
 import ProgressLine from "./ProgressLine";
 import AccountCreated from "./AccountCreated";
-import { useMutation } from "@apollo/client";
-import {
-  SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW,
-  useInterviewTime,
-} from "./queries";
+import { useInterviewTime } from "./queries";
 
 const Header = (props) => (
   <Text
@@ -65,57 +59,28 @@ const OnHold = () => (
   </PromptCard>
 );
 
-const InvitedToInterview = () => {
-  const { firstName, lastName, email, id } = useViewer();
+const BuildCaseStudy = () => {
+  const { firstName, lastName, id } = useViewer();
   const fullName = `${firstName} ${lastName}`;
-
-  const [schedule] = useMutation(SCHEDULE_ADVISABLE_APPLICATION_INTERVIEW);
-
-  const handleScheduled = () => {
-    calendly("https://calendly.com/d/c9sf-mhb/an-introduction-to-advisable", {
-      a2: id,
-      full_name: fullName,
-      email,
-    });
-  };
-
-  // Listen calendly notifications:
-  // https://calendly.stoplight.io/docs/embed-api-docs/docs/C-Notifying-the-parent-window.md
-  useEffect(() => {
-    const isCalendlyEvent = (e) =>
-      e.data.event && e.data.event.indexOf("calendly") === 0;
-
-    const handleCalendly = (e) => {
-      if (!isCalendlyEvent(e)) return null;
-
-      if (e.data.event === "calendly.event_scheduled") {
-        // URI example:
-        // https://api.calendly.com/scheduled_events/AEQZY6BZ7BGPC6EZ
-        const url = new URL(e.data.payload.event.uri);
-        const eventId = url.pathname.split("/")[2];
-        schedule({ variables: { input: { eventId } } });
-      }
-    };
-
-    window.addEventListener("message", handleCalendly);
-    return () => window.addEventListener("message", handleCalendly);
-  }, [schedule]);
 
   return (
     <PromptCard mb={10}>
       <ProgressLine progress={2} />
-      <Header>Invited To Interview</Header>
+      <Header>Invited to the next step</Header>
       <Description>
         Great news! We have reviewed your application and would like to invite
-        you to interview. Please click the link below to schedule your interview
-        at one of our available times.
+        you to join the next step. Please click the link below to build a case
+        study on your most impressive previous project. We will then use it to
+        figure out if you’re a great fit for our network!
       </Description>
       <Button
+        as={Link.External}
+        target="_blank"
         variant="gradient"
         suffix={<ArrowRight />}
-        onClick={handleScheduled}
+        href={`https://csi.advisable.com/freelancer/onboarding?specialist_id=${id}&contact_name=${fullName}`}
       >
-        Schedule Interview
+        Build case study
       </Button>
     </PromptCard>
   );
@@ -138,13 +103,14 @@ const InterviewScheduled = () => {
   );
 };
 
-const InterviewCompleted = () => (
+const CaseStudySubmitted = () => (
   <PromptCard mb={10}>
     <ProgressLine progress={3} />
-    <Header>Interview Completed</Header>
+    <Header>Case study submitted</Header>
     <Description>
-      Thank you for joining the call! We are reviewing the final details of your
-      application and you should hear from us within the next 2 working days.
+      Thank you for sharing about your best project! We are reviewing the final
+      details of your application and you should hear from us within the next 2
+      working days.
     </Description>
   </PromptCard>
 );
@@ -156,11 +122,11 @@ const ApplicationStage = ({ stage }) => {
     case "Submitted":
       return <ApplicationSubmitted />;
     case "Invited To Interview":
-      return <InvitedToInterview />;
+      return <BuildCaseStudy />;
     case "Interview Scheduled":
       return <InterviewScheduled />;
     case "Interview Completed":
-      return <InterviewCompleted />;
+      return <CaseStudySubmitted />;
     case "On Hold":
       return <OnHold />;
     default:
