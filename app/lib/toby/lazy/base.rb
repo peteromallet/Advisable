@@ -41,7 +41,11 @@ module Toby
         ar = includes ? lazy_model.includes(includes) : lazy_model
         ar.where(column => state[:pending]).each do |record|
           key = record.public_send(column)
-          value = attribute.try(:lazy_read, record) || record
+          value = if attribute.respond_to?(:lazy_read)
+                    attribute.lazy_read(record)
+                  else
+                    record
+                  end
           state[:loaded][key] ||= []
           state[:loaded][key] << value
         end

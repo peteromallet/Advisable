@@ -26,7 +26,9 @@ module Toby
       action :login_as, label: "Log in as this Specialist"
 
       def self.label(record, context)
-        Lazy::Label.new(::Account, record.account_id, context, value_column: :email)
+        Lazy::Label.new(::Account, record.account_id, context) do |account|
+          "#{account.name} (#{account.email})"
+        end
       end
 
       def self.search(query)

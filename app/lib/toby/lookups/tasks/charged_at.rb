@@ -3,7 +3,7 @@
 module Toby
   module Lookups
     module Tasks
-      class InvoiceRate < Attributes::Currency
+      class ChargedAt < Attributes::String
         include Lookup
 
         def lazy_read_class
@@ -11,15 +11,19 @@ module Toby
         end
 
         def via
-          :application_id
+          :id
+        end
+
+        def includes
+          [:payments]
         end
 
         def lazy_model
-          Application
+          Task
         end
 
-        def lazy_read(application)
-          application&.invoice_rate
+        def lazy_read(task)
+          task&.payments&.map { |payment| payment.charged_at&.strftime("%m/%d/%Y, %I:%m %p") || "-" }
         end
       end
     end
