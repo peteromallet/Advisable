@@ -26,6 +26,9 @@ module Toby
       attribute :trial, Attributes::Boolean
       attribute :stripe_invoice_id, Attributes::String
 
+      attribute :charged_at, Lookups::Tasks::ChargedAt
+      attribute :processed_at, Lookups::Tasks::ProcessedAt
+
       attribute :to_be_invited_at, Attributes::DateTime
       attribute :started_working_at, Attributes::DateTime
       attribute :submitted_at, Attributes::DateTime

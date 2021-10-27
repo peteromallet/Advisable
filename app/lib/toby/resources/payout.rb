@@ -6,6 +6,7 @@ module Toby
       model_name ::Payout
       attribute :uid, Attributes::String, readonly: true
       attribute :specialist, Attributes::BelongsTo
+      attribute :company, Lookups::Payouts::CompanyName
       attribute :amount, Attributes::Currency
       attribute :vat_rate, Attributes::String, readonly: true
       attribute :vat_amount, Attributes::Currency, readonly: true
