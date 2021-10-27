@@ -3,7 +3,7 @@
 module Toby
   module Lookups
     module Tasks
-      class InvoiceRate < Attributes::String
+      class InvoiceRate < Attributes::Currency
         include Lookup
 
         def lazy_read_class
