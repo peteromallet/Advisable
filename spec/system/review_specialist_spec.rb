@@ -21,7 +21,7 @@ RSpec.describe 'Reviewing a specialist', type: :system do
 
   it 'allows viewer to review a specialist' do
     visit "/review/#{specialist.uid}"
-    click_on text: /login with/i
+    click_on text: /validate with/i
     find('label[aria-label="Rate Skills 5 stars"]').click
     find('label[aria-label="Rate Quality of work 5 stars"]').click
     find('label[aria-label="Rate Adherence to schedule 5 stars"]').click

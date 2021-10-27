@@ -22,7 +22,7 @@ RSpec.describe "Reviewing a case study", type: :system do
 
   it "allows viewer to review a case study" do
     visit "/review/#{specialist.uid}/case_studies/#{article.uid}"
-    click_on text: /login with/i
+    click_on text: /validate with/i
     find('label[aria-label="Rate Skills 5 stars"]').click
     find('label[aria-label="Rate Quality of work 5 stars"]').click
     find('label[aria-label="Rate Adherence to schedule 5 stars"]').click
@@ -36,7 +36,7 @@ RSpec.describe "Reviewing a case study", type: :system do
 
   it "allows viewer to skip ratings step" do
     visit "/review/#{specialist.uid}/case_studies/#{article.uid}"
-    click_on text: /login with/i
+    click_on text: /validate with/i
     click_on 'Skip'
     fill_in('comment', with: 'Really great')
     click_on 'Submit Review'
@@ -45,7 +45,7 @@ RSpec.describe "Reviewing a case study", type: :system do
 
   context "when review already exists" do
     it "display that case study has already been reviewed" do
-      article.create_review
+      create(:review, case_study_article: article)
       visit "/review/#{specialist.uid}/case_studies/#{article.uid}"
       expect(page).to have_text(/already been reviewed/i)
     end
