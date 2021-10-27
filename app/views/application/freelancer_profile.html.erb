@@ -1,0 +1,6 @@
+<% if @specialist %>
+  <% content_for :title, "Advisable | #{@specialist.account.name}"%>
+  <% content_for :meta_tags do %>
+    <meta name="description" content="<%= @specialist.bio %>">
+  <% end %>
+<% end %>

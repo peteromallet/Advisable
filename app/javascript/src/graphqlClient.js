@@ -127,10 +127,13 @@ const client = new ApolloClient({
 // write any prefetched queries to the cache
 if (window.prefetchedQueries) {
   window.prefetchedQueries.forEach((prefetchedQuery) => {
-    client.writeQuery({
-      query: gql(prefetchedQuery.query),
-      data: prefetchedQuery.result.data,
-    });
+    if (!prefetchedQuery.result.errors) {
+      client.writeQuery({
+        query: gql(prefetchedQuery.query),
+        data: prefetchedQuery.result.data,
+        variables: prefetchedQuery.variables,
+      });
+    }
   });
 }
 

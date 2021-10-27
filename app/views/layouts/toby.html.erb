@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Advisable Toby</title>
+    <%= csrf_meta_tags %> <%= csp_meta_tag %>
+
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" />
+    <link rel="icon" href="/favicon-192.png" sizes="192x192" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+
+    <%= render "prefetched_queries" %>
+
+    <script>
+      window._CSRF = "<%= form_authenticity_token %>"
+    </script>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <%= javascript_packs_with_chunks_tag "toby" %>
+    <%= stylesheet_packs_with_chunks_tag "toby" %>
+    <noscript>
+      Please enable javascript to view this application
+    </noscript>
+  </body>
+</html>
