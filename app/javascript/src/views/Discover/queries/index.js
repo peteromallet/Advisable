@@ -15,6 +15,7 @@ import REFRESH_RESULTS from "./refreshResults.gql";
 import SKILL_CATEGORIES from "./skillCategories.gql";
 import DELETE from "./deleteSearch.gql";
 import CATEGORY_ARTICLES from "./categoryArticles.gql";
+import COMPANY_INFO from "./companyInfo.gql";
 
 export function useShortlist() {
   const { id } = useParams();
@@ -26,6 +27,10 @@ export function useShortlist() {
 
 export function useShortlists() {
   return useQuery(SHORTLISTS);
+}
+
+export function useCurrentCompany() {
+  return useQuery(COMPANY_INFO);
 }
 
 export function useArticle() {

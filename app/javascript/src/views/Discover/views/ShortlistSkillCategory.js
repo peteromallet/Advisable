@@ -2,11 +2,12 @@ import React from "react";
 import css from "@styled-system/css";
 import { Box, Text, Heading, theme } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
-import { useSkillCategories } from "../queries";
+import { useCurrentCompany, useSkillCategories } from "../queries";
 import Loading from "src/components/Loading";
 import { Link } from "react-router-dom";
 
 export default function ShortlistSkillCategory() {
+  useCurrentCompany();
   const { data, loading } = useSkillCategories();
 
   const categories = data?.skillCategories || [];
@@ -25,8 +26,8 @@ export default function ShortlistSkillCategory() {
       </Heading>
       <Box maxWidth="600px" marginBottom={8}>
         <Text fontSize="lg" lineHeight="24px">
-          We have freelancers working in all kinds of fields. Let us know which
-          one you are interested in.
+          To get started, please let us know what area you&apos;re particularly
+          interested in.
         </Text>
       </Box>
       {loading && <Loading />}
