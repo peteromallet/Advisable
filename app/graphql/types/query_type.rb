@@ -191,6 +191,17 @@ module Types
       ::Event.for_graphql.find_by!(uid: id)
     end
 
+    field :upcoming_events, [Types::EventType], null: true
+    def upcoming_events
+      requires_accepted_specialist!
+      ::Event.upcoming.published.for_graphql
+    end
+
+    field :collaboration_requests, Types::Guild::Post::OpportunityType.connection_type, null: true
+    def collaboration_requests
+      ::Guild::Opportunity.unresolved.order(created_at: :desc)
+    end
+
     field :guild_post, Types::Guild::PostInterface, null: true do
       argument :id, ID, required: true
     end
@@ -312,9 +323,13 @@ module Types
     field :case_study, Types::CaseStudy::Article, null: true do
       argument :id, ID, required: true
     end
-
     def case_study(id:)
       ::CaseStudy::Article.find_by!(uid: id)
+    end
+
+    field :top_case_studies, [Types::CaseStudy::Article], null: true
+    def top_case_studies
+      ::CaseStudy::Article.active.where(published_at: 1.week.ago..).by_score.limit(3)
     end
 
     field :shared_articles, [Types::CaseStudy::SharedArticle], null: false
