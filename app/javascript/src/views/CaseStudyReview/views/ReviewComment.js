@@ -4,15 +4,14 @@ import { Formik, Form } from "formik";
 // Hooks
 import { useHistory, useParams, useLocation, Redirect } from "react-router-dom";
 import { useNotifications } from "src/components/Notifications";
-import { useReviewSpecialist } from "../queries";
+import { useCreateReview } from "../queries";
 // Components
-import { Card, Text, Heading, Textarea, Select } from "@advisable/donut";
+import { Card, Text, Heading, Textarea } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
+import Reviewed from "./Reviewed";
 
 const valiadtionSchema = object().shape({
-  companyName: string().required("Please provide your company name"),
-  relationship: string().required("Please set the relationship status"),
   comment: string().required("Please write a review"),
 });
 
@@ -21,21 +20,21 @@ function ReviewComment({ data }) {
   const { error } = useNotifications();
 
   // React Router data
-  const { id } = useParams();
+  const { article_id } = useParams();
   const history = useHistory();
   const location = useLocation();
 
   // Apollo Mutation action
-  const [reviewSpecialist] = useReviewSpecialist();
+  const [createReview] = useCreateReview();
 
   // Describe Formik initial state
-  const initialValues = { companyName: "", relationship: "", comment: "" };
+  const initialValues = { comment: "" };
 
   const handleSubmit = async (values) => {
-    const response = await reviewSpecialist({
+    const response = await createReview({
       variables: {
         input: {
-          specialist: id,
+          article: article_id,
           ratings: location.state?.ratings,
           ...values,
         },
@@ -45,12 +44,19 @@ function ReviewComment({ data }) {
     if (response.errors) {
       error("Something went wrong. Please try again.");
     } else {
-      history.push(`/review/${specialist.id}/complete`);
+      history.push(
+        `/review/${specialist.id}/case_studies/${article_id}/complete`,
+      );
     }
   };
 
+  if (data.caseStudy.review) {
+    return <Reviewed />;
+  }
   if (!oauthViewer) {
-    return <Redirect to={`/review/${specialist.id}`} />;
+    return (
+      <Redirect to={`/review/${specialist.id}/case_studies/${article_id}`} />
+    );
   }
 
   return (
@@ -74,28 +80,6 @@ function ReviewComment({ data }) {
         onSubmit={handleSubmit}
       >
         <Form>
-          <FormField
-            marginBottom={6}
-            name="companyName"
-            label={`What company did you work with ${specialist.firstName} at?`}
-            placeholder="Company name"
-          />
-          <FormField
-            as={Select}
-            marginBottom={6}
-            name="relationship"
-            label="What was your relationship to them?"
-          >
-            <option value="They worked on the project with me">
-              I worked on the project with them
-            </option>
-            <option value="They worked at the company but not the project">
-              I worked at the company but not on the project
-            </option>
-            <option value="They managed the project">
-              I managed the project
-            </option>
-          </FormField>
           <FormField
             minRows={8}
             as={Textarea}
