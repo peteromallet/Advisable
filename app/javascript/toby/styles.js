@@ -79,6 +79,14 @@ export const StyledRow = styled.div`
   }
 `;
 
+export const StyledCellCopyButton = styled.button`
+  border: none;
+  background: white;
+  border-radius: 8px;
+  color: ${theme.colors.neutral800};
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+`;
+
 export const StyledCell = styled.div`
   width: 200px;
   height: 40px;
@@ -87,9 +95,21 @@ export const StyledCell = styled.div`
   padding: 0 10px;
   flex-shrink: 0;
   overflow: hidden;
+  position: relative;
   white-space: nowrap;
   align-items: center;
   border-right: 1px solid ${theme.colors.neutral100};
+
+  ${StyledCellCopyButton} {
+    right: 8px;
+    z-index: 2;
+    display: none;
+    position: absolute;
+  }
+
+  &:hover ${StyledCellCopyButton} {
+    display: block;
+  }
 `;
 
 export const StyledNavigation = styled.div`

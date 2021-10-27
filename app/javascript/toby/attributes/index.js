@@ -2,6 +2,7 @@ import React from "react";
 import { useField } from "formik";
 import { FieldError } from "@advisable/donut";
 import IdAttribute from "./id";
+import UrlAttribute from "./url";
 import StringAttribute from "./string";
 import SelectAttribute from "./select";
 import HasManyAttribute from "./hasMany";
@@ -27,13 +28,18 @@ const ATTRIBUTES = {
   DateTimeAttribute,
   BooleanAttribute,
   IntegerAttribute,
+  UrlAttribute,
   HasManyThroughAttribute: HasManyAttribute,
   SelectAttribute,
   LongTextAttribute,
 };
 
+export function handlerForAttribute(attribute) {
+  return ATTRIBUTES[attribute.__typename];
+}
+
 export function Attribute({ record, attribute }) {
-  const handler = ATTRIBUTES[attribute.__typename];
+  const handler = handlerForAttribute(attribute);
 
   if (!handler) {
     console.error("No attribute handler found", attribute);

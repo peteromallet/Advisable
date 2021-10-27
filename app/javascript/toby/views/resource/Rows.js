@@ -6,6 +6,7 @@ import { Exclamation } from "@styled-icons/heroicons-solid/Exclamation";
 import { Attribute } from "../../attributes";
 import { StyledRow, StyledCell } from "../../styles";
 import { recordPath } from "../../utilities";
+import CopyToClipboard from "../../components/CopyToClipboard";
 
 export default function Rows({ edges, resource }) {
   const history = useHistory();
@@ -31,6 +32,7 @@ export default function Rows({ edges, resource }) {
               </Box>
             }
           >
+            <CopyToClipboard record={node} attribute={attr} />
             <Attribute record={node} attribute={attr} />
           </Sentry.ErrorBoundary>
         </StyledCell>

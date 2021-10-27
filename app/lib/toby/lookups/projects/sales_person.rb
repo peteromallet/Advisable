@@ -3,7 +3,9 @@
 module Toby
   module Lookups
     module Projects
-      class SalesPerson < Attributes::StringLookup
+      class SalesPerson < Attributes::String
+        include Lookup
+
         filter :is, Filters::Equals do |records, _attribute, value|
           records.includes(user: {company: :sales_person}).
             where(sales_person: {username: value[0]})
