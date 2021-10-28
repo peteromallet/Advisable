@@ -20,7 +20,7 @@ import BackButton from "../BackButton";
 // CTA button
 import EditInfo from "../EditInfo";
 import MessageButton from "../MessageButton";
-import RequestConsultation from "src/components/RequestConsultation";
+import ConnectButton from "src/components/ConnectButton";
 import SocialProfilesIcons from "../SocialProfilesIcons";
 // Constant values
 import { TRUNCATE_LIMIT } from "../../values";
@@ -120,14 +120,14 @@ function Sidebar({ data, isOwner, ...props }) {
                 <EditInfo specialist={specialist}>Edit Info</EditInfo>
               ) : null}
               {!isOwner && !viewerIsGuild ? (
-                <RequestConsultation
+                <ConnectButton
                   specialist={specialist}
                   variant="dark"
                   width={["100%", "auto"]}
                   size={["m", "m", "l"]}
                 >
                   Work together
-                </RequestConsultation>
+                </ConnectButton>
               ) : null}
               {!isOwner && viewerIsGuild ? (
                 <MessageButton specialist={specialist} />

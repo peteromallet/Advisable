@@ -1,7 +1,7 @@
 import React from "react";
 import useViewer from "src/hooks/useViewer";
 import MessageButton from "src/views/FreelancerProfile/components/MessageButton";
-import RequestConsultation from "src/components/RequestConsultation";
+import ConnectButton from "src/components/ConnectButton";
 
 export default function MessageFreelancerButton({ specialist, ...props }) {
   const viewer = useViewer();
@@ -14,5 +14,5 @@ export default function MessageFreelancerButton({ specialist, ...props }) {
     return <MessageButton specialist={specialist} {...props} />;
   }
 
-  return <RequestConsultation specialist={specialist} marginRight={2} />;
+  return <ConnectButton specialist={specialist} marginRight={2} />;
 }

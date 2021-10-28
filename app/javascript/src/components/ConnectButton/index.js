@@ -1,9 +1,9 @@
 import React from "react";
 import { ChatAlt } from "@styled-icons/heroicons-solid/ChatAlt";
 import { Modal, useModal, Button, DialogDisclosure } from "@advisable/donut";
-import RequestConsultationModal from "./RequestConsultationModal";
+import ConnectModal from "./ConnectModal";
 
-export default function RequestConsultation({
+export default function ConnectButton({
   specialist,
   children = "Connect",
   ...props
@@ -17,7 +17,7 @@ export default function RequestConsultation({
         modal={dialog}
         label={`Request consultation with ${specialist.name}`}
       >
-        <RequestConsultationModal dialog={dialog} specialist={specialist} />
+        <ConnectModal dialog={dialog} specialist={specialist} />
       </Modal>
       <DialogDisclosure as={Button} prefix={<ChatAlt />} {...dialog} {...props}>
         {children}
