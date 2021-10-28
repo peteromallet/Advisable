@@ -4,35 +4,37 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import { variant } from "styled-system";
 
-const StyledCircularButtonIcon = styled.div`
-  display: flex;
-  position: relative;
-  align-items: center;
-  justify-content: center;
+const StyledCircularButtonIcon = styled.div(
+  css({
+    display: "flex",
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
+    svg: {
+      zIndex: 2,
+      position: "relative",
+    },
+  }),
+);
 
-  svg {
-    z-index: 2;
-    position: relative;
-  }
-`;
+const StyledCircularButtonLabel = styled.span(
+  css({
+    marginTop: 1,
+    fontSize: "13px",
+    fontWeight: 500,
+    letterSpacing: "-0.01em",
+  }),
+);
 
-const StyledCircularButtonBackground = styled(motion.div)`
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  position: absolute;
-  background: ${theme.colors.neutral100};
-`;
-
-const StyledCircularButtonLabel = styled.span`
-  margin-top: 4px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-`;
+const StyledCircularButtonBackground = styled.div(
+  css({
+    zIndex: 1,
+    width: "100%",
+    height: "100%",
+    borderRadius: "50%",
+    position: "absolute",
+  }),
+);
 
 const size = variant({
   prop: "$size",
@@ -76,18 +78,51 @@ const size = variant({
   },
 });
 
-const StyledCircularButton = styled(motion.button)`
-  ${size};
-  border: none;
-  display: flex;
-  outline: none;
-  cursor: pointer;
-  appearance: none;
-  align-items: center;
-  flex-direction: column;
-  background: transparent;
-  justify-content: center;
-`;
+const color = variant({
+  prop: "$color",
+  variants: {
+    neutral: {
+      color: "neutral700",
+      [StyledCircularButtonBackground]: {
+        bg: "neutral100",
+      },
+      "&:hover": {
+        color: "neutral900",
+        [StyledCircularButtonBackground]: {
+          bg: "neutral200",
+        },
+      },
+    },
+
+    blue: {
+      color: "blue500",
+      [StyledCircularButtonBackground]: {
+        bg: "blue100",
+      },
+      "&:hover": {
+        color: "blue700",
+      },
+    },
+  },
+});
+
+const StyledCircularButton = styled.button(
+  size,
+  color,
+  css({
+    padding: 0,
+    margin: 0,
+    border: "none",
+    display: "flex",
+    outline: "none",
+    appearance: "none",
+    position: "relative",
+    alignItems: "center",
+    background: "transparent",
+    justifyContent: "center",
+    flexDirection: "column",
+  }),
+);
 
 const circleVariants = {
   default: {
@@ -97,7 +132,7 @@ const circleVariants = {
     scale: 1.08,
   },
   pressed: {
-    scale: 0.9,
+    scale: 1,
   },
 };
 
@@ -107,22 +142,15 @@ const spring = {
   stiffness: 400,
 };
 
-export default React.forwardRef(function CircularButton(
-  { icon, bg, color, onClick, size, label, ...props },
+const CircularButton = React.forwardRef(function CircularButton(
+  { icon, onClick, size = "md", label, color = "neutral", ...props },
   ref,
 ) {
-  const colorAnimation = {
-    color: theme.colors[color],
-    transition: { duration: 0.3 },
-  };
-
-  const backgroundAnimation = {
-    backgroundColor: theme.colors[bg],
-    transition: { duration: 0.3 },
-  };
   return (
     <StyledCircularButton
+      ref={ref}
       $size={size}
+      $color={color}
       onClick={onClick}
       whileHover="hover"
       whileTap="pressed"
@@ -130,18 +158,16 @@ export default React.forwardRef(function CircularButton(
       {...props}
     >
       <StyledCircularButtonIcon>
-        {icon}
+        {React.createElement(icon)}
         <StyledCircularButtonBackground
-          bg={bg}
-          variants={circleVariants}
+          as={motion.div}
           transition={spring}
-          initial={backgroundAnimation}
-          animate={backgroundAnimation}
+          variants={circleVariants}
         />
       </StyledCircularButtonIcon>
       {label && <StyledCircularButtonLabel>{label}</StyledCircularButtonLabel>}
     </StyledCircularButton>
   );
-}
+});
 
 export default CircularButton;
