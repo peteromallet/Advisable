@@ -10,7 +10,7 @@ import PictureActionArea from "./PictureActionArea";
 import FileUploadInput from "./FileUploadInput";
 import ProgressBar from "./ProgressBar";
 import { useUpdateProfile } from "../queries";
-import ProfilePictureModal from "./ProfilePictureModal";
+import ImageModal from "./ImageModal";
 
 function ArticleProfilePicture({ specialist }) {
   return (
@@ -67,7 +67,13 @@ export default function ProfilePicture({ specialist }) {
         src={specialist.avatar}
         stroke="4px"
       />
-      <ProfilePictureModal specialist={specialist} modal={modal} />
+      <ImageModal modal={modal}>
+        <PassportAvatar
+          size="responsive"
+          name={specialist.name}
+          src={specialist.avatar}
+        />
+      </ImageModal>
       <PictureActionArea type="avatar" onClick={modal.show} />
       {isOwner && (
         <>
