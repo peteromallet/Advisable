@@ -1,11 +1,14 @@
+import { DateTime } from "luxon";
 import { Box, Button, Text } from "@advisable/donut";
 import React, { useState } from "react";
 import Loading from "src/components/Loading";
 import { useAvailability, useUpdateAvailability } from "./queries";
 import AvailabilityInput from "../AvailabilityInput";
 import RequestConsultationHeader from "./RequestConsultationHeader";
+import TimezoneSelect from "./TimezoneSelect";
 
 function AvailabilityForm({ data, onSubmit }) {
+  const [timezone, setTimezone] = useState(DateTime.local().zoneName || "UTC");
   const [updateAvailability, { loading }] = useUpdateAvailability();
   const [availability, setAvailability] = useState(
     data.viewer.availability || [],
@@ -23,12 +26,19 @@ function AvailabilityForm({ data, onSubmit }) {
       <Box marginBottom={6}>
         <AvailabilityInput
           value={availability}
+          timezone={timezone}
           onChange={setAvailability}
           events={data.viewer.interviews?.map((i) => ({
             time: i.startsAt,
             label: `Interview with ${i.specialist.firstName}`,
           }))}
         />
+        <Box marginY={4}>
+          <TimezoneSelect
+            value={timezone}
+            onChange={(e) => setTimezone(e.target.value)}
+          />
+        </Box>
       </Box>
       {availability.length < 6 ? (
         <Text
