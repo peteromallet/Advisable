@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # The SpecialistSkill type represents a specialists association with a skill.
 # Its important to note that the underlying object is not a SpecialistSkill
 # record as a specialist can have skills from multiple places. The 'object'

@@ -11,7 +11,7 @@ class Mutations::CreateSetupIntent < Mutations::BaseMutation
     intent = Stripe::SetupIntent.create
     current_user.company.update(
       stripe_setup_intent_id: intent.id,
-      setup_intent_status: 'pending'
+      setup_intent_status: "pending"
     )
 
     {secret: intent.client_secret}

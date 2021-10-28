@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Mutations::AnswerQuestion < Mutations::BaseMutation
   argument :question, ID, required: true
   argument :content, String, required: true

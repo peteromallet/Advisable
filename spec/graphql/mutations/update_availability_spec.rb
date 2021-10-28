@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::UpdateAvailability do
   let(:user) { create(:user, availability: []) }
@@ -23,10 +23,10 @@ RSpec.describe Mutations::UpdateAvailability do
     GRAPHQL
   end
 
-  it 'updates the users availability' do
+  it "updates the users availability" do
     expect(user.reload.availability).to be_empty
     response = AdvisableSchema.execute(query, context: context)
-    availability = response['data']['updateAvailability']['user']['availability']
+    availability = response["data"]["updateAvailability"]["user"]["availability"]
     expect(availability).to include(time)
   end
 
@@ -35,7 +35,7 @@ RSpec.describe Mutations::UpdateAvailability do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
+      error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("notAuthenticated")
     end
   end
@@ -45,7 +45,7 @@ RSpec.describe Mutations::UpdateAvailability do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
+      error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end
   end

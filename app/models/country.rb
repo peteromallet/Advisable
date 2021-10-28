@@ -14,7 +14,7 @@ class Country < ApplicationRecord
   end
 
   def name_stripped
-    name.gsub(/\s\(.*\)$/, '')
+    name.gsub(/\s\(.*\)$/, "")
   end
 end
 

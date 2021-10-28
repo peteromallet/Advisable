@@ -7,7 +7,7 @@ module Types::Guild::AuthorInterface
   orphan_types Types::Guild::CommentType, Types::Guild::ReactionType
 
   field :authored, Boolean, null: false do
-    description 'Whether the current user is the author of the resource'
+    description "Whether the current user is the author of the resource"
   end
   def authored
     object.specialist_id == context[:current_user]&.id

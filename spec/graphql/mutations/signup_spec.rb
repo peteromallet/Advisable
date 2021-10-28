@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::Signup do
   let(:account) { create(:account, password: nil) }
   let(:user) { create(:user, account: account) }
   let(:id) { user.uid }
   let(:email) { account.email }
-  let(:password) { 'testing123' }
+  let(:password) { "testing123" }
   let(:session_manager) do
     SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
   end
@@ -47,38 +47,38 @@ RSpec.describe Mutations::Signup do
     )
   end
 
-  it 'returns a viewer' do
-    id = response['data']['signup']['viewer']['id']
+  it "returns a viewer" do
+    id = response["data"]["signup"]["viewer"]["id"]
     expect(id).to eq(user.uid)
   end
 
-  context 'when the user is a specialist' do
+  context "when the user is a specialist" do
     let(:user) { create(:specialist, account: account) }
 
-    it 'returns a viewer' do
-      id = response['data']['signup']['viewer']['id']
+    it "returns a viewer" do
+      id = response["data"]["signup"]["viewer"]["id"]
       expect(id).to eq(user.uid)
     end
   end
 
-  context 'when the id is incorrect' do
-    let(:id) { 'wrong_id' }
+  context "when the id is incorrect" do
+    let(:id) { "wrong_id" }
 
-    it 'returns an error' do
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('NOT_FOUND')
+    it "returns an error" do
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("NOT_FOUND")
     end
   end
 
-  context 'when the account already exists' do
-    let(:user) { create(:user, account: create(:account, password: 'testing123')) }
+  context "when the account already exists" do
+    let(:user) { create(:user, account: create(:account, password: "testing123")) }
 
-    it 'returns an error' do
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('ACCOUNT_EXISTS')
+    it "returns an error" do
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("ACCOUNT_EXISTS")
     end
 
-    it 'doesnt login the user' do
+    it "doesnt login the user" do
       expect(session_manager).not_to receive(:login)
       response
     end

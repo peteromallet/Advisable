@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Used to update an application record during the application process.
 class Mutations::SetupZoomForVideoCall < Mutations::BaseMutation
   argument :id, ID, required: true

@@ -59,9 +59,9 @@ Specialist.update_all(guild: true)
   next unless num == 1
 
   Rails.logger.info "Attaching an image"
-  image = Rails.root.join(Rails.root, 'db/seeds/assets/guild/cover.jpg')
+  image = Rails.root.join(Rails.root, "db/seeds/assets/guild/cover.jpg")
   gpi = Guild::PostImage.create(post: post, cover: true, position: 0)
-  gpi.image.attach(io: File.open(image), filename: 'cover.jpg', content_type: 'image/jpeg')
+  gpi.image.attach(io: File.open(image), filename: "cover.jpg", content_type: "image/jpeg")
   gpi.save
 end
 
@@ -86,8 +86,8 @@ Rails.logger.info "Creating guild events"
 
   # Attach random picsum image without being rate limited
   sleep(0.3)
-  file = URI.open('https://picsum.photos/1800/1800.jpg')
-  event.cover_photo.attach(io: file, filename: "cover.jpg", content_type: 'image/jpg')
+  file = URI.open("https://picsum.photos/1800/1800.jpg")
+  event.cover_photo.attach(io: file, filename: "cover.jpg", content_type: "image/jpg")
   event.save!
 end
 

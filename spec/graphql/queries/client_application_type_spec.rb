@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe("clientApplication query", type: :system) do
   let(:user) { create(:user, application_status: "Application Started") }
@@ -22,12 +22,12 @@ RSpec.describe("clientApplication query", type: :system) do
     AdvisableSchema.execute(query, context: context)
   end
 
-  context 'when the application_status is started' do
+  context "when the application_status is started" do
     let(:user) { create(:user, application_status: "Application Started") }
 
     it 'the status field is "Application Started"' do
-      status = request['data']['clientApplication']['status']
-      expect(status).to eq('Application Started')
+      status = request["data"]["clientApplication"]["status"]
+      expect(status).to eq("Application Started")
     end
   end
 
@@ -35,8 +35,8 @@ RSpec.describe("clientApplication query", type: :system) do
     let(:user) { create(:user, application_status: "Application Accepted") }
 
     it 'the status field is "Application Accepted"' do
-      status = request['data']['clientApplication']['status']
-      expect(status).to eq('Application Accepted')
+      status = request["data"]["clientApplication"]["status"]
+      expect(status).to eq("Application Accepted")
     end
   end
 
@@ -44,8 +44,8 @@ RSpec.describe("clientApplication query", type: :system) do
     let(:user) { create(:user, application_status: "Application Rejected") }
 
     it 'the status field is "Application Rejected"' do
-      status = request['data']['clientApplication']['status']
-      expect(status).to eq('Application Rejected')
+      status = request["data"]["clientApplication"]["status"]
+      expect(status).to eq("Application Rejected")
     end
   end
 end

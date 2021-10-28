@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::FailPreviousProjectVerification do
   let(:contact_name) { "John Doe" }
@@ -33,12 +33,12 @@ RSpec.describe Mutations::FailPreviousProjectVerification do
   let(:oauth_viewer) do
     OauthViewer.new(
       {
-        'uid' => 'test',
-        'name' => viewer_name,
-        'provider' => 'linkedin',
-        'first_name' => 'John',
-        'last_name' => 'Doe',
-        'image' => ''
+        "uid" => "test",
+        "name" => viewer_name,
+        "provider" => "linkedin",
+        "first_name" => "John",
+        "last_name" => "Doe",
+        "image" => ""
       }
     )
   end
@@ -54,10 +54,10 @@ RSpec.describe Mutations::FailPreviousProjectVerification do
     expect(previous_project.validation_failed_reason).to eq("testing")
   end
 
-  context 'when the viewer is not the project contact' do
+  context "when the viewer is not the project contact" do
     let(:contact_name) { "Other Person" }
 
-    it 'does not change the validation status' do
+    it "does not change the validation status" do
       expect { request }.not_to(change { previous_project.reload.validation_status })
     end
   end

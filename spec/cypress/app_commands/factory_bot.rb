@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Array.wrap(command_options).map do |factory_options|
   factory_method = factory_options.shift
   begin

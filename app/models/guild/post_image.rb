@@ -4,9 +4,9 @@ module Guild
   class PostImage < ApplicationRecord
     include Resizable
     include Uid
-    uid_prefix 'gpi'
+    uid_prefix "gpi"
 
-    belongs_to :post, class_name: 'Guild::Post', foreign_key: 'guild_post_id', inverse_of: 'images'
+    belongs_to :post, class_name: "Guild::Post", foreign_key: "guild_post_id", inverse_of: "images"
     has_one_attached :image
     resize image: {resize_to_limit: [1600, 1600]}
 
@@ -16,7 +16,7 @@ module Guild
     private
 
     def reduce_positions
-      post.images.where('position > ?', position).find_each do |image|
+      post.images.where("position > ?", position).find_each do |image|
         image.update(position: image.position - 1)
       end
     end

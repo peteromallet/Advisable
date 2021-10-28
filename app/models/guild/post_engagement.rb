@@ -3,7 +3,7 @@
 module Guild
   class PostEngagement < ApplicationRecord
     belongs_to :specialist
-    belongs_to :post, foreign_key: 'guild_post_id', class_name: 'Guild::Post', counter_cache: :engagements_count, inverse_of: 'engagements'
+    belongs_to :post, foreign_key: "guild_post_id", class_name: "Guild::Post", counter_cache: :engagements_count, inverse_of: "engagements"
 
     validates :specialist_id, uniqueness: {scope: :guild_post_id}
   end

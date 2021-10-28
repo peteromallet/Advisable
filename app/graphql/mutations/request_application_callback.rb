@@ -12,8 +12,8 @@ module Mutations
 
       if user.application_status != "Application Accepted"
         ApiError.invalid_request(
-          'notAccepted',
-          'Must be accepted to request a callback'
+          "notAccepted",
+          "Must be accepted to request a callback"
         )
       end
 
@@ -22,14 +22,14 @@ module Mutations
 
     def resolve(**args)
       user = User.find_by_uid_or_airtable_id!(args[:id])
-      user.update contact_status: 'Call Scheduled'
+      user.update contact_status: "Call Scheduled"
 
       call =
         user.client_calls.create(
           call_time: Time.zone.now,
           phone_number: args[:phone_number],
-          event_type: 'ASAP Call',
-          type_of_call: 'Request Access Call',
+          event_type: "ASAP Call",
+          type_of_call: "Request Access Call",
           call_attempt_count: 0
         )
 
@@ -44,50 +44,50 @@ module Mutations
 
     def send_slack_message(user, client_call)
       Slack.message(
-        channel: 'asap_calls',
-        text: 'New ASAP call request',
+        channel: "asap_calls",
+        text: "New ASAP call request",
         blocks: [
           {
-            type: 'section',
+            type: "section",
             text: {
-              type: 'mrkdwn',
+              type: "mrkdwn",
               text: "<!channel> There's a new ASAP call waiting for you."
             }
           },
-          {type: 'divider'},
+          {type: "divider"},
           {
-            type: 'section',
+            type: "section",
             fields: [
-              {type: 'mrkdwn', text: "*Name*\n#{user.account.name}"},
-              {type: 'mrkdwn', text: "*Company*\n#{user.company.name}"}
+              {type: "mrkdwn", text: "*Name*\n#{user.account.name}"},
+              {type: "mrkdwn", text: "*Company*\n#{user.company.name}"}
             ]
           },
           {
-            type: 'section',
+            type: "section",
             text: {
-              type: 'mrkdwn',
+              type: "mrkdwn",
               text:
                 "Mark Call Completed = Yes once you reach them or move them up one if you weren't able to reach them."
             }
           },
           {
-            type: 'section',
+            type: "section",
             text: {
-              type: 'mrkdwn',
+              type: "mrkdwn",
               text:
                 "*<https://airtable.com/tblF2WWM9mC4geYhn/viw0XG7SAtiCcPUeE/#{
                 client_call.airtable_id
               }|View Details>*"
             }
           },
-          {type: 'section', text: {type: 'mrkdwn', text: ' '}},
-          {type: 'divider'},
+          {type: "section", text: {type: "mrkdwn", text: " "}},
+          {type: "divider"},
           {
-            type: 'section',
+            type: "section",
             text: {
-              type: 'mrkdwn',
+              type: "mrkdwn",
               text:
-                '<https://airtable.com/tblF2WWM9mC4geYhn/viw0XG7SAtiCcPUeE|View All Pending Calls>'
+                "<https://airtable.com/tblF2WWM9mC4geYhn/viw0XG7SAtiCcPUeE|View All Pending Calls>"
             }
           }
         ]

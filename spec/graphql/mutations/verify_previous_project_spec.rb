@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::VerifyPreviousProject do
-  let(:validation_status) { 'Pending' }
+  let(:validation_status) { "Pending" }
   let(:project) do
     create(
       :previous_project,
-      validation_status: validation_status, contact_name: 'Test Viewer'
+      validation_status: validation_status, contact_name: "Test Viewer"
     )
   end
 
   let(:oauth_viewer) do
     OauthViewer.new(
       {
-        'uid' => '123',
-        'name' => 'Test Viewer',
-        'firstName' => 'Test',
-        'lastName' => 'Viewer',
-        'image' => '..',
-        'provider' => 'linkedin'
+        "uid" => "123",
+        "name" => "Test Viewer",
+        "firstName" => "Test",
+        "lastName" => "Viewer",
+        "image" => "..",
+        "provider" => "linkedin"
       }
     )
   end
@@ -47,8 +47,8 @@ RSpec.describe Mutations::VerifyPreviousProject do
             query,
             context: {oauth_viewer: oauth_viewer}
           )
-      }.to change { project.reload.validation_status }.from('Pending').to(
-        'Validated'
+      }.to change { project.reload.validation_status }.from("Pending").to(
+        "Validated"
       )
     end
   end

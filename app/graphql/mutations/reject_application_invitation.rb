@@ -16,7 +16,7 @@ module Mutations
 
     def resolve(id:, reason:)
       application = Application.find_by_uid_or_airtable_id!(id)
-      application.status = 'Invitation Rejected'
+      application.status = "Invitation Rejected"
       application.invitation_rejection_reason = reason
 
       success = Logidze.with_responsible(current_account_id) do

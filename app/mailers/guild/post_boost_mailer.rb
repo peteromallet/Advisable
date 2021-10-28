@@ -10,7 +10,7 @@ module Guild
       @author = @guild_post.specialist
       subscriber_label_names = @subscriber.subscribed_labels.pluck(:name)
       post_label_names = @guild_post.labels.pluck(:name)
-      @label_names = (post_label_names & subscriber_label_names).join(', ')
+      @label_names = (post_label_names & subscriber_label_names).join(", ")
 
       mail(
         to: @subscriber.account.email,

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Types::PaymentMethodType < Types::BaseType
   field :id, String, null: false
   field :name, String, null: false

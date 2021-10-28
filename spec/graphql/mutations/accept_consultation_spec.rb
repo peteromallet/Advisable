@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::AcceptConsultation do
   let(:specialist) { create(:specialist) }
   let(:current_user) { specialist }
-  let(:consultation) { create(:consultation, specialist: specialist, status: 'Request Started') }
+  let(:consultation) { create(:consultation, specialist: specialist, status: "Request Started") }
   let(:context) { {current_user: current_user} }
 
   let(:query) do
@@ -30,7 +30,7 @@ RSpec.describe Mutations::AcceptConsultation do
   it "Sets the consultation status to 'Accepted By Specialist'" do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       consultation.reload.status
-    }.from('Request Started').to('Accepted By Specialist')
+    }.from("Request Started").to("Accepted By Specialist")
   end
 
   it "creates a project" do
@@ -48,14 +48,14 @@ RSpec.describe Mutations::AcceptConsultation do
     expect(application.attributes.slice("status", "score", "specialist_id", "trial_program").values).to match_array(["Applied", 90, consultation.specialist.id, true])
   end
 
-  context 'when the user already has a project with the skill' do
+  context "when the user already has a project with the skill" do
     let!(:project) { create(:project, user: consultation.user, primary_skill: consultation.skill) }
 
-    it 'doesnt create a new project' do
+    it "doesnt create a new project" do
       expect { AdvisableSchema.execute(query, context: context) }.not_to change(Project, :count)
     end
 
-    it 'creates an application for that project' do
+    it "creates an application for that project" do
       expect { AdvisableSchema.execute(query, context: context) }.to change {
         project.applications.count
       }.by(1)
@@ -67,7 +67,7 @@ RSpec.describe Mutations::AcceptConsultation do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
+      error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("notAuthenticated")
     end
   end
@@ -77,7 +77,7 @@ RSpec.describe Mutations::AcceptConsultation do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
+      error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_SPECIALIST")
     end
   end

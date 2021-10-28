@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Airtable::SyncReport
   attr_reader :failures
 

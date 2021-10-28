@@ -1,17 +1,18 @@
-require 'rails_helper'
+# frozen_string_literal: true
+require "rails_helper"
 
 RSpec.describe TaskPolicy do
   let(:task) { create(:task) }
 
-  describe '#update_due_date' do
-    it 'returns true if the user is an admin' do
+  describe "#update_due_date" do
+    it "returns true if the user is an admin" do
       user = task.application.project.user
       user.account.update(permissions: ["admin"])
       policy = described_class.new(user, task)
       expect(policy.update_due_date).to be_truthy
     end
 
-    it 'returns false if there is no user' do
+    it "returns false if there is no user" do
       policy = described_class.new(nil, task)
       expect(policy.update_due_date).to be_falsey
     end
@@ -28,7 +29,7 @@ RSpec.describe TaskPolicy do
     end
 
     context "when the task stage is 'Assigned'" do
-      let(:task) { create(:task, stage: 'Assigned') }
+      let(:task) { create(:task, stage: "Assigned") }
 
       it "returns true for specialists" do
         policy = described_class.new(task.application.specialist, task)
@@ -54,15 +55,15 @@ RSpec.describe TaskPolicy do
     end
   end
 
-  describe '#update_estimate' do
-    it 'returns true if the user is an admin' do
+  describe "#update_estimate" do
+    it "returns true if the user is an admin" do
       user = task.application.project.user
       user.account.update(permissions: ["admin"])
       policy = described_class.new(user, task)
       expect(policy.update_estimate).to be_truthy
     end
 
-    it 'returns false if there is no user' do
+    it "returns false if there is no user" do
       policy = described_class.new(nil, task)
       expect(policy.update_estimate).to be_falsey
     end
@@ -112,8 +113,8 @@ RSpec.describe TaskPolicy do
     end
   end
 
-  describe '#update_flexible_estimate' do
-    it 'calls #update_flexible_estimate' do
+  describe "#update_flexible_estimate" do
+    it "calls #update_flexible_estimate" do
       user = task.application.project.user
       policy = described_class.new(user, task)
       allow(policy).to receive(:update_flexible_estimate)
@@ -122,22 +123,22 @@ RSpec.describe TaskPolicy do
   end
 
   describe "#set_repeating" do
-    it 'returns true for the client' do
+    it "returns true for the client" do
       policy = described_class.new(task.application.project.user, task)
       expect(policy.set_repeating).to be_truthy
     end
 
-    it 'returns true for the specialist' do
+    it "returns true for the specialist" do
       policy = described_class.new(task.application.specialist, task)
       expect(policy.set_repeating).to be_truthy
     end
 
-    it 'returns false for a random user' do
+    it "returns false for a random user" do
       policy = described_class.new(create(:user), task)
       expect(policy.set_repeating).to be_falsey
     end
 
-    it 'returns true for admins' do
+    it "returns true for admins" do
       policy = described_class.new(create(:user, account: create(:account, permissions: ["admin"])), task)
       expect(policy.set_repeating).to be_truthy
     end

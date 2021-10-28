@@ -51,7 +51,7 @@ module MailHelper
   private
 
   def root_host
-    'https://advisable.com'
+    "https://advisable.com"
   end
 
   def app_host
@@ -59,7 +59,7 @@ module MailHelper
     if heroku_name.present? && heroku_name != "advisable"
       "https://#{heroku_name}.herokuapp.com"
     elsif Rails.env.production?
-      'https://app.advisable.com'
+      "https://app.advisable.com"
     else
       ActionMailer::Base.default_url_options[:host]
     end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Client signup', type: :system do
+RSpec.describe "Client signup", type: :system do
   before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     create(:blacklisted_domain, domain: "gmail.com")
@@ -14,8 +14,8 @@ RSpec.describe 'Client signup', type: :system do
     create(:skill, name: "Twitter Advertising")
   end
 
-  it 'Client can not use public emails' do
-    visit('/clients/join')
+  it "Client can not use public emails" do
+    visit("/clients/join")
     fill_in("firstName", with: "Michael")
     fill_in("lastName", with: "Scott")
     fill_in("email", with: "michael+scott@gmail.com")
@@ -24,7 +24,7 @@ RSpec.describe 'Client signup', type: :system do
     expect(page).to have_content("The email michael+scott@gmail.com is not allowed")
   end
 
-  it 'Client can create an account and gets redirected to projects' do
+  it "Client can create an account and gets redirected to projects" do
     visit("/clients/join")
     fill_in("firstName", with: "Michael")
     fill_in("lastName", with: "Scott")
@@ -49,17 +49,17 @@ RSpec.describe 'Client signup', type: :system do
     find("button[aria-label='Small Business']").click
 
     expect(page).to have_content("Goals")
-    find('label', text: 'Increase Web Traffic').click
-    find('label', text: 'Improve Conversion').click
+    find("label", text: "Increase Web Traffic").click
+    find("label", text: "Improve Conversion").click
     click_on("Continue")
 
     expect(page).to have_content("Preferences")
     fill_in("title", with: "CEO")
     fill_in("budget", with: "10000")
     find("button[aria-label='Yes']").click
-    find('label', text: 'We rarely experiment & try new things').click
+    find("label", text: "We rarely experiment & try new things").click
     click_on("Continue")
 
-    expect(page).to have_content('We are reviewing your application')
+    expect(page).to have_content("We are reviewing your application")
   end
 end

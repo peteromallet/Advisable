@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Types::CurrencyType < Types::BaseType
   field :iso_code, String, null: false
   field :name, String, null: false

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::StopWorking do
-  let(:application) { create(:application, status: 'Working') }
+  let(:application) { create(:application, status: "Working") }
   let(:context) { {current_user: application.project.user} }
   let(:query) do
     <<-GRAPHQL
@@ -43,33 +43,33 @@ RSpec.describe Mutations::StopWorking do
     end
   end
 
-  context 'when logged in as a random client' do
+  context "when logged in as a random client" do
     let(:context) { {current_user: create(:user)} }
 
-    it 'returns an error' do
+    it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('notAuthorized')
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("notAuthorized")
     end
   end
 
-  context 'when logged in as a random specialist' do
+  context "when logged in as a random specialist" do
     let(:context) { {current_user: create(:specialist)} }
 
-    it 'returns an error' do
+    it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('notAuthorized')
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("notAuthorized")
     end
   end
 
   context "when the application status is not 'Working'" do
-    let(:application) { create(:application, status: 'Applied') }
+    let(:application) { create(:application, status: "Applied") }
 
-    it 'returns an error' do
+    it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('APPLICATION_STATUS_NOT_WORKING')
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("APPLICATION_STATUS_NOT_WORKING")
     end
   end
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Mutations::DeleteAnswer < Mutations::BaseMutation
   argument :id, ID, required: true
   field :id, ID, null: true

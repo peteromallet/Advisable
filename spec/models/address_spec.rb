@@ -1,4 +1,5 @@
-require 'rails_helper'
+# frozen_string_literal: true
+require "rails_helper"
 
 RSpec.describe Address do
   describe "#to_s" do
@@ -14,8 +15,8 @@ RSpec.describe Address do
       expect(address.to_s).to eq("line1,\nline2,\ncity,\nstate,\nIE,\npostcode")
     end
 
-    context 'when there is no line2' do
-      it 'exlcudes it from the outputted address' do
+    context "when there is no line2" do
+      it "exlcudes it from the outputted address" do
         address = Address.new({
           "line1" => "line1",
           "city" => "city",
@@ -50,7 +51,7 @@ RSpec.describe Address do
   end
 
   describe "self.parse" do
-    it 'parses a given address' do
+    it "parses a given address" do
       expect(Address).to receive(:new).with({
         "line1" => "line1",
         "line2" => "line2",
@@ -62,8 +63,8 @@ RSpec.describe Address do
       Address.parse("line1,\nline2,\ncity,\nstate,\nIE,\npostcode")
     end
 
-    context 'when there is no line2' do
-      it 'still parses the address correctly' do
+    context "when there is no line2" do
+      it "still parses the address correctly" do
         expect(Address).to receive(:new).with({
           "line1" => "line1",
           "line2" => nil,

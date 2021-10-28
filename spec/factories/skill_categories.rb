@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :skill_category do
-    name { 'Skill Category Name' }
+    name { "Skill Category Name" }
   end
 end

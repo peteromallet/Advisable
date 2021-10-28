@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class StripeEvents::BaseEvent
   attr_reader :event
 

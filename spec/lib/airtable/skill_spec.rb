@@ -1,4 +1,5 @@
-require 'rails_helper'
+# frozen_string_literal: true
+require "rails_helper"
 
 RSpec.describe Airtable::Skill do
   # We can declare a fields let variable which the shared examples below will

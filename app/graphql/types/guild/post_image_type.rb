@@ -3,7 +3,7 @@
 module Types
   module Guild
     class PostImageType < Types::BaseType
-      graphql_name 'GuildPostImage'
+      graphql_name "GuildPostImage"
 
       field :id, ID, null: false
       field :url, String, null: false

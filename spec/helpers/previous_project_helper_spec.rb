@@ -18,12 +18,12 @@ RSpec.describe PreviousProjectHelper do
         project.primary_industry = build(:industry, name: "Testing")
       end
 
-      it 'returns industry and company type' do
+      it "returns industry and company type" do
         output = helper.previous_project_company_name(project)
         expect(output).to eq("Testing Startup")
       end
 
-      it 'returns just the company type when no primary_industry is set' do
+      it "returns just the company type when no primary_industry is set" do
         project.primary_industry = nil
         output = helper.previous_project_company_name(project)
         expect(output).to eq("Startup")

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Types::InvoiceType < Types::BaseType
   field :id, ID, null: false
   field :issued_at, GraphQL::Types::ISO8601DateTime, null: false

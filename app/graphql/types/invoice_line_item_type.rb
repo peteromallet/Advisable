@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # The underlying object for an InvoiceLineItemType is a stripe invoice line item
 class Types::InvoiceLineItemType < Types::BaseType
   field :id, ID, null: false
