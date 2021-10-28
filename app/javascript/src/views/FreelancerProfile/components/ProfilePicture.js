@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDialogState } from "reakit/Dialog";
 import { matchPath, useParams } from "react-router";
 import { Box } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
@@ -9,6 +10,7 @@ import PictureActionArea from "./PictureActionArea";
 import FileUploadInput from "./FileUploadInput";
 import ProgressBar from "./ProgressBar";
 import { useUpdateProfile } from "../queries";
+import ProfilePictureModal from "./ProfilePictureModal";
 
 function ArticleProfilePicture({ specialist }) {
   return (
@@ -30,8 +32,7 @@ export default function ProfilePicture({ specialist }) {
   const params = useParams();
   const viewer = useViewer();
   const isOwner = viewer?.id === params.id;
-
-  const [isExpanded, setExpanded] = useState();
+  const modal = useDialogState();
 
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:id/case_studies/:case_study_id",
@@ -46,10 +47,6 @@ export default function ProfilePicture({ specialist }) {
     } else {
       notifications.notify("Profile picture has been updated");
     }
-  };
-
-  const handleClick = () => {
-    setExpanded((state) => !state);
   };
 
   const { handleChange, progress, uploading, processing, updated } =
@@ -70,41 +67,21 @@ export default function ProfilePicture({ specialist }) {
         src={specialist.avatar}
         stroke="4px"
       />
-      {isExpanded && (
-        <Box
-          position="fixed"
-          zIndex="10"
-          onClick={handleClick}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          width="100%"
-          height="100%"
-          top="0"
-          left="0"
-          bg="rgba(0,0,0,0.6)"
-        >
-          <PassportAvatar
-            size="8xl"
-            name={specialist.name}
-            src={specialist.avatar}
-          />
-        </Box>
-      )}
+      <ProfilePictureModal specialist={specialist} modal={modal} />
+      <PictureActionArea type="avatar" onClick={modal.show} />
       {isOwner && (
         <>
+          <FileUploadInput
+            handleChange={handleChange}
+            accept={accept}
+            maxSizeInMB={1}
+            type="avatar"
+          />
           <ProgressBar
             progress={progress}
             uploading={uploading}
             processing={processing}
             updated={updated}
-            type="avatar"
-          />
-          <PictureActionArea type="avatar" onClick={handleClick} />
-          <FileUploadInput
-            handleChange={handleChange}
-            accept={accept}
-            maxSizeInMB={1}
             type="avatar"
           />
         </>

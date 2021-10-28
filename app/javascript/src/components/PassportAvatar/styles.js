@@ -86,9 +86,11 @@ const size = variant({
       height: "240px",
       borderRadius: "20px",
     },
-    "8xl": {
-      width: "410px",
-      height: "440px",
+    responsive: {
+      width: "80vw",
+      height: "91.4vw",
+      maxWidth: "264px",
+      maxHeight: "300px",
       borderRadius: "20px",
     },
   },
