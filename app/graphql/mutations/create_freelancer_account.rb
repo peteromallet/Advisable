@@ -19,6 +19,8 @@ module Mutations
       description "The freelancers email address"
     end
 
+    argument :password, String, required: false
+
     argument :pid, String, required: false do
       description "The project ID that they are signing up for."
     end
@@ -41,7 +43,8 @@ module Mutations
       account = Account.new(
         first_name: args[:first_name],
         last_name: args[:last_name],
-        email: args[:email]
+        email: args[:email],
+        password: args[:password]
       )
 
       specialist = Specialist.new(
