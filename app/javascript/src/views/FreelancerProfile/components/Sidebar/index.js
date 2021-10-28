@@ -104,7 +104,7 @@ export default function Sidebar({ data, ...props }) {
             {bio}
             {bioIsExceed ? (
               <StyledShowMore onClick={() => setExpanded((e) => !e)}>
-                {isExpanded ? <>see&#32;less</> : <>see&#32;more</>}
+                {isExpanded ? <>see&#160;less</> : <>see&#160;more</>}
               </StyledShowMore>
             ) : null}
           </Text>
