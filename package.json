@@ -12,7 +12,7 @@
     "@popperjs/core": "^2.9.3",
     "@rails/actioncable": "^6.1.4",
     "@rails/activestorage": "^6.1.4",
-    "@rails/webpacker": "5.4.0",
+    "@rails/webpacker": "5.4.3",
     "@rehooks/component-size": "^1.0.3",
     "@sentry/react": "^6.11.0",
     "@sentry/tracing": "^6.11.0",
@@ -89,7 +89,9 @@
     "webpack-bundle-analyzer": "^4.4.2",
     "yarn": "^1.22.11",
     "yup": "^0.32.9",
-    "zustand": "^3.5.8"
+    "zustand": "^3.5.8",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
@@ -115,8 +117,8 @@
     "react-refresh": "^0.10.0",
     "speedscope": "^1.13.0",
     "waait": "^1.0.5",
-    "webpack-dev-server": "^3.11.2",
-    "webpackbar": "^5.0.0-3"
+    "webpackbar": "^5.0.0-3",
+    "webpack-dev-server": "^3"
   },
   "scripts": {
     "test": "jest --coverage --runInBand",
