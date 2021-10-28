@@ -21,7 +21,7 @@ class SessionManager
       begin
         uid = session[:account_uid]
         if uid
-          if uid&.starts_with?('acc_')
+          if uid&.starts_with?("acc_")
             Account.find_by(uid: uid)
           else
             clear_browser_data

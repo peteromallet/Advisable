@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # matches a specialist to a project.
 # Records in the "matches" table are currently created off platform inside
 # of airtable.

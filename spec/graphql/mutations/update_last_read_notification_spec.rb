@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::UpdateLastReadNotification do
   let(:specialist) { create(:specialist) }
@@ -41,7 +41,7 @@ RSpec.describe Mutations::UpdateLastReadNotification do
         }.from(true).to(false)
 
         expect(unread_notification.reload.read_at).to eq(Time.current)
-        expect(touch_read_at['unreadNotifications']).to eq(false)
+        expect(touch_read_at["unreadNotifications"]).to eq(false)
       end
     end
   end

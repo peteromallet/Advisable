@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SpecialistMailerPreview < ActionMailer::Preview
   def verify_project
     project = PreviousProject.last
@@ -5,8 +6,8 @@ class SpecialistMailerPreview < ActionMailer::Preview
   end
 
   def inform_about_project
-    project = Project.order(Arel.sql('RANDOM()')).first
-    specialist = Specialist.order(Arel.sql('RANDOM()')).first
+    project = Project.order(Arel.sql("RANDOM()")).first
+    specialist = Specialist.order(Arel.sql("RANDOM()")).first
     SpecialistMailer.inform_about_project(project.id, specialist.id)
   end
 
@@ -15,13 +16,13 @@ class SpecialistMailerPreview < ActionMailer::Preview
   end
 
   def project_paused
-    application = Application.order(Arel.sql('RANDOM()')).first
+    application = Application.order(Arel.sql("RANDOM()")).first
     SpecialistMailer.project_paused(application.project, application)
   end
 
   private
 
   def random_interview
-    Interview.order(Arel.sql('RANDOM()')).first
+    Interview.order(Arel.sql("RANDOM()")).first
   end
 end

@@ -1,4 +1,5 @@
-require 'rails_helper'
+# frozen_string_literal: true
+require "rails_helper"
 
 RSpec.describe SessionManager do
   def mock_cookies(token = nil)
@@ -17,24 +18,24 @@ RSpec.describe SessionManager do
     session
   end
 
-  describe '#current_user' do
-    it 'returns the account based on the session account_uid' do
+  describe "#current_user" do
+    it "returns the account based on the session account_uid" do
       user = create(:user)
       session = mock_session(user.account.uid)
       manager = SessionManager.new(session: session, cookies: mock_cookies)
       expect(manager.current_user).to eq(user)
     end
 
-    context 'when there is no session account_uid' do
-      it 'returns nil' do
+    context "when there is no session account_uid" do
+      it "returns nil" do
         user = create(:user)
         session = mock_session
         manager = SessionManager.new(session: session, cookies: mock_cookies)
         expect(manager.current_user).to be_nil
       end
 
-      it 'restores the session' do
-        user = create(:user, account: create(:account, remember_token: '1234'))
+      it "restores the session" do
+        user = create(:user, account: create(:account, remember_token: "1234"))
         session = mock_session
         allow(session).to receive(:[]=)
         cookies = mock_cookies(user.account.remember_token)
@@ -44,10 +45,10 @@ RSpec.describe SessionManager do
     end
   end
 
-  describe '#login' do
+  describe "#login" do
     let(:account) { create(:account) }
 
-    it 'signs in the user' do
+    it "signs in the user" do
       session = mock_session
       cookies = mock_cookies
       manager = SessionManager.new(session: session, cookies: cookies)
@@ -58,9 +59,9 @@ RSpec.describe SessionManager do
     end
   end
 
-  describe '#logout' do
+  describe "#logout" do
     let(:account) { create(:account) }
-    it 'clears the user session' do
+    it "clears the user session" do
       session = mock_session(account.uid)
       cookies = mock_cookies(account.remember_token)
       manager = SessionManager.new(session: session, cookies: cookies)
@@ -71,18 +72,18 @@ RSpec.describe SessionManager do
     end
   end
 
-  describe '#restore_session' do
+  describe "#restore_session" do
     let(:account) { create(:account) }
 
-    it 'does nothing without a remember token' do
+    it "does nothing without a remember token" do
       session = mock_session
       cookies = mock_cookies
       manager = SessionManager.new(session: session, cookies: cookies)
       expect(manager.restore_session).to be_nil
     end
 
-    it 'sets the session' do
-      account = create(:account, remember_token: '12345')
+    it "sets the session" do
+      account = create(:account, remember_token: "12345")
       session = mock_session
       cookies = mock_cookies(account.remember_token)
       manager = SessionManager.new(session: session, cookies: cookies)
@@ -90,9 +91,9 @@ RSpec.describe SessionManager do
       manager.restore_session
     end
 
-    it 'delets the cookie if invalid token' do
+    it "delets the cookie if invalid token" do
       session = mock_session
-      cookies = mock_cookies('invalid')
+      cookies = mock_cookies("invalid")
       manager = SessionManager.new(session: session, cookies: cookies)
       expect(cookies).to receive(:delete).with(:remember)
       manager.restore_session
@@ -100,7 +101,7 @@ RSpec.describe SessionManager do
   end
 
   context "admin override" do
-    let(:account) { create(:account, permissions: permissions, remember_token: '12345') }
+    let(:account) { create(:account, permissions: permissions, remember_token: "12345") }
     let!(:user) { create(:user, account: account) }
     let(:specialist) { create(:specialist) }
     let(:permissions) { ["admin"] }

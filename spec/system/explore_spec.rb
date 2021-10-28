@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Discover', type: :system do
+RSpec.describe "Discover", type: :system do
   let(:account) { create(:account, permissions: ["team_manager"]) }
   let(:user) { create(:user, account: account) }
   let(:article1) { create(:case_study_article, title: "Article One", score: 100) }
@@ -18,7 +18,7 @@ RSpec.describe 'Discover', type: :system do
 
   context "when not authenticated" do
     it "/explore redirects to the login page" do
-      visit '/explore'
+      visit "/explore"
       expect(page).to have_content("Please sign in to your account")
     end
   end
@@ -26,7 +26,7 @@ RSpec.describe 'Discover', type: :system do
   context "when logged in as specialist" do
     it "/explore redirects to /applications" do
       authenticate_as(create(:specialist, application_stage: "Accepted"))
-      visit '/explore'
+      visit "/explore"
       expect(page).to have_content("You have not applied to any projects yet")
     end
   end
@@ -52,7 +52,7 @@ RSpec.describe 'Discover', type: :system do
   end
 
   describe "shortlist view" do
-    it 'user can archive a result from a the shortlist view' do
+    it "user can archive a result from a the shortlist view" do
       authenticate_as(user)
       expect(search.reload.archived).to be_empty
       visit "/explore/#{search.uid}"
@@ -65,7 +65,7 @@ RSpec.describe 'Discover', type: :system do
       expect(search.reload.archived).to include(article1.id)
     end
 
-    it 'user can click in to view a case study and back again' do
+    it "user can click in to view a case study and back again" do
       authenticate_as(user)
       visit("/explore/#{search.uid}")
       find("*[data-testid=title]", text: article1.title).click
@@ -92,7 +92,7 @@ RSpec.describe 'Discover', type: :system do
     end
   end
 
-  it 'user can create a new shortlist' do
+  it "user can create a new shortlist" do
     branding = create(:skill_category, name: "Branding")
     brand_marketing = create(:skill, name: "Brand Marketing")
     brand_strategy = create(:skill, name: "Brand Strategy")
@@ -104,14 +104,14 @@ RSpec.describe 'Discover', type: :system do
     end
 
     authenticate_as(user)
-    visit '/explore'
+    visit "/explore"
     click_on("New Shortlist")
     # Skills
     click_on("Branding")
     # Article selection
     first("[data-testid='articleTitle']", text: "Article One").click
     first("[data-testid='articleTitle']", text: "Article Two").click
-    expect(page).to have_button('Continue', disabled: true)
+    expect(page).to have_button("Continue", disabled: true)
     first("[data-testid='articleTitle']", text: "Article Three").click
     click_on("Continue")
     # Goals
@@ -128,7 +128,7 @@ RSpec.describe 'Discover', type: :system do
     expect(page).to have_content(article3.title)
   end
 
-  it 'user can delete a search' do
+  it "user can delete a search" do
     search = create(:case_study_search, {
       user: user,
       name: "Test search",

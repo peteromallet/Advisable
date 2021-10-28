@@ -10,7 +10,7 @@ class Mutations::DeleteJob < Mutations::BaseMutation
     policy = ProjectPolicy.new(current_user, project)
 
     unless policy.delete?
-      ApiError.not_authorized('You do not have access to this project')
+      ApiError.not_authorized("You do not have access to this project")
     end
 
     unless ["Draft", "Pending Advisable Confirmation"].include?(project.status)

@@ -5,7 +5,7 @@ module Guild
     belongs_to :reactionable, polymorphic: true, counter_cache: :reactionable_count
     belongs_to :specialist
 
-    has_many :notifications, inverse_of: 'notifiable', foreign_key: 'notifiable_id', dependent: :destroy
+    has_many :notifications, inverse_of: "notifiable", foreign_key: "notifiable_id", dependent: :destroy
 
     # @guild_post.reactions.create!(specialist: current_user, kind: Guild::Reaction.kinds["thanks"])
     # @guild_post.reactions.find_by(specialist: current_user, kind: Guild::Reaction.kinds["thanks"]).destroy

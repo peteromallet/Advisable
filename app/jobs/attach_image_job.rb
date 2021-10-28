@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'open-uri'
+require "open-uri"
 
 class AttachImageJob < ApplicationJob
   queue_as :default

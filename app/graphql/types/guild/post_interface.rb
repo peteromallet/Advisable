@@ -16,29 +16,29 @@ module Types
       description "Fields representing a Guild Post model"
 
       field :id, ID, null: false do
-        description 'The unique ID for the guild post'
+        description "The unique ID for the guild post"
       end
 
       field :title, String, null: true do
-        description 'The title of the guild post'
+        description "The title of the guild post"
       end
 
       field :excerpt, String, null: true
 
       field :body, String, null: true do
-        description 'The body of the guild post'
+        description "The body of the guild post"
       end
 
       field :status, String, null: true do
-        description 'The status of the guild post'
+        description "The status of the guild post"
       end
 
       field :comments_count, Integer, null: false do
-        description 'The total count of comments for a guild post'
+        description "The total count of comments for a guild post"
       end
 
       field :type, String, null: false do
-        description 'The guild post type'
+        description "The guild post type"
       end
       def type
         object.normalized_type
@@ -50,22 +50,22 @@ module Types
       end
 
       field :commented, Boolean, null: false do
-        description 'Whether the current user has commented on the guild post'
+        description "Whether the current user has commented on the guild post"
       end
       def commented
         object.comments.exists?(specialist: context[:current_user])
       end
 
       field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
-        description 'The timestamp for when the guild post record was created'
+        description "The timestamp for when the guild post record was created"
       end
 
       field :updated_at, GraphQL::Types::ISO8601DateTime, null: true do
-        description 'The timestamp for when the guild post record was last updated'
+        description "The timestamp for when the guild post record was last updated"
       end
 
       field :created_at_time_ago, String, null: true do
-        description 'The timestamp in words for when the guild post was created'
+        description "The timestamp in words for when the guild post was created"
       end
       def created_at_time_ago
         time_ago_in_words(object.created_at)
@@ -78,7 +78,7 @@ module Types
       end
 
       field :engagements_count, Integer, null: true do
-        description 'The recorded number of engagements for this post'
+        description "The recorded number of engagements for this post"
       end
 
       field :engaged, Boolean, null: false do
@@ -90,7 +90,7 @@ module Types
       end
 
       field :audience_type, String, null: true do
-        description 'The type of audience configured for this post'
+        description "The type of audience configured for this post"
       end
 
       field :labels, [Types::LabelType], null: true

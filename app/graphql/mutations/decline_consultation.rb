@@ -17,7 +17,7 @@ module Mutations
     def resolve(consultation:, reason: nil)
       consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
       consultation.update(
-        status: 'Specialist Rejected',
+        status: "Specialist Rejected",
         rejected_at: Time.zone.now,
         rejection_reason: reason
       )

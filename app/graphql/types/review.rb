@@ -4,7 +4,7 @@ module Types
   class Review < Types::BaseType
     implements Types::ReviewInterface
 
-    description 'A type for a basic Review'
+    description "A type for a basic Review"
 
   end
 end

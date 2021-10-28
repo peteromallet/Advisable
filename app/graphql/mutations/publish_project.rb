@@ -21,7 +21,7 @@ module Mutations
 
       ApiError.not_authorized("You don't have access to this project") unless policy.publish?
 
-      ApiError.invalid_request('ALREADY_PUBLISHED', 'This project is not a draft') if ALLOWED_STATUSES.exclude?(project.status)
+      ApiError.invalid_request("ALREADY_PUBLISHED", "This project is not a draft") if ALLOWED_STATUSES.exclude?(project.status)
 
       true
     end
@@ -30,7 +30,7 @@ module Mutations
       project = Project.find_by_uid_or_airtable_id!(id)
       project.status = project.assisted? ? "Brief Confirmed" : "Pending Advisable Confirmation"
       project.published_at = Time.zone.now
-      project.sales_status = 'Open'
+      project.sales_status = "Open"
       project.sourcing = true
       success = current_account_responsible_for { project.save }
       project.sync_to_airtable if success

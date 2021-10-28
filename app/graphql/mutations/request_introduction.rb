@@ -15,7 +15,7 @@ module Mutations
       policy = ApplicationPolicy.new(current_user, application)
       return true if policy.write?
 
-      ApiError.not_authorized('You do not have access to this')
+      ApiError.not_authorized("You do not have access to this")
     end
 
     def resolve(**args)
@@ -36,13 +36,13 @@ module Mutations
       application.create_interview(
         user: current_user,
         time_zone: time_zone || current_user.time_zone,
-        status: 'Call Requested',
+        status: "Call Requested",
         call_requested_at: Time.zone.now
       )
     end
 
     def update_application_status(application)
-      application.update(status: 'Application Accepted')
+      application.update(status: "Application Accepted")
       application.sync_to_airtable
     end
   end

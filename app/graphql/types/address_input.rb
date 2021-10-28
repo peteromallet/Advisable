@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Types::AddressInput < Types::BaseInputType
   description "Attributes for an address"
 

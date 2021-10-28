@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Messaging', type: :system, action_cable: :async do
+RSpec.describe "Messaging", type: :system, action_cable: :async do
   let(:dwight) { create(:account, first_name: "Dwight", specialist: create(:specialist)) }
   let(:jim) { create(:account, first_name: "Jim", specialist: create(:specialist)) }
   let(:michael) { create(:account, first_name: "Michael", user: create(:user)) }
   let!(:conversation) { conversation_with_participants([dwight, jim, michael]) }
 
-  it 'redirects to the first conversation' do
+  it "redirects to the first conversation" do
     authenticate_as(dwight.specialist)
     visit("/messages?version=2")
     expect(page).to have_current_path("/messages/#{conversation.uid}")
   end
 
-  it 'user can reply to a message' do
+  it "user can reply to a message" do
     authenticate_as(dwight.specialist)
     visit("/messages?version=2")
     fill_in("message", with: "Hey There!")
@@ -27,7 +27,7 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
     expect(message.content).to eq("Hey There!")
   end
 
-  it 'user can navigate to another conversation' do
+  it "user can navigate to another conversation" do
     other = conversation_with_participants([dwight, jim])
     send_message(conversation, jim, "Hey There!")
     send_message(other, jim, "Other message!")
@@ -47,19 +47,19 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
     end
   end
 
-  it 'user receives messages in realtime' do
+  it "user receives messages in realtime" do
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation.uid}?version=2")
     send_message(conversation, jim, "Hey There!")
     expect(page).to have_content("Hey There!")
   end
 
-  it 'user can send attachments' do
+  it "user can send attachments" do
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation.uid}?version=2")
 
     attach_file(
-      'message-attachments',
+      "message-attachments",
       Rails.root.join("spec/support/01.jpg"),
       make_visible: true
     )
@@ -72,7 +72,7 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
     end
   end
 
-  it 'renders conversations in order of most recent message' do
+  it "renders conversations in order of most recent message" do
     conversation2 = conversation_with_participants([dwight, jim])
     conversation3 = conversation_with_participants([jim, michael])
 
@@ -82,18 +82,18 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
 
     authenticate_as(jim.specialist)
     visit("/messages?version=2")
-    expect(find("[data-testid='conversationLink']:nth-child(1)")['id']).to eq(conversation3.uid)
-    expect(find("[data-testid='conversationLink']:nth-child(2)")['id']).to eq(conversation2.uid)
-    expect(find("[data-testid='conversationLink']:nth-child(3)")['id']).to eq(conversation.uid)
+    expect(find("[data-testid='conversationLink']:nth-child(1)")["id"]).to eq(conversation3.uid)
+    expect(find("[data-testid='conversationLink']:nth-child(2)")["id"]).to eq(conversation2.uid)
+    expect(find("[data-testid='conversationLink']:nth-child(3)")["id"]).to eq(conversation.uid)
 
     send_message(conversation, dwight, "perfectenschlag!")
     expect(page).to have_content("perfectenschlag!")
-    expect(find("[data-testid='conversationLink']:nth-child(1)")['id']).to eq(conversation.uid)
-    expect(find("[data-testid='conversationLink']:nth-child(2)")['id']).to eq(conversation3.uid)
-    expect(find("[data-testid='conversationLink']:nth-child(3)")['id']).to eq(conversation2.uid)
+    expect(find("[data-testid='conversationLink']:nth-child(1)")["id"]).to eq(conversation.uid)
+    expect(find("[data-testid='conversationLink']:nth-child(2)")["id"]).to eq(conversation3.uid)
+    expect(find("[data-testid='conversationLink']:nth-child(3)")["id"]).to eq(conversation2.uid)
   end
 
-  it 'shows disconnected notice when browser goes offline' do
+  it "shows disconnected notice when browser goes offline" do
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation.uid}?version=2")
     page.driver.browser.network_conditions = {offline: true, latency: 0, throughput: 0}
@@ -101,7 +101,7 @@ RSpec.describe 'Messaging', type: :system, action_cable: :async do
     page.driver.browser.network_conditions = {offline: false, latency: 0, throughput: 0}
   end
 
-  it 'marks a conversation as read when it is viewed' do
+  it "marks a conversation as read when it is viewed" do
     conversation2 = conversation_with_participants([michael, dwight])
     send_message(conversation2, dwight, "Hey")
     send_message(conversation2, dwight, "How are you?")

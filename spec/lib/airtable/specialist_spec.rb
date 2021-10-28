@@ -28,7 +28,7 @@ RSpec.describe Airtable::Specialist do
     end
 
     context "when updated_at is fresher than sync_started_at" do
-      it 'does not change data' do
+      it "does not change data" do
         old_email = specialist.account.email
 
         airtable.sync(started_at: 5.minutes.ago)
@@ -103,7 +103,7 @@ RSpec.describe Airtable::Specialist do
       expect(specialist.reload.skills).to include(skill_b)
     end
 
-    context 'when the skill has not already been synced' do
+    context "when the skill has not already been synced" do
       let(:airtable) do
         described_class.new({
           "Email Address" => "test@airtable.com",
@@ -111,7 +111,7 @@ RSpec.describe Airtable::Specialist do
         }, id: specialist.airtable_id)
       end
 
-      it 'syncs it first' do
+      it "syncs it first" do
         airtable_skill = instance_double(Airtable::Skill)
         allow(Airtable::Skill).to receive(:find).with("recNewSkill").and_return(airtable_skill)
         expect(airtable_skill).to receive(:sync)
@@ -160,9 +160,9 @@ RSpec.describe Airtable::Specialist do
       before { allow(airtable).to receive(:save) }
 
       it "syncs over unsubscriptions to account" do
-        expect(airtable.fields['Unsubscribe - SMS Alerts']).to eq(nil)
+        expect(airtable.fields["Unsubscribe - SMS Alerts"]).to eq(nil)
         airtable.push(specialist)
-        expect(airtable.fields['Unsubscribe - SMS Alerts']).to eq("Yes")
+        expect(airtable.fields["Unsubscribe - SMS Alerts"]).to eq("Yes")
       end
     end
   end
@@ -182,19 +182,19 @@ RSpec.describe Airtable::Specialist do
 
     it "syncs the bio" do
       expect { airtable.push(specialist) }.to change {
-        airtable.fields['Biography']
+        airtable.fields["Biography"]
       }.from(nil).to(specialist.bio)
     end
 
     it "syncs the email" do
       expect { airtable.push(specialist) }.to change {
-        airtable.fields['Email Address']
+        airtable.fields["Email Address"]
       }.from(nil).to(specialist.account.email)
     end
 
     it "syncs the city" do
       expect { airtable.push(specialist) }.to change {
-        airtable.fields['City']
+        airtable.fields["City"]
       }.from(nil).to(specialist.city)
     end
 
@@ -203,7 +203,7 @@ RSpec.describe Airtable::Specialist do
 
       it "sets the 'Remote Ok' column" do
         expect { airtable.push(specialist) }.to change {
-          airtable.fields['Remote OK']
+          airtable.fields["Remote OK"]
         }.from(nil).to("Yes, I'm happy to work remote")
       end
     end
@@ -214,7 +214,7 @@ RSpec.describe Airtable::Specialist do
 
         it "sets 'Freelancing Status' column to primarily freelance" do
           expect { airtable.push(specialist) }.to change {
-            airtable.fields['Freelancing Status']
+            airtable.fields["Freelancing Status"]
           }.from(nil).to("Yes, freelancing is my primary occupation")
         end
       end
@@ -224,7 +224,7 @@ RSpec.describe Airtable::Specialist do
 
         it "sets 'Freelancing Status' column to part-time freelance" do
           expect { airtable.push(specialist) }.to change {
-            airtable.fields['Freelancing Status']
+            airtable.fields["Freelancing Status"]
           }.from(nil).to("No, I freelance alongside a full-time job")
         end
       end
@@ -236,7 +236,7 @@ RSpec.describe Airtable::Specialist do
 
         it "syncs 'Okay To Use Publicly' as Yes" do
           expect { airtable.push(specialist) }.to change {
-            airtable.fields['Okay To Use Publicly']
+            airtable.fields["Okay To Use Publicly"]
           }.from(nil).to("Yes")
         end
       end
@@ -246,7 +246,7 @@ RSpec.describe Airtable::Specialist do
 
         it "syncs 'Okay To Use Publicly' as No" do
           expect { airtable.push(specialist) }.to change {
-            airtable.fields['Okay To Use Publicly']
+            airtable.fields["Okay To Use Publicly"]
           }.from(nil).to("No")
         end
       end
@@ -255,9 +255,9 @@ RSpec.describe Airtable::Specialist do
     context "when there is an hourly_rate" do
       let(:specialist) { create(:specialist, hourly_rate: 76_00) }
 
-      it 'syncs it as a non minor currency' do
+      it "syncs it as a non minor currency" do
         expect { airtable.push(specialist) }.to change {
-          airtable.fields['Typical Hourly Rate']
+          airtable.fields["Typical Hourly Rate"]
         }.from(nil).to(76)
       end
     end
@@ -266,7 +266,7 @@ RSpec.describe Airtable::Specialist do
       it "sets 'Account Created' to 'Yes'" do
         specialist.account.update(password: "testing123")
         expect { airtable.push(specialist) }.to change {
-          airtable.fields['Account Created']
+          airtable.fields["Account Created"]
         }.from(nil).to("Yes")
       end
     end

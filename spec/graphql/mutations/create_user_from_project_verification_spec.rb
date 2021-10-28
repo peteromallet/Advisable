@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::CreateUserFromProjectVerification do
   let(:oauth_viewer) do
     OauthViewer.new(
       {
-        'uid' => 'test',
-        'provider' => 'linkedin',
-        'name' => 'John Doe',
-        'first_name' => 'John',
-        'last_name' => 'Doe',
-        'image' => 'image_url'
+        "uid" => "test",
+        "provider" => "linkedin",
+        "name" => "John Doe",
+        "first_name" => "John",
+        "last_name" => "Doe",
+        "image" => "image_url"
       }
     )
   end
 
   let(:project) { create(:previous_project) }
-  let(:email) { 'test@test.com' }
+  let(:email) { "test@test.com" }
 
   let(:query) do
     <<-GRAPHQL
@@ -39,7 +39,7 @@ RSpec.describe Mutations::CreateUserFromProjectVerification do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
-  it 'creates a new user' do
+  it "creates a new user" do
     expect do
       AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
     end.to change(User, :count).by(1)
@@ -48,35 +48,35 @@ RSpec.describe Mutations::CreateUserFromProjectVerification do
   it "gives newly created user's account team manager permission" do
     response = AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
     user = User.find_by(uid: response["data"]["createUserFromProjectVerification"]["user"]["id"])
-    expect(user.account.permissions).to include('team_manager')
+    expect(user.account.permissions).to include("team_manager")
   end
 
-  context 'when not logged in with oauth' do
-    it 'returns an error' do
+  context "when not logged in with oauth" do
+    it "returns an error" do
       response = AdvisableSchema.execute(query, context: {oauth_viewer: nil})
-      error = response['errors'].first['extensions']['code']
-      expect(error).to eq('notAuthenticated')
+      error = response["errors"].first["extensions"]["code"]
+      expect(error).to eq("notAuthenticated")
     end
   end
 
-  context 'when provided a blacklisted email' do
-    let(:email) { 'test@gmail.com' }
+  context "when provided a blacklisted email" do
+    let(:email) { "test@gmail.com" }
 
-    it 'returns an error' do
-      create(:blacklisted_domain, domain: 'gmail.com')
+    it "returns an error" do
+      create(:blacklisted_domain, domain: "gmail.com")
       response =
         AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
-      error = response['errors'].first['extensions']['code']
-      expect(error).to eq('NON_CORPORATE_EMAIL')
+      error = response["errors"].first["extensions"]["code"]
+      expect(error).to eq("NON_CORPORATE_EMAIL")
     end
   end
 
-  context 'when provided an email that is already taken' do
-    it 'returns an error' do
+  context "when provided an email that is already taken" do
+    it "returns an error" do
       create(:user, account: create(:account, email: email))
       response = AdvisableSchema.execute(query, context: {oauth_viewer: oauth_viewer})
-      error = response['errors'].first['extensions']['code']
-      expect(error).to eq('EMAIL_TAKEN')
+      error = response["errors"].first["extensions"]["code"]
+      expect(error).to eq("EMAIL_TAKEN")
     end
   end
 

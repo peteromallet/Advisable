@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class LinkedinMessageCreator
   MIN_REQUIREMENT_LENGTH = 70
 

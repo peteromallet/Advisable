@@ -4,7 +4,7 @@ class AccountMailer < ApplicationMailer
   def reset_password(id:, token:)
     @account = Account.find(id)
     @token = token
-    mail(to: @account.email, subject: 'Reset password')
+    mail(to: @account.email, subject: "Reset password")
   end
 
   def zapier_email(account, subject, body)

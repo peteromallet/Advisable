@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::ScheduleAdvisableApplicationInterview do
   let(:application_stage) { "Invited To Interview" }
@@ -38,7 +38,7 @@ RSpec.describe Mutations::ScheduleAdvisableApplicationInterview do
     let(:application_stage) { "Interview Scheduled" }
 
     it "returns an error" do
-      error = request['errors'][0]["extensions"]["code"]
+      error = request["errors"][0]["extensions"]["code"]
       expect(error).to eq("INVALID_APPLICATION_STAGE")
     end
   end
@@ -47,7 +47,7 @@ RSpec.describe Mutations::ScheduleAdvisableApplicationInterview do
     let(:current_user) { nil }
 
     it "returns an error" do
-      error = request['errors'][0]["extensions"]["code"]
+      error = request["errors"][0]["extensions"]["code"]
       expect(error).to eq("notAuthenticated")
     end
   end

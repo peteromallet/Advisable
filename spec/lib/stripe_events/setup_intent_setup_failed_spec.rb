@@ -1,4 +1,5 @@
-require 'rails_helper'
+# frozen_string_literal: true
+require "rails_helper"
 
 RSpec.describe StripeEvents::SetupIntentSetupFailed do
   let!(:company) { create(:company, stripe_setup_intent_id: "si_12345", setup_intent_status: "pending") }

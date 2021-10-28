@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Interviews', type: :system do
+RSpec.describe "Interviews", type: :system do
   let(:user) do
     create(:user, availability:
       [
@@ -17,7 +17,7 @@ RSpec.describe 'Interviews', type: :system do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
   end
 
-  it 'allows the client to request to reschedule a call' do
+  it "allows the client to request to reschedule a call" do
     application = create(:application, status: "Application Accepted")
     interview = create(:interview, user: application.project.user, status: "Call Scheduled", application: application)
     authenticate_as(interview.application.project.user)
@@ -34,8 +34,8 @@ RSpec.describe 'Interviews', type: :system do
     expect(page).to have_content("You have requested to reschedule your call")
   end
 
-  context 'when the client has requested to reschedule' do
-    it 'the specialist can schedule the interview' do
+  context "when the client has requested to reschedule" do
+    it "the specialist can schedule the interview" do
       interview = create(:interview, status: "Client Requested Reschedule", starts_at: 2.days.from_now, user: user)
       authenticate_as interview.specialist
       visit "/interviews/#{interview.uid}"
@@ -47,7 +47,7 @@ RSpec.describe 'Interviews', type: :system do
     end
   end
 
-  it 'allows the specialist to request to reschedule a call' do
+  it "allows the specialist to request to reschedule a call" do
     interview = create(:interview, status: "Call Scheduled", starts_at: 2.days.from_now, user: user)
     authenticate_as interview.specialist
     visit "/interviews/#{interview.uid}"
@@ -57,8 +57,8 @@ RSpec.describe 'Interviews', type: :system do
     expect(page).to have_content("You have requested to reschedule your call")
   end
 
-  context 'when specialist has requested to reschedule' do
-    it 'the client can update their availability' do
+  context "when specialist has requested to reschedule" do
+    it "the client can update their availability" do
       application = create(:application, status: "Application Accepted")
       interview = create(:interview, user: application.project.user, status: "Specialist Requested Reschedule", application: application)
       authenticate_as interview.user
@@ -75,8 +75,8 @@ RSpec.describe 'Interviews', type: :system do
     end
   end
 
-  context 'when more time options have been added' do
-    it 'allows the specialist can schedule the call' do
+  context "when more time options have been added" do
+    it "allows the specialist can schedule the call" do
       interview = create(:interview, status: "More Time Options Added", starts_at: 2.days.from_now, user: user)
       authenticate_as interview.specialist
       visit "/interviews/#{interview.uid}"
@@ -88,7 +88,7 @@ RSpec.describe 'Interviews', type: :system do
     end
   end
 
-  it 'allows the user to invite a member of their team' do
+  it "allows the user to invite a member of their team" do
     application = create(:application, status: "Application Accepted")
     interview = create(:interview, user: application.project.user, status: "Call Requested", application: application)
     create(:user, account: create(:account, first_name: "Thomas"), company: application.project.user.company)
@@ -100,7 +100,7 @@ RSpec.describe 'Interviews', type: :system do
     expect(page).to have_content("Invite sent")
   end
 
-  it 'allows the user to invite a new member of their team' do
+  it "allows the user to invite a new member of their team" do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     application = create(:application, status: "Application Accepted")
     interview = create(:interview, user: application.project.user, status: "Call Requested", application: application)

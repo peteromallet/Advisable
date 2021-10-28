@@ -9,8 +9,8 @@ class Mutations::RequestApplicationReminder < Mutations::BaseMutation
     user = User.find_by_uid_or_airtable_id!(id)
     if user.application_status != "Application Rejected"
       ApiError.invalid_request(
-              'notRejected',
-              'Application must be rejected to request reminder'
+              "notRejected",
+              "Application must be rejected to request reminder"
             )
     end
 
@@ -19,7 +19,7 @@ class Mutations::RequestApplicationReminder < Mutations::BaseMutation
 
   def resolve(id:)
     user = User.find_by_uid_or_airtable_id!(id)
-    user.application_status = 'Requested Reminder'
+    user.application_status = "Requested Reminder"
     user.application_reminder_at = 6.months.from_now
     user.save_and_sync_with_responsible!(current_account_id)
 

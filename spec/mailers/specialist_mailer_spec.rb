@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe SpecialistMailer do
-  describe '#inform_about_project' do
+  describe "#inform_about_project" do
     let(:account) { create(:account) }
     let(:specialist) { create(:specialist, account: account) }
     let(:project) { create(:project) }

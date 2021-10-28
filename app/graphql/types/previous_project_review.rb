@@ -6,7 +6,7 @@ module Types
 
     include PreviousProjectHelper
 
-    description 'A type for PreviousProject Review'
+    description "A type for PreviousProject Review"
 
     field :project, Types::PreviousProject, null: false
 

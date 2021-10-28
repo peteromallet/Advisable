@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Mutations::ResendConfirmationEmail < Mutations::BaseMutation
   field :viewer, Types::ViewerUnion, null: true
 

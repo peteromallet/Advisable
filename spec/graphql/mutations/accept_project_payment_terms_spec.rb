@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::AcceptProjectPaymentTerms do
   let(:company) { create(:company, accepted_project_payment_terms_at: nil) }
@@ -42,7 +42,7 @@ RSpec.describe Mutations::AcceptProjectPaymentTerms do
     }.to change(user, :exceptional_project_payment_terms).from(nil).to("exceptional terms")
   end
 
-  it 'calls update_payments_setup on company' do
+  it "calls update_payments_setup on company" do
     AdvisableSchema.execute(query, context: context)
     expect(company).to have_received(:update_payments_setup)
   end
@@ -52,7 +52,7 @@ RSpec.describe Mutations::AcceptProjectPaymentTerms do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
+      error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_TEAM_MANAGER")
     end
   end
@@ -62,7 +62,7 @@ RSpec.describe Mutations::AcceptProjectPaymentTerms do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
+      error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("notAuthenticated")
     end
   end

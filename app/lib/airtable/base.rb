@@ -13,7 +13,7 @@ module Airtable
       attr_accessor :sync_model, :sync_block, :push_block, :after_sync_block
 
       def base_key
-        ENV['AIRTABLE_DATABASE_KEY']
+        ENV["AIRTABLE_DATABASE_KEY"]
       end
 
       def columns_hash
@@ -162,7 +162,7 @@ module Airtable
     # converted to use the sync_to_airtable method from the Syncable module which
     # uses push
     def push(record, additional_fields = {})
-      raise 'Airtable ID does not match' if id && id != record.try(:airtable_id)
+      raise "Airtable ID does not match" if id && id != record.try(:airtable_id)
 
       ActiveRecord::Base.transaction do
         # we keep track of how many times the push has been retried if any errors

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Account, type: :model do
   let(:factory) { described_class.to_s.underscore.to_sym }

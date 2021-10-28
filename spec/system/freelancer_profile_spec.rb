@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Freelancer profile', type: :system do
+RSpec.describe "Freelancer profile", type: :system do
   it "allows freelancer to update their bio" do
     specialist = create(:specialist, bio: "testing")
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)

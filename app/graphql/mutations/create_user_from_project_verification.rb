@@ -2,7 +2,7 @@
 
 module Mutations
   class CreateUserFromProjectVerification < Mutations::BaseMutation
-    description 'Creates a new user from a previous project verification'
+    description "Creates a new user from a previous project verification"
 
     include Mutations::Helpers::BlacklistedEmail
 
@@ -39,8 +39,8 @@ module Mutations
         account: account,
         company: company,
         fid: fid,
-        contact_status: 'Application Started',
-        campaign_source: 'validation'
+        contact_status: "Application Started",
+        campaign_source: "validation"
       )
       user.save_and_sync_with_responsible!(current_account_id)
       AttachImageJob.perform_later(user, oauth_viewer.image)

@@ -8,7 +8,7 @@ class Event < ApplicationRecord
   STATUSES = %w[Proposed Accepted Rejected].freeze
   has_many :event_attendees, inverse_of: :event, dependent: :destroy
   has_many :attendees, through: :event_attendees
-  belongs_to :host, class_name: 'Specialist'
+  belongs_to :host, class_name: "Specialist"
 
   has_one_attached :cover_photo
   resize cover_photo: {resize_to_limit: [1600, 1600]}
