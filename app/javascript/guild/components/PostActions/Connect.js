@@ -16,7 +16,7 @@ function ConnectAction({ post, size, walkthrough = false }) {
   const firstName = post.author.firstName;
 
   const handleConnect = () => {
-    if (viewer?.guild) {
+    if (viewer?.isSpecialist && viewer?.isAccepted) {
       modal.show();
     } else {
       const cta = document.getElementById("joinGuild");

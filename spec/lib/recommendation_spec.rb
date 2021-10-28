@@ -7,7 +7,7 @@ RSpec.describe Recommendation do
     described_class.recommend(specialist)
   end
 
-  let(:specialist) { create(:specialist, :guild) }
+  let(:specialist) { create(:specialist) }
 
   context "with skills" do
     let(:same_skills) do
@@ -16,7 +16,7 @@ RSpec.describe Recommendation do
       end
     end
 
-    let(:match) { create(:specialist, :guild) }
+    let(:match) { create(:specialist) }
 
     before do
       stub_const("Recommendation::RECOMMENDERS", [Recommendation::Skills])
@@ -59,15 +59,15 @@ RSpec.describe Recommendation do
     it "does not have a recommendation" do
       stub_const("Recommendation::RECOMMENDERS", [Recommendation::Skills])
       # no match
-      create(:specialist, :guild, skills: [])
+      create(:specialist, skills: [])
       expect(recommender.recommendation).to eq(nil)
     end
   end
 
   context "with industries" do
-    let(:same_industry) { create(:industry, name: 'Education') }
-    let(:diff_industry) { create(:industry, name: 'Aerospace') }
-    let(:match) { create(:specialist, :guild) }
+    let(:same_industry) { create(:industry, name: "Education") }
+    let(:diff_industry) { create(:industry, name: "Aerospace") }
+    let(:match) { create(:specialist) }
 
     before do
       stub_const("Recommendation::RECOMMENDERS", [Recommendation::Industry])
@@ -91,7 +91,7 @@ RSpec.describe Recommendation do
   end
 
   context "with random" do
-    let(:other) { create(:specialist, :guild) }
+    let(:other) { create(:specialist) }
 
     before do
       stub_const("Recommendation::RECOMMENDERS", [Recommendation::Random])
@@ -99,7 +99,7 @@ RSpec.describe Recommendation do
 
     it "creates a recommendation" do
       stub_const("Recommendation::RECOMMENDERS", [Recommendation::Random])
-      other = create(:specialist, :guild)
+      other = create(:specialist)
 
       expect(other).to eq(recommender.recommendation)
       expect(recommender).not_to respond_to(:industries)

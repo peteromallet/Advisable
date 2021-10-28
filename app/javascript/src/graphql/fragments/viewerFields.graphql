@@ -42,7 +42,6 @@ fragment ViewerFields on ViewerUnion {
     needsToSetAPassword
     unreadNotifications
     avatar
-    guild
     guildCalendlyLink
     account {
       id

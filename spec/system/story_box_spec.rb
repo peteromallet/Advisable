@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Story box', type: :system do
+RSpec.describe "Story box", type: :system do
   let(:account)    { create(:account, completed_tutorials: ["guild"]) }
-  let(:specialist) { create(:specialist, :guild, account: account) }
+  let(:specialist) { create(:specialist, account: account) }
   let(:label) { create(:label, description: "This is a description") }
   let(:post_prompt) do
     create(:post_prompt, featured: true, cta: "prompt cta", prompt: "edit this text please", label: label)
@@ -31,7 +31,7 @@ RSpec.describe 'Story box', type: :system do
     title = "This is a title for a prompt post"
     fill_in :title, with: title
 
-    click_on 'Continue'
+    click_on "Continue"
     expect(page).to have_content("Add images to this post")
   end
 end

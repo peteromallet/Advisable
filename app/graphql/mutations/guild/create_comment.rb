@@ -8,7 +8,7 @@ module Mutations
 
       argument :body, String, required: true
       argument :guild_comment_id, ID, required: false do
-        description 'An optional parent guild comment id'
+        description "An optional parent guild comment id"
       end
       argument :guild_post_id, ID, required: true
 

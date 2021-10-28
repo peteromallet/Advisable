@@ -29,7 +29,7 @@ export default function Sidebar({ data, ...props }) {
 
   const viewer = useViewer();
   const params = useParams();
-  const viewerIsGuild = viewer?.guild || false;
+  const viewerIsGuild = (viewer?.isSpecialist && viewer?.isAccepted) || false;
   const isOwner = viewer?.id === params.id;
   const { specialist } = data;
 
