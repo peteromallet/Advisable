@@ -1,12 +1,10 @@
 import { Switch } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
-
 import Route from "src/components/Route";
 import Loading from "src/components/Loading";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
-import RootPath from "./views/RootPath";
 import ApplicationRoutes from "./ApplicationRoutes";
 const CaseStudyReview = lazy(() => import("./views/CaseStudyReview"));
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
@@ -22,9 +20,6 @@ const Routes = () => {
   return (
     <Suspense fallback={<Loading />}>
       <Switch>
-        <AuthenticatedRoute exact path="/">
-          <RootPath />
-        </AuthenticatedRoute>
         <Route path="/login">
           <Login />
         </Route>

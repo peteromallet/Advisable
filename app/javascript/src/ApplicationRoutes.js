@@ -14,6 +14,7 @@ import Hire from "./views/Hire";
 const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
 const Applications = lazy(() => import("./views/Applications"));
+const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
   import("./views/FreelancerApplication"),
 );
@@ -90,6 +91,10 @@ const ApplicationRoutes = () => {
             <SetPassword />
           </AuthenticatedRoute>
           {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
+
+          <AuthenticatedRoute path="/" exact>
+            <FreelancerDashboard />
+          </AuthenticatedRoute>
           <Route path="/case_studies/:id">
             <CaseStudy />
           </Route>
