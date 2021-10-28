@@ -36,7 +36,7 @@ class TaskPolicy < BasePolicy
     return false if current_user.nil?
     return true if admin?
     return true if changeable_stage?
-    return true if record.stage == 'Assigned' && specialist_owner?
+    return true if record.stage == "Assigned" && specialist_owner?
 
     false
   end
@@ -46,8 +46,8 @@ class TaskPolicy < BasePolicy
   def update_estimate
     return false if current_user.nil?
     return true if admin?
-    return true if ['Not Assigned', 'Quote Requested', 'Requested To Start'].include?(record.stage)
-    return true if specialist_owner? && ['Quote Provided', 'Assigned'].include?(record.stage)
+    return true if ["Not Assigned", "Quote Requested", "Requested To Start"].include?(record.stage)
+    return true if specialist_owner? && ["Quote Provided", "Assigned"].include?(record.stage)
 
     false
   end
@@ -72,7 +72,7 @@ class TaskPolicy < BasePolicy
   end
 
   def changeable_stage?
-    ['Not Assigned', 'Quote Requested', 'Quote Provided', 'Requested To Start'].include?(record.stage)
+    ["Not Assigned", "Quote Requested", "Quote Provided", "Requested To Start"].include?(record.stage)
   end
 
   def company_of_record

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Guild::PostBoostMailer do
-  describe '#new_post' do
+  describe "#new_post" do
     subject(:mail) do
       described_class.new_post(post: guild_post, subscriber_id: specialist.id)
     end

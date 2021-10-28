@@ -7,7 +7,7 @@ module Mutations
 
     field :consultation, Types::ConsultationType, null: true
 
-    ALLOWED_STATUSES = ['Request Started', 'Request Completed'].freeze
+    ALLOWED_STATUSES = ["Request Started", "Request Completed"].freeze
 
     def authorized?(id:, **_args)
       requires_client!

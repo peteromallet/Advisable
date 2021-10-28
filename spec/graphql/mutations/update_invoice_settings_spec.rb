@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::UpdateInvoiceSettings do
   let(:company) {
@@ -114,7 +114,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
+      error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_TEAM_MANAGER")
     end
   end
@@ -124,7 +124,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
+      error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("notAuthenticated")
     end
   end
@@ -137,7 +137,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
+      error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("INVALID_VAT")
     end
   end

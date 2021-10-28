@@ -1,7 +1,8 @@
-require 'rails_helper'
+# frozen_string_literal: true
+require "rails_helper"
 
 RSpec.describe StripeEventsController do
-  it 'calls StripeEvents.process' do
+  it "calls StripeEvents.process" do
     event = double(Stripe::Event)
     allow(Stripe::Webhook).to receive(:construct_event).and_return(event)
     expect(StripeEvents).to receive(:process).with(event)
@@ -9,13 +10,13 @@ RSpec.describe StripeEventsController do
     expect(response.status).to eq(204)
   end
 
-  it 'returns 400 if invalid JSON is passed' do
+  it "returns 400 if invalid JSON is passed" do
     allow(Stripe::Webhook).to receive(:construct_event).and_raise(JSON::ParserError)
     post :create, :params => PAYMENT_INTENT_EVENT, :format => :json
     expect(response.status).to eq(400)
   end
 
-  it 'returns 400 if invalid signature' do
+  it "returns 400 if invalid signature" do
     error = Stripe::SignatureVerificationError.new("invalid", "signature_header")
     allow(Stripe::Webhook).to receive(:construct_event).and_raise(error)
     post :create, :params => PAYMENT_INTENT_EVENT, :format => :json

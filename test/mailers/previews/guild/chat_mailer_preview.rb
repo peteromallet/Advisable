@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Guild::ChatMailerPreview < ActionMailer::Preview
   # http://localhost:5000/rails/mailers/guild/chat_mailer/new_message
   def new_message

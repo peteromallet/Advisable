@@ -25,7 +25,7 @@ RSpec.describe SendApplicationInformationJob do
     end
   end
 
-  it 'does not include rejected specialists' do
+  it "does not include rejected specialists" do
     with_skill.update application_stage: "Rejected By Us"
     described_class.perform_now(project)
     expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "inform_about_project", "deliver_now", {args: [project.id, with_skill.id]})

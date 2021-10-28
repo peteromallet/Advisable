@@ -10,7 +10,7 @@ class Mutations::SetCoverPhoto < Mutations::BaseMutation
     requires_current_user!
 
     unless current_user.respond_to?(:cover_photo)
-      ApiError.invalid_request('MUST_HAVE_COVER_PHOTO', 'Current user must have a cover photo')
+      ApiError.invalid_request("MUST_HAVE_COVER_PHOTO", "Current user must have a cover photo")
     end
 
     true
@@ -20,6 +20,6 @@ class Mutations::SetCoverPhoto < Mutations::BaseMutation
     current_user.cover_photo.attach(blob)
     {specialist: current_user}
   rescue ActiveSupport::MessageVerifier::InvalidSignature
-    ApiError.invalid_request('INVALID_BLOB', 'Invalid blob')
+    ApiError.invalid_request("INVALID_BLOB", "Invalid blob")
   end
 end

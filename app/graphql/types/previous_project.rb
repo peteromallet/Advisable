@@ -91,7 +91,7 @@ module Types
     # Only show the contact email if the validation status is in progress
     field :contact_email, String, null: true
     def contact_email
-      return object.contact_email if object.validation_status == 'In Progress'
+      return object.contact_email if object.validation_status == "In Progress"
 
       nil
     end

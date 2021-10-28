@@ -2,7 +2,7 @@
 
 class ApplicationReference < ApplicationRecord
   include Uid
-  uid_prefix 'ref'
+  uid_prefix "ref"
 
   belongs_to :application
   belongs_to :previous_project, foreign_key: :off_platform_project_id, inverse_of: :application_references

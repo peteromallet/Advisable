@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Deleting specialist account', type: :system do
+RSpec.describe "Deleting specialist account", type: :system do
   let(:specialist) { create(:specialist, account: create(:account, password: "testing123")) }
 
   before { allow_any_instance_of(Specialist).to receive(:sync_to_airtable) }
 
-  it 'allows viewer to delete their account' do
+  it "allows viewer to delete their account" do
     visit "/login"
     fill_in "email", with: specialist.account.email
     fill_in "password", with: "testing123"

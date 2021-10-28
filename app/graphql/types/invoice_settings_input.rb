@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Types::InvoiceSettingsInput < Types::BaseInputType
   description "Attributes for the users invoice settings"
   argument :name, String, "Full Name", required: true

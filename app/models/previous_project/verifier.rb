@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PreviousProject::Verifier
   attr_reader :oauth_viewer, :project, :responsible_id
 
@@ -23,8 +24,8 @@ class PreviousProject::Verifier
   private
 
   def oauth_name_contains_contact_name
-    return false unless oauth_viewer.name.include?(project.contact_first_name || '')
-    return false unless oauth_viewer.name.include?(project.contact_last_name || '')
+    return false unless oauth_viewer.name.include?(project.contact_first_name || "")
+    return false unless oauth_viewer.name.include?(project.contact_last_name || "")
 
     true
   end

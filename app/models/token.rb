@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Token
   # Returns a random token.
   def self.new

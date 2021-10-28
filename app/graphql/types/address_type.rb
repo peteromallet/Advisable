@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Types::AddressType < Types::BaseType
   field :line1, String, null: true
   field :line2, String, null: true

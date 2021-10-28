@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 class Types::Guild::ReactionableUnion < Types::BaseUnion
-  graphql_name 'GuildReactionableUnion'
+  graphql_name "GuildReactionableUnion"
 
   description "The Guild::Reaction's relation which could be a comment or post"
 
@@ -11,7 +12,7 @@ class Types::Guild::ReactionableUnion < Types::BaseUnion
 
   def self.resolve_type(object, _context)
     case object.class.name
-    when 'Guild::Comment'
+    when "Guild::Comment"
       Types::Guild::CommentType
     else
       Types::Guild::Post::PostType

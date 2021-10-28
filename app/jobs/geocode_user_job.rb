@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'open-uri'
+require "open-uri"
 
 # TODO: Delete once all production jobs are processed
 class GeocodeUserJob < ApplicationJob
@@ -25,7 +25,7 @@ class GeocodeUserJob < ApplicationJob
 
   def geocode_ip(ip)
     if Rails.env.development?
-      [OpenStruct.new(country: 'IE', city: 'Dublin')]
+      [OpenStruct.new(country: "IE", city: "Dublin")]
     else
       Geocoder.search(ip)
     end

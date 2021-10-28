@@ -45,9 +45,9 @@ module Uid
     def valid_uid
       return unless uid
 
-      prefix, uniq = uid.split('_')
-      errors.add(:base, 'invalid_id_prefix') if prefix != self.class.prefix_for_uid
-      errors.add(:base, 'id_too_short') if uniq.length != 15
+      prefix, uniq = uid.split("_")
+      errors.add(:base, "invalid_id_prefix") if prefix != self.class.prefix_for_uid
+      errors.add(:base, "id_too_short") if uniq.length != 15
     end
   end
 end

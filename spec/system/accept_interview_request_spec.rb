@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Accept interview request', type: :system do
+RSpec.describe "Accept interview request", type: :system do
   let(:user) do
     create(:user, {
       availability: [
@@ -17,7 +17,7 @@ RSpec.describe 'Accept interview request', type: :system do
     create(:interview, status: "Call Requested", user: user)
   end
 
-  it 'Accepts an interview request' do
+  it "Accepts an interview request" do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
 
     authenticate_as(interview.specialist)

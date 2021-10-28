@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Types::CountryType < Types::BaseType
   field :id, ID, null: false
   field :code, String, null: true
@@ -22,7 +23,7 @@ class Types::CountryType < Types::BaseType
     Rails.cache.fetch("#{object.name}_states", expires_in: 7.days) do
       states = object.data.try(:states)
       return [] if states.nil?
-      states.map { |code, data| data['name'] }.compact
+      states.map { |code, data| data["name"] }.compact
     end
   end
 end

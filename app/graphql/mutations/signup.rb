@@ -42,18 +42,18 @@ module Mutations
       account = Account.find_by(email: email)
       return unless account&.has_password?
 
-      ApiError.invalid_request('ACCOUNT_EXISTS', 'Account with this email already exists')
+      ApiError.invalid_request("ACCOUNT_EXISTS", "Account with this email already exists")
     end
 
     def valid_account_already_exists?(account)
       return unless account.has_password?
 
-      ApiError.invalid_request('ACCOUNT_EXISTS', 'Account already exists')
+      ApiError.invalid_request("ACCOUNT_EXISTS", "Account already exists")
     end
 
     def signup_failed(account)
       message = account.errors.full_messages.first
-      ApiError.invalid_request('SIGNUP_FAILED', message)
+      ApiError.invalid_request("SIGNUP_FAILED", message)
     end
   end
 end

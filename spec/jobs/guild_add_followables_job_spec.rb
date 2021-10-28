@@ -7,7 +7,7 @@ RSpec.describe GuildAddFollowablesJob do
     described_class.perform_now(specialist.id)
   end
 
-  let(:skill) { create(:skill, name: 'Marketing') }
+  let(:skill) { create(:skill, name: "Marketing") }
   let(:specialist) { create(:specialist, skills: [skill]) }
   let!(:label) { create(:label, skill: skill, name: skill.name) }
 

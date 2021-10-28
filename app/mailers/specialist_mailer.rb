@@ -54,7 +54,7 @@ class SpecialistMailer < ApplicationMailer
     mail(
       from: @sales_person.email_with_name,
       to: interview.specialist.account.email,
-      subject: 'Interview Reschedule Request'
+      subject: "Interview Reschedule Request"
     ) do |format|
       format.html { render layout: false }
     end

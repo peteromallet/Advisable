@@ -13,7 +13,7 @@ class PreviousProject
     end
 
     def run
-      raise 'Application already has a previous project' if application.previous_project.present?
+      raise "Application already has a previous project" if application.previous_project.present?
 
       application.specialist.previous_projects.create(
         confidential: false,
@@ -21,7 +21,7 @@ class PreviousProject
         description: project.description,
         goal: project.goals.try(:first),
         client_name: project.user.company.name,
-        validation_status: 'Validated',
+        validation_status: "Validated",
         company_type: project.user.company.kind,
         contact_job_title: project.user.title,
         contact_first_name: project.user.account.first_name,

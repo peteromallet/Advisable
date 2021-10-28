@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 # TODO: Maybe refactor this to factories so we're not creating so many things all the time
 RSpec.describe CaseStudy::Search, type: :model do

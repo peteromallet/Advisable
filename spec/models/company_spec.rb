@@ -53,8 +53,8 @@ RSpec.describe Company, type: :model do
     end
   end
 
-  describe '#invoice_settings' do
-    it 'returns a hash of the users invoice settings' do
+  describe "#invoice_settings" do
+    it "returns a hash of the users invoice settings" do
       company = described_class.new(
         invoice_name: "Test Account",
         invoice_company_name: "Test Inc",
@@ -92,7 +92,7 @@ RSpec.describe Company, type: :model do
     end
   end
 
-  describe '#update_payments_setup' do
+  describe "#update_payments_setup" do
     let(:payment_method) { instance_double(Stripe::PaymentMethod) }
 
     it "sets payments_setup to true" do
@@ -117,7 +117,7 @@ RSpec.describe Company, type: :model do
       end
     end
 
-    context 'when the invoice_name is nil' do
+    context "when the invoice_name is nil" do
       it "sets payments_setup to false" do
         company = create(:company, project_payment_method: "Bank Transfer", payments_setup: nil, invoice_name: nil)
         allow(company).to receive(:payment_method).and_return(payment_method)
@@ -129,7 +129,7 @@ RSpec.describe Company, type: :model do
       end
     end
 
-    context 'when accepted_project_payment_terms_at is nil' do
+    context "when accepted_project_payment_terms_at is nil" do
       it "sets payments_setup to false" do
         company = create(:company, project_payment_method: "Bank Transfer", payments_setup: nil, invoice_name: "Test", accepted_project_payment_terms_at: nil)
         allow(company).to receive(:payment_method).and_return(payment_method)
@@ -143,8 +143,8 @@ RSpec.describe Company, type: :model do
   end
 
   # rubocop:disable RSpec/VerifiedDoubles
-  describe '#payment_method' do
-    it 'calls invoice_settings.default_payment_method on the stripe customer' do
+  describe "#payment_method" do
+    it "calls invoice_settings.default_payment_method on the stripe customer" do
       company = create(:company)
       stripe_invoice_settings = double("InvoiceSettings")
       expect(stripe_invoice_settings).to receive(:default_payment_method)

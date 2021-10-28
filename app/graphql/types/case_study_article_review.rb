@@ -6,7 +6,7 @@ module Types
 
     include PreviousProjectHelper
 
-    description 'A type for CaseStudy Article Review'
+    description "A type for CaseStudy Article Review"
 
     field :case_study_article, Types::CaseStudy::Article, null: false
   end

@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 class Guild::ChatMailer < ApplicationMailer
-  layout 'styled_mailer'
+  layout "styled_mailer"
 
   def new_message(recipient_uid:, sender_uid:, channel_sid:, message_body:)
     @recipient = Specialist.find_by(uid: recipient_uid)
@@ -8,13 +9,13 @@ class Guild::ChatMailer < ApplicationMailer
     @conversation_link = "#{ApplicationMailer.default_url_options[:host]}/guild/messages/#{channel_sid}"
 
     # Encodes chat metadata
-    chat_info = [recipient_uid, sender_uid, channel_sid].join(':')
+    chat_info = [recipient_uid, sender_uid, channel_sid].join(":")
     message_id = Base64.strict_encode64(chat_info)
     reply_to = "#{message_id}@#{ENV.fetch('GUILD_REPLIES_DOMAIN')}"
 
     # Set as a header in case the <encoded>@guild exceeds the RFC length
     # This will be accessed under the "References" header.
-    headers['Message-ID'] = "#{message_id}.#{Time.zone.now.to_i}"
+    headers["Message-ID"] = "#{message_id}.#{Time.zone.now.to_i}"
 
     mail(
       to: @recipient.account.email,

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Consultations', type: :system do
+RSpec.describe "Consultations", type: :system do
   let(:specialist) { create(:specialist) }
 
   before do
@@ -13,7 +13,7 @@ RSpec.describe 'Consultations', type: :system do
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
 
-  it 'allows client to request a consultation with a freelancer' do
+  it "allows client to request a consultation with a freelancer" do
     visit "/request_consultation/#{specialist.uid}"
     find("*[aria-label='Testing']").click
     click_on "Continue"
@@ -27,7 +27,7 @@ RSpec.describe 'Consultations', type: :system do
     fill_in "passwordConfirmation", with: "testing123"
     click_on "Set Password"
 
-    monday = Date.parse('monday')
+    monday = Date.parse("monday")
     delta = monday > Time.zone.now ? 0 : 7
     next_monday = monday + delta
     find("[aria-label='#{next_monday.strftime('%-d %b %Y, 09:00')}']").click
@@ -47,17 +47,17 @@ RSpec.describe 'Consultations', type: :system do
     expect(page).to have_content("We have sent your request")
   end
 
-  context 'when a consultation request has been sent' do
+  context "when a consultation request has been sent" do
     let(:consultation) { create(:consultation, specialist: specialist) }
 
-    it 'allows the specialist to accept ' do
+    it "allows the specialist to accept " do
       authenticate_as(specialist)
       visit "/consultations/#{consultation.uid}"
       click_on "Accept Request"
       expect(page).to have_content("select an available day")
     end
 
-    it 'allows the specialist to decline ' do
+    it "allows the specialist to decline " do
       authenticate_as(specialist)
       visit "/consultations/#{consultation.uid}"
       click_on "Decline Request"

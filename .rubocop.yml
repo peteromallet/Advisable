@@ -93,7 +93,7 @@ Style/MethodCallWithArgsParentheses:
     - redirect_to
 
 Style/StringLiterals:
-  Enabled: false
+  Enabled: true
   EnforcedStyle: double_quotes
 
 Naming/InclusiveLanguage:

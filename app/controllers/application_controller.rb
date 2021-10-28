@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   def frontend
     respond_to(&:html)
   rescue ActionController::UnknownFormat
-    render status: :not_found, json: {error: 'Not Found'}
+    render status: :not_found, json: {error: "Not Found"}
   end
 
   def freelancer_profile
@@ -29,8 +29,8 @@ class ApplicationController < ActionController::Base
   end
 
   def client_ip
-    request.env['HTTP_X_FORWARDED_FOR'].try(:split, ',').try(:first) ||
-      request.env['REMOTE_ADDR']
+    request.env["HTTP_X_FORWARDED_FOR"].try(:split, ",").try(:first) ||
+      request.env["REMOTE_ADDR"]
   end
 
   def set_sentry_context

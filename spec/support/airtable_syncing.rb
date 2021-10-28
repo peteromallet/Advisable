@@ -12,7 +12,7 @@ RSpec.shared_examples "airtable syncing" do |config = {}|
   end
 
   describe "self.base_key" do
-    it 'returns the AIRTABLE_DATABASE_KEY' do
+    it "returns the AIRTABLE_DATABASE_KEY" do
       expect(described_class.base_key).to eq(ENV["AIRTABLE_DATABASE_KEY"])
     end
   end

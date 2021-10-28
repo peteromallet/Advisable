@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe(User, type: :model) do
   let(:user) { create(:user) }
@@ -23,7 +23,7 @@ RSpec.describe(User, type: :model) do
   end
 
   describe "#send_confirmation_email" do
-    let(:mail) { double('email') } # rubocop:disable RSpec/VerifiedDoubles
+    let(:mail) { double("email") } # rubocop:disable RSpec/VerifiedDoubles
 
     it "sets the confirmation_digest" do
       expect(user.account.confirmation_digest).to be_nil
@@ -31,7 +31,7 @@ RSpec.describe(User, type: :model) do
       expect(user.account.reload.confirmation_digest).not_to be_nil
     end
 
-    it 'sends the confirmation email' do
+    it "sends the confirmation email" do
       expect(mail).to receive(:deliver_later)
       allow(UserMailer).to receive(:confirm).and_return(mail)
       user.send_confirmation_email

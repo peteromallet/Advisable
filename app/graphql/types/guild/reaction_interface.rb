@@ -11,7 +11,7 @@ module Types
       description "Fields for a post reaction"
 
       field :reactions_count, Integer, null: true do
-        description 'The number of reactions for the guild resource'
+        description "The number of reactions for the guild resource"
       end
       def reactions_count
         return unless current_user == object.specialist
@@ -20,7 +20,7 @@ module Types
       end
 
       field :reacted, Boolean, null: false do
-        description 'Whether the current_user has reacted to the guild resource'
+        description "Whether the current_user has reacted to the guild resource"
       end
       def reacted
         object.reactions.exists?(specialist: context[:current_user])

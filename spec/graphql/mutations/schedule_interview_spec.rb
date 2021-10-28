@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::ScheduleInterview do
   let(:status) { "Call Requested" }
@@ -38,7 +38,7 @@ RSpec.describe Mutations::ScheduleInterview do
     AdvisableSchema.execute(query, context: {current_user: current_user})
   end
 
-  it 'sets the interview status to Call Scheduled' do
+  it "sets the interview status to Call Scheduled" do
     expect do
       request
     end.to change {
@@ -46,7 +46,7 @@ RSpec.describe Mutations::ScheduleInterview do
     }.from("Call Requested").to("Call Scheduled")
   end
 
-  it 'sets the startsAt attribute' do
+  it "sets the startsAt attribute" do
     expect do
       request
     end.to change {
@@ -54,15 +54,15 @@ RSpec.describe Mutations::ScheduleInterview do
     }.from(nil).to(user.availability.first)
   end
 
-  it 'sets the specialist phone number' do
+  it "sets the specialist phone number" do
     expect do
       request
     end.to change {
       specialist.reload.phone
-    }.from(nil).to('0123456789')
+    }.from(nil).to("0123456789")
   end
 
-  it 'sets call_scheduled_at' do
+  it "sets call_scheduled_at" do
     request
     expect(interview.reload.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
   end
@@ -87,10 +87,10 @@ RSpec.describe Mutations::ScheduleInterview do
     end
   end
 
-  context 'when the interview is already scheduled' do
+  context "when the interview is already scheduled" do
     let(:status) { "Call Scheduled" }
 
-    it 'returns an error' do
+    it "returns an error" do
       response = request
       error = response["errors"].first
       expect(error["extensions"]["type"]).to eq("INVALID_REQUEST")
@@ -98,10 +98,10 @@ RSpec.describe Mutations::ScheduleInterview do
     end
   end
 
-  context 'when the user is not available at the given time' do
+  context "when the user is not available at the given time" do
     let(:starts_at) { 10.days.from_now.utc.iso8601 }
 
-    it 'returns an error' do
+    it "returns an error" do
       response = request
       error = response["errors"].first
       expect(error["extensions"]["type"]).to eq("INVALID_REQUEST")

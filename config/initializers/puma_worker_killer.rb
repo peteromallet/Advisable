@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 PumaWorkerKiller.config do |config|
   config.ram = 1024 # mb
   config.frequency = 30 # seconds

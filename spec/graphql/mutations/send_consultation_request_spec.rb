@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::SendConsultationRequest do
   let(:user) { create(:user) }
   let(:current_user) { user }
   let(:context) { {current_user: current_user} }
-  let(:consultation) { create(:consultation, user: user, status: 'Request Started', topic: nil) }
-  let(:topic) { 'Testing' }
+  let(:consultation) { create(:consultation, user: user, status: "Request Started", topic: nil) }
+  let(:topic) { "Testing" }
   let(:likely_to_hire) { 5 }
 
   let(:query) do
@@ -28,11 +28,11 @@ RSpec.describe Mutations::SendConsultationRequest do
   it "sets the status to 'Request Completed'" do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       consultation.reload.status
-    }.from('Request Started').
-      to('Request Completed')
+    }.from("Request Started").
+      to("Request Completed")
   end
 
-  it 'sets the likely_to_hire value' do
+  it "sets the likely_to_hire value" do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       consultation.reload.likely_to_hire
     }.from(nil).

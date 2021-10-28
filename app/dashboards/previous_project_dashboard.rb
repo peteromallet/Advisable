@@ -16,7 +16,7 @@ class PreviousProjectDashboard < Administrate::BaseDashboard
     ),
     specialist: Field::BelongsTo,
     project_skills: Field::HasMany,
-    primary_skill: Field::HasOne.with_options(class_name: 'Skill'),
+    primary_skill: Field::HasOne.with_options(class_name: "Skill"),
     id: Field::Number,
     contact_first_name: Field::String,
     contact_last_name: Field::String,
