@@ -170,6 +170,11 @@ module Types
 
     field :case_studies, [Types::CaseStudy::Article], null: false, method: :articles
 
+    field :case_studies_count, Integer, null: false
+    def case_studies_count
+      object.articles.active.published.size
+    end
+
     # TODO: authenticated-application-flow - Simplify this query arguments once
     # we know application flow is authenticated only.
     field :previous_projects, Types::PreviousProject.connection_type, null: false do
