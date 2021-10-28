@@ -8,7 +8,7 @@ module Mutations
     field :label, Types::LabelType, null: true
 
     def authorized?(**_args)
-      requires_guild_user!
+      requires_accepted_specialist!
     end
 
     def resolve(label_slug:)

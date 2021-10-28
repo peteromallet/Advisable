@@ -2,8 +2,8 @@
 
 module Guild
   class BasePolicy < BasePolicy
-    def guild_user?
-      current_user.try(:guild)
+    def accepted?
+      current_user&.accepted?
     end
   end
 end

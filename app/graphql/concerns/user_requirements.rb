@@ -52,13 +52,6 @@ module UserRequirements
     ApiError.invalid_request("MUST_BE_ACCEPTED_SPECIALIST", "Current user must be an accepted Specialist.")
   end
 
-  def requires_guild_user!
-    requires_specialist!
-    return true if current_user.guild
-
-    ApiError.invalid_request("INVALID_PERMISSIONS", "Not a guild user")
-  end
-
   def requires_team_manager!
     requires_client!
     return true if current_user.account.team_manager?

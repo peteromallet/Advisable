@@ -1,28 +1,28 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Guild resolve post', type: :system do
-  let(:author) { create(:specialist, :guild) }
+RSpec.describe "Guild resolve post", type: :system do
+  let(:author) { create(:specialist) }
   let!(:post) { create(:guild_post, specialist: author, resolved_at: nil, type: "AdviceRequired") }
   let(:resolve_btn) { '//button[@aria-label="Resolve post"]' }
 
   context "when the viewer is not the author" do
-    let(:other) { create(:specialist, :guild) }
+    let(:other) { create(:specialist) }
 
-    it 'does not have a resolve button' do
+    it "does not have a resolve button" do
       authenticate_as(other)
       visit "/guild/posts/#{post.id}"
       expect(page).not_to have_selector(:xpath, resolve_btn)
     end
   end
 
-  context 'when the viewer is the author' do
+  context "when the viewer is the author" do
     before do
       authenticate_as(author)
     end
 
-    it 'resolves a post' do
+    it "resolves a post" do
       visit "/guild/posts/#{post.id}"
       all(:xpath, resolve_btn).first.click
       click_on "Confirm"
@@ -30,8 +30,8 @@ RSpec.describe 'Guild resolve post', type: :system do
       expect(post.reload.resolved_at).not_to be_nil
     end
 
-    it 'does not have a resolve button if type is unsupported' do
-      post.update!(type: 'CaseStudy')
+    it "does not have a resolve button if type is unsupported" do
+      post.update!(type: "CaseStudy")
       visit "/guild/posts/#{post.id}"
       expect(page).not_to have_selector(:xpath, resolve_btn)
     end

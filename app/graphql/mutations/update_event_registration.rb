@@ -7,12 +7,12 @@ module Mutations
       value "UNREGISTER"
     end
 
-    argument :event_id, ID, required: true
     argument :action_type, RegistrationActionType, required: true
+    argument :event_id, ID, required: true
     field :event, Types::EventType, null: true
 
     def authorized?(**_args)
-      requires_guild_user!
+      requires_accepted_specialist!
     end
 
     def resolve(event_id:, action_type:)

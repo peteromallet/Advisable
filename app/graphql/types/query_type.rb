@@ -172,14 +172,14 @@ module Types
     field :specialist_recommendation, Types::RecommendationInterface, null: true
 
     def specialist_recommendation
-      requires_guild_user!
+      requires_accepted_specialist!
       ::Recommendation.recommend(current_user)
     end
 
     field :events, Types::EventConnection, null: true, connection: true
 
     def events
-      requires_guild_user!
+      requires_accepted_specialist!
       ::Event.list.for_graphql
     end
 
@@ -223,7 +223,7 @@ module Types
     end
 
     def guild_posts(**args)
-      requires_guild_user!
+      requires_accepted_specialist!
       query = ::Guild::Post.feed(current_user)
 
       if (type = args[:type].presence) && type != "For You"
@@ -244,7 +244,7 @@ module Types
     end
 
     def post_prompt(id:)
-      requires_guild_user!
+      requires_accepted_specialist!
       ::PostPrompt.find(id)
     end
 
@@ -253,7 +253,7 @@ module Types
     end
 
     def label_posts(label_slug:)
-      requires_guild_user!
+      requires_accepted_specialist!
       query = ::Guild::Post.feed(current_user)
       label = ::Label.published.find_by!(slug: label_slug)
       query.labeled_with(label)
@@ -270,7 +270,7 @@ module Types
     end
 
     def top_labels
-      requires_guild_user!
+      requires_accepted_specialist!
 
       ::Label.published.most_used
     end
@@ -296,7 +296,7 @@ module Types
     end
 
     def guild_your_posts(**_args)
-      requires_guild_user!
+      requires_accepted_specialist!
       current_user.guild_posts.order(updated_at: :desc)
     end
 
@@ -305,7 +305,7 @@ module Types
     end
 
     def followed_labels(**_args)
-      requires_guild_user!
+      requires_accepted_specialist!
       current_user.subscribed_labels.order(created_at: :desc)
     end
 

@@ -49,8 +49,8 @@ class User < ApplicationRecord
 
   alias_attribute :application_status, :contact_status
 
-  def guild
-    false
+  def accepted?
+    application_status == "Application Accepted"
   end
 
   def company_name

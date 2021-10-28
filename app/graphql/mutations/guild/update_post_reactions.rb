@@ -17,7 +17,7 @@ module Mutations
       field :guild_post, Types::Guild::PostInterface, null: true
 
       def authorized?(**_args)
-        requires_guild_user!
+        requires_accepted_specialist!
       end
 
       def resolve(guild_post_id:, reaction:)

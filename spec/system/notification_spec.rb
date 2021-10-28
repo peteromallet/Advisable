@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Notification', type: :system do
-  let(:specialist) { create(:specialist, :guild) }
-  let(:other_specialist) { create(:specialist, :guild) }
+RSpec.describe "Notification", type: :system do
+  let(:specialist) { create(:specialist) }
+  let(:other_specialist) { create(:specialist) }
   let(:unread_selector) { "//div[@data-testid='unreadNotifications']" }
   let!(:post) { create(:guild_post, specialist: specialist) }
 
@@ -40,7 +40,7 @@ RSpec.describe 'Notification', type: :system do
   it "has a suggested_post notification" do
     suggested_post = create(:guild_post, specialist: other_specialist)
     specialist.account.notifications.create!(
-      action: 'suggested_post',
+      action: "suggested_post",
       notifiable: suggested_post
     )
 

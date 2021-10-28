@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Events view', type: :system do
+RSpec.describe "Events view", type: :system do
   let(:account)    { create(:account, completed_tutorials: ["guild"]) }
-  let(:specialist) { create(:specialist, :guild, account: account) }
-  let(:host)       { create(:specialist, :guild) }
+  let(:specialist) { create(:specialist, account: account) }
+  let(:host)       { create(:specialist) }
 
   before do
     authenticate_as(specialist)

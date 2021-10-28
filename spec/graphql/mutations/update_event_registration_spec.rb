@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::UpdateEventRegistration do
-  let(:current_user) { create(:specialist, :guild) }
+  let(:current_user) { create(:specialist) }
   let(:event) { create(:event) }
 
   context "when registering" do
@@ -34,7 +34,7 @@ RSpec.describe Mutations::UpdateEventRegistration do
         update_event_registration
         event.reload
       end.to change(EventAttendee, :count).from(0).to(1).
-        and change(event.attendees, :count).from(0).to(1)
+        and(change(event.attendees, :count).from(0).to(1))
     end
 
     it "does not register the current_user of they are already registered" do

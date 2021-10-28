@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Event view', type: :system do
+RSpec.describe "Event view", type: :system do
   let(:account)    { create(:account, completed_tutorials: ["guild"]) }
-  let(:specialist) { create(:specialist, :guild, account: account) }
-  let(:host)       { create(:specialist, :guild) }
+  let(:specialist) { create(:specialist, account: account) }
+  let(:host)       { create(:specialist) }
   let!(:event)     { create(:event, host: host, url: "http://event.test") }
 
   context "when logged in" do
@@ -16,7 +16,7 @@ RSpec.describe 'Event view', type: :system do
     context "when viewing an event" do
       it "displays the event details in the users timezone" do
         override_tz = "America/New_York"
-        ENV['TZ'] = override_tz
+        ENV["TZ"] = override_tz
         Capybara.using_session(override_tz) do
           Time.use_zone(override_tz) do
             visit "/events/#{event.uid}"
@@ -34,7 +34,7 @@ RSpec.describe 'Event view', type: :system do
         end
       end
 
-      it 'can be registered or unregistered for' do
+      it "can be registered or unregistered for" do
         other_account = create(:account, first_name: "Other")
         event.attendees << create(:specialist, account: other_account)
         visit "/events/#{event.uid}"
@@ -51,7 +51,7 @@ RSpec.describe 'Event view', type: :system do
 
         visit "/events/#{event.uid}"
         expect(page).to have_content(event.title)
-        expect(page).to have_button('Register for event', disabled: true)
+        expect(page).to have_button("Register for event", disabled: true)
       end
 
       it "shows the remaining number of attendees beyond 100" do
@@ -59,7 +59,7 @@ RSpec.describe 'Event view', type: :system do
         event.attendees << attendees
 
         visit "/events/#{event.uid}"
-        expect(page).to have_content('+ 10')
+        expect(page).to have_content("+ 10")
       end
 
       context "with event status notices" do
@@ -90,18 +90,18 @@ RSpec.describe 'Event view', type: :system do
           event.attendees << specialist
           visit "/events/#{event.uid}"
 
-          expect(page).to have_button('Unregister')
-          expect(page).to have_button('Join', wait: 10)
+          expect(page).to have_button("Unregister")
+          expect(page).to have_button("Join", wait: 10)
           expect(page).to have_content("This event is in progress")
-          expect(page).not_to have_button('Register')
+          expect(page).not_to have_button("Register")
         end
 
         it "removes the Join button if ended" do
           event.update!(starts_at: Time.zone.now, ends_at: 5.seconds.from_now)
           visit "/events/#{event.uid}"
 
-          expect(page).to have_button('Join')
-          expect(page).not_to have_button('Join', wait: 10)
+          expect(page).to have_button("Join")
+          expect(page).not_to have_button("Join", wait: 10)
           expect(page).to have_content("This event has ended")
         end
       end
@@ -112,14 +112,14 @@ RSpec.describe 'Event view', type: :system do
     it "is still viewable" do
       visit "/events/#{event.uid}"
 
-      expect(page).to have_button('Register for event')
+      expect(page).to have_button("Register for event")
       expect(page).to have_content(event.title)
     end
 
     it "is redirected to login page when the attempting to join the event" do
       visit "/events/#{event.uid}"
 
-      click_on('Register for event')
+      click_on("Register for event")
       expect(page).to have_content("Please sign in to your account")
     end
   end
