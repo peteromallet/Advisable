@@ -75,7 +75,7 @@ class UserMailer < ApplicationMailer
     mail(
       from: @sales_person.email_with_name,
       to: interview.user.account.email,
-      subject: 'Need More Time Options'
+      subject: "Need More Time Options"
     ) do |format|
       format.html { render layout: false }
     end
