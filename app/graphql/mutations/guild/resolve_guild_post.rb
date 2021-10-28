@@ -8,11 +8,11 @@ module Mutations
       field :success, Boolean, null: true
 
       def authorized?(**args)
-        requires_guild_user!
+        requires_accepted_specialist!
 
         @post = ::Guild::Post.find(args[:guild_post_id])
         if @post.specialist != current_user
-          ApiError.not_authorized('You dont have access to this')
+          ApiError.not_authorized("You dont have access to this")
           return false
         end
 

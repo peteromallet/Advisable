@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Types::QueryType do
-  let(:specialist) { create(:specialist, :guild) }
+  let(:specialist) { create(:specialist) }
   let(:context) { {current_user: specialist} }
   let(:response)  { AdvisableSchema.execute(query, context: context) }
 

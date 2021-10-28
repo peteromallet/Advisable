@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Guild feed', type: :system do
-  let(:specialist) { create(:specialist, :guild) }
-  let(:author) { create(:specialist, :guild) }
+RSpec.describe "Guild feed", type: :system do
+  let(:specialist) { create(:specialist) }
+  let(:author) { create(:specialist) }
   let(:author_name) { author.account.first_name }
   let!(:post) { create(:guild_post, pinned: true, specialist: author) }
   let!(:posts) { create_list(:guild_post, 4, engagements_count: 1) }
@@ -15,7 +15,7 @@ RSpec.describe 'Guild feed', type: :system do
   end
 
   context "when viewing the default feed" do
-    it 'viewer can message post author' do
+    it "viewer can message post author" do
       visit "/guild/feed"
       expect(page).to have_content(post.title)
       find("button[aria-label=\"Connect with #{author_name}\"]").click
@@ -25,7 +25,7 @@ RSpec.describe 'Guild feed', type: :system do
       expect(page).to have_content("Your message has been sent to #{author_name}")
     end
 
-    it 'includes a notice that post is resolved' do
+    it "includes a notice that post is resolved" do
       posts.last.update(type: "Opportunity", resolved_at: 3.weeks.ago, reactionable_count: Guild::Post::POPULAR_THRESHOLD)
       visit "/guild/feed"
       author_name = posts.last.account.first_name
@@ -66,7 +66,7 @@ RSpec.describe 'Guild feed', type: :system do
       let(:threshold) { Guild::Post::POPULAR_THRESHOLD }
 
       it "includes a post many people have found interesting" do
-        posts.last.update!(specialist: create(:specialist, :guild), created_at: 3.weeks.ago, reactionable_count: threshold)
+        posts.last.update!(specialist: create(:specialist), created_at: 3.weeks.ago, reactionable_count: threshold)
         visit "/guild/feed"
         expect(page).to have_content("Many people found this post interesting")
       end
@@ -91,7 +91,7 @@ RSpec.describe 'Guild feed', type: :system do
     end
   end
 
-  it 'displays text to copy a referral link' do
+  it "displays text to copy a referral link" do
     visit "/guild/feed"
     expect(page).to have_content("Share this link with them and we’ll be in touch!")
     find(:xpath, '//div[text() = "Copy Link"]').click

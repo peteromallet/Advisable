@@ -6,7 +6,6 @@ module Mutations
       description "Updates a new guild post"
       graphql_name "UpdateGuildPost"
 
-      # rubocop:disable GraphQL/ExtractInputType
       argument :audience_type, String, required: false
       argument :body, String, required: false
       argument :guild_post_id, ID, required: true
@@ -15,12 +14,10 @@ module Mutations
       argument :shareable, Boolean, required: false
       argument :title, String, required: false
       argument :type, String, required: false
-      # rubocop:enable GraphQL/ExtractInputType
-
       field :guild_post, Types::Guild::PostInterface, null: true
 
       def authorized?(**_args)
-        requires_guild_user!
+        requires_accepted_specialist!
       end
 
       def resolve(**args)
