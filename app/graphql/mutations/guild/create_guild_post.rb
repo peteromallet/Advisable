@@ -6,17 +6,14 @@ module Mutations
       description "Creates a new guild post"
       graphql_name "CreateGuildPost"
 
-      # rubocop:disable GraphQL/ExtractInputType
       argument :body, String, required: false
       argument :post_prompt_id, ID, required: false
       argument :title, String, required: false
       argument :type, String, required: true
-      # rubocop:enable GraphQL/ExtractInputType
-
       field :guild_post, ::Types::Guild::PostInterface, null: true
 
       def authorized?(**_args)
-        requires_guild_user!
+        requires_accepted_specialist!
       end
 
       def resolve(type: nil, title: nil, body: nil, post_prompt_id: nil)

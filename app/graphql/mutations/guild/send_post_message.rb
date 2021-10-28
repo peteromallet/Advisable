@@ -13,7 +13,7 @@ module Mutations
       field :message, Types::GuildPostMessage, null: true
 
       def authorized?(**_args)
-        requires_guild_user!
+        requires_accepted_specialist!
       end
 
       def resolve(**args)

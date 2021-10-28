@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::Guild::UpdatePostReactions do
   subject(:guild_update_post_reactions) do
@@ -8,7 +8,7 @@ RSpec.describe Mutations::Guild::UpdatePostReactions do
     resp.dig("data", *response_keys)
   end
 
-  let(:specialist) { create(:specialist, :guild) }
+  let(:specialist) { create(:specialist) }
   let(:guild_post) { create(:guild_post) }
   let(:response_keys) { %w[guildUpdatePostReactions guildPost] }
   let(:reaction) { "THANK" }
@@ -28,7 +28,7 @@ RSpec.describe Mutations::Guild::UpdatePostReactions do
     GRAPHQL
   end
 
-  it_behaves_like "guild specialist"
+  it_behaves_like "accepted specialist"
 
   describe "giving thanks for a post" do
     it "creates a new thanks reaction for a post" do
@@ -72,7 +72,7 @@ RSpec.describe Mutations::Guild::UpdatePostReactions do
   end
 
   it "only updates the post reaction for the current_user" do
-    specialists = create_list(:specialist, 5, :guild)
+    specialists = create_list(:specialist, 5)
     specialists.each { |s| guild_post.reactions.create(specialist: s) }
     expect(guild_post.reactionable_count).to eq(5)
 

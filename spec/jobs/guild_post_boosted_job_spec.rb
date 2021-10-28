@@ -9,8 +9,8 @@ RSpec.describe GuildPostBoostedJob do
 
   let(:guild_post) { create(:guild_post, :published) }
   let(:labels) { create_list(:label, 5) }
-  let(:specialist) { create(:specialist, :guild) }
-  let(:another_specialist) { create(:specialist, :guild) }
+  let(:specialist) { create(:specialist) }
+  let(:another_specialist) { create(:specialist) }
 
   before do
     labels.each { |g| specialist.subscribe_to!(g) }

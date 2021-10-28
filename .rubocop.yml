@@ -92,8 +92,6 @@ Style/MethodCallWithArgsParentheses:
     - sleep
     - redirect_to
 
-# Let's discuss this one
-# I'd like to go double quotes everywhere, but am open to discussion
 Style/StringLiterals:
   Enabled: false
   EnforcedStyle: double_quotes

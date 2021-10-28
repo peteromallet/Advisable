@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::Guild::CreateComment do
   let(:guild_post) { create(:guild_post) }
-  let(:specialist) { build(:specialist, :guild) }
+  let(:specialist) { build(:specialist) }
   let(:response_keys) { %w[createGuildComment guildComment] }
 
   let(:query) do
@@ -29,9 +29,9 @@ RSpec.describe Mutations::Guild::CreateComment do
     GRAPHQL
   end
 
-  it_behaves_like "guild specialist"
+  it_behaves_like "accepted specialist"
 
-  context "with a guild specialist" do
+  context "with an accepted specialist" do
     subject(:create_guild_comment) do
       resp = AdvisableSchema.execute(
         query,
@@ -41,18 +41,18 @@ RSpec.describe Mutations::Guild::CreateComment do
     end
 
     it "creates a new guild comment" do
-      expect { subject }.to change {
+      expect { create_guild_comment }.to change {
         guild_post.reload.comments_count
       }.by(1)
-      expect(subject["body"]).to eq("This is a comment body")
+      expect(create_guild_comment["body"]).to eq("This is a comment body")
     end
 
     it "creates a comment thats associated with the post" do
-      expect(subject.dig("post", "id")).to eq(guild_post.id)
+      expect(create_guild_comment.dig("post", "id")).to eq(guild_post.id)
     end
 
     it "creates a comment belonging to the curret_user specialist" do
-      expect(subject.dig("author", "id")).to eq(specialist.uid)
+      expect(create_guild_comment.dig("author", "id")).to eq(specialist.uid)
     end
 
     describe "child comments" do

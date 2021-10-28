@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Event, type: :model do
-  let(:host) { create(:specialist, :guild) }
+  let(:host) { create(:specialist) }
   let(:event) { build(:event, host: host) }
 
   describe "db columns" do
@@ -20,7 +20,7 @@ RSpec.describe Event, type: :model do
   describe "relationships" do
     it { expect(event).to have_many(:event_attendees) }
     it { expect(event).to have_many(:attendees) }
-    it { expect(event).to belong_to(:host).class_name('Specialist') }
+    it { expect(event).to belong_to(:host).class_name("Specialist") }
   end
 
   it "is valid" do

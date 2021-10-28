@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::Guild::ResolveGuildPost do
-  let(:specialist) { create(:specialist, :guild) }
+  let(:specialist) { create(:specialist) }
   let(:guild_post) { create(:guild_post, specialist: specialist, type: "AdviceRequired") }
   let(:query) do
     <<-GRAPHQL
@@ -18,10 +18,10 @@ RSpec.describe Mutations::Guild::ResolveGuildPost do
   end
 
   it "errors if current_user is not the author" do
-    other = create(:specialist, :guild)
+    other = create(:specialist)
     resp = AdvisableSchema.execute(query, context: {current_user: other})
-    error = resp['errors'].first['extensions']['code']
-    expect(error).to eq('notAuthorized')
+    error = resp["errors"].first["extensions"]["code"]
+    expect(error).to eq("notAuthorized")
   end
 
   describe "resolving a post" do

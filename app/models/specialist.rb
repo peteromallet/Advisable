@@ -36,7 +36,7 @@ class Specialist < ApplicationRecord
   has_many :matches, dependent: :destroy
   has_many :projects, through: :applications
   # Successful applications are applications that are either working or stopped working
-  has_many :successful_applications, -> { where(status: ['Working', 'Stopped Working']) }, class_name: 'Application', inverse_of: :specialist
+  has_many :successful_applications, -> { where(status: ["Working", "Stopped Working"]) }, class_name: "Application", inverse_of: :specialist, dependent: :destroy
   has_many :successful_projects, through: :successful_applications, source: :project
   has_many :project_skills, through: :successful_projects, source: :skills
   has_many :previous_projects, dependent: :destroy
@@ -63,14 +63,18 @@ class Specialist < ApplicationRecord
   resize avatar: {resize_to_limit: [400, 400]}, cover_photo: {resize_to_limit: [2000, 2000]}
 
   # DEPRECATED IN FAVOUR OF phone column
-  attr_encrypted :phone_number, key: [ENV['ENCRYPTION_KEY']].pack('H*')
+  attr_encrypted :phone_number, key: [ENV["ENCRYPTION_KEY"]].pack("H*")
 
-  validates :number_of_projects, inclusion: {in: %w[1-5 5-20 20+ None], message: 'is invalid'}, allow_nil: true
+  validates :number_of_projects, inclusion: {in: %w[1-5 5-20 20+ None], message: "is invalid"}, allow_nil: true
   validates :application_stage, inclusion: {in: VALID_APPLICATION_STAGES}, allow_blank: true
 
   scope :available, -> { where("unavailable_until IS NULL OR unavailable_until <= ?", Time.zone.now) }
   scope :not_rejected, -> { where.not(application_stage: REJECTED_STAGES) }
   scope :accepted, -> { where(application_stage: "Accepted") }
+
+  def accepted?
+    application_stage == "Accepted"
+  end
 
   def send_confirmation_email
     token = account.create_confirmation_token

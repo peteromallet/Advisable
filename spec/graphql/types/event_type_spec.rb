@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Types::EventType do
-  let(:current_user) { create(:specialist, :guild) }
+  let(:current_user) { create(:specialist) }
 
   context "with a single event" do
     subject(:event_query) do
@@ -41,7 +41,7 @@ RSpec.describe Types::EventType do
     it "includes whether the viewer is attending" do
       event.event_attendees.create!(attendee: current_user)
       event.reload
-      expect(event_query['attending']).to eq(true)
+      expect(event_query["attending"]).to eq(true)
     end
   end
 

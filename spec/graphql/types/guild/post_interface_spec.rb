@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Types::Guild::PostInterface do
   include ActionView::Helpers::DateHelper
 
-  let(:guild_specialist) { build(:specialist, :guild) }
+  let(:guild_specialist) { build(:specialist) }
   let(:response_keys) { %w[guildPosts nodes] }
   let(:query) do
     <<-GRAPHQL
@@ -59,7 +59,7 @@ RSpec.describe Types::Guild::PostInterface do
     GRAPHQL
   end
 
-  it_behaves_like "guild specialist"
+  it_behaves_like "accepted specialist"
 
   context "with filters" do
     let!(:opportunity) { create(:opportunity_guild_post) }
@@ -154,7 +154,7 @@ RSpec.describe Types::Guild::PostInterface do
   end
 
   context "with removed posts" do
-    let(:shadow_ban_specialist) { create(:specialist, :guild) }
+    let(:shadow_ban_specialist) { create(:specialist) }
     let!(:removed_post) { create(:guild_post, status: "removed", specialist: shadow_ban_specialist) }
 
     let(:query) do
@@ -197,14 +197,14 @@ RSpec.describe Types::Guild::PostInterface do
     end
   end
 
-  context 'when a post is pinned' do
+  context "when a post is pinned" do
     let!(:pinned) { create(:guild_post, created_at: 10.days.ago, pinned: true) }
 
     before do
       create_list(:guild_post, 5)
     end
 
-    it 'is always first in the result' do
+    it "is always first in the result" do
       response = AdvisableSchema.execute(query, context: {current_user: guild_specialist})
       posts = response["data"]["guildPosts"]["nodes"]
       expect(posts.first["id"]).to eq(pinned.id)
@@ -212,7 +212,7 @@ RSpec.describe Types::Guild::PostInterface do
   end
 
   context "when querying a single guild post" do
-    let(:specialist) { build(:specialist, :guild) }
+    let(:specialist) { build(:specialist) }
     let(:non_guild_specialist) { build(:specialist) }
     let(:context) do
       {
@@ -242,17 +242,17 @@ RSpec.describe Types::Guild::PostInterface do
       }
     end
 
-    context "with a non guild specialist" do
-      let(:non_guild_specialist) { build(:specialist) }
+    context "with a rejected specialist" do
+      let(:rejected_specialist) { build(:specialist, :rejected) }
 
       it "returns a null guildPost" do
         resp = AdvisableSchema.execute(
           query[guild_post.id],
           context: {
-            current_user: non_guild_specialist
+            current_user: rejected_specialist
           }
         )
-        expect(resp.dig('data', 'guildPost')).to be_nil
+        expect(resp.dig("data", "guildPost")).to be_nil
       end
     end
 
@@ -266,7 +266,7 @@ RSpec.describe Types::Guild::PostInterface do
             current_user: nil
           }
         )
-        expect(resp.dig('data', 'guildPost')).not_to be_nil
+        expect(resp.dig("data", "guildPost")).not_to be_nil
       end
 
       it "does not return a guild post if its not shareable" do
@@ -278,16 +278,16 @@ RSpec.describe Types::Guild::PostInterface do
             current_user: nil
           }
         )
-        expect(resp.dig('data', 'guildPost')).to be_nil
+        expect(resp.dig("data", "guildPost")).to be_nil
       end
     end
 
-    it 'includes additional fields for other guild_post types' do
+    it "includes additional fields for other guild_post types" do
       resp = AdvisableSchema.execute(
         query[advice_required.id],
         context: context
       )
-      node = resp.dig('data', 'guildPost')
+      node = resp.dig("data", "guildPost")
       expect(node).to include(
         {
           "id" => advice_required.id,
@@ -298,9 +298,9 @@ RSpec.describe Types::Guild::PostInterface do
 
     context "with a guild_post query" do
       let(:response) { AdvisableSchema.execute(query[guild_post.id], context: context) }
-      let(:node) { response.dig('data', 'guildPost') }
+      let(:node) { response.dig("data", "guildPost") }
 
-      it 'includes interface fields for a Guild::Post' do
+      it "includes interface fields for a Guild::Post" do
         expect(node).to include({"id" => guild_post.id})
       end
 
@@ -319,17 +319,17 @@ RSpec.describe Types::Guild::PostInterface do
         guild_post.labels << label
         guild_post.save
 
-        expect(node['labels'][0]['name']).to eq(label.name)
+        expect(node["labels"][0]["name"]).to eq(label.name)
       end
 
       it "is popular" do
-        guild_post.update! reactionable_count: Guild::Post::POPULAR_THRESHOLD
-        expect(node['isPopular']).to eq(true)
+        guild_post.update!(reactionable_count: Guild::Post::POPULAR_THRESHOLD)
+        expect(node["isPopular"]).to eq(true)
       end
 
       it "is not popular" do
-        guild_post.update! reactionable_count: Guild::Post::POPULAR_THRESHOLD - 1
-        expect(node['isPopular']).to eq(false)
+        guild_post.update!(reactionable_count: Guild::Post::POPULAR_THRESHOLD - 1)
+        expect(node["isPopular"]).to eq(false)
       end
     end
   end

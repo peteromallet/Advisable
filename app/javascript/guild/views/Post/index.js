@@ -36,7 +36,7 @@ const Post = () => {
   });
   const post = data?.guildPost;
   const { viewer, isAuthor, popularOrAuthorReactions } = useViewerAuthor(post);
-  const guildViewer = viewer?.guild;
+  const guildViewer = viewer?.isSpecialist && viewer?.isAccepted;
   const otherImages = (post?.images || []).filter((p) => p.cover === false);
 
   if (loading) return <Loading />;

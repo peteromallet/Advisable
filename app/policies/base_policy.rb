@@ -25,6 +25,10 @@ class BasePolicy
 
   private
 
+  def accepted?
+    current_user&.accepted?
+  end
+
   def editor?
     current_user&.account&.editor?
   end

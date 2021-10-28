@@ -3,19 +3,19 @@
 require "rails_helper"
 
 RSpec.describe EventAttendee, type: :model do
-  let(:attendee) { create(:specialist, :guild) }
+  let(:attendee) { create(:specialist) }
   let(:event) { create(:event) }
   let!(:event_attendee) { event.event_attendees.create!(attendee: attendee) }
 
   describe "db columns" do
-    it { expect(event_attendee).to have_db_column :id }
-    it { expect(event_attendee).to have_db_column :specialist_id }
-    it { expect(event_attendee).to have_db_column :event_id }
+    it { expect(event_attendee).to have_db_column(:id) }
+    it { expect(event_attendee).to have_db_column(:specialist_id) }
+    it { expect(event_attendee).to have_db_column(:event_id) }
   end
 
   describe "relationships" do
     it { expect(event_attendee).to belong_to(:event) }
-    it { expect(event_attendee).to belong_to(:attendee).class_name('Specialist') }
+    it { expect(event_attendee).to belong_to(:attendee).class_name("Specialist") }
   end
 
   it "is valid" do
