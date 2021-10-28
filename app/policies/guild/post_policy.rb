@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Guild
-  class PostPolicy < Guild::BasePolicy
+  class PostPolicy < BasePolicy
     def show
       record.specialist == current_user || published_and_accepted? || published_and_shareable?
     end

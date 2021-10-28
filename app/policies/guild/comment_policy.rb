@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Guild
-  class CommentPolicy < Guild::BasePolicy
+  class CommentPolicy < BasePolicy
     def delete_comment
       accepted? && (record.specialist_id == current_user.id)
     end
