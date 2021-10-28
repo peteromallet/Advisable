@@ -37,7 +37,7 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
 
   it "sends the email to the specialist" do
     response
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "need_more_time_options", "deliver_now", {args: [interview]})
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "need_more_time_options", "deliver_now", {args: [interview]})
   end
 
   context "when the status is not 'Call Requested'" do

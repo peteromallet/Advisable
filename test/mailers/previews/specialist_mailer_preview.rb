@@ -25,10 +25,6 @@ class SpecialistMailerPreview < ActionMailer::Preview
     SpecialistMailer.more_time_options_added(random_interview)
   end
 
-  def need_more_time_options
-    SpecialistMailer.need_more_time_options(random_interview)
-  end
-
   private
 
   def random_interview
