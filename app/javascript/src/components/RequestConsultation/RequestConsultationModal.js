@@ -4,6 +4,7 @@ import RequestConsultationMessage from "./RequestConsultationMessage";
 import RequestConsultationAvailability from "./RequestConsultationAvailability";
 import useViewer from "src/hooks/useViewer";
 import RequestConsultationUnauthenticated from "./RequestConsultationUnauthenticated";
+import SendFreelancerMessage from "./SendFreelancerMessage";
 
 const AVAILABILITY = "AVAILABILITY";
 const MESSAGE = "MESSAGE";
@@ -24,6 +25,15 @@ export default function RequestConsultationModal({ specialist, dialog }) {
 
   if (!viewer) {
     return <RequestConsultationUnauthenticated specialist={specialist} />;
+  }
+
+  if (viewer.isSpecialist) {
+    return (
+      <SendFreelancerMessage
+        specialist={specialist}
+        onSend={handleSubmitMessage}
+      />
+    );
   }
 
   if (step === AVAILABILITY) {

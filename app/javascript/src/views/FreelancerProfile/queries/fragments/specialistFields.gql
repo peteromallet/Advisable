@@ -13,6 +13,11 @@ fragment SpecialistFields on Specialist {
   medium
   website
   city
+
+  account {
+    id
+  }
+
   country {
     id
   }

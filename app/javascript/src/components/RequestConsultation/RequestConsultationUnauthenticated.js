@@ -1,11 +1,47 @@
+import css from "@styled-system/css";
 import React, { useState } from "react";
-import { Box, Text, Heading, Link } from "@advisable/donut";
+import { ArrowRight } from "@styled-icons/heroicons-solid";
+import { Box, Text, Heading, Link, Stack } from "@advisable/donut";
 import RequestConsultationLogin from "./RequestConsultationLogin";
 import RequestConsultationClientSignup from "./RequestConsultationClientSignup";
+import RequestConsultationFreelancerSignup from "./RequestConsultationFreelancerSignup";
 
+const LOGIN = "LOGIN";
 const SIGNUP = "SIGNUP";
 const COMPANY_SIGNUP = "COMPANY_SIGNUP";
-const LOGIN = "LOGIN";
+const FREELANCER_SIGNUP = "FREELANCER_SIGNUP";
+
+function SignupOption({ title, description, ...props }) {
+  return (
+    <Box
+      {...props}
+      css={css({
+        padding: 6,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        cursor: "pointer",
+        border: "1px solid",
+        borderRadius: "12px",
+        borderColor: "neutral200",
+        transition: "border-color 200ms, box-shadow 200ms",
+        "&:hover": {
+          boxShadow: "0 8px 24px -8px rgba(0, 0, 0, 0.12)",
+        },
+      })}
+    >
+      <Box>
+        <Text fontWeight={500} fontSize="l" marginBottom={1}>
+          {title}
+        </Text>
+        <Text>{description}</Text>
+      </Box>
+      <Box color="neutral400">
+        <ArrowRight size={20} />
+      </Box>
+    </Box>
+  );
+}
 
 function RequestConsultationSignup({ specialist, setStep }) {
   return (
@@ -16,23 +52,18 @@ function RequestConsultationSignup({ specialist, setStep }) {
       <Text fontSize="l" marginBottom={6}>
         Create an account to connect with {specialist.firstName}.
       </Text>
-      <Box
-        padding={6}
-        border="1px solid"
-        borderColor="neutral100"
-        onClick={() => setStep(COMPANY_SIGNUP)}
-      >
-        <Text fontWeight={500} fontSize="l" marginBottom={1}>
-          Signup as a company
-        </Text>
-        <Text>Find proven people and projects</Text>
-      </Box>
-      <Box padding={6} border="1px solid" borderColor="neutral100">
-        <Text fontWeight={500} fontSize="l" marginBottom={1}>
-          Signup as a freelancer
-        </Text>
-        <Text>Be found for freelance projects</Text>
-      </Box>
+      <Stack spacing={2} marginBottom={6}>
+        <SignupOption
+          title="Signup as a company"
+          description="Find proven people and projects"
+          onClick={() => setStep(COMPANY_SIGNUP)}
+        />
+        <SignupOption
+          title="Signup as a freelancer"
+          description="Be found for freelance projects"
+          onClick={() => setStep(FREELANCER_SIGNUP)}
+        />
+      </Stack>
 
       <Text fontWeight={500} marginBottom={1}>
         Already have an account?
@@ -61,6 +92,15 @@ export default function RequestConsultationUnauthenticated({ specialist }) {
     case COMPANY_SIGNUP: {
       return (
         <RequestConsultationClientSignup
+          specialist={specialist}
+          setStep={setStep}
+        />
+      );
+    }
+
+    case FREELANCER_SIGNUP: {
+      return (
+        <RequestConsultationFreelancerSignup
           specialist={specialist}
           setStep={setStep}
         />
