@@ -28,7 +28,6 @@ module.exports = {
   collectCoverageFrom: [
     "<rootDir>/app/javascript/src/**/*.{js}",
     "<rootDir>/donut/src/**/*.{js}",
-    "!<rootDir>/app/javascript/src/**/*.stories.js",
   ],
   coverageThreshold: {
     global: {
