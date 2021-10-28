@@ -1,0 +1,12 @@
+query DashboardData {
+  upcomingEvents {
+    id
+    title
+    startsAt
+    host {
+      id
+      name
+    }
+    coverPhotoUrl
+  }
+}
