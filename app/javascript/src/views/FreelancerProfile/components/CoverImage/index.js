@@ -1,13 +1,20 @@
 import React from "react";
+import { useDialogState } from "reakit/Dialog";
 import { matchPath, useParams } from "react-router";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
-import { StyledCover, StyledCoverImage, StyledContentWrapper } from "./styles";
+import {
+  StyledCover,
+  StyledCoverImage,
+  StyledModalCoverImage,
+  StyledContentWrapper,
+} from "./styles";
 import defaultCoverPhoto from "./defaultCoverPhoto.png";
 import { useSetCoverPhoto } from "../../queries";
 import PictureActionArea from "../PictureActionArea";
 import FileUploadInput from "../FileUploadInput";
 import ProgressBar from "../ProgressBar";
+import ImageModal from "../ImageModal";
 import useFileUpload from "../../hooks/useFileUpload";
 
 function CoverImage({ src, ...props }) {
@@ -22,6 +29,7 @@ function CoverImage({ src, ...props }) {
   });
   const [updatePicture] = useSetCoverPhoto();
   const image = src || defaultCoverPhoto;
+  const modal = useDialogState();
 
   const notifications = useNotifications();
 
@@ -43,6 +51,11 @@ function CoverImage({ src, ...props }) {
 
   return (
     <StyledCover {...props}>
+      {src ? (
+        <ImageModal modal={modal}>
+          <StyledModalCoverImage src={error ? defaultCoverPhoto : image} />
+        </ImageModal>
+      ) : null}
       <svg className="svgClip" width={0} height={0} viewBox="0 0 1080 320">
         <clipPath
           id="coverSquircle"
@@ -54,20 +67,20 @@ function CoverImage({ src, ...props }) {
       </svg>
       <StyledContentWrapper>
         <StyledCoverImage src={error ? defaultCoverPhoto : image} />
+        <PictureActionArea type="cover" onClick={modal.show} />
         {isOwner && !isArticle ? (
           <>
+            <FileUploadInput
+              handleChange={handleChange}
+              accept={accept}
+              maxSizeInMB={maxSizeInMB}
+              type="cover"
+            />
             <ProgressBar
               progress={progress}
               uploading={uploading}
               processing={processing}
               updated={updated}
-              type="cover"
-            />
-            <PictureActionArea type="cover" />
-            <FileUploadInput
-              handleChange={handleChange}
-              accept={accept}
-              maxSizeInMB={maxSizeInMB}
               type="cover"
             />
           </>

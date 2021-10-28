@@ -10,6 +10,14 @@ export const StyledCoverImage = styled.img`
   clip-path: url(#coverSquircle);
 `;
 
+export const StyledModalCoverImage = styled.img`
+  border-radius: 12px;
+  object-fit: cover;
+  width: 96vw;
+  height: 32vw;
+  clip-path: url(#coverSquircle);
+`;
+
 export const StyledContentWrapper = styled.div`
   position: relative;
   width: 100%;
