@@ -12,15 +12,15 @@ module Types
     HEREDOC
 
     field :id, ID, null: false, method: :uid do
-      description 'The unique ID for the specialist'
+      description "The unique ID for the specialist"
     end
 
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs." do
-      description 'The airtable ID for the specialist'
+      description "The airtable ID for the specialist"
     end
 
     field :city, String, null: true do
-      description 'The specialists city'
+      description "The specialists city"
     end
 
     field :bio, String, null: true do
@@ -31,40 +31,40 @@ module Types
     end
 
     field :travel_availability, String, null: true do
-      description 'Whether or not the specialist is willing to travel for work'
+      description "Whether or not the specialist is willing to travel for work"
     end
 
     field :linkedin, String, null: true do
-      description 'The specialists linkedin URL'
+      description "The specialists linkedin URL"
     end
 
     field :twitter, String, null: true do
-      description 'The specialists twitter URL'
+      description "The specialists twitter URL"
     end
 
     field :instagram, String, null: true do
-      description 'The specialists instagram URL'
+      description "The specialists instagram URL"
     end
 
     field :medium, String, null: true do
-      description 'The specialists medium URL'
+      description "The specialists medium URL"
     end
 
     field :website, String, null: true do
-      description 'The specialists portfolio'
+      description "The specialists portfolio"
     end
 
     field :phone_number, String, null: true, method: :phone do
       authorize :specialist?, :admin?
-      description 'The phone number for the specialist'
+      description "The phone number for the specialist"
     end
 
     field :image, Types::AttachmentType, null: true, deprecation_reason: "Use #avatar instead" do
-      description 'The specialists profile image'
+      description "The specialists profile image"
     end
 
     field :resume, Types::AttachmentType, null: true do
-      description 'The specialists resume'
+      description "The specialists resume"
     end
 
     def resume
@@ -76,7 +76,7 @@ module Types
     field :cover_photo, String, null: true, method: :resized_cover_photo_url
 
     field :skills, [Types::SpecialistSkillType, {null: true}], null: true do
-      description 'A list of skills that the specialist possesses'
+      description "A list of skills that the specialist possesses"
       argument :limit, Int, required: false
       argument :project_skills, Boolean, required: false
     end
@@ -116,7 +116,7 @@ module Types
     field :industries, [Types::IndustryType], null: false
 
     field :project_industries, [Types::IndustryType], null: false do
-      description 'Returns a list of all the industries the specialist has worked in'
+      description "Returns a list of all the industries the specialist has worked in"
     end
 
     # TODO: This should eventually be updated to include multiple industries associated with an on
@@ -126,30 +126,30 @@ module Types
     end
 
     field :ratings, Types::Ratings, null: false do
-      description 'The combined ratings for the specialist based on previous work'
+      description "The combined ratings for the specialist based on previous work"
     end
 
     # Eventually the reviews and reviewsCount fields should be combined into
     # some kind of Connection type to support pagination and where the count
     # would be a field of the connection type.
     field :reviews, [Types::ReviewInterface], null: false do
-      description 'A list of reviews for the specialist'
+      description "A list of reviews for the specialist"
     end
 
     field :reviews_count, Integer, null: true do
-      description 'The amount of reviews a specialist has'
+      description "The amount of reviews a specialist has"
     end
 
     field :remote, Boolean, null: true do
-      description 'Whether or not the specialist will work remotely'
+      description "Whether or not the specialist will work remotely"
     end
 
     field :answers, [Types::AnswerType], null: true do
-      description 'Answers provided by specialist'
+      description "Answers provided by specialist"
     end
 
-    field :guild, Boolean, null: true do
-      description 'Whether or not the specialist is a Guild user'
+    field :guild, Boolean, null: true, deprecation_reason: "Specialists don't need specific access to guild any more" do
+      description "Whether or not the specialist is a Guild user"
     end
 
     field :guild_posts, Types::Guild::PostInterface.connection_type, null: false
@@ -158,14 +158,14 @@ module Types
     end
 
     field :guild_joined_time_ago, String, null: true do
-      description 'The timestamp in words for when the specialist first joined the guild'
+      description "The timestamp in words for when the specialist first joined the guild"
     end
     def guild_joined_time_ago
       time_ago_in_words(object.guild_joined_date || Time.now.utc)
     end
 
     field :guild_calendly_link, String, null: true do
-      description 'The calendly url for the guild specialist'
+      description "The calendly url for the guild specialist"
     end
 
     field :case_studies, [Types::CaseStudy::Article], null: false, method: :articles
@@ -200,7 +200,7 @@ module Types
 
     # TODO: AccountMigration - Rename for consistency
     field :has_account, Boolean, null: false do
-      description 'Whether or not the specialist has created their account yet'
+      description "Whether or not the specialist has created their account yet"
     end
 
     def has_account
@@ -221,16 +221,16 @@ module Types
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
       authorize :specialist?, :admin?
-      description 'The timestamp for when the specialist record was created'
+      description "The timestamp for when the specialist record was created"
     end
 
     field :application_interview_starts_at, GraphQL::Types::ISO8601DateTime, null: true do
       authorize :specialist?, :is_admin
-      description 'The time for an initial application interview'
+      description "The time for an initial application interview"
     end
 
     field :application_interview_calendly_id, String, null: true do
-      description 'Calendly event id of initial application interview'
+      description "Calendly event id of initial application interview"
     end
 
     # Eventually the applications field should be updated to support pagination
@@ -256,7 +256,7 @@ module Types
 
     field :email, String, null: true do
       authorize :admin?, :specialist?, :applicant_of_company_projects?
-      description 'The specialists email address'
+      description "The specialists email address"
     end
 
     def email
@@ -264,7 +264,7 @@ module Types
     end
 
     field :country, Types::CountryType, null: true do
-      description 'The specialists country'
+      description "The specialists country"
     end
     def country
       dataloader.with(::ActiveRecordSource, ::Country).load(object.country_id)
@@ -313,24 +313,24 @@ module Types
     end
 
     field :primarily_freelance, Boolean, null: true do
-      description 'Whether or not the freelancers occupation is primarily freelancing'
+      description "Whether or not the freelancers occupation is primarily freelancing"
     end
 
     field :number_of_projects, String, null: true do
-      description 'The number of projects the freelancer has completed'
+      description "The number of projects the freelancer has completed"
     end
 
     field :hourly_rate, Int, null: true do
-      description 'The typical hourly rate for this freelancer'
+      description "The typical hourly rate for this freelancer"
     end
 
     field :public_use, Boolean, null: true do
-      description 'Whether or not the specialist is ok with being used publicly'
+      description "Whether or not the specialist is ok with being used publicly"
     end
 
     field :application_stage, String, null: true do
       authorize :specialist?
-      description 'The account status for the specialist'
+      description "The account status for the specialist"
     end
 
     field :profile_projects, [Types::PreviousProject], null: false
@@ -351,7 +351,7 @@ module Types
 
     def similar_previous_projects
       ::PreviousProject.left_outer_joins(:skills).where(
-        validation_status: 'Validated', skills: {id: object.skill_ids}
+        validation_status: "Validated", skills: {id: object.skill_ids}
       ).where.not(specialist_id: object.id).limit(3)
     end
 

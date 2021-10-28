@@ -35,7 +35,7 @@ const ReactionsButton = ({ size, post, walkthrough = false }) => {
   const handleReaction = () => {
     clearTimeout(timer.current);
 
-    if (!viewer?.guild) {
+    if (!viewer?.isSpecialist && !viewer?.isAccepted) {
       const cta = document.getElementById("joinGuild");
       cta?.scrollIntoView({ behavior: "smooth" });
       return;

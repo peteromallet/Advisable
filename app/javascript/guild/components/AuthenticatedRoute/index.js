@@ -16,7 +16,7 @@ function RedirectToLogin({ viewer }) {
 
 const AuthenticatedRoute = ({ render, component: Component, ...rest }) => {
   const viewer = useViewer();
-  const guildUser = viewer?.isSpecialist && viewer?.guild;
+  const guildUser = viewer?.isSpecialist && viewer?.isAccepted;
 
   return (
     <Route
