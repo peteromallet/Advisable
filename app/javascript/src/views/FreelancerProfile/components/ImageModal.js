@@ -45,7 +45,7 @@ export default function ImageModal({ modal, children }) {
             pointerEvents: modal.visible ? "all" : "none",
           }}
         >
-          <Dialog {...modal} aria-label="Welcome">
+          <Dialog {...modal} tabIndex={0} aria-label="Welcome">
             {(modalProps) =>
               modal.visible && (
                 <StyledDialog
