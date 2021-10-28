@@ -63,7 +63,7 @@ class GraphqlController < ApplicationController
   def require_admin
     return if current_account&.admin?
 
-    render status: :not_found, json: {error: 'Not Found'}
+    render status: :not_found, json: {error: "Not Found"}
   end
 
   # Handle form data, JSON body, or a blank value

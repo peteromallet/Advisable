@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Mutations::ToggleTeamManager < Mutations::BaseMutation
   argument :user_id, ID, required: true
 

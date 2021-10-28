@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-require 'barnes'
+require "barnes"
 
 nakayoshi_fork
 
-workers Integer(ENV['WEB_CONCURRENCY'] || 2)
-threads_count = Integer(ENV['RAILS_MAX_THREADS'] || 5)
+workers Integer(ENV["WEB_CONCURRENCY"] || 2)
+threads_count = Integer(ENV["RAILS_MAX_THREADS"] || 5)
 threads threads_count, threads_count
 
 preload_app!
 
 rackup      DefaultRackup
-port        ENV['PORT']     || 3000
-environment ENV['RACK_ENV'] || 'development'
+port        ENV["PORT"]     || 3000
+environment ENV["RACK_ENV"] || "development"
 
 on_worker_boot do
   # Worker specific setup for Rails 4.1+
@@ -21,7 +21,7 @@ on_worker_boot do
 end
 
 before_fork do
-  require 'puma_worker_killer'
+  require "puma_worker_killer"
   PumaWorkerKiller.enable_rolling_restart # Default is every 6 hours
 
   # worker specific setup

@@ -21,7 +21,7 @@ module Mutations
         interview = create_interview(application)
         consultation.update(
           interview: interview,
-          status: 'Accepted By Specialist',
+          status: "Accepted By Specialist",
           accepted_at: Time.zone.now
         )
         {interview: interview}
@@ -46,9 +46,9 @@ module Mutations
       project = Project.create(
         user: consultation.user,
         skills: [consultation.skill],
-        sales_status: 'Open',
-        status: 'Project Created',
-        service_type: 'Consultation',
+        sales_status: "Open",
+        status: "Project Created",
+        service_type: "Consultation",
         primary_skill: consultation.skill,
         name: "#{consultation.user.company.name} - #{consultation.skill.name}"
       )
@@ -59,17 +59,17 @@ module Mutations
     def create_application(project, specialist)
       application = Application.create(
         project: project,
-        status: 'Applied',
+        status: "Applied",
         score: 90,
         specialist: specialist,
         trial_program: true
       )
-      application.sync_to_airtable({'Source' => 'consultation-request'})
+      application.sync_to_airtable({"Source" => "consultation-request"})
       application
     end
 
     def create_interview(application)
-      application.create_interview(status: 'Call Requested', user: application.project.user)
+      application.create_interview(status: "Call Requested", user: application.project.user)
     end
   end
 end

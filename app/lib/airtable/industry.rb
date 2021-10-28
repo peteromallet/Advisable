@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 class Airtable::Industry < Airtable::Base
-  self.table_name = 'Industries'
+  self.table_name = "Industries"
 
   sync_with ::Industry
-  sync_column 'Name', to: :name
+  sync_column "Name", to: :name
 
   sync_data do |industry|
-    industry.active = self['Active'].try(:include?, 'Yes')
+    industry.active = self["Active"].try(:include?, "Yes")
   end
 end

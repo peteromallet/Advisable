@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Types::Ratings < Types::BaseType
   field :overall, Float, null: true
   field :skills, Float, null: true

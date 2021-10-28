@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe(Mutations::SubmitClientApplication) do
   let(:application_status) { "Application Started" }
@@ -27,13 +27,13 @@ RSpec.describe(Mutations::SubmitClientApplication) do
     AdvisableSchema.execute(query, context: context)
   end
 
-  it 'Sets the status to Submitted' do
+  it "Sets the status to Submitted" do
     expect { request }.to change {
       user.reload.application_status
     }.from("Application Started").to("Submitted")
   end
 
-  it 'syncs to airtable' do
+  it "syncs to airtable" do
     expect_any_instance_of(User).to receive(:sync_to_airtable)
     request
   end

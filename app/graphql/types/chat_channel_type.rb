@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Types::ChatChannelType < Types::BaseType
   field :sid, String, null: true
   field :friendly_name, String, null: true

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Mutations::ReviewSpecialist do
-  let(:oauth_viewer) { OauthViewer.new('uid' => 'test', 'provider' => 'linkedin', 'name' => 'John Doe', 'first_name' => 'John', 'last_name' => 'Doe', 'image' => 'image_url') }
+  let(:oauth_viewer) { OauthViewer.new("uid" => "test", "provider" => "linkedin", "name" => "John Doe", "first_name" => "John", "last_name" => "Doe", "image" => "image_url") }
   let(:context) { {oauth_viewer: oauth_viewer} }
   let(:specialist) { create(:specialist) }
 

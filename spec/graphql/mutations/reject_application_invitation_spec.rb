@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::RejectApplicationInvitation do
   let(:specialist) { create(:specialist) }
@@ -29,14 +29,14 @@ RSpec.describe Mutations::RejectApplicationInvitation do
 
   it "sets the status to 'Invitation Rejected'" do
     response = AdvisableSchema.execute(query, context: context)
-    status = response['data']['rejectApplicationInvitation']['application']['status']
-    expect(status).to eq('Invitation Rejected')
+    status = response["data"]["rejectApplicationInvitation"]["application"]["status"]
+    expect(status).to eq("Invitation Rejected")
   end
 
-  it 'sets the invitation_rejection_reason' do
+  it "sets the invitation_rejection_reason" do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       application.reload.invitation_rejection_reason
-    }.from(nil).to('Not a good fit')
+    }.from(nil).to("Not a good fit")
   end
 
   it "syncs the record to airtable" do
@@ -50,7 +50,7 @@ RSpec.describe Mutations::RejectApplicationInvitation do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
+      error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("notAuthenticated")
     end
   end
@@ -60,7 +60,7 @@ RSpec.describe Mutations::RejectApplicationInvitation do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
+      error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_SPECIALIST")
     end
   end

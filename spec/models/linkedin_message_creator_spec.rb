@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 require "rails_helper"
 
 RSpec.describe LinkedinMessageCreator do
   subject(:lmc) { described_class.new(project, name) }
 
-  let(:project) { build_stubbed(:project, primary_skill: skill, user: user, goals: goals, characteristics: characteristics, required_characteristics: required_characteristics, uid: 'pro_123') }
+  let(:project) { build_stubbed(:project, primary_skill: skill, user: user, goals: goals, characteristics: characteristics, required_characteristics: required_characteristics, uid: "pro_123") }
   let(:user) { build_stubbed(:user, company: company) }
   let(:company) { build_stubbed(:company, industry: industry) }
   let(:industry) { build_stubbed(:industry, name: "Rock Music") }

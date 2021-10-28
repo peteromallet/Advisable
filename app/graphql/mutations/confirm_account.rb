@@ -29,9 +29,9 @@ module Mutations
     def validate_token(account, token)
       return if BCrypt::Password.new(account.confirmation_digest).is_password?(token)
 
-      ApiError.invalid_request('INVALID_CONFIRMATION_TOKEN')
+      ApiError.invalid_request("INVALID_CONFIRMATION_TOKEN")
     rescue BCrypt::Errors::InvalidHash
-      ApiError.invalid_request('INVALID_CONFIRMATION_TOKEN')
+      ApiError.invalid_request("INVALID_CONFIRMATION_TOKEN")
     end
   end
 end

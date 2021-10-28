@@ -10,13 +10,13 @@ class StaffMailerPreview < ActionMailer::Preview
   end
 
   def problematic_specialist
-    random_flag = ProblematicFlag.order(Arel.sql('RANDOM()')).first
+    random_flag = ProblematicFlag.order(Arel.sql("RANDOM()")).first
     StaffMailer.problematic_specialist(random_flag)
   end
 
   private
 
   def random_report
-    UnresponsivenessReport.order(Arel.sql('RANDOM()')).first
+    UnresponsivenessReport.order(Arel.sql("RANDOM()")).first
   end
 end

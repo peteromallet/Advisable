@@ -1,12 +1,13 @@
+# frozen_string_literal: true
 FactoryBot.define do
   factory :project do
     user
-    currency { 'EUR' }
-    sales_status { 'Open' }
-    company_type { 'Startup' }
-    industry { 'Marketing' }
+    currency { "EUR" }
+    sales_status { "Open" }
+    company_type { "Startup" }
+    industry { "Marketing" }
     name do
-      'Firespring – Public Relations and Communications Marketing, Publicity'
+      "Firespring – Public Relations and Communications Marketing, Publicity"
     end
     sequence(:airtable_id) { |id| "recproject#{id}" }
 

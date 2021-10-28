@@ -23,7 +23,7 @@ module Mutations
     end
 
     def resolve(event_id:)
-      current_user.application_stage = 'Interview Scheduled'
+      current_user.application_stage = "Interview Scheduled"
       current_user.application_interview_calendly_id = event_id
       current_user.save_and_sync_with_responsible!(current_account_id)
 

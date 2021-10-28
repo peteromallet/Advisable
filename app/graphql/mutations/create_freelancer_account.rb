@@ -8,31 +8,31 @@ module Mutations
     HEREDOC
 
     argument :first_name, String, required: true do
-      description 'The freelancers first name'
+      description "The freelancers first name"
     end
 
     argument :last_name, String, required: true do
-      description 'The freelancers last name'
+      description "The freelancers last name"
     end
 
     argument :email, String, required: true do
-      description 'The freelancers email address'
+      description "The freelancers email address"
     end
 
     argument :pid, String, required: false do
-      description 'The project ID that they are signing up for.'
+      description "The project ID that they are signing up for."
     end
 
     argument :campaign_name, String, required: false do
-      description 'The name of the campaign they signed up from'
+      description "The name of the campaign they signed up from"
     end
 
     argument :campaign_source, String, required: false do
-      description 'The source of the campaign they signed up from'
+      description "The source of the campaign they signed up from"
     end
 
     argument :referrer, String, required: false do
-      description 'The rerrer they signed up from'
+      description "The rerrer they signed up from"
     end
 
     field :viewer, Types::ViewerUnion, null: false
@@ -48,14 +48,14 @@ module Mutations
         account: account,
         campaign_name: args[:campaign_name],
         campaign_source: args[:campaign_source],
-        application_stage: 'Started',
+        application_stage: "Started",
         pid: args[:pid],
         referrer_id: find_referrer(args[:referrer])
       )
 
       # frozen_string_literal: false
       # Creates a new freelancer account
-      ApiError.invalid_request('EMAIL_TAKEN', 'This email is already being used by another account') if !account.valid? && specialist.valid? && account.errors.added?(:email, "has already been taken")
+      ApiError.invalid_request("EMAIL_TAKEN", "This email is already being used by another account") if !account.valid? && specialist.valid? && account.errors.added?(:email, "has already been taken")
 
       success = Logidze.with_responsible(specialist.account_id) do
         specialist.save
@@ -94,8 +94,8 @@ module Mutations
       project = Airtable::Project.find(pid).sync if project.nil?
       return if project.blank?
 
-      application = specialist.applications.create(project: project, status: 'Invited To Apply')
-      application.bg_sync_to_airtable({'Source' => 'new-signup'})
+      application = specialist.applications.create(project: project, status: "Invited To Apply")
+      application.bg_sync_to_airtable({"Source" => "new-signup"})
     end
   end
 end

@@ -22,7 +22,7 @@ class Mutations::UpdatePassword < Mutations::BaseMutation
       account.update!(password: password)
       {viewer: current_user}
     else
-      ApiError.invalid_request('CAN_NOT_CHANGE_PASSWORD')
+      ApiError.invalid_request("CAN_NOT_CHANGE_PASSWORD")
     end
   end
 

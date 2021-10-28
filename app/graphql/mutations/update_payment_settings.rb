@@ -7,19 +7,19 @@ module Mutations
     HEREDOC
 
     argument :bank_holder_name, String, required: true do
-      description 'The bank account holder full name or company name.'
+      description "The bank account holder full name or company name."
     end
 
     argument :bank_holder_address, Types::AddressInput, required: false do
-      description 'The bank account holder address.'
+      description "The bank account holder address."
     end
 
     argument :bank_currency, String, required: true do
-      description 'The currency for their bank account.'
+      description "The currency for their bank account."
     end
 
     argument :vat_number, String, required: false do
-      description 'Their VAT number.'
+      description "Their VAT number."
     end
 
     field :specialist, Types::SpecialistType, null: true

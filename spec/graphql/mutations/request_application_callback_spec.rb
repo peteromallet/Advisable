@@ -1,4 +1,5 @@
-require 'rails_helper'
+# frozen_string_literal: true
+require "rails_helper"
 
 RSpec.describe Mutations::RequestApplicationCallback do
   let(:application_status) { "Application Accepted" }
@@ -26,22 +27,22 @@ RSpec.describe Mutations::RequestApplicationCallback do
     allow_any_instance_of(ClientCall).to receive(:sync_to_airtable)
   end
 
-  it 'creates a call' do
+  it "creates a call" do
     expect { response }.to change { user.reload.client_calls.count }.by(1)
   end
 
-  it 'sets the contact_status to Call Scheduled' do
+  it "sets the contact_status to Call Scheduled" do
     expect { response }.to change { user.reload.contact_status }.to(
-      'Call Scheduled'
+      "Call Scheduled"
     )
   end
 
-  context 'when the application status is not accepted' do
+  context "when the application status is not accepted" do
     let(:application_status) { "Application Rejected" }
 
-    it 'returns an error' do
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('notAccepted')
+    it "returns an error" do
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("notAccepted")
     end
   end
 end

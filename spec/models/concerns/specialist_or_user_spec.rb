@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe SpecialistOrUser do
   describe "#find_by_uid" do
@@ -45,14 +45,14 @@ RSpec.describe SpecialistOrUser do
 
   describe "#find_by_email" do
     context "when passed a user email" do
-      it 'returns the user' do
+      it "returns the user" do
         user = create(:user)
         expect(described_class.find_by_email(user.account.email)).to eq(user)
       end
     end
 
     context "when passed a specialist email" do
-      it 'returns the specialist' do
+      it "returns the specialist" do
         specialist = create(:specialist)
         expect(described_class.find_by_email(specialist.account.email)).to eq(specialist)
       end

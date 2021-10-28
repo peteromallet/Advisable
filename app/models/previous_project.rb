@@ -20,7 +20,7 @@
 # [Failed] The project validation has failed.
 #
 class PreviousProject < ApplicationRecord
-  self.table_name = 'off_platform_projects'
+  self.table_name = "off_platform_projects"
 
   include Uid
   include Resizable
@@ -37,27 +37,27 @@ class PreviousProject < ApplicationRecord
   # If the prpevious project belongs to an application then we know it is a
   # previous project that happened on Advisable.
   belongs_to :application, optional: true
-  belongs_to :reviewed_by, class_name: 'SalesPerson', optional: true
+  belongs_to :reviewed_by, class_name: "SalesPerson", optional: true
 
-  has_many :application_references, foreign_key: 'off_platform_project_id', inverse_of: :previous_project, dependent: :destroy
+  has_many :application_references, foreign_key: "off_platform_project_id", inverse_of: :previous_project, dependent: :destroy
   has_many :reviews, foreign_key: :project_id, inverse_of: :project, dependent: :destroy
 
   # Project skills
   has_many :project_skills, as: :project, dependent: :destroy
   has_many :skills, through: :project_skills
-  has_one :primary_project_skill, -> { where(primary: true) }, as: :project, class_name: 'ProjectSkill', inverse_of: :project
+  has_one :primary_project_skill, -> { where(primary: true) }, as: :project, class_name: "ProjectSkill", inverse_of: :project
   has_one :primary_skill, through: :primary_project_skill, source: :skill
 
   # Project industries
   has_many :project_industries, as: :project, dependent: :destroy
   has_many :industries, through: :project_industries
-  has_one :primary_project_industry, -> { where(primary: true) }, as: :project, class_name: 'ProjectIndustry', inverse_of: :project
+  has_one :primary_project_industry, -> { where(primary: true) }, as: :project, class_name: "ProjectIndustry", inverse_of: :project
   has_one :primary_industry, through: :primary_project_industry, source: :industry
 
   # Scopes
-  scope :validated, -> { where(validation_status: 'Validated') }
-  scope :validation_pending, -> { where(validation_status: 'Pending') }
-  scope :validation_failed, -> { where(validation_status: 'Failed') }
+  scope :validated, -> { where(validation_status: "Validated") }
+  scope :validation_pending, -> { where(validation_status: "Pending") }
+  scope :validation_failed, -> { where(validation_status: "Failed") }
   scope :on_platform, -> { where.not(application_id: nil) }
   scope :not_hidden, -> { where(hide_from_profile: [nil, false]) }
   scope :published, -> { where(draft: [false, nil]) }

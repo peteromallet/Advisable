@@ -10,15 +10,15 @@ module Types
                  Types::Notifications::SuggestedPostNotification
 
     field :id, ID, null: false do
-      description 'The unique ID for notification'
+      description "The unique ID for notification"
     end
 
     field :read_at, GraphQL::Types::ISO8601DateTime, null: true do
-      description 'When the notification was read'
+      description "When the notification was read"
     end
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false do
-      description 'When the notification was created'
+      description "When the notification was created"
     end
 
     definition_methods do

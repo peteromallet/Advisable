@@ -15,7 +15,7 @@ class Interview < ApplicationRecord
   has_one :specialist, through: :application
   has_one :video_call, dependent: :destroy
 
-  scope :scheduled, -> { where(status: 'Call Scheduled') }
+  scope :scheduled, -> { where(status: "Call Scheduled") }
 
   validates :status, inclusion: {in: VALID_STATUSES}
 end

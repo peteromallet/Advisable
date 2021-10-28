@@ -1,4 +1,5 @@
-require 'rails_helper'
+# frozen_string_literal: true
+require "rails_helper"
 
 RSpec.describe Mutations::ToggleSourcing do
   let(:sourcing) { false }
@@ -21,43 +22,43 @@ RSpec.describe Mutations::ToggleSourcing do
 
   let(:context) { { current_user: project.user } }
 
-  context 'when sourcing is false' do
+  context "when sourcing is false" do
     let(:sourcing) { false }
 
-    it 'toggles the sourcing attribute to true' do
+    it "toggles the sourcing attribute to true" do
       expect { AdvisableSchema.execute(query, context: context) }.to change {
         project.reload.sourcing
       }.from(false).to(true)
     end
   end
 
-  context 'when sourcing is true' do
+  context "when sourcing is true" do
     let(:sourcing) { true }
 
-    it 'toggles the sourcing attribute to false' do
+    it "toggles the sourcing attribute to false" do
       expect { AdvisableSchema.execute(query, context: context) }.to change {
         project.reload.sourcing
       }.from(true).to(false)
     end
   end
 
-  context 'when not logged in' do
+  context "when not logged in" do
     let(:context) { { current_user: nil } }
 
-    it 'returns an error' do
+    it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('notAuthenticated')
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("notAuthenticated")
     end
   end
 
-  context 'when logged in as a random user' do
+  context "when logged in as a random user" do
     let(:context) { { current_user: create(:user) } }
 
-    it 'returns an error' do
+    it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('notAuthorized')
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("notAuthorized")
     end
   end
 end

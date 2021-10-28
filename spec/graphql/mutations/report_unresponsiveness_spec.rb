@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::ReportUnresponsiveness do
   let(:user) { create(:user) }
@@ -28,7 +28,7 @@ RSpec.describe Mutations::ReportUnresponsiveness do
     it "creates the report and schedules the mailer" do
       response = AdvisableSchema.execute(query, context: context)
 
-      success = response['data']['reportUnresponsiveness']['success']
+      success = response["data"]["reportUnresponsiveness"]["success"]
       expect(success).to eq(true)
 
       report = UnresponsivenessReport.find_by(reporter: user.account, application: application)
@@ -43,7 +43,7 @@ RSpec.describe Mutations::ReportUnresponsiveness do
       it "throws an error" do
         response = AdvisableSchema.execute(query, context: context)
 
-        error = response['errors'].first
+        error = response["errors"].first
         expect(error["message"]).to eq("The application does not belong to signed in user.")
       end
     end
@@ -55,7 +55,7 @@ RSpec.describe Mutations::ReportUnresponsiveness do
     it "creates the report and schedules the mailer" do
       response = AdvisableSchema.execute(query, context: context)
 
-      success = response['data']['reportUnresponsiveness']['success']
+      success = response["data"]["reportUnresponsiveness"]["success"]
       expect(success).to eq(true)
 
       report = UnresponsivenessReport.find_by(reporter: specialist.account, application: application)
@@ -70,7 +70,7 @@ RSpec.describe Mutations::ReportUnresponsiveness do
       it "throws an error" do
         response = AdvisableSchema.execute(query, context: context)
 
-        error = response['errors'].first
+        error = response["errors"].first
         expect(error["message"]).to eq("The application does not belong to signed in user.")
       end
     end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Reviewing a case study", type: :system do
   before do
@@ -28,18 +28,18 @@ RSpec.describe "Reviewing a case study", type: :system do
     find('label[aria-label="Rate Adherence to schedule 5 stars"]').click
     find('label[aria-label="Rate Communication 5 stars"]').click
     find('label[aria-label="Rate Availability 5 stars"]').click
-    click_on 'Continue'
-    fill_in('comment', with: 'Really great')
-    click_on 'Submit Review'
+    click_on "Continue"
+    fill_in("comment", with: "Really great")
+    click_on "Submit Review"
     expect(page).to have_text(/thanks/i)
   end
 
   it "allows viewer to skip ratings step" do
     visit "/review/#{specialist.uid}/case_studies/#{article.uid}"
     click_on text: /validate with/i
-    click_on 'Skip'
-    fill_in('comment', with: 'Really great')
-    click_on 'Submit Review'
+    click_on "Skip"
+    fill_in("comment", with: "Really great")
+    click_on "Submit Review"
     expect(page).to have_text(/thanks/i)
   end
 

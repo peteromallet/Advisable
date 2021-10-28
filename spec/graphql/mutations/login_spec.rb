@@ -1,10 +1,11 @@
-require 'rails_helper'
+# frozen_string_literal: true
+require "rails_helper"
 
 RSpec.describe Mutations::Login do
-  let(:account) { create(:account, password: 'testing123') }
+  let(:account) { create(:account, password: "testing123") }
   let(:user) { create(:user, account: account) }
   let(:email) { user.account.email }
-  let(:password) { 'testing123' }
+  let(:password) { "testing123" }
   let(:session_manager) do
     SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
   end
@@ -45,45 +46,45 @@ RSpec.describe Mutations::Login do
     )
   end
 
-  it 'returns a viewer' do
-    viewer = response['data']['login']['viewer']
-    expect(viewer['id']).to eq(user.uid)
-    expect(viewer['email']).to eq(user.account.email)
+  it "returns a viewer" do
+    viewer = response["data"]["login"]["viewer"]
+    expect(viewer["id"]).to eq(user.uid)
+    expect(viewer["email"]).to eq(user.account.email)
   end
 
-  context 'when the user is a specialist' do
-    let(:user) { create(:specialist, account: create(:account, password: 'testing123')) }
+  context "when the user is a specialist" do
+    let(:user) { create(:specialist, account: create(:account, password: "testing123")) }
 
-    it 'returns a specialist' do
-      viewer = response['data']['login']['viewer']
-      expect(viewer['id']).to eq(user.uid)
-      expect(viewer['email']).to eq(user.account.email)
+    it "returns a specialist" do
+      viewer = response["data"]["login"]["viewer"]
+      expect(viewer["id"]).to eq(user.uid)
+      expect(viewer["email"]).to eq(user.account.email)
     end
   end
 
-  context 'when the email is incorrect' do
-    let(:email) { 'wrong@advisable.com' }
+  context "when the email is incorrect" do
+    let(:email) { "wrong@advisable.com" }
 
-    it 'returns an error' do
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('AUTHENTICATION_FAILED')
+    it "returns an error" do
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("AUTHENTICATION_FAILED")
     end
 
-    it 'doesnt login the user' do
+    it "doesnt login the user" do
       expect(session_manager).to_not receive(:login)
       response
     end
   end
 
-  context 'when the password is incorrect' do
-    let(:password) { 'wrongpassword123' }
+  context "when the password is incorrect" do
+    let(:password) { "wrongpassword123" }
 
-    it 'returns an error' do
-      error = response['errors'][0]['extensions']['code']
-      expect(error).to eq('AUTHENTICATION_FAILED')
+    it "returns an error" do
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("AUTHENTICATION_FAILED")
     end
 
-    it 'doesnt login the user' do
+    it "doesnt login the user" do
       expect(session_manager).to_not receive(:login)
       response
     end

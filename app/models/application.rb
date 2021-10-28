@@ -46,8 +46,8 @@ class Application < ApplicationRecord
 
   has_logidze
 
-  ACTIVE_STATUSES = ['Application Accepted', 'Interview Scheduled', 'Interview Completed', 'Proposed'].freeze
-  HIRED_STATUSES = ['Working', 'Stopped Working'].freeze
+  ACTIVE_STATUSES = ["Application Accepted", "Interview Scheduled", "Interview Completed", "Proposed"].freeze
+  HIRED_STATUSES = ["Working", "Stopped Working"].freeze
   META_FIELDS = [
     "Working - 5 Days In - Client Happy", "Working - 10 Days In - Client Happy", "Working - 15 Days In - Client Happy",
     "Working - 5 Days In - Client Feedback", "Working - 10 Days In - Client Feedback", "Working - 15 Days In - Client Feedback",
@@ -78,16 +78,16 @@ class Application < ApplicationRecord
   after_save :update_specialist_average_score
   after_save :update_project_counts, if: :saved_change_to_status?
 
-  scope :applied, -> { where(status: 'Applied') }
-  scope :high_score, -> { where('score > ?', 65) }
+  scope :applied, -> { where(status: "Applied") }
+  scope :high_score, -> { where("score > ?", 65) }
   # A candidate is only "matched" once its score is set above 65.
   scope :matched, -> { applied.high_score }
-  scope :accepted, -> { where(status: 'Application Accepted') }
+  scope :accepted, -> { where(status: "Application Accepted") }
   scope :accepted_fees, -> { where(accepts_fee: true) }
   scope :accepted_terms, -> { where(accepts_terms: true) }
   scope :featured, -> { where(featured: true) }
-  scope :rejected, -> { where(status: 'Application Rejected') }
-  scope :proposed, -> { where(status: 'Proposed') }
+  scope :rejected, -> { where(status: "Application Rejected") }
+  scope :proposed, -> { where(status: "Proposed") }
   scope :hired, -> { where(status: HIRED_STATUSES) }
   scope :not_hidden, -> { where(hidden: [nil, false]) }
   scope :active, -> { where(status: ACTIVE_STATUSES) }
@@ -96,10 +96,10 @@ class Application < ApplicationRecord
   scope :by_sales_status, ->(status) { joins(:project).where(projects: {sales_status: status}) }
 
   # Filters out any applications that are in a final state.
-  scope :not_final, -> { where.not(status: ['Working', 'Application Rejected', 'Invited To Apply', 'Invitation Rejected']) }
+  scope :not_final, -> { where.not(status: ["Working", "Application Rejected", "Invited To Apply", "Invitation Rejected"]) }
 
   # Returns the top 3 candidates
-  scope :top_three_applied, -> { applied.where('score > ?', 65.0).order(score: :desc).limit(3) }
+  scope :top_three_applied, -> { applied.where("score > ?", 65.0).order(score: :desc).limit(3) }
 
   def create_previous_project
     PreviousProject::ConvertApplication.run(self)

@@ -15,7 +15,7 @@ RSpec.describe Guild::Comment, type: :model do
   describe "relationships" do
     it { expect(guild_comment).to belong_to(:specialist) }
     it { expect(guild_comment).to belong_to(:post) }
-    it { expect(guild_comment).to belong_to(:parent_comment).class_name('Guild::Comment').optional(true) }
+    it { expect(guild_comment).to belong_to(:parent_comment).class_name("Guild::Comment").optional(true) }
     it { expect(guild_comment).to have_many(:reactions) }
     it { expect(guild_comment).to have_many(:child_comments) }
   end

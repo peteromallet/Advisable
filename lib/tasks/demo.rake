@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :demo do
   task create_specialists: :environment do
     skills = Skill.all
@@ -5,7 +6,7 @@ namespace :demo do
 
     1_000.times do |i|
       puts "CREATING SPECIALIST #{i}"
-      country = Country.find_or_create_by(name: 'United States')
+      country = Country.find_or_create_by(name: "United States")
       account = Account.create(email: Faker::Internet.email)
       specialist =
         Specialist.create(
@@ -63,7 +64,7 @@ namespace :demo do
         project =
           user.projects.create(
             name: "#{skill.name}",
-            service_type: 'Self-Service',
+            service_type: "Self-Service",
             primary_skill: skill.name,
             industry: industry.name,
             project_skills: [
@@ -77,7 +78,7 @@ namespace :demo do
         puts project.errors.full_messages
 
         project.applications.create(
-          status: 'Stopped Working', specialist: specialist
+          status: "Stopped Working", specialist: specialist
         )
       end
     end

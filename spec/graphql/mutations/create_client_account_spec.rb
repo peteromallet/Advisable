@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe(Mutations::CreateClientAccount) do
-  let(:first_name) { 'Test' }
-  let(:last_name) { 'Account' }
-  let(:email) { 'test@test.com' }
+  let(:first_name) { "Test" }
+  let(:last_name) { "Account" }
+  let(:email) { "test@test.com" }
   let(:session_manager) do
     SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new)
   end

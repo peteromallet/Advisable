@@ -2,7 +2,7 @@
 
 class EventAttendee < ApplicationRecord
   belongs_to :event
-  belongs_to :attendee, class_name: 'Specialist', foreign_key: 'specialist_id', inverse_of: :event_attendees
+  belongs_to :attendee, class_name: "Specialist", foreign_key: "specialist_id", inverse_of: :event_attendees
 
   validates :attendee, uniqueness: {
     scope: :event,

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # All Administrate controllers inherit from this `Admin::ApplicationController`,
 # making it the ideal place to put authentication logic or other
 # before_actions.
@@ -24,27 +25,27 @@ module Admin
     def authenticate_admin
       return if current_account&.admin?
 
-      redirect_to '/'
+      redirect_to "/"
     end
 
     def resync
-      return unless ENV['STAGING']
+      return unless ENV["STAGING"]
 
       Airtable.sync
-      redirect_to '/admin', notice: 'Airtable has been synced'
+      redirect_to "/admin", notice: "Airtable has been synced"
     end
 
     def login_as
       session[:admin_override] = params[:gid]
-      redirect_to '/'
+      redirect_to "/"
     end
 
     def reset_test
-      return unless ENV['STAGING'] || Rails.env.development?
+      return unless ENV["STAGING"] || Rails.env.development?
 
       TestData.reset
 
-      redirect_to '/admin', notice: 'Test data has been reset'
+      redirect_to "/admin", notice: "Test data has been reset"
     end
   end
 end

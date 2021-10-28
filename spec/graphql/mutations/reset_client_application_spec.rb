@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::ResetClientApplication do
   before do
@@ -8,7 +8,7 @@ RSpec.describe Mutations::ResetClientApplication do
   end
 
   let(:industry) { create(:industry, name: "Digital Marketing") }
-  let(:skill) { create(:skill, name: 'Marketing') }
+  let(:skill) { create(:skill, name: "Marketing") }
   let(:company) do
     create(
       :company,
@@ -47,10 +47,10 @@ RSpec.describe Mutations::ResetClientApplication do
     GRAPHQL
   end
 
-  it 'reset application status to Application Started' do
+  it "reset application status to Application Started" do
     expect { AdvisableSchema.execute(query) }.to change {
       user.reload.application_status
-    }.from('Application Rejected').to('Application Started')
+    }.from("Application Rejected").to("Application Started")
     expect(user.company.budget).to eq(nil)
     expect(user.number_of_freelancers).to eq(nil)
     expect(user.skills).to eq([])

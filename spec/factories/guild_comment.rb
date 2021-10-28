@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 FactoryBot.define do
-  factory :guild_comment, class: 'Guild::Comment' do
+  factory :guild_comment, class: "Guild::Comment" do
     body    { Faker::TvShows::MichaelScott.quote }
     specialist
 

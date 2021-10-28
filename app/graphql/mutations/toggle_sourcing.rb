@@ -12,7 +12,7 @@ module Mutations
       policy = ProjectPolicy.new(current_user, project)
       return true if policy.can_access_project?
 
-      ApiError.not_authorized('You do not have access to this project')
+      ApiError.not_authorized("You do not have access to this project")
     end
 
     def resolve(**args)
