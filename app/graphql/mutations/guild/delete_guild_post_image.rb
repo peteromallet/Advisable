@@ -14,7 +14,7 @@ module Mutations
       end
 
       def resolve(**args)
-        image = Guild::PostImage.find_by(uid: args[:guild_post_image_id])
+        image = ::Guild::PostImage.find_by(uid: args[:guild_post_image_id])
         return {success: false} if image.blank?
 
         ApiError.not_authorized("You dont have access to this") if image.post.specialist != current_user
