@@ -69,6 +69,18 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def need_more_time_options(interview)
+    @interview = interview
+    @sales_person = interview.user.company.sales_person
+    mail(
+      from: @sales_person.email_with_name,
+      to: interview.user.account.email,
+      subject: 'Need More Time Options'
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
+
   private
 
   def application_url(application_id)
