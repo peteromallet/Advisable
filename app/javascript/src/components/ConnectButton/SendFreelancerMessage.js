@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { object, string } from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import SubmitButton from "components/SubmitButton";
 import { Text, Textarea } from "@advisable/donut";
 import { useCreateConversation } from "./queries";
+import FreelancerMessageSent from "./FreelancerMessageSent";
 
 const validationSchema = object({
   body: string().required("Please write your message"),
 });
 
-export default function SendFreelancerMessage({ specialist, onSend }) {
+export default function SendFreelancerMessage({ specialist, dialog }) {
+  const [sent, setSent] = useState(false);
   const [createConversation] = useCreateConversation();
 
   const initialValues = {
@@ -26,8 +28,12 @@ export default function SendFreelancerMessage({ specialist, onSend }) {
       },
     });
 
-    onSend();
+    setSent(true);
   };
+
+  if (sent) {
+    return <FreelancerMessageSent specialist={specialist} dialog={dialog} />;
+  }
 
   return (
     <Formik
