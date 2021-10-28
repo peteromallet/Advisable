@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Dialog, DialogBackdrop } from "reakit/Dialog";
-import PassportAvatar from "src/components/PassportAvatar";
 
 export const StyledDialogBackdrop = styled(motion.div)`
   top: 0;
@@ -32,7 +31,7 @@ export const StyledDialog = styled(motion.div)`
   position: relative;
 `;
 
-export default function ProfilePictureModal({ modal, specialist }) {
+export default function ImageModal({ modal, children }) {
   return (
     <DialogBackdrop {...modal}>
       {(backdrop) => (
@@ -60,11 +59,7 @@ export default function ProfilePictureModal({ modal, specialist }) {
                   }}
                   exit={{ opacity: 0, y: 40 }}
                 >
-                  <PassportAvatar
-                    size="responsive"
-                    name={specialist.name}
-                    src={specialist.avatar}
-                  />
+                  {children}
                 </StyledDialog>
               )
             }
