@@ -13,9 +13,9 @@ export default function Testimonials({ reviews }) {
   const { id } = useParams();
   const viewer = useViewer();
 
-  const testimonials = reviews.map(
-    (r) => !!r.comment && <Testimonial key={r.id} review={r} />,
-  );
+  const testimonials = reviews
+    .filter((r) => !!r.comment)
+    .map((r) => <Testimonial key={r.id} review={r} />);
 
   const isEmpty = testimonials.length === 0;
   const isOwner = viewer?.id === id;
