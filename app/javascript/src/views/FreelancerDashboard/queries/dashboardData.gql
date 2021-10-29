@@ -1,4 +1,17 @@
 query DashboardData {
+  collaborationRequests {
+    nodes {
+      id
+      author {
+        id
+        name
+        avatar
+      }
+      createdAtTimeAgo
+      title
+      excerpt
+    }
+  }
   topCaseStudies {
     id
     title
