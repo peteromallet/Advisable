@@ -85,12 +85,10 @@ const PaymentSettings = () => {
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(formik) => (
           <Form>
-            {formik.values.paymentMethod != "Bank Transfer" ? (
-              <CardPaymentSettings
-                paymentMethod={data.viewer.paymentMethod}
-                openCardModal={paymentMethodModal.show}
-              />
-            ) : null}
+            <CardPaymentSettings
+              paymentMethod={data.viewer.paymentMethod}
+              openCardModal={paymentMethodModal.show}
+            />
 
             <Text
               mb={1}
