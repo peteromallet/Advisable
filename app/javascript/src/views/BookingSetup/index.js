@@ -11,18 +11,11 @@ import CardDetails from "./CardDetails";
 import InvoiceSettings from "./InvoiceSettings";
 import PaymentTerms from "./PaymentTerms";
 import BookingType from "./BookingType";
-import PaymentMethod from "./PaymentMethod";
 import useViewer from "src/hooks/useViewer";
 import RequiresTeamManager from "./RequiresTeamManager";
 
 // The steps
 const STEPS = [
-  {
-    path: "/book/:applicationId/payment_method",
-    component: PaymentMethod,
-    isFirstStep: ({ viewer, currentCompany }) =>
-      !viewer.paymentsSetup && currentCompany.bankTransfersEnabled,
-  },
   {
     path: "/book/:applicationId/card_details",
     component: CardDetails,
