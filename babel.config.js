@@ -23,7 +23,6 @@ module.exports = function (api) {
           targets: {
             node: "current",
           },
-          modules: "commonjs",
         },
       ],
       (isProductionEnv || isDevelopmentEnv) && [
@@ -50,7 +49,6 @@ module.exports = function (api) {
       "@babel/plugin-syntax-dynamic-import",
       isTestEnv && "babel-plugin-dynamic-import-node",
       "@babel/plugin-transform-destructuring",
-      "@babel/plugin-proposal-optional-chaining",
       [
         "@babel/plugin-proposal-class-properties",
         {
@@ -79,8 +77,6 @@ module.exports = function (api) {
         "@babel/plugin-transform-runtime",
         {
           helpers: false,
-          regenerator: true,
-          corejs: false,
         },
       ],
       [
@@ -96,6 +92,5 @@ module.exports = function (api) {
         },
       ],
     ].filter(Boolean),
-    sourceType: "unambiguous",
   };
 };
