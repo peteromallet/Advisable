@@ -8,7 +8,9 @@ export default function CollaborationRequests({ collaborationRequests }) {
   ));
   return (
     <Box>
-      <Text>Collaboration requests</Text>
+      <Text color="neutral900" fontSize="2xl" fontWeight={450} mb={8}>
+        Collaboration requests
+      </Text>
       <Box>{requests}</Box>
     </Box>
   );
