@@ -81,12 +81,14 @@ export function VersionedRoute({
 
 const ApplicationRoutes = () => {
   const viewer = useViewer();
+  const isClient = viewer && viewer.__typename === "User";
 
   return (
     <>
       <Header />
       <Suspense fallback={<Loading />}>
         <Switch>
+          {isClient && <Redirect from="/" exact to="/explore" />}
           <AuthenticatedRoute path="/set_password">
             <SetPassword />
           </AuthenticatedRoute>
