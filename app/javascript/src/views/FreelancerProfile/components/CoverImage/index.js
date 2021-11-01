@@ -51,11 +51,11 @@ function CoverImage({ src, ...props }) {
 
   return (
     <StyledCover {...props}>
-      {src ? (
+      {Boolean(src) && (
         <ImageModal modal={modal}>
           <StyledModalCoverImage src={error ? defaultCoverPhoto : image} />
         </ImageModal>
-      ) : null}
+      )}
       <svg className="svgClip" width={0} height={0} viewBox="0 0 1080 320">
         <clipPath
           id="coverSquircle"
@@ -68,7 +68,7 @@ function CoverImage({ src, ...props }) {
       <StyledContentWrapper>
         <StyledCoverImage src={error ? defaultCoverPhoto : image} />
         <PictureActionArea type="cover" onClick={src && modal.show} />
-        {isOwner && !isArticle ? (
+        {isOwner && !isArticle && (
           <>
             <FileUploadInput
               handleChange={handleChange}
@@ -84,7 +84,7 @@ function CoverImage({ src, ...props }) {
               type="cover"
             />
           </>
-        ) : null}
+        )}
       </StyledContentWrapper>
     </StyledCover>
   );
