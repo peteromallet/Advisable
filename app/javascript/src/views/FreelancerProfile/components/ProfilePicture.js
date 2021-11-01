@@ -1,6 +1,6 @@
 import React from "react";
 import { useDialogState } from "reakit/Dialog";
-import { matchPath, useParams } from "react-router";
+import { useParams } from "react-router";
 import { Box } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
@@ -12,19 +12,6 @@ import ProgressBar from "./ProgressBar";
 import { useUpdateProfile } from "../queries";
 import ImageModal from "./ImageModal";
 
-function ArticleProfilePicture({ specialist }) {
-  return (
-    <Box marginTop={18} marginBottom={4} display="inline-block">
-      <PassportAvatar
-        size={"lg"}
-        name={specialist.name}
-        src={specialist.avatar}
-        stroke={"2px"}
-      />
-    </Box>
-  );
-}
-
 export default function ProfilePicture({ specialist }) {
   const accept = ".png, .jpg, .jpeg";
   const [updateAvatar] = useUpdateProfile();
@@ -33,10 +20,6 @@ export default function ProfilePicture({ specialist }) {
   const viewer = useViewer();
   const isOwner = viewer?.id === params.id;
   const modal = useDialogState();
-
-  const isArticle = !!matchPath(location.pathname, {
-    path: "/freelancers/:id/case_studies/:case_study_id",
-  });
 
   const submit = async (blob) => {
     const response = await updateAvatar({
@@ -57,9 +40,7 @@ export default function ProfilePicture({ specialist }) {
       accept,
     });
 
-  return isArticle ? (
-    <ArticleProfilePicture specialist={specialist} />
-  ) : (
+  return (
     <Box position="absolute" left="0" bottom="0" display="inline-block">
       <PassportAvatar
         size={["lg", "lg", "xl", "xl", "2xl"]}
