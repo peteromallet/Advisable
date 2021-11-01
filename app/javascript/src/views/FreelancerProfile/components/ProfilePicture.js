@@ -74,7 +74,10 @@ export default function ProfilePicture({ specialist }) {
           src={specialist.avatar}
         />
       </ImageModal>
-      <PictureActionArea type="avatar" onClick={modal.show} />
+      <PictureActionArea
+        type="avatar"
+        onClick={specialist.avatar && modal.show}
+      />
       {isOwner && (
         <>
           <FileUploadInput
