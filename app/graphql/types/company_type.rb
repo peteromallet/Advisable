@@ -18,10 +18,6 @@ module Types
       authorize :read?
     end
 
-    field :bank_transfers_enabled, Boolean, null: true do
-      authorize :read?
-    end
-
     field :users, [Types::User], null: true do
       authorize :read?
     end

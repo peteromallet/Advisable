@@ -2,17 +2,8 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { useDialogState } from "reakit/Dialog";
 import { useQuery, useMutation } from "@apollo/client";
-import { Formik, Form, Field } from "formik";
-import {
-  Box,
-  Card,
-  Text,
-  Button,
-  Skeleton,
-  Radio,
-  Modal,
-  RadioGroup,
-} from "@advisable/donut";
+import { Formik, Form } from "formik";
+import { Box, Card, Text, Button, Skeleton, Modal } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "../../../../components/Notifications";
 import UpdatePaymentMethod from "../../../../components/UpdatePaymentMethod";
@@ -27,8 +18,6 @@ const PaymentSettings = () => {
   const paymentMethodModal = useDialogState();
   const { data, loading, refetch } = useQuery(GET_PAYMENT_SETTINGS);
   const [updateInvoiceSettings] = useMutation(UPDATE_INVOICE_SETTINGS);
-
-  const bankTransfersEnabled = data?.currentCompany?.bankTransfersEnabled;
 
   if (!viewer.isTeamManager) {
     return <Redirect to="/settings" />;
@@ -96,48 +85,10 @@ const PaymentSettings = () => {
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(formik) => (
           <Form>
-            {bankTransfersEnabled ? (
-              <>
-                <Text
-                  mb={1}
-                  fontSize="l"
-                  fontWeight="medium"
-                  color="neutral900"
-                  letterSpacing="-0.02rem"
-                >
-                  Payment Method
-                </Text>
-                <Text fontSize="s" color="neutral700" mb={6}>
-                  How would you like us to collect payments?
-                </Text>
-                <RadioGroup mb={8}>
-                  <Field
-                    as={Radio}
-                    type="radio"
-                    value="Card"
-                    name="paymentMethod"
-                    label="Payments via card"
-                    description="We will collect payment by charging your card"
-                  />
-                  <Field
-                    as={Radio}
-                    type="radio"
-                    value="Bank Transfer"
-                    name="paymentMethod"
-                    label="Payments via bank transfer"
-                    description="We will collect payment by sending you an invoice"
-                  />
-                </RadioGroup>
-                <Box height={1} bg="neutral100" my="l" />
-              </>
-            ) : null}
-
-            {formik.values.paymentMethod != "Bank Transfer" ? (
-              <CardPaymentSettings
-                paymentMethod={data.viewer.paymentMethod}
-                openCardModal={paymentMethodModal.show}
-              />
-            ) : null}
+            <CardPaymentSettings
+              paymentMethod={data.viewer.paymentMethod}
+              openCardModal={paymentMethodModal.show}
+            />
 
             <Text
               mb={1}
