@@ -1,4 +1,14 @@
 query DashboardData {
+  viewer {
+    ... on Specialist {
+      caseStudies {
+        id
+      }
+      reviews {
+        id
+      }
+    }
+  }
   collaborationRequests {
     nodes {
       id
