@@ -7,7 +7,9 @@ export default function UpcomingEvents({ upcomingEvents }) {
 
   return (
     <Box>
-      <Text mb={4}>Upcoming events</Text>
+      <Text color="neutral900" fontSize="2xl" fontWeight={450} mb={8}>
+        Upcoming events
+      </Text>
       <Box>{events}</Box>
     </Box>
   );
