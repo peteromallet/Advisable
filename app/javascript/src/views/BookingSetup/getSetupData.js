@@ -4,7 +4,6 @@ export default gql`
   query bookingSetup($id: ID!) {
     currentCompany {
       id
-      bankTransfersEnabled
     }
     viewer {
       ... on User {

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Company < ApplicationRecord
+  PROJECT_PAYMENT_METHODS = ["Bank Transfer", "Card"].freeze
+  self.ignored_columns = ["bank_transfers_enabled"]
+
   has_logidze
 
   BUSINESS_TYPES = %w[B2B B2C].freeze
@@ -77,7 +80,7 @@ class Company < ApplicationRecord
   end
 
   def billing_email
-    @billing_email ||= super.presence || users.joins(:account).merge(Account.with_permission("team_manager")).first&.email
+    super.presence || @billing_email ||= users.joins(:account).merge(Account.with_permission("team_manager")).first&.email
   end
 
   # admin_fee value is stored in basis points integers: 5% -> 500 bp
@@ -109,7 +112,6 @@ end
 #  accepted_project_payment_terms_at :datetime
 #  address                           :jsonb
 #  admin_fee                         :integer
-#  bank_transfers_enabled            :boolean          default(FALSE)
 #  billing_email                     :string
 #  budget                            :bigint
 #  business_type                     :string
