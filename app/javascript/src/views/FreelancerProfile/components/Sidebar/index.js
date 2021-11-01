@@ -103,11 +103,11 @@ export default function Sidebar({ data, ...props }) {
             marginBottom={7}
           >
             {bio}
-            {bioIsExceed ? (
+            {bioIsExceed && (
               <StyledShowMore onClick={() => setExpanded((e) => !e)}>
                 {isExpanded ? <>see&#160;less</> : <>see&#160;more</>}
               </StyledShowMore>
-            ) : null}
+            )}
           </Text>
           <Box
             display="flex"
@@ -116,17 +116,17 @@ export default function Sidebar({ data, ...props }) {
             alignItems={{ _: "center", l: "flex-start" }}
           >
             <Box mb={[4, 0, 0, 10]} width="100%">
-              {isOwner ? (
+              {isOwner && (
                 <EditInfo specialist={specialist}>Edit Info</EditInfo>
-              ) : null}
-              {!isOwner && !viewerIsGuild ? (
+              )}
+              {!isOwner && !viewerIsGuild && (
                 <WorkTogetherButton id={specialist?.id}>
                   Work together
                 </WorkTogetherButton>
-              ) : null}
-              {!isOwner && viewerIsGuild ? (
+              )}
+              {!isOwner && viewerIsGuild && (
                 <MessageButton specialist={specialist} />
-              ) : null}
+              )}
             </Box>
             <SocialProfilesIcons specialist={specialist} />
           </Box>
