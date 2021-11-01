@@ -25,6 +25,7 @@ function AvailabilityForm({ data, onSubmit }) {
     <>
       <Box marginBottom={6}>
         <AvailabilityInput
+          maxHeight="40vh"
           value={availability}
           timezone={timezone}
           onChange={setAvailability}
@@ -41,12 +42,7 @@ function AvailabilityForm({ data, onSubmit }) {
         </Box>
       </Box>
       {availability.length < 6 ? (
-        <Text
-          textAlign="center"
-          color="neutral800"
-          marginTop={6}
-          letterSpacing="-0.01em"
-        >
+        <Text color="neutral600" marginTop={5} letterSpacing="-0.01em">
           Please select at least 6 available times to continue
         </Text>
       ) : (

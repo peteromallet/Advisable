@@ -1,4 +1,4 @@
-import { Box, Stack, Textarea } from "@advisable/donut";
+import { Box, Stack, Text, Textarea } from "@advisable/donut";
 import { CheckCircle } from "@styled-icons/heroicons-solid";
 import { Form, Formik } from "formik";
 import React from "react";
@@ -14,7 +14,7 @@ const validationSchema = object({
 
 function ListItem({ children }) {
   return (
-    <Box as="li" display="flex">
+    <Box as="li" display="flex" lineHeight="20px" alignItems="center">
       <Box flexShrink={0} color="neutral300" marginRight={2}>
         <CheckCircle size={20} />
       </Box>
@@ -59,17 +59,17 @@ export default function RequestConsultationMessage({ specialist, onSubmit }) {
             showError={false}
           />
           <Stack spacing={3} as="ul" marginY={6}>
+            <Text fontWeight={500}>What to include in your message</Text>
             <ListItem>
-              Include details about the problem you are looking to solve.
+              Provide a brief introduction to your project and how you see{" "}
+              {specialist.firstName} fitting in.
             </ListItem>
             <ListItem>
-              Include details about the problem you are looking to solve.
+              Specify the project budget if you have one in mind.
             </ListItem>
             <ListItem>
-              Include details about the problem you are looking to solve.
-            </ListItem>
-            <ListItem>
-              Include details about the problem you are looking to solve.
+              Add any other information that you think might be relevant at this
+              moment.
             </ListItem>
           </Stack>
           <SubmitButton
