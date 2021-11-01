@@ -29,7 +29,10 @@ export default function FreelancerDashboard() {
           paddingX={{ _: 4, m: 8 }}
         >
           <Welcome />
-          <Profile />
+          <Profile
+            caseStudies={data.viewer?.caseStudies}
+            reviews={data.viewer?.reviews}
+          />
         </Box>
       </Box>
       <Page width="1080px">
