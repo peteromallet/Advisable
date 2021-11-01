@@ -10,11 +10,11 @@ export default function LatestProjects({ topCaseStudies }) {
   if (caseStudies.length === 0) return null;
 
   return (
-    <Box mb={16}>
+    <>
       <Text color="neutral900" fontSize="2xl" fontWeight={450} mb={8}>
         Latest projects
       </Text>
       <Box>{caseStudies}</Box>
-    </Box>
+    </>
   );
 }
