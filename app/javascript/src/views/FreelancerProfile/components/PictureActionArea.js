@@ -18,7 +18,7 @@ const type = variant({
 const StyledActionArea = styled.div`
   ${type}
   position: absolute;
-  cursor: pointer;
+  cursor: ${(props) => (props.onClick ? "pointer" : "auto")};
   top: 0;
   left: 0;
   width: 100%;

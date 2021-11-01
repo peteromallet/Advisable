@@ -67,7 +67,7 @@ function CoverImage({ src, ...props }) {
       </svg>
       <StyledContentWrapper>
         <StyledCoverImage src={error ? defaultCoverPhoto : image} />
-        <PictureActionArea type="cover" onClick={modal.show} />
+        <PictureActionArea type="cover" onClick={src && modal.show} />
         {isOwner && !isArticle ? (
           <>
             <FileUploadInput
