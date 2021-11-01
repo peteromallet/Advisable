@@ -1,10 +1,14 @@
 import React from "react";
-import { Card, Box } from "@advisable/donut";
+import { Card, Text } from "@advisable/donut";
 
 export default function CollaborationRequest({ request }) {
   return (
-    <Card borderRadius="20px">
-      <Box>{request.title}</Box>
+    <Card borderRadius="20px" mb={4} p={6}>
+      <img src={request.author?.avatar} />
+      <Text>{request.author?.name}</Text>
+      <Text>{request.createdAtTimeAgo}</Text>
+      <Text>{request.title}</Text>
+      <Text>{request.excerpt}</Text>
     </Card>
   );
 }
