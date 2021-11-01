@@ -41,5 +41,7 @@ export const StyledDialog = styled(motion.div)`
   @media (max-width: 1024px) {
     min-height: 100%;
     max-width: 100%;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 `;

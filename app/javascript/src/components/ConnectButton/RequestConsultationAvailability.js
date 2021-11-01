@@ -1,5 +1,11 @@
 import { DateTime } from "luxon";
-import { Box, Button, Text } from "@advisable/donut";
+import {
+  Box,
+  Button,
+  Text,
+  Availability,
+  useBreakpoint,
+} from "@advisable/donut";
 import React, { useState } from "react";
 import Loading from "src/components/Loading";
 import { useAvailability, useUpdateAvailability } from "./queries";
@@ -8,6 +14,7 @@ import RequestConsultationHeader from "./RequestConsultationHeader";
 import TimezoneSelect from "./TimezoneSelect";
 
 function AvailabilityForm({ data, onSubmit }) {
+  const sup = useBreakpoint("sUp");
   const [timezone, setTimezone] = useState(DateTime.local().zoneName || "UTC");
   const [updateAvailability, { loading }] = useUpdateAvailability();
   const [availability, setAvailability] = useState(
@@ -24,16 +31,26 @@ function AvailabilityForm({ data, onSubmit }) {
   return (
     <>
       <Box marginBottom={6}>
-        <AvailabilityInput
-          maxHeight="40vh"
-          value={availability}
-          timezone={timezone}
-          onChange={setAvailability}
-          events={data.viewer.interviews?.map((i) => ({
-            time: i.startsAt,
-            label: `Interview with ${i.specialist.firstName}`,
-          }))}
-        />
+        {sup ? (
+          <AvailabilityInput
+            maxHeight="40vh"
+            value={availability}
+            timezone={timezone}
+            onChange={setAvailability}
+            events={data.viewer.interviews?.map((i) => ({
+              time: i.startsAt,
+              label: `Interview with ${i.specialist.firstName}`,
+            }))}
+          />
+        ) : (
+          <Box marginBottom={8}>
+            <Availability
+              timezone={timezone}
+              value={availability}
+              onChange={setAvailability}
+            />
+          </Box>
+        )}
         <Box marginY={4}>
           <TimezoneSelect
             value={timezone}
