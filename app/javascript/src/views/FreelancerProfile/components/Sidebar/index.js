@@ -5,6 +5,7 @@ import { Map } from "@styled-icons/heroicons-outline/Map";
 import { Box, Text, Link } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import ProfilePicture from "../ProfilePicture";
+import ProfilePictureArticle from "../ProfilePictureArticle";
 import CoverImage from "../CoverImage";
 import {
   StyledStickySidebar,
@@ -49,7 +50,7 @@ export default function Sidebar({ data, ...props }) {
               <BackButton>Go to profile</BackButton>
               <CoverImage src={specialist.coverPhoto} size="collapse" />
             </Box>
-            <ProfilePicture specialist={specialist} />
+            <ProfilePictureArticle specialist={specialist} />
           </StyledArticleAvatarWrapper>
         ) : (
           <StyledAvatarWrapper>
