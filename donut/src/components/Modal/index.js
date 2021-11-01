@@ -11,6 +11,7 @@ import {
 export { default as useRoutedModal } from "./useRoutedModal";
 import CircularButton from "src/components/CircularButton";
 import { StyledDialogBackdrop, StyledDialog } from "./styles";
+import usePreventBodyScroll from "./usePreventBodyScroll";
 
 export function useModal(opts) {
   return useDialogState({
@@ -29,6 +30,8 @@ function Modal({
   showCloseButton = true,
   hideOnClickOutside = true,
 }) {
+  usePreventBodyScroll(modal.visible);
+
   return (
     <DialogBackdrop {...modal}>
       {(backdrop) => (
@@ -43,6 +46,7 @@ function Modal({
             {...modal}
             aria-label={label}
             hideOnClickOutside={hideOnClickOutside}
+            preventBodyScroll={false}
           >
             {(dialogProps) => (
               <AnimatePresence>
