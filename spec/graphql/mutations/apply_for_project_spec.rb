@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::ApplyForProject do
@@ -19,25 +20,6 @@ RSpec.describe Mutations::ApplyForProject do
       }
     }
     GRAPHQL
-  end
-
-  it "syncs to airtable and returns application" do
-    expect_any_instance_of(Application).to receive(:save_and_sync_with_responsible!)
-    response = AdvisableSchema.execute(query, context: context)
-    expect(response["data"]["applyForProject"]["application"]).to include({"status" => "Invited To Apply"})
-
-    application = Application.find_by_uid!(response["data"]["applyForProject"]["application"]["id"])
-    expect(application.attributes.slice("status", "accepts_fee", "accepts_terms", "featured")).to eq({"accepts_fee" => false, "accepts_terms" => false, "featured" => false, "status" => "Invited To Apply"})
-  end
-
-  context "when application exists already" do
-    let!(:application) { create(:application, project: project, specialist: specialist, status: "Applied") }
-
-    it "syncs to airtable and returns application" do
-      expect_any_instance_of(Application).to receive(:save_and_sync_with_responsible!)
-      response = AdvisableSchema.execute(query, context: context)
-      expect(response["data"]["applyForProject"]["application"]).to eq({"id" => application.uid, "status" => application.status})
-    end
   end
 
   describe "errors" do

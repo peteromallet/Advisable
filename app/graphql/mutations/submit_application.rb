@@ -25,7 +25,7 @@ module Mutations
 
       application.status = "Applied"
       application.applied_at = Time.zone.now if application.applied_at.blank?
-      application.save_and_sync_with_responsible!(current_account_id)
+      save_with_current_account!(application)
 
       {application: application}
     end
