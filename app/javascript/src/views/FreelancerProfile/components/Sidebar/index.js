@@ -19,7 +19,6 @@ import {
 import BackButton from "../BackButton";
 // CTA button
 import EditInfo from "../EditInfo";
-import MessageButton from "../MessageButton";
 import ConnectButton from "src/components/ConnectButton";
 import SocialProfilesIcons from "../SocialProfilesIcons";
 // Constant values
@@ -32,7 +31,8 @@ function Sidebar({ data, isOwner, ...props }) {
   });
 
   const viewer = useViewer();
-  const viewerIsGuild = (viewer?.isSpecialist && viewer?.isAccepted) || false;
+  const params = useParams();
+  const isOwner = viewer?.id === params.id;
   const { specialist } = data;
 
   const [isExpanded, setExpanded] = useState(false);
@@ -118,8 +118,8 @@ function Sidebar({ data, isOwner, ...props }) {
             <Box mb={[4, 0, 0, 10]} width="100%">
               {isOwner && (
                 <EditInfo specialist={specialist}>Edit Info</EditInfo>
-              ) : null}
-              {!isOwner && !viewerIsGuild ? (
+              )}
+              {!isOwner && (
                 <ConnectButton
                   specialist={specialist}
                   variant="dark"
@@ -128,9 +128,6 @@ function Sidebar({ data, isOwner, ...props }) {
                 >
                   Work together
                 </ConnectButton>
-              ) : null}
-              {!isOwner && viewerIsGuild ? (
-                <MessageButton specialist={specialist} />
               )}
             </Box>
             <SocialProfilesIcons isOwner={isOwner} specialist={specialist} />
