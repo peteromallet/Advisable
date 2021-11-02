@@ -15,8 +15,13 @@ function SignupOption({ title, description, ...props }) {
   return (
     <Box
       {...props}
+      as="button"
       css={css({
-        padding: 6,
+        padding: 5,
+        width: "100%",
+        textAlign: "left",
+        background: "transparent",
+        appearance: "none",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -31,10 +36,12 @@ function SignupOption({ title, description, ...props }) {
       })}
     >
       <Box>
-        <Text fontWeight={500} fontSize="l" marginBottom={1}>
+        <Heading size="lg" marginBottom={0.5}>
           {title}
+        </Heading>
+        <Text fontSize="md" fontWeight={420} color="neutral700">
+          {description}
         </Text>
-        <Text color="neutral700">{description}</Text>
       </Box>
       <Box color="neutral400">
         <ArrowRight size={20} />
@@ -47,7 +54,7 @@ function RequestConsultationSignup({ specialist, setStep }) {
   return (
     <>
       <Heading size="5xl" marginBottom={2}>
-        Welcome to Advisable
+        Work with {specialist.firstName}
       </Heading>
       <Text
         fontSize="lg"

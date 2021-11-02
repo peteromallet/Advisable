@@ -7,7 +7,7 @@ import { useCreateConversation } from "./queries";
 import FreelancerMessageSent from "./FreelancerMessageSent";
 
 const validationSchema = object({
-  body: string().required("Please write your message"),
+  content: string().required("Please write your message"),
 });
 
 export default function SendFreelancerMessage({ specialist, dialog }) {
@@ -15,7 +15,7 @@ export default function SendFreelancerMessage({ specialist, dialog }) {
   const [createConversation] = useCreateConversation();
 
   const initialValues = {
-    body: "",
+    content: "",
   };
 
   const handleSubmit = async (values) => {
@@ -23,7 +23,7 @@ export default function SendFreelancerMessage({ specialist, dialog }) {
       variables: {
         input: {
           participants: [specialist.account.id],
-          content: values.body,
+          content: values.content,
         },
       },
     });
@@ -51,13 +51,13 @@ export default function SendFreelancerMessage({ specialist, dialog }) {
           Send a message to {specialist.firstName}
         </Text>
         <Field
-          name="body"
+          name="content"
           as={Textarea}
           minRows={8}
           placeholder={`Introduce yourself to ${specialist.firstName}`}
         />
         <ErrorMessage
-          name="body"
+          name="content"
           marginTop="sm"
           color="red700"
           component={Text}
