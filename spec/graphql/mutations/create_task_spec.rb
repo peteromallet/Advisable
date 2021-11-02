@@ -27,10 +27,6 @@ RSpec.describe Mutations::CreateTask do
     GRAPHQL
   end
 
-  before do
-    allow_any_instance_of(Airtable::Task).to receive(:create)
-  end
-
   context "when a user is signed in" do
     it "creates a new task" do
       expect(response["data"]["createTask"]["task"]).not_to be_nil
