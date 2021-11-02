@@ -25,7 +25,6 @@ module Mutations
 
       ApiError.invalid_request("FAILED_TO_REJECT_APPLICATION") unless success
 
-      application.sync_to_airtable
       {application: application}
     end
   end

@@ -57,15 +57,15 @@ module Mutations
     end
 
     def create_application(project, specialist)
-      application = Application.create(
-        project: project,
-        status: "Applied",
-        score: 90,
-        specialist: specialist,
-        trial_program: true
-      )
-      application.sync_to_airtable({"Source" => "consultation-request"})
-      application
+      Logidze.with_responsible(current_account_id) do
+        Application.create(
+          project: project,
+          status: "Applied",
+          score: 90,
+          specialist: specialist,
+          trial_program: true
+        )
+      end
     end
 
     def create_interview(application)

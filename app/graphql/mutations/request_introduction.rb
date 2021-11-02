@@ -24,7 +24,9 @@ module Mutations
       current_user.update(availability: args[:availability]) if args[:availability]
 
       interview = create_interview(application, args[:time_zone])
-      update_application_status(application)
+      Logidze.with_responsible(current_account_id) do
+        application.update(status: "Application Accepted")
+      end
       application.project.update_sourcing
 
       {interview: interview, application: application}
@@ -39,11 +41,6 @@ module Mutations
         status: "Call Requested",
         call_requested_at: Time.zone.now
       )
-    end
-
-    def update_application_status(application)
-      application.update(status: "Application Accepted")
-      application.sync_to_airtable
     end
   end
 end
