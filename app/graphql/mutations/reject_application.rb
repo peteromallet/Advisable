@@ -19,7 +19,7 @@ module Mutations
     def resolve(**args)
       application = Application.find_by!(uid: args[:id])
       application.status = "Application Rejected"
-      application.save_and_sync_with_responsible!(current_account_id)
+      save_with_current_account!(application)
       send_message(application, args[:message]) if args[:message].present?
 
       {application: application}
