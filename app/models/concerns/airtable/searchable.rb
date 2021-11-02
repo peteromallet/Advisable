@@ -18,7 +18,9 @@ module Airtable
         find_by_uid_or_airtable_id(id) || raise(ActiveRecord::RecordNotFound)
       end
 
-      private
+      def deprecated_find_by_airtable_id!(id)
+        deprecated_find_by_airtable_id(id) || raise(ActiveRecord::RecordNotFound)
+      end
 
       def airtable_id?(id)
         id =~ /^rec[^_]/
