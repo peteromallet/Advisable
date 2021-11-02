@@ -15,7 +15,7 @@ module Mutations
     end
 
     def resolve(id:, reason:)
-      application = Application.find_by_uid_or_airtable_id!(id)
+      application = Application.find_by!(uid: id)
       application.status = "Invitation Rejected"
       application.invitation_rejection_reason = reason
 

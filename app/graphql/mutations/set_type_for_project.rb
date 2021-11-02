@@ -15,7 +15,7 @@ module Mutations
     field :application, Types::ApplicationType, null: true
 
     def authorized?(application:, **_args)
-      ap = Application.find_by_uid_or_airtable_id!(application)
+      ap = Application.find_by!(uid: application)
       policy = ApplicationPolicy.new(current_user, ap)
       return true if policy.set_type_for_project?
 
@@ -25,7 +25,7 @@ module Mutations
     def resolve(application:, project_type:, monthly_limit:)
       ApiError.invalid_request("INVALID_PROJECT_TYPE", "Project type is not valid.") if %w[Fixed Flexible].exclude?(project_type)
 
-      ap = Application.find_by_uid_or_airtable_id!(application)
+      ap = Application.find_by!(uid: application)
       current_account_responsible_for do
         ap.update(project_type: project_type, monthly_limit: monthly_limit)
       end

@@ -9,7 +9,7 @@ module Mutations
     field :application, Types::ApplicationType, null: true
 
     def authorized?(**args)
-      application = Application.find_by_uid_or_airtable_id!(args[:application])
+      application = Application.find_by!(uid: args[:application])
       policy = ApplicationPolicy.new(current_user, application)
       return true if policy.start_working?
 
@@ -19,7 +19,7 @@ module Mutations
     def resolve(**args)
       ApiError.invalid_request("INVALID_PROJECT_TYPE") unless %w[Fixed Flexible].include?(args[:project_type])
 
-      application = Application.find_by_uid_or_airtable_id!(args[:application])
+      application = Application.find_by!(uid: args[:application])
       application.status = "Working"
       application.project_type = args[:project_type]
       application.monthly_limit = args[:monthly_limit] if args[:project_type] == "Flexible"

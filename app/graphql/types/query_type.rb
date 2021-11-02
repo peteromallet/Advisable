@@ -20,7 +20,7 @@ module Types
     end
 
     def application(id:)
-      ::Application.find_by_uid_or_airtable_id!(id)
+      ::Application.find_by!(uid: id)
     end
 
     field :interview,

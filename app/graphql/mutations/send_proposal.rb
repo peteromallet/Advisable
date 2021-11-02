@@ -8,7 +8,7 @@ module Mutations
     field :application, Types::ApplicationType, null: true
 
     def authorized?(**args)
-      application = Application.find_by_uid_or_airtable_id!(args[:application])
+      application = Application.find_by!(uid: args[:application])
       policy = ApplicationPolicy.new(current_user, application)
       return true if policy.send_proposal?
 
@@ -16,7 +16,7 @@ module Mutations
     end
 
     def resolve(**args)
-      application = Application.find_by_uid_or_airtable_id!(args[:application])
+      application = Application.find_by!(uid: args[:application])
       application.proposal_comment = args[:proposal_comment]
       application.status = "Proposed"
 
