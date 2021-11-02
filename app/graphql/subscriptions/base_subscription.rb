@@ -3,7 +3,7 @@
 module Subscriptions
   class BaseSubscription < GraphQL::Schema::Subscription
     # include Helpers::Authentication
-    # include UserRequirements
+    # include CurrentUserUtilities
 
     argument_class(Types::BaseArgument)
   end
