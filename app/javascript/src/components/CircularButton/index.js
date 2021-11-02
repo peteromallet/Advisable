@@ -39,6 +39,15 @@ const StyledCircularButtonBackground = styled.div(
 const size = variant({
   prop: "$size",
   variants: {
+    xs: {
+      [StyledCircularButtonIcon]: {
+        width: "32px",
+        height: "32px",
+        svg: {
+          width: "20px",
+        },
+      },
+    },
     sm: {
       [StyledCircularButtonIcon]: {
         width: "36px",
@@ -86,7 +95,7 @@ const color = variant({
       [StyledCircularButtonBackground]: {
         bg: "neutral100",
       },
-      "&:hover": {
+      "&:not(:disabled):hover": {
         color: "neutral900",
         [StyledCircularButtonBackground]: {
           bg: "neutral200",
@@ -99,7 +108,7 @@ const color = variant({
       [StyledCircularButtonBackground]: {
         bg: "blue100",
       },
-      "&:hover": {
+      "&:not(:disabled):hover": {
         color: "blue700",
       },
     },
@@ -121,6 +130,10 @@ const StyledCircularButton = styled.button(
     background: "transparent",
     justifyContent: "center",
     flexDirection: "column",
+    "&:disabled": {
+      opacity: 0.5,
+      cursor: "not-allowed",
+    },
   }),
 );
 
@@ -162,7 +175,7 @@ const CircularButton = React.forwardRef(function CircularButton(
         <StyledCircularButtonBackground
           as={motion.div}
           transition={spring}
-          variants={circleVariants}
+          variants={!props.disabled && circleVariants}
         />
       </StyledCircularButtonIcon>
       {label && <StyledCircularButtonLabel>{label}</StyledCircularButtonLabel>}
