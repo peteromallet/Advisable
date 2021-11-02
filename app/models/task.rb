@@ -84,7 +84,6 @@ end
 #  uid                            :string           not null
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
-#  airtable_id                    :string
 #  application_id                 :bigint
 #  stripe_invoice_id              :string
 #
