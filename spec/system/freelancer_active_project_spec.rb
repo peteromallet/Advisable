@@ -7,7 +7,6 @@ RSpec.describe "Freelancer active project view", type: :system do
 
   before do
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
-    allow_any_instance_of(Task).to receive(:sync_to_airtable)
     application.specialist.account.complete_tutorial("fixed_projects")
     application.specialist.account.complete_tutorial("flexible_projects")
     authenticate_as application.specialist

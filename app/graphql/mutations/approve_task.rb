@@ -21,7 +21,6 @@ module Mutations
 
       success = current_account_responsible_for { task.update(stage: "Approved", approved_at: Time.zone.now) }
       ApiError.invalid_request(task.errors.full_messages.first) unless success
-      task.sync_to_airtable
 
       if task.final_cost.to_i.positive?
         create_payout!(task)

@@ -22,10 +22,7 @@ RSpec.describe Mutations::ApproveTask do
 
   let(:context) { {current_user: task.application.project.user} }
 
-  before do
-    allow(Stripe::PaymentIntent).to receive(:create).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
-    allow_any_instance_of(Task).to receive(:sync_to_airtable)
-  end
+  before { allow(Stripe::PaymentIntent).to receive(:create).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded")) }
 
   it "sets the stage to 'Approved'" do
     response = AdvisableSchema.execute(query, context: context)

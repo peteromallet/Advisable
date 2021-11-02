@@ -32,7 +32,7 @@ module Mutations
         stage: "Not Assigned"
       }))
 
-      task.save_and_sync_with_responsible!(current_account_id)
+      save_with_current_account!(task)
 
       {task: task}
     end

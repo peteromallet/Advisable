@@ -16,8 +16,7 @@ module Mutations
       ApiError.invalid_request("tasks.cantDeleteAssigned") unless policy.delete
 
       task.stage = "Deleted"
-      task.save_and_sync_with_responsible!(current_account_id)
-
+      save_with_current_account!(task)
       {task: task}
     end
   end

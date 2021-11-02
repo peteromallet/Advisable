@@ -24,7 +24,7 @@ module Mutations
       ApiError.invalid_request("tasks.cantRequestToStart", "Application status is not 'Working'") if task.application.status != "Working"
 
       task.stage = "Requested To Start"
-      task.save_and_sync_with_responsible!(current_account_id)
+      save_with_current_account!(task)
 
       {task: task}
     end

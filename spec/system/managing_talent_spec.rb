@@ -6,7 +6,6 @@ RSpec.describe "Managing talent", type: :system do
   let(:application) { create(:application, status: "Working") }
 
   before do
-    allow_any_instance_of(Task).to receive(:sync_to_airtable)
     authenticate_as application.project.user
     application.project.user.account.complete_tutorial("fixed_projects")
   end
@@ -94,7 +93,6 @@ RSpec.describe "Managing talent", type: :system do
     end
 
     it "allows the client to delete it" do
-      allow_any_instance_of(Task).to receive(:remove_from_airtable)
       visit "/manage/#{application.uid}"
       find("h5", text: "This is an existing task").click
       click_on "Open task actions menu"
