@@ -57,7 +57,7 @@ module Mutations
     end
 
     def create_application(project, specialist)
-      Logidze.with_responsible(current_account_id) do
+      current_account_responsible_for do
         Application.create(
           project: project,
           status: "Applied",

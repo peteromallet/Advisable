@@ -19,7 +19,7 @@ module Mutations
       application.status = "Invitation Rejected"
       application.invitation_rejection_reason = reason
 
-      success = Logidze.with_responsible(current_account_id) do
+      success = current_account_responsible_for do
         application.save
       end
 

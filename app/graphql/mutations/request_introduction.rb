@@ -24,7 +24,7 @@ module Mutations
       current_user.update(availability: args[:availability]) if args[:availability]
 
       interview = create_interview(application, args[:time_zone])
-      Logidze.with_responsible(current_account_id) do
+      current_account_responsible_for do
         application.update(status: "Application Accepted")
       end
       application.project.update_sourcing
