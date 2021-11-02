@@ -4,7 +4,6 @@ require "rails_helper"
 
 RSpec.describe Task do
   include_examples "uid"
-  include_examples "Airtable::Syncable"
 
   it "has a valid factory" do
     task = build(:task)

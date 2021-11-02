@@ -25,7 +25,8 @@
 #   client.
 #
 class Task < ApplicationRecord
-  include ::Airtable::Syncable
+  self.ignored_columns += %i[airtable_id]
+
   include Uid
 
   has_logidze

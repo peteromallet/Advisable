@@ -22,7 +22,7 @@ module Mutations
       ApiError.invalid_request("tasks.descriptionRequired") if task.description.blank?
 
       task.assign_attributes(stage: "Quote Requested", quote_requested_at: Time.zone.now)
-      task.save_and_sync_with_responsible!(current_account_id)
+      save_with_current_account!(task)
 
       {task: task}
     end

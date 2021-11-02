@@ -51,7 +51,7 @@ module Mutations
         task.stage = "Not Assigned" if task.stage == "Quote Provided"
       end
 
-      task.save_and_sync_with_responsible!(current_account_id)
+      save_with_current_account!(task)
 
       {task: task}
     end
@@ -65,7 +65,7 @@ module Mutations
 
       if trial == true && existing && existing != task
         existing.assign_attributes(trial: false)
-        existing.save_and_sync_with_responsible!(current_account_id)
+        save_with_current_account!(existing)
       end
 
       task.trial = trial

@@ -22,10 +22,6 @@ RSpec.describe Mutations::RequestQuote do
 
   let(:context) { {current_user: task.application.project.user} }
 
-  before do
-    allow_any_instance_of(Task).to receive(:sync_to_airtable)
-  end
-
   it "sets the stage to 'Quote Requested'" do
     response = AdvisableSchema.execute(query, context: context)
     stage = response["data"]["requestQuote"]["task"]["stage"]

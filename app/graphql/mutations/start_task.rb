@@ -24,7 +24,6 @@ module Mutations
 
       success = current_account_responsible_for { task.update(stage: "Working", started_working_at: Time.zone.now) }
       ApiError.invalid_request(task.errors.full_messages.first) unless success
-      task.sync_to_airtable
 
       create_payment!(task)
 

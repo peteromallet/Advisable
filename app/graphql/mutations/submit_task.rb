@@ -22,7 +22,7 @@ module Mutations
       ApiError.invalid_request("tasks.notSubmittable") unless allowed_stages(task).include?(task.stage)
 
       task.assign_attributes(stage: "Submitted", final_cost: args[:final_cost], submitted_at: Time.zone.now)
-      task.save_and_sync_with_responsible!(current_account_id)
+      save_with_current_account!(task)
 
       {task: task}
     end
