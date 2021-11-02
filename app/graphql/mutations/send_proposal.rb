@@ -23,7 +23,6 @@ module Mutations
       success = current_account_responsible_for { application.save }
       ApiError.invalid_request(application.errors.full_messages.first) unless success
 
-      application.sync_to_airtable
       application.project.update(status: "Proposal Received")
       application.project.sync_to_airtable
 

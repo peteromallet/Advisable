@@ -23,10 +23,6 @@ RSpec.describe Mutations::RejectApplicationInvitation do
     GRAPHQL
   end
 
-  before do
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
-  end
-
   it "sets the status to 'Invitation Rejected'" do
     response = AdvisableSchema.execute(query, context: context)
     status = response["data"]["rejectApplicationInvitation"]["application"]["status"]
@@ -37,12 +33,6 @@ RSpec.describe Mutations::RejectApplicationInvitation do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       application.reload.invitation_rejection_reason
     }.from(nil).to("Not a good fit")
-  end
-
-  it "syncs the record to airtable" do
-    allow(Application).to receive(:find_by_uid_or_airtable_id!).and_return(application)
-    expect(application).to receive(:sync_to_airtable)
-    AdvisableSchema.execute(query, context: context)
   end
 
   context "when no user is logged in" do

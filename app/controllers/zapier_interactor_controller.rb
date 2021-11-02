@@ -95,7 +95,6 @@ class ZapierInteractorController < ApplicationController
     specialist = Specialist.find_by!(uid: params[:specialist_id])
     project = Project.find_by!(uid: params[:project_id])
     application = Application.create!(application_params.merge({specialist_id: specialist.id, project_id: project.id}))
-    application.sync_to_airtable
     render json: {status: "OK.", uid: application.uid}
   rescue ActiveRecord::RecordNotFound => e
     render json: {error: "Record not found", message: e.message}, status: :unprocessable_entity

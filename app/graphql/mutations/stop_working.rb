@@ -32,9 +32,9 @@ module Mutations
     def resolve(**args)
       application = Application.find_by_uid!(args[:application])
 
-      application.update(status: "Stopped Working", stopped_working_reason: args[:reason])
-
-      application.sync_to_airtable
+      Logidze.with_responsible(current_account_id) do
+        application.update(status: "Stopped Working", stopped_working_reason: args[:reason])
+      end
 
       {application: application}
     end

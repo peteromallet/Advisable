@@ -26,9 +26,9 @@ module Mutations
       ApiError.invalid_request("INVALID_PROJECT_TYPE", "Project type is not valid.") if %w[Fixed Flexible].exclude?(project_type)
 
       ap = Application.find_by_uid_or_airtable_id!(application)
-      ap.update(project_type: project_type, monthly_limit: monthly_limit)
-
-      ap.sync_to_airtable
+      current_account_responsible_for do
+        ap.update(project_type: project_type, monthly_limit: monthly_limit)
+      end
       {application: ap}
     end
   end
