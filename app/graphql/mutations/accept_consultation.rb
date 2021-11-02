@@ -63,7 +63,8 @@ module Mutations
           status: "Applied",
           score: 90,
           specialist: specialist,
-          trial_program: true
+          trial_program: true,
+          source: "consultation-request"
         )
       end
     end

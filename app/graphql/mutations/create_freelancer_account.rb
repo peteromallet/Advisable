@@ -94,7 +94,7 @@ module Mutations
       project = Airtable::Project.find(pid).sync if project.nil?
       return if project.blank?
 
-      specialist.applications.create(project: project, status: "Invited To Apply")
+      specialist.applications.create(project: project, status: "Invited To Apply", source: "new-signup")
     end
   end
 end
