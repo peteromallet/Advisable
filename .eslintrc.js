@@ -23,7 +23,7 @@ module.exports = {
     Calendly: "readonly",
     module: "readonly",
   },
-  parser: "babel-eslint",
+  parser: "@babel/eslint-parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
