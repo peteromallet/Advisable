@@ -67,6 +67,7 @@ class Specialist < ApplicationRecord
 
   validates :number_of_projects, inclusion: {in: %w[1-5 5-20 20+ None], message: "is invalid"}, allow_nil: true
   validates :application_stage, inclusion: {in: VALID_APPLICATION_STAGES}, allow_blank: true
+  validates :username, uniqueness: true, allow_blank: true
 
   scope :available, -> { where("unavailable_until IS NULL OR unavailable_until <= ?", Time.zone.now) }
   scope :not_rejected, -> { where.not(application_stage: REJECTED_STAGES) }
@@ -152,7 +153,7 @@ end
 #  twitter                           :string
 #  uid                               :string           not null
 #  unavailable_until                 :date
-#  username                          :string
+#  username                          :citext
 #  vat_number                        :string
 #  website                           :string
 #  created_at                        :datetime         not null

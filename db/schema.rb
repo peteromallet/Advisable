@@ -1047,7 +1047,7 @@ ActiveRecord::Schema.define(version: 2021_11_02_132501) do
     t.string "twitter"
     t.string "instagram"
     t.string "medium"
-    t.string "username"
+    t.citext "username"
     t.index ["account_id"], name: "index_specialists_on_account_id", unique: true
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
