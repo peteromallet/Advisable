@@ -44,6 +44,10 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.payment_receipt(Payment.order("RANDOM()").first)
   end
 
+  def need_more_time_options
+    UserMailer.need_more_time_options(random_interview)
+  end
+
   private
 
   def random_user
