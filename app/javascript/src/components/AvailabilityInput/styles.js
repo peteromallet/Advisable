@@ -4,7 +4,6 @@ import styled, { css } from "styled-components";
 import { theme } from "@advisable/donut";
 import disabled from "./disabled.svg";
 
-const HEADER_HEIGHT = 52;
 const CELL_HEIGHT = 40;
 
 export const StyledAvailabilityInput = styled.div`
@@ -20,10 +19,7 @@ export const StyledAvailabilityInputHeader = styled.div`
   display: flex;
   background: white;
   align-items: center;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  border: 1px solid ${theme.colors.neutral200};
-  box-shadow: 0 1px 2px ${rgba(theme.colors.neutral900, 0.12)};
+  margin-bottom: 16px;
 `;
 
 export const StyledAvailabilityInputHeaderColumn = styled.div`
@@ -33,8 +29,6 @@ export const StyledAvailabilityInputHeaderColumn = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  height: ${HEADER_HEIGHT}px;
-  box-shadow: inset -1px 0 0 ${theme.colors.neutral200};
 
   &:first-child {
     width: 52px;
@@ -50,42 +44,12 @@ export const StyledAvailabilityInputHeaderColumn = styled.div`
   }
 `;
 
-export const StyledAvailabilityInputHeaderButton = styled.button`
-  appearance: none;
-  width: calc(100% - 8px);
-  height: calc(100% - 8px);
-  border: none;
-  outline: none;
-  display: flex;
-  border-radius: 6px;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-
-  svg {
-    width: 24px;
-    height: 24px;
-    stroke-width: 2;
-    color: ${theme.colors.neutral500};
-  }
-
-  &:not([disabled]):hover {
-    background: ${theme.colors.neutral50};
-
-    svg {
-      color: ${theme.colors.neutral800};
-    }
-  }
-
-  &[disabled] {
-    opacity: 0.25;
-  }
-`;
-
 export const StyledAvailabilityInputColumns = styled.div`
   width: 100%;
   display: flex;
-  background: #f1f1f3;
+  border-radius: 16px;
+  box-shadow: inset 0 1px 4px ${rgba(theme.colors.neutral900, 0.04)};
+  background: ${theme.colors.neutral100};
   overflow-y: scroll;
   max-height: ${(props) => props.maxHeight || "420px"};
 `;
@@ -128,8 +92,7 @@ const selectedCellStyles = css`
 
 const activeCellStyles = css`
   ${StyledAvailabilityInputCellMarker} {
-    background: ${theme.colors.cyan500};
-    box-shadow: 0px 1px 2px ${rgba(theme.colors.cyan900, 0.1)};
+    background: ${theme.colors.cyan300};
   }
 `;
 
