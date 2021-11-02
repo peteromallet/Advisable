@@ -34,7 +34,7 @@ function SignupOption({ title, description, ...props }) {
         <Text fontWeight={500} fontSize="l" marginBottom={1}>
           {title}
         </Text>
-        <Text>{description}</Text>
+        <Text color="neutral700">{description}</Text>
       </Box>
       <Box color="neutral400">
         <ArrowRight size={20} />
@@ -46,13 +46,19 @@ function SignupOption({ title, description, ...props }) {
 function RequestConsultationSignup({ specialist, setStep }) {
   return (
     <>
-      <Heading marginBottom={2} letterSpacing="-0.03em">
+      <Heading size="5xl" marginBottom={2}>
         Welcome to Advisable
       </Heading>
-      <Text fontSize="l" marginBottom={6}>
+      <Text
+        fontSize="lg"
+        fontWeight={420}
+        lineHeight="24px"
+        color="neutral700"
+        marginBottom={6}
+      >
         Create an account to connect with {specialist.firstName}.
       </Text>
-      <Stack spacing={2} marginBottom={6}>
+      <Stack spacing={2} marginBottom={8}>
         <SignupOption
           title="Signup as a company"
           description="Find proven people and projects"
