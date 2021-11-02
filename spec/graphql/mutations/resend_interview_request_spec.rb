@@ -33,6 +33,11 @@ RSpec.describe Mutations::ResendInterviewRequest do
     expect(interview.reload.more_time_options_added_at).to be_within(1.second).of(Time.zone.now)
   end
 
+  it "sends the email to the specialist" do
+    AdvisableSchema.execute(query, context: context)
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "more_time_options_added", "deliver_now", {args: [interview]})
+  end
+
   context "when an error is thrown" do
     it "includes it in the response" do
       allow_any_instance_of(Interview).to receive(:save).and_return(false)
