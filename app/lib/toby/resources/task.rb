@@ -5,7 +5,6 @@ module Toby
     class Task < BaseResource
       model_name ::Task
       attribute :uid, Attributes::String, readonly: true
-      attribute :airtable_id, Attributes::String, readonly: true
       attribute :application, Attributes::BelongsTo, readonly: true
 
       attribute :specialist, Lookups::Tasks::SpecialistName
