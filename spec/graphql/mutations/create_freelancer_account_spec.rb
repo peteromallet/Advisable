@@ -33,7 +33,6 @@ RSpec.describe Mutations::CreateFreelancerAccount do
   before do
     allow(session_manager).to receive(:login)
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
     project = instance_double(Airtable::Project)
     allow(project).to receive(:sync)
     allow(Airtable::Project).to receive(:find).and_return(project)

@@ -24,10 +24,6 @@ RSpec.describe Mutations::SubmitApplication do
     GRAPHQL
   end
 
-  before do
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
-  end
-
   it "sets the status to 'Applied'" do
     response = AdvisableSchema.execute(query, context: context)
     status = response["data"]["submitApplication"]["application"]["status"]

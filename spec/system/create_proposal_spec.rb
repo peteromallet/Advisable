@@ -7,7 +7,6 @@ RSpec.describe "Submitting a proposal", type: :system do
   let!(:application) { create(:application, project: project) }
 
   before do
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
 

@@ -11,7 +11,7 @@ module Mutations
 
     def authorized?(**args)
       requires_current_user!
-      application = Application.find_by_uid_or_airtable_id!(args[:application])
+      application = Application.find_by!(uid: args[:application])
       policy = ApplicationPolicy.new(current_user, application)
       return true if policy.write?
 
@@ -19,12 +19,14 @@ module Mutations
     end
 
     def resolve(**args)
-      application = Application.find_by_uid_or_airtable_id!(args[:application])
+      application = Application.find_by!(uid: args[:application])
 
       current_user.update(availability: args[:availability]) if args[:availability]
 
       interview = create_interview(application, args[:time_zone])
-      update_application_status(application)
+      current_account_responsible_for do
+        application.update(status: "Application Accepted")
+      end
       application.project.update_sourcing
 
       {interview: interview, application: application}
@@ -39,11 +41,6 @@ module Mutations
         status: "Call Requested",
         call_requested_at: Time.zone.now
       )
-    end
-
-    def update_application_status(application)
-      application.update(status: "Application Accepted")
-      application.sync_to_airtable
     end
   end
 end

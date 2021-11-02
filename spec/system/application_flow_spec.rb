@@ -5,7 +5,6 @@ require "rails_helper"
 RSpec.describe "Application flow", type: :system do
   before do
     authenticate_as(application.specialist)
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
     # mock the skills endpoint for the add a previous project modal
     skill = instance_double(Airtable::Skill, id: "rec_123", fields: {"Name" => "Testing"})
     allow(Airtable::Skill).to receive(:active).and_return([skill])

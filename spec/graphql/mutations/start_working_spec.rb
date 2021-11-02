@@ -25,10 +25,6 @@ RSpec.describe Mutations::StartWorking do
     GRAPHQL
   end
 
-  before do
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
-  end
-
   it "sets all the attributes and creates previous project" do
     expect(application.previous_project).to be_nil
 

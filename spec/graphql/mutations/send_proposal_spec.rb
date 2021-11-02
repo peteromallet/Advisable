@@ -27,7 +27,6 @@ RSpec.describe Mutations::SendProposal do
   let(:context) { {current_user: application.specialist} }
 
   before do
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
 
