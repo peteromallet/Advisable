@@ -152,6 +152,7 @@ end
 #  twitter                           :string
 #  uid                               :string           not null
 #  unavailable_until                 :date
+#  username                          :string
 #  vat_number                        :string
 #  website                           :string
 #  created_at                        :datetime         not null
@@ -171,6 +172,7 @@ end
 #  index_specialists_on_interviewer_id  (interviewer_id)
 #  index_specialists_on_referrer_id     (referrer_id)
 #  index_specialists_on_uid             (uid) UNIQUE
+#  index_specialists_on_username        (username) UNIQUE
 #
 # Foreign Keys
 #
