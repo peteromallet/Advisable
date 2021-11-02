@@ -2,7 +2,7 @@
 
 module Subscriptions
   class ReceivedMessage < Subscriptions::BaseSubscription
-    include UserRequirements
+    include CurrentUserUtilities
 
     description "A message was received on current_account's conversation"
 

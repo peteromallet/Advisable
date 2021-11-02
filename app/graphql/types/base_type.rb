@@ -2,7 +2,7 @@
 
 module Types
   class BaseType < GraphQL::Schema::Object
-    include UserRequirements
+    include CurrentUserUtilities
     field_class BaseField
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module UserRequirements
+module CurrentUserUtilities
   def current_user
     context[:current_user]
   end
