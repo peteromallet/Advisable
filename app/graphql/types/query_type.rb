@@ -324,7 +324,11 @@ module Types
       argument :id, ID, required: true
     end
     def case_study(id:)
-      ::CaseStudy::Article.find_by!(uid: id)
+      if ::CaseStudy::Article.valid_uid?(id)
+        ::CaseStudy::Article.active.published.find_by!(uid: id)
+      else
+        ::CaseStudy::Article.active.published.find_by!(slug: id)
+      end
     end
 
     field :top_case_studies, [Types::CaseStudy::Article], null: true

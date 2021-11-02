@@ -30,6 +30,7 @@ module Types
         object.cover_photo.url
       end
 
+      field :slug, String, null: true
       field :industries, [Industry], null: true
       field :title, String, null: true
       field :subtitle, String, null: true
