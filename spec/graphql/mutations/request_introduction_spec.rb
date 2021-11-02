@@ -28,7 +28,6 @@ RSpec.describe Mutations::RequestIntroduction do
   let(:context) { {current_user: application.project.user} }
 
   before do
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Types::Interview).to receive(:id).and_return(
       "created_1234"
     )

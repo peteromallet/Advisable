@@ -9,7 +9,6 @@ RSpec.describe "Consultations", type: :system do
     skill = create(:skill, name: "Testing")
     specialist.skills << skill
     allow_any_instance_of(User).to receive(:sync_to_airtable)
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
 
@@ -50,14 +49,14 @@ RSpec.describe "Consultations", type: :system do
   context "when a consultation request has been sent" do
     let(:consultation) { create(:consultation, specialist: specialist) }
 
-    it "allows the specialist to accept " do
+    it "allows the specialist to accept" do
       authenticate_as(specialist)
       visit "/consultations/#{consultation.uid}"
       click_on "Accept Request"
       expect(page).to have_content("select an available day")
     end
 
-    it "allows the specialist to decline " do
+    it "allows the specialist to decline" do
       authenticate_as(specialist)
       visit "/consultations/#{consultation.uid}"
       click_on "Decline Request"

@@ -27,10 +27,6 @@ RSpec.describe Mutations::SetTypeForProject do
 
   let(:context) { {current_user: application.project.user} }
 
-  before do
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
-  end
-
   it "sets the project_type to 'Flexible'" do
     expect { AdvisableSchema.execute(query, context: context) }.to change {
       application.reload.project_type
