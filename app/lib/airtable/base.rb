@@ -82,8 +82,6 @@ module Airtable
 
       # sync_data allows us to sync data which might not fit into a direct mapping
       # with the airtable record. This can also be useful for setting relationships.
-      # See how app/models/concerns/airtable/application.rb syncs the 'questions'
-      # column for an example.
       def sync_data(&block)
         @sync_block = block
       end

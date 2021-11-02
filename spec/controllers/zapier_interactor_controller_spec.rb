@@ -13,11 +13,7 @@ RSpec.describe ZapierInteractorController, type: :request do
     let(:extra_params) { {specialist_id: specialist.uid, project_id: project.uid} }
     let(:params) { {application: application_params.merge(extra_application_params), key: key}.merge(extra_params) }
 
-    before { allow_any_instance_of(Application).to receive(:sync_to_airtable) }
-
-    it "creates the application, syncs to airtable, and returns its uid" do
-      expect_any_instance_of(Application).to receive(:sync_to_airtable)
-
+    it "creates the application and returns its uid" do
       post("/zapier_interactor/create_application", params: params)
       expect(response).to have_http_status(:success)
       application = Application.find_by(uid: JSON[response.body]["uid"])
@@ -56,13 +52,13 @@ RSpec.describe ZapierInteractorController, type: :request do
     end
 
     context "when given unpermitted params" do
-      let(:extra_application_params) { {airtable_id: "1234"} }
+      let(:extra_application_params) { {trial_program: "1234"} }
 
       it "ignores the param" do
         post("/zapier_interactor/create_application", params: params)
         uid = JSON[response.body]["uid"]
         application = Application.find_by(uid: uid)
-        expect(application.airtable_id).not_to eq("1234")
+        expect(application.trial_program).not_to eq("1234")
       end
     end
 
@@ -82,10 +78,7 @@ RSpec.describe ZapierInteractorController, type: :request do
     let(:extra_application_params) { {} }
     let(:params) { {application: application_params.merge(extra_application_params), uid: application.uid, key: key} }
 
-    before { allow_any_instance_of(Application).to receive(:sync_to_airtable) }
-
-    it "updates the application and syncs to airtable" do
-      expect_any_instance_of(Application).to receive(:sync_to_airtable)
+    it "updates the application" do
       post("/zapier_interactor/update_application", params: params)
       expect(response).to have_http_status(:success)
       application.reload
@@ -119,11 +112,11 @@ RSpec.describe ZapierInteractorController, type: :request do
     end
 
     context "when given unpermitted params" do
-      let(:extra_application_params) { {airtable_id: "1234"} }
+      let(:extra_application_params) { {trial_program: "1234"} }
 
       it "ignores the param" do
         post("/zapier_interactor/update_application", params: params)
-        expect(application.reload.airtable_id).not_to eq("1234")
+        expect(application.reload.trial_program).not_to eq("1234")
       end
     end
 
@@ -141,8 +134,6 @@ RSpec.describe ZapierInteractorController, type: :request do
     let(:interview) { create(:interview, status: "Call Scheduled") }
     let(:status) { "Call Requested" }
     let(:params) { {status: status, uid: interview.uid, key: key} }
-
-    before { allow_any_instance_of(Application).to receive(:sync_to_airtable) }
 
     it "updates the interview and syncs to airtable" do
       post("/zapier_interactor/update_interview", params: params)

@@ -107,18 +107,17 @@ RSpec.describe Application do
 
     it "is called when the status is updated" do
       expect(application).to receive(:update_project_counts)
-      application.update status: "Application Accepted"
+      application.update(status: "Application Accepted")
     end
 
     it "is called when the application is destroyed" do
-      allow_any_instance_of(described_class).to receive(:remove_from_airtable)
       expect(application).to receive(:update_project_counts)
       application.destroy
     end
 
     it "is not called when the status isnt updated" do
       expect(application).not_to receive(:update_project_counts)
-      application.update introduction: "Changed"
+      application.update(introduction: "Changed")
     end
   end
 end
