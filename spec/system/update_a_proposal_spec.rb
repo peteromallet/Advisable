@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "Updating a proposal", type: :system do
   let(:application) { create(:application, status: "Proposed") }
 
   before do
-    allow_any_instance_of(Task).to receive(:sync_to_airtable)
     allow_any_instance_of(Application).to receive(:sync_to_airtable)
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end

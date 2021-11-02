@@ -23,10 +23,6 @@ RSpec.describe Mutations::SetTaskRepeat do
 
   let(:context) { {current_user: task.application.project.user} }
 
-  before do
-    allow_any_instance_of(Task).to receive(:sync_to_airtable)
-  end
-
   it "sets repeat to 'Monthly'" do
     response = AdvisableSchema.execute(query, context: context)
     repeat = response["data"]["setTaskRepeat"]["task"]["repeat"]

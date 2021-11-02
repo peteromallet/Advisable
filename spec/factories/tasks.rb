@@ -1,8 +1,8 @@
 # frozen_string_literal: true
+
 FactoryBot.define do
   factory :task do
     application
-    sequence(:airtable_id) { |id| "rectask#{id}" }
     sequence(:uid) { "tas_#{SecureRandom.hex[0..14]}" }
     name { "MyString" }
     stage { "MyString" }

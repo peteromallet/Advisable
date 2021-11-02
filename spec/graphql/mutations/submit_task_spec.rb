@@ -23,10 +23,6 @@ RSpec.describe Mutations::SubmitTask do
 
   let(:context) { {current_user: task.application.specialist} }
 
-  before do
-    allow_any_instance_of(Task).to receive(:sync_to_airtable)
-  end
-
   it "sets the stage to 'Submitted'" do
     response = AdvisableSchema.execute(query, context: context)
     stage = response["data"]["submitTask"]["task"]["stage"]

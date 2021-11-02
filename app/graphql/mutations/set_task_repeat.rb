@@ -18,7 +18,6 @@ module Mutations
     def resolve(**args)
       task = Task.find_by_uid!(args[:id])
       current_account_responsible_for { task.update(repeat: args[:repeat]) }
-      task.sync_to_airtable
 
       {task: task}
     end
