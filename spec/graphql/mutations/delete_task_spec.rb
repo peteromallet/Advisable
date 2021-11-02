@@ -24,7 +24,6 @@ RSpec.describe Mutations::DeleteTask do
 
   context "when a user is signed in" do
     it "deletes the task" do
-      allow_any_instance_of(Task).to receive(:sync_to_airtable)
       expect(task.reload.stage).not_to eq("Deleted")
       AdvisableSchema.execute(query, context: {current_user: user})
       expect(task.reload.stage).to eq("Deleted")

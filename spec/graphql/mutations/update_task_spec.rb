@@ -41,10 +41,6 @@ RSpec.describe Mutations::UpdateTask do
 
   let(:context) { {current_user: task.application.project.user} }
 
-  before do
-    allow_any_instance_of(Task).to receive(:sync_to_airtable)
-  end
-
   context "when the user does not have access to the project" do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: {current_user: create(:user)})

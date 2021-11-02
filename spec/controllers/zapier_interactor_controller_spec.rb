@@ -522,8 +522,6 @@ RSpec.describe ZapierInteractorController, type: :request do
     let(:stage) { "Approved" }
     let(:params) { {stage: stage, uid: task.uid, key: key} }
 
-    before { allow_any_instance_of(Task).to receive(:sync_to_airtable) }
-
     it "updates the task and datetime field and syncs to airtable" do
       post("/zapier_interactor/update_task", params: params)
       expect(response).to have_http_status(:success)
