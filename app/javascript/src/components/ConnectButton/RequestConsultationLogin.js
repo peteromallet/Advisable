@@ -5,7 +5,7 @@ import LoginForm from "src/views/Login/LoginForm";
 export default function RequestConsultationLogin({ specialist, setStep }) {
   return (
     <>
-      <Heading marginBottom={2} letterSpacing="-0.04em">
+      <Heading size="5xl" marginBottom={2}>
         Welcome back
       </Heading>
       <Text fontSize="l" marginBottom={6}>

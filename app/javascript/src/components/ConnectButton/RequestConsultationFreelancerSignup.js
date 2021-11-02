@@ -42,10 +42,10 @@ export default function RequestConsultationFreelancerSignup({
 
   return (
     <>
-      <Heading marginBottom={2} letterSpacing="-0.03em">
+      <Heading marginBottom={2} size="5xl">
         Welcome to Advisable
       </Heading>
-      <Text fontSize="l" marginBottom={6}>
+      <Text fontSize="l" marginBottom={6} color="neutral700">
         Create an account to connect with {specialist.firstName}.
       </Text>
       <CreateAccountForm onSubmit={handleSubmit} setStep={setStep} />

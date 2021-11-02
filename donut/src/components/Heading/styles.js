@@ -12,9 +12,9 @@ const headingSize = variant({
     },
     "5xl": {
       fontSize: "5xl",
-      fontWeight: 600,
+      fontWeight: 540,
       lineHeight: "32px",
-      letterSpacing: "-0.04rem",
+      letterSpacing: "-0.05rem",
     },
     "4xl": {
       fontSize: "4xl",
@@ -42,7 +42,7 @@ const headingSize = variant({
     },
     lg: {
       fontSize: "lg",
-      fontWeight: 650,
+      fontWeight: 560,
       lineHeight: "20px",
       letterSpacing: "-0.02rem",
     },

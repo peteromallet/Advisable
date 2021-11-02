@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Text,
+  Heading,
   Availability,
   useBreakpoint,
 } from "@advisable/donut";
@@ -10,7 +11,6 @@ import React, { useState } from "react";
 import Loading from "src/components/Loading";
 import { useAvailability, useUpdateAvailability } from "./queries";
 import AvailabilityInput from "../AvailabilityInput";
-import RequestConsultationHeader from "./RequestConsultationHeader";
 import TimezoneSelect from "./TimezoneSelect";
 
 function AvailabilityForm({ data, onSubmit }) {
@@ -51,7 +51,7 @@ function AvailabilityForm({ data, onSubmit }) {
             />
           </Box>
         )}
-        <Box marginY={4}>
+        <Box paddingTop={4} paddingBottom={2}>
           <TimezoneSelect
             value={timezone}
             onChange={(e) => setTimezone(e.target.value)}
@@ -85,7 +85,20 @@ export default function RequestConsultationAvailability({
 
   return (
     <>
-      <RequestConsultationHeader specialist={specialist} />
+      <Box paddingBottom={6} paddingRight={4}>
+        <Heading size="5xl" marginBottom={2}>
+          Work with {specialist.firstName}
+        </Heading>
+        <Text
+          fontSize="lg"
+          fontWeight={420}
+          lineHeight="24px"
+          color="neutral700"
+        >
+          Request a 30 minute call with {specialist.firstName} to talk about
+          your project. Please select your available times below.
+        </Text>
+      </Box>
       {loading && <Loading />}
       {!loading && data && <AvailabilityForm data={data} onSubmit={onSubmit} />}
       {error && <>Failed to load availability</>}
