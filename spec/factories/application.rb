@@ -11,7 +11,6 @@ FactoryBot.define do
     availability { "2 Weeks" }
     introduction { "Hi there" }
     sequence(:uid) { "app_#{SecureRandom.hex[0..14]}" }
-    sequence(:airtable_id) { |id| "recapplication#{id}" }
 
     factory :full_application do
       introduction { Faker::Lorem.sentence(word_count: 40) }

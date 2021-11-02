@@ -6,10 +6,6 @@ RSpec.describe "Opportunity page", type: :system do
   let(:project) { create(:project, brief_confirmed_at: 1.week.ago) }
   let(:specialist) { create(:specialist) }
 
-  before do
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
-  end
-
   it "allows a freelancer to apply for a project" do
     authenticate_as(specialist)
     visit "/opportunities/#{project.uid}"

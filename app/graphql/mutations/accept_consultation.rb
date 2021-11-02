@@ -57,15 +57,16 @@ module Mutations
     end
 
     def create_application(project, specialist)
-      application = Application.create(
-        project: project,
-        status: "Applied",
-        score: 90,
-        specialist: specialist,
-        trial_program: true
-      )
-      application.sync_to_airtable({"Source" => "consultation-request"})
-      application
+      current_account_responsible_for do
+        Application.create(
+          project: project,
+          status: "Applied",
+          score: 90,
+          specialist: specialist,
+          trial_program: true,
+          source: "consultation-request"
+        )
+      end
     end
 
     def create_interview(application)

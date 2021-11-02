@@ -42,7 +42,7 @@ module Mutations
       application.assign_attributes(attributes.slice(*PERMITTED_ATTRIBUTES))
       add_q_and_a(application, attributes[:questions]) if attributes[:questions].present?
       create_references(application, attributes[:references]) if attributes[:references].present?
-      application.save_and_sync_with_responsible!(current_account_id)
+      save_with_current_account!(application)
       application.specialist.update(bio: args[:introduction]) if args[:persist_bio] && args[:introduction].present?
 
       {application: application}

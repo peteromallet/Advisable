@@ -9,7 +9,7 @@ module Mutations
 
     def authorized?(**args)
       requires_current_user!
-      application = Application.find_by_uid_or_airtable_id!(args[:id])
+      application = Application.find_by!(uid: args[:id])
       policy = ApplicationPolicy.new(current_user, application)
       return true if policy.write?
 
@@ -17,9 +17,9 @@ module Mutations
     end
 
     def resolve(**args)
-      application = Application.find_by_uid_or_airtable_id!(args[:id])
+      application = Application.find_by!(uid: args[:id])
       application.status = "Application Rejected"
-      application.save_and_sync_with_responsible!(current_account_id)
+      save_with_current_account!(application)
       send_message(application, args[:message]) if args[:message].present?
 
       {application: application}

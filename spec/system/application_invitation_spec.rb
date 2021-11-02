@@ -5,12 +5,6 @@ require "rails_helper"
 RSpec.describe "Application invitation view", type: :system do
   let(:project) { create(:project) }
 
-  before do
-    airtable_record = instance_double(Airtable::Application)
-    allow(airtable_record).to receive(:push)
-    allow(Airtable::Application).to receive(:find).and_return(airtable_record)
-  end
-
   context 'when the status is "Invited To Apply"' do
     let(:application) do
       create(:application, status: "Invited To Apply", project: project)

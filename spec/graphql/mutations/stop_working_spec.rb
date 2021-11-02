@@ -21,8 +21,6 @@ RSpec.describe Mutations::StopWorking do
     GRAPHQL
   end
 
-  before { allow_any_instance_of(Application).to receive(:sync_to_airtable) }
-
   context "when logged in as the client" do
     it "sets the status and reason" do
       expect(application.reload.status).to eq("Working")

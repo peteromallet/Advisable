@@ -15,17 +15,16 @@ module Mutations
     end
 
     def resolve(id:, reason:)
-      application = Application.find_by_uid_or_airtable_id!(id)
+      application = Application.find_by!(uid: id)
       application.status = "Invitation Rejected"
       application.invitation_rejection_reason = reason
 
-      success = Logidze.with_responsible(current_account_id) do
+      success = current_account_responsible_for do
         application.save
       end
 
       ApiError.invalid_request("FAILED_TO_REJECT_APPLICATION") unless success
 
-      application.sync_to_airtable
       {application: application}
     end
   end

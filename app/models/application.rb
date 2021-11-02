@@ -41,7 +41,8 @@
 # be set back to Working.
 #
 class Application < ApplicationRecord
-  include ::Airtable::Syncable
+  self.ignored_columns += %i[airtable_id]
+
   include Uid
 
   has_logidze

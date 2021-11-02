@@ -6,7 +6,6 @@ RSpec.describe "Freelancer active project view", type: :system do
   let(:application) { create(:application, status: "Working") }
 
   before do
-    allow_any_instance_of(Application).to receive(:sync_to_airtable)
     application.specialist.account.complete_tutorial("fixed_projects")
     application.specialist.account.complete_tutorial("flexible_projects")
     authenticate_as application.specialist
