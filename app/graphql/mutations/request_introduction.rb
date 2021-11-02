@@ -11,7 +11,7 @@ module Mutations
 
     def authorized?(**args)
       requires_current_user!
-      application = Application.find_by_uid_or_airtable_id!(args[:application])
+      application = Application.find_by!(uid: args[:application])
       policy = ApplicationPolicy.new(current_user, application)
       return true if policy.write?
 
@@ -19,7 +19,7 @@ module Mutations
     end
 
     def resolve(**args)
-      application = Application.find_by_uid_or_airtable_id!(args[:application])
+      application = Application.find_by!(uid: args[:application])
 
       current_user.update(availability: args[:availability]) if args[:availability]
 
