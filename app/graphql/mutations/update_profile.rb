@@ -26,6 +26,7 @@ module Mutations
     argument :resume, String, required: false
     argument :skills, [String], required: false
     argument :twitter, String, required: false
+    argument :username, String, required: false
     argument :website, String, required: false
 
     argument :ideal_project, String, required: false
@@ -68,6 +69,7 @@ module Mutations
 
     def assignable_attributes
       attributes.slice(
+        :username,
         :bio,
         :city,
         :remote,

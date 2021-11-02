@@ -97,7 +97,13 @@ module Types
     end
 
     def specialist(id:)
-      ::Specialist.find_by_uid_or_airtable_id!(id)
+      if ::Specialist.valid_uid?(id)
+        ::Specialist.find_by!(uid: id)
+      elsif ::Specialist.airtable_id?(id)
+        ::Specialist.deprecated_find_by_airtable_id!(id)
+      else
+        ::Specialist.find_by!(username: id)
+      end
     end
 
     field :industries, [Types::IndustryType], null: false

@@ -17,12 +17,14 @@ RSpec.describe Mutations::UpdateProfile do
         skills: ["#{skill.name}"],
         city: "Dublin",
         country: "IE",
-        remote: true
+        remote: true,
+        username: "angela",
       }) {
         specialist {
           firstName
           lastName
           email
+          username
           bio
           city
           remote
@@ -60,6 +62,11 @@ RSpec.describe Mutations::UpdateProfile do
   it "updates the email" do
     email = response["data"]["updateProfile"]["specialist"]["email"]
     expect(email).to eq("staging+angela@advisable.com")
+  end
+
+  it "updates username" do
+    username = response["data"]["updateProfile"]["specialist"]["username"]
+    expect(username).to eq("angela")
   end
 
   it "updates the bio" do
