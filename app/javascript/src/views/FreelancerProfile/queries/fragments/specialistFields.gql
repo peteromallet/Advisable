@@ -12,7 +12,6 @@ fragment SpecialistFields on Specialist {
   medium
   website
   city
-  guild
   country {
     id
   }
