@@ -5,6 +5,8 @@ module CaseStudy
     include SoftDeletable
     include Uid
     uid_prefix "csa"
+    include Sluggable
+    slug_from :title
 
     has_logidze
 
@@ -45,6 +47,7 @@ end
 #  hide_from_search       :boolean          default(FALSE)
 #  published_at           :datetime
 #  score                  :integer
+#  slug                   :string
 #  specialist_approved_at :datetime
 #  subtitle               :string
 #  targeting              :jsonb
@@ -64,6 +67,7 @@ end
 #  index_case_study_articles_on_company_id      (company_id)
 #  index_case_study_articles_on_editor_id       (editor_id)
 #  index_case_study_articles_on_interviewer_id  (interviewer_id)
+#  index_case_study_articles_on_slug            (slug) UNIQUE
 #  index_case_study_articles_on_specialist_id   (specialist_id)
 #  index_case_study_articles_on_uid             (uid) UNIQUE
 #
