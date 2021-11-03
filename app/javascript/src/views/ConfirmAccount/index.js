@@ -1,12 +1,20 @@
 import React, { useEffect, useCallback } from "react";
 import queryString from "query-string";
 import { useMutation, useApolloClient } from "@apollo/client";
-import { Redirect } from "react-router-dom";
+import {
+  Redirect,
+  useRouteMatch,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 import Loading from "src/components/Loading";
 import { useNotifications } from "src/components/Notifications";
 import CONFIRM_ACCOUNT from "./confirmAccount.graphql";
 
-const ConfirmAccount = ({ match, location, history }) => {
+const ConfirmAccount = () => {
+  const history = useHistory();
+  const location = useLocation();
+  const match = useRouteMatch();
   const client = useApolloClient();
   const [mutate] = useMutation(CONFIRM_ACCOUNT);
   const { notify } = useNotifications();
