@@ -19,7 +19,7 @@ export default function CreateGuildPost({ guildPost }) {
   const [updatePost] = useUpdateGuildPostWriteCache();
   const [createGuildPost] = useMutation(CREATE_GUILD_POST, {
     update(cache, { data }) {
-      const { guildPost } = data?.createGuildPost;
+      const guildPost = data?.createGuildPost?.guildPost;
       cache.writeQuery({
         query: GUILD_POST_QUERY,
         variables: { id: guildPost.id },
@@ -103,7 +103,6 @@ export default function CreateGuildPost({ guildPost }) {
                   value="AdviceRequired"
                   aria-label="Looking for advice"
                   onChange={(e) => selectHandler(formik, e)}
-                  onClick={(e) => selectHandler(formik, e)}
                 >
                   <Circle
                     size={64}
@@ -137,7 +136,6 @@ export default function CreateGuildPost({ guildPost }) {
                   value="Opportunity"
                   aria-label="Opportunity"
                   onChange={(e) => selectHandler(formik, e)}
-                  onClick={(e) => selectHandler(formik, e)}
                 >
                   <Circle
                     size={64}
@@ -171,7 +169,6 @@ export default function CreateGuildPost({ guildPost }) {
                   value="Post"
                   aria-label="Other"
                   onChange={(e) => selectHandler(formik, e)}
-                  onClick={(e) => selectHandler(formik, e)}
                 >
                   <Circle
                     size={64}
