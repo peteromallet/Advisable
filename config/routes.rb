@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "sidekiq/web"
+require "sidekiq-scheduler/web"
 require "admin_constraint"
 
 Rails.application.routes.draw do
@@ -11,14 +12,14 @@ Rails.application.routes.draw do
     mount GraphqlPlayground::Rails::Engine, as: "toby_playground", at: "/toby_playground", graphql_path: "/toby_graphql"
   end
 
+  mount Sidekiq::Web => "/sidekiq", constraints: AdminConstraint.new
+  mount PgHero::Engine, at: "/pghero", constraints: AdminConstraint.new
+
   post "/toby_graphql", to: "graphql#toby"
   get "/toby", to: "toby#index"
   get "/toby/*toby", to: "toby#index"
 
   namespace :admin do
-    mount Sidekiq::Web => "/sidekiq", constraints: AdminConstraint.new
-    mount PgHero::Engine, at: "pghero", constraints: AdminConstraint.new
-
     resources :applications
     resources :accounts
     resources :specialists
