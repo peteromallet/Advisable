@@ -61,8 +61,8 @@ class NewTestData
     populate_skill_categories if SkillCategory.none?
     populate_industries if Industry.none?
     populate_labels if Label.none?
-    populate_advisable
-    populate_case_studies
+    populate_advisable if User.none?
+    populate_case_studies if CaseStudy::Article.none?
   end
 
   private

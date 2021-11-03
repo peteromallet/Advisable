@@ -5,7 +5,7 @@ require_relative "../../config/environment"
 
 namespace :data do
   task prepare: :environment do
-    NewTestData.new(purge: true).seed!
+    NewTestData.new.seed!
   end
 
   task industries: :environment do
