@@ -45,13 +45,15 @@ export default function FreelancerDashboard() {
           maxWidth={{ _: "720px", l: "none" }}
           mx="auto"
         >
-          <CollaborationRequests
-            collaborationRequests={data.collaborationRequests.nodes}
-          />
-          <Stack spacing={16}>
+          <Stack as={Box} spacing={16} mb={16} gridColumn="2" gridRow="1">
             <LatestProjects topCaseStudies={data.topCaseStudies} />
             <UpcomingEvents upcomingEvents={data.upcomingEvents} />
           </Stack>
+          <Box gridColumn="1" gridRow="1">
+            <CollaborationRequests
+              collaborationRequests={data.collaborationRequests.nodes}
+            />
+          </Box>
         </Box>
       </Page>
     </>
