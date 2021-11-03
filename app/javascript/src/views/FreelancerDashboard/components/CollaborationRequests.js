@@ -23,8 +23,13 @@ export default function CollaborationRequests({ collaborationRequests }) {
         specialistId={viewer.id}
         onPublish={() => null}
       />
-      <Box display="flex" alignItems="center" mb={8}>
-        <Text color="neutral900" fontSize="2xl" fontWeight={450}>
+      <Box display="flex" alignItems="center" mb={6}>
+        <Text
+          color="neutral900"
+          fontSize="2xl"
+          fontWeight={450}
+          lineHeight="36px"
+        >
           Collaboration requests
         </Text>
         <Box ml="auto">
