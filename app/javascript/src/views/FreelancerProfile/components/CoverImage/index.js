@@ -1,14 +1,25 @@
 import React from "react";
+import { useDialogState } from "reakit/Dialog";
 import { matchPath, useParams } from "react-router";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
-import { StyledCover, StyledCoverImage, StyledContentWrapper } from "./styles";
+import {
+  StyledCover,
+  StyledCoverImage,
+  StyledModalCoverImage,
+  StyledContentWrapper,
+} from "./styles";
 import defaultCoverPhoto from "./defaultCoverPhoto.png";
-import FileUpload from "../FileUpload";
 import { useSetCoverPhoto } from "../../queries";
-import useLoadImage from "src/hooks/useLoadImage";
+import PictureActionArea from "../PictureActionArea";
+import FileUploadInput from "../FileUploadInput";
+import ProgressBar from "../ProgressBar";
+import ImageModal from "../ImageModal";
+import useFileUpload from "../../hooks/useFileUpload";
 
 function CoverImage({ src, ...props }) {
+  const maxSizeInMB = 5;
+  const accept = ".png, .jpg, .jpeg";
   const params = useParams();
   const viewer = useViewer();
   const isOwner = viewer?.id === params.id;
@@ -18,7 +29,7 @@ function CoverImage({ src, ...props }) {
   });
   const [updatePicture] = useSetCoverPhoto();
   const image = src || defaultCoverPhoto;
-  const { updated, error } = useLoadImage(image);
+  const modal = useDialogState();
 
   const notifications = useNotifications();
 
@@ -30,8 +41,21 @@ function CoverImage({ src, ...props }) {
     notifications.notify("Cover picture has been updated");
   };
 
+  const { handleChange, progress, uploading, processing, updated, error } =
+    useFileUpload({
+      src: image,
+      onChange: submit,
+      maxSizeInMB,
+      accept,
+    });
+
   return (
     <StyledCover {...props}>
+      {Boolean(src) && (
+        <ImageModal modal={modal}>
+          <StyledModalCoverImage src={error ? defaultCoverPhoto : image} />
+        </ImageModal>
+      )}
       <svg className="svgClip" width={0} height={0} viewBox="0 0 1080 320">
         <clipPath
           id="coverSquircle"
@@ -43,14 +67,24 @@ function CoverImage({ src, ...props }) {
       </svg>
       <StyledContentWrapper>
         <StyledCoverImage src={error ? defaultCoverPhoto : image} />
-        {isOwner && !isArticle ? (
-          <FileUpload
-            onChange={submit}
-            updated={updated}
-            maxSizeInMB={5}
-            type="cover"
-          />
-        ) : null}
+        <PictureActionArea type="cover" onClick={src && modal.show} />
+        {isOwner && !isArticle && (
+          <>
+            <FileUploadInput
+              handleChange={handleChange}
+              accept={accept}
+              maxSizeInMB={maxSizeInMB}
+              type="cover"
+            />
+            <ProgressBar
+              progress={progress}
+              uploading={uploading}
+              processing={processing}
+              updated={updated}
+              type="cover"
+            />
+          </>
+        )}
       </StyledContentWrapper>
     </StyledCover>
   );

@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import css from "@styled-system/css";
 import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
-import useViewer from "src/hooks/useViewer";
 import { Box, Text, Link } from "@advisable/donut";
+import useViewer from "src/hooks/useViewer";
 import ProfilePicture from "../ProfilePicture";
+import ProfilePictureArticle from "../ProfilePictureArticle";
 import CoverImage from "../CoverImage";
 import {
   StyledStickySidebar,
+  StyledArticleAvatarWrapper,
   StyledAvatarWrapper,
   StyledNameWrapper,
   StyledBioWrapper,
@@ -40,20 +42,21 @@ export default function Sidebar({ data, ...props }) {
     : specialist.bio?.slice(0, TRUNCATE_LIMIT);
 
   return (
-    <Box
-      position="relative"
-      mt={!isArticle && { _: "-24px", m: "-40px", l: "-108px", xl: "-148px" }}
-    >
-      <StyledStickySidebar layout={["s", "s", "m", "l"]} {...props}>
-        <StyledAvatarWrapper>
-          {isArticle ? (
+    <Box position="relative">
+      <StyledStickySidebar {...props}>
+        {isArticle ? (
+          <StyledArticleAvatarWrapper>
             <Box position="relative">
               <BackButton>Go to profile</BackButton>
               <CoverImage src={specialist.coverPhoto} size="collapse" />
             </Box>
-          ) : null}
-          <ProfilePicture specialist={specialist} />
-        </StyledAvatarWrapper>
+            <ProfilePictureArticle specialist={specialist} />
+          </StyledArticleAvatarWrapper>
+        ) : (
+          <StyledAvatarWrapper>
+            <ProfilePicture specialist={specialist} />
+          </StyledAvatarWrapper>
+        )}
         <StyledNameWrapper>
           <Text
             as={isArticle && Link}
@@ -100,11 +103,11 @@ export default function Sidebar({ data, ...props }) {
             marginBottom={7}
           >
             {bio}
-            {bioIsExceed ? (
+            {bioIsExceed && (
               <StyledShowMore onClick={() => setExpanded((e) => !e)}>
-                {isExpanded ? <>see&#32;less</> : <>see&#32;more</>}
+                {isExpanded ? <>see&#160;less</> : <>see&#160;more</>}
               </StyledShowMore>
-            ) : null}
+            )}
           </Text>
           <Box
             display="flex"
@@ -113,17 +116,17 @@ export default function Sidebar({ data, ...props }) {
             alignItems={{ _: "center", l: "flex-start" }}
           >
             <Box mb={[4, 0, 0, 10]} width="100%">
-              {isOwner ? (
+              {isOwner && (
                 <EditInfo specialist={specialist}>Edit Info</EditInfo>
-              ) : null}
-              {!isOwner && !viewerIsGuild ? (
+              )}
+              {!isOwner && !viewerIsGuild && (
                 <WorkTogetherButton id={specialist?.id}>
                   Work together
                 </WorkTogetherButton>
-              ) : null}
-              {!isOwner && viewerIsGuild ? (
+              )}
+              {!isOwner && viewerIsGuild && (
                 <MessageButton specialist={specialist} />
-              ) : null}
+              )}
             </Box>
             <SocialProfilesIcons specialist={specialist} />
           </Box>
