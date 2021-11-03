@@ -1,13 +1,14 @@
 import * as React from "react";
 import { useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useParams, useRouteMatch } from "react-router-dom";
 import AccessDenied from "src/views/AccessDenied";
 import NotFound from "src/views/NotFound";
 import Loading from "src/components/Loading";
 import GET_ACTIVE_APPLICATION from "./getActiveApplication";
 import Booking from "./Booking";
 
-export default function BookingContainer({ match }) {
+export default function BookingContainer() {
+  const match = useRouteMatch();
   const { applicationId } = useParams();
   const { data, loading, error } = useQuery(GET_ACTIVE_APPLICATION, {
     variables: {

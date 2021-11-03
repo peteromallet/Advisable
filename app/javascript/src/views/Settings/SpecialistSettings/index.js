@@ -9,7 +9,8 @@ import Password from "./Password";
 import PaymentSettings from "./PaymentSettings";
 import Availability from "./Availability";
 
-function SpecialistSettings({ match }) {
+function SpecialistSettings() {
+  const match = useRouteMatch();
   const breakpointS = useBreakpoint("sUp");
   const isMobileView = useRouteMatch({ path: match.path, exact: !breakpointS });
 

@@ -5,11 +5,14 @@ import JobListing from "./JobListing";
 import NotFound from "../NotFound";
 import ApplicationsClosed from "../ApplicationsClosed";
 import { GET_APPLICATION } from "./queries";
+import { useHistory, useParams } from "react-router";
 
-let JobListingContainer = ({ history, match }) => {
+let JobListingContainer = () => {
+  const params = useParams();
+  const history = useHistory();
   const { loading, data, error } = useQuery(GET_APPLICATION, {
     variables: {
-      id: match.params.applicationId,
+      id: params.applicationId,
     },
   });
 
