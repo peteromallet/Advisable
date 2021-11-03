@@ -7,10 +7,11 @@ import Sidebar from "../components/Sidebar";
 import CaseStudies from "../components/CaseStudies";
 import Testimonials from "../components/Testimonials";
 import GeneralEmptyState from "../components/GeneralEmptyState";
+import SetUsernamePrompt from "../components/SetUsernamePrompt";
 
 function Profile({ isOwner, data }) {
   useScrollToTop();
-  const { reviews, caseStudies } = data.specialist;
+  const { reviews, caseStudies, username } = data.specialist;
 
   return (
     <>
@@ -31,6 +32,9 @@ function Profile({ isOwner, data }) {
           isOwner={isOwner}
         />
         <Box width="100%" mt={{ _: 14, m: 12, l: 19, xl: 20 }}>
+          {isOwner && !username && (
+            <SetUsernamePrompt specialist={data.specialist} />
+          )}
           <CaseStudies
             isOwner={isOwner}
             caseStudies={caseStudies}
