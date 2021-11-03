@@ -7,7 +7,13 @@ export default function UpcomingEvents({ upcomingEvents }) {
 
   return (
     <>
-      <Text color="neutral900" fontSize="2xl" fontWeight={450} mb={8}>
+      <Text
+        color="neutral900"
+        fontSize="2xl"
+        lineHeight="36px"
+        fontWeight={450}
+        mb={6}
+      >
         Upcoming events
       </Text>
       <Stack spacing={10} divider="neutral100">
