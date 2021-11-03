@@ -17,7 +17,7 @@ export default function FreelancerDashboard() {
 
   return (
     <>
-      <Box bg="neutral100">
+      <Box bg="neutral50">
         <Box
           display={{ _: "block", l: "grid" }}
           gridTemplateColumns="52% auto"
