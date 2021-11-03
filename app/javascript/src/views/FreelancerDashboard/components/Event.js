@@ -9,6 +9,7 @@ export default function Event({ event }) {
     <Box mb={4} display="flex">
       <Box
         display="flex"
+        bg="neutral100"
         position="relative"
         justifyContent="center"
         alignItems="center"
