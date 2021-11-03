@@ -5,7 +5,7 @@ import css from "@styled-system/css";
 
 export default function CollaborationRequest({ request }) {
   return (
-    <Card borderRadius="20px" mb={4} p={6}>
+    <Card borderRadius="20px" p={6}>
       <Box
         display="flex"
         alignItems="center"

@@ -3,7 +3,7 @@ import useViewer from "@advisable-main/hooks/useViewer";
 import { Link } from "react-router-dom";
 import ComposerModal from "@guild/components/ComposerModal";
 import { useComposerModal } from "@guild/components/ComposerModal/useComposerModal";
-import { Box, Button, Text, DialogDisclosure } from "@advisable/donut";
+import { Stack, Box, Button, Text, DialogDisclosure } from "@advisable/donut";
 import { Pencil } from "@styled-icons/heroicons-outline/Pencil";
 import { Adjustments } from "@styled-icons/heroicons-outline/Adjustments";
 import CollaborationRequest from "./CollaborationRequest";
@@ -51,7 +51,7 @@ export default function CollaborationRequests({ collaborationRequests }) {
           </DialogDisclosure>
         </Box>
       </Box>
-      <Box>{requests}</Box>
+      <Stack spacing={4}>{requests}</Stack>
     </Box>
   );
 }
