@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { useMemo } from "react";
 import { useParams } from "react-router";
 import { Box, Text, useBreakpoint } from "@advisable/donut";
@@ -34,7 +35,7 @@ function ArticleContent() {
   );
 }
 
-export default function Article({ profileData }) {
+function Article({ isOwner, profileData }) {
   useScrollToTop();
   const params = useParams();
   const lUp = useBreakpoint("lUp");
@@ -56,7 +57,11 @@ export default function Article({ profileData }) {
       maxWidth={{ s: "700px", l: "none" }}
     >
       {lUp ? (
-        <Sidebar data={profileData} top={{ l: "88px", xl: "96px" }} />
+        <Sidebar
+          isOwner={isOwner}
+          data={profileData}
+          top={{ l: "88px", xl: "96px" }}
+        />
       ) : null}
       <Box position="relative" width="100%">
         <Box marginBottom={12}>
@@ -67,3 +72,9 @@ export default function Article({ profileData }) {
     </Box>
   );
 }
+
+Article.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
+};
+
+export default Article;

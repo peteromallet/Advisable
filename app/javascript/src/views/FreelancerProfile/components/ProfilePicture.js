@@ -1,8 +1,7 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { useDialogState } from "reakit/Dialog";
-import { useParams } from "react-router";
 import { Box } from "@advisable/donut";
-import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
 import PassportAvatar from "src/components/PassportAvatar";
 import useFileUpload from "../hooks/useFileUpload";
@@ -12,13 +11,10 @@ import ProgressBar from "./ProgressBar";
 import { useUpdateProfile } from "../queries";
 import ImageModal from "./ImageModal";
 
-export default function ProfilePicture({ specialist }) {
+function ProfilePicture({ specialist, isOwner }) {
   const accept = ".png, .jpg, .jpeg";
   const [updateAvatar] = useUpdateProfile();
   const notifications = useNotifications();
-  const params = useParams();
-  const viewer = useViewer();
-  const isOwner = viewer?.id === params.id;
   const modal = useDialogState();
 
   const submit = async (blob) => {
@@ -79,3 +75,9 @@ export default function ProfilePicture({ specialist }) {
     </Box>
   );
 }
+
+ProfilePicture.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
+};
+
+export default ProfilePicture;

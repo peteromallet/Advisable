@@ -1,6 +1,7 @@
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 import css from "@styled-system/css";
-import { matchPath, useParams } from "react-router";
+import { matchPath } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import { Box, Text, Link } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
@@ -24,15 +25,13 @@ import SocialProfilesIcons from "../SocialProfilesIcons";
 // Constant values
 import { TRUNCATE_LIMIT } from "../../values";
 
-export default function Sidebar({ data, ...props }) {
+function Sidebar({ data, isOwner, ...props }) {
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:id/case_studies/:case_study_id",
   });
 
   const viewer = useViewer();
-  const params = useParams();
   const viewerIsGuild = (viewer?.isSpecialist && viewer?.isAccepted) || false;
-  const isOwner = viewer?.id === params.id;
   const { specialist } = data;
 
   const [isExpanded, setExpanded] = useState(false);
@@ -54,7 +53,7 @@ export default function Sidebar({ data, ...props }) {
           </StyledArticleAvatarWrapper>
         ) : (
           <StyledAvatarWrapper>
-            <ProfilePicture specialist={specialist} />
+            <ProfilePicture isOwner={isOwner} specialist={specialist} />
           </StyledAvatarWrapper>
         )}
         <StyledNameWrapper>
@@ -128,10 +127,16 @@ export default function Sidebar({ data, ...props }) {
                 <MessageButton specialist={specialist} />
               )}
             </Box>
-            <SocialProfilesIcons specialist={specialist} />
+            <SocialProfilesIcons isOwner={isOwner} specialist={specialist} />
           </Box>
         </StyledBioWrapper>
       </StyledStickySidebar>
     </Box>
   );
 }
+
+Sidebar.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
+};
+
+export default Sidebar;

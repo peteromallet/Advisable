@@ -8,13 +8,17 @@ import Article from "./views/Article";
 import Profile from "./views/Profile";
 import { useProfileData } from "./queries";
 import ErrorBoundary from "src/components/ErrorBoundary";
+import useViewer from "src/hooks/useViewer";
 
 export default function FreelancerProfile() {
+  const viewer = useViewer();
   const { loading, data, error } = useProfileData();
   useBackground("white");
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
+
+  const isOwner = viewer?.id === data.specialist.id;
 
   return (
     <ErrorBoundary>
@@ -34,10 +38,10 @@ export default function FreelancerProfile() {
       >
         <Switch>
           <Route path="/freelancers/:id/case_studies/:case_study_id">
-            <Article profileData={data} />
+            <Article isOwner={isOwner} profileData={data} />
           </Route>
           <Route>
-            <Profile data={data} />
+            <Profile isOwner={isOwner} data={data} />
           </Route>
         </Switch>
       </Box>
