@@ -89,4 +89,27 @@ RSpec.describe Specialist do
       expect(specialist.errors).to be_added(:application_stage, :inclusion, value: "NOT A VALID STATE")
     end
   end
+
+  describe "username validation" do
+    it "allows capitalization but respects uniqueness" do
+      specialist.update(username: "TestUser")
+      specialist.reload
+      expect(specialist.username).to eq("TestUser")
+      expect { create(:specialist, username: "testuser") }.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it "does not allow spaces" do
+      expect { create(:specialist, username: "test user") }.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it "does not allow non a-zA-Z0-9_ characters" do
+      expect { create(:specialist, username: "slovenščina") }.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it "does not allow 1-2 chars" do
+      expect { create(:specialist, username: "a") }.to raise_error(ActiveRecord::RecordInvalid)
+      expect { create(:specialist, username: "ab") }.to raise_error(ActiveRecord::RecordInvalid)
+      expect { create(:specialist, username: "abc") }.not_to raise_error
+    end
+  end
 end
