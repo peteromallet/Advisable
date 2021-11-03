@@ -10,6 +10,7 @@ production:
   - action_mailbox_routing
   - action_mailbox_incineration
 :schedule:
-  interview_reminder:
-    cron: '0 * * * * *'   # Runs once per minute
-    class: InterviewReminderJob
+  InterviewReminderJob:
+    every: 10 minutes
+  AccountDeleteJob:
+    cron: "0 0 6 * * *" # Every day at 6 AM
