@@ -1,9 +1,11 @@
 import React from "react";
 import useViewer from "@advisable-main/hooks/useViewer";
+import { Link } from "react-router-dom";
 import ComposerModal from "@guild/components/ComposerModal";
 import { useComposerModal } from "@guild/components/ComposerModal/useComposerModal";
 import { Box, Button, Text, DialogDisclosure } from "@advisable/donut";
 import { Pencil } from "@styled-icons/heroicons-outline/Pencil";
+import { Adjustments } from "@styled-icons/heroicons-outline/Adjustments";
 import CollaborationRequest from "./CollaborationRequest";
 
 export default function CollaborationRequests({ collaborationRequests }) {
@@ -25,18 +27,29 @@ export default function CollaborationRequests({ collaborationRequests }) {
         <Text color="neutral900" fontSize="2xl" fontWeight={450}>
           Collaboration requests
         </Text>
-        <DialogDisclosure
-          as={Button}
-          variant="subtle"
-          size="s"
-          ml="auto"
-          prefix={<Pencil />}
-          {...composerModal}
-          aria-label="Create a Post"
-          data-walkthrough="createPost"
-        >
-          Post
-        </DialogDisclosure>
+        <Box ml="auto">
+          <Button
+            as={Link}
+            to="/guild/topics"
+            variant="ghost"
+            size="s"
+            mr={2}
+            prefix={<Adjustments />}
+          >
+            Customize
+          </Button>
+          <DialogDisclosure
+            as={Button}
+            variant="subtle"
+            size="s"
+            prefix={<Pencil />}
+            {...composerModal}
+            aria-label="Create a Post"
+            data-walkthrough="createPost"
+          >
+            Post
+          </DialogDisclosure>
+        </Box>
       </Box>
       <Box>{requests}</Box>
     </Box>

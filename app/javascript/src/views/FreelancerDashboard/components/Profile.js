@@ -54,7 +54,7 @@ export default function Hero({ caseStudies, reviews }) {
               {pluralize("testimonial", reviews.length)}
             </Text>
           </Box>
-          <StyledLink to="/profile" variant="ghost" size="s">
+          <StyledLink to="/profile" size="s">
             Update profile
           </StyledLink>
         </Box>
