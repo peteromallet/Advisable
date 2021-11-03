@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import css from "@styled-system/css";
-import { matchPath } from "react-router";
+import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import { Box, Text, Link } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
@@ -26,8 +26,9 @@ import SocialProfilesIcons from "../SocialProfilesIcons";
 import { TRUNCATE_LIMIT } from "../../values";
 
 function Sidebar({ data, isOwner, ...props }) {
+  const params = useParams();
   const isArticle = !!matchPath(location.pathname, {
-    path: "/freelancers/:id/case_studies/:case_study_id",
+    path: "/freelancers/:username/case_studies/:case_study_id",
   });
 
   const viewer = useViewer();
@@ -59,7 +60,7 @@ function Sidebar({ data, isOwner, ...props }) {
         <StyledNameWrapper>
           <Text
             as={isArticle && Link}
-            to={`/freelancers/${specialist.id}`}
+            to={`/freelancers/${params.username}`}
             fontSize={{ _: "2xl", m: "5xl" }}
             fontWeight={600}
             color="neutral900"

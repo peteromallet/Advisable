@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 // Components
 import {
   Modal,
-  Text,
+  Heading,
   Box,
   Textarea,
   Select,
@@ -15,8 +15,11 @@ import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 // Queries
 import { useUpdateProfile, useCountries } from "../../queries";
+import GET_PROFILE_DATA from "../../queries/getProfileData.gql";
 // Constant values
 import { TRUNCATE_LIMIT } from "../../values";
+import { generatePath, useHistory, useRouteMatch } from "react-router";
+import { useApolloClient } from "@apollo/client";
 
 const validationSchema = object().shape({
   city: string(),
@@ -35,6 +38,9 @@ const validationSchema = object().shape({
 });
 
 function EditInfoModal({ modal, specialist }) {
+  const client = useApolloClient();
+  const match = useRouteMatch();
+  const history = useHistory();
   const notifications = useNotifications();
   const [mutate] = useUpdateProfile();
   const isWidescreen = useBreakpoint("sUp");
@@ -62,6 +68,24 @@ function EditInfoModal({ modal, specialist }) {
         notifications.error("Something went wrong, please try again.");
       }
     } else {
+      const updatedSpecialist = response.data.updateProfile.specialist;
+      client.writeQuery({
+        query: GET_PROFILE_DATA,
+        variables: {
+          id: updatedSpecialist.username || updatedSpecialist.id,
+        },
+        data: {
+          specialist: updatedSpecialist,
+        },
+      });
+
+      const nextPath = generatePath(match.path, {
+        ...match.params,
+        username: updatedSpecialist.username || updatedSpecialist.id,
+      });
+
+      history.replace(nextPath);
+
       notifications.notify("Your profile has been updated");
       modal.hide();
     }
@@ -76,15 +100,9 @@ function EditInfoModal({ modal, specialist }) {
         validationSchema={validationSchema}
       >
         <Form>
-          <Text
-            as="h2"
-            fontSize="xxxl"
-            fontWeight="medium"
-            color="neutral900"
-            mb="l"
-          >
-            Edit profile info
-          </Text>
+          <Heading as="h2" size="4xl" mb={6}>
+            Edit profile
+          </Heading>
           <FormField
             name="username"
             label="Username"
