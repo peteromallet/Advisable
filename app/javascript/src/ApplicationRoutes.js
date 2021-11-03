@@ -105,7 +105,7 @@ const ApplicationRoutes = () => {
             path="/freelancers/apply"
             component={FreelancerApplication}
           />
-          <Route path="/freelancers/:id" component={FreelancerProfile} />
+          <Route path="/freelancers/:username" component={FreelancerProfile} />
           {/* Client routes */}
           <Redirect
             from="/project_setup/:projectID"
