@@ -1,8 +1,23 @@
+import { object, string, ref } from "yup";
 import { Form, Formik } from "formik";
 import React from "react";
 import { Box, Label, Error, Text, Link } from "@advisable/donut";
 import FormField from "../FormField";
 import SubmitButton from "../SubmitButton";
+
+const validationSchema = object({
+  firstName: string().required("Please enter your first name"),
+  lastName: string().required("Please enter your last name"),
+  email: string()
+    .required("Please enter your email")
+    .email("Please enter a valid email address"),
+  password: string()
+    .required("Please enter your password")
+    .min(8, "Password must be at least 8 characters long"),
+  passwordConfirmation: string()
+    .oneOf([ref("password"), null], "Password does not match")
+    .required("Please confirm your password"),
+});
 
 export default function CreateAccountForm({ onSubmit, setStep }) {
   const initialValues = {
@@ -14,7 +29,11 @@ export default function CreateAccountForm({ onSubmit, setStep }) {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={validationSchema}
+    >
       {(formik) => (
         <Form>
           <Label marginBottom={2}>Name</Label>
