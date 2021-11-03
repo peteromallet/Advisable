@@ -38,10 +38,6 @@ module Mutations
       current_account_responsible_for { interview.save! }
 
       interview.application.update(status: "Interview Scheduled") if interview.application.blank?
-      # If so, we have to find a different approach.
-      SpecialistMailer.interview_reminder(interview).deliver_later(wait_until: interview.starts_at - 1.hour)
-      UserMailer.interview_reminder(interview).deliver_later(wait_until: interview.starts_at - 1.hour)
-
       update_specialist_number(interview.application.specialist, args[:phone_number]) if args[:phone_number]
 
       {interview: interview}
