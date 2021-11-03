@@ -1,7 +1,6 @@
 import React from "react";
 import { useDialogState } from "reakit/Dialog";
 import { matchPath } from "react-router";
-import { matchPath } from "react-router";
 import { useNotifications } from "src/components/Notifications";
 import {
   StyledCover,
