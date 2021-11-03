@@ -27,6 +27,7 @@ export default function Project({ caseStudy }) {
     <Box display="flex" css={css({ columnGap: 4 })}>
       <Box
         position="relative"
+        bg="neutral100"
         width="120px"
         minWidth="120px"
         height="92px"
