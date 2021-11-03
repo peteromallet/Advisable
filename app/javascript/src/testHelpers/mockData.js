@@ -194,6 +194,7 @@ export const specialist = (fields = {}) => {
     {
       __typename: "Specialist",
       id: uniqueId("specialist"),
+      username: "testspecialist",
       bio: "Specialist bio",
       name: "Test Specialist",
       firstName: "Test",
