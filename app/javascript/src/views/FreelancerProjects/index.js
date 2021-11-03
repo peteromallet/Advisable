@@ -4,8 +4,10 @@ import Layout from "../../components/Layout";
 import Loading from "./Loading";
 import FETCH_DATA from "./fetchData";
 import ActiveApplications from "./ActiveApplications";
+import { useHistory } from "react-router";
 
-const FreelancerProjects = ({ history }) => {
+const FreelancerProjects = () => {
+  const history = useHistory();
   const { loading, data } = useQuery(FETCH_DATA);
 
   const handleClick = (application) => {

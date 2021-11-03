@@ -14,8 +14,9 @@ import Password from "./Password";
 import Invoice from "./StripeInvoices/Invoice";
 
 // Renders the settings view for a client user type.
-const ClientSettings = ({ match }) => {
+const ClientSettings = () => {
   const viewer = useViewer();
+  const match = useRouteMatch();
   const breakpointS = useBreakpoint("sUp");
 
   const initialPath = viewer.isTeamManager ? "/payments" : "/password";

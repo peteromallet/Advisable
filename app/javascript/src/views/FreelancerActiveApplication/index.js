@@ -6,9 +6,11 @@ import Loading from "./Loading";
 import NotFound from "../NotFound";
 import ActiveApplication from "./ActiveApplication";
 import FETCH_APPLICATION from "./fetchApplication";
+import { useParams } from "react-router";
 
-const Component = (props) => {
-  const id = props.match.params.applicationId;
+const FreelancerActiveApplication = (props) => {
+  const params = useParams();
+  const id = params.applicationId;
   const query = useQuery(FETCH_APPLICATION, { variables: { id } });
 
   if (query.loading) return <Loading />;
@@ -18,4 +20,4 @@ const Component = (props) => {
   return <ActiveApplication {...query} {...props} />;
 };
 
-export default Component;
+export default FreelancerActiveApplication;

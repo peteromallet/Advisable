@@ -1,7 +1,6 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import { useQuery } from "@apollo/client";
-import { Switch, Redirect } from "react-router-dom";
+import { Switch, Redirect, useLocation, useParams } from "react-router-dom";
 import Route from "src/components/Route";
 import useViewer from "src/hooks/useViewer";
 import NotFound from "../NotFound";
@@ -12,10 +11,12 @@ import { fetchApplication as FETCH_APPLICATION } from "./queries";
 import ApplicationsClosed from "../ApplicationsClosed";
 
 // Renders the application flow
-function ApplicationFlowContainer(props) {
+function ApplicationFlowContainer() {
   const viewer = useViewer();
-  const { applicationId } = props.match.params;
-  const locationState = props.location.state || {};
+  const location = useLocation();
+  const params = useParams();
+  const { applicationId } = params;
+  const locationState = location.state || {};
 
   const query = useQuery(FETCH_APPLICATION, {
     variables: {
@@ -47,7 +48,7 @@ function ApplicationFlowContainer(props) {
   // allowApply location state.
   let isRejected = application.status === "Invitation Rejected";
   if (locationState.allowApply !== true && isRejected) {
-    let url = `/invites/${props.match.params.applicationId}`;
+    let url = `/invites/${applicationId}`;
     return <Redirect to={url} />;
   }
 
@@ -65,10 +66,5 @@ function ApplicationFlowContainer(props) {
     </Switch>
   );
 }
-
-ApplicationFlowContainer.propTypes = {
-  match: PropTypes.object,
-  location: PropTypes.object,
-};
 
 export default ApplicationFlowContainer;
