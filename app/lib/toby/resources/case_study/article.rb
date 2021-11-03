@@ -7,6 +7,7 @@ module Toby
         model_name ::CaseStudy::Article
         attribute :uid, Attributes::String, readonly: true
         attribute :title, Attributes::String
+        attribute :slug, Attributes::String
         attribute :specialist, Attributes::BelongsTo
         attribute :specialist_name, Lookups::CaseStudy::Articles::SpecialistName
         attribute :deleted_at, Attributes::DateTime

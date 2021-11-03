@@ -15,6 +15,8 @@ module Types
       description "The unique ID for the specialist"
     end
 
+    field :username, String, null: true
+
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs." do
       description "The airtable ID for the specialist"
     end

@@ -10,6 +10,7 @@ module Toby
       attribute :account, Attributes::BelongsTo
       attribute :consultation_url, Lookups::Specialists::ConsultationUrl, sortable: false
       attribute :unavailable_until, Attributes::Date
+      attribute :username, Attributes::String
       attribute :bio, Attributes::LongText
       attribute :skills, Attributes::HasManyThrough
       attribute :industries, Attributes::HasManyThrough

@@ -67,6 +67,8 @@ class Specialist < ApplicationRecord
 
   validates :number_of_projects, inclusion: {in: %w[1-5 5-20 20+ None], message: "is invalid"}, allow_nil: true
   validates :application_stage, inclusion: {in: VALID_APPLICATION_STAGES}, allow_blank: true
+  validates :username, uniqueness: true, allow_blank: true
+  validate :valid_username
 
   scope :available, -> { where("unavailable_until IS NULL OR unavailable_until <= ?", Time.zone.now) }
   scope :not_rejected, -> { where.not(application_stage: REJECTED_STAGES) }
@@ -95,6 +97,15 @@ class Specialist < ApplicationRecord
   # sourcing_fee value is stored in basis points integers: 8% -> 800 bp
   def sourcing_fee_percentage
     (sourcing_fee.presence || DEFAULT_SOURCING_FEE) / BigDecimal("10000")
+  end
+
+  private
+
+  def valid_username
+    return if username.blank?
+
+    errors.add(:username, "must be longer than 3 characters") if username.length < 3
+    errors.add(:username, "must be alphanumeric") if /\W/.match?(username)
   end
 end
 
@@ -152,6 +163,7 @@ end
 #  twitter                           :string
 #  uid                               :string           not null
 #  unavailable_until                 :date
+#  username                          :citext
 #  vat_number                        :string
 #  website                           :string
 #  created_at                        :datetime         not null
@@ -171,6 +183,7 @@ end
 #  index_specialists_on_interviewer_id  (interviewer_id)
 #  index_specialists_on_referrer_id     (referrer_id)
 #  index_specialists_on_uid             (uid) UNIQUE
+#  index_specialists_on_username        (username) UNIQUE
 #
 # Foreign Keys
 #

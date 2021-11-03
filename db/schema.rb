@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_02_130237) do
+ActiveRecord::Schema.define(version: 2021_11_02_132501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -1047,12 +1047,14 @@ ActiveRecord::Schema.define(version: 2021_11_02_130237) do
     t.string "twitter"
     t.string "instagram"
     t.string "medium"
+    t.citext "username"
     t.index ["account_id"], name: "index_specialists_on_account_id", unique: true
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
     t.index ["interviewer_id"], name: "index_specialists_on_interviewer_id"
     t.index ["referrer_id"], name: "index_specialists_on_referrer_id"
     t.index ["uid"], name: "index_specialists_on_uid", unique: true
+    t.index ["username"], name: "index_specialists_on_username", unique: true
   end
 
   create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
