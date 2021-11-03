@@ -21,6 +21,13 @@ import { TRUNCATE_LIMIT } from "../../values";
 const validationSchema = object().shape({
   city: string(),
   country: string(),
+  username: string()
+    .nullable()
+    .min(3)
+    .matches(
+      /^[a-zA-Z0-9_]+$/,
+      "Username can only contain letters, numbers, and underscores.",
+    ),
   bio: string().max(
     TRUNCATE_LIMIT,
     `Must be not more than ${TRUNCATE_LIMIT} characters`,
@@ -33,33 +40,31 @@ function EditInfoModal({ modal, specialist }) {
   const isWidescreen = useBreakpoint("sUp");
   const initialValues = {
     city: specialist.city || "",
+    username: specialist.username || "",
     country: specialist.country?.id || "",
     bio: specialist.bio || "",
   };
 
-  const handleSubmit = (values) => {
-    const optimisticResponse = {
-      __typename: "Mutation",
-      updateProfile: {
-        __typename: "UpdateProfilePayload",
-        specialist: {
-          __typename: "Specialist",
-          ...specialist,
+  const handleSubmit = async (values, formik) => {
+    const response = await mutate({
+      variables: {
+        input: {
           ...values,
-          country: {
-            __typename: "Country",
-            id: values.country,
-          },
+          username: values.username || null,
         },
       },
-    };
-    mutate({
-      variables: { input: { ...values } },
-      optimisticResponse,
     });
 
-    notifications.notify("Your profile has been updated");
-    modal.hide();
+    if (response.errors) {
+      if (/username.*taken/i.test(response.errors[0].message)) {
+        formik.setFieldError("username", "Username is already taken.");
+      } else {
+        notifications.error("Something went wrong, please try again.");
+      }
+    } else {
+      notifications.notify("Your profile has been updated");
+      modal.hide();
+    }
   };
   const countriesQuery = useCountries();
 
@@ -80,6 +85,12 @@ function EditInfoModal({ modal, specialist }) {
           >
             Edit profile info
           </Text>
+          <FormField
+            name="username"
+            label="Username"
+            description="This will be used in your profile URL."
+            caption="Must be at least 3 characters long and can contain only letters, numbers, and underscores."
+          />
           <Box display={isWidescreen ? "flex" : null} mb="l" mt={5}>
             <Box
               mr={isWidescreen && "s"}

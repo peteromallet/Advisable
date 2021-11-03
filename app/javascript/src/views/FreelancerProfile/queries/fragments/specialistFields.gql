@@ -1,6 +1,7 @@
 fragment SpecialistFields on Specialist {
   id
   name
+  username
   firstName
   avatar
   coverPhoto
