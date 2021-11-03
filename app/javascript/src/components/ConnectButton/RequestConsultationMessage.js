@@ -78,8 +78,8 @@ export default function RequestConsultationMessage({ specialist, onSubmit }) {
               potentially working together.
             </ListItem>
             <ListItem>
-              Describe what kind of project you have in mind for them and why
-              you think it should be exciting for them.
+              Describe what kind of project you have in mind and why you think
+              it would be exciting for them.
             </ListItem>
             <ListItem>
               Add any relevant information you have around timelines, budget,
