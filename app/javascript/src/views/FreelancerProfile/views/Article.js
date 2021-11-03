@@ -56,7 +56,7 @@ export default function Article({ profileData }) {
       maxWidth={{ s: "700px", l: "none" }}
     >
       {lUp ? (
-        <Sidebar data={profileData} top={{ l: "80px", xl: "88px" }} />
+        <Sidebar data={profileData} top={{ l: "88px", xl: "96px" }} />
       ) : null}
       <Box position="relative" width="100%">
         <Box marginBottom={12}>

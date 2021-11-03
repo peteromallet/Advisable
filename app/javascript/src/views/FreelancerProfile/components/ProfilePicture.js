@@ -1,53 +1,81 @@
 import React from "react";
-import { matchPath, useParams } from "react-router";
+import { useDialogState } from "reakit/Dialog";
+import { useParams } from "react-router";
+import { Box } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
-import { Box } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
-import FileUpload from "./FileUpload";
+import useFileUpload from "../hooks/useFileUpload";
+import PictureActionArea from "./PictureActionArea";
+import FileUploadInput from "./FileUploadInput";
+import ProgressBar from "./ProgressBar";
 import { useUpdateProfile } from "../queries";
-import useLoadImage from "src/hooks/useLoadImage";
+import ImageModal from "./ImageModal";
 
 export default function ProfilePicture({ specialist }) {
+  const accept = ".png, .jpg, .jpeg";
   const [updateAvatar] = useUpdateProfile();
-  const { updated } = useLoadImage(specialist.avatar);
   const notifications = useNotifications();
   const params = useParams();
   const viewer = useViewer();
   const isOwner = viewer?.id === params.id;
-
-  const isArticle = !!matchPath(location.pathname, {
-    path: "/freelancers/:id/case_studies/:case_study_id",
-  });
+  const modal = useDialogState();
 
   const submit = async (blob) => {
-    await updateAvatar({
+    const response = await updateAvatar({
       variables: { input: { avatar: blob.signed_id } },
     });
-    notifications.notify("Profile picture has been updated");
+    if (response.errors) {
+      notifications.error("Something went wrong. Please try again.");
+    } else {
+      notifications.notify("Profile picture has been updated");
+    }
   };
 
+  const { handleChange, progress, uploading, processing, updated } =
+    useFileUpload({
+      src: specialist.avatar,
+      onChange: submit,
+      maxSizeInMB: 1,
+      accept,
+    });
+
   return (
-    <Box
-      position="relative"
-      display="inline-block"
-      marginBottom={4}
-      marginTop={isArticle && 18}
-    >
+    <Box position="absolute" left="0" bottom="0" display="inline-block">
       <PassportAvatar
-        size={isArticle ? "lg" : ["lg", "lg", "xl", "xl", "2xl"]}
+        size={["lg", "lg", "xl", "xl", "2xl"]}
         name={specialist.name}
         src={specialist.avatar}
-        stroke={isArticle ? "2px" : "4px"}
+        stroke="4px"
       />
-      {isOwner && !isArticle ? (
-        <FileUpload
-          onChange={submit}
-          updated={updated}
-          maxSizeInMB={1}
-          type="avatar"
+      <ImageModal modal={modal}>
+        <PassportAvatar
+          size="responsive"
+          name={specialist.name}
+          src={specialist.avatar}
         />
-      ) : null}
+      </ImageModal>
+      <PictureActionArea
+        type="avatar"
+        onClick={specialist.avatar && modal.show}
+      />
+      {isOwner && (
+        <>
+          <FileUploadInput
+            handleChange={handleChange}
+            accept={accept}
+            maxSizeInMB={1}
+            type="avatar"
+          />
+          <ProgressBar
+            progress={progress}
+            uploading={uploading}
+            processing={processing}
+            updated={updated}
+            type="avatar"
+          />
+        </>
+      )}
     </Box>
   );
 }

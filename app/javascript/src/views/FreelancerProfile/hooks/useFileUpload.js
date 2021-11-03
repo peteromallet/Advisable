@@ -3,19 +3,21 @@ import { useNotifications } from "src/components/Notifications";
 import { DirectUpload } from "@rails/activestorage";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
 import matchFileType from "src/utilities/matchFileType";
+import useLoadImage from "src/hooks/useLoadImage";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
 export default function useFileUpload({
   onChange,
-  updated,
   maxSizeInMB = 2,
   accept,
+  src,
 }) {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [processing, setProcessing] = useState(false);
-  const { error } = useNotifications();
+  const notifications = useNotifications();
+  const { updated, error } = useLoadImage(src);
 
   const progressHandler = {
     directUploadWillStoreFileWithXHR(request) {
@@ -48,12 +50,14 @@ export default function useFileUpload({
 
     // Check file type
     if (!matchFileType(files, accept)) {
-      error(`Please select one of the following file types: ${accept}`);
+      notifications.error(
+        `Please select one of the following file types: ${accept}`,
+      );
       return false;
     }
     // Check file size
     if (filesExceedLimit(files, maxSizeInMB)) {
-      error(`File size cannot exceed ${maxSizeInMB} MB`);
+      notifications.error(`File size cannot exceed ${maxSizeInMB} MB`);
       return false;
     }
 
@@ -67,5 +71,13 @@ export default function useFileUpload({
     (updated === false && 100) ||
     0;
 
-  return { handleChange, progress, uploading, processing, accept };
+  return {
+    handleChange,
+    progress,
+    uploading,
+    processing,
+    accept,
+    updated,
+    error,
+  };
 }
