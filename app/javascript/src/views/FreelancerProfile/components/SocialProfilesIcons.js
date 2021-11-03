@@ -16,8 +16,6 @@ import { Medium } from "@styled-icons/fa-brands/Medium";
 import { Instagram } from "@styled-icons/fa-brands/Instagram";
 import { Globe } from "@styled-icons/heroicons-solid/Globe";
 import SocialProfilesForm from "./SocialProfilesForm";
-import useViewer from "src/hooks/useViewer";
-import { useParams } from "react-router";
 
 const StyledEditButton = styled.button`
   height: 28px;
@@ -60,14 +58,11 @@ function SocialIcon({ icon: Icon, href }) {
   );
 }
 
-export default function SocialProfilesIcons({ specialist }) {
+export default function SocialProfilesIcons({ specialist, isOwner }) {
   const { linkedin, twitter, instagram, medium, website } = specialist;
   const isEmpty = ![linkedin, twitter, instagram, medium, website].some(
     Boolean,
   );
-  const viewer = useViewer();
-  const params = useParams();
-  const isOwner = viewer?.id === params.id;
 
   const modal = useModal();
   return (
