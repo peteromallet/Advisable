@@ -4,7 +4,6 @@
 // preloaded. This component should eventually be rewritten as it has
 // become very bloated from when it was a simple task drawer.
 import * as React from "react";
-import { withRouter } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { Box } from "@advisable/donut";
 import filter from "lodash/filter";
@@ -27,6 +26,7 @@ import {
   updateTaskDescription as UPDATE_DESCRIPTION,
 } from "../../graphql/mutations/tasks";
 import TaskDrawerErrorBoundary from "./ErrorBoundary";
+import { useHistory } from "react-router";
 
 const DELETE_PROMPT = "DELETE_PROMPT";
 const APPROVE_PROMPT = "APPROVE_PROMPT";
@@ -37,7 +37,6 @@ const SUBMIT_PROMPT = "SUBMIT_PROMPT";
 const TaskDrawer = ({
   taskId,
   onClose,
-  history,
   readOnly,
   isClient,
   hideStatus,
@@ -46,6 +45,7 @@ const TaskDrawer = ({
   projectType,
   onCreateRepeatingTask,
 }) => {
+  const history = useHistory();
   const query = useQuery(FETCH_TASK, {
     variables: { id: taskId },
     skip: !taskId,
@@ -197,4 +197,4 @@ const TaskDrawer = ({
   );
 };
 
-export default withRouter(TaskDrawer);
+export default TaskDrawer;
