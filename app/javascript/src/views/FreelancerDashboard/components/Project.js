@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
 import styled from "styled-components";
+import css from "@styled-system/css";
 
 const StyledCoverImage = styled.img`
   position: absolute;
@@ -23,25 +24,36 @@ const StyledAvatar = styled.img`
 
 export default function Project({ caseStudy }) {
   return (
-    <Box display="flex">
+    <Box display="flex" css={css({ columnGap: 4 })}>
       <Box
         position="relative"
         width="120px"
+        minWidth="120px"
         height="92px"
-        css={`
-          overflow: hidden;
-        `}
         borderRadius="12px"
         display="flex"
         justifyContent="center"
         alignItems="center"
+        css={`
+          overflow: hidden;
+        `}
       >
         <StyledCoverImage src={caseStudy.coverPhoto} />
         <StyledAvatar src={caseStudy.specialist?.avatar} />
       </Box>
       <Box>
-        <Text>{caseStudy.specialist?.name}</Text>
-        <Text>{caseStudy.title}</Text>
+        <Text
+          fontSize="xs"
+          color="neutral500"
+          fontWeight={450}
+          lineHeight="xs"
+          mb={1}
+        >
+          {caseStudy.specialist?.name}
+        </Text>
+        <Text color="neutral900" lineHeight="s" fontWeight={450}>
+          {caseStudy.title}
+        </Text>
       </Box>
     </Box>
   );
