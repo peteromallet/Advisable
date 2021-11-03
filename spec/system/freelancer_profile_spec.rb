@@ -14,6 +14,12 @@ RSpec.describe "Freelancer profile", type: :system do
     expect(page).to have_content("Your profile has been updated")
   end
 
+  it "loads profile from username" do
+    specialist = create(:specialist, username: "testing")
+    visit "/freelancers/#{specialist.username}"
+    expect(page).to have_content(specialist.account.name)
+  end
+
   it "loads a 404 page when given an incorrect UID" do
     visit "/freelancers/nope"
     expect(page).to have_content("404")
