@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Button, Text } from "@advisable/donut";
-import { Link } from "react-router-dom";
-import PassportAvatar from "src/components/PassportAvatar";
-import useViewer from "src/hooks/useViewer";
+import pluralize from "pluralize";
 import css from "@styled-system/css";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { Box, Text } from "@advisable/donut";
+import PassportAvatar from "src/components/PassportAvatar";
+import useViewer from "src/hooks/useViewer";
 
 const StyledLink = styled(Link)(
   css({
@@ -22,18 +23,35 @@ export default function Hero({ caseStudies, reviews }) {
 
   return (
     <>
-      <Box display="flex">
+      <Box display="flex" alignItems="center" css={css({ columnGap: 4 })}>
         <PassportAvatar src={viewer.avatar} name={viewer.name} size="xl" />
         <Box>
-          <Text fontSize="3xl" fontWeight={550} color="neutral900">
+          <Text
+            fontSize="3xl"
+            fontWeight={550}
+            color="neutral900"
+            lineHeight="l"
+            mb={1}
+          >
             {viewer.name}
           </Text>
           <Box display="flex" mb={6}>
-            <Text marginRight={5}>
-              <span>{caseStudies.length}</span> case studies
+            <Text
+              marginRight={5}
+              lineHeight="m"
+              color="neutral700"
+              fontWeight={350}
+            >
+              <Text as="span" fontWeight={450}>
+                {caseStudies.length}
+              </Text>{" "}
+              case {pluralize("study", caseStudies.length)}
             </Text>
-            <Text>
-              <span>{reviews.length}</span> testimonials
+            <Text lineHeight="m" color="neutral700" fontWeight={350}>
+              <Text as="span" fontWeight={450}>
+                {reviews.length}
+              </Text>{" "}
+              {pluralize("testimonial", reviews.length)}
             </Text>
           </Box>
           <StyledLink to="/profile" variant="ghost" size="s">
