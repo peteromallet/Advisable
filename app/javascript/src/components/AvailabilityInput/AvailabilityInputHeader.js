@@ -25,10 +25,16 @@ const AvailabilityInputHeader = React.memo(function AvailabilityInputHeader({
           size="xs"
           icon={ArrowSmLeft}
           onClick={onPreviousWeek}
+          aria-label="Previous week"
         />
       </StyledAvailabilityInputHeaderColumn>
       {days.map((day) => (
-        <StyledAvailabilityInputHeaderColumn key={day}>
+        <StyledAvailabilityInputHeaderColumn
+          key={day}
+          data-testid={DateTime.fromISO(day)
+            .setZone(timezone)
+            .toFormat("dd MMM")}
+        >
           <Text fontSize="13px" color="neutral500" fontWeight={600} mb={0.5}>
             {DateTime.fromISO(day).setZone(timezone).toFormat("dd")}
           </Text>
@@ -43,7 +49,12 @@ const AvailabilityInputHeader = React.memo(function AvailabilityInputHeader({
         </StyledAvailabilityInputHeaderColumn>
       ))}
       <StyledAvailabilityInputHeaderColumn>
-        <CircularButton size="xs" icon={ArrowSmRight} onClick={onNextWeek} />
+        <CircularButton
+          size="xs"
+          icon={ArrowSmRight}
+          onClick={onNextWeek}
+          aria-label="Next week"
+        />
       </StyledAvailabilityInputHeaderColumn>
     </StyledAvailabilityInputHeader>
   );

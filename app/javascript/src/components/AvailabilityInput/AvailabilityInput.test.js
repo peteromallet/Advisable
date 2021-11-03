@@ -103,9 +103,9 @@ test("can move forward and back in weeks", () => {
   const nextWeek = screen.getByLabelText("Next week");
   const previousWeek = screen.getByLabelText("Previous week");
   fireEvent.click(nextWeek);
-  screen.getByText(/6 jun/i);
+  screen.getByTestId(/07 Jun/i);
   fireEvent.click(previousWeek);
-  screen.getByText(/28 may/i);
+  screen.getByTestId(/28 May/i);
   expect(previousWeek).toBeDisabled();
 });
 
@@ -118,7 +118,6 @@ test("Passed values are converted to timezone", () => {
     />,
   );
 
-  screen.getByText(/28 may/i);
   const time = screen.getByLabelText("2 Jun 2020, 04:00");
   expect(time).toHaveAttribute("aria-selected", "true");
 });
