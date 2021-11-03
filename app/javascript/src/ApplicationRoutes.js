@@ -45,7 +45,7 @@ const Discover = lazy(() => import("./views/Discover"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
-  return <Redirect to={`/freelancers/${viewer.id}`} />;
+  return <Redirect to={`/freelancers/${viewer.username || viewer.id}`} />;
 }
 
 function RedirectToSetPassword() {
