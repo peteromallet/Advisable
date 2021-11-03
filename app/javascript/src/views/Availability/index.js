@@ -6,15 +6,18 @@ import React, { useState } from "react";
 import Loading from "src/components/Loading";
 import AvailabilityInput from "src/components/AvailabilityInput";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
-import { withNotifications } from "src/components/Notifications";
+import { useNotifications } from "src/components/Notifications";
 import useWindowSize from "src/utilities/useWindowSize";
 
 import { Container, Form, Header, Body, Footer } from "./styles";
 import { GET_AVAILABILITY, UPDATE_AVAILABILITY } from "./queries";
+import { useRouteMatch } from "react-router";
 
 const DEFAULT_TIMEZONE = DateTime.local().zoneName || "UTC";
 
-const AvailabilityView = ({ match, notifications }) => {
+const AvailabilityView = () => {
+  const match = useRouteMatch();
+  const notifications = useNotifications();
   const windowSize = useWindowSize();
   const sup = useBreakpoint("sUp");
   const [updateAvailability] = useMutation(UPDATE_AVAILABILITY);
@@ -98,4 +101,4 @@ const AvailabilityView = ({ match, notifications }) => {
   );
 };
 
-export default withNotifications(AvailabilityView);
+export default AvailabilityView;

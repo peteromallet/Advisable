@@ -23,37 +23,53 @@ const Routes = () => {
   return (
     <Suspense fallback={<Loading />}>
       <Switch>
-        <AuthenticatedRoute exact path="/" component={RootPath} />
-        <Route path="/login" component={Login} />
-        <Route
-          path="/reset_password"
-          render={(props) => <ResetPassword {...props} />}
-        />
-        <Route
-          path="/confirm_account/:token"
-          render={(props) => <ConfirmAccount {...props} />}
-        />
-        <Route path="/signup/:id" component={Signup} />
+        <AuthenticatedRoute exact path="/">
+          <RootPath />
+        </AuthenticatedRoute>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/reset_password">
+          <ResetPassword />
+        </Route>
+        <Route path="/confirm_account/:token">
+          <ConfirmAccount />
+        </Route>
+        <Route path="/signup/:id">
+          <Signup />
+        </Route>
         <AuthenticatedRoute
           exact
           clientOnly
           path="/clients/:userID/availability"
-          component={Availability}
-        />
-        <AuthenticatedRoute path="/calls/:id" component={VideoCall} />
+        >
+          <Availability />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path="/calls/:id">
+          <VideoCall />
+        </AuthenticatedRoute>
         <Redirect
           from="/freelancers/signup"
           to={{ pathname: "/freelancers/join", search: location.search }}
         />
-        <Route path="/clients/join" component={ClientJoin} />
-        <Route path="/freelancers/join" component={FreelancerJoin} />
-        <Route path="/verify_project/:id" component={VerifyProject} />
-        <Route
-          path="/review/:id/case_studies/:article_id"
-          component={CaseStudyReview}
-        />
-        <Route path="/review/:id" component={TestimonialFlow} />
-        <Route component={ApplicationRoutes} />
+        <Route path="/clients/join">
+          <ClientJoin />
+        </Route>
+        <Route path="/freelancers/join">
+          <FreelancerJoin />
+        </Route>
+        <Route path="/verify_project/:id">
+          <VerifyProject />
+        </Route>
+        <Route path="/review/:id/case_studies/:article_id">
+          <CaseStudyReview />
+        </Route>
+        <Route path="/review/:id">
+          <TestimonialFlow />
+        </Route>
+        <Route>
+          <ApplicationRoutes />
+        </Route>
       </Switch>
     </Suspense>
   );
