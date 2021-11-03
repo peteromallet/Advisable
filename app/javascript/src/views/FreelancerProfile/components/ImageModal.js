@@ -29,6 +29,7 @@ export const StyledDialog = styled(motion.div)`
   margin: auto;
   outline: none;
   position: relative;
+  transform: translate3d(0, 0, 0);
 `;
 
 export default function ImageModal({ modal, children }) {
@@ -51,13 +52,12 @@ export default function ImageModal({ modal, children }) {
                 <StyledDialog
                   {...modalProps}
                   transition={{ duration: 0.32 }}
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0 }}
                   animate={{
                     display: "block",
                     opacity: 1,
-                    y: 0,
                   }}
-                  exit={{ opacity: 0, y: 40 }}
+                  exit={{ opacity: 0 }}
                 >
                   {children}
                 </StyledDialog>
