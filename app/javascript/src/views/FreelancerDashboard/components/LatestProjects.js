@@ -14,7 +14,7 @@ export default function LatestProjects({ topCaseStudies }) {
       <Text color="neutral900" fontSize="2xl" fontWeight={450} mb={8}>
         Latest projects
       </Text>
-      <Stack spacing={5} divider="neutral100">
+      <Stack spacing={10} divider="neutral100">
         {caseStudies}
       </Stack>
     </>
