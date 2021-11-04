@@ -1,0 +1,28 @@
+p Hi #{@interview.specialist.account.first_name},
+p Ahead of your call with #{user_name_with_company(@interview.user)}, I'm including some notes about the consultation process below.
+
+
+p You can join the call using the link below which should also be in the calendar invite.
+
+a href="#{call_url(@interview.video_call)}" = call_url(@interview.video_call)
+
+P Hope you enjoy the call and feel free to let me know if you have any questions!
+
+p
+  | Best,
+  br
+  | #{@sales_person.name}
+
+strong About this call:
+
+p The goal of the call should be to find out more about #{possesive(@interview.user.account.first_name)} project and plans and see if those might be of interest to you. We advise to take the lead in driving conversation and after the call, you should ideally be in the position to send a proposal to collaborate with them.
+
+p We suggest using <a clicktracking=off href="https://advisable.com/freelancer-trial/">Advisable’s money-back guarantee</a> to help the client start the engagement. With our money-back guarantee, if the client isn’t happy with the output of your work (which is rarely a case on our platform), they don’t have to pay while we cover the cost of your involvement. Please review our <a clicktracking=off href="https://advisable.com/direct-consultation-best-practices/">Direct Consultation Interview Best Practices</a> for useful language to communicate this.
+
+strong Pricing & Logistics:
+
+p If you see an opportunity to collaborate with them, we encourage you to send a proposal to them as soon as possible in order to enable them to make a quick decision - companies that receive proposals ASAP hire far quicker and more frequently. You can do so using our tool <a href="#{proposal_url(@interview.application)}">here</a>. I'll share this link with you again after the call.
+p Please discuss the budget directly with #{@interview.user.account.first_name} on the call. <b>Please remember to take into account that the fees you communicate should include the Advisable.com sourcing fee of 8%</b> (f.e. if your usual fee is 100$/hour, then you should communicate 108$ as your hourly rate since the Advisable fee is 8$ in this case). There is no need for you to communicate your Advisable fees to Clients, although specialist fees are, of course, transparent and displayed on our website.
+p They will make all payments via the Advisable.com platform.
+
+p Additionally, please keep all communication with the client in our messaging app or let us know any reason you’d need to move outside of it.

@@ -1,0 +1,22 @@
+p Hi #{@interview.user.account.first_name}, 
+
+p Just a quick reminder that your call with #{@interview.specialist.account.name} is in one hour.
+
+p You can join the call using the link below which should also be in the calendar invite.
+
+a href="#{call_url(@interview.video_call)}" = call_url(@interview.video_call)
+
+p You can re-visit #{possesive(@interview.specialist.account.first_name)} profile <a clicktracking="off" href="#{profile_url(@interview.specialist)}">here</a>.
+
+p The goal of this call is to explore the opportunity for you and #{@interview.specialist.account.first_name} to collaborate on a project together. Feel free to get to know their capabilities and share with them an in-depth understanding of the support you’re looking for.
+
+p It might be worth figuring out the details of how a project with them would work – perhaps an initial paid trial project might make sense. We offer a <a clicktracking=off href="https://advisable.com/freelancer-trial/">Risk-Free Guarantee</a> to our clients, meaning if you are not happy with the work our freelancer provides (which is rarely a case on our platform), you don’t have to pay while we cover the cost of the freelancer's involvement. 
+
+p After the call, we'll send you an email asking you for feedback - I'd highly appreciate it if you could provide this ASAP.
+
+p I hope you enjoy it and if you have any questions, please let me know.
+
+p
+  | Best,
+  br
+  | #{@sales_person.name}
