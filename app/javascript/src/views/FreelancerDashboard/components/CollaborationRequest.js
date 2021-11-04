@@ -1,11 +1,27 @@
 import React from "react";
-import { Card, Box, Text } from "@advisable/donut";
+import { StyledCard, Link, Box, Text } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
 import css from "@styled-system/css";
+import styled from "styled-components";
+
+const StyledPostCard = styled(StyledCard)`
+  box-shadow: 0 1px 6px rgba(28, 28, 37, 0.12);
+  transition: box-shadow 0.4s;
+
+  &:hover {
+    box-shadow: 0px 4px 20px rgba(26, 35, 67, 0.14);
+  }
+`;
 
 export default function CollaborationRequest({ request }) {
   return (
-    <Card borderRadius="20px" p={6}>
+    <StyledPostCard
+      as={Link}
+      to={`/guild/posts/${request.id}`}
+      elevation="s"
+      borderRadius="20px"
+      p={6}
+    >
       <Box
         display="flex"
         alignItems="center"
@@ -38,6 +54,6 @@ export default function CollaborationRequest({ request }) {
       <Text color="neutral700" lineHeight="s">
         {request.excerpt}
       </Text>
-    </Card>
+    </StyledPostCard>
   );
 }
