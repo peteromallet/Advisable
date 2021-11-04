@@ -23,8 +23,17 @@ export default function Hero({ caseStudies, reviews }) {
 
   return (
     <>
-      <Box display="flex" alignItems="center" css={css({ columnGap: 4 })}>
-        <PassportAvatar src={viewer.avatar} name={viewer.name} size="xl" />
+      <Box
+        display="flex"
+        width="100%"
+        alignItems={{ _: "start", l: "center" }}
+        css={css({ columnGap: 4 })}
+      >
+        <PassportAvatar
+          src={viewer.avatar}
+          name={viewer.name}
+          size={{ _: "lg", l: "xl" }}
+        />
         <Box>
           <Text
             fontSize="3xl"
@@ -35,13 +44,13 @@ export default function Hero({ caseStudies, reviews }) {
           >
             {viewer.name}
           </Text>
-          <Box display="flex" mb={6}>
-            <Text
-              marginRight={5}
-              lineHeight="m"
-              color="neutral700"
-              fontWeight={350}
-            >
+          <Box
+            display="flex"
+            flexWrap="wrap"
+            mb={6}
+            css={css({ columnGap: 5 })}
+          >
+            <Text lineHeight="m" color="neutral700" fontWeight={350}>
               <Text as="span" fontWeight={450}>
                 {caseStudies.length}
               </Text>{" "}

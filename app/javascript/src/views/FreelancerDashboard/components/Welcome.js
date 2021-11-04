@@ -6,7 +6,7 @@ export default function Welcome() {
   const viewer = useViewer();
 
   return (
-    <Box alignSelf="center" paddingBottom={4}>
+    <Box alignSelf="center" paddingBottom={{ _: 12, l: 4 }}>
       <Text fontSize="5xl" fontWeight={550}>
         Welcome back, <br />
         {viewer.firstName}
