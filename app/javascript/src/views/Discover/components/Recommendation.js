@@ -5,6 +5,7 @@ import { Box, Text } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
 import ArchiveButton from "./ArchiveButton";
 import MessageFreelancerButton from "./MessageButton";
+import ConsultationStatus from "./ConsultationStatus";
 
 const StyledRecommendationTitle = styled(Text)(
   css({
@@ -79,11 +80,16 @@ export default function Recommendation({
             >
               {recommendation.comment}
             </Text>
+            {Boolean(recommendation.specialist.consultation) && (
+              <ConsultationStatus specialist={recommendation.specialist} />
+            )}
             <Box onClick={stopActionPropagation}>
-              <MessageFreelancerButton
-                mr={3}
-                specialist={recommendation.specialist}
-              />
+              {!recommendation.specialist.consultation && (
+                <MessageFreelancerButton
+                  mr={3}
+                  specialist={recommendation.specialist}
+                />
+              )}
               <ArchiveButton article={recommendation} search={search} />
             </Box>
           </Box>
