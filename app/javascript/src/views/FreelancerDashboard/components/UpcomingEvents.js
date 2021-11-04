@@ -16,7 +16,7 @@ function EmptyState() {
       paddingY={10}
     >
       <Text color="neutral500" fontWeight={350}>
-        We have no scheduled events yet.
+        There are no upcoming Events
       </Text>
     </Box>
   );
