@@ -32,12 +32,12 @@ export default function UpcomingEvents({ upcomingEvents }) {
         fontSize="2xl"
         lineHeight="36px"
         fontWeight={450}
-        mb={6}
+        mb={3}
       >
         Upcoming events
       </Text>
       {events.length > 0 ? (
-        <Stack spacing={10} divider="neutral100">
+        <Stack spacing={6} divider="neutral100">
           {events}
         </Stack>
       ) : (
