@@ -76,11 +76,15 @@ class SpecialistMailer < ApplicationMailer
   def interview_reminder(interview)
     @interview = interview
     @sales_person = interview.user.company.sales_person
+    subject = "Your call with #{interview.user.account.name}"
+    subject += " from #{interview.user.company.name}" if interview.user.company.name.present?
+    subject += " in 1 hour"
+
     mail(
       from: @sales_person.email_with_name,
       to: interview.specialist.account.email,
       bcc: @sales_person.email_with_name,
-      subject: "Your call with #{interview.user.account.name} from #{interview.user.company.name} in 1 hour"
+      subject: subject
     ) do |format|
       format.html { render layout: false }
     end
