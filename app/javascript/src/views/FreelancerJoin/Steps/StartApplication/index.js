@@ -1,6 +1,5 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { Redirect, useHistory, useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import queryString from "query-string";
 import { Form, Formik } from "formik";
 import { ChevronRight } from "@styled-icons/feather/ChevronRight";
@@ -11,13 +10,8 @@ import validationSchema from "./validationSchema";
 import HaveAccount from "../HaveAccount";
 import Description from "./Description";
 import MotionCard from "../MotionCard";
-import Loading from "./Loading";
 import useViewer from "src/hooks/useViewer";
-import {
-  GET_PROJECT,
-  useCreateFreelancerAccount,
-  useUpdateProfile,
-} from "../queries";
+import { useCreateFreelancerAccount, useUpdateProfile } from "../queries";
 
 export default function StartApplication({ nextStep, forwards }) {
   const viewer = useViewer();
@@ -28,15 +22,6 @@ export default function StartApplication({ nextStep, forwards }) {
   const project_id = queryParams?.pid;
   const [updateProfile] = useUpdateProfile();
   const [createFreelancerAccount] = useCreateFreelancerAccount();
-  const { data, loading, error } = useQuery(GET_PROJECT, {
-    variables: { id: project_id },
-    skip: !project_id,
-  });
-
-  // Clean query string if pid is wrong
-  if (project_id && error) {
-    return <Redirect to={location.pathname} />;
-  }
 
   const initialValues = {
     firstName: viewer?.firstName || queryParams?.firstName || "",
@@ -75,74 +60,70 @@ export default function StartApplication({ nextStep, forwards }) {
 
   return (
     <MotionCard forwards={forwards}>
-      {project_id && loading ? (
-        <Loading />
-      ) : (
-        <>
-          <Box mb={[0, 8]}>
-            <Description project={data?.project} />
-          </Box>
-          <Formik
-            onSubmit={handleSubmit}
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-          >
-            {({ status }) => (
-              <Form>
-                <Box display="flex" flexDirection={["column", "row"]}>
-                  <Box mb={4} mr={[0, 2]} width="100%">
-                    <FormField
-                      as={Input}
-                      name="firstName"
-                      size={["sm", "md"]}
-                      placeholder="Dwight"
-                      label="First Name"
-                    />
-                  </Box>
-                  <Box mb={4} width="100%">
-                    <FormField
-                      as={Input}
-                      name="lastName"
-                      size={["sm", "md"]}
-                      placeholder="Schrutt"
-                      label="Last Name"
-                    />
-                  </Box>
-                </Box>
-                <Box mb={[4, 5]}>
+      <>
+        <Box mb={[0, 8]}>
+          <Description />
+        </Box>
+        <Formik
+          onSubmit={handleSubmit}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+        >
+          {({ status }) => (
+            <Form>
+              <Box display="flex" flexDirection={["column", "row"]}>
+                <Box mb={4} mr={[0, 2]} width="100%">
                   <FormField
                     as={Input}
-                    name="email"
+                    name="firstName"
                     size={["sm", "md"]}
-                    placeholder="dwight@dundermifflin.com"
-                    label="Email"
+                    placeholder="Dwight"
+                    label="First Name"
                   />
                 </Box>
-                <Error>{status}</Error>
-                <Box
-                  display="flex"
-                  flexDirection={{ _: "column", m: "row" }}
-                  pt={[4, 5]}
-                >
-                  <SubmitButton
-                    size={["m", "l"]}
-                    variant="dark"
-                    suffix={<ChevronRight />}
-                    mb={{ _: 3, m: 0 }}
-                  >
-                    {project_id
-                      ? isMobile
-                        ? "Request Details"
-                        : "Request more details"
-                      : "Get Started"}
-                  </SubmitButton>
-                  <HaveAccount />
+                <Box mb={4} width="100%">
+                  <FormField
+                    as={Input}
+                    name="lastName"
+                    size={["sm", "md"]}
+                    placeholder="Schrutt"
+                    label="Last Name"
+                  />
                 </Box>
-              </Form>
-            )}
-          </Formik>
-        </>
-      )}
+              </Box>
+              <Box mb={[4, 5]}>
+                <FormField
+                  as={Input}
+                  name="email"
+                  size={["sm", "md"]}
+                  placeholder="dwight@dundermifflin.com"
+                  label="Email"
+                />
+              </Box>
+              <Error>{status}</Error>
+              <Box
+                display="flex"
+                flexDirection={{ _: "column", m: "row" }}
+                pt={[4, 5]}
+              >
+                <SubmitButton
+                  size={["m", "l"]}
+                  variant="dark"
+                  suffix={<ChevronRight />}
+                  mb={{ _: 3, m: 0 }}
+                >
+                  {project_id
+                    ? isMobile
+                      ? "Request Details"
+                      : "Request more details"
+                    : "Get Started"}
+                </SubmitButton>
+                <HaveAccount />
+              </Box>
+            </Form>
+          )}
+        </Formik>
+      </>
     </MotionCard>
   );
 }

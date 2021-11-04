@@ -1,7 +1,6 @@
 import React from "react";
-import queryString from "query-string";
 import { Form, Formik } from "formik";
-import { Redirect, useHistory, useLocation } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 import { Box, Text, Error } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
@@ -16,10 +15,8 @@ import { CardHeader } from "../styles";
 
 export default function SetPassword({ prevStep, forwards }) {
   const viewer = useViewer();
-  const { search } = useLocation();
   const [setPassword] = useUpdatePassword();
   const history = useHistory();
-  const project_id = queryString.parse(search)?.pid;
   const initialValues = {
     password: "",
     passwordConfirmation: "",
@@ -42,10 +39,7 @@ export default function SetPassword({ prevStep, forwards }) {
       return;
     }
 
-    const nextPath = project_id
-      ? `/opportunities/${project_id}`
-      : "/freelancers/apply";
-    history.replace(nextPath);
+    history.replace("/freelancers/apply");
   };
 
   return (
