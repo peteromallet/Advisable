@@ -1,12 +1,42 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
 import { DateTime } from "luxon";
+import css from "@styled-system/css";
+import { StyledLineClamp } from "@guild/views/Events/styles";
+import OrbitsBackground from "@guild/components/Event/OrbitsBackground";
+
+const StartsAtTag = ({ startsAt }) => {
+  const date = DateTime.fromISO(startsAt);
+  return (
+    <Box bg="white" zIndex="1" borderRadius="12px" width="44px">
+      <Text
+        fontSize="10px"
+        paddingTop={0.5}
+        fontWeight={550}
+        lineHeight="14px"
+        color="neutral900"
+        textAlign="center"
+        textTransform="uppercase"
+      >
+        {date.monthShort}
+      </Text>
+      <Box height="1px" width="100%" mb={0.5} bg="neutral100" />
+      <Text
+        fontSize="xl"
+        lineHeight="s"
+        fontWeight={550}
+        textAlign="center"
+        paddingBottom={1.5}
+      >
+        {date.day}
+      </Text>
+    </Box>
+  );
+};
 
 export default function Event({ event }) {
-  const date = DateTime.fromISO(event.startsAt);
-
   return (
-    <Box mb={4} display="flex">
+    <Box display="flex" css={css({ columnGap: 4 })}>
       <Box
         display="flex"
         bg="neutral100"
@@ -14,41 +44,37 @@ export default function Event({ event }) {
         justifyContent="center"
         alignItems="center"
         borderRadius="12px"
+        minWidth="118px"
         width="118px"
         height="90px"
         css={`
           overflow: hidden;
         `}
       >
-        <Box bg="white" zIndex="1" borderRadius="12px" width="44px">
-          <Text
-            textAlign="center"
-            fontSize="10px"
-            lineHeight="16px"
-            fontWeight={550}
-            textTransform="uppercase"
-            color="neutral900"
-          >
-            {date.monthShort}
-          </Text>
-          <Box height="1px" width="100%" pb="1px" bg="neutral100" />
-          <Text
-            textAlign="center"
-            lineHeight="l"
-            fontSize="xl"
-            pb={0.5}
-            fontWeight={550}
-          >
-            {date.day}
-          </Text>
-        </Box>
+        <StartsAtTag startsAt={event.startsAt} />
         <Box position="absolute" left="0" top="0" right="0" bottom="0">
-          <img src={event.coverPhotoUrl} />
+          {event.coverPhotoUrl ? (
+            <img src={event.coverPhotoUrl} />
+          ) : (
+            <OrbitsBackground
+              height="148px"
+              color={event.color}
+              borderRadius="12px 12px 0 0"
+            />
+          )}
         </Box>
       </Box>
       <Box>
-        <Text>{event.title}</Text>
-        <Text>
+        <StyledLineClamp
+          lines={3}
+          color="neutral900"
+          lineHeight="s"
+          fontWeight={450}
+          mb={2}
+        >
+          {event.title}
+        </StyledLineClamp>
+        <Text fontSize="xs" color="neutral500" fontWeight={450} lineHeight="xs">
           Hosted by <span>{event.host?.name}</span>
         </Text>
       </Box>
