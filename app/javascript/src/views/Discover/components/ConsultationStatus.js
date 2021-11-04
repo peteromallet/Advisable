@@ -63,6 +63,14 @@ function ConsultationRequestSent({ specialist }) {
   );
 }
 
+function ConsultationRequestRejected({ specialist }) {
+  return (
+    <StatusNotice title="Consultation request declined">
+      {specialist.firstName} has declined your consultation request.
+    </StatusNotice>
+  );
+}
+
 function InterviewScheduled({ specialist }) {
   const datetime = DateTime.fromISO(
     specialist.consultation.interview.startsAt,
@@ -123,6 +131,7 @@ function InterviewStatus({ specialist }) {
 const CONSULTATION_STATUSES = {
   "Request Completed": ConsultationRequestSent,
   "Accepted By Specialist": InterviewStatus,
+  "Specialist Rejected": ConsultationRequestRejected,
 };
 
 export default function ConsultationStatus({ specialist }) {
