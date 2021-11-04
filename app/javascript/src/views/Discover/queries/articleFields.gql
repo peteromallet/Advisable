@@ -13,6 +13,16 @@ fragment ArticleFields on CaseStudyArticle {
   specialist {
     id
     name
+    firstName
     avatar
+    consultation {
+      id
+      status
+      interview {
+        id
+        status
+        startsAt
+      }
+    }
   }
 }
