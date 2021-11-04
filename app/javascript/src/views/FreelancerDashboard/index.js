@@ -19,12 +19,11 @@ export default function FreelancerDashboard() {
     <>
       <Box bg="neutral50">
         <Box
-          display={{ _: "block", l: "grid" }}
-          gridTemplateColumns="52% auto"
-          gridColumnGap={{ l: "48px", xl: "96px" }}
+          display={{ _: "block", s: "grid" }}
+          gridTemplateColumns={{ _: "44% auto", l: "52% auto" }}
+          gridColumnGap={{ _: "16px", l: "48px", xl: "96px" }}
           marginX="auto"
-          width="1080px"
-          maxWidth={{ _: "720px", l: "none" }}
+          maxWidth={{ _: "720px", l: "1080px" }}
           paddingY={{ _: 8, m: 12 }}
           paddingX={{ _: 4, m: 8 }}
         >
