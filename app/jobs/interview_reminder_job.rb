@@ -4,7 +4,7 @@ class InterviewReminderJob < ApplicationJob
   def perform
     redis = Redis.current
 
-    Interview.where(starts_at: (Time.current..1.hour.from_now)).each do |interview|
+    Interview.scheduled.where(starts_at: (Time.current..1.hour.from_now)).each do |interview|
       sent_for = redis.get("interview_reminder_for_#{interview.id}").to_i
       next if sent_for.present? && interview.starts_at.to_i == sent_for
 
