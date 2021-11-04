@@ -14,7 +14,7 @@ import {
   UPDATE_PASSWORD,
 } from "./Steps/queries";
 import VIEWER from "src/graphql/queries/getViewer.graphql";
-import { GET_PROJECT } from "../JobOpportunity/queries";
+import { GET_PROJECT } from "./queries";
 import { GET_APPLICATIONS } from "../Applications/queries";
 import { GET_SPECIALIST } from "../FreelancerApplication/queries";
 
@@ -151,8 +151,7 @@ test("display alt description", async () => {
     graphQLMocks,
   });
   await app.findByText(/advisable helps/i);
-  const description = `Sign up to access this ${
-    project.primarySkill?.name || ""
-  } opportunity:`;
+  const description = `Sign up to access this ${project.primarySkill?.name || ""
+    } opportunity:`;
   await app.findByText(description);
 });
