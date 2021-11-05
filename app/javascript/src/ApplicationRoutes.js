@@ -44,7 +44,7 @@ const Discover = lazy(() => import("./views/Discover"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
-  return <Redirect to={`/freelancers/${viewer.id}`} />;
+  return <Redirect to={`/freelancers/${viewer.username || viewer.id}`} />;
 }
 
 function RedirectToSetPassword() {
@@ -104,7 +104,7 @@ const ApplicationRoutes = () => {
             path="/freelancers/apply"
             component={FreelancerApplication}
           />
-          <Route path="/freelancers/:id" component={FreelancerProfile} />
+          <Route path="/freelancers/:username" component={FreelancerProfile} />
           {/* Client routes */}
           <Redirect
             from="/project_setup/:projectID"

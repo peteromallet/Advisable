@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 import css from "@styled-system/css";
 import { matchPath, useParams } from "react-router";
@@ -24,15 +25,14 @@ import SocialProfilesIcons from "../SocialProfilesIcons";
 // Constant values
 import { TRUNCATE_LIMIT } from "../../values";
 
-export default function Sidebar({ data, ...props }) {
+function Sidebar({ data, isOwner, ...props }) {
+  const params = useParams();
   const isArticle = !!matchPath(location.pathname, {
-    path: "/freelancers/:id/case_studies/:case_study_id",
+    path: "/freelancers/:username/case_studies/:case_study_id",
   });
 
   const viewer = useViewer();
-  const params = useParams();
   const viewerIsGuild = (viewer?.isSpecialist && viewer?.isAccepted) || false;
-  const isOwner = viewer?.id === params.id;
   const { specialist } = data;
 
   const [isExpanded, setExpanded] = useState(false);
@@ -54,13 +54,13 @@ export default function Sidebar({ data, ...props }) {
           </StyledArticleAvatarWrapper>
         ) : (
           <StyledAvatarWrapper>
-            <ProfilePicture specialist={specialist} />
+            <ProfilePicture isOwner={isOwner} specialist={specialist} />
           </StyledAvatarWrapper>
         )}
         <StyledNameWrapper>
           <Text
             as={isArticle && Link}
-            to={`/freelancers/${specialist.id}`}
+            to={`/freelancers/${params.username}`}
             fontSize={{ _: "2xl", m: "5xl" }}
             fontWeight={600}
             color="neutral900"
@@ -128,10 +128,16 @@ export default function Sidebar({ data, ...props }) {
                 <MessageButton specialist={specialist} />
               )}
             </Box>
-            <SocialProfilesIcons specialist={specialist} />
+            <SocialProfilesIcons isOwner={isOwner} specialist={specialist} />
           </Box>
         </StyledBioWrapper>
       </StyledStickySidebar>
     </Box>
   );
 }
+
+Sidebar.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
+};
+
+export default Sidebar;

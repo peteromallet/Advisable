@@ -1,7 +1,6 @@
 import React from "react";
 import { useDialogState } from "reakit/Dialog";
-import { matchPath, useParams } from "react-router";
-import useViewer from "src/hooks/useViewer";
+import { matchPath } from "react-router";
 import { useNotifications } from "src/components/Notifications";
 import {
   StyledCover,
@@ -17,15 +16,12 @@ import ProgressBar from "../ProgressBar";
 import ImageModal from "../ImageModal";
 import useFileUpload from "../../hooks/useFileUpload";
 
-function CoverImage({ src, ...props }) {
+function CoverImage({ src, isOwner, ...props }) {
   const maxSizeInMB = 5;
   const accept = ".png, .jpg, .jpeg";
-  const params = useParams();
-  const viewer = useViewer();
-  const isOwner = viewer?.id === params.id;
 
   const isArticle = !!matchPath(location.pathname, {
-    path: "/freelancers/:id/case_studies/:case_study_id",
+    path: "/freelancers/:username/case_studies/:case_study_id",
   });
   const [updatePicture] = useSetCoverPhoto();
   const image = src || defaultCoverPhoto;
