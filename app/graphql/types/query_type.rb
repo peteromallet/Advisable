@@ -97,13 +97,7 @@ module Types
     end
 
     def specialist(id:)
-      if ::Specialist.valid_uid?(id)
-        ::Specialist.find_by!(uid: id)
-      elsif ::Specialist.airtable_id?(id)
-        ::Specialist.deprecated_find_by_airtable_id!(id)
-      else
-        ::Specialist.find_by!(username: id)
-      end
+      ::Specialist.find_by_username!(id)
     end
 
     field :industries, [Types::IndustryType], null: false
@@ -330,11 +324,7 @@ module Types
       argument :id, ID, required: true
     end
     def case_study(id:)
-      if ::CaseStudy::Article.valid_uid?(id)
-        ::CaseStudy::Article.active.published.find_by!(uid: id)
-      else
-        ::CaseStudy::Article.active.published.find_by!(slug: id)
-      end
+      ::CaseStudy::Article.find_by_slug!(id)
     end
 
     field :top_case_studies, [Types::CaseStudy::Article], null: true

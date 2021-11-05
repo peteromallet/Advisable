@@ -15,24 +15,20 @@ class ApplicationController < ActionController::Base
     render status: :not_found, json: {error: "Not Found"}
   end
 
-  def freelancer_profile
-    @specialist = Specialist.find_by(uid: params[:id])
-    prefetch_query("app/javascript/src/views/FreelancerProfile/queries/getProfileData.gql", variables: {
-      id: params[:id]
-    })
-  end
-
   def guild_post
     @guild_post = Guild::Post.published.find_by(shareable: true, id: params[:id]) if params[:id]
-  end
-
-  def case_study
-    @case_study = CaseStudy::Article.find_by!(uid: params[:id])
   end
 
   def client_ip
     request.env["HTTP_X_FORWARDED_FOR"].try(:split, ",").try(:first) ||
       request.env["REMOTE_ADDR"]
+  end
+
+  def case_study
+    @case_study = ::CaseStudy::Article.find_by_slug!(params[:id])
+    username = @case_study.specialist.username || @case_study.specialist.uid
+    slug = @case_study.slug || @case_study.uid
+    redirect_to "/freelancers/#{username}/#{slug}"
   end
 
   def set_sentry_context

@@ -120,7 +120,7 @@ Rails.application.routes.draw do
   # match every other route to the frontend codebase
   root "application#frontend"
   get "/case_studies/:id", to: "application#case_study", as: :public_case_study
-  get "/freelancers/:id", to: "application#freelancer_profile", as: :freelancer_profile
-
+  get "/freelancers/:username/:slug", to: "specialists#case_study", as: :case_study
+  get "/freelancers/:username", to: "specialists#profile", as: :freelancer_profile
   get "*path", to: "application#frontend", constraints: ->(req) { req.path.exclude?("rails/") }
 end

@@ -28,6 +28,18 @@ module CaseStudy
     scope :searchable, -> { active.published.where(hide_from_search: false) }
     scope :by_score, -> { order("score DESC NULLS LAST").order(id: :desc) }
     scope :available_specialists, -> { joins(:specialist).merge(Specialist.available).joins(specialist: :account).merge(Account.active) }
+
+    def self.find_by_slug(slug)
+      if ::CaseStudy::Article.valid_uid?(slug)
+        ::CaseStudy::Article.active.published.find_by(uid: slug)
+      else
+        ::CaseStudy::Article.active.published.find_by(slug: slug)
+      end
+    end
+
+    def self.find_by_slug!(slug)
+      find_by_slug(slug) || raise(ActiveRecord::RecordNotFound)
+    end
   end
 end
 
