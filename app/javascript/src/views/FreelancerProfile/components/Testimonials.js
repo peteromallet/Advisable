@@ -26,7 +26,12 @@ function Testimonials({ reviews, isOwner }) {
       </Stack>
       {isEmpty && isOwner && <TestimonialsEmptyState modal={modal} />}
       {!isEmpty && isOwner && (
-        <DialogDisclosure as={SectionActionButton} mt={6} {...modal}>
+        <DialogDisclosure
+          as={SectionActionButton}
+          paddingY={6}
+          mt={6}
+          {...modal}
+        >
           Request a Testimonial
         </DialogDisclosure>
       )}
