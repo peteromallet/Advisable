@@ -28,6 +28,7 @@ function CaseStudies({ caseStudies, specialist, isOwner }) {
           href={`https://csi.advisable.com/freelancer/onboarding?specialist_id=${specialist.id}&contact_name=${specialist.firstName}`}
           target="_blank"
           mt={6}
+          paddingY={6}
         >
           Add a Case Study
         </SectionActionButton>
