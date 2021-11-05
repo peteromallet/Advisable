@@ -4,8 +4,6 @@ class AuthProvider < ApplicationRecord
   LINKEDIN_ACCESS_TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken"
   belongs_to :account
 
-  scope :linkedin_ads, -> { where(provider: "linkedin_ads") }
-
   validates :uid, :provider, presence: true
   validates :uid, uniqueness: {scope: :provider}
 

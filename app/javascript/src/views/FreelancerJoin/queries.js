@@ -36,13 +36,3 @@ export const GET_PROJECT = gql`
     }
   }
 `;
-
-export const APPLY_FOR_PROJECT = gql`
-  mutation ApplyForProject($input: ApplyForProjectInput!) {
-    applyForProject(input: $input) {
-      application {
-        id
-      }
-    }
-  }
-`;
