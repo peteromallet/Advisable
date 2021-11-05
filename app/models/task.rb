@@ -55,6 +55,29 @@ class Task < ApplicationRecord
   def fixed_estimate?
     estimate_type == "Fixed"
   end
+
+  def financialize!
+    return unless final_cost.to_i.positive?
+
+    create_payout!
+    create_payment!
+  end
+
+  private
+
+  def create_payout!
+    return if payout.present?
+
+    Payout.create!(specialist_id: application.specialist_id, task: self, amount: final_cost, status: "pending")
+  end
+
+  def create_payment!
+    amount = final_cost - payments.sum(:amount)
+    return if amount.zero?
+
+    payment = Payment.create!(company_id: application.project.user.company_id, specialist_id: application.specialist_id, amount: amount, task: self, status: "pending")
+    payment.charge!
+  end
 end
 
 # == Schema Information
