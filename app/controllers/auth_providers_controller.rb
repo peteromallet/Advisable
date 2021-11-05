@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AuthProvidersController < ApplicationController
-  PROVIDERS = %i[linkedin linkedin_ads google_oauth2].freeze
+  PROVIDERS = %i[linkedin google_oauth2].freeze
 
   def create
     provider = params[:provider].to_sym
@@ -35,13 +35,6 @@ class AuthProvidersController < ApplicationController
 
     session[:omniauth] = omniauth
     redirect_to request.env["omniauth.origin"]
-  end
-
-  def linkedin_ads
-    auth_provider = current_account.auth_providers.find_or_initialize_by(provider: "linkedin_ads")
-    auth_provider.update!(oauth.identifiers_with_blob_and_token)
-
-    redirect_to admin_applications_path
   end
 
   def google_oauth2

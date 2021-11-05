@@ -72,10 +72,6 @@ Rails.application.routes.draw do
 
   get "/guild/posts/:id", to: "application#guild_post", as: :guild_post
 
-  # Routes for internal tooling
-  post "/projects/send_invites"
-  post "/projects/create_linkedin_ad"
-
   get "accounts/me"
   post "accounts/user"
   post "accounts/specialist"
