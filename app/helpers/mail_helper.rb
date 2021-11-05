@@ -32,6 +32,18 @@ module MailHelper
     "#{app_host}/messages/#{conversation.uid}"
   end
 
+  def profile_url(specialist)
+    "#{app_host}/freelancers/#{specialist.uid}"
+  end
+
+  def call_url(video_call)
+    "#{app_host}/calls/#{video_call.uid}"
+  end
+
+  def proposal_url(application)
+    "#{app_host}/applications/#{application.uid}/proposal"
+  end
+
   def time_in_zone(timestamp, zone, format = "%d %B, %I:%M%P %Z")
     timestamp.in_time_zone(zone).strftime(format)
   end
@@ -46,6 +58,16 @@ module MailHelper
     else
       "https://advisable.com/unsubscribe?Specialist%20ID=#{account.specialist.uid}"
     end
+  end
+
+  def user_name_with_company(user)
+    return user.account.name if user.company&.name.blank?
+
+    "#{user.account.name} from #{user.company.name}"
+  end
+
+  def possesive(name)
+    name.end_with?("s") ? "#{name}'" : "#{name}'s"
   end
 
   private
