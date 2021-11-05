@@ -1,5 +1,5 @@
 import React from "react";
-import Linkify from "linkifyjs/react";
+import Linkify from "linkify-react";
 import { Text as TextStyles } from "./styles";
 
 const Text = React.forwardRef(function Text(
