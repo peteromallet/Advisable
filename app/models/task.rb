@@ -56,7 +56,7 @@ class Task < ApplicationRecord
     estimate_type == "Fixed"
   end
 
-  def charge!
+  def financialize!
     return unless final_cost.to_i.positive?
 
     create_payout!
@@ -66,6 +66,8 @@ class Task < ApplicationRecord
   private
 
   def create_payout!
+    return if payout.present?
+
     Payout.create!(specialist_id: application.specialist_id, task: self, amount: final_cost, status: "pending")
   end
 

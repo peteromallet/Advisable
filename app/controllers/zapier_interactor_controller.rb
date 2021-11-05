@@ -82,7 +82,7 @@ class ZapierInteractorController < ApplicationController
       task.stage = params[:stage]
       task.assign_attributes(TASK_STAGE_MAPPING[task.stage] => Time.current) if TASK_STAGE_MAPPING[task.stage]
       task.save!
-      task.charge! if task.stage == "Approved"
+      task.financialize! if task.stage == "Approved"
     end
   end
 
