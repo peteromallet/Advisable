@@ -2,7 +2,13 @@
 // application
 import React from "react";
 import { Box, Modal, useModal } from "@advisable/donut";
-import { matchPath, useParams } from "react-router-dom";
+import {
+  matchPath,
+  useParams,
+  useHistory,
+  useLocation,
+  useRouteMatch,
+} from "react-router-dom";
 import Layout from "components/Layout";
 import TaskDrawer from "components/TaskDrawer";
 import FixedTutorial from "components/Tutorial/FixedProjectTutorial";
@@ -19,7 +25,10 @@ const tutorials = {
   Flexible: "flexible_projects",
 };
 
-const ActiveApplication = ({ location, history, match, data, client }) => {
+const ActiveApplication = ({ data, client }) => {
+  const match = useRouteMatch();
+  const location = useLocation();
+  const history = useHistory();
   const params = useParams();
   const application = data.application;
   const tutorial = tutorials[application.projectType];

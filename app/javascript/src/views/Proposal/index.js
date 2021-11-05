@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Switch, Redirect } from "react-router-dom";
+import { Switch, Redirect, useRouteMatch } from "react-router-dom";
 import { Container } from "@advisable/donut";
 import Route from "src/components/Route";
 import useViewer from "src/hooks/useViewer";
@@ -15,8 +15,9 @@ import Loading from "./Loading";
 import FETCH_APPLICATION from "./fetchApplication";
 import Notfound from "../NotFound";
 
-const Proposals = ({ match }) => {
+const Proposals = () => {
   const viewer = useViewer();
+  const match = useRouteMatch();
   const { loading, data } = useQuery(FETCH_APPLICATION, {
     variables: {
       id: match.params.applicationId,

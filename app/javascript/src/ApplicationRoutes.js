@@ -88,23 +88,29 @@ const ApplicationRoutes = () => {
       <Header />
       <Suspense fallback={<Loading />}>
         <Switch>
-          <AuthenticatedRoute path="/set_password" component={SetPassword} />
+          <AuthenticatedRoute path="/set_password">
+            <SetPassword />
+          </AuthenticatedRoute>
           {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
           <Redirect
             from="/clients/signup"
             to={{ ...location, pathname: "/clients/join" }}
           />
-          <Route path="/case_studies/:id" component={CaseStudy} />
-          <AuthenticatedRoute path="/messages" component={Messages} />
-          <AuthenticatedRoute
-            path="/clients/apply"
-            component={ClientApplication}
-          />
-          <AuthenticatedRoute
-            path="/freelancers/apply"
-            component={FreelancerApplication}
-          />
-          <Route path="/freelancers/:username" component={FreelancerProfile} />
+          <Route path="/case_studies/:id">
+            <CaseStudy />
+          </Route>
+          <AuthenticatedRoute path="/messages">
+            <Messages />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path="/clients/apply">
+            <ClientApplication />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path="/freelancers/apply">
+            <FreelancerApplication />
+          </AuthenticatedRoute>
+          <Route path="/freelancers/:username">
+            <FreelancerProfile />
+          </Route>
           {/* Client routes */}
           <Redirect
             from="/project_setup/:projectID"
@@ -113,101 +119,97 @@ const ApplicationRoutes = () => {
           <AuthenticatedRoute
             specialistOnly
             path="/interview_request/:interviewID"
-            component={InterviewRequest}
-          />
+          >
+            <InterviewRequest />
+          </AuthenticatedRoute>
           {/* maintain old interview availability routes */}
           <Redirect
             from="/projects/:projectID/interviews/:interviewID/availability"
             to="/interviews/:interviewID"
           />
-          <AuthenticatedRoute path="/interviews/:id" component={Interview} />
+          <AuthenticatedRoute path="/interviews/:id">
+            <Interview />
+          </AuthenticatedRoute>
           <Redirect
             from="/projects/:projectId/candidates/:id/proposal"
             to="/hire/proposals/:id"
           />
           <Redirect from="/projects" to="/hire" />
-          <AuthenticatedRoute clientOnly path="/hire" component={Hire} />
-          <AuthenticatedRoute exact path="/manage" component={ActiveTalent} />
-          <AuthenticatedRoute
-            path="/book/:applicationId"
-            component={BookingSetup}
-          />
-          <AuthenticatedRoute
-            clientOnly
-            path="/manage/:applicationId"
-            component={Booking}
-          />
-          <Route
-            path="/request_consultation/:specialistId"
-            component={RequestConsultation}
-          />
+          <AuthenticatedRoute clientOnly path="/hire">
+            <Hire />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute exact path="/manage">
+            <ActiveTalent />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path="/book/:applicationId">
+            <BookingSetup />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute clientOnly path="/manage/:applicationId">
+            <Booking />
+          </AuthenticatedRoute>
+          <Route path="/request_consultation/:specialistId">
+            <RequestConsultation />
+          </Route>
           {/* Freelancer Routes */}
-          <AuthenticatedRoute
-            specialistOnly
-            path="/consultations/:id"
-            component={Consultation}
-          />
-          <AuthenticatedRoute
-            exact
-            specialistOnly
-            path="/applications"
-            component={Applications}
-          />
-          <AuthenticatedRoute
-            component={Proposal}
-            path={"/applications/:applicationId/proposal"}
-          />
-          <AuthenticatedRoute
-            exact
-            path="/clients"
-            component={FreelancerProjects}
-          />
-          <AuthenticatedRoute
-            path="/clients/:applicationId"
-            component={FreelancerActiveApplication}
-          />
+          <AuthenticatedRoute specialistOnly path="/consultations/:id">
+            <Consultation />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute exact specialistOnly path="/applications">
+            <Applications />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path={"/applications/:applicationId/proposal"}>
+            <Proposal />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute exact path="/clients">
+            <FreelancerProjects />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path="/clients/:applicationId">
+            <FreelancerActiveApplication />
+          </AuthenticatedRoute>
           <AuthenticatedRoute
             exact
             specialistOnly
             path="/invites/:applicationId"
-            component={JobListing}
-          />
+          >
+            <JobListing />
+          </AuthenticatedRoute>
           <AuthenticatedRoute
             specialistOnly
             path="/invites/:applicationId/apply"
-            component={ApplicationFlow}
-          />
-          <AuthenticatedRoute path="/settings" component={Settings} />
-          <AuthenticatedRoute
-            path="/profile"
-            component={RedirectToFreelancerProfile}
-          />
-          <AuthenticatedRoute clientOnly path="/explore" component={Discover} />
-          <AuthenticatedRoute
-            clientOnly
-            path="/payments/:id"
-            component={Payment}
-          />
-          <Route
-            specialistOnly
-            path="/guild/posts/:postId"
-            component={GuildPost}
-          />
-          <AuthenticatedRoute
-            exact
-            path="/guild/topics"
-            specialistOnly
-            component={GuildFollows}
-          />
-          <Route exact path="/events/:eventId" component={GuildEvent} />
-          <AuthenticatedRoute exact path="/events" component={GuildEvents} />
+          >
+            <ApplicationFlow />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path="/settings">
+            <Settings />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path="/profile">
+            <RedirectToFreelancerProfile />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute clientOnly path="/explore">
+            <Discover />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute clientOnly path="/payments/:id">
+            <Payment />
+          </AuthenticatedRoute>
+          <Route specialistOnly path="/guild/posts/:postId">
+            <GuildPost />
+          </Route>
+          <AuthenticatedRoute exact path="/guild/topics" specialistOnly>
+            <GuildFollows />
+          </AuthenticatedRoute>
+          <Route exact path="/events/:eventId">
+            <GuildEvent />
+          </Route>
+          <AuthenticatedRoute exact path="/events">
+            <GuildEvents />
+          </AuthenticatedRoute>
           <Redirect from="/guild/events/:eventId" to="/events/:eventId" />
-          <AuthenticatedRoute
-            path="/guild"
-            specialistOnly
-            component={GuildFeed}
-          />
-          <Route component={NotFound} />
+          <AuthenticatedRoute path="/guild" specialistOnly>
+            <GuildFeed />
+          </AuthenticatedRoute>
+          <Route>
+            <NotFound />
+          </Route>
         </Switch>
       </Suspense>
     </>
