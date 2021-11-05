@@ -1,10 +1,10 @@
 import React from "react";
 import { useField } from "formik";
-import { Textarea } from "@advisable/donut";
+import { Textarea, Text } from "@advisable/donut";
 
 export default {
   render: function RenderLongText({ record, field }) {
-    return record[field.name] || null;
+    return <Text lineHeight="20px">{record[field.name] || null}</Text>;
   },
   initializeFormValue: function (record, attribute) {
     return record[attribute.name] || "";
