@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { Box, useBreakpoint, useTheme } from "@advisable/donut";
 import { useConversations, useReceivedMessage } from "./queries";
-import { Redirect, Switch } from "react-router-dom";
+import { Redirect, Switch, useRouteMatch } from "react-router-dom";
 import Route from "src/components/Route";
 import Loading from "src/components/Loading";
 import Conversation from "./components/Conversation";
@@ -24,11 +24,13 @@ export default function Messages() {
     return () => setTheme((t) => ({ ...t, background: "default" }));
   }, [setTheme]);
 
+  const isMobileView = useRouteMatch({ path: "/messages", exact: !isDesktop });
+
   return (
     <Box display="flex">
-      <Route path="/messages" exact={!isDesktop}>
+      {isMobileView && (
         <MessagesSidebar loading={loading} conversations={ordered} />
-      </Route>
+      )}
       <Box width="100%" height="calc(100vh - var(--header-height))">
         {loading && <Loading />}
         <Switch>

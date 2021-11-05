@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import { Button, Tooltip, Box, Avatar, Text } from "@advisable/donut";
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sticky from "src/components/Sticky";
 import Layout from "src/components/Layout";
@@ -19,7 +19,8 @@ import { Edit } from "@styled-icons/feather/Edit";
 import { HelpCircle } from "@styled-icons/feather/HelpCircle";
 import { MessageCircle } from "@styled-icons/feather/MessageCircle";
 
-const Sidebar = ({ data, history, tutorialModal }) => {
+const Sidebar = ({ data, tutorialModal }) => {
+  const history = useHistory();
   const viewer = useViewer();
   const isMobile = useMobile();
   const dialog = useDialogState();
@@ -178,4 +179,4 @@ const Sidebar = ({ data, history, tutorialModal }) => {
   );
 };
 
-export default withRouter(Sidebar);
+export default Sidebar;

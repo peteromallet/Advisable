@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Redirect } from "react-router-dom";
+import { Switch, Redirect, useRouteMatch } from "react-router-dom";
 import { Container, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import Route from "src/components/Route";
@@ -14,22 +14,24 @@ import Password from "./Password";
 import Invoice from "./StripeInvoices/Invoice";
 
 // Renders the settings view for a client user type.
-const ClientSettings = ({ match }) => {
+const ClientSettings = () => {
   const viewer = useViewer();
+  const match = useRouteMatch();
   const breakpointS = useBreakpoint("sUp");
 
   const initialPath = viewer.isTeamManager ? "/payments" : "/password";
+  const isMobileView = useRouteMatch({ path: match.path, exact: !breakpointS });
 
   return (
     <View>
       {/* On mobile we only show the navigation menu if the URL is exactly
       /settings. On desktop we want to display it as a sidebar on all settings
       pages. We use a Route with exact prop to achieve this. */}
-      <Route path={match.path} exact={!breakpointS}>
+      {isMobileView && (
         <View.Sidebar>
           <ClientSettingsNavigation />
         </View.Sidebar>
-      </Route>
+      )}
       <View.Content>
         <Container
           pt={{ _: 4, s: 0, l: 12 }}

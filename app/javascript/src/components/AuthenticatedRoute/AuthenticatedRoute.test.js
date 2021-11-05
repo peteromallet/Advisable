@@ -37,7 +37,9 @@ test("Redirects unauthenticated viewer to login", async () => {
   renderTestCase(
     null,
     "/test",
-    <AuthenticatedRoute path="/test" component={View} />,
+    <AuthenticatedRoute path="/test">
+      <View />
+    </AuthenticatedRoute>,
   );
 
   await screen.findByText("Current: /login");
@@ -48,7 +50,9 @@ test("Does not redirect authenticated viewer", async () => {
   renderTestCase(
     mockData.user(),
     "/test",
-    <AuthenticatedRoute path="/test" component={View} />,
+    <AuthenticatedRoute path="/test">
+      <View />
+    </AuthenticatedRoute>,
   );
 
   await screen.findByText("Current: /test");
@@ -59,7 +63,9 @@ test("specialistOnly redirects clients to /", async () => {
   renderTestCase(
     mockData.user(),
     "/test",
-    <AuthenticatedRoute specialistOnly path="/test" component={View} />,
+    <AuthenticatedRoute specialistOnly path="/test">
+      <View />
+    </AuthenticatedRoute>,
   );
 
   await screen.findByText("Current: /");
@@ -70,7 +76,9 @@ test("specialistOnly does not redirect specialists", async () => {
   renderTestCase(
     mockData.specialist(),
     "/test",
-    <AuthenticatedRoute specialistOnly path="/test" component={View} />,
+    <AuthenticatedRoute specialistOnly path="/test">
+      <View />
+    </AuthenticatedRoute>,
   );
 
   await screen.findByText("Current: /test");
@@ -81,7 +89,9 @@ test("clientOnly redirects specialist to /", async () => {
   renderTestCase(
     mockData.specialist(),
     "/test",
-    <AuthenticatedRoute clientOnly path="/test" component={View} />,
+    <AuthenticatedRoute clientOnly path="/test">
+      <View />
+    </AuthenticatedRoute>,
   );
 
   await screen.findByText("Current: /");
@@ -92,7 +102,9 @@ test("clientOnly does not redirect user", async () => {
   renderTestCase(
     mockData.user(),
     "/test",
-    <AuthenticatedRoute clientOnly path="/test" component={View} />,
+    <AuthenticatedRoute clientOnly path="/test">
+      <View />
+    </AuthenticatedRoute>,
   );
 
   await screen.findByText("Current: /test");

@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { Card } from "@advisable/donut";
-import { useParams, Switch, Redirect } from "react-router-dom";
+import { useParams, Switch, Redirect, useRouteMatch } from "react-router-dom";
 import Route from "src/components/Route";
 import Loading from "src/components/Loading";
 import SelectDay from "./SelectDay";
@@ -15,7 +15,8 @@ import NotFound, { isNotFound } from "src/views/NotFound";
 const SELECT_TIME_PATH = ":date([0-9]{4}-[0-9]{2}-[0-9]{2})";
 const CONFIRM_PATH = ":datetime([0-9]{4}-[0-9]{2}-[0-9]{2}T.*)";
 
-export default function InterviewRequestView({ match }) {
+export default function InterviewRequestView() {
+  const match = useRouteMatch();
   const { interviewID } = useParams();
   const { loading, data, error } = useQuery(FETCH_INTERVIEW, {
     variables: { id: interviewID },

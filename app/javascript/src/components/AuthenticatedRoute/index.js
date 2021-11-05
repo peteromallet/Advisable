@@ -2,16 +2,28 @@
 // authenticated user to view the route. If the viewer is not authenticated it
 // will redirect to the Login view.
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useLocation } from "react-router-dom";
 import Route from "src/components/Route";
 import useViewer from "../../hooks/useViewer";
 
+function RedirectToLogin() {
+  const location = useLocation();
+
+  return (
+    <Redirect
+      to={{
+        pathname: "/login",
+        state: { from: location },
+      }}
+    />
+  );
+}
+
 const AuthenticatedRoute = ({
-  render,
-  component: Component,
   specialistOnly = false,
   clientOnly = false,
-  ...rest
+  children,
+  ...props
 }) => {
   const viewer = useViewer();
   const __typename = viewer?.__typename;
@@ -25,23 +37,9 @@ const AuthenticatedRoute = ({
   }
 
   return (
-    <Route
-      {...rest}
-      render={(props) => {
-        if (!viewer) {
-          return (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: props.location },
-              }}
-            />
-          );
-        }
-
-        return Component ? <Component {...props} /> : render(props);
-      }}
-    />
+    <Route {...props}>
+      {viewer ? React.cloneElement(children) : <RedirectToLogin />}
+    </Route>
   );
 };
 
