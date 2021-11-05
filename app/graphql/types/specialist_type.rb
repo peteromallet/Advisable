@@ -179,6 +179,10 @@ module Types
 
     field :case_studies, [Types::CaseStudy::Article], null: false, method: :articles
 
+    def case_studies
+      object.articles.order(created_at: :desc)
+    end
+
     field :case_studies_count, Integer, null: false
     def case_studies_count
       object.articles.active.published.size
