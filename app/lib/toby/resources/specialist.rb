@@ -6,16 +6,19 @@ module Toby
       model_name ::Specialist
       attribute :uid, Attributes::String, readonly: true
       attribute :email, Lookups::Accounts::Email
-      attribute :application_stage, Attributes::Select, options: ::Specialist::VALID_APPLICATION_STAGES
       attribute :account, Attributes::BelongsTo
+      attribute :bio, Attributes::LongText
+      attribute :application_stage, Attributes::Select, options: ::Specialist::VALID_APPLICATION_STAGES
+      attribute :previous_work_description, Attributes::LongText, readonly: true
+      attribute :previous_work_results, Attributes::LongText, readonly: true
+      attribute :ideal_project, Attributes::LongText, readonly: true
+      attribute :linkedin, Attributes::Url
+      attribute :website, Attributes::Url
       attribute :consultation_url, Lookups::Specialists::ConsultationUrl, sortable: false
       attribute :unavailable_until, Attributes::Date
       attribute :username, Attributes::String
-      attribute :bio, Attributes::LongText
       attribute :skills, Attributes::HasManyThrough
       attribute :industries, Attributes::HasManyThrough
-      attribute :linkedin, Attributes::String
-      attribute :website, Attributes::Url
       attribute :hourly_rate, Attributes::Currency
       attribute :sourcing_fee, Attributes::Integer
       attribute :country, Attributes::BelongsTo
