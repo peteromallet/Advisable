@@ -1,19 +1,16 @@
+import PropTypes from "prop-types";
 import React from "react";
-import useViewer from "src/hooks/useViewer";
 import { Link, Box, Stack } from "@advisable/donut";
 import SectionTitle from "./SectionTitle";
 import CaseStudyCard from "./CaseStudyCard";
 import SectionActionButton from "./SectionActionButton";
 import CaseStudiesEmptyState from "./CaseStudiesEmptyState";
 
-export default function CaseStudies({ caseStudies, specialist }) {
-  const viewer = useViewer();
-
+function CaseStudies({ caseStudies, specialist, isOwner }) {
   const cards = caseStudies.map((cs) => (
     <CaseStudyCard caseStudy={cs} key={cs.id} />
   ));
 
-  const isOwner = viewer?.id === specialist.id;
   const isEmpty = cards.length === 0;
 
   if (isEmpty && !isOwner) return null;
@@ -31,6 +28,7 @@ export default function CaseStudies({ caseStudies, specialist }) {
           href={`https://csi.advisable.com/freelancer/onboarding?specialist_id=${specialist.id}&contact_name=${specialist.firstName}`}
           target="_blank"
           mt={6}
+          paddingY={6}
         >
           Add a Case Study
         </SectionActionButton>
@@ -38,3 +36,9 @@ export default function CaseStudies({ caseStudies, specialist }) {
     </Box>
   );
 }
+
+CaseStudies.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
+};
+
+export default CaseStudies;

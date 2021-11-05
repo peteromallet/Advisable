@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 // Components
 import {
   Modal,
-  Text,
+  Heading,
   Box,
   Textarea,
   Select,
@@ -15,12 +15,22 @@ import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 // Queries
 import { useUpdateProfile, useCountries } from "../../queries";
+import GET_PROFILE_DATA from "../../queries/getProfileData.gql";
 // Constant values
 import { TRUNCATE_LIMIT } from "../../values";
+import { generatePath, useHistory, useRouteMatch } from "react-router";
+import { useApolloClient } from "@apollo/client";
 
 const validationSchema = object().shape({
   city: string(),
   country: string(),
+  username: string()
+    .nullable()
+    .min(3)
+    .matches(
+      /^[a-zA-Z0-9_]+$/,
+      "Username can only contain letters, numbers, and underscores.",
+    ),
   bio: string().max(
     TRUNCATE_LIMIT,
     `Must be not more than ${TRUNCATE_LIMIT} characters`,
@@ -28,38 +38,57 @@ const validationSchema = object().shape({
 });
 
 function EditInfoModal({ modal, specialist }) {
+  const client = useApolloClient();
+  const match = useRouteMatch();
+  const history = useHistory();
   const notifications = useNotifications();
   const [mutate] = useUpdateProfile();
   const isWidescreen = useBreakpoint("sUp");
   const initialValues = {
     city: specialist.city || "",
+    username: specialist.username || "",
     country: specialist.country?.id || "",
     bio: specialist.bio || "",
   };
 
-  const handleSubmit = (values) => {
-    const optimisticResponse = {
-      __typename: "Mutation",
-      updateProfile: {
-        __typename: "UpdateProfilePayload",
-        specialist: {
-          __typename: "Specialist",
-          ...specialist,
+  const handleSubmit = async (values, formik) => {
+    const response = await mutate({
+      variables: {
+        input: {
           ...values,
-          country: {
-            __typename: "Country",
-            id: values.country,
-          },
+          username: values.username || null,
         },
       },
-    };
-    mutate({
-      variables: { input: { ...values } },
-      optimisticResponse,
     });
 
-    notifications.notify("Your profile has been updated");
-    modal.hide();
+    if (response.errors) {
+      if (/username.*taken/i.test(response.errors[0].message)) {
+        formik.setFieldError("username", "Username is already taken.");
+      } else {
+        notifications.error("Something went wrong, please try again.");
+      }
+    } else {
+      const updatedSpecialist = response.data.updateProfile.specialist;
+      client.writeQuery({
+        query: GET_PROFILE_DATA,
+        variables: {
+          id: updatedSpecialist.username || updatedSpecialist.id,
+        },
+        data: {
+          specialist: updatedSpecialist,
+        },
+      });
+
+      const nextPath = generatePath(match.path, {
+        ...match.params,
+        username: updatedSpecialist.username || updatedSpecialist.id,
+      });
+
+      history.replace(nextPath);
+
+      notifications.notify("Your profile has been updated");
+      modal.hide();
+    }
   };
   const countriesQuery = useCountries();
 
@@ -71,15 +100,15 @@ function EditInfoModal({ modal, specialist }) {
         validationSchema={validationSchema}
       >
         <Form>
-          <Text
-            as="h2"
-            fontSize="xxxl"
-            fontWeight="medium"
-            color="neutral900"
-            mb="l"
-          >
-            Edit profile info
-          </Text>
+          <Heading as="h2" size="4xl" mb={6}>
+            Edit profile
+          </Heading>
+          <FormField
+            name="username"
+            label="Username"
+            description="This will be used in your profile URL."
+            caption="Must be at least 3 characters long and can contain only letters, numbers, and underscores."
+          />
           <Box display={isWidescreen ? "flex" : null} mb="l" mt={5}>
             <Box
               mr={isWidescreen && "s"}

@@ -161,7 +161,7 @@ export default function CaseStudyCard({ caseStudy }) {
   const params = useParams();
 
   const isArticle = !!matchPath(location.pathname, {
-    path: "/freelancers/:id/case_studies/:case_study_id",
+    path: "/freelancers/:username/case_studies/:case_study_id",
   });
 
   const skills = caseStudy.skills.map(({ skill }) => (
@@ -172,7 +172,7 @@ export default function CaseStudyCard({ caseStudy }) {
     <Suspense fallback={<LoadingSkeleton />}>
       <Box
         as={isArticle ? null : Link}
-        to={`/freelancers/${params.id}/case_studies/${caseStudy.id}`}
+        to={`/freelancers/${params.username}/case_studies/${caseStudy.id}`}
         notInline="true"
       >
         <StyledCaseStudyCard type={isArticle ? "article" : "profile"}>

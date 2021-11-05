@@ -1,24 +1,20 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 import { Box, Stack, useModal, DialogDisclosure } from "@advisable/donut";
-import useViewer from "src/hooks/useViewer";
 import SectionActionButton from "./SectionActionButton";
 import SectionTitle from "./SectionTitle";
 import Testimonial from "./Testimonial";
 import TestimonialLinkModal from "./TestimonialLinkModal";
 import TestimonialsEmptyState from "./TestimonialsEmptyState";
 
-export default function Testimonials({ reviews }) {
+function Testimonials({ reviews, isOwner }) {
   const modal = useModal();
-  const { id } = useParams();
-  const viewer = useViewer();
 
   const testimonials = reviews
     .filter((r) => !!r.comment)
     .map((r) => <Testimonial key={r.id} review={r} />);
 
   const isEmpty = testimonials.length === 0;
-  const isOwner = viewer?.id === id;
 
   if (isEmpty && !isOwner) return null;
 
@@ -30,7 +26,12 @@ export default function Testimonials({ reviews }) {
       </Stack>
       {isEmpty && isOwner && <TestimonialsEmptyState modal={modal} />}
       {!isEmpty && isOwner && (
-        <DialogDisclosure as={SectionActionButton} mt={6} {...modal}>
+        <DialogDisclosure
+          as={SectionActionButton}
+          paddingY={6}
+          mt={6}
+          {...modal}
+        >
           Request a Testimonial
         </DialogDisclosure>
       )}
@@ -38,3 +39,9 @@ export default function Testimonials({ reviews }) {
     </Box>
   );
 }
+
+Testimonials.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
+};
+
+export default Testimonials;

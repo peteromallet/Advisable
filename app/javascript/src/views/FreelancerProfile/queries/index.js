@@ -18,7 +18,7 @@ export const useProfileData = (props) => {
   const params = useParams();
   const response = useQuery(GET_PROFILE_DATA, {
     variables: {
-      id: params.id,
+      id: params.username,
     },
     ...props,
   });

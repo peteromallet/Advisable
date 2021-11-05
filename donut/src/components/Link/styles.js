@@ -52,9 +52,14 @@ const styles = css`
   ${typography}
   ${color}
 
+  border: none;
   outline: none;
+  cursor: pointer;
+  appearance: none;
   position: relative;
   align-items: center;
+  background: transparent;
+  font-family: TTHoves, sans-serif;
   display: ${(props) => (props.notInline ? "flex" : "inline-flex")};
   text-decoration: none;
   transition: color 200ms;

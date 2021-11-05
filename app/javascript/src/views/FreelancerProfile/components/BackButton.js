@@ -38,10 +38,10 @@ const StyledBackButton = styled.div`
 
 export default function BackButton({ children }) {
   const params = useParams();
-  const id = params?.id;
+  const username = params?.username;
 
   return (
-    <StyledBackButton as={Link} to={`/freelancers/${id}`}>
+    <StyledBackButton as={Link} to={`/freelancers/${username}`}>
       <ArrowLeft />
       <Text as="span">{children}</Text>
     </StyledBackButton>

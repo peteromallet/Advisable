@@ -2,11 +2,12 @@ import React from "react";
 import { Box } from "@advisable/donut";
 import css from "@styled-system/css";
 import styled from "styled-components";
+import { space } from "styled-system";
 
 const StyledAddButton = styled(Box)(
+  space,
   css({
     backgroundColor: "white",
-    height: "68px",
     width: "100%",
     display: "flex",
     userSelect: "none",
