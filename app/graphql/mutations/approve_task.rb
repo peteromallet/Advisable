@@ -21,6 +21,7 @@ module Mutations
 
       success = current_account_responsible_for { task.update(stage: "Approved", approved_at: Time.zone.now) }
       ApiError.invalid_request(task.errors.full_messages.first) unless success
+      task.charge!
 
       {task: task}
     end

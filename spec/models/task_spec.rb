@@ -35,19 +35,19 @@ RSpec.describe Task do
     end
   end
 
-  context "when stage changes to Approved" do
+  describe "charge!" do
     before { allow(Stripe::PaymentIntent).to receive(:create).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded")) }
 
     it "creates a payout" do
       count = Payout.count
-      task.update!(stage: "Approved")
+      task.charge!
       expect(Payout.count).to eq(count + 1)
       expect(Payout.last.attributes).to include("amount" => 5000, "sourcing_fee" => 400, "status" => "pending", "specialist_id" => task.application.specialist_id, "task_id" => task.id)
     end
 
     it "creates a Payment with all the right attributes" do
       count = Payment.count
-      task.update!(stage: "Approved")
+      task.charge!
       expect(Payment.count).to eq(count + 1)
       expect(Payment.last.attributes).to include("amount" => 5000, "admin_fee" => 250, "status" => "succeeded", "company_id" => task.application.project.user.company_id, "specialist_id" => task.application.specialist_id, "task_id" => task.id)
     end
@@ -57,7 +57,7 @@ RSpec.describe Task do
         it "creates a payment with a diff" do
           create(:payment, task: task, amount: task.final_cost - 1000)
           count = Payment.count
-          task.update!(stage: "Approved")
+          task.charge!
           expect(Payment.count).to eq(count + 1)
           expect(Payment.last.attributes).to include("amount" => 1000, "admin_fee" => 50, "status" => "succeeded", "company_id" => task.application.project.user.company_id, "specialist_id" => task.application.specialist_id, "task_id" => task.id)
         end
@@ -67,7 +67,7 @@ RSpec.describe Task do
         it "does not create a payment" do
           create(:payment, task: task, amount: task.final_cost)
           count = Payment.count
-          task.update!(stage: "Approved")
+          task.charge!
           expect(Payment.count).to eq(count)
         end
       end
@@ -79,7 +79,7 @@ RSpec.describe Task do
       it "does nothing" do
         payout_count = Payout.count
         payment_count = Payment.count
-        task.update!(stage: "Approved")
+        task.charge!
         expect(Payout.count).to eq(payout_count)
         expect(Payment.count).to eq(payment_count)
       end
