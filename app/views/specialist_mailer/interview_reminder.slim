@@ -1,7 +1,6 @@
 p Hi #{@interview.specialist.account.first_name},
 p Ahead of your call with #{user_name_with_company(@interview.user)}, I'm including some notes about the consultation process below.
 
-
 p You can join the call using the link below which should also be in the calendar invite.
 
 a href="#{call_url(@interview.video_call)}" = call_url(@interview.video_call)
