@@ -37,6 +37,8 @@ class Task < ApplicationRecord
   has_one :payout, dependent: :nullify
   belongs_to :application
 
+  after_save :charge, if: ->(task) { task.stage == "Approved" }
+
   scope :active, -> { where.not(stage: "Deleted") }
 
   # Returns a collection of tasks that have a due date on a given date.
@@ -54,6 +56,27 @@ class Task < ApplicationRecord
 
   def fixed_estimate?
     estimate_type == "Fixed"
+  end
+
+  private
+
+  def charge
+    return unless final_cost.to_i.positive?
+
+    create_payout!
+    create_payment!
+  end
+
+  def create_payout!
+    Payout.create!(specialist_id: application.specialist_id, task: self, amount: final_cost, status: "pending")
+  end
+
+  def create_payment!
+    amount = final_cost - payments.sum(:amount)
+    return if amount.zero?
+
+    payment = Payment.create!(company_id: application.project.user.company_id, specialist_id: application.specialist_id, amount: amount, task: self, status: "pending")
+    payment.charge!
   end
 end
 
