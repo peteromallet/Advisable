@@ -14,7 +14,7 @@ import { useCaseStudy } from "../queries";
 
 function ArticleContent() {
   const params = useParams();
-  const { data, loading, error } = useCaseStudy(params.case_study_id);
+  const { data, loading, error } = useCaseStudy(params.slug);
 
   if (isNotFound(error)) {
     return <NotFound />;
@@ -43,9 +43,9 @@ function Article({ isOwner, profileData }) {
 
   const partialCaseStudy = useMemo(
     () =>
-      profileData.specialist.caseStudies.find(
-        (cs) => cs.id === params.case_study_id,
-      ),
+      profileData.specialist.caseStudies.find((cs) => {
+        return [cs.id, cs.slug].includes(params.slug);
+      }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [params.case_study_id],
   );
