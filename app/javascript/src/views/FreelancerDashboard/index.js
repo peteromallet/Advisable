@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Stack, useBackground } from "@advisable/donut";
+import ErrorBoundary from "src/components/ErrorBoundary";
 import Page from "src/components/Page";
 import Loading from "src/components/Loading";
 import Welcome from "./components/Welcome";
@@ -16,7 +17,7 @@ export default function FreelancerDashboard() {
   if (loading) return <Loading />;
 
   return (
-    <>
+    <ErrorBoundary>
       <Box bg="neutral50">
         <Box
           display={{ _: "block", s: "grid" }}
@@ -55,6 +56,6 @@ export default function FreelancerDashboard() {
           </Box>
         </Box>
       </Page>
-    </>
+    </ErrorBoundary>
   );
 }
