@@ -83,6 +83,20 @@ RSpec.describe Mutations::ScheduleInterview do
     expect { request }.to(change(VideoCall, :count).by(1))
   end
 
+  it "creates a new message in a conversation" do
+    c_count = Conversation.count
+    request
+    expect(Conversation.count).to eq(c_count + 1)
+    conversation = Conversation.last
+    expect(conversation.participants.pluck(:account_id)).to match_array([user.account.id, specialist.account.id])
+    expect(conversation.messages.count).to eq(1)
+    message = conversation.messages.first
+    expect(message.author).to be_nil
+    expect(message.kind).to eq("system")
+    expect(message.author).to be_nil
+    expect(message.content).to eq("#{specialist.account.name} & #{user.account.name},\n\nNow that you've scheduled a call, you can use this thread to communicate.\n\nIf you have any questions or issues, don't hesitate to contact the Advisable team at hello@advisable.com.")
+  end
+
   context "when a video call already exists for that interview" do
     it "doesnt create a video call record" do
       VideoCall.create(interview: interview)
