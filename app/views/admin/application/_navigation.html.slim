@@ -2,10 +2,12 @@ nav.navigation role="navigation"
   - Administrate::Namespace.new(namespace).resources_with_index_route.each do |resource|
     = link_to(display_resource_name(resource), resource_index_route(resource), class: "navigation__link navigation__link--#{nav_link_state(resource)}") if valid_action?(:index, resource) && show_action?(:index, model_from_resource(resource))
   hr
-  div style=("margin-bottom: 10px;")
-    = button_to "Sidekiq", admin_sidekiq_web_path, style: 'width: 100%', method: :get
+  div style="margin-bottom: 10px"
+    = button_to "Sidekiq", sidekiq_web_path, style: 'width: 100%', method: :get
+  div style="margin-bottom: 10px"
+    = button_to "PG Hero", pg_hero_path, style: 'width: 100%', method: :get
   - if ENV["STAGING"]
-    div style=("margin-bottom: 10px;")
+    div style="margin-bottom: 10px"
       = button_to "Resync Airtable", admin_resync_path, style: 'width: 100%'
-    div style=("margin-bottom: 10px;")
+    div style="margin-bottom: 10px"
       = button_to "Reset test data", admin_reset_test_path, style: 'width: 100%'
