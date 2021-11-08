@@ -4,7 +4,6 @@ import css from "@styled-system/css";
 import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import { Box, Text, Link } from "@advisable/donut";
-import useViewer from "src/hooks/useViewer";
 import ProfilePicture from "../ProfilePicture";
 import ProfilePictureArticle from "../ProfilePictureArticle";
 import CoverImage from "../CoverImage";
@@ -30,9 +29,6 @@ function Sidebar({ data, isOwner, ...props }) {
     path: "/freelancers/:username/case_studies/:case_study_id",
   });
 
-  const viewer = useViewer();
-  const params = useParams();
-  const isOwner = viewer?.id === params.id;
   const { specialist } = data;
 
   const [isExpanded, setExpanded] = useState(false);
