@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Box, Stack } from "@advisable/donut";
 import GenericError from "src/views/GenericError";
 import Page from "src/components/Page";
+import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
 import Welcome from "../components/Welcome";
 import Profile from "../components/Profile";
 import UpcomingEvents from "../components/UpcomingEvents";
@@ -35,29 +36,33 @@ export default function Dashboard() {
       </Box>
       <Page width="1080px">
         <Box
-          display={{ _: "block", l: "grid" }}
           paddingY={{ _: 8, m: 12 }}
           paddingX={{ _: 4, m: 8 }}
-          gridTemplateColumns="52% auto"
-          gridColumnGap={{ l: "48px", xl: "96px" }}
           maxWidth={{ _: "720px", l: "none" }}
           mx="auto"
         >
-          {loading ? (
-            <DashboardLoading />
-          ) : (
-            <Suspense fallback={<DashboardLoading />}>
-              <Stack as={Box} spacing={16} mb={16} gridColumn="2" gridRow="1">
-                <LatestProjects topCaseStudies={data.topCaseStudies} />
-                <UpcomingEvents upcomingEvents={data.upcomingEvents} />
-              </Stack>
-              <Box gridColumn="1" gridRow="1">
-                <CollaborationRequests
-                  collaborationRequests={data.collaborationRequests?.nodes}
-                />
-              </Box>
-            </Suspense>
-          )}
+          <AccountConfirmationPrompt />
+          <Box
+            display={{ _: "block", l: "grid" }}
+            gridTemplateColumns="52% auto"
+            gridColumnGap={{ l: "48px", xl: "96px" }}
+          >
+            {loading ? (
+              <DashboardLoading />
+            ) : (
+              <Suspense fallback={<DashboardLoading />}>
+                <Stack as={Box} spacing={16} mb={16} gridColumn="2" gridRow="1">
+                  <LatestProjects topCaseStudies={data.topCaseStudies} />
+                  <UpcomingEvents upcomingEvents={data.upcomingEvents} />
+                </Stack>
+                <Box gridColumn="1" gridRow="1">
+                  <CollaborationRequests
+                    collaborationRequests={data.collaborationRequests?.nodes}
+                  />
+                </Box>
+              </Suspense>
+            )}
+          </Box>
         </Box>
       </Page>
     </>
