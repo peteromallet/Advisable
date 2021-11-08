@@ -9,3 +9,8 @@ production:
   - active_storage_analysis
   - action_mailbox_routing
   - action_mailbox_incineration
+:schedule:
+  InterviewReminderJob:
+    every: 10 minutes
+  AccountDeleteJob:
+    cron: "0 0 6 * * *" # Every day at 6 AM
