@@ -1,8 +1,9 @@
 import React from "react";
 import { Box, Stack, useBackground } from "@advisable/donut";
 import ErrorBoundary from "src/components/ErrorBoundary";
-import Page from "src/components/Page";
+import GenericError from "src/views/GenericError";
 import Loading from "src/components/Loading";
+import Page from "src/components/Page";
 import Welcome from "./components/Welcome";
 import Profile from "./components/Profile";
 import UpcomingEvents from "./components/UpcomingEvents";
@@ -15,6 +16,7 @@ export default function FreelancerDashboard() {
   useBackground("white");
 
   if (loading) return <Loading />;
+  if (error) return <GenericError />;
 
   return (
     <ErrorBoundary>
