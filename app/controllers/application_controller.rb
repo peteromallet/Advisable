@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include ActiveStorage::SetCurrent
   include CurrentUser
 
   before_action :set_sentry_context
