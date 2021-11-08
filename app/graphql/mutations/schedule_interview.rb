@@ -28,7 +28,6 @@ module Mutations
       interview = Interview.find_by!(uid: args[:id])
 
       ApiError.invalid_request("INTERVIEW_IS_NOT_SCHEDULABLE", "Interview is not in a schedulable state.") unless ALLOWED_STATUES.include?(interview.status)
-
       ApiError.invalid_request("STARTS_AT_NOT_AVAILABLE_ON_CLIENT", "Argument `starts_at` is not inside of the client's availability.") unless interview.user.availability.include?(args[:starts_at])
 
       create_video_call(interview)
@@ -37,7 +36,7 @@ module Mutations
       interview.status = "Call Scheduled"
       current_account_responsible_for { interview.save! }
 
-      interview.application.update(status: "Interview Scheduled") if interview.application.blank?
+      interview.application.update(status: "Interview Scheduled")
       update_specialist_number(interview.application.specialist, args[:phone_number]) if args[:phone_number]
 
       {interview: interview}
