@@ -5,6 +5,7 @@ import { Box, Text, Link } from "@advisable/donut";
 import Card from "./Card";
 import { StyledLineClamp } from "@guild/views/Events/styles";
 import OrbitsBackground from "@guild/components/Event/OrbitsBackground";
+import { useImage } from "react-image";
 
 const StartsAtTag = ({ startsAt }) => {
   const date = DateTime.fromISO(startsAt);
@@ -35,6 +36,12 @@ const StartsAtTag = ({ startsAt }) => {
   );
 };
 
+const EventCoverImage = (coverPhotoUrl) => {
+  const { src } = useImage({ srcList: coverPhotoUrl });
+
+  return <img src={src} />;
+};
+
 export default function Event({ event }) {
   return (
     <Card as={Link} to={`/events/${event.id}`}>
@@ -56,7 +63,7 @@ export default function Event({ event }) {
           <StartsAtTag startsAt={event.startsAt} />
           <Box position="absolute" left="0" top="0" right="0" bottom="0">
             {event.coverPhotoUrl ? (
-              <img src={event.coverPhotoUrl} />
+              <EventCoverImage coverPhotoUrl={event.coverPhotoUrl} />
             ) : (
               <OrbitsBackground
                 height="148px"
