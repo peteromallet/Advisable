@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Stack, useBackground } from "@advisable/donut";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import GenericError from "src/views/GenericError";
-import Loading from "src/components/Loading";
 import Page from "src/components/Page";
 import Welcome from "./components/Welcome";
 import Profile from "./components/Profile";
@@ -10,12 +9,12 @@ import UpcomingEvents from "./components/UpcomingEvents";
 import LatestProjects from "./components/LatestProjects";
 import CollaborationRequests from "./components/CollaborationRequests";
 import { useDashboardData } from "./queries";
+import DashboardLoading from "./components/DashboardLoading";
 
 export default function FreelancerDashboard() {
   const { data, loading, error } = useDashboardData();
   useBackground("white");
 
-  if (loading) return <Loading />;
   if (error) return <GenericError />;
 
   return (
@@ -32,8 +31,8 @@ export default function FreelancerDashboard() {
         >
           <Welcome />
           <Profile
-            caseStudies={data.viewer?.caseStudies}
-            reviews={data.viewer?.reviews}
+            caseStudies={data?.viewer?.caseStudies}
+            reviews={data?.viewer?.reviews}
           />
         </Box>
       </Box>
@@ -47,15 +46,21 @@ export default function FreelancerDashboard() {
           maxWidth={{ _: "720px", l: "none" }}
           mx="auto"
         >
-          <Stack as={Box} spacing={16} mb={16} gridColumn="2" gridRow="1">
-            <LatestProjects topCaseStudies={data.topCaseStudies} />
-            <UpcomingEvents upcomingEvents={data.upcomingEvents} />
-          </Stack>
-          <Box gridColumn="1" gridRow="1">
-            <CollaborationRequests
-              collaborationRequests={data.collaborationRequests.nodes}
-            />
-          </Box>
+          {loading ? (
+            <DashboardLoading />
+          ) : (
+            <>
+              <Stack as={Box} spacing={16} mb={16} gridColumn="2" gridRow="1">
+                <LatestProjects topCaseStudies={data.topCaseStudies} />
+                <UpcomingEvents upcomingEvents={data.upcomingEvents} />
+              </Stack>
+              <Box gridColumn="1" gridRow="1">
+                <CollaborationRequests
+                  collaborationRequests={data.collaborationRequests?.nodes}
+                />
+              </Box>
+            </>
+          )}
         </Box>
       </Page>
     </ErrorBoundary>

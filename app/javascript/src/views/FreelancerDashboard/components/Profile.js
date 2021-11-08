@@ -3,9 +3,10 @@ import pluralize from "pluralize";
 import css from "@styled-system/css";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Box, Text } from "@advisable/donut";
+import { Box, Skeleton, Text } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
 import useViewer from "src/hooks/useViewer";
+import { review } from "src/testHelpers/mockData";
 
 const StyledLink = styled(Link)(
   css({
@@ -17,6 +18,34 @@ const StyledLink = styled(Link)(
     },
   }),
 );
+
+function ReviewsAndCaseStudies({ reviews, caseStudies }) {
+  return (
+    <Box display="flex" flexWrap="wrap" mb={6} css={css({ columnGap: 5 })}>
+      <Text lineHeight="m" color="neutral700" fontWeight={350}>
+        <Text as="span" fontWeight={450}>
+          {caseStudies.length}
+        </Text>{" "}
+        case {pluralize("study", caseStudies.length)}
+      </Text>
+      <Text lineHeight="m" color="neutral700" fontWeight={350}>
+        <Text as="span" fontWeight={450}>
+          {reviews.length}
+        </Text>{" "}
+        {pluralize("testimonial", reviews.length)}
+      </Text>
+    </Box>
+  );
+}
+
+function LoadingReviewsAndCaseStudies() {
+  return (
+    <Box display="flex" flexWrap="wrap" mb={6} css={css({ columnGap: 5 })}>
+      <Skeleton width="100px" height="18px" my={0.5} />
+      <Skeleton width="98px" height="18px" my={0.5} />
+    </Box>
+  );
+}
 
 export default function Hero({ caseStudies, reviews }) {
   const viewer = useViewer();
@@ -44,25 +73,11 @@ export default function Hero({ caseStudies, reviews }) {
           >
             {viewer.name}
           </Text>
-          <Box
-            display="flex"
-            flexWrap="wrap"
-            mb={6}
-            css={css({ columnGap: 5 })}
-          >
-            <Text lineHeight="m" color="neutral700" fontWeight={350}>
-              <Text as="span" fontWeight={450}>
-                {caseStudies.length}
-              </Text>{" "}
-              case {pluralize("study", caseStudies.length)}
-            </Text>
-            <Text lineHeight="m" color="neutral700" fontWeight={350}>
-              <Text as="span" fontWeight={450}>
-                {reviews.length}
-              </Text>{" "}
-              {pluralize("testimonial", reviews.length)}
-            </Text>
-          </Box>
+          {Boolean(caseStudies) && Boolean(reviews) ? (
+            <ReviewsAndCaseStudies caseStudies={caseStudies} reviews={review} />
+          ) : (
+            <LoadingReviewsAndCaseStudies />
+          )}
           <StyledLink to="/profile" size="s">
             Update profile
           </StyledLink>
