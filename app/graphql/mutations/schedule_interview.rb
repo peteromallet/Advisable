@@ -15,27 +15,28 @@ module Mutations
       "More Time Options Added"
     ].freeze
 
-    def authorized?(id:, **_args)
+    def authorized?(id:, **args)
       requires_specialist!
       interview = Interview.find_by!(uid: id)
       policy = InterviewPolicy.new(current_user, interview)
-      return true if policy.schedule?
-
-      ApiError.not_authorized("You do not have permission to schedule this interview")
+      ApiError.not_authorized("You do not have permission to schedule this interview") unless policy.schedule?
+      ApiError.invalid_request("INTERVIEW_IS_NOT_SCHEDULABLE", "Interview is not in a schedulable state.") unless ALLOWED_STATUES.include?(interview.status)
+      ApiError.invalid_request("STARTS_AT_NOT_AVAILABLE_ON_CLIENT", "Argument `starts_at` is not inside of the client's availability.") unless interview.user.availability.include?(args[:starts_at])
+      true
     end
 
     def resolve(**args)
       interview = Interview.find_by!(uid: args[:id])
 
-      ApiError.invalid_request("INTERVIEW_IS_NOT_SCHEDULABLE", "Interview is not in a schedulable state.") unless ALLOWED_STATUES.include?(interview.status)
-      ApiError.invalid_request("STARTS_AT_NOT_AVAILABLE_ON_CLIENT", "Argument `starts_at` is not inside of the client's availability.") unless interview.user.availability.include?(args[:starts_at])
+      current_account_responsible_for do
+        interview.update!(
+          starts_at: args[:starts_at],
+          call_scheduled_at: Time.current,
+          status: "Call Scheduled"
+        )
+      end
 
-      create_video_call(interview)
-      interview.starts_at = args[:starts_at]
-      interview.call_scheduled_at = Time.zone.now
-      interview.status = "Call Scheduled"
-      current_account_responsible_for { interview.save! }
-
+      interview.create_video_call! if interview.video_call.blank?
       interview.application.update(status: "Interview Scheduled")
       interview.application.project.update(status: "Interview Scheduled")
       update_specialist_number(interview.application.specialist, args[:phone_number]) if args[:phone_number]
@@ -44,12 +45,6 @@ module Mutations
     end
 
     private
-
-    def create_video_call(interview)
-      return if interview.video_call.present?
-
-      VideoCall.create(interview: interview)
-    end
 
     def update_specialist_number(specialist, number)
       return if specialist.phone == number
