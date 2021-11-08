@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Text, Box, Stack, useBackground } from "@advisable/donut";
+import { Box, Stack, useBackground } from "@advisable/donut";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import GenericError from "src/views/GenericError";
 import Page from "src/components/Page";
