@@ -27,7 +27,7 @@ module Types
 
       field :cover_photo, String, null: true
       def cover_photo
-        object.cover_photo.url
+        Rails.application.routes.url_helpers.rails_blob_url(object.cover_photo, host: Advisable::Application::ORIGIN_HOST)
       end
 
       field :slug, String, null: true
