@@ -42,13 +42,15 @@ function StatusNotice({ path, actionLabel, title, children }) {
           {children}
         </Text>
       </Box>
-      <Box flexShrink={0}>
-        <Link to={path} onClick={handleClick}>
-          <Button variant="gradient" size="s" suffix={<ArrowRight />}>
-            {actionLabel}
-          </Button>
-        </Link>
-      </Box>
+      {path && (
+        <Box flexShrink={0}>
+          <Link to={path} onClick={handleClick}>
+            <Button variant="gradient" size="s" suffix={<ArrowRight />}>
+              {actionLabel}
+            </Button>
+          </Link>
+        </Box>
+      )}
     </Box>
   );
 }
