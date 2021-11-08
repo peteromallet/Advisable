@@ -1,6 +1,7 @@
 import React from "react";
 import { DateTime } from "luxon";
 import css from "@styled-system/css";
+import styled from "styled-components";
 import { Box, Text, Link } from "@advisable/donut";
 import Card from "./Card";
 import { StyledLineClamp } from "@guild/views/Events/styles";
@@ -36,10 +37,17 @@ const StartsAtTag = ({ startsAt }) => {
   );
 };
 
-const EventCoverImage = (coverPhotoUrl) => {
+const StyledCoverImage = styled.img`
+  object-fit: cover;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+`;
+
+const EventCoverImage = ({ coverPhotoUrl }) => {
   const { src } = useImage({ srcList: coverPhotoUrl });
 
-  return <img src={src} />;
+  return <StyledCoverImage src={src} />;
 };
 
 export default function Event({ event }) {
