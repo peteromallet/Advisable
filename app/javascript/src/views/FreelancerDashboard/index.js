@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Stack, useBackground } from "@advisable/donut";
+import React, { Suspense } from "react";
+import { Text, Box, Stack, useBackground } from "@advisable/donut";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import GenericError from "src/views/GenericError";
 import Page from "src/components/Page";
@@ -49,7 +49,7 @@ export default function FreelancerDashboard() {
           {loading ? (
             <DashboardLoading />
           ) : (
-            <>
+            <Suspense fallback={<DashboardLoading />}>
               <Stack as={Box} spacing={16} mb={16} gridColumn="2" gridRow="1">
                 <LatestProjects topCaseStudies={data.topCaseStudies} />
                 <UpcomingEvents upcomingEvents={data.upcomingEvents} />
@@ -59,7 +59,7 @@ export default function FreelancerDashboard() {
                   collaborationRequests={data.collaborationRequests?.nodes}
                 />
               </Box>
-            </>
+            </Suspense>
           )}
         </Box>
       </Page>

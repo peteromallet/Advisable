@@ -3,6 +3,7 @@ import { Link, Box, Text } from "@advisable/donut";
 import styled from "styled-components";
 import css from "@styled-system/css";
 import Card from "./Card";
+import { useImage } from "react-image";
 
 const StyledCoverImage = styled.img`
   position: absolute;
@@ -14,6 +15,11 @@ const StyledCoverImage = styled.img`
   transform: scale(2);
 `;
 
+function CoverImage({ coverPhoto }) {
+  const { src } = useImage({ srcList: coverPhoto });
+  return <StyledCoverImage src={src} />;
+}
+
 const StyledAvatar = styled.img`
   z-index: 1;
   border-radius: 12px;
@@ -22,6 +28,11 @@ const StyledAvatar = styled.img`
   height: 62px;
   object-fit: cover;
 `;
+
+function Avatar({ avatar }) {
+  const { src } = useImage({ srcList: avatar });
+  return <StyledAvatar src={src} />;
+}
 
 export default function Project({ caseStudy }) {
   return (
@@ -44,8 +55,8 @@ export default function Project({ caseStudy }) {
             overflow: hidden;
           `}
         >
-          <StyledCoverImage src={caseStudy.coverPhoto} />
-          <StyledAvatar src={caseStudy.specialist?.avatar} />
+          <CoverImage coverPhoto={caseStudy.coverPhoto} />
+          <Avatar avatar={caseStudy.specialist?.avatar} />
         </Box>
         <Box>
           <Text
