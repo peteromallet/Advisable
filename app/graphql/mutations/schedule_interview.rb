@@ -37,6 +37,7 @@ module Mutations
       current_account_responsible_for { interview.save! }
 
       interview.application.update(status: "Interview Scheduled")
+      interview.application.project.update(status: "Interview Scheduled")
       update_specialist_number(interview.application.specialist, args[:phone_number]) if args[:phone_number]
 
       {interview: interview}
