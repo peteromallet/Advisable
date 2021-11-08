@@ -27,7 +27,7 @@ export default function AccountConfirmationPrompt() {
   }
 
   return (
-    <Box bg="neutral100" borderRadius="12px" padding="lg" marginBottom="xl">
+    <Box bg="neutral100" borderRadius="12px" padding="lg" marginBottom={11}>
       <Box display="flex" alignItems="center">
         <Box flexShrink="0">
           <Circle size="40px" bg="cyan300" color="cyan900">
