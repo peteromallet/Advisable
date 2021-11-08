@@ -67,6 +67,12 @@ RSpec.describe Mutations::ScheduleInterview do
     expect(interview.reload.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
   end
 
+  it "updates the application" do
+    expect(application.reload.status).to eq("Applied")
+    request
+    expect(application.reload.status).to eq("Interview Scheduled")
+  end
+
   it "creates a video call record" do
     expect { request }.to(change(VideoCall, :count).by(1))
   end
