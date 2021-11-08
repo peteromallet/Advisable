@@ -1,15 +1,16 @@
 import React from "react";
+import { useImage } from "react-image";
 import { Link, Box, Text } from "@advisable/donut";
 import styled from "styled-components";
 import css from "@styled-system/css";
 import Card from "./Card";
-import { useImage } from "react-image";
 
 const StyledCoverImage = styled.img`
   position: absolute;
   left: 0;
   top: 0;
   object-fit: cover;
+  pointer-events: none;
   width: 100%;
   height: 100%;
   transform: scale(2);
@@ -27,6 +28,7 @@ const StyledAvatar = styled.img`
   width: 42px;
   height: 62px;
   object-fit: cover;
+  pointer-events: none;
 `;
 
 function Avatar({ avatar }) {
