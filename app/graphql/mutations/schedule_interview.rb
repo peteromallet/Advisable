@@ -40,6 +40,7 @@ module Mutations
       interview.application.update(status: "Interview Scheduled")
       interview.application.project.update(status: "Interview Scheduled")
       update_specialist_number(interview.application.specialist, args[:phone_number]) if args[:phone_number]
+      create_system_message!(interview)
 
       {interview: interview}
     end
@@ -51,6 +52,13 @@ module Mutations
 
       specialist.update(phone: number)
       specialist.sync_to_airtable
+    end
+
+    def create_system_message!(interview)
+      specialist_acc = interview.specialist.account
+      user_acc = interview.user.account
+      conversation = Conversation.by_accounts([specialist_acc, user_acc])
+      conversation.new_message!(nil, "#{specialist_acc.name} & #{user_acc.name},\n\nNow that you've scheduled a call, you can use this thread to communicate.\n\nIf you have any questions or issues, don't hesitate to contact the Advisable team at hello@advisable.com.")
     end
   end
 end
