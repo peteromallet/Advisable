@@ -1,1 +1,77 @@
-aaa
+<p>
+  Hi <%= @specialist.account.first_name %>,
+</p>
+<p>
+  Ahead of your call with <%= @user.account.name %> from <%= @user.company.name %>, I'm including some notes on the client and project for your reference below.
+</p>
+<p>
+  As this is a direct to consultation call, we recommend using our <a href="https://advisable.com/direct-consultation-best-practices/">Direct Consultation Interview Best Practices</a>.
+  Please take time to read this prior to the call.
+</p>
+<p>
+  Best of luck and let me know if you have any questions!
+</p>
+<p>
+  Best,<br>
+  <%= @sales_person.first_name %>
+</p>
+<p>
+  <strong>On The Call:</strong>
+</p>
+<p>
+  The goal of the call should be for you to get an in-depth understanding of the <%= @interview.application.project.nice_name %> project while also convincing <%= @user.account.first_name %> and the <%= @user.company.name %> team of your ability to execute it.
+  After the call, you should ideally be in the position to send a proposal to <%= @user.company.name %>.
+</p>
+<p>
+QUESTIONMARK THOMAS QUESTIONMARK
+As mentioned, the topic they want to discuss is: "{{84182677__topic}}"
+IS THIS STILL RELEVANT? DO WE HAVE A TOPIC EQUIALENT ON THE INTERVIEW?
+</p>
+<p>
+  We suggest using <a href="https://advisable.com/freelancer-trial/">Advisable’s money-back guarantee</a> to help the client start the engagement.
+  With our money back guarantee, if the client isn’t happy with the output of your work, they don’t have to pay.
+  As long as they agree that the input was good (communication, schedule adherence, effort, etc.), you’ll still get paid.
+  Please review our <a href="https://advisable.com/direct-consultation-best-practices/">Direct Consultation Interview Best Practices</a> for useful language to communicate this.
+</p>
+<p>
+  <strong>After The Call:</strong>
+</p>
+<p>
+  After the call, we'll send you an email asking you for feedback which we'll need you to complete ASAP.
+  One of our team members will also try and call you after the interview for an update but, if you’re unable to connect, please fill out the automated follow up form we send to you after the interview.
+</p>
+<p>
+  We typically encourage you to send a proposal to <%= @user.company.name %> as soon as possible in order to enable them to make a quick decision - companies that receive proposals ASAP hire far quicker and more frequently.
+  You can do so using our tool <a href="<%= proposal_url(@interview.application) %>">here</a>.
+  I'll share this link with you again after the call.
+</p>
+<p>
+  Additionally, please keep all communication with the client in our messaging app or let us know any reason you’d need to move outside of it.
+</p>
+<p>
+  <strong>Pricing & Logistics:</strong>
+</p>
+<p>
+  In direct consultation leads your hourly rates have not been shared so please discuss pricing directly with <%= @user.account.first_name %> on the call.  Please remember to take into account that the fees you communicate will include the Advisable.com fee.
+</p>
+<p>
+WE NEED TO UPDATE THE FEEES!!!
+Advisable's fee starts at 20% for the first $10,000 of a project but is reduced to 10% on payments above $10,000, and further reduced to 5% on payments above $25,000.
+</p>
+<p>
+PROBABLY NEED TO UPDATE THIS TOO
+Remember, Advisable charges fees to Freelancers so that the rate quoted to Clients is the only rate that Clients need to consider and pay. There is no need for you to communicate your Advisable fees to Clients, although your fees are of course transparent and available to Clients.
+</p>
+<p>
+AND THIS
+Our goal for the Client is simplicity: they agree to your rate, Advisable invoice them on that basis, then that's all they pay.
+</p>
+<p>
+  Once <%= @user.account.first_name %> makes you an offer, you can accept it using our tool.
+  <%= @user.account.first_name %> will make all payments via the Advisable.com platform so, once they accept your proposal, we will be in touch with everyone to take care of invoicing, contracts, etc.
+</p>
+<p>
+  --<br><br>
+  <%= @sales_person.name %><br>
+  Advisable.com
+</p>
