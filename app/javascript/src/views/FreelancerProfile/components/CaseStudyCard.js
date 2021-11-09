@@ -194,7 +194,9 @@ export default function CaseStudyCard({ caseStudy }) {
               </StyledFaviconWrapper>
             </StyledLogoSquircle>
             <Box>
-              <StyledCompanyType>{caseStudy.companyType}</StyledCompanyType>
+              <StyledCompanyType>
+                {caseStudy.companyType?.join(", ")}
+              </StyledCompanyType>
               <StyledTitle>{caseStudy.title}</StyledTitle>
               <Box display="flex" flexDirection="row" flexWrap="wrap">
                 {skills}
