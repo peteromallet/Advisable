@@ -5,12 +5,7 @@ module Types
     description "Fields representing Project model"
 
     field :id, ID, null: false, method: :uid
-    field :name, String, null: false
-
-    def name
-      object.name || object.primary_skill&.name
-    end
-
+    field :name, String, null: false, method: :nice_name
     field :primary_skill, Types::Skill, null: true
     # Whether or not we are actively searching for candidates
     field :sourcing, Boolean, null: true

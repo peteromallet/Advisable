@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "icalendar/tzinfo"
+
 class Interview < ApplicationRecord
   include Uid
 
@@ -18,6 +20,22 @@ class Interview < ApplicationRecord
   scope :scheduled, -> { where(status: "Call Scheduled") }
 
   validates :status, inclusion: {in: VALID_STATUSES}
+
+  def calendar_event_with(summary, description)
+    cal = Icalendar::Calendar.new
+    cal.add_timezone(starts_at.time_zone.tzinfo.ical_timezone(starts_at))
+    cal.event do |e|
+      e.dtstart = starts_at
+      e.dtend = starts_at + 30.minutes
+      e.summary = summary
+      e.description = description
+      e.location = "#{ApplicationMailer.default_url_options[:host]}/calls/#{video_call.uid}"
+      e.organizer = user.company.sales_person.cal_address
+      e.ip_class = "PRIVATE"
+    end
+    cal.publish
+    cal
+  end
 end
 
 # == Schema Information
