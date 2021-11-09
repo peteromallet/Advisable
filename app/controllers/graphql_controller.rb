@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
-  include ActiveStorage::SetCurrent
-
   before_action :require_admin, only: :toby
 
   def execute
