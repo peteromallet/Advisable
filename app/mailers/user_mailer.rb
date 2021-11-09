@@ -112,7 +112,7 @@ class UserMailer < ApplicationMailer
       from: @sales_person.email_with_name,
       to: @user.account.email,
       bcc: @sales_person.email_with_name,
-      subject: "Your call with #{@specialist.account.name} in 1 hour"
+      subject: "Information Before Your Call with #{@specialist.account.name} - #{interview.application.project.nice_name} Project"
     ) do |format|
       format.html { render layout: false }
     end
