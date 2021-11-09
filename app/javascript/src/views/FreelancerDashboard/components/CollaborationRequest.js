@@ -37,8 +37,8 @@ export default function CollaborationRequest({ request }) {
           <Text color="neutral900" fontWeight={450} lineHeight="m">
             {request.author?.name}
           </Text>
-          <Text fontSize="xs" color="neutral500" lineHeight="xs">
-            {request.createdAtTimeAgo}
+          <Text fontSize="xs" color="neutral500" lineHeight="s">
+            {request.author?.location}
           </Text>
         </Box>
       </Box>
