@@ -102,9 +102,9 @@ class SpecialistMailer < ApplicationMailer
     attachments["interview-with-#{@user.company.name.parameterize}.ics"] = {mime_type: "application/ics", content: interview.calendar_event_with(summary, description).to_ical}
     mail(
       from: @sales_person.email_with_name,
-      to: @user.account.email,
+      to: @specialist.account.email,
       bcc: @sales_person.email_with_name,
-      subject: "Your call with #{@specialist.account.name} in 1 hour"
+      subject: "Information Before Your Call with #{@user.account.name} from #{@user.company.name}"
     ) do |format|
       format.html { render layout: false }
     end
