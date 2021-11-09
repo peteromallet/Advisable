@@ -41,6 +41,8 @@ module Mutations
       interview.application.project.update(status: "Interview Scheduled")
       update_specialist_number(interview.application.specialist, args[:phone_number]) if args[:phone_number]
       create_system_message!(interview)
+      SpecialistMailer.interview_scheduled(interview).deliver_later
+      UserMailer.interview_scheduled(interview).deliver_later
 
       {interview: interview}
     end

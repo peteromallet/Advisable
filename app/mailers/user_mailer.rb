@@ -94,6 +94,8 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def interview_scheduled(interview); end
+
   private
 
   def application_url(application_id)
