@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AnimateSharedLayout } from "framer-motion";
 import { Box, Heading, Skeleton } from "@advisable/donut";
+import NotFound, { isNotFound } from "src/views/NotFound";
 import BackButton from "src/components/BackButton";
 import { useShortlist } from "../queries";
 import MoreResults from "../components/MoreResults";
@@ -18,6 +19,7 @@ export default function Shortlist() {
   const { loading, data, error } = useShortlist();
 
   if (isNotAuthorized(error)) return <AccessDenied />;
+  if (isNotFound(error)) return <NotFound />;
   if (error) return <>Failed to load page. Please try refreshing the page.</>;
 
   const shortlist = data?.caseStudySearch;
