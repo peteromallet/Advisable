@@ -2,8 +2,6 @@
 
 module Types
   class GuildPostMessage < Types::UserMessage
-    implements Types::MessageInterface
-
     graphql_name "GuildPostMessage"
     description "Type for the Message model when it has a guild post."
 
