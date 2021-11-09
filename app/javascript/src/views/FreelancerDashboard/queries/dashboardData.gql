@@ -16,8 +16,8 @@ query DashboardData {
         id
         name
         avatar
+        location
       }
-      createdAtTimeAgo
       title
       excerpt
     }
