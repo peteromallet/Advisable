@@ -97,6 +97,12 @@ RSpec.describe Mutations::ScheduleInterview do
     expect(message.content).to eq("#{specialist.account.name} & #{user.account.name},\n\nNow that you've scheduled a call, you can use this thread to communicate.\n\nIf you have any questions or issues, don't hesitate to contact the Advisable team at hello@advisable.com.")
   end
 
+  it "sends emails" do
+    request
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_scheduled", "deliver_now", {args: [interview]}).once
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "interview_scheduled", "deliver_now", {args: [interview]}).once
+  end
+
   context "when a video call already exists for that interview" do
     it "doesnt create a video call record" do
       VideoCall.create(interview: interview)

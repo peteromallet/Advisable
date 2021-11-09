@@ -86,4 +86,6 @@ class SpecialistMailer < ApplicationMailer
       format.html { render layout: false }
     end
   end
+
+  def interview_scheduled(interview); end
 end
