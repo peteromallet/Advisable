@@ -30,6 +30,7 @@ const StartsAtTag = ({ startsAt }) => {
         fontWeight={550}
         textAlign="center"
         paddingBottom={1.5}
+        color="neutral900"
       >
         {date.day}
       </Text>
