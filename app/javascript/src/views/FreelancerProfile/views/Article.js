@@ -3,12 +3,12 @@ import React, { useMemo } from "react";
 import { useParams } from "react-router";
 import { Box, Text, useBreakpoint } from "@advisable/donut";
 import useScrollToTop from "src/hooks/useScrollToTop";
-import { isNotFound } from "src/views/NotFound";
-import Loading from "src/components/Loading";
-import CaseStudyContent from "src/components/CaseStudyContent";
+import NotFound, { isNotFound } from "src/views/NotFound";
 import CaseStudyResultsRow from "src/components/CaseStudyResultsRow";
-import Sidebar from "../components/Sidebar";
+import CaseStudyContent from "src/components/CaseStudyContent";
+import Loading from "src/components/Loading";
 import CaseStudyCard from "../components/CaseStudyCard";
+import Sidebar from "../components/Sidebar";
 import { useCaseStudy } from "../queries";
 
 function ArticleContent() {
@@ -16,7 +16,7 @@ function ArticleContent() {
   const { data, loading, error } = useCaseStudy(params.case_study_id);
 
   if (isNotFound(error)) {
-    return <div>Article not found</div>;
+    return <NotFound />;
   }
 
   return loading ? (
@@ -48,6 +48,10 @@ function Article({ isOwner, profileData }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [params.case_study_id],
   );
+
+  if (!partialCaseStudy) {
+    return <NotFound />;
+  }
 
   return (
     <Box
