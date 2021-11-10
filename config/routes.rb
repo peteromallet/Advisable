@@ -101,5 +101,15 @@ Rails.application.routes.draw do
   root "application#frontend"
   get "/case_studies/:id", to: "application#case_study", as: :public_case_study
   get "/freelancers/:id", to: "application#freelancer_profile", as: :freelancer_profile
+
+  # redirections for old routes
+  get "/projects", to: redirect("/hire")
+  get "/projects/:project/interviews/:id/availability", to: redirect("/interviews/%{id}")
+  get "/projects/:project/candidates/:id/proposal", to: redirect("/hire/proposls/%{id}")
+  get "/request_consultation/:id", to: redirect("/freelancers/%{id}")
+  get "/guild/events/:id", to: redirect("/events/%{id}")
+  get "/clients/signup", to: redirect(path: "/clients/join")
+  get "/freelancers/signup", to: redirect(path: "/freelancers/join")
+
   get "*path", to: "application#frontend", constraints: ->(req) { req.path.exclude?("rails/") }
 end
