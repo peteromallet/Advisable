@@ -3,6 +3,7 @@ import truncate from "lodash/truncate";
 import css from "@styled-system/css";
 import { Box, Text } from "@advisable/donut";
 import Article from "src/components/Article";
+import NotFound, { isNotFound } from "src/views/NotFound";
 import { useArticle } from "../queries";
 import RecommendationAvatar from "../components/RecommendationAvatar";
 import BackButton from "src/components/BackButton";
@@ -15,9 +16,10 @@ import Loading from "src/components/Loading";
 export default function ShortlistArticle() {
   const { id } = useParams();
   const history = useHistory();
-  const { data, loading } = useArticle();
+  const { data, loading, error } = useArticle();
 
   if (loading) return <Loading />;
+  if (isNotFound(error)) return <NotFound />;
 
   const handleArchive = () => {
     history.push(`/explore/${id}`);

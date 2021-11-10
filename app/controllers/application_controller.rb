@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   include ActiveStorage::SetCurrent
   include CurrentUser
+  include ActiveStorage::SetCurrent
 
   before_action :set_sentry_context
   before_action :prefetch_viewer
