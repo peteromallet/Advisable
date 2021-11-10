@@ -347,6 +347,7 @@ export default function useCombobox({
       role: "option",
       id: `option_${index}`,
       isValue: isValue(index),
+      component: props.optionComponent,
       selected: state.selectionIndex === index,
       onClick: () => handleOptionClick(index),
       onMouseMove: () => handleOptionMouseMove(index),

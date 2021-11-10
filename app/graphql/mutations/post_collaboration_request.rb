@@ -4,7 +4,6 @@ module Mutations
   class PostCollaborationRequest < Mutations::BaseMutation
     description "Posts a new collaboration request"
 
-    argument :audience_type, String, required: true
     argument :body, String, required: true
     argument :labels, [String], required: true
     argument :shareable, Boolean, required: false
@@ -21,8 +20,7 @@ module Mutations
         specialist_id: current_user.id,
         title: args[:title],
         body: args[:body],
-        audience_type: args[:audience_type],
-        shareable: args[:shareable],
+        shareable: true,
         status: :published
       )
 
