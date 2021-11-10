@@ -96,6 +96,9 @@ Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
 
+Style/FormatStringToken:
+  Enabled: false
+
 Naming/InclusiveLanguage:
   Enabled: false
 
@@ -121,7 +124,7 @@ Rails/BulkChangeTable:
 
 Rails/ApplicationRecord:
   Exclude:
-  - "db/migrate/**/*"
+    - "db/migrate/**/*"
 
 RSpec/ExampleLength:
   Enabled: false
