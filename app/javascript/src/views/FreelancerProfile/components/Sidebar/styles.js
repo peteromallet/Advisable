@@ -39,10 +39,8 @@ export const StyledStickySidebar = styled.div(
     display: "grid",
     position: "sticky",
     gridTemplateRows: ["auto auto", "auto auto", "auto auto", "auto"],
-    gridTemplateColumns: ["auto 1fr", "auto 1fr", "auto auto", "auto"],
-    width: ["auto", "auto", "auto", "280px"],
+    gridTemplateColumns: ["auto 1fr", "auto 1fr", "auto 1fr", "280px"],
     columnGap: [3, 3, 4],
-    marginRight: [0, 0, 0, 8],
   }),
 );
 
