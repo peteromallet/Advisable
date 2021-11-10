@@ -11,7 +11,7 @@ function EditPost({ post, size }) {
   const modal = useDialogState();
 
   function handleClick() {
-    post.article ? modal.show() : history.push(`/composer/${post.id}/post`);
+    post.article ? modal.show() : history.push(`/posts/${post.id}/edit`);
   }
   return (
     <>

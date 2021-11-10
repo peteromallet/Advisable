@@ -10,6 +10,7 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import Hire from "./views/Hire";
+import EditPost from "./views/EditPost";
 
 const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
@@ -181,6 +182,9 @@ const ApplicationRoutes = () => {
             <Payment />
           </AuthenticatedRoute>
           <Redirect from="/guild/posts/:postId" to="/posts/:postId" />
+          <Route path="/posts/:id/edit">
+            <EditPost />
+          </Route>
           <Route path="/posts/:postId">
             <GuildPost />
           </Route>

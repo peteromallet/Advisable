@@ -5,40 +5,25 @@ import SubmitButton from "@advisable-main/components/SubmitButton";
 import { yourPostValidationSchema } from "./validationSchemas";
 import PostTitle from "./PostTitle";
 import RichTextEditor from "src/components/RichTextEditor";
-import { useHistory } from "react-router";
 import TargetDropdown from "./TargetDropdown";
-import { usePostCollaborationRequest } from "./queries";
 
-export default function PostContent() {
-  const history = useHistory();
-  const [publish] = usePostCollaborationRequest();
-
-  const handleSubmit = async (values) => {
-    await publish({
-      variables: {
-        input: {
-          title: values.title,
-          body: values.body,
-          labels: values.labels.map((l) => l.value),
-        },
-      },
-    });
-
-    history.push("/");
-  };
-
-  const initialValues = {
-    title: "",
-    body: "",
-    labels: [],
+export default function CollaborationRequestForm({
+  initialValues,
+  onSubmit,
+  buttonLabel = "Publish",
+}) {
+  const formInitialValues = {
+    title: initialValues?.title || "",
+    body: initialValues?.body || "",
+    labels: initialValues?.labels || [],
   };
 
   return (
     <>
       <Formik
         validateOnMount
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
+        onSubmit={onSubmit}
+        initialValues={formInitialValues}
         validationSchema={yourPostValidationSchema}
       >
         {(formik) => (
@@ -88,7 +73,7 @@ export default function PostContent() {
               variant="gradient"
               loading={formik.isSubmitting}
             >
-              Publish
+              {buttonLabel}
             </SubmitButton>
           </Form>
         )}
