@@ -34,8 +34,11 @@ module Airtable
         article = ::CaseStudy::Article.find_or_initialize_by(airtable_id: id)
 
         article.specialist = ::Specialist.find_by!(airtable_id: fields["Specialist"].first)
-        sales_person = ::SalesPerson.find_by!(airtable_id: fields["Interviewer"])
-        article.interviewer = Account.find_by(email: sales_person.email)
+
+        if fields["Interviewer"].present?
+          sales_person = ::SalesPerson.find_by!(airtable_id: fields["Interviewer"])
+          article.interviewer = Account.find_by(email: sales_person.email)
+        end
 
         company = ::CaseStudy::Company.find_or_initialize_by(name: fields["Client Name"])
         company.business_type = fields["Company Focus"]
