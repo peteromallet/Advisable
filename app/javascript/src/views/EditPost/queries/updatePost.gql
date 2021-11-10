@@ -1,0 +1,18 @@
+mutation UpdateGuildPost($input: UpdateGuildPostInput!) {
+  updateGuildPost(input: $input) {
+    guildPost {
+      id
+      title
+      body
+      author {
+        id
+        name
+        avatar
+      }
+      labels {
+        id
+        name
+      }
+    }
+  }
+}

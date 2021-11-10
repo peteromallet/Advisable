@@ -1,0 +1,16 @@
+query GuildPost($id: ID!) {
+  guildPost(id: $id) {
+    id
+    title
+    body
+    author {
+      id
+      name
+      avatar
+    }
+    labels {
+      id
+      name
+    }
+  }
+}
