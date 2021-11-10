@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useMemo } from "react";
 import { useParams } from "react-router";
+import css from "@styled-system/css";
 import { Box, Text, useBreakpoint } from "@advisable/donut";
 import useScrollToTop from "src/hooks/useScrollToTop";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -59,6 +60,7 @@ function Article({ isOwner, profileData }) {
       flexDirection={{ _: "column", l: "row" }}
       px={{ xs: 7, s: 9, l: 11, xl: 14 }}
       maxWidth={{ s: "700px", l: "none" }}
+      css={css({ columnGap: 8 })}
     >
       {lUp ? (
         <Sidebar
