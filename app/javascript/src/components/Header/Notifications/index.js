@@ -51,7 +51,7 @@ const Notification = ({
             {message}
 
             <Link
-              to={`/guild/posts/${guildPost?.id}`}
+              to={`/posts/${guildPost?.id}`}
               fontWeight="medium"
               variant="dark"
               onClick={closeNotifications}
