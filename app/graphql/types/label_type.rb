@@ -17,6 +17,16 @@ module Types
       description "The unique slug of the Label"
     end
 
+    field :kind, String, null: true
+
+    def kind
+      return "SKILL" if object.skill_id.present?
+      return "INDUSTRY" if object.industry_id.present?
+      return "LOCATION" if object.country_id.present?
+
+      "OTHER"
+    end
+
     field :guild_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5
 
     def guild_posts
