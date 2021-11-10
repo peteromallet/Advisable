@@ -20,7 +20,7 @@ module Sluggable
   end
 
   included do
-    before_save :set_slug
+    before_validation :set_slug
     validates :slug, uniqueness: true
   end
 
