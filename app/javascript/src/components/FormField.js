@@ -15,6 +15,7 @@ const FormField = ({
   isRequired,
   as: Component = Input,
   widget: Widget,
+  showError = true,
   prefix,
   suffix,
   labelHint,
@@ -33,7 +34,7 @@ const FormField = ({
   const [field, meta] = useField(props);
   const id = React.useMemo(() => props.id || uniqueId("formField"), [props.id]);
 
-  const hasError = meta.touched && meta.error;
+  const hasError = showError && meta.touched && meta.error;
 
   // Characters counter
   const isCountable = typeof meta?.value === "string" && charLimit;

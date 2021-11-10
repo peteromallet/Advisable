@@ -17,7 +17,7 @@ export default function MessageAction({ application, ...props }) {
         {...dialog}
         size="sm"
         label="Message"
-        icon={<ChatAlt />}
+        icon={ChatAlt}
         as={CircularButton}
         {...props}
       />

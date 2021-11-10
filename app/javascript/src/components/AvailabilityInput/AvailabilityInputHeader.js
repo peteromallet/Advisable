@@ -1,13 +1,12 @@
 import React from "react";
-import { ChevronLeft } from "@styled-icons/feather/ChevronLeft";
-import { ChevronRight } from "@styled-icons/feather/ChevronRight";
 import { Text } from "@advisable/donut";
 import { DateTime } from "luxon";
 import {
   StyledAvailabilityInputHeader,
   StyledAvailabilityInputHeaderColumn,
-  StyledAvailabilityInputHeaderButton,
 } from "./styles";
+import CircularButton from "../CircularButton";
+import { ArrowSmLeft, ArrowSmRight } from "@styled-icons/heroicons-solid";
 
 const AvailabilityInputHeader = React.memo(function AvailabilityInputHeader({
   times,
@@ -21,33 +20,41 @@ const AvailabilityInputHeader = React.memo(function AvailabilityInputHeader({
   return (
     <StyledAvailabilityInputHeader>
       <StyledAvailabilityInputHeaderColumn>
-        <StyledAvailabilityInputHeaderButton
-          type="button"
+        <CircularButton
           disabled={!canGoBack}
+          size="xs"
+          icon={ArrowSmLeft}
           onClick={onPreviousWeek}
           aria-label="Previous week"
-        >
-          <ChevronLeft />
-        </StyledAvailabilityInputHeaderButton>
+        />
       </StyledAvailabilityInputHeaderColumn>
       {days.map((day) => (
-        <StyledAvailabilityInputHeaderColumn key={day}>
-          <Text fontSize="15px" color="blue900" fontWeight="medium" mb="2px">
-            {DateTime.fromISO(day).setZone(timezone).toFormat("ccc")}
+        <StyledAvailabilityInputHeaderColumn
+          key={day}
+          data-testid={DateTime.fromISO(day)
+            .setZone(timezone)
+            .toFormat("dd MMM")}
+        >
+          <Text fontSize="13px" color="neutral500" fontWeight={600} mb={0.5}>
+            {DateTime.fromISO(day).setZone(timezone).toFormat("dd")}
           </Text>
-          <Text fontSize="13px" color="neutral600">
-            {DateTime.fromISO(day).setZone(timezone).toFormat("dd MMM")}
+          <Text
+            fontSize="12px"
+            color="neutral900"
+            fontWeight={600}
+            textTransform="uppercase"
+          >
+            {DateTime.fromISO(day).setZone(timezone).toFormat("ccc")}
           </Text>
         </StyledAvailabilityInputHeaderColumn>
       ))}
       <StyledAvailabilityInputHeaderColumn>
-        <StyledAvailabilityInputHeaderButton
-          type="button"
+        <CircularButton
+          size="xs"
+          icon={ArrowSmRight}
           onClick={onNextWeek}
           aria-label="Next week"
-        >
-          <ChevronRight />
-        </StyledAvailabilityInputHeaderButton>
+        />
       </StyledAvailabilityInputHeaderColumn>
     </StyledAvailabilityInputHeader>
   );

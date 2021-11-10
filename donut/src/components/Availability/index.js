@@ -6,7 +6,6 @@ import {
   StyledAvailability,
   StyledAvailabilityScrollContainer,
 } from "./styles";
-import Box from "../Box";
 import Text from "../Text";
 import AvailabilityDay from "./AvailabilityDay";
 import AvailabilityModal from "./AvailabilityModal";
@@ -66,7 +65,7 @@ const Availability = ({ value, onChange, timezone }) => {
       <List
         height={90}
         itemSize={() => 54}
-        itemCount={367} // we render 365 days to the future
+        itemCount={31}
         layout="horizontal"
         innerElementType={StyledAvailabilityScrollContainer}
         onItemsRendered={handleItemsRendered}

@@ -14,9 +14,7 @@ function EditAction({ project, editModal, size }) {
         <DialogDisclosure
           as={CircularButton}
           size={size}
-          bg="neutral100"
-          color="neutral600"
-          icon={<Pencil />}
+          icon={Pencil}
           aria-label="Edit project"
           {...editModal.atPath(`/previous_projects/${project.id}`)}
         />
