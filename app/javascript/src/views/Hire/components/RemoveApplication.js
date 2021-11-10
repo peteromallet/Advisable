@@ -72,7 +72,7 @@ export default function RemoveApplication({ application, onRemove, ...props }) {
         as={CircularButton}
         size="sm"
         label="Remove"
-        icon={<Trash />}
+        icon={Trash}
         {...props}
       />
       <Modal padding={[4, 6, 8]} modal={dialog} label={`Reject ${firstName}`}>

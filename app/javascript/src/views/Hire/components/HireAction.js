@@ -12,11 +12,10 @@ export default function HireAction({ application, ...props }) {
   return (
     <CircularButton
       size="sm"
-      icon={<BadgeCheck />}
+      icon={BadgeCheck}
       label="Hire"
       onClick={handleHire}
-      bg="blue100"
-      color="blue800"
+      color="blue"
       {...props}
     />
   );

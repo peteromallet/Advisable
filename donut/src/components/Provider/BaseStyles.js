@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { StyledDialogBackdrop, StyledDialog } from "../Modal";
+import { StyledDialogBackdrop, StyledDialog } from "../Modal/styles";
 
 const BACKGROUND = {
   default: "#F8F8F9",

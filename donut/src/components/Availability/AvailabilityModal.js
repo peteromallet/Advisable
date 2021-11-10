@@ -19,7 +19,12 @@ const AvailabilityModal = ({
   }, [selectedDay]);
 
   return (
-    <Modal modal={modal} label="Select availability" showCloseButton={false}>
+    <Modal
+      modal={modal}
+      label="Select availability"
+      showCloseButton={false}
+      padding={0}
+    >
       {selectedDay && (
         <AvailabilityForm
           timeZone={timeZone}

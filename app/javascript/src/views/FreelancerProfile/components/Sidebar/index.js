@@ -4,7 +4,6 @@ import css from "@styled-system/css";
 import { matchPath, useParams } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import { Box, Text, Link } from "@advisable/donut";
-import useViewer from "src/hooks/useViewer";
 import ProfilePicture from "../ProfilePicture";
 import ProfilePictureArticle from "../ProfilePictureArticle";
 import CoverImage from "../CoverImage";
@@ -19,8 +18,7 @@ import {
 import BackButton from "../BackButton";
 // CTA button
 import EditInfo from "../EditInfo";
-import MessageButton from "../MessageButton";
-import WorkTogetherButton from "../WorkTogetherButton";
+import ConnectButton from "src/components/ConnectButton";
 import SocialProfilesIcons from "../SocialProfilesIcons";
 // Constant values
 import { TRUNCATE_LIMIT } from "../../values";
@@ -31,8 +29,6 @@ function Sidebar({ data, isOwner, ...props }) {
     path: "/freelancers/:username/case_studies/:case_study_id",
   });
 
-  const viewer = useViewer();
-  const viewerIsGuild = (viewer?.isSpecialist && viewer?.isAccepted) || false;
   const { specialist } = data;
 
   const [isExpanded, setExpanded] = useState(false);
@@ -119,13 +115,15 @@ function Sidebar({ data, isOwner, ...props }) {
               {isOwner && (
                 <EditInfo specialist={specialist}>Edit Info</EditInfo>
               )}
-              {!isOwner && !viewerIsGuild && (
-                <WorkTogetherButton id={specialist?.id}>
+              {!isOwner && (
+                <ConnectButton
+                  specialist={specialist}
+                  variant="dark"
+                  width={["100%", "auto"]}
+                  size={["m", "m", "l"]}
+                >
                   Work together
-                </WorkTogetherButton>
-              )}
-              {!isOwner && viewerIsGuild && (
-                <MessageButton specialist={specialist} />
+                </ConnectButton>
               )}
             </Box>
             <SocialProfilesIcons isOwner={isOwner} specialist={specialist} />
