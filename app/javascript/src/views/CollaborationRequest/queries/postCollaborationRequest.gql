@@ -1,0 +1,7 @@
+mutation PostCollaborationRequest($input: PostCollaborationRequestInput!) {
+  postCollaborationRequest(input: $input) {
+    post {
+      id
+    }
+  }
+}

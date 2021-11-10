@@ -2,18 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { BottomScrollListener } from "react-bottom-scroll-listener";
 import CardButton from "src/components/CardButton";
-import useViewer from "@advisable-main/hooks/useViewer";
-import ComposerModal from "@guild/components/ComposerModal";
-import { useComposerModal } from "@guild/components/ComposerModal/useComposerModal";
 import Loading from "src/components/Loading";
-import {
-  Stack,
-  Box,
-  Skeleton,
-  Button,
-  Text,
-  DialogDisclosure,
-} from "@advisable/donut";
+import { Stack, Box, Skeleton, Button, Text } from "@advisable/donut";
 import { Adjustments } from "@styled-icons/heroicons-outline/Adjustments";
 import { Pencil } from "@styled-icons/heroicons-outline/Pencil";
 import CollaborationRequest from "./CollaborationRequest";
@@ -37,8 +27,6 @@ const LoadingSkeleton = () => (
 );
 
 export default function CollaborationRequests() {
-  const viewer = useViewer();
-  const composerModal = useComposerModal("/guild/composer");
   const { data, loading, fetchMore } = useCollaborationRequests();
 
   const hasNextPage = data?.collaborationRequests.pageInfo.hasNextPage || false;
@@ -63,11 +51,6 @@ export default function CollaborationRequests() {
 
   return (
     <Box>
-      <ComposerModal
-        modal={composerModal}
-        specialistId={viewer.id}
-        onPublish={() => null}
-      />
       <Box display="flex" alignItems="center" mb={6}>
         <Text
           color="neutral900"
@@ -88,17 +71,11 @@ export default function CollaborationRequests() {
           >
             Customize
           </Button>
-          <DialogDisclosure
-            as={Button}
-            variant="subtle"
-            size="s"
-            prefix={<Pencil />}
-            {...composerModal}
-            aria-label="Create a Post"
-            data-walkthrough="createPost"
-          >
-            Post
-          </DialogDisclosure>
+          <Link to="/post">
+            <Button variant="subtle" size="s" prefix={<Pencil />}>
+              Post
+            </Button>
+          </Link>
         </Box>
       </Box>
       <Stack spacing={4}>

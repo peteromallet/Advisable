@@ -278,7 +278,7 @@ module Types
     def search_labels(name:)
       requires_accepted_specialist!
 
-      Label.published.where("name ILIKE ?", "%#{name}%").order(labelings_count: :desc)
+      Label.published.where("name ILIKE ?", "%#{name}%").limit(20).order(labelings_count: :desc)
     end
 
     field :top_labels, Types::LabelType.connection_type, null: true, max_page_size: 20 do
