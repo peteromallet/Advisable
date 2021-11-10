@@ -51,7 +51,7 @@ function ConnectionType({ post, modal }) {
         <>
           <Back setConnectionType={setConnectionType} />
           <ShareModal
-            externalUrl={`https://app.advisable.com/guild/posts/${post.id}`}
+            externalUrl={`https://app.advisable.com/posts/${post.id}`}
           />
         </>
       );
