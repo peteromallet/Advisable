@@ -4,14 +4,14 @@ require "rails_helper"
 
 class SluggableDummy
   def self.exists?(_)
-    if @num_exists > 0
+    if @num_exists.positive?
       @num_exists -= 1
       return true
     end
     false
   end
 
-  def self.before_save(_); end
+  def self.before_validation(_); end
 
   def self.validates(*_args); end
 
