@@ -86,6 +86,7 @@ export default function useCombobox({
   creatable,
   max,
   onChange,
+  closeOnSelect,
   ...props
 }) {
   const inputRef = useRef(null);
@@ -130,7 +131,7 @@ export default function useCombobox({
     } else {
       dispatch({ type: UPDATE_OPTIONS, options });
     }
-  }, [state.searchValue, options, loadOptions]);
+  }, [state.searchValue, options]);
 
   const searchDirectMatch = useMemo(() => {
     const directOption = state.options.find(
@@ -201,7 +202,9 @@ export default function useCombobox({
     const selectedOption = filteredOptions[index];
     if (!selectedOption) return;
 
-    dispatch({ type: RESET });
+    if (closeOnSelect) {
+      dispatch({ type: RESET });
+    }
 
     if (multiple && isValue(index)) {
       removeOption(selectedOption.value);
