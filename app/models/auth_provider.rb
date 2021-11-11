@@ -31,6 +31,7 @@ class AuthProvider < ApplicationRecord
       "web" => {
         "access_token" => token,
         "refresh_token" => refresh_token,
+        "expires_at" => expires_at,
         "client_id" => ENV["GOOGLE_ID"],
         "client_secret" => ENV["GOOGLE_SECRET"]
       }
