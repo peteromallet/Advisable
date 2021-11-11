@@ -27,6 +27,8 @@ module Types
 
       field :cover_photo, String, null: true
       def cover_photo
+        return unless object.cover_photo.attached?
+
         Rails.application.routes.url_helpers.rails_blob_url(object.cover_photo, host: Advisable::Application::ORIGIN_HOST)
       end
 
