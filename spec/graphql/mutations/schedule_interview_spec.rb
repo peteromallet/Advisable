@@ -100,7 +100,6 @@ RSpec.describe Mutations::ScheduleInterview do
   it "sends emails" do
     request
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_scheduled", "deliver_now", {args: [interview]}).once
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "interview_scheduled", "deliver_now", {args: [interview]}).once
   end
 
   context "when a video call already exists for that interview" do
