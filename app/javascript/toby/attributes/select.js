@@ -16,7 +16,7 @@ export default {
     const [field] = useField(attribute.name);
     if (attribute.readonly) return record[attribute.name];
     return (
-      <Select size="sm" {...field}>
+      <Select size="sm" {...field} placeholder={attribute.columnLabel}>
         {attribute.options.map((opt) => (
           <option key={opt}>{opt}</option>
         ))}
