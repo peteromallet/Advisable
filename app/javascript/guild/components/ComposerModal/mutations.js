@@ -1,6 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import GuildPostFields from "@guild/graphql/fragments/guildPostFields";
-import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
+import { GUILD_POST_QUERY } from "src/views/Post/queries";
 
 export const CREATE_GUILD_POST = gql`
   ${GuildPostFields}
