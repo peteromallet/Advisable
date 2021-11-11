@@ -4,6 +4,21 @@ require "sidekiq/web"
 require "sidekiq-scheduler/web"
 require "admin_constraint"
 
+class LogAndRedirect
+  def initialize(path)
+    @path = path
+  end
+
+  def call(params, request)
+    Sentry.capture_message(
+      "Redirecting #{request.path} to #{@path}",
+      level: "debug"
+    )
+
+    @path % params
+  end
+end
+
 Rails.application.routes.draw do
   match "(*any)", to: redirect { |_, req| "https://app.advisable.com#{req.fullpath}" }, via: :all, constraints: {host: "advisable.herokuapp.com"}
 
@@ -95,21 +110,21 @@ Rails.application.routes.draw do
   post "zapier_interactor/send_finance_email"
   post "zapier_interactor/create_message"
 
+  # redirections for old routes
+  get "/projects", to: redirect(LogAndRedirect.new("/hire"))
+  get "/projects/:project/interviews/:id/availability", to: redirect(LogAndRedirect.new("/interviews/%{id}"))
+  get "/projects/:project/candidates/:id/proposal", to: redirect(LogAndRedirect.new("/hire/proposls/%{id}"))
+  get "/request_consultation/:id", to: redirect(LogAndRedirect.new("/freelancers/%{id}"))
+  get "/guild/events/:id", to: redirect(LogAndRedirect.new("/events/%{id}"))
+  get "/clients/signup", to: redirect(LogAndRedirect.new("/clients/join"))
+  get "/freelancers/signup", to: redirect(LogAndRedirect.new("/freelancers/join"))
+
   get "verify_project/:uid", to: "application#verify_project_redirect"
 
   # match every other route to the frontend codebase
   root "application#frontend"
   get "/case_studies/:id", to: "application#case_study", as: :public_case_study
   get "/freelancers/:id", to: "application#freelancer_profile", as: :freelancer_profile
-
-  # redirections for old routes
-  get "/projects", to: redirect("/hire")
-  get "/projects/:project/interviews/:id/availability", to: redirect("/interviews/%{id}")
-  get "/projects/:project/candidates/:id/proposal", to: redirect("/hire/proposls/%{id}")
-  get "/request_consultation/:id", to: redirect("/freelancers/%{id}")
-  get "/guild/events/:id", to: redirect("/events/%{id}")
-  get "/clients/signup", to: redirect(path: "/clients/join")
-  get "/freelancers/signup", to: redirect(path: "/freelancers/join")
 
   get "*path", to: "application#frontend", constraints: ->(req) { req.path.exclude?("rails/") }
 end
