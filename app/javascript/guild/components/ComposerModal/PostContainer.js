@@ -4,7 +4,7 @@ import { useRouteMatch } from "react-router-dom";
 import { Box, Container, Text } from "@advisable/donut";
 import useViewer from "@advisable-main/hooks/useViewer";
 import NavigationMenu from "./NavigationMenu";
-import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
+import { GUILD_POST_QUERY } from "src/views/Post/queries";
 import { SELECT_DATA, POST_PROMPT_QUERY } from "./queries";
 import ComposerHeader from "./ComposerHeader";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
