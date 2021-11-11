@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/react";
 import React, { Suspense } from "react";
 import { rgba } from "polished";
+// import { Link } from "react-router-dom";
 import css from "@styled-system/css";
 import { useImage } from "react-image";
 import { motion } from "framer-motion";
@@ -10,6 +11,13 @@ import SuperEllipse from "react-superellipse";
 import { matchPath } from "react-router";
 import { Box, Text, Link, Skeleton, theme } from "@advisable/donut";
 import LogoMark from "src/components/LogoMark";
+
+const StyledLink = styled(Link)(
+  css({
+    position: "relative",
+    borderRadius: "20px",
+  }),
+);
 
 const StyledContentWrapper = styled.div(
   css({
@@ -152,7 +160,14 @@ const CaseStudyBackgroundImage = React.memo(function CaseStudyBackgroundImage({
   const { src } = useImage({ srcList: url });
 
   return (
-    <Box top="0" left="0" width="100%" height="100%" position="absolute">
+    <Box
+      top="0"
+      left="0"
+      width="100%"
+      height="100%"
+      borderRadius="20px"
+      position="absolute"
+    >
       <StyledBackgroundImg as={motion.img} src={src} />
     </Box>
   );
@@ -169,13 +184,13 @@ export default function CaseStudyCard({ caseStudy }) {
 
   return (
     <Suspense fallback={<LoadingSkeleton />}>
-      <Box as={isArticle ? null : Link} to={caseStudy.path} notInline="true">
+      <Box as={isArticle ? null : StyledLink} to={caseStudy.path}>
         <StyledCaseStudyCard type={isArticle ? "article" : "profile"}>
-          {caseStudy.coverPhoto ? (
+          {Boolean(caseStudy.coverPhoto) && (
             <Sentry.ErrorBoundary>
               <CaseStudyBackgroundImage url={caseStudy.coverPhoto} />
             </Sentry.ErrorBoundary>
-          ) : null}
+          )}
           <StyledContentWrapper>
             <StyledLogoSquircle r1={0.1} r2={0.362}>
               <StyledFaviconWrapper>
