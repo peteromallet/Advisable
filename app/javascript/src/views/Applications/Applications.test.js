@@ -45,7 +45,7 @@ test("Shows application invites", async () => {
 
 test("Renders a account confirmation prompt", async () => {
   renderRoute({
-    route: "/projects",
+    route: "/applications",
     graphQLMocks: [
       mockViewer({ ...specialist, confirmed: false }),
       mockQuery(
