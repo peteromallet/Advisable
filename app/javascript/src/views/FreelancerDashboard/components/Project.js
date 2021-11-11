@@ -57,8 +57,12 @@ export default function Project({ caseStudy }) {
             overflow: hidden;
           `}
         >
-          <CoverImage coverPhoto={caseStudy.coverPhoto} />
-          <Avatar avatar={caseStudy.specialist?.avatar} />
+          {Boolean(caseStudy.coverPhoto) && (
+            <CoverImage coverPhoto={caseStudy.coverPhoto} />
+          )}
+          {Boolean(caseStudy.specialist?.avatar) && (
+            <Avatar avatar={caseStudy.specialist?.avatar} />
+          )}
         </Box>
         <Box>
           <Text
