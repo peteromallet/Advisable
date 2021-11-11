@@ -18,6 +18,7 @@ import {
 import { useMutation, useQuery } from "@apollo/client";
 import VersionHistory from "./VersionHistory";
 import ActionsMenu from "./ActionsMenu";
+import { isEqual } from "lodash-es";
 
 function useRoutedModal(path, returnPath) {
   const modal = useDialogState();
@@ -93,6 +94,16 @@ function Details({ id, resource }) {
   });
 
   const handleSubmit = async (attributes, formik) => {
+    const valuesToSubmit = Object.keys(initialValues).reduce((acc, key) => {
+      const initial = initialValues[key];
+      const value = attributes[key];
+      if (!isEqual(initial, value)) {
+        acc[key] = value;
+      }
+
+      return acc;
+    }, {});
+
     const { errors } = await update({
       variables: {
         id,
@@ -116,6 +127,9 @@ function Details({ id, resource }) {
       error("Failed to save record");
     } else {
       notify("Your changes have been saved");
+      formik.resetForm({
+        values: { ...initialValues, ...valuesToSubmit },
+      });
     }
   };
 
