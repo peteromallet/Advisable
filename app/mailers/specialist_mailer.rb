@@ -92,14 +92,6 @@ class SpecialistMailer < ApplicationMailer
     @user = interview.user
     @specialist = interview.specialist
     @sales_person = @user.company.sales_person
-    summary = "Call with #{@user.name_with_company}"
-    description = <<~DESCRIPTION.strip
-      You can use the following link to speak to #{@user.account.first_name}: #{ApplicationMailer.default_url_options[:host]}/calls/#{interview.video_call.uid}\n
-      You'll need to sign into your Advisable account to join this call.\n
-      You can also see the project details and application here:  #{ApplicationMailer.default_url_options[:host]}/clients/#{interview.application.uid}\n
-      If you'd like to reschedule, please email #{@user.company.sales_person.name} at #{@user.company.sales_person.email}
-    DESCRIPTION
-    attachments["interview-with-#{@user.company.name.parameterize}.ics"] = {mime_type: "application/ics", content: interview.calendar_event_with(summary, description).to_ical}
     mail(
       from: @sales_person.email_with_name,
       to: @specialist.account.email,
