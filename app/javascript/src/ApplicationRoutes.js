@@ -80,7 +80,6 @@ export function VersionedRoute({
 
 const ApplicationRoutes = () => {
   const viewer = useViewer();
-  const location = useLocation();
 
   return (
     <>
@@ -91,10 +90,6 @@ const ApplicationRoutes = () => {
             <SetPassword />
           </AuthenticatedRoute>
           {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
-          <Redirect
-            from="/clients/signup"
-            to={{ ...location, pathname: "/clients/join" }}
-          />
           <Route path="/case_studies/:id">
             <CaseStudy />
           </Route>
@@ -111,10 +106,6 @@ const ApplicationRoutes = () => {
             <FreelancerProfile />
           </Route>
           {/* Client routes */}
-          <Redirect
-            from="/project_setup/:projectID"
-            to="/projects/:projectID"
-          />
           <AuthenticatedRoute
             specialistOnly
             path="/interview_request/:interviewID"
@@ -122,18 +113,9 @@ const ApplicationRoutes = () => {
             <InterviewRequest />
           </AuthenticatedRoute>
           {/* maintain old interview availability routes */}
-          <Redirect
-            from="/projects/:projectID/interviews/:interviewID/availability"
-            to="/interviews/:interviewID"
-          />
           <AuthenticatedRoute path="/interviews/:id">
             <Interview />
           </AuthenticatedRoute>
-          <Redirect
-            from="/projects/:projectId/candidates/:id/proposal"
-            to="/hire/proposals/:id"
-          />
-          <Redirect from="/projects" to="/hire" />
           <AuthenticatedRoute clientOnly path="/hire">
             <Hire />
           </AuthenticatedRoute>
@@ -146,10 +128,6 @@ const ApplicationRoutes = () => {
           <AuthenticatedRoute clientOnly path="/manage/:applicationId">
             <Booking />
           </AuthenticatedRoute>
-          <Redirect
-            from="/request_consultation/:specialistId"
-            to="/freelancers/:specialistId"
-          />
           {/* Freelancer Routes */}
           <AuthenticatedRoute specialistOnly path="/consultations/:id">
             <Consultation />
@@ -203,7 +181,6 @@ const ApplicationRoutes = () => {
           <AuthenticatedRoute exact path="/events">
             <GuildEvents />
           </AuthenticatedRoute>
-          <Redirect from="/guild/events/:eventId" to="/events/:eventId" />
           <AuthenticatedRoute path="/guild" specialistOnly>
             <GuildFeed />
           </AuthenticatedRoute>

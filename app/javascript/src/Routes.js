@@ -1,4 +1,4 @@
-import { Redirect, Switch, useLocation } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
 
 import Route from "src/components/Route";
@@ -19,7 +19,6 @@ const FreelancerJoin = lazy(() => import("./views/FreelancerJoin"));
 const VideoCall = lazy(() => import("./views/VideoCall"));
 
 const Routes = () => {
-  const location = useLocation();
   return (
     <Suspense fallback={<Loading />}>
       <Switch>
@@ -48,10 +47,6 @@ const Routes = () => {
         <AuthenticatedRoute path="/calls/:id">
           <VideoCall />
         </AuthenticatedRoute>
-        <Redirect
-          from="/freelancers/signup"
-          to={{ pathname: "/freelancers/join", search: location.search }}
-        />
         <Route path="/clients/join">
           <ClientJoin />
         </Route>
