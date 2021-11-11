@@ -30,7 +30,7 @@ export default function CollaborationRequest() {
     <View>
       <Box position="absolute" right="20px" top="20px">
         <Link to="/">
-          <CircularButton icon={<X />} />
+          <CircularButton icon={X} />
         </Link>
       </Box>
       <Box maxWidth="800px" marginX="auto" padding={12}>
