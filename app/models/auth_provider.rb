@@ -1,35 +1,40 @@
 # frozen_string_literal: true
 
+require "google/api_client/client_secrets"
+require "google/apis/calendar_v3"
+
 class AuthProvider < ApplicationRecord
-  LINKEDIN_ACCESS_TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken"
   belongs_to :account
+
+  scope :google_calendar, -> { where(provider: "google_oauth2_calendar") }
 
   validates :uid, :provider, presence: true
   validates :uid, uniqueness: {scope: :provider}
 
-  def refresh_linkedin_token!
-    return if expires_at.nil? || expires_at.future?
-
-    params = {
-      grant_type: "refresh_token",
-      refresh_token: refresh_token,
-      client_id: ENV["LINKEDIN_KEY"],
-      client_secret: ENV["LINKEDIN_SECRET"]
-    }
-    headers = {
-      "Content-Type" => "application/x-www-form-urlencoded",
-      "Accept" => "application/json"
-    }
-    response = Faraday.post(LINKEDIN_ACCESS_TOKEN_URL, params, headers)
-    if response.status == 200
-      body = JSON[response.body]
-      self.token = body["access_token"]
-      self.refresh_token = body["refresh_token"]
-      self.expires_at = Time.zone.now + body["expires_in"]
-      save!
-    else
-      destroy!
+  def self.robot_calendar_provider
+    service = Google::Apis::CalendarV3::CalendarService.new
+    provider = google_calendar.find do |p|
+      service.authorization = p.google_secret.to_authorization
+      service.list_calendar_lists.items.find do |calendar|
+        calendar.id == ENV["GOOGLE_INTERVIEW_CALENDAR_ID"] && calendar.access_role == "owner"
+      end
     end
+    return provider if provider
+
+    Sentry.capture_message("GOOGLE ROBOT CALENDAR AUTH REQUIRED", level: "fatal")
+  end
+
+  def google_secret
+    return unless provider == "google_oauth2_calendar"
+
+    Google::APIClient::ClientSecrets.new({
+      "web" => {
+        "access_token" => token,
+        "refresh_token" => refresh_token,
+        "client_id" => ENV["GOOGLE_ID"],
+        "client_secret" => ENV["GOOGLE_SECRET"]
+      }
+    })
   end
 end
 
