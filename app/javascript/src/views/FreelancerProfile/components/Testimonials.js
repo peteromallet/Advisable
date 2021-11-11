@@ -7,7 +7,7 @@ import Testimonial from "./Testimonial";
 import TestimonialLinkModal from "./TestimonialLinkModal";
 import TestimonialsEmptyState from "./TestimonialsEmptyState";
 
-function Testimonials({ reviews, isOwner }) {
+function Testimonials({ reviews, specialist, isOwner }) {
   const modal = useModal();
 
   const testimonials = reviews
@@ -35,7 +35,7 @@ function Testimonials({ reviews, isOwner }) {
           Request a Testimonial
         </DialogDisclosure>
       )}
-      <TestimonialLinkModal modal={modal} />
+      <TestimonialLinkModal specialist={specialist} modal={modal} />
     </Box>
   );
 }
