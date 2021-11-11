@@ -27,6 +27,22 @@ const StyledContentWrapper = styled.div(
   }),
 );
 
+const StyledEditButton = styled.div(
+  css({
+    position: "absolute",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    right: "12px",
+    bottom: "12px",
+    width: "68px",
+    height: "32px",
+    bg: "rgba(255, 255, 255, 0.75)",
+    borderRadius: "24px",
+    transition: "0.2s opacity",
+  }),
+);
+
 const StyledCompanyType = styled(Text)(
   css({
     textTransform: "uppercase",
@@ -109,6 +125,9 @@ const StyledCaseStudyCard = styled.div(
     prop: "type",
     variants: {
       profile: {
+        [StyledEditButton]: {
+          opacity: 0,
+        },
         transition: "transform 200ms, box-shadow 200ms",
         "&:hover": {
           transform: "translateY(-2px)",
@@ -116,6 +135,9 @@ const StyledCaseStudyCard = styled.div(
           0 16px 40px -16px ${rgba(theme.colors.blue800, 0.08)},
           0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)}
         `,
+          [StyledEditButton]: {
+            opacity: 1,
+          },
         },
       },
       article: {
@@ -215,6 +237,7 @@ export default function CaseStudyCard({ caseStudy }) {
               </Box>
             </Box>
           </StyledContentWrapper>
+          <StyledEditButton>Edit</StyledEditButton>
         </StyledCaseStudyCard>
       </Box>
     </Suspense>
