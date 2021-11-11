@@ -20,6 +20,7 @@ RSpec.describe "Freelancer dashboard", type: :system do
 
   context "when dashboard data is empty" do
     let(:event) { nil }
+    let(:article) { nil }
 
     it "displays empty state of latest projects and upcoming events" do
       authenticate_as(specialist)
