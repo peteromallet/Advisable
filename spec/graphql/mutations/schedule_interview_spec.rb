@@ -102,6 +102,11 @@ RSpec.describe Mutations::ScheduleInterview do
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_scheduled", "deliver_now", {args: [interview]}).once
   end
 
+  it "creates gcal events" do
+    expect_any_instance_of(Interview).to receive(:create_google_calendar_events).once
+    request
+  end
+
   context "when a video call already exists for that interview" do
     it "doesnt create a video call record" do
       VideoCall.create(interview: interview)
