@@ -1,7 +1,6 @@
 import * as Sentry from "@sentry/react";
 import React, { Suspense } from "react";
 import { rgba } from "polished";
-// import { Link } from "react-router-dom";
 import css from "@styled-system/css";
 import { useImage } from "react-image";
 import { motion } from "framer-motion";
@@ -9,7 +8,7 @@ import styled from "styled-components";
 import { variant } from "styled-system";
 import SuperEllipse from "react-superellipse";
 import { matchPath } from "react-router";
-import { Box, Text, Link, Skeleton, theme } from "@advisable/donut";
+import { Box, Text, Link, Skeleton, useModal, theme } from "@advisable/donut";
 import LogoMark from "src/components/LogoMark";
 
 const StyledLink = styled(Link)(
@@ -196,6 +195,8 @@ const CaseStudyBackgroundImage = React.memo(function CaseStudyBackgroundImage({
 });
 
 export default function CaseStudyCard({ caseStudy }) {
+  const modal = useModal();
+
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:username/:slug",
   });
@@ -237,7 +238,16 @@ export default function CaseStudyCard({ caseStudy }) {
               </Box>
             </Box>
           </StyledContentWrapper>
-          <StyledEditButton>Edit</StyledEditButton>
+          <StyledEditButton
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              modal.show();
+              return false;
+            }}
+          >
+            Edit
+          </StyledEditButton>
         </StyledCaseStudyCard>
       </Box>
     </Suspense>
