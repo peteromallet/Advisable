@@ -43,7 +43,7 @@ export default function EditPost() {
     <Box position="relative">
       <Box position="absolute" right="20px" top="20px">
         <Link to={`/posts/${id}`}>
-          <CircularButton icon={<X />} />
+          <CircularButton icon={X} />
         </Link>
       </Box>
       <Box maxWidth="800px" padding={12} marginX="auto">
