@@ -60,12 +60,6 @@ module MailHelper
     end
   end
 
-  def user_name_with_company(user)
-    return user.account.name if user.company&.name.blank?
-
-    "#{user.account.name} from #{user.company.name}"
-  end
-
   def possesive(name)
     name.end_with?("s") ? "#{name}'" : "#{name}'s"
   end

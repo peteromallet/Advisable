@@ -92,7 +92,7 @@ class SpecialistMailer < ApplicationMailer
     @user = interview.user
     @specialist = interview.specialist
     @sales_person = @user.company.sales_person
-    summary = "Call with #{@user.account.name} from #{@user.company.name}"
+    summary = "Call with #{@user.name_with_company}"
     description = <<~DESCRIPTION.strip
       You can use the following link to speak to #{@user.account.first_name}: #{ApplicationMailer.default_url_options[:host]}/calls/#{interview.video_call.uid}\n
       You'll need to sign into your Advisable account to join this call.\n
@@ -104,7 +104,7 @@ class SpecialistMailer < ApplicationMailer
       from: @sales_person.email_with_name,
       to: @specialist.account.email,
       bcc: @sales_person.email_with_name,
-      subject: "Information Before Your Call with #{@user.account.name} from #{@user.company.name}"
+      subject: "Information Before Your Call with #{@user.name_with_company}"
     ) do |format|
       format.html { render layout: false }
     end

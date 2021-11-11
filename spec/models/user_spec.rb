@@ -22,6 +22,31 @@ RSpec.describe(User, type: :model) do
     expect(user.availability).to include(b)
   end
 
+  describe "#name_with_company" do
+    let(:account) { create(:account, first_name: "Bob", last_name: "Vance") }
+    let(:company) { create(:company, name: "Vance Refrigeration") }
+    let(:user) { create(:user, account: account, company: company) }
+
+    it "includes company" do
+      expect(user.name_with_company).to eq("Bob Vance from Vance Refrigeration")
+    end
+
+    context "when company name is blank" do
+      let(:company) { create(:company, name: "") }
+
+      it "does not include company" do
+        expect(user.name_with_company).to eq("Bob Vance")
+      end
+    end
+
+    context "when company is nil" do
+      it "does not include company" do
+        user.update_columns(company_id: nil) # rubocop:disable Rails/SkipsModelValidations
+        expect(user.name_with_company).to eq("Bob Vance")
+      end
+    end
+  end
+
   describe "#send_confirmation_email" do
     let(:mail) { double("email") } # rubocop:disable RSpec/VerifiedDoubles
 
