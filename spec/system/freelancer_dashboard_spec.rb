@@ -6,20 +6,16 @@ RSpec.describe "Freelancer dashboard", type: :system do
   let(:account) { create(:account) }
   let(:application_stage) { "Accepted" }
   let(:specialist) { create(:specialist, application_stage: application_stage, account: account) }
-  # let!(:article) { create(:case_study_article, published_at: 1.hour.ago, title: "Article title") }
+  let!(:article) { create(:case_study_article, published_at: 1.hour.ago, title: "Article title") }
   let!(:post) { create(:guild_post, pinned: true, specialist: specialist, type: "Opportunity") }
   let!(:event) { create(:event, title: "Big event") }
 
-  it "displays all the content" do
+  it "displays posts, events and articles" do
     authenticate_as(specialist)
     visit("/")
-    expect(page).to have_content("Welcome back")
-    expect(page).to have_content("Collaboration requests")
-    expect(page).to have_content("Latest projects")
-    expect(page).to have_content("Upcoming events")
     expect(page).to have_content(post.title)
     expect(page).to have_content(event.title)
-    # expect(page).to have_content(article.title)
+    expect(page).to have_content(article.title)
   end
 
   context "when dashboard data is empty" do
