@@ -57,6 +57,7 @@ export default function TargetDropdown() {
       placeholder="Skills, industries, locations..."
       onChange={setValue}
       optionComponent={LabelOption}
+      closeOnSelect={false}
     />
   );
 }
