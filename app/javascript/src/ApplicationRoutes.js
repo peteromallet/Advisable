@@ -181,7 +181,6 @@ const ApplicationRoutes = () => {
           <AuthenticatedRoute clientOnly path="/payments/:id">
             <Payment />
           </AuthenticatedRoute>
-          <Redirect from="/guild/posts/:postId" to="/posts/:postId" />
           <Route path="/posts/:id/edit">
             <EditPost />
           </Route>
