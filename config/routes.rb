@@ -10,11 +10,7 @@ class LogAndRedirect
   end
 
   def call(params, request)
-    Sentry.capture_message(
-      "Redirecting #{request.path} to #{@path}",
-      level: "debug"
-    )
-
+    Sentry.capture_message("Redirecting #{request.path} to #{@path}", level: "debug")
     @path % params
   end
 end
