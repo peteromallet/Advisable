@@ -20,7 +20,7 @@ module MailHelper
   end
 
   def magic_link_guild_post(guild_post, account)
-    url = "#{app_host}/guild/posts/#{guild_post.id}"
+    url = "#{app_host}/posts/#{guild_post.id}"
     guild_post.shareable ? url : magic_link(account, url, expires_at: 1.day.from_now)
   end
 
