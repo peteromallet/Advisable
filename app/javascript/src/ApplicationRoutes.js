@@ -42,7 +42,7 @@ const GuildFollows = lazy(() => import("guild/views/Follows"));
 const GuildEvent = lazy(() => import("guild/views/Event"));
 const GuildEvents = lazy(() => import("guild/views/Events"));
 const Discover = lazy(() => import("./views/Discover"));
-const CollaborationRequest = lazy(() => import("./views/CollaborationRequest"));
+const NewPost = lazy(() => import("./views/NewPost"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -100,7 +100,7 @@ const ApplicationRoutes = () => {
             <FreelancerDashboard />
           </AuthenticatedRoute>
           <AuthenticatedRoute path="/post">
-            <CollaborationRequest />
+            <NewPost />
           </AuthenticatedRoute>
           <Route path="/case_studies/:id">
             <CaseStudy />
