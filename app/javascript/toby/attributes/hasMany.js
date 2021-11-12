@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useField } from "formik";
 import { useSchema } from "../components/schema";
 import { useSearchResource, getNestedResource } from "../utilities";
-import { Combobox } from "@advisable/donut";
+import { Stack, Combobox } from "@advisable/donut";
+import LinkToRecord from "../components/LinkToRecord";
 
 export default {
   render: function RenderHasMany({ record, attribute }) {
@@ -13,6 +14,17 @@ export default {
     return items.map((item, i) => {
       return [i > 0 && ", ", item];
     });
+  },
+  renderDetail: function RenderHasManyDetail({ record, attribute }) {
+    const records = record[attribute.name] || [];
+
+    return (
+      <Stack spacing={3}>
+        {records.map((record) => (
+          <LinkToRecord key={record.id} record={record} />
+        ))}
+      </Stack>
+    );
   },
   initializeFormValue: function (record, attribute) {
     return record[attribute.name].map((n) => n.id) || [];
@@ -49,13 +61,20 @@ export default {
       setValue(next.map((v) => v.value));
     };
 
+    const records = record[attribute.name] || [];
+
     return (
-      <Combobox
-        multiple
-        value={selections}
-        loadOptions={handleSearch}
-        onChange={handleChange}
-      />
+      <Stack spacing={3}>
+        <Combobox
+          multiple
+          value={selections}
+          loadOptions={handleSearch}
+          onChange={handleChange}
+        />
+        {records.map((record) => (
+          <LinkToRecord key={record.id} record={record} />
+        ))}
+      </Stack>
     );
   },
 };
