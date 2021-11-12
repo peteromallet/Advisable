@@ -82,7 +82,7 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "auth_providers#create"
   get "/auth/failure", to: "auth_providers#failure"
 
-  get "/guild/posts/:id", to: "application#guild_post", as: :guild_post
+  get "/posts/:id", to: "application#guild_post", as: :guild_post
 
   get "accounts/me"
   post "accounts/user"
