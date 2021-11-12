@@ -6,9 +6,10 @@ import styled from "styled-components";
 
 const StyledPostCard = styled(StyledCard)`
   box-shadow: 0 1px 6px rgba(28, 28, 37, 0.12);
-  transition: box-shadow 0.4s;
+  transition: box-shadow 200ms, transform 200ms;
 
   &:hover {
+    transform: translateY(-2px);
     box-shadow: 0px 4px 20px rgba(26, 35, 67, 0.14);
   }
 `;
