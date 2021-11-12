@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_02_132501) do
+ActiveRecord::Schema.define(version: 2021_11_12_123049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -585,6 +585,7 @@ ActiveRecord::Schema.define(version: 2021_11_02_132501) do
     t.datetime "client_requested_reschedule_at"
     t.datetime "specialist_requested_reschedule_at"
     t.jsonb "log_data"
+    t.string "google_calendar_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
     t.index ["uid"], name: "index_interviews_on_uid", unique: true
     t.index ["user_id"], name: "index_interviews_on_user_id"

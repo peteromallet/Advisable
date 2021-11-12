@@ -112,7 +112,7 @@ RSpec.describe Mutations::ScheduleInterview do
   end
 
   it "creates gcal events" do
-    expect_any_instance_of(Interview).to receive(:create_google_calendar_event).once
+    expect_any_instance_of(Interview).to receive(:schedule_google_calendar_event).once
     request
   end
 
