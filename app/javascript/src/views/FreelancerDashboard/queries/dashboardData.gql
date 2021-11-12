@@ -1,6 +1,7 @@
 query DashboardData {
   viewer {
     ... on Specialist {
+      id
       caseStudies {
         id
       }
