@@ -14,6 +14,7 @@ class AuthProvider < ApplicationRecord
   def self.robot_calendar_provider
     service = Google::Apis::CalendarV3::CalendarService.new
     provider = google_calendar.find do |p|
+      p.refresh_google_token!
       service.authorization = p.google_secret.to_authorization
       service.list_calendar_lists.items.find do |calendar|
         calendar.id == ENV["GOOGLE_INTERVIEW_CALENDAR_ID"] && calendar.access_role == "owner"
@@ -36,6 +37,14 @@ class AuthProvider < ApplicationRecord
         "client_secret" => ENV["GOOGLE_SECRET"]
       }
     })
+  end
+
+  def refresh_google_token!
+    return if expires_at.future?
+
+    authorization = google_secret.to_authorization
+    authorization.refresh!
+    update!(token: authorization.access_token, refresh_token: authorization.refresh_token, expires_at: authorization.expires_at)
   end
 end
 
