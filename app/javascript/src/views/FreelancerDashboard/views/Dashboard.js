@@ -56,9 +56,7 @@ export default function Dashboard() {
                   <UpcomingEvents upcomingEvents={data.upcomingEvents} />
                 </Stack>
                 <Box gridColumn="1" gridRow="1">
-                  <CollaborationRequests
-                    collaborationRequests={data.collaborationRequests?.nodes}
-                  />
+                  <CollaborationRequests />
                 </Box>
               </Suspense>
             )}
