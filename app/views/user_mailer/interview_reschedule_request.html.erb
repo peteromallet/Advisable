@@ -11,17 +11,17 @@
     availabilities</a>.
 </p>
 <% if @interview.availability_note.present? %>
-  <p>
-    <%= @interview.specialist.first_name %> left the following note: <%= @interview.availability_note %>
-  </p>
-  <% end %>
-    <p>
-      Once they select a time, we’ll send new invitations.
-    </p>
-    <p>
-      Apologies for any inconvenience and we appreciate your flexibility!
-    </p>
-    <p>
-      Best,<br>
-      <%= @interview.user.company.sales_person.name %>
-    </p>
+<p>
+  <%= @interview.specialist.first_name %> left the following note: <%= @interview.availability_note %>
+</p>
+<% end %>
+<p>
+  Once they select a time, we’ll send new invitations.
+</p>
+<p>
+  Apologies for any inconvenience and we appreciate your flexibility!
+</p>
+<p>
+  Best,<br>
+  <%= @interview.user.company.sales_person.name %>
+</p>
