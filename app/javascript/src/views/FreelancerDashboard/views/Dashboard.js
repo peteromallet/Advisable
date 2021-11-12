@@ -55,11 +55,11 @@ export default function Dashboard() {
                   <LatestProjects topCaseStudies={data.topCaseStudies} />
                   <UpcomingEvents upcomingEvents={data.upcomingEvents} />
                 </Stack>
-                <Box gridColumn="1" gridRow="1">
-                  <CollaborationRequests />
-                </Box>
               </Suspense>
             )}
+            <Box gridColumn="1" gridRow="1">
+              <CollaborationRequests />
+            </Box>
           </Box>
         </Box>
       </Page>
