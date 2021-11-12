@@ -40,7 +40,7 @@ gem "pdfmonkey"
 gem "omniauth"
 gem "omniauth-rails_csrf_protection"
 gem "omniauth-google-oauth2"
-gem "google-api-client"
+gem "google-apis-calendar_v3"
 
 gem "airrecord"
 
