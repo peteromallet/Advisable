@@ -1,4 +1,5 @@
 import React from "react";
+import Loading from "src/components/Loading";
 import { X } from "@styled-icons/heroicons-solid";
 import { Link, useParams, useHistory } from "react-router-dom";
 import CircularButton from "src/components/CircularButton";
@@ -28,7 +29,7 @@ export default function EditPost() {
     history.push(`/posts/${id}`);
   };
 
-  if (loading) return null;
+  if (loading) return <Loading />;
 
   const initialValues = {
     title: data.guildPost.title || "",
