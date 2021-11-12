@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import Sticky from "react-stickynode";
 import { Box, Stack } from "@advisable/donut";
 import GenericError from "src/views/GenericError";
 import Page from "src/components/Page";
@@ -43,6 +44,7 @@ export default function Dashboard() {
         >
           <AccountConfirmationPrompt />
           <Box
+            id="dashboardContainer"
             display={{ _: "block", l: "grid" }}
             gridTemplateColumns="52% auto"
             gridColumnGap={{ l: "48px", xl: "96px" }}
@@ -51,10 +53,19 @@ export default function Dashboard() {
               <DashboardLoading />
             ) : (
               <Suspense fallback={<DashboardLoading />}>
-                <Stack as={Box} spacing={16} mb={16} gridColumn="2" gridRow="1">
-                  <LatestProjects topCaseStudies={data.topCaseStudies} />
-                  <UpcomingEvents upcomingEvents={data.upcomingEvents} />
-                </Stack>
+                <Sticky top={84} bottomBoundary="#dashboardContainer">
+                  <Stack
+                    as={Box}
+                    gridColumn="2"
+                    gridRow="1"
+                    spacing={16}
+                    paddingBottom={6}
+                    mb={10}
+                  >
+                    <LatestProjects topCaseStudies={data.topCaseStudies} />
+                    <UpcomingEvents upcomingEvents={data.upcomingEvents} />
+                  </Stack>
+                </Sticky>
               </Suspense>
             )}
             <Box gridColumn="1" gridRow="1">
