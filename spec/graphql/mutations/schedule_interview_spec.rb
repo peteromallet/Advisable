@@ -32,6 +32,7 @@ RSpec.describe Mutations::ScheduleInterview do
 
   before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
+    allow_any_instance_of(GoogleCalendar).to receive(:schedule_for_interview)
   end
 
   def request
@@ -112,7 +113,7 @@ RSpec.describe Mutations::ScheduleInterview do
   end
 
   it "creates gcal events" do
-    expect_any_instance_of(Interview).to receive(:schedule_google_calendar_event).once
+    expect_any_instance_of(GoogleCalendar).to receive(:schedule_for_interview).with(interview)
     request
   end
 
