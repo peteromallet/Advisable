@@ -12,9 +12,11 @@ query CollaborationRequests($cursor: String) {
           name
           avatar
           location
+          firstName
         }
         title
         excerpt
+        engagementsCount
       }
     }
   }
