@@ -9,19 +9,6 @@ query DashboardData {
       }
     }
   }
-  collaborationRequests {
-    nodes {
-      id
-      author {
-        id
-        name
-        avatar
-        location
-      }
-      title
-      excerpt
-    }
-  }
   topCaseStudies {
     id
     title

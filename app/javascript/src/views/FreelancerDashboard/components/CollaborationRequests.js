@@ -1,20 +1,33 @@
-import React from "react";
-import useViewer from "@advisable-main/hooks/useViewer";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { BottomScrollListener } from "react-bottom-scroll-listener";
+import useViewer from "@advisable-main/hooks/useViewer";
 import ComposerModal from "@guild/components/ComposerModal";
 import { useComposerModal } from "@guild/components/ComposerModal/useComposerModal";
 import { Stack, Box, Button, Text, DialogDisclosure } from "@advisable/donut";
-import { Pencil } from "@styled-icons/heroicons-outline/Pencil";
 import { Adjustments } from "@styled-icons/heroicons-outline/Adjustments";
+import { Pencil } from "@styled-icons/heroicons-outline/Pencil";
 import CollaborationRequest from "./CollaborationRequest";
+import { useCollaborationRequests } from "../queries";
 
-export default function CollaborationRequests({ collaborationRequests }) {
+export default function CollaborationRequests() {
   const viewer = useViewer();
   const composerModal = useComposerModal("/guild/composer");
+  const { data, loading, fetchMore } = useCollaborationRequests();
 
-  const requests = collaborationRequests.map((cr) => (
-    <CollaborationRequest key={cr.id} request={cr} />
+  const hasNextPage = data?.collaborationRequests.pageInfo.hasNextPage || false;
+  const endCursor = data?.collaborationRequests.pageInfo.endCursor;
+  const requests = data?.collaborationRequests.edges.map((edge) => (
+    <CollaborationRequest key={edge.node.id} request={edge.node} />
   ));
+
+  const onReachedBottom = () => {
+    if (!loading && hasNextPage) {
+      fetchMore({
+        variables: { cursor: endCursor },
+      });
+    }
+  };
 
   return (
     <Box>
@@ -57,6 +70,11 @@ export default function CollaborationRequests({ collaborationRequests }) {
         </Box>
       </Box>
       <Stack spacing={4}>{requests}</Stack>
+      <BottomScrollListener
+        onBottom={onReachedBottom}
+        offset={64}
+        debounce={0}
+      />
     </Box>
   );
 }
