@@ -2,8 +2,8 @@ import React from "react";
 import { useField } from "formik";
 import { Link, Input } from "@advisable/donut";
 
-function UrlAttribute({ record, field }) {
-  const value = record[field.name];
+function UrlAttribute({ record, attribute }) {
+  const value = record[attribute.name];
   if (!value) return null;
 
   const handleClick = (e) => {

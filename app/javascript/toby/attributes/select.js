@@ -3,8 +3,8 @@ import { useField } from "formik";
 import { Tag, Select } from "@advisable/donut";
 
 export default {
-  render: function RenderStringColumn({ record, field }) {
-    return <Tag size="s">{record[field.name]}</Tag>;
+  render: function RenderStringColumn({ record, attribute }) {
+    return <Tag size="s">{record[attribute.name]}</Tag>;
   },
   initializeFormValue: function (record, attribute) {
     return record[attribute.name] || "";

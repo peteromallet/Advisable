@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useField } from "formik";
-import TagsInput from "../components/TagsInput";
 import { useSchema } from "../components/schema";
 import { useSearchResource, getNestedResource } from "../utilities";
 import { Combobox } from "@advisable/donut";
 
 export default {
-  render: function RenderHasMany({ record, field }) {
-    const items = record[field.name].map((r) => {
+  render: function RenderHasMany({ record, attribute }) {
+    const items = record[attribute.name].map((r) => {
       return r._label;
     });
 
