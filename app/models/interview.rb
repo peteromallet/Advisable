@@ -47,7 +47,7 @@ class Interview < ApplicationRecord
     DESCRIPTION
     attendee = Google::Apis::CalendarV3::EventAttendee.new(email: user.account.email)
     event = Google::Apis::CalendarV3::Event.new(**common_google_calendar_event.merge(summary: summary, description: description, attendees: [attendee]))
-    service.insert_event(ENV["GOOGLE_INTERVIEW_CALENDAR_ID"], event)
+    service.insert_event(ENV["GOOGLE_INTERVIEW_CALENDAR_ID"], event, send_updates: "all")
   end
 
   def create_specialist_gcal_event(service)
@@ -60,7 +60,7 @@ class Interview < ApplicationRecord
     DESCRIPTION
     attendee = Google::Apis::CalendarV3::EventAttendee.new(email: specialist.account.email)
     event = Google::Apis::CalendarV3::Event.new(**common_google_calendar_event.merge(summary: summary, description: description, attendees: [attendee]))
-    service.insert_event(ENV["GOOGLE_INTERVIEW_CALENDAR_ID"], event)
+    service.insert_event(ENV["GOOGLE_INTERVIEW_CALENDAR_ID"], event, send_updates: "all")
   end
 
   def common_google_calendar_event
