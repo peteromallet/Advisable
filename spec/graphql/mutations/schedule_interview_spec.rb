@@ -97,9 +97,18 @@ RSpec.describe Mutations::ScheduleInterview do
     expect(message.content).to eq("#{specialist.account.name} & #{user.account.name},\n\nNow that you've scheduled a call, you can use this thread to communicate.\n\nIf you have any questions or issues, don't hesitate to contact the Advisable team at hello@advisable.com.")
   end
 
-  it "sends emails" do
+  it "sends introductory email to specialist" do
     request
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_scheduled", "deliver_now", {args: [interview]}).once
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "first_interview_scheduled", "deliver_now", {args: [interview]}).once
+    expect(specialist.account.reload.completed_tutorials).to include("introductory_call")
+  end
+
+  context "when it's not first call for specialist" do
+    it "does not send an email" do
+      specialist.account.update(completed_tutorials: ["introductory_call"])
+      request
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "first_interview_scheduled", "deliver_now", {args: [interview]})
+    end
   end
 
   it "creates gcal events" do
