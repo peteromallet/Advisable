@@ -1,18 +1,25 @@
 import React from "react";
 import Loading from "src/components/Loading";
 import { X } from "@styled-icons/heroicons-solid";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Redirect, Link, useParams, useHistory } from "react-router-dom";
 import CircularButton from "src/components/CircularButton";
 import { Box, useBackground } from "@advisable/donut";
 import CollaborationRequestForm from "src/components/CollaborationRequestForm";
 import { usePost, useUpdatePost } from "./queries";
+import useViewer from "src/hooks/useViewer";
 
 export default function EditPost() {
   useBackground("white");
+  const viewer = useViewer();
   const { id } = useParams();
   const history = useHistory();
   const [update] = useUpdatePost();
   const { data, loading } = usePost(id);
+
+  const post = data?.guildPost;
+  if (post && post.author.id !== viewer.id) {
+    return <Redirect to={`/posts/${post.id}`} />;
+  }
 
   const handleSubmit = async (values) => {
     await update({
@@ -32,9 +39,9 @@ export default function EditPost() {
   if (loading) return <Loading />;
 
   const initialValues = {
-    title: data.guildPost.title || "",
-    body: data.guildPost.body || "",
-    labels: data.guildPost.labels.map((l) => ({
+    title: post.title || "",
+    body: post.body || "",
+    labels: post.labels.map((l) => ({
       value: l.name,
       label: l.name,
     })),
