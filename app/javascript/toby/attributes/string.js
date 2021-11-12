@@ -3,8 +3,8 @@ import { useField } from "formik";
 import { Input } from "@advisable/donut";
 
 export default {
-  render: function RenderStringColumn({ record, field }) {
-    return record[field.name] || null;
+  render: function RenderStringColumn({ record, attribute }) {
+    return record[attribute.name] || null;
   },
   initializeFormValue: function (record, attribute) {
     return record[attribute.name] || "";

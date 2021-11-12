@@ -3,8 +3,8 @@ import { useField } from "formik";
 import BulletPointInput from "src/components/BulletPointInput";
 
 export default {
-  render: function RenderStringColumn({ record, field }) {
-    return record[field.name].join(", ");
+  render: function RenderStringColumn({ record, attribute }) {
+    return record[attribute.name].join(", ");
   },
   input: function TextArrayInput({ attribute }) {
     const [field, , helpers] = useField(attribute.name);

@@ -5,8 +5,8 @@ import { useSearchResource, getNestedResource } from "../utilities";
 import { Combobox } from "@advisable/donut";
 
 export default {
-  render: function RenderBelongsTo({ record, field }) {
-    const value = record[field.name];
+  render: function RenderBelongsTo({ record, attribute }) {
+    const value = record[attribute.name];
     if (!value) return null;
     return value._label;
   },
