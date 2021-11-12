@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Link, Box, Stack } from "@advisable/donut";
+import CardButton from "src/components/CardButton";
 import SectionTitle from "./SectionTitle";
 import CaseStudyCard from "./CaseStudyCard";
-import SectionActionButton from "./SectionActionButton";
 import CaseStudiesEmptyState from "./CaseStudiesEmptyState";
 
 function CaseStudies({ caseStudies, specialist, isOwner }) {
@@ -23,7 +23,7 @@ function CaseStudies({ caseStudies, specialist, isOwner }) {
       </Stack>
       {isEmpty && isOwner && <CaseStudiesEmptyState specialist={specialist} />}
       {!isEmpty && isOwner && (
-        <SectionActionButton
+        <CardButton
           as={Link.External}
           href={`https://csi.advisable.com/freelancer/onboarding?specialist_id=${specialist.id}&contact_name=${specialist.firstName}`}
           target="_blank"
@@ -31,7 +31,7 @@ function CaseStudies({ caseStudies, specialist, isOwner }) {
           paddingY={6}
         >
           Add a Case Study
-        </SectionActionButton>
+        </CardButton>
       )}
     </Box>
   );
