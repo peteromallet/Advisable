@@ -41,7 +41,7 @@ module Mutations
       interview.application.project.update(status: "Interview Scheduled")
       update_specialist_number(specialist, args[:phone_number]) if args[:phone_number]
       interview.create_system_message!
-      interview.create_google_calendar_events
+      interview.create_google_calendar_event
 
       unless specialist.account.completed_tutorial?("introductory_call")
         SpecialistMailer.first_interview_scheduled(interview).deliver_later
