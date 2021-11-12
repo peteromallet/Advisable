@@ -27,6 +27,7 @@ function EditPost({ post, size }) {
             onClick={handleClick}
             bg="neutral100"
             color="neutral600"
+            aria-label="Edit"
             icon={<Pencil />}
           />
         </Box>
