@@ -87,7 +87,7 @@ class SpecialistMailer < ApplicationMailer
     end
   end
 
-  def interview_scheduled(interview)
+  def first_interview_scheduled(interview)
     @interview = interview
     @user = interview.user
     @specialist = interview.specialist
@@ -96,7 +96,7 @@ class SpecialistMailer < ApplicationMailer
       from: @sales_person.email_with_name,
       to: @specialist.account.email,
       bcc: @sales_person.email_with_name,
-      subject: "Information Before Your Call with #{@user.name_with_company}"
+      subject: "Prep call with Advisable"
     ) do |format|
       format.html { render layout: false }
     end
