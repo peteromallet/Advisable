@@ -19,7 +19,7 @@ export const GUILD_POSTS_QUERY = gql`
         }
       }
     }
-    guildPosts(first: 10, after: $cursor, type: $type) {
+    guildPosts(first: 2, after: $cursor, type: $type) {
       pageInfo {
         endCursor
         hasNextPage
