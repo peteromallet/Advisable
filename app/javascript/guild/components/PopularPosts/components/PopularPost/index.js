@@ -8,7 +8,7 @@ import { isGuildPath } from "@guild/utils";
 import pluralize from "src/utilities/pluralize";
 
 const PopularPost = ({ post }) => {
-  const url = `/guild/posts/${post.id}`;
+  const url = `/posts/${post.id}`;
 
   return (
     <Sentry.ErrorBoundary>

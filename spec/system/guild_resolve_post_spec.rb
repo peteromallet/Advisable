@@ -12,7 +12,7 @@ RSpec.describe "Guild resolve post", type: :system do
 
     it "does not have a resolve button" do
       authenticate_as(other)
-      visit "/guild/posts/#{post.id}"
+      visit "/posts/#{post.id}"
       expect(page).not_to have_selector(:xpath, resolve_btn)
     end
   end
@@ -23,7 +23,7 @@ RSpec.describe "Guild resolve post", type: :system do
     end
 
     it "resolves a post" do
-      visit "/guild/posts/#{post.id}"
+      visit "/posts/#{post.id}"
       all(:xpath, resolve_btn).first.click
       click_on "Confirm"
       expect(page).to have_content("Your post has been marked as resolved")
@@ -32,7 +32,7 @@ RSpec.describe "Guild resolve post", type: :system do
 
     it "does not have a resolve button if type is unsupported" do
       post.update!(type: "CaseStudy")
-      visit "/guild/posts/#{post.id}"
+      visit "/posts/#{post.id}"
       expect(page).not_to have_selector(:xpath, resolve_btn)
     end
   end

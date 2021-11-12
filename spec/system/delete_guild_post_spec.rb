@@ -9,7 +9,7 @@ RSpec.describe "Guild post delete action", type: :system do
 
   it "allows the author to delete their post" do
     authenticate_as(author)
-    visit "/guild/posts/#{post.id}"
+    visit "/posts/#{post.id}"
     author.account.first_name
     all("button[aria-label=\"Delete post\"]").first.click
     click_on "Confirm"
@@ -19,7 +19,7 @@ RSpec.describe "Guild post delete action", type: :system do
 
   it "is only shown to the author" do
     authenticate_as(specialist)
-    visit "/guild/posts/#{post.id}"
+    visit "/posts/#{post.id}"
     expect(page).to have_content(post.title)
     expect(page).not_to have_selector("*[data-testid=deletePost]")
   end
