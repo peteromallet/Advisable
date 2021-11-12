@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import Sticky from "react-stickynode";
-import { Box, Stack } from "@advisable/donut";
+import { Box, Stack, useBreakpoint } from "@advisable/donut";
 import GenericError from "src/views/GenericError";
 import Page from "src/components/Page";
 import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
@@ -14,6 +14,7 @@ import DashboardLoading from "../components/DashboardLoading";
 
 export default function Dashboard() {
   const { data, loading, error } = useDashboardData();
+  const lUp = useBreakpoint("lUp");
   if (error) return <GenericError />;
 
   return (
@@ -53,7 +54,11 @@ export default function Dashboard() {
               <DashboardLoading />
             ) : (
               <Suspense fallback={<DashboardLoading />}>
-                <Sticky top={84} bottomBoundary="#dashboardContainer">
+                <Sticky
+                  enabled={lUp}
+                  top={84}
+                  bottomBoundary="#dashboardContainer"
+                >
                   <Stack
                     as={Box}
                     gridColumn="2"
