@@ -1,8 +1,9 @@
 import React from "react";
-import { StyledCard, Link, Box, Text } from "@advisable/donut";
-import PassportAvatar from "src/components/PassportAvatar";
 import css from "@styled-system/css";
 import styled from "styled-components";
+import ConnectionsCount from "@guild/components/ConnectionsCount";
+import { StyledCard, Link, Box, Text } from "@advisable/donut";
+import PassportAvatar from "src/components/PassportAvatar";
 
 const StyledPostCard = styled(StyledCard)`
   box-shadow: 0 1px 6px rgba(28, 28, 37, 0.12);
@@ -52,9 +53,10 @@ export default function CollaborationRequest({ request }) {
       >
         {request.title}
       </Text>
-      <Text color="neutral700" lineHeight="s">
+      <Text color="neutral700" lineHeight="s" marginBottom={5}>
         {request.excerpt}
       </Text>
+      <ConnectionsCount post={request} display="inline" />
     </StyledPostCard>
   );
 }
