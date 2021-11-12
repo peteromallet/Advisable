@@ -1,5 +1,5 @@
 query CollaborationRequests($cursor: String) {
-  collaborationRequests(first: 2, after: $cursor) {
+  collaborationRequests(first: 10, after: $cursor) {
     pageInfo {
       endCursor
       hasNextPage
