@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "google/api_client/client_secrets"
-require "google/apis/calendar_v3"
 
 class AuthProvider < ApplicationRecord
   belongs_to :account
@@ -10,20 +9,6 @@ class AuthProvider < ApplicationRecord
 
   validates :uid, :provider, presence: true
   validates :uid, uniqueness: {scope: :provider}
-
-  def self.robot_calendar_provider
-    service = Google::Apis::CalendarV3::CalendarService.new
-    provider = google_calendar.find do |p|
-      p.refresh_google_token!
-      service.authorization = p.google_secret.to_authorization
-      service.list_calendar_lists.items.find do |calendar|
-        calendar.id == ENV["GOOGLE_INTERVIEW_CALENDAR_ID"] && calendar.access_role == "owner"
-      end
-    end
-    return provider if provider
-
-    Sentry.capture_message("GOOGLE ROBOT CALENDAR AUTH REQUIRED", level: "fatal")
-  end
 
   def google_secret
     return unless provider == "google_oauth2_calendar"
