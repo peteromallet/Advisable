@@ -5,7 +5,7 @@ module Toby
     class SkillCategory < BaseResource
       model_name ::SkillCategory
       attribute :name, Attributes::String
-      attribute :skills, Attributes::HasManyThrough
+      attribute :description, Attributes::String
 
       def self.label(record, context)
         Lazy::Label.new(::SkillCategory, record.id, context, value_column: :name)
