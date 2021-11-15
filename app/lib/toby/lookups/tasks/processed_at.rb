@@ -3,7 +3,7 @@
 module Toby
   module Lookups
     module Tasks
-      class ProcessedAt < Attributes::String
+      class ProcessedAt < Attributes::DateTime
         include Lookup
 
         def lazy_read_class
@@ -23,7 +23,7 @@ module Toby
         end
 
         def lazy_read(task)
-          task&.payout&.processed_at&.strftime("%m/%d/%Y, %I:%m %p") || "-"
+          task&.payout&.processed_at
         end
       end
     end
