@@ -52,7 +52,7 @@ class Application < ApplicationRecord
     "Working - 5 Days In - Client Feedback", "Working - 10 Days In - Client Feedback", "Working - 15 Days In - Client Feedback",
     "Working - 5 Days In - Specialist Happy", "Working - 10 Days In - Specialist Happy", "Working - 15 Days In - Specialist Happy",
     "Working - 5 Days In - Specialist Feedback", "Working - 10 Days In - Specialist Feedback", "Working - 15 Days In - Specialist Feedback",
-    "Client Wants To More Forward", "Likelihood To Hire", "Freelancer - Post Interview Next Steps", "Client Ready To Hire Now", "Client Needs From Freelancer", "Better Freelancer Feedback"
+    "Client Wants To More Forward", "Likelihood To Hire", "Freelancer - Post Interview Next Steps", "Client - Post Interview Next Steps", "Client Ready To Hire Now", "Client Needs From Freelancer", "Better Freelancer Feedback"
   ].freeze
 
   belongs_to :specialist

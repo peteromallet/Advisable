@@ -8,6 +8,7 @@ class PostInterviewJob < ApplicationJob
       interview.application.project.update(status: "Interview Completed", interview_completed_at: interview.starts_at + 30.minutes)
       SpecialistMailer.post_interview(interview).deliver_later
       UserMailer.post_interview(interview).deliver_later
+      PostInterviewReminderJob.set(wait_until: interview.starts_at + 1.day).perform_later(interview)
     end
   end
 end
