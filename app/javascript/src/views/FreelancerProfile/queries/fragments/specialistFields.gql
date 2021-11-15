@@ -29,6 +29,7 @@ fragment SpecialistFields on Specialist {
     companyType
     title
     coverPhoto
+    editorUrl
     company {
       favicon
     }
