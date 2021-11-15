@@ -10,6 +10,7 @@ import SuperEllipse from "react-superellipse";
 import { matchPath } from "react-router";
 import { Box, Text, Link, Skeleton, useModal, theme } from "@advisable/donut";
 import LogoMark from "src/components/LogoMark";
+import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
 
 const StyledLink = styled(Link)(
   css({
@@ -26,17 +27,40 @@ const StyledContentWrapper = styled.div(
   }),
 );
 
-const StyledEditButton = styled.div(
+export const StyledDropdown = styled(Box)`
+  outline: none;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px -12px ${theme.colors.neutral900}24,
+    0 2px 8px ${theme.colors.neutral900}12;
+`;
+
+export const StyledDropdownLink = styled.div`
+  display: block;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 450;
+  padding: 8px 20px;
+  color: ${theme.colors.neutral600};
+
+  &:hover {
+    color: ${theme.colors.neutral900};
+    background: ${theme.colors.neutral50};
+  }
+`;
+
+const StyledMeatballButton = styled.div(
   css({
     position: "absolute",
+    right: "12px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    right: "12px",
-    bottom: "12px",
-    width: "68px",
-    height: "32px",
-    bg: "rgba(255, 255, 255, 0.75)",
+    top: "12px",
+    width: "36px",
+    height: "36px",
+    bg: "rgba(255,255,255, 0.4)",
+    color: "neutral700",
     borderRadius: "24px",
     transition: "0.2s opacity",
   }),
@@ -124,7 +148,7 @@ const StyledCaseStudyCard = styled.div(
     prop: "type",
     variants: {
       profile: {
-        [StyledEditButton]: {
+        [StyledMeatballButton]: {
           opacity: 0,
         },
         transition: "transform 200ms, box-shadow 200ms",
@@ -134,7 +158,7 @@ const StyledCaseStudyCard = styled.div(
           0 16px 40px -16px ${rgba(theme.colors.blue800, 0.08)},
           0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)}
         `,
-          [StyledEditButton]: {
+          [StyledMeatballButton]: {
             opacity: 1,
           },
         },
@@ -238,18 +262,41 @@ export default function CaseStudyCard({ caseStudy }) {
               </Box>
             </Box>
           </StyledContentWrapper>
-          <StyledEditButton
+          <PopoverDisclosure
+            as={StyledMeatballButton}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              modal.show();
-              return false;
+              popover.show();
             }}
+            {...popover}
           >
-            Edit
-          </StyledEditButton>
+            <DotsVertical size={24} />
+          </PopoverDisclosure>
+          <Popover {...popover} aria-label="Edit a case study">
+            <StyledDropdown>
+              <DialogDisclosure
+                as={StyledDropdownLink}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  modal.show();
+                  popover.hide();
+                }}
+                {...modal}
+              >
+                Edit a case study
+              </DialogDisclosure>
+            </StyledDropdown>
+          </Popover>
         </StyledCaseStudyCard>
       </Box>
+      <Modal modal={modal}>
+        <Text>ololo</Text>
+        <Link.External href={caseStudy.editorUrl} target="_blank">
+          <Button>Go to the editor</Button>
+        </Link.External>
+      </Modal>
     </Suspense>
   );
 }
