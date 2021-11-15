@@ -7,7 +7,7 @@ RSpec.describe PostInterviewJob do
   let(:starts_at) { 20.minutes.ago }
   let!(:interview) { create(:interview, starts_at: starts_at, status: status) }
 
-  it "updates all the statuses" do
+  it "updates all the statuses and schedules next job" do
     expect(interview.status).to eq("Call Scheduled")
     expect(interview.application.status).to eq("Applied")
     expect(interview.application.project.status).to be_nil
@@ -16,6 +16,7 @@ RSpec.describe PostInterviewJob do
     expect(interview.status).to eq("Call Completed")
     expect(interview.application.status).to eq("Interview Completed")
     expect(interview.application.project.status).to eq("Interview Completed")
+    expect(PostInterviewReminderJob).to have_been_enqueued.with(interview).at(interview.starts_at + 1.day)
   end
 
   it "sends post interview only once" do
