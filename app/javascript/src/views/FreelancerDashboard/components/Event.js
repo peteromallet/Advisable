@@ -2,6 +2,7 @@ import React from "react";
 import { DateTime } from "luxon";
 import css from "@styled-system/css";
 import styled from "styled-components";
+import * as Sentry from "@sentry/react";
 import { Box, Text, Link } from "@advisable/donut";
 import Card from "./Card";
 import { StyledLineClamp } from "@guild/views/Events/styles";
@@ -53,55 +54,57 @@ const EventCoverImage = ({ coverPhotoUrl }) => {
 
 export default function Event({ event }) {
   return (
-    <Card as={Link} to={`/events/${event.id}`}>
-      <Box display="flex" css={css({ columnGap: 4 })}>
-        <Box
-          display="flex"
-          bg="neutral100"
-          position="relative"
-          justifyContent="center"
-          alignItems="center"
-          borderRadius="12px"
-          minWidth="118px"
-          width="118px"
-          height="90px"
-          css={`
-            overflow: hidden;
-          `}
-        >
-          <StartsAtTag startsAt={event.startsAt} />
-          <Box position="absolute" left="0" top="0" right="0" bottom="0">
-            {event.coverPhotoUrl ? (
-              <EventCoverImage coverPhotoUrl={event.coverPhotoUrl} />
-            ) : (
-              <OrbitsBackground
-                height="148px"
-                color={event.color}
-                borderRadius="12px 12px 0 0"
-              />
-            )}
+    <Sentry.ErrorBoundary>
+      <Card as={Link} to={`/events/${event.id}`}>
+        <Box display="flex" css={css({ columnGap: 4 })}>
+          <Box
+            display="flex"
+            bg="neutral100"
+            position="relative"
+            justifyContent="center"
+            alignItems="center"
+            borderRadius="12px"
+            minWidth="118px"
+            width="118px"
+            height="90px"
+            css={`
+              overflow: hidden;
+            `}
+          >
+            <StartsAtTag startsAt={event.startsAt} />
+            <Box position="absolute" left="0" top="0" right="0" bottom="0">
+              {event.coverPhotoUrl ? (
+                <EventCoverImage coverPhotoUrl={event.coverPhotoUrl} />
+              ) : (
+                <OrbitsBackground
+                  height="148px"
+                  color={event.color}
+                  borderRadius="12px 12px 0 0"
+                />
+              )}
+            </Box>
+          </Box>
+          <Box>
+            <StyledLineClamp
+              lines={3}
+              color="neutral900"
+              lineHeight="s"
+              fontWeight={450}
+              mb={2}
+            >
+              {event.title}
+            </StyledLineClamp>
+            <Text
+              fontSize="xs"
+              color="neutral500"
+              fontWeight={450}
+              lineHeight="xs"
+            >
+              Hosted by <span>{event.host?.name}</span>
+            </Text>
           </Box>
         </Box>
-        <Box>
-          <StyledLineClamp
-            lines={3}
-            color="neutral900"
-            lineHeight="s"
-            fontWeight={450}
-            mb={2}
-          >
-            {event.title}
-          </StyledLineClamp>
-          <Text
-            fontSize="xs"
-            color="neutral500"
-            fontWeight={450}
-            lineHeight="xs"
-          >
-            Hosted by <span>{event.host?.name}</span>
-          </Text>
-        </Box>
-      </Box>
-    </Card>
+      </Card>
+    </Sentry.ErrorBoundary>
   );
 }
