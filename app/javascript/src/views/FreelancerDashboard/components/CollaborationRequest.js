@@ -1,4 +1,5 @@
 import React from "react";
+import * as Sentry from "@sentry/react";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 import css from "@styled-system/css";
 import styled from "styled-components";
@@ -21,40 +22,42 @@ const StyledPostCard = styled(StyledCard)(
 
 export default function CollaborationRequest({ request }) {
   return (
-    <StyledPostCard as={Link} to={`/guild/posts/${request.id}`} elevation="s">
-      <Box
-        display="flex"
-        alignItems="center"
-        css={css({ columnGap: 3 })}
-        mb={4}
-      >
-        <PassportAvatar
-          size="sm"
-          src={request.author?.avatar}
-          name={request.author?.name}
-        />
-        <Box>
-          <Text color="neutral900" fontWeight={450} lineHeight="m">
-            {request.author?.name}
-          </Text>
-          <Text fontSize="xs" color="neutral500" lineHeight="s">
-            {request.author?.location}
-          </Text>
+    <Sentry.ErrorBoundary>
+      <StyledPostCard as={Link} to={`/guild/posts/${request.id}`} elevation="s">
+        <Box
+          display="flex"
+          alignItems="center"
+          css={css({ columnGap: 3 })}
+          mb={4}
+        >
+          <PassportAvatar
+            size="sm"
+            src={request.author?.avatar}
+            name={request.author?.name}
+          />
+          <Box>
+            <Text color="neutral900" fontWeight={450} lineHeight="m">
+              {request.author?.name}
+            </Text>
+            <Text fontSize="xs" color="neutral500" lineHeight="s">
+              {request.author?.location}
+            </Text>
+          </Box>
         </Box>
-      </Box>
-      <Text
-        color="neutral900"
-        fontWeight={450}
-        fontSize="3xl"
-        lineHeight="l"
-        mb={4}
-      >
-        {request.title}
-      </Text>
-      <Text color="neutral700" lineHeight="s" marginBottom={5}>
-        {request.excerpt}
-      </Text>
-      <ConnectionsCount post={request} display="inline" />
-    </StyledPostCard>
+        <Text
+          color="neutral900"
+          fontWeight={450}
+          fontSize="3xl"
+          lineHeight="l"
+          mb={4}
+        >
+          {request.title}
+        </Text>
+        <Text color="neutral700" lineHeight="s" marginBottom={5}>
+          {request.excerpt}
+        </Text>
+        <ConnectionsCount post={request} display="inline" />
+      </StyledPostCard>
+    </Sentry.ErrorBoundary>
   );
 }
