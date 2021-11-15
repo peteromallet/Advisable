@@ -12,7 +12,6 @@ RSpec.describe Mutations::PostCollaborationRequest do
     <<-GRAPHQL
     mutation {
       postCollaborationRequest(input: {
-        audienceType: "skills",
         body: "#{Faker::Lorem.paragraph}",
         labels: #{labels.map(&:name)},
         shareable: true,
@@ -35,8 +34,7 @@ RSpec.describe Mutations::PostCollaborationRequest do
         "type" => "Opportunity",
         "status" => "published",
         "specialist_id" => specialist.id,
-        "shareable" => true,
-        "audience_type" => "skills"
+        "shareable" => true
       })
     end
   end
