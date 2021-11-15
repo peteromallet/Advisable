@@ -16,7 +16,7 @@ class SpecialistMailer < ApplicationMailer
 
     mail(
       to: @specialist.account.email,
-      subject: "New Freelance Opportunity: #{@project.primary_skill.name} with #{@project.industry} #{@project.company_type}"
+      subject: "New Freelance Opportunity: #{@project.nice_name} with #{@project.industry} #{@project.company_type}"
     )
   end
 
@@ -29,7 +29,7 @@ class SpecialistMailer < ApplicationMailer
     mail(
       from: @sales_person.email_with_name,
       to: @application.specialist.account.email,
-      subject: "#{@project.primary_skill.name} Project Has Been Paused"
+      subject: "#{@project.nice_name} Project Has Been Paused"
     ) do |format|
       format.html { render layout: false }
     end
@@ -50,11 +50,10 @@ class SpecialistMailer < ApplicationMailer
   def more_time_options_added(interview)
     @interview = interview
     @sales_person = interview.user.company.sales_person
-    project_name = [interview.application.project&.primary_skill&.name, "project"].join(" ")
     mail(
       from: @sales_person.email_with_name,
       to: interview.specialist.account.email,
-      subject: "More times added: Introductory call for #{project_name}"
+      subject: "More times added: Introductory call for #{interview.application.project.nice_name} Project"
     ) do |format|
       format.html { render layout: false }
     end
@@ -84,6 +83,20 @@ class SpecialistMailer < ApplicationMailer
       to: @specialist.account.email,
       bcc: @sales_person.email_with_name,
       subject: "Prep call with Advisable"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
+
+  def post_interview(interview)
+    @interview = interview
+    @sales_person = interview.user.company.sales_person
+
+    mail(
+      from: "Advisable <hello@advisable.com>",
+      to: interview.specialist.account.email,
+      bcc: @sales_person.email_with_name,
+      subject: "What are your next steps for the #{@interview.application.project.nice_name} project with #{@interview.user.name_with_company}?"
     ) do |format|
       format.html { render layout: false }
     end
