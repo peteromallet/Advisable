@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/react";
 import React, { Suspense } from "react";
 import { rgba } from "polished";
 import css from "@styled-system/css";
@@ -177,7 +178,9 @@ export default function CaseStudyCard({ caseStudy }) {
       >
         <StyledCaseStudyCard type={isArticle ? "article" : "profile"}>
           {caseStudy.coverPhoto ? (
-            <CaseStudyBackgroundImage url={caseStudy.coverPhoto} />
+            <Sentry.ErrorBoundary>
+              <CaseStudyBackgroundImage url={caseStudy.coverPhoto} />
+            </Sentry.ErrorBoundary>
           ) : null}
           <StyledContentWrapper>
             <StyledLogoSquircle r1={0.1} r2={0.362}>

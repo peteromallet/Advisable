@@ -60,7 +60,9 @@ export default function Project({ caseStudy }) {
             `}
           >
             {Boolean(caseStudy.coverPhoto) && (
-              <CoverImage coverPhoto={caseStudy.coverPhoto} />
+              <Sentry.ErrorBoundary>
+                <CoverImage coverPhoto={caseStudy.coverPhoto} />
+              </Sentry.ErrorBoundary>
             )}
             {Boolean(caseStudy.specialist?.avatar) && (
               <Avatar avatar={caseStudy.specialist?.avatar} />
