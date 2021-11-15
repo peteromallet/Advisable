@@ -23,7 +23,7 @@ module Toby
         end
 
         def lazy_read(task)
-          task&.payments&.map { |payment| payment.charged_at&.strftime("%m/%d/%Y, %I:%m %p") || "-" }
+          task&.payments&.map { |payment| payment.charged_at&.strftime("%d/%m/%Y, %I:%m %p") || "-" }
         end
       end
     end
