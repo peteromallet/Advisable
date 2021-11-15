@@ -64,6 +64,6 @@ class GoogleCalendar
       Google::Apis::CalendarV3::EventAttendee.new(email: interview.user.account.email, response_status: "needsAction"),
       Google::Apis::CalendarV3::EventAttendee.new(email: interview.specialist.account.email, response_status: "needsAction")
     ]
-    service.update_event("primary", event.id, event, send_updates: "all")
+    service.update_event(ENV["GOOGLE_INTERVIEW_CALENDAR_ID"], event.id, event, send_updates: "all")
   end
 end
