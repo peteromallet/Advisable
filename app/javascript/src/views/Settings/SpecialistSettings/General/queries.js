@@ -8,11 +8,6 @@ const fields = gql`
     email
     firstName
     lastName
-    skills {
-      name
-      value: name
-      label: name
-    }
     hourlyRate
     publicUse
   }
@@ -22,10 +17,6 @@ export const GET_DATA = gql`
   ${fields}
 
   query getData {
-    skills {
-      value: name
-      label: name
-    }
     viewer {
       ... on Specialist {
         ...SpecialistFields
