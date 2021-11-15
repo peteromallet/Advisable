@@ -1,16 +1,7 @@
 import React from "react";
-import sortBy from "lodash/sortBy";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import { useQuery, useMutation } from "@apollo/client";
-import {
-  Box,
-  Card,
-  Text,
-  Link,
-  InputError,
-  Combobox,
-  Checkbox,
-} from "@advisable/donut";
+import { Box, Card, Text, Checkbox } from "@advisable/donut";
 import Loading from "components/Loading";
 import FormField from "components/FormField";
 import CurrencyInput from "components/CurrencyInput";
@@ -30,7 +21,6 @@ const Profile = () => {
     remote: data?.viewer?.remote || true,
     hourlyRate: data?.viewer?.hourlyRate / 100.0,
     publicUse: data?.viewer?.publicUse || false,
-    skills: data?.viewer?.skills || [],
   };
 
   const handleSubmit = async (values) => {
@@ -41,7 +31,6 @@ const Profile = () => {
       hourlyRate: values.hourlyRate * 100,
       remote: values.remote,
       publicUse: values.publicUse,
-      skills: values.skills.map((s) => s.value),
     };
     const response = await updateProfile({ variables: { input } });
     if (response.errors) {
@@ -81,29 +70,6 @@ const Profile = () => {
             </Box>
             <Box height={1} bg="neutral100" my="l" />
             <FormField name="email" label="Email" />
-            <Box height={1} bg="neutral100" my="l" />
-            <FormField
-              multiple
-              max={10}
-              name="skills"
-              as={Combobox}
-              description="Add up to 10 skill’s that you have used in previously completed projects."
-              label="What type of projects are you looking for?"
-              placeholder="e.g Online Marketing"
-              options={sortBy(data.skills, ["label"])}
-              onChange={(skills) => {
-                formik.setFieldTouched("skills", true);
-                formik.setFieldValue("skills", skills);
-              }}
-            />
-            <ErrorMessage mt="xs" name="skills" component={InputError} />
-            {formik.values.skills.length >= 10 && (
-              <Text mt="m" size="s" lineHeight="s">
-                You can&apos;t add more than 10 primary skills. If you want to
-                add more skills to your profile, you can do so by{" "}
-                <Link to="/profile">adding a previous project.</Link>
-              </Text>
-            )}
             <Box height={1} bg="neutral100" my="l" />
             <Box paddingBottom="xs">
               <Text fontWeight="medium" color="neutral800">
