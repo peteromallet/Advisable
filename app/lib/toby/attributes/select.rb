@@ -5,6 +5,7 @@ module Toby
     class Select < BaseAttribute
       filter "equals...", Filters::Equals
       filter "is one of...", Filters::OneOf
+      filter "is not one of...", Filters::NotOneOf
       filter "is blank", Filters::CheckNil
       filter "is not blank", Filters::CheckNotNil
 
