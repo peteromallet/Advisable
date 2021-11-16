@@ -6,6 +6,7 @@ module Toby
       field :create_toby_view, mutation: Mutations::CreateView
       field :update_toby_view, mutation: Mutations::UpdateView
       field :delete_toby_view, mutation: Mutations::DeleteView
+      field :get_csv, mutation: Mutations::GetCsv
 
       Toby::Resources.resource_classes.each do |resource|
         field resource.query_name_update, mutation: resource.update_mutation
