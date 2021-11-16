@@ -8,6 +8,7 @@ import StringContains from "./StringContains";
 
 const FILTERS = {
   OneOf,
+  NotOneOf: OneOf,
   Equals,
   Includes,
   LessThan: NumberInput,
