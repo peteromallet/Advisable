@@ -106,7 +106,7 @@
       "check_name": "Redirect",
       "message": "Possible unprotected redirect",
       "file": "app/controllers/application_controller.rb",
-      "line": 54,
+      "line": 55,
       "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
       "code": "redirect_to(\"/review/#{PreviousProject.find_by!(:uid => params[:uid]).specialist.uid}\")",
       "render_path": null,
@@ -136,6 +136,26 @@
         "method": "apply"
       },
       "user_input": "attribute.name.to_s.underscore",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "5642f196f1978c01439e3e5c12f668d6517218df8bad5b4e1e85b84672af28d3",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/toby/filters/not_one_of.rb",
+      "line": 16,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "records.where.not(\"LOWER(#{attribute.name}) IN (?)\", value.select(&:present?).select do\n valid_uuid?(v)\n end.map(&:downcase))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Toby::Filters::NotOneOf",
+        "method": "apply"
+      },
+      "user_input": "attribute.name",
       "confidence": "Weak",
       "note": ""
     },
@@ -260,6 +280,46 @@
       "note": ""
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "c84ea88caefdfab35f09c829a26367f23dbd3f5d6d6e81a8ff686ff81bf42743",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/toby/filters/not_one_of.rb",
+      "line": 14,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "records.where.not(\"#{attribute.name} IN (?)\", value.select(&:present?).select do\n valid_uuid?(v)\n end)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Toby::Filters::NotOneOf",
+        "method": "apply"
+      },
+      "user_input": "attribute.name",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "c84ea88caefdfab35f09c829a26367f23dbd3f5d6d6e81a8ff686ff81bf42743",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/toby/filters/not_one_of.rb",
+      "line": 18,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "records.where.not(\"#{attribute.name} IN (?)\", value.select(&:present?).select do\n valid_uuid?(v)\n end)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Toby::Filters::NotOneOf",
+        "method": "apply"
+      },
+      "user_input": "attribute.name",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
       "warning_type": "Redirect",
       "warning_code": 18,
       "fingerprint": "cdff841e7067cd67384b040bce796c7a00db6d468f24f10d74efb58d0bfdacfb",
@@ -320,6 +380,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-10-22 09:53:19 +0200",
-  "brakeman_version": "5.1.1"
+  "updated": "2021-11-16 08:34:35 +0100",
+  "brakeman_version": "5.1.2"
 }
