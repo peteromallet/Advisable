@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { StyledInput, StyledTag } from "@advisable/donut";
 
 export const StyledTagsInput = styled(StyledInput)`
+  height: auto !important;
   min-height: 32px;
   padding-left: 2px;
   padding-right: 2px;
