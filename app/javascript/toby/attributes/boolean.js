@@ -3,8 +3,8 @@ import { useField } from "formik";
 import { Checkbox } from "@advisable/donut";
 
 export default {
-  render: function Boolean({ record, field }) {
-    return record[field.name] ? "✅" : "❌";
+  render: function Boolean({ record, attribute }) {
+    return record[attribute.name] ? "✅" : "❌";
   },
   initializeFormValue: function (record, attribute) {
     return record[attribute.name] || false;

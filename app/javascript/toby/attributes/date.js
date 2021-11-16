@@ -3,8 +3,8 @@ import { DateTime } from "luxon";
 import { useField } from "formik";
 import DatePicker from "src/components/DatePicker";
 
-function DateAttribute({ record, field }) {
-  const value = record[field.name];
+function DateAttribute({ record, attribute }) {
+  const value = record[attribute.name];
   return value ? DateTime.fromISO(value).toLocaleString() : null;
 }
 

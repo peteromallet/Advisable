@@ -38,7 +38,7 @@ export function handlerForAttribute(attribute) {
   return ATTRIBUTES[attribute.__typename];
 }
 
-export function Attribute({ record, attribute }) {
+export function Attribute({ record, attribute, ...props }) {
   const handler = handlerForAttribute(attribute);
 
   if (!handler) {
@@ -46,7 +46,7 @@ export function Attribute({ record, attribute }) {
     return <div>{record[attribute.name]}</div>;
   }
 
-  return <handler.render record={record} field={attribute} />;
+  return <handler.render record={record} attribute={attribute} {...props} />;
 }
 
 // each attribute needs to be able to tell the UI how it's value should be
@@ -73,7 +73,8 @@ export function AttributeInput({ record, attribute, ...props }) {
   const handler = ATTRIBUTES[attribute.__typename];
 
   if (attribute.readonly || !handler?.input) {
-    return <Attribute record={record} attribute={attribute} />;
+    const component = handler?.renderDetail || Attribute;
+    return React.createElement(component, { record, attribute, ...props });
   }
 
   return (
