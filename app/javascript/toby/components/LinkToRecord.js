@@ -1,7 +1,7 @@
 import React from "react";
 import { ChevronRight } from "@styled-icons/heroicons-solid";
 import { Link } from "react-router-dom";
-import { Box, Text } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 import { css } from "@styled-system/css";
 import { recordPath } from "../utilities";
 
