@@ -39,7 +39,7 @@ function ProfilePicture({ specialist, isOwner }) {
   return (
     <Box position="absolute" left="0" bottom="0" display="inline-block">
       <PassportAvatar
-        size={["lg", "lg", "xl", "xl", "2xl"]}
+        size={["lg", "lg", "2xl", "2xl", "3xl"]}
         name={specialist.name}
         src={specialist.avatar}
         stroke="4px"

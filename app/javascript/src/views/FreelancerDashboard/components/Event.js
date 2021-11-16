@@ -84,7 +84,7 @@ export default function Event({ event }) {
               )}
             </Box>
           </Box>
-          <Box>
+          <Box paddingY={0.5}>
             <StyledLineClamp
               lines={3}
               color="neutral900"

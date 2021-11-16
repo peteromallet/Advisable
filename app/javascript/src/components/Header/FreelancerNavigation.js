@@ -20,6 +20,9 @@ const FreelancerNavigation = ({ closeNav, isMobile }) => {
       >
         Messages
       </NavigationLink>
+      <NavigationLink onClick={closeNav} to="/profile">
+        Profile
+      </NavigationLink>
 
       {isMobile && (
         <>

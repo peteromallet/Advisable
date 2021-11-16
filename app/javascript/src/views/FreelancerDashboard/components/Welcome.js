@@ -7,7 +7,7 @@ export default function Welcome() {
 
   return (
     <Box alignSelf="center" paddingBottom={{ _: 12, l: 4 }}>
-      <Text fontSize="5xl" fontWeight={550}>
+      <Text fontSize="5xl" fontWeight={600} letterSpacing="-0.03rem">
         Welcome back, <br />
         {viewer.firstName}
       </Text>

@@ -17,6 +17,10 @@ query CollaborationRequests($cursor: String) {
         title
         excerpt
         engagementsCount
+        labels {
+          id
+          slug
+        }
       }
     }
   }

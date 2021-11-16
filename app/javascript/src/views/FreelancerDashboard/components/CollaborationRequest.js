@@ -8,6 +8,7 @@ import PassportAvatar from "src/components/PassportAvatar";
 
 const StyledPostCard = styled(StyledCard)(
   css({
+    cursor: "pointer",
     boxShadow: "0 1px 6px rgba(28, 28, 37, 0.12)",
     transition: "box-shadow 200ms, transform 200ms",
     borderRadius: "20px",
@@ -23,7 +24,7 @@ const StyledPostCard = styled(StyledCard)(
 export default function CollaborationRequest({ request }) {
   return (
     <Sentry.ErrorBoundary>
-      <StyledPostCard as={Link} to={`/guild/posts/${request.id}`} elevation="s">
+      <StyledPostCard as={Link} to={`/posts/${request.id}`} elevation="s">
         <Box
           display="flex"
           alignItems="center"
@@ -36,27 +37,40 @@ export default function CollaborationRequest({ request }) {
             name={request.author?.name}
           />
           <Box>
-            <Text color="neutral900" fontWeight={450} lineHeight="m">
+            <Text
+              color="neutral900"
+              fontWeight={520}
+              lineHeight="m"
+              letterSpacing="-0.01rem"
+            >
               {request.author?.name}
             </Text>
-            <Text fontSize="xs" color="neutral500" lineHeight="s">
+            <Text fontSize="sm" color="neutral600" lineHeight="s">
               {request.author?.location}
             </Text>
           </Box>
         </Box>
         <Text
           color="neutral900"
-          fontWeight={450}
-          fontSize="3xl"
+          fontWeight={520}
+          fontSize="2xl"
           lineHeight="l"
-          mb={4}
+          letterSpacing="-0.02rem"
+          mb={3}
         >
           {request.title}
         </Text>
-        <Text color="neutral700" lineHeight="s" marginBottom={5}>
+        <Text color="neutral700" fontWeight={420} lineHeight="20px">
           {request.excerpt}
         </Text>
-        <ConnectionsCount post={request} display="inline" />
+
+        <Box marginTop={1}>
+          {request.engagementsCount > 0 && (
+            <Box marginTop={5} display="flex" alignItems="center">
+              <ConnectionsCount post={request} display="inline" />
+            </Box>
+          )}
+        </Box>
       </StyledPostCard>
     </Sentry.ErrorBoundary>
   );

@@ -86,16 +86,17 @@ export const VARIANTS = {
   secondary: secondaryStyles,
   dark: secondaryStyles, // deprecated: use secondary variant instead
   subtle: css`
-    color: #242473;
-    background: #e8e8f6;
+    color: ${theme.colors.blue700};
+    background: ${theme.colors.blue50};
 
     &:not(:disabled):hover {
-      background: #ededf8;
+      color: ${theme.colors.blue900};
+      background: ${theme.colors.blue100};
     }
 
     &:not(:disabled):active {
-      background: #e4e4f4;
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.025);
+      color: ${theme.colors.blue900};
+      background: ${theme.colors.blue100};
     }
 
     ${Loading} {
@@ -103,9 +104,10 @@ export const VARIANTS = {
     }
   `,
   ghost: css`
-    color: ${theme.colors.blue500};
+    color: ${theme.colors.neutral500};
 
     &:not(:disabled):hover {
+      color: ${theme.colors.neutral700};
       background: ${rgba(theme.colors.blue500, 0.04)};
     }
 
