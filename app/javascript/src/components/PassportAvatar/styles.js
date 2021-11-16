@@ -72,16 +72,21 @@ const size = variant({
       borderRadius: "20px",
     },
     xl: {
+      width: "105px",
+      height: "120px",
+      borderRadius: "20px",
+    },
+    "2xl": {
       width: "126px",
       height: "144px",
       borderRadius: "20px",
     },
-    "2xl": {
+    "3xl": {
       width: "168px",
       height: "192px",
       borderRadius: "20px",
     },
-    "3xl": {
+    "4xl": {
       width: "210px",
       height: "240px",
       borderRadius: "20px",

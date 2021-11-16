@@ -2,6 +2,7 @@ import React from "react";
 import * as Sentry from "@sentry/react";
 import { useImage } from "react-image";
 import { Link, Box, Text } from "@advisable/donut";
+import { StyledLineClamp } from "@guild/views/Events/styles";
 import styled from "styled-components";
 import css from "@styled-system/css";
 import Card from "./Card";
@@ -68,7 +69,7 @@ export default function Project({ caseStudy }) {
               <Avatar avatar={caseStudy.specialist?.avatar} />
             )}
           </Box>
-          <Box>
+          <Box paddingY={0.5}>
             <Text
               fontSize="xs"
               color="neutral500"
@@ -78,9 +79,14 @@ export default function Project({ caseStudy }) {
             >
               {caseStudy.specialist?.name}
             </Text>
-            <Text color="neutral900" lineHeight="s" fontWeight={450}>
+            <StyledLineClamp
+              lines={3}
+              color="neutral900"
+              lineHeight="s"
+              fontWeight={450}
+            >
               {caseStudy.title}
-            </Text>
+            </StyledLineClamp>
           </Box>
         </Box>
       </Card>

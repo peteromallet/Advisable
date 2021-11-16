@@ -72,7 +72,7 @@ export default function CollaborationRequests() {
           </Link>
         </Box>
       </Box>
-      <Stack spacing={4}>
+      <Stack spacing={5}>
         {requests}
         {fetchingMode && loading && <Loading />}
         {hasNextPage && !fetchingMode && !loading && (

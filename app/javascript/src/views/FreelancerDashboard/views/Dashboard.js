@@ -26,13 +26,14 @@ export default function Dashboard() {
           gridColumnGap={{ _: "16px", l: "48px", xl: "96px" }}
           marginX="auto"
           maxWidth={{ _: "720px", l: "1080px" }}
-          paddingY={{ _: 8, m: 12 }}
+          paddingY={{ _: 8, m: 14 }}
           paddingX={{ _: 4, m: 8 }}
         >
           <Welcome />
           <Profile
-            caseStudies={data?.viewer?.caseStudies}
-            reviews={data?.viewer?.reviews}
+            loading={loading}
+            caseStudies={data?.viewer?.caseStudiesCount}
+            reviews={data?.viewer?.reviews?.length}
           />
         </Box>
       </Box>

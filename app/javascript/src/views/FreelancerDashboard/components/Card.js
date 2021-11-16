@@ -6,6 +6,7 @@ export default styled.div(
     padding: "12px",
     marginX: "-12px",
     cursor: "pointer",
+    display: "flex",
     border: "2px solid transparent",
     borderRadius: "16px",
     transition: "border-color 200ms, box-shadow 200ms, transform 200ms",

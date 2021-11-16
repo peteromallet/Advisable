@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { Box, Skeleton, Text } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
 import useViewer from "src/hooks/useViewer";
-import { review } from "src/testHelpers/mockData";
 
 const StyledLink = styled(Link)(
   css({
@@ -21,18 +20,22 @@ const StyledLink = styled(Link)(
 
 function ReviewsAndCaseStudies({ reviews, caseStudies }) {
   return (
-    <Box display="flex" flexWrap="wrap" mb={6} css={css({ columnGap: 5 })}>
+    <Box display="flex" flexWrap="wrap" mb={3} css={css({ columnGap: 5 })}>
       <Text lineHeight="m" color="neutral700" fontWeight={350}>
-        <Text as="span" fontWeight={450}>
-          {caseStudies.length}
+        <Text as="span" fontWeight={520} color="neutral900">
+          {caseStudies}
         </Text>{" "}
-        case {pluralize("study", caseStudies.length)}
+        <Text as="span" fontWeight={420}>
+          case {pluralize("study", caseStudies)}
+        </Text>
       </Text>
       <Text lineHeight="m" color="neutral700" fontWeight={350}>
-        <Text as="span" fontWeight={450}>
-          {reviews.length}
+        <Text as="span" fontWeight={520} color="neutral900">
+          {reviews}
         </Text>{" "}
-        {pluralize("testimonial", reviews.length)}
+        <Text as="span" fontWeight={420}>
+          {pluralize("testimonial", reviews)}
+        </Text>
       </Text>
     </Box>
   );
@@ -47,7 +50,7 @@ function LoadingReviewsAndCaseStudies() {
   );
 }
 
-export default function Hero({ caseStudies, reviews }) {
+export default function Hero({ loading, caseStudies, reviews }) {
   const viewer = useViewer();
 
   return (
@@ -56,7 +59,7 @@ export default function Hero({ caseStudies, reviews }) {
         display="flex"
         width="100%"
         alignItems={{ _: "start", l: "center" }}
-        css={css({ columnGap: 4 })}
+        css={css({ columnGap: 5 })}
       >
         <PassportAvatar
           src={viewer.avatar}
@@ -69,12 +72,16 @@ export default function Hero({ caseStudies, reviews }) {
             fontWeight={550}
             color="neutral900"
             lineHeight="l"
+            letterSpacing="-0.02rem"
             mb={1}
           >
             {viewer.name}
           </Text>
-          {Boolean(caseStudies) && Boolean(reviews) ? (
-            <ReviewsAndCaseStudies caseStudies={caseStudies} reviews={review} />
+          {!loading ? (
+            <ReviewsAndCaseStudies
+              caseStudies={caseStudies}
+              reviews={reviews}
+            />
           ) : (
             <LoadingReviewsAndCaseStudies />
           )}
