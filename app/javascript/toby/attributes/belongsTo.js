@@ -3,12 +3,18 @@ import { useField } from "formik";
 import { useSchema } from "../components/schema";
 import { useSearchResource, getNestedResource } from "../utilities";
 import { Combobox } from "@advisable/donut";
+import LinkToRecord from "../components/LinkToRecord";
 
 export default {
-  render: function RenderBelongsTo({ record, field }) {
-    const value = record[field.name];
+  render: function RenderBelongsTo({ record, attribute }) {
+    const value = record[attribute.name];
     if (!value) return null;
     return value._label;
+  },
+  renderDetail: function RenderDetail({ record, attribute }) {
+    const value = record[attribute.name];
+    if (!value) return null;
+    return <LinkToRecord record={value} />;
   },
   initializeFormValue: function (record, attribute) {
     return record[attribute.name]?.id || undefined;
@@ -51,11 +57,15 @@ export default {
     };
 
     return (
-      <Combobox
-        value={selection}
-        loadOptions={handleSearch}
-        onChange={handleChange}
-      />
+      <>
+        <Combobox
+          value={selection}
+          loadOptions={handleSearch}
+          onChange={handleChange}
+          marginBottom={3}
+        />
+        <LinkToRecord record={record[attribute.name]} />
+      </>
     );
   },
 };

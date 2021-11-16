@@ -33,7 +33,7 @@ export default function Rows({ edges, resource }) {
             }
           >
             <CopyToClipboard record={node} attribute={attr} />
-            <Attribute record={node} attribute={attr} />
+            <Attribute record={node} attribute={attr} resource={resource} />
           </Sentry.ErrorBoundary>
         </StyledCell>
       ))}
