@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Stack, Text } from "@advisable/donut";
 import Project from "./Project";
+import SectionHeader from "./SectionHeader";
 
 function EmptyState() {
   return (
@@ -29,15 +30,7 @@ export default function LatestProjects({ topCaseStudies }) {
 
   return (
     <>
-      <Text
-        color="neutral900"
-        fontSize="2xl"
-        lineHeight="36px"
-        fontWeight={450}
-        mb={3}
-      >
-        Latest projects
-      </Text>
+      <SectionHeader mb={3}>Latest projects</SectionHeader>
       {caseStudies.length > 0 ? (
         <Stack spacing={6} divider="neutral100">
           {caseStudies}

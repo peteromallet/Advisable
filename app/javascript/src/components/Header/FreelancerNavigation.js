@@ -20,12 +20,6 @@ const FreelancerNavigation = ({ closeNav, isMobile }) => {
       >
         Messages
       </NavigationLink>
-      <NavigationLink onClick={closeNav} to="/guild">
-        Guild
-      </NavigationLink>
-      <NavigationLink onClick={closeNav} to="/events">
-        Events
-      </NavigationLink>
 
       {isMobile && (
         <>

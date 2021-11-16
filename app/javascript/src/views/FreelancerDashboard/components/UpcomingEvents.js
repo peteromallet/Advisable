@@ -1,6 +1,8 @@
 import React from "react";
-import { Stack, Box, Text } from "@advisable/donut";
+import { Stack, Box, Text, Link } from "@advisable/donut";
 import Event from "./Event";
+import { ChevronRight } from "@styled-icons/heroicons-solid";
+import SectionHeader from "./SectionHeader";
 
 function EmptyState() {
   return (
@@ -27,15 +29,18 @@ export default function UpcomingEvents({ upcomingEvents }) {
 
   return (
     <>
-      <Text
-        color="neutral900"
-        fontSize="2xl"
-        lineHeight="36px"
-        fontWeight={450}
-        mb={3}
+      <Box
+        display="flex"
+        alignItems="baseline"
+        marginBottom={3}
+        justifyContent="space-between"
       >
-        Upcoming events
-      </Text>
+        <SectionHeader>Upcoming events</SectionHeader>
+        <Link to="/events" variant="subtle" fontWeight={450}>
+          View all
+          <ChevronRight size={16} />
+        </Link>
+      </Box>
       {events.length > 0 ? (
         <Stack spacing={6} divider="neutral100">
           {events}

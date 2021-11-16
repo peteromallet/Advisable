@@ -64,7 +64,7 @@ export default function Dashboard() {
                     gridColumn="2"
                     gridRow="1"
                     spacing={16}
-                    paddingBottom={6}
+                    paddingBottom={8}
                     mb={10}
                   >
                     <LatestProjects topCaseStudies={data.topCaseStudies} />

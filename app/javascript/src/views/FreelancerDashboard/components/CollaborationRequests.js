@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { BottomScrollListener } from "react-bottom-scroll-listener";
 import CardButton from "src/components/CardButton";
 import Loading from "src/components/Loading";
-import { Stack, Box, Skeleton, Button, Text } from "@advisable/donut";
+import { Stack, Box, Skeleton, Button } from "@advisable/donut";
 import { Adjustments } from "@styled-icons/heroicons-outline/Adjustments";
 import { Pencil } from "@styled-icons/heroicons-outline/Pencil";
 import CollaborationRequest from "./CollaborationRequest";
 import { useCollaborationRequests } from "../queries";
+import SectionHeader from "./SectionHeader";
 
 const LoadingSkeleton = () => (
   <>
@@ -52,14 +53,7 @@ export default function CollaborationRequests() {
   return (
     <Box>
       <Box display="flex" alignItems="center" mb={6}>
-        <Text
-          color="neutral900"
-          fontSize="2xl"
-          fontWeight={450}
-          lineHeight="36px"
-        >
-          Collaboration requests
-        </Text>
+        <SectionHeader>Collaboration requests</SectionHeader>
         <Box ml="auto">
           <Button
             as={Link}
