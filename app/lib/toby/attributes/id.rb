@@ -5,6 +5,7 @@ module Toby
     class Id < BaseAttribute
       filter "equals...", Filters::Equals
       filter "is one of...", Filters::OneOf
+      filter "is not one of...", Filters::NotOneOf
 
       def type
         GraphQL::Schema::Object::ID
