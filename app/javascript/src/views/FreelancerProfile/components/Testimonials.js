@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import * as Sentry from "@sentry/react";
 import { Box, Stack, useModal, DialogDisclosure } from "@advisable/donut";
 import SectionActionButton from "./SectionActionButton";
 import SectionTitle from "./SectionTitle";
@@ -12,7 +13,11 @@ function Testimonials({ reviews, specialist, isOwner }) {
 
   const testimonials = reviews
     .filter((r) => !!r.comment)
-    .map((r) => <Testimonial key={r.id} review={r} />);
+    .map((r) => (
+      <Sentry.ErrorBoundary key={r.id}>
+        <Testimonial review={r} />
+      </Sentry.ErrorBoundary>
+    ));
 
   const isEmpty = testimonials.length === 0;
 

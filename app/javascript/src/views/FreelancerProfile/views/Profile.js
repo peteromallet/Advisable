@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import * as Sentry from "@sentry/react";
 import React from "react";
 import css from "@styled-system/css";
 import { Box } from "@advisable/donut";
@@ -16,11 +17,13 @@ function Profile({ isOwner, data }) {
 
   return (
     <>
-      <CoverImage
-        isOwner={isOwner}
-        src={data.specialist.coverPhoto}
-        size={["xs", "s", "m", "l", "xl"]}
-      />
+      <Sentry.ErrorBoundary>
+        <CoverImage
+          isOwner={isOwner}
+          src={data.specialist.coverPhoto}
+          size={["xs", "s", "m", "l", "xl"]}
+        />
+      </Sentry.ErrorBoundary>
       <Box
         display="flex"
         flexDirection={{ _: "column", l: "row" }}

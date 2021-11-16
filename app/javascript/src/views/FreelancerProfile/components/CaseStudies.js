@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import * as Sentry from "@sentry/react";
 import { Link, Box, Stack } from "@advisable/donut";
 import SectionTitle from "./SectionTitle";
 import CaseStudyCard from "./CaseStudyCard";
@@ -8,7 +9,9 @@ import CaseStudiesEmptyState from "./CaseStudiesEmptyState";
 
 function CaseStudies({ caseStudies, specialist, isOwner }) {
   const cards = caseStudies.map((cs) => (
-    <CaseStudyCard caseStudy={cs} key={cs.id} />
+    <Sentry.ErrorBoundary key={cs.id}>
+      <CaseStudyCard caseStudy={cs} />
+    </Sentry.ErrorBoundary>
   ));
 
   const isEmpty = cards.length === 0;
