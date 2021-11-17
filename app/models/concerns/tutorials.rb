@@ -7,7 +7,7 @@ module Tutorials
 
   TUTORIALS = {
     "User" => %w[fixed_projects flexible_projects recommendations],
-    "Specialist" => %w[fixed_projects flexible_projects guild]
+    "Specialist" => %w[fixed_projects flexible_projects guild introductory_call]
   }.freeze
 
   included do

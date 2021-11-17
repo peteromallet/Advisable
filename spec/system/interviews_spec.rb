@@ -15,6 +15,7 @@ RSpec.describe "Interviews", type: :system do
 
   before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
+    allow_any_instance_of(GoogleCalendar).to receive(:schedule_for_interview)
   end
 
   it "allows the client to request to reschedule a call" do

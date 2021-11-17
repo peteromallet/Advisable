@@ -86,4 +86,19 @@ class SpecialistMailer < ApplicationMailer
       format.html { render layout: false }
     end
   end
+
+  def first_interview_scheduled(interview)
+    @interview = interview
+    @user = interview.user
+    @specialist = interview.specialist
+    @sales_person = @user.company.sales_person
+    mail(
+      from: @sales_person.email_with_name,
+      to: @specialist.account.email,
+      bcc: @sales_person.email_with_name,
+      subject: "Prep call with Advisable"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
 end

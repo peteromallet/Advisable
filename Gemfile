@@ -38,8 +38,9 @@ gem "skylight"
 gem "pdfmonkey"
 
 gem "omniauth"
-gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
+gem "omniauth-google-oauth2"
+gem "google-apis-calendar_v3"
 
 gem "airrecord"
 

@@ -15,41 +15,43 @@ module Mutations
       "More Time Options Added"
     ].freeze
 
-    def authorized?(id:, **_args)
+    def authorized?(id:, **args)
       requires_specialist!
       interview = Interview.find_by!(uid: id)
       policy = InterviewPolicy.new(current_user, interview)
-      return true if policy.schedule?
-
-      ApiError.not_authorized("You do not have permission to schedule this interview")
+      ApiError.not_authorized("You do not have permission to schedule this interview") unless policy.schedule?
+      ApiError.invalid_request("INTERVIEW_IS_NOT_SCHEDULABLE", "Interview is not in a schedulable state.") unless ALLOWED_STATUES.include?(interview.status)
+      ApiError.invalid_request("STARTS_AT_NOT_AVAILABLE_ON_CLIENT", "Argument `starts_at` is not inside of the client's availability.") unless interview.user.availability.include?(args[:starts_at])
+      true
     end
 
     def resolve(**args)
       interview = Interview.find_by!(uid: args[:id])
+      specialist = interview.application.specialist
+      current_account_responsible_for do
+        interview.update!(
+          starts_at: args[:starts_at],
+          call_scheduled_at: Time.current,
+          status: "Call Scheduled"
+        )
+      end
 
-      ApiError.invalid_request("INTERVIEW_IS_NOT_SCHEDULABLE", "Interview is not in a schedulable state.") unless ALLOWED_STATUES.include?(interview.status)
+      interview.create_video_call! if interview.video_call.blank?
+      interview.application.update(status: "Interview Scheduled")
+      interview.application.project.update(status: "Interview Scheduled")
+      update_specialist_number(specialist, args[:phone_number]) if args[:phone_number]
+      interview.create_system_message!
+      GoogleCalendar.new.schedule_for_interview(interview)
 
-      ApiError.invalid_request("STARTS_AT_NOT_AVAILABLE_ON_CLIENT", "Argument `starts_at` is not inside of the client's availability.") unless interview.user.availability.include?(args[:starts_at])
-
-      create_video_call(interview)
-      interview.starts_at = args[:starts_at]
-      interview.call_scheduled_at = Time.zone.now
-      interview.status = "Call Scheduled"
-      current_account_responsible_for { interview.save! }
-
-      interview.application.update(status: "Interview Scheduled") if interview.application.blank?
-      update_specialist_number(interview.application.specialist, args[:phone_number]) if args[:phone_number]
+      unless specialist.account.completed_tutorial?("introductory_call")
+        SpecialistMailer.first_interview_scheduled(interview).deliver_later
+        specialist.account.complete_tutorial("introductory_call")
+      end
 
       {interview: interview}
     end
 
     private
-
-    def create_video_call(interview)
-      return if interview.video_call.present?
-
-      VideoCall.create(interview: interview)
-    end
 
     def update_specialist_number(specialist, number)
       return if specialist.phone == number

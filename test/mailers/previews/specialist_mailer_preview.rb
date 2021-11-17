@@ -21,7 +21,7 @@ class SpecialistMailerPreview < ActionMailer::Preview
     SpecialistMailer.project_paused(application.project, application)
   end
 
-  %i[more_time_options_added interview_reminder].each do |method|
+  %i[more_time_options_added interview_reminder first_interview_scheduled].each do |method|
     define_method(method) do
       SpecialistMailer.public_send(method, random_interview)
     end

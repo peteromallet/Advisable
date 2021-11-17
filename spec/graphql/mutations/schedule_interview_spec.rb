@@ -32,6 +32,7 @@ RSpec.describe Mutations::ScheduleInterview do
 
   before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
+    allow_any_instance_of(GoogleCalendar).to receive(:schedule_for_interview)
   end
 
   def request
@@ -67,8 +68,53 @@ RSpec.describe Mutations::ScheduleInterview do
     expect(interview.reload.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
   end
 
+  it "updates the application" do
+    expect(application.reload.status).to eq("Applied")
+    request
+    expect(application.reload.status).to eq("Interview Scheduled")
+  end
+
+  it "updates the project" do
+    expect(application.project.reload.status).to be_nil
+    request
+    expect(application.project.reload.status).to eq("Interview Scheduled")
+  end
+
   it "creates a video call record" do
     expect { request }.to(change(VideoCall, :count).by(1))
+  end
+
+  it "creates a new message in a conversation" do
+    c_count = Conversation.count
+    request
+    expect(Conversation.count).to eq(c_count + 1)
+    conversation = Conversation.last
+    expect(conversation.participants.pluck(:account_id)).to match_array([user.account.id, specialist.account.id])
+    expect(conversation.messages.count).to eq(1)
+    message = conversation.messages.first
+    expect(message.author).to be_nil
+    expect(message.kind).to eq("system")
+    expect(message.author).to be_nil
+    expect(message.content).to eq("#{specialist.account.name} & #{user.account.name},\n\nNow that you've scheduled a call, you can use this thread to communicate.\n\nIf you have any questions or issues, don't hesitate to contact the Advisable team at hello@advisable.com.")
+  end
+
+  it "sends introductory email to specialist" do
+    request
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "first_interview_scheduled", "deliver_now", {args: [interview]}).once
+    expect(specialist.account.reload.completed_tutorials).to include("introductory_call")
+  end
+
+  context "when it's not first call for specialist" do
+    it "does not send an email" do
+      specialist.account.update(completed_tutorials: ["introductory_call"])
+      request
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "first_interview_scheduled", "deliver_now", {args: [interview]})
+    end
+  end
+
+  it "creates gcal events" do
+    expect_any_instance_of(GoogleCalendar).to receive(:schedule_for_interview).with(interview)
+    request
   end
 
   context "when a video call already exists for that interview" do

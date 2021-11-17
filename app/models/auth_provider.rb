@@ -1,35 +1,35 @@
 # frozen_string_literal: true
 
+require "google/api_client/client_secrets"
+
 class AuthProvider < ApplicationRecord
-  LINKEDIN_ACCESS_TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken"
   belongs_to :account
+
+  scope :google_calendar, -> { where(provider: "google_oauth2_calendar") }
 
   validates :uid, :provider, presence: true
   validates :uid, uniqueness: {scope: :provider}
 
-  def refresh_linkedin_token!
-    return if expires_at.nil? || expires_at.future?
+  def google_secret
+    return unless provider == "google_oauth2_calendar"
 
-    params = {
-      grant_type: "refresh_token",
-      refresh_token: refresh_token,
-      client_id: ENV["LINKEDIN_KEY"],
-      client_secret: ENV["LINKEDIN_SECRET"]
-    }
-    headers = {
-      "Content-Type" => "application/x-www-form-urlencoded",
-      "Accept" => "application/json"
-    }
-    response = Faraday.post(LINKEDIN_ACCESS_TOKEN_URL, params, headers)
-    if response.status == 200
-      body = JSON[response.body]
-      self.token = body["access_token"]
-      self.refresh_token = body["refresh_token"]
-      self.expires_at = Time.zone.now + body["expires_in"]
-      save!
-    else
-      destroy!
-    end
+    Google::APIClient::ClientSecrets.new({
+      "web" => {
+        "access_token" => token,
+        "refresh_token" => refresh_token,
+        "expires_at" => expires_at,
+        "client_id" => ENV["GOOGLE_ID"],
+        "client_secret" => ENV["GOOGLE_SECRET"]
+      }
+    })
+  end
+
+  def refresh_google_token!
+    return if expires_at.future?
+
+    authorization = google_secret.to_authorization
+    authorization.refresh!
+    update!(token: authorization.access_token, refresh_token: authorization.refresh_token, expires_at: authorization.expires_at)
   end
 end
 
