@@ -2,7 +2,7 @@ import css from "@styled-system/css";
 import React, { useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Box, Text, Stack } from "@advisable/donut";
-import { PlusCircle } from "@styled-icons/heroicons-solid/PlusCircle";
+import { PlusCircle } from "@styled-icons/heroicons-solid";
 import Filter from "./Filter";
 import EmptyFilters from "./EmptyFilters";
 import { useSchema } from "../../../components/schema";
