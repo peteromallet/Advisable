@@ -10,9 +10,7 @@ import SuperEllipse from "react-superellipse";
 import { matchPath } from "react-router";
 import { Box, Text, Link, Skeleton, useModal, theme } from "@advisable/donut";
 import LogoMark from "src/components/LogoMark";
-import { usePopoverState } from "reakit/Popover";
-import MeatballButton, { StyledMeatballButton } from "./MeatballButton";
-import MeatballMenu from "./MeatballMenu";
+import MeatballMenu, { StyledMeatballButton } from "./MeatballMenu";
 import EditCaseStudyDropdownLink from "./EditCaseStudyDropdownLink";
 import EditCaseStudyModal from "./EditCaseStudyModal";
 
@@ -224,22 +222,9 @@ export default function CaseStudyCard({ caseStudy }) {
               </Box>
             </Box>
           </StyledContentWrapper>
-          <Box
-            as={motion.div}
-            onHoverEnd={popover.hide}
-            position="absolute"
-            right="12px"
-            top="12px"
-            display="flex"
-            pl="132px"
-            pb="48px"
-            justifyContent="flex-end"
-          >
-            <MeatballButton popover={popover} />
-            <MeatballMenu popover={popover}>
-              <EditCaseStudyDropdownLink modal={modal} popover={popover} />
-            </MeatballMenu>
-          </Box>
+          <MeatballMenu>
+            <EditCaseStudyDropdownLink modal={modal} />
+          </MeatballMenu>
         </StyledCaseStudyCard>
       </Box>
       <EditCaseStudyModal modal={modal} caseStudy={caseStudy} />

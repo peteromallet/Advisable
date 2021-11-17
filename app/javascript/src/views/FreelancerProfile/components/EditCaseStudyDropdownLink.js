@@ -17,7 +17,7 @@ export const StyledDropdownLink = styled(motion.div)`
   }
 `;
 
-export default function EditCaseStudyDropdownLink({ modal, popover }) {
+export default function EditCaseStudyDropdownLink({ modal }) {
   return (
     <DialogDisclosure
       as={StyledDropdownLink}
@@ -25,9 +25,7 @@ export default function EditCaseStudyDropdownLink({ modal, popover }) {
         e.preventDefault();
         e.stopPropagation();
         modal.show();
-        popover.hide();
       }}
-      {...modal}
     >
       Open Editor
     </DialogDisclosure>
