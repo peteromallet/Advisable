@@ -124,7 +124,12 @@ function Resource({ resource, views }) {
             setSortOrder={setSortOrder}
             handleUpdateView={handleUpdateView}
           />
-          <DownloadCSV resource={resource} filters={filters} />
+          <DownloadCSV
+            resource={resource}
+            filters={filters}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+          />
         </Box>
       </StyledHeader>
       <StyledViewport>

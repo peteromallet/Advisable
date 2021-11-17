@@ -23,7 +23,7 @@ const GET_CSV = gql`
   }
 `;
 
-export default function DownloadCSV({ resource, filters }) {
+export default function DownloadCSV({ resource, filters, sortBy, sortOrder }) {
   const [generate, { loading }] = useMutation(GET_CSV);
 
   const allFiltersHaveValues = useMemo(() => {
@@ -37,6 +37,8 @@ export default function DownloadCSV({ resource, filters }) {
     const response = await generate({
       variables: {
         resource: resource.type,
+        sortBy,
+        sortOrder,
         filters: filters,
       },
     });
