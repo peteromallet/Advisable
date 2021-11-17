@@ -2,19 +2,16 @@
   Hi <%= @specialist.account.first_name %>,
 </p>
 <p>
-  I realized this is your first consultation call with an Advisable's client!
+  Congratulations on scheduling your first consultation!
 </p>
 <p>
-  Do you want to jump on a call with me for 30 mins to prepare quickly before your chat with <%= @user.account.first_name %>?
+  To help you be successful, we offer everyone a 30-minute preparation call before their first call to share all the necessary information about our policies and best practices.
 </p>
 <p>
-  In this call, I'd like to share you with all the necessary information regarding our policy and best practices that got our freelancers success.
+  If you are interested, please <a href="<%= @sales_person.calendly_url %>">grab a time on my calendar</a>.
 </p>
 <p>
-  If you are interested, please grab a time on <a href="<%= @sales_person.calendly_url %>">my calendar</a>.
-</p>
-<p>
-  Looking forwards to chatting with you.
+  I am looking forward to chatting with you!
 </p>
 <p>
   Best,<br>
