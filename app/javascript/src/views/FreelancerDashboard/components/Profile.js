@@ -43,7 +43,7 @@ function ReviewsAndCaseStudies({ reviews, caseStudies }) {
 
 function LoadingReviewsAndCaseStudies() {
   return (
-    <Box display="flex" flexWrap="wrap" mb={6} css={css({ columnGap: 5 })}>
+    <Box display="flex" flexWrap="wrap" mb={3} css={css({ columnGap: 5 })}>
       <Skeleton width="100px" height="18px" my={0.5} />
       <Skeleton width="98px" height="18px" my={0.5} />
     </Box>
@@ -77,13 +77,13 @@ export default function Hero({ loading, caseStudies, reviews }) {
           >
             {viewer.name}
           </Text>
-          {!loading ? (
+          {loading ? (
+            <LoadingReviewsAndCaseStudies />
+          ) : (
             <ReviewsAndCaseStudies
               caseStudies={caseStudies}
               reviews={reviews}
             />
-          ) : (
-            <LoadingReviewsAndCaseStudies />
           )}
           <StyledLink to="/profile" size="s">
             Update profile
