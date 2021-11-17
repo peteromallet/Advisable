@@ -49,6 +49,10 @@ class User < ApplicationRecord
 
   alias_attribute :application_status, :contact_status
 
+  def name_with_company
+    [account.name, company&.name.presence].compact.join(" from ")
+  end
+
   def accepted?
     application_status == "Application Accepted"
   end

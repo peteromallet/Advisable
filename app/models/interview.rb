@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
+  extend Memoist
   include Uid
 
   has_logidze
@@ -18,6 +19,11 @@ class Interview < ApplicationRecord
   scope :scheduled, -> { where(status: "Call Scheduled") }
 
   validates :status, inclusion: {in: VALID_STATUSES}
+
+  def create_system_message!
+    conversation = Conversation.by_accounts([specialist.account, user.account])
+    conversation.new_message!(nil, "#{specialist.account.name} & #{user.account.name},\n\nNow that you've scheduled a call, you can use this thread to communicate.\n\nIf you have any questions or issues, don't hesitate to contact the Advisable team at hello@advisable.com.")
+  end
 end
 
 # == Schema Information
@@ -39,6 +45,7 @@ end
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
 #  application_id                     :bigint
+#  google_calendar_id                 :string
 #  user_id                            :bigint
 #  zoom_meeting_id                    :string
 #

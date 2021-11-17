@@ -34,6 +34,10 @@ class Project < ApplicationRecord
 
   after_update :send_paused_emails, if: -> { saved_change_to_sales_status? && sales_status == "Paused" }
 
+  def nice_name
+    name.presence || primary_skill&.name
+  end
+
   def accepted_terms=(accepted)
     self.accepted_terms_at = Time.zone.now if !accepted_terms && accepted
     self.accepted_terms_at = nil if accepted_terms && !accepted

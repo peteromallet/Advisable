@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AuthProvidersController < ApplicationController
-  PROVIDERS = %i[linkedin google_oauth2].freeze
+  PROVIDERS = %i[linkedin google_oauth2 google_oauth2_calendar].freeze
 
   def create
     provider = params[:provider].to_sym
@@ -40,6 +40,18 @@ class AuthProvidersController < ApplicationController
   def google_oauth2
     account = Account.find_by!(email: oauth.email)
     auth_provider = account.auth_providers.find_or_initialize_by(provider: "google_oauth2")
+    auth_provider.update!(oauth.identifiers_with_blob_and_token)
+    session_manager.start_session(account)
+
+    redirect_to "/"
+  rescue ActiveRecord::RecordNotFound
+    flash[:notice] = "No account with that email found, please sign up."
+    redirect_to "/login/signup"
+  end
+
+  def google_oauth2_calendar
+    account = Account.find_by!(email: oauth.email)
+    auth_provider = account.auth_providers.find_or_initialize_by(provider: "google_oauth2_calendar")
     auth_provider.update!(oauth.identifiers_with_blob_and_token)
     session_manager.start_session(account)
 

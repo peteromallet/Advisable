@@ -19,6 +19,7 @@ RSpec.describe "Accept interview request", type: :system do
 
   it "Accepts an interview request" do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
+    allow_any_instance_of(GoogleCalendar).to receive(:schedule_for_interview)
 
     authenticate_as(interview.specialist)
     visit "/interview_request/#{interview.uid}"
