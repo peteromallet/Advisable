@@ -35,7 +35,7 @@ export const StyledDropdown = styled(Box)`
     0 2px 8px ${theme.colors.neutral900}12;
 `;
 
-export const StyledDropdownLink = styled.div`
+export const StyledDropdownLink = styled(motion.div)`
   display: block;
   font-size: 16px;
   cursor: pointer;
@@ -49,14 +49,11 @@ export const StyledDropdownLink = styled.div`
   }
 `;
 
-const StyledMeatballButton = styled.div(
+const StyledMeatballButton = styled(motion.div)(
   css({
-    position: "absolute",
-    right: "12px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    top: "12px",
     width: "36px",
     height: "36px",
     bg: "rgba(255,255,255, 0.4)",
@@ -143,7 +140,7 @@ const StyledBackgroundImg = styled.img`
   object-position: center;
 `;
 
-const StyledCaseStudyCard = styled.div(
+const StyledCaseStudyCard = styled(motion.div)(
   variant({
     prop: "type",
     variants: {
@@ -262,33 +259,41 @@ export default function CaseStudyCard({ caseStudy }) {
               </Box>
             </Box>
           </StyledContentWrapper>
-          <PopoverDisclosure
-            as={StyledMeatballButton}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              popover.show();
-            }}
-            {...popover}
+          <Box
+            as={motion.div}
+            onHoverEnd={popover.hide}
+            position="absolute"
+            right="12px"
+            top="12px"
+            display="flex"
+            pl="132px"
+            pb="48px"
+            justifyContent="flex-end"
           >
-            <DotsVertical size={24} />
-          </PopoverDisclosure>
-          <Popover {...popover} aria-label="Edit a case study">
-            <StyledDropdown>
-              <DialogDisclosure
-                as={StyledDropdownLink}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  modal.show();
-                  popover.hide();
-                }}
-                {...modal}
-              >
-                Edit a case study
-              </DialogDisclosure>
-            </StyledDropdown>
-          </Popover>
+            <PopoverDisclosure
+              as={StyledMeatballButton}
+              onHoverStart={popover.show}
+              {...popover}
+            >
+              <DotsVertical size={24} />
+            </PopoverDisclosure>
+            <Popover {...popover} aria-label="Edit a case study">
+              <StyledDropdown>
+                <DialogDisclosure
+                  as={StyledDropdownLink}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    modal.show();
+                    popover.hide();
+                  }}
+                  {...modal}
+                >
+                  Edit a case study
+                </DialogDisclosure>
+              </StyledDropdown>
+            </Popover>
+          </Box>
         </StyledCaseStudyCard>
       </Box>
       <Modal modal={modal}>
