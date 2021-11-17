@@ -13,11 +13,10 @@ module Types
         dataloader.with(::ActiveRecordSource, ::Specialist).load(object.specialist_id)
       end
 
-      field :company, Company, null: true do
-        authorize :read_company?
-      end
+      field :company, Company, null: true
       def company
-        dataloader.with(::ActiveRecordSource, ::CaseStudy::Company).load(object.company_id)
+        policy = ::CaseStudy::ArticlePolicy.new(current_user, object)
+        dataloader.with(::ActiveRecordSource, ::CaseStudy::Company).load(object.company_id) if policy.read_company?
       end
 
       field :skills, [Skill], null: true
