@@ -10,7 +10,11 @@ import SuperEllipse from "react-superellipse";
 import { matchPath } from "react-router";
 import { Box, Text, Link, Skeleton, useModal, theme } from "@advisable/donut";
 import LogoMark from "src/components/LogoMark";
-import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
+import { usePopoverState } from "reakit/Popover";
+import MeatballButton, { StyledMeatballButton } from "./MeatballButton";
+import MeatballMenu from "./MeatballMenu";
+import EditCaseStudyDropdownLink from "./EditCaseStudyDropdownLink";
+import EditCaseStudyModal from "./EditCaseStudyModal";
 
 const StyledLink = styled(Link)(
   css({
@@ -24,42 +28,6 @@ const StyledContentWrapper = styled.div(
     position: "relative",
     display: "flex",
     pointerEvents: "none",
-  }),
-);
-
-export const StyledDropdown = styled(Box)`
-  outline: none;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 20px 40px -12px ${theme.colors.neutral900}24,
-    0 2px 8px ${theme.colors.neutral900}12;
-`;
-
-export const StyledDropdownLink = styled(motion.div)`
-  display: block;
-  font-size: 16px;
-  cursor: pointer;
-  font-weight: 450;
-  padding: 8px 20px;
-  color: ${theme.colors.neutral600};
-
-  &:hover {
-    color: ${theme.colors.neutral900};
-    background: ${theme.colors.neutral50};
-  }
-`;
-
-const StyledMeatballButton = styled(motion.div)(
-  css({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "36px",
-    height: "36px",
-    bg: "rgba(255,255,255, 0.4)",
-    color: "neutral700",
-    borderRadius: "24px",
-    transition: "0.2s opacity",
   }),
 );
 
@@ -270,38 +238,14 @@ export default function CaseStudyCard({ caseStudy }) {
             pb="48px"
             justifyContent="flex-end"
           >
-            <PopoverDisclosure
-              as={StyledMeatballButton}
-              onHoverStart={popover.show}
-              {...popover}
-            >
-              <DotsVertical size={24} />
-            </PopoverDisclosure>
-            <Popover {...popover} aria-label="Edit a case study">
-              <StyledDropdown>
-                <DialogDisclosure
-                  as={StyledDropdownLink}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    modal.show();
-                    popover.hide();
-                  }}
-                  {...modal}
-                >
-                  Edit a case study
-                </DialogDisclosure>
-              </StyledDropdown>
-            </Popover>
+            <MeatballButton popover={popover} />
+            <MeatballMenu popover={popover}>
+              <EditCaseStudyDropdownLink modal={modal} popover={popover} />
+            </MeatballMenu>
           </Box>
         </StyledCaseStudyCard>
       </Box>
-      <Modal modal={modal}>
-        <Text>ololo</Text>
-        <Link.External href={caseStudy.editorUrl} target="_blank">
-          <Button>Go to the editor</Button>
-        </Link.External>
-      </Modal>
+      <EditCaseStudyModal modal={modal} caseStudy={caseStudy} />
     </Suspense>
   );
 }
