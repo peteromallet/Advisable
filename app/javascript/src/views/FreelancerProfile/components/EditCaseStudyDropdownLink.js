@@ -8,7 +8,7 @@ export const StyledDropdownLink = styled(motion.div)`
   font-size: 16px;
   cursor: pointer;
   font-weight: 450;
-  padding: 8px 20px;
+  padding: 12px 20px;
   color: ${theme.colors.neutral600};
 
   &:hover {
@@ -29,7 +29,7 @@ export default function EditCaseStudyDropdownLink({ modal, popover }) {
       }}
       {...modal}
     >
-      Edit a case study
+      Open Editor
     </DialogDisclosure>
   );
 }
