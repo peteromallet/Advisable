@@ -20,11 +20,15 @@ module Types
     field :kind, String, null: true
 
     def kind
-      return "Skill" if object.skill_id.present?
-      return "Industry" if object.industry_id.present?
-      return "Location" if object.country_id.present?
-
-      "Other"
+      if object.skill_id?
+        "Skill"
+      elsif object.industry_id?
+        "Industry"
+      elsif object.country_id?
+        "Location"
+      else
+        "Other"
+      end
     end
 
     field :guild_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5
