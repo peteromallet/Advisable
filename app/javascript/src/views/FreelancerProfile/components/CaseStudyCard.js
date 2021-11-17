@@ -108,14 +108,11 @@ const StyledBackgroundImg = styled.img`
   object-position: center;
 `;
 
-const StyledCaseStudyCard = styled(motion.div)(
+export const StyledCaseStudyCard = styled(motion.div)(
   variant({
     prop: "type",
     variants: {
       profile: {
-        [StyledMeatballButton]: {
-          opacity: 0,
-        },
         transition: "transform 200ms, box-shadow 200ms",
         "&:hover": {
           transform: "translateY(-2px)",

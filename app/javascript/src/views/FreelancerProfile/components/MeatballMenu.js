@@ -6,6 +6,7 @@ import styled from "styled-components";
 export const StyledDropdown = styled(Box)`
   outline: none;
   background: white;
+  overflow: hidden;
   border-radius: 16px;
   box-shadow: 0 20px 40px -12px ${theme.colors.neutral900}24,
     0 2px 8px ${theme.colors.neutral900}12;
