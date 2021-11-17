@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def case_study
-    @case_study = ::CaseStudy::Article.find_by_slug!(params[:id])
+    @case_study = ::CaseStudy::Article.find_by_slug_or_id!(params[:id])
     username = @case_study.specialist.username || @case_study.specialist.uid
     slug = @case_study.slug || @case_study.uid
     Sentry.capture_message("Redirecting case study URL", level: "debug")
