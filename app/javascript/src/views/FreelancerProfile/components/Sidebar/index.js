@@ -26,7 +26,7 @@ import { TRUNCATE_LIMIT } from "../../values";
 function Sidebar({ data, isOwner, ...props }) {
   const params = useParams();
   const isArticle = !!matchPath(location.pathname, {
-    path: "/freelancers/:username/case_studies/:case_study_id",
+    path: "/freelancers/:username/:slug",
   });
 
   const { specialist } = data;
