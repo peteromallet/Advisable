@@ -99,7 +99,7 @@ class Specialist < ApplicationRecord
     (sourcing_fee.presence || DEFAULT_SOURCING_FEE) / BigDecimal("10000")
   end
 
-  def self.find_by_username(username)
+  def self.find_by_username_or_id(username)
     if ::Specialist.valid_uid?(username)
       ::Specialist.find_by(uid: username)
     elsif ::Specialist.airtable_id?(username)
@@ -109,8 +109,8 @@ class Specialist < ApplicationRecord
     end
   end
 
-  def self.find_by_username!(username)
-    find_by_username(username) || raise(ActiveRecord::RecordNotFound)
+  def self.find_by_username_or_id!(username)
+    find_by_username_or_id(username) || raise(ActiveRecord::RecordNotFound)
   end
 
   private

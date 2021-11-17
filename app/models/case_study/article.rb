@@ -29,7 +29,7 @@ module CaseStudy
     scope :by_score, -> { order("score DESC NULLS LAST").order(id: :desc) }
     scope :available_specialists, -> { joins(:specialist).merge(Specialist.available).joins(specialist: :account).merge(Account.active) }
 
-    def self.find_by_slug(slug)
+    def self.find_by_slug_or_id(slug)
       if ::CaseStudy::Article.valid_uid?(slug)
         ::CaseStudy::Article.active.published.find_by(uid: slug)
       else
@@ -37,8 +37,8 @@ module CaseStudy
       end
     end
 
-    def self.find_by_slug!(slug)
-      find_by_slug(slug) || raise(ActiveRecord::RecordNotFound)
+    def self.find_by_slug_or_id!(slug)
+      find_by_slug_or_id(slug) || raise(ActiveRecord::RecordNotFound)
     end
   end
 end

@@ -97,7 +97,7 @@ module Types
     end
 
     def specialist(id:)
-      ::Specialist.find_by_username!(id)
+      ::Specialist.find_by_username_or_id!(id)
     end
 
     field :industries, [Types::IndustryType], null: false
@@ -324,7 +324,7 @@ module Types
       argument :id, ID, required: true
     end
     def case_study(id:)
-      ::CaseStudy::Article.find_by_slug!(id)
+      ::CaseStudy::Article.find_by_slug_or_id!(id)
     end
 
     field :top_case_studies, [Types::CaseStudy::Article], null: true
