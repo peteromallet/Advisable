@@ -1,4 +1,5 @@
 import React from "react";
+import * as Sentry from "@sentry/react";
 import { Box, Stack, Text } from "@advisable/donut";
 import Project from "./Project";
 import SectionHeader from "./SectionHeader";
@@ -25,7 +26,9 @@ function EmptyState() {
 
 export default function LatestProjects({ topCaseStudies }) {
   const caseStudies = topCaseStudies.map((cs) => (
-    <Project caseStudy={cs} key={cs.id} />
+    <Sentry.ErrorBoundary key={cs.id}>
+      <Project caseStudy={cs} />
+    </Sentry.ErrorBoundary>
   ));
 
   return (
