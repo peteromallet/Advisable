@@ -30,7 +30,7 @@ export default function LatestProjects({ topCaseStudies }) {
 
   return (
     <>
-      <SectionHeader mb={3}>Latest projects</SectionHeader>
+      <SectionHeader mb={3}>Top-rated projects</SectionHeader>
       {caseStudies.length > 0 ? (
         <Stack spacing={6} divider="neutral100">
           {caseStudies}
