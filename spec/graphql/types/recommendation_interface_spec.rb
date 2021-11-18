@@ -54,8 +54,6 @@ RSpec.describe Types::RecommendationInterface do
     stub_const("Recommendation::RECOMMENDERS", [Recommendation::Industry])
     match = create(:specialist)
     same_industry = create(:industry, name: "Education")
-    same_industry.previous_projects.create!(specialist: current_user)
-    same_industry.previous_projects.create!(specialist: match)
 
     expect(response["data"]["specialistRecommendation"]).to eq({
       "recommendation" => {"id" => match.uid},
@@ -79,7 +77,6 @@ RSpec.describe Types::RecommendationInterface do
 
     it "returns a recommendation with skills" do
       skills = create_list(:skill, 3)
-      create_list(:previous_project, 3, specialist: random_match, skills: skills)
 
       expect(response["data"]["specialistRecommendation"]).to eq({
         "recommendation" => {"id" => random_match.uid},

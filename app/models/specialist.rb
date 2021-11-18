@@ -39,9 +39,6 @@ class Specialist < ApplicationRecord
   has_many :successful_applications, -> { where(status: ["Working", "Stopped Working"]) }, class_name: "Application", inverse_of: :specialist, dependent: :destroy
   has_many :successful_projects, through: :successful_applications, source: :project
   has_many :project_skills, through: :successful_projects, source: :skills
-  has_many :previous_projects, dependent: :destroy
-  has_many :previous_project_skills, through: :previous_projects, source: :skills
-  has_many :previous_project_industries, through: :previous_projects, source: :industries
   has_many :specialist_skills, dependent: :destroy
   has_many :skills, through: :specialist_skills
   has_many :specialist_industries, dependent: :destroy
@@ -95,11 +92,6 @@ class Specialist < ApplicationRecord
   # if enough payment information has been provided.
   def has_setup_payments # rubocop:disable Naming/PredicateName
     bank_holder_name.present? && bank_holder_address.present? && bank_currency.present?
-  end
-
-  def update_project_count
-    self.project_count = previous_projects.count
-    save(validate: false)
   end
 
   # sourcing_fee value is stored in basis points integers: 8% -> 800 bp

@@ -57,37 +57,37 @@ RSpec.describe Resizable do
     end
 
     context "when many" do
-      let(:project) { create(:previous_project) }
+      let(:content) { create(:case_study_content) }
       let(:file2) { Rails.root.join("spec/support/02.jpg") }
       let(:image2) { ActiveStorage::Blob.create_and_upload!(io: File.open(file2), filename: "02.jpg", content_type: "image/jpeg").signed_id }
 
       it "returns variants" do
-        project.images.attach(avatar)
-        project.images.attach(image2)
+        content.images.attach(avatar)
+        content.images.attach(image2)
 
-        expect(project.resized_images).to all(be_a(ActiveStorage::VariantWithRecord))
+        expect(content.resized_images).to all(be_a(ActiveStorage::VariantWithRecord))
       end
 
       it "returns urls" do
-        project.images.attach(avatar)
-        project.images.attach(image2)
+        content.images.attach(avatar)
+        content.images.attach(image2)
 
-        expect(project.resized_images_urls).to all(start_with("http"))
+        expect(content.resized_images_urls).to all(start_with("http"))
       end
 
       it "works correctly with _mapping method" do
-        project.images.attach(avatar)
-        project.images.attach(image2)
-        mapping = project.resized_images_mapping
+        content.images.attach(avatar)
+        content.images.attach(image2)
+        mapping = content.resized_images_mapping
 
         # This is testing memoization 👇
-        project.resized_images_mapping
-        project.resized_images_mapping
-        project.resized_images_mapping
+        content.resized_images_mapping
+        content.resized_images_mapping
+        content.resized_images_mapping
         # This is testing memoization 👆
 
         keys = []
-        project.images.attachments.each do |att|
+        content.images.attachments.each do |att|
           keys << att.blob_id
         end
         expect(mapping.keys).to eq(keys)

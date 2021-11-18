@@ -43,12 +43,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def verify_project_redirect
-    Sentry.capture_message("Redirecting project verification!", level: "debug")
-    project = PreviousProject.find_by!(uid: params[:uid])
-    redirect_to "/review/#{project.specialist.uid}"
-  end
-
   protected
 
   def prefetch_viewer

@@ -13,8 +13,6 @@ class AttachImageJob < ApplicationJob
     file = uri.open
 
     case object
-    when PreviousProject
-      object.contact_image.attach(io: file, filename: filename)
     when SalesPerson
       object.image.attach(io: file, filename: filename)
     when User, Specialist, Review

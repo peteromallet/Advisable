@@ -103,16 +103,6 @@ class ZapierInteractorController < ApplicationController
     render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
   end
 
-  def attach_previous_project_image
-    previous_project = PreviousProject.find_by!(uid: params[:uid])
-    raise ActiveRecord::RecordNotFound if params[:image_url].blank?
-
-    AttachImageJob.perform_later(previous_project, params[:image_url])
-    render json: {status: "OK."}
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "No image attached."}, status: :unprocessable_entity
-  end
-
   def create_magic_link
     with_account do |account|
       options = {}

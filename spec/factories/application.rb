@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :application do
+    sequence(:uid) { "app_#{SecureRandom.hex[0..14]}" }
     specialist
     project
     score { 90 }
@@ -10,20 +11,5 @@ FactoryBot.define do
     project_type { "Fixed" }
     availability { "2 Weeks" }
     introduction { "Hi there" }
-    sequence(:uid) { "app_#{SecureRandom.hex[0..14]}" }
-
-    factory :full_application do
-      introduction { Faker::Lorem.sentence(word_count: 40) }
-
-      after :create do |application, _options|
-        project = create(:previous_project, specialist: application.specialist)
-        application.previous_projects << project
-        create(
-          :review,
-          specialist: application.specialist,
-          project: project
-        )
-      end
-    end
   end
 end

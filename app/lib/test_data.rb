@@ -32,62 +32,7 @@ class TestData
       )
     end
 
-    if specialist.previous_projects.empty?
-      create_previous_project(specialist: specialist)
-      create_previous_project(specialist: specialist)
-      create_previous_project(specialist: specialist)
-      create_previous_project(specialist: specialist)
-    end
-
     specialist
-  end
-
-  def self.create_previous_project(attrs = {})
-    previous_project =
-      PreviousProject.create(
-        company_type: "Startup",
-        specialist: attrs.fetch(:specialist),
-        validation_status: attrs.fetch(:validation_status, "Validated"),
-        contact_name: Faker::Name.name,
-        contact_job_title: Faker::Company.profession.capitalize,
-        client_name: Faker::Company.name,
-        description:
-          "#{Faker::Hipster.sentence(word_count: 40)}\n\n#{
-            Faker::Hipster.sentence(word_count: 32)
-          }"
-      )
-
-    skills = Skill.all.sample(4)
-    previous_project.project_skills.create(skill: skills[0], primary: true)
-    previous_project.project_skills.create(skill: skills[1])
-    previous_project.project_skills.create(skill: skills[2])
-    previous_project.project_skills.create(skill: skills[3])
-
-    industries = Industry.all.sample(3)
-    previous_project.project_industries.create(
-      industry: industries[0], primary: true
-    )
-    previous_project.project_industries.create(industry: industries[1])
-    previous_project.project_industries.create(industry: industries[2])
-
-    previous_project.reviews.create(
-      comment: Faker::Hipster.sentence(word_count: 16),
-      specialist: previous_project.specialist
-    )
-
-    url = "https://advisable-test-assets.s3.eu-central-1.amazonaws.com/characters/toby.png"
-    previous_project.contact_image.attach(
-      io: URI.open(url), filename: File.basename(URI.parse(url).path)
-    )
-
-    if [true, false].sample
-      url = stock_image
-      previous_project.images.attach(
-        io: URI.open(url), filename: File.basename(URI.parse(url).path)
-      )
-    end
-
-    previous_project
   end
 
   def self.create_application(attrs = {})

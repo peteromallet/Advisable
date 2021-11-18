@@ -12,7 +12,6 @@ RSpec.describe Skill do
 
     let(:specialist) { create(:specialist) }
     let(:user) { create(:user) }
-    let(:previous_project) { create(:previous_project) }
     let(:consultation) { create(:consultation) }
     let(:label) { create(:label, skill: duplicate) }
     let(:post) { create(:guild_post) }
@@ -20,14 +19,12 @@ RSpec.describe Skill do
     before do
       specialist.skills << duplicate
       user.skills << duplicate
-      previous_project.skills << duplicate
       consultation.update(skill: duplicate)
     end
 
     it "does all the things" do
       expect(duplicate.specialists).to eq([specialist])
       expect(duplicate.users).to eq([user])
-      expect(duplicate.previous_projects).to eq([previous_project])
       expect(duplicate.consultations).to eq([consultation])
       expect(original.projects_count).to eq(0)
       expect(original.specialists_count).to eq(0)
@@ -37,7 +34,6 @@ RSpec.describe Skill do
 
       expect(original.specialists).to eq([specialist])
       expect(original.users).to eq([user])
-      expect(original.previous_projects).to eq([previous_project])
       expect(original.consultations).to eq([consultation])
       expect(original.projects_count).to eq(1)
       expect(original.specialists_count).to eq(1)
