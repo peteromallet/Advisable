@@ -25,10 +25,8 @@ class ApplicationController < ActionController::Base
 
   def case_study
     @case_study = ::CaseStudy::Article.find_by_slug_or_id!(params[:id])
-    username = @case_study.specialist.username || @case_study.specialist.uid
-    slug = @case_study.slug || @case_study.uid
     Sentry.capture_message("Redirecting case study URL", level: "debug")
-    redirect_to "/freelancers/#{username}/#{slug}"
+    redirect_to @case_study.path
   end
 
   def set_sentry_context

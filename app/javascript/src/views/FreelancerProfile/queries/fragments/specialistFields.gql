@@ -25,6 +25,7 @@ fragment SpecialistFields on Specialist {
   caseStudies {
     id
     slug
+    path
     companyType
     title
     coverPhoto

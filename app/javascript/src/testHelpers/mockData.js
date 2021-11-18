@@ -194,6 +194,7 @@ export const specialist = (fields = {}) => {
     {
       __typename: "Specialist",
       id: uniqueId("specialist"),
+      profilePath: "/testspecialist",
       username: "testspecialist",
       bio: "Specialist bio",
       name: "Test Specialist",

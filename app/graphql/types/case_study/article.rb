@@ -19,6 +19,8 @@ module Types
         dataloader.with(::ActiveRecordSource, ::CaseStudy::Company).load(object.company_id) if policy.read_company?
       end
 
+      field :path, String, null: false
+
       field :skills, [Skill], null: true
       def skills
         object.skills.order(created_at: :asc)
