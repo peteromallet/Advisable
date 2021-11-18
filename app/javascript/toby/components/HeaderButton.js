@@ -12,14 +12,18 @@ export const StyledHeaderButton = styled.button`
   display: inline-flex;
   align-items: center;
   padding: 0 12px;
-  cursor: pointer;
   font-weight: 450;
   font-family: TTHoves, sans-serif;
   margin-left: 8px;
 
-  &:hover {
+  &:hover:not(:disabled) {
+    cursor: pointer;
     color: #101114;
     background: #f1f1f0;
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 
   svg {
@@ -50,11 +54,16 @@ export const StyledHeaderButtonGroup = styled.div`
   }
 `;
 
-export default function HeaderButton({ icon, children, ...props }) {
+const HeaderButton = React.forwardRef(function HeaderButton(
+  { icon, children, ...props },
+  ref,
+) {
   return (
-    <StyledHeaderButton {...props}>
+    <StyledHeaderButton ref={ref} {...props}>
       {React.createElement(icon, { size: 20 })}
       <span>{children}</span>
     </StyledHeaderButton>
   );
-}
+});
+
+export default HeaderButton;
