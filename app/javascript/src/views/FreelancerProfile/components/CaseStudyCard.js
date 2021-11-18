@@ -126,6 +126,9 @@ export const StyledCaseStudyCard = styled.div(
         [StyledContentWrapper]: {
           pointerEvents: "auto",
         },
+        [StyledMeatballButton]: {
+          opacity: 1,
+        },
       },
     },
   }),
