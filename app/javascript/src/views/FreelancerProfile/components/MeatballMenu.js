@@ -46,8 +46,8 @@ const StyledMeatballWrapper = styled.div`
 
 export default function MeatballMenu({ children }) {
   return (
-      <StyledMeatballButton onClick={(e) => e.preventDefault()}>
     <StyledMeatballWrapper>
+      <StyledMeatballButton onClick={(e) => e.preventDefault()} role="button">
         <DotsVertical size={24} />
       </StyledMeatballButton>
       <StyledDropdown>{children}</StyledDropdown>
