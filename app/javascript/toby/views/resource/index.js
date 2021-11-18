@@ -14,6 +14,7 @@ import HeaderButton from "../../components/HeaderButton";
 import ViewsDropdown from "./ViewsDropdown";
 import SortMenu from "./SortMenu";
 import Records from "./Records";
+import DownloadCSV from "./DownloadCSV";
 
 export default function ResourceConfig({ resource }) {
   const { loading, data } = useResourceViews(resource.type);
@@ -122,6 +123,12 @@ function Resource({ resource, views }) {
             sortOrder={sortOrder}
             setSortOrder={setSortOrder}
             handleUpdateView={handleUpdateView}
+          />
+          <DownloadCSV
+            resource={resource}
+            filters={filters}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
           />
         </Box>
       </StyledHeader>
