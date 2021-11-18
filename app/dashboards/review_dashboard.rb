@@ -27,7 +27,6 @@ class ReviewDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     specialist
-    project
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -37,7 +36,6 @@ class ReviewDashboard < Administrate::BaseDashboard
     uid
     airtable_id
     specialist
-    project
     comment
     ratings
     created_at
@@ -49,7 +47,6 @@ class ReviewDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     specialist
-    project
     comment
   ].freeze
 
