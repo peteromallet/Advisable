@@ -18,12 +18,9 @@ const ApplicationProvider = ({ children }) => {
   useHotjarUser(data?.viewer);
   useMixpanelUser(data?.viewer);
   useIntercom(location, data?.viewer);
-  const [logoURL, setLogoURL] = React.useState("/");
 
   const context = {
     viewer: data?.viewer,
-    logoURL,
-    setLogoURL,
   };
 
   if (loading) {
