@@ -4,7 +4,7 @@ import css from "@styled-system/css";
 import styled from "styled-components";
 import { space } from "styled-system";
 
-const StyledAddButton = styled(Box)(
+const StyledCardButton = styled(Box)(
   space,
   css({
     backgroundColor: "white",
@@ -32,6 +32,6 @@ const StyledAddButton = styled(Box)(
   }),
 );
 
-export default function SectionActionButton(props) {
-  return <StyledAddButton role="button" {...props} />;
+export default function CardButton(props) {
+  return <StyledCardButton role="button" {...props} />;
 }

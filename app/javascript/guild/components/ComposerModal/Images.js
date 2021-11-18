@@ -7,7 +7,7 @@ import styled, { css } from "styled-components";
 import { theme } from "@advisable/donut";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { DirectUpload } from "@rails/activestorage";
-import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
+import { GUILD_POST_QUERY } from "src/views/Post/queries";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
 import matchFileType from "src/utilities/matchFileType";
 import { useNotifications } from "src/components/Notifications";

@@ -1,0 +1,7 @@
+query SearchLabels($name: String!) {
+  searchLabels(name: $name) {
+    id
+    name
+    kind
+  }
+}

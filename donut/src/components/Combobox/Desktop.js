@@ -14,14 +14,16 @@ export default function ComboboxDesktop({
   inputProps,
   menuProps,
   removeOption,
+  close,
   ...props
 }) {
+  const popper = React.useRef(null);
   const inputConatinerRef = React.useRef(null);
   const listboxContainerRef = React.useRef(null);
 
   useEffect(() => {
     if (inputConatinerRef.current && listboxContainerRef.current) {
-      const popper = createPopper(
+      popper.current = createPopper(
         inputConatinerRef.current,
         listboxContainerRef.current,
         {
@@ -37,9 +39,29 @@ export default function ComboboxDesktop({
         },
       );
 
-      return () => popper.destroy();
+      const instance = popper.current;
+      return () => instance.destroy();
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (popper.current) {
+      popper.current.update();
+    }
+  }, [menuProps]);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      const container = listboxContainerRef.current;
+      if (!container) return;
+      if (!container.contains(e.target)) {
+        close();
+      }
+    };
+
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [close]);
 
   return (
     <StyledAutocomplete {...containerProps}>

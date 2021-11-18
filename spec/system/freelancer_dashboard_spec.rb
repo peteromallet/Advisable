@@ -3,8 +3,32 @@
 require "rails_helper"
 
 RSpec.describe "Freelancer dashboard", type: :system do
+  let(:account) { create(:account) }
   let(:application_stage) { "Accepted" }
-  let(:specialist) { create(:specialist, application_stage: application_stage) }
+  let(:specialist) { create(:specialist, application_stage: application_stage, account: account) }
+  let!(:article) { create(:case_study_article, published_at: 1.hour.ago, title: "Article title") }
+  let!(:post) { create(:guild_post, pinned: true, specialist: specialist, type: "Opportunity") }
+  let!(:event) { create(:event, title: "Big event") }
+
+  it "displays posts, events and articles" do
+    authenticate_as(specialist)
+    visit("/")
+    expect(page).to have_content(post.title)
+    expect(page).to have_content(event.title)
+    expect(page).to have_content(article.title)
+  end
+
+  context "when dashboard data is empty" do
+    let(:event) { nil }
+    let(:article) { nil }
+
+    it "displays empty state of latest projects and upcoming events" do
+      authenticate_as(specialist)
+      visit("/")
+      expect(page).to have_content("There are no upcoming Events")
+      expect(page).to have_content("No Case Studies have been created recently")
+    end
+  end
 
   context "when application_stage is 'Started'" do
     let(:application_stage) { "Started" }
@@ -55,6 +79,16 @@ RSpec.describe "Freelancer dashboard", type: :system do
       authenticate_as(specialist)
       visit("/")
       expect(page).to have_content("Case study submitted")
+    end
+  end
+
+  context "when email is not confimed" do
+    let(:account) { create(:account, confirmed_at: nil) }
+
+    it "prompts the user to confirm an email" do
+      authenticate_as(specialist)
+      visit("/")
+      expect(page).to have_content("Please confirm your account")
     end
   end
 end

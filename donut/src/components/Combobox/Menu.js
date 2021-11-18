@@ -8,8 +8,12 @@ import {
   StyledAutocompleteNoResults,
 } from "./styles";
 
+function Option({ option }) {
+  return <Box>{option.label}</Box>;
+}
+
 const AutocompleteOption = React.forwardRef(function AutocompleteOption(
-  { children, selected, isValue, ...props },
+  { selected, isValue, option, component = Option, ...props },
   ref,
 ) {
   return (
@@ -25,9 +29,7 @@ const AutocompleteOption = React.forwardRef(function AutocompleteOption(
           <Check size={16} />
         </Box>
       ) : null}
-      <Box letterSpacing="-0.02rem" fontSize={["l", "m"]}>
-        {children}
-      </Box>
+      {React.createElement(component, { option })}
     </StyledAutocompleteMenuItem>
   );
 });
@@ -56,10 +58,9 @@ const ComboboxMenu = React.forwardRef(function ComboboxMenu(
         ? options.map((option, index) => (
             <AutocompleteOption
               key={`${option.value}-${index}`}
+              option={option}
               {...propsForOption(index)}
-            >
-              {option.label}
-            </AutocompleteOption>
+            />
           ))
         : null}
     </StyledAutocompleteMenuList>

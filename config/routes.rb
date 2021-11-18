@@ -82,7 +82,7 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "auth_providers#create"
   get "/auth/failure", to: "auth_providers#failure"
 
-  get "/guild/posts/:id", to: "application#guild_post", as: :guild_post
+  get "/posts/:id", to: "application#guild_post", as: :guild_post
 
   get "accounts/me"
   post "accounts/user"
@@ -114,6 +114,7 @@ Rails.application.routes.draw do
   get "/guild/events/:id", to: redirect(LogAndRedirect.new("/events/%{id}"))
   get "/clients/signup", to: redirect(LogAndRedirect.new("/clients/join"))
   get "/freelancers/signup", to: redirect(LogAndRedirect.new("/freelancers/join"))
+  get "/guild/posts/:id", to: redirect(LogAndRedirect.new("/posts/%{id}"))
 
   get "verify_project/:uid", to: "application#verify_project_redirect"
 
