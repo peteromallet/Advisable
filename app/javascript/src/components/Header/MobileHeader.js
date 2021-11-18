@@ -8,8 +8,7 @@ import {
   CloseNav,
 } from "./styles";
 import { Box } from "@advisable/donut";
-import useLogoURL from "../ApplicationProvider/useLogoURL";
-import LogoMark from "src/components/LogoMark";
+import HeaderLogo from "src/components/HeaderLogo";
 import Notifications from "./Notifications";
 import Navigation from "./Navigation";
 import useViewer from "src/hooks/useViewer";
@@ -17,7 +16,6 @@ import useViewer from "src/hooks/useViewer";
 export default function MobileHeader() {
   const viewer = useViewer();
   const [navOpen, setNavOpen] = React.useState(false);
-  const logoURL = useLogoURL();
 
   const handleCloseNav = () => {
     return setNavOpen(false);
@@ -52,9 +50,7 @@ export default function MobileHeader() {
           )}
         </Box>
         <Box>
-          <a href={logoURL}>
-            <LogoMark size={24} />
-          </a>
+          <HeaderLogo />
         </Box>
         <Box>{viewer?.isSpecialist && <Notifications />}</Box>
       </StyledHeader>

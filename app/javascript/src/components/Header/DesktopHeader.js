@@ -2,23 +2,19 @@ import React from "react";
 import { StyledHeader, StyledHeaderSpacer } from "./styles";
 import CurrentUser from "./CurrentUser";
 import { Box } from "@advisable/donut";
-import useLogoURL from "../ApplicationProvider/useLogoURL";
+import HeaderLogo from "src/components/HeaderLogo";
 import useViewer from "src/hooks/useViewer";
-import LogoMark from "src/components/LogoMark";
 import Notifications from "./Notifications";
 import Navigation from "./Navigation";
 import NavigationLink from "./NavigationLink";
 
 export default function DesktopHeader() {
   const viewer = useViewer();
-  const logoURL = useLogoURL();
 
   return (
     <>
       <StyledHeader>
-        <a href={logoURL}>
-          <LogoMark size={24} />
-        </a>
+        <HeaderLogo />
         <Box flexGrow={1}>
           <Navigation />
         </Box>
