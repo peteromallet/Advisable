@@ -34,7 +34,7 @@ module Toby
       def self.retry_payment(object, _context)
         return if object.status == "succeeded"
 
-        object.update!(retries: object.retries + 1)
+        object.update!(retries: object.retries + 1, payment_intent_id: nil)
         object.charge!
       end
 
