@@ -58,12 +58,12 @@ const Events = () => {
             letterSpacing="-0.03rem"
             color="neutral900"
           >
-            Upcoming Events
+            Events
           </Text>
           <DialogDisclosure {...modal}>
             {(disclosure) => (
               <Button {...disclosure} prefix={<Plus />}>
-                Create Event
+                Propose Event
               </Button>
             )}
           </DialogDisclosure>
