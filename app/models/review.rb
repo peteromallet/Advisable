@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Represents a review of a specialist in various contexts. A review will always
-# have an attached specialist and project.
+# have an attached specialist.
 # The "reviewable" for a review represent the record that was reviewed. This
 # again is a polymorphic assocation and is used to add more context to the
 # review.
@@ -10,7 +10,6 @@ class Review < ApplicationRecord
   include Resizable
 
   belongs_to :specialist, optional: true, counter_cache: true
-  belongs_to :project, optional: true, class_name: "PreviousProject"
   belongs_to :case_study_article, optional: true, class_name: "CaseStudy::Article"
 
   has_one_attached :avatar

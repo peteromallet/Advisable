@@ -11,7 +11,6 @@ class ReviewDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     specialist: Field::BelongsTo,
-    project: Field::Polymorphic.with_options(classes: [Project, PreviousProject]),
     id: Field::Number,
     airtable_id: Field::String,
     comment: Field::Text,

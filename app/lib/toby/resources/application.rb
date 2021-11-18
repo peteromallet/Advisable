@@ -15,7 +15,6 @@ module Toby
       attribute :comment, Attributes::LongText
       attribute :proposal_comment, Attributes::LongText
       attribute :rejection_reason, Attributes::String
-      attribute :previous_projects, Attributes::HasManyThrough
       attribute :tasks, Attributes::HasMany
       attribute :rejection_reason_comment, Attributes::LongText
       attribute :invitation_rejection_reason, Attributes::String
