@@ -1,10 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { theme } from "@advisable/donut";
 import styled from "styled-components";
 import { DotsVertical } from "@styled-icons/heroicons-outline/DotsVertical";
 
-export const StyledMeatballButton = styled(motion.div)`
+export const StyledMeatballButton = styled.div`
   opacity: 0;
   display: flex;
   align-items: center;
@@ -47,8 +46,8 @@ const StyledMeatballWrapper = styled.div`
 
 export default function MeatballMenu({ children }) {
   return (
-    <StyledMeatballWrapper as={motion.div}>
       <StyledMeatballButton onClick={(e) => e.preventDefault()}>
+    <StyledMeatballWrapper>
         <DotsVertical size={24} />
       </StyledMeatballButton>
       <StyledDropdown>{children}</StyledDropdown>
