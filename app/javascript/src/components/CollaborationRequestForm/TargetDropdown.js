@@ -14,7 +14,7 @@ const ICONS = {
   Skill: Puzzle,
   Industry: OfficeBuilding,
   Location: LocationMarker,
-  other: Hashtag,
+  Other: Hashtag,
 };
 
 function LabelOption({ option }) {
