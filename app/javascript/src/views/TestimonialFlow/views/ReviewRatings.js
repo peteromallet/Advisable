@@ -72,7 +72,8 @@ function ReviewRatings({ data }) {
         fontWeight={600}
         letterSpacing="-0.03em"
       >
-        Did you enjoy working with {specialist.firstName}?
+        How was your experience working with {specialist.firstName} on this
+        project?
       </Heading>
       <Text fontSize="lg" lineHeight="24px" color="neutral900" mb="40px">
         How would you rate them in the following areas?
