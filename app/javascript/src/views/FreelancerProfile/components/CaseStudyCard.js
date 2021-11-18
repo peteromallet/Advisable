@@ -182,7 +182,7 @@ const CaseStudyBackgroundImage = React.memo(function CaseStudyBackgroundImage({
   );
 });
 
-export default function CaseStudyCard({ caseStudy }) {
+export default function CaseStudyCard({ caseStudy, isOwner }) {
   const modal = useModal();
 
   const isArticle = !!matchPath(location.pathname, {
@@ -226,9 +226,11 @@ export default function CaseStudyCard({ caseStudy }) {
               </Box>
             </Box>
           </StyledContentWrapper>
-          <MeatballMenu>
-            <EditCaseStudyDropdownLink modal={modal} />
-          </MeatballMenu>
+          {isOwner && (
+            <MeatballMenu>
+              <EditCaseStudyDropdownLink modal={modal} />
+            </MeatballMenu>
+          )}
         </StyledCaseStudyCard>
       </Box>
       <EditCaseStudyModal modal={modal} caseStudy={caseStudy} />
