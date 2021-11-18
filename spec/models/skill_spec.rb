@@ -26,7 +26,6 @@ RSpec.describe Skill do
       expect(duplicate.specialists).to eq([specialist])
       expect(duplicate.users).to eq([user])
       expect(duplicate.consultations).to eq([consultation])
-      expect(original.projects_count).to eq(0)
       expect(original.specialists_count).to eq(0)
 
       original.merge_with!(duplicate: duplicate)
@@ -35,7 +34,6 @@ RSpec.describe Skill do
       expect(original.specialists).to eq([specialist])
       expect(original.users).to eq([user])
       expect(original.consultations).to eq([consultation])
-      expect(original.projects_count).to eq(1)
       expect(original.specialists_count).to eq(1)
       expect(duplicate.airtable_id).to be_nil
       expect(described_class.where(id: duplicate.id)).to eq([])

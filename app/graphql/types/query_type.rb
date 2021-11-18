@@ -161,13 +161,6 @@ module Types
       ::VideoCall.find_by_uid!(id)
     end
 
-    field :specialist_recommendation, Types::RecommendationInterface, null: true
-
-    def specialist_recommendation
-      requires_accepted_specialist!
-      ::Recommendation.recommend(current_user)
-    end
-
     field :events, Types::EventConnection, null: true, connection: true
 
     def events
