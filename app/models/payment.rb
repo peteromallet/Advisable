@@ -44,7 +44,7 @@ class Payment < ApplicationRecord
     if amount_to_be_paid.positive?
       if company.project_payment_method == "Bank Transfer"
         update!(payment_method: "Bank Transfer")
-        Slack.message(channel: "payments", text: "New Bank Transfer for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})! Payment: #{uid}")
+        Slack.message(channel: "payments", text: "New Bank Transfer for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})!\nPayment: #{uid}")
       elsif payment_intent_id.blank?
         intent = Stripe::PaymentIntent.create(
           stripe_params.merge({confirm: true, off_session: true, payment_method: company.stripe_payment_method}),
@@ -67,7 +67,7 @@ class Payment < ApplicationRecord
   rescue Stripe::StripeError => e
     update!(status: "failed", payment_intent_id: e.json_body.dig(:error, :payment_intent, :id))
     Sentry.capture_exception(e, extra: {stripe_error: e.json_body[:error]})
-    Slack.message(channel: "payments", text: "Something went wrong with the payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})! Payment: #{uid}")
+    Slack.message(channel: "payments", text: "Something went wrong with the payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})!\nPayment: #{uid}\nStripe Payment Intent ID: #{payment_intent_id}")
     create_on_session_intent!
     self
   end
@@ -76,7 +76,7 @@ class Payment < ApplicationRecord
     Stripe::Refund.create({payment_intent: payment_intent_id, metadata: {payment_type: "payment", payment: uid}})
   rescue Stripe::StripeError => e
     Sentry.capture_exception(e, extra: {stripe_error: e.json_body[:error]})
-    Slack.message(channel: "payments", text: "Something went wrong with refundment of payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})! Payment: #{uid}")
+    Slack.message(channel: "payments", text: "Something went wrong with refundment of payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})!\nPayment: #{uid}\nStripe Payment Intent ID: #{payment_intent_id}")
     self
   end
 
