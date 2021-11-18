@@ -81,24 +81,10 @@ module Types
     field :skills, [Types::SpecialistSkillType, {null: true}], null: true do
       description "A list of skills that the specialist possesses"
       argument :limit, Int, required: false
-      argument :project_skills, Boolean, required: false
     end
 
-    # Specialist can have skills from multiple places:
-    # - Direct skills they have added to their profile. Associated via
-    # SpecialistSkill records.
-    # - Skills associated to previous projects that they have worked on
-    # By default the skills field will only show direct skills, however, you can
-    # include project skills by specifying the project_skills argument.
-    def skills(project_skills: false, limit: nil)
-      records =
-        if project_skills
-          (object.skills + object.previous_project_skills).uniq
-        else
-          object.skills
-        end
-
-      sorted = records.sort_by { |s| [s.projects_count, s.specialists_count] }.reverse!
+    def skills(limit: nil)
+      sorted = object.skills.sort_by { |s| [s.projects_count, s.specialists_count] }.reverse!
       sorted[0..(limit || (sorted.size + 1)) - 1].map do |skill|
         OpenStruct.new(specialist: object, skill: skill)
       end
@@ -116,24 +102,7 @@ module Types
       object.case_study_skills.distinct
     end
 
-    # Project skills returns all of the skills the specialist has used on actual projects.
-    field :project_skills, Types::Skill.connection_type, null: false
-
-    def project_skills
-      object.previous_project_skills.uniq
-    end
-
     field :industries, [Types::IndustryType], null: false
-
-    field :project_industries, [Types::IndustryType], null: false do
-      description "Returns a list of all the industries the specialist has worked in"
-    end
-
-    # TODO: This should eventually be updated to include multiple industries associated with an on
-    # platform project
-    def project_industries
-      object.previous_project_industries.uniq
-    end
 
     field :ratings, Types::Ratings, null: false do
       description "The combined ratings for the specialist based on previous work"
@@ -187,29 +156,6 @@ module Types
     field :case_studies_count, Integer, null: false
     def case_studies_count
       object.articles.active.published.size
-    end
-
-    # TODO: authenticated-application-flow - Simplify this query arguments once
-    # we know application flow is authenticated only.
-    field :previous_projects, Types::PreviousProject.connection_type, null: false do
-      argument :include_drafts, Boolean, required: false
-      argument :include_validation_failed, Boolean, required: false
-      argument :include_validation_pending, Boolean, required: false
-    end
-
-    def previous_projects(include_validation_failed: false, include_drafts: false, include_validation_pending: true)
-      validation_statuses = ["Validated"]
-      validation_statuses << "Pending" if include_validation_pending
-      validation_statuses << "Validation Failed" if include_validation_failed
-      records = object.previous_projects.where(validation_status: validation_statuses)
-      records = records.published unless include_drafts
-      records.order(created_at: :asc)
-    end
-
-    field :previous_projects_count, Int, null: false
-
-    def previous_projects_count
-      object.project_count || 0
     end
 
     # TODO: AccountMigration - Rename for consistency
@@ -345,28 +291,6 @@ module Types
     field :application_stage, String, null: true do
       authorize :specialist?
       description "The account status for the specialist"
-    end
-
-    field :profile_projects, [Types::PreviousProject], null: false
-
-    def profile_projects
-      object.previous_projects.published.validated.not_hidden.
-        sort_by do |previous_project|
-        previous_project.try(:priority) || Float::INFINITY
-      end
-    end
-
-    field :similar_previous_projects, [Types::PreviousProject], null: false do
-      description <<~HEREDOC
-        Returns up to 3 other previous projects belonging to other specialists
-        on advisable that match the specialists skillset.
-      HEREDOC
-    end
-
-    def similar_previous_projects
-      ::PreviousProject.left_outer_joins(:skills).where(
-        validation_status: "Validated", skills: {id: object.skill_ids}
-      ).where.not(specialist_id: object.id).limit(3)
     end
 
     field :unavailable_until, GraphQL::Types::ISO8601DateTime, null: true

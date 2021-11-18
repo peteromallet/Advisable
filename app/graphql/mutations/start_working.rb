@@ -24,7 +24,6 @@ module Mutations
       application.project_type = args[:project_type]
       application.monthly_limit = args[:monthly_limit] if args[:project_type] == "Flexible"
       save_with_current_account!(application)
-      application.create_previous_project if application.previous_project.blank?
 
       {application: application}
     end

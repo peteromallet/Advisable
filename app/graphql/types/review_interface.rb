@@ -32,16 +32,6 @@ module Types
       end
     end
 
-    orphan_types Types::PreviousProjectReview, Types::CaseStudyArticleReview
-
-    definition_methods do
-      def resolve_type(object, _)
-        if object.project_id.present?
-          Types::PreviousProjectReview
-        else
-          Types::Review
-        end
-      end
-    end
+    orphan_types Types::CaseStudyArticleReview
   end
 end

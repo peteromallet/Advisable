@@ -41,7 +41,6 @@ module Mutations
       attributes = massage_attributes(args)
       application.assign_attributes(attributes.slice(*PERMITTED_ATTRIBUTES))
       add_q_and_a(application, attributes[:questions]) if attributes[:questions].present?
-      create_references(application, attributes[:references]) if attributes[:references].present?
       save_with_current_account!(application)
       application.specialist.update(bio: args[:introduction]) if args[:persist_bio] && args[:introduction].present?
 
@@ -69,20 +68,6 @@ module Mutations
       end
 
       application.questions = application_questions
-    end
-
-    def create_references(application, references)
-      reference_projects = references.map do |id|
-        application.specialist.previous_projects.find_by!(uid: id)
-      end
-
-      reference_projects.each do |project|
-        application.application_references.find_or_create_by(previous_project: project)
-      end
-
-      application.application_references.where.not(previous_project: reference_projects).delete_all
-    rescue ActiveRecord::RecordNotFound
-      ApiError.invalid_request("invalid_reference")
     end
   end
 end

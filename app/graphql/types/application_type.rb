@@ -37,20 +37,6 @@ module Types
       authorize :read?
     end
 
-    field :previous_projects, [Types::PreviousProject], null: false, deprecation_reason: "Gone with the ~wind~ new flow" do
-      argument :fallback, Boolean, required: false
-    end
-
-    # When querying for an applications previous_projects, we can pass a 'fallback'
-    # argument which when true will fall back to returning all of the specialists
-    # previous proejcts if there are none specifically related to the application
-    # through references. This argument defaults to true.
-    def previous_projects(fallback: true)
-      projects = object.previous_projects
-      projects = object.specialist.previous_projects.validated if fallback && projects.empty?
-      projects
-    end
-
     field :tasks, [Types::TaskType], null: true do
       authorize :read?
     end
