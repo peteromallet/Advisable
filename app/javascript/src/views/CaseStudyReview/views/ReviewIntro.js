@@ -33,9 +33,7 @@ export default function ReviewIntro({ data }) {
         Your review will be shown on {possessive(specialist.firstName)} public
         profile and will be used to help them find projects on Advisable.
       </Text>
-      <CaseStudyLink
-        to={`/profile/${specialist.id}/case_studies/${article_id}`}
-      >
+      <CaseStudyLink to={`/profile/${specialist.id}/${article_id}`}>
         {caseStudy.title}
       </CaseStudyLink>
       <AuthenticateWithLinkedin data={data} />
