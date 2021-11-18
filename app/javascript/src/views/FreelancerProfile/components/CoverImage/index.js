@@ -21,7 +21,7 @@ function CoverImage({ src, isOwner, ...props }) {
   const accept = ".png, .jpg, .jpeg";
 
   const isArticle = !!matchPath(location.pathname, {
-    path: "/freelancers/:username/:slug",
+    path: "/profile/:username/:slug",
   });
   const [updatePicture] = useSetCoverPhoto();
   const image = src || defaultCoverPhoto;

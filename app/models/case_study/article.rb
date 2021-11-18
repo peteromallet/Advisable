@@ -34,7 +34,7 @@ module CaseStudy
     end
 
     def path
-      "/freelancers/#{specialist.username_or_uid}/#{slug_or_uid}"
+      "/profile/#{specialist.username_or_uid}/#{slug_or_uid}"
     end
 
     def self.find_by_slug_or_id(slug)

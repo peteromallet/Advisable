@@ -38,7 +38,7 @@ export default function CaseStudy() {
               />
             </Box>
             <Link
-              to={`/freelancers/${data.caseStudy.specialist.id}`}
+              to={`/profile/${data.caseStudy.specialist.id}`}
               target="_blank"
             >
               <Text

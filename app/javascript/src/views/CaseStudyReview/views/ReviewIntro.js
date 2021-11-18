@@ -34,7 +34,7 @@ export default function ReviewIntro({ data }) {
         profile and will be used to help them find projects on Advisable.
       </Text>
       <CaseStudyLink
-        to={`/freelancers/${specialist.id}/case_studies/${article_id}`}
+        to={`/profile/${specialist.id}/case_studies/${article_id}`}
       >
         {caseStudy.title}
       </CaseStudyLink>

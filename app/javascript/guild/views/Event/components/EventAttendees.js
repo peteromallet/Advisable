@@ -35,7 +35,7 @@ export default function EventAttendees({ attendees = [], attendeesCount = 0 }) {
             as={Link}
             name={attendee.name}
             url={attendee.avatar}
-            to={`/freelancers/${attendee.id}`}
+            to={`/profile/${attendee.id}`}
           />
           <Text fontSize="xs" mt="3">
             {attendee.firstName}

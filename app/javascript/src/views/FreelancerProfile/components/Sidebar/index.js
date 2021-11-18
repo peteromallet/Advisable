@@ -26,7 +26,7 @@ import { TRUNCATE_LIMIT } from "../../values";
 function Sidebar({ data, isOwner, ...props }) {
   const params = useParams();
   const isArticle = !!matchPath(location.pathname, {
-    path: "/freelancers/:username/:slug",
+    path: "/profile/:username/:slug",
   });
 
   const { specialist } = data;
@@ -56,7 +56,7 @@ function Sidebar({ data, isOwner, ...props }) {
         <StyledNameWrapper>
           <Text
             as={isArticle && Link}
-            to={`/freelancers/${params.username}`}
+            to={`/profile/${params.username}`}
             fontSize={{ _: "2xl", m: "5xl" }}
             fontWeight={600}
             color="neutral900"
