@@ -99,6 +99,9 @@ Style/StringLiterals:
 Style/FormatStringToken:
   Enabled: false
 
+Style/OpenStructUse:
+  Enabled: false
+
 Naming/InclusiveLanguage:
   Enabled: false
 
