@@ -9,6 +9,7 @@ function useLoadImage(url) {
     setUpdated((u) => u && false);
     if (!url) {
       setLoading(false);
+      return;
     }
 
     const img = new Image();

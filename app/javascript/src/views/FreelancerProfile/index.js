@@ -37,7 +37,7 @@ export default function FreelancerProfile() {
         pt={[3, 5, 5, 5, 7]}
       >
         <Switch>
-          <Route path="/freelancers/:username/case_studies/:case_study_id">
+          <Route path="/freelancers/:username/:slug">
             <Article isOwner={isOwner} profileData={data} />
           </Route>
           <Route>
