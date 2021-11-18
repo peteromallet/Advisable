@@ -14,7 +14,6 @@ import {
 } from "./Steps/queries";
 import VIEWER from "src/graphql/queries/getViewer.graphql";
 import { GET_PROJECT } from "./queries";
-import { GET_APPLICATIONS } from "../Applications/queries";
 import { GET_SPECIALIST } from "../FreelancerApplication/queries";
 
 const viewer = mockData.specialist({
@@ -32,16 +31,6 @@ const queries = [
   mockViewer(null),
   mockQuery(GET_PROJECT_JOIN, { id: project.id }, { project }),
   mockQuery(GET_PROJECT, { id: project.id }, { project }),
-  mockQuery(
-    GET_APPLICATIONS,
-    {},
-    {
-      viewer: {
-        ...viewer,
-        applications: [],
-      },
-    },
-  ),
   mockMutation(
     UPDATE_PASSWORD,
     { password: "123123123", passwordConfirmation: "123123123" },

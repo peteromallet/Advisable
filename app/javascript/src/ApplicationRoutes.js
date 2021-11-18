@@ -14,7 +14,6 @@ import EditPost from "./views/EditPost";
 
 const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
-const Applications = lazy(() => import("./views/Applications"));
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
   import("./views/FreelancerApplication"),
@@ -142,9 +141,6 @@ const ApplicationRoutes = () => {
           {/* Freelancer Routes */}
           <AuthenticatedRoute specialistOnly path="/consultations/:id">
             <Consultation />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute exact specialistOnly path="/applications">
-            <Applications />
           </AuthenticatedRoute>
           <AuthenticatedRoute path={"/applications/:applicationId/proposal"}>
             <Proposal />
