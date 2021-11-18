@@ -5,17 +5,17 @@ module Toby
     class Payout < BaseResource
       model_name ::Payout
       attribute :uid, Attributes::String, readonly: true
-      attribute :specialist, Attributes::BelongsTo
+      attribute :task, Attributes::BelongsTo
       attribute :company, Lookups::Payouts::CompanyName
-      attribute :amount, Attributes::Currency
+      attribute :specialist, Attributes::BelongsTo
+      attribute :task_name, Lookups::Tasks::Name
       attribute :vat_rate, Attributes::String, readonly: true
+      attribute :amount, Attributes::Currency
       attribute :vat_amount, Attributes::Currency, readonly: true
       attribute :gross_amount, Attributes::Currency, readonly: true
       attribute :sourcing_fee, Attributes::Currency
       attribute :amount_without_fee, Attributes::Currency, readonly: true
       attribute :status, Attributes::String
-      attribute :task, Attributes::BelongsTo
-      attribute :task_name, Lookups::Tasks::Name
       attribute :processed_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
