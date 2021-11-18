@@ -46,7 +46,7 @@ export default function ShortlistArticle() {
               />
             </Box>
             <Link
-              to={`/freelancers/${data.caseStudy.specialist.id}`}
+              to={`/profile/${data.caseStudy.specialist.id}`}
               target="_blank"
             >
               <Text

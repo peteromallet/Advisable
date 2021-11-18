@@ -7,7 +7,7 @@ export default function AuthorDetails({ post }) {
     <Box display="flex" marginBottom="5" alignItems="center">
       <Avatar
         as={RouterLink}
-        to={`/freelancers/${post.author.id}/guild`}
+        to={`/profile/${post.author.id}/guild`}
         size="s"
         name={post.author.name}
         url={post.author.avatar}
@@ -19,7 +19,7 @@ export default function AuthorDetails({ post }) {
           fontSize={["m", "l"]}
           color="neutral900"
           letterSpacing="-0.01rem"
-          to={`/freelancers/${post.author.id}/guild`}
+          to={`/profile/${post.author.id}/guild`}
         >
           {post.author.name}
         </Link>

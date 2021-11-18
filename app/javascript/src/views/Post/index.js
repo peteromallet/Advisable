@@ -113,7 +113,7 @@ const Post = () => {
                   as={Link}
                   name={post.author.name}
                   url={post.author.avatar}
-                  to={`/freelancers/${post.author.id}`}
+                  to={`/profile/${post.author.id}`}
                 />
                 <Box ml={3}>
                   <Link
@@ -122,7 +122,7 @@ const Post = () => {
                     fontSize="l"
                     color="neutral900"
                     letterSpacing="-0.01rem"
-                    to={`/freelancers/${post.author.id}/guild`}
+                    to={`/profile/${post.author.id}/guild`}
                   >
                     {post.author.name}
                   </Link>

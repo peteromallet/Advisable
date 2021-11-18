@@ -41,7 +41,7 @@ export default function BackButton({ children }) {
   const username = params?.username;
 
   return (
-    <StyledBackButton as={Link} to={`/freelancers/${username}`}>
+    <StyledBackButton as={Link} to={`/profile/${username}`}>
       <ArrowLeft />
       <Text as="span">{children}</Text>
     </StyledBackButton>

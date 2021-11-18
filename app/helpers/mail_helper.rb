@@ -33,7 +33,7 @@ module MailHelper
   end
 
   def profile_url(specialist)
-    "#{app_host}/freelancers/#{specialist.uid}"
+    "#{app_host}/profile/#{specialist.uid}"
   end
 
   def call_url(video_call)

@@ -114,7 +114,7 @@ Rails.application.routes.draw do
   get "/projects", to: redirect(LogAndRedirect.new("/hire"))
   get "/projects/:project/interviews/:id/availability", to: redirect(LogAndRedirect.new("/interviews/%{id}"))
   get "/projects/:project/candidates/:id/proposal", to: redirect(LogAndRedirect.new("/hire/proposls/%{id}"))
-  get "/request_consultation/:id", to: redirect(LogAndRedirect.new("/freelancers/%{id}"))
+  get "/request_consultation/:id", to: redirect(LogAndRedirect.new("/profile/%{id}"))
   get "/guild/events/:id", to: redirect(LogAndRedirect.new("/events/%{id}"))
   get "/clients/signup", to: redirect(LogAndRedirect.new("/clients/join"))
   get "/freelancers/signup", to: redirect(LogAndRedirect.new("/freelancers/join"))

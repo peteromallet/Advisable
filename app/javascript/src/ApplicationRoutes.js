@@ -110,9 +110,13 @@ const ApplicationRoutes = () => {
           <AuthenticatedRoute path="/freelancers/apply">
             <FreelancerApplication />
           </AuthenticatedRoute>
-          <Route path="/freelancers/:username">
+          <Route path="/profile/:username">
             <FreelancerProfile />
           </Route>
+          <Redirect from="/freelancers/:username" to="/profile/:username" />
+          <AuthenticatedRoute path="/profile">
+            <RedirectToFreelancerProfile />
+          </AuthenticatedRoute>
           {/* Client routes */}
           <AuthenticatedRoute
             specialistOnly
@@ -151,9 +155,6 @@ const ApplicationRoutes = () => {
           </AuthenticatedRoute>
           <AuthenticatedRoute path="/settings">
             <Settings />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path="/profile">
-            <RedirectToFreelancerProfile />
           </AuthenticatedRoute>
           <AuthenticatedRoute clientOnly path="/explore">
             <Discover />

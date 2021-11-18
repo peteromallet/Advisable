@@ -24,7 +24,7 @@ RSpec.describe "Request consultation" do
 
   it "Allows user to request consultation with a freelancer" do
     authenticate_as(user)
-    visit("/freelancers/#{freelancer.uid}")
+    visit("/profile/#{freelancer.uid}")
     click_on("Work together")
     complete_request_consultation_flow
   end
@@ -32,7 +32,7 @@ RSpec.describe "Request consultation" do
   context "when a user is not logged in" do
     it "they can signup as a client and request a consultation" do
       allow_any_instance_of(User).to receive(:sync_to_airtable)
-      visit("/freelancers/#{freelancer.uid}")
+      visit("/profile/#{freelancer.uid}")
       click_on("Work together")
       click_on("Signup as a company")
       fill_in("firstName", with: "Michael")
@@ -45,7 +45,7 @@ RSpec.describe "Request consultation" do
     end
 
     it "they can login to their existing account and request a consultation" do
-      visit("/freelancers/#{freelancer.uid}")
+      visit("/profile/#{freelancer.uid}")
       click_on("Work together")
       within("*[role='dialog']") do
         click_on("Login")
@@ -60,7 +60,7 @@ RSpec.describe "Request consultation" do
 
     it "they can signup as a freelancer and send a message" do
       allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
-      visit("/freelancers/#{freelancer.uid}")
+      visit("/profile/#{freelancer.uid}")
       click_on("Work together")
       click_on("Signup as a freelancer")
       fill_in("firstName", with: "Michael")
@@ -76,7 +76,7 @@ RSpec.describe "Request consultation" do
 
     it "they can login as a freelancer and send a message" do
       other_freelancer = create(:specialist)
-      visit("/freelancers/#{freelancer.uid}")
+      visit("/profile/#{freelancer.uid}")
       click_on("Work together")
       within("*[role='dialog']") do
         click_on("Login")
