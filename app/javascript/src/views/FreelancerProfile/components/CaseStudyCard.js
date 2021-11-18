@@ -36,8 +36,9 @@ const StyledCompanyType = styled(Text)(
     letterSpacing: "0.02rem",
     lineHeight: "16px",
     color: "neutral700",
-    mt: 0.5,
-    mb: 1,
+    mt: [2, 0.5],
+    mb: [2, 1],
+    paddingRight: 8,
   }),
 );
 
@@ -48,6 +49,7 @@ const StyledTitle = styled(Text)(
     letterSpacing: "-0.032rem",
     color: "neutral900",
     marginBottom: 6,
+    paddingRight: [8, 4],
   }),
 );
 
@@ -134,7 +136,7 @@ export const StyledCaseStudyCard = styled.div(
   }),
   css({
     padding: [4, 8],
-    pb: [6, 10],
+    paddingBottom: [6, 10],
     width: "100%",
     bg: "neutral100",
     position: "relative",
