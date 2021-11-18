@@ -18,13 +18,13 @@ module Types
     field :availability, String, null: true
     field :specialist, Types::SpecialistType, null: true
     field :status, String, null: true
-    field :comment, String, null: true
-    field :introduction, String, null: true
+    field :comment, String, null: true, deprecation_reason: "Gone with the ~wind~ new flow"
+    field :introduction, String, null: true, deprecation_reason: "Gone with the ~wind~ new flow"
     field :rejection_reason, String, null: true
     field :rejection_feedback, String, null: true
     field :project_type, String, null: true
     field :monthly_limit, Int, null: true
-    field :questions, [Types::ApplicationQuestionType, {null: true}], null: true
+    field :questions, [Types::ApplicationQuestionType, {null: true}], null: true, deprecation_reason: "Gone with the ~wind~ new flow"
     field :project, Types::ProjectType, null: false
     field :referral_url, String, null: true
     field :accepts_fee, Boolean, null: true
@@ -37,7 +37,7 @@ module Types
       authorize :read?
     end
 
-    field :previous_projects, [Types::PreviousProject], null: false do
+    field :previous_projects, [Types::PreviousProject], null: false, deprecation_reason: "Gone with the ~wind~ new flow" do
       argument :fallback, Boolean, required: false
     end
 
@@ -65,7 +65,7 @@ module Types
       object.applied_at.try(:iso8601)
     end
 
-    field :hidden, Boolean, null: true
+    field :hidden, Boolean, null: true, deprecation_reason: "Gone with the ~wind~ new flow"
 
     def hidden
       object.hidden || false
