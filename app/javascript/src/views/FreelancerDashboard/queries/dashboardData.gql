@@ -10,6 +10,7 @@ query DashboardData {
   }
   topCaseStudies {
     id
+    path
     title
     specialist {
       id

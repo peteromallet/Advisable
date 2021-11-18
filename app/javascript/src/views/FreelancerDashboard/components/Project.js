@@ -41,10 +41,7 @@ function Avatar({ avatar }) {
 export default function Project({ caseStudy }) {
   return (
     <Sentry.ErrorBoundary>
-      <Card
-        as={Link}
-        to={`/freelancers/${caseStudy.specialist?.id}/case_studies/${caseStudy.id}`}
-      >
+      <Card as={Link} to={caseStudy.path}>
         <Box display="flex" css={css({ columnGap: 4 })}>
           <Box
             position="relative"
