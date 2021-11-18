@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import { variant } from "styled-system";
 import SuperEllipse from "react-superellipse";
-import { matchPath, useParams } from "react-router";
+import { matchPath } from "react-router";
 import { Box, Text, Link, Skeleton, theme } from "@advisable/donut";
 import LogoMark from "src/components/LogoMark";
 
@@ -159,8 +159,6 @@ const CaseStudyBackgroundImage = React.memo(function CaseStudyBackgroundImage({
 });
 
 export default function CaseStudyCard({ caseStudy }) {
-  const params = useParams();
-
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:username/:slug",
   });
@@ -171,11 +169,7 @@ export default function CaseStudyCard({ caseStudy }) {
 
   return (
     <Suspense fallback={<LoadingSkeleton />}>
-      <Box
-        as={isArticle ? null : Link}
-        to={`/freelancers/${params.username}/${caseStudy.slug || caseStudy.id}`}
-        notInline="true"
-      >
+      <Box as={isArticle ? null : Link} to={caseStudy.path} notInline="true">
         <StyledCaseStudyCard type={isArticle ? "article" : "profile"}>
           {caseStudy.coverPhoto ? (
             <Sentry.ErrorBoundary>

@@ -16,6 +16,7 @@ module Types
     end
 
     field :username, String, null: true
+    field :profile_path, String, null: false
 
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs." do
       description "The airtable ID for the specialist"

@@ -29,6 +29,14 @@ module CaseStudy
     scope :by_score, -> { order("score DESC NULLS LAST").order(id: :desc) }
     scope :available_specialists, -> { joins(:specialist).merge(Specialist.available).joins(specialist: :account).merge(Account.active) }
 
+    def slug_or_uid
+      slug || uid
+    end
+
+    def path
+      "/freelancers/#{specialist.username_or_uid}/#{slug_or_uid}"
+    end
+
     def self.find_by_slug_or_id(slug)
       if ::CaseStudy::Article.valid_uid?(slug)
         ::CaseStudy::Article.active.published.find_by(uid: slug)

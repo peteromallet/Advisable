@@ -2,7 +2,7 @@
   <%# facebook  %>
   <meta property="og:type" content="article" />
   <meta property="og:title" content='<%= @case_study.title %>'% />
-  <meta property="og:url" content=<%= specialist_case_study_url(@case_study.specialist.username || @case_study.specialist.uid, @case_study.slug || @case_study.uid) %> />
+  <meta property="og:url" content=<%= specialist_case_study_url(@case_study.specialist.username_or_uid, @case_study.slug_or_uid) %> />
   <meta property="og:description" content='<%= @case_study.subtitle %>' />
   <meta property="article:published_time" content=<%= @case_study.created_at.strftime('%Y-%m-%d') %> />
   
