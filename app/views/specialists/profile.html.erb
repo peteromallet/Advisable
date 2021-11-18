@@ -2,5 +2,26 @@
   <% content_for :title, "Advisable | #{@specialist.account.name}"%>
   <% content_for :meta_tags do %>
     <meta name="description" content="<%= @specialist.bio %>">
+
+    <meta property="og:site_name" content="Advisable" />
+    <meta property="og:title" content="<%= @specialist.account.name %>" />
+    <meta property="og:url" content="<%= freelancer_profile_url(@specialist.username_or_uid) %>" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:description" content="<%= @specialist.bio %>" />
+    <% if @specialist.cover_photo.attached? || @specialist.avatar.attached? %>
+      <meta property="og:image" content="<%= @specialist.cover_photo.url || @specialist.avatar.url %>" />
+    <% end %>
+
+    <meta name="twitter:site" content="AdvisableHQ" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<%= @specialist.account.name %>" />
+    <meta name="twitter:description" content="<%= @specialist.bio %>" />
+    <% if @specialist.cover_photo.attached? || @specialist.avatar.attached? %>
+      <meta name="twitter:image" content="<%= @specialist.cover_photo.url || @specialist.avatar.url %>" />
+    <% end %>
+
+    <% if @specialist.twitter %>
+      <meta name="twitter:creator" content="@<%= @specialist.twitter %>" />
+    <% end %>
   <% end %>
 <% end %>
