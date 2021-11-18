@@ -33,7 +33,6 @@ const CaseStudy = lazy(() => import("./views/CaseStudy"));
 const SetPassword = lazy(() => import("./views/SetPassword"));
 const Payment = lazy(() => import("./views/Payment"));
 const Messages = lazy(() => import("./views/Messages"));
-const GuildFeed = lazy(() => import("guild/views/Feed"));
 const GuildPost = lazy(() => import("./views/Post"));
 const GuildFollows = lazy(() => import("guild/views/Follows"));
 const GuildEvent = lazy(() => import("guild/views/Event"));
@@ -176,9 +175,6 @@ const ApplicationRoutes = () => {
           </Route>
           <AuthenticatedRoute exact path="/events">
             <GuildEvents />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path="/guild" specialistOnly>
-            <GuildFeed />
           </AuthenticatedRoute>
           <Route>
             <NotFound />
