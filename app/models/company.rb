@@ -2,7 +2,6 @@
 
 class Company < ApplicationRecord
   PROJECT_PAYMENT_METHODS = ["Bank Transfer", "Card"].freeze
-  self.ignored_columns = ["bank_transfers_enabled"]
 
   has_logidze
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_12_123049) do
+ActiveRecord::Schema.define(version: 2021_11_18_122946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -114,7 +114,6 @@ ActiveRecord::Schema.define(version: 2021_11_12_123049) do
     t.integer "score"
     t.bigint "specialist_id"
     t.bigint "project_id"
-    t.string "airtable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "accepts_fee"
@@ -376,7 +375,6 @@ ActiveRecord::Schema.define(version: 2021_11_12_123049) do
     t.string "billing_email"
     t.string "vat_number"
     t.jsonb "address"
-    t.boolean "bank_transfers_enabled", default: false
     t.jsonb "goals"
     t.boolean "feedback"
     t.string "business_type"
@@ -1071,7 +1069,6 @@ ActiveRecord::Schema.define(version: 2021_11_12_123049) do
   create_table "tasks", force: :cascade do |t|
     t.string "name"
     t.string "uid", null: false
-    t.string "airtable_id"
     t.string "stage"
     t.integer "estimate"
     t.datetime "due_date"
@@ -1095,7 +1092,6 @@ ActiveRecord::Schema.define(version: 2021_11_12_123049) do
     t.datetime "submitted_at"
     t.datetime "approved_at"
     t.jsonb "log_data"
-    t.index ["airtable_id"], name: "index_tasks_on_airtable_id"
     t.index ["application_id"], name: "index_tasks_on_application_id"
     t.index ["stage"], name: "index_tasks_on_stage"
     t.index ["uid"], name: "index_tasks_on_uid", unique: true
