@@ -78,6 +78,14 @@ class Specialist < ApplicationRecord
     application_stage == "Accepted"
   end
 
+  def username_or_uid
+    username || uid
+  end
+
+  def profile_path
+    "/freelancers/#{username_or_uid}"
+  end
+
   def send_confirmation_email
     token = account.create_confirmation_token
     SpecialistMailer.confirm(uid: uid, token: token).deliver_later

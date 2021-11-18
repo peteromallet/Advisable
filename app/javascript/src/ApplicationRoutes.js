@@ -45,7 +45,7 @@ const NewPost = lazy(() => import("./views/NewPost"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
-  return <Redirect to={`/freelancers/${viewer.username || viewer.id}`} />;
+  return <Redirect to={viewer.profilePath} />;
 }
 
 function RedirectToSetPassword() {
