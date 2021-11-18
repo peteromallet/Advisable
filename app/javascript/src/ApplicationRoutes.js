@@ -21,7 +21,6 @@ const FreelancerApplication = lazy(() =>
 const ClientApplication = lazy(() => import("./views/ClientApplication"));
 const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
 const Booking = lazy(() => import("./views/Booking"));
-const JobListing = lazy(() => import("./views/JobListing"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const FreelancerActiveApplication = lazy(() =>
@@ -150,13 +149,6 @@ const ApplicationRoutes = () => {
           </AuthenticatedRoute>
           <AuthenticatedRoute path="/clients/:applicationId">
             <FreelancerActiveApplication />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute
-            exact
-            specialistOnly
-            path="/invites/:applicationId"
-          >
-            <JobListing />
           </AuthenticatedRoute>
           <AuthenticatedRoute path="/settings">
             <Settings />
