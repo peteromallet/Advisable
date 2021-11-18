@@ -3,7 +3,6 @@ import React, { Suspense } from "react";
 import { rgba } from "polished";
 import css from "@styled-system/css";
 import { useImage } from "react-image";
-import { motion } from "framer-motion";
 import styled from "styled-components";
 import { variant } from "styled-system";
 import SuperEllipse from "react-superellipse";
@@ -106,7 +105,7 @@ const StyledBackgroundImg = styled.img`
   object-position: center;
 `;
 
-export const StyledCaseStudyCard = styled(motion.div)(
+export const StyledCaseStudyCard = styled.div(
   variant({
     prop: "type",
     variants: {
@@ -173,7 +172,7 @@ const CaseStudyBackgroundImage = React.memo(function CaseStudyBackgroundImage({
       borderRadius="20px"
       position="absolute"
     >
-      <StyledBackgroundImg as={motion.img} src={src} />
+      <StyledBackgroundImg src={src} />
     </Box>
   );
 });
