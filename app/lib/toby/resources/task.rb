@@ -7,36 +7,32 @@ module Toby
       attribute :uid, Attributes::String, readonly: true
       attribute :application, Attributes::BelongsTo, readonly: true
 
-      attribute :specialist, Lookups::Tasks::SpecialistName
       attribute :company, Lookups::Tasks::CompanyName
+      attribute :specialist, Lookups::Tasks::SpecialistName
 
       attribute :name, Attributes::String
       attribute :description, Attributes::String
-      attribute :due_date, Attributes::DateTime
-      attribute :estimate, Attributes::Currency
       attribute :estimate_type, Attributes::String
+      attribute :estimate, Attributes::Currency
+      attribute :flexible_estimate, Attributes::Currency
       attribute :hours_worked, Attributes::Integer
       attribute :invoice_rate, Lookups::Tasks::InvoiceRate
       attribute :final_cost, Attributes::Currency
-      attribute :flexible_estimate, Attributes::Currency
       attribute :repeat, Attributes::String
-      attribute :stage, Attributes::String
-      attribute :submitted_for_approval_comment, Attributes::String
       attribute :trial, Attributes::Boolean
       attribute :stripe_invoice_id, Attributes::String
+      attribute :stage, Attributes::String
+      attribute :due_date, Attributes::DateTime
 
-      attribute :charged_amount, Lookups::Tasks::ChargedAmount
-      attribute :charged_at, Lookups::Tasks::ChargedAt
-      attribute :processed_at, Lookups::Tasks::ProcessedAt
-
-      attribute :to_be_invited_at, Attributes::DateTime
+      attribute :quote_requested_at, Attributes::DateTime
+      attribute :quote_provided_at, Attributes::DateTime
+      attribute :assigned_at, Attributes::DateTime
       attribute :started_working_at, Attributes::DateTime
       attribute :submitted_at, Attributes::DateTime
       attribute :approved_at, Attributes::DateTime
-      attribute :assigned_at, Attributes::DateTime
-      attribute :quote_provided_at, Attributes::DateTime
-      attribute :quote_requested_at, Attributes::DateTime
-
+      attribute :charged_at, Lookups::Tasks::ChargedAt
+      attribute :processed_at, Lookups::Tasks::ProcessedAt
+      attribute :charged_amount, Lookups::Tasks::ChargedAmount
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 

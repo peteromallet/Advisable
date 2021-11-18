@@ -5,16 +5,16 @@ module Toby
     class Payment < BaseResource
       model_name ::Payment
       attribute :uid, Attributes::String, readonly: true
+      attribute :task, Attributes::BelongsTo
       attribute :company, Attributes::BelongsTo
       attribute :specialist, Attributes::BelongsTo
-      attribute :status, Attributes::Select, options: ::Payment::VALID_STATUSES
-      attribute :payment_method, Attributes::Select, options: ::Payment::VALID_PAYMENT_METHODS
+      attribute :task_name, Lookups::Tasks::Name
       attribute :amount, Attributes::Currency
       attribute :admin_fee, Attributes::Currency
       attribute :amount_with_fee, Attributes::Currency, readonly: true
       attribute :deposit, Attributes::Currency
-      attribute :task, Attributes::BelongsTo
-      attribute :task_name, Lookups::Tasks::Name
+      attribute :status, Attributes::Select, options: ::Payment::VALID_STATUSES
+      attribute :payment_method, Attributes::Select, options: ::Payment::VALID_PAYMENT_METHODS
       attribute :payment_intent_id, Attributes::String, readonly: true
       attribute :charged_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
