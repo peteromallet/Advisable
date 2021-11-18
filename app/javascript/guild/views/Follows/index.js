@@ -4,7 +4,7 @@ import { Card, Text, Box, Stack } from "@advisable/donut";
 import { Plus } from "@styled-icons/heroicons-outline/Plus";
 import { X } from "@styled-icons/heroicons-outline/X";
 import Loading from "@advisable-main/components/Loading";
-import { GUILD_TOP_TOPICS_QUERY } from "@guild/components/Topics/queries.js";
+import { GUILD_TOP_TOPICS_QUERY } from "./queries";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
 import NoResults from "@guild/components/NoResults";
 import { StyledGuildTopic } from "./styles";
@@ -12,12 +12,8 @@ import { GuildBox } from "@guild/styles";
 import useFollows from "./useFollows";
 
 const Follows = () => {
-  const {
-    unfollowTopic,
-    followTopic,
-    followedTopics,
-    followedTopicsLoading,
-  } = useFollows();
+  const { unfollowTopic, followTopic, followedTopics, followedTopicsLoading } =
+    useFollows();
 
   const { data: topTopicsData, loading: topTopicsLoading } = useQuery(
     GUILD_TOP_TOPICS_QUERY,
