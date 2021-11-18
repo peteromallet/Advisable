@@ -10,10 +10,12 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import Hire from "./views/Hire";
+import EditPost from "./views/EditPost";
 
 const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
 const Applications = lazy(() => import("./views/Applications"));
+const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
   import("./views/FreelancerApplication"),
 );
@@ -35,11 +37,12 @@ const SetPassword = lazy(() => import("./views/SetPassword"));
 const Payment = lazy(() => import("./views/Payment"));
 const Messages = lazy(() => import("./views/Messages"));
 const GuildFeed = lazy(() => import("guild/views/Feed"));
-const GuildPost = lazy(() => import("guild/views/Post"));
+const GuildPost = lazy(() => import("./views/Post"));
 const GuildFollows = lazy(() => import("guild/views/Follows"));
 const GuildEvent = lazy(() => import("guild/views/Event"));
 const GuildEvents = lazy(() => import("guild/views/Events"));
 const Discover = lazy(() => import("./views/Discover"));
+const NewPost = lazy(() => import("./views/NewPost"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -80,16 +83,25 @@ export function VersionedRoute({
 
 const ApplicationRoutes = () => {
   const viewer = useViewer();
+  const isClient = viewer && viewer.__typename === "User";
 
   return (
     <>
       <Header />
       <Suspense fallback={<Loading />}>
         <Switch>
+          {isClient && <Redirect from="/" exact to="/explore" />}
           <AuthenticatedRoute path="/set_password">
             <SetPassword />
           </AuthenticatedRoute>
           {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
+
+          <AuthenticatedRoute path="/" exact>
+            <FreelancerDashboard />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path="/post">
+            <NewPost />
+          </AuthenticatedRoute>
           <Route path="/case_studies/:id">
             <CaseStudy />
           </Route>
@@ -169,7 +181,10 @@ const ApplicationRoutes = () => {
           <AuthenticatedRoute clientOnly path="/payments/:id">
             <Payment />
           </AuthenticatedRoute>
-          <Route specialistOnly path="/guild/posts/:postId">
+          <Route path="/posts/:id/edit">
+            <EditPost />
+          </Route>
+          <Route path="/posts/:postId">
             <GuildPost />
           </Route>
           <AuthenticatedRoute exact path="/guild/topics" specialistOnly>

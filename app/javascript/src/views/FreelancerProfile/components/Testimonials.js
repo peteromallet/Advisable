@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as Sentry from "@sentry/react";
 import { Box, Stack, useModal, DialogDisclosure } from "@advisable/donut";
-import SectionActionButton from "./SectionActionButton";
+import CardButton from "src/components/CardButton";
 import SectionTitle from "./SectionTitle";
 import Testimonial from "./Testimonial";
 import TestimonialLinkModal from "./TestimonialLinkModal";
@@ -31,12 +31,7 @@ function Testimonials({ reviews, specialist, isOwner }) {
       </Stack>
       {isEmpty && isOwner && <TestimonialsEmptyState modal={modal} />}
       {!isEmpty && isOwner && (
-        <DialogDisclosure
-          as={SectionActionButton}
-          paddingY={6}
-          mt={6}
-          {...modal}
-        >
+        <DialogDisclosure as={CardButton} paddingY={6} mt={6} {...modal}>
           Request a Testimonial
         </DialogDisclosure>
       )}

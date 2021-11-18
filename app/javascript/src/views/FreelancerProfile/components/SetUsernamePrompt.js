@@ -11,7 +11,7 @@ import {
   ArrowNarrowRight,
   Identification,
 } from "@styled-icons/heroicons-solid";
-import SectionActionButton from "./SectionActionButton";
+import CardButton from "src/components/CardButton";
 
 export default function SetUsernamePrompt({ specialist }) {
   const modal = useModal();
@@ -21,7 +21,7 @@ export default function SetUsernamePrompt({ specialist }) {
       <Box marginBottom={11}>
         <DialogDisclosure {...modal} size="s">
           {(disclosure) => (
-            <SectionActionButton {...disclosure} padding={5}>
+            <CardButton {...disclosure} padding={5}>
               <Box display="flex" alignItems="center" width="100%">
                 <Circle bg="blue100" size={40} marginRight={3} color="blue900">
                   <Identification size={20} />
@@ -45,7 +45,7 @@ export default function SetUsernamePrompt({ specialist }) {
                 </Box>
                 <ArrowNarrowRight size={20} />
               </Box>
-            </SectionActionButton>
+            </CardButton>
           )}
         </DialogDisclosure>
       </Box>

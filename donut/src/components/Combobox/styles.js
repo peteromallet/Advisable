@@ -66,6 +66,7 @@ export const StyledAutocompleteMenuItem = styled.li`
 `;
 
 export const StyledComboxMobileContainer = styled(Box)`
+  z-index: 9999;
   height: -moz-available; /* WebKit-based browsers will ignore this. */
   height: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
   height: fill-available;

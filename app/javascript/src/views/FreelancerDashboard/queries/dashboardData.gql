@@ -1,0 +1,31 @@
+query DashboardData {
+  viewer {
+    ... on Specialist {
+      id
+      caseStudiesCount
+      reviews {
+        id
+      }
+    }
+  }
+  topCaseStudies {
+    id
+    title
+    specialist {
+      id
+      name
+      avatar
+    }
+    coverPhoto
+  }
+  upcomingEvents {
+    id
+    title
+    startsAt
+    host {
+      id
+      name
+    }
+    coverPhotoUrl
+  }
+}

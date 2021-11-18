@@ -11,7 +11,7 @@ function EditPost({ post, size }) {
   const modal = useDialogState();
 
   function handleClick() {
-    post.article ? modal.show() : history.push(`/composer/${post.id}/post`);
+    post.article ? modal.show() : history.push(`/posts/${post.id}/edit`);
   }
   return (
     <>
@@ -27,6 +27,7 @@ function EditPost({ post, size }) {
             onClick={handleClick}
             bg="neutral100"
             color="neutral600"
+            aria-label="Edit"
             icon={<Pencil />}
           />
         </Box>

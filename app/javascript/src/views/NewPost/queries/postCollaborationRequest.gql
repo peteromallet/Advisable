@@ -1,0 +1,17 @@
+mutation PostCollaborationRequest($input: PostCollaborationRequestInput!) {
+  postCollaborationRequest(input: $input) {
+    post {
+      id
+      author {
+        id
+        name
+        avatar
+        location
+        firstName
+      }
+      title
+      excerpt
+      engagementsCount
+    }
+  }
+}

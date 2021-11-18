@@ -7,8 +7,8 @@ import Logout from "./Logout";
 const FreelancerNavigation = ({ closeNav, isMobile }) => {
   return (
     <StyledNav>
-      <NavigationLink onClick={closeNav} to="/applications">
-        Applications
+      <NavigationLink onClick={closeNav} to="/" exact>
+        Dashboard
       </NavigationLink>
       <NavigationLink onClick={closeNav} to="/clients">
         Projects
@@ -20,11 +20,8 @@ const FreelancerNavigation = ({ closeNav, isMobile }) => {
       >
         Messages
       </NavigationLink>
-      <NavigationLink onClick={closeNav} to="/guild">
-        Guild
-      </NavigationLink>
-      <NavigationLink onClick={closeNav} to="/events">
-        Events
+      <NavigationLink onClick={closeNav} to="/profile">
+        Profile
       </NavigationLink>
 
       {isMobile && (

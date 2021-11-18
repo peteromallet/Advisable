@@ -6,7 +6,7 @@ RSpec.describe "Guild view post", type: :system do
   let(:account) { create(:account, completed_tutorials: ["guild"]) }
   let(:specialist) { create(:specialist, guild: true, account: account) }
   let!(:guild_post) { create(:guild_post, shareable: false, title: "This is a test post") }
-  let(:post_path) { "/guild/posts/#{guild_post.id}" }
+  let(:post_path) { "/posts/#{guild_post.id}" }
 
   context "when not logged in" do
     it "is redirected to login page" do

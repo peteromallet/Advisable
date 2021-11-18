@@ -1,0 +1,27 @@
+query CollaborationRequests($cursor: String) {
+  collaborationRequests(first: 10, after: $cursor) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    edges {
+      node {
+        id
+        author {
+          id
+          name
+          avatar
+          location
+          firstName
+        }
+        title
+        excerpt
+        engagementsCount
+        labels {
+          id
+          slug
+        }
+      }
+    }
+  }
+}

@@ -19,7 +19,7 @@ export default function Body({
   walkthrough = false,
   popularOrAuthorReactions = false,
 }) {
-  const url = `/guild/posts/${post.id}`;
+  const url = `/posts/${post.id}`;
   const history = useHistory();
   const handleOpen = () => {
     // We need to use an actual page load while the guild pack is separate.

@@ -8,7 +8,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { Box, Text, Circle } from "@advisable/donut";
 import { CREATE_GUILD_POST } from "./mutations";
-import { GUILD_POST_QUERY } from "@guild/views/Post/queries";
+import { GUILD_POST_QUERY } from "src/views/Post/queries";
 import RadioOption from "./RadioOption";
 import { PATH_REGEX } from "./useComposerModal";
 import { useUpdateGuildPostWriteCache } from "./mutations";
