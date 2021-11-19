@@ -29,6 +29,8 @@ export default function TestimonialsEmptyState({ modal }) {
           you.
         </Text>
         <Circle
+          mx="auto"
+          display="block"
           border="2px solid"
           borderColor="neutral200"
           color="neutral200"

@@ -31,6 +31,8 @@ export default function CaseStudiesEmptyState({ specialist }) {
           Showcase your work and find new clients.
         </Text>
         <Circle
+          mx="auto"
+          display="block"
           border="2px solid"
           borderColor="neutral200"
           color="neutral200"
