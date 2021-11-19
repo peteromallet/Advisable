@@ -10,7 +10,6 @@ class IndustryDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    skills: Field::HasMany,
     companies: Field::HasMany,
     label: Field::HasOne,
     id: Field::Number,

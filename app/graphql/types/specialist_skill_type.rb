@@ -7,20 +7,14 @@
 # resolver for the specialist skills field.
 module Types
   class SpecialistSkillType < Types::BaseType
-    field :verified, Boolean, null: false
-
     field :id, ID, null: false
-
     def id
       skill.uid
     end
 
     field :name, String, null: false
-
     delegate :name, to: :skill
-
     delegate :skill, to: :object
-
     delegate :specialist, to: :object
   end
 end
