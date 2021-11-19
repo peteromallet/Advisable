@@ -229,7 +229,7 @@ export default function CaseStudyCard({ caseStudy, isOwner }) {
               </Box>
             </Box>
           </StyledContentWrapper>
-          {isOwner && (
+          {isOwner && caseStudy.editorUrl && (
             <MeatballMenu>
               <EditCaseStudyDropdownLink modal={modal} />
             </MeatballMenu>
