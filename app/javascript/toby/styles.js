@@ -49,6 +49,7 @@ export const StyledHeaderRow = styled.div`
   display: flex;
   position: sticky;
   flex-wrap: nowrap;
+  user-select: none;
   white-space: nowrap;
   background-color: ${theme.colors.neutral50};
   box-shadow: 0 2px 4px ${rgba(theme.colors.neutral900, 0.16)},
@@ -56,18 +57,44 @@ export const StyledHeaderRow = styled.div`
 `;
 
 export const StyledHeaderCell = styled.div`
-  width: 200px;
   height: 36px;
   display: inline-flex;
   flex-shrink: 0;
   padding: 0 10px;
   font-size: 15px;
-  overflow: hidden;
   font-weight: 500;
   white-space: nowrap;
   align-items: center;
+  position: relative;
   color: ${theme.colors.neutral900};
   border-right: 1px solid ${theme.colors.neutral200};
+`;
+
+export const StyledResizeHandler = styled.div`
+  top: 0;
+  width: 20px;
+  right: -10px;
+  height: 100%;
+  cursor: ew-resize;
+  position: absolute;
+  z-index: 2;
+
+  &::after {
+    content: "";
+    width: 3px;
+    opacity: 0;
+    display: block;
+    margin-top: 4px;
+    margin-left: 9px;
+    border-radius: 2px;
+    height: calc(100% - 8px);
+    background: ${theme.colors.neutral400};
+  }
+
+  &:hover::after,
+  &[data-resizing="true"]:after {
+    opacity: 1;
+  }
 `;
 
 export const StyledRow = styled.div`
@@ -89,7 +116,6 @@ export const StyledCellCopyButton = styled.button`
 `;
 
 export const StyledCell = styled.div`
-  width: 200px;
   height: 40px;
   display: flex;
   font-size: 15px;

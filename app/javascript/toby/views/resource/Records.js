@@ -8,9 +8,11 @@ import {
   StyledHeaderRow,
   StyledHeaderCell,
   StyledScrollContainer,
+  StyledResizeHandler,
 } from "../../styles";
 import Rows from "./Rows";
 import Loading from "./Loading";
+import useColumnSizes from "./useColumnSizes";
 
 function APIError() {
   return (
@@ -29,6 +31,7 @@ function APIError() {
 }
 
 export default function Records({ resource, filters, sortBy, sortOrder }) {
+  const { sizeForColumn, resizePropsForHeaderCell } = useColumnSizes(resource);
   const { error: notifyError } = useNotifications();
   const { loading, data, fetchMore, error } = useFetchResources(
     resource,
@@ -56,14 +59,37 @@ export default function Records({ resource, filters, sortBy, sortOrder }) {
       <Box display="inline-block" minWidth="100vw">
         <StyledHeaderRow>
           {resource.attributes.map((attr) => (
-            <StyledHeaderCell key={attr.name}>
-              {attr.columnLabel}
+            <StyledHeaderCell
+              style={{
+                width: sizeForColumn(attr.name),
+              }}
+              key={attr.name}
+            >
+              <Text
+                paddingY={1}
+                fontWeight={500}
+                letterSpacing="-0.01rem"
+                $truncate
+              >
+                {attr.columnLabel}
+              </Text>
+              <StyledResizeHandler {...resizePropsForHeaderCell(attr.name)} />
             </StyledHeaderCell>
           ))}
         </StyledHeaderRow>
         <Box>
-          {error ? <APIError /> : <Rows edges={edges} resource={resource} />}
-          {loading && <Loading resource={resource} />}
+          {error ? (
+            <APIError />
+          ) : (
+            <Rows
+              edges={edges}
+              resource={resource}
+              sizeForColumn={sizeForColumn}
+            />
+          )}
+          {loading && (
+            <Loading resource={resource} sizeForColumn={sizeForColumn} />
+          )}
         </Box>
       </Box>
     </StyledScrollContainer>
