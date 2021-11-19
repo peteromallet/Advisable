@@ -25,8 +25,6 @@
 #   client.
 #
 class Task < ApplicationRecord
-  self.ignored_columns += %i[airtable_id]
-
   include Uid
 
   has_logidze
@@ -112,7 +110,6 @@ end
 #
 # Indexes
 #
-#  index_tasks_on_airtable_id     (airtable_id)
 #  index_tasks_on_application_id  (application_id)
 #  index_tasks_on_stage           (stage)
 #  index_tasks_on_uid             (uid) UNIQUE
