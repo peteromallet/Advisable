@@ -196,7 +196,10 @@ export default function CaseStudyCard({ caseStudy, isOwner }) {
   return (
     <Suspense fallback={<LoadingSkeleton />}>
       <Box as={isArticle ? null : StyledLink} to={caseStudy.path}>
-        <StyledCaseStudyCard type={isArticle ? "article" : "profile"}>
+        <StyledCaseStudyCard
+          data-testid="caseStudyCard"
+          type={isArticle ? "article" : "profile"}
+        >
           {Boolean(caseStudy.coverPhoto) && (
             <Sentry.ErrorBoundary>
               <CaseStudyBackgroundImage url={caseStudy.coverPhoto} />

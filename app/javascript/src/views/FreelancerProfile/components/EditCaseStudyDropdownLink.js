@@ -3,12 +3,16 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import { DialogDisclosure, theme } from "@advisable/donut";
 
-export const StyledDropdownLink = styled(motion.div)`
+export const StyledDropdownLink = styled(motion.button)`
   display: block;
   font-size: 16px;
   cursor: pointer;
   font-weight: 450;
   padding: 12px 20px;
+  appearance: none;
+  border: none;
+  background: transparent;
+  font-family: TThoves, sans-serif;
   color: ${theme.colors.neutral600};
 
   &:hover {
@@ -27,7 +31,7 @@ export default function EditCaseStudyDropdownLink({ modal }) {
         modal.show();
       }}
     >
-      Open Editor
+      Edit case study
     </DialogDisclosure>
   );
 }

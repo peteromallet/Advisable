@@ -1,15 +1,17 @@
 import React from "react";
 import { theme } from "@advisable/donut";
 import styled from "styled-components";
-import { DotsVertical } from "@styled-icons/heroicons-outline/DotsVertical";
+import { DotsHorizontal } from "@styled-icons/heroicons-solid";
 
-export const StyledMeatballButton = styled.div`
+export const StyledMeatballButton = styled.button`
   opacity: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
+  border: none;
+  appearance: none;
   background: rgba(255, 255, 255, 0.4);
   color: ${theme.colors.neutral700};
   border-radius: 24px;
@@ -47,8 +49,11 @@ const StyledMeatballWrapper = styled.div`
 export default function MeatballMenu({ children }) {
   return (
     <StyledMeatballWrapper>
-      <StyledMeatballButton onClick={(e) => e.preventDefault()} role="button">
-        <DotsVertical size={24} />
+      <StyledMeatballButton
+        aria-label="Case study menu"
+        onClick={(e) => e.preventDefault()}
+      >
+        <DotsHorizontal size={24} />
       </StyledMeatballButton>
       <StyledDropdown>{children}</StyledDropdown>
     </StyledMeatballWrapper>
