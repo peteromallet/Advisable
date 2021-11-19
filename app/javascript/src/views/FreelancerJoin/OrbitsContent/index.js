@@ -73,8 +73,8 @@ function FormsContent() {
           color="white"
           lineHeight={{ _: "m", l: "l" }}
         >
-          Discover a world of opportunity with clients who value your brilliance
-          and a network of world-class peers from 500+ marketing-related skills.
+          We build case studies of your work and get them discovered by clients
+          who need you.
         </Text>
       </Box>
       <Logos />
@@ -97,7 +97,8 @@ export default function OrbitsContent({ step, custom }) {
       gridArea="orbits-content"
       alignSelf={{ _: "start", xl: "center" }}
       maxWidth={{ _: "640px", xl: "500px" }}
-      pt={{ _: 0, xl: 14 }}
+      pr={{ _: 0, xl: 8 }}
+      p={{ _: 0, xl: 14 }}
       pb={{ xl: 14 }}
       display="flex"
       flexDirection="column"
