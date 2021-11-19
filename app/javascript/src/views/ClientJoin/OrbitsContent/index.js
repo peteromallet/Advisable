@@ -73,8 +73,8 @@ function FormsContent() {
           color="white"
           lineHeight={{ _: "m", l: "l" }}
         >
-          Discover strategies and work with the world&apos;s best marketing
-          specialists across 500+ marketing-related skills.
+          Get recommended brilliant talent and learn about them by exploring
+          case studies of their work.
         </Text>
       </Box>
       <Logos />
