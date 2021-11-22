@@ -61,6 +61,7 @@ end
 #  confidential           :boolean
 #  deleted_at             :datetime
 #  editor_note            :text
+#  editor_url             :string
 #  excerpt                :string
 #  freelancer_edits       :text
 #  goals                  :jsonb

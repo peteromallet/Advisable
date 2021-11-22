@@ -10,7 +10,7 @@ import CaseStudiesEmptyState from "./CaseStudiesEmptyState";
 function CaseStudies({ caseStudies, specialist, isOwner }) {
   const cards = caseStudies.map((cs) => (
     <Sentry.ErrorBoundary key={cs.id}>
-      <CaseStudyCard caseStudy={cs} />
+      <CaseStudyCard caseStudy={cs} isOwner={isOwner} />
     </Sentry.ErrorBoundary>
   ));
 

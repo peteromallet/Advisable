@@ -71,7 +71,7 @@ function Article({ isOwner, profileData }) {
       ) : null}
       <Box position="relative" width="100%">
         <Box marginBottom={12}>
-          <CaseStudyCard caseStudy={partialCaseStudy} />
+          <CaseStudyCard caseStudy={partialCaseStudy} isOwner={isOwner} />
         </Box>
         <ArticleContent />
       </Box>
