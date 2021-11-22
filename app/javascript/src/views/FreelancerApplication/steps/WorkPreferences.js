@@ -68,8 +68,8 @@ export default function WorkPreferences({ specialist, skills, industries }) {
             <StepNumber>Step 4 of 5</StepNumber>
             <Header>Work preferences</Header>
             <Description>
-              Tell us about your specialisms, focus areas and availability to
-              help us match you with the right projects.
+              Tell us about the skills you specialise in, the industries
+              you&apos;ve worked in, and your current working availability.
             </Description>
             <Box mb={6}>
               <FormField

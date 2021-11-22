@@ -28,10 +28,10 @@ const ApplicationSubmitted = () => (
     <ProgressLine progress={1} />
     <Header>We are reviewing your application</Header>
     <Description>
-      Thanks for taking the time to tell us more about you and your freelancing!
-      Your application to Advisable will be reviewed by our team, and you should
-      hear back from us within 2 working days. In the meantime, you can still
-      update your application by clicking below.
+      Thanks for taking the time to tell us about you! Your application to
+      Advisable will be reviewed by our team, and you should hear back from us
+      soon. In the meantime, you can still update your application by clicking
+      below.
     </Description>
     <Button
       as={Link}

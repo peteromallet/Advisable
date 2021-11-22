@@ -76,7 +76,8 @@ export default function Introduction({ specialist, countries }) {
             <StepNumber>Step 1 of 5</StepNumber>
             <Header>Introduction</Header>
             <Description>
-              Fill in your details to start building your freelancer profile!
+              We&apos;d like to start by learning some of the basic details
+              about you.
             </Description>
             <Box mb={6}>
               <Text color="neutral900" mb={2} fontWeight="medium">
@@ -115,7 +116,7 @@ export default function Introduction({ specialist, countries }) {
               minRows={5}
               label="Add a short bio"
               marginBottom={6}
-              description="This will be shown on your public Advisable profile and shown to clients when you apply to projects. You can always update this later."
+              description="This will be displayed on your profile when clients discover you. You can always update this later."
               placeholder="Tell us about yourself..."
               charLimit={280}
             />

@@ -66,8 +66,7 @@ export default function Overview({ specialist }) {
             <StepNumber>Step 2 of 5</StepNumber>
             <Header>Overview</Header>
             <Description>
-              Add your portfolio links and resume to show us how you do what you
-              do.
+              Add something that gives us an overview of your background.
             </Description>
             <Box mb="l">
               <FormField
