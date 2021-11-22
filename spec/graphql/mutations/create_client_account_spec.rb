@@ -49,8 +49,13 @@ RSpec.describe(Mutations::CreateClientAccount) do
     expect(account.permissions).to include("team_manager")
   end
 
-  it "creates a new user" do
-    expect { request }.to change(User, :count).by(1)
+  it "creates a new user and sends an email" do
+    count = User.count
+    request
+    expect(User.count).to eq(count + 1)
+    user = User.last
+    token = user.account.confirmation_token
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "confirm", "deliver_now", {args: [{uid: user.uid, token: token}]})
   end
 
   it "creates a new company" do

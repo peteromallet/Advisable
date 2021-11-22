@@ -33,8 +33,9 @@ module Mutations
         )
 
         if user.save
+          user.send_confirmation_email
+          user.sync_to_airtable
           login_as(account)
-
           {viewer: user}
         else
           ApiError.invalid_request("INVALID", user.errors.full_messages)
