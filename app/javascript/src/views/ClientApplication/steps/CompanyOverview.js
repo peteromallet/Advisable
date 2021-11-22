@@ -64,7 +64,7 @@ export default function CompanyOverview({ clientApplication, industries }) {
               <Box mb={6}>
                 <FormField
                   name="companyName"
-                  label="Company Name"
+                  label="What's your company's name?"
                   placeholder="Company name"
                 />
               </Box>
