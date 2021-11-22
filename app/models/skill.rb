@@ -9,7 +9,6 @@ class Skill < ApplicationRecord
   has_many :user_skills, dependent: :destroy
   has_many :users, through: :user_skills
   has_many :project_skills, dependent: :destroy
-  has_many :previous_projects, through: :project_skills, source: :project, source_type: "PreviousProject"
   has_many :consultations, dependent: :destroy
   has_many :case_study_skills, class_name: "CaseStudy::Skill", dependent: :destroy
   has_many :skill_category_skills, dependent: :destroy

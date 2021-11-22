@@ -20,7 +20,6 @@ class ApplicationDashboard < Administrate::BaseDashboard
     score: Field::Number,
     introduction: Field::Text,
     questions: Field::String.with_options(searchable: false),
-    airtable_id: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -48,7 +47,6 @@ class ApplicationDashboard < Administrate::BaseDashboard
     status
     introduction
     questions
-    airtable_id
     created_at
     updated_at
   ].freeze
@@ -62,7 +60,6 @@ class ApplicationDashboard < Administrate::BaseDashboard
     availability
     status
     introduction
-    airtable_id
   ].freeze
 
   # Overwrite this method to customize how applications are displayed

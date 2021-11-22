@@ -61,12 +61,6 @@ class Application < ApplicationRecord
   has_many :unresponsiveness_reports, dependent: :destroy
   has_many :problematic_flags, dependent: :destroy
   has_one :trial_task, -> { where(trial: true) }, class_name: "Task", inverse_of: :application, dependent: :destroy
-  # This previous project association represents a previous project that was created
-  # from the application record after working with the client.
-  has_one :previous_project, dependent: :destroy
-
-  has_many :application_references, dependent: :destroy
-  has_many :previous_projects, through: :application_references
   has_one :interview, dependent: :destroy
 
   # Every time an application is created, updated or destroyed we want to:
@@ -99,10 +93,6 @@ class Application < ApplicationRecord
 
   # Returns the top 3 candidates
   scope :top_three_applied, -> { applied.where("score > ?", 65.0).order(score: :desc).limit(3) }
-
-  def create_previous_project
-    PreviousProject::ConvertApplication.run(self)
-  end
 
   def referral_url
     "#{project.client_referral_url}&rid=#{specialist.uid}&referrer_firstname=#{specialist.account.first_name}&referrer_lastname=#{specialist.account.last_name}"

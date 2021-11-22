@@ -29,7 +29,7 @@ RSpec.describe "Guild view post", type: :system do
 
     it "has a not found notice if there is no post" do
       visit("#{post_path}123")
-      expect(page).to have_content("Post not found")
+      expect(page).to have_content("The page you were looking for could not be found")
     end
 
     it "displays the post" do

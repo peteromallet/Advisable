@@ -44,7 +44,6 @@ Rails.application.routes.draw do
     resources :interviews
     resources :reviews
     resources :projects
-    resources :previous_projects
     resources :video_calls
     resources :companies
     resources :industries
@@ -102,7 +101,6 @@ Rails.application.routes.draw do
   post "zapier_interactor/update_specialist"
   post "zapier_interactor/update_project"
   post "zapier_interactor/update_task"
-  post "zapier_interactor/attach_previous_project_image"
   post "zapier_interactor/create_magic_link"
   post "zapier_interactor/enable_guild"
   post "zapier_interactor/boost_guild_post"
