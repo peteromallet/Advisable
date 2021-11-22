@@ -14,7 +14,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_PROFILE } from "../queries";
 import { track } from "src/utilities/mixpanel";
 
-const CHAR_LIMIT = 800;
+const CHAR_LIMIT = 400;
 
 export const validationSchema = object().shape({
   previousWorkDescription: string()
@@ -65,9 +65,9 @@ export default function PreviousWork({ specialist }) {
             <StepNumber>Step 3 of 5</StepNumber>
             <Header>Previous work</Header>
             <Description>
-              Every freelancer has that one project that stands out in their
-              mind. Tell us about one of your previous projects that you’re most
-              proud of, and why.
+              The most important thing for us is the projects you&apos;ve
+              executed and the impact they&apos;ve had. Tell us about a project
+              you&apos;re particularly proud of.
             </Description>
             <Box mb={6}>
               <FormField

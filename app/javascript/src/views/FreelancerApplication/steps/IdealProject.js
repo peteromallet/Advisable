@@ -61,8 +61,8 @@ export default function IdealProject({ specialist }) {
             <StepNumber>Step 5 of 5</StepNumber>
             <Header>Ideal project</Header>
             <Description letterSpacing="-0.01rem">
-              Tell us about your perfect project so we can tailor how we match
-              you with potential work.
+              Tell us about your ideal project so we can see if what you&apos;re
+              looking for is a good match for what we have.
             </Description>
             <Box mb={4}>
               <FormField

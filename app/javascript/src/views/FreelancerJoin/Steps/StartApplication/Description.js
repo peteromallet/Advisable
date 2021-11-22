@@ -6,7 +6,7 @@ export default function NoProjectDetails() {
   const isWideScreen = useBreakpoint("sUp");
   return (
     <>
-      <CardHeader>Apply to join our network of top freelancers</CardHeader>
+      <CardHeader>Apply to join our network of unique talent</CardHeader>
       {isWideScreen ? (
         <Text as="p" color="neutral800" fontSize="m" lineHeight="m">
           Enter your details now to get started.

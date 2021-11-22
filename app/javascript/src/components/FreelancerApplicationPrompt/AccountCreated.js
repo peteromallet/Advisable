@@ -73,9 +73,8 @@ export default function AccountCreated() {
           lineHeight="s"
           color="neutral800"
         >
-          You have created an account, however, you have not yet been accepted
-          into our Network. Please submit an application to join our freelance
-          network and get access to top tier projects
+          You&apos;ve created an account but you have not yet been accepted into
+          our network. Begin your application to get started.
         </StyledDescription>
         <Box
           display="grid"
@@ -87,18 +86,18 @@ export default function AccountCreated() {
         >
           <Section
             number={1}
-            header="Priority Access To Opportunities"
-            description="Get access to opportunities in your skill set with companies that value your brilliance."
+            header="Be Discovered For Opportunities"
+            description="We recommend you to clients who need your expertise for meaningful projects."
           />
           <Section
             number={2}
-            header="A Trusted Network Of Brilliant Peers"
-            description="Join our freelance community and build a trusted network of people you love to work with."
+            header="Join A Network Of Brilliant Peers"
+            description="Access a private network featuring talented peers from across hundreds of skills."
           />
           <Section
             number={3}
-            header="A Beautiful Profile To Represent Your Work"
-            description="Show off your best work with a profile specifically built for freelancers."
+            header="Show Off Your Best Achievements"
+            description="Our profiles help tell the story of the most impressive projects you've executed."
           />
         </Box>
         <Button
