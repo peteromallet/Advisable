@@ -1,13 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Redirect } from "react-router-dom";
-import { Box, Text, Link, Button } from "@advisable/donut";
-import image from "../images/welcome-illustration.png";
+import { Heading, Box, Text, Link, Button, theme } from "@advisable/donut";
 import AnimatedCard from "../components/AnimatedCard";
 import { validationSchema as companyOverviewValidationSchema } from "./CompanyOverview";
 import { validationSchema as companyStageValidationSchema } from "./CompanyStage";
 import { validationSchema as goalsValidationSchema } from "./Goals";
 import { validationSchema as preferencesValidationSchema } from "./Preferences";
+import Pencil from "src/illustrations/zest/pencil";
 
 const stepsMeta = [
   {
@@ -50,16 +50,11 @@ export default function Welcome({ clientApplication }) {
         textAlign="center"
       >
         <Box width="352px" height="248px" marginBottom={6}>
-          <Box as="img" src={image} width="100%" />
+          <Pencil height="280px" color={theme.colors.orange200} />
         </Box>
-        <Text
-          color="#00404E"
-          fontSize="5xl"
-          fontWeight="medium"
-          marginBottom={3}
-        >
+        <Heading size="5xl" marginBottom={3}>
           Welcome to Advisable
-        </Text>
+        </Heading>
         <Text
           fontSize="lg"
           color="neutral800"
