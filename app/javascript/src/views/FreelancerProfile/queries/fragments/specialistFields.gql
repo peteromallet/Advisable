@@ -6,6 +6,7 @@ fragment SpecialistFields on Specialist {
   avatar
   coverPhoto
   location
+  profilePath
   bio
   linkedin
   twitter

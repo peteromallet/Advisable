@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router";
 import styled from "styled-components";
 import { Link, Text, theme } from "@advisable/donut";
 import { ArrowLeft } from "@styled-icons/heroicons-solid/ArrowLeft";
@@ -36,12 +35,9 @@ const StyledBackButton = styled.div`
   }
 `;
 
-export default function BackButton({ children }) {
-  const params = useParams();
-  const username = params?.username;
-
+export default function BackButton({ children, path }) {
   return (
-    <StyledBackButton as={Link} to={`/profile/${username}`}>
+    <StyledBackButton as={Link} to={path}>
       <ArrowLeft />
       <Text as="span">{children}</Text>
     </StyledBackButton>

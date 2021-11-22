@@ -23,6 +23,7 @@ query Article($searchId: ID!, $articleId: ID!) {
       id
       name
       avatar
+      profilePath
     }
     comment
     specialist {
