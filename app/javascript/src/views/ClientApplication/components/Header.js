@@ -1,16 +1,11 @@
 import React from "react";
-import { Text } from "@advisable/donut";
+import { Heading } from "@advisable/donut";
+import GradientHighlight from "src/components/GradientHighlight";
 
-export default function Header(props) {
+export default function Header({ children, ...props }) {
   return (
-    <Text
-      as="h1"
-      fontSize="5xl"
-      color="cyan700"
-      fontWeight="medium"
-      letterSpacing="-0.03rem"
-      mb={2.5}
-      {...props}
-    />
+    <Heading as="h1" size="5xl" mb={2.5} {...props}>
+      <GradientHighlight>{children}</GradientHighlight>
+    </Heading>
   );
 }
