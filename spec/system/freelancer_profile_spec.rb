@@ -35,6 +35,20 @@ RSpec.describe "Freelancer profile", type: :system do
     expect(page).to have_content("This is the content")
   end
 
+  it "allows owner to edit case study" do
+    specialist = create(:specialist, bio: "testing")
+    article = create(:case_study_article, specialist: specialist, title: "A test case study", editor_url: "https://advisable.com")
+    section = create(:case_study_section, article: article, type: "background")
+    create(:case_study_content, section: section, type: "CaseStudy::ParagraphContent", content: {text: "This is the content"})
+    authenticate_as(specialist)
+    visit("/freelancers/#{specialist.uid}")
+    expect(page).to have_content("A test case study")
+    first("*[data-testid='caseStudyCard']").hover
+    first(:button, "Case study menu").hover
+    click_button("Edit case study")
+    expect(page).to have_content("Open editor")
+  end
+
   it "prompts the profile owner to add case studies when they have none" do
     specialist = create(:specialist, bio: "testing")
     authenticate_as(specialist)

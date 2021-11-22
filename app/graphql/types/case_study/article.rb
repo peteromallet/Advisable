@@ -13,6 +13,12 @@ module Types
         dataloader.with(::ActiveRecordSource, ::Specialist).load(object.specialist_id)
       end
 
+      field :editor_url, String, null: true
+      def editor_url
+        policy = ::CaseStudy::ArticlePolicy.new(current_user, object)
+        object.editor_url if policy.update?
+      end
+
       field :company, Company, null: true
       def company
         policy = ::CaseStudy::ArticlePolicy.new(current_user, object)

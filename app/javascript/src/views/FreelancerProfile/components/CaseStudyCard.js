@@ -3,13 +3,22 @@ import React, { Suspense } from "react";
 import { rgba } from "polished";
 import css from "@styled-system/css";
 import { useImage } from "react-image";
-import { motion } from "framer-motion";
 import styled from "styled-components";
 import { variant } from "styled-system";
 import SuperEllipse from "react-superellipse";
 import { matchPath } from "react-router";
-import { Box, Text, Link, Skeleton, theme } from "@advisable/donut";
+import { Box, Text, Link, Skeleton, useModal, theme } from "@advisable/donut";
 import LogoMark from "src/components/LogoMark";
+import MeatballMenu, { StyledMeatballButton } from "./MeatballMenu";
+import EditCaseStudyDropdownLink from "./EditCaseStudyDropdownLink";
+import EditCaseStudyModal from "./EditCaseStudyModal";
+
+const StyledLink = styled(Link)(
+  css({
+    position: "relative",
+    borderRadius: "20px",
+  }),
+);
 
 const StyledContentWrapper = styled.div(
   css({
@@ -27,8 +36,9 @@ const StyledCompanyType = styled(Text)(
     letterSpacing: "0.02rem",
     lineHeight: "16px",
     color: "neutral700",
-    mt: 0.5,
-    mb: 1,
+    mt: [2, 0.5],
+    mb: [2, 1],
+    paddingRight: 8,
   }),
 );
 
@@ -39,6 +49,7 @@ const StyledTitle = styled(Text)(
     letterSpacing: "-0.032rem",
     color: "neutral900",
     marginBottom: 6,
+    paddingRight: [8, 4],
   }),
 );
 
@@ -96,7 +107,7 @@ const StyledBackgroundImg = styled.img`
   object-position: center;
 `;
 
-const StyledCaseStudyCard = styled.div(
+export const StyledCaseStudyCard = styled.div(
   variant({
     prop: "type",
     variants: {
@@ -108,18 +119,24 @@ const StyledCaseStudyCard = styled.div(
           0 16px 40px -16px ${rgba(theme.colors.blue800, 0.08)},
           0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)}
         `,
+          [StyledMeatballButton]: {
+            opacity: 1,
+          },
         },
       },
       article: {
         [StyledContentWrapper]: {
           pointerEvents: "auto",
         },
+        [StyledMeatballButton]: {
+          opacity: 1,
+        },
       },
     },
   }),
   css({
     padding: [4, 8],
-    pb: [6, 10],
+    paddingBottom: [6, 10],
     width: "100%",
     bg: "neutral100",
     position: "relative",
@@ -152,13 +169,22 @@ const CaseStudyBackgroundImage = React.memo(function CaseStudyBackgroundImage({
   const { src } = useImage({ srcList: url });
 
   return (
-    <Box top="0" left="0" width="100%" height="100%" position="absolute">
-      <StyledBackgroundImg as={motion.img} src={src} />
+    <Box
+      top="0"
+      left="0"
+      width="100%"
+      height="100%"
+      borderRadius="20px"
+      position="absolute"
+    >
+      <StyledBackgroundImg src={src} />
     </Box>
   );
 });
 
-export default function CaseStudyCard({ caseStudy }) {
+export default function CaseStudyCard({ caseStudy, isOwner }) {
+  const modal = useModal();
+
   const isArticle = !!matchPath(location.pathname, {
     path: "/freelancers/:username/:slug",
   });
@@ -169,13 +195,16 @@ export default function CaseStudyCard({ caseStudy }) {
 
   return (
     <Suspense fallback={<LoadingSkeleton />}>
-      <Box as={isArticle ? null : Link} to={caseStudy.path} notInline="true">
-        <StyledCaseStudyCard type={isArticle ? "article" : "profile"}>
-          {caseStudy.coverPhoto ? (
+      <Box as={isArticle ? null : StyledLink} to={caseStudy.path}>
+        <StyledCaseStudyCard
+          data-testid="caseStudyCard"
+          type={isArticle ? "article" : "profile"}
+        >
+          {Boolean(caseStudy.coverPhoto) && (
             <Sentry.ErrorBoundary>
               <CaseStudyBackgroundImage url={caseStudy.coverPhoto} />
             </Sentry.ErrorBoundary>
-          ) : null}
+          )}
           <StyledContentWrapper>
             <StyledLogoSquircle r1={0.1} r2={0.362}>
               <StyledFaviconWrapper>
@@ -200,8 +229,14 @@ export default function CaseStudyCard({ caseStudy }) {
               </Box>
             </Box>
           </StyledContentWrapper>
+          {isOwner && caseStudy.editorUrl && (
+            <MeatballMenu>
+              <EditCaseStudyDropdownLink modal={modal} />
+            </MeatballMenu>
+          )}
         </StyledCaseStudyCard>
       </Box>
+      <EditCaseStudyModal modal={modal} caseStudy={caseStudy} />
     </Suspense>
   );
 }
