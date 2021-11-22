@@ -21,5 +21,15 @@ module Types
     end
 
     orphan_types Types::CaseStudyArticleReview
+
+    definition_methods do
+      def resolve_type(object, _)
+        if object.case_study_article_id
+          Types::CaseStudyArticleReview
+        else
+          Types::Review
+        end
+      end
+    end
   end
 end
