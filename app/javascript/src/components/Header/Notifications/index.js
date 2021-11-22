@@ -39,7 +39,7 @@ const Notification = ({
           <Text size="s" color="neutral600" mb={1} lineHeight="1.1rem">
             {type === "PostReactionNotification" ? (
               <Link
-                to={`/profile/${specialist.id}`}
+                to={specialist.profilePath}
                 fontWeight="medium"
                 variant="dark"
                 onClick={closeNotifications}
