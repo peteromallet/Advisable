@@ -15,6 +15,12 @@ class LogAndRedirect
   end
 end
 
+class UsernameConstraint
+  def matches?(request)
+    Specialist.exists?(username: request.path_parameters[:username])
+  end
+end
+
 Rails.application.routes.draw do
   match "(*any)", to: redirect { |_, req| "https://app.advisable.com#{req.fullpath}" }, via: :all, constraints: {host: "advisable.herokuapp.com"}
 
@@ -121,7 +127,7 @@ Rails.application.routes.draw do
   # match every other route to the frontend codebase
   root "application#frontend"
   get "/case_studies/:id", to: "application#case_study"
-  get "/freelancers/:username/:slug", to: "specialists#case_study", as: :specialist_case_study
-  get "/freelancers/:username", to: "specialists#profile", as: :freelancer_profile
+  get "/freelancers/:username/:slug", to: "specialists#case_study", as: :specialist_case_study, constraints: UsernameConstraint.new
+  get "/freelancers/:username", to: "specialists#profile", as: :freelancer_profile, constraints: UsernameConstraint.new
   get "*path", to: "application#frontend", constraints: ->(req) { req.path.exclude?("rails/") }
 end
