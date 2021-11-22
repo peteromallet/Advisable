@@ -37,7 +37,7 @@ RSpec.describe "Freelancer profile", type: :system do
 
   it "allows owner to edit case study" do
     specialist = create(:specialist, bio: "testing")
-    article = create(:case_study_article, specialist: specialist, title: "A test case study")
+    article = create(:case_study_article, specialist: specialist, title: "A test case study", editor_url: "https://advisable.com")
     section = create(:case_study_section, article: article, type: "background")
     create(:case_study_content, section: section, type: "CaseStudy::ParagraphContent", content: {text: "This is the content"})
     authenticate_as(specialist)
