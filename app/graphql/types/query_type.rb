@@ -84,14 +84,6 @@ module Types
       Label.on_country.most_used.limit(5)
     end
 
-    field :previous_project, Types::PreviousProject, null: false do
-      argument :id, ID, required: true
-    end
-
-    def previous_project(id:)
-      ::PreviousProject.find_by!(uid: id)
-    end
-
     field :specialist, Types::SpecialistType, null: true do
       argument :id, ID, required: true
     end
@@ -167,13 +159,6 @@ module Types
 
     def video_call(id:)
       ::VideoCall.find_by_uid!(id)
-    end
-
-    field :specialist_recommendation, Types::RecommendationInterface, null: true
-
-    def specialist_recommendation
-      requires_accepted_specialist!
-      ::Recommendation.recommend(current_user)
     end
 
     field :events, Types::EventConnection, null: true, connection: true

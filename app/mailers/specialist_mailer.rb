@@ -9,19 +9,6 @@ class SpecialistMailer < ApplicationMailer
     mail(to: @specialist.account.email, subject: "Account Confirmation")
   end
 
-  def verify_project(uid)
-    @project = PreviousProject.find_by(uid: uid)
-    @specialist = @project.specialist
-
-    mail(
-      to: @specialist.account.email,
-      subject:
-        "Validation Required: #{@project.primary_skill.try(:name)} with #{
-          @project.client_name
-        }"
-    )
-  end
-
   def inform_about_project(project_id, specialist_id)
     @project = Project.find(project_id)
     @specialist = Specialist.find(specialist_id)

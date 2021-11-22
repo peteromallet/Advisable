@@ -3,7 +3,7 @@ import { Card, Text, Avatar, Link, Box } from "@advisable/donut";
 import { useParams, useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
-import NotFound from "@advisable-main/components/PreviousProjectFormModal/NotFound";
+import NotFound, { isNotFound } from "src/views/NotFound";
 import { GUILD_POST_QUERY } from "./queries";
 import Topics from "@guild/components/Post/components/Topics";
 import ResolvedNotice from "@guild/components/Post/components/ResolvedNotice";
@@ -26,7 +26,7 @@ const Post = () => {
   const gallery = useImageGallery();
   const location = useLocation();
 
-  const { data, loading } = useQuery(GUILD_POST_QUERY, {
+  const { data, loading, error } = useQuery(GUILD_POST_QUERY, {
     variables: { id: postId },
     onError: (errors) => {
       if (!viewer && hasGqlError("notAuthorized", errors)) {
@@ -40,7 +40,7 @@ const Post = () => {
   const otherImages = (post?.images || []).filter((p) => p.cover === false);
 
   if (loading) return <Loading />;
-  if (viewer && !post) return <NotFound resource="Post" id={postId} />;
+  if (isNotFound(error)) return <NotFound />;
 
   return post ? (
     <ErrorBoundary>

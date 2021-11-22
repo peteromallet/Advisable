@@ -60,7 +60,6 @@ const createCache = () => {
       Specialist: {
         fields: {
           guildPosts: relayStylePagination(),
-          previousProjects: relayStylePagination(),
         },
       },
       SkillCategory: {
@@ -69,13 +68,6 @@ const createCache = () => {
         },
       },
       ClientApplication: {
-        fields: {
-          skills: {
-            merge: replaceArrayMerge,
-          },
-        },
-      },
-      PreviousProject: {
         fields: {
           skills: {
             merge: replaceArrayMerge,

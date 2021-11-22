@@ -25,15 +25,12 @@ RSpec.describe Mutations::StartWorking do
     GRAPHQL
   end
 
-  it "sets all the attributes and creates previous project" do
-    expect(application.previous_project).to be_nil
-
+  it "sets all the attributes" do
     AdvisableSchema.execute(query, context: context)
 
     application.reload
     expect(application.status).to eq("Working")
     expect(application.project_type).to eq("Fixed")
-    expect(application.previous_project).not_to be_nil
   end
 
   context "when an invalid project type is passed" do
