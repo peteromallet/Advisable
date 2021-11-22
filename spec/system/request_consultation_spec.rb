@@ -31,6 +31,7 @@ RSpec.describe "Request consultation" do
 
   context "when a user is not logged in" do
     it "they can signup as a client and request a consultation" do
+      allow_any_instance_of(User).to receive(:sync_to_airtable)
       visit("/freelancers/#{freelancer.uid}")
       click_on("Work together")
       click_on("Signup as a company")
