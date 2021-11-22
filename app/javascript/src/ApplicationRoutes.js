@@ -14,7 +14,6 @@ import EditPost from "./views/EditPost";
 
 const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
-const Applications = lazy(() => import("./views/Applications"));
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
   import("./views/FreelancerApplication"),
@@ -22,7 +21,6 @@ const FreelancerApplication = lazy(() =>
 const ClientApplication = lazy(() => import("./views/ClientApplication"));
 const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
 const Booking = lazy(() => import("./views/Booking"));
-const JobListing = lazy(() => import("./views/JobListing"));
 const ActiveTalent = lazy(() => import("./views/ActiveTalent"));
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const FreelancerActiveApplication = lazy(() =>
@@ -35,7 +33,6 @@ const CaseStudy = lazy(() => import("./views/CaseStudy"));
 const SetPassword = lazy(() => import("./views/SetPassword"));
 const Payment = lazy(() => import("./views/Payment"));
 const Messages = lazy(() => import("./views/Messages"));
-const GuildFeed = lazy(() => import("guild/views/Feed"));
 const GuildPost = lazy(() => import("./views/Post"));
 const GuildFollows = lazy(() => import("guild/views/Follows"));
 const GuildEvent = lazy(() => import("guild/views/Event"));
@@ -143,9 +140,6 @@ const ApplicationRoutes = () => {
           <AuthenticatedRoute specialistOnly path="/consultations/:id">
             <Consultation />
           </AuthenticatedRoute>
-          <AuthenticatedRoute exact specialistOnly path="/applications">
-            <Applications />
-          </AuthenticatedRoute>
           <AuthenticatedRoute path={"/applications/:applicationId/proposal"}>
             <Proposal />
           </AuthenticatedRoute>
@@ -154,13 +148,6 @@ const ApplicationRoutes = () => {
           </AuthenticatedRoute>
           <AuthenticatedRoute path="/clients/:applicationId">
             <FreelancerActiveApplication />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute
-            exact
-            specialistOnly
-            path="/invites/:applicationId"
-          >
-            <JobListing />
           </AuthenticatedRoute>
           <AuthenticatedRoute path="/settings">
             <Settings />
@@ -188,9 +175,6 @@ const ApplicationRoutes = () => {
           </Route>
           <AuthenticatedRoute exact path="/events">
             <GuildEvents />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path="/guild" specialistOnly>
-            <GuildFeed />
           </AuthenticatedRoute>
           <Route>
             <NotFound />

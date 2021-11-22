@@ -7,36 +7,6 @@ export const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
-/*
-    https://www.apollographql.com/docs/react/data/pagination/#cursor-based
-    https://graphql-ruby.org/pagination/using_connections.html
-  */
-export const cursorLoadMore = ({ fetchMore, collectionKey, data }) => {
-  if (!data?.[collectionKey]?.nodes) return;
-  const collection = data[collectionKey];
-
-  fetchMore({
-    variables: {
-      cursor: collection?.pageInfo.endCursor,
-    },
-    updateQuery: (previousResult, { fetchMoreResult }) => {
-      const newNodes = fetchMoreResult[collectionKey].nodes;
-      const { pageInfo, guildTopic } = fetchMoreResult[collectionKey];
-
-      return newNodes.length
-        ? {
-            [collectionKey]: {
-              __typename: previousResult[collectionKey].__typename,
-              nodes: [...previousResult[collectionKey].nodes, ...newNodes],
-              pageInfo,
-              guildTopic,
-            },
-          }
-        : previousResult;
-    },
-  });
-};
-
 export const isGuildPath = /^\/guild/.test(window.location.pathname);
 
 export const hasGqlError = (code, errors) =>

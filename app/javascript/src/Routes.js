@@ -9,7 +9,6 @@ import ApplicationRoutes from "./ApplicationRoutes";
 const CaseStudyReview = lazy(() => import("./views/CaseStudyReview"));
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
-const VerifyProject = lazy(() => import("./views/VerifyProject"));
 const TestimonialFlow = lazy(() => import("./views/TestimonialFlow"));
 const Availability = lazy(() => import("./views/Availability"));
 const ClientJoin = lazy(() => import("./views/ClientJoin"));
@@ -47,9 +46,6 @@ const Routes = () => {
         </Route>
         <Route path="/freelancers/join">
           <FreelancerJoin />
-        </Route>
-        <Route path="/verify_project/:id">
-          <VerifyProject />
         </Route>
         <Route path="/review/:id/case_studies/:article_id">
           <CaseStudyReview />
