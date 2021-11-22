@@ -1,14 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Redirect } from "react-router-dom";
-import { Box, Text, Link, Button } from "@advisable/donut";
-import image from "../images/welcome-illustration.png";
+import { theme, Heading, Box, Text, Link, Button } from "@advisable/donut";
 import AnimatedCard from "../components/AnimatedCard";
 import { validationSchema as introductionValidationSchema } from "./Introduction";
 import { validationSchema as overviewValidationSchema } from "./Overview";
 import { validationSchema as idealProjectValidationSchema } from "./IdealProject";
 import { validationSchema as previousWorkValidationSchema } from "./PreviousWork";
 import { validationSchema as workPreferencesValidationSchema } from "./WorkPreferences";
+import Pencil from "src/illustrations/zest/pencil";
 
 const stepsMeta = [
   {
@@ -60,25 +60,20 @@ export default function Welcome({ specialist }) {
         textAlign="center"
       >
         <Box width="352px" height="248px" marginBottom={6}>
-          <Box as="img" src={image} width="100%" />
+          <Pencil height="280px" color={theme.colors.orange200} />
         </Box>
-        <Text
-          color="#00404E"
-          fontSize="5xl"
-          fontWeight="medium"
-          marginBottom={3}
-        >
+        <Heading size="5xl" marginBottom={3}>
           Welcome to Advisable
-        </Text>
+        </Heading>
         <Text
           fontSize="lg"
           color="neutral800"
           marginBottom={10}
           lineHeight="1.2"
         >
-          We need to know a little more about you so we can find you the right
-          projects. Once you’re accepted into the Advisable network, we’ll begin
-          matching you with projects you might like to apply for.
+          In order to help figure out if we&apos;re a good fit for one another,
+          we&apos;d first like to ask a few questions about you, your
+          background, and your preferences.
         </Text>
         <Button
           as={Link}

@@ -43,7 +43,7 @@ export default function StartApplication({ nextStep, forwards }) {
       <>
         <Box mb={[0, 8]}>
           <CardHeader>
-            Apply to gain access to our our network of top freelancers
+            Apply to gain access to our network of unique talent
           </CardHeader>
           {isWideScreen ? (
             <Text as="p" color="neutral800" fontSize="m" lineHeight="m">

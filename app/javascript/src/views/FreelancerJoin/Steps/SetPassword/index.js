@@ -46,8 +46,7 @@ export default function SetPassword({ prevStep, forwards }) {
     <MotionCard forwards={forwards}>
       <CardHeader>Welcome to Advisable!</CardHeader>
       <Text as="p" color="neutral800" fontSize="m" lineHeight="m" mb={8}>
-        Set the password on your account to create your profile, manage your
-        applications, and see your work.
+        Set the password that you&apos;ll use to log in to your account.
       </Text>
       <Formik
         onSubmit={handleSubmit}
