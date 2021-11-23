@@ -3,9 +3,12 @@
 require "rails_helper"
 
 RSpec.describe Mutations::UpdateProfile do
-  let(:skill) { create(:skill) }
   let(:specialist) { create(:specialist, {bio: nil, city: nil, country: nil, remote: false}) }
   let(:extra_context) { {} }
+  let(:skill) { create(:skill) }
+  let(:skills) { [skill.name] }
+  let(:industries) { [] }
+  let(:country) { create(:country) }
   let(:query) do
     <<-GRAPHQL
     mutation {
@@ -14,9 +17,10 @@ RSpec.describe Mutations::UpdateProfile do
         lastName: "Noelle",
         email: "staging+angela@advisable.com",
         bio: "This is the bio",
-        skills: ["#{skill.name}"],
+        skills: #{skills},
+        industries: #{industries},
         city: "Dublin",
-        country: "IE",
+        country: "#{country.uid}",
         remote: true,
         username: "angela",
       }) {
@@ -29,6 +33,9 @@ RSpec.describe Mutations::UpdateProfile do
           city
           remote
           skills {
+            name
+          }
+          industries {
             name
           }
           country {
@@ -127,6 +134,105 @@ RSpec.describe Mutations::UpdateProfile do
       response = AdvisableSchema.execute(query, context: {current_user: create(:user)})
       error_code = response["errors"][0]["extensions"]["code"]
       expect(error_code).to eq("notAuthenticated")
+    end
+  end
+
+  describe "label subscriptions" do
+    let(:skill1) { create(:skill) }
+    let(:skill2) { create(:skill) }
+    let(:skill3) { create(:skill) }
+    let(:skills) { [skill1.name, skill2.name] }
+    let(:industry1) { create(:industry) }
+    let(:industry2) { create(:industry) }
+    let(:industry3) { create(:industry) }
+    let(:industries) { [industry1.name, industry2.name] }
+    let(:country) { create(:country) }
+    let(:country2) { create(:country) }
+
+    context "when labels exist" do
+      before do
+        skill1.create_label!
+        skill2.create_label!
+        skill3.create_label!
+        industry1.create_label!
+        industry2.create_label!
+        industry3.create_label!
+        country.create_label!
+        country2.create_label!
+      end
+
+      context "when new account" do
+        it "subscribes specialist to skill, industry, and country labels" do
+          expect(specialist.subscriptions.count).to eq(0)
+          response
+          expect(specialist.subscriptions.count).to eq(5)
+          expect(specialist.subscriptions.pluck(:label_id)).to match_array([skill1.label.id, skill2.label.id, industry1.label.id, industry2.label.id, country.label.id])
+        end
+      end
+
+      context "when adding stuff" do
+        it "subscribes specialist to new skill, industry, and country labels" do
+          specialist.update!(skills: [skill1], industries: [industry1], country: country2)
+          expect(specialist.subscriptions.count).to eq(0)
+          response
+          expect(specialist.subscriptions.count).to eq(3)
+          expect(specialist.subscriptions.pluck(:label_id)).to match_array([skill2.label.id, industry2.label.id, country.label.id])
+        end
+      end
+
+      context "when removing stuff" do
+        it "unsubscribes specialist from skill, industry, and country labels" do
+          specialist.update!(skills: [skill3], industries: [industry3], country: country2)
+          specialist.subscribe_to!(skill3.label)
+          specialist.subscribe_to!(industry3.label)
+          specialist.subscribe_to!(country2.label)
+          expect(specialist.subscriptions.count).to eq(3)
+          expect(specialist.subscriptions.pluck(:label_id)).to match_array([skill3.label.id, industry3.label.id, country2.label.id])
+          response
+          expect(specialist.subscriptions.count).to eq(5)
+          expect(specialist.subscriptions.pluck(:label_id)).to match_array([skill1.label.id, skill2.label.id, industry1.label.id, industry2.label.id, country.label.id])
+        end
+      end
+    end
+
+    context "when labels do not exist" do
+      context "when new account" do
+        it "does nothing" do
+          expect(specialist.subscriptions.count).to eq(0)
+          response
+          expect(specialist.subscriptions.count).to eq(0)
+        end
+      end
+
+      context "when adding stuff" do
+        it "keeps existing subscriptions in place" do
+          specialist.update!(skills: [skill1], industries: [industry1])
+          skill1.create_label!
+          industry1.create_label!
+          specialist.subscribe_to!(skill1.label)
+          specialist.subscribe_to!(industry1.label)
+          expect(specialist.subscriptions.count).to eq(2)
+          response
+          expect(specialist.subscriptions.count).to eq(2)
+          expect(specialist.subscriptions.pluck(:label_id)).to match_array([skill1.label.id, industry1.label.id])
+        end
+      end
+
+      context "when removing stuff" do
+        it "unsubscribes specialist from skill, industry, and country labels" do
+          specialist.update!(skills: [skill3], industries: [industry3], country: country2)
+          skill3.create_label!
+          industry3.create_label!
+          country2.create_label!
+          specialist.subscribe_to!(skill3.label)
+          specialist.subscribe_to!(industry3.label)
+          specialist.subscribe_to!(country2.label)
+          expect(specialist.subscriptions.count).to eq(3)
+          expect(specialist.subscriptions.pluck(:label_id)).to match_array([skill3.label.id, industry3.label.id, country2.label.id])
+          response
+          expect(specialist.subscriptions.count).to eq(0)
+        end
+      end
     end
   end
 end
