@@ -45,7 +45,6 @@ module Mutations
     def resolve(**args)
       @specialist = current_user
       @attributes = args
-      @subscribe_to_labels = @unsubscribe_from_labels = []
 
       specialist.assign_attributes(assignable_attributes)
       specialist.account.update(account_assignable_attributes)
@@ -55,7 +54,6 @@ module Mutations
       update_skills if attributes[:skills]
       update_industries if attributes[:industries]
       update_country if attributes[:country]
-      update_subscriptions
 
       success = current_account_responsible_for do
         specialist.save
@@ -99,29 +97,30 @@ module Mutations
       existing_skills = specialist.skills.map(&:id)
       skills = Skill.where(name: attributes[:skills])
       specialist.skill_ids = skills.map(&:id)
-      @subscribe_to_labels += Label.where(skill_id: specialist.skill_ids - existing_skills)
-      @unsubscribe_from_labels += Label.where(skill_id: existing_skills - specialist.skill_ids)
+      handle_subscription(:subscribe_to!, :skill, specialist.skill_ids - existing_skills)
+      handle_subscription(:unsubscribe_from!, :skill, existing_skills - specialist.skill_ids)
     end
 
     def update_industries
       existing_industries = specialist.industries.map(&:id)
       industries = Industry.where(name: attributes[:industries])
       specialist.industry_ids = industries.map(&:id)
-      @subscribe_to_labels += Label.where(industry_id: specialist.industry_ids - existing_industries)
-      @unsubscribe_from_labels += Label.where(industry_id: existing_industries - specialist.industry_ids)
+      handle_subscription(:subscribe_to!, :industry, specialist.industry_ids - existing_industries)
+      handle_subscription(:unsubscribe_from!, :industry, existing_industries - specialist.industry_ids)
     end
 
     def update_country
       existing_country = specialist.country
       country = Country.find_by(uid: attributes[:country]) || Country.find_by(alpha2: attributes[:country]) || Country.find_by(name: attributes[:country])
       specialist.country_id = country&.id
-      @subscribe_to_labels += Label.where(country_id: country&.id)
-      @unsubscribe_from_labels += Label.where(country_id: existing_country&.id)
+      handle_subscription(:subscribe_to!, :country, [specialist.country_id])
+      handle_subscription(:unsubscribe_from!, :country, [existing_country.id]) if existing_country
     end
 
-    def update_subscriptions
-      @subscribe_to_labels.each { |label| specialist.subscribe_to!(label) }
-      @unsubscribe_from_labels.each { |label| specialist.unsubscribe_from!(label) }
+    def handle_subscription(action, type, ids)
+      return if ids.empty?
+
+      Label.where("#{type}_id" => ids).each { |label| specialist.public_send(action, label) }
     end
   end
 end
