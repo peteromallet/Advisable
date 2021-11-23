@@ -50,6 +50,7 @@ module Mutations
       specialist.account.update(account_assignable_attributes)
       specialist.avatar.attach(attributes[:avatar]) if attributes[:avatar]
       specialist.resume.attach(attributes[:resume]) if attributes[:resume]
+
       update_skills if attributes[:skills]
       update_industries if attributes[:industries]
       update_country if attributes[:country]
@@ -92,21 +93,34 @@ module Mutations
       attributes.slice(:email, :first_name, :last_name)
     end
 
-    # Update the specialists skills if a skills attribute was passed.
     def update_skills
+      existing_skills = specialist.skills.map(&:id)
       skills = Skill.where(name: attributes[:skills])
       specialist.skill_ids = skills.map(&:id)
+      handle_subscription(:subscribe_to!, :skill, specialist.skill_ids - existing_skills)
+      handle_subscription(:unsubscribe_from!, :skill, existing_skills - specialist.skill_ids)
     end
 
     def update_industries
+      existing_industries = specialist.industries.map(&:id)
       industries = Industry.where(name: attributes[:industries])
       specialist.industry_ids = industries.map(&:id)
+      handle_subscription(:subscribe_to!, :industry, specialist.industry_ids - existing_industries)
+      handle_subscription(:unsubscribe_from!, :industry, existing_industries - specialist.industry_ids)
     end
 
-    # Update the country if it was passed
     def update_country
+      existing_country = specialist.country
       country = Country.find_by(uid: attributes[:country]) || Country.find_by(alpha2: attributes[:country]) || Country.find_by(name: attributes[:country])
       specialist.country_id = country&.id
+      handle_subscription(:subscribe_to!, :country, [specialist.country_id])
+      handle_subscription(:unsubscribe_from!, :country, [existing_country&.id])
+    end
+
+    def handle_subscription(action, type, ids)
+      return if ids.compact.empty?
+
+      Label.where("#{type}_id" => ids).each { |label| specialist.public_send(action, label) }
     end
   end
 end
