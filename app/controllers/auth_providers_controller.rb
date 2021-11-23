@@ -38,10 +38,19 @@ class AuthProvidersController < ApplicationController
   end
 
   def google_oauth2
-    account = Account.find_or_create_by(email: oauth.email) do |acc|
+    account = Account.find_or_initialize_by(email: oauth.email) do |acc|
+      acc.first_name = oauth.info.first_name
+      acc.last_name = oauth.info.last_name
       acc.password = SecureRandom.hex
     end
-    # I need to know whether to create User or Specialist here
+
+    if account.new_record?
+      if request.env.dig("omniauth.params", "mode") == "user"
+        User.create!(account: account, company: Company.create(name: "Company from Oauth"))
+      else
+        Specialist.create!(account: account, application_stage: "Started")
+      end
+    end
 
     auth_provider = account.auth_providers.find_or_initialize_by(provider: "google_oauth2")
     auth_provider.update!(oauth.identifiers_with_blob_and_token)

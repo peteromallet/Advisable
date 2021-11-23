@@ -7,8 +7,9 @@ export default function LoginWithGoogle() {
     .querySelector("meta[name=csrf-token]")
     ?.getAttribute("content");
 
+  // mode can be user or specialist
   return (
-    <form action="/auth/google_oauth2" method="POST">
+    <form action="/auth/google_oauth2?mode=user" method="POST">
       <input type="hidden" name="authenticity_token" value={csrf} />
       <StyledLoginWithGoogle $buttonSize="l" type="submit">
         <Google />
