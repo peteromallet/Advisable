@@ -38,15 +38,16 @@ class AuthProvidersController < ApplicationController
   end
 
   def google_oauth2
-    account = Account.find_by!(email: oauth.email)
+    account = Account.find_or_create_by(email: oauth.email) do |acc|
+      acc.password = SecureRandom.hex
+    end
+    # I need to know whether to create User or Specialist here
+
     auth_provider = account.auth_providers.find_or_initialize_by(provider: "google_oauth2")
     auth_provider.update!(oauth.identifiers_with_blob_and_token)
     session_manager.start_session(account)
 
     redirect_to "/"
-  rescue ActiveRecord::RecordNotFound
-    flash[:notice] = "No account with that email found, please sign up."
-    redirect_to "/login/signup"
   end
 
   def google_oauth2_calendar
