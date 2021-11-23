@@ -4,7 +4,7 @@ import { Chat } from "@styled-icons/heroicons-solid/Chat";
 import { Link as LinkIcon } from "@styled-icons/heroicons-solid/Link";
 import { VideoCamera } from "@styled-icons/heroicons-solid/VideoCamera";
 import { Modal, Circle, Box, Text, Link } from "@advisable/donut";
-import ShareModal from "@guild/components/Post/components/ShareModal";
+import ShareModal from "./ShareModal";
 import MessageModal from "@guild/components/MessageModal";
 import RequestVideoCallModal from "./RequestVideoCallModal";
 import { StyledConnectionType } from "./styles";
