@@ -114,11 +114,11 @@ module Mutations
       country = Country.find_by(uid: attributes[:country]) || Country.find_by(alpha2: attributes[:country]) || Country.find_by(name: attributes[:country])
       specialist.country_id = country&.id
       handle_subscription(:subscribe_to!, :country, [specialist.country_id])
-      handle_subscription(:unsubscribe_from!, :country, [existing_country.id]) if existing_country
+      handle_subscription(:unsubscribe_from!, :country, [existing_country&.id])
     end
 
     def handle_subscription(action, type, ids)
-      return if ids.empty?
+      return if ids.compact.empty?
 
       Label.where("#{type}_id" => ids).each { |label| specialist.public_send(action, label) }
     end
