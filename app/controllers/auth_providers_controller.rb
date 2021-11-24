@@ -38,25 +38,17 @@ class AuthProvidersController < ApplicationController
   end
 
   def google_oauth2
-    account = Account.find_or_initialize_by(email: oauth.email) do |acc|
-      acc.first_name = oauth.info.first_name
-      acc.last_name = oauth.info.last_name
-      acc.password = SecureRandom.hex
+    account = Account.find_by(email: oauth.email) || create_account!
+
+    if account
+      auth_provider = account.auth_providers.find_or_initialize_by(provider: "google_oauth2")
+      auth_provider.update!(oauth.identifiers_with_blob_and_token)
+      session_manager.start_session(account)
+      redirect_to "/"
+    else
+      flash[:notice] = "No account with that email found, please sign up."
+      redirect_to "/login/signup"
     end
-
-    if account.new_record?
-      if request.env.dig("omniauth.params", "mode") == "user"
-        User.create!(account: account, company: Company.create(name: "Company from Oauth"))
-      else
-        Specialist.create!(account: account, application_stage: "Started")
-      end
-    end
-
-    auth_provider = account.auth_providers.find_or_initialize_by(provider: "google_oauth2")
-    auth_provider.update!(oauth.identifiers_with_blob_and_token)
-    session_manager.start_session(account)
-
-    redirect_to "/"
   end
 
   def google_oauth2_calendar
@@ -72,6 +64,29 @@ class AuthProvidersController < ApplicationController
   end
 
   private
+
+  def create_account!
+    mode = request.env.dig("omniauth.params", "mode")
+    return if mode.blank?
+
+    account = Account.new(
+      email: oauth.email,
+      first_name: oauth.info.first_name,
+      last_name: oauth.info.last_name,
+      password: SecureRandom.hex
+    )
+
+    case mode
+    when "user"
+      User.create!(account: account, company: Company.create(name: "Company from Oauth"))
+    when "specialist"
+      Specialist.create!(account: account, application_stage: "Started")
+    else
+      raise "Unknown mode #{mode}"
+    end
+
+    account
+  end
 
   def oauth
     @oauth ||= Oauth.new(request.env["omniauth.auth"])
