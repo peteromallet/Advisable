@@ -11,15 +11,14 @@ RSpec.describe(User, type: :model) do
     expect(build(:user)).to be_valid
   end
 
-  it "removes any availability in the past before saving" do
+  it "shows only availabilities in the future" do
     user = create(:user)
-    a = 1.day.ago.change({hour: 10, min: 0, sec: 0})
-    b = 1.day.from_now.change({hour: 10, min: 0, sec: 0})
-    user.availability = [a, b]
-    expect(user.availability).to include(a)
-    user.save
-    expect(user.availability).not_to include(a)
-    expect(user.availability).to include(b)
+    past = 1.day.ago.change({hour: 10, min: 0, sec: 0})
+    future = 1.day.from_now.change({hour: 10, min: 0, sec: 0})
+    user.update(availability: [past, future])
+    expect(user.read_attribute(:availability)).to match_array([past, future])
+    expect(user.availability).not_to include(past)
+    expect(user.availability).to include(future)
   end
 
   describe "#name_with_company" do
