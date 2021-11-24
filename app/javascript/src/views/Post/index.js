@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Text, Avatar, Link, Box } from "@advisable/donut";
-import { useParams, useLocation } from "react-router-dom";
+import { Redirect, useParams, useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -13,7 +13,7 @@ import PostActions from "@guild/components/PostActions";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
-import { hasGqlError, loginWithRedirectPath } from "@guild/utils";
+import { hasGqlError } from "@guild/utils";
 import ResolvedNotice from "./ResolvedNotice";
 import PopularNotice from "./PopularNotice";
 import JoinGuild from "./JoinGuild";
@@ -28,12 +28,19 @@ const Post = () => {
 
   const { data, loading, error } = useQuery(GUILD_POST_QUERY, {
     variables: { id: postId },
-    onError: (errors) => {
-      if (!viewer && hasGqlError("notAuthorized", errors)) {
-        loginWithRedirectPath(location.pathname);
-      }
-    },
   });
+
+  if (!viewer && hasGqlError("notAuthorized", error)) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/login",
+          state: { from: location },
+        }}
+      />
+    );
+  }
+
   const post = data?.guildPost;
   const { viewer, isAuthor, popularOrAuthorReactions } = useViewerAuthor(post);
   const guildViewer = viewer?.isSpecialist && viewer?.isAccepted;

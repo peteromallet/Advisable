@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Sticky from "react-stickynode";
 import { Text, Box, useTheme, useBreakpoint } from "@advisable/donut";
 import useViewer from "@advisable-main/hooks/useViewer";
@@ -22,17 +22,15 @@ import HostBio from "./components/HostBio";
 import DetailsAside from "./components/DetailsAside";
 import RegisterButton from "./components/RegisterButton";
 import StatusNotice from "./components/StatusNotice";
-import { loginWithRedirectPath } from "@guild/utils";
 
 const Event = () => {
   useScrollToTop();
-
+  const history = useHistory();
   const { eventId } = useParams();
   const viewer = useViewer();
   const theme = useTheme();
   const sUp = useBreakpoint("sUp");
   const detailsRef = useRef(null);
-  const location = useLocation();
 
   const { data, loading } = useQuery(EVENT_QUERY, {
     variables: { id: eventId },
@@ -48,7 +46,10 @@ const Event = () => {
   );
 
   const handleEventRegistration = () => {
-    if (!viewer) return loginWithRedirectPath(location.pathname);
+    if (!viewer) {
+      history.push("/login");
+      return;
+    }
 
     const inProgress = eventStatus === EventStatus.inProgress;
     const joinEvent = () => window.open(event.url, "JoinEvent");
