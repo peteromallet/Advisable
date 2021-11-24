@@ -64,7 +64,9 @@ export default {
           onChange={handleChange}
           marginBottom={3}
         />
-        <LinkToRecord record={record[attribute.name]} />
+        {record[attribute.name] && (
+          <LinkToRecord record={record[attribute.name]} />
+        )}
       </>
     );
   },
