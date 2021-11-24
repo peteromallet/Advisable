@@ -21,7 +21,7 @@ import EditInfo from "../EditInfo";
 import ConnectButton from "src/components/ConnectButton";
 import SocialProfilesIcons from "../SocialProfilesIcons";
 // Constant values
-import { TRUNCATE_LIMIT } from "../../values";
+import { SPECIALIST_BIO_LENGTH } from "src/constants";
 
 function Sidebar({ data, isOwner, ...props }) {
   const isArticle = !!matchPath(location.pathname, {
@@ -31,10 +31,10 @@ function Sidebar({ data, isOwner, ...props }) {
   const { specialist } = data;
 
   const [isExpanded, setExpanded] = useState(false);
-  const bioIsExceed = specialist.bio?.length > TRUNCATE_LIMIT;
+  const bioIsExceed = specialist.bio?.length > SPECIALIST_BIO_LENGTH;
   const bio = isExpanded
     ? specialist.bio
-    : specialist.bio?.slice(0, TRUNCATE_LIMIT);
+    : specialist.bio?.slice(0, SPECIALIST_BIO_LENGTH);
 
   return (
     <Box position="relative">

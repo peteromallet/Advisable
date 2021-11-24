@@ -1,0 +1,1 @@
+export const SPECIALIST_BIO_LENGTH = 160;
