@@ -35,8 +35,6 @@ class User < ApplicationRecord
 
   serialize :available_payment_methods, Array
 
-  before_save :remove_past_availabililty
-
   attribute :availability, :datetime, default: [], array: true
 
   has_one_attached :avatar
@@ -57,22 +55,19 @@ class User < ApplicationRecord
     application_status == "Application Accepted"
   end
 
-  def company_name
-    Sentry.capture_message("Something is still using company_name")
-    company.name
+  def disabled?
+    application_status == "Disabled"
+  end
+
+  def disable!(responsible_id = nil)
+    self.application_status = "Disabled"
+    account.disable!
+    save_and_sync_with_responsible!(responsible_id)
   end
 
   def send_confirmation_email
     token = account.create_confirmation_token
     UserMailer.confirm(uid: uid, token: token).deliver_later
-  end
-
-  # Called before the client record is saved to clean up any availability
-  # in the past.
-  def remove_past_availabililty
-    return if availability.nil?
-
-    self.availability = availability.select { |time| time > Time.zone.now }
   end
 
   def invite_comember!(account, responsible: nil)
@@ -83,16 +78,6 @@ class User < ApplicationRecord
     end
     user.sync_to_airtable
     user
-  end
-
-  def disabled?
-    application_status == "Disabled"
-  end
-
-  def disable!(responsible_id = nil)
-    self.application_status = "Disabled"
-    account.disable!
-    save_and_sync_with_responsible!(responsible_id)
   end
 
   # rubocop:disable Rails/SkipsModelValidations
