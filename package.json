@@ -35,7 +35,7 @@
     "draft-js-export-markdown": "^1.4.0",
     "draft-js-import-markdown": "^1.4.0",
     "formik": "^2.2.9",
-    "framer-motion": "^4.1.17",
+    "framer-motion": "^5.3.3",
     "fuse.js": "^6.4.6",
     "graphql": "^16.0.1",
     "graphql-ruby-client": "^1.10.4",
