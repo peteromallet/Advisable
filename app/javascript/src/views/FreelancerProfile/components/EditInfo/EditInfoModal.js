@@ -17,7 +17,7 @@ import SubmitButton from "src/components/SubmitButton";
 import { useUpdateProfile, useCountries } from "../../queries";
 import GET_PROFILE_DATA from "../../queries/getProfileData.gql";
 // Constant values
-import { TRUNCATE_LIMIT } from "../../values";
+import { SPECIALIST_BIO_LENGTH } from "src/constants";
 import { generatePath, useHistory, useRouteMatch } from "react-router";
 import { useApolloClient } from "@apollo/client";
 
@@ -32,8 +32,8 @@ const validationSchema = object().shape({
       "Username can only contain letters, numbers, and underscores.",
     ),
   bio: string().max(
-    TRUNCATE_LIMIT,
-    `Must be not more than ${TRUNCATE_LIMIT} characters`,
+    SPECIALIST_BIO_LENGTH,
+    `Must be not more than ${SPECIALIST_BIO_LENGTH} characters`,
   ),
 });
 
@@ -140,7 +140,7 @@ function EditInfoModal({ modal, specialist }) {
               label="About me"
               description="Add a short title to describe who you are"
               placeholder="Add a short title to describe who you are"
-              charLimit={TRUNCATE_LIMIT}
+              charLimit={SPECIALIST_BIO_LENGTH}
             />
           </Box>
           <SubmitButton>Update</SubmitButton>
