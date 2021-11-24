@@ -18,6 +18,7 @@ export default function ComboboxDesktop({
   ...props
 }) {
   const popper = React.useRef(null);
+  const comboboxRef = React.useRef(null);
   const inputConatinerRef = React.useRef(null);
   const listboxContainerRef = React.useRef(null);
 
@@ -51,20 +52,20 @@ export default function ComboboxDesktop({
   }, [menuProps]);
 
   useEffect(() => {
+    const container = comboboxRef.current;
+
     const handleClick = (e) => {
-      const container = listboxContainerRef.current;
       if (!container) return;
       if (!container.contains(e.target)) {
         close();
       }
     };
-
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
-  }, [close]);
+    document.body.addEventListener("click", handleClick);
+    return () => document.body.removeEventListener("click", handleClick);
+  }, [isOpen, close]);
 
   return (
-    <StyledAutocomplete {...containerProps}>
+    <StyledAutocomplete ref={comboboxRef} {...containerProps}>
       <div ref={inputConatinerRef}>
         <Input {...inputProps()} suffix={<ChevronDown />} />
       </div>
