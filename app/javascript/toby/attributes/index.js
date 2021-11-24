@@ -42,7 +42,7 @@ export function Attribute({ record, attribute, ...props }) {
   const handler = handlerForAttribute(attribute);
 
   if (!handler) {
-    console.error("No attribute handler found", attribute);
+    // console.error("No attribute handler found", attribute);
     return <div>{record[attribute.name]}</div>;
   }
 
