@@ -1,3 +1,5 @@
+import css from "@styled-system/css";
+import { Reorder, useDragControls } from "framer-motion";
 import React, { useEffect } from "react";
 import { Box, Text } from "@advisable/donut";
 import { Exclamation } from "@styled-icons/heroicons-solid/Exclamation";
@@ -13,6 +15,8 @@ import {
 import Rows from "./Rows";
 import Loading from "./Loading";
 import useColumnSizes from "./useColumnSizes";
+import DragHandle from "./DragHandle";
+import useColumnOrder from "./useColumnOrder";
 
 function APIError() {
   return (
@@ -30,8 +34,45 @@ function APIError() {
   );
 }
 
+function HeaderCell({ attribute, width, resizeProps, isResizing }) {
+  const controls = useDragControls();
+
+  return (
+    <StyledHeaderCell
+      value={attribute}
+      as={!isResizing && Reorder.Item}
+      style={{ width }}
+      dragListener={false}
+      dragControls={controls}
+    >
+      <Box
+        display="flex"
+        marginRight={1.5}
+        alignItems="center"
+        color="neutral400"
+        css={css({
+          "&:hover": {
+            cursor: "move",
+            color: "neutral800",
+          },
+        })}
+        onPointerDown={(e) => controls.start(e)}
+      >
+        <DragHandle />
+      </Box>
+      <Text paddingY={1} fontWeight={500} letterSpacing="-0.01rem" $truncate>
+        {attribute.columnLabel}
+      </Text>
+      <StyledResizeHandler {...resizeProps} />
+    </StyledHeaderCell>
+  );
+}
+
 export default function Records({ resource, filters, sortBy, sortOrder }) {
-  const { sizeForColumn, resizePropsForHeaderCell } = useColumnSizes(resource);
+  const { sizeForColumn, resizePropsForHeaderCell, isResizing } =
+    useColumnSizes(resource);
+
+  const { orderedAttributes, updateAttributeOrder } = useColumnOrder(resource);
   const { error: notifyError } = useNotifications();
   const { loading, data, fetchMore, error } = useFetchResources(
     resource,
@@ -58,24 +99,21 @@ export default function Records({ resource, filters, sortBy, sortOrder }) {
       {/* Dear future developer. I know this inline-block looks random. But its important. */}
       <Box display="inline-block" minWidth="100vw">
         <StyledHeaderRow>
-          {resource.attributes.map((attr) => (
-            <StyledHeaderCell
-              style={{
-                width: sizeForColumn(attr.name),
-              }}
-              key={attr.name}
-            >
-              <Text
-                paddingY={1}
-                fontWeight={500}
-                letterSpacing="-0.01rem"
-                $truncate
-              >
-                {attr.columnLabel}
-              </Text>
-              <StyledResizeHandler {...resizePropsForHeaderCell(attr.name)} />
-            </StyledHeaderCell>
-          ))}
+          <Reorder.Group
+            axis="x"
+            values={orderedAttributes}
+            onReorder={updateAttributeOrder}
+          >
+            {orderedAttributes.map((attr) => (
+              <HeaderCell
+                key={attr.name}
+                attribute={attr}
+                isResizing={isResizing}
+                width={sizeForColumn(attr.name)}
+                resizeProps={resizePropsForHeaderCell(attr.name)}
+              />
+            ))}
+          </Reorder.Group>
         </StyledHeaderRow>
         <Box>
           {error ? (
@@ -85,10 +123,14 @@ export default function Records({ resource, filters, sortBy, sortOrder }) {
               edges={edges}
               resource={resource}
               sizeForColumn={sizeForColumn}
+              attributes={orderedAttributes}
             />
           )}
           {loading && (
-            <Loading resource={resource} sizeForColumn={sizeForColumn} />
+            <Loading
+              sizeForColumn={sizeForColumn}
+              attributes={orderedAttributes}
+            />
           )}
         </Box>
       </Box>
