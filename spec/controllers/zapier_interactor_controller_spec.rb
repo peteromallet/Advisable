@@ -685,9 +685,10 @@ RSpec.describe ZapierInteractorController, type: :request do
 
     it "imports case study" do
       allow(Airtable::CaseStudy).to receive(:find).with("asdf").and_return(stub)
-      allow(stub).to receive(:import!).and_return(article)
+      allow(stub).to receive(:article_record).and_return(article)
       post("/zapier_interactor/import_case_study", params: params)
       expect(response).to have_http_status(:success)
+      expect(CaseStudyImportJob).to have_been_enqueued.with("asdf")
       json = JSON[response.body]
       expect(json["airtable_id"]).to eq("asdf")
       expect(json["uid"]).to eq(article.uid)
@@ -722,10 +723,10 @@ RSpec.describe ZapierInteractorController, type: :request do
       end
     end
 
-    context "when something goes wrong when importing" do
+    context "when something goes wrong when creating article" do
       it "tells so in the error response" do
         allow(Airtable::CaseStudy).to receive(:find).with("asdf").and_return(stub)
-        allow(stub).to receive(:import!).and_raise(ActiveRecord::RecordNotFound, "Couldn't find Specialist")
+        allow(stub).to receive(:article_record).and_raise(ActiveRecord::RecordNotFound, "Couldn't find Specialist")
         post("/zapier_interactor/import_case_study", params: params)
         expect(response).to have_http_status(:unprocessable_entity)
         json = JSON[response.body]

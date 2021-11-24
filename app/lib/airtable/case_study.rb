@@ -9,6 +9,13 @@ module Airtable
     self.base_key = ENV["AIRTABLE_DATABASE_KEY"]
     self.table_name = "Case Studies"
 
+    def article_record
+      ::CaseStudy::Article.find_or_create_by(airtable_id: id) do |article|
+        article.specialist = ::Specialist.find_by!(airtable_id: fields["Specialist"].first)
+        article.title = fields["Title"] # for slug
+      end
+    end
+
     def import!(testing: false)
       @content_position = 0
 
