@@ -51,6 +51,10 @@ class User < ApplicationRecord
     [account.name, company&.name.presence].compact.join(" from ")
   end
 
+  def availability
+    super.select(&:future?)
+  end
+
   def accepted?
     application_status == "Application Accepted"
   end
