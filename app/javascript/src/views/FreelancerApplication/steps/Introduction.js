@@ -23,14 +23,15 @@ import Description from "../components/Description";
 import { UPDATE_PROFILE } from "../queries";
 import { boolean, object, string } from "yup";
 import DefaultAvatarIcon from "../components/DefaultAvatarIcon";
+import { SPECIALIST_BIO_LENGTH } from "src/constants";
 import { track } from "src/utilities/mixpanel";
 
 export const validationSchema = object().shape({
   avatar: string().nullable(),
   bio: string()
     .max(
-      280,
-      "Please keep your biography simple. It must be at most 280 characters",
+      SPECIALIST_BIO_LENGTH,
+      `Please keep your biography simple. It must be at most ${SPECIALIST_BIO_LENGTH} characters`,
     )
     .required("Please provide your short biography"),
   city: string().required("Please enter your city"),
@@ -118,7 +119,7 @@ export default function Introduction({ specialist, countries }) {
               marginBottom={6}
               description="This will be displayed on your profile when clients discover you. You can always update this later."
               placeholder="Tell us about yourself..."
-              charLimit={280}
+              charLimit={SPECIALIST_BIO_LENGTH}
             />
             <Label marginBottom="xs">Where are you based?</Label>
             <Box display={["block", "flex"]} mb="l">
