@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import css from "@styled-system/css";
 import styled from "styled-components";
 import SuperEllipse from "react-superellipse";
-import { Circle, theme } from "@advisable/donut";
+import { Circle } from "@advisable/donut";
 import { useImage } from "react-image";
 import { ErrorBoundary } from "react-error-boundary";
 import { variant } from "styled-system";
@@ -12,9 +12,6 @@ const StyledRecommendationAvatarSquircle = styled(SuperEllipse)(
     width: "100%",
     height: "100%",
     bg: "neutral100",
-    svg: {
-      width: "100%",
-    },
   }),
 );
 
@@ -174,13 +171,6 @@ export default function RecommendationAvatar({
             </ErrorBoundary>
           </Suspense>
         )}
-
-        <svg viewBox="0 0 180 220">
-          <g fill={theme.colors.neutral50}>
-            <circle cx="90" cy="90" r="40"></circle>
-            <circle cx="90" cy="234" r="90"></circle>
-          </g>
-        </svg>
       </StyledRecommendationAvatarSquircle>
     </StyledRecommendationAvatar>
   );
