@@ -195,7 +195,7 @@ export default function CaseStudyCard({ caseStudy, isOwner }) {
 
   return (
     <Suspense fallback={<LoadingSkeleton />}>
-      <Box as={isArticle ? null : StyledLink} to={caseStudy.path}>
+      <Box as={isArticle ? null : StyledLink} to={caseStudy.path} width="100%">
         <StyledCaseStudyCard
           data-testid="caseStudyCard"
           type={isArticle ? "article" : "profile"}
