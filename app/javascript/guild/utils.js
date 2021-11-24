@@ -12,11 +12,6 @@ export const isGuildPath = /^\/guild/.test(window.location.pathname);
 export const hasGqlError = (code, errors) =>
   errors?.graphQLErrors?.[0]?.extensions?.code === code;
 
-export const loginWithRedirectPath = (path) => {
-  const redirect = encodeURIComponent(`/guild${path}`);
-  window.location = `/login?redirect=${redirect}`;
-};
-
 /* DateTime utilities */
 
 export function timestamp(date) {
