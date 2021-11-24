@@ -77,5 +77,5 @@ export default function useColumnSizes(resource) {
     };
   }, [mouseMove, mouseUp]);
 
-  return { sizeForColumn, resizePropsForHeaderCell };
+  return { sizeForColumn, resizePropsForHeaderCell, isResizing: resizingAttr };
 }
