@@ -18,6 +18,7 @@ query Notifications {
         specialist {
           id
           name
+          profilePath
         }
         guildPost {
           id

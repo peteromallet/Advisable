@@ -22,6 +22,7 @@ export const GUILD_POST_QUERY = gql`
         id
         bio
         firstName
+        profilePath
         name
       }
     }

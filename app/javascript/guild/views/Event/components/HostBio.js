@@ -32,7 +32,7 @@ export default function HostBio({ color, host }) {
       >
         {host.bio}
       </StyledLineClamp>
-      <Link fontSize="15px" lineHeight="s" to={`/freelancers/${host.id}`}>
+      <Link fontSize="15px" lineHeight="s" to={host.profilePath}>
         View Profile
       </Link>
     </Box>

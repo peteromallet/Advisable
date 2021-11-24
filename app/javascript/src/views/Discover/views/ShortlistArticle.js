@@ -45,10 +45,7 @@ export default function ShortlistArticle() {
                 src={data.caseStudy.specialist.avatar}
               />
             </Box>
-            <Link
-              to={`/freelancers/${data.caseStudy.specialist.id}`}
-              target="_blank"
-            >
+            <Link to={data.caseStudy.specialist.profilePath} target="_blank">
               <Text
                 marginTop={5}
                 marginBottom={2}

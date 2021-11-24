@@ -18,6 +18,7 @@ export default gql`
       name
       avatar
       location
+      profilePath
       bio
     }
   }

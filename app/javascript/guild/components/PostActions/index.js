@@ -5,7 +5,7 @@ import Edit from "./Edit";
 import Connect from "./Connect";
 import Delete from "./Delete";
 import Resolve from "./Resolve";
-import ReactionsButton from "../Post/components/ReactionsButton";
+import ReactionsButton from "./ReactionsButton";
 import useViewer from "src/hooks/useViewer";
 
 export default function PostActions({
