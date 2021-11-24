@@ -66,24 +66,35 @@ class AuthProvidersController < ApplicationController
   private
 
   def create_account!
-    mode = request.env.dig("omniauth.params", "mode")
-    return if mode.blank?
+    oparams = request.env["omniauth.params"]
+    return if oparams["mode"].blank?
 
     account = Account.new(
       email: oauth.email,
       first_name: oauth.info.first_name,
       last_name: oauth.info.last_name,
-      password: SecureRandom.hex
+      password: SecureRandom.hex,
+      confirmed_at: Time.current
     )
 
-    case mode
+    common_attrs = {
+      account: account,
+      campaign_name: oparams[:utm_name],
+      campaign_source: oparams[:utm_source],
+      campaign_medium: oparams[:utm_medium]
+    }
+
+    case oparams["mode"]
     when "user"
-      User.create!(account: account, company: Company.create(name: "Company from Oauth"))
+      User.create!(common_attrs.merge(company: Company.new))
     when "specialist"
-      Specialist.create!(account: account, application_stage: "Started")
+      referrer = Specialist.find_by(uid: oparams["referrer"])
+      Specialist.create!(common_attrs.merge(application_stage: "Started", referrer_id: referrer&.id))
     else
-      raise "Unknown mode #{mode}"
+      raise "Unknown mode #{oparams["mode"]}"
     end
+
+    GeocodeAccountJob.perform_later(account, client_ip)
 
     account
   end
