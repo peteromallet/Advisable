@@ -35,8 +35,6 @@ class User < ApplicationRecord
 
   serialize :available_payment_methods, Array
 
-  before_save :remove_past_availabililty
-
   attribute :availability, :datetime, default: [], array: true
 
   has_one_attached :avatar
@@ -53,36 +51,12 @@ class User < ApplicationRecord
     [account.name, company&.name.presence].compact.join(" from ")
   end
 
+  def availability
+    super.select(&:future?)
+  end
+
   def accepted?
     application_status == "Application Accepted"
-  end
-
-  def company_name
-    Sentry.capture_message("Something is still using company_name")
-    company.name
-  end
-
-  def send_confirmation_email
-    token = account.create_confirmation_token
-    UserMailer.confirm(uid: uid, token: token).deliver_later
-  end
-
-  # Called before the client record is saved to clean up any availability
-  # in the past.
-  def remove_past_availabililty
-    return if availability.nil?
-
-    self.availability = availability.select { |time| time > Time.zone.now }
-  end
-
-  def invite_comember!(account, responsible: nil)
-    user = User.new(account: account, company_id: company_id, application_status: "Application Accepted")
-    responsible = account_id if responsible.nil?
-    Logidze.with_responsible(responsible) do
-      user.save!
-    end
-    user.sync_to_airtable
-    user
   end
 
   def disabled?
@@ -93,6 +67,21 @@ class User < ApplicationRecord
     self.application_status = "Disabled"
     account.disable!
     save_and_sync_with_responsible!(responsible_id)
+  end
+
+  def send_confirmation_email
+    token = account.create_confirmation_token
+    UserMailer.confirm(uid: uid, token: token).deliver_later
+  end
+
+  def invite_comember!(account, responsible: nil)
+    user = User.new(account: account, company_id: company_id, application_status: "Application Accepted")
+    responsible = account_id if responsible.nil?
+    Logidze.with_responsible(responsible) do
+      user.save!
+    end
+    user.sync_to_airtable
+    user
   end
 
   # rubocop:disable Rails/SkipsModelValidations
