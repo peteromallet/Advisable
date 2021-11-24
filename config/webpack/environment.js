@@ -3,8 +3,8 @@ const { environment } = require("@rails/webpacker");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 const version = require("./buildVersion");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 dotenv.config({ silent: true });
 
@@ -50,4 +50,18 @@ environment.config.merge({
 });
 
 environment.splitChunks();
+
+// https://github.com/framer/motion/issues/1307
+environment.config.merge({
+  module: {
+    rules: [
+      {
+        type: "javascript/auto",
+        test: /\.mjs$/,
+        include: /node_modules/,
+      },
+    ],
+  },
+});
+
 module.exports = environment;
