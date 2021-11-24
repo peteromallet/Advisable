@@ -59,6 +59,7 @@ RSpec.describe "Request consultation" do
     end
 
     it "they can signup as a freelancer and send a message" do
+      allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
       visit("/freelancers/#{freelancer.uid}")
       click_on("Work together")
       click_on("Signup as a freelancer")
