@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import css from "@styled-system/css";
-import { matchPath, useParams } from "react-router";
+import { matchPath } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import { Box, Text, Link } from "@advisable/donut";
 import ProfilePicture from "../ProfilePicture";
@@ -24,9 +24,8 @@ import SocialProfilesIcons from "../SocialProfilesIcons";
 import { TRUNCATE_LIMIT } from "../../values";
 
 function Sidebar({ data, isOwner, ...props }) {
-  const params = useParams();
   const isArticle = !!matchPath(location.pathname, {
-    path: "/freelancers/:username/:slug",
+    path: "/profile/:username/:slug",
   });
 
   const { specialist } = data;
@@ -43,7 +42,9 @@ function Sidebar({ data, isOwner, ...props }) {
         {isArticle ? (
           <StyledArticleAvatarWrapper>
             <Box position="relative">
-              <BackButton>Go to profile</BackButton>
+              <BackButton path={specialist.profilePath}>
+                Go to profile
+              </BackButton>
               <CoverImage src={specialist.coverPhoto} size="collapse" />
             </Box>
             <ProfilePictureArticle specialist={specialist} />
@@ -56,7 +57,7 @@ function Sidebar({ data, isOwner, ...props }) {
         <StyledNameWrapper>
           <Text
             as={isArticle && Link}
-            to={`/freelancers/${params.username}`}
+            to={specialist.profilePath}
             fontSize={{ _: "2xl", m: "5xl" }}
             fontWeight={600}
             color="neutral900"

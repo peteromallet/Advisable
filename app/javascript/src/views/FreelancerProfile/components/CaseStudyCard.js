@@ -186,7 +186,7 @@ export default function CaseStudyCard({ caseStudy, isOwner }) {
   const modal = useModal();
 
   const isArticle = !!matchPath(location.pathname, {
-    path: "/freelancers/:username/:slug",
+    path: "/profile/:username/:slug",
   });
 
   const skills = caseStudy.skills.map(({ skill }) => (

@@ -80,7 +80,7 @@ class Specialist < ApplicationRecord
   end
 
   def profile_path
-    "/freelancers/#{username_or_uid}"
+    "/profile/#{username_or_uid}"
   end
 
   def send_confirmation_email

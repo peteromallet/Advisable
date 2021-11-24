@@ -12,6 +12,7 @@ query GetCaseStudy($article_id: ID!, $id: ID!) {
   caseStudy(id: $article_id) {
     title
     id
+    path
     review {
       id
     }

@@ -5,8 +5,6 @@ import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import { GUILD_POST_QUERY } from "./queries";
-import Topics from "@guild/components/Post/components/Topics";
-import ResolvedNotice from "@guild/components/Post/components/ResolvedNotice";
 import { CoverImage } from "@guild/components/CoverImage";
 import useViewerAuthor from "@guild/hooks/useViewerAuthor";
 import Markdown from "@guild/components/Markdown";
@@ -15,9 +13,11 @@ import PostActions from "@guild/components/PostActions";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
-import JoinGuild from "./JoinGuild";
-import PopularNotice from "@guild/components/Post/components/PopularNotice";
 import { hasGqlError, loginWithRedirectPath } from "@guild/utils";
+import ResolvedNotice from "./ResolvedNotice";
+import PopularNotice from "./PopularNotice";
+import JoinGuild from "./JoinGuild";
+import Topics from "./Topics";
 import { StyledImageThumbnail } from "./styles";
 import CaseStudyContent from "src/components/CaseStudyContent";
 
@@ -113,7 +113,7 @@ const Post = () => {
                   as={Link}
                   name={post.author.name}
                   url={post.author.avatar}
-                  to={`/freelancers/${post.author.id}`}
+                  to={post.author.profilePath}
                 />
                 <Box ml={3}>
                   <Link
@@ -122,7 +122,7 @@ const Post = () => {
                     fontSize="l"
                     color="neutral900"
                     letterSpacing="-0.01rem"
-                    to={`/freelancers/${post.author.id}/guild`}
+                    to={post.author.profilePath}
                   >
                     {post.author.name}
                   </Link>

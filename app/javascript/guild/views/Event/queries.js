@@ -11,6 +11,7 @@ export const EVENT_QUERY = gql`
           node {
             id
             firstName
+            profilePath
             avatar
           }
         }
