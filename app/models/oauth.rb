@@ -19,7 +19,7 @@ class Oauth < SimpleDelegator
     )
   end
 
-  %i[first_name last_name email].each do |info|
+  %i[first_name last_name email picture_url].each do |info|
     define_method(info) { dig(:info, info) }
   end
 

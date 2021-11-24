@@ -25,12 +25,12 @@ class AuthProvidersController < ApplicationController
 
   def linkedin
     omniauth = {
-      uid: auth_hash.uid,
+      uid: oauth.uid,
       provider: "linkedin",
-      name: auth_hash.info.name,
-      first_name: auth_hash.info.first_name,
-      last_name: auth_hash.info.last_name,
-      image: auth_hash.info.picture_url
+      name: oauth.info.name,
+      first_name: oauth.first_name,
+      last_name: oauth.last_name,
+      image: oauth.picture_url
     }
 
     session[:omniauth] = omniauth
@@ -90,9 +90,5 @@ class AuthProvidersController < ApplicationController
 
   def oauth
     @oauth ||= Oauth.new(request.env["omniauth.auth"])
-  end
-
-  def auth_hash
-    request.env["omniauth.auth"]
   end
 end
