@@ -3,12 +3,7 @@ import { Box, Link, Text } from "@advisable/donut";
 
 export default function HaveAccount() {
   return (
-    <Box
-      display="flex"
-      flexDirection={{ m: "column" }}
-      ml="auto"
-      mr={{ xs: "auto", m: 0 }}
-    >
+    <Box ml="auto" mr={{ xs: "auto", m: 0 }}>
       <Text color="neutral600" mb={{ m: 1.5 }} fontSize={["xs", "m"]}>
         Already have an account?
       </Text>
