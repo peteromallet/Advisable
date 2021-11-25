@@ -86,7 +86,7 @@ class AuthProvidersController < ApplicationController
 
     case oparams["mode"]
     when "user"
-      User.create!(common_attrs.merge(company: Company.new))
+      User.create!(common_attrs.merge(company: Company.new, application_status: "Application Started"))
     when "specialist"
       referrer = Specialist.find_by(uid: oparams["referrer"])
       Specialist.create!(common_attrs.merge(application_stage: "Started", referrer_id: referrer&.id))
