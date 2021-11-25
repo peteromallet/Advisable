@@ -78,7 +78,7 @@ class CompanyFaviconFinderJob < ApplicationJob
   end
 
   def parse_company_website
-    uri = URI.parse(company.website)
+    uri = URI.parse(company.website.strip)
     case uri
     when URI::HTTP, URI::HTTPS
       uri.path = "/"
