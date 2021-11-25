@@ -36,20 +36,61 @@ function OrbitsBackground({ step }) {
       stroke={theme.colors.neutral200}
       transition={{ duration: 1 }}
     >
-      <Orbit stroke={theme.colors.blue600} />
-      <Orbit stroke={theme.colors.blue600} />
-      <Orbit stroke={theme.colors.blue600} />
-      <Orbit stroke={theme.colors.blue600} />
-      <Orbit stroke={theme.colors.blue600} />
-      <Orbit stroke={theme.colors.blue600} />
-      <Orbit stroke={theme.colors.blue600} />
-      <Orbit fill={theme.colors.blue500} />
+      <Orbit
+        stroke={theme.colors.blue200}
+        strokeOpacity={0.2}
+        strokeWidth={1.5}
+      />
+      <Orbit
+        stroke={theme.colors.blue200}
+        strokeOpacity={0.2}
+        strokeWidth={1.5}
+      />
+      <Orbit
+        stroke={theme.colors.blue200}
+        strokeOpacity={0.2}
+        strokeWidth={1.5}
+      />
+      <Orbit
+        stroke={theme.colors.blue200}
+        strokeOpacity={0.2}
+        strokeWidth={1.5}
+      />
+      <Orbit
+        stroke={theme.colors.blue200}
+        strokeOpacity={0.2}
+        strokeWidth={1.5}
+      />
+      <Orbit
+        stroke={theme.colors.blue200}
+        strokeOpacity={0.2}
+        strokeWidth={1.5}
+      />
+      <Orbit
+        stroke={theme.colors.blue200}
+        strokeOpacity={0.2}
+        strokeWidth={1.5}
+      />
+      <Orbit fill="url(#orbitGradient)" />
       <Orbit />
       <Orbit />
       <Orbit />
       <Orbit />
       <Orbit />
       <Orbit />
+      <defs>
+        <linearGradient
+          id="orbitGradient"
+          x1="500"
+          y1="0"
+          x2="0"
+          y2="500"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#4234E3" />
+          <stop offset="1" stopColor="#6F28D3" />
+        </linearGradient>
+      </defs>
     </OrbitsSystem>
   );
 }
