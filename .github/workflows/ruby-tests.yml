@@ -28,6 +28,7 @@ jobs:
       MESSAGE_REPLIES_DOMAIN: message-replies
       CASE_STUDY_COVERS_BUCKET_NAME: case-study-covers
       RSPEC_RETRY: 3
+      LOG_JS_ERRORS: true
 
     services:
       postgres:
