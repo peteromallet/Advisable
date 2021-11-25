@@ -44,7 +44,7 @@ class AuthProvidersController < ApplicationController
       auth_provider = account.auth_providers.find_or_initialize_by(provider: "google_oauth2")
       auth_provider.update!(oauth.identifiers_with_blob_and_token)
       session_manager.start_session(account)
-      redirect_to "/"
+      redirect_to oparams["navigate"] || "/"
     else
       flash[:notice] = "No account with that email found, please sign up."
       redirect_to "/login/signup"
@@ -65,8 +65,11 @@ class AuthProvidersController < ApplicationController
 
   private
 
+  def oparams
+    request.env["omniauth.params"]
+  end
+
   def create_account!
-    oparams = request.env["omniauth.params"]
     return if oparams["mode"].blank?
 
     account = Account.new(

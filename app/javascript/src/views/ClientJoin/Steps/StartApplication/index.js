@@ -50,7 +50,7 @@ export default function StartApplication({ nextStep, forwards }) {
             </Link>
           </Text>
         </Box>
-        <LoginWithGoogle size="xl" mode="user">
+        <LoginWithGoogle size="xl" mode="user" navigate="/clients/apply">
           Signup with Google
         </LoginWithGoogle>
         <Divider py={6}>Or</Divider>
