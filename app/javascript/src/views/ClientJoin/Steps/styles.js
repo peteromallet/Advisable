@@ -7,8 +7,9 @@ export const CardHeader = (props) => (
     mb={2}
     fontSize={["3xl", "4xl"]}
     color="neutral800"
-    fontWeight="medium"
-    letterSpacing="-0.02rem"
+    fontWeight={520}
+    letterSpacing="-0.02em"
+    lineHeight="32px"
     {...props}
   />
 );
