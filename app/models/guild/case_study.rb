@@ -30,7 +30,6 @@ end
 #  audience_type      :string
 #  body               :text
 #  boosted_at         :datetime
-#  comments_count     :integer          default(0), not null
 #  engagements_count  :integer          default(0)
 #  pinned             :boolean          default(FALSE)
 #  reactionable_count :integer          default(0), not null
