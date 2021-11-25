@@ -36,7 +36,7 @@ function Logos() {
         css={`
           object-fit: scale-down;
         `}
-        opacity="0.6"
+        opacity="0.8"
       />
       <ProductHuntLogo {...params} opacity="0.8" height="98%" />
       <WorldRemitLogo {...params} fill="none" opacity="0.6" />
@@ -51,9 +51,9 @@ function Title({ children, ...props }) {
   return (
     <Text
       fontSize={{ _: "5xl", xl: 48 }}
-      letterSpacing="-0.02rem"
+      letterSpacing="-0.016em"
       color="white"
-      fontWeight="medium"
+      fontWeight={560}
       {...props}
     >
       {children}
@@ -97,6 +97,7 @@ export default function OrbitsContent({ step, custom }) {
       gridArea="orbits-content"
       alignSelf={{ _: "start", xl: "center" }}
       maxWidth={{ _: "640px", xl: "500px" }}
+      pt={{ _: 0, xl: 14 }}
       pr={{ _: 0, xl: 8 }}
       pb={{ xl: 14 }}
       display="flex"
