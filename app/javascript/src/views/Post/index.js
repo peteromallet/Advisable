@@ -6,7 +6,6 @@ import Loading from "@advisable-main/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import { GUILD_POST_QUERY } from "./queries";
 import { CoverImage } from "@guild/components/CoverImage";
-import useViewerAuthor from "@guild/hooks/useViewerAuthor";
 import Markdown from "@guild/components/Markdown";
 import PostTypeTag from "@guild/components/PostTypeTag";
 import PostActions from "@guild/components/PostActions";
@@ -20,8 +19,10 @@ import JoinGuild from "./JoinGuild";
 import Topics from "./Topics";
 import { StyledImageThumbnail } from "./styles";
 import CaseStudyContent from "src/components/CaseStudyContent";
+import useViewer from "src/hooks/useViewer";
 
 const Post = () => {
+  const viewer = useViewer();
   const { postId } = useParams();
   const gallery = useImageGallery();
   const location = useLocation();
@@ -42,7 +43,9 @@ const Post = () => {
   }
 
   const post = data?.guildPost;
-  const { viewer, isAuthor, popularOrAuthorReactions } = useViewerAuthor(post);
+  const isAuthor = viewer?.id === post?.author?.id;
+  const authorHasReactions = isAuthor && !!post?.reactionsCount;
+  const popularOrAuthorReactions = post?.isPopular || authorHasReactions;
   const guildViewer = viewer?.isSpecialist && viewer?.isAccepted;
   const otherImages = (post?.images || []).filter((p) => p.cover === false);
 
@@ -177,7 +180,11 @@ const Post = () => {
             )}
           </Box>
           {popularOrAuthorReactions && (
-            <PopularNotice marginBottom="-4px" post={post} />
+            <PopularNotice
+              isAuthor={isAuthor}
+              marginBottom="-4px"
+              post={post}
+            />
           )}
         </Card>
       </Box>
