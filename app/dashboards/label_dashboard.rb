@@ -13,7 +13,6 @@ class LabelDashboard < Administrate::BaseDashboard
     country: Field::BelongsTo,
     industry: Field::BelongsTo,
     skill: Field::BelongsTo,
-    post_prompts: Field::HasMany,
     id: Field::String,
     name: Field::String,
     slug: Field::String,
@@ -42,7 +41,6 @@ class LabelDashboard < Administrate::BaseDashboard
     country
     industry
     skill
-    post_prompts
     id
     name
     slug

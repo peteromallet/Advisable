@@ -33,10 +33,6 @@ module Types
         description "The status of the guild post"
       end
 
-      field :comments_count, Integer, null: false do
-        description "The total count of comments for a guild post"
-      end
-
       field :type, String, null: false do
         description "The guild post type"
       end
@@ -47,13 +43,6 @@ module Types
       field :denormalized_type, String, null: true
       def denormalized_type
         object.type
-      end
-
-      field :commented, Boolean, null: false do
-        description "Whether the current user has commented on the guild post"
-      end
-      def commented
-        object.comments.exists?(specialist: context[:current_user])
       end
 
       field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
@@ -69,12 +58,6 @@ module Types
       end
       def created_at_time_ago
         time_ago_in_words(object.created_at)
-      end
-
-      field :comments, [Types::Guild::CommentType], null: false
-      def comments
-        object.parent_comments
-        # TODO: include child comments
       end
 
       field :engagements_count, Integer, null: true do
@@ -122,8 +105,6 @@ module Types
       def is_popular
         object.popular?
       end
-
-      field :post_prompt, Types::PostPromptType, null: true
 
       definition_methods do
         def resolve_type(object, _context)

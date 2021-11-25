@@ -73,17 +73,6 @@ module Types
       ::Skill.active
     end
 
-    field :popular_skills, Types::Skill.connection_type, null: false
-
-    def popular_skills
-      ::Skill.active.popular
-    end
-
-    field :popular_guild_countries, [Types::LabelType], null: false
-    def popular_guild_countries
-      Label.on_country.most_used.limit(5)
-    end
-
     field :specialist, Types::SpecialistType, null: true do
       argument :id, ID, required: true
     end
@@ -199,57 +188,6 @@ module Types
       post
     end
 
-    field :guild_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
-      description "Returns a list of guild posts for the feed"
-
-      argument :type, String, required: false do
-        description "Filters guild posts by type"
-      end
-    end
-
-    def guild_posts(**args)
-      requires_accepted_specialist!
-      query = ::Guild::Post.feed(current_user)
-
-      if (type = args[:type].presence) && type != "For You"
-        query.where(type: type)
-      else
-        query
-      end
-    end
-
-    field :latest_prompt, PostPromptType, null: true
-
-    def latest_prompt
-      ::PostPrompt.featured.includes(:label).first
-    end
-
-    field :post_prompt, ::Types::PostPromptType, null: true do
-      argument :id, ID, required: true
-    end
-
-    def post_prompt(id:)
-      requires_accepted_specialist!
-      ::PostPrompt.find(id)
-    end
-
-    field :label_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5 do
-      argument :label_slug, ID, required: true
-    end
-
-    def label_posts(label_slug:)
-      requires_accepted_specialist!
-      query = ::Guild::Post.feed(current_user)
-      label = ::Label.published.find_by!(slug: label_slug)
-      query.labeled_with(label)
-    end
-
-    field :guild_popular_posts, [Types::Guild::PostInterface], null: true
-
-    def guild_popular_posts(**_args)
-      ::Guild::Post.popular
-    end
-
     field :search_labels, [Types::LabelType], null: true do
       argument :name, String, required: true
     end
@@ -268,31 +206,6 @@ module Types
       requires_accepted_specialist!
 
       ::Label.published.most_used
-    end
-
-    field :other_labels, [Types::LabelType], null: true do
-      description "Returns other labels that aren't related to skill, industry, or location"
-    end
-
-    def other_labels
-      ::Label.other
-    end
-
-    field :guild_featured_members, [Types::SpecialistType], null: true
-
-    def guild_featured_members
-      ::Specialist.guild_featured_members.limit(6)
-    end
-
-    field :guild_your_posts,
-          Types::Guild::PostInterface.connection_type,
-          null: true, max_page_size: 10 do
-      description "Returns the specialist's guild_posts"
-    end
-
-    def guild_your_posts(**_args)
-      requires_accepted_specialist!
-      current_user.guild_posts.order(updated_at: :desc)
     end
 
     field :followed_labels, [Types::LabelType], null: true do
