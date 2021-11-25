@@ -1,17 +1,26 @@
 import React from "react";
+import queryString from "query-string";
 import { StyledLoginWithGoogle } from "./styles";
 
-export default function LoginWithGoogle({ mode, size = "l", children }) {
+export default function LoginWithGoogle({
+  mode,
+  size = "l",
+  navigate,
+  children,
+}) {
   const csrf = document
     .querySelector("meta[name=csrf-token]")
     ?.getAttribute("content");
 
-  let url = "/auth/google_oauth2";
-  if (mode) {
-    url += `?mode=${mode}`;
-  }
+  const params = queryString.stringify(
+    { mode, navigate },
+    {
+      skipNull: true,
+    },
+  );
 
-  // mode can be user or specialist
+  let url = `/auth/google_oauth2?${params}`;
+
   return (
     <form action={url} method="POST">
       <input type="hidden" name="authenticity_token" value={csrf} />
