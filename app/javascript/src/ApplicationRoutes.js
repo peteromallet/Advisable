@@ -109,6 +109,7 @@ const ApplicationRoutes = () => {
           <Route path="/profile/:username">
             <FreelancerProfile />
           </Route>
+          <Redirect from="/freelancers/:username/:article" to="/profile/:username/:article" />
           <Redirect from="/freelancers/:username" to="/profile/:username" />
           <AuthenticatedRoute path="/profile">
             <RedirectToFreelancerProfile />
