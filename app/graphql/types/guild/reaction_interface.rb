@@ -6,8 +6,6 @@ module Types
       include Types::BaseInterface
       field_class BaseField
 
-      orphan_types Types::Guild::CommentType
-
       description "Fields for a post reaction"
 
       field :reactions_count, Integer, null: true do
