@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text, useBreakpoint } from "@advisable/donut";
-import lambdaSchoolLogoWhite from "./logos/lambdaSchoolLogoWhite.png";
+import bloomtechLogoBlack from "./logos/bloomtech-black.png";
 import StackOverflowLogo from "./logos/StackOverflowLogo";
 import SpotifyLogo from "./logos/SpotifyLogo";
 import ProductHuntLogo from "./logos/ProductHuntLogo";
@@ -16,7 +16,7 @@ function Logos() {
     width: "100%",
     height: "100%",
     preserveAspectRatio: "xMinYMin meet",
-    fill: "white",
+    fill: "black",
   };
   return (
     <Box
@@ -30,13 +30,14 @@ function Logos() {
       <StackOverflowLogo {...params} height="96%" />
       <Box
         as="img"
-        src={lambdaSchoolLogoWhite}
-        alt="lambda-school-logo"
+        src={bloomtechLogoBlack}
+        alt="bloomtech-logo"
         height="100%"
         css={`
           object-fit: scale-down;
+          transform: translateY(3px);
         `}
-        opacity="0.8"
+        opacity="0.58"
       />
       <ProductHuntLogo {...params} opacity="0.8" height="98%" />
       <WorldRemitLogo {...params} fill="none" opacity="0.6" />
