@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_122946) do
+ActiveRecord::Schema.define(version: 2021_11_25_084846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -480,21 +480,6 @@ ActiveRecord::Schema.define(version: 2021_11_18_122946) do
     t.index ["uid"], name: "index_events_on_uid", unique: true
   end
 
-  create_table "guild_comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "body", null: false
-    t.integer "reactionable_count", default: 0, null: false
-    t.uuid "guild_post_id"
-    t.bigint "specialist_id"
-    t.uuid "parent_comment_id"
-    t.integer "status", default: 0, null: false
-    t.jsonb "data"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["guild_post_id"], name: "index_guild_comments_on_guild_post_id"
-    t.index ["parent_comment_id"], name: "index_guild_comments_on_parent_comment_id"
-    t.index ["specialist_id"], name: "index_guild_comments_on_specialist_id"
-  end
-
   create_table "guild_post_engagements", force: :cascade do |t|
     t.bigint "specialist_id"
     t.uuid "guild_post_id"
@@ -523,7 +508,6 @@ ActiveRecord::Schema.define(version: 2021_11_18_122946) do
     t.text "body"
     t.string "title"
     t.integer "status", default: 0, null: false
-    t.integer "comments_count", default: 0, null: false
     t.integer "reactionable_count", default: 0, null: false
     t.bigint "specialist_id"
     t.datetime "created_at", precision: 6, null: false
@@ -767,17 +751,6 @@ ActiveRecord::Schema.define(version: 2021_11_18_122946) do
     t.index ["specialist_id"], name: "index_payouts_on_specialist_id"
     t.index ["task_id"], name: "index_payouts_on_task_id"
     t.index ["uid"], name: "index_payouts_on_uid", unique: true
-  end
-
-  create_table "post_prompts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "prompt"
-    t.string "cta"
-    t.integer "guild_posts_count", default: 0
-    t.boolean "featured", default: false
-    t.uuid "label_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["label_id"], name: "index_post_prompts_on_label_id"
   end
 
   create_table "problematic_flags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -1235,8 +1208,6 @@ ActiveRecord::Schema.define(version: 2021_11_18_122946) do
   add_foreign_key "event_attendees", "events"
   add_foreign_key "event_attendees", "specialists"
   add_foreign_key "events", "specialists", column: "host_id"
-  add_foreign_key "guild_comments", "guild_posts", on_delete: :cascade
-  add_foreign_key "guild_comments", "specialists", on_delete: :cascade
   add_foreign_key "guild_post_engagements", "guild_posts"
   add_foreign_key "guild_post_engagements", "specialists"
   add_foreign_key "guild_post_images", "guild_posts", on_delete: :cascade
@@ -1264,7 +1235,6 @@ ActiveRecord::Schema.define(version: 2021_11_18_122946) do
   add_foreign_key "payments", "tasks"
   add_foreign_key "payouts", "specialists"
   add_foreign_key "payouts", "tasks"
-  add_foreign_key "post_prompts", "labels"
   add_foreign_key "problematic_flags", "applications"
   add_foreign_key "problematic_flags", "users"
   add_foreign_key "project_industries", "industries"
