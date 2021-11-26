@@ -52,7 +52,7 @@ class User < ApplicationRecord
   end
 
   def availability
-    super.select(&:future?)
+    (super.presence || []).select(&:future?)
   end
 
   def accepted?
