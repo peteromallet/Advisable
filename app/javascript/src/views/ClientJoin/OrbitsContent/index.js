@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text, useBreakpoint } from "@advisable/donut";
-import lambdaSchoolLogoWhite from "./logos/lambdaSchoolLogoWhite.png";
+import bloomtechLogoWhite from "./logos/bloomtech-white.png";
 import StackOverflowLogo from "./logos/StackOverflowLogo";
 import SpotifyLogo from "./logos/SpotifyLogo";
 import ProductHuntLogo from "./logos/ProductHuntLogo";
@@ -30,17 +30,18 @@ function Logos() {
       <StackOverflowLogo {...params} height="96%" />
       <Box
         as="img"
-        src={lambdaSchoolLogoWhite}
-        alt="lambda-school-logo"
+        src={bloomtechLogoWhite}
+        alt="bloomtech-logo"
         height="100%"
         css={`
           object-fit: scale-down;
+          transform: translateY(3px);
         `}
         opacity="0.8"
       />
-      <ProductHuntLogo {...params} opacity="0.8" height="98%" />
+      <ProductHuntLogo {...params} opacity="0.8" />
       <WorldRemitLogo {...params} fill="none" opacity="0.6" />
-      <BabbelLogo {...params} opacity="0.6" height="88%" />
+      <BabbelLogo {...params} opacity="0.6" height="86%" />
       <UberAllLogo {...params} opacity="0.4" />
       <BigCommerceLogo {...params} opacity="0.4" />
     </Box>
@@ -66,7 +67,20 @@ function FormsContent() {
     <>
       <Box mb={{ xl: 20 }}>
         <Title>Advisable helps</Title>
-        <Title color="#FEB6C8">ambitious companies</Title>
+        <Title
+          css={`
+            background-image: linear-gradient(
+              135deg,
+              #b782fc,
+              #dec3ff 50%,
+              #8f97fc
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          `}
+        >
+          ambitious companies
+        </Title>
         <Title mb={{ _: 4, l: 5 }}>succeed</Title>
         <Text
           fontSize={{ _: "m", l: "l" }}
