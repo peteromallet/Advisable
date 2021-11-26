@@ -5,9 +5,9 @@ const getCoords = (step) => {
   switch (step) {
     case 0:
       return {
-        y: { _: -1340, xlUp: 600 },
-        x: { _: -140, sUp: 250, xlUp: -800 },
-        offsetY: { _: -30, xlUp: 70 },
+        y: { _: -1340, xlUp: 100 },
+        x: { _: -140, sUp: 250, xlUp: 2340 },
+        offsetY: { _: -30, xlUp: -70 },
         increment: { _: 220, xlUp: 200 },
       };
     case 1:
@@ -81,10 +81,10 @@ function OrbitsBackground({ step }) {
       <defs>
         <linearGradient
           id="orbitGradient"
-          x1="500"
+          x1="100"
           y1="0"
           x2="0"
-          y2="500"
+          y2="200"
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#4234E3" />
