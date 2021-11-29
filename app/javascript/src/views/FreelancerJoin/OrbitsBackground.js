@@ -5,16 +5,16 @@ const getCoords = (step) => {
   switch (step) {
     case 0:
       return {
-        y: { _: 1980, xlUp: 100 },
+        y: { _: 2300, xlUp: 100 },
         x: { _: 680, sUp: 790, xlUp: 2340 },
-        offsetY: { _: -30, xlUp: -70 },
+        offsetY: { _: 30, xlUp: -70 },
         increment: { _: 220, xlUp: 200 },
       };
     case 1:
       return {
-        y: { _: -700, xlUp: 265 },
-        x: { _: 140, sUp: 550, xlUp: -820 },
-        offsetY: { _: 70, xlUp: -30 },
+        y: { _: 1550, xlUp: 500 },
+        x: { _: 400, sUp: 890, xlUp: 2385 },
+        offsetY: { _: -70, xlUp: 10 },
         increment: { _: 210, xlUp: 220 },
       };
     default:
