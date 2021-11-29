@@ -30,14 +30,18 @@ RSpec.describe Mutations::DeclineConsultation do
   end
 
   context "when a message exists" do
+    let(:conversation) { create(:conversation) }
+    let!(:participant) { conversation.participants.create(account: current_user.account) }
+
     it "creates a system message" do
-      create(:message, consultation: consultation)
+      create(:message, consultation: consultation, conversation: conversation)
       message_count = Message.count
       AdvisableSchema.execute(query, context: context)
       expect(Message.count).to eq(message_count + 1)
       last_message = consultation.messages.last
       expect(last_message.kind).to eq("system")
       expect(last_message.content).to eq("consultations.declined")
+      expect(participant.reload.unread_count).to eq(1)
     end
   end
 
