@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe Conversation, type: :model do
   let(:conversation) { create(:conversation) }
   let(:user) { create(:user) }
+  let(:consultation) { create(:consultation) }
 
   it "has a valid factory" do
     expect(build(:conversation)).to be_valid
@@ -18,14 +19,16 @@ RSpec.describe Conversation, type: :model do
       expect(new_message).to eq(message)
     end
 
-    it "can take a uid" do
-      message = conversation.new_message!(user.account, "Test", [], uid: "msg_123456789012345")
+    it "can take extra attributes" do
+      message = conversation.new_message!(user.account, "Test", uid: "msg_123456789012345", metadata: {foo: :bar}, consultation: consultation)
       expect(message.uid).to eq("msg_123456789012345")
+      expect(message.metadata).to eq({"foo" => "bar"})
+      expect(message.consultation).to eq(consultation)
     end
 
     context "when author is nil" do
       it "marks it as system message" do
-        message = conversation.new_message!(nil, "Test", [])
+        message = conversation.new_message!(nil, "Test")
         expect(message).to be_system_message
       end
     end

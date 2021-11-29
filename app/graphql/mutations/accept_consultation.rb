@@ -34,11 +34,10 @@ module Mutations
     def create_system_message(consultation)
       return if consultation.messages.none?
 
-      Message.create(
-        conversation: consultation.messages.first.conversation,
-        consultation: consultation,
-        content: "consultations.accepted",
-        kind: "system"
+      consultation.messages.first.conversation.new_message!(
+        nil,
+        "consultations.accepted",
+        consultation: consultation
       )
     end
 
