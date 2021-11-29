@@ -49,6 +49,8 @@ class CompanyFaviconFinderJob < ApplicationJob
     end
   rescue URI::InvalidComponentError
     fetch_favicon("/#{href}")
+  rescue URI::Error
+    false
   end
 
   def try_favicon_ico
