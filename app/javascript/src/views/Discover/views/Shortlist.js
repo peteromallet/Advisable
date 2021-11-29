@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { AnimateSharedLayout } from "framer-motion";
 import { Box, Heading, Skeleton } from "@advisable/donut";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import BackButton from "src/components/BackButton";
@@ -36,7 +35,7 @@ export default function Shortlist() {
   };
 
   return (
-    <AnimateSharedLayout>
+    <>
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Box display="flex" alignItems="center">
           <BackButton to="/explore" marginRight={4} />
@@ -73,6 +72,6 @@ export default function Shortlist() {
         />
       )}
       {!loading && !showLoadMore && <NoMoreResults />}
-    </AnimateSharedLayout>
+    </>
   );
 }
