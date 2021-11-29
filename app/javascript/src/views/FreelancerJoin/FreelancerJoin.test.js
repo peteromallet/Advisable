@@ -78,6 +78,6 @@ test("successful flow", async () => {
   await app.findByText("Welcome to Advisable!");
   userEvent.type(app.getByLabelText("Password"), "123123123");
   userEvent.type(app.getByLabelText("Confirm password"), "123123123");
-  fireEvent.click(app.getByLabelText(/get started/i));
+  fireEvent.click(app.getByLabelText(/continue/i));
   await app.findByText("Welcome to Advisable");
 });
