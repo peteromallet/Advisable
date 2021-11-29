@@ -39,6 +39,7 @@ RSpec.describe Mutations::RequestConsultation do
     message_uid = response["data"]["requestConsultation"]["consultation"]["message"]["id"]
     message = Message.find_by!(uid: message_uid)
     expect(message.content).to eq("Wanna work for me, bro?")
+    expect(message.conversation.participants.pluck(:account_id, :unread_count)).to match_array([[specialist.account.id, 1], [current_user.account.id, 0]])
   end
 
   context "when there's a case study article" do

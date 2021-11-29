@@ -24,10 +24,10 @@ module Mutations
         skill: specialist.articles.first&.skills&.primary&.first&.skill
       )
 
-      conversation.messages.create!(
-        consultation: consultation,
-        content: args[:message],
-        author: current_user.account
+      conversation.new_message!(
+        current_user.account,
+        args[:message],
+        consultation: consultation
       )
 
       {consultation: consultation}

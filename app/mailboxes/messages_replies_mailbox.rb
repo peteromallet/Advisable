@@ -8,8 +8,7 @@ class MessagesRepliesMailbox < ApplicationMailbox
     author = find_author(conversation)
     if author
       content = EmailReplyParser.parse_reply(mail_body(mail))
-      message = conversation.messages.create!(content: content, author: author.account)
-      message.after_create_actions
+      conversation.new_message!(author.account, content)
     else
       Sentry.capture_message(
         "#{mail.from.first} tried to reply to a conversation that they don't participate in.",
