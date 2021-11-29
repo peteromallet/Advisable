@@ -8,7 +8,7 @@ import { StyledRow, StyledCell } from "../../styles";
 import { recordPath } from "../../utilities";
 import CopyToClipboard from "../../components/CopyToClipboard";
 
-export default function Rows({ edges, resource, sizeForColumn }) {
+export default function Rows({ edges, resource, sizeForColumn, attributes }) {
   const history = useHistory();
 
   const openRecord = (record) => () => {
@@ -20,7 +20,7 @@ export default function Rows({ edges, resource, sizeForColumn }) {
 
   return edges.map(({ node }) => (
     <StyledRow key={node.id} onClick={openRecord(node)}>
-      {resource.attributes.map((attr) => (
+      {attributes.map((attr) => (
         <StyledCell style={{ width: sizeForColumn(attr.name) }} key={attr.name}>
           <Sentry.ErrorBoundary
             fallback={
