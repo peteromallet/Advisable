@@ -1,41 +1,51 @@
 import React from "react";
 import { Card, Text, Avatar, Link, Box } from "@advisable/donut";
-import { useParams, useLocation } from "react-router-dom";
+import { Redirect, useParams, useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Loading from "@advisable-main/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import { GUILD_POST_QUERY } from "./queries";
 import { CoverImage } from "@guild/components/CoverImage";
-import useViewerAuthor from "@guild/hooks/useViewerAuthor";
 import Markdown from "@guild/components/Markdown";
 import PostTypeTag from "@guild/components/PostTypeTag";
 import PostActions from "@guild/components/PostActions";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
 import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
-import { hasGqlError, loginWithRedirectPath } from "@guild/utils";
+import { hasGqlError } from "@guild/utils";
 import ResolvedNotice from "./ResolvedNotice";
 import PopularNotice from "./PopularNotice";
 import JoinGuild from "./JoinGuild";
 import Topics from "./Topics";
 import { StyledImageThumbnail } from "./styles";
 import CaseStudyContent from "src/components/CaseStudyContent";
+import useViewer from "src/hooks/useViewer";
 
 const Post = () => {
+  const viewer = useViewer();
   const { postId } = useParams();
   const gallery = useImageGallery();
   const location = useLocation();
 
   const { data, loading, error } = useQuery(GUILD_POST_QUERY, {
     variables: { id: postId },
-    onError: (errors) => {
-      if (!viewer && hasGqlError("notAuthorized", errors)) {
-        loginWithRedirectPath(location.pathname);
-      }
-    },
   });
+
+  if (!viewer && hasGqlError("notAuthorized", error)) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/login",
+          state: { from: location },
+        }}
+      />
+    );
+  }
+
   const post = data?.guildPost;
-  const { viewer, isAuthor, popularOrAuthorReactions } = useViewerAuthor(post);
+  const isAuthor = viewer?.id === post?.author?.id;
+  const authorHasReactions = isAuthor && !!post?.reactionsCount;
+  const popularOrAuthorReactions = post?.isPopular || authorHasReactions;
   const guildViewer = viewer?.isSpecialist && viewer?.isAccepted;
   const otherImages = (post?.images || []).filter((p) => p.cover === false);
 
@@ -170,7 +180,11 @@ const Post = () => {
             )}
           </Box>
           {popularOrAuthorReactions && (
-            <PopularNotice marginBottom="-4px" post={post} />
+            <PopularNotice
+              isAuthor={isAuthor}
+              marginBottom="-4px"
+              post={post}
+            />
           )}
         </Card>
       </Box>

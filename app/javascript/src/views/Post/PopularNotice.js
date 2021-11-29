@@ -2,11 +2,8 @@ import React from "react";
 import { Bulb } from "@styled-icons/ionicons-solid/Bulb";
 import pluralize from "src/utilities/pluralize";
 import { Box, Text } from "@advisable/donut";
-import useViewerAuthor from "@guild/hooks/useViewerAuthor";
 
-export default function PopularNotice({ post, ...props }) {
-  const { isAuthor } = useViewerAuthor(post);
-
+export default function PopularNotice({ post, isAuthor, ...props }) {
   return (
     <Box display="flex" alignItems="center" justifyContent="center" {...props}>
       <Box
