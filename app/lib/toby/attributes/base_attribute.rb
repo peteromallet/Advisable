@@ -55,10 +55,6 @@ module Toby
         object.public_send("#{name}=", value)
       end
 
-      def filter(records, _filters)
-        records
-      end
-
       class << self
         def filter(name, type, **args, &block)
           @filters ||= []
