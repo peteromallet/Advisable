@@ -8,8 +8,12 @@ function ResetPasswordContainer() {
   const match = useRouteMatch();
   return (
     <Switch>
-      <Route path={match.path} exact component={RequestPasswordReset} />
-      <Route path={`${match.path}/:token`} component={ResetPassword} />
+      <Route path={match.path} exact>
+        <RequestPasswordReset />
+      </Route>
+      <Route path={`${match.path}/:token`}>
+        <ResetPassword />
+      </Route>
     </Switch>
   );
 }

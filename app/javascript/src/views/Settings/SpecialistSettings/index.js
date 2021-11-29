@@ -33,17 +33,25 @@ function SpecialistSettings() {
           maxWidth={{ l: "940px" }}
         >
           <Switch>
-            <Route path="/settings/general" component={General} />
-            <Route path="/settings/availability" component={Availability} />
-            <Redirect from="/settings/references" to="/profile" />
-            <Route
-              path="/settings/payment-settings"
-              component={PaymentSettings}
-            />
-            <Route path="/settings/password" component={Password} />
+            <Route path="/settings/general">
+              <General />
+            </Route>
+            <Route path="/settings/availability">
+              <Availability />
+            </Route>
+            <Route path="/settings/payment-settings">
+              <PaymentSettings />
+            </Route>
+            <Route path="/settings/password">
+              <Password />
+            </Route>
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
-            {breakpointS && <Redirect to="/settings/general" />}
+            {breakpointS && (
+              <Route>
+                <Redirect to="/settings/general" />
+              </Route>
+            )}
           </Switch>
         </Container>
       </View.Content>

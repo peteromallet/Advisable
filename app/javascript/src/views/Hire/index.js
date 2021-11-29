@@ -15,9 +15,15 @@ export default function Hire() {
       <Page width="1020px">
         <Box paddingY={{ _: 8, m: 12 }} paddingX={{ _: 4, m: 8 }}>
           <Switch>
-            <Route path="/hire/proposals/:id" component={Proposal} />
-            <Route path="/hire" component={Candidates} />
-            <Redirect to="/hire" />
+            <Route path="/hire/proposals/:id">
+              <Proposal />
+            </Route>
+            <Route path="/hire">
+              <Candidates />
+            </Route>
+            <Route>
+              <Redirect to="/hire" />
+            </Route>
           </Switch>
         </Box>
       </Page>

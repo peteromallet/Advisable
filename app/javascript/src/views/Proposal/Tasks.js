@@ -1,7 +1,12 @@
 import * as React from "react";
 import { Box, Card, Button, Text, Modal } from "@advisable/donut";
 import { useApolloClient } from "@apollo/client";
-import { matchPath } from "react-router";
+import {
+  matchPath,
+  useHistory,
+  useLocation,
+  useRouteMatch,
+} from "react-router";
 import { useDialogState } from "reakit/Dialog";
 import NewTask from "components/NewTask";
 import TaskList from "components/TaskList";
@@ -9,7 +14,10 @@ import TaskDrawer from "components/TaskDrawer";
 import TASK_FIELDS from "../../graphql/fragments/task";
 import { hasCompleteTasksStep } from "./validationSchema";
 
-const Tasks = ({ application, match, location, history }) => {
+const Tasks = ({ application }) => {
+  const history = useHistory();
+  const match = useRouteMatch();
+  const location = useLocation();
   const client = useApolloClient();
   const trialModal = useDialogState();
   const onSelectTask = (task) => {

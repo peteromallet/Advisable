@@ -40,23 +40,30 @@ const ClientSettings = () => {
           maxWidth={{ l: "940px" }}
         >
           <Switch>
-            <Route path="/settings/payments" component={PaymentSettings} />
-            <Route path="/settings/team" component={Team} />
-            <Route
-              path="/settings/invoices/old/:invoice_id"
-              component={Invoice}
-            />
-            <Route path="/settings/invoices/old" component={OldInvoices} />
-            <Route path="/settings/invoices" component={Invoices} />
-            <Route path="/settings/password" component={Password} />
+            <Route path="/settings/payments">
+              <PaymentSettings />
+            </Route>
+            <Route path="/settings/team">
+              <Team />
+            </Route>
+            <Route path="/settings/invoices/old/:invoice_id">
+              <Invoice />
+            </Route>
+            <Route path="/settings/invoices/old">
+              <OldInvoices />
+            </Route>
+            <Route path="/settings/invoices">
+              <Invoices />
+            </Route>
+            <Route path="/settings/password">
+              <Password />
+            </Route>
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
             {breakpointS && (
-              <Route
-                exact
-                path={match.path}
-                render={() => <Redirect to={`/settings${initialPath}`} />}
-              />
+              <Route exact path={match.path}>
+                <Redirect to={`/settings${initialPath}`} />
+              </Route>
             )}
           </Switch>
         </Container>
