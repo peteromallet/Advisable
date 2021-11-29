@@ -47,12 +47,12 @@ module Toby
         options.fetch(:case_insensitive_compare, false)
       end
 
-      def read(resource)
-        resource.public_send(name)
+      def read(object)
+        object.public_send(name)
       end
 
-      def write(resource, value)
-        resource.public_send("#{name}=", value)
+      def write(object, value)
+        object.public_send("#{name}=", value)
       end
 
       def filter(records, _filters)
