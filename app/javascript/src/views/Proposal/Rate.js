@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
+import { useHistory } from "react-router";
 import { useMutation } from "@apollo/client";
 import { Card, Text } from "@advisable/donut";
 import FormField from "src/components/FormField";
@@ -10,7 +11,8 @@ import CurrencyInput from "src/components/CurrencyInput";
 import { rateValidationSchema } from "./validationSchema";
 import UPDATE_APPLICATION from "./updateApplication.js";
 
-const Rate = ({ history, application }) => {
+const Rate = ({ application }) => {
+  const history = useHistory();
   const [updateApplication] = useMutation(UPDATE_APPLICATION);
 
   const handleSubmit = async (values) => {

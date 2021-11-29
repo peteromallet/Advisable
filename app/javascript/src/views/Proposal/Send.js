@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { Text, Card, Textarea } from "@advisable/donut";
 import FormField from "src/components/FormField";
@@ -8,7 +8,8 @@ import SEND_PROPOSAL from "./sendProposal.graphql";
 import SubmitButton from "src/components/SubmitButton";
 import { hasCompleteTasksStep } from "./validationSchema";
 
-const Send = ({ application, history }) => {
+const Send = ({ application }) => {
+  const history = useHistory();
   const [sendProposal] = useMutation(SEND_PROPOSAL);
 
   // If they haven't complete the tasks step then redirect back

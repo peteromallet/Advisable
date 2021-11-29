@@ -40,59 +40,40 @@ export default function InterviewRequestView() {
         "Client Requested Reschedule",
       ].indexOf(interview.status) > -1 && (
         <Switch>
-          <Route
-            path={`${match.path}/${SELECT_TIME_PATH}`}
-            render={(route) => (
-              <SelectTime
-                {...route}
-                timeZone={interview.timeZone}
-                availability={interview.user.availability}
-                clientName={interview.user.companyName}
-              />
-            )}
-          />
+          <Route path={`${match.path}/${SELECT_TIME_PATH}`}>
+            <SelectTime
+              timeZone={interview.timeZone}
+              clientName={interview.user.companyName}
+              availability={interview.user.availability}
+            />
+          </Route>
           <Route path={`${match.path}/${CONFIRM_PATH}`}>
             <ConfirmInterviewRequest interview={interview} />
           </Route>
 
-          <Route
-            exact
-            path={match.path}
-            render={(route) => (
-              <SelectDay
-                {...route}
-                timeZone={interview.timeZone}
-                availability={interview.user.availability}
-                clientName={interview.user.companyName}
-              />
-            )}
-          />
+          <Route exact path={match.path}>
+            <SelectDay
+              timeZone={interview.timeZone}
+              availability={interview.user.availability}
+              clientName={interview.user.companyName}
+            />
+          </Route>
           <Redirect to={match.path} />
         </Switch>
       )}
       {interview.status === "Call Scheduled" && (
-        <Route
-          path={match.path}
-          render={(route) => (
-            <InterviewConfirmed
-              {...route}
-              startsAt={interview.startsAt}
-              timeZone={interview.timeZone}
-              clientName={interview.user.companyName}
-            />
-          )}
-        />
+        <Route path={match.path}>
+          <InterviewConfirmed
+            startsAt={interview.startsAt}
+            timeZone={interview.timeZone}
+            clientName={interview.user.companyName}
+          />
+        </Route>
       )}
       {interview.status === "Need More Time Options" && (
-        <Route
-          path={match.path}
-          render={(route) => (
-            <MoreTimesRequested
-              {...route}
-              clientName={interview.user.companyName}
-            />
-          )}
-        />
+        <Route path={match.path}>
+          <MoreTimesRequested clientName={interview.user.companyName} />
+        </Route>
       )}
     </Card>
   );
