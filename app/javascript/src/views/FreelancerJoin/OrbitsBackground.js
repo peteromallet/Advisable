@@ -5,8 +5,8 @@ const getCoords = (step) => {
   switch (step) {
     case 0:
       return {
-        y: { _: -1340, xlUp: 100 },
-        x: { _: -140, sUp: 250, xlUp: 2340 },
+        y: { _: 1980, xlUp: 100 },
+        x: { _: 680, sUp: 790, xlUp: 2340 },
         offsetY: { _: -30, xlUp: -70 },
         increment: { _: 220, xlUp: 200 },
       };

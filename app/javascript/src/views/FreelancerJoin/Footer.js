@@ -16,17 +16,17 @@ function Footer() {
     >
       <Text
         fontWeight="medium"
-        color={{ xl: "blue900", _: "neutral500" }}
+        color={{ _: "neutral900", xl: "neutral500" }}
         mr="xs"
       >
         &#169; Advisable
       </Text>
-      <Text mr="xs" color={{ _: "neutral500", xl: "blue900" }}>
+      <Text mr="xs" color={{ xl: "neutral500", _: "neutral900" }}>
         •
       </Text>
       <Link.External
         href="https://advisable.com/terms-of-service/"
-        color={{ xl: "blue900", _: "neutral500" }}
+        color={{ _: "neutral900", xl: "neutral500" }}
       >
         Terms of Service
       </Link.External>
