@@ -43,7 +43,7 @@ module Toby
         options.fetch(:sortable, true)
       end
 
-      def case_insensitive_compare?
+      def case_insensitive_compare
         options.fetch(:case_insensitive_compare, false)
       end
 
