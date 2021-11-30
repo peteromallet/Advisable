@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Notification < ApplicationRecord
-  ACTION_TYPES = %w[post_reaction suggested_post].freeze
+  ACTION_TYPES = %w[suggested_post].freeze
 
   belongs_to :account
   belongs_to :actor, class_name: "Account", optional: true
