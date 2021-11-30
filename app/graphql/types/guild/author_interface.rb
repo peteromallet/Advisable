@@ -6,8 +6,6 @@ module Types
       include Types::BaseInterface
       field_class BaseField
 
-      orphan_types Types::Guild::ReactionType
-
       field :authored, Boolean, null: false do
         description "Whether the current user is the author of the resource"
       end

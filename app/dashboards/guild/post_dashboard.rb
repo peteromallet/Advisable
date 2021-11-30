@@ -23,7 +23,6 @@ module Guild
       body: Field::Text,
       title: Field::String,
       status: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.public_send(field.attribute.to_s.pluralize).keys }),
-      reactionable_count: Field::Number,
       data: Field::String.with_options(searchable: false),
       created_at: Field::DateTime,
       updated_at: Field::DateTime,
@@ -58,7 +57,6 @@ module Guild
       body
       created_at
       updated_at
-      reactionable_count
       boosted_at
       audience_type
       pinned
@@ -77,7 +75,6 @@ module Guild
       status
       created_at
       updated_at
-      reactionable_count
       pinned
       resolved_at
     ].freeze
