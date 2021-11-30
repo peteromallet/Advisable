@@ -50,7 +50,7 @@ export default function CompanyOverview({ clientApplication }) {
       return;
     }
 
-    history.push("/clients/apply/preferences");
+    history.push("/clients/apply/requirements");
   };
 
   return (

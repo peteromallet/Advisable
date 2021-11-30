@@ -4,7 +4,6 @@ import { Formik, Form, Field } from "formik";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
-import TilesInput from "src/components/TilesInput";
 import { Label, Box, Error, RadioGroup, Radio } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import CurrencyInput from "src/components/CurrencyInput";
@@ -29,7 +28,7 @@ export const validationSchema = object().shape({
   ),
 });
 
-export default function CompanyOverview({ clientApplication }) {
+export default function Requirements({ clientApplication }) {
   const [update] = useMutation(UPDATE_CLIENT_APPLICATION);
   const [submit] = useMutation(SUBMIT_CLIENT_APPLICATION);
   const history = useHistory();
@@ -71,7 +70,7 @@ export default function CompanyOverview({ clientApplication }) {
         {(formik) => (
           <Form>
             <StepNumber>Step 4 of 4</StepNumber>
-            <Header>Preferences</Header>
+            <Header>Requirements</Header>
             <Description>
               This will help understand whether you and your company are a good
               fit for Advisable.
@@ -93,23 +92,6 @@ export default function CompanyOverview({ clientApplication }) {
                   placeholder="Enter your estimated spend"
                   label="What’s your company’s estimated annual marketing budget?"
                   data-testid="budget"
-                />
-              </Box>
-              <Box mb={6}>
-                <FormField
-                  as={TilesInput}
-                  fullWidth
-                  alignWidth
-                  optionsPerRow={2}
-                  name="feedback"
-                  onChange={(n) => formik.setFieldValue("feedback", n)}
-                  error={null}
-                  label="Are you open to giving feedback on your experience with Advisable"
-                  options={[
-                    { label: "Yes", value: true },
-                    { label: "No", value: false },
-                  ]}
-                  value={formik.values.feedback}
                 />
               </Box>
               <Label mb={3}>

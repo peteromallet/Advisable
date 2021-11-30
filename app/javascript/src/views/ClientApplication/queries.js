@@ -16,7 +16,7 @@ const clientApplicationFields = gql`
     businessType
     # Goals
     goals
-    # Preferences
+    # Requirements
     budget
     feedback
     marketingAttitude
