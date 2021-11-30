@@ -1,4 +1,6 @@
 import React from "react";
+import queryString from "query-string";
+import { useLocation } from "react-router";
 import { ChatAlt } from "@styled-icons/heroicons-solid/ChatAlt";
 import { Modal, useModal, Button, DialogDisclosure } from "@advisable/donut";
 import ConnectModal from "./ConnectModal";
@@ -8,7 +10,9 @@ export default function ConnectButton({
   children = "Connect",
   ...props
 }) {
-  const dialog = useModal();
+  const location = useLocation();
+  const { prompt } = queryString.parse(location.search);
+  const dialog = useModal({ visible: prompt === "true" });
 
   return (
     <>
