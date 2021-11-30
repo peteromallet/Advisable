@@ -7,8 +7,6 @@ export default gql`
     title
     body
     excerpt
-    reacted
-    reactionsCount
     status
     engaged
     engagementsCount
@@ -19,7 +17,6 @@ export default gql`
     shareable
     pinned
     resolved
-    isPopular
     images {
       id
       url
