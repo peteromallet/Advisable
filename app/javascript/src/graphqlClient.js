@@ -18,11 +18,13 @@ function extractProfileHeader(queryParams) {
 
 const authLink = setContext((_, { headers }) => {
   const queryParams = queryString.parse(window.location.search);
-  const csrfElement = document.querySelector("meta[name=csrf-token]");
+  const csrfToken = document
+    .querySelector("meta[name=csrf-token]")
+    ?.getAttribute("content");
 
   const nextHeaders = {
     ...headers,
-    "X-CSRF-Token": window?._CSRF || csrfElement.content,
+    "X-CSRF-Token": csrfToken,
     "X-RELEASED-AT": process.env.RELEASED_AT,
   };
 
