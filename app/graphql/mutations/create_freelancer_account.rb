@@ -51,6 +51,7 @@ module Mutations
         account: account,
         campaign_name: args[:campaign_name],
         campaign_source: args[:campaign_source],
+        campaign_medium: args[:campaign_medium],
         application_stage: "Started",
         pid: args[:pid],
         referrer_id: find_referrer(args[:referrer])

@@ -36,6 +36,7 @@ module Mutations
           login_as(account)
           user.sync_to_airtable
           user.send_confirmation_email
+          GeocodeAccountJob.perform_later(account, context[:client_ip])
           {viewer: user}
         else
           ApiError.invalid_request("INVALID", user.errors.full_messages)

@@ -44,6 +44,7 @@ export function Orbit({
   index,
   path,
   strokeWidth,
+  strokeOpacity,
   transition = { duration: 0.5 },
 }) {
   const [state, setState] = useSharedOrbits();
@@ -63,6 +64,7 @@ export function Orbit({
       animate={animate}
       transition={transition}
       strokeWidth={strokeWidth}
+      strokeOpacity={strokeOpacity}
       vectorEffect="non-scaling-stroke"
     />
   );
