@@ -22,11 +22,20 @@ export const validationSchema = object().shape({
   title: string().required("Please enter your role at the company"),
   budget: string().required("Please enter your budget"),
   hiring: boolean().required(
-    "Please tell us if you interested in hiring a specialist",
+    "Please tell us if you're interested in hiring a specialist",
   ),
-  marketingAttitude: string().required(
-    "Please select your type of marketing attitude",
-  ),
+  specialistDescription: string().when("hiring", {
+    is: true,
+    then: string().required(
+      "Please describe the specialist you're looking for",
+    ),
+  }),
+  introduction: boolean().when("hiring", {
+    is: true,
+    then: boolean().required(
+      "Please tell us if you want to be introduced to the hiring process",
+    ),
+  }),
 });
 
 export default function Requirements({ clientApplication }) {
@@ -38,7 +47,8 @@ export default function Requirements({ clientApplication }) {
     title: clientApplication.title || "",
     budget: clientApplication.budget / 100 || "",
     hiring: undefined,
-    marketingAttitude: clientApplication.marketingAttitude || "",
+    specialistDescription: undefined,
+    introduction: undefined,
   };
 
   const handleSubmit = async (values, { setStatus }) => {
@@ -117,7 +127,7 @@ export default function Requirements({ clientApplication }) {
                 <>
                   <FormField
                     as={Textarea}
-                    name="description"
+                    name="specialistDescription"
                     minRows={3}
                     label="Please briefly describe the specialist you are looking for"
                     marginBottom={6}
