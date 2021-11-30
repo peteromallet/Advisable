@@ -9,7 +9,6 @@ module Types
       field_class BaseField
 
       include Types::Guild::AuthorInterface
-      include Types::Guild::ReactionInterface
 
       orphan_types Types::Guild::Post::PostType, Types::Guild::Post::AdviceRequiredType, Types::Guild::Post::CaseStudyType, Types::Guild::Post::OpportunityType
 
@@ -99,11 +98,6 @@ module Types
       field :resolved, Boolean, null: true
       def resolved
         !!object.resolved_at
-      end
-
-      field :is_popular, Boolean, null: true
-      def is_popular
-        object.popular?
       end
 
       definition_methods do

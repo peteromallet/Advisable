@@ -12,35 +12,13 @@ RSpec.describe Guild::Post, type: :model do
     it { expect(guild_post).to have_db_column(:body) }
     it { expect(guild_post).to have_db_column(:title) }
     it { expect(guild_post).to have_db_column(:status) }
-    it { expect(guild_post).to have_db_column(:reactionable_count) }
     it { expect(guild_post).to have_db_column(:pinned) }
   end
 
   describe "relationships" do
     it { expect(guild_post).to belong_to(:specialist) }
-    it { expect(guild_post).to have_many(:reactions) }
     it { expect(guild_post).to have_many(:labels) }
     it { expect(guild_post).to have_many(:images) }
-  end
-
-  describe "with reactions" do
-    it "can have multiple reactions from different specialists" do
-      expect(guild_post.reactions).to be_empty
-      guild_post.reactions << build(:guild_reaction)
-      guild_post.reactions << build(:guild_reaction)
-
-      expect(guild_post.reactions.size).to eq(2)
-      expect(guild_post.reactions.pluck(:specialist_id).uniq.size).to eq(2)
-    end
-
-    it "cannot have multiple reactions from a single specialist" do
-      expect(guild_post.reactions).to be_empty
-      reactions = build_list(:guild_reaction, 2, specialist: specialist)
-      guild_post.reactions << reactions.first
-      guild_post.reactions << reactions.last
-
-      expect(guild_post.reactions.pluck(:specialist_id).uniq.size).to eq(1)
-    end
   end
 
   describe "with audience type" do
@@ -105,45 +83,6 @@ RSpec.describe Guild::Post, type: :model do
         post.boost!
       end.to change(post, :boosted_at)
       expect(GuildPostBoostedJob).to have_been_enqueued.with(post.id)
-    end
-  end
-
-  describe "popular posts" do
-    subject(:popular_posts) { described_class.popular }
-
-    let!(:post_a) do
-      create(:guild_post, engagements_count: 0, reactionable_count: 1)
-    end
-
-    let!(:post_b) do
-      create(:guild_post, engagements_count: 1, reactionable_count: 2)
-    end
-
-    it "orders by the sum of reactions and engagements" do
-      expect(popular_posts.map(&:rank)).to eq([
-                                                post_b.engagements_count + post_b.reactionable_count,
-                                                post_a.engagements_count + post_a.reactionable_count
-                                              ])
-
-      post_a.update!(reactionable_count: 99)
-      post_a.reload
-      expect(described_class.popular.first).to eq(post_a)
-    end
-
-    it "does not include unpublished" do
-      unpublished = create(:guild_post, status: "draft", engagements_count: 100, reactionable_count: 100)
-      expect(popular_posts).not_to include(unpublished)
-      expect(popular_posts).to eq([post_b, post_a])
-    end
-
-    it "does not include posts older than two weeks" do
-      post_b.update!(created_at: 3.weeks.ago)
-      expect(popular_posts).not_to include(post_b)
-    end
-
-    it "does not include unresolved posts" do
-      post_a.update!(resolved_at: 1.day.ago)
-      expect(popular_posts).not_to include(post_a)
     end
   end
 end

@@ -52,10 +52,6 @@ Specialist.update_all(guild: true)
 
   post.save!
 
-  rand(3).times do
-    post.reactions.create(specialist: random_specialist)
-  end
-
   next unless num == 1
 
   Rails.logger.info "Attaching an image"

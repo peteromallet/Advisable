@@ -28,8 +28,7 @@ RSpec.describe Mutations::UpdateLastReadNotification do
     let(:other) { create(:specialist) }
 
     before do
-      reaction = guild_post.reactions.create(specialist: other)
-      reaction.create_notification!
+      Notification.create!(account: specialist.account, action: "suggested_post", notifiable: guild_post)
     end
 
     it "updates unread notifications as read" do
