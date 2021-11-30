@@ -6,7 +6,7 @@ import AnimatedCard from "../components/AnimatedCard";
 import { validationSchema as companyOverviewValidationSchema } from "./CompanyOverview";
 import { validationSchema as companyStageValidationSchema } from "./CompanyStage";
 import { validationSchema as goalsValidationSchema } from "./Goals";
-import { validationSchema as preferencesValidationSchema } from "./Preferences";
+import { validationSchema as requirementsValidationSchema } from "./Requirements";
 import Pencil from "src/illustrations/zest/pencil";
 
 const stepsMeta = [
@@ -23,8 +23,8 @@ const stepsMeta = [
     path: "/clients/apply/goals",
   },
   {
-    validationSchema: preferencesValidationSchema,
-    path: "/clients/apply/preferences",
+    validationSchema: requirementsValidationSchema,
+    path: "/clients/apply/requirements",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function Welcome({ clientApplication }) {
           lineHeight="1.2"
         >
           In order to understand how best to serve you, we’d first like to ask
-          you some questions about your company, goals, and preferences.
+          you some questions about your company, goals, and requirements.
         </Text>
         <Button
           as={Link}
