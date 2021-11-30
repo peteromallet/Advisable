@@ -22,6 +22,8 @@ module Types
           Types::AgreementMessage
         elsif object.guild_post_id
           Types::GuildPostMessage
+        elsif object.consultation_id
+          Types::ConsultationRequestMessage
         else
           Types::UserMessage
         end
