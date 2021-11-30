@@ -18,15 +18,17 @@ export default function MotionCard({ children, forwards, ...props }) {
       position="relative"
       gridArea="card"
       alignSelf={{ _: "start", xl: "center" }}
-      {...props}
     >
       {children && (
         <Card
-          padding={[5, 10]}
+          paddingTop={[5, 10]}
+          paddingX={[5, 12]}
+          paddingBottom={[5, 12]}
           maxWidth={640}
           width={{ xl: 640 }}
-          borderRadius={8}
+          borderRadius="24px"
           elevation="l"
+          {...props}
         >
           {children}
         </Card>

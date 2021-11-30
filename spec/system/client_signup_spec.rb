@@ -33,7 +33,7 @@ RSpec.describe "Client signup", type: :system do
     expect(page).to have_content("Welcome to Advisable!")
     fill_in("password", with: "testing123")
     fill_in("passwordConfirmation", with: "testing123")
-    click_on("Get Started")
+    click_on("Continue")
 
     expect(page).to have_content("Welcome to Advisable")
     click_on("Get Started")

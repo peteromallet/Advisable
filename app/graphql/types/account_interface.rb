@@ -19,7 +19,7 @@ module Types
 
     field :needs_to_set_a_password, Boolean, null: true
     def needs_to_set_a_password
-      account.password_digest.blank?
+      account.auth_providers.none? && account.password_digest.blank?
     end
 
     field :confirmed, Boolean, null: false

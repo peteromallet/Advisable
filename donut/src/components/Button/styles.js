@@ -232,6 +232,24 @@ const buttonSize = variant({
         marginLeft: "8px",
       },
     },
+    xl: {
+      height: "60px",
+      fontSize: 18,
+      lineHeight: "60px",
+      fontWeight: 500,
+      paddingLeft: 24,
+      paddingRight: 24,
+      svg: {
+        width: 24,
+        height: 24,
+      },
+      [StyledButtonPrefix]: {
+        marginRight: "8px",
+      },
+      [StyledButtonSuffix]: {
+        marginLeft: "8px",
+      },
+    },
   },
 });
 

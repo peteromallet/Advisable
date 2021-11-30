@@ -1,21 +1,19 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import { useHistory } from "react-router";
-import { ChevronRight } from "@styled-icons/feather/ChevronRight";
-import { Box, Text, Input, Error, useBreakpoint } from "@advisable/donut";
+import { Box, Text, Input, Error, Link, Heading } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
 import useViewer from "src/hooks/useViewer";
 import validationSchema from "./validationSchema";
-import HaveAccount from "../HaveAccount";
 import MotionCard from "../MotionCard";
-import { CardHeader } from "../styles";
 import { useCreateClientAccount } from "../queries";
+import LoginWithGoogle from "src/views/Login/LoginWithGoogle";
+import Divider from "src/components/Divider";
 
 export default function StartApplication({ nextStep, forwards }) {
   const viewer = useViewer();
   const history = useHistory();
-  const isWideScreen = useBreakpoint("sUp");
   const [createClientAccount] = useCreateClientAccount();
 
   const initialValues = {
@@ -41,16 +39,21 @@ export default function StartApplication({ nextStep, forwards }) {
   return (
     <MotionCard forwards={forwards}>
       <>
-        <Box mb={[0, 8]}>
-          <CardHeader>
-            Apply to gain access to our network of unique talent
-          </CardHeader>
-          {isWideScreen ? (
-            <Text as="p" color="neutral800" fontSize="m" lineHeight="m">
-              Enter your details now to get started.
-            </Text>
-          ) : null}
+        <Box textAlign="center" marginBottom={8}>
+          <Heading size="4xl" marginBottom={3}>
+            Get started
+          </Heading>
+          <Text fontSize="lg" color="neutral700">
+            Already have an account?{" "}
+            <Link to="/login" variant="underlined">
+              Login
+            </Link>
+          </Text>
         </Box>
+        <LoginWithGoogle size="xl" mode="user" navigate="/clients/apply">
+          Signup with Google
+        </LoginWithGoogle>
+        <Divider py={6}>Or</Divider>
         <Formik
           onSubmit={handleSubmit}
           initialValues={initialValues}
@@ -64,48 +67,48 @@ export default function StartApplication({ nextStep, forwards }) {
                     as={Input}
                     name="firstName"
                     size={["sm", "md"]}
-                    placeholder="Dwight"
-                    label="First Name"
+                    placeholder="First name"
                   />
                 </Box>
-                <Box mb={4} width="100%">
+                <Box mb={4} ml={[0, 2]} width="100%">
                   <FormField
                     as={Input}
                     name="lastName"
                     size={["sm", "md"]}
-                    placeholder="Schrutt"
-                    label="Last Name"
+                    placeholder="Last name"
                   />
                 </Box>
               </Box>
-              <Box mb={[4, 5]}>
+              <Box mb={4}>
                 <FormField
                   as={Input}
                   name="email"
                   size={["sm", "md"]}
-                  placeholder="dwight@dundermifflin.com"
-                  label="Email"
+                  placeholder="Email address"
                 />
               </Box>
               <Error>{status}</Error>
-              <Box
-                display="flex"
-                flexDirection={{ _: "column", m: "row" }}
-                pt={[4, 5]}
-              >
-                <SubmitButton
-                  size={["m", "l"]}
-                  variant="dark"
-                  suffix={<ChevronRight />}
-                  mb={{ _: 3, m: 0 }}
-                >
-                  Get Started
-                </SubmitButton>
-                <HaveAccount />
-              </Box>
+              <SubmitButton size={["m", "l"]} variant="gradient" width="100%">
+                Get Started
+              </SubmitButton>
             </Form>
           )}
         </Formik>
+        <Divider py={8} />
+        <Box textAlign="center">
+          <Text
+            fontWeight={480}
+            fontSize="md"
+            marginBottom={2}
+            color="neutral700"
+            letterSpacing="-0.016em"
+          >
+            Looking to create a freelancer account?
+          </Text>
+          <Link to="/freelancers/join" fontSize="m" variant="underlined">
+            Signup as a freelancer
+          </Link>
+        </Box>
       </>
     </MotionCard>
   );

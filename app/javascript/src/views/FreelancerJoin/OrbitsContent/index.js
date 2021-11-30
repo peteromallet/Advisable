@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text, useBreakpoint } from "@advisable/donut";
-import lambdaSchoolLogoWhite from "./logos/lambdaSchoolLogoWhite.png";
+import bloomtechLogoBlack from "./logos/bloomtech-black.png";
 import StackOverflowLogo from "./logos/StackOverflowLogo";
 import SpotifyLogo from "./logos/SpotifyLogo";
 import ProductHuntLogo from "./logos/ProductHuntLogo";
@@ -16,7 +16,7 @@ function Logos() {
     width: "100%",
     height: "100%",
     preserveAspectRatio: "xMinYMin meet",
-    fill: "white",
+    fill: "black",
   };
   return (
     <Box
@@ -26,23 +26,24 @@ function Logos() {
       gridColumnGap="54px"
       gridRowGap={7}
     >
-      <SpotifyLogo {...params} />
-      <StackOverflowLogo {...params} height="96%" />
+      <SpotifyLogo {...params} opacity="0.6" />
+      <StackOverflowLogo {...params} height="96%" opacity="0.63" />
       <Box
         as="img"
-        src={lambdaSchoolLogoWhite}
-        alt="lambda-school-logo"
+        src={bloomtechLogoBlack}
+        alt="bloomtech-logo"
         height="100%"
         css={`
           object-fit: scale-down;
+          transform: translateY(3px);
         `}
-        opacity="0.6"
+        opacity="0.58"
       />
-      <ProductHuntLogo {...params} opacity="0.8" height="98%" />
-      <WorldRemitLogo {...params} fill="none" opacity="0.6" />
-      <BabbelLogo {...params} opacity="0.6" height="88%" />
-      <UberAllLogo {...params} opacity="0.4" />
-      <BigCommerceLogo {...params} opacity="0.4" />
+      <ProductHuntLogo {...params} opacity="0.55" />
+      <WorldRemitLogo {...params} stroke="black" opacity="0.55" />
+      <BabbelLogo {...params} opacity="0.5" height="86%" />
+      <UberAllLogo {...params} opacity="0.45" />
+      <BigCommerceLogo {...params} opacity="0.45" />
     </Box>
   );
 }
@@ -51,9 +52,9 @@ function Title({ children, ...props }) {
   return (
     <Text
       fontSize={{ _: "5xl", xl: 48 }}
-      letterSpacing="-0.02rem"
-      color="white"
-      fontWeight="medium"
+      letterSpacing="-0.016em"
+      color="neutral900"
+      fontWeight={560}
       {...props}
     >
       {children}
@@ -66,11 +67,19 @@ function FormsContent() {
     <>
       <Box mb={{ xl: 20 }}>
         <Title>Advisable helps</Title>
-        <Title color="#FEB6C8">top freelancers</Title>
+        <Title
+          css={`
+            background-image: linear-gradient(135deg, #c518ce, #0c3fec);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          `}
+        >
+          top freelancers
+        </Title>
         <Title mb={{ _: 4, l: 5 }}>succeed</Title>
         <Text
           fontSize={{ _: "m", l: "l" }}
-          color="white"
+          color="neutral800"
           lineHeight={{ _: "m", l: "l" }}
         >
           We build case studies of your work and get them discovered by clients
@@ -97,6 +106,7 @@ export default function OrbitsContent({ step, custom }) {
       gridArea="orbits-content"
       alignSelf={{ _: "start", xl: "center" }}
       maxWidth={{ _: "640px", xl: "500px" }}
+      pt={{ _: 0, xl: 14 }}
       pr={{ _: 0, xl: 8 }}
       pb={{ xl: 14 }}
       display="flex"

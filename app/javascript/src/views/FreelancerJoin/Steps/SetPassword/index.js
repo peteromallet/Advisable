@@ -1,17 +1,14 @@
 import React from "react";
 import { Form, Formik } from "formik";
+import { motion } from "framer-motion";
 import { Redirect, useHistory } from "react-router";
-import { ChevronRight } from "@styled-icons/feather/ChevronRight";
-import { Box, Text, Error } from "@advisable/donut";
+import { Heading, Box, Text, Error } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
 import useViewer from "src/hooks/useViewer";
 import MotionCard from "../MotionCard";
-import HaveAccount from "../HaveAccount";
 import { useUpdatePassword } from "../queries";
 import validationSchema from "./validationSchema";
-import { motion } from "framer-motion";
-import { CardHeader } from "../styles";
 
 export default function SetPassword({ prevStep, forwards }) {
   const viewer = useViewer();
@@ -44,10 +41,14 @@ export default function SetPassword({ prevStep, forwards }) {
 
   return (
     <MotionCard forwards={forwards}>
-      <CardHeader>Welcome to Advisable!</CardHeader>
-      <Text as="p" color="neutral800" fontSize="m" lineHeight="m" mb={8}>
-        Set the password that you&apos;ll use to log in to your account.
-      </Text>
+      <Box textAlign="center" marginBottom={6}>
+        <Heading size="4xl" marginBottom={3}>
+          Welcome to Advisable!
+        </Heading>
+        <Text fontSize="lg" color="neutral700">
+          Set the password that you&apos;ll use to log in to your account.
+        </Text>
+      </Box>
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -65,7 +66,7 @@ export default function SetPassword({ prevStep, forwards }) {
                 label="Password"
               />
             </Box>
-            <Box mb={[4, 5]}>
+            <Box mb={[4, 8]}>
               <FormField
                 type="password"
                 size={["sm", "md"]}
@@ -75,21 +76,14 @@ export default function SetPassword({ prevStep, forwards }) {
               />
             </Box>
             <Error>{status}</Error>
-            <Box
-              display="flex"
-              flexDirection={{ _: "column", m: "row" }}
-              pt={[4, 5]}
+            <SubmitButton
+              size={["m", "l"]}
+              variant="gradient"
+              mb={{ xs: 3 }}
+              width="100%"
             >
-              <SubmitButton
-                size={["m", "l"]}
-                variant="dark"
-                mb={{ xs: 3 }}
-                suffix={<ChevronRight />}
-              >
-                Get Started
-              </SubmitButton>
-              <HaveAccount />
-            </Box>
+              Continue
+            </SubmitButton>
           </Form>
         )}
       </Formik>

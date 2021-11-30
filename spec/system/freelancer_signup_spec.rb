@@ -23,7 +23,7 @@ RSpec.describe "Freelancer signup", type: :system do
     click_on("Get Started")
     fill_in("password", with: "testing123")
     fill_in("passwordConfirmation", with: "testing123")
-    click_on("Get Started")
+    click_on("Continue")
 
     expect(page).to have_content("Welcome to Advisable")
     click_on("Get Started")
@@ -54,11 +54,11 @@ RSpec.describe "Freelancer signup", type: :system do
     expect(page).to have_content("Work preferences")
 
     skills = find_field("skills")
-    skills.send_keys "face", :down, :enter
-    skills.send_keys "twit", :down, :enter
+    skills.send_keys("face", :down, :enter)
+    skills.send_keys("twit", :down, :enter)
     industries = find_field("industries")
-    industries.send_keys "fin", :down, :enter
-    industries.send_keys "deve", :down, :enter
+    industries.send_keys("fin", :down, :enter)
+    industries.send_keys("deve", :down, :enter)
     choose "Full-time freelancer", allow_label_click: true
     click_on "Continue"
 

@@ -71,13 +71,13 @@ test("successful flow", async () => {
   ];
   const app = renderRoute({ route: `/freelancers/join`, graphQLMocks });
   await app.findByText(/advisable helps/i);
-  userEvent.type(app.getByLabelText(/first name/i), viewer.firstName);
-  userEvent.type(app.getByLabelText(/last name/i), viewer.lastName);
-  userEvent.type(app.getByLabelText(/email/i), viewer.email);
+  userEvent.type(app.getByPlaceholderText(/first name/i), viewer.firstName);
+  userEvent.type(app.getByPlaceholderText(/last name/i), viewer.lastName);
+  userEvent.type(app.getByPlaceholderText(/email/i), viewer.email);
   fireEvent.click(app.getByLabelText(/get started/i));
   await app.findByText("Welcome to Advisable!");
   userEvent.type(app.getByLabelText("Password"), "123123123");
   userEvent.type(app.getByLabelText("Confirm password"), "123123123");
-  fireEvent.click(app.getByLabelText(/get started/i));
+  fireEvent.click(app.getByLabelText(/continue/i));
   await app.findByText("Welcome to Advisable");
 });

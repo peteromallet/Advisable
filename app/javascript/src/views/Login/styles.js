@@ -35,10 +35,14 @@ export const Error = styled.div`
 
 export const StyledLoginWithGoogle = styled(StyledButton)`
   width: 100%;
-  background: ${theme.colors.neutral800};
+  background: white;
+  color: ${theme.colors.neutral800};
+  border: 2px solid ${theme.colors.neutral200};
 
   &:not(:disabled):hover {
-    background: ${theme.colors.neutral900};
+    background: white;
+    color: ${theme.colors.neutral900};
+    border-color: ${theme.colors.neutral300};
   }
 
   svg {
