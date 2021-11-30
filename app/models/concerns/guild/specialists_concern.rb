@@ -6,7 +6,6 @@ module Guild
 
     included do
       has_many :guild_posts, class_name: "Guild::Post", dependent: :destroy, inverse_of: :specialist
-      has_many :guild_post_reactions, -> { order(created_at: :desc) }, through: :guild_posts, source: :reactions, class_name: "Guild::Reaction"
       has_many :guild_post_engagements, class_name: "Guild::PostEngagement", dependent: :destroy
 
       before_save :guild_joined_callbacks, if: -> { guild_changed? && guild }
