@@ -76,21 +76,23 @@ function Sidebar({ data, isOwner, ...props }) {
           >
             {specialist.name}
           </Text>
-          <Box display="flex" color="neutral500" alignItems="center">
-            <Box flexShrink={0}>
-              <Map height="20px" width="20px" />
+          {Boolean(specialist.location) && (
+            <Box display="flex" color="neutral500" alignItems="center">
+              <Box flexShrink={0}>
+                <Map height="20px" width="20px" />
+              </Box>
+              <Text
+                $truncate
+                fontSize={{ _: "s", m: "l" }}
+                letterSpacing="-0.016em"
+                color="neutral600"
+                lineHeight="l"
+                marginLeft={1}
+              >
+                {specialist.location}
+              </Text>
             </Box>
-            <Text
-              $truncate
-              fontSize={{ _: "s", m: "l" }}
-              letterSpacing="-0.016em"
-              color="neutral600"
-              lineHeight="l"
-              marginLeft={1}
-            >
-              {specialist.location}
-            </Text>
-          </Box>
+          )}
         </StyledNameWrapper>
         <StyledBioWrapper>
           <Text

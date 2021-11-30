@@ -233,7 +233,7 @@ module Types
     field :location, String, null: true
 
     def location
-      "#{object.city}, #{country.try(:name)}"
+      [object.city, country.try(:name)].compact.join(", ")
     end
 
     field :has_setup_payments, Boolean, null: true do
