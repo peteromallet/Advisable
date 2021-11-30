@@ -94,32 +94,6 @@ export default function Requirements({ clientApplication }) {
                   data-testid="budget"
                 />
               </Box>
-              <Label mb={3}>
-                How would you describe your company’s attitude to marketing?
-              </Label>
-              <RadioGroup>
-                <Field
-                  as={Radio}
-                  type="radio"
-                  name="marketingAttitude"
-                  value="We rarely experiment & try new things"
-                  description="We rarely experiment & try new things"
-                />
-                <Field
-                  as={Radio}
-                  type="radio"
-                  name="marketingAttitude"
-                  value="We sometimes test new strategies & tactics"
-                  description="We sometimes test new strategies & tactics"
-                />
-                <Field
-                  as={Radio}
-                  type="radio"
-                  name="marketingAttitude"
-                  value="We’re constantly looking for opportunities"
-                  description="We’re constantly looking for opportunities"
-                />
-              </RadioGroup>
             </Box>
             <Error>{formik.status}</Error>
             <SubmitButton
