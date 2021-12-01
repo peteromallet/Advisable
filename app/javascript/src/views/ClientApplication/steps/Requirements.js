@@ -43,20 +43,35 @@ export default function Requirements({ clientApplication }) {
   const [submit] = useMutation(SUBMIT_CLIENT_APPLICATION);
   const history = useHistory();
 
+  const { status, feedback, specialistDescription, title, budget } =
+    clientApplication;
+
+  let hiringInitialValue;
+  if (status === "Submitted" && feedback && specialistDescription) {
+    hiringInitialValue = true;
+  } else if (status === "Submitted") {
+    hiringInitialValue = false;
+  }
+
   const initialValues = {
-    title: clientApplication.title || "",
-    budget: clientApplication.budget / 100 || "",
-    hiring: undefined,
-    specialistDescription: clientApplication.specialistDescription || "",
-    feedback: clientApplication.feedback || undefined,
+    title: title || "",
+    budget: budget / 100 || "",
+    hiring: hiringInitialValue,
+    specialistDescription: specialistDescription || "",
+    feedback: feedback || undefined,
   };
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
-    delete values.hiring;
+    const { title, budget, specialistDescription, feedback, hiring } = values;
     const res = await update({
       variables: {
-        input: { ...values, budget: values.budget * 100 },
+        input: {
+          title,
+          budget: budget * 100,
+          specialistDescription: hiring ? specialistDescription : null,
+          feedback: hiring ? feedback : null,
+        },
       },
     });
 
