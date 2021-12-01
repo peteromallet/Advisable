@@ -48,8 +48,8 @@ module Uid
     end
 
     def valid_uid?(uid)
-      prefix, uniq = uid.split("_")
-      prefix == prefix_for_uid && uniq.length == 15
+      prefix, uniq = uid.split("_", 2)
+      prefix == prefix_for_uid && uniq&.length == 15
     end
   end
 end
