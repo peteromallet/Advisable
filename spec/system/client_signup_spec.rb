@@ -53,11 +53,12 @@ RSpec.describe "Client signup", type: :system do
     find("label", text: "Improve Conversion").click
     click_on("Continue")
 
-    expect(page).to have_content("Preferences")
+    expect(page).to have_content("Requirements")
     fill_in("title", with: "CEO")
     fill_in("budget", with: "10000")
     find("button[aria-label='Yes']").click
-    find("label", text: "We rarely experiment & try new things").click
+    fill_in("specialistDescription", with: "We are looking for talents")
+    find("[data-testid='feedback-buttons'").find("button[aria-label='Yes'").click
     click_on("Continue")
 
     expect(page).to have_content("We are reviewing your application")
