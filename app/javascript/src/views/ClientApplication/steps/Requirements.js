@@ -157,6 +157,7 @@ export default function Requirements({ clientApplication }) {
                     onChange={(n) => formik.setFieldValue("feedback", n)}
                     error={null}
                     label="Are you up for dedicating 1 hour of your time in the next few days to be introduced to the hiring process and provide feedback to our team?"
+                    data-testid="feedback-buttons"
                     options={[
                       { label: "Yes", value: true },
                       { label: "No", value: false },
