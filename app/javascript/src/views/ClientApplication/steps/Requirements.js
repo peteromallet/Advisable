@@ -30,10 +30,10 @@ export const validationSchema = object().shape({
       "Please describe the specialist you're looking for",
     ),
   }),
-  introduction: boolean().when("hiring", {
+  feedback: boolean().when("hiring", {
     is: true,
     then: boolean().required(
-      "Please tell us if you want to be introduced to the hiring process",
+      "Please tell us if you want to be introduced to the hiring process and provide a feedback",
     ),
   }),
 });
@@ -48,7 +48,7 @@ export default function Requirements({ clientApplication }) {
     budget: clientApplication.budget / 100 || "",
     hiring: undefined,
     specialistDescription: undefined,
-    introduction: undefined,
+    feedback: undefined,
   };
 
   const handleSubmit = async (values, { setStatus }) => {
@@ -138,15 +138,15 @@ export default function Requirements({ clientApplication }) {
                     fullWidth
                     alignWidth
                     optionsPerRow={2}
-                    name="introduction"
-                    onChange={(n) => formik.setFieldValue("introduction", n)}
+                    name="feedback"
+                    onChange={(n) => formik.setFieldValue("feedback", n)}
                     error={null}
                     label="Are you up for dedicating 1 hour of your time in the next few days to be introduced to the hiring process and provide feedback to our team?"
                     options={[
                       { label: "Yes", value: true },
                       { label: "No", value: false },
                     ]}
-                    value={formik.values.introduction}
+                    value={formik.values.feedback}
                   />
                 </>
               )}
