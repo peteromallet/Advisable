@@ -127,14 +127,14 @@ RSpec.describe(Mutations::UpdateClientApplication) do
     end
   end
 
-  context "when passing marketingAttitude" do
-    it "sets the company marketing attitude attribute" do
+  context "when passing specialistDescription" do
+    it "sets the company specialist description attribute" do
       user.company.update(marketing_attitude: nil)
-      unchanged_data = user.company.reload.attributes.dup.except("marketing_attitude", "updated_at")
+      unchanged_data = user.company.reload.attributes.dup.except("specialist_description", "updated_at")
       expect do
-        request({marketingAttitude: "We’re pretty happy with our strategy & tactics"})
+        request({specialistDescription: "We’re pretty happy with our strategy & tactics"})
       end.to change {
-        user.company.reload.marketing_attitude
+        user.company.reload.specialist_description
       }.from(nil).to("We’re pretty happy with our strategy & tactics")
       expect(unchanged_data < user.company.reload.attributes).to be(true)
     end
