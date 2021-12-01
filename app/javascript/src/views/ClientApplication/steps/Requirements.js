@@ -47,8 +47,8 @@ export default function Requirements({ clientApplication }) {
     title: clientApplication.title || "",
     budget: clientApplication.budget / 100 || "",
     hiring: undefined,
-    specialistDescription: undefined,
-    feedback: undefined,
+    specialistDescription: clientApplication.specialistDescription || "",
+    feedback: clientApplication.feedback || undefined,
   };
 
   const handleSubmit = async (values, { setStatus }) => {

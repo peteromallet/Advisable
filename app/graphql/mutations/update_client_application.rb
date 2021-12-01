@@ -11,7 +11,7 @@ module Mutations
     argument :feedback, Boolean, required: false
     argument :goals, [String], required: false
     argument :industry, String, required: false
-    argument :marketing_attitude, String, required: false
+    argument :specialist_description, String, required: false
     argument :title, String, required: false
 
     field :client_application, Types::ClientApplicationType, null: true
@@ -31,7 +31,7 @@ module Mutations
       company.industry = Industry.find_by_name!(args[:industry]) if args.key?(:industry)
       company.kind = args[:company_type] if args.key?(:company_type)
       company.assign_attributes(
-        args.slice(:budget, :business_type, :goals, :feedback, :marketing_attitude)
+        args.slice(:budget, :business_type, :goals, :feedback, :specialist_description)
       )
       success = current_account_responsible_for do
         current_user.save && company.save

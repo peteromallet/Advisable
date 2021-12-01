@@ -7,7 +7,7 @@ module Types
     description "Represents a clients application to Advisable"
 
     delegate :company, to: :object
-    delegate :goals, :marketing_attitude, :business_type, :feedback, :budget, :industry, to: :company
+    delegate :goals, :specialist_description, :business_type, :feedback, :budget, :industry, to: :company
 
     field :budget, Int, null: true
     field :skills, [Types::Skill], null: true
@@ -15,7 +15,7 @@ module Types
     field :feedback, Boolean, null: true
     field :goals, [String], null: true
     field :business_type, String, null: true
-    field :marketing_attitude, String, null: true
+    field :specialist_description, String, null: true
     field :industry, Types::IndustryType, null: true
     field :number_of_freelancers, String, null: true
     field :country, Types::CountryType, null: true
