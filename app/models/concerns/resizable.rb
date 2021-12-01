@@ -63,7 +63,12 @@ module Resizable
     return if image.blank?
 
     if image.respond_to?(:variation)
-      Rails.application.routes.url_helpers.rails_representation_url(image, host: Advisable::Application::ORIGIN_HOST)
+      if image.processed?
+        Rails.application.routes.url_helpers.rails_representation_url(image, host: Advisable::Application::ORIGIN_HOST)
+      else
+        ProcessImageJob.perform_later(image.blob, image.variation.transformations)
+        Rails.application.routes.url_helpers.rails_blob_url(image.blob, host: Advisable::Application::ORIGIN_HOST)
+      end
     else
       Rails.application.routes.url_helpers.rails_blob_url(image, host: Advisable::Application::ORIGIN_HOST)
     end
