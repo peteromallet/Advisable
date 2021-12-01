@@ -14,7 +14,6 @@ import ConnectionsCount from "@guild/components/ConnectionsCount";
 import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 import { hasGqlError } from "@guild/utils";
 import ResolvedNotice from "./ResolvedNotice";
-import PopularNotice from "./PopularNotice";
 import JoinGuild from "./JoinGuild";
 import Topics from "./Topics";
 import { StyledImageThumbnail } from "./styles";
@@ -44,8 +43,6 @@ const Post = () => {
 
   const post = data?.guildPost;
   const isAuthor = viewer?.id === post?.author?.id;
-  const authorHasReactions = isAuthor && !!post?.reactionsCount;
-  const popularOrAuthorReactions = post?.isPopular || authorHasReactions;
   const guildViewer = viewer?.isSpecialist && viewer?.isAccepted;
   const otherImages = (post?.images || []).filter((p) => p.cover === false);
 
@@ -63,9 +60,7 @@ const Post = () => {
         {post.images.length > 0 ? (
           <ImageGallery dialog={gallery} images={post.images} />
         ) : null}
-        <Card
-          borderBottom={popularOrAuthorReactions ? "6px solid #fde7b2" : null}
-        >
+        <Card>
           {post.coverImage ? (
             <CoverImage
               height={{ _: "260px", s: "340px", m: "480px" }}
@@ -179,13 +174,6 @@ const Post = () => {
               )
             )}
           </Box>
-          {popularOrAuthorReactions && (
-            <PopularNotice
-              isAuthor={isAuthor}
-              marginBottom="-4px"
-              post={post}
-            />
-          )}
         </Card>
       </Box>
     </ErrorBoundary>

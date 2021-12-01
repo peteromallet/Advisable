@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_25_084846) do
+ActiveRecord::Schema.define(version: 2021_11_30_114415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -508,7 +508,6 @@ ActiveRecord::Schema.define(version: 2021_11_25_084846) do
     t.text "body"
     t.string "title"
     t.integer "status", default: 0, null: false
-    t.integer "reactionable_count", default: 0, null: false
     t.bigint "specialist_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -523,20 +522,6 @@ ActiveRecord::Schema.define(version: 2021_11_25_084846) do
     t.index ["article_id"], name: "index_guild_posts_on_article_id"
     t.index ["post_prompt_id"], name: "index_guild_posts_on_post_prompt_id"
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
-  end
-
-  create_table "guild_reactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "reactionable_type"
-    t.uuid "reactionable_id"
-    t.bigint "specialist_id"
-    t.integer "kind", default: 0, null: false
-    t.integer "status", default: 0, null: false
-    t.jsonb "data"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["reactionable_type", "reactionable_id"], name: "index_guild_reactions_on_reactionable_type_and_reactionable_id"
-    t.index ["specialist_id", "reactionable_type", "reactionable_id"], name: "index_guild_reactions_on_specialist_reactionable", unique: true
-    t.index ["specialist_id"], name: "index_guild_reactions_on_specialist_id"
   end
 
   create_table "industries", force: :cascade do |t|
@@ -1213,7 +1198,6 @@ ActiveRecord::Schema.define(version: 2021_11_25_084846) do
   add_foreign_key "guild_post_images", "guild_posts", on_delete: :cascade
   add_foreign_key "guild_posts", "case_study_articles", column: "article_id"
   add_foreign_key "guild_posts", "specialists"
-  add_foreign_key "guild_reactions", "specialists", on_delete: :cascade
   add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "users"
   add_foreign_key "invoices", "companies"
