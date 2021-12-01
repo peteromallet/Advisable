@@ -13,7 +13,6 @@ module Guild
     belongs_to :post_prompt, optional: true, counter_cache: :guild_posts_count
     belongs_to :article, optional: true, class_name: "::CaseStudy::Article"
     has_one :account, through: :specialist
-    has_many :reactions, as: :reactionable, dependent: :destroy
     has_many :images, class_name: "Guild::PostImage", foreign_key: "guild_post_id", inverse_of: "post", dependent: :destroy
     has_many :engagements, class_name: "Guild::PostEngagement", foreign_key: "guild_post_id", dependent: :destroy, inverse_of: "post"
     has_many :notifications, inverse_of: "notifiable", foreign_key: "notifiable_id", dependent: :destroy
@@ -29,15 +28,6 @@ module Guild
         or(removed.where(specialist: specialist)).
         includes(:specialist).
         order(pinned: :desc, created_at: :desc)
-    }
-
-    scope :popular, lambda {
-      published.
-        includes(:specialist).
-        where(created_at: 2.weeks.ago..Time.current, resolved_at: nil, pinned: false).
-        select("guild_posts.*, reactionable_count + engagements_count AS rank").
-        order("rank DESC").
-        limit(3)
     }
 
     enum status: {draft: 0, published: 1, removed: 2}
@@ -78,10 +68,6 @@ module Guild
       GuildPostBoostedJob.perform_later(id)
     end
 
-    def popular?
-      reactionable_count >= Guild::Post::POPULAR_THRESHOLD && !resolved_at && !pinned
-    end
-
     protected
 
     def labels_resettable?
@@ -112,23 +98,22 @@ end
 #
 # Table name: guild_posts
 #
-#  id                 :uuid             not null, primary key
-#  audience_type      :string
-#  body               :text
-#  boosted_at         :datetime
-#  engagements_count  :integer          default(0)
-#  pinned             :boolean          default(FALSE)
-#  reactionable_count :integer          default(0), not null
-#  resolved_at        :datetime
-#  shareable          :boolean          default(FALSE)
-#  status             :integer          default("draft"), not null
-#  title              :string
-#  type               :string           default("Post"), not null
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  article_id         :bigint
-#  post_prompt_id     :uuid
-#  specialist_id      :bigint
+#  id                :uuid             not null, primary key
+#  audience_type     :string
+#  body              :text
+#  boosted_at        :datetime
+#  engagements_count :integer          default(0)
+#  pinned            :boolean          default(FALSE)
+#  resolved_at       :datetime
+#  shareable         :boolean          default(FALSE)
+#  status            :integer          default("draft"), not null
+#  title             :string
+#  type              :string           default("Post"), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  article_id        :bigint
+#  post_prompt_id    :uuid
+#  specialist_id     :bigint
 #
 # Indexes
 #

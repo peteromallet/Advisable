@@ -24,7 +24,6 @@ const Notification = ({
   __typename: type,
 }) => {
   const messageTypes = {
-    PostReactionNotification: " found your post interesting: ",
     SuggestedPostNotification: "You have a new suggested Post: ",
   };
   const message = messageTypes[type];
@@ -37,17 +36,6 @@ const Notification = ({
         </Box>
         <Box flex={1}>
           <Text size="s" color="neutral600" mb={1} lineHeight="1.1rem">
-            {type === "PostReactionNotification" ? (
-              <Link
-                to={specialist.profilePath}
-                fontWeight="medium"
-                variant="dark"
-                onClick={closeNotifications}
-              >
-                {specialist.name}
-              </Link>
-            ) : null}
-
             {message}
 
             <Link

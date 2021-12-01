@@ -10,8 +10,7 @@ RSpec.describe "Notification", type: :system do
 
   before do
     specialist.account.update!(completed_tutorials: ["guild"])
-    reaction = post.reactions.create!(specialist: other_specialist)
-    reaction.create_notification!
+    Notification.create!(account: specialist.account, action: "suggested_post", notifiable: post)
     authenticate_as(specialist)
   end
 
@@ -26,15 +25,6 @@ RSpec.describe "Notification", type: :system do
 
     visit "/guild/feed"
     expect(page).not_to have_selector(:xpath, unread_selector)
-  end
-
-  it "changes notifications as being read and displays a notification" do
-    visit "/guild/feed"
-    expect(page).to have_selector(:xpath, unread_selector)
-    find(:xpath, unread_selector).click
-    expect(page).not_to have_selector(:xpath, unread_selector)
-
-    expect(page).to have_content("found your post interesting")
   end
 
   it "has a suggested_post notification" do

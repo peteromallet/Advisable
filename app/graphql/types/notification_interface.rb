@@ -6,8 +6,7 @@ module Types
 
     field_class BaseField
 
-    orphan_types Types::Notifications::PostReactionNotification,
-                 Types::Notifications::SuggestedPostNotification
+    orphan_types Types::Notifications::SuggestedPostNotification
 
     field :id, ID, null: false do
       description "The unique ID for notification"
@@ -24,7 +23,6 @@ module Types
     definition_methods do
       def resolve_type(object, _context)
         case object.action
-        when "post_reaction" then Types::Notifications::PostReactionNotification
         when "suggested_post" then Types::Notifications::SuggestedPostNotification
         else
           raise "Unknown notification action"
