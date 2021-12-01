@@ -27,7 +27,8 @@ module Mutations
       conversation.new_message!(
         current_user.account,
         args[:message],
-        consultation: consultation
+        consultation: consultation,
+        send_emails: false
       )
 
       {consultation: consultation}
