@@ -25,7 +25,8 @@ RSpec.describe Mutations::RequestConsultation do
     GRAPHQL
   end
 
-  it "creates a new consultation and message" do
+  it "creates a new consultation and message but doesn't send email" do
+    expect_any_instance_of(Message).not_to receive(:schedule_email_notifications)
     c_count = Consultation.count
     m_count = Message.count
     response = AdvisableSchema.execute(query, context: context)
