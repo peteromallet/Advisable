@@ -56,6 +56,29 @@ RSpec.describe Resizable do
       expect(specialist.resized_avatar_url).to start_with("http")
     end
 
+    describe "job enqueuing" do
+      before { specialist.avatar.attach(avatar) }
+
+      context "when not processed" do
+        it "enqueues a job and returns original" do
+          specialist.resized_avatar_url
+          expect(ProcessImageJob).to have_been_enqueued.with(specialist.avatar.blob, {format: "jpg", resize_to_limit: [400, 400]})
+          expect(specialist.resized_avatar_url).to start_with("http")
+          expect(specialist.resized_avatar_url).to include("/rails/active_storage/blobs/")
+        end
+      end
+
+      context "when processed" do
+        it "returns url without job enqueuing" do
+          ProcessImageJob.perform_now(specialist.avatar.blob, {format: "jpg", resize_to_limit: [400, 400]})
+          specialist.resized_avatar_url
+          expect(ProcessImageJob).not_to have_been_enqueued
+          expect(specialist.resized_avatar_url).to start_with("http")
+          expect(specialist.resized_avatar_url).to include("rails/active_storage/representations/redirect/")
+        end
+      end
+    end
+
     context "when many" do
       let(:content) { create(:case_study_content) }
       let(:file2) { Rails.root.join("spec/support/02.jpg") }
