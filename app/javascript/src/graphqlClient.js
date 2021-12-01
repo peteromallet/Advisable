@@ -39,6 +39,7 @@ const authLink = setContext((_, { headers }) => {
 
 const httpLink = createHttpLink({
   uri: "/graphql",
+  credentials: "same-origin",
 });
 
 const retryLink = new RetryLink({
