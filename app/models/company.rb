@@ -124,6 +124,7 @@ end
 #  payments_setup                    :boolean          default(FALSE)
 #  project_payment_method            :string
 #  setup_intent_status               :string
+#  specialist_description            :string
 #  stripe_payment_method             :string
 #  vat_number                        :string
 #  created_at                        :datetime         not null
