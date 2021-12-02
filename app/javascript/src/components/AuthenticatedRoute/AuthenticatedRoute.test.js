@@ -19,7 +19,9 @@ function LocationDisplay() {
 function renderTestCase(viewer, initialPath, component) {
   return renderComponent(
     <>
-      <Route path="*" component={LocationDisplay} />
+      <Route path="*">
+        <LocationDisplay />
+      </Route>
       {React.cloneElement(component)}
     </>,
     {

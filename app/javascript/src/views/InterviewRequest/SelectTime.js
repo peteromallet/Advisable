@@ -6,10 +6,12 @@ import { Text, Link, Box } from "@advisable/donut";
 import { ArrowLeft } from "@styled-icons/feather/ArrowLeft";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import { Times, Time } from "./styles";
+import { useRouteMatch } from "react-router";
 
 export default function SelectTime(props) {
+  const match = useRouteMatch();
   const localTimezone = DateTime.local().zoneName;
-  const { availability, timeZone, match, clientName } = props;
+  const { availability, timeZone, clientName } = props;
   const [selectedTimeZone, setTimeZone] = React.useState({
     value: localTimezone || timeZone,
     label: localTimezone || timeZone,
