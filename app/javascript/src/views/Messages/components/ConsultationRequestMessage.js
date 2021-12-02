@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useModal,
   DialogDisclosure,
@@ -11,6 +11,7 @@ import { BaseMessage } from "./Message";
 import useViewer from "src/hooks/useViewer";
 import { Calendar } from "@styled-icons/heroicons-solid";
 import ConsultationRequestModal from "./ConsultationRequestModal";
+import { useMessagePrompt } from "./MessagePrompt";
 
 function ConsultationRequestMessageForSpecialist({ message }) {
   const modal = useModal();
@@ -40,7 +41,6 @@ function ConsultationRequestMessageForSpecialist({ message }) {
                 After your call you will be able to send a request to work
                 together
               </Text>
-              {/* <Badge variant="orange">Pending</Badge> */}
             </Box>
             <Box>
               <Button variant="dark" size="s">
@@ -69,6 +69,15 @@ function ConsultationRequestMessageForClient() {
 
 export default function ConsultationRequestMessage({ message }) {
   const viewer = useViewer();
+  const { prompt, dismiss } = useMessagePrompt();
+
+  useEffect(() => {
+    if (message.consultation?.status === "Request Completed") {
+      prompt(message, "New consultation request");
+    } else {
+      dismiss();
+    }
+  }, [prompt, dismiss, message]);
 
   return (
     <BaseMessage message={message}>
