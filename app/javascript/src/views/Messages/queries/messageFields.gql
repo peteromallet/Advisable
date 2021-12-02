@@ -34,6 +34,7 @@ fragment MessageFields on MessageInterface {
   ... on ConsultationRequestMessage {
     consultation {
       id
+      status
       interview {
         id
       }
