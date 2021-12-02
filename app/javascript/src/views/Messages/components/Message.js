@@ -25,7 +25,7 @@ function dateForMessage(iso) {
   return date.toFormat("dd MMM, yyyy HH:mm");
 }
 
-export function BaseMessage({ message, sending, children }) {
+export function BaseMessage({ message, sending, children, ...props }) {
   return (
     <Box
       width="100%"
@@ -36,6 +36,7 @@ export function BaseMessage({ message, sending, children }) {
       bg="white"
       boxShadow="0px 2px 4px rgba(15, 17, 26, 0.08), 0px 2px 24px rgba(15, 17, 26, 0.04);"
       padding={6}
+      {...props}
     >
       <Box
         display="flex"
