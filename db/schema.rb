@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_01_141717) do
+ActiveRecord::Schema.define(version: 2021_12_02_083225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -379,7 +379,6 @@ ActiveRecord::Schema.define(version: 2021_12_01_141717) do
     t.jsonb "goals"
     t.boolean "feedback"
     t.string "business_type"
-    t.string "marketing_attitude"
     t.bigint "budget"
     t.jsonb "log_data"
     t.integer "admin_fee"
