@@ -9,12 +9,13 @@ function TilesInput({
   alignWidth,
   optionsPerRow,
   size = "m",
+  ...props
 }) {
   const createClickHandler = (value) => () => onChange(value);
   const numberOfTiles = options.length;
 
   return (
-    <Box>
+    <Box {...props}>
       <Box
         display="grid"
         gridTemplateColumns={`repeat(${optionsPerRow || numberOfTiles}, ${

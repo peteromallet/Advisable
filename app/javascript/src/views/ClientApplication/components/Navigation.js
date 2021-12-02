@@ -4,7 +4,7 @@ import MultistepMenu from "src/components/MultistepMenu";
 import { validationSchema as companyOverviewValidationSchema } from "../steps/CompanyOverview";
 import { validationSchema as companyStageValidationSchema } from "../steps/CompanyStage";
 import { validationSchema as goalsValidationSchema } from "../steps/Goals";
-import { validationSchema as preferencesValidationSchema } from "../steps/Preferences";
+import { validationSchema as requirementsValidationSchema } from "../steps/Requirements";
 
 export default function Navigation({ clientApplication }) {
   const companyOverviewComplete =
@@ -12,8 +12,8 @@ export default function Navigation({ clientApplication }) {
   const companyStageComplete =
     companyStageValidationSchema.isValidSync(clientApplication);
   const goalsComplete = goalsValidationSchema.isValidSync(clientApplication);
-  const preferencesComplete =
-    preferencesValidationSchema.isValidSync(clientApplication);
+  const requirementsComplete =
+    requirementsValidationSchema.isValidSync(clientApplication);
 
   return (
     <>
@@ -48,11 +48,11 @@ export default function Navigation({ clientApplication }) {
           Goals
         </MultistepMenu.Item>
         <MultistepMenu.Item
-          to="/clients/apply/preferences"
-          isComplete={preferencesComplete}
-          isDisabled={!goalsComplete && !preferencesComplete}
+          to="/clients/apply/requirements"
+          isComplete={requirementsComplete}
+          isDisabled={!goalsComplete && !requirementsComplete}
         >
-          Preferences
+          Requirements
         </MultistepMenu.Item>
       </MultistepMenu>
     </>
