@@ -14,7 +14,7 @@ import { CLIENT_APPLICATION_DATA } from "./queries";
 import CompanyOverview from "./steps/CompanyOverview";
 import CompanyStage from "./steps/CompanyStage";
 import Goals from "./steps/Goals";
-import Preferences from "./steps/Preferences";
+import Requirements from "./steps/Requirements";
 import Welcome from "./steps/Welcome";
 
 export default function ClientApplication() {
@@ -62,8 +62,8 @@ export default function ClientApplication() {
               <Route path="/clients/apply/goals">
                 <Goals clientApplication={clientApplication} />
               </Route>
-              <Route path="/clients/apply/preferences">
-                <Preferences clientApplication={clientApplication} />
+              <Route path="/clients/apply/requirements">
+                <Requirements clientApplication={clientApplication} />
               </Route>
               <Route>
                 <Welcome clientApplication={clientApplication} />

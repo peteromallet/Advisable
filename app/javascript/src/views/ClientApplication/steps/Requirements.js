@@ -1,11 +1,11 @@
 import React from "react";
 import { object, string, boolean } from "yup";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import TilesInput from "src/components/TilesInput";
-import { Label, Box, Error, RadioGroup, Radio } from "@advisable/donut";
+import { Box, Error, Textarea } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import CurrencyInput from "src/components/CurrencyInput";
 import SubmitButton from "src/components/SubmitButton";
@@ -21,31 +21,57 @@ import {
 export const validationSchema = object().shape({
   title: string().required("Please enter your role at the company"),
   budget: string().required("Please enter your budget"),
-  feedback: boolean().required(
-    "Please tell us if you open to provide feedback",
+  hiring: boolean().required(
+    "Please tell us if you're interested in hiring a specialist",
   ),
-  marketingAttitude: string().required(
-    "Please select your type of marketing attitude",
-  ),
+  specialistDescription: string().when("hiring", {
+    is: true,
+    then: string().required(
+      "Please describe the specialist you're looking for",
+    ),
+  }),
+  feedback: boolean().when("hiring", {
+    is: true,
+    then: boolean().required(
+      "Please tell us if you want to be introduced to the hiring process and provide a feedback",
+    ),
+  }),
 });
 
-export default function CompanyOverview({ clientApplication }) {
+export default function Requirements({ clientApplication }) {
   const [update] = useMutation(UPDATE_CLIENT_APPLICATION);
   const [submit] = useMutation(SUBMIT_CLIENT_APPLICATION);
   const history = useHistory();
 
+  const { status, feedback, specialistDescription, title, budget } =
+    clientApplication;
+
+  let hiringInitialValue;
+  if (status === "Submitted" && feedback && specialistDescription) {
+    hiringInitialValue = true;
+  } else if (status === "Submitted") {
+    hiringInitialValue = false;
+  }
+
   const initialValues = {
-    title: clientApplication.title || "",
-    budget: clientApplication.budget / 100 || "",
-    feedback: clientApplication.feedback || undefined,
-    marketingAttitude: clientApplication.marketingAttitude || "",
+    title: title || "",
+    budget: budget / 100 || "",
+    hiring: hiringInitialValue,
+    specialistDescription: specialistDescription || "",
+    feedback: feedback || undefined,
   };
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
+    const { title, budget, specialistDescription, feedback, hiring } = values;
     const res = await update({
       variables: {
-        input: { ...values, budget: values.budget * 100 },
+        input: {
+          title,
+          budget: budget * 100,
+          specialistDescription: hiring ? specialistDescription : null,
+          feedback: hiring ? feedback : null,
+        },
       },
     });
 
@@ -71,7 +97,7 @@ export default function CompanyOverview({ clientApplication }) {
         {(formik) => (
           <Form>
             <StepNumber>Step 4 of 4</StepNumber>
-            <Header>Preferences</Header>
+            <Header>Requirements</Header>
             <Description>
               This will help understand whether you and your company are a good
               fit for Advisable.
@@ -101,43 +127,45 @@ export default function CompanyOverview({ clientApplication }) {
                   fullWidth
                   alignWidth
                   optionsPerRow={2}
-                  name="feedback"
-                  onChange={(n) => formik.setFieldValue("feedback", n)}
+                  name="hiring"
+                  onChange={(n) => formik.setFieldValue("hiring", n)}
                   error={null}
-                  label="Are you open to giving feedback on your experience with Advisable"
+                  label="Are you interested in hiring a specialist immediately or in short term?"
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
                   ]}
-                  value={formik.values.feedback}
+                  value={formik.values.hiring}
                 />
               </Box>
-              <Label mb={3}>
-                How would you describe your company’s attitude to marketing?
-              </Label>
-              <RadioGroup>
-                <Field
-                  as={Radio}
-                  type="radio"
-                  name="marketingAttitude"
-                  value="We rarely experiment & try new things"
-                  description="We rarely experiment & try new things"
-                />
-                <Field
-                  as={Radio}
-                  type="radio"
-                  name="marketingAttitude"
-                  value="We sometimes test new strategies & tactics"
-                  description="We sometimes test new strategies & tactics"
-                />
-                <Field
-                  as={Radio}
-                  type="radio"
-                  name="marketingAttitude"
-                  value="We’re constantly looking for opportunities"
-                  description="We’re constantly looking for opportunities"
-                />
-              </RadioGroup>
+              {formik.values.hiring === true && (
+                <>
+                  <FormField
+                    as={Textarea}
+                    name="specialistDescription"
+                    minRows={3}
+                    label="Please briefly describe the specialist you are looking for"
+                    marginBottom={6}
+                    placeholder="I'm looking for..."
+                  />
+                  <FormField
+                    as={TilesInput}
+                    fullWidth
+                    alignWidth
+                    optionsPerRow={2}
+                    name="feedback"
+                    onChange={(n) => formik.setFieldValue("feedback", n)}
+                    error={null}
+                    label="Are you up for dedicating 1 hour of your time in the next few days to be introduced to the hiring process and provide feedback to our team?"
+                    data-testid="feedback-buttons"
+                    options={[
+                      { label: "Yes", value: true },
+                      { label: "No", value: false },
+                    ]}
+                    value={formik.values.feedback}
+                  />
+                </>
+              )}
             </Box>
             <Error>{formik.status}</Error>
             <SubmitButton

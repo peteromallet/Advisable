@@ -119,11 +119,11 @@ end
 #  invoice_company_name              :string
 #  invoice_name                      :string
 #  kind                              :string
-#  marketing_attitude                :string
 #  name                              :string
 #  payments_setup                    :boolean          default(FALSE)
 #  project_payment_method            :string
 #  setup_intent_status               :string
+#  specialist_description            :string
 #  stripe_payment_method             :string
 #  vat_number                        :string
 #  created_at                        :datetime         not null

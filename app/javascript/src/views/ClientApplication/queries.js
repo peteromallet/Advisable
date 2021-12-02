@@ -11,15 +11,15 @@ const clientApplicationFields = gql`
       label: name
       value: name
     }
-    title
     # Company Stage
     businessType
     # Goals
     goals
-    # Preferences
+    # Requirements
+    title
     budget
+    specialistDescription
     feedback
-    marketingAttitude
   }
 `;
 
