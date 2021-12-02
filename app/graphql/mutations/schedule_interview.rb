@@ -57,7 +57,7 @@ module Mutations
       return if specialist.phone == number
 
       specialist.update(phone: number)
-      specialist.sync_to_airtable
+      specialist.bg_sync_to_airtable
     end
   end
 end
