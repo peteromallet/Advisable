@@ -30,4 +30,18 @@ fragment MessageFields on MessageInterface {
       avatar
     }
   }
+
+  ... on ConsultationRequestMessage {
+    consultation {
+      id
+      interview {
+        id
+      }
+    }
+    author {
+      id
+      name
+      avatar
+    }
+  }
 }

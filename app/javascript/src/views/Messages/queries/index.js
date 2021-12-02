@@ -10,6 +10,7 @@ import MESSAGES from "./messages.gql";
 import SEND_MESSAGE from "./sendMessage.gql";
 import UPDATE_LAST_READ from "./updateLastRead.gql";
 import RECEIVED_MESSAGE from "./receivedMessage.gql";
+import DECLINE_CONSULTATION from "./declineConsultationRequest.gql";
 
 export function useConversations() {
   return useQuery(CONVERSATIONS);
@@ -132,4 +133,8 @@ export function useReceivedMessage() {
       updateConversationsList(client, message.conversation);
     },
   });
+}
+
+export function useDeclineConsultationRequest() {
+  return useMutation(DECLINE_CONSULTATION);
 }
