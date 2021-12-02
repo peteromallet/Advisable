@@ -129,7 +129,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
 
   context "when passing specialistDescription" do
     it "sets the company specialist description attribute" do
-      user.company.update(marketing_attitude: nil)
+      user.company.update(specialist_description: nil)
       unchanged_data = user.company.reload.attributes.dup.except("specialist_description", "updated_at")
       expect do
         request({specialistDescription: "We’re pretty happy with our strategy & tactics"})
