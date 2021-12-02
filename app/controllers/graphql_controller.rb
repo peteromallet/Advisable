@@ -49,11 +49,8 @@ class GraphqlController < ApplicationController
       "Invalid CSRF token",
       level: "debug",
       extra: {
-        headers: headers,
-        tokens: request_authenticity_tokens,
-        real: Base64.encode64(real_csrf_token(session)),
-        global: Base64.encode64(global_csrf_token(session)),
-        session: cookies["_advisable_session"]
+        session: session.to_json,
+        jrrTolkien: request.headers["X-CSRF-Token"]
       }
     )
 
