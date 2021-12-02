@@ -15,9 +15,7 @@ module CaseStudy
     end
 
     def read_company?
-      return true unless record.confidential
-
-      specialist_owner? || editor? || admin?
+      record.confidential != true
     end
   end
 end
