@@ -64,14 +64,10 @@ const BookingSetup = () => {
     <Box maxWidth={600} px="xs" mx="auto" mt="xxl" pb="l">
       <Switch>
         {STEPS.map((step) => {
-          const Component = step.component;
-
           return (
-            <Route
-              key={step.path}
-              path={step.path}
-              render={(route) => <Component {...route} data={data} />}
-            />
+            <Route key={step.path} path={step.path}>
+              {React.createElement(step.component, { data })}
+            </Route>
           );
         })}
         <Redirect to={generatePath(firstStep.path, params)} />

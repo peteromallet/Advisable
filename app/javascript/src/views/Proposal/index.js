@@ -46,30 +46,24 @@ const Proposals = () => {
           maxWidth={{ l: "800px" }}
         >
           <Switch>
-            <Route
-              exact
-              path={urlPrefix}
-              render={(props) => <Rate application={application} {...props} />}
-            />
-            <Route
-              path={`${urlPrefix}/type`}
-              render={(props) => (
-                <ProjectType application={application} {...props} />
-              )}
-            />
-            <Route
-              path={`${urlPrefix}/tasks`}
-              render={(props) => <Tasks application={application} {...props} />}
-            />
-            <Route
-              path={`${urlPrefix}/send`}
-              render={(props) => <Send application={application} {...props} />}
-            />
-            <Route
-              path={`${urlPrefix}/sent`}
-              render={(props) => <Sent application={application} {...props} />}
-            />
-            <Route render={() => <Redirect to={urlPrefix} />} />
+            <Route exact path={urlPrefix}>
+              <Rate application={application} />
+            </Route>
+            <Route path={`${urlPrefix}/type`}>
+              <ProjectType application={application} />
+            </Route>
+            <Route path={`${urlPrefix}/tasks`}>
+              <Tasks application={application} />
+            </Route>
+            <Route path={`${urlPrefix}/send`}>
+              <Send application={application} />
+            </Route>
+            <Route path={`${urlPrefix}/sent`}>
+              <Sent application={application} />
+            </Route>
+            <Route>
+              <Redirect to={urlPrefix} />
+            </Route>
           </Switch>
         </Container>
       </View.Content>

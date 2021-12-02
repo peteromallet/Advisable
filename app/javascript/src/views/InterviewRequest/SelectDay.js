@@ -6,9 +6,11 @@ import { Text, Modal, useModal } from "@advisable/donut";
 import { Day, RequestMore } from "./styles";
 import NoAvailability from "./NoAvailability";
 import RequestMoreAvailability from "./RequestMoreAvailability";
+import { useRouteMatch } from "react-router";
 
-const SelectDay = ({ clientName, availability, timeZone, match }) => {
+const SelectDay = ({ clientName, availability, timeZone }) => {
   const modal = useModal();
+  const match = useRouteMatch();
 
   const dates = reduce(
     availability,

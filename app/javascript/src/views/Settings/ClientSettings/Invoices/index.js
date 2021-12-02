@@ -6,9 +6,15 @@ import InvoicesList from "./InvoicesList";
 export default function Invoices() {
   return (
     <Switch>
-      <Route path="/settings/invoices/:id" component={Invoice} />
-      <Route path="/settings/invoices" component={InvoicesList} />
-      <Redirect to="/settings/invoices" />
+      <Route path="/settings/invoices/:id">
+        <Invoice />
+      </Route>
+      <Route path="/settings/invoices">
+        <InvoicesList />
+      </Route>
+      <Route>
+        <Redirect to="/settings/invoices" />
+      </Route>
     </Switch>
   );
 }

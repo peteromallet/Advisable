@@ -15,8 +15,10 @@ import FormField from "src/components/FormField";
 import CurrencyInput from "src/components/CurrencyInput";
 import { projectTypeValidationSchema } from "./validationSchema";
 import UPDATE_APPLICATION from "./updateApplication.js";
+import { useHistory } from "react-router";
 
-const ProjectType = ({ history, application }) => {
+const ProjectType = ({ application }) => {
+  const history = useHistory();
   const { t } = useTranslation();
   const [updateApplication] = useMutation(UPDATE_APPLICATION);
 

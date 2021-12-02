@@ -32,19 +32,27 @@ export default function Discover() {
           <AccountConfirmationPrompt />
           {viewer.isAccepted && (
             <Switch>
-              <Route path="/explore/new/goals" component={ShortlistGoals} />
-              <Route path="/explore/new/name" component={ShortlistName} />
-              <Route
-                path="/explore/new/:slug"
-                component={ShortlistArticleSelection}
-              />
-              <Route path="/explore/new" component={ShortlistSkillCategory} />
-              <Route
-                path="/explore/:id/:articleId"
-                component={ShortlistArticle}
-              />
-              <Route path="/explore/:id" component={Shortlist} />
-              <Route path="/explore" component={Shortlists} />
+              <Route path="/explore/new/goals">
+                <ShortlistGoals />
+              </Route>
+              <Route path="/explore/new/name">
+                <ShortlistName />
+              </Route>
+              <Route path="/explore/new/:slug">
+                <ShortlistArticleSelection />
+              </Route>
+              <Route path="/explore/new">
+                <ShortlistSkillCategory />
+              </Route>
+              <Route path="/explore/:id/:articleId">
+                <ShortlistArticle />
+              </Route>
+              <Route path="/explore/:id">
+                <Shortlist />
+              </Route>
+              <Route path="/explore">
+                <Shortlists />
+              </Route>
             </Switch>
           )}
         </Box>
