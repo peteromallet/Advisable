@@ -16,6 +16,7 @@ export default function ConversationMessages({ conversation, currentAccount }) {
   useUpdateConversationLastRead(conversation);
   const { data, loading, fetchMore, refetch } = useMessages({
     pollInterval: POLL,
+    fetchPolicy: "cache-and-network",
     notifyOnNetworkStatusChange: true,
     variables: { id: conversation.id },
   });
