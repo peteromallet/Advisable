@@ -11,22 +11,9 @@ module Toby
 
       def resolve(id:, attributes:)
         resource = self.class.resource
-        model = resource.model.find(id)
-
-        attributes.each do |key, value|
-          attribute = resource.attributes.find { |attr| attr.name == key }
-          next if attribute.readonly
-
-          attribute.write(model, value)
-        end
-
-        Logidze.with_responsible(current_account_id) do
-          model.save!
-        end
-
-        model.sync_to_airtable if model.respond_to?(:sync_to_airtable) && model.airtable_id.present?
-
-        {resource: model}
+        record = resource.model.find(id)
+        current_account_responsible_for { resource.save(record, attributes) }
+        {resource: record}
       end
     end
   end
