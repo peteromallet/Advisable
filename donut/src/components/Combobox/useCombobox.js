@@ -86,7 +86,7 @@ export default function useCombobox({
   creatable,
   max,
   onChange,
-  closeOnSelect,
+  closeOnSelect = true,
   ...props
 }) {
   const inputRef = useRef(null);
