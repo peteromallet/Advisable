@@ -56,7 +56,8 @@ const Follows = () => {
       <Box
         margin="0 auto"
         mt="2xl"
-        width={{ _: "100%", s: "85%", l: "70%" }}
+        maxWidth="840px"
+        width="100%"
         p={{ _: "s", s: "l" }}
       >
         <Stack spacing="2xl">
