@@ -39,7 +39,7 @@ class Conversation < ApplicationRecord
     message = messages.create!({author:, content:, kind:}.merge(attributes))
     message.attachments.attach(attachments) if attachments.present?
     message.schedule_email_notifications if send_emails
-    message.update_read_statuses
+    message.update_participants
     message
   end
 end
