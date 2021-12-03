@@ -24,10 +24,10 @@ class Message < ApplicationRecord
     MessageNotifierJob.set(wait: NOTIFICATION_WAIT_TIME).perform_later(self)
   end
 
-  def update_read_statuses
+  def update_participants
     conversation.mark_as_read_for!(author) if author_id
-    conversation.participants.where.not(account_id: author_id).find_each do |participant|
-      participant.update(unread_count: (participant.unread_count || 0) + 1)
+    conversation.participants.find_each do |participant|
+      participant.update(unread_count: (participant.unread_count || 0) + 1) if participant.account_id != author_id
       AdvisableSchema.subscriptions.trigger("receivedMessage", {}, self, scope: participant.account_id)
     end
   end

@@ -50,10 +50,7 @@ export function useSendMessage(conversation) {
               return message;
             },
             messages(previous) {
-              return {
-                ...previous,
-                edges: [...previous.edges, { node: message }],
-              };
+              return appendToMessages(previous, message);
             },
           },
         });
@@ -115,10 +112,7 @@ export function updateConversation(client, location, message) {
         return message;
       },
       messages(previous) {
-        return {
-          ...previous,
-          edges: [...previous.edges, { node: message }],
-        };
+        return appendToMessages(previous, message);
       },
     },
   });
@@ -137,4 +131,14 @@ export function useReceivedMessage() {
 
 export function useDeclineConsultationRequest() {
   return useMutation(DECLINE_CONSULTATION);
+}
+
+function appendToMessages(messages, message) {
+  const existing = messages.edges.find((e) => e.node.id === message.id);
+  if (existing) return messages;
+
+  return {
+    ...messages,
+    edges: [...messages.edges, { node: message }],
+  };
 }
