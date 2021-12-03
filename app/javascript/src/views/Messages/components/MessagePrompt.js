@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Box } from "@advisable/donut";
-import { ArrowUp } from "@styled-icons/heroicons-solid";
+import { ArrowDown, ArrowUp } from "@styled-icons/heroicons-solid";
 
 const MessagePromptContext = React.createContext();
 
@@ -9,9 +9,7 @@ export function useMessagePrompt() {
   const { setPrompt } = React.useContext(MessagePromptContext);
 
   const prompt = useCallback(
-    (message, text) => {
-      setPrompt({ id: message.id, text });
-    },
+    (message, text) => setPrompt({ id: message.id, text }),
     [setPrompt],
   );
 
@@ -20,42 +18,57 @@ export function useMessagePrompt() {
   return { prompt, dismiss };
 }
 
+const DOWN = "DOWN";
+const UP = "UP";
+
 export default function MessagePrompt({ simplebar, children }) {
   const [prompt, setPrompt] = React.useState(null);
-  const [visible, setVisible] = React.useState(false);
+  const [promptDirection, setPromptDirection] = React.useState(false);
 
   const contextValue = useMemo(() => ({ setPrompt }), []);
 
   const handleClick = () => {
     const message = document.getElementById(prompt.id);
     const scrollView = simplebar.current.getScrollElement();
-    scrollView.scrollTo(0, message.offsetTop - 20);
+    scrollView.scrollTo({ top: message.offsetTop - 20, behavior: "smooth" });
   };
 
-  const callback = useCallback((entries) => {
-    setVisible(!entries[0]?.isIntersecting);
-  }, []);
+  const intersectionCallback = useCallback(
+    ([entry]) => {
+      const scrollView = simplebar.current.getScrollElement();
+      if (entry.isIntersecting) {
+        setPromptDirection(false);
+      } else {
+        const isUp = entry.target.offsetTop < scrollView.scrollTop;
+        setPromptDirection(isUp ? UP : DOWN);
+      }
+    },
+    [simplebar],
+  );
 
   useEffect(() => {
     if (prompt) {
       const el = document.getElementById(prompt.id);
       if (!el) return;
 
-      const observer = new IntersectionObserver(callback, {});
+      const observer = new IntersectionObserver(intersectionCallback, {
+        root: simplebar.current.getScrollElement(),
+      });
       observer.observe(el);
 
       return () => observer.unobserve(el);
     }
-  }, [prompt, callback]);
+  }, [prompt, intersectionCallback, simplebar]);
 
   return (
     <MessagePromptContext.Provider value={contextValue}>
       <AnimatePresence>
-        {prompt && visible && (
+        {prompt && promptDirection && (
           <Box
             as={motion.div}
             position="absolute"
-            top="12px"
+            top={promptDirection === UP && "12px"}
+            bottom={promptDirection === DOWN && "20px"}
             left="50%"
             zIndex={2}
             onClick={handleClick}
@@ -74,7 +87,11 @@ export default function MessagePrompt({ simplebar, children }) {
             exit={{ opacity: 0 }}
           >
             <Box marginRight={2}>
-              <ArrowUp size={16} />
+              {promptDirection === UP ? (
+                <ArrowUp size={16} />
+              ) : (
+                <ArrowDown size={16} />
+              )}
             </Box>
             {prompt.text}
           </Box>
