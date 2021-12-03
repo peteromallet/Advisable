@@ -3,13 +3,14 @@
 module Toby
   module Lazy
     class Label
-      attr_reader :klass, :id, :context, :id_column, :includes, :value_column, :value_block
+      attr_reader :klass, :id, :context, :suffix, :id_column, :includes, :value_column, :value_block
 
       # rubocop: disable Metrics/ParameterLists
-      def initialize(klass, id, context, id_column: :id, includes: nil, value_column: nil, &value_block)
+      def initialize(klass, id, context, suffix: "", id_column: :id, includes: nil, value_column: nil, &value_block)
         @klass = klass
         @id = id
         @context = context
+        @suffix = suffix
         @id_column = id_column
         @includes = includes
         @value_column = value_column
@@ -26,7 +27,7 @@ module Toby
       private
 
       def state
-        context[:"lazy_load_label_#{klass}"] ||= {pending: Set.new, loaded: {}}
+        context[:"lazy_load_label_#{klass}_#{suffix}"] ||= {pending: Set.new, loaded: {}}
       end
 
       def load_records
