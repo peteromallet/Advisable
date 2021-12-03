@@ -16,18 +16,21 @@ import { useMessagePrompt } from "./MessagePrompt";
 function ConsultationRequestMessageForSpecialist({ message }) {
   const modal = useModal();
   const sender = message.author?.name;
-  const { prompt, dismiss } = useMessagePrompt();
+  const { show, dismiss, highlight } = useMessagePrompt(
+    message,
+    "New consultation request",
+  );
 
   useEffect(() => {
     if (message.consultation?.status === "Request Completed") {
-      prompt(message, "New consultation request");
+      show();
     } else {
       dismiss();
     }
-  }, [prompt, dismiss, message]);
+  }, [show, dismiss, message]);
 
   return (
-    <>
+    <BaseMessage message={message} highlight={highlight}>
       <DialogDisclosure {...modal}>
         {(disclosure) => (
           <Box
@@ -64,30 +67,26 @@ function ConsultationRequestMessageForSpecialist({ message }) {
         message={message}
         sender={sender}
       />
-    </>
+    </BaseMessage>
   );
 }
 
-function ConsultationRequestMessageForClient() {
+function ConsultationRequestMessageForClient({ message }) {
   return (
-    <Box paddingY={3} paddingX={4} bg="neutral100" borderRadius="12px">
-      You sent a consultation request.
-    </Box>
+    <BaseMessage message={message}>
+      <Box paddingY={3} paddingX={4} bg="neutral100" borderRadius="12px">
+        You sent a consultation request.
+      </Box>
+    </BaseMessage>
   );
 }
 
 export default function ConsultationRequestMessage({ message }) {
   const viewer = useViewer();
 
-  return (
-    <BaseMessage message={message}>
-      <Box paddingTop={5}>
-        {viewer.isSpecialist ? (
-          <ConsultationRequestMessageForSpecialist message={message} />
-        ) : (
-          <ConsultationRequestMessageForClient message={message} />
-        )}
-      </Box>
-    </BaseMessage>
+  return viewer.isSpecialist ? (
+    <ConsultationRequestMessageForSpecialist message={message} />
+  ) : (
+    <ConsultationRequestMessageForClient message={message} />
   );
 }
