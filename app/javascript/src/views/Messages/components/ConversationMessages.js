@@ -90,20 +90,17 @@ export default function ConversationMessages({ conversation, currentAccount }) {
                 <Box flexShrink={1} height="1px" width="100%" bg="neutral200" />
               </Box>
             )}
-            <Stack
-              paddingY={10}
-              spacing={10}
-              divider="neutral100"
-              id="messages"
-            >
-              {messageEdges.map((edge) => (
-                <Message key={edge.node.id} message={edge.node} />
-              ))}
+            <Box paddingY={8}>
+              <Stack spacing={6} id="messages" paddingBottom={6}>
+                {messageEdges.map((edge) => (
+                  <Message key={edge.node.id} message={edge.node} />
+                ))}
+              </Stack>
               <MessageComposer
                 conversation={conversation}
                 currentAccount={currentAccount}
               />
-            </Stack>
+            </Box>
           </Box>
         )}
       </Box>
