@@ -7,6 +7,7 @@ import { Avatar, Box, Text } from "@advisable/donut";
 import renderLineBreaks from "src/utilities/renderLineBreaks";
 import { DateTime } from "luxon";
 import MessageAttachment from "./MessageAttachment";
+import { motion } from "framer-motion";
 
 const COMPONENTS = {
   UserMessage,
@@ -25,10 +26,22 @@ function dateForMessage(iso) {
   return date.toFormat("dd MMM, yyyy HH:mm");
 }
 
-export function BaseMessage({ message, sending, children, ...props }) {
+export function BaseMessage({
+  message,
+  sending,
+  children,
+  highlight,
+  ...props
+}) {
   return (
     <Box
       width="100%"
+      as={motion.div}
+      border="2px solid"
+      style={{ borderColor: "#FFF" }}
+      animate={{
+        borderColor: highlight ? ["#1C1C25", "#FFF"] : "#FFF",
+      }}
       id={message.id}
       data-status={message.status}
       opacity={sending ? 0.4 : 1}
@@ -75,7 +88,7 @@ export function BaseMessage({ message, sending, children, ...props }) {
         >
           {renderLineBreaks(message.content)}
         </Text>
-        {children}
+        {children ? <Box paddingTop={5}>{children}</Box> : null}
         {message.attachments.length > 0 && (
           <Box
             display="grid"
