@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import { useQuery } from "@apollo/client";
-import { Card, Text, Box, Stack } from "@advisable/donut";
+import { Card, Text, Box, Stack, Combobox } from "@advisable/donut";
 import { Plus } from "@styled-icons/heroicons-outline/Plus";
-import { X } from "@styled-icons/heroicons-outline/X";
 import Loading from "@advisable-main/components/Loading";
-import { GUILD_TOP_TOPICS_QUERY } from "./queries";
+import { GUILD_TOP_TOPICS_QUERY, SEARCH_LABELS } from "./queries";
+import { useApolloClient } from "@apollo/client";
 import ErrorBoundary from "@guild/components/ErrorBoundary";
 import NoResults from "@guild/components/NoResults";
 import { StyledGuildTopic } from "./styles";
@@ -12,6 +12,7 @@ import { GuildBox } from "@guild/styles";
 import useFollows from "./useFollows";
 
 const Follows = () => {
+  const client = useApolloClient();
   const { unfollowTopic, followTopic, followedTopics, followedTopicsLoading } =
     useFollows();
 
@@ -31,6 +32,25 @@ const Follows = () => {
 
   if (followedTopicsLoading || topTopicsLoading) return <Loading />;
 
+  const handleSearch = async (name) => {
+    const response = await client.query({
+      query: SEARCH_LABELS,
+      variables: { name },
+    });
+
+    return (response.data?.searchLabels || []).map((label) => label);
+  };
+
+  const handleChange = (topics) => {
+    if (topics.length > followedTopics.length) {
+      const addTopic = topics.filter((l) => !followedTopics.includes(l))[0];
+      followTopic(addTopic.slug);
+    } else if (topics.length < followedTopics.length) {
+      const removeTopic = followedTopics.filter((t) => !topics.includes(t))[0];
+      unfollowTopic(removeTopic.slug);
+    }
+  };
+
   return (
     <ErrorBoundary>
       <Box
@@ -46,33 +66,20 @@ const Follows = () => {
             color="catalinaBlue100"
             letterSpacing="-0.02em"
           >
-            Your Guild Topics
+            Your Topics
           </Text>
-          {followedTopics?.length ? (
-            <Card padding="l">
-              <GuildBox
-                width="100%"
-                display="flex"
-                flexWrap="wrap"
-                wrapChildrenBoth={8}
-              >
-                {followedTopics.map((topic, key) => (
-                  <StyledGuildTopic
-                    type="button"
-                    onClick={() => unfollowTopic(topic.slug)}
-                    key={key}
-                  >
-                    <Text mr={2} size="s" color="#2B2D5F">
-                      {topic.name}
-                    </Text>
-                    <X size={16} color="#2B2D5F" strokeWidth={2} />
-                  </StyledGuildTopic>
-                ))}
-              </GuildBox>
-            </Card>
-          ) : (
-            <NoResults message={"You are not following any topics"} />
-          )}
+          <Card padding="l">
+            <Combobox
+              multiple
+              loadOptions={handleSearch}
+              placeholder="Skills, industries, locations..."
+              onChange={(topics) => handleChange(topics)}
+              value={followedTopics}
+            />
+            {followedTopics.length === 0 && (
+              <NoResults message={"You are not following any topics"} />
+            )}
+          </Card>
 
           <Text
             fontSize="3xl"
