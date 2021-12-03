@@ -16,6 +16,15 @@ import { useMessagePrompt } from "./MessagePrompt";
 function ConsultationRequestMessageForSpecialist({ message }) {
   const modal = useModal();
   const sender = message.author?.name;
+  const { prompt, dismiss } = useMessagePrompt();
+
+  useEffect(() => {
+    if (message.consultation?.status === "Request Completed") {
+      prompt(message, "New consultation request");
+    } else {
+      dismiss();
+    }
+  }, [prompt, dismiss, message]);
 
   return (
     <>
@@ -69,15 +78,6 @@ function ConsultationRequestMessageForClient() {
 
 export default function ConsultationRequestMessage({ message }) {
   const viewer = useViewer();
-  const { prompt, dismiss } = useMessagePrompt();
-
-  useEffect(() => {
-    if (message.consultation?.status === "Request Completed") {
-      prompt(message, "New consultation request");
-    } else {
-      dismiss();
-    }
-  }, [prompt, dismiss, message]);
 
   return (
     <BaseMessage message={message}>
