@@ -24,6 +24,11 @@ module Toby
       def self.search(query)
         ::Company.where("name ILIKE ?", "%#{query}%")
       end
+
+      def self.save(record, _attributes)
+        super
+        record.users.where.not(airtable_id: nil).each(&:sync_to_airtable)
+      end
     end
   end
 end
