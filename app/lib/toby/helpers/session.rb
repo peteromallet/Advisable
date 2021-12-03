@@ -10,6 +10,10 @@ module Toby
       def current_account_id
         session_manager.current_account.id
       end
+
+      def current_account_responsible_for(&block)
+        Logidze.with_responsible(current_account_id, &block)
+      end
     end
   end
 end
