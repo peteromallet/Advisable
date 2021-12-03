@@ -28,6 +28,15 @@ module Toby
           end
         end
 
+        def save(record, params)
+          params.each do |key, value|
+            attribute = attributes.find { |attr| attr.name == key }
+            attribute.write(record, value) unless attribute.readonly
+          end
+          record.save!
+          record.sync_to_airtable if record.respond_to?(:sync_to_airtable) && record.airtable_id.present?
+        end
+
         def attribute(name, type, **args)
           args[:parent] = self.name.demodulize unless args.key?(:parent)
           @attributes << type.new(name, self, **args)
