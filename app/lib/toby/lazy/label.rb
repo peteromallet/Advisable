@@ -35,7 +35,7 @@ module Toby
         ar.where(id_column => state[:pending]).each do |record|
           key = record.public_send(id_column)
           value = value_column ? record.public_send(value_column) : value_block.call(record)
-          state[:loaded][key] = value
+          state[:loaded][key] = value.presence || "No value for #{key}"
         end
         state[:pending].clear
       end
