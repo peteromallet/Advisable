@@ -35,7 +35,7 @@ module Mutations
       project =
         user.projects.joins(project_skills: :skill).where(
           project_skills: {
-            primary: true, skills: {name: consultation.skill.name}
+            primary: true, skills: {name: consultation.skill&.name}
           }
         ).first
       project = create_new_project(consultation) if project.nil?
