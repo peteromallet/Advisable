@@ -7,6 +7,8 @@ export const GUILD_TOP_TOPICS_QUERY = gql`
         id
         name
         slug
+        value: name
+        label: name
       }
     }
   }
@@ -18,6 +20,20 @@ export const GUILD_FOLLOWED_TOPICS = gql`
       id
       name
       slug
+      value: name
+      label: name
+    }
+  }
+`;
+
+export const SEARCH_LABELS = gql`
+  query SearchLabels($name: String!) {
+    searchLabels(name: $name) {
+      id
+      name
+      slug
+      value: name
+      label: name
     }
   }
 `;

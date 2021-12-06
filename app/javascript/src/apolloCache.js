@@ -34,6 +34,9 @@ const createCache = () => {
           events: relayStylePagination(),
           labelPosts: relayStylePagination(),
           savedArticles: relayStylePagination(),
+          followedLabels: {
+            merge: replaceArrayMerge,
+          },
           collaborationRequests: relayStylePagination(),
           archivedArticles: relayStylePagination(),
           postPrompt(_, { args, toReference }) {
