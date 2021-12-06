@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_02_083225) do
+ActiveRecord::Schema.define(version: 2021_12_06_070543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -93,17 +93,6 @@ ActiveRecord::Schema.define(version: 2021_12_02_083225) do
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["specialist_id"], name: "index_answers_on_specialist_id"
     t.index ["uid"], name: "index_answers_on_uid", unique: true
-  end
-
-  create_table "application_references", force: :cascade do |t|
-    t.string "uid", null: false
-    t.bigint "application_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "off_platform_project_id"
-    t.index ["application_id"], name: "index_application_references_on_application_id"
-    t.index ["off_platform_project_id"], name: "index_application_references_on_off_platform_project_id"
-    t.index ["uid"], name: "index_application_references_on_uid", unique: true
   end
 
   create_table "applications", force: :cascade do |t|
@@ -651,55 +640,6 @@ ActiveRecord::Schema.define(version: 2021_12_02_083225) do
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
   end
 
-  create_table "off_platform_projects", force: :cascade do |t|
-    t.bigint "specialist_id"
-    t.string "industry"
-    t.string "contact_first_name"
-    t.string "contact_last_name"
-    t.string "contact_job_title"
-    t.string "client_name"
-    t.text "client_description"
-    t.text "description"
-    t.text "requirements"
-    t.text "results"
-    t.string "primary_skill"
-    t.boolean "confidential", default: false
-    t.boolean "validated", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "can_contact"
-    t.string "validation_url"
-    t.string "contact_email"
-    t.string "validation_method"
-    t.string "validation_status"
-    t.boolean "validated_by_client"
-    t.string "validation_explanation"
-    t.string "company_type"
-    t.boolean "public_use"
-    t.string "uid", null: false
-    t.string "goal"
-    t.string "contact_relationship"
-    t.boolean "hide_from_profile"
-    t.integer "priority"
-    t.integer "advisable_score"
-    t.bigint "application_id"
-    t.boolean "draft"
-    t.boolean "description_requires_update"
-    t.integer "industry_relevance"
-    t.integer "location_relevance"
-    t.integer "cost_to_hire"
-    t.integer "execution_cost"
-    t.string "pending_description"
-    t.string "validation_failed_reason"
-    t.bigint "reviewed_by_id"
-    t.jsonb "log_data"
-    t.bigint "cover_photo_id"
-    t.index ["application_id"], name: "index_off_platform_projects_on_application_id"
-    t.index ["reviewed_by_id"], name: "index_off_platform_projects_on_reviewed_by_id"
-    t.index ["specialist_id"], name: "index_off_platform_projects_on_specialist_id"
-    t.index ["uid"], name: "index_off_platform_projects_on_uid", unique: true
-  end
-
   create_table "payments", force: :cascade do |t|
     t.string "uid", null: false
     t.integer "amount"
@@ -1153,8 +1093,6 @@ ActiveRecord::Schema.define(version: 2021_12_02_083225) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "specialists"
-  add_foreign_key "application_references", "applications"
-  add_foreign_key "application_references", "off_platform_projects"
   add_foreign_key "applications", "projects"
   add_foreign_key "applications", "specialists"
   add_foreign_key "auth_providers", "accounts"
@@ -1213,7 +1151,6 @@ ActiveRecord::Schema.define(version: 2021_12_02_083225) do
   add_foreign_key "messages", "guild_posts"
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
-  add_foreign_key "off_platform_projects", "specialists"
   add_foreign_key "payments", "companies"
   add_foreign_key "payments", "specialists"
   add_foreign_key "payments", "tasks"
@@ -1535,9 +1472,6 @@ ActiveRecord::Schema.define(version: 2021_12_02_083225) do
   SQL
   create_trigger :logidze_on_interviews, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_interviews BEFORE INSERT OR UPDATE ON public.interviews FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_off_platform_projects, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_off_platform_projects BEFORE INSERT OR UPDATE ON public.off_platform_projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_projects, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_projects BEFORE INSERT OR UPDATE ON public.projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
