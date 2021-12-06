@@ -91,14 +91,15 @@ class SpecialistMailer < ApplicationMailer
   def post_interview(interview)
     @interview = interview
     @sales_person = interview.user.company.sales_person
+    @account = interview.specialist.account
 
     mail(
       from: "Advisable <hello@advisable.com>",
-      to: interview.specialist.account.email,
+      to: @account.email,
       bcc: @sales_person.email_with_name,
       subject: "What are your next steps for the #{@interview.application.project.nice_name} project with #{@interview.user.name_with_company}?"
     ) do |format|
-      format.html { render layout: false }
+      format.html { render(layout: "email_v2") }
     end
   end
 end
