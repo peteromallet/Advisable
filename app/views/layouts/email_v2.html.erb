@@ -3,6 +3,42 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <%= yield(:head) %>
+
+    <style>
+      .action {
+        position: relative;
+      }
+
+      .action:hover {
+        border-color: #021D77 !important;
+      }
+
+      .action::before {
+        top: 50%;
+        right: 20px;
+        content: "";
+        width: 32px;
+        height: 32px;
+        display: block;
+        margin-top: -16px;
+        position: absolute;
+        border-radius: 50%;
+        background: #DEE9FF;
+      }
+
+      .action::after {
+        top: 50%;
+        right: 32px;
+        content: "";
+        width: 0;
+        height: 0;
+        margin-top: -5px;
+        border-left: 5px solid #021D77;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        position: absolute;
+      }
+    </style>
   </head>
 
   <body style="background: #F2F1F0;">
@@ -33,10 +69,10 @@
           </td>
         </tr>
         <tr>
-          <td align="center" bgcolor="#F2F1F0" height="24" width="100%"></td>
+          <td align="center" bgcolor="transparent" height="24" width="100%"></td>
         </tr>
         <tr>
-          <td align="center" bgcolor="#F2F1F0" width="100%">
+          <td align="center" bgcolor="transparent" width="100%">
             <% if instance_variable_defined?("@account") %>
               <p style="margin: 0; font-size: 12px; line-height: 16px;font-family: Arial; color: #514B46;">
                 You’re receiving this email because you signed up for Advisable.
@@ -47,7 +83,7 @@
           </td>
         </tr>
         <tr>
-          <td align="center" bgcolor="#F2F1F0" height="40" width="100%"></td>
+          <td align="center" bgcolor="transparent" height="40" width="100%"></td>
         </tr>
       </tbody>
     </table>
