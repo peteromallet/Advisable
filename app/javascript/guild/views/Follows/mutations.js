@@ -7,6 +7,8 @@ export const UNFOLLOW_GUILD_TOPIC = gql`
         id
         name
         slug
+        value: name
+        label: name
       }
     }
   }
@@ -19,6 +21,8 @@ export const FOLLOW_GUILD_TOPIC = gql`
         id
         name
         slug
+        value: name
+        label: name
       }
     }
   }

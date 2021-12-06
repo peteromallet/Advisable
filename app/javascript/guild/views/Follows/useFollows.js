@@ -33,7 +33,7 @@ const useFollows = () => {
       cache.writeQuery({
         query: GUILD_FOLLOWED_TOPICS,
         data: {
-          followedLabels: [...existing?.followedLabels, added],
+          followedLabels: [...existing.followedLabels, added],
         },
       });
     },
