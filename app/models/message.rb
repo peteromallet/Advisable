@@ -6,9 +6,10 @@ class Message < ApplicationRecord
 
   NOTIFICATION_WAIT_TIME = 10.minutes
 
+  belongs_to :conversation
   belongs_to :author, class_name: "Account", optional: true
   belongs_to :guild_post, class_name: "Guild::Post", optional: true
-  belongs_to :conversation
+  belongs_to :agreement, optional: true
   has_many_attached :attachments
 
   before_validation :strip_content
@@ -50,12 +51,14 @@ end
 #  uid             :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  agreement_id    :bigint
 #  author_id       :bigint
 #  conversation_id :bigint           not null
 #  guild_post_id   :uuid
 #
 # Indexes
 #
+#  index_messages_on_agreement_id     (agreement_id)
 #  index_messages_on_author_id        (author_id)
 #  index_messages_on_conversation_id  (conversation_id)
 #  index_messages_on_guild_post_id    (guild_post_id)
@@ -64,6 +67,7 @@ end
 #
 # Foreign Keys
 #
+#  fk_rails_...  (agreement_id => agreements.id)
 #  fk_rails_...  (author_id => accounts.id)
 #  fk_rails_...  (conversation_id => conversations.id)
 #  fk_rails_...  (guild_post_id => guild_posts.id)

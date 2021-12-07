@@ -10,6 +10,7 @@ class Agreement < ApplicationRecord
   belongs_to :user
   belongs_to :company
   belongs_to :specialist
+  has_many :messages, dependent: :nullify
 
   validates :collaboration, inclusion: {in: COLLABORATION_OPTIONS}, allow_blank: true
   validates :invoicing, inclusion: {in: INVOICING_OPTIONS}, allow_blank: true
