@@ -12,7 +12,7 @@ module Types
     end
     field :messages, Types::MessageInterface.connection_type, null: true
     def messages
-      object.messages.order(created_at: :asc)
+      object.messages.includes(attachments_attachments: :blob).order(created_at: :asc)
     end
 
     field :last_read_at, GraphQL::Types::ISO8601DateTime, null: false

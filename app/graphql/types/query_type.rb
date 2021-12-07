@@ -298,7 +298,7 @@ module Types
     end
     def conversation(id:)
       requires_current_user!
-      current_user.account.conversations.includes(participants: :account).find_by!(uid: id)
+      current_user.account.conversations.find_by!(uid: id)
     end
 
     field :skill_categories, [Types::SkillCategory], null: false
