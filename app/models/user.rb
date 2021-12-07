@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :projects, dependent: :destroy
   has_many :interviews, dependent: :destroy
   has_many :applications, through: :projects
+  has_many :agreements, dependent: :destroy
   has_many :consultations, dependent: :destroy
   has_many :user_skills, dependent: :destroy
   has_many :skills, through: :user_skills
