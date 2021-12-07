@@ -243,7 +243,7 @@ const EditTask = ({
               {!readOnly && showStatusNotice && (
                 <StageDescription isClient={isClient} task={task} />
               )}
-              {!readOnly && (
+              {!readOnly && showStatusNotice && (
                 <Actions
                   setPrompt={setPrompt}
                   isClient={isClient}
