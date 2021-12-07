@@ -8,12 +8,14 @@ import renderLineBreaks from "src/utilities/renderLineBreaks";
 import { DateTime } from "luxon";
 import MessageAttachment from "./MessageAttachment";
 import { motion } from "framer-motion";
+import InterviewScheduledMessage from "./SystemMessage/InterviewScheduled";
 
 const COMPONENTS = {
   UserMessage,
   SystemMessage,
   GuildPostMessage,
   ConsultationRequestMessage,
+  InterviewScheduledMessage,
 };
 
 export default function Message({ message }) {
