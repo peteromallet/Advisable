@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_06_070543) do
+ActiveRecord::Schema.define(version: 2021_12_07_080316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -81,6 +81,23 @@ ActiveRecord::Schema.define(version: 2021_12_06_070543) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "agreements", force: :cascade do |t|
+    t.string "uid", null: false
+    t.bigint "user_id", null: false
+    t.uuid "company_id", null: false
+    t.bigint "specialist_id", null: false
+    t.string "collaboration"
+    t.string "invoicing"
+    t.string "status"
+    t.integer "hourly_rate"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_agreements_on_company_id"
+    t.index ["specialist_id"], name: "index_agreements_on_specialist_id"
+    t.index ["uid"], name: "index_agreements_on_uid", unique: true
+    t.index ["user_id"], name: "index_agreements_on_user_id"
   end
 
   create_table "answers", force: :cascade do |t|
@@ -1091,6 +1108,9 @@ ActiveRecord::Schema.define(version: 2021_12_06_070543) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agreements", "companies"
+  add_foreign_key "agreements", "specialists"
+  add_foreign_key "agreements", "users"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "specialists"
   add_foreign_key "applications", "projects"
