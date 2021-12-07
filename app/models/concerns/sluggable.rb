@@ -20,11 +20,12 @@ module Sluggable
   end
 
   included do
-    before_validation :set_slug
-    validates :slug, uniqueness: true
+    before_validation :generate_slug
   end
 
-  def set_slug
+  private
+
+  def generate_slug
     return if slug.present?
 
     self.slug = unique_slug
@@ -32,15 +33,11 @@ module Sluggable
 
   def unique_slug
     slug = public_send(self.class.slug_source).to_s.parameterize
-    return slug unless slug_taken?(slug)
+    return slug unless self.class.exists?(slug: slug)
 
     (2..).each do |i|
       new_slug = "#{slug}-#{i}"
-      break new_slug unless slug_taken?(new_slug)
+      break new_slug unless self.class.exists?(slug: new_slug)
     end
-  end
-
-  def slug_taken?(slug)
-    self.class.exists?(slug: slug)
   end
 end
