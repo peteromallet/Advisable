@@ -312,5 +312,11 @@ module Types
     def skill_category(slug:)
       ::SkillCategory.find_by!(slug: slug)
     end
+
+    field :accepted_agreements, [Types::Agreement], null: true
+    def accepted_agreements
+      requires_current_user!
+      current_user.agreements.accepted
+    end
   end
 end
