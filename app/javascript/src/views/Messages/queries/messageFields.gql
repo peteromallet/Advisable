@@ -45,4 +45,15 @@ fragment MessageFields on MessageInterface {
       avatar
     }
   }
+
+  ... on InterviewScheduledMessage {
+    interview {
+      id
+      startsAt
+      specialist {
+        id
+        firstName
+      }
+    }
+  }
 }

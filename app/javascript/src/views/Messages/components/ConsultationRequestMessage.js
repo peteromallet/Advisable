@@ -31,37 +31,35 @@ function ConsultationRequestMessageForSpecialist({ message }) {
 
   return (
     <BaseMessage message={message} highlight={highlight}>
-      <DialogDisclosure {...modal}>
-        {(disclosure) => (
-          <Box
-            {...disclosure}
-            padding={4}
-            borderRadius="20px"
-            border="2px solid"
-            borderColor="neutral100"
-            display="flex"
-            alignItems="center"
-          >
-            <Circle size={40} bg="blue100" color="blue600">
-              <Calendar size={20} />
-            </Circle>
-            <Box paddingLeft={3} flex={1}>
-              <Text fontWeight={560} marginBottom={1}>
-                {sender} has requested a call with you
-              </Text>
-              <Text>
-                After your call you will be able to send a request to work
-                together
-              </Text>
-            </Box>
-            <Box>
-              <Button variant="dark" size="s">
+      <Box
+        padding={4}
+        borderRadius="20px"
+        border="2px solid"
+        borderColor="neutral100"
+        display="flex"
+        alignItems="center"
+      >
+        <Circle size={40} bg="blue100" color="blue600">
+          <Calendar size={20} />
+        </Circle>
+        <Box paddingLeft={3} flex={1}>
+          <Text fontWeight={560} marginBottom={1}>
+            {sender} requested a call with you
+          </Text>
+          <Text>
+            After your call you will be able to send a request to work together
+          </Text>
+        </Box>
+        <Box>
+          <DialogDisclosure {...modal}>
+            {(disclosure) => (
+              <Button {...disclosure} variant="gradient" size="s">
                 View
               </Button>
-            </Box>
-          </Box>
-        )}
-      </DialogDisclosure>
+            )}
+          </DialogDisclosure>
+        </Box>
+      </Box>
       <ConsultationRequestModal
         modal={modal}
         message={message}
