@@ -40,14 +40,14 @@ RSpec.describe Sluggable do
   let(:dummy) { SluggableDummy.new(0, title: "aa bb") }
 
   it "sets the slug" do
-    expect(dummy.unique_slug).to eq("aa-bb")
+    expect(dummy.__send__(:unique_slug)).to eq("aa-bb")
   end
 
   context "when there are already instances with that slug" do
     let(:dummy) { SluggableDummy.new(3, title: "aa bb") }
 
     it "sets the slug" do
-      expect(dummy.unique_slug).to eq("aa-bb-4")
+      expect(dummy.__send__(:unique_slug)).to eq("aa-bb-4")
     end
   end
 end
