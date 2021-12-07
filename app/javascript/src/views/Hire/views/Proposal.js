@@ -10,6 +10,7 @@ import BackButton from "src/components/BackButton";
 import HireAction from "../components/HireAction";
 import MessageAction from "../components/MessageAction";
 import RemoveApplication from "../components/RemoveApplication";
+import currency from "src/utilities/currency";
 
 export default function Proposal() {
   const { id } = useParams();
@@ -45,12 +46,7 @@ export default function Proposal() {
           together.
         </Text>
       </Box>
-      <Box
-        padding="16px"
-        borderRadius="12px"
-        bg="neutral100"
-        marginBottom="48px"
-      >
+      <Box padding="16px" borderRadius="12px" bg="neutral100" marginBottom={8}>
         <Box display="flex" alignItems="center" marginBottom="s">
           <Avatar
             size="s"
@@ -78,6 +74,14 @@ export default function Proposal() {
         </Paragraph>
       </Box>
       <ProposalTasks tasks={application.tasks} />
+      <Box marginBottom={8}>
+        <Text fontWeight={480} letterSpacing="-0.02em" marginBottom={1.5}>
+          Hourly Rate
+        </Text>
+        <Text fontSize="3xl" fontWeight={560}>
+          {currency(application.invoiceRate)}
+        </Text>
+      </Box>
       <MoneyBackGuarantee />
       <Box display="flex" marginTop={8} alignItems="center">
         <HireAction application={application} size="md" />
