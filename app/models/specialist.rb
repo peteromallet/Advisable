@@ -33,6 +33,7 @@ class Specialist < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :consultations, dependent: :destroy
   has_many :applications, dependent: :destroy
+  has_many :agreements, dependent: :destroy
   has_many :matches, dependent: :destroy
   has_many :projects, through: :applications
   # Successful applications are applications that are either working or stopped working
