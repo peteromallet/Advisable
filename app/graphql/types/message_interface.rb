@@ -12,11 +12,13 @@ module Types
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :attachments, [Types::AttachmentType], null: true
 
-    orphan_types Types::UserMessage, Types::SystemMessage, Types::GuildPostMessage
+    orphan_types Types::UserMessage, Types::SystemMessage, Types::GuildPostMessage, Types::Messages::InterviewScheduled
 
     definition_methods do
       def resolve_type(object, _)
-        if object.system_message?
+        if object.kind == "interviewScheduled"
+          Types::Messages::InterviewScheduled
+        elsif object.system_message?
           Types::SystemMessage
         elsif object.agreement_id
           Types::AgreementMessage
