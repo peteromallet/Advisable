@@ -1,6 +1,7 @@
 query Propposal($id: ID!) {
   application(id: $id) {
     id
+    invoiceRate
     proposedAt
     projectType
     proposalComment
