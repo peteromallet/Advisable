@@ -1,11 +1,43 @@
 import React, { useState } from "react";
-import { useDeclineConsultationRequest } from "../queries";
+import {
+  useAcceptConsultationRequest,
+  useDeclineConsultationRequest,
+} from "../queries";
 import { Modal, Box, Text, Button, Heading, Textarea } from "@advisable/donut";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import CircularButton from "src/components/CircularButton";
 import { ArrowLeft } from "@styled-icons/heroicons-solid";
+import { useNotifications } from "src/components/Notifications";
 
 function ConsultationRequestPrompt({ message, sender, onDecline }) {
+  const history = useHistory();
+  const { error } = useNotifications();
+  const [accept, { loading }] = useAcceptConsultationRequest();
+
+  const gotoInterview = (i) => history.push(`/interviews/${i.id}`);
+
+  const handleAccept = async () => {
+    if (message.consultation.interview) {
+      gotoInterview(message.consultation.interview);
+      return;
+    }
+
+    const response = await accept({
+      variables: {
+        input: {
+          consultation: message.consultation.id,
+        },
+      },
+    });
+
+    if (response.errors) {
+      error("Something went wrong, please try again.");
+      return;
+    }
+
+    gotoInterview(response.data.acceptConsultation.interview);
+  };
+
   return (
     <>
       <Heading textAlign="center" marginBottom={2}>
@@ -15,13 +47,14 @@ function ConsultationRequestPrompt({ message, sender, onDecline }) {
         {sender} has requested a 30 minute call with you.
       </Text>
       <Box display="flex">
-        <Box
-          as={Link}
-          width="100%"
-          marginRight={2}
-          to={`/interviews/${message.consultation?.interview?.id}`}
-        >
-          <Button width="100%" size="l" variant="gradient">
+        <Box width="100%" marginRight={2}>
+          <Button
+            width="100%"
+            size="l"
+            loading={loading}
+            variant="gradient"
+            onClick={handleAccept}
+          >
             View availability
           </Button>
         </Box>

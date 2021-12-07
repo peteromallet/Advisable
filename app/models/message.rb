@@ -12,6 +12,7 @@ class Message < ApplicationRecord
   belongs_to :agreement, optional: true
   belongs_to :conversation
   belongs_to :consultation, optional: true
+  belongs_to :interview, optional: true
   has_many_attached :attachments
 
   before_validation :strip_content
@@ -60,6 +61,7 @@ end
 #  consultation_id :bigint
 #  conversation_id :bigint           not null
 #  guild_post_id   :uuid
+#  interview_id    :bigint
 #
 # Indexes
 #
@@ -69,6 +71,7 @@ end
 #  index_messages_on_conversation_id  (conversation_id)
 #  index_messages_on_guild_post_id    (guild_post_id)
 #  index_messages_on_idempotency_key  (idempotency_key)
+#  index_messages_on_interview_id     (interview_id)
 #  index_messages_on_uid              (uid) UNIQUE
 #
 # Foreign Keys

@@ -1,0 +1,7 @@
+mutation AcceptConsultation($input: AcceptConsultationInput!) {
+  acceptConsultation(input: $input) {
+    interview {
+      id
+    }
+  }
+}
