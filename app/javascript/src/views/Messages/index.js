@@ -26,6 +26,10 @@ export default function Messages() {
 
   const isMobileView = useRouteMatch({ path: "/messages", exact: !isDesktop });
 
+  if (hasConversations && isDesktop) {
+    return <Redirect to={`/messages/${ordered[0].id}`} />;
+  }
+
   return (
     <Box display="flex">
       {isMobileView && (
@@ -41,9 +45,6 @@ export default function Messages() {
                 currentAccount={data?.currentAccount}
               />
             </Route>
-          )}
-          {hasConversations && isDesktop && (
-            <Redirect to={`/messages/${ordered[0].id}`} />
           )}
           {!loading && isDesktop && (
             <Route>

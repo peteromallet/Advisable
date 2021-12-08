@@ -58,7 +58,9 @@ export default function InterviewRequestView() {
               clientName={interview.user.companyName}
             />
           </Route>
-          <Redirect to={match.path} />
+          <Route path="*">
+            <Redirect to={match.path} />
+          </Route>
         </Switch>
       )}
       {interview.status === "Call Scheduled" && (

@@ -8,12 +8,8 @@ export default function MoreTimeOptionsAdded({ interview }) {
   const isSpecialist = viewer.isSpecialist;
 
   return isSpecialist ? (
-    <MoreTimeOptionsAddedAsSpecialist interview={interview} />
+    <Redirect to={`/interview_request/${interview.id}`} />
   ) : (
     <CallRequested interview={interview} />
   );
-}
-
-function MoreTimeOptionsAddedAsSpecialist({ interview }) {
-  return <Redirect to={`/interview_request/${interview.id}`} />;
 }
