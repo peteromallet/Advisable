@@ -8,7 +8,6 @@ module Types
     description "Type for the Message model when we have an account."
 
     field :author, Types::Account, null: true
-
     def author
       dataloader.with(::ActiveRecordSource, ::Account).load(object.author_id)
     end
