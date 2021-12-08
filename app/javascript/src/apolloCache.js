@@ -22,6 +22,7 @@ const createCache = () => {
         "SystemMessage",
         "GuildPostMessage",
         "ConsultationRequestMessage",
+        "ConsultationDeclinedMessage",
         "InterviewScheduledMessage",
       ],
       ViewerUnion: ["User", "Specialist"],

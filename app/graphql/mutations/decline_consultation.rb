@@ -33,8 +33,10 @@ module Mutations
 
       consultation.messages.first.conversation.new_message!(
         nil,
-        "consultations.declined",
-        consultation: consultation
+        nil,
+        kind: "ConsultationDeclined",
+        consultation: consultation,
+        send_emails: false
       )
     end
 
