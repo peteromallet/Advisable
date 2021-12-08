@@ -13,15 +13,13 @@ module Mutations
     end
 
     def resolve(avatar:)
-      current_user.avatar.attach(avatar)
+      current_account.avatar.attach(avatar)
 
       success = current_account_responsible_for do
-        current_user.save
+        current_account.save
       end
 
-      ApiError.invalid_request("FAILED_TO_UPDATE", current_user.errors.full_messages.first) unless success
-
-      current_user.sync_to_airtable
+      ApiError.invalid_request("FAILED_TO_UPDATE", current_account.errors.full_messages.first) unless success
 
       {viewer: current_user}
     end

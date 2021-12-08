@@ -155,12 +155,12 @@ class NewTestData
 
     Specialist.where(id: @specialists).each_with_index do |specialist, i|
       path = "db/seeds/assets/avatars/#{yml[:advisable][i][:avatar]}"
-      specialist.avatar.attach(io: File.open(path), filename: yml[:advisable][i][:avatar])
+      specialist.account.avatar.attach(io: File.open(path), filename: yml[:advisable][i][:avatar])
     end
 
     User.where(id: @users).each_with_index do |user, i|
       path = "db/seeds/assets/avatars/#{yml[:advisable][i][:avatar]}"
-      user.avatar.attach(io: File.open(path), filename: yml[:advisable][i][:avatar])
+      user.account.avatar.attach(io: File.open(path), filename: yml[:advisable][i][:avatar])
     end
 
     project_data = []

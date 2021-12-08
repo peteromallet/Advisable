@@ -175,13 +175,13 @@ module Airtable
       # We also check to see if the filename in airtable is different to the
       # filename for our version as if they are the same then its probably the
       # same image and there is no need to reset it.
-      if specialist.avatar.attached?
+      if specialist.account.avatar.attached?
         airtable_image_filename = self["Image"].try(:first).try(:[], "filename")
-        if airtable_image_filename != specialist.avatar.filename.to_s
+        if airtable_image_filename != specialist.account.avatar.filename.to_s
           self["Image"] = [
             {
-              url: specialist.avatar.service_url,
-              filename: specialist.avatar.filename.to_s
+              url: specialist.account.avatar.service_url,
+              filename: specialist.account.avatar.filename.to_s
             }
           ]
         end

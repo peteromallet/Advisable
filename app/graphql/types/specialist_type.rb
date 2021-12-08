@@ -3,6 +3,7 @@
 module Types
   class SpecialistType < Types::BaseType
     include ActionView::Helpers::DateHelper
+    delegate :account, to: :object
 
     implements Types::AccountInterface
 
@@ -74,7 +75,10 @@ module Types
       object.resume.attached? ? object.resume : nil
     end
 
-    field :avatar, String, null: true, method: :cached_avatar_url
+    field :avatar, String, null: true
+    def avatar
+      account.cached_avatar_url
+    end
 
     field :cover_photo, String, null: true, method: :resized_cover_photo_url
 
@@ -162,9 +166,8 @@ module Types
     field :has_account, Boolean, null: false do
       description "Whether or not the specialist has created their account yet"
     end
-
     def has_account
-      object.account.has_password?
+      account.has_password?
     end
 
     field :completed_tutorials, [String], null: false do
@@ -174,10 +177,7 @@ module Types
         track when to show onboarding flows for certain features.
       HEREDOC
     end
-
-    def completed_tutorials
-      object.account.completed_tutorials
-    end
+    delegate :completed_tutorials, to: :account
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
       authorize :specialist?, :admin?
@@ -218,10 +218,7 @@ module Types
       authorize :admin?, :specialist?, :applicant_of_company_projects?
       description "The specialists email address"
     end
-
-    def email
-      object.account.email
-    end
+    delegate :email, to: :account
 
     field :country, Types::CountryType, null: true do
       description "The specialists country"

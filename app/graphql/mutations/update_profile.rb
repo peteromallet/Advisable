@@ -48,7 +48,7 @@ module Mutations
 
       specialist.assign_attributes(assignable_attributes)
       specialist.account.update(account_assignable_attributes)
-      specialist.avatar.attach(attributes[:avatar]) if attributes[:avatar]
+      specialist.account.avatar.attach(attributes[:avatar]) if attributes[:avatar]
       specialist.resume.attach(attributes[:resume]) if attributes[:resume]
 
       update_skills if attributes[:skills]
