@@ -15,7 +15,9 @@ export default function Routes() {
           <Resource resource={resource} />
         </Route>
       ))}
-      <Redirect to={resourcePath(resources[0])} />
+      <Route path="*">
+        <Redirect to={resourcePath(resources[0])} />
+      </Route>
     </Switch>
   );
 }

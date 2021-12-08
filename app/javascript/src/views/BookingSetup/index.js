@@ -70,7 +70,9 @@ const BookingSetup = () => {
             </Route>
           );
         })}
-        <Redirect to={generatePath(firstStep.path, params)} />
+        <Route path="*">
+          <Redirect to={generatePath(firstStep.path, params)} />
+        </Route>
       </Switch>
     </Box>
   );
