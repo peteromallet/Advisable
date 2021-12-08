@@ -62,18 +62,14 @@ export default function InterviewRequestView() {
         </Switch>
       )}
       {interview.status === "Call Scheduled" && (
-        <Route path={match.path}>
-          <InterviewConfirmed
-            startsAt={interview.startsAt}
-            timeZone={interview.timeZone}
-            clientName={interview.user.companyName}
-          />
-        </Route>
+        <InterviewConfirmed
+          startsAt={interview.startsAt}
+          timeZone={interview.timeZone}
+          clientName={interview.user.companyName}
+        />
       )}
       {interview.status === "Need More Time Options" && (
-        <Route path={match.path}>
-          <MoreTimesRequested clientName={interview.user.companyName} />
-        </Route>
+        <MoreTimesRequested clientName={interview.user.companyName} />
       )}
     </Card>
   );
