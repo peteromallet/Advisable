@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, useLocation } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 import { screen } from "@testing-library/react";
 import { renderComponent, mockData, mockViewer } from "test-utils";
 import AuthenticatedRoute from "./index";
@@ -19,9 +19,11 @@ function LocationDisplay() {
 function renderTestCase(viewer, initialPath, component) {
   return renderComponent(
     <>
-      <Route path="*">
-        <LocationDisplay />
-      </Route>
+      <Switch>
+        <Route path="*">
+          <LocationDisplay />
+        </Route>
+      </Switch>
       {React.cloneElement(component)}
     </>,
     {
