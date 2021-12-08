@@ -64,6 +64,12 @@ module MailHelper
     name.end_with?("s") ? "#{name}'" : "#{name}'s"
   end
 
+  def pretty_iso(timestamp)
+    return if timestamp.nil?
+
+    DateTime.parse(timestamp).strftime("%d %B, %I:%M%P %Z")
+  end
+
   private
 
   def root_host
