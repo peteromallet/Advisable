@@ -1,0 +1,26 @@
+= render "emails/container" do
+  = render "emails/spacing", height: "32px"
+  = render "emails/h2" do
+    | How was your call with #{@interview.specialist.account.name}?
+
+  = render "emails/spacing", height: "24px"
+
+  = render "emails/paragraph" do
+    | Hi #{@account.first_name}, <br /><br/ >
+    | Now that you have spoken with #{@interview.specialist.account.name}, How would you like to proceed?
+
+  = render "emails/spacing", height: "28px"
+
+  = render "emails/option",
+    title: "I'm interested in hiring them",
+    text: "Don't worry, you can still speak to other candidates if you'd like.",
+    href: "http://admin.advisable.com/client-post-interview-feedback?score=Yes&click-id=#{@interview.uid}&email-type=client-post-interview&move_forward=yes&aid=#{@interview.application.uid}&specialist=#{@interview.specialist.account.first_name}"
+
+  = render "emails/spacing", height: "8px"
+  
+  = render "emails/option",
+    title: "Not interested",
+    text: "We'll let them know that you don't want to proceed.",
+    href: "http://admin.advisable.com/client-post-interview-feedback?score=No&click-id=#{@interview.uid}&email-type=client-post-interview&move_forward=no&aid=#{@interview.application.uid}&specialist=#{@interview.specialist.account.first_name}"
+
+  = render "emails/spacing", height: "40px"

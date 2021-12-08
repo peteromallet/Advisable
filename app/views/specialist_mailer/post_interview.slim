@@ -1,0 +1,37 @@
+= render "emails/container" do
+  = render "emails/spacing", height: "32px"
+  = render "emails/h2" do
+    | How was your call with #{@interview.user.company.name}?
+  = render "emails/spacing", height: "24px"
+  = render "emails/paragraph" do
+    | Hi #{@account.first_name}, <br /><br/ >
+    | Now that you have spoken with #{@interview.user.name_with_company}, How would you like to proceed?
+  = render "emails/spacing", height: "28px"
+
+  = render "emails/option",
+    title: "Send a proposal",
+    text: "Send them a proposal to work together on Advisable",
+    href: "#{app_host}/applications/#{@interview.application.uid}/proposal?score=Ready%20To%20Send%20Proposal&click-id=#{@interview.uid}&email-type=specialist-post-interview"
+
+  = render "emails/spacing", height: "8px"
+  
+  = render "emails/option",
+    title: "I need more time",
+    text: "We'll ask you again in a few days",
+    href: "http://admin.advisable.com/post-interview-more-time?score=Need%20More%20Time&click-id=#{@interview.uid}&email-type=specialist-post-interview&aid=#{@interview.application.uid}"
+
+  = render "emails/spacing", height: "8px"
+
+  = render "emails/option",
+    title: "I'm not interested in this project",
+    text: "Let them know you aren't interested in pursuing this project",
+    href: "https://admin.advisable.com/thank-you/?text=Sorry%20this%20one%20isn%27t%20a%20good%20fit%20for%20you&score=Not%20Interested&click-id=#{@interview.uid}&email-type=specialist-post-interview"
+  
+  = render "emails/spacing", height: "8px"
+
+  = render "emails/option",
+    title: "Our call didn't happen",
+    text: "Reschedule your call for another time",
+    href: "#{app_host}/interviews/#{@interview.uid}"
+
+  = render "emails/spacing", height: "40px"

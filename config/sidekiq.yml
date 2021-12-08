@@ -12,5 +12,7 @@ production:
 :schedule:
   InterviewReminderJob:
     every: 10 minutes
+  PostInterviewJob:
+    every: 10 minutes
   AccountDeleteJob:
     cron: "0 0 6 * * *" # Every day at 6 AM
