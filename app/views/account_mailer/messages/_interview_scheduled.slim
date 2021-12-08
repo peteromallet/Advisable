@@ -1,0 +1,2 @@
+= render 'account_mailer/messages/system_message' do
+  = "#{message.interview.specialist.account.first_name} scheduled a call for #{pretty_iso(message.metadata["starts_at"])}"

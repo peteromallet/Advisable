@@ -8,10 +8,13 @@
   = render "emails/spacing", height: "12px"
 
   - @messages.each do |message|
-    - if message.system_message?
-      = render 'system_message', message: message
+    - if message.kind && lookup_context.template_exists?("account_mailer/messages/_#{message.kind.underscore}")
+      = render "account_mailer/messages/#{message.kind.underscore}", message: message
+    - elsif message.system_message?
+      = render 'account_mailer/messages/system_message' do
+        = message.content
     - else
-      = render 'user_message', message: message
+      = render 'account_mailer/messages/user_message', message: message
 
     div style="border-bottom: 1px solid #eee; margin: 20px 32px;"
 
