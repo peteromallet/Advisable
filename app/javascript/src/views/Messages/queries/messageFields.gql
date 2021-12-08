@@ -57,10 +57,10 @@ fragment MessageFields on MessageInterface {
   }
 
   ... on InterviewScheduledMessage {
+    startsAt
     interview {
       id
       status
-      startsAt
       specialist {
         id
         firstName
