@@ -3,5 +3,9 @@ mutation AcceptConsultation($input: AcceptConsultationInput!) {
     interview {
       id
     }
+    consultation {
+      id
+      status
+    }
   }
 }
