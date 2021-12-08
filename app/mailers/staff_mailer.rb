@@ -3,13 +3,13 @@
 class StaffMailer < ApplicationMailer
   def unresponsive_specialist(report)
     instance_variables_for_unresponsiveness_report(report)
-
+    @sales_person = SalesPerson.default_for_specialist || @project.user.company.sales_person
     mail(to: @sales_person.email_with_name, subject: "#{@specialist.account.name} is unresponsive on #{@project.name}")
   end
 
   def unresponsive_client(report)
     instance_variables_for_unresponsiveness_report(report)
-
+    @sales_person = SalesPerson.default_for_user || @project.user.company.sales_person
     mail(to: @sales_person.email_with_name, subject: "#{@client.account.name} is unresponsive on #{@project.name}")
   end
 
@@ -18,7 +18,7 @@ class StaffMailer < ApplicationMailer
     @project = @flag.application.project
     @user = @flag.user
     @specialist = @flag.application.specialist
-    @sales_person = @project.user.company.sales_person
+    @sales_person = SalesPerson.default_for_specialist || @project.user.company.sales_person
 
     mail(to: @sales_person.email_with_name, subject: "#{@user.account.name} reported #{@specialist.account.name} as problematic on #{@project.name}")
   end
@@ -36,6 +36,5 @@ class StaffMailer < ApplicationMailer
     @project = @application.project
     @specialist = @application.specialist
     @client = @project.user
-    @sales_person = @project.user.company.sales_person
   end
 end
