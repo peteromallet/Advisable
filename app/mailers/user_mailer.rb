@@ -9,7 +9,8 @@ class UserMailer < ApplicationMailer
 
   def interview_reschedule_request(interview)
     @interview = interview
-    mail(from: interview.user.company.sales_person.email_with_name, to: interview.user.account.email, subject: "Interview Reschedule Request")
+    @sales_person = sales_person_for(interview.user.company)
+    mail(from: @sales_person.email_with_name, to: interview.user.account.email, subject: "Interview Reschedule Request")
   end
 
   def invited_by_manager(manager, user)
@@ -71,7 +72,7 @@ class UserMailer < ApplicationMailer
 
   def need_more_time_options(interview)
     @interview = interview
-    @sales_person = interview.user.company.sales_person
+    @sales_person = sales_person_for(interview.user.company)
     mail(
       from: @sales_person.email_with_name,
       to: interview.user.account.email,
@@ -83,7 +84,7 @@ class UserMailer < ApplicationMailer
 
   def interview_reminder(interview)
     @interview = interview
-    @sales_person = interview.user.company.sales_person
+    @sales_person = sales_person_for(interview.user.company)
     mail(
       from: @sales_person.email_with_name,
       to: interview.user.account.email,
@@ -97,7 +98,7 @@ class UserMailer < ApplicationMailer
   def post_interview(interview)
     @interview = interview
     @account = interview.user.account
-    @sales_person = interview.user.company.sales_person
+    @sales_person = sales_person_for(interview.user.company)
 
     mail(
       from: "Advisable <hello@advisable.com>",
@@ -117,5 +118,9 @@ class UserMailer < ApplicationMailer
     else
       "#{default_url_options[:host]}/projects/#{@project.uid}/matches"
     end
+  end
+
+  def sales_person_for(company)
+    SalesPerson.default_for_user || company.sales_person
   end
 end
