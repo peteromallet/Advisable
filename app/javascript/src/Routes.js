@@ -2,7 +2,7 @@ import { Switch } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
 import Route from "src/components/Route";
 import Loading from "src/components/Loading";
-import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import RequireAuthentication from "./components/RequireAuthentication";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import ApplicationRoutes from "./ApplicationRoutes";
@@ -31,16 +31,16 @@ const Routes = () => {
         <Route path="/signup/:id">
           <Signup />
         </Route>
-        <AuthenticatedRoute
-          exact
-          clientOnly
-          path="/clients/:userID/availability"
-        >
-          <Availability />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute path="/calls/:id">
-          <VideoCall />
-        </AuthenticatedRoute>
+        <Route path="/clients/:userID/availability" exact>
+          <RequireAuthentication clientOnly>
+            <Availability />
+          </RequireAuthentication>
+        </Route>
+        <Route path="/calls/:id">
+          <RequireAuthentication>
+            <VideoCall />
+          </RequireAuthentication>
+        </Route>
         <Route path="/clients/join">
           <ClientJoin />
         </Route>
