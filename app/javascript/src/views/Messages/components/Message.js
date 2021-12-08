@@ -9,6 +9,7 @@ import { DateTime } from "luxon";
 import MessageAttachment from "./MessageAttachment";
 import { motion } from "framer-motion";
 import InterviewScheduledMessage from "./SystemMessage/InterviewScheduled";
+import ConsultationDeclinedMessage from "./SystemMessage/ConsultationDeclined";
 
 const COMPONENTS = {
   UserMessage,
@@ -16,6 +17,7 @@ const COMPONENTS = {
   GuildPostMessage,
   ConsultationRequestMessage,
   InterviewScheduledMessage,
+  ConsultationDeclinedMessage,
 };
 
 export default function Message({ message }) {

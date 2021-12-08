@@ -46,6 +46,16 @@ fragment MessageFields on MessageInterface {
     }
   }
 
+  ... on ConsultationDeclinedMessage {
+    consultation {
+      id
+      specialist {
+        id
+        firstName
+      }
+    }
+  }
+
   ... on InterviewScheduledMessage {
     interview {
       id
