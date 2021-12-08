@@ -3,8 +3,8 @@ import { DateTime } from "luxon";
 import { Box, Link, Text } from "@advisable/donut";
 
 export default function InterviewScheduledMessage({ message }) {
-  const interview = message.interview;
-  const { id, startsAt, specialist } = interview;
+  const { startsAt, interview } = message;
+  const { id, specialist } = interview;
   const datetime = DateTime.fromISO(startsAt).toFormat("dd LLLL y 'at' hh:mma");
 
   return (
