@@ -22,7 +22,7 @@ module Types
 
     field :last_message, Types::MessageInterface, null: true
     def last_message
-      object.messages.order(created_at: :asc).last
+      object.messages.where.not(content: nil).order(created_at: :asc).last
     end
 
     field :unread_count, Int, null: false
