@@ -2,16 +2,16 @@
 
 module Types
   class User < Types::BaseType
+    delegate :account, :company, to: :object
+
     description "Represents a user"
     implements Types::AccountInterface
-    delegate :account, :company, to: :object
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
     field :application_stage, String, null: true, method: :application_status
 
     field :email, String, null: false do
       authorize :admin?, :user?, :candidate_for_user_project?, :owned_by_company?
     end
-
     delegate :email, to: :account
 
     field :is_admin, Boolean, null: false
@@ -206,6 +206,9 @@ module Types
       object
     end
 
-    field :avatar, String, null: true, method: :cached_avatar_url
+    field :avatar, String, null: true
+    def avatar
+      account.cached_avatar_url
+    end
   end
 end

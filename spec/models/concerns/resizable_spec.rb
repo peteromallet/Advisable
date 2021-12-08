@@ -24,7 +24,7 @@ end
 
 RSpec.describe Resizable do
   let(:dummy) { ResizedDummy.new }
-  let(:specialist) { create(:specialist) }
+  let(:account) { create(:account) }
   let(:file) { Rails.root.join("spec/support/01.jpg") }
   let(:avatar) { ActiveStorage::Blob.create_and_upload!(io: File.open(file), filename: "01.jpg", content_type: "image/jpeg").signed_id }
 
@@ -46,35 +46,35 @@ RSpec.describe Resizable do
 
   context "when real world ActiveRecord" do
     it "returns variant" do
-      specialist.avatar.attach(avatar)
-      expect(specialist.resized_avatar).to be_a(ActiveStorage::VariantWithRecord)
+      account.avatar.attach(avatar)
+      expect(account.resized_avatar).to be_a(ActiveStorage::VariantWithRecord)
     end
 
     it "returns an url" do
-      specialist.avatar.attach(avatar)
-      specialist.resized_avatar_url
-      expect(specialist.resized_avatar_url).to start_with("http")
+      account.avatar.attach(avatar)
+      account.resized_avatar_url
+      expect(account.resized_avatar_url).to start_with("http")
     end
 
     describe "job enqueuing" do
-      before { specialist.avatar.attach(avatar) }
+      before { account.avatar.attach(avatar) }
 
       context "when not processed" do
         it "enqueues a job and returns original" do
-          specialist.resized_avatar_url
-          expect(ProcessImageJob).to have_been_enqueued.with(specialist.avatar.blob, {format: "jpg", resize_to_limit: [400, 400]})
-          expect(specialist.resized_avatar_url).to start_with("http")
-          expect(specialist.resized_avatar_url).to include("/rails/active_storage/blobs/")
+          account.resized_avatar_url
+          expect(ProcessImageJob).to have_been_enqueued.with(account.avatar.blob, {format: "jpg", resize_to_limit: [400, 400]})
+          expect(account.resized_avatar_url).to start_with("http")
+          expect(account.resized_avatar_url).to include("/rails/active_storage/blobs/")
         end
       end
 
       context "when processed" do
         it "returns url without job enqueuing" do
-          ProcessImageJob.perform_now(specialist.avatar.blob, {format: "jpg", resize_to_limit: [400, 400]})
-          specialist.resized_avatar_url
+          ProcessImageJob.perform_now(account.avatar.blob, {format: "jpg", resize_to_limit: [400, 400]})
+          account.resized_avatar_url
           expect(ProcessImageJob).not_to have_been_enqueued
-          expect(specialist.resized_avatar_url).to start_with("http")
-          expect(specialist.resized_avatar_url).to include("rails/active_storage/representations/redirect/")
+          expect(account.resized_avatar_url).to start_with("http")
+          expect(account.resized_avatar_url).to include("rails/active_storage/representations/redirect/")
         end
       end
     end
@@ -123,9 +123,9 @@ RSpec.describe Resizable do
     let(:avatar) { ActiveStorage::Blob.create_and_upload!(io: File.open(file), filename: "test.pdf").signed_id }
 
     it "removes the image" do
-      specialist.avatar.attach(avatar)
-      expect(specialist.resized_avatar_url).to be_nil
-      expect(specialist.avatar).not_to be_attached
+      account.avatar.attach(avatar)
+      expect(account.resized_avatar_url).to be_nil
+      expect(account.avatar).not_to be_attached
     end
   end
 end

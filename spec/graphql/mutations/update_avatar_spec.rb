@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Mutations::UpdateAvatar do
-  let(:context) { {current_user: current_user} }
+  let(:context) { {current_user: current_user, current_account: current_user&.account} }
   let(:file) { Rails.root.join("spec/support/test.pdf") }
   let(:signed_id) { ActiveStorage::Blob.create_and_upload!(io: File.open(file), filename: "test.pdf").signed_id }
 
@@ -38,7 +38,7 @@ RSpec.describe Mutations::UpdateAvatar do
       response = AdvisableSchema.execute(query, context: context)
       id = response["data"]["updateAvatar"]["viewer"]["id"]
       expect(id).to eq(current_user.uid)
-      expect(current_user.avatar.blob.signed_id).to eq(signed_id)
+      expect(current_user.account.avatar.blob.signed_id).to eq(signed_id)
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe Mutations::UpdateAvatar do
       response = AdvisableSchema.execute(query, context: context)
       id = response["data"]["updateAvatar"]["viewer"]["id"]
       expect(id).to eq(current_user.uid)
-      expect(current_user.avatar.blob.signed_id).to eq(signed_id)
+      expect(current_user.account.avatar.blob.signed_id).to eq(signed_id)
     end
   end
 

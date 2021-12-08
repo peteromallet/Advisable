@@ -5,6 +5,7 @@ class Account < ApplicationRecord
   include Tutorials
   include Featurable
   include SoftDeletable
+  include Resizable
 
   SUBSCRIPTIONS = ["All", "SMS Alerts", "Automated Invitations", "Personal Invitations", "Onboarding Emails", "Status Surveys"].freeze
 
@@ -23,11 +24,15 @@ class Account < ApplicationRecord
   has_many :conversation_participants, dependent: :destroy
   has_many :conversations, through: :conversation_participants
 
+  has_one_attached :avatar
+  resize avatar: {resize_to_limit: [400, 400]}
+
   has_secure_password validations: false
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
   validates :email, uniqueness: true, presence: true, format: {with: /@/}
 
   before_validation :strip_email
+  before_save :clear_avatar_cache
 
   featurize :admin, :team_manager, :editor, column: :permissions
 
@@ -37,6 +42,10 @@ class Account < ApplicationRecord
 
   def name
     @name ||= [first_name, last_name].select(&:present?).join(" ")
+  end
+
+  def cached_avatar_url
+    Rails.cache.fetch("account_avatar_#{id}") { resized_avatar_url }
   end
 
   def has_password? # rubocop:disable Naming/PredicateName
@@ -114,6 +123,12 @@ class Account < ApplicationRecord
     return if email.blank?
 
     self.email = email.strip
+  end
+
+  def clear_avatar_cache
+    return if avatar.attachment&.persisted?
+
+    Rails.cache.delete("account_avatar_#{id}")
   end
 end
 

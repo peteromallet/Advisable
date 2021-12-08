@@ -25,9 +25,9 @@ class TestData
         s.city = "Scranton"
       end
 
-    unless specialist.avatar.attached? || attrs.fetch(:avatar, nil).nil?
+    unless specialist.account.avatar.attached? || attrs.fetch(:avatar, nil).nil?
       url = attrs.fetch(:avatar)
-      specialist.avatar.attach(
+      specialist.account.avatar.attach(
         io: URI.open(url), filename: File.basename(URI.parse(url).path)
       )
     end
