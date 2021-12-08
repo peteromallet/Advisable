@@ -2,29 +2,8 @@ import React from "react";
 import { Box, Text } from "@advisable/donut";
 import renderLineBreaks from "src/utilities/renderLineBreaks";
 import MessageAttachment from "../MessageAttachment";
-import ConsultationDeclined from "./ConsultationDeclined";
-
-const SYSTEM_MESSAGES = {
-  "consultations.declined": ConsultationDeclined,
-};
-
-function SystemMessageContent({ message }) {
-  return (
-    <Text
-      autoLink
-      color="neutral800"
-      lineHeight="24px"
-      style={{ overflowWrap: "break-word" }}
-    >
-      {renderLineBreaks(message.content)}
-    </Text>
-  );
-}
 
 export default function SystemMessage({ message }) {
-  const contentComponent =
-    SYSTEM_MESSAGES[message.content] || SystemMessageContent;
-
   return (
     <Box
       padding={4}
@@ -37,7 +16,14 @@ export default function SystemMessage({ message }) {
       textAlign="center"
     >
       <Box width="100%">
-        {React.createElement(contentComponent, { message })}
+        <Text
+          autoLink
+          color="neutral800"
+          lineHeight="24px"
+          style={{ overflowWrap: "break-word" }}
+        >
+          {renderLineBreaks(message.content)}
+        </Text>
         {message.attachments.length > 0 && (
           <Box
             display="grid"
