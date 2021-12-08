@@ -1,12 +1,5 @@
-import React, { useEffect } from "react";
-import {
-  useModal,
-  DialogDisclosure,
-  Box,
-  Text,
-  Button,
-  Circle,
-} from "@advisable/donut";
+import React, { useEffect, useMemo } from "react";
+import { Box, Text, Circle } from "@advisable/donut";
 import { BaseMessage } from "./Message";
 import useViewer from "src/hooks/useViewer";
 import { Calendar } from "@styled-icons/heroicons-solid";
@@ -14,20 +7,23 @@ import ConsultationRequestModal from "./ConsultationRequestModal";
 import { useMessagePrompt } from "./MessagePrompt";
 
 function ConsultationRequestMessageForSpecialist({ message }) {
-  const modal = useModal();
   const sender = message.author?.name;
   const { show, dismiss, highlight } = useMessagePrompt(
     message,
     "New consultation request",
   );
 
+  const isPending = useMemo(() => {
+    return message.consultation?.status === "Request Completed";
+  }, [message]);
+
   useEffect(() => {
-    if (message.consultation?.status === "Request Completed") {
+    if (isPending) {
       show();
     } else {
       dismiss();
     }
-  }, [show, dismiss, message]);
+  }, [show, dismiss, isPending]);
 
   return (
     <BaseMessage message={message} highlight={highlight}>
@@ -50,21 +46,12 @@ function ConsultationRequestMessageForSpecialist({ message }) {
             After your call you will be able to send a request to work together
           </Text>
         </Box>
-        <Box>
-          <DialogDisclosure {...modal}>
-            {(disclosure) => (
-              <Button {...disclosure} variant="gradient" size="s">
-                View
-              </Button>
-            )}
-          </DialogDisclosure>
-        </Box>
+        {isPending && (
+          <Box>
+            <ConsultationRequestModal message={message} sender={sender} />
+          </Box>
+        )}
       </Box>
-      <ConsultationRequestModal
-        modal={modal}
-        message={message}
-        sender={sender}
-      />
     </BaseMessage>
   );
 }

@@ -3,7 +3,16 @@ import {
   useAcceptConsultationRequest,
   useDeclineConsultationRequest,
 } from "../queries";
-import { Modal, Box, Text, Button, Heading, Textarea } from "@advisable/donut";
+import {
+  Modal,
+  Box,
+  Text,
+  Button,
+  Heading,
+  Textarea,
+  useModal,
+  DialogDisclosure,
+} from "@advisable/donut";
 import { useHistory } from "react-router-dom";
 import CircularButton from "src/components/CircularButton";
 import { ArrowLeft } from "@styled-icons/heroicons-solid";
@@ -118,28 +127,38 @@ function DeclineConsultationRequest({ message, sender, onBack, onDecline }) {
   );
 }
 
-export default function ConsultationRequestModal({ modal, sender, message }) {
+export default function ConsultationRequestModal({ sender, message }) {
+  const modal = useModal();
   const [decline, setDecline] = useState(false);
 
   const reset = () => setDecline(false);
   const handleDecline = () => setDecline(true);
 
   return (
-    <Modal modal={modal}>
-      {decline ? (
-        <DeclineConsultationRequest
-          message={message}
-          sender={sender}
-          onBack={reset}
-          onDecline={modal.hide}
-        />
-      ) : (
-        <ConsultationRequestPrompt
-          sender={sender}
-          message={message}
-          onDecline={handleDecline}
-        />
-      )}
-    </Modal>
+    <>
+      <DialogDisclosure {...modal}>
+        {(disclosure) => (
+          <Button {...disclosure} variant="gradient" size="s">
+            View
+          </Button>
+        )}
+      </DialogDisclosure>
+      <Modal modal={modal}>
+        {decline ? (
+          <DeclineConsultationRequest
+            message={message}
+            sender={sender}
+            onBack={reset}
+            onDecline={modal.hide}
+          />
+        ) : (
+          <ConsultationRequestPrompt
+            sender={sender}
+            message={message}
+            onDecline={handleDecline}
+          />
+        )}
+      </Modal>
+    </>
   );
 }
