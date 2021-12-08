@@ -12,6 +12,14 @@ class SalesPerson < ApplicationRecord
   has_one_attached :image
   resize image: {resize_to_limit: [400, 400]}
 
+  def self.default_for_user
+    find_by(username: ENV["SALES_PERSON_USER_DEFAULT"])
+  end
+
+  def self.default_for_specialist
+    find_by(username: ENV["SALES_PERSON_SPECIALIST_DEFAULT"])
+  end
+
   def name
     "#{first_name} #{last_name}"
   end
