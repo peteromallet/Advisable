@@ -1,10 +1,10 @@
 import React from "react";
 import { DateTime } from "luxon";
-import { Box, Text } from "@advisable/donut";
+import { Box, Link, Text } from "@advisable/donut";
 
 export default function InterviewScheduledMessage({ message }) {
   const interview = message.interview;
-  const { startsAt, specialist } = interview;
+  const { id, startsAt, specialist } = interview;
   const datetime = DateTime.fromISO(startsAt).toFormat("dd LLLL y 'at' hh:mma");
 
   return (
@@ -18,12 +18,17 @@ export default function InterviewScheduledMessage({ message }) {
       borderColor="neutral100"
       textAlign="center"
     >
-      <Text>
-        {specialist.firstName} scheduled an interview for{" "}
+      <Text marginBottom={2}>
+        <Text as="span" fontWeight={520}>
+          {specialist.firstName}
+        </Text>{" "}
+        scheduled a call for{" "}
         <Text as="span" fontWeight={520}>
           {datetime}
         </Text>
       </Text>
+
+      <Link to={`/interviews/${id}`}>Manage call</Link>
     </Box>
   );
 }
