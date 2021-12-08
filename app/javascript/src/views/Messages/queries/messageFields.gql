@@ -49,6 +49,7 @@ fragment MessageFields on MessageInterface {
   ... on InterviewScheduledMessage {
     interview {
       id
+      status
       startsAt
       specialist {
         id

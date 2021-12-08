@@ -5,6 +5,7 @@ module Mutations
     argument :consultation, ID, required: true
 
     field :interview, Types::Interview, null: true
+    field :consultation, Types::ConsultationType, null: true
 
     def authorized?(consultation:)
       requires_specialist!
@@ -24,7 +25,7 @@ module Mutations
           status: "Accepted By Specialist",
           accepted_at: Time.zone.now
         )
-        {interview: interview}
+        {interview: interview, consultation: consultation}
       end
     end
 
