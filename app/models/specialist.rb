@@ -55,10 +55,9 @@ class Specialist < ApplicationRecord
 
   # We also have an 'image' column in the specalists table. This is a deprecated
   # column that we used to use to store the avatar from airtable in.
-  has_one_attached :avatar
   has_one_attached :resume
   has_one_attached :cover_photo
-  resize avatar: {resize_to_limit: [400, 400]}, cover_photo: {resize_to_limit: [2000, 2000]}
+  resize cover_photo: {resize_to_limit: [2000, 2000]}
 
   # DEPRECATED IN FAVOUR OF phone column
   attr_encrypted :phone_number, key: [ENV["ENCRYPTION_KEY"]].pack("H*")
