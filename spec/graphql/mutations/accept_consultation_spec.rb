@@ -61,22 +61,6 @@ RSpec.describe Mutations::AcceptConsultation do
     end
   end
 
-  context "when a message exists" do
-    let(:conversation) { create(:conversation) }
-    let!(:participant) { conversation.participants.create(account: current_user.account) }
-
-    it "creates a system message" do
-      create(:message, consultation: consultation, conversation: conversation)
-      message_count = Message.count
-      AdvisableSchema.execute(query, context: context)
-      expect(Message.count).to eq(message_count + 1)
-      last_message = consultation.messages.last
-      expect(last_message.kind).to eq("system")
-      expect(last_message.content).to eq("consultations.accepted")
-      expect(participant.reload.unread_count).to eq(1)
-    end
-  end
-
   context "when no user is logged in" do
     let(:current_user) { nil }
 
