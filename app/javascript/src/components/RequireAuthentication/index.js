@@ -1,6 +1,7 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Redirect, useLocation } from "react-router-dom";
 import useViewer from "../../hooks/useViewer";
+const SetPassword = lazy(() => import("src/views/SetPassword"));
 
 function RedirectToLogin() {
   const location = useLocation();
@@ -24,6 +25,10 @@ function RequireAuthentication({ children, specialistOnly, clientOnly }) {
 
   if (clientOnly && viewer && !viewer.isClient) {
     return <Redirect to="/" />;
+  }
+
+  if (viewer?.needsToSetAPassword) {
+    return <SetPassword />;
   }
 
   return viewer ? children : <RedirectToLogin />;
