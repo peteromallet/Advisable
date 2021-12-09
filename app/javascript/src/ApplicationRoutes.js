@@ -1,6 +1,5 @@
 // ApplicationRoutes renders the routes that should be rendered with a header
-import queryString from "query-string";
-import React, { Suspense, lazy, useMemo } from "react";
+import React, { Suspense, lazy } from "react";
 import { Switch, Redirect, useLocation } from "react-router-dom";
 import Route from "src/components/Route";
 import NotFound from "./views/NotFound";
@@ -56,26 +55,6 @@ function RedirectToSetPassword() {
   );
 }
 
-export function VersionedRoute({
-  fallback,
-  versions,
-  routeComponent = Route,
-  ...props
-}) {
-  const location = useLocation();
-  const versionNumber = useMemo(() => {
-    const { version } = queryString.parse(location.search);
-    if (version) sessionStorage.setItem(props.path, version);
-    return sessionStorage.getItem(props.path);
-  }, [location, props.path]);
-
-  const component = versions[versionNumber] || fallback;
-  return React.createElement(routeComponent, {
-    ...props,
-    component,
-  });
-}
-
 const ApplicationRoutes = () => {
   const viewer = useViewer();
   const isClient = viewer && viewer.__typename === "User";
@@ -126,13 +105,6 @@ const ApplicationRoutes = () => {
           <Route path="/profile/:username">
             <FreelancerProfile />
           </Route>
-
-          <Redirect
-            from="/freelancers/:username/:article"
-            to="/profile/:username/:article"
-          />
-
-          <Redirect from="/freelancers/:username" to="/profile/:username" />
 
           <Route path="/profile">
             <RequireAuthentication>
