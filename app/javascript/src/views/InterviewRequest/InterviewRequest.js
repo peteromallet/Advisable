@@ -1,8 +1,13 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { Card } from "@advisable/donut";
-import { useParams, Switch, Redirect, useRouteMatch } from "react-router-dom";
-import Route from "src/components/Route";
+import {
+  Route,
+  useParams,
+  Switch,
+  Redirect,
+  useRouteMatch,
+} from "react-router-dom";
 import Loading from "src/components/Loading";
 import SelectDay from "./SelectDay";
 import SelectTime from "./SelectTime";

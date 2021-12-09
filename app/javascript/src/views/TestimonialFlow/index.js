@@ -1,10 +1,9 @@
 import React, { Suspense } from "react";
 import { useReviewMeta } from "./queries";
-import { useParams, Switch } from "react-router-dom";
+import { Route, useParams, Switch } from "react-router-dom";
 import { Box, Container } from "@advisable/donut";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import Loading from "src/components/Loading";
-import Route from "src/components/Route";
 import Logo from "src/components/Logo";
 // Review views
 import ReviewComment from "./views/ReviewComment";

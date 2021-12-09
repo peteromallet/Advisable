@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Box, useBackground } from "@advisable/donut";
-import { Switch, useLocation } from "react-router";
-import Route from "src/components/Route";
+import { Route, Switch, useLocation } from "react-router";
 import Shortlist from "./views/Shortlist";
 import Shortlists from "./views/Shortlists";
 import ShortlistArticle from "./views/ShortlistArticle";

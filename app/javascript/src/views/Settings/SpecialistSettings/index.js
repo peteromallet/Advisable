@@ -1,6 +1,5 @@
 import React from "react";
-import { Switch, Redirect, useRouteMatch } from "react-router-dom";
-import Route from "src/components/Route";
+import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
 import { Container, useBreakpoint } from "@advisable/donut";
 import View from "src/components/View";
 import Navigation from "./SpecialistSettingsNavigation";

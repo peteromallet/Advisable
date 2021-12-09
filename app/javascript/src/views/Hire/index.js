@@ -2,8 +2,7 @@ import React from "react";
 import { Box, useBackground } from "@advisable/donut";
 import Page from "src/components/Page";
 import ErrorBoundary from "src/components/ErrorBoundary";
-import { Redirect, Switch } from "react-router";
-import Route from "src/components/Route";
+import { Route, Redirect, Switch } from "react-router-dom";
 import Proposal from "./views/Proposal";
 import Candidates from "./views/Candidates";
 

@@ -13,10 +13,10 @@ const stripePromise = loadStripe(keys.stripePublicKey);
 import "./i18n";
 import App from "./App";
 
-const Root = ({ history }) => {
+const Root = () => {
   return (
     <ApolloProvider client={client}>
-      <Router history={history}>
+      <Router>
         <Elements stripe={stripePromise}>
           <BaseLineGridOverlay />
           <App />
