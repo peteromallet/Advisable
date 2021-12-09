@@ -7,7 +7,6 @@ class User < ApplicationRecord
   include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser
-  include Resizable
 
   TALENT_QUALITY_OPTIONS = %w[cheap budget good top world_class].freeze
   NUMBER_OF_FREELANCERS_OPTIONS = %w[0 1-3 4-10 10+].freeze
@@ -37,9 +36,6 @@ class User < ApplicationRecord
   serialize :available_payment_methods, Array
 
   attribute :availability, :datetime, default: [], array: true
-
-  has_one_attached :avatar
-  resize avatar: {resize_to_limit: [400, 400]}
 
   validates :company, presence: {unless: :disabled?}
   validates :rejection_reason, inclusion: {in: %w[cheap_talent not_hiring]}, allow_nil: true

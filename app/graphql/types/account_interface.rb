@@ -17,6 +17,11 @@ module Types
     field :features, [String], null: true
     delegate :name, :first_name, :last_name, :features, to: :account
 
+    field :avatar, String, null: true
+    def avatar
+      account.cached_avatar_url
+    end
+
     field :needs_to_set_a_password, Boolean, null: true
     def needs_to_set_a_password
       account.auth_providers.none? && account.password_digest.blank?

@@ -8,10 +8,7 @@ module Types
     field :first_name, String, null: true
     field :last_name, String, null: true
     field :name, String, null: true
-    field :avatar, String, null: true
-    def avatar
-      object.specialist_or_user.cached_avatar_url
-    end
+    field :avatar, String, null: true, method: :cached_avatar_url
 
     field :is_viewer, Boolean, null: true
     def is_viewer
