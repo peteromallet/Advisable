@@ -1,6 +1,6 @@
 // ApplicationRoutes renders the routes that should be rendered with a header
 import React, { Suspense, lazy } from "react";
-import { Switch, Redirect, useLocation } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
 import Route from "src/components/Route";
 import NotFound from "./views/NotFound";
 import Header from "./components/Header";
@@ -28,7 +28,6 @@ const FreelancerActiveApplication = lazy(() =>
 const Consultation = lazy(() => import("./views/Consultation"));
 const Interview = lazy(() => import("./views/Interview"));
 const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
-const SetPassword = lazy(() => import("./views/SetPassword"));
 const Payment = lazy(() => import("./views/Payment"));
 const Messages = lazy(() => import("./views/Messages"));
 const GuildPost = lazy(() => import("./views/Post"));
@@ -43,18 +42,6 @@ function RedirectToFreelancerProfile() {
   return <Redirect to={viewer.profilePath} />;
 }
 
-function RedirectToSetPassword() {
-  const location = useLocation();
-  return (
-    <Redirect
-      to={{
-        pathname: "/set_password",
-        state: { from: location },
-      }}
-    />
-  );
-}
-
 const ApplicationRoutes = () => {
   const viewer = useViewer();
   const isClient = viewer && viewer.__typename === "User";
@@ -65,12 +52,6 @@ const ApplicationRoutes = () => {
       <Suspense fallback={<Loading />}>
         <Switch>
           {isClient && <Redirect from="/" exact to="/explore" />}
-          <Route path="/set_password">
-            <RequireAuthentication>
-              <SetPassword />
-            </RequireAuthentication>
-          </Route>
-          {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
 
           <Route path="/" exact>
             <RequireAuthentication>
