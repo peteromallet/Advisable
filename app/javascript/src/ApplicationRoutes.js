@@ -6,7 +6,7 @@ import Route from "src/components/Route";
 import NotFound from "./views/NotFound";
 import Header from "./components/Header";
 import Loading from "./components/Loading";
-import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import RequireAuthentication from "./components/RequireAuthentication";
 import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import Hire from "./views/Hire";
@@ -59,7 +59,7 @@ function RedirectToSetPassword() {
 export function VersionedRoute({
   fallback,
   versions,
-  routeComponent = AuthenticatedRoute,
+  routeComponent = Route,
   ...props
 }) {
   const location = useLocation();
@@ -86,94 +86,162 @@ const ApplicationRoutes = () => {
       <Suspense fallback={<Loading />}>
         <Switch>
           {isClient && <Redirect from="/" exact to="/explore" />}
-          <AuthenticatedRoute path="/set_password">
-            <SetPassword />
-          </AuthenticatedRoute>
+          <Route path="/set_password">
+            <RequireAuthentication>
+              <SetPassword />
+            </RequireAuthentication>
+          </Route>
           {viewer?.needsToSetAPassword ? <RedirectToSetPassword /> : null}
 
-          <AuthenticatedRoute path="/" exact>
-            <FreelancerDashboard />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path="/post">
-            <NewPost />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path="/messages">
-            <Messages />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path="/clients/apply">
-            <ClientApplication />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path="/freelancers/apply">
-            <FreelancerApplication />
-          </AuthenticatedRoute>
+          <Route path="/" exact>
+            <RequireAuthentication>
+              <FreelancerDashboard />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/post">
+            <RequireAuthentication specialistOnly>
+              <NewPost />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/messages">
+            <RequireAuthentication>
+              <Messages />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/clients/apply">
+            <RequireAuthentication>
+              <ClientApplication />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/freelancers/apply">
+            <RequireAuthentication>
+              <FreelancerApplication />
+            </RequireAuthentication>
+          </Route>
+
           <Route path="/profile/:username">
             <FreelancerProfile />
           </Route>
-          <Redirect from="/freelancers/:username/:article" to="/profile/:username/:article" />
+
+          <Redirect
+            from="/freelancers/:username/:article"
+            to="/profile/:username/:article"
+          />
+
           <Redirect from="/freelancers/:username" to="/profile/:username" />
-          <AuthenticatedRoute path="/profile">
-            <RedirectToFreelancerProfile />
-          </AuthenticatedRoute>
-          {/* Client routes */}
-          <AuthenticatedRoute
-            specialistOnly
-            path="/interview_request/:interviewID"
-          >
-            <InterviewRequest />
-          </AuthenticatedRoute>
-          {/* maintain old interview availability routes */}
-          <AuthenticatedRoute path="/interviews/:id">
-            <Interview />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute clientOnly path="/hire">
-            <Hire />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute exact path="/manage">
-            <ActiveTalent />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path="/book/:applicationId">
-            <BookingSetup />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute clientOnly path="/manage/:applicationId">
-            <Booking />
-          </AuthenticatedRoute>
-          {/* Freelancer Routes */}
-          <AuthenticatedRoute specialistOnly path="/consultations/:id">
-            <Consultation />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path={"/applications/:applicationId/proposal"}>
-            <Proposal />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute exact path="/clients">
-            <FreelancerProjects />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path="/clients/:applicationId">
-            <FreelancerActiveApplication />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path="/settings">
-            <Settings />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute clientOnly path="/explore">
-            <Discover />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute clientOnly path="/payments/:id">
-            <Payment />
-          </AuthenticatedRoute>
+
+          <Route path="/profile">
+            <RequireAuthentication>
+              <RedirectToFreelancerProfile />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/interview_request/:interviewID">
+            <RequireAuthentication specialistOnly>
+              <InterviewRequest />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/interviews/:id">
+            <RequireAuthentication>
+              <Interview />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/hire">
+            <RequireAuthentication clientOnly>
+              <Hire />
+            </RequireAuthentication>
+          </Route>
+
+          <Route exact path="/manage">
+            <RequireAuthentication>
+              <ActiveTalent />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/book/:applicationId">
+            <RequireAuthentication>
+              <BookingSetup />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/manage/:applicationId">
+            <RequireAuthentication clientOnly>
+              <Booking />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/consultations/:id">
+            <RequireAuthentication specialistOnly>
+              <Consultation />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/applications/:applicationId/proposal">
+            <RequireAuthentication>
+              <Proposal />
+            </RequireAuthentication>
+          </Route>
+
+          <Route exact path="/clients">
+            <RequireAuthentication>
+              <FreelancerProjects />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/clients/:applicationId">
+            <RequireAuthentication>
+              <FreelancerActiveApplication />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/settings">
+            <RequireAuthentication>
+              <Settings />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/explore">
+            <RequireAuthentication clientOnly>
+              <Discover />
+            </RequireAuthentication>
+          </Route>
+
+          <Route path="/payments/:id">
+            <RequireAuthentication clientOnly>
+              <Payment />
+            </RequireAuthentication>
+          </Route>
+
           <Route path="/posts/:id/edit">
             <EditPost />
           </Route>
+
           <Route path="/posts/:postId">
             <GuildPost />
           </Route>
-          <AuthenticatedRoute exact path="/guild/topics" specialistOnly>
-            <GuildFollows />
-          </AuthenticatedRoute>
+
+          <Route exact path="/guild/topics">
+            <RequireAuthentication specialistOnly>
+              <GuildFollows />
+            </RequireAuthentication>
+          </Route>
+
           <Route exact path="/events/:eventId">
             <GuildEvent />
           </Route>
-          <AuthenticatedRoute exact path="/events">
-            <GuildEvents />
-          </AuthenticatedRoute>
+
+          <Route exact path="/events">
+            <RequireAuthentication>
+              <GuildEvents />
+            </RequireAuthentication>
+          </Route>
+
           <Route>
             <NotFound />
           </Route>
