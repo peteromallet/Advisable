@@ -1,6 +1,5 @@
 import React, { useMemo, useCallback } from "react";
-import { matchPath } from "react-router-dom";
-import Route from "src/components/Route";
+import { Route, matchPath } from "react-router-dom";
 import usePathnameQueue from "src/utilities/usePathnameQueue";
 import findIndex from "lodash/findIndex";
 

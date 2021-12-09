@@ -1,8 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { Box, useBreakpoint, useTheme } from "@advisable/donut";
 import { useConversations, useReceivedMessage } from "./queries";
-import { Redirect, Switch, useRouteMatch } from "react-router-dom";
-import Route from "src/components/Route";
+import { Route, Redirect, Switch, useRouteMatch } from "react-router-dom";
 import Loading from "src/components/Loading";
 import Conversation from "./components/Conversation";
 import NoConversations from "./components/NoConversations";

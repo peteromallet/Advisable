@@ -1,8 +1,7 @@
 import React from "react";
-import { Switch, useParams } from "react-router-dom";
+import { Route, Switch, useParams } from "react-router-dom";
 import AccessDenied, { isNotAuthorized } from "src/views/AccessDenied";
 import NotFound, { isNotFound } from "src/views/NotFound";
-import Route from "src/components/Route";
 import Loading from "src/components/Loading";
 import { useInterview } from "./queries";
 import CallScheduled from "./CallScheduled";

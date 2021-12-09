@@ -1,7 +1,6 @@
 // ApplicationRoutes renders the routes that should be rendered with a header
 import React, { Suspense, lazy } from "react";
-import { Switch, Redirect } from "react-router-dom";
-import Route from "src/components/Route";
+import { Route, Switch, Redirect } from "react-router-dom";
 import NotFound from "./views/NotFound";
 import Header from "./components/Header";
 import Loading from "./components/Loading";

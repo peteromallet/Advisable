@@ -1,6 +1,5 @@
-import { Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
-import Route from "src/components/Route";
 import Loading from "src/components/Loading";
 import RequireAuthentication from "./components/RequireAuthentication";
 import Login from "./views/Login";
