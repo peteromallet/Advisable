@@ -24,6 +24,8 @@ class CopyAvatarsToAccount < ActiveRecord::Migration[6.1]
     avatars = MigrationAttachment.where(record_type: klass, name: "avatar")
     ids = "Migration#{klass}".constantize.where(id: avatars.pluck(:record_id)).pluck(:id, :account_id).to_h
     avatars.each do |avatar|
+      next unless ids[avatar.record_id]
+
       MigrationAttachment.create!(
         avatar.attributes.except("id").merge(
           "record_type" => "Account",
