@@ -16,7 +16,7 @@ RSpec.describe Conversation, type: :model do
   describe "#new_message!" do
     it "creates a message in a conversation and calls after create actions" do
       expect_any_instance_of(Message).to receive(:schedule_email_notifications)
-      expect_any_instance_of(Message).to receive(:update_read_statuses)
+      expect_any_instance_of(Message).to receive(:update_participants)
       new_message = conversation.new_message!(user.account, "Test")
       message = conversation.messages.last
       expect(new_message).to eq(message)
@@ -31,7 +31,7 @@ RSpec.describe Conversation, type: :model do
 
     it "can create a message without scheduling email notifications" do
       expect_any_instance_of(Message).not_to receive(:schedule_email_notifications)
-      expect_any_instance_of(Message).to receive(:update_read_statuses)
+      expect_any_instance_of(Message).to receive(:update_participants)
       message = conversation.new_message!(user.account, "Test", metadata: {foo: :bar}, consultation: consultation, send_emails: false)
       expect(message.metadata).to eq({"foo" => "bar"})
       expect(message.consultation).to eq(consultation)
