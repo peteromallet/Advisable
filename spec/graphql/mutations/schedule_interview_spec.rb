@@ -93,9 +93,8 @@ RSpec.describe Mutations::ScheduleInterview do
     expect(conversation.messages.count).to eq(1)
     message = conversation.messages.first
     expect(message.author).to be_nil
-    expect(message.kind).to eq("system")
+    expect(message.kind).to eq("InterviewScheduled")
     expect(message.author).to be_nil
-    expect(message.content).to eq("#{specialist.account.name} & #{user.account.name},\n\nNow that you've scheduled a call, you can use this thread to communicate.\n\nIf you have any questions or issues, don't hesitate to contact the Advisable team at hello@advisable.com.")
   end
 
   it "sends introductory email to specialist" do

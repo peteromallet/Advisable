@@ -131,6 +131,6 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     }.merge(extra))
 
     message.schedule_email_notifications
-    message.update_read_statuses
+    message.update_participants
   end
 end

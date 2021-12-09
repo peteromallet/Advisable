@@ -39,8 +39,7 @@ RSpec.describe Mutations::DeclineConsultation do
       AdvisableSchema.execute(query, context: context)
       expect(Message.count).to eq(message_count + 1)
       last_message = consultation.messages.last
-      expect(last_message.kind).to eq("system")
-      expect(last_message.content).to eq("consultations.declined")
+      expect(last_message.kind).to eq("ConsultationDeclined")
       expect(participant.reload.unread_count).to eq(1)
     end
   end
