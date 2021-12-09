@@ -39,7 +39,7 @@ module Mutations
     private
 
     def slack_notification(consultation)
-      Slack.message(
+      Slack.bg_message(
         channel: "consultation_requests",
         text: "We have a new consultation request for #{consultation.specialist.account.name} from #{consultation.user.name_with_company}."
       )
