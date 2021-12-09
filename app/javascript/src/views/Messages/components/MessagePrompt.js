@@ -28,7 +28,7 @@ const UP = "UP";
 
 export default function MessagePrompt({ simplebar, children }) {
   const [prompt, setPrompt] = useState(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [actioned, setActioned] = useState(false);
   const [promptDirection, setPromptDirection] = useState(false);
 
@@ -92,13 +92,19 @@ export default function MessagePrompt({ simplebar, children }) {
             onClick={handleClick}
             padding={3}
             paddingX={5}
-            bg="neutral800"
             color="white"
             fontWeight={520}
             borderRadius="40px"
             display="flex"
             alignItems="center"
             boxShadow="l"
+            css={`
+              background: linear-gradient(
+                108.83deg,
+                #9423ed -10%,
+                #2350ed 120.66%
+              );
+            `}
             style={{ transform: "translateX(-50%)", cursor: "pointer" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
