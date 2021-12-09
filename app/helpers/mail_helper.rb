@@ -44,6 +44,16 @@ module MailHelper
     "#{app_host}/applications/#{application.uid}/proposal"
   end
 
+  # TODO: We can remove this fallback when we remove the consultation request
+  # view.
+  def consultation_request_url(consultation)
+    if consultation.messages.any?
+      "#{app_host}/messages/#{consultation.messages.first.conversation.uid}"
+    else
+      "#{app_host}/consultation_request/#{consultation.uid}"
+    end
+  end
+
   def time_in_zone(timestamp, zone, format = "%d %B, %I:%M%P %Z")
     timestamp.in_time_zone(zone).strftime(format)
   end

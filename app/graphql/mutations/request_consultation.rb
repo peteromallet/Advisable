@@ -25,6 +25,7 @@ module Mutations
       )
 
       slack_notification(consultation)
+      email_notification(consultation)
 
       conversation.new_message!(
         current_user.account,
@@ -37,6 +38,10 @@ module Mutations
     end
 
     private
+
+    def email_notification(consultation)
+      SpecialistMailer.consultation_request(consultation).deliver_later
+    end
 
     def slack_notification(consultation)
       Slack.bg_message(
