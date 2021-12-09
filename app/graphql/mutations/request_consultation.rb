@@ -24,6 +24,8 @@ module Mutations
         skill: specialist.articles.first&.skills&.primary&.first&.skill
       )
 
+      slack_notification(consultation)
+
       conversation.new_message!(
         current_user.account,
         args[:message],
@@ -32,6 +34,15 @@ module Mutations
       )
 
       {consultation: consultation}
+    end
+
+    private
+
+    def slack_notification(consultation)
+      Slack.message(
+        channel: "consultation_requests",
+        text: "We have a new consultation request for #{consultation.specialist.account.name} from #{consultation.user.name_with_company}."
+      )
     end
   end
 end

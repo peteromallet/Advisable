@@ -637,11 +637,8 @@ ActiveRecord::Schema.define(version: 2021_12_08_080911) do
     t.uuid "guild_post_id"
     t.jsonb "metadata"
     t.bigint "consultation_id"
-<<<<<<< HEAD
     t.bigint "agreement_id"
     t.index ["agreement_id"], name: "index_messages_on_agreement_id"
-=======
->>>>>>> daaf5c20f (Turn the belongs_to the other way)
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["consultation_id"], name: "index_messages_on_consultation_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
@@ -1174,10 +1171,7 @@ ActiveRecord::Schema.define(version: 2021_12_08_080911) do
   add_foreign_key "matches", "projects"
   add_foreign_key "matches", "specialists"
   add_foreign_key "messages", "accounts", column: "author_id"
-<<<<<<< HEAD
   add_foreign_key "messages", "agreements"
-=======
->>>>>>> daaf5c20f (Turn the belongs_to the other way)
   add_foreign_key "messages", "consultations"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "guild_posts"
