@@ -205,10 +205,5 @@ module Types
     def client_application
       object
     end
-
-    field :avatar, String, null: true
-    def avatar
-      account.cached_avatar_url
-    end
   end
 end

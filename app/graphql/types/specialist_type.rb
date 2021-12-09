@@ -75,11 +75,6 @@ module Types
       object.resume.attached? ? object.resume : nil
     end
 
-    field :avatar, String, null: true
-    def avatar
-      account.cached_avatar_url
-    end
-
     field :cover_photo, String, null: true, method: :resized_cover_photo_url
 
     field :skills, [Types::SpecialistSkillType, {null: true}], null: true do

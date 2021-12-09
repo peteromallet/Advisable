@@ -1,4 +1,4 @@
-- avatar_url = message.author&.specialist_or_user&.avatar.present? ? url_for(message.author&.avatar) : asset_url("avatar.png")
+- avatar_url = message.author&.avatar.present? ? url_for(message.author&.avatar) : asset_url("avatar.png")
 table style="padding: 0 32px;"
   tr
     td style="vertical-align: top;" width="5%" class="avatarContainer"
