@@ -9,5 +9,6 @@ module Types
     field :status, String, null: false
     field :collaboration, String, null: true
     field :invoicing, String, null: true
+    field :hourly_rate, Integer, null: true
   end
 end
