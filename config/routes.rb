@@ -119,7 +119,7 @@ Rails.application.routes.draw do
   get "/freelancers/signup", to: redirect(LogAndRedirect.new("/freelancers/join"))
   get "/guild/posts/:id", to: redirect(LogAndRedirect.new("/posts/%{id}"))
   get "/freelancers/:username/:article", to: redirect(LogAndRedirect.new("/profile/%{username}/%{article}"))
-  get "/freelancers/:username", to: redirect(LogAndRedirect.new("/profile/%{username}"))
+  get "/freelancers/:username", to: redirect(LogAndRedirect.new("/profile/%{username}")), constraints: UsernameConstraint.new
 
   get "verify_project/:uid", to: "application#verify_project_redirect"
 
