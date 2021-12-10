@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 module Types
-  class UserMessage < Types::BaseType
+  class AgreementMessage < Types::BaseType
     implements Types::MessageInterface
 
-    graphql_name "UserMessage"
-    description "Type for the Message model when we have an account."
+    graphql_name "AgreementMessage"
+    description "Type for Message that has an Agreement associated with it."
 
+    field :agreement, Types::Agreement, null: false
     field :author, Types::Account, null: true
     def author
       return unless object.author_id

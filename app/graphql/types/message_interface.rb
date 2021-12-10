@@ -18,6 +18,8 @@ module Types
       def resolve_type(object, _)
         if object.system_message?
           Types::SystemMessage
+        elsif object.agreement_id
+          Types::AgreementMessage
         elsif object.guild_post_id
           Types::GuildPostMessage
         else
