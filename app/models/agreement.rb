@@ -3,17 +3,20 @@
 class Agreement < ApplicationRecord
   include Uid
 
+  STATUS_OPTIONS = %w[pending accepted declined].freeze
   COLLABORATION_OPTIONS = %w[fixed hourly flexible].freeze
   INVOICING_OPTIONS = %w[upfront recurring after flexible].freeze
-  STATUS_OPTIONS = %w[pending accepted declined].freeze
 
   belongs_to :user
   belongs_to :company
   belongs_to :specialist
+  has_many :messages, dependent: :nullify
 
+  validates :status, inclusion: {in: STATUS_OPTIONS}
   validates :collaboration, inclusion: {in: COLLABORATION_OPTIONS}, allow_blank: true
   validates :invoicing, inclusion: {in: INVOICING_OPTIONS}, allow_blank: true
-  validates :status, inclusion: {in: STATUS_OPTIONS}
+
+  scope :accepted, -> { where(status: "accepted") }
 end
 
 # == Schema Information
