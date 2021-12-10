@@ -25,7 +25,7 @@ class SpecialistMailer < ApplicationMailer
 
     @project = project
     @application = application
-    @sales_person = sales_person_for(project.user.company)
+    @sales_person = project.user.company.sales_person
     mail(
       from: @sales_person.email_with_name,
       to: @application.specialist.account.email,
@@ -37,7 +37,7 @@ class SpecialistMailer < ApplicationMailer
 
   def interview_reschedule_request(interview)
     @interview = interview
-    @sales_person = sales_person_for(interview.user.company)
+    @sales_person = interview.user.company.sales_person
     mail(
       from: @sales_person.email_with_name,
       to: interview.specialist.account.email,
@@ -49,7 +49,7 @@ class SpecialistMailer < ApplicationMailer
 
   def more_time_options_added(interview)
     @interview = interview
-    @sales_person = sales_person_for(interview.user.company)
+    @sales_person = interview.user.company.sales_person
     mail(
       from: @sales_person.email_with_name,
       to: interview.specialist.account.email,
@@ -61,7 +61,7 @@ class SpecialistMailer < ApplicationMailer
 
   def interview_reminder(interview)
     @interview = interview
-    @sales_person = sales_person_for(interview.user.company)
+    @sales_person = interview.user.company.sales_person
     mail(
       from: @sales_person.email_with_name,
       to: interview.specialist.account.email,
@@ -76,7 +76,7 @@ class SpecialistMailer < ApplicationMailer
     @interview = interview
     @user = interview.user
     @specialist = interview.specialist
-    @sales_person = sales_person_for(user.company)
+    @sales_person = default_sales_person_for(company)
     mail(
       from: @sales_person.email_with_name,
       to: @specialist.account.email,
@@ -89,7 +89,7 @@ class SpecialistMailer < ApplicationMailer
 
   def post_interview(interview)
     @interview = interview
-    @sales_person = sales_person_for(interview.user.company)
+    @sales_person = interview.user.company.sales_person
     @account = interview.specialist.account
     mail(
       from: "Advisable <hello@advisable.com>",
@@ -103,7 +103,7 @@ class SpecialistMailer < ApplicationMailer
 
   private
 
-  def sales_person_for(company)
+  def default_sales_person_for(company)
     SalesPerson.default_for_specialist || company.sales_person
   end
 end
