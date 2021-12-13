@@ -7,15 +7,17 @@ class Conversation < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :participants, class_name: "ConversationParticipant", dependent: :destroy
 
-  def self.by_accounts(accounts)
-    find_existing_with(accounts) || create_new_with(accounts)
+  def self.by_accounts(*accounts)
+    accounts = accounts.flatten.filter_map { |a| a.respond_to?(:account) ? a.account : a }
+    find_existing_with(*accounts) || create_new_with(accounts)
   end
 
-  def self.find_existing_with(accounts)
+  def self.find_existing_with(*accounts)
+    account_ids = accounts.flatten.filter_map { |a| a.respond_to?(:account) ? a.account_id : a.id }
     joins(:participants).
-      where(participants: {account: accounts}).
+      where(participants: {account_id: account_ids}).
       group(:id).
-      having("COUNT(participants.id) = ?", accounts.size).
+      having("COUNT(participants.id) = ?", account_ids.size).
       first
   end
 
