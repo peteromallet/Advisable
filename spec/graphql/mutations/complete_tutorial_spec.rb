@@ -37,7 +37,7 @@ RSpec.describe Mutations::CompleteTutorial do
     it "raises an error" do
       response = AdvisableSchema.execute(query, context: context)
       data = response["errors"][0]["extensions"]["code"]
-      expect(data).to eq("notAuthenticated")
+      expect(data).to eq("NOT_AUTHENTICATED")
     end
   end
 end

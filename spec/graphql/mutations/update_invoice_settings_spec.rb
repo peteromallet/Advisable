@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Mutations::UpdateInvoiceSettings do
-  let(:company) {
+  let(:company) do
     create(:company, {
       stripe_customer_id: "cus_123",
       invoice_name: nil,
@@ -12,7 +12,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
       vat_number: nil,
       address: nil
     })
-  }
+  end
 
   let(:account) { create(:account, permissions: ["team_manager"]) }
   let(:user) { create(:user, company: company, account: account) }
@@ -55,27 +55,27 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
   end
 
   it "Sets the invoice_name" do
-    expect {
+    expect do
       AdvisableSchema.execute(query, context: context)
-    }.to change(company, :invoice_name).from(nil).to("contact name")
+    end.to change(company, :invoice_name).from(nil).to("contact name")
   end
 
   it "Sets the invoice_company_name" do
-    expect {
+    expect do
       AdvisableSchema.execute(query, context: context)
-    }.to change(company, :invoice_company_name).from(nil).to("company name")
+    end.to change(company, :invoice_company_name).from(nil).to("company name")
   end
 
   it "Sets the billing_email" do
-    expect {
+    expect do
       AdvisableSchema.execute(query, context: context)
-    }.to change(company, :billing_email).from(nil).to("billing@test.com")
+    end.to change(company, :billing_email).from(nil).to("billing@test.com")
   end
 
   it "Sets the vat_number" do
-    expect {
+    expect do
       AdvisableSchema.execute(query, context: context)
-    }.to change(company, :vat_number).from(nil).to("12345")
+    end.to change(company, :vat_number).from(nil).to("12345")
   end
 
   it "Sets the address" do
@@ -125,7 +125,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthenticated")
+      expect(error).to eq("NOT_AUTHENTICATED")
     end
   end
 

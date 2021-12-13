@@ -67,7 +67,7 @@ RSpec.describe Mutations::UpdatePaymentSettings do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]
-      expect(error["extensions"]["code"]).to eq("notAuthenticated")
+      expect(error["extensions"]["code"]).to eq("NOT_AUTHENTICATED")
     end
   end
 

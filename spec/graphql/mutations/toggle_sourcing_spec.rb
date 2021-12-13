@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::ToggleSourcing do
@@ -20,7 +21,7 @@ RSpec.describe Mutations::ToggleSourcing do
     GRAPHQL
   end
 
-  let(:context) { { current_user: project.user } }
+  let(:context) { {current_user: project.user} }
 
   context "when sourcing is false" do
     let(:sourcing) { false }
@@ -43,22 +44,22 @@ RSpec.describe Mutations::ToggleSourcing do
   end
 
   context "when not logged in" do
-    let(:context) { { current_user: nil } }
+    let(:context) { {current_user: nil} }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthenticated")
+      expect(error).to eq("NOT_AUTHENTICATED")
     end
   end
 
   context "when logged in as a random user" do
-    let(:context) { { current_user: create(:user) } }
+    let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthorized")
+      expect(error).to eq("NOT_AUTHORIZED")
     end
   end
 end
