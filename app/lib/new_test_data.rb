@@ -109,7 +109,9 @@ class NewTestData
     categories = SkillCategory.upsert_all(categories_data, returning: %w[id name], unique_by: :slug).pluck("name", "id").to_h
 
     skill_category_skills_data = yml[:skill_categories].flat_map do |category, skills|
-      skills.map do |skill|
+      skills.filter_map do |skill|
+        next unless @skills[skill]
+
         {skill_id: @skills[skill], skill_category_id: categories[category], created_at: now, updated_at: now}
       end
     end
