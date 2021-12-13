@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 2021_12_17_094747) do
     t.integer "hourly_rate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
     t.index ["company_id"], name: "index_agreements_on_company_id"
     t.index ["specialist_id"], name: "index_agreements_on_specialist_id"
     t.index ["uid"], name: "index_agreements_on_uid", unique: true
@@ -1515,5 +1516,8 @@ ActiveRecord::Schema.define(version: 2021_12_17_094747) do
   SQL
   create_trigger :logidze_on_users, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_agreements, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_agreements BEFORE INSERT OR UPDATE ON public.agreements FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
