@@ -1,6 +1,5 @@
 import React from "react";
-import { Switch, useRouteMatch } from "react-router-dom";
-import Route from "src/components/Route";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import ResetPassword from "./ResetPassword";
 import RequestPasswordReset from "./RequestPasswordReset";
 

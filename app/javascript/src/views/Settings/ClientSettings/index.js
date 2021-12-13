@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Redirect, useRouteMatch } from "react-router-dom";
+import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
 import { Container, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
-import Route from "src/components/Route";
 import View from "src/components/View";
 import ClientSettingsNavigation from "./ClientSettingsNavigation";
 import PaymentSettings from "./PaymentSettings";

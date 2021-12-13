@@ -3,8 +3,13 @@
 import React from "react";
 import { Box } from "@advisable/donut";
 import { useQuery } from "@apollo/client";
-import { Switch, Redirect, useParams, generatePath } from "react-router-dom";
-import Route from "src/components/Route";
+import {
+  Route,
+  Switch,
+  Redirect,
+  useParams,
+  generatePath,
+} from "react-router-dom";
 import GET_SETUP_DATA from "./getSetupData";
 import Loading from "../../components/Loading";
 import CardDetails from "./CardDetails";
@@ -70,7 +75,9 @@ const BookingSetup = () => {
             </Route>
           );
         })}
-        <Redirect to={generatePath(firstStep.path, params)} />
+        <Route path="*">
+          <Redirect to={generatePath(firstStep.path, params)} />
+        </Route>
       </Switch>
     </Box>
   );

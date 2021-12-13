@@ -1,8 +1,13 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { Card } from "@advisable/donut";
-import { useParams, Switch, Redirect, useRouteMatch } from "react-router-dom";
-import Route from "src/components/Route";
+import {
+  Route,
+  useParams,
+  Switch,
+  Redirect,
+  useRouteMatch,
+} from "react-router-dom";
 import Loading from "src/components/Loading";
 import SelectDay from "./SelectDay";
 import SelectTime from "./SelectTime";
@@ -58,22 +63,20 @@ export default function InterviewRequestView() {
               clientName={interview.user.companyName}
             />
           </Route>
-          <Redirect to={match.path} />
+          <Route path="*">
+            <Redirect to={match.path} />
+          </Route>
         </Switch>
       )}
       {interview.status === "Call Scheduled" && (
-        <Route path={match.path}>
-          <InterviewConfirmed
-            startsAt={interview.startsAt}
-            timeZone={interview.timeZone}
-            clientName={interview.user.companyName}
-          />
-        </Route>
+        <InterviewConfirmed
+          startsAt={interview.startsAt}
+          timeZone={interview.timeZone}
+          clientName={interview.user.companyName}
+        />
       )}
       {interview.status === "Need More Time Options" && (
-        <Route path={match.path}>
-          <MoreTimesRequested clientName={interview.user.companyName} />
-        </Route>
+        <MoreTimesRequested clientName={interview.user.companyName} />
       )}
     </Card>
   );
