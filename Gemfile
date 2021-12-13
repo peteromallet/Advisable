@@ -77,6 +77,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "squasher", github: "miharekar/squasher"
   gem "web-console", require: false
   gem "listen"
   gem "graphql-rails_logger"
