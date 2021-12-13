@@ -1,8 +1,8 @@
 import React from "react";
-import { Route, useLocation } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 import { screen } from "@testing-library/react";
 import { renderComponent, mockData, mockViewer } from "test-utils";
-import AuthenticatedRoute from "./index";
+import RequireAuthentication from "./index";
 
 function LocationDisplay() {
   const location = useLocation();
@@ -19,9 +19,11 @@ function LocationDisplay() {
 function renderTestCase(viewer, initialPath, component) {
   return renderComponent(
     <>
-      <Route path="*">
-        <LocationDisplay />
-      </Route>
+      <Switch>
+        <Route path="*">
+          <LocationDisplay />
+        </Route>
+      </Switch>
       {React.cloneElement(component)}
     </>,
     {
@@ -39,9 +41,11 @@ test("Redirects unauthenticated viewer to login", async () => {
   renderTestCase(
     null,
     "/test",
-    <AuthenticatedRoute path="/test">
-      <View />
-    </AuthenticatedRoute>,
+    <Route path="/test">
+      <RequireAuthentication>
+        <View />
+      </RequireAuthentication>
+    </Route>,
   );
 
   await screen.findByText("Current: /login");
@@ -52,9 +56,11 @@ test("Does not redirect authenticated viewer", async () => {
   renderTestCase(
     mockData.user(),
     "/test",
-    <AuthenticatedRoute path="/test">
-      <View />
-    </AuthenticatedRoute>,
+    <Route path="/test">
+      <RequireAuthentication>
+        <View />
+      </RequireAuthentication>
+    </Route>,
   );
 
   await screen.findByText("Current: /test");
@@ -65,9 +71,11 @@ test("specialistOnly redirects clients to /", async () => {
   renderTestCase(
     mockData.user(),
     "/test",
-    <AuthenticatedRoute specialistOnly path="/test">
-      <View />
-    </AuthenticatedRoute>,
+    <Route path="/test">
+      <RequireAuthentication specialistOnly>
+        <View />
+      </RequireAuthentication>
+    </Route>,
   );
 
   await screen.findByText("Current: /");
@@ -78,9 +86,11 @@ test("specialistOnly does not redirect specialists", async () => {
   renderTestCase(
     mockData.specialist(),
     "/test",
-    <AuthenticatedRoute specialistOnly path="/test">
-      <View />
-    </AuthenticatedRoute>,
+    <Route path="/test">
+      <RequireAuthentication specialistOnly>
+        <View />
+      </RequireAuthentication>
+    </Route>,
   );
 
   await screen.findByText("Current: /test");
@@ -91,9 +101,11 @@ test("clientOnly redirects specialist to /", async () => {
   renderTestCase(
     mockData.specialist(),
     "/test",
-    <AuthenticatedRoute clientOnly path="/test">
-      <View />
-    </AuthenticatedRoute>,
+    <Route path="/test">
+      <RequireAuthentication clientOnly>
+        <View />
+      </RequireAuthentication>
+    </Route>,
   );
 
   await screen.findByText("Current: /");
@@ -104,9 +116,11 @@ test("clientOnly does not redirect user", async () => {
   renderTestCase(
     mockData.user(),
     "/test",
-    <AuthenticatedRoute clientOnly path="/test">
-      <View />
-    </AuthenticatedRoute>,
+    <Route path="/test">
+      <RequireAuthentication clientOnly>
+        <View />
+      </RequireAuthentication>
+    </Route>,
   );
 
   await screen.findByText("Current: /test");
