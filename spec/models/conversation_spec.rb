@@ -5,12 +5,60 @@ require "rails_helper"
 RSpec.describe Conversation, type: :model do
   let(:conversation) { create(:conversation) }
   let(:user) { create(:user) }
+  let(:specialist) { create(:specialist) }
   let(:consultation) { create(:consultation) }
   let(:pdf) { ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("spec/support/test.pdf")), filename: "test.pdf").signed_id }
   let(:image) { ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("spec/support/01.jpg")), filename: "01.jpg").signed_id }
 
   it "has a valid factory" do
     expect(build(:conversation)).to be_valid
+  end
+
+  describe ".by_accounts" do
+    context "when conversation exists" do
+      before do
+        conversation.participants.create!(account: user.account)
+        conversation.participants.create!(account: specialist.account)
+      end
+
+      it "returns a conversation when passed user or specialist" do
+        con = described_class.by_accounts(user, specialist)
+        expect(con.id).to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
+      end
+
+      it "returns a conversation when passed accounts" do
+        con = described_class.by_accounts(user.account, specialist.account)
+        expect(con.id).to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
+      end
+
+      it "is backward compatible - can take an array of accounts" do
+        con = described_class.by_accounts([user.account, specialist.account])
+        expect(con.id).to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
+      end
+    end
+
+    context "when conversation does not exist" do
+      it "creates a conversation when passed user or specialist" do
+        con = described_class.by_accounts(user, specialist)
+        expect(con.id).not_to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
+      end
+
+      it "creates a conversation when passed accounts" do
+        con = described_class.by_accounts(user.account, specialist.account)
+        expect(con.id).not_to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
+      end
+
+      it "is backward compatible - can take an array of accounts" do
+        con = described_class.by_accounts([user.account, specialist.account])
+        expect(con.id).not_to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
+      end
+    end
   end
 
   describe "#new_message!" do
