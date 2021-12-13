@@ -41,7 +41,7 @@ RSpec.describe "project root query", type: :system do
         response =
           AdvisableSchema.execute(query, context: {current_user: nil})
         error = response["errors"].first
-        expect(error["extensions"]["code"]).to eq("notAuthenticated")
+        expect(error["extensions"]["code"]).to eq("NOT_AUTHENTICATED")
       end
     end
 

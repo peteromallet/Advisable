@@ -55,7 +55,7 @@ RSpec.describe Mutations::RequestToStart do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]
-      expect(error["extensions"]["code"]).to eq("notAuthorized")
+      expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
   end
 
@@ -65,7 +65,7 @@ RSpec.describe Mutations::RequestToStart do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]
-      expect(error["extensions"]["code"]).to eq("notAuthorized")
+      expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
   end
 
@@ -75,7 +75,7 @@ RSpec.describe Mutations::RequestToStart do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]
-      expect(error["extensions"]["code"]).to eq("notAuthorized")
+      expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
   end
 

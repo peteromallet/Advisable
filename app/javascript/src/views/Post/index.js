@@ -30,7 +30,7 @@ const Post = () => {
     variables: { id: postId },
   });
 
-  if (!viewer && hasGqlError("notAuthorized", error)) {
+  if (!viewer && hasGqlError("NOT_AUTHORIZED", error)) {
     return (
       <Redirect
         to={{

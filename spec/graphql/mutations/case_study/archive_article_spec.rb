@@ -58,7 +58,7 @@ RSpec.describe Mutations::CaseStudy::ArchiveArticle do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthorized")
+      expect(error).to eq("NOT_AUTHORIZED")
     end
   end
 
@@ -78,7 +78,7 @@ RSpec.describe Mutations::CaseStudy::ArchiveArticle do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthenticated")
+      expect(error).to eq("NOT_AUTHENTICATED")
     end
   end
 end

@@ -15,18 +15,18 @@
 # @param [Hash] extensions Any additional extensions to be added to the error.
 #
 # @example
-#   raise ApiError.new("NOT_AUTHORIZED", "notAuthorized", "Viewer does not have permission to execute this mutation.")
+#   raise ApiError.new("NOT_AUTHORIZED", "NOT_AUTHORIZED", "Viewer does not have permission to execute this mutation.")
 #
 class ApiError < GraphQL::ExecutionError
   class NotAuthenticated < ApiError
     def initialize(message = "You are not logged in", extensions: {})
-      super("NOT_AUTHENTICATED", "notAuthenticated", message, extensions: extensions)
+      super("NOT_AUTHENTICATED", "NOT_AUTHENTICATED", message, extensions: extensions)
     end
   end
 
   class NotAuthorized < ApiError
     def initialize(message, extensions: {})
-      super("NOT_AUTHORIZED", "notAuthorized", message, extensions: extensions)
+      super("NOT_AUTHORIZED", "NOT_AUTHORIZED", message, extensions: extensions)
     end
   end
 
