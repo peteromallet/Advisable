@@ -41,8 +41,8 @@ RSpec.describe Mutations::RequestIntroduction do
 
   it "sets the interview time zone" do
     response = AdvisableSchema.execute(query, context: context)
-    timeZone = response["data"]["requestIntroduction"]["interview"]["timeZone"]
-    expect(timeZone).to eq("Dublin")
+    time_zone = response["data"]["requestIntroduction"]["interview"]["timeZone"]
+    expect(time_zone).to eq("Dublin")
   end
 
   it "sets the application status to application accepted" do
@@ -54,14 +54,14 @@ RSpec.describe Mutations::RequestIntroduction do
   it "returns an error if the user is not logged in" do
     response = AdvisableSchema.execute(query, context: {current_user: nil})
     error = response["errors"][0]["extensions"]["code"]
-    expect(error).to eq("notAuthenticated")
+    expect(error).to eq("NOT_AUTHENTICATED")
   end
 
   it "returns an error if the user does not have access" do
     response =
       AdvisableSchema.execute(query, context: {current_user: create(:user)})
     error = response["errors"][0]["extensions"]["code"]
-    expect(error).to eq("notAuthorized")
+    expect(error).to eq("NOT_AUTHORIZED")
   end
 
   it "creates a new interview record and sets call_requested_at" do

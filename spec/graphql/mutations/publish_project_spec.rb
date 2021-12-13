@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::PublishProject do
@@ -20,7 +21,7 @@ RSpec.describe Mutations::PublishProject do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Project).to receive(:sync_to_airtable)
   end
 
@@ -30,13 +31,13 @@ RSpec.describe Mutations::PublishProject do
     }.from("Draft").to("Pending Advisable Confirmation")
   end
 
-  context "When logged in as another user" do
+  context "when logged in as another user" do
     let(:context) { {current_user: create(:user)} }
 
     it "returns a not authorized error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthorized")
+      expect(error).to eq("NOT_AUTHORIZED")
     end
   end
 
@@ -46,7 +47,7 @@ RSpec.describe Mutations::PublishProject do
     it "returns a not authorized error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthorized")
+      expect(error).to eq("NOT_AUTHORIZED")
     end
   end
 

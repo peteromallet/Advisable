@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::SetCoverPhoto do
@@ -20,7 +21,7 @@ RSpec.describe Mutations::SetCoverPhoto do
   end
 
   let(:blob) do
-    file = Rails.root.join("spec", "support", "01.jpg")
+    file = Rails.root.join("spec/support/01.jpg")
     ActiveStorage::Blob.create_and_upload!(
       io: File.open(file),
       filename: "01.jpg",
@@ -36,7 +37,7 @@ RSpec.describe Mutations::SetCoverPhoto do
   end
 
   it "attaches the passed blob as an cover_photo" do
-    expect(specialist.reload.cover_photo).to_not be_attached
+    expect(specialist.reload.cover_photo).not_to(be_attached)
     execute
     expect(specialist.reload.cover_photo).to be_attached
   end
@@ -46,7 +47,7 @@ RSpec.describe Mutations::SetCoverPhoto do
 
     it "returns an error" do
       error = execute["errors"].first["extensions"]["code"]
-      expect(error).to eq("notAuthenticated")
+      expect(error).to eq("NOT_AUTHENTICATED")
     end
   end
 
