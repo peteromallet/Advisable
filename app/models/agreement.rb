@@ -3,6 +3,8 @@
 class Agreement < ApplicationRecord
   include Uid
 
+  has_logidze
+
   STATUS_OPTIONS = %w[pending accepted declined].freeze
   COLLABORATION_OPTIONS = %w[fixed hourly flexible].freeze
   INVOICING_OPTIONS = %w[upfront recurring after flexible].freeze
