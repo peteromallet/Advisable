@@ -46,7 +46,7 @@ RSpec.describe Mutations::CreateTask do
 
     it "responds with not_authorized error code" do
       error = response["errors"][0]
-      expect(error["extensions"]["code"]).to eq("notAuthorized")
+      expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
   end
 
@@ -55,7 +55,7 @@ RSpec.describe Mutations::CreateTask do
 
     it "responds with not_authorized error code" do
       error = response["errors"][0]
-      expect(error["extensions"]["code"]).to eq("notAuthorized")
+      expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
   end
 
@@ -64,7 +64,7 @@ RSpec.describe Mutations::CreateTask do
 
     it "responds with not_authorized error code" do
       error = response["errors"][0]
-      expect(error["extensions"]["code"]).to eq("notAuthorized")
+      expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
   end
 end

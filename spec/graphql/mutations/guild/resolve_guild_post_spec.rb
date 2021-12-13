@@ -21,7 +21,7 @@ RSpec.describe Mutations::Guild::ResolveGuildPost do
     other = create(:specialist)
     resp = AdvisableSchema.execute(query, context: {current_user: other})
     error = resp["errors"].first["extensions"]["code"]
-    expect(error).to eq("notAuthorized")
+    expect(error).to eq("NOT_AUTHORIZED")
   end
 
   describe "resolving a post" do

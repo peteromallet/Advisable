@@ -28,18 +28,18 @@ RSpec.describe Mutations::AcceptProjectPaymentTerms do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 
-  it "sets accepted_project_payment_terms_at to the current time " do
+  it "sets accepted_project_payment_terms_at to the current time" do
     expect(company.accepted_project_payment_terms_at).to be_nil
-    response = AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context: context)
     expect(company.reload.accepted_project_payment_terms_at).to be_within(
       2.seconds
     ).of(Time.zone.now)
   end
 
   it "sets the eceptionalTerms" do
-    expect {
+    expect do
       AdvisableSchema.execute(query, context: context)
-    }.to change(user, :exceptional_project_payment_terms).from(nil).to("exceptional terms")
+    end.to change(user, :exceptional_project_payment_terms).from(nil).to("exceptional terms")
   end
 
   it "calls update_payments_setup on company" do
@@ -63,7 +63,7 @@ RSpec.describe Mutations::AcceptProjectPaymentTerms do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: context)
       error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthenticated")
+      expect(error).to eq("NOT_AUTHENTICATED")
     end
   end
 end

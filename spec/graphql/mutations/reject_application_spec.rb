@@ -52,7 +52,7 @@ RSpec.describe Mutations::RejectApplication do
 
     it "returns an error if the user is not logged in" do
       error = request["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthenticated")
+      expect(error).to eq("NOT_AUTHENTICATED")
     end
   end
 
@@ -61,7 +61,7 @@ RSpec.describe Mutations::RejectApplication do
 
     it "returns an error if the user is not logged in" do
       error = request["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthorized")
+      expect(error).to eq("NOT_AUTHORIZED")
     end
   end
 end

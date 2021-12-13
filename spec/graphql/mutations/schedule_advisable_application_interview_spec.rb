@@ -48,7 +48,7 @@ RSpec.describe Mutations::ScheduleAdvisableApplicationInterview do
 
     it "returns an error" do
       error = request["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthenticated")
+      expect(error).to eq("NOT_AUTHENTICATED")
     end
   end
 end

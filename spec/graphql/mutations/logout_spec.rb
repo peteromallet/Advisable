@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::Logout do
@@ -14,12 +15,12 @@ RSpec.describe Mutations::Logout do
     GRAPHQL
   end
 
-  let(:request) {
+  let(:request) do
     AdvisableSchema.execute(query, context: {
       current_user: current_user,
       session_manager: session_manager
     })
-  }
+  end
 
   before do
     allow(session_manager).to receive(:logout)
@@ -35,7 +36,7 @@ RSpec.describe Mutations::Logout do
 
     it "returns an error" do
       code = request["errors"].first["extensions"]["code"]
-      expect(code).to eq("notAuthenticated")
+      expect(code).to eq("NOT_AUTHENTICATED")
     end
   end
 end

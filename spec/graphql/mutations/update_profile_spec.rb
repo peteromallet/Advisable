@@ -125,7 +125,7 @@ RSpec.describe Mutations::UpdateProfile do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: {current_user: nil})
       error_code = response["errors"][0]["extensions"]["code"]
-      expect(error_code).to eq("notAuthenticated")
+      expect(error_code).to eq("NOT_AUTHENTICATED")
     end
   end
 
@@ -133,7 +133,7 @@ RSpec.describe Mutations::UpdateProfile do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: {current_user: create(:user)})
       error_code = response["errors"][0]["extensions"]["code"]
-      expect(error_code).to eq("notAuthenticated")
+      expect(error_code).to eq("NOT_AUTHENTICATED")
     end
   end
 

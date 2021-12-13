@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::SetupZoomForVideoCall do
@@ -19,9 +20,9 @@ RSpec.describe Mutations::SetupZoomForVideoCall do
     GRAPHQL
   end
 
-  let(:request) {
+  let(:request) do
     AdvisableSchema.execute(query, context: {current_user: current_user})
-  }
+  end
 
   it "converts a video call for zoom" do
     expect { request }.to(change { video_call.reload.fallback }.from(false).to(true))
@@ -32,7 +33,7 @@ RSpec.describe Mutations::SetupZoomForVideoCall do
 
     it "returns an error" do
       code = request["errors"].first["extensions"]["code"]
-      expect(code).to eq("notAuthenticated")
+      expect(code).to eq("NOT_AUTHENTICATED")
     end
   end
 end

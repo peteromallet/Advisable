@@ -55,7 +55,7 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     it "returns an error" do
       request = AdvisableSchema.execute(query, context: context)
       error = request["errors"][0]["extensions"]["code"]
-      expect(error).to eq("notAuthenticated")
+      expect(error).to eq("NOT_AUTHENTICATED")
     end
   end
 end
