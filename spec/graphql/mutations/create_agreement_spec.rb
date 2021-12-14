@@ -14,7 +14,8 @@ RSpec.describe Mutations::CreateAgreement do
       createAgreement(input: {
         collaboration: "fixed",
         invoicing: "upfront",
-        user: "#{user&.uid}"
+        user: "#{user&.uid}",
+        message: "Hello"
       }) {
         agreement {
           id
@@ -35,6 +36,11 @@ RSpec.describe Mutations::CreateAgreement do
       expect(agreement.invoicing).to eq("upfront")
       expect(agreement.status).to eq("pending")
       expect(agreement.log_data.responsible_id).to eq(specialist.account_id)
+
+      conversation = Conversation.find_existing_with(user, specialist)
+      expect(conversation.messages.count).to eq(2)
+      expect(conversation.messages.first.kind).to eq("AgreementCreated")
+      expect(conversation.messages.last.content).to eq("Hello")
     end
   end
 
