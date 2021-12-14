@@ -13,8 +13,7 @@ RSpec.describe Mutations::AcceptAgreement do
     <<-GRAPHQL
     mutation {
       acceptAgreement(input: {
-        agreement: "#{agreement&.uid}",
-        message: "I don't like this agreement"
+        agreement: "#{agreement&.uid}"
       }) {
         agreement {
           id
@@ -25,16 +24,15 @@ RSpec.describe Mutations::AcceptAgreement do
   end
 
   context "when a user is signed in" do
-    it "accepts an agreement and creates messages" do
+    it "accepts an agreement and creates a message" do
       id = response["data"]["acceptAgreement"]["agreement"]["id"]
       agr = Agreement.with_log_data.find_by!(uid: id)
       expect(agr.status).to eq("accepted")
       expect(agr.log_data.responsible_id).to eq(user.account_id)
 
       conversation = Conversation.find_existing_with(user, specialist)
-      expect(conversation.messages.count).to eq(2)
+      expect(conversation.messages.count).to eq(1)
       expect(conversation.messages.first.kind).to eq("AgreementAccepted")
-      expect(conversation.messages.last.content).to eq("I don't like this agreement")
     end
   end
 
