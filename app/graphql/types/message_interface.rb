@@ -15,6 +15,7 @@ module Types
     orphan_types Types::UserMessage,
                  Types::SystemMessage,
                  Types::GuildPostMessage,
+                 Types::Messages::ConsultationRequest,
                  Types::Messages::InterviewScheduled,
                  Types::Messages::ConsultationDeclined
 
@@ -28,8 +29,6 @@ module Types
           Types::AgreementMessage
         elsif object.guild_post_id
           Types::GuildPostMessage
-        elsif object.consultation_id
-          Types::ConsultationRequestMessage
         else
           Types::UserMessage
         end
