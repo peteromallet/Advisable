@@ -30,6 +30,7 @@ module Mutations
       conversation.new_message!(
         current_user.account,
         args[:message],
+        kind: "ConsultationRequest",
         consultation:,
         send_emails: false
       )
