@@ -71,18 +71,21 @@ export function BaseMessage({
           />
         </Box>
         <Box width="100%">
-          <Text fontSize="17px" fontWeight={550}>
+          <Text fontSize="17px" fontWeight={550} marginBottom={1}>
             {message.author?.name || "Deleted user"}
           </Text>
-        </Box>
-        <Box flexShrink={0}>
-          <Text fontSize="xs" fontWeight={400} color="neutral500">
+          <Text fontSize="xs" fontWeight={400} color="neutral600">
             {dateForMessage(message.createdAt)}
           </Text>
         </Box>
       </Box>
       <Box my={4} height="1px" bg="neutral100" />
       <Box width="100%">
+        {children ? (
+          <Box paddingTop={3} paddingBottom={5}>
+            {children}
+          </Box>
+        ) : null}
         <Text
           autoLink
           fontSize="17px"
@@ -92,7 +95,6 @@ export function BaseMessage({
         >
           {renderLineBreaks(message.content)}
         </Text>
-        {children ? <Box paddingTop={5}>{children}</Box> : null}
         {message.attachments.length > 0 && (
           <Box
             display="grid"
