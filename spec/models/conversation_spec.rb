@@ -33,6 +33,18 @@ RSpec.describe Conversation, type: :model do
         expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
       end
 
+      it "returns a conversation when passed one of each" do
+        con = described_class.by_accounts(user, specialist.account)
+        expect(con.id).to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
+      end
+
+      it "returns a conversation when passed account ids" do
+        con = described_class.by_accounts(user, specialist.account_id)
+        expect(con.id).to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
+      end
+
       it "is backward compatible - can take an array of accounts" do
         con = described_class.by_accounts([user.account, specialist.account])
         expect(con.id).to eq(conversation.id)
