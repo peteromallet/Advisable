@@ -36,6 +36,20 @@ class Account < ApplicationRecord
 
   featurize :admin, :team_manager, :editor, column: :permissions
 
+  # Can take an array or many params instances of Account, anything that belongs_to Account, or account ids directly.
+  # Returns an array of account ids.
+  def self.ids_from(*items)
+    items.flatten.filter_map do |item|
+      if item.respond_to?(:account_id)
+        item.account_id
+      elsif item.respond_to?(:id)
+        item.id
+      else
+        item
+      end
+    end
+  end
+
   def specialist_or_user
     specialist || user
   end
