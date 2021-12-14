@@ -12,13 +12,6 @@ export const FETCH_INTERVIEW = gql`
         companyName
         availability(excludeConflicts: true)
       }
-      application {
-        id
-        specialist {
-          id
-          phoneNumber
-        }
-      }
     }
   }
 `;
