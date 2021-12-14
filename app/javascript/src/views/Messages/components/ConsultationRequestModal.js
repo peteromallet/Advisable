@@ -12,11 +12,13 @@ import {
   Textarea,
   useModal,
   DialogDisclosure,
+  theme,
 } from "@advisable/donut";
 import { useHistory } from "react-router-dom";
 import CircularButton from "src/components/CircularButton";
 import { ArrowLeft } from "@styled-icons/heroicons-solid";
 import { useNotifications } from "src/components/Notifications";
+import CalendarIllustration from "src/illustrations/zest/calendar";
 
 function ConsultationRequestPrompt({ message, sender, onDecline }) {
   const history = useHistory();
@@ -49,12 +51,22 @@ function ConsultationRequestPrompt({ message, sender, onDecline }) {
 
   return (
     <>
-      <Heading textAlign="center" marginBottom={2}>
-        Interview request
-      </Heading>
-      <Text textAlign="center" fontSize="l" lineHeight="20px" marginBottom={6}>
-        {sender} has requested a 30 minute call with you.
-      </Text>
+      <Box textAlign="center" paddingX="20px">
+        <CalendarIllustration width="160px" color={theme.colors.blue100} />
+        <Heading size="3xl" textAlign="center" marginTop={4} marginBottom={2}>
+          New call request
+        </Heading>
+        <Text
+          textAlign="center"
+          fontSize="l"
+          marginBottom={10}
+          lineHeight="24px"
+          color="neutral900"
+        >
+          {sender} has requested a 30 minute call with you. After speaking with
+          them you will be able to send them a request to work together.
+        </Text>
+      </Box>
       <Box display="flex">
         <Box width="100%" marginRight={2}>
           <Button
@@ -139,7 +151,7 @@ export default function ConsultationRequestModal({ sender, message }) {
       <DialogDisclosure {...modal}>
         {(disclosure) => (
           <Button {...disclosure} variant="gradient" size="s">
-            View
+            Respond
           </Button>
         )}
       </DialogDisclosure>
