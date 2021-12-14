@@ -8,12 +8,12 @@ class Conversation < ApplicationRecord
   has_many :participants, class_name: "ConversationParticipant", dependent: :destroy
 
   def self.by_accounts(*accounts)
-    accounts = accounts.flatten.filter_map { |a| a.respond_to?(:account) ? a.account : a }
-    find_existing_with(*accounts) || create_new_with(accounts)
+    account_ids = Account.ids_from(accounts)
+    find_existing_with(account_ids) || create_new_with(account_ids)
   end
 
   def self.find_existing_with(*accounts)
-    account_ids = accounts.flatten.filter_map { |a| a.respond_to?(:account) ? a.account_id : a.id }
+    account_ids = Account.ids_from(accounts)
     joins(:participants).
       where(participants: {account_id: account_ids}).
       group(:id).
@@ -21,11 +21,9 @@ class Conversation < ApplicationRecord
       first
   end
 
-  def self.create_new_with(accounts)
+  def self.create_new_with(*accounts)
     conversation = create!
-    accounts.each do |participant|
-      conversation.participants.create!(account: participant)
-    end
+    Account.ids_from(accounts).each { |id| conversation.participants.create!(account_id: id) }
     conversation
   end
 
