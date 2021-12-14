@@ -31,19 +31,19 @@ function ConsultationRequestMessageForSpecialist({ message }) {
         padding={4}
         borderRadius="20px"
         border="2px solid"
-        borderColor="neutral100"
+        borderColor="neutral300"
         display="flex"
         alignItems="center"
       >
-        <Circle size={40} bg="blue100" color="blue600">
+        <Circle size={40} bg="neutral200" color="neutral800">
           <Calendar size={20} />
         </Circle>
         <Box paddingLeft={3} flex={1}>
-          <Text fontWeight={560} marginBottom={1}>
+          <Text fontSize="17px" fontWeight={560} marginBottom={1}>
             {sender} requested a call with you
           </Text>
-          <Text>
-            After your call you will be able to send a request to work together
+          <Text color="neutral600" fontSize="sm">
+            Check their availability and schedule a call to find out more
           </Text>
         </Box>
         {isPending && (
