@@ -6,6 +6,12 @@ GIT
       byebug (~> 11.0)
       pry (>= 0.13, < 0.15)
 
+GIT
+  remote: https://github.com/miharekar/squasher.git
+  revision: b5c8804cde837ad41c76fae68d75af8db4d83f46
+  specs:
+    squasher (0.6.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -674,6 +680,7 @@ DEPENDENCIES
   skylight
   slim
   sql_spy
+  squasher!
   stripe
   strong_migrations
   timecop
