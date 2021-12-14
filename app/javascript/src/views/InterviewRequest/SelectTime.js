@@ -2,25 +2,24 @@ import React from "react";
 import { DateTime } from "luxon";
 import filter from "lodash/filter";
 import sortBy from "lodash/sortBy";
-import { Text, Link, Box } from "@advisable/donut";
-import { ArrowLeft } from "@styled-icons/feather/ArrowLeft";
-import TimeZoneSelect from "src/components/TimeZoneSelect";
+import { Box, Heading, Text } from "@advisable/donut";
 import { Times, Time } from "./styles";
 import { useRouteMatch } from "react-router";
+import BackButton from "src/components/BackButton";
+import TimezoneSelect from "src/components/ConnectButton/TimezoneSelect";
 
 export default function SelectTime(props) {
   const match = useRouteMatch();
   const localTimezone = DateTime.local().zoneName;
   const { availability, timeZone, clientName } = props;
-  const [selectedTimeZone, setTimeZone] = React.useState({
-    value: localTimezone || timeZone,
-    label: localTimezone || timeZone,
-  });
+  const [selectedTimeZone, setTimezone] = React.useState(
+    localTimezone || timeZone,
+  );
 
   const date = DateTime.fromISO(match.params.date, { zone: timeZone });
   const times = sortBy(
     filter(availability, (t) => {
-      const time = DateTime.fromISO(t, { zone: selectedTimeZone.value });
+      const time = DateTime.fromISO(t, { zone: selectedTimeZone });
       return date.day === time.day;
     }),
     (time) => DateTime.fromISO(time).toFormat("T"),
@@ -28,42 +27,25 @@ export default function SelectTime(props) {
 
   return (
     <>
-      <Link mb="xs" to={`/interview_request/${match.params.interviewID}`}>
-        <Box display="inline-block" mr="xxs">
-          <ArrowLeft size={16} strokeWidth={2} />
-        </Box>
-        Back
-      </Link>
-      <Text
-        as="h1"
-        mb="xs"
-        fontSize="xxl"
-        color="blue900"
-        fontWeight="semibold"
-        letterSpacing="-0.02em"
-      >
-        {date.toFormat("cccc, dd LLL yyyy")}
-      </Text>
-      <Text lineHeight="s" color="neutral800" mb="l">
+      <BackButton
+        marginBottom={4}
+        to={`/interview_request/${match.params.interviewID}`}
+      />
+      <Heading mb={2}>{date.toFormat("cccc, dd LLL yyyy")}</Heading>
+      <Text fontSize="l" lineHeight="24px" color="neutral800">
         Select a time for your call with {clientName}
       </Text>
-      <TimeZoneSelect
-        value={selectedTimeZone}
-        label="Your Timezone"
-        placeholder="Your Timezone"
-        onChange={(timeZone) => setTimeZone(timeZone)}
-      />
       <Times>
         {times.map((time) => {
           const parsed = DateTime.fromISO(time, {
-            zone: selectedTimeZone.value,
+            zone: selectedTimeZone,
           });
           return (
             <Time
               key={time}
               to={{
                 pathname: parsed.toUTC().toISO(),
-                state: { zone: selectedTimeZone.value },
+                state: { zone: selectedTimeZone },
               }}
             >
               {`${parsed.toFormat("h:mm a")} - ${parsed
@@ -73,6 +55,13 @@ export default function SelectTime(props) {
           );
         })}
       </Times>
+      <Box paddingTop={4}>
+        <TimezoneSelect
+          data-testid="timezone"
+          value={selectedTimeZone}
+          onChange={(e) => setTimezone(e.target.value)}
+        />
+      </Box>
     </>
   );
 }

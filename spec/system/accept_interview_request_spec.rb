@@ -25,7 +25,6 @@ RSpec.describe "Accept interview request", type: :system do
     visit "/interview_request/#{interview.uid}"
     click_on user.availability[0].strftime("%A")
     find_all("a[class^=styles__Time]").first.click
-    fill_in "phoneNumber", with: "0861234567"
     click_on "Confirm Call"
     expect(page).to have_content("has been scheduled!")
   end
