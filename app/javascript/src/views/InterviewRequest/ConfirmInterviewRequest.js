@@ -1,78 +1,51 @@
 import React from "react";
-import { Formik, Form } from "formik";
 import { DateTime } from "luxon";
 import { useParams, useLocation } from "react-router-dom";
-import { ArrowLeft } from "@styled-icons/feather/ArrowLeft";
 import { useMutation } from "@apollo/client";
-import { Text, Box, Link } from "@advisable/donut";
-import FormField from "../../components/FormField";
-import SubmitButton from "../../components/SubmitButton";
+import { Heading, Text, Box, Button } from "@advisable/donut";
 import { SCHEDULE_INTERVIEW } from "./queries";
 import Event from "./Event";
+import BackButton from "src/components/BackButton";
 
-export default function ConfirmInterviewRequest({ interview }) {
+export default function ConfirmInterviewRequest() {
   const location = useLocation();
   const { datetime, interviewID } = useParams();
   const parsed = DateTime.fromISO(datetime);
-  const [scheduleInterview] = useMutation(SCHEDULE_INTERVIEW);
+  const [scheduleInterview, { loading }] = useMutation(SCHEDULE_INTERVIEW);
 
-  const handleSubmit = async (values) => {
+  const startsAt = parsed.toUTC().toISO();
+
+  const handleSchedule = async () => {
     await scheduleInterview({
       variables: {
-        input: { ...values, id: interviewID },
+        input: { id: interviewID, startsAt },
       },
     });
   };
 
-  const clientName = interview.user.companyName;
-
-  const initialValues = {
-    startsAt: parsed.toUTC().toISO(),
-    phoneNumber: interview.application.specialist.phoneNumber || "",
-  };
-
   return (
     <>
-      <Link
-        mb="xs"
+      <BackButton
+        marginBottom={4}
         to={`/interview_request/${interviewID}/${parsed.toFormat(
           "yyyy-MM-dd",
         )}`}
-      >
-        <Box display="inline-block" mr="xxs">
-          <ArrowLeft size={16} strokeWidth={2} />
-        </Box>
-        Back
-      </Link>
-      <Text
-        as="h1"
-        mb="xs"
-        fontSize="xxl"
-        color="blue900"
-        fontWeight="semibold"
-        letterSpacing="-0.02em"
-      >
-        Contact Information
+      />
+      <Heading marginBottom={2}>Confirm time</Heading>
+      <Text fontSize="l" lineHeight="24px" color="neutral800" marginBottom={5}>
+        Please review and confirm the selected time below.
       </Text>
-      <Text lineHeight="s" color="neutral800" mb="m">
-        Enter & confirm your contact information below. This will be shared with{" "}
-        {clientName}
-      </Text>
-      <Box mb="m">
+      <Box marginBottom={8}>
         <Event date={parsed} zone={location.state?.zone} />
       </Box>
-      <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-        <Form>
-          <FormField
-            autoFocus
-            name="phoneNumber"
-            marginBottom="xl"
-            placeholder="(000)-000-0000"
-            label="Your contact number"
-          />
-          <SubmitButton size="l">Confirm Call</SubmitButton>
-        </Form>
-      </Formik>
+      <Button
+        variant="gradient"
+        onClick={handleSchedule}
+        size="l"
+        loading={loading}
+      >
+        Confirm Call
+      </Button>
     </>
   );
 }
