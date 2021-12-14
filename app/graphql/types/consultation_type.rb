@@ -14,9 +14,9 @@ module Types
     field :specialist, Types::SpecialistType, null: false
     field :interview, Types::Interview, null: true
     field :id, ID, null: false, method: :uid
-    field :messages, [Types::ConsultationRequestMessage], null: true
+    field :messages, [Types::Messages::ConsultationRequest], null: true
 
-    field :message, Types::ConsultationRequestMessage, null: true
+    field :message, Types::Messages::ConsultationRequest, null: true
     def message
       object.messages.first
     end
