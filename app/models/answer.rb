@@ -11,22 +11,17 @@ end
 #
 # Table name: answers
 #
-#  id            :bigint           not null, primary key
+#  id            :integer          not null, primary key
 #  content       :string
-#  uid           :string           not null
+#  question_id   :integer          not null
+#  specialist_id :integer          not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  question_id   :bigint           not null
-#  specialist_id :bigint           not null
+#  uid           :string           not null
 #
 # Indexes
 #
 #  index_answers_on_question_id    (question_id)
 #  index_answers_on_specialist_id  (specialist_id)
 #  index_answers_on_uid            (uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (question_id => questions.id)
-#  fk_rails_...  (specialist_id => specialists.id)
 #

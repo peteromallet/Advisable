@@ -55,32 +55,32 @@ end
 #
 # Table name: case_study_articles
 #
-#  id                     :bigint           not null, primary key
-#  comment                :text
-#  company_type           :jsonb
-#  confidential           :boolean
-#  deleted_at             :datetime
-#  editor_note            :text
-#  editor_url             :string
-#  excerpt                :string
-#  freelancer_edits       :text
-#  goals                  :jsonb
-#  hide_from_search       :boolean          default(FALSE)
-#  published_at           :datetime
-#  score                  :integer
-#  slug                   :string
-#  specialist_approved_at :datetime
-#  subtitle               :string
-#  targeting              :jsonb
-#  title                  :string
+#  id                     :integer          not null, primary key
 #  uid                    :string           not null
+#  score                  :integer
+#  confidential           :boolean
+#  title                  :string
+#  subtitle               :string
+#  comment                :text
+#  excerpt                :string
+#  goals                  :jsonb
+#  published_at           :datetime
+#  specialist_approved_at :datetime
+#  specialist_id          :integer          not null
+#  interviewer_id         :integer
+#  editor_id              :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  company_id             :integer
 #  airtable_id            :string
-#  company_id             :bigint
-#  editor_id              :bigint
-#  interviewer_id         :bigint
-#  specialist_id          :bigint           not null
+#  company_type           :jsonb
+#  targeting              :jsonb
+#  editor_note            :text
+#  freelancer_edits       :text
+#  deleted_at             :datetime
+#  hide_from_search       :boolean          default("false")
+#  slug                   :string
+#  editor_url             :string
 #
 # Indexes
 #
@@ -91,11 +91,4 @@ end
 #  index_case_study_articles_on_slug            (slug) UNIQUE
 #  index_case_study_articles_on_specialist_id   (specialist_id)
 #  index_case_study_articles_on_uid             (uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (company_id => case_study_companies.id)
-#  fk_rails_...  (editor_id => accounts.id)
-#  fk_rails_...  (interviewer_id => accounts.id)
-#  fk_rails_...  (specialist_id => specialists.id)
 #

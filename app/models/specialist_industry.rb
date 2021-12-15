@@ -9,19 +9,14 @@ end
 #
 # Table name: specialist_industries
 #
-#  id            :bigint           not null, primary key
+#  id            :integer          not null, primary key
+#  specialist_id :integer          not null
+#  industry_id   :integer          not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  industry_id   :bigint           not null
-#  specialist_id :bigint           not null
 #
 # Indexes
 #
 #  index_specialist_industries_on_industry_id    (industry_id)
 #  index_specialist_industries_on_specialist_id  (specialist_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (industry_id => industries.id)
-#  fk_rails_...  (specialist_id => specialists.id)
 #

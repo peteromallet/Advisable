@@ -7,7 +7,7 @@ end
 #
 # Table name: blacklisted_domains
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
 #  domain     :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

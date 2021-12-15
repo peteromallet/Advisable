@@ -48,21 +48,16 @@ end
 #
 # Table name: skill_similarities
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
+#  skill1_id  :integer          not null
+#  skill2_id  :integer          not null
 #  similarity :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  skill1_id  :bigint           not null
-#  skill2_id  :bigint           not null
 #
 # Indexes
 #
 #  index_skill_similarities_on_skill1_id                (skill1_id)
 #  index_skill_similarities_on_skill1_id_and_skill2_id  (skill1_id,skill2_id) UNIQUE
 #  index_skill_similarities_on_skill2_id                (skill2_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (skill1_id => skills.id)
-#  fk_rails_...  (skill2_id => skills.id)
 #

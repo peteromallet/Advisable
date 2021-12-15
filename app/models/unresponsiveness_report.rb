@@ -39,19 +39,14 @@ end
 # Table name: unresponsiveness_reports
 #
 #  id             :uuid             not null, primary key
+#  application_id :integer          not null
+#  reporter_id    :integer          not null
 #  message        :text
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  application_id :bigint           not null
-#  reporter_id    :bigint           not null
 #
 # Indexes
 #
 #  index_unresponsiveness_reports_on_application_id  (application_id)
 #  index_unresponsiveness_reports_on_reporter_id     (reporter_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (application_id => applications.id)
-#  fk_rails_...  (reporter_id => accounts.id)
 #

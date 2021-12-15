@@ -92,26 +92,22 @@ end
 #
 # Table name: case_study_searches
 #
-#  id            :bigint           not null, primary key
-#  archived      :jsonb
-#  business_type :string
-#  finalized_at  :datetime
-#  goals         :jsonb
-#  name          :string
-#  preferences   :jsonb
-#  results       :jsonb
-#  selected      :jsonb
+#  id            :integer          not null, primary key
 #  uid           :string           not null
+#  name          :string
+#  user_id       :integer          not null
+#  business_type :string
+#  goals         :jsonb
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  user_id       :bigint           not null
+#  results       :jsonb
+#  finalized_at  :datetime
+#  preferences   :jsonb
+#  archived      :jsonb
+#  selected      :jsonb
 #
 # Indexes
 #
 #  index_case_study_searches_on_uid      (uid) UNIQUE
 #  index_case_study_searches_on_user_id  (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (user_id => users.id)
 #

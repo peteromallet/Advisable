@@ -27,12 +27,12 @@ end
 #
 # Table name: skill_categories
 #
-#  id          :bigint           not null, primary key
-#  description :string
+#  id          :integer          not null, primary key
 #  name        :string
-#  slug        :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  slug        :string           not null
+#  description :string
 #
 # Indexes
 #

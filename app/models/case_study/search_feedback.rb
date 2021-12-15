@@ -16,21 +16,16 @@ end
 #
 # Table name: case_study_search_feedbacks
 #
-#  id          :bigint           not null, primary key
+#  id          :integer          not null, primary key
+#  search_id   :integer          not null
+#  article_id  :integer          not null
 #  feedback    :text
-#  resolved_at :datetime
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  article_id  :bigint           not null
-#  search_id   :bigint           not null
+#  resolved_at :datetime
 #
 # Indexes
 #
 #  index_case_study_search_feedbacks_on_article_id  (article_id)
 #  index_case_study_search_feedbacks_on_search_id   (search_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (article_id => case_study_articles.id)
-#  fk_rails_...  (search_id => case_study_searches.id)
 #

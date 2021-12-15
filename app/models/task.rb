@@ -82,31 +82,31 @@ end
 #
 # Table name: tasks
 #
-#  id                             :bigint           not null, primary key
-#  approved_at                    :datetime
-#  assigned_at                    :datetime
-#  description                    :string
-#  due_date                       :datetime
-#  estimate                       :integer
-#  estimate_type                  :string
-#  final_cost                     :integer
-#  flexible_estimate              :integer
-#  hours_worked                   :integer
+#  id                             :integer          not null, primary key
 #  name                           :string
-#  quote_provided_at              :datetime
-#  quote_requested_at             :datetime
-#  repeat                         :string
-#  stage                          :string
-#  started_working_at             :datetime
-#  submitted_at                   :datetime
-#  submitted_for_approval_comment :string
-#  to_be_invited_at               :datetime
-#  trial                          :boolean
 #  uid                            :string           not null
+#  stage                          :string
+#  estimate                       :integer
+#  due_date                       :datetime
+#  description                    :string
+#  submitted_for_approval_comment :string
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
-#  application_id                 :bigint
+#  application_id                 :integer
+#  repeat                         :string
+#  flexible_estimate              :integer
+#  hours_worked                   :integer
+#  trial                          :boolean
 #  stripe_invoice_id              :string
+#  estimate_type                  :string
+#  final_cost                     :integer
+#  to_be_invited_at               :datetime
+#  quote_requested_at             :datetime
+#  quote_provided_at              :datetime
+#  assigned_at                    :datetime
+#  started_working_at             :datetime
+#  submitted_at                   :datetime
+#  approved_at                    :datetime
 #
 # Indexes
 #

@@ -19,14 +19,14 @@ end
 #
 # Table name: case_study_skills
 #
-#  id         :bigint           not null, primary key
-#  primary    :boolean
+#  id         :integer          not null, primary key
 #  uid        :string           not null
+#  primary    :boolean
+#  article_id :integer
+#  skill_id   :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  article_id :bigint
-#  search_id  :bigint
-#  skill_id   :bigint           not null
+#  search_id  :integer
 #
 # Indexes
 #
@@ -34,10 +34,4 @@ end
 #  index_case_study_skills_on_search_id   (search_id)
 #  index_case_study_skills_on_skill_id    (skill_id)
 #  index_case_study_skills_on_uid         (uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (article_id => case_study_articles.id)
-#  fk_rails_...  (search_id => case_study_searches.id)
-#  fk_rails_...  (skill_id => skills.id)
 #

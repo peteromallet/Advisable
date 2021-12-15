@@ -71,28 +71,24 @@ end
 #
 # Table name: events
 #
-#  id                 :bigint           not null, primary key
-#  color              :string           not null
+#  id                 :integer          not null, primary key
+#  uid                :string           not null
+#  title              :string           not null
 #  description        :text             not null
-#  ends_at            :datetime
-#  featured           :boolean          default(FALSE)
+#  url                :string
+#  color              :string           not null
+#  host_id            :integer
+#  featured           :boolean          default("false")
 #  published_at       :datetime
 #  starts_at          :datetime
-#  status             :string
-#  title              :string           not null
-#  uid                :string           not null
-#  url                :string
+#  ends_at            :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  google_calendar_id :string
-#  host_id            :bigint
+#  status             :string
 #
 # Indexes
 #
 #  index_events_on_host_id  (host_id)
 #  index_events_on_uid      (uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (host_id => specialists.id)
 #

@@ -109,38 +109,33 @@ end
 # Table name: companies
 #
 #  id                                :uuid             not null, primary key
-#  accepted_project_payment_terms_at :datetime
-#  address                           :jsonb
-#  admin_fee                         :integer
-#  billing_email                     :string
-#  budget                            :bigint
-#  business_type                     :string
-#  feedback                          :boolean
-#  goals                             :jsonb
-#  invoice_company_name              :string
-#  invoice_name                      :string
-#  kind                              :string
 #  name                              :string
-#  payments_setup                    :boolean          default(FALSE)
-#  project_payment_method            :string
-#  setup_intent_status               :string
-#  specialist_description            :string
-#  stripe_payment_method             :string
-#  vat_number                        :string
+#  kind                              :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
-#  industry_id                       :bigint
-#  sales_person_id                   :bigint
+#  sales_person_id                   :integer
+#  industry_id                       :integer
 #  stripe_customer_id                :string
 #  stripe_setup_intent_id            :string
+#  setup_intent_status               :string
+#  payments_setup                    :boolean          default("false")
+#  project_payment_method            :string
+#  accepted_project_payment_terms_at :datetime
+#  invoice_name                      :string
+#  invoice_company_name              :string
+#  billing_email                     :string
+#  vat_number                        :string
+#  address                           :jsonb
+#  goals                             :jsonb
+#  feedback                          :boolean
+#  business_type                     :string
+#  budget                            :integer
+#  admin_fee                         :integer
+#  stripe_payment_method             :string
+#  specialist_description            :string
 #
 # Indexes
 #
 #  index_companies_on_industry_id      (industry_id)
 #  index_companies_on_sales_person_id  (sales_person_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (industry_id => industries.id)
-#  fk_rails_...  (sales_person_id => sales_people.id)
 #

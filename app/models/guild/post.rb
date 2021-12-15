@@ -3,6 +3,8 @@
 module Guild
   class Post < ApplicationRecord
     class BoostError < StandardError; end
+    self.ignored_columns += %i[post_prompt_id]
+
     self.store_full_sti_class = false
 
     POST_TYPES = %w[Post AdviceRequired CaseStudy Opportunity].freeze
@@ -10,7 +12,6 @@ module Guild
     POPULAR_THRESHOLD = 5
 
     belongs_to :specialist
-    belongs_to :post_prompt, optional: true, counter_cache: :guild_posts_count
     belongs_to :article, optional: true, class_name: "::CaseStudy::Article"
     has_one :account, through: :specialist
     has_many :images, class_name: "Guild::PostImage", foreign_key: "guild_post_id", inverse_of: "post", dependent: :destroy
@@ -77,7 +78,7 @@ module Guild
     def reset_labels
       return unless labels_resettable?
 
-      self.labels = Array(post_prompt ? post_prompt.label : nil)
+      self.labels = []
     end
 
     def reset_previous_pinned
@@ -99,30 +100,24 @@ end
 # Table name: guild_posts
 #
 #  id                :uuid             not null, primary key
-#  audience_type     :string
-#  body              :text
-#  boosted_at        :datetime
-#  engagements_count :integer          default(0)
-#  pinned            :boolean          default(FALSE)
-#  resolved_at       :datetime
-#  shareable         :boolean          default(FALSE)
-#  status            :integer          default("draft"), not null
-#  title             :string
 #  type              :string           default("Post"), not null
+#  body              :text
+#  title             :string
+#  status            :integer          default("0"), not null
+#  specialist_id     :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  article_id        :bigint
-#  post_prompt_id    :uuid
-#  specialist_id     :bigint
+#  engagements_count :integer          default("0")
+#  shareable         :boolean          default("false")
+#  pinned            :boolean          default("false")
+#  boosted_at        :datetime
+#  resolved_at       :datetime
+#  audience_type     :string
+#  article_id        :integer
 #
 # Indexes
 #
 #  index_guild_posts_on_article_id      (article_id)
 #  index_guild_posts_on_post_prompt_id  (post_prompt_id)
 #  index_guild_posts_on_specialist_id   (specialist_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (article_id => case_study_articles.id)
-#  fk_rails_...  (specialist_id => specialists.id)
 #

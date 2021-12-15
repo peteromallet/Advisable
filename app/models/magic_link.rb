@@ -58,13 +58,13 @@ end
 #
 # Table name: magic_links
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
+#  account_id :integer          not null
+#  path       :string
 #  digest     :string
 #  expires_at :datetime
-#  path       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  account_id :bigint           not null
 #
 # Indexes
 #

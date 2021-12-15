@@ -30,12 +30,6 @@ module Mutations
           guild_post.labels = labels
         end
 
-        # - Don't allow deleting the post prompt label
-        if guild_post.post_prompt
-          label = guild_post.post_prompt&.label
-          guild_post.labels << label unless guild_post.labels.exists?(label&.id)
-        end
-
         # - A removed post cannot be published
         guild_post.status = "published" if args[:publish].present? && guild_post.status != "removed"
         guild_post.save!
