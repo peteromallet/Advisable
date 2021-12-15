@@ -134,21 +134,21 @@ end
 #
 # Table name: payments
 #
-#  id                :bigint           not null, primary key
-#  admin_fee         :integer
-#  amount            :integer
-#  charged_at        :datetime
-#  deposit           :integer
-#  payment_method    :string
-#  retries           :integer
-#  status            :string
+#  id                :integer          not null, primary key
 #  uid               :string           not null
+#  amount            :integer
+#  admin_fee         :integer
+#  status            :string
+#  company_id        :uuid             not null
+#  specialist_id     :integer          not null
+#  task_id           :integer
+#  payment_intent_id :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  company_id        :uuid             not null
-#  payment_intent_id :string
-#  specialist_id     :bigint           not null
-#  task_id           :bigint
+#  payment_method    :string
+#  deposit           :integer
+#  retries           :integer
+#  charged_at        :datetime
 #
 # Indexes
 #
@@ -156,10 +156,4 @@ end
 #  index_payments_on_specialist_id  (specialist_id)
 #  index_payments_on_task_id        (task_id)
 #  index_payments_on_uid            (uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (company_id => companies.id)
-#  fk_rails_...  (specialist_id => specialists.id)
-#  fk_rails_...  (task_id => tasks.id)
 #

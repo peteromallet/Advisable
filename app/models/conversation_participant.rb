@@ -9,21 +9,16 @@ end
 #
 # Table name: conversation_participants
 #
-#  id              :bigint           not null, primary key
+#  id              :integer          not null, primary key
+#  account_id      :integer          not null
+#  conversation_id :integer          not null
 #  last_read_at    :datetime
-#  unread_count    :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  account_id      :bigint           not null
-#  conversation_id :bigint           not null
+#  unread_count    :integer
 #
 # Indexes
 #
 #  index_conversation_participants_on_account_id       (account_id)
 #  index_conversation_participants_on_conversation_id  (conversation_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (account_id => accounts.id)
-#  fk_rails_...  (conversation_id => conversations.id)
 #

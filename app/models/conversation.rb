@@ -47,11 +47,11 @@ end
 #
 # Table name: conversations
 #
-#  id              :bigint           not null, primary key
-#  idempotency_key :string
+#  id              :integer          not null, primary key
 #  uid             :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  idempotency_key :string
 #
 # Indexes
 #

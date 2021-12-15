@@ -45,25 +45,20 @@ end
 #
 # Table name: payouts
 #
-#  id            :bigint           not null, primary key
+#  id            :integer          not null, primary key
+#  uid           :string           not null
+#  specialist_id :integer          not null
+#  task_id       :integer
 #  amount        :integer
-#  processed_at  :datetime
 #  sourcing_fee  :integer
 #  status        :string
-#  uid           :string           not null
+#  processed_at  :datetime
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  specialist_id :bigint           not null
-#  task_id       :bigint
 #
 # Indexes
 #
 #  index_payouts_on_specialist_id  (specialist_id)
 #  index_payouts_on_task_id        (task_id)
 #  index_payouts_on_uid            (uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (specialist_id => specialists.id)
-#  fk_rails_...  (task_id => tasks.id)
 #

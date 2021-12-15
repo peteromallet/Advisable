@@ -125,46 +125,46 @@ end
 #
 # Table name: applications
 #
-#  id                          :bigint           not null, primary key
-#  accepts_fee                 :boolean
-#  accepts_terms               :boolean
-#  application_accepted_at     :datetime
-#  application_rejected_at     :datetime
-#  applied_at                  :datetime
-#  auto_apply                  :boolean
+#  id                          :integer          not null, primary key
 #  availability                :string
-#  comment                     :string
-#  featured                    :boolean          default(FALSE)
-#  hidden                      :boolean
-#  hide_from_profile           :boolean
-#  interview_completed_at      :datetime
-#  interview_scheduled_at      :datetime
-#  introduction                :text
-#  invitation_rejected_at      :datetime
-#  invitation_rejection_reason :string
-#  invited_to_apply_at         :datetime
-#  invoice_rate                :integer
-#  meta_fields                 :jsonb
-#  monthly_limit               :integer
-#  project_type                :string
-#  proposal_comment            :string
-#  proposal_sent_at            :datetime
-#  questions                   :jsonb
-#  rejection_feedback          :text
-#  rejection_reason            :text
-#  rejection_reason_comment    :text
-#  score                       :integer
-#  source                      :string
-#  started_working_at          :datetime
 #  status                      :string
-#  stopped_working_at          :datetime
-#  stopped_working_reason      :string
-#  trial_program               :boolean
-#  uid                         :string           not null
+#  introduction                :text
+#  questions                   :jsonb
+#  score                       :integer
+#  specialist_id               :integer
+#  project_id                  :integer
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
-#  project_id                  :bigint
-#  specialist_id               :bigint
+#  accepts_fee                 :boolean
+#  accepts_terms               :boolean
+#  featured                    :boolean          default("false")
+#  comment                     :string
+#  rejection_reason            :text
+#  rejection_reason_comment    :text
+#  invitation_rejection_reason :string
+#  applied_at                  :datetime
+#  hidden                      :boolean
+#  proposal_comment            :string
+#  project_type                :string
+#  monthly_limit               :integer
+#  uid                         :string           not null
+#  stopped_working_reason      :string
+#  trial_program               :boolean
+#  invited_to_apply_at         :datetime
+#  invitation_rejected_at      :datetime
+#  application_rejected_at     :datetime
+#  application_accepted_at     :datetime
+#  interview_scheduled_at      :datetime
+#  interview_completed_at      :datetime
+#  proposal_sent_at            :datetime
+#  started_working_at          :datetime
+#  stopped_working_at          :datetime
+#  auto_apply                  :boolean
+#  hide_from_profile           :boolean
+#  rejection_feedback          :text
+#  meta_fields                 :jsonb
+#  source                      :string
+#  invoice_rate                :integer
 #
 # Indexes
 #
@@ -172,9 +172,4 @@ end
 #  index_applications_on_specialist_id  (specialist_id)
 #  index_applications_on_status         (status)
 #  index_applications_on_uid            (uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (project_id => projects.id)
-#  fk_rails_...  (specialist_id => specialists.id)
 #

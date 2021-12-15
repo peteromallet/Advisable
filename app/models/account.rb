@@ -136,27 +136,27 @@ end
 #
 # Table name: accounts
 #
-#  id                  :bigint           not null, primary key
-#  completed_tutorials :jsonb
-#  confirmation_digest :string
-#  confirmation_token  :string
-#  confirmed_at        :datetime
-#  deleted_at          :datetime
-#  disabled_at         :datetime
-#  email               :citext
-#  features            :jsonb
+#  id                  :integer          not null, primary key
 #  first_name          :string
 #  last_name           :string
 #  password_digest     :string
-#  permissions         :jsonb
-#  remember_token      :string
+#  email               :citext
+#  uid                 :string           not null
+#  confirmed_at        :datetime
+#  confirmation_digest :string
 #  reset_digest        :string
 #  reset_sent_at       :datetime
+#  permissions         :jsonb            default("[]")
+#  completed_tutorials :jsonb            default("[]")
+#  confirmation_token  :string
 #  test_account        :boolean
-#  uid                 :string           not null
-#  unsubscribed_from   :jsonb
+#  remember_token      :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  deleted_at          :datetime
+#  unsubscribed_from   :jsonb
+#  disabled_at         :datetime
+#  features            :jsonb
 #
 # Indexes
 #

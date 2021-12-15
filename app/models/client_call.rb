@@ -11,22 +11,22 @@ end
 #
 # Table name: client_calls
 #
-#  id                 :bigint           not null, primary key
-#  call_attempt_count :integer
-#  call_time          :datetime
-#  cancelled          :boolean
+#  id                 :integer          not null, primary key
+#  airtable_id        :string
 #  duration           :integer
+#  project_id         :integer
+#  call_time          :datetime
+#  phone_number       :string
 #  email              :string
 #  event_type         :string
-#  phone_number       :string
+#  calendly_id        :string
+#  cancelled          :boolean
+#  sales_person_id    :integer
 #  type_of_call       :string
+#  user_id            :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  airtable_id        :string
-#  calendly_id        :string
-#  project_id         :bigint
-#  sales_person_id    :bigint
-#  user_id            :bigint
+#  call_attempt_count :integer
 #
 # Indexes
 #
@@ -34,10 +34,4 @@ end
 #  index_client_calls_on_project_id       (project_id)
 #  index_client_calls_on_sales_person_id  (sales_person_id)
 #  index_client_calls_on_user_id          (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (project_id => projects.id)
-#  fk_rails_...  (sales_person_id => sales_people.id)
-#  fk_rails_...  (user_id => users.id)
 #

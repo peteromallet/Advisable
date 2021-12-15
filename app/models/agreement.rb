@@ -23,17 +23,17 @@ end
 #
 # Table name: agreements
 #
-#  id            :bigint           not null, primary key
+#  id            :integer          not null, primary key
+#  uid           :string           not null
+#  user_id       :integer          not null
+#  company_id    :uuid             not null
+#  specialist_id :integer          not null
 #  collaboration :string
-#  hourly_rate   :integer
 #  invoicing     :string
 #  status        :string
-#  uid           :string           not null
+#  hourly_rate   :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  company_id    :uuid             not null
-#  specialist_id :bigint           not null
-#  user_id       :bigint           not null
 #
 # Indexes
 #
@@ -41,10 +41,4 @@ end
 #  index_agreements_on_specialist_id  (specialist_id)
 #  index_agreements_on_uid            (uid) UNIQUE
 #  index_agreements_on_user_id        (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (company_id => companies.id)
-#  fk_rails_...  (specialist_id => specialists.id)
-#  fk_rails_...  (user_id => users.id)
 #

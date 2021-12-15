@@ -17,23 +17,18 @@ end
 # Table name: notifications
 #
 #  id              :uuid             not null, primary key
+#  account_id      :integer          not null
+#  actor_id        :integer
 #  action          :string           not null
 #  notifiable_type :string           not null
+#  notifiable_id   :uuid             not null
 #  read_at         :datetime
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  account_id      :bigint           not null
-#  actor_id        :bigint
-#  notifiable_id   :uuid             not null
 #
 # Indexes
 #
 #  index_notifications_on_account_id  (account_id)
 #  index_notifications_on_actor_id    (actor_id)
 #  index_notifications_on_notifiable  (notifiable_type,notifiable_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (account_id => accounts.id)
-#  fk_rails_...  (actor_id => accounts.id)
 #

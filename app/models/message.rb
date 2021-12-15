@@ -43,18 +43,18 @@ end
 #
 # Table name: messages
 #
-#  id              :bigint           not null, primary key
-#  content         :text
-#  idempotency_key :string
-#  kind            :string
-#  metadata        :jsonb
+#  id              :integer          not null, primary key
 #  uid             :string           not null
+#  content         :text
+#  author_id       :integer
+#  conversation_id :integer          not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  agreement_id    :bigint
-#  author_id       :bigint
-#  conversation_id :bigint           not null
+#  idempotency_key :string
+#  kind            :string
 #  guild_post_id   :uuid
+#  metadata        :jsonb
+#  agreement_id    :integer
 #
 # Indexes
 #
@@ -64,11 +64,4 @@ end
 #  index_messages_on_guild_post_id    (guild_post_id)
 #  index_messages_on_idempotency_key  (idempotency_key)
 #  index_messages_on_uid              (uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (agreement_id => agreements.id)
-#  fk_rails_...  (author_id => accounts.id)
-#  fk_rails_...  (conversation_id => conversations.id)
-#  fk_rails_...  (guild_post_id => guild_posts.id)
 #

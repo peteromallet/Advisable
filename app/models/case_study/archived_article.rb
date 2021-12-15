@@ -11,19 +11,14 @@ end
 #
 # Table name: case_study_archived_articles
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
+#  user_id    :integer          not null
+#  article_id :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  article_id :bigint           not null
-#  user_id    :bigint           not null
 #
 # Indexes
 #
 #  index_case_study_archived_articles_on_article_id  (article_id)
 #  index_case_study_archived_articles_on_user_id     (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (article_id => case_study_articles.id)
-#  fk_rails_...  (user_id => users.id)
 #

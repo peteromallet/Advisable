@@ -56,20 +56,20 @@ end
 #
 # Table name: reviews
 #
-#  id                    :bigint           not null, primary key
+#  id                    :integer          not null, primary key
+#  airtable_id           :string
+#  specialist_id         :integer
+#  project_id            :integer
 #  comment               :text
-#  company_name          :string
-#  first_name            :string
-#  last_name             :string
 #  ratings               :jsonb
-#  relationship          :string
-#  uid                   :string           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  airtable_id           :string
-#  case_study_article_id :bigint
-#  project_id            :bigint
-#  specialist_id         :bigint
+#  uid                   :string           not null
+#  case_study_article_id :integer
+#  first_name            :string
+#  last_name             :string
+#  company_name          :string
+#  relationship          :string
 #
 # Indexes
 #
@@ -77,9 +77,4 @@ end
 #  index_reviews_on_case_study_article_id  (case_study_article_id)
 #  index_reviews_on_specialist_id          (specialist_id)
 #  index_reviews_on_uid                    (uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (case_study_article_id => case_study_articles.id)
-#  fk_rails_...  (specialist_id => specialists.id)
 #

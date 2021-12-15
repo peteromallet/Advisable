@@ -85,6 +85,7 @@ Rails.application.configure do
   if ENV["SMTP_DELIVERY"].present?
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.smtp_timeout = 5
   else
     config.action_mailer.delivery_method = :letter_opener
   end

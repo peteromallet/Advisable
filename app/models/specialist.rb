@@ -134,68 +134,68 @@ end
 #
 # Table name: specialists
 #
-#  id                                :bigint           not null, primary key
-#  accepted_at                       :datetime
-#  application_interview_starts_at   :datetime
-#  application_stage                 :string
-#  application_status                :string
-#  average_score                     :decimal(, )
-#  bank_currency                     :string
-#  bank_holder_address               :jsonb
-#  bank_holder_name                  :string
-#  bio                               :text
-#  campaign_medium                   :string
-#  campaign_name                     :string
-#  campaign_source                   :string
-#  case_study_status                 :string
-#  city                              :string
-#  community_accepted_at             :datetime
-#  community_applied_at              :datetime
-#  community_invited_to_call_at      :datetime
-#  community_score                   :integer
-#  community_status                  :string
-#  guild                             :boolean          default(FALSE)
-#  guild_calendly_link               :string
-#  guild_featured_member_at          :datetime
-#  guild_joined_date                 :datetime
-#  hourly_rate                       :integer
-#  iban                              :string
-#  ideal_project                     :string
+#  id                                :integer          not null, primary key
 #  image                             :jsonb
-#  instagram                         :string
-#  interview_completed_at            :datetime
-#  invited_to_interview_at           :datetime
 #  linkedin                          :string
-#  medium                            :string
-#  member_of_week_email              :integer
-#  number_of_projects                :string
-#  pid                               :string
-#  previous_work_description         :string
-#  previous_work_results             :string
-#  primarily_freelance               :boolean
-#  project_count                     :integer
-#  public_use                        :boolean
-#  ratings                           :jsonb
-#  remote                            :boolean
-#  reviews_count                     :integer
-#  sourcing_fee                      :integer
-#  submitted_at                      :datetime
 #  travel_availability               :string
-#  trustpilot_review_status          :string
-#  twitter                           :string
-#  uid                               :string           not null
-#  unavailable_until                 :date
-#  username                          :citext
-#  vat_number                        :string
-#  website                           :string
+#  city                              :string
+#  country_id                        :integer
+#  airtable_id                       :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
-#  account_id                        :bigint
-#  airtable_id                       :string
+#  ratings                           :jsonb            default("{}")
+#  reviews_count                     :integer
+#  bio                               :text
+#  uid                               :string           not null
+#  remote                            :boolean
+#  application_stage                 :string
+#  bank_holder_name                  :string
+#  bank_holder_address               :jsonb            default("{}")
+#  bank_currency                     :string
+#  primarily_freelance               :boolean
+#  number_of_projects                :string
+#  hourly_rate                       :integer
+#  website                           :string
+#  public_use                        :boolean
+#  pid                               :string
+#  campaign_name                     :string
+#  campaign_source                   :string
+#  average_score                     :decimal(, )
+#  project_count                     :integer
+#  guild                             :boolean          default("false")
+#  community_status                  :string
+#  account_id                        :integer
+#  community_applied_at              :datetime
+#  community_accepted_at             :datetime
+#  community_invited_to_call_at      :datetime
+#  community_score                   :integer
+#  member_of_week_email              :integer
+#  unavailable_until                 :date
+#  previous_work_description         :string
+#  previous_work_results             :string
+#  ideal_project                     :string
+#  vat_number                        :string
 #  application_interview_calendly_id :string
-#  country_id                        :bigint
-#  interviewer_id                    :bigint
-#  referrer_id                       :bigint
+#  application_interview_starts_at   :datetime
+#  iban                              :string
+#  guild_joined_date                 :datetime
+#  guild_featured_member_at          :datetime
+#  guild_calendly_link               :string
+#  referrer_id                       :integer
+#  sourcing_fee                      :integer
+#  interviewer_id                    :integer
+#  case_study_status                 :string
+#  trustpilot_review_status          :string
+#  campaign_medium                   :string
+#  application_status                :string
+#  twitter                           :string
+#  instagram                         :string
+#  medium                            :string
+#  username                          :citext
+#  submitted_at                      :datetime
+#  invited_to_interview_at           :datetime
+#  interview_completed_at            :datetime
+#  accepted_at                       :datetime
 #
 # Indexes
 #
@@ -206,11 +206,4 @@ end
 #  index_specialists_on_referrer_id     (referrer_id)
 #  index_specialists_on_uid             (uid) UNIQUE
 #  index_specialists_on_username        (username) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (account_id => accounts.id)
-#  fk_rails_...  (country_id => countries.id)
-#  fk_rails_...  (interviewer_id => sales_people.id)
-#  fk_rails_...  (referrer_id => specialists.id)
 #
