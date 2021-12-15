@@ -10,6 +10,7 @@
 # application is stored in the application_stage column.
 #
 class Specialist < ApplicationRecord
+  self.ignored_columns = %w[phone encrypted_phone_number encrypted_phone_number_iv]
   include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser
@@ -58,9 +59,6 @@ class Specialist < ApplicationRecord
   has_one_attached :resume
   has_one_attached :cover_photo
   resize cover_photo: {resize_to_limit: [2000, 2000]}
-
-  # DEPRECATED IN FAVOUR OF phone column
-  attr_encrypted :phone_number, key: [ENV["ENCRYPTION_KEY"]].pack("H*")
 
   validates :number_of_projects, inclusion: {in: %w[1-5 5-20 20+ None], message: "is invalid"}, allow_nil: true
   validates :application_stage, inclusion: {in: VALID_APPLICATION_STAGES}, allow_blank: true
@@ -146,8 +144,6 @@ end
 #  community_invited_to_call_at      :datetime
 #  community_score                   :integer
 #  community_status                  :string
-#  encrypted_phone_number            :string
-#  encrypted_phone_number_iv         :string
 #  guild                             :boolean          default(FALSE)
 #  guild_calendly_link               :string
 #  guild_featured_member_at          :datetime
@@ -161,7 +157,6 @@ end
 #  medium                            :string
 #  member_of_week_email              :integer
 #  number_of_projects                :string
-#  phone                             :string
 #  pid                               :string
 #  previous_work_description         :string
 #  previous_work_results             :string
