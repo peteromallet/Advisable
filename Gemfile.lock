@@ -101,8 +101,6 @@ GEM
       railties (>= 5.2)
       stackprof (~> 0.2)
     ast (2.4.2)
-    attr_encrypted (3.1.0)
-      encryptor (~> 3.0.0)
     aws-eventstream (1.2.0)
     aws-partitions (1.541.0)
     aws-sdk-core (3.124.0)
@@ -165,7 +163,6 @@ GEM
       railties (>= 3.2)
     e2mmap (0.1.0)
     email_reply_parser (0.5.10)
-    encryptor (3.0.0)
     erubi (1.10.0)
     et-orbi (1.2.6)
       tzinfo
@@ -608,7 +605,6 @@ DEPENDENCIES
   airrecord
   annotate
   app_profiler
-  attr_encrypted
   aws-sdk-s3
   barnes
   bcrypt
