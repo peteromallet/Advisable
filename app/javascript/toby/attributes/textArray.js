@@ -6,6 +6,9 @@ export default {
   render: function RenderStringColumn({ record, attribute }) {
     return record[attribute.name].join(", ");
   },
+  initializeFormValue(record, attribute) {
+    return record[attribute.name] || [];
+  },
   input: function TextArrayInput({ attribute }) {
     const [field, , helpers] = useField(attribute.name);
 
