@@ -47,7 +47,6 @@ gem "airrecord"
 gem "graphql"
 gem "parser"
 gem "stripe"
-gem "attr_encrypted"
 
 gem "pundit"
 gem "nanoid"
