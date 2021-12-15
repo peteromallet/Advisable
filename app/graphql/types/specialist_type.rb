@@ -58,11 +58,6 @@ module Types
       description "The specialists portfolio"
     end
 
-    field :phone_number, String, null: true, method: :phone do
-      authorize :specialist?, :admin?
-      description "The phone number for the specialist"
-    end
-
     field :image, Types::AttachmentType, null: true, deprecation_reason: "Use #avatar instead" do
       description "The specialists profile image"
     end
