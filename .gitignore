@@ -42,7 +42,6 @@ dump.rdb
 credentials.yml.enc
 /.env
 .DS_Store
-jest-coverage
 spec/cypress/videos/*
 stats.json
 .eslintcache

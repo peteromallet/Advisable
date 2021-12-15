@@ -1,6 +1,5 @@
 test/
 spec/
-jest-coverage/
 coverage/
 app/javascript/*.test.js
 donut/*.test.js

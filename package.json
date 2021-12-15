@@ -114,7 +114,7 @@
     "webpackbar": "^5.0.2"
   },
   "scripts": {
-    "test": "jest --coverage --runInBand",
+    "test": "jest --runInBand",
     "test:watch": "jest --watch",
     "test:parallel": "jest",
     "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand --watch",
