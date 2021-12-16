@@ -16,16 +16,21 @@ end
 #
 # Table name: case_study_industries
 #
-#  id          :integer          not null, primary key
+#  id          :bigint           not null, primary key
 #  uid         :string           not null
-#  article_id  :integer          not null
-#  industry_id :integer          not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  article_id  :bigint           not null
+#  industry_id :bigint           not null
 #
 # Indexes
 #
 #  index_case_study_industries_on_article_id   (article_id)
 #  index_case_study_industries_on_industry_id  (industry_id)
 #  index_case_study_industries_on_uid          (uid) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (article_id => case_study_articles.id)
+#  fk_rails_...  (industry_id => industries.id)
 #

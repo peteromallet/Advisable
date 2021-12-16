@@ -31,16 +31,16 @@ end
 # Table name: labels
 #
 #  id              :uuid             not null, primary key
-#  name            :string
-#  slug            :string
-#  published_at    :datetime
+#  description     :text
 #  labelings_count :integer
-#  country_id      :integer
-#  industry_id     :integer
-#  skill_id        :integer
+#  name            :string
+#  published_at    :datetime
+#  slug            :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  description     :text
+#  country_id      :bigint
+#  industry_id     :bigint
+#  skill_id        :bigint
 #
 # Indexes
 #
@@ -48,4 +48,10 @@ end
 #  index_labels_on_industry_id  (industry_id) UNIQUE
 #  index_labels_on_skill_id     (skill_id) UNIQUE
 #  index_labels_on_slug         (slug) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (country_id => countries.id)
+#  fk_rails_...  (industry_id => industries.id)
+#  fk_rails_...  (skill_id => skills.id)
 #

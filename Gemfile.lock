@@ -13,6 +13,15 @@ GIT
       byebug (~> 11.0)
       pry (>= 0.13, < 0.15)
 
+GIT
+  remote: https://github.com/miharekar/annotate_models.git
+  revision: e95c4f669b7d560518fdb4f0b3e495e27ded63f3
+  branch: rails-7
+  specs:
+    annotate (3.1.1)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -93,9 +102,6 @@ GEM
     airrecord (1.0.7)
       faraday (>= 0.10, < 2.0)
       net-http-persistent
-    annotate (2.6.5)
-      activerecord (>= 2.3.0)
-      rake (>= 0.8.7)
     app_profiler (0.0.8)
       activesupport (>= 5.2)
       rack
@@ -607,7 +613,7 @@ DEPENDENCIES
   administrate
   administrate-field-active_storage
   airrecord
-  annotate
+  annotate!
   app_profiler
   aws-sdk-s3
   barnes

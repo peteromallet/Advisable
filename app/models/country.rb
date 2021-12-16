@@ -22,16 +22,16 @@ end
 #
 # Table name: countries
 #
-#  id             :integer          not null, primary key
-#  name           :string
+#  id             :bigint           not null, primary key
+#  alpha2         :string
 #  currency       :string
-#  airtable_id    :string
+#  dial_in_number :string
+#  eu             :boolean
+#  name           :string
+#  uid            :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  uid            :string           not null
-#  eu             :boolean
-#  alpha2         :string
-#  dial_in_number :string
+#  airtable_id    :string
 #
 # Indexes
 #

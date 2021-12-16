@@ -28,14 +28,14 @@ end
 #
 # Table name: industries
 #
-#  id          :integer          not null, primary key
+#  id          :bigint           not null, primary key
+#  active      :boolean
+#  color       :string
 #  name        :string
 #  uid         :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  airtable_id :string
-#  color       :string
-#  active      :boolean
 #
 # Indexes
 #

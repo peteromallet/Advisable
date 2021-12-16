@@ -7,14 +7,14 @@ end
 #
 # Table name: toby_views
 #
-#  id         :integer          not null, primary key
+#  id         :bigint           not null, primary key
+#  filters    :jsonb
 #  name       :string
 #  resource   :string
-#  filters    :jsonb
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
 #  sort_by    :string
 #  sort_order :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #

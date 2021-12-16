@@ -10,18 +10,22 @@ end
 #
 # Table name: video_calls
 #
-#  id              :integer          not null, primary key
-#  uid             :string           not null
-#  interview_id    :integer
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id              :bigint           not null, primary key
 #  fallback        :boolean
-#  zoom_meeting_id :string
+#  uid             :string           not null
 #  zoom_passcode   :string
 #  zoom_url        :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  interview_id    :bigint
+#  zoom_meeting_id :string
 #
 # Indexes
 #
 #  index_video_calls_on_interview_id  (interview_id)
 #  index_video_calls_on_uid           (uid) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (interview_id => interviews.id)
 #

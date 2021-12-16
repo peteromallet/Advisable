@@ -31,18 +31,22 @@ end
 #
 # Table name: guild_post_images
 #
-#  id            :integer          not null, primary key
-#  guild_post_id :uuid
-#  uid           :string           not null
-#  string        :string
-#  position      :integer
+#  id            :bigint           not null, primary key
 #  cover         :boolean
+#  position      :integer
+#  string        :string
+#  uid           :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  guild_post_id :uuid
 #
 # Indexes
 #
 #  index_guild_post_images_on_guild_post_id  (guild_post_id)
 #  index_guild_post_images_on_string         (string)
 #  index_guild_post_images_on_uid            (uid) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (guild_post_id => guild_posts.id) ON DELETE => cascade
 #

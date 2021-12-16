@@ -161,68 +161,72 @@ end
 #
 # Table name: projects
 #
-#  id                               :integer          not null, primary key
-#  name                             :string
-#  airtable_id                      :string
-#  created_at                       :datetime         not null
-#  updated_at                       :datetime         not null
-#  currency                         :string
+#  id                               :bigint           not null, primary key
+#  accepted_terms_at                :datetime
+#  booking_confirmed_at             :datetime
+#  booking_request_sent_at          :datetime
+#  brief_confirmed_at               :datetime
+#  brief_pending_confirmation_at    :datetime
+#  call_scheduled_at                :datetime
+#  campaign_name                    :string
+#  campaign_source                  :string
+#  candidate_accepted_at            :datetime
+#  candidate_count                  :integer          default(0)
+#  candidate_proposed_at            :datetime
+#  characteristics                  :text             default([]), is an Array
 #  client_referral_url              :string
 #  company_description              :text
-#  description                      :text
-#  specialist_description           :text
-#  goals                            :text             default("{}"), is an Array
-#  questions                        :text             default("{}"), is an Array
-#  required_characteristics         :text             default("{}"), is an Array
-#  characteristics                  :text             default("{}"), is an Array
-#  accepted_terms_at                :datetime
-#  deposit                          :integer
-#  status                           :string
-#  deposit_paid                     :integer
-#  user_id                          :integer
-#  service_type                     :string
-#  estimated_budget                 :string
-#  remote                           :boolean
-#  sales_status                     :string
-#  deposit_payment_intent_id        :string
-#  campaign_source                  :string
-#  brief_pending_confirmation_at    :datetime
-#  brief_confirmed_at               :datetime
-#  interview_scheduled_at           :datetime
-#  call_scheduled_at                :datetime
-#  candidate_proposed_at            :datetime
-#  candidate_accepted_at            :datetime
-#  interview_completed_at           :datetime
-#  booking_request_sent_at          :datetime
-#  booking_confirmed_at             :datetime
-#  proposal_received_at             :datetime
-#  won_at                           :datetime
-#  lost_at                          :datetime
-#  campaign_name                    :string
-#  uid                              :string           not null
-#  industry                         :string
 #  company_type                     :string
-#  industry_experience_required     :boolean
 #  company_type_experience_required :boolean
-#  industry_experience_importance   :integer
-#  location_importance              :integer
-#  likely_to_hire                   :integer
-#  candidate_count                  :integer          default("0")
-#  proposed_count                   :integer          default("0")
-#  hired_count                      :integer          default("0")
-#  sourcing                         :boolean
-#  linkedin_campaign_id             :integer
-#  published_at                     :datetime
+#  currency                         :string
+#  deposit                          :integer
+#  deposit_paid                     :integer
 #  deposit_used                     :integer
-#  stop_candidate_proposed_emails   :boolean
+#  description                      :text
+#  estimated_budget                 :string
+#  goals                            :text             default([]), is an Array
+#  hired_count                      :integer          default(0)
+#  industry                         :string
+#  industry_experience_importance   :integer
+#  industry_experience_required     :boolean
+#  interview_completed_at           :datetime
+#  interview_scheduled_at           :datetime
 #  level_of_expertise_required      :string
 #  likelihood_to_confirm            :integer
+#  likely_to_hire                   :integer
+#  location_importance              :integer
+#  lost_at                          :datetime
 #  lost_reason                      :string
+#  name                             :string
 #  project_start                    :string
+#  proposal_received_at             :datetime
+#  proposed_count                   :integer          default(0)
+#  published_at                     :datetime
+#  questions                        :text             default([]), is an Array
+#  remote                           :boolean
+#  required_characteristics         :text             default([]), is an Array
+#  sales_status                     :string
+#  service_type                     :string
+#  sourcing                         :boolean
+#  specialist_description           :text
+#  status                           :string
+#  stop_candidate_proposed_emails   :boolean
+#  uid                              :string           not null
+#  won_at                           :datetime
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  airtable_id                      :string
+#  deposit_payment_intent_id        :string
+#  linkedin_campaign_id             :bigint
+#  user_id                          :bigint
 #
 # Indexes
 #
 #  index_projects_on_sales_status  (sales_status)
 #  index_projects_on_uid           (uid) UNIQUE
 #  index_projects_on_user_id       (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #

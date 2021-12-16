@@ -20,16 +20,20 @@ end
 #
 # Table name: case_study_sections
 #
-#  id         :integer          not null, primary key
-#  uid        :string           not null
-#  article_id :integer          not null
-#  type       :string
+#  id         :bigint           not null, primary key
 #  position   :integer
+#  type       :string
+#  uid        :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  article_id :bigint           not null
 #
 # Indexes
 #
 #  index_case_study_sections_on_article_id  (article_id)
 #  index_case_study_sections_on_uid         (uid) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (article_id => case_study_articles.id)
 #

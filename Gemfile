@@ -84,7 +84,7 @@ group :development do
   gem "rubocop-performance", require: false
   gem "rubocop-rspec", require: false
   gem "rubocop-graphql", require: false
-  gem "annotate"
+  gem "annotate", github: "miharekar/annotate_models", branch: "rails-7"
   gem "foreman"
   gem "guard"
   gem "guard-rspec", require: false

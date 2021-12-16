@@ -14,14 +14,14 @@ end
 #
 # Table name: case_study_shared_articles
 #
-#  id             :integer          not null, primary key
-#  article_id     :integer          not null
-#  shared_with_id :integer          not null
-#  shared_by_id   :integer          not null
+#  id             :bigint           not null, primary key
 #  message        :text
+#  uid            :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  uid            :string           not null
+#  article_id     :bigint           not null
+#  shared_by_id   :bigint           not null
+#  shared_with_id :bigint           not null
 #
 # Indexes
 #
@@ -29,4 +29,10 @@ end
 #  index_case_study_shared_articles_on_shared_by_id    (shared_by_id)
 #  index_case_study_shared_articles_on_shared_with_id  (shared_with_id)
 #  index_case_study_shared_articles_on_uid             (uid) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (article_id => case_study_articles.id)
+#  fk_rails_...  (shared_by_id => users.id)
+#  fk_rails_...  (shared_with_id => users.id)
 #

@@ -20,12 +20,12 @@ end
 #
 # Table name: case_study_companies
 #
-#  id            :integer          not null, primary key
-#  uid           :string           not null
-#  name          :string
-#  description   :text
-#  website       :string
+#  id            :bigint           not null, primary key
 #  business_type :string
+#  description   :text
+#  name          :string
+#  uid           :string           not null
+#  website       :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
