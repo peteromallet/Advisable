@@ -110,41 +110,41 @@ end
 #
 # Table name: users
 #
-#  id                                :integer          not null, primary key
-#  airtable_id                       :string
-#  availability                      :text
-#  created_at                        :datetime         not null
-#  updated_at                        :datetime         not null
-#  uid                               :string           not null
-#  country_id                        :integer
-#  title                             :string
-#  stripe_customer_id                :string
-#  exceptional_project_payment_terms :string
-#  stripe_setup_intent_id            :string
-#  setup_intent_status               :string
-#  campaign_name                     :string
-#  campaign_source                   :string
-#  pid                               :string
-#  rid                               :string
-#  gclid                             :string
-#  time_zone                         :string
-#  campaign_medium                   :string
-#  contact_status                    :string
-#  fid                               :string
-#  locality_importance               :integer
+#  id                                :bigint           not null, primary key
 #  accepted_guarantee_terms_at       :datetime
-#  talent_quality                    :string
-#  rejection_reason                  :string
-#  number_of_freelancers             :string
 #  application_accepted_at           :datetime
+#  application_interview_starts_at   :datetime
 #  application_rejected_at           :datetime
 #  application_reminder_at           :datetime
-#  account_id                        :integer
-#  company_id                        :uuid
-#  application_interview_starts_at   :datetime
-#  trustpilot_review_status          :string
+#  availability                      :text
+#  campaign_medium                   :string
+#  campaign_name                     :string
+#  campaign_source                   :string
+#  contact_status                    :string
+#  exceptional_project_payment_terms :string
+#  fid                               :string
+#  gclid                             :string
 #  invited_to_interview_at           :datetime
+#  locality_importance               :integer
+#  number_of_freelancers             :string
+#  pid                               :string
+#  rejection_reason                  :string
+#  rid                               :string
+#  setup_intent_status               :string
 #  submitted_at                      :datetime
+#  talent_quality                    :string
+#  time_zone                         :string
+#  title                             :string
+#  trustpilot_review_status          :string
+#  uid                               :string           not null
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#  account_id                        :bigint
+#  airtable_id                       :string
+#  company_id                        :uuid
+#  country_id                        :bigint
+#  stripe_customer_id                :string
+#  stripe_setup_intent_id            :string
 #
 # Indexes
 #
@@ -153,4 +153,10 @@ end
 #  index_users_on_company_id   (company_id)
 #  index_users_on_country_id   (country_id)
 #  index_users_on_uid          (uid) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (account_id => accounts.id)
+#  fk_rails_...  (company_id => companies.id)
+#  fk_rails_...  (country_id => countries.id)
 #

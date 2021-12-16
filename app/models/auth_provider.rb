@@ -37,19 +37,23 @@ end
 #
 # Table name: auth_providers
 #
-#  id            :integer          not null, primary key
-#  uid           :string           not null
-#  provider      :string
-#  token         :string
-#  refresh_token :string
-#  expires_at    :datetime
+#  id            :bigint           not null, primary key
 #  blob          :jsonb
+#  expires_at    :datetime
+#  provider      :string
+#  refresh_token :string
+#  token         :string
+#  uid           :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  account_id    :integer          not null
+#  account_id    :bigint           not null
 #
 # Indexes
 #
 #  index_auth_providers_on_account_id        (account_id)
 #  index_auth_providers_on_provider_and_uid  (provider,uid) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (account_id => accounts.id)
 #

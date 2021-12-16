@@ -59,19 +59,19 @@ end
 #
 # Table name: skills
 #
-#  id                         :integer          not null, primary key
-#  name                       :string
-#  airtable_id                :string
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
-#  category                   :string
-#  profile                    :boolean
-#  uid                        :string           not null
+#  id                         :bigint           not null, primary key
 #  active                     :boolean
-#  projects_count             :integer          default("0")
-#  specialists_count          :integer          default("0")
+#  category                   :string
 #  characteristic_placeholder :string
 #  goal_placeholder           :string
+#  name                       :string
+#  profile                    :boolean
+#  projects_count             :integer          default(0)
+#  specialists_count          :integer          default(0)
+#  uid                        :string           not null
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  airtable_id                :string
 #
 # Indexes
 #

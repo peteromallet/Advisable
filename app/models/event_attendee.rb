@@ -14,15 +14,20 @@ end
 #
 # Table name: event_attendees
 #
-#  id            :integer          not null, primary key
-#  event_id      :integer
-#  specialist_id :integer
+#  id            :bigint           not null, primary key
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  event_id      :bigint
+#  specialist_id :bigint
 #
 # Indexes
 #
 #  index_event_attendees_on_event_id                    (event_id)
 #  index_event_attendees_on_specialist_id               (specialist_id)
 #  index_event_attendees_on_specialist_id_and_event_id  (specialist_id,event_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (event_id => events.id)
+#  fk_rails_...  (specialist_id => specialists.id)
 #

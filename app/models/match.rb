@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # matches a specialist to a project.
 # Records in the "matches" table are currently created off platform inside
 # of airtable.
@@ -14,15 +15,20 @@ end
 #
 # Table name: matches
 #
-#  id            :integer          not null, primary key
-#  specialist_id :integer
-#  project_id    :integer
+#  id            :bigint           not null, primary key
+#  status        :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  status        :string
+#  project_id    :bigint
+#  specialist_id :bigint
 #
 # Indexes
 #
 #  index_matches_on_project_id     (project_id)
 #  index_matches_on_specialist_id  (specialist_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (project_id => projects.id)
+#  fk_rails_...  (specialist_id => specialists.id)
 #

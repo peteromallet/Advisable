@@ -33,20 +33,20 @@ end
 #
 # Table name: sales_people
 #
-#  id            :integer          not null, primary key
+#  id            :bigint           not null, primary key
+#  active        :boolean
+#  calendly_url  :string
+#  email         :string
 #  first_name    :string
 #  last_name     :string
-#  email         :string
-#  username      :string           not null
-#  active        :boolean
 #  out_of_office :boolean
 #  slack         :string
-#  calendly_url  :string
-#  asana_id      :string
-#  airtable_id   :string
+#  uid           :string           not null
+#  username      :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  uid           :string           not null
+#  airtable_id   :string
+#  asana_id      :string
 #
 # Indexes
 #

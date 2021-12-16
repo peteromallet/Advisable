@@ -34,18 +34,22 @@ end
 #
 # Table name: invoices
 #
-#  id         :integer          not null, primary key
-#  month      :integer          not null
-#  year       :integer          not null
-#  company_id :uuid             not null
+#  id         :bigint           not null, primary key
 #  key        :string
+#  month      :integer          not null
+#  uid        :string           not null
+#  year       :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  uid        :string           not null
+#  company_id :uuid             not null
 #
 # Indexes
 #
 #  index_invoices_on_company_id                     (company_id)
 #  index_invoices_on_company_id_and_year_and_month  (company_id,year,month) UNIQUE
 #  index_invoices_on_uid                            (uid) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (company_id => companies.id)
 #

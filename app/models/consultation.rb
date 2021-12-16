@@ -14,27 +14,27 @@ end
 #
 # Table name: consultations
 #
-#  id                    :integer          not null, primary key
-#  uid                   :string           not null
-#  specialist_id         :integer
-#  user_id               :integer
+#  id                    :bigint           not null, primary key
+#  accepted_at           :datetime
+#  advisable_rejected_at :datetime
+#  likely_to_hire        :integer
+#  rejected_at           :datetime
+#  rejection_reason      :string
+#  request_completed_at  :datetime
+#  request_started_at    :datetime
+#  sent_at               :datetime
+#  source                :string
 #  status                :string
 #  topic                 :string
-#  skill_id              :integer
-#  airtable_id           :string
+#  uid                   :string           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  interview_id          :integer
-#  source                :string
-#  likely_to_hire        :integer
-#  request_started_at    :datetime
-#  request_completed_at  :datetime
-#  sent_at               :datetime
-#  accepted_at           :datetime
-#  rejected_at           :datetime
-#  advisable_rejected_at :datetime
-#  search_id             :integer
-#  rejection_reason      :string
+#  airtable_id           :string
+#  interview_id          :bigint
+#  search_id             :bigint
+#  skill_id              :bigint
+#  specialist_id         :bigint
+#  user_id               :bigint
 #
 # Indexes
 #
@@ -45,4 +45,11 @@ end
 #  index_consultations_on_specialist_id  (specialist_id)
 #  index_consultations_on_uid            (uid) UNIQUE
 #  index_consultations_on_user_id        (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (interview_id => interviews.id)
+#  fk_rails_...  (skill_id => skills.id)
+#  fk_rails_...  (specialist_id => specialists.id)
+#  fk_rails_...  (user_id => users.id)
 #

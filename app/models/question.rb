@@ -8,11 +8,11 @@ end
 #
 # Table name: questions
 #
-#  id         :integer          not null, primary key
+#  id         :bigint           not null, primary key
 #  content    :string
+#  uid        :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  uid        :string           not null
 #
 # Indexes
 #
