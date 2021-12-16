@@ -3,11 +3,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "~> 3.0.3"
 
-gem "rails", "~> 7.0.0.rc3"
+gem "rails", "~> 7.0.0"
 gem "pg", ">= 0.18", "< 2.0"
 gem "strong_migrations"
 gem "good_migrations"
-gem "pghero"
+gem "pghero", github: "ankane/pghero" # fixes rails deprecation warnings
 gem "logidze", ">= 1.0.0"
 gem "fx"
 gem "puma"

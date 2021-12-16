@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/ankane/pghero.git
+  revision: b1b6857ae1f6f86eebbd7932bf5a9cb98d46a042
+  specs:
+    pghero (2.8.2)
+      activerecord (>= 5)
+
+GIT
   remote: https://github.com/deivid-rodriguez/pry-byebug.git
   revision: bf28c9781c434b2f00a83130ec5a8a992a691183
   specs:
@@ -349,8 +356,6 @@ GEM
       ast (~> 2.4.1)
     pdfmonkey (0.8.0)
     pg (1.2.3)
-    pghero (2.8.2)
-      activerecord (>= 5)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -644,7 +649,7 @@ DEPENDENCIES
   parser
   pdfmonkey
   pg (>= 0.18, < 2.0)
-  pghero
+  pghero!
   pry
   pry-byebug!
   pry-doc
@@ -653,7 +658,7 @@ DEPENDENCIES
   puma_worker_killer
   pundit
   rack-attack
-  rails (~> 7.0.0.rc3)
+  rails (~> 7.0.0)
   rspec-github
   rspec-rails
   rspec-retry
