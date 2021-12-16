@@ -64,7 +64,7 @@ gem "administrate-field-active_storage"
 
 gem "pry"
 gem "pry-rails"
-# gem "pry-doc" Does not support Ruby 3 yet
+gem "pry-doc"
 gem "pry-byebug", github: "deivid-rodriguez/pry-byebug" # Uses pry 0.14
 gem "ruby-progressbar", require: false
 gem "app_profiler"
