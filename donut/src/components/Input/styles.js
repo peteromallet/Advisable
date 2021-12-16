@@ -99,6 +99,21 @@ const StyledInput_Disabled = css`
 const size = variant({
   prop: "size",
   variants: {
+    xs: {
+      height: 32,
+      [StyledInputControl]: {
+        paddingLeft: 3,
+        paddingRight: 3,
+      },
+      [StyledInputDecoration]: {
+        "&:first-child": {
+          paddingLeft: 3,
+        },
+        "&:last-child": {
+          paddingRight: 3,
+        },
+      },
+    },
     sm: {
       height: 40,
       [StyledInputControl]: {

@@ -15,6 +15,7 @@ import ViewsDropdown from "./ViewsDropdown";
 import SortMenu from "./SortMenu";
 import Records from "./Records";
 import DownloadCSV from "./DownloadCSV";
+import QuickFind from "./QuickFind";
 
 export default function ResourceConfig({ resource }) {
   const { loading, data } = useResourceViews(resource.type);
@@ -90,46 +91,56 @@ function Resource({ resource, views }) {
       <DetailsModal resource={resource} />
       <StyledHeader>
         <Navigation resource={resource} />
-        <Box display="flex" alignItems="center" paddingLeft="8px">
-          <ViewsDropdown
-            views={views}
-            resource={resource}
-            filters={filters}
-            sortBy={sortBy}
-            sortOrder={sortOrder}
-          />
-          <HeaderButton icon={Adjustments} onClick={() => setIsOpen(!isOpen)}>
-            Filters
-            {filters.length > 0 && (
-              <Box
-                paddingY={1}
-                paddingX={2}
-                borderRadius="8px"
-                bg="white"
-                fontSize="2xs"
-                fontWeight={600}
-                marginRight="-8px"
-                marginLeft="8px"
-                color="blue600"
-              >
-                {filters.length}
-              </Box>
-            )}
-          </HeaderButton>
-          <SortMenu
-            sortBy={sortBy}
-            resource={resource}
-            setSortBy={setSortBy}
-            sortOrder={sortOrder}
-            setSortOrder={setSortOrder}
-            handleUpdateView={handleUpdateView}
-          />
-          <DownloadCSV
-            resource={resource}
-            filters={filters}
-            sortBy={sortBy}
-            sortOrder={sortOrder}
-          />
+        <Box
+          paddingX={4}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Box display="flex" alignItems="center">
+            <ViewsDropdown
+              views={views}
+              resource={resource}
+              filters={filters}
+              sortBy={sortBy}
+              sortOrder={sortOrder}
+            />
+            <HeaderButton icon={Adjustments} onClick={() => setIsOpen(!isOpen)}>
+              Filters
+              {filters.length > 0 && (
+                <Box
+                  paddingY={1}
+                  paddingX={2}
+                  borderRadius="8px"
+                  bg="white"
+                  fontSize="2xs"
+                  fontWeight={600}
+                  marginRight="-8px"
+                  marginLeft="8px"
+                  color="blue600"
+                >
+                  {filters.length}
+                </Box>
+              )}
+            </HeaderButton>
+            <SortMenu
+              sortBy={sortBy}
+              resource={resource}
+              setSortBy={setSortBy}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+              handleUpdateView={handleUpdateView}
+            />
+            <DownloadCSV
+              resource={resource}
+              filters={filters}
+              sortBy={sortBy}
+              sortOrder={sortOrder}
+            />
+          </Box>
+          <Box>
+            <QuickFind resource={resource} />
+          </Box>
         </Box>
       </StyledHeader>
       <StyledViewport>
