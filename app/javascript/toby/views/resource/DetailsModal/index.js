@@ -107,7 +107,7 @@ function Details({ id, resource }) {
     const { errors } = await update({
       variables: {
         id,
-        attributes,
+        attributes: valuesToSubmit,
       },
     });
 
