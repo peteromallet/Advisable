@@ -4,15 +4,24 @@ import { DirectUpload } from "@rails/activestorage";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
 import matchFileType from "src/utilities/matchFileType";
 import useLoadImage from "src/hooks/useLoadImage";
+import { gql, useLazyQuery } from "@apollo/client";
 
-const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
+const GET_TOKEN = gql`
+  query UploadToken($resource: String!, $attachment: String!) {
+    directUpload(resource: $resource, attachment: $attachment) {
+      url
+      name
+      token
+    }
+  }
+`;
 
-export default function useFileUpload({
-  onChange,
-  maxSizeInMB = 2,
-  accept,
-  src,
-}) {
+export default function useFileUpload(
+  resource,
+  attachment,
+  { onChange, maxSizeInMB = 2, accept, src },
+) {
+  const [getToken] = useLazyQuery(GET_TOKEN);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [processing, setProcessing] = useState(false);
@@ -28,8 +37,17 @@ export default function useFileUpload({
     },
   };
 
-  const upload = (file) => {
-    const u = new DirectUpload(file, DIRECT_UPLOAD_URL, progressHandler);
+  const fetchUploadKeys = async () => {
+    const response = await getToken({
+      variables: { resource, attachment },
+    });
+
+    return response.data.directUpload;
+  };
+
+  const upload = async (file) => {
+    const { url, name, token } = await fetchUploadKeys();
+    const u = new DirectUpload(file, url, token, name, progressHandler);
 
     u.create(async (error, blob) => {
       if (error) {

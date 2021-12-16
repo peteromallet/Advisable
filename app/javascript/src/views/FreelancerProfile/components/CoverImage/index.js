@@ -38,7 +38,7 @@ function CoverImage({ src, isOwner, ...props }) {
   };
 
   const { handleChange, progress, uploading, processing, updated, error } =
-    useFileUpload({
+    useFileUpload("Specialist", "cover_image", {
       src: image,
       onChange: submit,
       maxSizeInMB,

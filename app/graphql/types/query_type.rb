@@ -318,5 +318,30 @@ module Types
       requires_current_user!
       current_user.agreements.accepted
     end
+
+    field :direct_upload, Types::DirectUpload, null: true do
+      argument :attachment, String, required: true
+      argument :resource, String, required: true
+    end
+
+    def direct_upload(resource:, attachment:)
+      requires_current_user!
+
+      klass = resource.constantize
+      class_with_attachment = "#{klass.name.underscore}##{attachment}"
+      token = ActiveStorage::DirectUploadToken.generate_direct_upload_token(
+        class_with_attachment,
+        ActiveStorage::Blob.service.name,
+        context[:session]
+      )
+
+      {
+        url: "/rails/active_storage/direct_uploads",
+        name: class_with_attachment,
+        token: token
+      }
+    rescue NameError
+      nil
+    end
   end
 end

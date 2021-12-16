@@ -63,6 +63,7 @@ class ApplicationController < ActionController::Base
       session_manager: session_manager,
       current_user: current_user,
       current_account: current_account,
+      session: session,
       oauth_viewer: session[:omniauth] ? OauthViewer.new(session[:omniauth]) : nil
     }
   end

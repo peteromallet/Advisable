@@ -29,7 +29,7 @@ function ProfilePicture({ specialist, isOwner }) {
   };
 
   const { handleChange, progress, uploading, processing, updated } =
-    useFileUpload({
+    useFileUpload("Specialist", "avatar", {
       src: specialist.avatar,
       onChange: submit,
       maxSizeInMB: 1,
