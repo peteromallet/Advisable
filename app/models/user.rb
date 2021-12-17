@@ -44,6 +44,8 @@ class User < ApplicationRecord
 
   alias_attribute :application_status, :contact_status
 
+  before_save :update_timestamps, if: :will_save_change_to_application_status?
+
   def name_with_company
     [account.name, company&.name.presence].compact.join(" from ")
   end
@@ -93,6 +95,15 @@ class User < ApplicationRecord
     end
   end
   # rubocop:enable Rails/SkipsModelValidations
+
+  private
+
+  def update_timestamps
+    column = "#{application_status&.downcase&.gsub(/\s/, "_")}_at="
+    return unless respond_to?(column)
+
+    public_send(column, Time.current)
+  end
 end
 
 # == Schema Information

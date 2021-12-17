@@ -71,6 +71,8 @@ class Specialist < ApplicationRecord
   scope :not_rejected, -> { where.not(application_stage: REJECTED_STAGES) }
   scope :accepted, -> { where(application_stage: "Accepted") }
 
+  before_save :update_timestamps, if: :will_save_change_to_application_stage?
+
   def accepted?
     application_stage == "Accepted"
   end
@@ -120,6 +122,13 @@ class Specialist < ApplicationRecord
 
     errors.add(:username, "must be longer than 3 characters") if username.length < 3
     errors.add(:username, "must be alphanumeric") if /\W/.match?(username)
+  end
+
+  def update_timestamps
+    column = "#{application_stage&.downcase&.gsub(/\s/, "_")}_at="
+    return unless respond_to?(column)
+
+    public_send(column, Time.current)
   end
 end
 

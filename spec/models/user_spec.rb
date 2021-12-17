@@ -134,4 +134,28 @@ RSpec.describe(User, type: :model) do
       end
     end
   end
+
+  describe "timestamps" do
+    it "sets accepted_at to new factory record but leaves the others" do
+      expect(user.application_accepted_at).not_to be_nil
+      expect(user.submitted_at).to be_nil
+      expect(user.invited_to_interview_at).to be_nil
+    end
+
+    it "does not touch the timestamp if status didn't change" do
+      timestamp = user.application_accepted_at
+      user.update(application_status: "Submitted")
+      expect(user.reload.application_accepted_at).to eq(timestamp)
+      user.update(availability: "I'm a new availability")
+      expect(user.reload.application_accepted_at).to eq(timestamp)
+    end
+
+    it "handles all the timestamps" do
+      expect(user.reload.application_accepted_at).not_to be_nil
+      user.update(application_status: "Submitted")
+      expect(user.reload.submitted_at).not_to be_nil
+      user.update(application_status: "Invited To Interview")
+      expect(user.reload.invited_to_interview_at).not_to be_nil
+    end
+  end
 end
