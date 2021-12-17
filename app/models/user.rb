@@ -113,12 +113,14 @@ end
 #  exceptional_project_payment_terms :string
 #  fid                               :string
 #  gclid                             :string
+#  invited_to_interview_at           :datetime
 #  locality_importance               :integer
 #  number_of_freelancers             :string
 #  pid                               :string
 #  rejection_reason                  :string
 #  rid                               :string
 #  setup_intent_status               :string
+#  submitted_at                      :datetime
 #  talent_quality                    :string
 #  time_zone                         :string
 #  title                             :string

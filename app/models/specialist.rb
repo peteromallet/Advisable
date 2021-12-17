@@ -128,6 +128,7 @@ end
 # Table name: specialists
 #
 #  id                                :bigint           not null, primary key
+#  accepted_at                       :datetime
 #  application_interview_starts_at   :datetime
 #  application_stage                 :string
 #  application_status                :string
@@ -157,6 +158,8 @@ end
 #  ideal_project                     :string
 #  image                             :jsonb
 #  instagram                         :string
+#  interview_completed_at            :datetime
+#  invited_to_interview_at           :datetime
 #  linkedin                          :string
 #  medium                            :string
 #  member_of_week_email              :integer
@@ -172,6 +175,7 @@ end
 #  remote                            :boolean
 #  reviews_count                     :integer
 #  sourcing_fee                      :integer
+#  submitted_at                      :datetime
 #  travel_availability               :string
 #  trustpilot_review_status          :string
 #  twitter                           :string
