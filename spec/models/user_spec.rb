@@ -143,7 +143,7 @@ RSpec.describe(User, type: :model) do
     end
 
     it "does not touch the timestamp if status didn't change" do
-      timestamp = user.application_accepted_at
+      timestamp = user.application_accepted_at.round(6)
       user.update(application_status: "Submitted")
       expect(user.reload.application_accepted_at).to eq(timestamp)
       user.update(availability: "I'm a new availability")

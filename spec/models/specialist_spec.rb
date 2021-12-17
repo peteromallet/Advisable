@@ -122,7 +122,8 @@ RSpec.describe Specialist do
     end
 
     it "does not touch the timestamp if status didn't change" do
-      timestamp = specialist.accepted_at
+      timestamp = specialist.accepted_at.round(6)
+      puts timestamp.to_formatted_s(:db)
       specialist.update(application_stage: "Submitted")
       expect(specialist.reload.accepted_at).to eq(timestamp)
       specialist.update(bio: "I'm a new bio")
