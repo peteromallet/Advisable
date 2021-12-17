@@ -112,4 +112,32 @@ RSpec.describe Specialist do
       expect { create(:specialist, username: "abc") }.not_to raise_error
     end
   end
+
+  describe "timestamps" do
+    it "sets accepted_at to new factory record but leaves the others" do
+      expect(specialist.accepted_at).not_to be_nil
+      expect(specialist.submitted_at).to be_nil
+      expect(specialist.invited_to_interview_at).to be_nil
+      expect(specialist.interview_completed_at).to be_nil
+    end
+
+    it "does not touch the timestamp if status didn't change" do
+      timestamp = specialist.accepted_at.round(6)
+      puts timestamp.to_formatted_s(:db)
+      specialist.update(application_stage: "Submitted")
+      expect(specialist.reload.accepted_at).to eq(timestamp)
+      specialist.update(bio: "I'm a new bio")
+      expect(specialist.reload.accepted_at).to eq(timestamp)
+    end
+
+    it "handles all the timestamps" do
+      expect(specialist.reload.accepted_at).not_to be_nil
+      specialist.update(application_stage: "Submitted")
+      expect(specialist.reload.submitted_at).not_to be_nil
+      specialist.update(application_stage: "Invited To Interview")
+      expect(specialist.reload.invited_to_interview_at).not_to be_nil
+      specialist.update(application_stage: "Interview Completed")
+      expect(specialist.reload.interview_completed_at).not_to be_nil
+    end
+  end
 end
