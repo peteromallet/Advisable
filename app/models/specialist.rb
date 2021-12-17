@@ -71,6 +71,8 @@ class Specialist < ApplicationRecord
   scope :not_rejected, -> { where.not(application_stage: REJECTED_STAGES) }
   scope :accepted, -> { where(application_stage: "Accepted") }
 
+  before_save :update_timestamps, if: :will_save_change_to_application_stage?
+
   def accepted?
     application_stage == "Accepted"
   end
@@ -121,6 +123,13 @@ class Specialist < ApplicationRecord
     errors.add(:username, "must be longer than 3 characters") if username.length < 3
     errors.add(:username, "must be alphanumeric") if /\W/.match?(username)
   end
+
+  def update_timestamps
+    column = "#{application_stage&.downcase&.gsub(/\s/, "_")}_at="
+    return unless respond_to?(column)
+
+    public_send(column, Time.current)
+  end
 end
 
 # == Schema Information
@@ -128,6 +137,7 @@ end
 # Table name: specialists
 #
 #  id                                :bigint           not null, primary key
+#  accepted_at                       :datetime
 #  application_interview_starts_at   :datetime
 #  application_stage                 :string
 #  application_status                :string
@@ -157,6 +167,8 @@ end
 #  ideal_project                     :string
 #  image                             :jsonb
 #  instagram                         :string
+#  interview_completed_at            :datetime
+#  invited_to_interview_at           :datetime
 #  linkedin                          :string
 #  medium                            :string
 #  member_of_week_email              :integer
@@ -172,6 +184,7 @@ end
 #  remote                            :boolean
 #  reviews_count                     :integer
 #  sourcing_fee                      :integer
+#  submitted_at                      :datetime
 #  travel_availability               :string
 #  trustpilot_review_status          :string
 #  twitter                           :string
