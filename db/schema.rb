@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_08_080911) do
+ActiveRecord::Schema.define(version: 2021_12_17_094747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -965,6 +965,10 @@ ActiveRecord::Schema.define(version: 2021_12_08_080911) do
     t.string "instagram"
     t.string "medium"
     t.citext "username"
+    t.datetime "submitted_at"
+    t.datetime "invited_to_interview_at"
+    t.datetime "interview_completed_at"
+    t.datetime "accepted_at"
     t.index ["account_id"], name: "index_specialists_on_account_id", unique: true
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
@@ -1079,6 +1083,8 @@ ActiveRecord::Schema.define(version: 2021_12_08_080911) do
     t.uuid "company_id"
     t.datetime "application_interview_starts_at"
     t.string "trustpilot_review_status"
+    t.datetime "invited_to_interview_at"
+    t.datetime "submitted_at"
     t.index ["account_id"], name: "index_users_on_account_id", unique: true
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["company_id"], name: "index_users_on_company_id"
