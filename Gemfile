@@ -7,7 +7,7 @@ gem "rails", "~> 7.0.0"
 gem "pg", ">= 0.18", "< 2.0"
 gem "strong_migrations"
 gem "good_migrations"
-gem "pghero", github: "ankane/pghero" # fixes rails deprecation warnings
+gem "pghero"
 gem "logidze", ">= 1.0.0"
 gem "fx"
 gem "puma"
@@ -84,7 +84,7 @@ group :development do
   gem "rubocop-performance", require: false
   gem "rubocop-rspec", require: false
   gem "rubocop-graphql", require: false
-  gem "annotate", github: "miharekar/annotate_models", branch: "rails-7"
+  gem "annotate", github: "dabit/annotate_models", branch: "rails-7"
   gem "foreman"
   gem "guard"
   gem "guard-rspec", require: false
