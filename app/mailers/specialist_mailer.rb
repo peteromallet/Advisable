@@ -76,7 +76,7 @@ class SpecialistMailer < ApplicationMailer
     @interview = interview
     @user = interview.user
     @specialist = interview.specialist
-    @sales_person = default_sales_person_for(user.company)
+    @sales_person = default_sales_person_for(@user.company)
     mail(
       from: @sales_person.email_with_name,
       to: @specialist.account.email,
