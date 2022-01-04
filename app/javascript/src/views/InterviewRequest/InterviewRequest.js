@@ -38,6 +38,7 @@ export default function InterviewRequestView() {
       width="90%"
       maxWidth={600}
       padding={{ _: "l", md: "xl" }}
+      borderRadius="24px"
     >
       {[
         "Call Requested",

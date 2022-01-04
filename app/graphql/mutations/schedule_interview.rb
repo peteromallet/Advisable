@@ -3,7 +3,6 @@
 module Mutations
   class ScheduleInterview < Mutations::BaseMutation
     argument :id, ID, required: true
-    argument :phone_number, String, required: false
     argument :starts_at, String, required: true
 
     field :interview, Types::Interview, null: true
@@ -39,7 +38,6 @@ module Mutations
       interview.create_video_call! if interview.video_call.blank?
       interview.application.update(status: "Interview Scheduled")
       interview.application.project.update(status: "Interview Scheduled")
-      update_specialist_number(specialist, args[:phone_number]) if args[:phone_number]
       interview.create_system_message!
       GoogleCalendar.new.schedule_for_interview(interview)
 
@@ -49,15 +47,6 @@ module Mutations
       end
 
       {interview: interview}
-    end
-
-    private
-
-    def update_specialist_number(specialist, number)
-      return if specialist.phone == number
-
-      specialist.update(phone: number)
-      specialist.bg_sync_to_airtable
     end
   end
 end

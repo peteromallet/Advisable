@@ -38,10 +38,8 @@ test("specialist in Berlin can accept interview request based in new york", asyn
   const clientUser = mockData.user({
     availability: times.map((t) => t.toISO()),
   });
-  const application = mockData.application({ specialist });
 
   const interview = mockData.interview({
-    application,
     user: clientUser,
     status: "Call Requested",
     timeZone: "America/New_York",
@@ -61,7 +59,6 @@ test("specialist in Berlin can accept interview request based in new york", asyn
       {
         id: interview.id,
         startsAt: times[2].toUTC().toISO(),
-        phoneNumber: "0861234567",
       },
       {
         scheduleInterview: {
@@ -86,8 +83,6 @@ test("specialist in Berlin can accept interview request based in new york", asyn
   user.click(day);
   const timeOption = screen.getByText("1:00 PM - 1:30 PM");
   user.click(timeOption);
-  const number = screen.getByLabelText("Your contact number");
-  user.type(number, "0861234567");
   user.click(screen.getByLabelText(/confirm call/i));
   await screen.findByText(/has been scheduled/i);
   expect(screen.getByText("1:00 PM - 1:30 PM")).toBeInTheDocument();
@@ -98,10 +93,8 @@ test("Maintains selected time zone", async () => {
   const clientUser = mockData.user({
     availability: times.map((t) => t.toISO()),
   });
-  const application = mockData.application({ specialist });
 
   const interview = mockData.interview({
-    application,
     user: clientUser,
     status: "Call Requested",
     timeZone: "America/New_York",
@@ -121,7 +114,6 @@ test("Maintains selected time zone", async () => {
       {
         id: interview.id,
         startsAt: "2020-05-22T10:00:00.000Z",
-        phoneNumber: "0861234567",
       },
       {
         scheduleInterview: {
@@ -148,14 +140,10 @@ test("Maintains selected time zone", async () => {
   const berlinTime = "12:00 PM - 12:30 PM";
   const laTime = "3:00 AM - 3:30 AM";
   expect(screen.queryByText(berlinTime)).not.toBeNull();
-  const timeZoneInput = screen.getByPlaceholderText("Your Timezone");
+  const timeZoneInput = screen.getByTestId("timezone");
   fireEvent.change(timeZoneInput, { target: { value: "America/Los_Angeles" } });
-  fireEvent.keyDown(timeZoneInput, { key: "Return", keyCode: 13 });
   expect(screen.queryByText(berlinTime)).toBeNull();
   user.click(screen.getByText(laTime));
-
-  const number = screen.getByLabelText("Your contact number");
-  user.type(number, "0861234567");
   user.click(screen.getByLabelText(/confirm call/i));
 
   await screen.findByText(/has been scheduled/i);
@@ -165,10 +153,8 @@ test("Maintains selected time zone", async () => {
 test("Scheduled call defaults to viewers timezone", async () => {
   const clientUser = mockData.user();
   const specialist = mockData.specialist();
-  const application = mockData.application({ specialist });
 
   const interview = mockData.interview({
-    application,
     user: clientUser,
     timeZone: "America/New_York",
     status: "Call Scheduled",
@@ -198,23 +184,15 @@ test("Scheduled call defaults to viewers timezone", async () => {
 test("Can request more time", async () => {
   const specialist = mockData.specialist();
   const clientUser = mockData.user({ availability: [] });
-  const application = mockData.application({ specialist });
 
   const interview = mockData.interview({
-    application,
     user: clientUser,
     status: "Call Requested",
   });
 
   const graphQLMocks = [
     mockViewer(specialist),
-    mockQuery(
-      FETCH_INTERVIEW,
-      { id: interview.id },
-      {
-        interview,
-      },
-    ),
+    mockQuery(FETCH_INTERVIEW, { id: interview.id }, { interview }),
     mockMutation(
       REQUEST_MORE_TIMES,
       {
@@ -250,23 +228,15 @@ test("Can request more time", async () => {
 test("shows no time when there is no availability", async () => {
   const specialist = mockData.specialist();
   const clientUser = mockData.user({ availability: [] });
-  const application = mockData.application({ specialist });
 
   const interview = mockData.interview({
-    application,
     user: clientUser,
     status: "Call Requested",
   });
 
   const graphQLMocks = [
     mockViewer(specialist),
-    mockQuery(
-      FETCH_INTERVIEW,
-      { id: interview.id },
-      {
-        interview,
-      },
-    ),
+    mockQuery(FETCH_INTERVIEW, { id: interview.id }, { interview }),
   ];
 
   renderRoute({

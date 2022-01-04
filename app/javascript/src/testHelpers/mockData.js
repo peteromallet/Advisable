@@ -212,7 +212,6 @@ export const specialist = (fields = {}) => {
       needsToSetAPassword: false,
       resume: null,
       idealProject: null,
-      phoneNumber: null,
       createdAt: new Date().toISOString(),
       acceptedAt: new Date().toISOString(),
       city: "Dublin",

@@ -16,7 +16,6 @@ module Airtable
     sync_column_to_association "Last Name", association: :account, to: :last_name
 
     sync_column "VAT Number", to: :vat_number
-    sync_column "Phone Number", to: :phone
     sync_column "Can Travel", to: :travel_availability
     sync_column "City", to: :city
     sync_column "LinkedIn URL", to: :linkedin
@@ -125,7 +124,6 @@ module Airtable
       self["City"] = specialist.city
       self["Account Created"] = specialist.account.has_password? ? "Yes" : nil
       self["Country"] = [specialist.country.try(:airtable_id)].compact
-      self["Phone Number"] = specialist.phone
       self["Bank Holder Name"] = specialist.bank_holder_name
       self["Bank Currency"] = specialist.bank_currency
       self["VAT Number"] = specialist.vat_number
