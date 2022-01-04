@@ -2,7 +2,7 @@ import React from "react";
 import { DateTime } from "luxon";
 import reduce from "lodash/reduce";
 import sortBy from "lodash/sortBy";
-import { Text, Modal, useModal } from "@advisable/donut";
+import { Heading, Text, Modal, useModal } from "@advisable/donut";
 import { Day, RequestMore } from "./styles";
 import NoAvailability from "./NoAvailability";
 import RequestMoreAvailability from "./RequestMoreAvailability";
@@ -28,17 +28,10 @@ const SelectDay = ({ clientName, availability, timeZone }) => {
 
   return (
     <>
-      <Text
-        as="h1"
-        mb="xs"
-        fontSize="xxl"
-        color="blue900"
-        fontWeight="semibold"
-        letterSpacing="-0.02em"
-      >
+      <Heading as="h1" mb={2}>
         Call with {clientName}
-      </Text>
-      <Text lineHeight="s" color="neutral800" mb="l">
+      </Heading>
+      <Text fontSize="l" lineHeight="24px" color="neutral800" mb={8}>
         {clientName} has requested a call with you! Please select an available
         day below.
       </Text>

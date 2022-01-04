@@ -18,7 +18,6 @@ RSpec.describe Mutations::ScheduleInterview do
         scheduleInterview(input: {
           id: "#{interview.uid}",
           startsAt: "#{starts_at}",
-          phoneNumber: "0123456789"
         }) {
           interview {
             id
@@ -53,14 +52,6 @@ RSpec.describe Mutations::ScheduleInterview do
     end.to change {
       interview.reload.starts_at
     }.from(nil).to(user.availability.first)
-  end
-
-  it "sets the specialist phone number" do
-    expect do
-      request
-    end.to change {
-      specialist.reload.phone
-    }.from(nil).to("0123456789")
   end
 
   it "sets call_scheduled_at" do
