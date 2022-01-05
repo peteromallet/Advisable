@@ -3,6 +3,8 @@
 module Guild
   class Post < ApplicationRecord
     class BoostError < StandardError; end
+    self.ignored_columns += %i[post_prompt_id]
+
     self.store_full_sti_class = false
 
     POST_TYPES = %w[Post AdviceRequired CaseStudy Opportunity].freeze
@@ -10,7 +12,6 @@ module Guild
     POPULAR_THRESHOLD = 5
 
     belongs_to :specialist
-    belongs_to :post_prompt, optional: true, counter_cache: :guild_posts_count
     belongs_to :article, optional: true, class_name: "::CaseStudy::Article"
     has_one :account, through: :specialist
     has_many :images, class_name: "Guild::PostImage", foreign_key: "guild_post_id", inverse_of: "post", dependent: :destroy
@@ -77,7 +78,7 @@ module Guild
     def reset_labels
       return unless labels_resettable?
 
-      self.labels = Array(post_prompt ? post_prompt.label : nil)
+      self.labels = []
     end
 
     def reset_previous_pinned
@@ -112,7 +113,6 @@ end
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  article_id        :bigint
-#  post_prompt_id    :uuid
 #  specialist_id     :bigint
 #
 # Indexes

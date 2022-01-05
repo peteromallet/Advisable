@@ -37,7 +37,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       it "returns error" do
         post("/zapier_interactor/create_application", params: params)
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(JSON[response.body]["message"]).to eq("Couldn't find Specialist")
+        expect(JSON[response.body]["message"]).to eq("Couldn't find Specialist with [WHERE \"specialists\".\"uid\" IS NULL]")
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       it "returns error" do
         post("/zapier_interactor/create_application", params: params)
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(JSON[response.body]["message"]).to eq("Couldn't find Project")
+        expect(JSON[response.body]["message"]).to eq("Couldn't find Project with [WHERE \"projects\".\"uid\" IS NULL]")
       end
     end
 

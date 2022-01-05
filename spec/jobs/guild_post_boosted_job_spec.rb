@@ -19,26 +19,23 @@ RSpec.describe GuildPostBoostedJob do
 
   context "with boosted mailer" do
     it "only enqueues one mail if there are multiple subscriptions from the same specialist" do
-      expect do
-        enqueued_job
-      end.to have_enqueued_mail(Guild::PostBoostMailer, :new_post).once
+      enqueued_job
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("Guild::PostBoostMailer", "new_post", "deliver_now", any_args).once
     end
 
     it "enqueues multiple mails for separate specialists" do
       another_specialist.subscribe_to!(labels.first)
 
-      expect do
-        enqueued_job
-      end.to have_enqueued_mail(Guild::PostBoostMailer, :new_post).twice
+      enqueued_job
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("Guild::PostBoostMailer", "new_post", "deliver_now", any_args).twice
     end
 
     it "does not enqueue a mail for the author of the post" do
       labels.each { |gt| guild_post.specialist.subscribe_to!(gt) }
       expect(guild_post.specialist.subscriptions.count).to eq(labels.size)
 
-      expect do
-        enqueued_job
-      end.not_to have_enqueued_mail(Guild::PostBoostMailer, :new_post).with({post: guild_post, subscriber_id: guild_post.specialist.id})
+      enqueued_job
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("Guild::PostBoostMailer", "new_post", "deliver_now", args: [{post: guild_post, subscriber_id: guild_post.specialist.id}])
     end
   end
 

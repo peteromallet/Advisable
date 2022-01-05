@@ -16,6 +16,9 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
+  # Enable server timing
+  config.server_timing = true
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
@@ -82,6 +85,7 @@ Rails.application.configure do
   if ENV["SMTP_DELIVERY"].present?
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.smtp_timeout = 5
   else
     config.action_mailer.delivery_method = :letter_opener
   end
