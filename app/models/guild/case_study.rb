@@ -40,7 +40,6 @@ end
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  article_id        :bigint
-#  post_prompt_id    :uuid
 #  specialist_id     :bigint
 #
 # Indexes
