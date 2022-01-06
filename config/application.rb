@@ -23,7 +23,7 @@ module Advisable
     config.action_mailer.preview_path = Rails.root.join("test/mailers/previews")
     config.action_mailbox.ingress = :sendgrid
     config.assets.paths << Rails.root.join("app/assets/fonts")
-    config.active_storage.variant_processor = :mini_magick
+    config.active_storage.variant_processor = :vips
 
     config.skylight.probes += %w[redis graphql faraday]
 
