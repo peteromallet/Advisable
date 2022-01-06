@@ -37,6 +37,7 @@ fragment MessageFields on MessageInterface {
       status
       interview {
         id
+        status
       }
     }
     author {
