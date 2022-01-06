@@ -14,7 +14,17 @@ function ConsultationRequestMessageForSpecialist({ message }) {
   );
 
   const isPending = useMemo(() => {
-    return message.consultation?.status === "Request Completed";
+    const consultation = message.consultation;
+    const interview = consultation?.interview;
+
+    if (
+      consultation?.status === "Accepted By Specialist" &&
+      interview?.status === "Call Requested"
+    ) {
+      return true;
+    }
+
+    return consultation?.status === "Request Completed";
   }, [message]);
 
   useEffect(() => {
