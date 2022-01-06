@@ -178,7 +178,7 @@ module Airtable
         if airtable_image_filename != specialist.account.avatar.filename.to_s
           self["Image"] = [
             {
-              url: specialist.account.avatar.service_url,
+              url: specialist.account.avatar.url,
               filename: specialist.account.avatar.filename.to_s
             }
           ]
@@ -191,7 +191,7 @@ module Airtable
         if airtable_filename != specialist.resume.filename.to_s
           self["Resume"] = [
             {
-              url: specialist.resume.service_url,
+              url: specialist.resume.url,
               filename: specialist.resume.filename.to_s
             }
           ]
