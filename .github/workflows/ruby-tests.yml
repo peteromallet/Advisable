@@ -63,8 +63,8 @@ jobs:
         with:
           node-version: "12"
 
-      - name: Install postgres headers
-        run: sudo apt-get install libpq-dev
+      - name: Install postgres and libvips
+        run: sudo apt-get install libpq-dev libvips
 
       # Setup Yarn
       - name: Setup Yarn
