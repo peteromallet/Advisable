@@ -27,9 +27,9 @@ RSpec.describe "Freelancer profile", type: :system do
 
   it "allows user to click into a case study" do
     specialist = create(:specialist, bio: "testing")
-    article = create(:case_study_article, specialist: specialist, title: "A test case study")
-    section = create(:case_study_section, article: article, type: "background")
-    create(:case_study_content, section: section, type: "CaseStudy::ParagraphContent", content: {text: "This is the content"})
+    article = create(:case_study_article, specialist:, title: "A test case study")
+    section = create(:case_study_section, article:, type: "background")
+    create(:case_study_content, section:, type: "CaseStudy::ParagraphContent", content: {text: "This is the content"})
     visit("/profile/#{specialist.uid}")
     click_link("A test case study")
     expect(page).to have_content("This is the content")
@@ -37,9 +37,9 @@ RSpec.describe "Freelancer profile", type: :system do
 
   it "allows owner to edit case study" do
     specialist = create(:specialist, bio: "testing")
-    article = create(:case_study_article, specialist: specialist, title: "A test case study", editor_url: "https://advisable.com")
-    section = create(:case_study_section, article: article, type: "background")
-    create(:case_study_content, section: section, type: "CaseStudy::ParagraphContent", content: {text: "This is the content"})
+    article = create(:case_study_article, specialist:, title: "A test case study", editor_url: "https://advisable.com")
+    section = create(:case_study_section, article:, type: "background")
+    create(:case_study_content, section:, type: "CaseStudy::ParagraphContent", content: {text: "This is the content"})
     authenticate_as(specialist)
     visit("/freelancers/#{specialist.uid}")
     expect(page).to have_content("A test case study")

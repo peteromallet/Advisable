@@ -7,7 +7,7 @@ module Guild
       return article.guild_post if article.guild_post
 
       labels = Label.joins(skill: [:case_study_skills]).merge(article.skills)
-      create!(status: "published", specialist: article.specialist, labels: labels, article: article)
+      create!(status: "published", specialist: article.specialist, labels:, article:)
     end
 
     def title

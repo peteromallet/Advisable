@@ -58,7 +58,7 @@ module Airtable
           airtable_sp = Airtable::SalesPerson.find(sales_person_airtable_id)
           sales_person = airtable_sp.sync
         end
-        project.user&.company&.update(sales_person: sales_person)
+        project.user&.company&.update(sales_person:)
       end
 
       required_skills = fields["Skills Required"] || []
@@ -73,7 +73,7 @@ module Airtable
         if project_skill.present?
           project_skill.update(primary: is_primary)
         else
-          project.project_skills.new(skill: skill, primary: is_primary)
+          project.project_skills.new(skill:, primary: is_primary)
         end
       end
 

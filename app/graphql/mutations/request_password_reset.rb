@@ -7,7 +7,7 @@ module Mutations
     field :sent, Boolean, null: true
 
     def resolve(email:)
-      account = Account.find_by(email: email)
+      account = Account.find_by(email:)
 
       if account.blank?
         ApiError.invalid_request("ACCOUNT_NOT_FOUND")

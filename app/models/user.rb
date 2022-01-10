@@ -70,11 +70,11 @@ class User < ApplicationRecord
 
   def send_confirmation_email
     token = account.create_confirmation_token
-    UserMailer.confirm(uid: uid, token: token).deliver_later
+    UserMailer.confirm(uid:, token:).deliver_later
   end
 
   def invite_comember!(account, responsible: nil)
-    user = User.new(account: account, company_id: company_id, application_status: "Application Accepted")
+    user = User.new(account:, company_id:, application_status: "Application Accepted")
     responsible = account_id if responsible.nil?
     Logidze.with_responsible(responsible) do
       user.save!

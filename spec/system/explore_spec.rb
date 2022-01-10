@@ -4,14 +4,14 @@ require "rails_helper"
 
 RSpec.describe "Discover", type: :system do
   let(:account) { create(:account, permissions: ["team_manager"]) }
-  let(:user) { create(:user, account: account) }
+  let(:user) { create(:user, account:) }
   let(:article1) { create(:case_study_article, title: "Article One", score: 100) }
   let(:article2) { create(:case_study_article, title: "Article Two", score: 90) }
   let(:article3) { create(:case_study_article, title: "Article Three", score: 90) }
   let!(:search) do
     create(:case_study_search, {
       name: "Test list",
-      user: user,
+      user:,
       results: [article1.id, article2.id]
     })
   end
@@ -33,7 +33,7 @@ RSpec.describe "Discover", type: :system do
 
   describe "/explore" do
     it "lists the users shortlists and they can click into one" do
-      search = create(:case_study_search, name: "Test shortlist", user: user)
+      search = create(:case_study_search, name: "Test shortlist", user:)
       authenticate_as(user)
       visit("/explore")
       expect(page).to have_content("Test shortlist")
@@ -100,7 +100,7 @@ RSpec.describe "Discover", type: :system do
     brand_strategy.skill_categories << branding
 
     [article1, article2, article3].each do |article|
-      create(:case_study_skill, article: article, skill: [brand_marketing, brand_strategy].sample)
+      create(:case_study_skill, article:, skill: [brand_marketing, brand_strategy].sample)
     end
 
     authenticate_as(user)
@@ -130,7 +130,7 @@ RSpec.describe "Discover", type: :system do
 
   it "user can delete a search" do
     search = create(:case_study_search, {
-      user: user,
+      user:,
       name: "Test search",
       finalized_at: Time.zone.now,
       results: []

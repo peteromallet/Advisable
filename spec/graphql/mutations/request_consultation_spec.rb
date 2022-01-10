@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::RequestConsultation do
   let(:specialist) { create(:specialist) }
   let(:current_user) { create(:user) }
-  let(:context) { {current_user: current_user} }
+  let(:context) { {current_user:} }
 
   let(:query) do
     <<-GRAPHQL
@@ -23,19 +23,19 @@ RSpec.describe Mutations::RequestConsultation do
   end
 
   it "creates a new consultation" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change(Consultation, :count).by(1)
+    expect { AdvisableSchema.execute(query, context:) }.to change(Consultation, :count).by(1)
   end
 
   context "when there's a case study article" do
-    let(:article) { create(:case_study_article, specialist: specialist) }
+    let(:article) { create(:case_study_article, specialist:) }
 
     it "uses primary skill of an article if there is one" do
-      ::CaseStudy::Skill.create!(article: article, primary: false, skill: create(:skill, name: "Third"))
-      ::CaseStudy::Skill.create!(article: article, primary: true, skill: create(:skill, name: "Primary"))
+      ::CaseStudy::Skill.create!(article:, primary: false, skill: create(:skill, name: "Third"))
+      ::CaseStudy::Skill.create!(article:, primary: true, skill: create(:skill, name: "Primary"))
 
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       uid = response["data"]["requestConsultation"]["consultation"]["id"]
-      consultation = Consultation.find_by!(uid: uid)
+      consultation = Consultation.find_by!(uid:)
       expect(consultation.skill.name).to eq("Primary")
     end
   end
@@ -44,7 +44,7 @@ RSpec.describe Mutations::RequestConsultation do
     let(:current_user) { create(:specialist) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end
@@ -54,7 +54,7 @@ RSpec.describe Mutations::RequestConsultation do
     let(:current_user) { nil }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
 
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")

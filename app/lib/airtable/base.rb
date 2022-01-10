@@ -38,9 +38,9 @@ module Airtable
         view: nil,
         started_at: nil
       )
-        records = all(filter: filter, view: view)
+        records = all(filter:, view:)
         records.each do |r|
-          r.sync(report, started_at: started_at)
+          r.sync(report, started_at:)
         rescue StandardError => e
           raise $ERROR_INFO, "#{e.message} (#{r.class} with id #{r.id})", $ERROR_INFO.backtrace
         end
@@ -136,7 +136,7 @@ module Airtable
 
         unless error
           self.class.associations.each do |column, options|
-            sync_association(column: column, record: model, attribute: options[:to])
+            sync_association(column:, record: model, attribute: options[:to])
           end
 
           instance_exec(model, &self.class.sync_block) if self.class.sync_block

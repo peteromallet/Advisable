@@ -31,7 +31,7 @@ module Mutations
           search.refresh_results!
         end
 
-        {search: search}
+        {search:}
       end
     end
   end

@@ -29,7 +29,7 @@ module Mutations
       end
       application.project.update_sourcing
 
-      {interview: interview, application: application}
+      {interview:, application:}
     end
 
     private

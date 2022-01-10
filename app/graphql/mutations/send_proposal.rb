@@ -26,7 +26,7 @@ module Mutations
       application.project.update(status: "Proposal Received")
       application.project.sync_to_airtable
 
-      {application: application}
+      {application:}
     end
   end
 end

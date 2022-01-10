@@ -16,7 +16,7 @@ module Toby
       end
 
       def views(resource:)
-        ::TobyView.where(resource: resource)
+        ::TobyView.where(resource:)
       end
 
       Resources.resource_classes.each do |resource|

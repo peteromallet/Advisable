@@ -18,7 +18,7 @@ class Payment < ApplicationRecord
   validates :status, inclusion: {in: VALID_STATUSES}, allow_nil: true
   validates :payment_method, inclusion: {in: VALID_PAYMENT_METHODS}, allow_nil: true
 
-  scope :with_status, ->(status) { where(status: status) }
+  scope :with_status, ->(status) { where(status:) }
 
   def retries
     super.presence || 0
@@ -118,7 +118,7 @@ class Payment < ApplicationRecord
       metadata: {
         payment_type: "payment",
         payment: uid,
-        admin_fee: admin_fee
+        admin_fee:
       }
     }
   end

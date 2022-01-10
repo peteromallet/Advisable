@@ -25,7 +25,7 @@ RSpec.describe Mutations::AssignTask do
   before { allow(Stripe::PaymentIntent).to receive(:create).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded")) }
 
   it "sets the stage to 'Assigned'" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     stage = response["data"]["assignTask"]["task"]["stage"]
     expect(stage).to eq("Assigned")
   end
@@ -34,7 +34,7 @@ RSpec.describe Mutations::AssignTask do
     let(:task) { create(:task, stage: "Not Assigned", name: nil) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["message"]
       expect(error).to eq("tasks.nameRequired")
     end
@@ -44,7 +44,7 @@ RSpec.describe Mutations::AssignTask do
     let(:task) { create(:task, stage: "Not Assigned", description: nil) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["message"]
       expect(error).to eq("tasks.descriptionRequired")
     end
@@ -54,7 +54,7 @@ RSpec.describe Mutations::AssignTask do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -64,7 +64,7 @@ RSpec.describe Mutations::AssignTask do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -74,7 +74,7 @@ RSpec.describe Mutations::AssignTask do
     let(:context) { {current_user: task.application.specialist} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -84,7 +84,7 @@ RSpec.describe Mutations::AssignTask do
     let(:task) { create(:task, stage: "Assigned") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["message"]
       expect(error).to eq("tasks.alreadyAssigned")
     end
@@ -94,7 +94,7 @@ RSpec.describe Mutations::AssignTask do
     let(:task) { create(:task, stage: "Working") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["message"]
       expect(error).to eq("tasks.alreadyAssigned")
     end
@@ -104,7 +104,7 @@ RSpec.describe Mutations::AssignTask do
     let(:task) { create(:task, stage: "Submitted") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["message"]
       expect(error).to eq("tasks.alreadyAssigned")
     end

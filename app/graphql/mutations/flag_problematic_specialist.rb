@@ -18,7 +18,7 @@ module Mutations
 
     def resolve(application_id:, message:)
       application = Application.find_by!(uid: application_id)
-      flag = ProblematicFlag.create!(application: application, message: message, user: current_user)
+      flag = ProblematicFlag.create!(application:, message:, user: current_user)
       StaffMailer.problematic_specialist(flag).deliver_later
       {success: true}
     end

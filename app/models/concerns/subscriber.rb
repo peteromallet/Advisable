@@ -9,18 +9,18 @@ module Subscriber
   end
 
   def subscribed_to?(label)
-    subscriptions.exists?(label: label)
+    subscriptions.exists?(label:)
   end
 
   def subscribe_to!(label)
     return if subscribed_to?(label)
 
-    subscriptions.create!(label: label)
+    subscriptions.create!(label:)
   end
 
   def unsubscribe_from!(label)
     return unless subscribed_to?(label)
 
-    subscriptions.find_by(label: label).destroy!
+    subscriptions.find_by(label:).destroy!
   end
 end

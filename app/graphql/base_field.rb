@@ -39,7 +39,7 @@ class BaseField < GraphQL::Schema::Field
       level: "debug",
       extra: {
         query: context&.query&.query_string,
-        deprecation_reason: deprecation_reason
+        deprecation_reason:
       }
     )
   end

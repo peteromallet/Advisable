@@ -38,8 +38,8 @@ RSpec.describe Payment, type: :model do
 
   describe "#charge!" do
     let(:project) { create(:project) }
-    let(:task) { create(:task, application: create(:application, project: project)) }
-    let(:payment) { create(:payment, amount: 1000, task: task) }
+    let(:task) { create(:task, application: create(:application, project:)) }
+    let(:payment) { create(:payment, amount: 1000, task:) }
 
     context "when deposit is bigger than amount" do
       let(:project) { create(:project, deposit: 2000) }
@@ -53,7 +53,7 @@ RSpec.describe Payment, type: :model do
       end
 
       context "when deposit is not nil/0" do
-        let(:payment) { create(:payment, amount: 1000, task: task, deposit: 100) }
+        let(:payment) { create(:payment, amount: 1000, task:, deposit: 100) }
 
         it "doesn't do any deposit logic, sets payment method to stripe and charges stripe" do
           allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee - 100), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))

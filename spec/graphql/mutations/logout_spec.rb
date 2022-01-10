@@ -17,8 +17,8 @@ RSpec.describe Mutations::Logout do
 
   let(:request) do
     AdvisableSchema.execute(query, context: {
-      current_user: current_user,
-      session_manager: session_manager
+      current_user:,
+      session_manager:
     })
   end
 

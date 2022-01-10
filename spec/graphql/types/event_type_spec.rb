@@ -7,7 +7,7 @@ RSpec.describe Types::EventType do
 
   context "with a single event" do
     subject(:event_query) do
-      resp = AdvisableSchema.execute(query, context: {current_user: current_user})
+      resp = AdvisableSchema.execute(query, context: {current_user:})
       resp["data"]["event"]
     end
 
@@ -47,7 +47,7 @@ RSpec.describe Types::EventType do
 
   context "with events" do
     subject(:events_query) do
-      resp = AdvisableSchema.execute(query, context: {current_user: current_user})
+      resp = AdvisableSchema.execute(query, context: {current_user:})
       resp["data"]["events"]["nodes"]
     end
 

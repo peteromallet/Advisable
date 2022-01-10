@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::PostCollaborationRequest do
   let(:specialist) { create(:specialist) }
   let(:current_user) { specialist }
-  let(:context) { {current_user: current_user} }
+  let(:context) { {current_user:} }
   let(:labels) { create_list(:label, 3) }
 
   let(:query) do
@@ -27,7 +27,7 @@ RSpec.describe Mutations::PostCollaborationRequest do
 
   context "with an accpted specialist" do
     it "creates a new collaboration request" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       id = response.dig("data", "postCollaborationRequest", "post", "id")
       post = Guild::Post.find(id)
       expect(post.attributes).to include({
@@ -43,7 +43,7 @@ RSpec.describe Mutations::PostCollaborationRequest do
     let(:current_user) { nil }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end
@@ -53,7 +53,7 @@ RSpec.describe Mutations::PostCollaborationRequest do
     let(:current_user) { create(:user) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_SPECIALIST")
     end
@@ -63,7 +63,7 @@ RSpec.describe Mutations::PostCollaborationRequest do
     let(:current_user) { create(:specialist, application_stage: "Rejected By Us") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_ACCEPTED_SPECIALIST")
     end

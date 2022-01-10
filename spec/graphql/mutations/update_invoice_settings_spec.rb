@@ -15,7 +15,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
   end
 
   let(:account) { create(:account, permissions: ["team_manager"]) }
-  let(:user) { create(:user, company: company, account: account) }
+  let(:user) { create(:user, company:, account:) }
   let(:current_user) { user }
   let(:query) do
     <<-GRAPHQL
@@ -42,7 +42,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
     GRAPHQL
   end
 
-  let(:context) { {current_user: current_user} }
+  let(:context) { {current_user:} }
 
   before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
@@ -56,25 +56,25 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
 
   it "Sets the invoice_name" do
     expect do
-      AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context:)
     end.to change(company, :invoice_name).from(nil).to("contact name")
   end
 
   it "Sets the invoice_company_name" do
     expect do
-      AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context:)
     end.to change(company, :invoice_company_name).from(nil).to("company name")
   end
 
   it "Sets the billing_email" do
     expect do
-      AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context:)
     end.to change(company, :billing_email).from(nil).to("billing@test.com")
   end
 
   it "Sets the vat_number" do
     expect do
-      AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context:)
     end.to change(company, :vat_number).from(nil).to("12345")
   end
 
@@ -85,7 +85,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
     expect(company.address.state).to be_nil
     expect(company.address.country).to be_nil
     expect(company.address.postcode).to be_nil
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
     expect(company.address.line1).to eq("line1")
     expect(company.address.line2).to eq("line2")
     expect(company.address.city).to eq("city")
@@ -95,12 +95,12 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
   end
 
   it "calls update_payments_setup on company" do
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
     expect(company).to have_received(:update_payments_setup)
   end
 
   it "sets the vat number inside of stripe" do
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
 
     expect(Stripe::Customer).to have_received(:create_tax_id).with(
       "cus_123",
@@ -113,7 +113,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
     let(:account) { create(:account, permissions: []) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_TEAM_MANAGER")
     end
@@ -123,7 +123,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
     let(:current_user) { nil }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end
@@ -136,7 +136,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
     end
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("INVALID_VAT")
     end

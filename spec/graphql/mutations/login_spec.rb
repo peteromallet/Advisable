@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::Login do
   let(:account) { create(:account, password: "testing123") }
-  let(:user) { create(:user, account: account) }
+  let(:user) { create(:user, account:) }
   let(:email) { user.account.email }
   let(:password) { "testing123" }
   let(:session_manager) do
@@ -32,7 +33,7 @@ RSpec.describe Mutations::Login do
     GRAPHQL
   end
 
-  before :each do
+  before do
     allow(session_manager).to receive(:login)
   end
 
@@ -41,7 +42,7 @@ RSpec.describe Mutations::Login do
       query,
       context: {
         current_user: nil,
-        session_manager: session_manager,
+        session_manager:
       }
     )
   end
@@ -71,7 +72,7 @@ RSpec.describe Mutations::Login do
     end
 
     it "doesnt login the user" do
-      expect(session_manager).to_not receive(:login)
+      expect(session_manager).not_to(receive(:login))
       response
     end
   end
@@ -85,7 +86,7 @@ RSpec.describe Mutations::Login do
     end
 
     it "doesnt login the user" do
-      expect(session_manager).to_not receive(:login)
+      expect(session_manager).not_to(receive(:login))
       response
     end
   end

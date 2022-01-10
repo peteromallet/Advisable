@@ -9,7 +9,7 @@ RSpec.describe GuildAddFollowablesJob do
 
   let(:skill) { create(:skill, name: "Marketing") }
   let(:specialist) { create(:specialist, skills: [skill]) }
-  let!(:label) { create(:label, skill: skill, name: skill.name) }
+  let!(:label) { create(:label, skill:, name: skill.name) }
 
   it "creates label followables for the specialist" do
     expect do

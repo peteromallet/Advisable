@@ -54,18 +54,18 @@ RSpec.describe Task do
 
     context "when previous payout exists" do
       it "does nothing" do
-        create(:payout, task: task, amount: task.final_cost)
+        create(:payout, task:, amount: task.final_cost)
         count = Payout.count
         task.financialize!
         expect(Payout.count).to eq(count)
-        expect(Payout.find_by(task: task).attributes).to include("amount" => 5000, "sourcing_fee" => 400, "status" => "pending", "task_id" => task.id)
+        expect(Payout.find_by(task:).attributes).to include("amount" => 5000, "sourcing_fee" => 400, "status" => "pending", "task_id" => task.id)
       end
     end
 
     context "when previous payments exist" do
       context "when less" do
         it "creates a payment with a diff" do
-          create(:payment, task: task, amount: task.final_cost - 1000)
+          create(:payment, task:, amount: task.final_cost - 1000)
           count = Payment.count
           task.financialize!
           expect(Payment.count).to eq(count + 1)
@@ -75,7 +75,7 @@ RSpec.describe Task do
 
       context "when equal" do
         it "does not create a payment" do
-          create(:payment, task: task, amount: task.final_cost)
+          create(:payment, task:, amount: task.final_cost)
           count = Payment.count
           task.financialize!
           expect(Payment.count).to eq(count)

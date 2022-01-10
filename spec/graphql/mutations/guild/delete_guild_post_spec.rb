@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::Guild::DeleteGuildPost do
   let(:specialist) { create(:specialist) }
-  let!(:guild_post) { create(:guild_post, specialist: specialist) }
+  let!(:guild_post) { create(:guild_post, specialist:) }
 
   let(:query) do
     <<-GRAPHQL

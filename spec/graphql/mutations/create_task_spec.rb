@@ -5,12 +5,12 @@ require "rails_helper"
 RSpec.describe Mutations::CreateTask do
   let(:user) { create(:user) }
   let(:specialist) { create(:specialist) }
-  let(:project) { create(:project, user: user) }
+  let(:project) { create(:project, user:) }
   let(:application) do
-    create(:application, specialist: specialist, project: project)
+    create(:application, specialist:, project:)
   end
   let(:context) { {current_user: user} }
-  let(:response) { AdvisableSchema.execute(query, context: context) }
+  let(:response) { AdvisableSchema.execute(query, context:) }
 
   let(:query) do
     <<-GRAPHQL

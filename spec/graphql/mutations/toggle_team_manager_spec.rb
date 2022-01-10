@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::ToggleTeamManager do
@@ -22,7 +23,7 @@ RSpec.describe Mutations::ToggleTeamManager do
   end
 
   it "turns on team manager permission" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     target_user_response = response["data"]["toggleTeamManager"]["user"]
     target_user = User.find_by(uid: target_user_response["id"])
 
@@ -34,7 +35,7 @@ RSpec.describe Mutations::ToggleTeamManager do
     let(:target_user) { create(:user, :team_manager) }
 
     it "turns off team manager permission" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       target_user_response = response["data"]["toggleTeamManager"]["user"]
       target_user = User.find_by(uid: target_user_response["id"])
 
@@ -47,7 +48,7 @@ RSpec.describe Mutations::ToggleTeamManager do
     let(:user) { create(:user) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("MUST_BE_TEAM_MANAGER")
     end

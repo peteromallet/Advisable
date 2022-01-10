@@ -26,9 +26,9 @@ RSpec.describe Mutations::CaseStudy::ShareArticle do
   end
 
   it "shares the article" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     uid = response["data"]["shareCaseStudyArticle"]["sharedArticle"]["id"]
-    share = ::CaseStudy::SharedArticle.find_by!(uid: uid)
+    share = ::CaseStudy::SharedArticle.find_by!(uid:)
     expect(share.article).to eq(article)
     expect(share.shared_with).to eq(share_with)
     expect(share.shared_by).to eq(user)
@@ -39,9 +39,9 @@ RSpec.describe Mutations::CaseStudy::ShareArticle do
     let(:extra) { "message: \"This is amazing!\"" }
 
     it "shares the article with the message" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       uid = response["data"]["shareCaseStudyArticle"]["sharedArticle"]["id"]
-      share = ::CaseStudy::SharedArticle.find_by!(uid: uid)
+      share = ::CaseStudy::SharedArticle.find_by!(uid:)
       expect(share.article).to eq(article)
       expect(share.shared_with).to eq(share_with)
       expect(share.shared_by).to eq(user)
@@ -53,7 +53,7 @@ RSpec.describe Mutations::CaseStudy::ShareArticle do
     let(:user) { create(:specialist) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end
@@ -63,7 +63,7 @@ RSpec.describe Mutations::CaseStudy::ShareArticle do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end

@@ -15,7 +15,7 @@ module Mutations
       label = ::Label.find_by!(slug: label_slug)
       current_user.unsubscribe_from!(label)
 
-      {label: label}
+      {label:}
     end
   end
 end

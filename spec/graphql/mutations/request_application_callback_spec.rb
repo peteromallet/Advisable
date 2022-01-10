@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::RequestApplicationCallback do
   let(:application_status) { "Application Accepted" }
-  let(:user) { create(:user, application_status: application_status) }
+  let(:user) { create(:user, application_status:) }
 
   let(:query) do
     <<-GRAPHQL
@@ -22,7 +23,7 @@ RSpec.describe Mutations::RequestApplicationCallback do
 
   let(:response) { AdvisableSchema.execute(query) }
 
-  before :each do
+  before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     allow_any_instance_of(ClientCall).to receive(:sync_to_airtable)
   end

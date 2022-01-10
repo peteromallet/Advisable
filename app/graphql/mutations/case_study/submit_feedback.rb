@@ -21,12 +21,12 @@ module Mutations
         skill = args[:skill] ? ::CaseStudy::Skill.find_by!(uid: args[:skill]) : nil
 
         ::CaseStudy::ArticleFeedback.create!(
-          article: article,
-          skill: skill,
-          feedback: feedback
+          article:,
+          skill:,
+          feedback:
         )
 
-        {article: article}
+        {article:}
       end
     end
   end

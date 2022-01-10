@@ -7,15 +7,15 @@ FactoryBot.define do
     published_at { Time.zone.now }
 
     trait :with_skill do
-      skill { association :skill, name: name }
+      skill { association :skill, name: }
     end
 
     trait :with_country do
-      country { association :country, name: name }
+      country { association :country, name: }
     end
 
     trait :with_industry do
-      industry { association :industry, name: name }
+      industry { association :industry, name: }
     end
   end
 end

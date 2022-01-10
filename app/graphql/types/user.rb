@@ -106,7 +106,7 @@ module Types
 
     def interviews(status: nil)
       interviews = object.interviews
-      interviews = interviews.where(status: status) if status
+      interviews = interviews.where(status:) if status
       interviews
     end
 
@@ -193,7 +193,7 @@ module Types
 
     def applications(status: nil)
       records = company.applications
-      records = records.where(status: status) if status
+      records = records.where(status:) if status
       records
     end
 

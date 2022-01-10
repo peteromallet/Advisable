@@ -52,17 +52,17 @@ class ApplicationController < ActionController::Base
   def prefetch_query(path, variables: {})
     @prefetched_queries ||= []
     query = GraphqlFileParser.import(path)
-    result = AdvisableSchema.execute(query, context: graphql_context, variables: variables)
-    @prefetched_queries << {query: query, result: result, variables: variables}
+    result = AdvisableSchema.execute(query, context: graphql_context, variables:)
+    @prefetched_queries << {query:, result:, variables:}
   end
 
   def graphql_context
     {
-      request: request,
-      client_ip: client_ip,
-      session_manager: session_manager,
-      current_user: current_user,
-      current_account: current_account,
+      request:,
+      client_ip:,
+      session_manager:,
+      current_user:,
+      current_account:,
       oauth_viewer: session[:omniauth] ? OauthViewer.new(session[:omniauth]) : nil
     }
   end

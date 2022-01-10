@@ -24,13 +24,13 @@ module Mutations
         metadata[:calendly_url] = args[:calendly_url] if args.key?(:calendly_url)
         message = conversation.new_message!(current_account, args[:content], [], {
           guild_post: post,
-          metadata: metadata
+          metadata:
         })
 
         create_post_engagement!(post)
         update_calendly_url(args[:calendly_url])
 
-        {message: message}
+        {message:}
       end
 
       private

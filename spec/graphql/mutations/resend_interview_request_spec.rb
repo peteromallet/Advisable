@@ -5,8 +5,8 @@ require "rails_helper"
 RSpec.describe Mutations::ResendInterviewRequest do
   let(:user) { create(:user, availability: []) }
   let(:current_user) { user }
-  let(:context) { {current_user: current_user} }
-  let(:interview) { create(:interview, status: "Need More Time Options", time_zone: "Perth", user: user) }
+  let(:context) { {current_user:} }
+  let(:interview) { create(:interview, status: "Need More Time Options", time_zone: "Perth", user:) }
 
   let(:query) do
     <<-GRAPHQL
@@ -27,21 +27,21 @@ RSpec.describe Mutations::ResendInterviewRequest do
   end
 
   it "sets the status to 'More Time Options Added'" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     status = response["data"]["resendInterviewRequest"]["interview"]["status"]
     expect(status).to eq("More Time Options Added")
     expect(interview.reload.more_time_options_added_at).to be_within(1.second).of(Time.zone.now)
   end
 
   it "sends the email to the specialist" do
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "more_time_options_added", "deliver_now", {args: [interview]})
   end
 
   context "when an error is thrown" do
     it "includes it in the response" do
       allow_any_instance_of(Interview).to receive(:save).and_return(false)
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       message = response["errors"].first["message"]
       expect(message).to eq("FAILED_TO_RESEND")
     end
@@ -51,7 +51,7 @@ RSpec.describe Mutations::ResendInterviewRequest do
     let(:current_user) { interview.specialist }
 
     it "sets the status to 'More Time Options Added'" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       status = response["data"]["resendInterviewRequest"]["interview"]["status"]
       expect(status).to eq("More Time Options Added")
       expect(interview.reload.more_time_options_added_at).to be_within(1.second).of(Time.zone.now)
@@ -62,7 +62,7 @@ RSpec.describe Mutations::ResendInterviewRequest do
     let(:current_user) { create(:specialist) }
 
     it "raises an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["type"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -72,7 +72,7 @@ RSpec.describe Mutations::ResendInterviewRequest do
     let(:current_user) { create(:user) }
 
     it "raises an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["type"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -82,7 +82,7 @@ RSpec.describe Mutations::ResendInterviewRequest do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHENTICATED")
     end
   end

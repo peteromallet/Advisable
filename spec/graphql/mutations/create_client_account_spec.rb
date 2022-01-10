@@ -36,7 +36,7 @@ RSpec.describe(Mutations::CreateClientAccount) do
   def request
     AdvisableSchema.execute(
       query,
-      context: {session_manager: session_manager}
+      context: {session_manager:}
     )
   end
 
@@ -55,7 +55,7 @@ RSpec.describe(Mutations::CreateClientAccount) do
     expect(User.count).to eq(count + 1)
     user = User.last
     token = user.account.confirmation_token
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "confirm", "deliver_now", {args: [{uid: user.uid, token: token}]})
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "confirm", "deliver_now", {args: [{uid: user.uid, token:}]})
   end
 
   it "creates a new company" do
@@ -69,7 +69,7 @@ RSpec.describe(Mutations::CreateClientAccount) do
 
   context "when the email is already taken" do
     it "returns an error" do
-      create(:account, email: email)
+      create(:account, email:)
       error = request["errors"][0]["extensions"]["code"]
       expect(error).to eq("EMAIL_TAKEN")
     end

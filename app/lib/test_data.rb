@@ -18,7 +18,7 @@ class TestData
     end
 
     specialist =
-      Specialist.find_or_create_by(account: account) do |s|
+      Specialist.find_or_create_by(account:) do |s|
         s.bio = attrs.fetch(:bio)
         s.application_stage = "Accepted"
         s.country = Country.find_or_create_by(name: "United States")
@@ -67,7 +67,7 @@ class TestData
 
   def self.create_accepted_application(project, specialist)
     application = create_application(
-      project: project, specialist: specialist, status: "Application Accepted"
+      project:, specialist:, status: "Application Accepted"
     )
 
     interview = application.interview || application.create_interview(user: project.user)
@@ -78,8 +78,8 @@ class TestData
 
   def self.create_proposal(project, specialist)
     application = create_application(
-      project: project,
-      specialist: specialist,
+      project:,
+      specialist:,
       status: "Proposed",
       proposal_sent_at: 1.day.ago,
       proposal_comment:
@@ -141,14 +141,14 @@ class TestData
       a.confirmed_at = 1.day.ago
     end
 
-    user = User.find_or_create_by(account: account) do |u|
+    user = User.find_or_create_by(account:) do |u|
       u.application_status = "Application Accepted"
       u.company = Company.new(
         name: Company.fresh_name_for("Dunder Mifflin"),
         address: {city: "Dublin", country: "IE"},
-        industry: industry,
+        industry:,
         kind: "Startup",
-        sales_person: sales_person
+        sales_person:
       )
     end
 
@@ -208,7 +208,7 @@ class TestData
       bio: "Dwight Kurt Schrute III (born January 20, 1970) is a fictional character on The Office portrayed by Rainn Wilson. He is one of the highest-ranking salesmen as well as assistant to the regional manager (disputed)[1] at the paper distribution company Dunder Mifflin. Additionally, he is a bed-and-breakfast proprietor at Schrute Farms, a beet plantation owner, and an owner of the business park in which Dunder Mifflin exists. He is notorious for his lack of social skills and common sense, his love for martial arts and the justice system, and his office rivalry with fellow salesman Jim Halpert. He is also known for his romantic relationship with Angela Martin, head of the accounting department. He has at times risen to the position of acting Branch Manager of the Scranton branch, but often serves as a second or third in command as Assistant (to the) Regional Manager. While Dwight was a regional manager in the last few episodes of the series, he named himself the Assistant to the Assistant to the Regional Manager (A.A.R.M). Dwight was also the Vice President of Special Projects Development for the Sabre Corporation, which was the parent company of Dunder Mifflin at the time, but was soon replaced by Todd Packer, who was almost immediately terminated. In the final season, Dwight is offered the position of permanent Regional Manager."
     )
 
-    create_application(specialist: dwight, project: project, status: "Applied")
+    create_application(specialist: dwight, project:, status: "Applied")
 
     jim = create_specialist(
       first_name: "Jim",
@@ -218,7 +218,7 @@ class TestData
       bio: "James 'Jim' Halpert (born October 1, 1978) is a fictional character in the U.S. version of the television sitcom The Office, portrayed by John Krasinski. The character is based on Tim Canterbury from the original version of The Office. The character is also named after a childhood friend of executive producer Greg Daniels. He is introduced as a sales representative at the Scranton branch of paper distribution company Dunder Mifflin, before temporarily transferring to the Stamford branch in the third season. Upon the merger of Scranton and Stamford branches, he becomes Assistant Regional Manager, and later co-manager alongside Michael Scott during the sixth-season episode arc from 'The Promotion' to 'Manager and Salesman'. His character serves as the intelligent, mild-mannered straight man role to Michael, although it is also defined by a rivalrous pranking on fellow salesman Dwight Schrute and a romantic interest in receptionist Pam Beesly, whom he begins dating in the fourth season, marries in the sixth, and has children with in the sixth and eighth. Jim's coworker, Andy Bernard, often calls him by the nickname 'Big Tuna'."
     )
 
-    create_application(specialist: jim, project: project, status: "Applied")
+    create_application(specialist: jim, project:, status: "Applied")
 
     darryl = create_specialist(
       first_name: "Darryl",
@@ -228,7 +228,7 @@ class TestData
       bio: "Although he is dry and humorless when dealing with Michael Scott, the office manager, he seems to be a much more relaxed, silly person in social situations. Unlike Michael, Darryl is competent, ambitious, and innovative, and on several occasions late into the series, he promotes ideas to corporate that seem to benefit the company greatly. Michael refers to him as \"Mittah Rogers\"—a nickname which began as \"Regis\" (as Darryl's last name is Philbin, a reference to Regis Philbin who is producer Michael Schur's father-in-law), then \"Reeg\", \"Roger\" and then finally settling on \"Mittah Rogers\".[1] In contrast with this, Darryl almost always calls Michael \"Mike\" instead of by his full name (although he will call him by his full name when he becomes frustrated or annoyed with Michael's immaturity). Being in a position of responsibility in a potentially hazardous work area, he dislikes Michael's disregard for rules or safety, as Michael often disrupts their work schedule and delays their shipments from going out on time. His relationship with Michael is tense, as he is often aggravated by Michael's juvenile antics, as when he stated his greatest fear is that someone would prevent them from getting the shipments out on time. His rapport with the rest of the staff both in the office and warehouse is friendly. He was initially enemies with Andy Bernard but the two eventually become close friends and confidants."
     )
 
-    create_application(specialist: darryl, project: project, status: "Applied")
+    create_application(specialist: darryl, project:, status: "Applied")
 
     pam = create_specialist(
       first_name: "Pam",

@@ -24,7 +24,7 @@ RSpec.describe Mutations::CaseStudy::Publish do
   it "sets published_at" do
     expect(article.published_at).to be_nil
 
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     id = response["data"]["publishCaseStudy"]["article"]["id"]
 
     expect(id).to eq(article.uid)
@@ -33,7 +33,7 @@ RSpec.describe Mutations::CaseStudy::Publish do
 
   context "when creating a guild post" do
     subject(:publish_query) do
-      AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context:)
     end
 
     it "creates a guild post" do
@@ -51,7 +51,7 @@ RSpec.describe Mutations::CaseStudy::Publish do
     end
 
     it "creates post labelings for case study skills with labels" do
-      case_study_skills = create_list(:case_study_skill, 2, article: article)
+      case_study_skills = create_list(:case_study_skill, 2, article:)
       label = create(:label, skill: case_study_skills.first.skill)
       create(:label)
       publish_query
@@ -64,7 +64,7 @@ RSpec.describe Mutations::CaseStudy::Publish do
     let(:user) { create(:specialist) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -74,7 +74,7 @@ RSpec.describe Mutations::CaseStudy::Publish do
     let(:user) { create(:user) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -84,7 +84,7 @@ RSpec.describe Mutations::CaseStudy::Publish do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end

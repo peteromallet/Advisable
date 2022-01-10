@@ -58,7 +58,7 @@ RSpec.describe Account, type: :model do
 
   describe "#disable!" do
     let(:account) { create(:account) }
-    let(:specialist) { create(:specialist, account: account) }
+    let(:specialist) { create(:specialist, account:) }
 
     it "resets password and changes email, and sets disabled_at timestamp" do
       email = account.email
@@ -85,7 +85,7 @@ RSpec.describe Account, type: :model do
     end
 
     it "deletes magic links" do
-      magic_link = create(:magic_link, account: account)
+      magic_link = create(:magic_link, account:)
       account.disable!
       expect(MagicLink.where(id: magic_link.id)).to be_empty
     end

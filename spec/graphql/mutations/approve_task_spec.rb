@@ -25,14 +25,14 @@ RSpec.describe Mutations::ApproveTask do
   before { allow(Stripe::PaymentIntent).to receive(:create).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded")) }
 
   it "sets the stage to 'Approved'" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     stage = response["data"]["approveTask"]["task"]["stage"]
     expect(stage).to eq("Approved")
   end
 
   it "creates a payout" do
     count = Payout.count
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
     expect(Payout.count).to eq(count + 1)
     expect(Payout.last.attributes).to include("amount" => 5000, "sourcing_fee" => 400, "status" => "pending", "specialist_id" => task.application.specialist_id, "task_id" => task.id)
   end
@@ -41,7 +41,7 @@ RSpec.describe Mutations::ApproveTask do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -51,7 +51,7 @@ RSpec.describe Mutations::ApproveTask do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -61,7 +61,7 @@ RSpec.describe Mutations::ApproveTask do
     let(:context) { {current_user: task.application.specialist} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -71,7 +71,7 @@ RSpec.describe Mutations::ApproveTask do
     let(:task) { create(:task, stage: "Assigned") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["message"]
       expect(error).to eq("tasks.statusNotSubmitted")
     end
@@ -80,7 +80,7 @@ RSpec.describe Mutations::ApproveTask do
   describe "creating payments" do
     it "creates a Payment with all the right attributes" do
       count = Payment.count
-      AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context:)
       expect(Payment.count).to eq(count + 1)
       expect(Payment.last.attributes).to include("amount" => 5000, "admin_fee" => 250, "status" => "succeeded", "company_id" => task.application.project.user.company_id, "specialist_id" => task.application.specialist_id, "task_id" => task.id)
     end
@@ -88,9 +88,9 @@ RSpec.describe Mutations::ApproveTask do
     context "when previous payments exist" do
       context "when less" do
         it "creates a payment with a diff" do
-          create(:payment, task: task, amount: task.final_cost - 1000)
+          create(:payment, task:, amount: task.final_cost - 1000)
           count = Payment.count
-          AdvisableSchema.execute(query, context: context)
+          AdvisableSchema.execute(query, context:)
           expect(Payment.count).to eq(count + 1)
           expect(Payment.last.attributes).to include("amount" => 1000, "admin_fee" => 50, "status" => "succeeded", "company_id" => task.application.project.user.company_id, "specialist_id" => task.application.specialist_id, "task_id" => task.id)
         end
@@ -98,9 +98,9 @@ RSpec.describe Mutations::ApproveTask do
 
       context "when equal" do
         it "does not create a payment" do
-          create(:payment, task: task, amount: task.final_cost)
+          create(:payment, task:, amount: task.final_cost)
           count = Payment.count
-          AdvisableSchema.execute(query, context: context)
+          AdvisableSchema.execute(query, context:)
           expect(Payment.count).to eq(count)
         end
       end

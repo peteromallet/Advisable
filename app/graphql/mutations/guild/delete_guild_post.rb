@@ -16,7 +16,7 @@ module Mutations
       def resolve(**args)
         guild_post = current_user.guild_posts.find(args[:guild_post_id])
         guild_post.destroy
-        {guild_post: guild_post}
+        {guild_post:}
       end
     end
   end

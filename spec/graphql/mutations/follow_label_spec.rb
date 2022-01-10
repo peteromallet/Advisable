@@ -8,7 +8,7 @@ RSpec.describe Mutations::FollowLabel do
   let(:label) { create(:label) }
   let(:specialist) { create(:specialist) }
   let(:context) { {current_user: specialist} }
-  let(:response) { AdvisableSchema.execute(query, context: context) }
+  let(:response) { AdvisableSchema.execute(query, context:) }
 
   let(:query) do
     <<-GRAPHQL

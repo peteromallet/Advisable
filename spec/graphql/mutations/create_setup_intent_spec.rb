@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::CreateSetupIntent do
   let(:company) { create(:company, setup_intent_status: nil, stripe_setup_intent_id: nil) }
   let(:context) { {current_user: user} }
-  let(:user) { create(:user, company: company) }
+  let(:user) { create(:user, company:) }
   let(:query) do
     <<-GRAPHQL
     mutation {
@@ -24,20 +24,20 @@ RSpec.describe Mutations::CreateSetupIntent do
   # rubocop:enable RSpec/VerifiedDoubles
 
   it "returns the setup intent secret" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     secret = response["data"]["createSetupIntent"]["secret"]
     expect(secret).to eq("1234")
   end
 
   it "sets the setup_intent_status to 'pending'" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change {
+    expect { AdvisableSchema.execute(query, context:) }.to change {
       company.reload.setup_intent_status
     }.from(nil).
       to("pending")
   end
 
   it "stores the stripe_setup_intent_id" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change {
+    expect { AdvisableSchema.execute(query, context:) }.to change {
       company.reload.stripe_setup_intent_id
     }.from(nil).
       to("1234")
@@ -47,7 +47,7 @@ RSpec.describe Mutations::CreateSetupIntent do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHENTICATED")
     end
   end
@@ -56,7 +56,7 @@ RSpec.describe Mutations::CreateSetupIntent do
     let(:context) { {current_user: create(:specialist)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["extensions"]["type"]).to eq("INVALID_REQUEST")
     end
   end

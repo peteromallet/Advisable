@@ -28,7 +28,7 @@ module Mutations
           end
         end
 
-        {article: article}
+        {article:}
       end
     end
   end

@@ -11,7 +11,7 @@ RSpec.describe "Consultations", type: :system do
   end
 
   context "when a consultation request has been sent" do
-    let(:consultation) { create(:consultation, specialist: specialist) }
+    let(:consultation) { create(:consultation, specialist:) }
 
     it "allows the specialist to accept" do
       authenticate_as(specialist)

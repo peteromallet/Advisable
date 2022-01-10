@@ -21,17 +21,17 @@ RSpec.describe Mutations::CaseStudy::DeleteSearch do
 
   it "deletes a search" do
     uid = search.uid
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     success = response["data"]["deleteCaseStudySearch"]["success"]
     expect(success).to eq(true)
-    expect(::CaseStudy::Search.find_by(uid: uid)).to eq(nil)
+    expect(::CaseStudy::Search.find_by(uid:)).to eq(nil)
   end
 
   context "when current_user is not owner" do
     let(:user) { create(:user) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -41,7 +41,7 @@ RSpec.describe Mutations::CaseStudy::DeleteSearch do
     let(:user) { create(:specialist) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end
@@ -51,7 +51,7 @@ RSpec.describe Mutations::CaseStudy::DeleteSearch do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end

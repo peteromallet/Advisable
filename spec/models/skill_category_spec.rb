@@ -14,7 +14,7 @@ RSpec.describe SkillCategory do
 
   describe "#skills_with_similar" do
     it "returns skills with similarity above 50 to existing skills" do
-      create(:skill_similarity, skill1: skill1, skill2: skill2, similarity: 1)
+      create(:skill_similarity, skill1:, skill2:, similarity: 1)
       create(:skill_similarity, skill1: skill3, skill2: skill4, similarity: 99)
       skill_category.skills = [skill1, skill4]
 
@@ -24,8 +24,8 @@ RSpec.describe SkillCategory do
 
   describe "#skills_without_aliases" do
     it "excludes aliases" do
-      create(:skill_similarity, skill1: skill1, skill2: skill2, similarity: 99)
-      create(:skill_similarity, skill1: skill1, skill2: skill3, similarity: 100)
+      create(:skill_similarity, skill1:, skill2:, similarity: 99)
+      create(:skill_similarity, skill1:, skill2: skill3, similarity: 100)
       create(:skill_similarity, skill1: skill4, skill2: skill5, similarity: 100)
       skill_category.skills = [skill1, skill2, skill3, skill4, skill5]
 

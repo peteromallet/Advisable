@@ -23,7 +23,7 @@ RSpec.describe(Mutations::UpdateClientApplication) do
   end
 
   def request(input = {})
-    AdvisableSchema.execute(query, context: context, variables: {input: input})
+    AdvisableSchema.execute(query, context:, variables: {input:})
   end
 
   it "updates the users company name" do

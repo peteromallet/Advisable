@@ -12,7 +12,7 @@ module ApplicationCable
     private
 
     def session_manager
-      @session_manager ||= SessionManager.new(session: @request.session, cookies: cookies)
+      @session_manager ||= SessionManager.new(session: @request.session, cookies:)
     end
   end
 end

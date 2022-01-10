@@ -59,7 +59,7 @@ RSpec.describe Mutations::UpdateTask do
     let(:task) { create(:task, stage: "Assigned") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe Mutations::UpdateTask do
     let(:task) { create(:task, stage: "Working") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
     end
   end
@@ -77,7 +77,7 @@ RSpec.describe Mutations::UpdateTask do
     let(:task) { create(:task, stage: "Submitted") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
     end
   end
@@ -86,7 +86,7 @@ RSpec.describe Mutations::UpdateTask do
     let(:task) { create(:task, stage: "Approved") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
     end
   end
@@ -102,7 +102,7 @@ RSpec.describe Mutations::UpdateTask do
     end
 
     it "updates the task name" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       name = response["data"]["updateTask"]["task"]["name"]
       expect(name).to eq("Updated Name")
     end
@@ -111,7 +111,7 @@ RSpec.describe Mutations::UpdateTask do
       let(:task) { create(:task, name: nil, stage: "Assigned") }
 
       it "returns an error" do
-        response = AdvisableSchema.execute(query, context: context)
+        response = AdvisableSchema.execute(query, context:)
         expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
       end
     end
@@ -120,7 +120,7 @@ RSpec.describe Mutations::UpdateTask do
       let(:task) { create(:task, name: nil, stage: "Quote Provided") }
 
       it "sets the stage to Not Assigned" do
-        expect { AdvisableSchema.execute(query, context: context) }.to change {
+        expect { AdvisableSchema.execute(query, context:) }.to change {
           task.reload.stage
         }.from("Quote Provided").to("Not Assigned")
       end
@@ -136,7 +136,7 @@ RSpec.describe Mutations::UpdateTask do
 
         it "removes the estimate" do
           expect do
-            AdvisableSchema.execute(query, context: context)
+            AdvisableSchema.execute(query, context:)
           end.to change { task.reload.estimate }.from(8).to(nil)
         end
       end
@@ -146,7 +146,7 @@ RSpec.describe Mutations::UpdateTask do
 
         it "does not removes the estimate" do
           expect do
-            AdvisableSchema.execute(query, context: context)
+            AdvisableSchema.execute(query, context:)
           end.not_to(change { task.reload.estimate })
         end
       end
@@ -164,7 +164,7 @@ RSpec.describe Mutations::UpdateTask do
     end
 
     it "Updates the task description" do
-      expect { AdvisableSchema.execute(query, context: context) }.to change {
+      expect { AdvisableSchema.execute(query, context:) }.to change {
         task.reload.description
       }.from(nil).to("Updated description")
     end
@@ -173,7 +173,7 @@ RSpec.describe Mutations::UpdateTask do
       let(:task) { create(:task, description: nil, stage: "Quote Provided") }
 
       it "sets the stage to Not Assigned" do
-        expect { AdvisableSchema.execute(query, context: context) }.to change {
+        expect { AdvisableSchema.execute(query, context:) }.to change {
           task.reload.stage
         }.from("Quote Provided").to("Not Assigned")
       end
@@ -192,7 +192,7 @@ RSpec.describe Mutations::UpdateTask do
     end
 
     it "Updates the task due_date" do
-      expect { AdvisableSchema.execute(query, context: context) }.to change {
+      expect { AdvisableSchema.execute(query, context:) }.to change {
         task.reload.due_date.try(:to_date)
       }.from(nil).to(due_date.to_date)
     end
@@ -203,13 +203,13 @@ RSpec.describe Mutations::UpdateTask do
       end
 
       it "sets the stage to Not Assigned" do
-        expect { AdvisableSchema.execute(query, context: context) }.to change {
+        expect { AdvisableSchema.execute(query, context:) }.to change {
           task.reload.stage
         }.from("Quote Provided").to("Not Assigned")
       end
 
       it "removes the estimate" do
-        expect { AdvisableSchema.execute(query, context: context) }.to change {
+        expect { AdvisableSchema.execute(query, context:) }.to change {
           task.reload.estimate
         }.from(4).to(nil)
       end
@@ -227,7 +227,7 @@ RSpec.describe Mutations::UpdateTask do
     end
 
     it "Updates the task estimate" do
-      expect { AdvisableSchema.execute(query, context: context) }.to change {
+      expect { AdvisableSchema.execute(query, context:) }.to change {
         task.reload.estimate
       }.from(nil).to(8)
     end
@@ -236,7 +236,7 @@ RSpec.describe Mutations::UpdateTask do
       let(:task) { create(:task, estimate: nil, stage: "Quote Requested") }
 
       it "sets the stage to 'Quote Provided'" do
-        expect { AdvisableSchema.execute(query, context: context) }.to change {
+        expect { AdvisableSchema.execute(query, context:) }.to change {
           task.reload.stage
         }.from("Quote Requested").to("Quote Provided")
       end
@@ -245,10 +245,10 @@ RSpec.describe Mutations::UpdateTask do
 
   context "when the application status is 'Stopped Working'" do
     let(:application) { create(:application, status: "Stopped Working") }
-    let(:task) { create(:task, application: application) }
+    let(:task) { create(:task, application:) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHORIZED")
     end
   end
@@ -269,7 +269,7 @@ RSpec.describe Mutations::UpdateTask do
 
       it "sets the trial" do
         expect do
-          AdvisableSchema.execute(query, context: context)
+          AdvisableSchema.execute(query, context:)
         end.to change { task.reload.trial }.from(false).to(true)
       end
 
@@ -280,7 +280,7 @@ RSpec.describe Mutations::UpdateTask do
 
         it "toggles the other trial task to false" do
           expect do
-            AdvisableSchema.execute(query, context: context)
+            AdvisableSchema.execute(query, context:)
           end.to change { trial.reload.trial }.from(true).to(false)
         end
       end
@@ -289,7 +289,7 @@ RSpec.describe Mutations::UpdateTask do
         before { create(:task, application: task.application, trial: true, stage: "Working") }
 
         it "Returns an error" do
-          response = AdvisableSchema.execute(query, context: context)
+          response = AdvisableSchema.execute(query, context:)
           error = response["errors"][0]
           expect(error["message"]).to eq("tasks.applicationHasActiveTrialTask")
         end
@@ -300,7 +300,7 @@ RSpec.describe Mutations::UpdateTask do
       let(:context) { {current_user: task.application.project.user} }
 
       it "does not set the trial" do
-        AdvisableSchema.execute(query, context: context)
+        AdvisableSchema.execute(query, context:)
         expect(task.reload.trial).to be_falsey
       end
     end

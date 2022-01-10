@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::AnswerQuestion do
@@ -28,18 +29,19 @@ RSpec.describe Mutations::AnswerQuestion do
 
   context "no answer exists" do
     it "creates a new answer" do
-      expect(Answer.find_by(question: question)).to be_nil
-      response = AdvisableSchema.execute(query, context: context)
-      expect(Answer.find_by(question: question).content).to eq("It depends.")
+      expect(Answer.find_by(question:)).to be_nil
+      response = AdvisableSchema.execute(query, context:)
+      expect(Answer.find_by(question:).content).to eq("It depends.")
     end
   end
 
   context "answer exists already" do
-    let!(:answer) { create(:answer, question: question, specialist: specialist, content: "Black bear.") }
+    let!(:answer) { create(:answer, question:, specialist:, content: "Black bear.") }
+
     it "overwrites answer" do
-      expect(Answer.find_by(question: question).content).to eq("Black bear.")
-      response = AdvisableSchema.execute(query, context: context)
-      expect(Answer.find_by(question: question).content).to eq("It depends.")
+      expect(Answer.find_by(question:).content).to eq("Black bear.")
+      response = AdvisableSchema.execute(query, context:)
+      expect(Answer.find_by(question:).content).to eq("It depends.")
     end
   end
 
@@ -48,7 +50,7 @@ RSpec.describe Mutations::AnswerQuestion do
       let(:context) { {current_user: nil} }
 
       it "raises an error" do
-        response = AdvisableSchema.execute(query, context: context)
+        response = AdvisableSchema.execute(query, context:)
         error = response["errors"].first["extensions"]["type"]
         expect(error).to eq("NOT_AUTHENTICATED")
       end
@@ -58,7 +60,7 @@ RSpec.describe Mutations::AnswerQuestion do
       let(:context) { {current_user: create(:user)} }
 
       it "raises an error" do
-        response = AdvisableSchema.execute(query, context: context)
+        response = AdvisableSchema.execute(query, context:)
         error = response["errors"].first["extensions"]["type"]
         expect(error).to eq("INVALID_REQUEST")
       end

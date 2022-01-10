@@ -24,7 +24,7 @@ RSpec.describe Mutations::StopWorking do
   context "when logged in as the client" do
     it "sets the status and reason" do
       expect(application.reload.status).to eq("Working")
-      AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context:)
       expect(application.reload.status).to eq("Stopped Working")
       expect(application.stopped_working_reason).to eq("Because")
     end
@@ -35,7 +35,7 @@ RSpec.describe Mutations::StopWorking do
 
     it "sets the status and reason" do
       expect(application.reload.status).to eq("Working")
-      AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context:)
       expect(application.reload.status).to eq("Stopped Working")
       expect(application.stopped_working_reason).to eq("Because")
     end
@@ -45,7 +45,7 @@ RSpec.describe Mutations::StopWorking do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -55,7 +55,7 @@ RSpec.describe Mutations::StopWorking do
     let(:context) { {current_user: create(:specialist)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -65,7 +65,7 @@ RSpec.describe Mutations::StopWorking do
     let(:application) { create(:application, status: "Applied") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("APPLICATION_STATUS_NOT_WORKING")
     end

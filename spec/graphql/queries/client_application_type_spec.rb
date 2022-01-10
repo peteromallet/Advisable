@@ -16,10 +16,10 @@ RSpec.describe("clientApplication query", type: :system) do
   end
 
   let(:current_user) { user }
-  let(:context) { {current_user: current_user} }
+  let(:context) { {current_user:} }
 
   def request
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
   end
 
   context "when the application_status is started" do

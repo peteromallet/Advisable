@@ -20,7 +20,7 @@ module Toby
 
         view.save!
 
-        {view: view}
+        {view:}
       end
     end
   end

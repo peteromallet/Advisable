@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::ResendConfirmationEmail do
   let(:account) { create(:account, confirmation_digest: nil) }
-  let(:user) { create(:user, account: account) }
+  let(:user) { create(:user, account:) }
   let(:query) do
     <<-GRAPHQL
       mutation {

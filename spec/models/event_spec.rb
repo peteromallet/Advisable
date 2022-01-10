@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Event, type: :model do
   let(:host) { create(:specialist) }
-  let(:event) { build(:event, host: host) }
+  let(:event) { build(:event, host:) }
 
   describe "db columns" do
     it { expect(event).to have_db_column(:id) }

@@ -39,7 +39,7 @@ module Mutations
             search.skills = []
             args[:skills].each do |skill|
               ::CaseStudy::Skill.create!(
-                search: search,
+                search:,
                 primary: args[:primary_skill] == skill,
                 skill: ::Skill.find_by!(name: skill)
               )
