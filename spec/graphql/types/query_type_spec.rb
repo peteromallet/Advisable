@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Types::QueryType do
   let(:specialist) { create(:specialist) }
   let(:context) { {current_user: specialist} }
-  let(:response)  { AdvisableSchema.execute(query, context: context) }
+  let(:response)  { AdvisableSchema.execute(query, context:) }
 
   describe "followed labels" do
     subject(:followed_labels) { response.dig("data", "followedLabels") }

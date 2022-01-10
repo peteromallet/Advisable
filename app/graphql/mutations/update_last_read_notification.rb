@@ -14,7 +14,7 @@ module Mutations
       viewer = current_user
       current_user.account.mark_all_notifications_as_read!
 
-      {viewer: viewer}
+      {viewer:}
     end
   end
 end

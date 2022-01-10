@@ -34,7 +34,7 @@ module Mutations
 
       save_with_current_account!(task)
 
-      {task: task}
+      {task:}
     end
   end
 end

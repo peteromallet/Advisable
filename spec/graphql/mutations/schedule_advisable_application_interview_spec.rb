@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::ScheduleAdvisableApplicationInterview do
   let(:application_stage) { "Invited To Interview" }
-  let!(:specialist) { create(:specialist, application_stage: application_stage) }
+  let!(:specialist) { create(:specialist, application_stage:) }
   let(:current_user) { specialist }
   let(:query) do
     <<-GRAPHQL
@@ -21,7 +21,7 @@ RSpec.describe Mutations::ScheduleAdvisableApplicationInterview do
   end
 
   let(:request) do
-    AdvisableSchema.execute(query, context: {current_user: current_user})
+    AdvisableSchema.execute(query, context: {current_user:})
   end
 
   before do

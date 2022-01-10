@@ -310,7 +310,7 @@ module Types
       argument :slug, String, required: true
     end
     def skill_category(slug:)
-      ::SkillCategory.find_by!(slug: slug)
+      ::SkillCategory.find_by!(slug:)
     end
 
     field :accepted_agreements, [Types::Agreement], null: true

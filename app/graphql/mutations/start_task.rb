@@ -27,7 +27,7 @@ module Mutations
 
       create_payment!(task)
 
-      {task: task}
+      {task:}
     end
 
     private
@@ -42,7 +42,7 @@ module Mutations
 
       return unless amount.positive?
 
-      payment = Payment.create!(company_id: task.application.project.user.company_id, specialist_id: task.application.specialist_id, amount: amount, task: task, status: "pending")
+      payment = Payment.create!(company_id: task.application.project.user.company_id, specialist_id: task.application.specialist_id, amount:, task:, status: "pending")
       payment.charge!
     end
   end

@@ -10,7 +10,7 @@ RSpec.describe StripeEvents::ChargeRefunded do
         object: OpenStruct.new({
           id: "ch_1234",
           refunded: true,
-          metadata: metadata
+          metadata:
         })
       })
     })

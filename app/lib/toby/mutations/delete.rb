@@ -12,7 +12,7 @@ module Toby
         model = resource.model.find(id)
         success = model.destroy
 
-        {success: success}
+        {success:}
       end
     end
   end

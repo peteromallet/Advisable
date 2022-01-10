@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe InterviewReminderJob do
   let(:status) { "Call Scheduled" }
   let(:starts_at) { 50.minutes.from_now }
-  let!(:interview) { create(:interview, starts_at: starts_at, status: status) }
+  let!(:interview) { create(:interview, starts_at:, status:) }
 
   it "sends reminder only once" do
     described_class.perform_now

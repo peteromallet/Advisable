@@ -86,7 +86,7 @@ module Airtable
         # if not then sync it
         skill = Airtable::Skill.find(skill_id).sync if skill.nil?
         # find or initialize an association.
-        specialist.specialist_skills.find_or_initialize_by(skill: skill)
+        specialist.specialist_skills.find_or_initialize_by(skill:)
       end
 
       specialist.remote = true if fields["Remote OK"].try(:include?, "Yes")
@@ -234,7 +234,7 @@ module Airtable
       original = ::Skill.where.not(id: skill.id).find_by(name: skill.name)
 
       if original
-        record.specialist_skills.find_by(skill: skill).update(skill: original)
+        record.specialist_skills.find_by(skill:).update(skill: original)
         original.merge_with!(duplicate: skill)
       else
         # The skill may have existed in airtable before so we need to clear

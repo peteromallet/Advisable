@@ -34,19 +34,19 @@ RSpec.describe Mutations::RequestIntroduction do
   end
 
   it "sets the interview status to Call Requested" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     status = response["data"]["requestIntroduction"]["interview"]["status"]
     expect(status).to eq("Call Requested")
   end
 
   it "sets the interview time zone" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     time_zone = response["data"]["requestIntroduction"]["interview"]["timeZone"]
     expect(time_zone).to eq("Dublin")
   end
 
   it "sets the application status to application accepted" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change {
+    expect { AdvisableSchema.execute(query, context:) }.to change {
       application.reload.status
     }.from("Applied").to("Application Accepted")
   end
@@ -65,7 +65,7 @@ RSpec.describe Mutations::RequestIntroduction do
   end
 
   it "creates a new interview record and sets call_requested_at" do
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
     interview = Interview.last
     expect(interview.call_requested_at).to be_within(1.second).of(Time.zone.now)
   end

@@ -35,7 +35,7 @@ module CurrentUser
       account = Account.find_by_uid(uid)
       return if account.blank?
 
-      MagicLink.for_path(account: account, token: token, path: request.path)
+      MagicLink.for_path(account:, token:, path: request.path)
     end
 
     def redirect_without_magic_link_params
@@ -43,7 +43,7 @@ module CurrentUser
     end
 
     def session_manager
-      @session_manager ||= SessionManager.new(session: session, cookies: cookies)
+      @session_manager ||= SessionManager.new(session:, cookies:)
     end
   end
 end

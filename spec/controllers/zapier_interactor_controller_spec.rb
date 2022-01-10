@@ -11,10 +11,10 @@ RSpec.describe ZapierInteractorController, type: :request do
     let(:application_params) { {comment: "This is a comment"} }
     let(:extra_application_params) { {} }
     let(:extra_params) { {specialist_id: specialist.uid, project_id: project.uid} }
-    let(:params) { {application: application_params.merge(extra_application_params), key: key}.merge(extra_params) }
+    let(:params) { {application: application_params.merge(extra_application_params), key:}.merge(extra_params) }
 
     it "creates the application and returns its uid" do
-      post("/zapier_interactor/create_application", params: params)
+      post("/zapier_interactor/create_application", params:)
       expect(response).to have_http_status(:success)
       application = Application.find_by(uid: JSON[response.body]["uid"])
       expect(application.comment).to eq("This is a comment")
@@ -24,7 +24,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:extra_application_params) { {working_5_days_in_client_feedback: "No feedback"} }
 
       it "updates them" do
-        post("/zapier_interactor/create_application", params: params)
+        post("/zapier_interactor/create_application", params:)
         expect(response).to have_http_status(:success)
         application = Application.find_by(uid: JSON[response.body]["uid"])
         expect(application.meta_fields["Working - 5 Days In - Client Feedback"]).to eq("No feedback")
@@ -35,7 +35,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:extra_params) { {project_id: project.uid} }
 
       it "returns error" do
-        post("/zapier_interactor/create_application", params: params)
+        post("/zapier_interactor/create_application", params:)
         expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON[response.body]["message"]).to eq("Couldn't find Specialist with [WHERE \"specialists\".\"uid\" IS NULL]")
       end
@@ -45,7 +45,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:extra_params) { {specialist_id: specialist.uid} }
 
       it "returns error" do
-        post("/zapier_interactor/create_application", params: params)
+        post("/zapier_interactor/create_application", params:)
         expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON[response.body]["message"]).to eq("Couldn't find Project with [WHERE \"projects\".\"uid\" IS NULL]")
       end
@@ -55,9 +55,9 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:extra_application_params) { {trial_program: "1234"} }
 
       it "ignores the param" do
-        post("/zapier_interactor/create_application", params: params)
+        post("/zapier_interactor/create_application", params:)
         uid = JSON[response.body]["uid"]
-        application = Application.find_by(uid: uid)
+        application = Application.find_by(uid:)
         expect(application.trial_program).not_to eq("1234")
       end
     end
@@ -66,7 +66,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/create_application", params: params)
+        post("/zapier_interactor/create_application", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -76,10 +76,10 @@ RSpec.describe ZapierInteractorController, type: :request do
     let(:application) { create(:application) }
     let(:application_params) { {comment: "This is a comment", source: "And this is the source"} }
     let(:extra_application_params) { {} }
-    let(:params) { {application: application_params.merge(extra_application_params), uid: application.uid, key: key} }
+    let(:params) { {application: application_params.merge(extra_application_params), uid: application.uid, key:} }
 
     it "updates the application" do
-      post("/zapier_interactor/update_application", params: params)
+      post("/zapier_interactor/update_application", params:)
       expect(response).to have_http_status(:success)
       application.reload
       expect(application.comment).to eq("This is a comment")
@@ -90,7 +90,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:extra_application_params) { {"working_5_days_in_client_feedback" => "No feedback"} }
 
       it "updates them" do
-        post("/zapier_interactor/update_application", params: params)
+        post("/zapier_interactor/update_application", params:)
         expect(response).to have_http_status(:success)
         application.reload
         expect(application.meta_fields["Working - 5 Days In - Client Feedback"]).to eq("No feedback")
@@ -103,7 +103,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:extra_application_params) { {"working_5_days_in_client_feedback" => "No feedback"} }
 
       it "does not overwrite them" do
-        post("/zapier_interactor/update_application", params: params)
+        post("/zapier_interactor/update_application", params:)
         expect(response).to have_http_status(:success)
         application.reload
         expect(application.meta_fields["Working - 5 Days In - Specialist Feedback"]).to eq("Not great. Not terrible.")
@@ -115,7 +115,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:extra_application_params) { {trial_program: "1234"} }
 
       it "ignores the param" do
-        post("/zapier_interactor/update_application", params: params)
+        post("/zapier_interactor/update_application", params:)
         expect(application.reload.trial_program).not_to eq("1234")
       end
     end
@@ -124,7 +124,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/update_application", params: params)
+        post("/zapier_interactor/update_application", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -133,10 +133,10 @@ RSpec.describe ZapierInteractorController, type: :request do
   describe "POST /update_interview" do
     let(:interview) { create(:interview, status: "Call Scheduled") }
     let(:status) { "Call Requested" }
-    let(:params) { {status: status, uid: interview.uid, key: key} }
+    let(:params) { {status:, uid: interview.uid, key:} }
 
     it "updates the interview and syncs to airtable" do
-      post("/zapier_interactor/update_interview", params: params)
+      post("/zapier_interactor/update_interview", params:)
       expect(response).to have_http_status(:success)
       expect(interview.reload.status).to eq("Call Requested")
     end
@@ -145,7 +145,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:status) { "Not a valid status" }
 
       it "ignores the param" do
-        post("/zapier_interactor/update_interview", params: params)
+        post("/zapier_interactor/update_interview", params:)
         expect(response.status).to eq(422)
         expect(JSON[response.body]["message"]).to eq("Validation failed: Status is not included in the list")
       end
@@ -155,7 +155,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/update_interview", params: params)
+        post("/zapier_interactor/update_interview", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -164,10 +164,10 @@ RSpec.describe ZapierInteractorController, type: :request do
   describe "POST /update_consultation" do
     let(:consultation) { create(:consultation, status: "Call Scheduled") }
     let(:status) { "Call Requested" }
-    let(:params) { {status: status, uid: consultation.uid, key: key} }
+    let(:params) { {status:, uid: consultation.uid, key:} }
 
     it "updates the consultation and syncs to airtable" do
-      post("/zapier_interactor/update_consultation", params: params)
+      post("/zapier_interactor/update_consultation", params:)
       expect(response).to have_http_status(:success)
       expect(consultation.reload.status).to eq("Call Requested")
     end
@@ -176,7 +176,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/update_consultation", params: params)
+        post("/zapier_interactor/update_consultation", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -184,8 +184,8 @@ RSpec.describe ZapierInteractorController, type: :request do
 
   describe "POST /update_user" do
     let(:account) { create(:account) }
-    let(:user) { create(:user, account: account, title: "Old Title", campaign_name: "Old Name") }
-    let(:params) { {uid: user.uid, key: key} }
+    let(:user) { create(:user, account:, title: "Old Title", campaign_name: "Old Name") }
+    let(:params) { {uid: user.uid, key:} }
 
     before { allow_any_instance_of(User).to receive(:sync_to_airtable) }
 
@@ -272,7 +272,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/update_user", params: params)
+        post("/zapier_interactor/update_user", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -280,8 +280,8 @@ RSpec.describe ZapierInteractorController, type: :request do
 
   describe "POST /update_specialist" do
     let(:account) { create(:account) }
-    let(:specialist) { create(:specialist, account: account, community_status: "Old Status", campaign_name: "Old Name") }
-    let(:params) { {uid: specialist.uid, key: key} }
+    let(:specialist) { create(:specialist, account:, community_status: "Old Status", campaign_name: "Old Name") }
+    let(:params) { {uid: specialist.uid, key:} }
 
     before { allow_any_instance_of(Specialist).to receive(:sync_to_airtable) }
 
@@ -368,7 +368,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/update_specialist", params: params)
+        post("/zapier_interactor/update_specialist", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -376,7 +376,7 @@ RSpec.describe ZapierInteractorController, type: :request do
 
   describe "POST /update_project" do
     let(:project) { create(:project, campaign_name: "Old Name", sales_status: "Old Status") }
-    let(:params) { {uid: project.uid, key: key} }
+    let(:params) { {uid: project.uid, key:} }
 
     before { allow_any_instance_of(Project).to receive(:sync_to_airtable) }
 
@@ -502,7 +502,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/update_project", params: params)
+        post("/zapier_interactor/update_project", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -511,10 +511,10 @@ RSpec.describe ZapierInteractorController, type: :request do
   describe "POST /update_task" do
     let(:task) { create(:task) }
     let(:stage) { "Quote Provided" }
-    let(:params) { {stage: stage, uid: task.uid, key: key} }
+    let(:params) { {stage:, uid: task.uid, key:} }
 
     it "updates the task and datetime field" do
-      post("/zapier_interactor/update_task", params: params)
+      post("/zapier_interactor/update_task", params:)
       expect(response).to have_http_status(:success)
       task.reload
       expect(task.stage).to eq("Quote Provided")
@@ -531,7 +531,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       it "updates the task and datetime field, and charges" do
         payout_count = Payout.count
         payment_count = Payment.count
-        post("/zapier_interactor/update_task", params: params)
+        post("/zapier_interactor/update_task", params:)
         expect(response).to have_http_status(:success)
         task.reload
         expect(task.stage).to eq("Approved")
@@ -546,7 +546,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:stage) { "Deleted" }
 
       it "updates the task and no datetime field" do
-        post("/zapier_interactor/update_task", params: params)
+        post("/zapier_interactor/update_task", params:)
         expect(response).to have_http_status(:success)
         task.reload
         expect(task.stage).to eq("Deleted")
@@ -559,7 +559,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/update_task", params: params)
+        post("/zapier_interactor/update_task", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -568,20 +568,20 @@ RSpec.describe ZapierInteractorController, type: :request do
   describe "POST /create_magic_link" do
     let(:url) { "http://path.to/image.jpg" }
     let(:user) { create(:specialist) }
-    let(:params) { {uid: user.uid, url: url, key: key} }
+    let(:params) { {uid: user.uid, url:, key:} }
 
     context "when no key" do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/create_magic_link", params: params)
+        post("/zapier_interactor/create_magic_link", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
     context "when specialist" do
       it "creates a magic link" do
-        post("/zapier_interactor/create_magic_link", params: params)
+        post("/zapier_interactor/create_magic_link", params:)
         expect(response).to have_http_status(:success)
         link = JSON[response.body]["magic_link"]
         expect(link).to include("&mluid=#{user.account.uid}")
@@ -592,7 +592,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:user) { create(:user) }
 
       it "creates a magic link" do
-        post("/zapier_interactor/create_magic_link", params: params)
+        post("/zapier_interactor/create_magic_link", params:)
         expect(response).to have_http_status(:success)
         link = JSON[response.body]["magic_link"]
         expect(link).to include("&mluid=#{user.account.uid}")
@@ -603,7 +603,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:user) { create(:account) }
 
       it "creates a magic link" do
-        post("/zapier_interactor/create_magic_link", params: params)
+        post("/zapier_interactor/create_magic_link", params:)
         expect(response).to have_http_status(:success)
         link = JSON[response.body]["magic_link"]
         expect(link).to include("&mluid=#{user.uid}")
@@ -614,7 +614,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:expires_at) { 1.month.from_now }
 
       it "creates a magic link" do
-        post("/zapier_interactor/create_magic_link", params: params.merge(expires_at: expires_at))
+        post("/zapier_interactor/create_magic_link", params: params.merge(expires_at:))
         expect(response).to have_http_status(:success)
         link = JSON[response.body]["magic_link"]
         params = CGI.parse(URI.parse(link).query)
@@ -628,19 +628,19 @@ RSpec.describe ZapierInteractorController, type: :request do
 
   describe "POST /enable_guild" do
     let(:specialist) { create(:specialist, guild: false) }
-    let(:params) { {uid: specialist.uid, key: key} }
+    let(:params) { {uid: specialist.uid, key:} }
 
     context "when no key" do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/enable_guild", params: params)
+        post("/zapier_interactor/enable_guild", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
     it "enables guild" do
-      post("/zapier_interactor/enable_guild", params: params)
+      post("/zapier_interactor/enable_guild", params:)
       expect(response).to have_http_status(:success)
       expect(specialist.reload).to be_guild
       expect(GuildAddFollowablesJob).to have_been_enqueued.with(specialist.id)
@@ -650,13 +650,13 @@ RSpec.describe ZapierInteractorController, type: :request do
   describe "POST /boost_guild_post" do
     let(:guild_post) { create(:guild_post, status: "published", labels: [create(:label)]) }
     let(:post_id) { guild_post.id }
-    let(:params) { {post_id: post_id, key: key} }
+    let(:params) { {post_id:, key:} }
 
     context "when no key" do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/boost_guild_post", params: params)
+        post("/zapier_interactor/boost_guild_post", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -665,28 +665,28 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:guild_post) { create(:guild_post) }
 
       it "returns a descriptive error" do
-        post("/zapier_interactor/boost_guild_post", params: params)
+        post("/zapier_interactor/boost_guild_post", params:)
         expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON[response.body]["error"]).to eq("Cannot boost a post with zero labels")
       end
     end
 
     it "boosts post" do
-      post("/zapier_interactor/boost_guild_post", params: params)
+      post("/zapier_interactor/boost_guild_post", params:)
       expect(response).to have_http_status(:success)
       expect(Guild::Post.find(post_id).boosted_at).to be_present
     end
   end
 
   describe "POST /import_case_study" do
-    let(:params) { {airtable_id: "asdf", key: key} }
+    let(:params) { {airtable_id: "asdf", key:} }
     let(:stub) { instance_double(Airtable::CaseStudy) }
     let(:article) { build_stubbed(:case_study_article, airtable_id: "asdf") }
 
     it "imports case study" do
       allow(Airtable::CaseStudy).to receive(:find).with("asdf").and_return(stub)
       allow(stub).to receive(:article_record).and_return(article)
-      post("/zapier_interactor/import_case_study", params: params)
+      post("/zapier_interactor/import_case_study", params:)
       expect(response).to have_http_status(:success)
       expect(CaseStudyImportJob).to have_been_enqueued.with("asdf")
       json = JSON[response.body]
@@ -698,7 +698,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/import_case_study", params: params)
+        post("/zapier_interactor/import_case_study", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -706,7 +706,7 @@ RSpec.describe ZapierInteractorController, type: :request do
     context "when case study not found in airtable" do
       it "tells so in the error response" do
         allow(Airtable::CaseStudy).to receive(:find).with("asdf").and_raise(Airrecord::Error, "HTTP 404: : ")
-        post("/zapier_interactor/import_case_study", params: params)
+        post("/zapier_interactor/import_case_study", params:)
         expect(response).to have_http_status(:unprocessable_entity)
         json = JSON[response.body]
         expect(json["error"]).to eq("Case Study not found")
@@ -716,7 +716,7 @@ RSpec.describe ZapierInteractorController, type: :request do
     context "when some other airtable error" do
       it "tells so in the error response" do
         allow(Airtable::CaseStudy).to receive(:find).with("asdf").and_raise(Airrecord::Error, "It's raining in them tables")
-        post("/zapier_interactor/import_case_study", params: params)
+        post("/zapier_interactor/import_case_study", params:)
         expect(response).to have_http_status(:unprocessable_entity)
         json = JSON[response.body]
         expect(json["error"]).to eq("Airtable communication error")
@@ -727,7 +727,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       it "tells so in the error response" do
         allow(Airtable::CaseStudy).to receive(:find).with("asdf").and_return(stub)
         allow(stub).to receive(:article_record).and_raise(ActiveRecord::RecordNotFound, "Couldn't find Specialist")
-        post("/zapier_interactor/import_case_study", params: params)
+        post("/zapier_interactor/import_case_study", params:)
         expect(response).to have_http_status(:unprocessable_entity)
         json = JSON[response.body]
         expect(json["error"]).to eq("Something went wrong")
@@ -737,19 +737,19 @@ RSpec.describe ZapierInteractorController, type: :request do
 
   describe "POST /post_case_study_to_guild" do
     let(:article) { create(:case_study_article) }
-    let(:params) { {uid: article.uid, key: key} }
+    let(:params) { {uid: article.uid, key:} }
 
     context "when no key" do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/post_case_study_to_guild", params: params)
+        post("/zapier_interactor/post_case_study_to_guild", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
     it "creates guild post" do
-      post("/zapier_interactor/post_case_study_to_guild", params: params)
+      post("/zapier_interactor/post_case_study_to_guild", params:)
       expect(response).to have_http_status(:success)
       body = JSON[response.body]
       expect(body.keys).to include("post_id")
@@ -758,10 +758,10 @@ RSpec.describe ZapierInteractorController, type: :request do
 
     context "when guild posts already exists" do
       let(:article) { create(:case_study_article) }
-      let!(:guild_post) { create(:guild_post, article: article) }
+      let!(:guild_post) { create(:guild_post, article:) }
 
       it "returns the existing one" do
-        post("/zapier_interactor/post_case_study_to_guild", params: params)
+        post("/zapier_interactor/post_case_study_to_guild", params:)
         expect(response).to have_http_status(:success)
         body = JSON[response.body]
         expect(body.keys).to include("post_id")
@@ -772,20 +772,20 @@ RSpec.describe ZapierInteractorController, type: :request do
 
   describe "POST /send_email" do
     let(:user) { create(:specialist) }
-    let(:params) { {uid: user.uid, subject: "Subject", body: "<h1>Heya!</h1>", key: key} }
+    let(:params) { {uid: user.uid, subject: "Subject", body: "<h1>Heya!</h1>", key:} }
 
     context "when no key" do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/send_email", params: params)
+        post("/zapier_interactor/send_email", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
     context "when specialist" do
       it "sends the email" do
-        post("/zapier_interactor/send_email", params: params)
+        post("/zapier_interactor/send_email", params:)
         expect(response).to have_http_status(:success)
         expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "zapier_email", "deliver_now", {args: [user.account, "Subject", "<h1>Heya!</h1>"]})
       end
@@ -795,7 +795,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:user) { create(:user) }
 
       it "sends the email" do
-        post("/zapier_interactor/send_email", params: params)
+        post("/zapier_interactor/send_email", params:)
         expect(response).to have_http_status(:success)
         expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "zapier_email", "deliver_now", {args: [user.account, "Subject", "<h1>Heya!</h1>"]})
       end
@@ -805,7 +805,7 @@ RSpec.describe ZapierInteractorController, type: :request do
       let(:user) { create(:account) }
 
       it "sends the email" do
-        post("/zapier_interactor/send_email", params: params)
+        post("/zapier_interactor/send_email", params:)
         expect(response).to have_http_status(:success)
         expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "zapier_email", "deliver_now", {args: [user, "Subject", "<h1>Heya!</h1>"]})
       end
@@ -813,19 +813,19 @@ RSpec.describe ZapierInteractorController, type: :request do
   end
 
   describe "POST /send_finance_email" do
-    let(:params) { {email: "test@test.com", key: key} }
+    let(:params) { {email: "test@test.com", key:} }
 
     context "when no key" do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/send_finance_email", params: params)
+        post("/zapier_interactor/send_finance_email", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
     it "generates the csv" do
-      post("/zapier_interactor/send_finance_email", params: params)
+      post("/zapier_interactor/send_finance_email", params:)
       expect(response).to have_http_status(:success)
       expect(GenerateFinanceCsvJob).to have_been_enqueued.with("test@test.com")
     end
@@ -834,13 +834,13 @@ RSpec.describe ZapierInteractorController, type: :request do
   describe "POST /create_message" do
     let(:user) { create(:user) }
     let(:account_ids) { [user.uid] }
-    let(:params) { {uids: account_ids, author: user.uid, content: "Content", key: key} }
+    let(:params) { {uids: account_ids, author: user.uid, content: "Content", key:} }
 
     context "when no key" do
       let(:key) { "" }
 
       it "is unauthorized" do
-        post("/zapier_interactor/create_message", params: params)
+        post("/zapier_interactor/create_message", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -853,10 +853,10 @@ RSpec.describe ZapierInteractorController, type: :request do
         let(:second_uid) { second.uid }
 
         it "creates the message between user and second" do
-          post("/zapier_interactor/create_message", params: params)
+          post("/zapier_interactor/create_message", params:)
           expect(response).to have_http_status(:success)
           uid = JSON[response.body]["conversation"]
-          conversation = Conversation.find_by(uid: uid)
+          conversation = Conversation.find_by(uid:)
           expect(conversation.messages.count).to eq(1)
           expect(conversation.participants.pluck(:account_id)).to match_array([user.account_id, second.account_id])
           message = conversation.messages.last
@@ -870,10 +870,10 @@ RSpec.describe ZapierInteractorController, type: :request do
         let(:second_uid) { second.uid }
 
         it "creates the message between user and second" do
-          post("/zapier_interactor/create_message", params: params)
+          post("/zapier_interactor/create_message", params:)
           expect(response).to have_http_status(:success)
           uid = JSON[response.body]["conversation"]
-          conversation = Conversation.find_by(uid: uid)
+          conversation = Conversation.find_by(uid:)
           expect(conversation.messages.count).to eq(1)
           expect(conversation.participants.pluck(:account_id)).to match_array([user.account_id, second.account_id])
           message = conversation.messages.last
@@ -887,10 +887,10 @@ RSpec.describe ZapierInteractorController, type: :request do
         let(:second_uid) { second.account.uid }
 
         it "creates the message between user and second" do
-          post("/zapier_interactor/create_message", params: params)
+          post("/zapier_interactor/create_message", params:)
           expect(response).to have_http_status(:success)
           uid = JSON[response.body]["conversation"]
-          conversation = Conversation.find_by(uid: uid)
+          conversation = Conversation.find_by(uid:)
           expect(conversation.messages.count).to eq(1)
           expect(conversation.participants.pluck(:account_id)).to match_array([user.account_id, second.account_id])
           message = conversation.messages.last
@@ -906,10 +906,10 @@ RSpec.describe ZapierInteractorController, type: :request do
         it "creates a message in existing conversation" do
           conversation = Conversation.by_accounts([user.account, second.account])
           conversation.new_message!(second.account, "Existing message")
-          post("/zapier_interactor/create_message", params: params)
+          post("/zapier_interactor/create_message", params:)
           expect(response).to have_http_status(:success)
           uid = JSON[response.body]["conversation"]
-          conversation = Conversation.find_by(uid: uid)
+          conversation = Conversation.find_by(uid:)
           expect(conversation.messages.count).to eq(2)
           expect(conversation.participants.pluck(:account_id)).to match_array([user.account_id, second.account_id])
           message = conversation.messages.last
@@ -919,15 +919,15 @@ RSpec.describe ZapierInteractorController, type: :request do
       end
 
       context "when no author" do
-        let(:params) { {uids: account_ids, content: "Content", key: key} }
+        let(:params) { {uids: account_ids, content: "Content", key:} }
         let(:second) { create(:specialist) }
         let(:second_uid) { second.uid }
 
         it "creates a system message between user and second" do
-          post("/zapier_interactor/create_message", params: params)
+          post("/zapier_interactor/create_message", params:)
           expect(response).to have_http_status(:success)
           uid = JSON[response.body]["conversation"]
-          conversation = Conversation.find_by(uid: uid)
+          conversation = Conversation.find_by(uid:)
           expect(conversation.messages.count).to eq(1)
           expect(conversation.participants.pluck(:account_id)).to match_array([user.account_id, second.account_id])
           message = conversation.messages.last

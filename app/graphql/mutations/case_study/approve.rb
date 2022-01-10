@@ -25,7 +25,7 @@ module Mutations
           article.update(specialist_approved_at: Time.zone.now)
         end
 
-        {article: article}
+        {article:}
       end
     end
   end

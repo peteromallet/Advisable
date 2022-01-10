@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::CaseStudy::CreateReview do
   let(:oauth_viewer) { OauthViewer.new("uid" => "test", "provider" => "linkedin", "name" => "John Doe", "first_name" => "John", "last_name" => "Doe", "image" => "image_url") }
-  let(:context) { {oauth_viewer: oauth_viewer} }
+  let(:context) { {oauth_viewer:} }
   let(:article) { create(:case_study_article) }
 
   let(:query) do
@@ -30,9 +30,9 @@ RSpec.describe Mutations::CaseStudy::CreateReview do
   end
 
   it "creates a new review" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     uid = response["data"]["createCaseStudyReview"]["review"]["id"]
-    review = Review.find_by!(uid: uid)
+    review = Review.find_by!(uid:)
 
     expect(review.ratings).to eq({"skills" => 3, "availability" => 3, "communication" => 3, "quality_of_work" => 3, "adherence_to_schedule" => 3})
     expect(review.name).to eq("John Doe")
@@ -42,7 +42,7 @@ RSpec.describe Mutations::CaseStudy::CreateReview do
   context "when review already exists" do
     it "returns an error" do
       article.create_review
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("ARTICLE_HAS_EXISTING_REVIEW")
     end
@@ -52,7 +52,7 @@ RSpec.describe Mutations::CaseStudy::CreateReview do
     let(:context) { {oauth_viewer: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end

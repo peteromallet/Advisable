@@ -10,7 +10,7 @@ RSpec.describe Review do
 
   it "updates the specialists reviews_count column" do
     specialist = create(:specialist, reviews_count: 0)
-    expect { create(:review, specialist: specialist) }.to change { specialist.reload.reviews_count }.by(1)
+    expect { create(:review, specialist:) }.to change { specialist.reload.reviews_count }.by(1)
   end
 
   describe "#update_specialist_ratings" do
@@ -23,7 +23,7 @@ RSpec.describe Review do
     end
 
     it "updates the rating" do
-      create(:review, specialist: specialist, ratings: {overall: 6})
+      create(:review, specialist:, ratings: {overall: 6})
       create(:review, specialist: specialist.reload, ratings: {overall: 7})
       expect(specialist.reload.ratings["overall"]).to eq(6.5)
     end

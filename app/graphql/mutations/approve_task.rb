@@ -23,7 +23,7 @@ module Mutations
       ApiError.invalid_request(task.errors.full_messages.first) unless success
       task.financialize!
 
-      {task: task}
+      {task:}
     end
   end
 end

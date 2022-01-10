@@ -24,7 +24,7 @@ module Mutations
       task.assign_attributes(stage: "Submitted", final_cost: args[:final_cost], submitted_at: Time.zone.now)
       save_with_current_account!(task)
 
-      {task: task}
+      {task:}
     end
 
     private

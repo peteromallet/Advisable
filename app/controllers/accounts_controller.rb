@@ -15,7 +15,7 @@ class AccountsController < ApplicationController
   end
 
   def user
-    user = User.find_or_create_by(account: account) do |u|
+    user = User.find_or_create_by(account:) do |u|
       u.company = Company.new(name: Company.fresh_name_for(params[:company_name].strip))
 
       account.permissions << :team_manager
@@ -30,12 +30,12 @@ class AccountsController < ApplicationController
 
     render json: {user_uid: user.uid, account_uid: account.uid}
   rescue ActiveRecord::RecordInvalid => e
-    Sentry.capture_exception(e, extra: {params: params})
+    Sentry.capture_exception(e, extra: {params:})
     render json: {error: "Something went wrong."}, status: :unprocessable_entity
   end
 
   def specialist
-    specialist = Specialist.find_or_create_by(account: account)
+    specialist = Specialist.find_or_create_by(account:)
     %i[airtable_id application_stage].each do |key|
       specialist.public_send("#{key}=", params[key].strip) if params[key].present?
     end
@@ -45,7 +45,7 @@ class AccountsController < ApplicationController
 
     render json: {specialist_uid: specialist.uid, account_uid: account.uid}
   rescue ActiveRecord::RecordInvalid => e
-    Sentry.capture_exception(e, extra: {params: params})
+    Sentry.capture_exception(e, extra: {params:})
     render json: {error: "Something went wrong."}, status: :unprocessable_entity
   end
 

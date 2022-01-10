@@ -24,7 +24,7 @@ module Mutations
       consultation.topic = args[:topic]
 
       consultation.save
-      {consultation: consultation}
+      {consultation:}
     end
   end
 end

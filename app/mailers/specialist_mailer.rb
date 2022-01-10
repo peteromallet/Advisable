@@ -4,7 +4,7 @@ class SpecialistMailer < ApplicationMailer
   layout "styled_mailer"
 
   def confirm(uid:, token:)
-    @specialist = Specialist.find_by(uid: uid)
+    @specialist = Specialist.find_by(uid:)
     @token = token
     mail(to: @specialist.account.email, subject: "Account Confirmation")
   end

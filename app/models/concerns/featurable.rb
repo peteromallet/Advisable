@@ -38,7 +38,7 @@ module Featurable
       end
 
       define_singleton_method("with_#{column.to_s.singularize}") do |feature|
-        where("#{column} ? :feature", feature: feature)
+        where("#{column} ? :feature", feature:)
       end
     end
   end

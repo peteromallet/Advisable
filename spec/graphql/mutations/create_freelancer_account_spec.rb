@@ -42,7 +42,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     AdvisableSchema.execute(
       query,
       context: {
-        session_manager: session_manager,
+        session_manager:,
         client_ip: "1.2.3.4"
       }
     )
@@ -55,7 +55,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
   it "sets first name, last name, and email" do
     data = response["data"]
     uid = data.dig("createFreelancerAccount", "viewer", "id")
-    specialist = Specialist.find_by(uid: uid)
+    specialist = Specialist.find_by(uid:)
     account = specialist.account
     expect(account.first_name).to eq("Test")
     expect(account.last_name).to eq("Account")
@@ -65,7 +65,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
   it "creates an application invitation if a PID is provided" do
     data = response["data"]
     uid = data.dig("createFreelancerAccount", "viewer", "id")
-    specialist = Specialist.find_by(uid: uid)
+    specialist = Specialist.find_by(uid:)
     expect(specialist.applications.first.project).to eq(project)
   end
 
@@ -76,7 +76,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
 
   it "schedules geocode job" do
     uid = response.dig("data", "createFreelancerAccount", "viewer", "id")
-    expect(GeocodeAccountJob).to have_been_enqueued.with(Specialist.find_by(uid: uid).account, "1.2.3.4")
+    expect(GeocodeAccountJob).to have_been_enqueued.with(Specialist.find_by(uid:).account, "1.2.3.4")
   end
 
   context "when no pid is provided" do
@@ -85,7 +85,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     it "doesn't create any application record" do
       data = response["data"]
       uid = data.dig("createFreelancerAccount", "viewer", "id")
-      specialist = Specialist.find_by(uid: uid)
+      specialist = Specialist.find_by(uid:)
       expect(specialist.applications).to be_empty
     end
   end
@@ -107,7 +107,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     it "sets the referrer relation" do
       data = response["data"]
       uid = data.dig("createFreelancerAccount", "viewer", "id")
-      specialist = Specialist.find_by(uid: uid)
+      specialist = Specialist.find_by(uid:)
       expect(specialist.referrer_id).to eq(referrer.id)
       expect(specialist.referrer).to eq(referrer)
       expect(referrer.referred).to eq([specialist])

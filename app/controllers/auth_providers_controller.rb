@@ -9,7 +9,7 @@ class AuthProvidersController < ApplicationController
 
     public_send(provider)
   rescue StandardError => e
-    Sentry.capture_exception(e, extra: {oauth: request.env["omniauth.auth"], oparams: oparams})
+    Sentry.capture_exception(e, extra: {oauth: request.env["omniauth.auth"], oparams:})
     flash[:notice] = "Something went wrong."
     redirect_to "/login/signup"
   end
@@ -91,7 +91,7 @@ class AuthProvidersController < ApplicationController
     )
 
     common_attrs = {
-      account: account,
+      account:,
       campaign_name: oparams[:utm_name],
       campaign_source: oparams[:utm_source],
       campaign_medium: oparams[:utm_medium]

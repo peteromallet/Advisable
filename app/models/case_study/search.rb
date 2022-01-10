@@ -56,7 +56,7 @@ module CaseStudy
       return results_query(limit: nil, exclude: nil) if skills.none?
 
       skill_counts = selected ? CaseStudy::Skill.where(article_id: selected).group(:skill_id).count : {}
-      relevant = results_query(exclude: exclude).pluck(:id, :score)
+      relevant = results_query(exclude:).pluck(:id, :score)
       relevant_skills = CaseStudy::Skill.where(article_id: relevant.map(&:first)).pluck(:article_id, :skill_id).group_by(&:first)
       weighted = relevant.sort_by do |article_id, article_score|
         score = article_score.to_i / 10.0
@@ -75,7 +75,7 @@ module CaseStudy
       if skills.any?
         query = query.joins(:skills).where(case_study_skills: {skill_id: skills.pluck(:skill_id)})
       elsif goals.present?
-        query = query.where("goals ?| array[:goals]", goals: goals)
+        query = query.where("goals ?| array[:goals]", goals:)
       end
       query
     end

@@ -12,15 +12,15 @@ Rails.logger.info "Creating labels"
 
 current_time = Time.zone.now
 Skill.active.find_each do |skill|
-  Label.create(name: skill.name, skill: skill, published_at: current_time)
+  Label.create(name: skill.name, skill:, published_at: current_time)
 end
 
 Industry.active.order(name: :asc).find_each do |industry|
-  Label.create(name: industry.name, industry: industry, published_at: current_time)
+  Label.create(name: industry.name, industry:, published_at: current_time)
 end
 
 Country.find_each do |country|
-  Label.create(name: country.name, country: country, published_at: current_time)
+  Label.create(name: country.name, country:, published_at: current_time)
 end
 
 Rails.logger.info "Creating guild posts"
@@ -42,7 +42,7 @@ Specialist.update_all(guild: true)
   post = Guild::Post.new(
     specialist: random_specialist,
     title: Faker::Quote.yoda[0..149],
-    body: body,
+    body:,
     type: random_post_type,
     status: "published",
     audience_type: "none"
@@ -56,7 +56,7 @@ Specialist.update_all(guild: true)
 
   Rails.logger.info "Attaching an image"
   image = Rails.root.join(Rails.root, "db/seeds/assets/guild/cover.jpg")
-  gpi = Guild::PostImage.create(post: post, cover: true, position: 0)
+  gpi = Guild::PostImage.create(post:, cover: true, position: 0)
   gpi.image.attach(io: File.open(image), filename: "cover.jpg", content_type: "image/jpeg")
   gpi.save
 end
@@ -67,17 +67,17 @@ Rails.logger.info "Creating guild events"
   host = Specialist.order(Arel.sql("RANDOM()")).first
   starts_at = rand(5..90).days.from_now
   event = Event.create(
-    host: host,
+    host:,
     title: Faker::Quote.yoda[0..149],
     description: Faker::Lorem.paragraph_by_chars(number: 4256, supplemental: false),
     published_at: Time.zone.now,
-    starts_at: starts_at,
+    starts_at:,
     ends_at: starts_at + 1.hour
   )
 
   rand(1..10).times do
     attendee = Specialist.where.not(id: host.id).order(Arel.sql("RANDOM()")).first
-    event.event_attendees.create(attendee: attendee) unless event.attendees.exists?(attendee.id)
+    event.event_attendees.create(attendee:) unless event.attendees.exists?(attendee.id)
   end
 
   # Attach random picsum image without being rate limited

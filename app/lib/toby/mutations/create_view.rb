@@ -20,7 +20,7 @@ module Toby
           filters: args[:filters]
         )
 
-        {view: view}
+        {view:}
       end
     end
   end

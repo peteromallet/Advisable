@@ -17,11 +17,11 @@ module Mutations
       specialist = Specialist.find_by!(uid: args[:specialist])
       consultation = current_user.consultations.create!(
         status: "Request Completed",
-        specialist: specialist,
+        specialist:,
         topic: args[:message],
         skill: specialist.articles.first&.skills&.primary&.first&.skill
       )
-      {consultation: consultation}
+      {consultation:}
     end
   end
 end

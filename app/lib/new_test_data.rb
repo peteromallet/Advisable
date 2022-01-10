@@ -52,7 +52,7 @@ class NewTestData
     @now = Time.zone.now
     @sales_person = SalesPerson.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, username: Faker::Internet.username)
     @country = Country.find_or_create_by(name: "Ireland")
-    @company = Company.find_or_create_by(name: "Advisable", sales_person: sales_person)
+    @company = Company.find_or_create_by(name: "Advisable", sales_person:)
   end
 
   def seed!
@@ -77,14 +77,14 @@ class NewTestData
     progressbar = ProgressBar.create(format: "Downloading images: %a %b\u{15E7}%i %p%% %e", progress_mark: " ", remainder_mark: "\u{FF65}", total: missing_images_count)
     while missing_images_count.positive?
       url = "https://source.unsplash.com/featured/"
-      res = Faraday.new(url: url) { |f| f.use(FaradayMiddleware::FollowRedirects) }.get
+      res = Faraday.new(url:) { |f| f.use(FaradayMiddleware::FollowRedirects) }.get
 
       raise "Couldn't download images from Unsplash" unless res.success?
 
       file_path = "#{IMAGES_PATH}/#{res.headers["x-imgix-id"]}.jpg"
       next if File.exist?(file_path)
 
-      File.open(file_path, "wb") { |f| f.write(res.body) }
+      File.binwrite(file_path, res.body)
       progressbar.increment
     end
     @unsplash_images = Dir.glob("#{IMAGES_PATH}*.jpg")
@@ -128,15 +128,15 @@ class NewTestData
   def populate_labels
     labels_data = []
     @skills.each do |name, id|
-      labels_data << {name: name, slug: name.parameterize, skill_id: id, industry_id: nil, country_id: nil, created_at: now, updated_at: now, published_at: now}
+      labels_data << {name:, slug: name.parameterize, skill_id: id, industry_id: nil, country_id: nil, created_at: now, updated_at: now, published_at: now}
     end
 
     @industries.each do |name, id|
-      labels_data << {name: name, slug: name.parameterize, skill_id: nil, industry_id: id, country_id: nil, created_at: now, updated_at: now, published_at: now}
+      labels_data << {name:, slug: name.parameterize, skill_id: nil, industry_id: id, country_id: nil, created_at: now, updated_at: now, published_at: now}
     end
 
     Country.pluck(:name, :id) do |name, id|
-      labels_data << {name: name, slug: name.parameterize, skill_id: nil, industry_id: nil, country_id: id, created_at: now, updated_at: now, published_at: now}
+      labels_data << {name:, slug: name.parameterize, skill_id: nil, industry_id: nil, country_id: id, created_at: now, updated_at: now, published_at: now}
     end
 
     Label.insert_all(labels_data)
@@ -181,7 +181,7 @@ class NewTestData
     @projects.each do |project|
       project_skills_data << {project_id: project, project_type: "Project", skill_id: skill_ids.sample, primary: true, created_at: now, updated_at: now}
       skill_ids.sample(rand(1..5)).each do |skill_id|
-        project_skills_data << {project_id: project, project_type: "Project", skill_id: skill_id, primary: false, created_at: now, updated_at: now}
+        project_skills_data << {project_id: project, project_type: "Project", skill_id:, primary: false, created_at: now, updated_at: now}
       end
     end
     @project_skills = ProjectSkill.insert_all(project_skills_data).pluck("id")
@@ -265,7 +265,7 @@ class NewTestData
         results = []
         rand(2..5).times { results << Faker::Marketing.buzzwords }
         contents << content_hash("CaseStudy::HeadingContent", {size: "h1", text: Faker::Marketing.buzzwords.titleize}, section)
-        contents << content_hash("CaseStudy::ResultsContent", {results: results}, section)
+        contents << content_hash("CaseStudy::ResultsContent", {results:}, section)
         contents << content_hash("CaseStudy::ParagraphContent", {text: Faker::Hipster.paragraph(sentence_count: 12, random_sentences_to_add: 8)}, section)
         contents << content_hash("CaseStudy::ImagesContent", nil, section) if rand(1..3).even? # 1/3 chance
         @content_position = 0
@@ -276,7 +276,7 @@ class NewTestData
 
   def content_hash(type, content, section_id)
     @content_position += 1
-    {type: type, content: content, position: @content_position, created_at: now, updated_at: now, section_id: section_id, uid: CaseStudy::Content.generate_uid}
+    {type:, content:, position: @content_position, created_at: now, updated_at: now, section_id:, uid: CaseStudy::Content.generate_uid}
   end
 
   def attach_images_to_cs_contents

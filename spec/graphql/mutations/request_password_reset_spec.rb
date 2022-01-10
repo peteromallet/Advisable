@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::RequestPasswordReset do
   let(:account) { create(:account, reset_sent_at: nil, reset_digest: nil) }
-  let!(:user) { create(:user, account: account) }
+  let!(:user) { create(:user, account:) }
   let(:email) { account.email }
   let(:query) do
     <<-GRAPHQL

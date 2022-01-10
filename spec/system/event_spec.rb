@@ -4,9 +4,9 @@ require "rails_helper"
 
 RSpec.describe "Event view", type: :system do
   let(:account)    { create(:account, completed_tutorials: ["guild"]) }
-  let(:specialist) { create(:specialist, account: account) }
+  let(:specialist) { create(:specialist, account:) }
   let(:host)       { create(:specialist) }
-  let!(:event)     { create(:event, host: host, url: "http://event.test") }
+  let!(:event)     { create(:event, host:, url: "http://event.test") }
 
   context "when logged in" do
     before do

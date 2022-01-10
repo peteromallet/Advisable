@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Submitting a proposal", type: :system do
   let!(:project) { create(:project) }
-  let!(:application) { create(:application, project: project) }
+  let!(:application) { create(:application, project:) }
 
   before do
     allow_any_instance_of(Project).to receive(:sync_to_airtable)

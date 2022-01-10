@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe PostInterviewJob do
   let(:status) { "Call Scheduled" }
   let(:starts_at) { 20.minutes.ago }
-  let!(:interview) { create(:interview, starts_at: starts_at, status: status) }
+  let!(:interview) { create(:interview, starts_at:, status:) }
 
   it "updates all the statuses and schedules next job" do
     expect(interview.status).to eq("Call Scheduled")

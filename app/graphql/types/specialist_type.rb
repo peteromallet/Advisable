@@ -80,7 +80,7 @@ module Types
     def skills(limit: nil)
       sorted = object.skills.sort_by { |s| [s.projects_count, s.specialists_count] }.reverse!
       sorted[0..(limit || (sorted.size + 1)) - 1].map do |skill|
-        OpenStruct.new(specialist: object, skill: skill)
+        OpenStruct.new(specialist: object, skill:)
       end
     end
 
@@ -200,7 +200,7 @@ module Types
     def applications(status: nil, sales_status: nil)
       applications = object.applications.order(created_at: :desc)
       applications = applications.by_sales_status(sales_status) if sales_status.present?
-      applications = applications.where(status: status) if status.present?
+      applications = applications.where(status:) if status.present?
       applications
     end
 

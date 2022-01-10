@@ -14,7 +14,7 @@ module Mutations
     def resolve(tutorial:)
       viewer = current_user
       viewer.account.complete_tutorial(tutorial)
-      {viewer: viewer}
+      {viewer:}
     end
   end
 end

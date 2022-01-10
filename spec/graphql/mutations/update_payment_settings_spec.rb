@@ -43,7 +43,7 @@ RSpec.describe Mutations::UpdatePaymentSettings do
   end
 
   it "updates the specialists payment settings" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     expect(response["data"]["updatePaymentSettings"]["specialist"]).to eq(
       {
         id: specialist.uid,
@@ -65,7 +65,7 @@ RSpec.describe Mutations::UpdatePaymentSettings do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHENTICATED")
     end
@@ -75,7 +75,7 @@ RSpec.describe Mutations::UpdatePaymentSettings do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("MUST_BE_SPECIALIST")
     end

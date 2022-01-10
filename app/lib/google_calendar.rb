@@ -44,7 +44,7 @@ class GoogleCalendar
       location: "#{ApplicationMailer.default_url_options[:host]}/calls/#{interview.video_call.uid}",
       reminders: Google::Apis::CalendarV3::Event::Reminders.new(use_default: true),
       summary: "Call with #{interview.user.name_with_company} and #{interview.specialist.account.name} about #{interview.application.project.nice_name} Project",
-      description: description,
+      description:,
       attendees: [
         Google::Apis::CalendarV3::EventAttendee.new(email: interview.user.account.email),
         Google::Apis::CalendarV3::EventAttendee.new(email: interview.specialist.account.email)

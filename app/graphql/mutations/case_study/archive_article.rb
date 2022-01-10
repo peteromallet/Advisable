@@ -31,13 +31,13 @@ module Mutations
 
         if args[:feedback] && search
           ::CaseStudy::SearchFeedback.create!(
-            search: search,
-            article: article,
+            search:,
+            article:,
             feedback: args[:feedback]
           )
         end
 
-        {article: article, search: search}
+        {article:, search:}
       end
     end
   end

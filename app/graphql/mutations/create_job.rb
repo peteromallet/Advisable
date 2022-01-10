@@ -13,7 +13,7 @@ module Mutations
       GeocodeAccountJob.perform_later(current_user.account, context[:client_ip]) unless current_user.company.address.provided?
       project = current_user.projects.create(status: "Draft", service_type: "Self-Service")
 
-      {project: project}
+      {project:}
     end
   end
 end

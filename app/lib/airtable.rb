@@ -10,7 +10,7 @@ module Airtable
 
     ActiveRecord::Base.logger.silence do
       Airtable::Base.descendants.each do |table|
-        table.sync(report, started_at: started_at)
+        table.sync(report, started_at:)
       end
     end
 

@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Events view", type: :system do
   let(:account)    { create(:account, completed_tutorials: ["guild"]) }
-  let(:specialist) { create(:specialist, account: account) }
+  let(:specialist) { create(:specialist, account:) }
   let(:host)       { create(:specialist) }
 
   before do
@@ -18,7 +18,7 @@ RSpec.describe "Events view", type: :system do
     end
 
     it "shows if the viewer is attending" do
-      event = create(:event, host: host)
+      event = create(:event, host:)
       visit "/events"
       expect(page).not_to have_content("Attending")
 
@@ -29,7 +29,7 @@ RSpec.describe "Events view", type: :system do
     end
 
     it "includes older events that have ended" do
-      create(:event, starts_at: 2.days.ago, ends_at: 1.day.ago, host: host)
+      create(:event, starts_at: 2.days.ago, ends_at: 1.day.ago, host:)
       visit "/events"
 
       expect(page).to have_content("Ended")

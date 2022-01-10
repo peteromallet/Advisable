@@ -5,12 +5,12 @@ require "rails_helper"
 RSpec.describe Mutations::ScheduleInterview do
   let(:status) { "Call Requested" }
   let(:specialist) { create(:specialist) }
-  let(:application) { create(:application, specialist: specialist) }
+  let(:application) { create(:application, specialist:) }
   let(:user) { create(:user, availability: [Time.zone.now.next_weekday.beginning_of_day]) }
   let(:starts_at) { user.availability.first }
   let(:initial_starts_at) { nil }
   let(:current_user) { specialist }
-  let(:interview) { create(:interview, starts_at: initial_starts_at, status: status, application: application, user: user) }
+  let(:interview) { create(:interview, starts_at: initial_starts_at, status:, application:, user:) }
 
   let(:query) do
     <<-GRAPHQL
@@ -35,7 +35,7 @@ RSpec.describe Mutations::ScheduleInterview do
   end
 
   def request
-    AdvisableSchema.execute(query, context: {current_user: current_user})
+    AdvisableSchema.execute(query, context: {current_user:})
   end
 
   it "sets the interview status to Call Scheduled" do
@@ -110,7 +110,7 @@ RSpec.describe Mutations::ScheduleInterview do
 
   context "when a video call already exists for that interview" do
     it "doesnt create a video call record" do
-      VideoCall.create(interview: interview)
+      VideoCall.create(interview:)
       expect { request }.not_to(change(VideoCall, :count))
     end
   end

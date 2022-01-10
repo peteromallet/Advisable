@@ -60,7 +60,7 @@ class ZapierInteractorController < ApplicationController
 
       if params[:skills].present?
         project.skills = params[:skills].filter_map do |name|
-          Skill.find_by(name: name)
+          Skill.find_by(name:)
         end
       end
 
@@ -68,8 +68,8 @@ class ZapierInteractorController < ApplicationController
         skill = Skill.find_by(name: params[:primary_skill])
         if skill
           project.project_skills.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
-          project.skills << skill unless project.project_skills.find_by(skill: skill)
-          project.project_skills.find_by(skill: skill).update(primary: true)
+          project.skills << skill unless project.project_skills.find_by(skill:)
+          project.project_skills.find_by(skill:).update(primary: true)
         end
       end
 
@@ -244,11 +244,11 @@ class ZapierInteractorController < ApplicationController
             when /^use/
               User
             when /^acc/
-              return Account.find_by!(uid: uid)
+              return Account.find_by!(uid:)
             else
               raise ActiveRecord::RecordNotFound
             end
-    klass.public_send(:find_by!, uid: uid).account
+    klass.public_send(:find_by!, uid:).account
   end
 
   def verify_key!

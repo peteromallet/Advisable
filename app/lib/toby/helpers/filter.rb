@@ -26,7 +26,7 @@ module Toby
         if filter_class.block.present?
           filter_class.block.call(records, attribute, value)
         else
-          filter_class.apply(records, attribute, value: value)
+          filter_class.apply(records, attribute, value:)
         end
       end
     end

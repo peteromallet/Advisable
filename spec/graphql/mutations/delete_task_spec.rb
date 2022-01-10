@@ -5,9 +5,9 @@ require "rails_helper"
 RSpec.describe Mutations::DeleteTask do
   let!(:user) { create(:user) }
   let!(:specialist) { create(:specialist) }
-  let!(:project) { create(:project, user: user) }
-  let!(:application) { create(:application, specialist: specialist, project: project) }
-  let!(:task) { create(:task, application: application, stage: "Not Assigned") }
+  let!(:project) { create(:project, user:) }
+  let!(:application) { create(:application, specialist:, project:) }
+  let!(:task) { create(:task, application:, stage: "Not Assigned") }
   let(:query) do
     <<-GRAPHQL
     mutation {
@@ -39,7 +39,7 @@ RSpec.describe Mutations::DeleteTask do
   end
 
   context "when the stage is 'Assigned'" do
-    let(:task) { create(:task, application: application, stage: "Assigned") }
+    let(:task) { create(:task, application:, stage: "Assigned") }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: {current_user: user})

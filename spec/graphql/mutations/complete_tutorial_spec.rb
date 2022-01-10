@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::CompleteTutorial do
   let(:account) { create(:account, completed_tutorials: []) }
-  let!(:user) { create(:user, account: account) }
+  let!(:user) { create(:user, account:) }
   let(:context) { {current_user: user} }
 
   let(:query) do
@@ -25,7 +25,7 @@ RSpec.describe Mutations::CompleteTutorial do
   end
 
   it "marks the project as complete" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     data = response["data"]["completeTutorial"]["viewer"]["completedTutorials"]
     expect(data).to eq(%w[fixed_projects])
     expect(user.account.reload.completed_tutorials).to include("fixed_projects")
@@ -35,7 +35,7 @@ RSpec.describe Mutations::CompleteTutorial do
     let(:context) { {current_user: nil} }
 
     it "raises an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       data = response["errors"][0]["extensions"]["code"]
       expect(data).to eq("NOT_AUTHENTICATED")
     end

@@ -29,11 +29,11 @@ module Airtable
         Airtable::SalesPerson.find(fields["Interviewer"].first).sync if ::SalesPerson.find_by(airtable_id: fields["Interviewer"].first).nil?
 
         Array(fields["Industry"]).each do |airtable_id|
-          Airtable::Industry.find(airtable_id).sync if ::Industry.find_by(airtable_id: airtable_id).nil?
+          Airtable::Industry.find(airtable_id).sync if ::Industry.find_by(airtable_id:).nil?
         end
 
         Array(fields["Skills"]).each do |airtable_id|
-          Airtable::Skill.find(airtable_id).sync if ::Skill.find_by(airtable_id: airtable_id).nil?
+          Airtable::Skill.find(airtable_id).sync if ::Skill.find_by(airtable_id:).nil?
         end
       end
 
@@ -54,7 +54,7 @@ module Airtable
         if fields["Client Logo"].present?
           url = URI.parse(fields["Client Logo"].first["url"])
           filename = File.basename(url.path)
-          company.logo.attach(io: url.open, filename: filename)
+          company.logo.attach(io: url.open, filename:)
         end
         company.save!
         CompanyFaviconFinderJob.perform_later(company)
@@ -101,13 +101,13 @@ module Airtable
         AttachCoverToArticleJob.perform_later(article)
 
         Array(fields["Industry"]).each do |airtable_id|
-          industry = ::Industry.find_by!(airtable_id: airtable_id)
-          ::CaseStudy::Industry.find_or_create_by!(industry: industry, article: article)
+          industry = ::Industry.find_by!(airtable_id:)
+          ::CaseStudy::Industry.find_or_create_by!(industry:, article:)
         end
 
         Array(fields["Skills"]).each do |airtable_id|
-          skill = ::Skill.find_by!(airtable_id: airtable_id)
-          ::CaseStudy::Skill.find_or_create_by!(skill: skill, article: article)
+          skill = ::Skill.find_by!(airtable_id:)
+          ::CaseStudy::Skill.find_or_create_by!(skill:, article:)
         end
 
         primary_skill = ::Skill.find_by!(airtable_id: fields["Primary Skill"].first)
@@ -121,7 +121,7 @@ module Airtable
     def attach_heading(section, field, size: "h1")
       return if field.blank?
 
-      section.contents.new(type: "CaseStudy::HeadingContent", content: {size: size, text: field}, position: content_position)
+      section.contents.new(type: "CaseStudy::HeadingContent", content: {size:, text: field}, position: content_position)
       increment_content_position
     end
 
@@ -133,17 +133,17 @@ module Airtable
     end
 
     def attach_results(section, results)
-      section.contents.new(type: "CaseStudy::ResultsContent", content: {results: results}, position: content_position)
+      section.contents.new(type: "CaseStudy::ResultsContent", content: {results:}, position: content_position)
       increment_content_position
     end
 
     def attach_links(section, field)
       return if field.blank?
 
-      links = field.first.split("\n").reject(&:blank?)
+      links = field.first.split("\n").compact_blank
       return if links.blank?
 
-      section.contents.new(type: "CaseStudy::LinksContent", content: {links: links}, position: content_position)
+      section.contents.new(type: "CaseStudy::LinksContent", content: {links:}, position: content_position)
       increment_content_position
     end
 
@@ -155,7 +155,7 @@ module Airtable
       fields.each do |field|
         url = URI.parse(field["url"])
         filename = File.basename(url.path)
-        content.images.attach(io: url.open, filename: filename)
+        content.images.attach(io: url.open, filename:)
       end
     end
 

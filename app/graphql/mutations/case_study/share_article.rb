@@ -20,7 +20,7 @@ module Mutations
         article = ::CaseStudy::Article.find_by!(uid: article)
         with = ::User.find_by!(uid: with)
         shared_article = ::CaseStudy::SharedArticle.create(
-          article: article,
+          article:,
           shared_with: with,
           shared_by: current_user
         )
@@ -29,7 +29,7 @@ module Mutations
 
         current_account_responsible_for { shared_article.save! }
 
-        {shared_article: shared_article}
+        {shared_article:}
       end
     end
   end

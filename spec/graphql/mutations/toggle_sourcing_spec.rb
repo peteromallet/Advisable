@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::ToggleSourcing do
   let(:sourcing) { false }
-  let(:project) { create(:project, sourcing: sourcing) }
+  let(:project) { create(:project, sourcing:) }
 
   let(:query) do
     <<-GRAPHQL
@@ -27,7 +27,7 @@ RSpec.describe Mutations::ToggleSourcing do
     let(:sourcing) { false }
 
     it "toggles the sourcing attribute to true" do
-      expect { AdvisableSchema.execute(query, context: context) }.to change {
+      expect { AdvisableSchema.execute(query, context:) }.to change {
         project.reload.sourcing
       }.from(false).to(true)
     end
@@ -37,7 +37,7 @@ RSpec.describe Mutations::ToggleSourcing do
     let(:sourcing) { true }
 
     it "toggles the sourcing attribute to false" do
-      expect { AdvisableSchema.execute(query, context: context) }.to change {
+      expect { AdvisableSchema.execute(query, context:) }.to change {
         project.reload.sourcing
       }.from(true).to(false)
     end
@@ -47,7 +47,7 @@ RSpec.describe Mutations::ToggleSourcing do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end
@@ -57,7 +57,7 @@ RSpec.describe Mutations::ToggleSourcing do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end

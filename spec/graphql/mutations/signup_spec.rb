@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::Signup do
   let(:account) { create(:account, password: nil) }
-  let(:user) { create(:user, account: account) }
+  let(:user) { create(:user, account:) }
   let(:id) { user.uid }
   let(:email) { account.email }
   let(:password) { "testing123" }
@@ -43,7 +43,7 @@ RSpec.describe Mutations::Signup do
   def response
     AdvisableSchema.execute(
       query,
-      context: {session_manager: session_manager}
+      context: {session_manager:}
     )
   end
 
@@ -53,7 +53,7 @@ RSpec.describe Mutations::Signup do
   end
 
   context "when the user is a specialist" do
-    let(:user) { create(:specialist, account: account) }
+    let(:user) { create(:specialist, account:) }
 
     it "returns a viewer" do
       id = response["data"]["signup"]["viewer"]["id"]

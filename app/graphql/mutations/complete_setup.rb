@@ -25,7 +25,7 @@ module Mutations
       end
       specialist.bg_sync_to_airtable
 
-      {specialist: specialist}
+      {specialist:}
     end
   end
 end

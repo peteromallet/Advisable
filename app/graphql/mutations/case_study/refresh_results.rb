@@ -24,7 +24,7 @@ module Mutations
         search = ::CaseStudy::Search.find_by!(uid: id)
         search.refresh_results!
 
-        {search: search}
+        {search:}
       end
     end
   end

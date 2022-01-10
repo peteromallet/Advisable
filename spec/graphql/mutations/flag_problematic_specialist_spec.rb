@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe Mutations::FlagProblematicSpecialist do
   let(:user) { create(:user) }
-  let(:project) { create(:project, user: user) }
-  let(:application) { create(:application, project: project) }
+  let(:project) { create(:project, user:) }
+  let(:application) { create(:application, project:) }
   let(:message) { "This guy. I mean. COME ON!" }
 
   let(:query) do
@@ -24,12 +24,12 @@ RSpec.describe Mutations::FlagProblematicSpecialist do
   let(:context) { {current_user: user} }
 
   it "creates the flag and schedules the mailer" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
 
     success = response["data"]["flagProblematicSpecialist"]["success"]
     expect(success).to eq(true)
 
-    flag = ProblematicFlag.find_by(user: user, application: application)
+    flag = ProblematicFlag.find_by(user:, application:)
     expect(flag.message).to eq(message)
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("StaffMailer", "problematic_specialist", "deliver_now", {args: [flag]})
   end
@@ -39,7 +39,7 @@ RSpec.describe Mutations::FlagProblematicSpecialist do
     let(:context) { {current_user: another_user} }
 
     it "throws an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
 
       error = response["errors"].first
       expect(error["message"]).to eq("The application does not belong to signed in user.")
@@ -51,7 +51,7 @@ RSpec.describe Mutations::FlagProblematicSpecialist do
     let(:context) { {current_user: specialist} }
 
     it "throws an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
 
       error = response["errors"].first
       expect(error["message"]).to eq("Current user must be a User.")

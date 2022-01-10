@@ -6,13 +6,13 @@ RSpec.describe "Hiring flow", type: :system do
   let(:specialist) { create(:specialist) }
   let(:company) { create(:company, payments_setup: false) }
   let(:account) { create(:account, permissions: ["team_manager"]) }
-  let(:user) { create(:user, company: company, account: account) }
-  let(:project) { create(:project, user: user) }
-  let(:application) { create(:application, project: project, specialist: specialist) }
+  let(:user) { create(:user, company:, account:) }
+  let(:project) { create(:project, user:) }
+  let(:application) { create(:application, project:, specialist:) }
 
   it "allows user to hire setup payments and hire the freelancer" do
     invoice_settings = OpenStruct.new(default_payment_method: nil)
-    customer = OpenStruct.new(id: "cus_12345", invoice_settings: invoice_settings)
+    customer = OpenStruct.new(id: "cus_12345", invoice_settings:)
 
     allow(company).to receive(:stripe_customer).and_return(customer)
 

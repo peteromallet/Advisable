@@ -53,7 +53,7 @@ module Uid
 
   def unique_uid
     uid = self.class.generate_uid
-    return uid unless self.class.exists?(uid: uid)
+    return uid unless self.class.exists?(uid:)
 
     unique_uid
   end

@@ -14,7 +14,7 @@ RSpec.describe "Accept interview request", type: :system do
     })
   end
   let(:interview) do
-    create(:interview, status: "Call Requested", user: user)
+    create(:interview, status: "Call Requested", user:)
   end
 
   it "Accepts an interview request" do

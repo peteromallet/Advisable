@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::DeleteJob do
   let(:user) { create(:user) }
-  let!(:project) { create(:project, user: user, status: "Draft") }
+  let!(:project) { create(:project, user:, status: "Draft") }
 
   let(:query) do
     <<-GRAPHQL
@@ -22,9 +22,9 @@ RSpec.describe Mutations::DeleteJob do
     before { allow_any_instance_of(Project).to receive(:remove_from_airtable) }
 
     it "deletes the project" do
-      expect {
+      expect do
         AdvisableSchema.execute(query, context: {current_user: user})
-      }.to change { user.projects.count }.by(-1)
+      end.to change { user.projects.count }.by(-1)
     end
   end
 
@@ -46,7 +46,7 @@ RSpec.describe Mutations::DeleteJob do
   end
 
   context "when the project status is not draft" do
-    let(:project) { create(:project, user: user, status: "Brief Confirmed") }
+    let(:project) { create(:project, user:, status: "Brief Confirmed") }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context: {current_user: user})

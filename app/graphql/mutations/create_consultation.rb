@@ -22,7 +22,7 @@ module Mutations
         account = Account.find_by(email: args[:email])
 
         if account
-          ApiError.invalid_request("EMAIL_BELONGS_TO_A_FREELANCER", "This email belongs to a freelancer account") if Specialist.find_by(account: account)
+          ApiError.invalid_request("EMAIL_BELONGS_TO_A_FREELANCER", "This email belongs to a freelancer account") if Specialist.find_by(account:)
         else
           create_and_login_new_user(args)
         end
@@ -34,7 +34,7 @@ module Mutations
     def resolve(**args)
       ActiveRecord::Base.transaction do
         consultation = create_consultation(**args)
-        {consultation: consultation, viewer: current_user}
+        {consultation:, viewer: current_user}
       end
     end
 
@@ -43,16 +43,16 @@ module Mutations
     def create_consultation(**args)
       skill = Skill.find_by_name!(args[:skill])
       specialist = Specialist.find_by_uid_or_airtable_id!(args[:specialist])
-      consultation = current_user.consultations.find_by(specialist: specialist, status: "Request Started")
+      consultation = current_user.consultations.find_by(specialist:, status: "Request Started")
 
       if consultation.present?
-        consultation.update(skill: skill)
+        consultation.update(skill:)
       else
         consultation = Consultation.create(
           user: current_user,
-          specialist: specialist,
+          specialist:,
           status: "Request Started",
-          skill: skill,
+          skill:,
           source: args[:utm_source],
           request_started_at: Time.zone.now
         )
@@ -70,7 +70,7 @@ module Mutations
       )
 
       user = User.create(
-        account: account,
+        account:,
         company: Company.new(name: Company.fresh_name_for(args[:company])),
         campaign_source: args[:utm_source],
         campaign_name: args[:utm_campaign],

@@ -63,7 +63,7 @@ module Mutations
 
       specialist.bg_sync_to_airtable
 
-      {specialist: specialist}
+      {specialist:}
     end
 
     private

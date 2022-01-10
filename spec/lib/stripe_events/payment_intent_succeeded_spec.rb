@@ -12,7 +12,7 @@ RSpec.describe StripeEvents::PaymentIntentSucceeded do
           amount: 500_00,
           payment_method: "pm_12345",
           status: "succeeded",
-          metadata: metadata
+          metadata:
         })
       })
     })

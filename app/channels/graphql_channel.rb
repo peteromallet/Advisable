@@ -29,7 +29,7 @@ class GraphqlChannel < ApplicationCable::Channel
   def execute_query(data)
     AdvisableSchema.execute(
       query: data["query"],
-      context: context,
+      context:,
       variables: data["variables"],
       operation_name: data["operationName"]
     )
@@ -37,9 +37,9 @@ class GraphqlChannel < ApplicationCable::Channel
 
   def context
     {
-      current_user: current_user,
+      current_user:,
       current_user_id: current_user&.id,
-      current_account: current_account,
+      current_account:,
       current_account_id: current_account&.id,
       channel: self
     }

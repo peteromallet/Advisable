@@ -19,7 +19,7 @@ module Mutations
       task = Task.find_by_uid!(args[:id])
       current_account_responsible_for { task.update(repeat: args[:repeat]) }
 
-      {task: task}
+      {task:}
     end
   end
 end

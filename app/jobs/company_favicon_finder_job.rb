@@ -76,7 +76,7 @@ class CompanyFaviconFinderJob < ApplicationJob
     tempfile = Tempfile.new(filename, binmode: true)
     tempfile.write(data)
     tempfile.close
-    company.favicon.attach(io: File.open(tempfile.path), filename: filename)
+    company.favicon.attach(io: File.open(tempfile.path), filename:)
   end
 
   def parse_company_website

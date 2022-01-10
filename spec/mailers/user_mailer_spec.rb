@@ -6,7 +6,7 @@ RSpec.describe UserMailer do
   describe "#confirm" do
     let(:token) { Token.new }
     let(:user) { create(:user, account: create(:account, confirmation_digest: Token.digest(token))) }
-    let(:mail) { described_class.confirm(uid: user.uid, token: token) }
+    let(:mail) { described_class.confirm(uid: user.uid, token:) }
 
     it "renders correct headers" do
       expect(mail.to).to eq([user.account.email])

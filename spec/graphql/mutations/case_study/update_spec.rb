@@ -92,7 +92,7 @@ RSpec.describe Mutations::CaseStudy::Update do
   end
 
   it "updates the article and saves the position" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     expect(response["data"]["updateCaseStudy"]["article"]["id"]).to eq(article.uid)
 
     expect(article.sections.count).to eq(2)
@@ -119,15 +119,15 @@ RSpec.describe Mutations::CaseStudy::Update do
     end
 
     it "does not update the article" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"].first["message"]).to eq("Content does not follow the type's requirements")
       expect(article.sections.count).to eq(0)
     end
   end
 
   context "when existing images" do
-    let(:section) { create(:case_study_section, article: article) }
-    let(:image_content) { create(:case_study_images_content, section: section) }
+    let(:section) { create(:case_study_section, article:) }
+    let(:image_content) { create(:case_study_images_content, section:) }
     let(:section_extra) { "id: \"#{section.uid}\"" }
     let(:images) do
       <<-GRAPHQL
@@ -145,7 +145,7 @@ RSpec.describe Mutations::CaseStudy::Update do
 
     it "replaces with the new ones" do
       image_content.images.attach(image1)
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["data"]["updateCaseStudy"]["article"]["id"]).to eq(article.uid)
       expect(image_content.images.reload.map(&:signed_id)).to match([image2])
     end
@@ -155,7 +155,7 @@ RSpec.describe Mutations::CaseStudy::Update do
     let(:context) { {current_user: article.specialist} }
 
     it "updates the article" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"]
       expect(error).to be_nil
     end
@@ -165,7 +165,7 @@ RSpec.describe Mutations::CaseStudy::Update do
     let(:context) { {current_user: create(:specialist)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -175,7 +175,7 @@ RSpec.describe Mutations::CaseStudy::Update do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -185,7 +185,7 @@ RSpec.describe Mutations::CaseStudy::Update do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end

@@ -23,7 +23,7 @@ RSpec.describe Mutations::CaseStudy::Approve do
   it "sets approved_at" do
     expect(article.specialist_approved_at).to be_nil
 
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     id = response["data"]["approveCaseStudy"]["article"]["id"]
 
     expect(id).to eq(article.uid)
@@ -34,7 +34,7 @@ RSpec.describe Mutations::CaseStudy::Approve do
     let(:context) { {current_user: create(:specialist)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -44,7 +44,7 @@ RSpec.describe Mutations::CaseStudy::Approve do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -54,7 +54,7 @@ RSpec.describe Mutations::CaseStudy::Approve do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end

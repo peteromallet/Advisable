@@ -77,7 +77,7 @@ RSpec.describe Types::Guild::PostInterface do
     it "includes additional fields for other guild_post types" do
       resp = AdvisableSchema.execute(
         query[advice_required.id],
-        context: context
+        context:
       )
       node = resp.dig("data", "guildPost")
       expect(node).to include(
@@ -89,7 +89,7 @@ RSpec.describe Types::Guild::PostInterface do
     end
 
     context "with a guild_post query" do
-      let(:response) { AdvisableSchema.execute(query[guild_post.id], context: context) }
+      let(:response) { AdvisableSchema.execute(query[guild_post.id], context:) }
       let(:node) { response.dig("data", "guildPost") }
 
       it "includes interface fields for a Guild::Post" do

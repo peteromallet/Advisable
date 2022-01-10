@@ -8,7 +8,7 @@ module Guild
       subscriber = Specialist.first
       post.labels.each { |l| subscriber.subscribe_to!(l) }
 
-      Guild::PostBoostMailer.new_post(post: post, subscriber_id: subscriber.id)
+      Guild::PostBoostMailer.new_post(post:, subscriber_id: subscriber.id)
     end
   end
 end

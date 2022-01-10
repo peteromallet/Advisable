@@ -32,7 +32,7 @@ RSpec.describe Mutations::SetCoverPhoto do
   def execute
     AdvisableSchema.execute(
       query,
-      context: context
+      context:
     )
   end
 

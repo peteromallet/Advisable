@@ -5,24 +5,24 @@ require "rails_helper"
 RSpec.describe Types::SpecialistType do
   let(:specialist) { create(:specialist) }
   let(:context) { {current_user: specialist} }
-  let(:response) { AdvisableSchema.execute(query, context: context) }
+  let(:response) { AdvisableSchema.execute(query, context:) }
 
   describe "applications field" do
     let!(:application1) do
-      create(:application, specialist: specialist, status: "Applied")
+      create(:application, specialist:, status: "Applied")
     end
     let(:project) { create(:project, sales_status: "Lost") }
     let!(:application2) do
       create(
         :application,
-        specialist: specialist, status: "Applied", project: project
+        specialist:, status: "Applied", project:
       )
     end
     let!(:application3) do
-      create(:application, specialist: specialist, status: "Invited To Apply")
+      create(:application, specialist:, status: "Invited To Apply")
     end
     let!(:application4) do
-      create(:application, specialist: specialist, status: "Working")
+      create(:application, specialist:, status: "Working")
     end
 
     let(:query) do
@@ -117,7 +117,7 @@ RSpec.describe Types::SpecialistType do
 
     context "when logged in as a user from the same company" do
       let(:project) { create(:project) }
-      let(:application) { create(:application, specialist: specialist, status: "Applied", project: project) }
+      let(:application) { create(:application, specialist:, status: "Applied", project:) }
       let(:context) { {current_user: create(:user, company: application.project.user.company)} }
 
       it "allows access" do
@@ -162,12 +162,12 @@ RSpec.describe Types::SpecialistType do
 
     context "with a freelancer profile" do
       let(:shadow_ban_specialist) { create(:specialist) }
-      let!(:published_post) { create(:guild_post, specialist: specialist, status: "published") }
-      let!(:removed_post) { create(:guild_post, specialist: specialist, status: "removed") }
+      let!(:published_post) { create(:guild_post, specialist:, status: "published") }
+      let!(:removed_post) { create(:guild_post, specialist:, status: "removed") }
 
       it "only includes published posts" do
         viewer = create(:specialist)
-        create(:guild_post, specialist: specialist, status: "draft")
+        create(:guild_post, specialist:, status: "draft")
         response = AdvisableSchema.execute(query, context: {current_user: viewer})
         specialist_posts = response.dig("data", "specialist", "guildPosts", "nodes")
 
