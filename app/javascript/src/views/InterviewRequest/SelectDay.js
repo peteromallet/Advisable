@@ -6,10 +6,11 @@ import { Heading, Text, Modal, useModal } from "@advisable/donut";
 import { Day, RequestMore } from "./styles";
 import NoAvailability from "./NoAvailability";
 import RequestMoreAvailability from "./RequestMoreAvailability";
-import { useRouteMatch } from "react-router";
+import { useRouteMatch, useLocation } from "react-router";
 
 const SelectDay = ({ clientName, availability, timeZone }) => {
   const modal = useModal();
+  const location = useLocation();
   const match = useRouteMatch();
 
   const dates = reduce(
@@ -50,7 +51,13 @@ const SelectDay = ({ clientName, availability, timeZone }) => {
             const date = DateTime.fromISO(d, { zone: timeZone });
 
             return (
-              <Day key={d} to={`${match.url}/${d}`}>
+              <Day
+                key={d}
+                to={{
+                  ...location,
+                  pathname: `${match.url}/${d}`,
+                }}
+              >
                 <h4>{date.toFormat("cccc")}</h4>
                 <span>{date.toFormat("dd MMM yyyy")}</span>
                 <svg width={10} height={18} fill="none">

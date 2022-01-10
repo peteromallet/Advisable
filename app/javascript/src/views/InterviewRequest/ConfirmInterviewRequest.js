@@ -1,6 +1,6 @@
 import React from "react";
 import { DateTime } from "luxon";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { Heading, Text, Box, Button } from "@advisable/donut";
 import { SCHEDULE_INTERVIEW } from "./queries";
@@ -8,6 +8,7 @@ import Event from "./Event";
 import BackButton from "src/components/BackButton";
 
 export default function ConfirmInterviewRequest() {
+  const history = useHistory();
   const location = useLocation();
   const { datetime, interviewID } = useParams();
   const parsed = DateTime.fromISO(datetime);
@@ -21,15 +22,22 @@ export default function ConfirmInterviewRequest() {
         input: { id: interviewID, startsAt },
       },
     });
+
+    if (location.state?.from) {
+      history.push(location.state.from);
+    }
   };
 
   return (
     <>
       <BackButton
         marginBottom={4}
-        to={`/interview_request/${interviewID}/${parsed.toFormat(
-          "yyyy-MM-dd",
-        )}`}
+        to={{
+          ...location,
+          pathname: `/interview_request/${interviewID}/${parsed.toFormat(
+            "yyyy-MM-dd",
+          )}`,
+        }}
       />
       <Heading marginBottom={2}>Confirm time</Heading>
       <Text fontSize="l" lineHeight="24px" color="neutral800" marginBottom={5}>
