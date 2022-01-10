@@ -30,7 +30,7 @@ RSpec.describe Mutations::CaseStudy::ArchiveArticle do
   end
 
   it "archives the article to the search" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     r_article = response["data"]["archiveCaseStudyArticle"]["article"]
     r_search = response["data"]["archiveCaseStudyArticle"]["search"]
     expect(r_article["id"]).to eq(article.uid)
@@ -43,7 +43,7 @@ RSpec.describe Mutations::CaseStudy::ArchiveArticle do
     let(:extra) { "feedback: \"#{text}\"" }
 
     it "creates SearchFeedback" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       r_article = response["data"]["archiveCaseStudyArticle"]["article"]
       expect(r_article["id"]).to eq(article.uid)
       feedback = search.search_feedbacks.first
@@ -56,7 +56,7 @@ RSpec.describe Mutations::CaseStudy::ArchiveArticle do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -66,7 +66,7 @@ RSpec.describe Mutations::CaseStudy::ArchiveArticle do
     let(:user) { create(:specialist) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end
@@ -76,7 +76,7 @@ RSpec.describe Mutations::CaseStudy::ArchiveArticle do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end

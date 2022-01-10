@@ -24,11 +24,11 @@ module Mutations
         status: :published
       )
 
-      labels = args[:labels].map { |name| Label.find_or_create_by(name: name) }
+      labels = args[:labels].map { |name| Label.find_or_create_by(name:) }
       post.labels = labels
       post.save!
 
-      {post: post}
+      {post:}
     end
   end
 end

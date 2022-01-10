@@ -28,14 +28,14 @@ RSpec.describe Mutations::SetTypeForProject do
   let(:context) { {current_user: application.project.user} }
 
   it "sets the project_type to 'Flexible'" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change {
+    expect { AdvisableSchema.execute(query, context:) }.to change {
       application.reload.project_type
     }.from("Flexible").
       to("Fixed")
   end
 
   it "sets the monthly_limit" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change {
+    expect { AdvisableSchema.execute(query, context:) }.to change {
       application.reload.monthly_limit
     }.from(nil).
       to(400)
@@ -45,7 +45,7 @@ RSpec.describe Mutations::SetTypeForProject do
     let(:project_type) { "invalidType" }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("INVALID_PROJECT_TYPE")
     end
@@ -55,7 +55,7 @@ RSpec.describe Mutations::SetTypeForProject do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end

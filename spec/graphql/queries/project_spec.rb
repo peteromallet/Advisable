@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "project root query", type: :system do
   let(:user) { create(:user) }
-  let(:project) { create(:project, user: user) }
+  let(:project) { create(:project, user:) }
   let(:query) do
     <<-GRAPHQL
     {

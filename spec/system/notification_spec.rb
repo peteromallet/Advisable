@@ -6,7 +6,7 @@ RSpec.describe "Notification", type: :system do
   let(:specialist) { create(:specialist) }
   let(:other_specialist) { create(:specialist) }
   let(:unread_selector) { "//div[@data-testid='unreadNotifications']" }
-  let!(:post) { create(:guild_post, specialist: specialist) }
+  let!(:post) { create(:guild_post, specialist:) }
 
   before do
     specialist.account.update!(completed_tutorials: ["guild"])

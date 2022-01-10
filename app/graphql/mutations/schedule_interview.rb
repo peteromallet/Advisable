@@ -46,7 +46,7 @@ module Mutations
         specialist.account.complete_tutorial("introductory_call")
       end
 
-      {interview: interview}
+      {interview:}
     end
   end
 end

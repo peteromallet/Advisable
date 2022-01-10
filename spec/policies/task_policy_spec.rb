@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TaskPolicy do
@@ -19,7 +20,7 @@ RSpec.describe TaskPolicy do
 
     ["Not Assigned", "Quote Requested", "Quote Provided"].each do |stage|
       context "when the task stage is #{stage}" do
-        let(:task) { create(:task, stage: stage) }
+        let(:task) { create(:task, stage:) }
 
         it "returns true" do
           policy = described_class.new(task.application.project.user, task)
@@ -70,7 +71,7 @@ RSpec.describe TaskPolicy do
 
     ["Not Assigned", "Quote Requested"].each do |stage|
       context "when the task stage is #{stage}" do
-        let(:task) { create(:task, stage: stage) }
+        let(:task) { create(:task, stage:) }
 
         it "returns true for client" do
           policy = described_class.new(task.application.project.user, task)
@@ -86,7 +87,7 @@ RSpec.describe TaskPolicy do
 
     ["Assigned", "Quote Provided"].each do |stage|
       context "when the task stage is #{stage}" do
-        let(:task) { create(:task, stage: stage) }
+        let(:task) { create(:task, stage:) }
 
         it "returns true for specialists" do
           policy = described_class.new(task.application.specialist, task)

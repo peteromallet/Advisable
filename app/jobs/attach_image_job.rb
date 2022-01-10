@@ -14,9 +14,9 @@ class AttachImageJob < ApplicationJob
 
     case object
     when SalesPerson
-      object.image.attach(io: file, filename: filename)
+      object.image.attach(io: file, filename:)
     when Review
-      object.avatar.attach(io: file, filename: filename)
+      object.avatar.attach(io: file, filename:)
     else
       Sentry.capture_message("Don't know what to do with #{object.class.name}")
     end

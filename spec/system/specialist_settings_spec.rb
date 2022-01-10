@@ -9,7 +9,7 @@ RSpec.describe "Specialist settings", type: :system do
 
   it "allows specialist to change their password" do
     account = create(:account, password: "testing123")
-    specialist = create(:specialist, account: account)
+    specialist = create(:specialist, account:)
     authenticate_as specialist
     visit "/settings/password"
     fill_in "currentPassword", with: "testing123"
@@ -22,7 +22,7 @@ RSpec.describe "Specialist settings", type: :system do
 
   it "allows specialist to change their email" do
     account = create(:account, password: "testing123")
-    specialist = create(:specialist, account: account)
+    specialist = create(:specialist, account:)
     authenticate_as specialist
     visit "/settings/general"
     fill_in "email", with: "update@test.com", fill_options: {clear: :backspace}

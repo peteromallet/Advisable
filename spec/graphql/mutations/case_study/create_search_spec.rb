@@ -27,9 +27,9 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
   end
 
   it "creates a new search" do
-    request = AdvisableSchema.execute(query, context: context)
+    request = AdvisableSchema.execute(query, context:)
     uid = request["data"]["createCaseStudySearch"]["search"]["id"]
-    search = ::CaseStudy::Search.find_by!(uid: uid)
+    search = ::CaseStudy::Search.find_by!(uid:)
     expect(search.business_type).to eq("B2B")
     expect(search.goals).to match_array(%w[First Second])
     expect(search.name).to eq("A Search")
@@ -43,7 +43,7 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     let(:user) { create(:specialist) }
 
     it "returns an error" do
-      request = AdvisableSchema.execute(query, context: context)
+      request = AdvisableSchema.execute(query, context:)
       error = request["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end
@@ -53,7 +53,7 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      request = AdvisableSchema.execute(query, context: context)
+      request = AdvisableSchema.execute(query, context:)
       error = request["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end

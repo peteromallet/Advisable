@@ -28,20 +28,20 @@ module Mutations
             goals: args[:goals],
             preferences: args[:preferences],
             business_type: args[:business_type],
-            selected: selected,
+            selected:,
             results: selected
           )
 
           skill_ids = ::CaseStudy::Skill.where(article_id: selected).distinct.pluck(:skill_id)
           ::Skill.where(id: skill_ids).each do |skill|
-            ::CaseStudy::Skill.create!(search: search, skill: skill)
+            ::CaseStudy::Skill.create!(search:, skill:)
           end
 
           search.refresh_results!
           search
         end
 
-        {search: search}
+        {search:}
       end
     end
   end

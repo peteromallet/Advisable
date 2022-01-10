@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "airtable syncing" do |config = {}|
+RSpec.shared_examples("airtable syncing") do |config = {}|
   let(:factory) { described_class.sync_model.to_s.underscore }
 
   it "has a table_name" do
@@ -30,15 +30,15 @@ RSpec.shared_examples "airtable syncing" do |config = {}|
     it "can pass through a filter" do
       filter = "TEST"
       allow(described_class).to receive(:all).and_return([])
-      described_class.sync(filter: filter)
-      expect(described_class).to have_received(:all).with(filter: filter, view: nil)
+      described_class.sync(filter:)
+      expect(described_class).to have_received(:all).with(filter:, view: nil)
     end
 
     it "can pass through a view" do
       view = "TEST"
       allow(described_class).to receive(:all).and_return([])
-      described_class.sync(view: view, filter: nil)
-      expect(described_class).to have_received(:all).with(filter: nil, view: view)
+      described_class.sync(view:, filter: nil)
+      expect(described_class).to have_received(:all).with(filter: nil, view:)
     end
 
     it "accepts a report object and passes it to each #sync call" do
@@ -90,7 +90,7 @@ RSpec.shared_examples "airtable syncing" do |config = {}|
   end
 end
 
-RSpec.shared_examples "sync airtable column" do |column, config|
+RSpec.shared_examples("sync airtable column") do |column, config|
   it "sync the #{column} column to #{config[:to]}" do
     factory = described_class.sync_model.to_s.underscore
     record = build(factory)
@@ -116,7 +116,7 @@ RSpec.shared_examples "sync airtable column" do |column, config|
   end
 end
 
-RSpec.shared_examples "sync airtable association" do |column, config|
+RSpec.shared_examples("sync airtable association") do |column, config|
   let(:factory) { described_class.sync_model.to_s.underscore }
   let(:record) { build(factory) }
   let(:default_fields) { config[:fields] || {} }
@@ -153,8 +153,8 @@ RSpec.shared_examples "sync airtable association" do |column, config|
   end
 end
 
-RSpec.shared_examples "sync airtable columns to association" do |config|
-  let(:data) { config[:columns].map { |c| [c[:from], c[:with]] }.to_h }
+RSpec.shared_examples("sync airtable columns to association") do |config|
+  let(:data) { config[:columns].to_h { |c| [c[:from], c[:with]] } }
   let!(:record) { create(described_class.sync_model.to_s.underscore) }
   let(:airtable) { described_class.new(data, id: record.airtable_id) }
 

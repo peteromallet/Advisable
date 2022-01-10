@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::ConfirmAccount do
@@ -36,13 +37,13 @@ RSpec.describe Mutations::ConfirmAccount do
   let(:response) do
     AdvisableSchema.execute(
       query,
-      context: {session_manager: session_manager}
+      context: {session_manager:}
     )
   end
 
   before do
     allow(session_manager).to receive(:login)
-    create(:user, account: account)
+    create(:user, account:)
   end
 
   it "returns the viewer" do

@@ -10,7 +10,7 @@ class GraphqlController < ApplicationController
     result = with_query_tracing do
       AdvisableSchema.execute(
         query,
-        variables: variables, context: graphql_context, operation_name: operation_name
+        variables:, context: graphql_context, operation_name:
       )
     end
     render json: result
@@ -21,7 +21,7 @@ class GraphqlController < ApplicationController
       Toby::Schema.execute(
         params[:query],
         variables: ensure_hash(params[:variables]),
-        context: {session_manager: session_manager},
+        context: {session_manager:},
         operation_name: params[:operationName]
       )
     end

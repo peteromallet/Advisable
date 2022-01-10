@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::RejectApplication do
@@ -19,9 +20,9 @@ RSpec.describe Mutations::RejectApplication do
   end
 
   let(:context) { {current_user: user} }
-  let(:response) { AdvisableSchema.execute(query, context: context) }
+  let(:response) { AdvisableSchema.execute(query, context:) }
 
-  before :each do
+  before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
   end
 

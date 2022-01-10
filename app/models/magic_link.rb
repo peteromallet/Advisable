@@ -20,7 +20,7 @@ class MagicLink < ApplicationRecord
   # In order to use a magic link we need three things; the token, the account
   # that we are trying to authenticate and the path to access.
   def self.for_path(account:, token:, path:)
-    account.magic_links.not_expired.where(path: path).find do |ml|
+    account.magic_links.not_expired.where(path:).find do |ml|
       ml.valid_token(token)
     end
   end

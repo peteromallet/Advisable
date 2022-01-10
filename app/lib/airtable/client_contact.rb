@@ -41,7 +41,7 @@ module Airtable
           airtable_sp = Airtable::SalesPerson.find(sales_person_airtable_id)
           sales_person = airtable_sp.sync
         end
-        user.company.update(sales_person: sales_person)
+        user.company.update(sales_person:)
       end
 
       industry_id = self["Industry"].try(:first)

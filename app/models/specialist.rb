@@ -85,7 +85,7 @@ class Specialist < ApplicationRecord
 
   def send_confirmation_email
     token = account.create_confirmation_token
-    SpecialistMailer.confirm(uid: uid, token: token).deliver_later
+    SpecialistMailer.confirm(uid:, token:).deliver_later
   end
 
   # Whether or not the specialist has provided payment information. Returns true
@@ -105,7 +105,7 @@ class Specialist < ApplicationRecord
     elsif ::Specialist.airtable_id?(username)
       ::Specialist.deprecated_find_by_airtable_id(username)
     else
-      ::Specialist.find_by(username: username)
+      ::Specialist.find_by(username:)
     end
   end
 

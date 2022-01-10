@@ -38,7 +38,7 @@ module Mutations
         ApiError.invalid_request("MUST_BE_CLIENT_OR_SPECIALIST", "Current user must be a client or a specialist.")
       end
 
-      {interview: interview}
+      {interview:}
     end
   end
 end

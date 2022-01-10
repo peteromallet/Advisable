@@ -142,7 +142,7 @@ RSpec.describe Airtable::Specialist do
 
   describe "unsubscriptions" do
     let(:account) { create(:account) }
-    let(:specialist) { create(:specialist, account: account) }
+    let(:specialist) { create(:specialist, account:) }
     let(:fields) { {"Email Address" => "test@airtable.com", "Unsubscribe - Marketing Emails" => "Yes", "Unsubscribe - Onboarding Emails" => "Yes"} }
     let(:airtable) { described_class.new(fields, id: specialist.airtable_id) }
 

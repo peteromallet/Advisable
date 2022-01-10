@@ -27,7 +27,7 @@ module Mutations
 
       ap = Application.find_by!(uid: application)
       current_account_responsible_for do
-        ap.update(project_type: project_type, monthly_limit: monthly_limit)
+        ap.update(project_type:, monthly_limit:)
       end
       {application: ap}
     end

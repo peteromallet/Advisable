@@ -26,15 +26,15 @@ RSpec.describe Mutations::SendMessage do
     GRAPHQL
   end
 
-  let(:context) { {current_user: current_user, current_account: current_account} }
+  let(:context) { {current_user:, current_account:} }
 
   before do
-    create(:conversation_participant, account: current_user.account, conversation: conversation) if current_user
+    create(:conversation_participant, account: current_user.account, conversation:) if current_user
   end
 
   it "creates the message and updates last_read_at" do
     expect(conversation.participants.first.last_read_at).to be_nil
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     message = response["data"]["sendMessage"]["message"]
     expect(message["content"]).to eq("This is the message content.")
     expect(message["author"]["id"]).to eq(current_user.account.uid)
@@ -45,7 +45,7 @@ RSpec.describe Mutations::SendMessage do
     let(:current_user) { nil }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
@@ -55,7 +55,7 @@ RSpec.describe Mutations::SendMessage do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
@@ -66,7 +66,7 @@ RSpec.describe Mutations::SendMessage do
 
     it "creates the message but does not change last_read_at" do
       expect(conversation.participants.first.last_read_at).to be_nil
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       message = response["data"]["sendMessage"]["message"]
       expect(message["content"]).to eq("This is the message content.")
       expect(message["author"]["id"]).to eq(current_account.uid)

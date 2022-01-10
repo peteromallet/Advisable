@@ -33,7 +33,7 @@ RSpec.describe(User, type: :model) do
   describe "#name_with_company" do
     let(:account) { create(:account, first_name: "Bob", last_name: "Vance") }
     let(:company) { create(:company, name: "Vance Refrigeration") }
-    let(:user) { create(:user, account: account, company: company) }
+    let(:user) { create(:user, account:, company:) }
 
     it "includes company" do
       expect(user.name_with_company).to eq("Bob Vance from Vance Refrigeration")

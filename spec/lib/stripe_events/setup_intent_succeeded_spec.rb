@@ -18,7 +18,7 @@ RSpec.describe StripeEvents::SetupIntentSucceeded do
 
   before do
     allow(UpdateCompanysPaymentMethodJob).to receive(:perform_later)
-    create(:user, company: company)
+    create(:user, company:)
   end
 
   it "sets the setup_intent_status attribute for the user to succeeded" do

@@ -18,7 +18,7 @@ module Mutations
     def resolve(**args)
       project = Project.find_by_uid_or_airtable_id!(args[:project])
       current_account_responsible_for { project.update(sourcing: !project.sourcing) }
-      {project: project}
+      {project:}
     end
   end
 end

@@ -31,9 +31,9 @@ RSpec.describe Mutations::CaseStudy::UpdateSearch do
   end
 
   it "updates a search" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     uid = response["data"]["updateCaseStudySearch"]["search"]["id"]
-    search = ::CaseStudy::Search.find_by!(uid: uid)
+    search = ::CaseStudy::Search.find_by!(uid:)
     expect(search.attributes.values_at("business_type", "goals", "name", "user_id")).to match_array(["B2B", %w[First Second], "A Search", user.id])
   end
 
@@ -46,9 +46,9 @@ RSpec.describe Mutations::CaseStudy::UpdateSearch do
     end
 
     it "creates the skills" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       uid = response["data"]["updateCaseStudySearch"]["search"]["id"]
-      search = ::CaseStudy::Search.find_by!(uid: uid)
+      search = ::CaseStudy::Search.find_by!(uid:)
       expect(search.skills.count).to eq(2)
       expect(search.skills.primary.count).to eq(1)
       expect(search.skills.primary.first.skill.name).to eq("Primary")
@@ -56,11 +56,11 @@ RSpec.describe Mutations::CaseStudy::UpdateSearch do
 
     context "when skills already exist" do
       it "updates the skills" do
-        ::CaseStudy::Skill.create!(search: search, primary: true, skill: skill)
-        ::CaseStudy::Skill.create!(search: search, primary: false, skill: create(:skill, name: "Third"))
-        response = AdvisableSchema.execute(query, context: context)
+        ::CaseStudy::Skill.create!(search:, primary: true, skill:)
+        ::CaseStudy::Skill.create!(search:, primary: false, skill: create(:skill, name: "Third"))
+        response = AdvisableSchema.execute(query, context:)
         uid = response["data"]["updateCaseStudySearch"]["search"]["id"]
-        search = ::CaseStudy::Search.find_by!(uid: uid)
+        search = ::CaseStudy::Search.find_by!(uid:)
         expect(search.skills.count).to eq(2)
         expect(search.skills.primary.count).to eq(1)
         expect(search.skills.primary.first.skill.name).to eq("Primary")
@@ -72,7 +72,7 @@ RSpec.describe Mutations::CaseStudy::UpdateSearch do
     let(:user) { create(:user) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -82,7 +82,7 @@ RSpec.describe Mutations::CaseStudy::UpdateSearch do
     let(:user) { create(:specialist) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end
@@ -92,7 +92,7 @@ RSpec.describe Mutations::CaseStudy::UpdateSearch do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end

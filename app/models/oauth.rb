@@ -4,7 +4,7 @@ class Oauth < SimpleDelegator
   extend Memoist
 
   memoize def identifiers
-    {provider: provider, uid: uid}
+    {provider:, uid:}
   end
 
   memoize def identifiers_with_blob
@@ -13,8 +13,8 @@ class Oauth < SimpleDelegator
 
   memoize def identifiers_with_blob_and_token
     identifiers_with_blob.merge(
-      token: token,
-      refresh_token: refresh_token,
+      token:,
+      refresh_token:,
       expires_at: Time.zone.at(expires_at)
     )
   end

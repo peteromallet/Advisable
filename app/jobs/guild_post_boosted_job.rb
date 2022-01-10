@@ -7,11 +7,11 @@ class GuildPostBoostedJob < ApplicationJob
     subscriber_ids = Subscription.where(label_id: label_ids).where.not(specialist_id: post.specialist_id).distinct.pluck(:specialist_id)
 
     subscriber_ids.each do |id|
-      Guild::PostBoostMailer.new_post(post: post, subscriber_id: id).deliver_later
+      Guild::PostBoostMailer.new_post(post:, subscriber_id: id).deliver_later
     end
 
     Account.joins(:specialist).where("specialists.id" => subscriber_ids).each do |account|
-      Notification.create!(account: account, action: "suggested_post", notifiable: post)
+      Notification.create!(account:, action: "suggested_post", notifiable: post)
     end
   end
 end

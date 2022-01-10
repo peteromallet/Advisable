@@ -8,7 +8,7 @@ module Mutations
     field :viewer, Types::ViewerUnion, null: true
 
     def resolve(email:, password:)
-      account = Account.find_by(email: email)
+      account = Account.find_by(email:)
       ApiError.invalid_request("AUTHENTICATION_FAILED", "Account does not exist") unless account&.has_password?
       ApiError.invalid_request("AUTHENTICATION_FAILED", "Invalid credentials") unless account.authenticate(password)
 

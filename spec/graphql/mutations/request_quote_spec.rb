@@ -23,7 +23,7 @@ RSpec.describe Mutations::RequestQuote do
   let(:context) { {current_user: task.application.project.user} }
 
   it "sets the stage to 'Quote Requested'" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     stage = response["data"]["requestQuote"]["task"]["stage"]
     expect(stage).to eq("Quote Requested")
   end
@@ -32,7 +32,7 @@ RSpec.describe Mutations::RequestQuote do
     let(:task) { create(:task, stage: "Not Assigned", name: nil) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["message"]).to eq("tasks.nameRequired")
     end
@@ -42,7 +42,7 @@ RSpec.describe Mutations::RequestQuote do
     let(:task) { create(:task, stage: "Not Assigned", description: nil) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["message"]).to eq("tasks.descriptionRequired")
     end
@@ -52,7 +52,7 @@ RSpec.describe Mutations::RequestQuote do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
@@ -62,7 +62,7 @@ RSpec.describe Mutations::RequestQuote do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
@@ -72,7 +72,7 @@ RSpec.describe Mutations::RequestQuote do
     let(:context) { {current_user: task.application.specialist} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
@@ -82,7 +82,7 @@ RSpec.describe Mutations::RequestQuote do
     let(:task) { create(:task, stage: "Assigned") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["message"]).to eq("tasks.cantRequestQuote")
     end
@@ -92,7 +92,7 @@ RSpec.describe Mutations::RequestQuote do
     let(:task) { create(:task, stage: "Working") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["message"]).to eq("tasks.cantRequestQuote")
     end
@@ -102,7 +102,7 @@ RSpec.describe Mutations::RequestQuote do
     let(:task) { create(:task, stage: "Submitted") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["message"]).to eq("tasks.cantRequestQuote")
     end

@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Teams", type: :system do
   let(:account) { create(:account, permissions: ["team_manager"]) }
-  let(:manager) { create(:user, account: account) }
+  let(:manager) { create(:user, account:) }
   let!(:non_manager) { create(:user, company: manager.company) }
 
   before do

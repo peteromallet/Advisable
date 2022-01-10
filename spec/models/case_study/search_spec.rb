@@ -200,7 +200,7 @@ RSpec.describe CaseStudy::Search, type: :model do
       results = search.weighted_results(exclude: selected)
       expect(results.pluck(:id)).to eq([article2.id, article3.id, article1.id])
 
-      search.update(selected: selected)
+      search.update(selected:)
       results = search.weighted_results(exclude: selected)
       expect(results.pluck(:id)).to eq([article1.id, article2.id, article3.id])
     end

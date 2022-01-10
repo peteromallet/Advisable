@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::ResetPassword do
@@ -6,7 +7,7 @@ RSpec.describe Mutations::ResetPassword do
   let(:input_token) { token }
   let(:digest) { Token.digest(token) }
   let(:account) { create(:account, reset_sent_at: 1.hour.ago, reset_digest: digest) }
-  let!(:user) { create(:user, account: account) }
+  let!(:user) { create(:user, account:) }
   let(:password) { "newpassword123" }
   let(:query) do
     <<-GRAPHQL

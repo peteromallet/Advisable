@@ -28,7 +28,7 @@ RSpec.describe Skill do
       expect(duplicate.consultations).to eq([consultation])
       expect(original.specialists_count).to eq(0)
 
-      original.merge_with!(duplicate: duplicate)
+      original.merge_with!(duplicate:)
       original.reload
 
       expect(original.specialists).to eq([specialist])
@@ -49,7 +49,7 @@ RSpec.describe Skill do
           another_post.labels << original_label
           expect(duplicate.label.guild_posts).to eq([post])
 
-          original.merge_with!(duplicate: duplicate)
+          original.merge_with!(duplicate:)
 
           expect(Label.where(id: label.id)).to eq([])
           expect(original.label.reload.guild_posts.pluck(:id)).to contain_exactly(post.id, another_post.id)
@@ -61,7 +61,7 @@ RSpec.describe Skill do
           post.labels << label
           expect(duplicate.label.guild_posts).to eq([post])
 
-          original.merge_with!(duplicate: duplicate)
+          original.merge_with!(duplicate:)
 
           expect(original.reload.label.guild_posts).to eq([post])
           expect(label.skill).to eq(original)

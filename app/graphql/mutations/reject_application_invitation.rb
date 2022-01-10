@@ -25,7 +25,7 @@ module Mutations
 
       ApiError.invalid_request("FAILED_TO_REJECT_APPLICATION") unless success
 
-      {application: application}
+      {application:}
     end
   end
 end

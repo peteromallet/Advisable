@@ -6,8 +6,8 @@ RSpec.describe RefreshCaseStudySearchesJob do
   let!(:user) { create(:user, account: create(:account)) }
   let!(:user2) { create(:user, account: create(:account)) }
   let!(:user_without_access) { create(:user, application_status: "Submitted") }
-  let(:search1) { create(:case_study_search, user: user) }
-  let(:search2) { create(:case_study_search, user: user) }
+  let(:search1) { create(:case_study_search, user:) }
+  let(:search2) { create(:case_study_search, user:) }
   let(:search3) { create(:case_study_search, user: user2) }
   let(:search4) { create(:case_study_search, user: user_without_access) }
   let(:article1) { create(:case_study_article, score: 90) }

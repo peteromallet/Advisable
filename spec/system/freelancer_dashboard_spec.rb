@@ -5,9 +5,9 @@ require "rails_helper"
 RSpec.describe "Freelancer dashboard", type: :system do
   let(:account) { create(:account) }
   let(:application_stage) { "Accepted" }
-  let(:specialist) { create(:specialist, application_stage: application_stage, account: account) }
+  let(:specialist) { create(:specialist, application_stage:, account:) }
   let!(:article) { create(:case_study_article, published_at: 1.hour.ago, title: "Article title") }
-  let!(:post) { create(:guild_post, pinned: true, specialist: specialist, type: "Opportunity") }
+  let!(:post) { create(:guild_post, pinned: true, specialist:, type: "Opportunity") }
   let!(:event) { create(:event, title: "Big event") }
 
   it "displays posts, events and articles" do

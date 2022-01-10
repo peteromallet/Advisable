@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Mutations::UpdateAvatar do
-  let(:context) { {current_user: current_user, current_account: current_user&.account} }
+  let(:context) { {current_user:, current_account: current_user&.account} }
   let(:file) { Rails.root.join("spec/support/test.pdf") }
   let(:signed_id) { ActiveStorage::Blob.create_and_upload!(io: File.open(file), filename: "test.pdf").signed_id }
 
@@ -35,7 +35,7 @@ RSpec.describe Mutations::UpdateAvatar do
     let(:current_user) { create(:user) }
 
     it "updates the avatar" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       id = response["data"]["updateAvatar"]["viewer"]["id"]
       expect(id).to eq(current_user.uid)
       expect(current_user.account.avatar.blob.signed_id).to eq(signed_id)
@@ -46,7 +46,7 @@ RSpec.describe Mutations::UpdateAvatar do
     let(:current_user) { create(:specialist) }
 
     it "updates the avatar" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       id = response["data"]["updateAvatar"]["viewer"]["id"]
       expect(id).to eq(current_user.uid)
       expect(current_user.account.avatar.blob.signed_id).to eq(signed_id)
@@ -57,7 +57,7 @@ RSpec.describe Mutations::UpdateAvatar do
     let(:current_user) { nil }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
 
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")

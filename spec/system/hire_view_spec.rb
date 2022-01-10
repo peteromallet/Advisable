@@ -33,7 +33,7 @@ RSpec.describe "Hire view", type: :system do
 
   context "when application has an interview scheduled" do
     let!(:application) { create(:application, status: "Interview Scheduled") }
-    let!(:interview) { create(:interview, user: application.project.user, application: application, starts_at: 1.day.from_now, status: "Call Scheduled") }
+    let!(:interview) { create(:interview, user: application.project.user, application:, starts_at: 1.day.from_now, status: "Call Scheduled") }
 
     it "allows user to click into interview details" do
       authenticate_as(application.project.user)

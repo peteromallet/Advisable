@@ -20,10 +20,10 @@ class TobyController < ApplicationController
     cache_key = "#{cache_key}_#{current_account.id}" if per_account
 
     result = Rails.cache.fetch(cache_key) do
-      Toby::Schema.execute(query, context: {session_manager: session_manager}).to_h
+      Toby::Schema.execute(query, context: {session_manager:}).to_h
     end
 
-    @prefetched_queries << {query: query, result: result}
+    @prefetched_queries << {query:, result:}
   end
 
   def admin?

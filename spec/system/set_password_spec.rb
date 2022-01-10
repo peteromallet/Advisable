@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Setting a password", type: :system do
   let(:account) { create(:account, password: nil) }
-  let(:user) { create(:user, account: account) }
+  let(:user) { create(:user, account:) }
 
   it "asks authenticated users to set a password when they havent yet set one" do
     authenticate_as(user)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace :demo do
   task create_specialists: :environment do
     skills = Skill.all
@@ -10,22 +11,22 @@ namespace :demo do
       account = Account.create(email: Faker::Internet.email)
       specialist =
         Specialist.create(
-          account: account,
+          account:,
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name,
           city: Faker::Address.city,
-          country: country,
+          country:,
           hourly_rate: 100,
           average_score: 80
         )
 
       # create skills
-      5.times do |s|
+      5.times do |_s|
         skill = skills.sample
         specialist.skills << skill
       end
 
-      5.times do |p|
+      5.times do |_p|
         industry = industries.sample
         skill = skills.sample
 
@@ -35,11 +36,11 @@ namespace :demo do
           contact_job_title: Faker::Job.title,
           client_name: Faker::Company.name,
           project_industries: [
-            ProjectIndustry.new(industry: industry, primary: true),
+            ProjectIndustry.new(industry:, primary: true),
             ProjectIndustry.new(industry: industries.sample)
           ],
           project_skills: [
-            ProjectSkill.new(skill: skill, primary: true),
+            ProjectSkill.new(skill:, primary: true),
             ProjectSkill.new(skill: skills.sample),
             ProjectSkill.new(skill: skills.sample),
             ProjectSkill.new(skill: skills.sample)
@@ -48,10 +49,10 @@ namespace :demo do
       end
 
       # Create on platform projects
-      5.times do |p|
+      5.times do |_p|
         account = Account.create(email: Faker::Internet.email, permissions: [:team_manager])
         user = User.create(
-          account: account,
+          account:,
           company: Company.new(name: Company.fresh_name_for(Faker::Company.name)),
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name,
@@ -63,12 +64,12 @@ namespace :demo do
 
         project =
           user.projects.create(
-            name: "#{skill.name}",
+            name: skill.name.to_s,
             service_type: "Self-Service",
             primary_skill: skill.name,
             industry: industry.name,
             project_skills: [
-              ProjectSkill.new(skill: skill, primary: true),
+              ProjectSkill.new(skill:, primary: true),
               ProjectSkill.new(skill: skills.sample),
               ProjectSkill.new(skill: skills.sample),
               ProjectSkill.new(skill: skills.sample)
@@ -78,7 +79,7 @@ namespace :demo do
         puts project.errors.full_messages
 
         project.applications.create(
-          status: "Stopped Working", specialist: specialist
+          status: "Stopped Working", specialist:
         )
       end
     end

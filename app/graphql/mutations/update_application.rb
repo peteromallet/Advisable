@@ -44,14 +44,14 @@ module Mutations
       save_with_current_account!(application)
       application.specialist.update(bio: args[:introduction]) if args[:persist_bio] && args[:introduction].present?
 
-      {application: application}
+      {application:}
     end
 
     private
 
     def massage_attributes(args)
       questions = (args[:questions] || []).map { |qa| {question: qa.question, answer: qa.answer} }
-      args.except(:id, :questions).merge({questions: questions})
+      args.except(:id, :questions).merge({questions:})
     end
 
     def add_q_and_a(application, questions)

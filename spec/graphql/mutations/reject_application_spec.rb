@@ -24,7 +24,7 @@ RSpec.describe Mutations::RejectApplication do
   let(:context) { {current_user: application.project.user} }
 
   def request
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
   end
 
   it "sets the status to ApplicationRejected" do

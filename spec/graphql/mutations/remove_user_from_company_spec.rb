@@ -29,7 +29,7 @@ RSpec.describe Mutations::RemoveUserFromCompany do
   end
 
   it "removes the user from the company" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     success = response["data"]["removeUserFromCompany"]["success"]
     expect(success).to be_truthy
 
@@ -43,7 +43,7 @@ RSpec.describe Mutations::RemoveUserFromCompany do
     let(:user) { create(:user) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("MUST_BE_TEAM_MANAGER")
     end
@@ -53,7 +53,7 @@ RSpec.describe Mutations::RemoveUserFromCompany do
     let(:dummy_user) { create(:user) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("USER_BELONGS_TO_A_DIFFERENT_COMPANY")
     end
@@ -63,7 +63,7 @@ RSpec.describe Mutations::RemoveUserFromCompany do
     let(:dummy_user) { user }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("NO_USERS_LEFT_IN_THE_COMPANY")
     end

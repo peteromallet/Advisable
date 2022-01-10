@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::UpdatePassword do
   let(:account) { create(:account, password: current_password) }
-  let(:user) { create(:user, account: account) }
+  let(:user) { create(:user, account:) }
   let(:current_password) { "testing123" }
   let(:password) { "123testing" }
   let(:password_confirmation) { password }
@@ -39,17 +40,17 @@ RSpec.describe Mutations::UpdatePassword do
     context "when user" do
       it "updates password" do
         expect(account.authenticate(password)).to be_falsy
-        AdvisableSchema.execute(query, context: context)
+        AdvisableSchema.execute(query, context:)
         expect(account.authenticate(password)).to be_truthy
       end
     end
 
     context "when specialist" do
-      let(:user) { create(:specialist, account: account) }
+      let(:user) { create(:specialist, account:) }
 
       it "updates password" do
         expect(account.authenticate(password)).to be_falsy
-        AdvisableSchema.execute(query, context: context)
+        AdvisableSchema.execute(query, context:)
         expect(account.authenticate(password)).to be_truthy
       end
     end
@@ -60,7 +61,7 @@ RSpec.describe Mutations::UpdatePassword do
 
     it "does not change password" do
       expect(account.authenticate(password)).to be_falsy
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["extensions"]["code"]).to eq("CAN_NOT_CHANGE_PASSWORD")
       expect(account.authenticate(password)).to be_falsy
     end
@@ -71,7 +72,7 @@ RSpec.describe Mutations::UpdatePassword do
 
     it "does not change password" do
       expect(account.authenticate(password)).to be_falsy
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["extensions"]["code"]).to eq("CAN_NOT_CHANGE_PASSWORD")
       expect(account.authenticate(password)).to be_falsy
     end
@@ -82,7 +83,7 @@ RSpec.describe Mutations::UpdatePassword do
     let(:extra) { "" }
 
     it "sets password" do
-      AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context:)
       expect(account.authenticate(password)).to be_truthy
     end
   end

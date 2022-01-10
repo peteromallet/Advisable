@@ -19,7 +19,7 @@ module Mutations
     def resolve(conversation:)
       conversation = Conversation.find_by!(uid: conversation)
       conversation.mark_as_read_for!(current_account)
-      {conversation: conversation}
+      {conversation:}
     end
   end
 end

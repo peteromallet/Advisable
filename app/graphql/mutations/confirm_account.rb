@@ -8,7 +8,7 @@ module Mutations
     field :viewer, Types::ViewerUnion, null: true
 
     def resolve(email:, token:)
-      account = Account.find_by!(email: email)
+      account = Account.find_by!(email:)
       validate_token(account, token)
 
       account.confirmed_at = Time.zone.now if account.confirmed_at.blank?

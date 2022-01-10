@@ -26,7 +26,7 @@ module Mutations
         guild_post.assign_attributes(assignable)
 
         if args[:labels].present?
-          labels = args[:labels].map { |name| Label.find_or_create_by(name: name) }
+          labels = args[:labels].map { |name| Label.find_or_create_by(name:) }
           guild_post.labels = labels
         end
 
@@ -34,7 +34,7 @@ module Mutations
         guild_post.status = "published" if args[:publish].present? && guild_post.status != "removed"
         guild_post.save!
 
-        {guild_post: guild_post}
+        {guild_post:}
       end
     end
   end

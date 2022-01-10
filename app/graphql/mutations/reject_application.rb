@@ -22,7 +22,7 @@ module Mutations
       save_with_current_account!(application)
       send_message(application, args[:message]) if args[:message].present?
 
-      {application: application}
+      {application:}
     end
 
     private

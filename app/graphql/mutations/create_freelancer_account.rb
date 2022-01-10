@@ -48,7 +48,7 @@ module Mutations
       )
 
       specialist = Specialist.new(
-        account: account,
+        account:,
         campaign_name: args[:campaign_name],
         campaign_source: args[:campaign_source],
         campaign_medium: args[:campaign_medium],
@@ -98,7 +98,7 @@ module Mutations
       project = Airtable::Project.find(pid).sync if project.nil?
       return if project.blank?
 
-      specialist.applications.create(project: project, status: "Invited To Apply", source: "new-signup")
+      specialist.applications.create(project:, status: "Invited To Apply", source: "new-signup")
     end
   end
 end

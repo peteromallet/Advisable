@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Mutations::UpdateUser do
   let(:marketing) { create(:industry, name: "Marketing") }
   let(:company) { create(:company, kind: "Major Corporation", industry: marketing) }
-  let(:user) { create(:user, company: company) }
+  let(:user) { create(:user, company:) }
 
   before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
@@ -20,12 +21,12 @@ RSpec.describe Mutations::UpdateUser do
   end
 
   it "can update the company_type" do
-    expect {
+    expect do
       AdvisableSchema.execute(
         query("{ companyType: \"Startup\" }"),
         context: {current_user: user}
       )
-    }.to change { user.company.reload.kind }.to("Startup")
+    end.to change { user.company.reload.kind }.to("Startup")
   end
 
   context "when not logged in" do

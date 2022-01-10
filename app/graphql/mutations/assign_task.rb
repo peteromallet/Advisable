@@ -28,7 +28,7 @@ module Mutations
       success = current_account_responsible_for { task.update(stage: "Assigned", assigned_at: Time.zone.now) }
       ApiError.invalid_request(task.errors.full_messages.first) unless success
 
-      {task: task}
+      {task:}
     end
   end
 end
