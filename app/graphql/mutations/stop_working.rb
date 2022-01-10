@@ -36,7 +36,7 @@ module Mutations
         application.update(status: "Stopped Working", stopped_working_reason: args[:reason])
       end
 
-      {application: application}
+      {application:}
     end
   end
 end

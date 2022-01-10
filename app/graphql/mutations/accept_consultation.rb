@@ -20,11 +20,11 @@ module Mutations
         application = create_application(project, consultation.specialist)
         interview = create_interview(application)
         consultation.update(
-          interview: interview,
+          interview:,
           status: "Accepted By Specialist",
           accepted_at: Time.zone.now
         )
-        {interview: interview}
+        {interview:}
       end
     end
 
@@ -59,10 +59,10 @@ module Mutations
     def create_application(project, specialist)
       current_account_responsible_for do
         Application.create(
-          project: project,
+          project:,
           status: "Applied",
           score: 90,
-          specialist: specialist,
+          specialist:,
           trial_program: true,
           source: "consultation-request"
         )

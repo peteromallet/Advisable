@@ -11,7 +11,7 @@ def clear_magic_links
 end
 
 def clear_unavailable_until_today
-  Specialist.where("unavailable_until < ?", Time.zone.today).update_all(unavailable_until: nil) # rubocop:disable Rails/SkipsModelValidations
+  Specialist.where("unavailable_until < ?", Time.zone.today).update_all(unavailable_until: nil)
 end
 
 def create_invoices
@@ -22,7 +22,7 @@ def create_invoices
   last_months_payments = Payment.with_status("succeeded").where(created_at: yesterday.beginning_of_month..today)
   companies_with_payments = Company.where(id: last_months_payments.select(:company_id))
   companies_with_payments.each do |company|
-    invoice = Invoice.create(company: company, year: yesterday.year, month: yesterday.month)
+    invoice = Invoice.create(company:, year: yesterday.year, month: yesterday.month)
     GenerateInvoicePdfJob.perform_later(invoice, notify: true)
   end
 end

@@ -23,7 +23,7 @@ class GenerateInvoicePdfJob < ApplicationJob
     if document.status == "success"
       upload_document(document)
     else
-      Sentry.capture_message("Something went wrong in invoice generation!", extra: {invoice: invoice})
+      Sentry.capture_message("Something went wrong in invoice generation!", extra: {invoice:})
     end
   end
 
@@ -34,11 +34,11 @@ class GenerateInvoicePdfJob < ApplicationJob
       tempfile = Tempfile.new(key, binmode: true)
       tempfile.write(res.body)
       tempfile.close
-      obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: key)
+      obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key:)
       obj.upload_file(tempfile.path)
-      invoice.update(key: key)
+      invoice.update(key:)
     else
-      Sentry.capture_message("Could not download invoice from pdfmonkey!", extra: {invoice: invoice})
+      Sentry.capture_message("Could not download invoice from pdfmonkey!", extra: {invoice:})
     end
   end
 
@@ -61,7 +61,7 @@ class GenerateInvoicePdfJob < ApplicationJob
       description = payment.specialist.account.name
       description += " - #{payment.task.name}" if payment.task&.name&.present?
       {
-        description: description,
+        description:,
         quantity: 1,
         price: payment.amount / 100.0
       }

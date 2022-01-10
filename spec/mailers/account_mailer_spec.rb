@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe AccountMailer do
   describe "#reset_password" do
     let(:token) { Token.new }
     let(:account) { create(:account, reset_digest: Token.digest(token), reset_sent_at: Time.zone.now) }
-    let(:mail) { AccountMailer.reset_password(id: account.id, token: token) }
+    let(:mail) { described_class.reset_password(id: account.id, token:) }
 
     it "renders correct headers" do
       expect(mail.to).to eq([account.email])

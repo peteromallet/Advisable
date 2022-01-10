@@ -43,7 +43,7 @@ module Mutations
 
       UserMailer.need_more_time_options(interview).deliver_later
 
-      {interview: interview}
+      {interview:}
     end
   end
 end

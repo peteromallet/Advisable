@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Project do
@@ -112,7 +113,7 @@ RSpec.describe Project do
       application =
         create(
           :application,
-          project: project, score: 75, status: "Application Accepted"
+          project:, score: 75, status: "Application Accepted"
         )
       expect(project.candidates).to include(application)
     end
@@ -122,7 +123,7 @@ RSpec.describe Project do
       application =
         create(
           :application,
-          project: project, score: 75, status: "Application Rejected"
+          project:, score: 75, status: "Application Rejected"
         )
       expect(project.candidates).not_to include(application)
     end
@@ -132,7 +133,7 @@ RSpec.describe Project do
       application =
         create(
           :application,
-          project: project, score: 75, status: "Interview Scheduled"
+          project:, score: 75, status: "Interview Scheduled"
         )
       expect(project.candidates).to include(application)
     end
@@ -142,7 +143,7 @@ RSpec.describe Project do
       application =
         create(
           :application,
-          project: project, score: 75, status: "Interview Completed"
+          project:, score: 75, status: "Interview Completed"
         )
       expect(project.candidates).to include(application)
     end
@@ -150,14 +151,14 @@ RSpec.describe Project do
     it 'includes any candidates that have a status of "Proposed"' do
       project = create(:project)
       application =
-        create(:application, project: project, score: 75, status: "Proposed")
+        create(:application, project:, score: 75, status: "Proposed")
       expect(project.candidates).to include(application)
     end
 
     it 'excludes any candidates that have a status of "Working"' do
       project = create(:project)
       application =
-        create(:application, project: project, score: 75, status: "Working")
+        create(:application, project:, score: 75, status: "Working")
       expect(project.candidates).not_to include(application)
     end
 
@@ -166,7 +167,7 @@ RSpec.describe Project do
       application =
         create(
           :application,
-          project: project, score: 75, status: "Stopped Working"
+          project:, score: 75, status: "Stopped Working"
         )
       expect(project.candidates).not_to include(application)
     end
@@ -176,7 +177,7 @@ RSpec.describe Project do
       application =
         create(
           :application,
-          project: project, score: 75, status: "Invited To Apply"
+          project:, score: 75, status: "Invited To Apply"
         )
       expect(project.candidates).not_to include(application)
     end
@@ -186,7 +187,7 @@ RSpec.describe Project do
       application =
         create(
           :application,
-          project: project, score: 75, status: "Invitation Rejected"
+          project:, score: 75, status: "Invitation Rejected"
         )
       expect(project.candidates).not_to include(application)
     end
@@ -196,7 +197,7 @@ RSpec.describe Project do
       application =
         create(
           :application,
-          project: project, score: 75, status: "To Be Invited"
+          project:, score: 75, status: "To Be Invited"
         )
       expect(project.candidates).not_to include(application)
     end
@@ -204,9 +205,9 @@ RSpec.describe Project do
 
   describe "project paused emails" do
     let(:project) { create(:project) }
-    let!(:applied_candidate) { create(:application, project: project, status: "Applied") }
-    let!(:accepted_candidate) { create(:application, project: project, status: "Application Accepted") }
-    let!(:rejected_candidate) { create(:application, project: project, status: "Application Rejected") }
+    let!(:applied_candidate) { create(:application, project:, status: "Applied") }
+    let!(:accepted_candidate) { create(:application, project:, status: "Application Accepted") }
+    let!(:rejected_candidate) { create(:application, project:, status: "Application Rejected") }
 
     context "when status changed to paused" do
       it "schedules emails to non-rejected applicants" do

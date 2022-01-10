@@ -37,7 +37,7 @@ module Mutations
         vat_number: args[:vat_number]
       )
       specialist.sync_to_airtable
-      {specialist: specialist}
+      {specialist:}
     end
   end
 end

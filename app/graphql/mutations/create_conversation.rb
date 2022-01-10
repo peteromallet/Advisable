@@ -18,13 +18,13 @@ module Mutations
     def resolve(participants:, content:, attachments: nil)
       has_message_content?(content, attachments)
 
-      @accounts = (participants.map { |uid| Account.find_by!(uid: uid) } + [current_account]).uniq
+      @accounts = (participants.map { |uid| Account.find_by!(uid:) } + [current_account]).uniq
       has_participants?
 
       conversation = Conversation.by_accounts(@accounts)
       message = conversation.new_message!(current_account, content, attachments)
 
-      {conversation: conversation, message: message}
+      {conversation:, message:}
     end
 
     private

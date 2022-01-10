@@ -32,7 +32,7 @@ RSpec.describe "Freelancer active project view", type: :system do
         {
           estimate: 8,
           stage: "Assigned",
-          application: application,
+          application:,
           due_date: 2.days.from_now,
           name: "This is an existing task",
           description: "This is the task description"
@@ -66,7 +66,7 @@ RSpec.describe "Freelancer active project view", type: :system do
         {
           estimate: nil,
           stage: "Quote Requested",
-          application: application,
+          application:,
           due_date: 2.days.from_now,
           name: "This is an existing task",
           description: "This is the task description"
@@ -91,7 +91,7 @@ RSpec.describe "Freelancer active project view", type: :system do
         {
           estimate: 8,
           stage: "Assigned",
-          application: application,
+          application:,
           due_date: 2.days.from_now,
           name: "This is an existing task",
           description: "This is the task description"
@@ -113,7 +113,7 @@ RSpec.describe "Freelancer active project view", type: :system do
         {
           estimate: 8,
           stage: "Working",
-          application: application,
+          application:,
           due_date: 2.days.from_now,
           name: "This is an existing task",
           description: "This is the task description"
@@ -144,7 +144,7 @@ RSpec.describe "Freelancer active project view", type: :system do
     let(:application) { create(:application, status: "Working", project_type: "Fixed") }
 
     before do
-      create(:task, stage: "Not Assigned", name: "Test task", application: application)
+      create(:task, stage: "Not Assigned", name: "Test task", application:)
     end
 
     it "allows the freelancer to request to start working" do

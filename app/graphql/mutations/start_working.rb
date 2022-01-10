@@ -25,7 +25,7 @@ module Mutations
       application.monthly_limit = args[:monthly_limit] if args[:project_type] == "Flexible"
       save_with_current_account!(application)
 
-      {application: application}
+      {application:}
     end
   end
 end

@@ -25,7 +25,7 @@ RSpec.describe Mutations::CaseStudy::SubmitFeedback do
   end
 
   it "saves the feedback on the article" do
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
     feedback = CaseStudy::ArticleFeedback.last
     expect(feedback.article_id).to eq(article.id)
     expect(feedback.skill_id).to be_nil
@@ -37,7 +37,7 @@ RSpec.describe Mutations::CaseStudy::SubmitFeedback do
     let(:extra) { "skill: \"#{skill.uid}\"" }
 
     it "saves the feedback on the article with skill" do
-      AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context:)
       feedback = CaseStudy::ArticleFeedback.last
       expect(feedback.article_id).to eq(article.id)
       expect(feedback.skill_id).to eq(skill.id)
@@ -49,7 +49,7 @@ RSpec.describe Mutations::CaseStudy::SubmitFeedback do
     let(:user) { create(:specialist) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end
@@ -59,7 +59,7 @@ RSpec.describe Mutations::CaseStudy::SubmitFeedback do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end

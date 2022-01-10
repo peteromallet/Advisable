@@ -36,7 +36,7 @@ class Conversation < ApplicationRecord
 
   def new_message!(author, content, attachments = [], *attrs)
     kind = author.present? ? nil : "system"
-    message = messages.create!({author: author, content: content, kind: kind}.merge(*attrs))
+    message = messages.create!({author:, content:, kind:}.merge(*attrs))
     message.attachments.attach(attachments) if attachments.present?
     message.reload.after_create_actions
     message

@@ -33,7 +33,7 @@ module Sluggable
 
   def unique_slug
     slug = public_send(self.class.slug_source).to_s.parameterize
-    return slug unless self.class.exists?(slug: slug)
+    return slug unless self.class.exists?(slug:)
 
     (2..).each do |i|
       new_slug = "#{slug}-#{i}"

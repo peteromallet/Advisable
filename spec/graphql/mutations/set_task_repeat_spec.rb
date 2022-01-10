@@ -24,7 +24,7 @@ RSpec.describe Mutations::SetTaskRepeat do
   let(:context) { {current_user: task.application.project.user} }
 
   it "sets repeat to 'Monthly'" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     repeat = response["data"]["setTaskRepeat"]["task"]["repeat"]
     expect(repeat).to eq("Monthly")
   end
@@ -33,7 +33,7 @@ RSpec.describe Mutations::SetTaskRepeat do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end

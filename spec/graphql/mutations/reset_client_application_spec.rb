@@ -15,7 +15,7 @@ RSpec.describe Mutations::ResetClientApplication do
       name: "SomeCorp",
       kind: "Growth-Stage Startup",
       budget: 100,
-      industry: industry
+      industry:
     )
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Mutations::ResetClientApplication do
     create(
       :user,
       application_status: "Application Rejected",
-      company: company,
+      company:,
       number_of_freelancers: 0,
       skills: [skill],
       accepted_guarantee_terms_at: 1.day.ago,

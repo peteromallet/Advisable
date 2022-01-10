@@ -34,7 +34,7 @@ module Mutations
       project.sourcing = true
       success = current_account_responsible_for { project.save }
       project.sync_to_airtable if success
-      {project: project}
+      {project:}
     end
   end
 end

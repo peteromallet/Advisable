@@ -5,8 +5,8 @@ require "rails_helper"
 RSpec.describe Mutations::DeclineConsultation do
   let(:specialist) { create(:specialist) }
   let(:current_user) { specialist }
-  let(:consultation) { create(:consultation, specialist: specialist, status: "Request Started") }
-  let(:context) { {current_user: current_user} }
+  let(:consultation) { create(:consultation, specialist:, status: "Request Started") }
+  let(:context) { {current_user:} }
 
   let(:query) do
     <<-GRAPHQL
@@ -23,7 +23,7 @@ RSpec.describe Mutations::DeclineConsultation do
   end
 
   it "sets the consultation status to 'Specialist Rejected'" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change {
+    expect { AdvisableSchema.execute(query, context:) }.to change {
       consultation.reload.status
     }.from("Request Started").
       to("Specialist Rejected")
@@ -33,7 +33,7 @@ RSpec.describe Mutations::DeclineConsultation do
     let(:current_user) { nil }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end
@@ -43,7 +43,7 @@ RSpec.describe Mutations::DeclineConsultation do
     let(:current_user) { create(:user) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_SPECIALIST")
     end

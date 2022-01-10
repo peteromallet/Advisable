@@ -33,7 +33,7 @@ RSpec.describe Company, type: :model do
 
     context "when the company has no existing stripe customer id" do
       let(:company) { create(:company, stripe_customer_id: nil) }
-      let(:user) { create(:user, company: company) }
+      let(:user) { create(:user, company:) }
 
       it "creates a new stripe customer and stores the id" do
         customer = double(Stripe::Customer, id: "cus_123") # rubocop:disable RSpec/VerifiedDoubles

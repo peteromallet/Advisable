@@ -2,11 +2,11 @@
 
 module Mutations
   module Helpers
-    module Account # rubocop:disable GraphQL/ObjectDescription
+    module Account
       include Mutations::Helpers::BlacklistedEmail
 
       def find_or_create_user_by_email!(email, attributes = {})
-        existing_acc = ::Account.find_by(email: email)
+        existing_acc = ::Account.find_by(email:)
         if existing_acc
           ApiError.invalid_request("NOT_AN_USER", "This email belongs to a specialist account") if existing_acc.user.nil?
 
@@ -14,7 +14,7 @@ module Mutations
         else
           email_blacklisted?(email)
           attributes = attributes.slice(:first_name, :last_name)
-          account = ::Account.new(email: email, **attributes)
+          account = ::Account.new(email:, **attributes)
           account.save!
           current_user.invite_comember!(account, responsible: current_account_id)
         end

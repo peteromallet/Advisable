@@ -4,9 +4,9 @@ require "rails_helper"
 
 RSpec.describe "magic links", type: :system do
   let(:account) { create(:account, confirmed_at: nil) }
-  let(:magic_link) { create(:magic_link, account: account, path: "/explore") }
+  let(:magic_link) { create(:magic_link, account:, path: "/explore") }
 
-  before { create(:user, account: account) }
+  before { create(:user, account:) }
 
   it "authenticates the user and uses the magic link" do
     visit "/explore?mlt=#{magic_link.token}&mluid=#{account.uid}&another=param"
@@ -23,7 +23,7 @@ RSpec.describe "magic links", type: :system do
   end
 
   context "when the magic link has expired" do
-    let(:magic_link) { create(:magic_link, expires_at: 1.hour.ago, account: account, path: "/explore") }
+    let(:magic_link) { create(:magic_link, expires_at: 1.hour.ago, account:, path: "/explore") }
 
     it "does not authenticate the user" do
       visit "/explore?mlt=#{magic_link.token}&mluid=#{account.uid}"

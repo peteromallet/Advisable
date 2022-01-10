@@ -9,7 +9,7 @@ RSpec.describe Guild::PostBoostMailer do
     end
 
     let(:account)    { create(:account) }
-    let(:specialist) { create(:specialist, account: account) }
+    let(:specialist) { create(:specialist, account:) }
     let(:guild_post) { create(:guild_post, title: "This is a long title that should be truncated when sent as a subject line") }
 
     it "sends an email with a truncated title" do
@@ -18,7 +18,7 @@ RSpec.describe Guild::PostBoostMailer do
 
     it "does not send the email when unsubscribed" do
       account = create(:account, unsubscribed_from: ["Advisable Guild"])
-      specialist.update! account: account
+      specialist.update!(account:)
       expect(mail.to).to eq(nil)
     end
   end

@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::SetUnavailableUntil do
   let(:current_user) { create(:specialist, unavailable_until: 2.days.from_now) }
-  let(:context) { {current_user: current_user} }
+  let(:context) { {current_user:} }
   let(:params) { "clear: true" }
 
   let(:query) do
@@ -22,7 +22,7 @@ RSpec.describe Mutations::SetUnavailableUntil do
   end
 
   it "clears the date" do
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
     expect(Specialist.find(current_user.id).unavailable_until).to be_nil
   end
 
@@ -30,7 +30,7 @@ RSpec.describe Mutations::SetUnavailableUntil do
     let(:params) { "date: \"#{4.days.from_now.strftime('%Y-%m-%d')}\"" }
 
     it "Update the specialists unavailable_until date" do
-      AdvisableSchema.execute(query, context: context)
+      AdvisableSchema.execute(query, context:)
       expect(Specialist.find(current_user.id).unavailable_until).to eq(4.days.from_now.to_date)
     end
   end
@@ -39,7 +39,7 @@ RSpec.describe Mutations::SetUnavailableUntil do
     let(:params) { "date: \"#{2.days.ago.strftime('%Y-%m-%d')}\"" }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("INVALID_DATE")
     end
@@ -49,7 +49,7 @@ RSpec.describe Mutations::SetUnavailableUntil do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHENTICATED")
     end
@@ -59,7 +59,7 @@ RSpec.describe Mutations::SetUnavailableUntil do
     let(:current_user) { create(:user) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("MUST_BE_SPECIALIST")
     end

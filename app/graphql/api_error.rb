@@ -20,43 +20,43 @@
 class ApiError < GraphQL::ExecutionError
   class NotAuthenticated < ApiError
     def initialize(message = "You are not logged in", extensions: {})
-      super("NOT_AUTHENTICATED", "NOT_AUTHENTICATED", message, extensions: extensions)
+      super("NOT_AUTHENTICATED", "NOT_AUTHENTICATED", message, extensions:)
     end
   end
 
   class NotAuthorized < ApiError
     def initialize(message, extensions: {})
-      super("NOT_AUTHORIZED", "NOT_AUTHORIZED", message, extensions: extensions)
+      super("NOT_AUTHORIZED", "NOT_AUTHORIZED", message, extensions:)
     end
   end
 
   class InvalidRequest < ApiError
     def initialize(code, message, extensions: {})
-      super("INVALID_REQUEST", code, message, extensions: extensions)
+      super("INVALID_REQUEST", code, message, extensions:)
     end
   end
 
   def initialize(type, code, message, extensions: {})
     super(
       message,
-      extensions: extensions.merge({type: type, code: code}).as_json
+      extensions: extensions.merge({type:, code:}).as_json
     )
   end
 
   def self.invalid_request(code, message = "", extensions: {})
     message = code if message.blank?
-    raise ApiError::InvalidRequest.new(code, message, extensions: extensions)
+    raise ApiError::InvalidRequest.new(code, message, extensions:)
   end
 
   def self.not_authorized(message, extensions: {})
-    raise ApiError::NotAuthorized.new(message, extensions: extensions)
+    raise ApiError::NotAuthorized.new(message, extensions:)
   end
 
   def self.not_authenticated(message = "You are not logged in", extensions: {})
-    raise ApiError::NotAuthenticated.new(message, extensions: extensions)
+    raise ApiError::NotAuthenticated.new(message, extensions:)
   end
 
   def self.service_error(error, extensions: {})
-    raise ApiError::InvalidRequest.new(error.code, error.message, extensions: extensions)
+    raise ApiError::InvalidRequest.new(error.code, error.message, extensions:)
   end
 end

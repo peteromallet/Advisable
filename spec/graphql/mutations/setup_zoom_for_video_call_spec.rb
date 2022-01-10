@@ -21,7 +21,7 @@ RSpec.describe Mutations::SetupZoomForVideoCall do
   end
 
   let(:request) do
-    AdvisableSchema.execute(query, context: {current_user: current_user})
+    AdvisableSchema.execute(query, context: {current_user:})
   end
 
   it "converts a video call for zoom" do

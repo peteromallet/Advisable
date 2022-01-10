@@ -22,11 +22,11 @@ module Guild
     has_many :messages, foreign_key: :guild_post_id, inverse_of: :guild_post, dependent: :nullify
 
     scope :unresolved, -> { where(resolved_at: nil) }
-    scope :labeled_with, ->(labels) { includes(:labelings).where(labelings: {labels: labels}) }
+    scope :labeled_with, ->(labels) { includes(:labelings).where(labelings: {labels:}) }
 
     scope :feed, lambda { |specialist|
       published.
-        or(removed.where(specialist: specialist)).
+        or(removed.where(specialist:)).
         includes(:specialist).
         order(pinned: :desc, created_at: :desc)
     }

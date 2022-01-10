@@ -24,7 +24,7 @@ module OmniAuth
         {
           first_name: localized_field("firstName"),
           last_name: localized_field("lastName"),
-          picture_url: picture_url
+          picture_url:
         }
       end
 

@@ -6,7 +6,7 @@ RSpec.describe "Resending interview request", type: :system do
   it "resends the interview request" do
     next_workday = Time.zone.now.next_weekday
     application = create(:application)
-    interview = create(:interview, status: "Need More Time Options", application: application, user: application.project.user)
+    interview = create(:interview, status: "Need More Time Options", application:, user: application.project.user)
     authenticate_as interview.application.project.user
     visit "/projects/#{interview.application.project.uid}/interviews/#{
             interview.uid

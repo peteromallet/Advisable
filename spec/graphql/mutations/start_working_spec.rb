@@ -26,7 +26,7 @@ RSpec.describe Mutations::StartWorking do
   end
 
   it "sets all the attributes" do
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
 
     application.reload
     expect(application.status).to eq("Working")
@@ -37,7 +37,7 @@ RSpec.describe Mutations::StartWorking do
     let(:project_type) { "Invalid" }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("INVALID_PROJECT_TYPE")
     end
@@ -46,7 +46,7 @@ RSpec.describe Mutations::StartWorking do
   context "when a user is signed in" do
     context "when the user owns the project" do
       it "sets the status to 'Working'" do
-        response = AdvisableSchema.execute(query, context: context)
+        response = AdvisableSchema.execute(query, context:)
         status = response["data"]["startWorking"]["application"]["status"]
         expect(status).to eq("Working")
       end
@@ -56,7 +56,7 @@ RSpec.describe Mutations::StartWorking do
       let(:context) { {current_user: create(:user)} }
 
       it "returns a not_authorized error" do
-        response = AdvisableSchema.execute(query, context: context)
+        response = AdvisableSchema.execute(query, context:)
         error = response["errors"][0]["extensions"]["code"]
         expect(error).to eq("NOT_AUTHORIZED")
       end
@@ -67,7 +67,7 @@ RSpec.describe Mutations::StartWorking do
     let(:context) { {current_user: nil} }
 
     it "returns a not_authorized error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end

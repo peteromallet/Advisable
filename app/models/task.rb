@@ -73,7 +73,7 @@ class Task < ApplicationRecord
     amount = final_cost - payments.sum(:amount)
     return if amount.zero?
 
-    payment = Payment.create!(company_id: application.project.user.company_id, specialist_id: application.specialist_id, amount: amount, task: self, status: "pending")
+    payment = Payment.create!(company_id: application.project.user.company_id, specialist_id: application.specialist_id, amount:, task: self, status: "pending")
     payment.charge!
   end
 end

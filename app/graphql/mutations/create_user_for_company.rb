@@ -24,7 +24,7 @@ module Mutations
       email_matches_domain?(email)
       attributes = optional.slice(:first_name, :last_name)
       attributes[:permissions] = optional[:team_manager] ? [:team_manager] : []
-      account = Account.new(email: email, **attributes)
+      account = Account.new(email:, **attributes)
       account.save!
 
       new_user = current_user.invite_comember!(account, responsible: current_account_id)

@@ -45,7 +45,7 @@ class Company < ApplicationRecord
   def stripe_customer_id
     return self[:stripe_customer_id] if self[:stripe_customer_id].present?
 
-    customer = Stripe::Customer.create(email: first_account.email, name: name, metadata: {company_id: id})
+    customer = Stripe::Customer.create(email: first_account.email, name:, metadata: {company_id: id})
     update_columns(stripe_customer_id: customer.id) # rubocop:disable Rails/SkipsModelValidations
     customer.id
   end

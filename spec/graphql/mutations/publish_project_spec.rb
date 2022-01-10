@@ -26,7 +26,7 @@ RSpec.describe Mutations::PublishProject do
   end
 
   it "sets the status to Pending Advisable Confirmation" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change {
+    expect { AdvisableSchema.execute(query, context:) }.to change {
       project.reload.status
     }.from("Draft").to("Pending Advisable Confirmation")
   end
@@ -35,7 +35,7 @@ RSpec.describe Mutations::PublishProject do
     let(:context) { {current_user: create(:user)} }
 
     it "returns a not authorized error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -45,7 +45,7 @@ RSpec.describe Mutations::PublishProject do
     let(:context) { {current_user: nil} }
 
     it "returns a not authorized error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -55,7 +55,7 @@ RSpec.describe Mutations::PublishProject do
     let(:project) { create(:project, status: "Pending Advisable Confirmation") }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("ALREADY_PUBLISHED")
     end

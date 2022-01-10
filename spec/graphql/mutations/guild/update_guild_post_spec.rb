@@ -14,7 +14,7 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
   end
 
   let(:specialist) { create(:specialist) }
-  let!(:guild_post) { create(:guild_post, specialist: specialist, status: "draft") }
+  let!(:guild_post) { create(:guild_post, specialist:, status: "draft") }
   let(:response_keys) { %w[updateGuildPost guildPost] }
 
   let(:guild_post_fields) do

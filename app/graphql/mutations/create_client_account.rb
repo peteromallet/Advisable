@@ -23,7 +23,7 @@ module Mutations
         account = create_account(**args)
 
         user = User.new(
-          account: account,
+          account:,
           company: Company.new,
           rid: args[:rid],
           campaign_name: args[:utm_campaign],

@@ -29,7 +29,7 @@ module Mutations
       current_account_responsible_for { user.save }
       user.sync_to_airtable
 
-      {user: user}
+      {user:}
     end
   end
 end

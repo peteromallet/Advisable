@@ -31,7 +31,7 @@ RSpec.describe "Managing talent", type: :system do
         {
           estimate: 8,
           stage: "Assigned",
-          application: application,
+          application:,
           due_date: 2.days.from_now,
           name: "This is an existing task",
           description: "This is the task description"
@@ -65,7 +65,7 @@ RSpec.describe "Managing talent", type: :system do
         {
           estimate: nil,
           stage: "Not Assigned",
-          application: application,
+          application:,
           due_date: 2.days.from_now,
           name: "This is an existing task",
           description: "This is the task description"
@@ -109,7 +109,7 @@ RSpec.describe "Managing talent", type: :system do
         {
           estimate: nil,
           stage: "Quote Requested",
-          application: application,
+          application:,
           due_date: 2.days.from_now,
           name: "This is an existing task",
           description: "This is the task description"
@@ -141,7 +141,7 @@ RSpec.describe "Managing talent", type: :system do
         {
           estimate: 8,
           stage: "Quote Provided",
-          application: application,
+          application:,
           due_date: 2.days.from_now,
           name: "This is an existing task",
           description: "This is the task description"
@@ -175,7 +175,7 @@ RSpec.describe "Managing talent", type: :system do
         {
           estimate: 8,
           stage: "Submitted",
-          application: application,
+          application:,
           due_date: 2.days.from_now,
           name: "This is an existing task",
           description: "This is the task description"

@@ -22,7 +22,7 @@ module Mutations
       success = current_account_responsible_for { interview.save(validate: false) }
       if success
         SpecialistMailer.more_time_options_added(interview).deliver_later
-        {interview: interview}
+        {interview:}
       else
         ApiError.invalid_request("FAILED_TO_RESEND", interview.errors.full_messages.first)
       end

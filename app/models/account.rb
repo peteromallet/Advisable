@@ -82,7 +82,7 @@ class Account < ApplicationRecord
     self.reset_digest = Token.digest(token)
     self.reset_sent_at = Time.zone.now
     save!
-    AccountMailer.reset_password(id: id, token: token).deliver_later
+    AccountMailer.reset_password(id:, token:).deliver_later
   end
 
   def disable!(delete: false)

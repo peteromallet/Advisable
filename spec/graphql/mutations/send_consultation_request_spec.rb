@@ -5,8 +5,8 @@ require "rails_helper"
 RSpec.describe Mutations::SendConsultationRequest do
   let(:user) { create(:user) }
   let(:current_user) { user }
-  let(:context) { {current_user: current_user} }
-  let(:consultation) { create(:consultation, user: user, status: "Request Started", topic: nil) }
+  let(:context) { {current_user:} }
+  let(:consultation) { create(:consultation, user:, status: "Request Started", topic: nil) }
   let(:topic) { "Testing" }
   let(:likely_to_hire) { 5 }
 
@@ -26,14 +26,14 @@ RSpec.describe Mutations::SendConsultationRequest do
   end
 
   it "sets the status to 'Request Completed'" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change {
+    expect { AdvisableSchema.execute(query, context:) }.to change {
       consultation.reload.status
     }.from("Request Started").
       to("Request Completed")
   end
 
   it "sets the likely_to_hire value" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change {
+    expect { AdvisableSchema.execute(query, context:) }.to change {
       consultation.reload.likely_to_hire
     }.from(nil).
       to(5)
@@ -43,7 +43,7 @@ RSpec.describe Mutations::SendConsultationRequest do
     let(:current_user) { nil }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end
@@ -53,7 +53,7 @@ RSpec.describe Mutations::SendConsultationRequest do
     let(:current_user) { create(:specialist) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end

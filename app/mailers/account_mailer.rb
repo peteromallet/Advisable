@@ -8,7 +8,7 @@ class AccountMailer < ApplicationMailer
   end
 
   def zapier_email(account, subject, body)
-    mail(to: account.email, subject: subject) do |f|
+    mail(to: account.email, subject:) do |f|
       f.html { body }
     end
   end
@@ -19,7 +19,7 @@ class AccountMailer < ApplicationMailer
     @messages = Message.where(id: message_ids).order(:created_at)
     reply_to = "#{conversation.uid}@#{ENV["MESSAGE_REPLIES_DOMAIN"]}"
 
-    mail(to: @account.email, reply_to: reply_to, subject: "New messages in conversation") do |f|
+    mail(to: @account.email, reply_to:, subject: "New messages in conversation") do |f|
       f.html { render(layout: "email_v2") }
     end
   end

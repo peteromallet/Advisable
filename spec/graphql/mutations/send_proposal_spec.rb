@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::SendProposal do
   let(:project) { create(:project, status: "Brief Confirmed") }
   let(:application) do
-    create(:application, status: "Interview Completed", project: project)
+    create(:application, status: "Interview Completed", project:)
   end
   let(:query) do
     <<-GRAPHQL
@@ -31,19 +31,19 @@ RSpec.describe Mutations::SendProposal do
   end
 
   it "sets the status to 'Proposed'" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     status = response["data"]["sendProposal"]["application"]["status"]
     expect(status).to eq("Proposed")
   end
 
   it "sets the proposalComment" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     comment = response["data"]["sendProposal"]["application"]["proposalComment"]
     expect(comment).to eq("This is the proposal comment")
   end
 
   it "sets the project status to Proposal Received" do
-    expect { AdvisableSchema.execute(query, context: context) }.to change {
+    expect { AdvisableSchema.execute(query, context:) }.to change {
       application.reload.project.status
     }.from("Brief Confirmed").to("Proposal Received")
   end
@@ -52,7 +52,7 @@ RSpec.describe Mutations::SendProposal do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
@@ -62,7 +62,7 @@ RSpec.describe Mutations::SendProposal do
     let(:context) { {current_user: application.project.user} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
@@ -72,7 +72,7 @@ RSpec.describe Mutations::SendProposal do
     let(:context) { {current_user: create(:specialist)} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
@@ -81,7 +81,7 @@ RSpec.describe Mutations::SendProposal do
   context "when an error is thrown" do
     it "includes it in the response" do
       allow_any_instance_of(Application).to receive(:save).and_return(false)
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["message"]).to eq("ApiError::InvalidRequest")
     end
   end

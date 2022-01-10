@@ -33,9 +33,9 @@ RSpec.describe Mutations::CreateUserForCompany do
   before { allow_any_instance_of(User).to receive(:sync_to_airtable) }
 
   it "creates a new user on the company and sends an email to new user" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     uid = response["data"]["createUserForCompany"]["user"]["id"]
-    created_user = User.find_by(uid: uid)
+    created_user = User.find_by(uid:)
     expect(created_user.account.attributes.slice("email", "first_name", "last_name").values).to match_array([email, first_name, last_name])
     expect(created_user.account).not_to be_team_manager
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "invited_by_manager", "deliver_now", {args: [user, created_user]})
@@ -57,7 +57,7 @@ RSpec.describe Mutations::CreateUserForCompany do
     end
 
     it "creates a new user on the company and sends an email to new user" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       errors = response["errors"]
       expect(errors.size).to eq(2)
       expect(errors.map { |e| e["extensions"]["argumentName"] }).to match_array(%w[firstName lastName])
@@ -68,7 +68,7 @@ RSpec.describe Mutations::CreateUserForCompany do
     let(:user) { create(:user) }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("MUST_BE_TEAM_MANAGER")
     end
@@ -79,7 +79,7 @@ RSpec.describe Mutations::CreateUserForCompany do
 
     it "returns an error" do
       create(:blacklisted_domain, domain: "gmail.com")
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("NON_CORPORATE_EMAIL")
     end
@@ -87,8 +87,8 @@ RSpec.describe Mutations::CreateUserForCompany do
 
   context "when provided an email that is already taken" do
     it "returns an error" do
-      create(:user, account: create(:account, email: email))
-      response = AdvisableSchema.execute(query, context: context)
+      create(:user, account: create(:account, email:))
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("EMAIL_TAKEN")
     end
@@ -98,7 +98,7 @@ RSpec.describe Mutations::CreateUserForCompany do
     let(:email) { "" }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["code"]
       expect(error).to eq("EMAIL_BLANK")
     end
@@ -109,9 +109,9 @@ RSpec.describe Mutations::CreateUserForCompany do
       let(:extra) { "teamManager: true" }
 
       it "created user is a team manager" do
-        response = AdvisableSchema.execute(query, context: context)
+        response = AdvisableSchema.execute(query, context:)
         uid = response["data"]["createUserForCompany"]["user"]["id"]
-        created_user = User.find_by(uid: uid)
+        created_user = User.find_by(uid:)
         expect(created_user.account).to be_team_manager
       end
     end
@@ -120,9 +120,9 @@ RSpec.describe Mutations::CreateUserForCompany do
       let(:extra) { "teamManager: false" }
 
       it "created user is not a team manager" do
-        response = AdvisableSchema.execute(query, context: context)
+        response = AdvisableSchema.execute(query, context:)
         uid = response["data"]["createUserForCompany"]["user"]["id"]
-        created_user = User.find_by(uid: uid)
+        created_user = User.find_by(uid:)
         expect(created_user.account).not_to be_team_manager
       end
     end

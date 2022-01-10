@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe SpecialistMailer do
   describe "#inform_about_project" do
     let(:account) { create(:account) }
-    let(:specialist) { create(:specialist, account: account) }
+    let(:specialist) { create(:specialist, account:) }
     let(:project) { create(:project) }
 
     it "sends to right address" do

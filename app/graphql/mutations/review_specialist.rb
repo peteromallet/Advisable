@@ -35,7 +35,7 @@ module Mutations
 
       AttachImageJob.perform_later(review, oauth_viewer.image)
 
-      {review: review}
+      {review:}
     end
   end
 end

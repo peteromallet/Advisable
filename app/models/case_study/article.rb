@@ -41,7 +41,7 @@ module CaseStudy
       if ::CaseStudy::Article.valid_uid?(slug)
         ::CaseStudy::Article.active.published.find_by(uid: slug)
       else
-        ::CaseStudy::Article.active.published.find_by(slug: slug)
+        ::CaseStudy::Article.active.published.find_by(slug:)
       end
     end
 

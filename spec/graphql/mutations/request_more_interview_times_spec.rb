@@ -5,8 +5,8 @@ require "rails_helper"
 RSpec.describe Mutations::RequestMoreInterviewTimes do
   let(:user) { create(:user) }
   let(:current_user) { user }
-  let(:context) { {current_user: current_user} }
-  let(:interview) { create(:interview, user: user, status: "Call Requested") }
+  let(:context) { {current_user:} }
+  let(:interview) { create(:interview, user:, status: "Call Requested") }
 
   let(:query) do
     <<-GRAPHQL
@@ -23,7 +23,7 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
     GRAPHQL
   end
 
-  let(:response) { AdvisableSchema.execute(query, context: context) }
+  let(:response) { AdvisableSchema.execute(query, context:) }
 
   it "sets the status to 'Need More Time Options'" do
     status = response["data"]["requestMoreInterviewTimes"]["interview"]["status"]
@@ -41,7 +41,7 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
   end
 
   context "when the status is not 'Call Requested'" do
-    let(:interview) { create(:interview, user: user, status: "Call Completed") }
+    let(:interview) { create(:interview, user:, status: "Call Completed") }
 
     it "returns an error" do
       error = response["errors"][0]["extensions"]["code"]
@@ -62,7 +62,7 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
     let(:current_user) { create(:specialist) }
 
     it "raises an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["type"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -72,7 +72,7 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
     let(:current_user) { create(:user) }
 
     it "raises an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"].first["extensions"]["type"]
       expect(error).to eq("NOT_AUTHORIZED")
     end
@@ -82,7 +82,7 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(response["errors"][0]["extensions"]["type"]).to eq("NOT_AUTHENTICATED")
     end
   end

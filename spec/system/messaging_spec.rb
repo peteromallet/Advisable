@@ -121,16 +121,16 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
   def conversation_with_participants(participants)
     create(:conversation) do |conversation|
       participants.each do |participant|
-        create(:conversation_participant, conversation: conversation, account: participant)
+        create(:conversation_participant, conversation:, account: participant)
       end
     end
   end
 
   def send_message(conversation, author, content, **extra)
     message = create(:message, {
-      conversation: conversation,
-      content: content,
-      author: author
+      conversation:,
+      content:,
+      author:
     }.merge(extra))
 
     message.after_create_actions

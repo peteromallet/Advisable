@@ -34,10 +34,10 @@ RSpec.describe Mutations::CreateConversation do
     GRAPHQL
   end
 
-  let(:context) { {current_user: current_user, current_account: current_account} }
+  let(:context) { {current_user:, current_account:} }
 
   it "creates the conversation and message" do
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     uids = response["data"]["createConversation"]["conversation"]["participants"].pluck("id")
     expect(uids).to match_array([current_account.uid, participant.uid])
     message = response["data"]["createConversation"]["message"]
@@ -54,7 +54,7 @@ RSpec.describe Mutations::CreateConversation do
     end
 
     it "creates a message in that conversation" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       expect(conversation.uid).to eq(response["data"]["createConversation"]["conversation"]["id"])
       uids = response["data"]["createConversation"]["conversation"]["participants"].pluck("id")
       expect(uids).to match_array([current_account.uid, participant.uid])
@@ -68,7 +68,7 @@ RSpec.describe Mutations::CreateConversation do
     let(:participant) { current_account }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NO_PARTICIPANTS")
     end
@@ -78,7 +78,7 @@ RSpec.describe Mutations::CreateConversation do
     let(:current_user) { nil }
 
     it "returns an error" do
-      response = AdvisableSchema.execute(query, context: context)
+      response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_AUTHENTICATED")
     end

@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe(Mutations::SubmitClientApplication) do
   let(:application_status) { "Application Started" }
-  let(:user) { create(:user, application_status: application_status) }
+  let(:user) { create(:user, application_status:) }
   let(:context) { {current_user: user} }
 
   let(:query) do
@@ -24,7 +24,7 @@ RSpec.describe(Mutations::SubmitClientApplication) do
   end
 
   def request
-    AdvisableSchema.execute(query, context: context)
+    AdvisableSchema.execute(query, context:)
   end
 
   it "Sets the status to Submitted" do

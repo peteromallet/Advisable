@@ -18,7 +18,7 @@ module Mutations
 
     def resolve(application_id:, message:)
       application = Application.find_by!(uid: application_id)
-      report = UnresponsivenessReport.create!(application: application, message: message, reporter: current_user.account)
+      report = UnresponsivenessReport.create!(application:, message:, reporter: current_user.account)
 
       if current_user.is_a?(Specialist)
         StaffMailer.unresponsive_client(report).deliver_later

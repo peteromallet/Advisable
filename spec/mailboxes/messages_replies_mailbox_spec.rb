@@ -12,7 +12,7 @@ RSpec.describe MessagesRepliesMailbox do
   end
 
   context "when account is a participant" do
-    before { conversation.participants.create!(account: account) }
+    before { conversation.participants.create!(account:) }
 
     it "creates a message in conversation" do
       mail = Mail.new(from: account.email, to: destination, body: "This is a test message")
@@ -52,7 +52,7 @@ RSpec.describe MessagesRepliesMailbox do
   context "when account with + in the email is the sender" do
     let!(:account_with_plus) { create(:account, email: account.email.sub("@", "+guild@")) }
 
-    before { conversation.participants.create!(account: account) }
+    before { conversation.participants.create!(account:) }
 
     it "creates a message in conversation" do
       mail = Mail.new(from: account_with_plus.email, to: destination, body: "This is a test message")

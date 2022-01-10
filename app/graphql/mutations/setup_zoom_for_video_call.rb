@@ -1,19 +1,22 @@
 # frozen_string_literal: true
+
 # Used to update an application record during the application process.
-class Mutations::SetupZoomForVideoCall < Mutations::BaseMutation
-  argument :id, ID, required: true
+module Mutations
+  class SetupZoomForVideoCall < Mutations::BaseMutation
+    argument :id, ID, required: true
 
-  field :video_call, Types::VideoCallType, null: true
+    field :video_call, Types::VideoCallType, null: true
 
-  def authorized?(id:)
-    requires_current_user!
-  end
+    def authorized?(id:)
+      requires_current_user!
+    end
 
-  def resolve(id:)
-    video_call = VideoCall.find_by_uid!(id)
-    video_call.fallback = true
-    video_call.save
+    def resolve(id:)
+      video_call = VideoCall.find_by_uid!(id)
+      video_call.fallback = true
+      video_call.save
 
-    {video_call: video_call}
+      {video_call:}
+    end
   end
 end

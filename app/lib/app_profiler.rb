@@ -6,7 +6,7 @@ class AppProfilerAuthorizedMiddleware < AppProfiler::Middleware
     session_name = Rails.application.config.session_options[:key]
     uid = request.cookie_jar.encrypted[session_name]["account_uid"]
 
-    Account.find_by(uid: uid)&.admin?
+    Account.find_by(uid:)&.admin?
   end
 end
 
@@ -34,7 +34,7 @@ module AppProfiler
             object = Aws::S3::Object.new(
               key: filename,
               bucket_name: ENV["AWS_S3_BUCKET"],
-              client: client
+              client:
             )
 
             OpenStruct.new(

@@ -21,7 +21,7 @@ module Mutations
         rejected_at: Time.zone.now,
         rejection_reason: reason
       )
-      {consultation: consultation}
+      {consultation:}
     end
   end
 end

@@ -8,7 +8,7 @@ RSpec.describe Mutations::UpdateEventRegistration do
 
   context "when registering" do
     subject(:update_event_registration) do
-      resp = AdvisableSchema.execute(register_query, context: {current_user: current_user})
+      resp = AdvisableSchema.execute(register_query, context: {current_user:})
       resp["data"]["updateEventRegistration"]
     end
 
@@ -57,7 +57,7 @@ RSpec.describe Mutations::UpdateEventRegistration do
 
   context "when unregistering" do
     subject(:update_event_registration) do
-      resp = AdvisableSchema.execute(unregister_query, context: {current_user: current_user})
+      resp = AdvisableSchema.execute(unregister_query, context: {current_user:})
       resp["data"]["updateEventRegistration"]
     end
 

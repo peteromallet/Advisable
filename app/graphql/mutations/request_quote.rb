@@ -24,7 +24,7 @@ module Mutations
       task.assign_attributes(stage: "Quote Requested", quote_requested_at: Time.zone.now)
       save_with_current_account!(task)
 
-      {task: task}
+      {task:}
     end
   end
 end

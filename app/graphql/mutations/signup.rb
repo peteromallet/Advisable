@@ -2,8 +2,8 @@
 
 module Mutations
   class Signup < Mutations::BaseMutation
-    argument :id, ID, required: true
     argument :email, String, required: true
+    argument :id, ID, required: true
     argument :password, String, required: true
     argument :password_confirmation, String, required: true
 
@@ -39,7 +39,7 @@ module Mutations
     private
 
     def email_taken?(email)
-      account = Account.find_by(email: email)
+      account = Account.find_by(email:)
       return unless account&.has_password?
 
       ApiError.invalid_request("ACCOUNT_EXISTS", "Account with this email already exists")
