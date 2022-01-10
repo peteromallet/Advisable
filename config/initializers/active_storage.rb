@@ -4,7 +4,7 @@
 module ActiveStorage
   module DirectUploadToken
     def verify_direct_upload_token(_token, _attachment_name, _session)
-      raise "This still valid?" if Rails.version != "7.0.0"
+      raise "This still valid?" if Rails.version != "7.0.1"
 
       ActiveStorage::Blob.service.name
     end
