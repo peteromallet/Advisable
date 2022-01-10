@@ -8,7 +8,7 @@ class AuthProvidersController < ApplicationController
     raise ActionController::RoutingError, "Unknown provider" if PROVIDERS.exclude?(provider)
 
     public_send(provider)
-  rescue ActiveRecord::RecordInvalid => e
+  rescue StandardError => e
     Sentry.capture_exception(e, extra: {oauth: request.env["omniauth.auth"], oparams: oparams})
     flash[:notice] = "Something went wrong."
     redirect_to "/login/signup"
@@ -41,7 +41,7 @@ class AuthProvidersController < ApplicationController
     redirect_to request.env["omniauth.origin"]
   end
 
-  def google_oauth2
+  def google_oauth2(retrying: false)
     account = Account.find_by(email: oauth.email) || create_account!
 
     if account
@@ -53,6 +53,12 @@ class AuthProvidersController < ApplicationController
       flash[:notice] = "No account with that email found, please sign up."
       redirect_to "/login/signup"
     end
+  rescue ActiveRecord::RecordInvalid => e
+    raise unless !retrying && e.message == "Validation failed: Uid has already been taken" && !retrying
+
+    AuthProvider.find_by(provider: "google_oauth2", uid: oauth.uid).destroy!
+    retrying = true
+    retry
   end
 
   def google_oauth2_calendar
