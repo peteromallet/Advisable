@@ -60,7 +60,11 @@ class UserMailer < ApplicationMailer
     return unless pdf.success?
 
     attachments["#{invoice.first_day.strftime("%Y-%m")}-advisable-invoice.pdf"] = {mime_type: "application/pdf", content: pdf.body}
-    mail(to: invoice.company.billing_email, subject: "#{invoice.first_day.strftime("%B %Y")} invoice from Advisable")
+    mail(
+      to: invoice.company.billing_email,
+      cc: "finance@advisable.com",
+      subject: "#{invoice.first_day.strftime("%B %Y")} invoice from Advisable"
+    )
   end
 
   def payment_receipt(payment)
