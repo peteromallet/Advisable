@@ -10,7 +10,7 @@ import { useMutation, useApolloClient } from "@apollo/client";
 import { Box, Stack, Link } from "@advisable/donut";
 import VIEWER from "src/graphql/queries/getViewer.graphql";
 import validationSchema from "./validationSchema";
-import LOGIN from "./login";
+import LOGIN from "./login.gql";
 import LoginWithGoogle from "./LoginWithGoogle";
 
 export default function LoginForm() {

@@ -1,6 +1,8 @@
 import { gql, useMutation } from "@apollo/client";
-import viewerFields from "src/graphql/fragments/viewerFields.graphql";
 import VIEWER from "src/graphql/queries/getViewer.graphql";
+import CREATE_FREELANCER_ACCOUNT from "./createFreelancerAccount.gql";
+import UPDATE_PROFILE from "./updateProfile.gql";
+import UPDATE_PASSWORD from "./updatePassword.gql";
 
 export const GET_PROJECT = gql`
   query GetProject($id: ID!) {
@@ -25,18 +27,6 @@ export const GET_PROJECT = gql`
   }
 `;
 
-export const CREATE_FREELANCER_ACCOUNT = gql`
-  ${viewerFields}
-
-  mutation CreateFreelancerAccount($input: CreateFreelancerAccountInput!) {
-    createFreelancerAccount(input: $input) {
-      viewer {
-        ...ViewerFields
-      }
-    }
-  }
-`;
-
 export const useCreateFreelancerAccount = () =>
   useMutation(CREATE_FREELANCER_ACCOUNT, {
     update(cache, { data, errors }) {
@@ -51,18 +41,6 @@ export const useCreateFreelancerAccount = () =>
     },
   });
 
-export const UPDATE_PROFILE = gql`
-  ${viewerFields}
-
-  mutation UpdateProfile($input: UpdateProfileInput!) {
-    updateProfile(input: $input) {
-      specialist {
-        ...ViewerFields
-      }
-    }
-  }
-`;
-
 export const useUpdateProfile = () =>
   useMutation(UPDATE_PROFILE, {
     update(cache, { data, errors }) {
@@ -76,18 +54,6 @@ export const useUpdateProfile = () =>
       }
     },
   });
-
-export const UPDATE_PASSWORD = gql`
-  ${viewerFields}
-
-  mutation updatePassword($input: UpdatePasswordInput!) {
-    updatePassword(input: $input) {
-      viewer {
-        ...ViewerFields
-      }
-    }
-  }
-`;
 
 export function useUpdatePassword() {
   return useMutation(UPDATE_PASSWORD, {

@@ -1,0 +1,28 @@
+{
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "jsx": "react",
+    "paths": {
+      "toby": ["./app/javascript/toby"],
+      "internal": ["./app/javascript/internal"],
+      "guild": ["./app/javascript/guild"],
+      "guild/*": ["./app/javascript/guild/*"],
+      "@guild/*": ["./app/javascript/guild/*"],
+      "src/*": ["./app/javascript/src/*"],
+      "components/*": ["./app/javascript/src/components/*"],
+      "@advisable-main/*": ["./app/javascript/src/*"],
+      "@advisable/donut/components/Combobox": [
+        "./donut/src/components/Combobox/index.js"
+      ],
+      "@advisable/donut/*": ["./donut/src/*"],
+      "@advisable/donut": ["./donut/src/index"],
+      "*": [
+        "./app/javascript/guild/*",
+        "./app/javascript/src/*",
+        "./app/javascript/src/components/*",
+        "./donut/src/*"
+      ]
+    }
+  }
+}

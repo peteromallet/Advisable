@@ -1,0 +1,9 @@
+#import "../../../graphql/fragments/viewerFields.graphql"
+
+mutation UpdateProfile($input: UpdateProfileInput!) {
+  updateProfile(input: $input) {
+    specialist {
+      ...ViewerFields
+    }
+  }
+}

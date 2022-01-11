@@ -28,7 +28,6 @@ gem "money"
 gem "sentry-ruby"
 gem "sentry-rails"
 gem "sentry-sidekiq"
-gem "webpacker", "~> 5.1"
 gem "slim"
 gem "bootsnap", require: false
 gem "dalli"
@@ -56,6 +55,7 @@ gem "image_processing"
 gem "faker"
 gem "twilio-ruby"
 gem "graphql_playground-rails"
+gem "jsbundling-rails"
 
 # Guild
 gem "email_reply_parser"

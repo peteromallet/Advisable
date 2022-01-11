@@ -1,18 +1,7 @@
-import { gql, useMutation } from "@apollo/client";
-import viewerFields from "src/graphql/fragments/viewerFields.graphql";
+import { useMutation } from "@apollo/client";
 import VIEWER from "src/graphql/queries/getViewer.graphql";
-
-const CREATE_CLIENT_ACCOUNT = gql`
-  ${viewerFields}
-
-  mutation CreateClientAccount($input: CreateClientAccountInput!) {
-    createClientAccount(input: $input) {
-      viewer {
-        ...ViewerFields
-      }
-    }
-  }
-`;
+import CREATE_CLIENT_ACCOUNT from "./createClientAccount.gql";
+import UPDATE_PASSWORD from "./updatePassword.gql";
 
 export const useCreateClientAccount = () =>
   useMutation(CREATE_CLIENT_ACCOUNT, {
@@ -27,18 +16,6 @@ export const useCreateClientAccount = () =>
       }
     },
   });
-
-export const UPDATE_PASSWORD = gql`
-  ${viewerFields}
-
-  mutation updatePassword($input: UpdatePasswordInput!) {
-    updatePassword(input: $input) {
-      viewer {
-        ...ViewerFields
-      }
-    }
-  }
-`;
 
 export function useUpdatePassword() {
   return useMutation(UPDATE_PASSWORD, {

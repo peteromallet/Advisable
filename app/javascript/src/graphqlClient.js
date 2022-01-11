@@ -1,5 +1,5 @@
 import queryString from "query-string";
-import { ApolloClient, from, split, createHttpLink, gql } from "@apollo/client";
+import { ApolloClient, from, split, createHttpLink } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import { RetryLink } from "@apollo/client/link/retry";
@@ -128,16 +128,16 @@ const client = new ApolloClient({
 });
 
 // write any prefetched queries to the cache
-if (window.prefetchedQueries) {
-  window.prefetchedQueries.forEach((prefetchedQuery) => {
-    if (!prefetchedQuery.result.errors) {
-      client.writeQuery({
-        query: gql(prefetchedQuery.query),
-        data: prefetchedQuery.result.data,
-        variables: prefetchedQuery.variables,
-      });
-    }
-  });
-}
+// if (window.prefetchedQueries) {
+//   window.prefetchedQueries.forEach((prefetchedQuery) => {
+//     if (!prefetchedQuery.result.errors) {
+//       client.writeQuery({
+//         query: gql(prefetchedQuery.query),
+//         data: prefetchedQuery.result.data,
+//         variables: prefetchedQuery.variables,
+//       });
+//     }
+//   });
+// }
 
 export default client;
