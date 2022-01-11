@@ -29,12 +29,12 @@ RSpec.describe Mutations::RequestConsultation do
     expect_any_instance_of(Message).not_to receive(:schedule_email_notifications)
     c_count = Consultation.count
     m_count = Message.count
-    response = AdvisableSchema.execute(query, context: context)
+    response = AdvisableSchema.execute(query, context:)
     expect(Consultation.count).to eq(c_count + 1)
     expect(Message.count).to eq(m_count + 1)
 
     uid = response["data"]["requestConsultation"]["consultation"]["id"]
-    consultation = Consultation.find_by!(uid: uid)
+    consultation = Consultation.find_by!(uid:)
     expect(consultation.specialist).to eq(specialist)
 
     message_uid = response["data"]["requestConsultation"]["consultation"]["message"]["id"]
