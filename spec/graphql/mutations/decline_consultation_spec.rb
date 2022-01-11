@@ -12,7 +12,8 @@ RSpec.describe Mutations::DeclineConsultation do
     <<-GRAPHQL
     mutation {
       declineConsultation(input: {
-        consultation: "#{consultation.uid}"
+        consultation: "#{consultation.uid}",
+        reason: "Not interested"
       }) {
         consultation {
           id
@@ -31,16 +32,30 @@ RSpec.describe Mutations::DeclineConsultation do
 
   context "when a message exists" do
     let(:conversation) { create(:conversation) }
-    let!(:participant) { conversation.participants.create(account: current_user.account) }
+
+    before do
+      conversation.participants.create(account: current_user.account)
+      create(:message, consultation:, conversation:)
+    end
 
     it "creates a system message" do
-      create(:message, consultation: consultation, conversation: conversation)
-      message_count = Message.count
-      AdvisableSchema.execute(query, context: context)
-      expect(Message.count).to eq(message_count + 1)
-      last_message = consultation.messages.last
-      expect(last_message.kind).to eq("ConsultationDeclined")
-      expect(participant.reload.unread_count).to eq(1)
+      expect(conversation.messages.where(kind: "ConsultationDeclined")).not_to exist
+      AdvisableSchema.execute(query, context:)
+      expect(conversation.messages.where(kind: "ConsultationDeclined")).to exist
+    end
+
+    it "creates a user message" do
+      AdvisableSchema.execute(query, context:)
+      last_message = conversation.messages.last
+      expect(last_message.content).to eq("Not interested")
+    end
+
+    it "notifies the user via email" do
+      AdvisableSchema.execute(query, context:)
+      message = conversation.messages.last
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "consultation_declined", "deliver_now", {
+        args: [consultation, message]
+      }).once
     end
   end
 
