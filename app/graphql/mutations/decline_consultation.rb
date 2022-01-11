@@ -17,7 +17,8 @@ module Mutations
     def resolve(consultation:, reason: nil)
       consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
       create_system_message(consultation)
-      create_user_message(consultation, reason)
+      message = create_user_message(consultation, reason)
+      UserMailer.consultation_declined(consultation, message).deliver_later
       consultation.update(
         status: "Specialist Rejected",
         rejected_at: Time.zone.now,
@@ -35,7 +36,7 @@ module Mutations
         nil,
         nil,
         kind: "ConsultationDeclined",
-        consultation: consultation,
+        consultation:,
         send_emails: false
       )
     end
