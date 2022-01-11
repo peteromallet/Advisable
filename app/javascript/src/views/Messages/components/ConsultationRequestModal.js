@@ -127,6 +127,7 @@ function DeclineConsultationRequest({ message, sender, onBack, onDecline }) {
       <Textarea
         autoFocus
         minRows={8}
+        name="reason"
         value={reason}
         marginBottom={8}
         placeholder={`Message to ${sender}...`}
