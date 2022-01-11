@@ -22,7 +22,7 @@ module Mutations
       conversation.new_message!(nil, nil, kind: "AgreementDeclined", send_emails: false)
       conversation.new_message!(current_account, args[:message]) if args[:message].present?
 
-      {agreement: agreement}
+      {agreement:}
     end
   end
 end
