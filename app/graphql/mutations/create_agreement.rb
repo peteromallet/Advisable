@@ -27,7 +27,7 @@ module Mutations
       conversation.new_message!(nil, nil, kind: "AgreementCreated", send_emails: false)
       conversation.new_message!(current_account, args[:message], attachments: args[:attachments])
 
-      {agreement: agreement}
+      {agreement:}
     end
   end
 end

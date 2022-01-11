@@ -6,8 +6,8 @@ RSpec.describe Mutations::DeclineAgreement do
   let(:user) { create(:user) }
   let(:specialist) { create(:specialist) }
   let(:context) { {current_user: user, current_account: user.account} }
-  let(:agreement) { create(:agreement, status: "pending", specialist: specialist, user: user) }
-  let(:response) { AdvisableSchema.execute(query, context: context) }
+  let(:agreement) { create(:agreement, status: "pending", specialist:, user:) }
+  let(:response) { AdvisableSchema.execute(query, context:) }
 
   let(:query) do
     <<-GRAPHQL

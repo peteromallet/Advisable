@@ -6,7 +6,7 @@ RSpec.describe Mutations::CreateAgreement do
   let(:specialist) { create(:specialist) }
   let(:user) { create(:user) }
   let(:context) { {current_user: specialist, current_account: specialist.account} }
-  let(:response) { AdvisableSchema.execute(query, context: context) }
+  let(:response) { AdvisableSchema.execute(query, context:) }
 
   let(:query) do
     <<-GRAPHQL
