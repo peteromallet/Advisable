@@ -35,6 +35,14 @@ export default function RequestConsultationMessage({ specialist, onSubmit }) {
           message: values.message,
         },
       },
+      update(cache, result) {
+        cache.modify({
+          id: cache.identify(specialist),
+          fields: {
+            consultation: () => result.data.requestConsultation.consultation,
+          },
+        });
+      },
     });
 
     onSubmit();

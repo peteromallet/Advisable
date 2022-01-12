@@ -19,12 +19,6 @@ query Article($searchId: ID!, $articleId: ID!) {
       logo
       favicon
     }
-    specialist {
-      id
-      name
-      avatar
-      profilePath
-    }
     comment
     specialist {
       id
@@ -32,6 +26,16 @@ query Article($searchId: ID!, $articleId: ID!) {
       avatar
       name
       firstName
+      profilePath
+      consultation {
+        id
+        status
+        interview {
+          id
+          status
+          startsAt
+        }
+      }
     }
     sections {
       id
