@@ -24,7 +24,8 @@ class SpecialistMailerPreview < ActionMailer::Preview
 
   def consultation_request
     consultation = Consultation.order(Arel.sql("RANDOM()")).first
-    SpecialistMailer.consultation_request(consultation)
+    message = Message.order(Arel.sql("RANDOM()")).first
+    SpecialistMailer.consultation_request(consultation, message)
   end
 
   private

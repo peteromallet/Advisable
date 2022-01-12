@@ -41,6 +41,18 @@ RSpec.describe Mutations::RequestConsultation do
     message = Message.find_by!(uid: message_uid)
     expect(message.content).to eq("Wanna work for me, bro?")
     expect(message.conversation.participants.pluck(:account_id, :unread_count)).to match_array([[specialist.account.id, 1], [current_user.account.id, 0]])
+
+    expect(MessageNotifierJob).not_to have_been_enqueued
+  end
+
+  it "notifies the freelancer viia email" do
+    AdvisableSchema.execute(query, context:)
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "consultation_request", "deliver_now", {
+      args: [
+        an_instance_of(Consultation),
+        an_instance_of(Message)
+      ]
+    }).once
   end
 
   context "when there's a case study article" do

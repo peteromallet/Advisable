@@ -101,7 +101,8 @@ class SpecialistMailer < ApplicationMailer
     end
   end
 
-  def consultation_request(consultation)
+  def consultation_request(consultation, message)
+    @message = message
     @consultation = consultation
     @sales_person = consultation.user.company.sales_person
 
