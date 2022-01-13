@@ -53,7 +53,7 @@ namespace :demo do
         account = Account.create(email: Faker::Internet.email, permissions: [:team_manager])
         user = User.create(
           account:,
-          company: Company.new(name: Company.fresh_name_for(Faker::Company.name)),
+          company: Company.new(name: Faker::Company.name),
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name,
           company_name: Faker::Company.name

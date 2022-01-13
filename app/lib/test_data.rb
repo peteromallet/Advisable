@@ -144,7 +144,7 @@ class TestData
     user = User.find_or_create_by(account:) do |u|
       u.application_status = "Application Accepted"
       u.company = Company.new(
-        name: Company.fresh_name_for("Dunder Mifflin"),
+        name: "Dunder Mifflin",
         address: {city: "Dublin", country: "IE"},
         industry:,
         kind: "Startup",
