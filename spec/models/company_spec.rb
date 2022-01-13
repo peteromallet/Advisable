@@ -5,25 +5,6 @@ require "rails_helper"
 RSpec.describe Company, type: :model do
   let(:company) { create(:company) }
 
-  describe ".fresh_name_for" do
-    it "returns the same name as user's company" do
-      expect(described_class.fresh_name_for("Acme")).to eq("Acme")
-    end
-
-    context "when company with that name already exists" do
-      it "returns the same name as user's company with (2)" do
-        create(:company, name: "Acme")
-        expect(described_class.fresh_name_for("Acme")).to eq("Acme (2)")
-      end
-
-      it "returns the same name as user's company with a bigger number in parenthesis" do
-        create(:company, name: "Acme")
-        create(:company, name: "Acme (2)")
-        expect(described_class.fresh_name_for("Acme")).to eq("Acme (3)")
-      end
-    end
-  end
-
   describe "#stripe_customer_id" do
     context "when the company has a stripe customer id set" do
       it "returns the existing id" do
