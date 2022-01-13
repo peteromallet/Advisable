@@ -9,7 +9,7 @@ module Toby
 
       # optional for when we don't follow the class == resource convention
       def model
-        reflection.class_name
+        reflection.klass.name.delete("::")
       end
 
       def column
@@ -25,7 +25,8 @@ module Toby
       end
 
       def type
-        ["Toby::Types::#{model}"]
+        type = ["Toby", "Types", model.delete("::")].join("::")
+        [type]
       end
 
       def input_type
