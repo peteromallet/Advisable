@@ -8,7 +8,7 @@ gem "pg", ">= 0.18", "< 2.0"
 gem "strong_migrations"
 gem "good_migrations"
 gem "pghero"
-gem "logidze", ">= 1.0.0"
+gem "logidze"
 gem "fx"
 gem "puma"
 gem "puma_worker_killer"
@@ -63,7 +63,7 @@ gem "administrate-field-active_storage"
 
 gem "pry"
 gem "pry-rails"
-gem "pry-doc", github: "pry/pry-doc"
+gem "pry-doc"
 gem "pry-byebug", github: "deivid-rodriguez/pry-byebug" # Uses pry 0.14
 gem "ruby-progressbar", require: false
 gem "app_profiler"
