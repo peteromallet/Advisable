@@ -15,6 +15,7 @@ RSpec.describe Toby::Resources do
           Toby::Resources::CaseStudy::Article,
           Toby::Resources::CaseStudy::Search,
           Toby::Resources::CaseStudy::SearchFeedback,
+          Toby::Resources::CaseStudy::Skill,
           Toby::Resources::SkillSimilarity,
           Toby::Resources::Industry,
           Toby::Resources::SkillCategory,
@@ -45,7 +46,8 @@ RSpec.describe Toby::Resources do
         [
           Toby::Resources::CaseStudy::SearchFeedback,
           Toby::Resources::CaseStudy::Article,
-          Toby::Resources::CaseStudy::Search
+          Toby::Resources::CaseStudy::Search,
+          Toby::Resources::CaseStudy::Skill
         ]
       )
     end

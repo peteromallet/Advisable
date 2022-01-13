@@ -38,7 +38,7 @@ module Toby
         end
 
         def attribute(name, type, **args)
-          args[:parent] = self.name.demodulize unless args.key?(:parent)
+          args[:parent] = self.name.sub(/^Toby::Resources::/, "").delete("::") unless args.key?(:parent)
           @attributes << type.new(name, self, **args)
         end
 
@@ -55,7 +55,7 @@ module Toby
         end
 
         def type
-          @type ||= Toby::Types.const_set(name.demodulize, type_class)
+          @type ||= Toby::Types.const_set(name.sub(/^Toby::Resources::/, "").delete("::"), type_class)
         end
 
         def type_class
