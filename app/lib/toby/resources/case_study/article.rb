@@ -10,6 +10,10 @@ module Toby
         attribute :slug, Attributes::String
         attribute :specialist, Attributes::BelongsTo
         attribute :specialist_name, Lookups::CaseStudy::Articles::SpecialistName
+        attribute :skills, Attributes::HasMany
+        attribute :score, Attributes::Integer
+        attribute :hide_from_search, Attributes::Boolean
+        attribute :published_at, Attributes::DateTime
         attribute :deleted_at, Attributes::DateTime
 
         action :create_guild_post, label: "Post To Guild"
