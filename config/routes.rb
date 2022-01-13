@@ -17,7 +17,7 @@ end
 
 class UsernameConstraint
   def matches?(request)
-    Specialist.find_by_username_or_id(request.path_parameters[:username])
+    Specialist.accepted.find_by_username_or_id(request.path_parameters[:username])
   end
 end
 

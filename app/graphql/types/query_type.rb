@@ -78,7 +78,7 @@ module Types
     end
 
     def specialist(id:)
-      ::Specialist.find_by_username_or_id!(id)
+      ::Specialist.accepted.find_by_username_or_id!(id)
     end
 
     field :industries, [Types::IndustryType], null: false
