@@ -38,16 +38,23 @@ module Toby
       end
 
       def load_records
-        ar = includes ? lazy_model.includes(includes) : lazy_model
-        ar.where(column => state[:pending]).each do |record|
-          key = record.public_send(column)
-          value = if attribute.respond_to?(:lazy_read)
-                    attribute.lazy_read(record)
-                  else
-                    record
-                  end
-          state[:loaded][key] ||= []
-          state[:loaded][key] << value
+        if attribute.respond_to?(:load_records)
+          attribute.load_records(state[:pending]).each do |key, value|
+            state[:loaded][key] ||= []
+            state[:loaded][key] << value
+          end
+        else
+          ar = includes ? lazy_model.includes(includes) : lazy_model
+          ar.where(column => state[:pending]).each do |record|
+            key = record.public_send(column)
+            value = if attribute.respond_to?(:lazy_read)
+                      attribute.lazy_read(record)
+                    else
+                      record
+                    end
+            state[:loaded][key] ||= []
+            state[:loaded][key] << value
+          end
         end
         state[:pending].clear
       end
