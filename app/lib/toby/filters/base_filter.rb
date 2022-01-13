@@ -13,7 +13,7 @@ module Toby
       end
 
       def type
-        self.class.name.demodulize
+        self.class.name.sub(/^Toby::Filters::/, "").delete("::")
       end
 
       def nested
