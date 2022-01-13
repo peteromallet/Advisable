@@ -7,7 +7,7 @@ module Toby
       filter "is blank", Filters::HasNone
 
       def type
-        "Toby::Types::#{model}"
+        ["Toby", "Types", model.delete("::")].join("::")
       end
 
       def sortable
