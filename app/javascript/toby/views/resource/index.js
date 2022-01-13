@@ -47,7 +47,7 @@ function Resource({ resource, views }) {
   }, [views, location.search]);
 
   const [sortBy, setSortBy] = useState(currentView?.sortBy || "created_at");
-  const [sortOrder, setSortOrder] = useState(currentView?.sortOrder || "ASC");
+  const [sortOrder, setSortOrder] = useState(currentView?.sortOrder || "DESC");
   const [filters, setFilters] = useState(() => initFilters(currentView));
 
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +58,7 @@ function Resource({ resource, views }) {
       ? views.find((v) => v.id === queryParams.view)
       : null;
     setSortBy(currentView?.sortBy || "created_at");
-    setSortOrder(currentView?.sortOrder || "ASC");
+    setSortOrder(currentView?.sortOrder || "DESC");
     setFilters(initFilters(currentView));
   }, [location.search]);
 
