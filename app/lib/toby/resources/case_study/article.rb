@@ -10,6 +10,7 @@ module Toby
         attribute :slug, Attributes::String
         attribute :specialist, Attributes::BelongsTo
         attribute :specialist_name, Lookups::CaseStudy::Articles::SpecialistName
+        attribute :primary_skill, Lookups::CaseStudy::Articles::PrimarySkill
         attribute :skills, Attributes::HasMany
         attribute :score, Attributes::Integer
         attribute :hide_from_search, Attributes::Boolean
