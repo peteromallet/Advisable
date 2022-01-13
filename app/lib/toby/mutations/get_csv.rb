@@ -31,7 +31,8 @@ module Toby
                 elsif rec.is_a?(Array)
                   rec.map { |r| lazy_resource.label(r, {}).resolve }
                 elsif rec.present?
-                  lazy_resource.label(rec, {}).resolve
+                  label = lazy_resource.label(rec, {})
+                  label.respond_to?(:resolve) ? label.resolve : label
                 end
               else
                 attribute.read(record)
