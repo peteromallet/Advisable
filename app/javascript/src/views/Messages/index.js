@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from "react";
 import { Box, useBreakpoint, useTheme } from "@advisable/donut";
-import { useConversations, useReceivedMessage } from "./queries";
+import { useConversations } from "./queries";
 import { Route, Redirect, Switch, useRouteMatch } from "react-router-dom";
 import Loading from "src/components/Loading";
 import Conversation from "./components/Conversation";
@@ -9,7 +9,6 @@ import MessagesSidebar from "./components/MessagesSidebar";
 import useOrderedConversations from "./hooks/useOrderedConversations";
 
 export default function Messages() {
-  useReceivedMessage();
   const { data, loading } = useConversations();
   const { setTheme } = useTheme();
   const isDesktop = useBreakpoint("lUp");
