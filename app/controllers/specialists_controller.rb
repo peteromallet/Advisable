@@ -4,7 +4,7 @@ class SpecialistsController < ApplicationController
   before_action :prefetch_profile, only: %i[profile case_study]
 
   def profile
-    @specialist = Specialist.find_by_username_or_id(params[:username])
+    @specialist = Specialist.accepted.find_by_username_or_id(params[:username])
   end
 
   def case_study
