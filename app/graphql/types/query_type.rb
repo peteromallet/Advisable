@@ -78,7 +78,11 @@ module Types
     end
 
     def specialist(id:)
-      ::Specialist.find_by_username_or_id!(id)
+      return current_user if current_user.is_a?(::Specialist) && (current_user.uid == id || current_user.username == id)
+
+      query = ::Specialist
+      query = query.accepted unless current_account&.admin?
+      query.find_by_username_or_id!(id)
     end
 
     field :industries, [Types::IndustryType], null: false
