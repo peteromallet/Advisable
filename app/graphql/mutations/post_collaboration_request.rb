@@ -16,7 +16,7 @@ module Mutations
     end
 
     def resolve(**args)
-      post = ::Guild::Opportunity.new(
+      post = ::Guild::Post.new(
         specialist_id: current_user.id,
         title: args[:title],
         body: args[:body],

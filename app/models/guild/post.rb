@@ -7,7 +7,6 @@ module Guild
 
     self.store_full_sti_class = false
 
-    POST_TYPES = %w[Post AdviceRequired CaseStudy Opportunity].freeze
     AUDIENCE_TYPES = %w[skills industries locations none other].freeze
     POPULAR_THRESHOLD = 5
 
@@ -33,7 +32,6 @@ module Guild
 
     enum status: {draft: 0, published: 1, removed: 2}
 
-    validates :type, :status, presence: true
     validates :title, length: {maximum: 250, minimum: 8}, allow_nil: true
     validates :body, length: {maximum: 10_000, minimum: 16}, allow_nil: true
     validates :audience_type, inclusion: {in: AUDIENCE_TYPES}, allow_nil: true
@@ -99,7 +97,6 @@ end
 #  shareable         :boolean          default(FALSE)
 #  status            :integer          default("draft"), not null
 #  title             :string
-#  type              :string           default("Post"), not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  article_id        :bigint

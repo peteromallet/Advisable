@@ -177,7 +177,7 @@ module Types
 
     field :collaboration_requests, Types::Guild::Post.connection_type, null: true
     def collaboration_requests
-      ::Guild::Opportunity.published.unresolved.order(created_at: :desc)
+      ::Guild::Post.published.unresolved.order(created_at: :desc)
     end
 
     field :guild_post, Types::Guild::Post, null: true do
