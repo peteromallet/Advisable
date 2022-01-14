@@ -8,6 +8,7 @@ module Types
     field :first_name, String, null: true
     field :last_name, String, null: true
     field :name, String, null: true
+    field :timezone, String, null: true
     field :avatar, String, null: true, method: :cached_avatar_url
 
     field :is_viewer, Boolean, null: true
