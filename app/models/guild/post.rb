@@ -42,16 +42,6 @@ module Guild
     before_save :reset_labels, if: :labels_resettable?
     before_save :reset_previous_pinned, if: :pinned_changed?
 
-    # General, Opportunity, Advice Required, Case Study
-    def normalized_type
-      case type
-      when "Post"
-        "General"
-      else
-        type.demodulize.titleize
-      end
-    end
-
     def cover_image
       images.find_by(cover: true)
     end

@@ -14,7 +14,7 @@ module Mutations
       argument :shareable, Boolean, required: false
       argument :title, String, required: false
       argument :type, String, required: false
-      field :guild_post, Types::Guild::PostInterface, null: true
+      field :guild_post, Types::Guild::Post, null: true
 
       def authorized?(**_args)
         requires_accepted_specialist!

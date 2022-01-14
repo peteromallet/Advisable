@@ -2,15 +2,9 @@
 
 module Types
   module Guild
-    module PostInterface
-      include Types::BaseInterface
+    class Post < Types::BaseType
       include ActionView::Helpers::DateHelper
-
-      field_class BaseField
-
-      include Types::Guild::AuthorInterface
-
-      orphan_types Types::Guild::Post::PostType, Types::Guild::Post::AdviceRequiredType, Types::Guild::Post::CaseStudyType, Types::Guild::Post::OpportunityType
+      implements Types::Guild::AuthorInterface
 
       description "Fields representing a Guild Post model"
 
@@ -30,18 +24,6 @@ module Types
 
       field :status, String, null: true do
         description "The status of the guild post"
-      end
-
-      field :type, String, null: false do
-        description "The guild post type"
-      end
-      def type
-        object.normalized_type
-      end
-
-      field :denormalized_type, String, null: true
-      def denormalized_type
-        object.type
       end
 
       field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
@@ -98,14 +80,6 @@ module Types
       field :resolved, Boolean, null: true
       def resolved
         !!object.resolved_at
-      end
-
-      definition_methods do
-        def resolve_type(object, _context)
-          raise "Unexpected Post Type: #{object.inspect}" unless ::Guild::Post::POST_TYPES.include?(object.type)
-
-          "Types::Guild::Post::#{object.type}Type".constantize
-        end
       end
     end
   end
