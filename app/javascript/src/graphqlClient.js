@@ -26,6 +26,7 @@ const authLink = setContext((_, { headers }) => {
     ...headers,
     "X-CSRF-Token": csrfToken,
     "X-RELEASED-AT": process.env.RELEASED_AT,
+    "X-TIMEZONE": Intl.DateTimeFormat().resolvedOptions().timeZone
   };
 
   if (queryParams.profile) {
