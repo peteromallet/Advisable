@@ -2,6 +2,7 @@
 
 class GraphqlController < ApplicationController
   before_action :require_admin, only: :toby
+  before_action :set_timezone
 
   def execute
     variables = ensure_hash(params[:variables])
@@ -29,6 +30,14 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def set_timezone
+    return if !current_account ||
+              request.headers["X-TIMEZONE"].blank? ||
+              current_account.timezone.present?
+
+    current_account.update(timezone: request.headers["X-TIMEZONE"])
+  end
 
   def with_query_tracing
     return yield unless Rails.env.development?
