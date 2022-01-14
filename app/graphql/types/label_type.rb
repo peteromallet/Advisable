@@ -31,7 +31,7 @@ module Types
       end
     end
 
-    field :guild_posts, Types::Guild::PostInterface.connection_type, null: true, max_page_size: 5
+    field :guild_posts, Types::Guild::Post.connection_type, null: true, max_page_size: 5
 
     def guild_posts
       object.guild_posts.published.order(created_at: :desc)

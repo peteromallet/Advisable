@@ -125,7 +125,7 @@ module Types
       description "Whether or not the specialist is a Guild user"
     end
 
-    field :guild_posts, Types::Guild::PostInterface.connection_type, null: false
+    field :guild_posts, Types::Guild::Post.connection_type, null: false
     def guild_posts
       object.guild_posts.feed(current_user)
     end

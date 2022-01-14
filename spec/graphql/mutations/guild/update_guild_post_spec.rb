@@ -17,43 +17,33 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
   let!(:guild_post) { create(:guild_post, specialist:, status: "draft") }
   let(:response_keys) { %w[updateGuildPost guildPost] }
 
-  let(:guild_post_fields) do
-    <<-GRAPHQL
-      fragment GuildPostFields on PostInterface {
-        id
-        type
-        title
-        body
-        status
-        shareable
-        author {
-          id
-        }
-        labels {
-          id
-          name
-        }
-        images {
-          id
-          url
-        }
-        coverImage {
-          id
-          url
-        }
-      }
-    GRAPHQL
-  end
-
   let(:query) do
     <<-GRAPHQL
-    #{guild_post_fields}
     mutation {
       updateGuildPost(input: {
         guildPostId: "#{guild_post.id}"
       }) {
         guildPost {
-          ...GuildPostFields
+          id
+          title
+          body
+          status
+          shareable
+          author {
+            id
+          }
+          labels {
+            id
+            name
+          }
+          images {
+            id
+            url
+          }
+          coverImage {
+            id
+            url
+          }
         }
       }
     }
@@ -78,11 +68,29 @@ RSpec.describe Mutations::Guild::UpdateGuildPost do
       lambda { |input|
         gql = input.map { |k, v| "#{k}: #{v.is_a?(String) ? "\"#{v}\"" : v}" }.join(", ")
         <<-GRAPHQL
-            #{guild_post_fields}
             mutation {
               updateGuildPost(input: { #{gql} }) {
                 guildPost {
-                  ...GuildPostFields
+                  id
+                  title
+                  body
+                  status
+                  shareable
+                  author {
+                    id
+                  }
+                  labels {
+                    id
+                    name
+                  }
+                  images {
+                    id
+                    url
+                  }
+                  coverImage {
+                    id
+                    url
+                  }
                 }
               }
             }

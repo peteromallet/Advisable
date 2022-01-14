@@ -149,10 +149,8 @@ RSpec.describe Types::SpecialistType do
               hasNextPage
             }
             nodes {
-              ... on PostInterface {
-                status
-                id
-              }
+              status
+              id
             }
           }
         }

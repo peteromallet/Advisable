@@ -7,7 +7,7 @@ module Mutations
 
       argument :guild_post_id, ID, required: true
 
-      field :guild_post, Types::Guild::PostInterface, null: true
+      field :guild_post, Types::Guild::Post, null: true
 
       def authorized?(**_args)
         requires_accepted_specialist!
