@@ -16,7 +16,7 @@ class AccountsController < ApplicationController
 
   def user
     user = User.find_or_create_by(account:) do |u|
-      u.company = Company.new(name: Company.fresh_name_for(params[:company_name].strip))
+      u.company = Company.new(name: params[:company_name].strip)
 
       account.permissions << :team_manager
       account.save!

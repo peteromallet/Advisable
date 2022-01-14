@@ -27,14 +27,6 @@ class Company < ApplicationRecord
 
   attribute :address, AddressAttribute::Type.new
 
-  def self.fresh_name_for(company_name)
-    return company_name unless exists?(name: company_name)
-
-    n = 2
-    n += 1 while exists?(name: "#{company_name} (#{n})")
-    "#{company_name} (#{n})"
-  end
-
   def stripe_customer
     Stripe::Customer.retrieve({
       id: stripe_customer_id,
