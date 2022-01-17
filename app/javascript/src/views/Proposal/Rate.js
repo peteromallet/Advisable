@@ -60,7 +60,7 @@ const Rate = ({ application }) => {
               What is your hourly rate for this project?
             </Text>
             <Text color="neutral800" mb={6}>
-              Advisable charge a fee of 20% of the price you charge. Please
+              Advisable charge a fee of 8% of the price you charge. Please
               remember to account for this in your hourly rate.
             </Text>
             <FormField
