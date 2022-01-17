@@ -22,11 +22,7 @@ export default function PostActions({
   const isShareable = showShare && post.shareable;
   const isEditable = showEdit && viewerIsAuthor;
   const isDeleteable = showDelete && viewerIsAuthor;
-  const isResolvable =
-    showResolve &&
-    viewerIsAuthor &&
-    !post.resolved &&
-    /Advice\sRequired|Opportunity/.test(post.type);
+  const isResolvable = showResolve && viewerIsAuthor && !post.resolved;
 
   if (
     viewerIsAuthor &&
