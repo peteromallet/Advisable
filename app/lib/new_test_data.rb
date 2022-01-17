@@ -13,7 +13,7 @@ class NewTestData
 
   extend Memoist
 
-  attr_reader :yml, :now, :sales_person, :country, :company
+  attr_reader :yml, :advisable_yml, :now, :sales_person, :country, :company
 
   def self.yml_file
     unless File.exist?(YML_PATH)
@@ -48,6 +48,7 @@ class NewTestData
     purge_and_migrate! if purge
 
     @yml = self.class.yml_file
+    @advisable_yml = YAML.load_file("db/seeds/people.yml")[:advisable]
     @unsplash_images = Dir.glob("#{IMAGES_PATH}*.jpg")
     @now = Time.zone.now
     @sales_person = SalesPerson.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, username: Faker::Internet.username)
@@ -154,18 +155,18 @@ class NewTestData
     @users = User.upsert_all(user_data, unique_by: :account_id).pluck("id")
 
     Specialist.where(id: @specialists).each_with_index do |specialist, i|
-      path = "db/seeds/assets/avatars/#{yml[:advisable][i][:avatar]}"
-      specialist.account.avatar.attach(io: File.open(path), filename: yml[:advisable][i][:avatar])
+      path = "db/seeds/assets/avatars/#{advisable_yml[i][:avatar]}"
+      specialist.account.avatar.attach(io: File.open(path), filename: advisable_yml[i][:avatar])
     end
 
     User.where(id: @users).each_with_index do |user, i|
-      path = "db/seeds/assets/avatars/#{yml[:advisable][i][:avatar]}"
-      user.account.avatar.attach(io: File.open(path), filename: yml[:advisable][i][:avatar])
+      path = "db/seeds/assets/avatars/#{advisable_yml[i][:avatar]}"
+      user.account.avatar.attach(io: File.open(path), filename: advisable_yml[i][:avatar])
     end
 
     project_data = []
     @users.each_with_index do |user, i|
-      possesive = yml[:advisable][i][:first_name]
+      possesive = advisable_yml[i][:first_name]
       possesive = possesive.end_with?("s") ? "#{possesive}'" : "#{possesive}'s"
       project_data << {name: "#{possesive} Project", user_id: user, uid: Project.generate_uid, created_at: now, updated_at: now, hired_count: 1, sales_status: "Won"}
     end
@@ -296,7 +297,7 @@ class NewTestData
   end
 
   memoize def advisable_data
-    yml[:advisable].flat_map do |advisable|
+    advisable_yml.flat_map do |advisable|
       [
         {
           account: {
