@@ -29,16 +29,21 @@ class NewTestData
     obj.upload_file(YML_PATH)
   end
 
+  # Populate skill categories by going to production and running:
+  # SkillCategorySkill.joins(:skill).where(skill: {active: [nil, false]})
+  # to verify all the skills are active. Delete others. Then:
+  # puts ({skill_categories: SkillCategorySkill.includes(:skill, :skill_category).group_by{|scs| scs.skill_category.name}.map{|sc, scss| [sc, scss.map{|scs| scs.skill.name}]}.to_h}.to_yaml)
+  # then replace in test_data.yml
   def self.seed_from_airtable!
     yml = yml_file
 
     Airtable::Skill.sync(filter: nil)
     attrs = %i[name category profile uid active airtable_id]
-    yml[:skills] = Skill.pluck(*attrs).map { |p| attrs.zip(p).to_h }
+    yml[:skills] = Skill.active.pluck(*attrs).map { |p| attrs.zip(p).to_h }
 
     Airtable::Industry.sync(filter: nil)
     attrs = %i[name color active uid airtable_id]
-    yml[:industries] = Industry.pluck(*attrs).map { |p| attrs.zip(p).to_h }
+    yml[:industries] = Industry.active.pluck(*attrs).map { |p| attrs.zip(p).to_h }
 
     File.write(YML_PATH, yml.to_yaml)
     upload_yml_file
