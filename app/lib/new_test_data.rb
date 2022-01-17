@@ -69,6 +69,7 @@ class NewTestData
     populate_labels if Label.none?
     populate_advisable if User.none?
     populate_case_studies if CaseStudy::Article.none?
+    populate_reviews if Review.none?
   end
 
   private
@@ -199,6 +200,19 @@ class NewTestData
     populate_cs_article_stuff
     populate_cs_contents
     attach_images_to_cs_contents
+  end
+
+  def populate_reviews
+    reviews_data = []
+    rating_keys = %w[skills availability communication quality_of_work adherence_to_schedule]
+    @specialists.each do |specialist_id|
+      3.times do
+        ratings = rating_keys.index_with { rand(1..5) }
+        case_study_article_id = [nil, @articles.sample].sample
+        reviews_data << {uid: Review.generate_uid, specialist_id:, case_study_article_id:, ratings:, comment: Faker::Hipster.paragraph, created_at: now, updated_at: now}
+      end
+    end
+    @reviews = Review.insert_all(reviews_data).pluck("id")
   end
 
   def populate_cs_companies
