@@ -70,6 +70,7 @@ class NewTestData
     populate_advisable if User.none?
     populate_case_studies if CaseStudy::Article.none?
     populate_reviews if Review.none?
+    populate_events if Event.none?
   end
 
   private
@@ -194,14 +195,6 @@ class NewTestData
     @project_skills = ProjectSkill.insert_all(project_skills_data).pluck("id")
   end
 
-  def populate_case_studies
-    populate_cs_companies
-    populate_cs_articles
-    populate_cs_article_stuff
-    populate_cs_contents
-    attach_images_to_cs_contents
-  end
-
   def populate_reviews
     reviews_data = []
     rating_keys = %w[skills availability communication quality_of_work adherence_to_schedule]
@@ -213,6 +206,23 @@ class NewTestData
       end
     end
     @reviews = Review.insert_all(reviews_data).pluck("id")
+  end
+
+  def populate_events
+    events_data = []
+    10.times do
+      starts_at = rand(1..10).days.from_now
+      events_data << {uid: Event.generate_uid, title: Faker::Hipster.sentence, description: Faker::Hipster.paragraph, color: Event::COLORS.sample, starts_at:, ends_at: starts_at + 1.hour, featured: rand(1..4) == 1, published_at: now, created_at: now, updated_at: now}
+    end
+    @events = Event.insert_all(events_data).pluck("id")
+  end
+
+  def populate_case_studies
+    populate_cs_companies
+    populate_cs_articles
+    populate_cs_article_stuff
+    populate_cs_contents
+    attach_images_to_cs_contents
   end
 
   def populate_cs_companies
