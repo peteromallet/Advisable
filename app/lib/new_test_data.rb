@@ -158,10 +158,10 @@ class NewTestData
     end
     specialist_data = advisable_data.pluck(:specialist).compact
     user_data = advisable_data.pluck(:user).compact
-    @specialists = Specialist.upsert_all(specialist_data, unique_by: :account_id).pluck("id")
+    @specialist_ids = Specialist.upsert_all(specialist_data, unique_by: :account_id).pluck("id")
     @users = User.upsert_all(user_data, unique_by: :account_id).pluck("id")
 
-    Specialist.where(id: @specialists).each_with_index do |specialist, i|
+    Specialist.where(id: specialist_ids).each_with_index do |specialist, i|
       path = "db/seeds/assets/avatars/#{advisable_yml[i][:avatar]}"
       specialist.account.avatar.attach(io: File.open(path), filename: advisable_yml[i][:avatar])
     end
@@ -181,7 +181,7 @@ class NewTestData
 
     application_data = []
     @projects.each_with_index do |project, i|
-      application_data << {project_id: project, project_type: "Fixed", specialist_id: @specialists[i], status: "Working", uid: Application.generate_uid, created_at: now, updated_at: now, started_working_at: now - 1.week}
+      application_data << {project_id: project, project_type: "Fixed", specialist_id: specialist_ids[i], status: "Working", uid: Application.generate_uid, created_at: now, updated_at: now, started_working_at: now - 1.week}
     end
     @applications = Application.insert_all(application_data).pluck("id")
 
@@ -198,7 +198,7 @@ class NewTestData
   def populate_reviews
     reviews_data = []
     rating_keys = %w[skills availability communication quality_of_work adherence_to_schedule]
-    @specialists.each do |specialist_id|
+    specialist_ids.each do |specialist_id|
       3.times do
         ratings = rating_keys.index_with { rand(1..5) }
         case_study_article_id = [nil, @articles.sample].sample
@@ -252,7 +252,7 @@ class NewTestData
         goals: ["Rebranding", "Improve Retention", "Generate Leads", "Increase Brand Awareness", "Improve Conversion", "Increase Web Traffic", "Improve Profitability", "Improve Processes", "Analyse Existing Activities", "Improve Efficiency", "Develop Strategy", "Increase Brand Awarenes", "Improve Process"].sample(rand(1..3)),
         score: rand(100),
         company_id: @companies[i],
-        specialist_id: @specialists.sample,
+        specialist_id: specialist_ids.sample,
         uid: CaseStudy::Article.generate_uid,
         published_at: now,
         created_at: now,
@@ -323,6 +323,10 @@ class NewTestData
 
   def industry_ids
     @industry_ids ||= Industry.pluck(:id)
+  end
+
+  def specialist_ids
+    @specialist_ids ||= Specialist.pluck(:id)
   end
 
   memoize def advisable_data
