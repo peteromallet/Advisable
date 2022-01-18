@@ -2,7 +2,7 @@
 
 module Mutations
   class UpdateLastReadNotification < Mutations::BaseMutation
-    description "Updates any unread  notifications to read"
+    description "Updates any unread notifications to read"
 
     field :viewer, Types::ViewerUnion, null: true
 
@@ -12,7 +12,7 @@ module Mutations
 
     def resolve(**_args)
       viewer = current_user
-      current_user.account.mark_all_notifications_as_read!
+      current_account.mark_all_notifications_as_read!
 
       {viewer:}
     end

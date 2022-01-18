@@ -21,10 +21,11 @@ RSpec.describe Mutations::UpdateLastReadNotification do
 
   describe "notifications" do
     subject(:touch_read_at) do
-      resp = AdvisableSchema.execute(query, context: {current_user: specialist})
+      resp = AdvisableSchema.execute(query, context: {current_user: specialist, current_account:})
       resp.dig("data", "updateLastReadNotification", "viewer")
     end
 
+    let(:current_account) { specialist.account }
     let(:other) { create(:specialist) }
 
     before do
@@ -41,6 +42,20 @@ RSpec.describe Mutations::UpdateLastReadNotification do
 
         expect(unread_notification.reload.read_at).to eq(Time.current)
         expect(touch_read_at["unreadNotifications"]).to eq(false)
+      end
+    end
+
+    context "when emulating a user" do
+      let(:current_account) { create(:account) }
+
+      it "does not update unread notifications if emulating as admin" do
+        unread_notification = guild_post.specialist.account.notifications.first
+
+        freeze_time do
+          expect { touch_read_at }.not_to(change { specialist.account.reload.unread_notifications? })
+          expect(unread_notification.reload.read_at).not_to eq(Time.current)
+          expect(touch_read_at["unreadNotifications"]).to eq(true)
+        end
       end
     end
   end
