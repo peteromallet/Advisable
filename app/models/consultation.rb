@@ -3,11 +3,13 @@
 class Consultation < ApplicationRecord
   include ::Airtable::Searchable
   include Uid
+
   belongs_to :specialist
   belongs_to :user
   belongs_to :skill, optional: true
   belongs_to :search, optional: true
   belongs_to :interview, optional: true
+  has_many :messages, dependent: :destroy
 end
 
 # == Schema Information

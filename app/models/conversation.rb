@@ -7,23 +7,23 @@ class Conversation < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :participants, class_name: "ConversationParticipant", dependent: :destroy
 
-  def self.by_accounts(accounts)
-    find_existing_with(accounts) || create_new_with(accounts)
+  def self.by_accounts(*accounts)
+    account_ids = Account.ids_from(accounts)
+    find_existing_with(account_ids) || create_new_with(account_ids)
   end
 
-  def self.find_existing_with(accounts)
+  def self.find_existing_with(*accounts)
+    account_ids = Account.ids_from(accounts)
     joins(:participants).
-      where(participants: {account: accounts}).
+      where(participants: {account_id: account_ids}).
       group(:id).
-      having("COUNT(participants.id) = ?", accounts.size).
+      having("COUNT(participants.id) = ?", account_ids.size).
       first
   end
 
-  def self.create_new_with(accounts)
+  def self.create_new_with(*accounts)
     conversation = create!
-    accounts.each do |participant|
-      conversation.participants.create!(account: participant)
-    end
+    Account.ids_from(accounts).each { |id| conversation.participants.create!(account_id: id) }
     conversation
   end
 
@@ -34,11 +34,12 @@ class Conversation < ApplicationRecord
     participant&.update!(last_read_at: Time.zone.now, unread_count: 0)
   end
 
-  def new_message!(author, content, attachments = [], *attrs)
+  def new_message!(author, content, attachments: [], send_emails: true, **attributes)
     kind = author.present? ? nil : "system"
-    message = messages.create!({author:, content:, kind:}.merge(*attrs))
+    message = messages.create!({author:, content:, kind:}.merge(attributes))
     message.attachments.attach(attachments) if attachments.present?
-    message.reload.after_create_actions
+    message.schedule_email_notifications if send_emails
+    message.update_participants
     message
   end
 end

@@ -30,4 +30,42 @@ fragment MessageFields on MessageInterface {
       avatar
     }
   }
+
+  ... on ConsultationRequestMessage {
+    consultation {
+      id
+      status
+      interview {
+        id
+        status
+      }
+    }
+    author {
+      id
+      name
+      avatar
+    }
+  }
+
+  ... on ConsultationDeclinedMessage {
+    consultation {
+      id
+      specialist {
+        id
+        firstName
+      }
+    }
+  }
+
+  ... on InterviewScheduledMessage {
+    startsAt
+    interview {
+      id
+      status
+      specialist {
+        id
+        firstName
+      }
+    }
+  }
 }

@@ -15,13 +15,40 @@ module Mutations
 
     def resolve(**args)
       specialist = Specialist.find_by!(uid: args[:specialist])
+
+      conversation = Conversation.by_accounts([specialist.account, current_user.account])
+
       consultation = current_user.consultations.create!(
         status: "Request Completed",
         specialist:,
-        topic: args[:message],
         skill: specialist.articles.first&.skills&.primary&.first&.skill
       )
+
+      message = conversation.new_message!(
+        current_user.account,
+        args[:message],
+        kind: "ConsultationRequest",
+        consultation:,
+        send_emails: false
+      )
+
+      slack_notification(consultation)
+      email_notification(consultation, message)
+
       {consultation:}
+    end
+
+    private
+
+    def email_notification(consultation, message)
+      SpecialistMailer.consultation_request(consultation, message).deliver_later
+    end
+
+    def slack_notification(consultation)
+      Slack.bg_message(
+        channel: "consultation_requests",
+        text: "We have a new consultation request for #{consultation.specialist.account.name} from #{consultation.user.name_with_company}."
+      )
     end
   end
 end

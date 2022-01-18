@@ -22,7 +22,7 @@ module Mutations
       has_participants?
 
       conversation = Conversation.by_accounts(@accounts)
-      message = conversation.new_message!(current_account, content, attachments)
+      message = conversation.new_message!(current_account, content, attachments:)
 
       {conversation:, message:}
     end

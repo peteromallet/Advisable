@@ -22,7 +22,7 @@ class Interview < ApplicationRecord
 
   def create_system_message!
     conversation = Conversation.by_accounts([specialist.account, user.account])
-    conversation.new_message!(nil, "#{specialist.account.name} & #{user.account.name},\n\nNow that you've scheduled a call, you can use this thread to communicate.\n\nIf you have any questions or issues, don't hesitate to contact the Advisable team at hello@advisable.com.")
+    conversation.new_message!(nil, nil, kind: "InterviewScheduled", interview: self, metadata: {starts_at:}, send_emails: false)
   end
 end
 

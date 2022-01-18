@@ -1,0 +1,14 @@
+p Hi #{@consultation.specialist.account.first_name},
+
+p #{@sales_person.first_name} from Advisable.com here. One of our clients is interested in arranging a 30-minute call with you. This is a great opportunity for you to understand their requirements and figure out how you can work with them.
+
+p They left the following message:
+
+p "#{@message.content}"
+
+p You can accept or decline their request <a clicktracking=off href="#{magic_link(@consultation.specialist.account, consultation_request_url(@consultation))}">here</a>.
+
+p
+  | Best,
+  br
+  = @sales_person.first_name
