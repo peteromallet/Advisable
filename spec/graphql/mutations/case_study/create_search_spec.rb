@@ -7,6 +7,8 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
   let(:context) { {current_user: user} }
   let(:article1) { create(:case_study_article, :with_skills) }
   let(:article2) { create(:case_study_article, :with_skills) }
+  let(:relevant_category) { create(:skill_category) }
+  let(:category_slugs) { [relevant_category.slug] }
 
   let(:query) do
     <<-GRAPHQL
@@ -17,6 +19,7 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
           goals: ["First", "Second"],
           name: "A Search",
           preferences: ["One", "Two"],
+          categories: #{category_slugs}
         }) {
           search {
             id
@@ -24,6 +27,12 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
         }
       }
     GRAPHQL
+  end
+
+  before do
+    (article1.skills + article2.skills).each do |cs_skill|
+      cs_skill.skill.skill_categories << relevant_category
+    end
   end
 
   it "creates a new search" do
@@ -37,6 +46,23 @@ RSpec.describe Mutations::CaseStudy::CreateSearch do
     expect(search.skills.pluck(:skill_id)).to match_array([article1.skills.pluck(:skill_id), article2.skills.pluck(:skill_id)].flatten)
     expect(search.preferences).to eq(%w[One Two])
     expect(search.results).to match_array([article1, article2])
+  end
+
+  describe "skills outside the category" do
+    let(:irrelevant_category) { create(:skill_category) }
+
+    before do
+      article1.skills[0].skill.skill_category_skills.first.update!(skill_category_id: irrelevant_category.id)
+      article2.skills[1].skill.skill_category_skills.first.update!(skill_category_id: irrelevant_category.id)
+    end
+
+    it "only adds relevant skills" do
+      request = AdvisableSchema.execute(query, context:)
+      uid = request["data"]["createCaseStudySearch"]["search"]["id"]
+      search = ::CaseStudy::Search.find_by!(uid:)
+      expect(search.skills.size).to eq(2)
+      expect(search.skills.pluck(:skill_id)).to match_array(relevant_category.skill_ids)
+    end
   end
 
   context "when current_user is specialist" do
