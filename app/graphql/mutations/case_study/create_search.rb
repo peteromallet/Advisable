@@ -8,6 +8,7 @@ module Mutations
 
       argument :articles, [ID], required: false
       argument :business_type, String, required: false
+      argument :categories, [ID], required: true
       argument :goals, [String], required: false
       argument :name, String, required: false
       argument :preferences, [String], required: false
@@ -33,8 +34,9 @@ module Mutations
           )
 
           skill_ids = ::CaseStudy::Skill.where(article_id: selected).distinct.pluck(:skill_id)
-          ::Skill.where(id: skill_ids).each do |skill|
-            ::CaseStudy::Skill.create!(search:, skill:)
+          skill_category_ids = ::SkillCategory.where(slug: args[:categories]).pluck(:id)
+          ::SkillCategorySkill.where(skill_id: skill_ids, skill_category_id: skill_category_ids).each do |scs|
+            ::CaseStudy::Skill.create!(search:, skill_id: scs.skill_id)
           end
 
           search.refresh_results!
