@@ -13,7 +13,7 @@ class NewTestData
 
   extend Memoist
 
-  attr_reader :yml, :now, :sales_person, :country, :company
+  attr_reader :yml, :advisable_yml, :now, :sales_person, :country, :company
 
   def self.yml_file
     unless File.exist?(YML_PATH)
@@ -29,16 +29,21 @@ class NewTestData
     obj.upload_file(YML_PATH)
   end
 
+  # Populate skill categories by going to production and running:
+  # SkillCategorySkill.joins(:skill).where(skill: {active: [nil, false]})
+  # to verify all the skills are active. Delete others. Then:
+  # puts ({skill_categories: SkillCategorySkill.includes(:skill, :skill_category).group_by{|scs| scs.skill_category.name}.map{|sc, scss| [sc, scss.map{|scs| scs.skill.name}]}.to_h}.to_yaml)
+  # then replace in test_data.yml
   def self.seed_from_airtable!
     yml = yml_file
 
     Airtable::Skill.sync(filter: nil)
     attrs = %i[name category profile uid active airtable_id]
-    yml[:skills] = Skill.pluck(*attrs).map { |p| attrs.zip(p).to_h }
+    yml[:skills] = Skill.active.pluck(*attrs).map { |p| attrs.zip(p).to_h }
 
     Airtable::Industry.sync(filter: nil)
     attrs = %i[name color active uid airtable_id]
-    yml[:industries] = Industry.pluck(*attrs).map { |p| attrs.zip(p).to_h }
+    yml[:industries] = Industry.active.pluck(*attrs).map { |p| attrs.zip(p).to_h }
 
     File.write(YML_PATH, yml.to_yaml)
     upload_yml_file
@@ -48,6 +53,7 @@ class NewTestData
     purge_and_migrate! if purge
 
     @yml = self.class.yml_file
+    @advisable_yml = YAML.load_file("db/seeds/people.yml")[:advisable]
     @unsplash_images = Dir.glob("#{IMAGES_PATH}*.jpg")
     @now = Time.zone.now
     @sales_person = SalesPerson.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, username: Faker::Internet.username)
@@ -63,6 +69,8 @@ class NewTestData
     populate_labels if Label.none?
     populate_advisable if User.none?
     populate_case_studies if CaseStudy::Article.none?
+    populate_reviews if Review.none?
+    populate_events if Event.none?
   end
 
   private
@@ -150,22 +158,22 @@ class NewTestData
     end
     specialist_data = advisable_data.pluck(:specialist).compact
     user_data = advisable_data.pluck(:user).compact
-    @specialists = Specialist.upsert_all(specialist_data, unique_by: :account_id).pluck("id")
+    @specialist_ids = Specialist.upsert_all(specialist_data, unique_by: :account_id).pluck("id")
     @users = User.upsert_all(user_data, unique_by: :account_id).pluck("id")
 
-    Specialist.where(id: @specialists).each_with_index do |specialist, i|
-      path = "db/seeds/assets/avatars/#{yml[:advisable][i][:avatar]}"
-      specialist.account.avatar.attach(io: File.open(path), filename: yml[:advisable][i][:avatar])
+    Specialist.where(id: specialist_ids).each_with_index do |specialist, i|
+      path = "db/seeds/assets/avatars/#{advisable_yml[i][:avatar]}"
+      specialist.account.avatar.attach(io: File.open(path), filename: advisable_yml[i][:avatar])
     end
 
     User.where(id: @users).each_with_index do |user, i|
-      path = "db/seeds/assets/avatars/#{yml[:advisable][i][:avatar]}"
-      user.account.avatar.attach(io: File.open(path), filename: yml[:advisable][i][:avatar])
+      path = "db/seeds/assets/avatars/#{advisable_yml[i][:avatar]}"
+      user.account.avatar.attach(io: File.open(path), filename: advisable_yml[i][:avatar])
     end
 
     project_data = []
     @users.each_with_index do |user, i|
-      possesive = yml[:advisable][i][:first_name]
+      possesive = advisable_yml[i][:first_name]
       possesive = possesive.end_with?("s") ? "#{possesive}'" : "#{possesive}'s"
       project_data << {name: "#{possesive} Project", user_id: user, uid: Project.generate_uid, created_at: now, updated_at: now, hired_count: 1, sales_status: "Won"}
     end
@@ -173,7 +181,7 @@ class NewTestData
 
     application_data = []
     @projects.each_with_index do |project, i|
-      application_data << {project_id: project, project_type: "Fixed", specialist_id: @specialists[i], status: "Working", uid: Application.generate_uid, created_at: now, updated_at: now, started_working_at: now - 1.week}
+      application_data << {project_id: project, project_type: "Fixed", specialist_id: specialist_ids[i], status: "Working", uid: Application.generate_uid, created_at: now, updated_at: now, started_working_at: now - 1.week}
     end
     @applications = Application.insert_all(application_data).pluck("id")
 
@@ -185,6 +193,28 @@ class NewTestData
       end
     end
     @project_skills = ProjectSkill.insert_all(project_skills_data).pluck("id")
+  end
+
+  def populate_reviews
+    reviews_data = []
+    rating_keys = %w[skills availability communication quality_of_work adherence_to_schedule]
+    specialist_ids.each do |specialist_id|
+      3.times do
+        ratings = rating_keys.index_with { rand(1..5) }
+        case_study_article_id = [nil, @articles.sample].sample
+        reviews_data << {uid: Review.generate_uid, specialist_id:, case_study_article_id:, ratings:, comment: Faker::Hipster.paragraph, created_at: now, updated_at: now}
+      end
+    end
+    @reviews = Review.insert_all(reviews_data).pluck("id")
+  end
+
+  def populate_events
+    events_data = []
+    10.times do
+      starts_at = rand(1..10).days.from_now
+      events_data << {uid: Event.generate_uid, title: Faker::Hipster.sentence, description: Faker::Hipster.paragraph, color: Event::COLORS.sample, starts_at:, ends_at: starts_at + 1.hour, featured: rand(1..4) == 1, published_at: now, created_at: now, updated_at: now}
+    end
+    @events = Event.insert_all(events_data).pluck("id")
   end
 
   def populate_case_studies
@@ -222,7 +252,7 @@ class NewTestData
         goals: ["Rebranding", "Improve Retention", "Generate Leads", "Increase Brand Awareness", "Improve Conversion", "Increase Web Traffic", "Improve Profitability", "Improve Processes", "Analyse Existing Activities", "Improve Efficiency", "Develop Strategy", "Increase Brand Awarenes", "Improve Process"].sample(rand(1..3)),
         score: rand(100),
         company_id: @companies[i],
-        specialist_id: @specialists.sample,
+        specialist_id: specialist_ids.sample,
         uid: CaseStudy::Article.generate_uid,
         published_at: now,
         created_at: now,
@@ -295,8 +325,12 @@ class NewTestData
     @industry_ids ||= Industry.pluck(:id)
   end
 
+  def specialist_ids
+    @specialist_ids ||= Specialist.pluck(:id)
+  end
+
   memoize def advisable_data
-    yml[:advisable].flat_map do |advisable|
+    advisable_yml.flat_map do |advisable|
       [
         {
           account: {

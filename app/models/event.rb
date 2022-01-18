@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
+  self.ignored_columns = %w[status]
+
   include Uid
   include Resizable
 
   COLORS = %w[blue purple cyan orange].freeze
-  STATUSES = %w[Proposed Accepted Rejected].freeze
   has_many :event_attendees, inverse_of: :event, dependent: :destroy
   has_many :attendees, through: :event_attendees
   belongs_to :host, class_name: "Specialist"
@@ -17,7 +18,6 @@ class Event < ApplicationRecord
   validates :title, length: {maximum: 250, minimum: 8}
   validates :description, length: {maximum: 10_000, minimum: 16}
   validates :color, inclusion: {in: COLORS}
-  validates :status, inclusion: {in: STATUSES}, allow_blank: true
 
   validate :end_is_after_start
 
@@ -78,7 +78,6 @@ end
 #  featured           :boolean          default(FALSE)
 #  published_at       :datetime
 #  starts_at          :datetime
-#  status             :string
 #  title              :string           not null
 #  uid                :string           not null
 #  url                :string
