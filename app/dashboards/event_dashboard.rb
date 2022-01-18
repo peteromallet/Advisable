@@ -18,7 +18,6 @@ class EventDashboard < Administrate::BaseDashboard
     attendees: Field::HasMany.with_options(class_name: "Specialist"),
     created_at: Field::DateTime,
     description: Field::Text,
-    status: Field::Select.with_options(collection: ::Event::STATUSES),
     google_calendar_id: Field::String
   }.freeze
 
@@ -27,7 +26,6 @@ class EventDashboard < Administrate::BaseDashboard
     starts_at
     ends_at
     uid
-    status
   ].freeze
 
   SHOW_PAGE_ATTRIBUTES = %i[
@@ -43,7 +41,6 @@ class EventDashboard < Administrate::BaseDashboard
     url
     uid
     featured
-    status
     google_calendar_id
   ].freeze
 
@@ -57,7 +54,6 @@ class EventDashboard < Administrate::BaseDashboard
     url
     host
     featured
-    status
     google_calendar_id
   ].freeze
 
