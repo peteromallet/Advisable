@@ -42,7 +42,11 @@ const ApplicationRoutes = () => {
       <Header />
       <Suspense fallback={<Loading />}>
         <Switch>
-          {isClient && <Redirect from="/" exact to="/explore" />}
+          {isClient && (
+            <Route>
+              <Redirect from="/" exact to="/explore" />
+            </Route>
+          )}
 
           <Route path="/set_password">
             <Redirect to="/" />
