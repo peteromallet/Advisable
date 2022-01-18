@@ -35,8 +35,8 @@ export default function DeleteSearch({ search }) {
           Are you sure?
         </Text>
         <Text color="neutral700" marginBottom={6}>
-          This shortlist and it&apos;s recommendations will be deleted and can
-          not be undone.
+          This shortlist and its recommendations will be deleted and can not be
+          undone.
         </Text>
         <Button
           variant="dark"
