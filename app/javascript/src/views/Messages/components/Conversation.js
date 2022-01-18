@@ -23,6 +23,7 @@ export default function Conversation({ conversations, currentAccount }) {
           width="100%"
           flexGrow={1}
           flexShrink={1}
+          position="relative"
         >
           {conversation ? (
             <ConversationMessages

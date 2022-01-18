@@ -1,0 +1,8 @@
+mutation declineConsultation($input: DeclineConsultationInput!) {
+  declineConsultation(input: $input) {
+    consultation {
+      id
+      status
+    }
+  }
+}

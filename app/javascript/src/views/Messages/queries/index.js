@@ -10,6 +10,8 @@ import MESSAGES from "./messages.gql";
 import SEND_MESSAGE from "./sendMessage.gql";
 import UPDATE_LAST_READ from "./updateLastRead.gql";
 import RECEIVED_MESSAGE from "./receivedMessage.gql";
+import ACCEPT_CONSULTATION from "./acceptConsultation.gql";
+import DECLINE_CONSULTATION from "./declineConsultationRequest.gql";
 
 export function useConversations() {
   return useQuery(CONVERSATIONS);
@@ -49,10 +51,7 @@ export function useSendMessage(conversation) {
               return message;
             },
             messages(previous) {
-              return {
-                ...previous,
-                edges: [...previous.edges, { node: message }],
-              };
+              return appendToMessages(previous, message);
             },
           },
         });
@@ -114,10 +113,7 @@ export function updateConversation(client, location, message) {
         return message;
       },
       messages(previous) {
-        return {
-          ...previous,
-          edges: [...previous.edges, { node: message }],
-        };
+        return appendToMessages(previous, message);
       },
     },
   });
@@ -132,4 +128,22 @@ export function useReceivedMessage() {
       updateConversationsList(client, message.conversation);
     },
   });
+}
+
+export function useDeclineConsultationRequest() {
+  return useMutation(DECLINE_CONSULTATION);
+}
+
+export function useAcceptConsultationRequest() {
+  return useMutation(ACCEPT_CONSULTATION);
+}
+
+function appendToMessages(messages, message) {
+  const existing = messages.edges.find((e) => e.node.id === message.id);
+  if (existing) return messages;
+
+  return {
+    ...messages,
+    edges: [...messages.edges, { node: message }],
+  };
 }

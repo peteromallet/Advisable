@@ -40,6 +40,13 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.payment_receipt(Payment.order("RANDOM()").first)
   end
 
+  def consultation_declined
+    UserMailer.consultation_declined(
+      Consultation.order("RANDOM()").first,
+      Message.order("RANDOM()").first
+    )
+  end
+
   %i[interview_reschedule_request need_more_time_options interview_reminder post_interview].each do |method|
     define_method(method) do
       UserMailer.public_send(method, random_interview)

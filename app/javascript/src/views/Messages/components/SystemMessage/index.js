@@ -1,18 +1,19 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
 import renderLineBreaks from "src/utilities/renderLineBreaks";
-import MessageAttachment from "./MessageAttachment";
+import MessageAttachment from "../MessageAttachment";
 
 export default function SystemMessage({ message }) {
   return (
     <Box
+      padding={4}
       width="100%"
       id={message.id}
       data-status={message.status}
-      borderRadius="12px"
-      bg="neutral100"
-      paddingY={3}
-      paddingX={4}
+      borderRadius="20px"
+      border="2px solid"
+      borderColor="neutral100"
+      textAlign="center"
     >
       <Box width="100%">
         <Text

@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2022_01_14_101524) do
     t.integer "hourly_rate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
     t.index ["company_id"], name: "index_agreements_on_company_id"
     t.index ["specialist_id"], name: "index_agreements_on_specialist_id"
     t.index ["uid"], name: "index_agreements_on_uid", unique: true
@@ -637,12 +638,16 @@ ActiveRecord::Schema.define(version: 2022_01_14_101524) do
     t.string "kind"
     t.uuid "guild_post_id"
     t.jsonb "metadata"
+    t.bigint "consultation_id"
     t.bigint "agreement_id"
+    t.bigint "interview_id"
     t.index ["agreement_id"], name: "index_messages_on_agreement_id"
     t.index ["author_id"], name: "index_messages_on_author_id"
+    t.index ["consultation_id"], name: "index_messages_on_consultation_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["guild_post_id"], name: "index_messages_on_guild_post_id"
     t.index ["idempotency_key"], name: "index_messages_on_idempotency_key"
+    t.index ["interview_id"], name: "index_messages_on_interview_id"
     t.index ["uid"], name: "index_messages_on_uid", unique: true
   end
 
@@ -1177,6 +1182,7 @@ ActiveRecord::Schema.define(version: 2022_01_14_101524) do
   add_foreign_key "matches", "specialists"
   add_foreign_key "messages", "accounts", column: "author_id"
   add_foreign_key "messages", "agreements"
+  add_foreign_key "messages", "consultations"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "guild_posts"
   add_foreign_key "notifications", "accounts"
@@ -1511,5 +1517,8 @@ ActiveRecord::Schema.define(version: 2022_01_14_101524) do
   SQL
   create_trigger :logidze_on_users, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_agreements, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_agreements BEFORE INSERT OR UPDATE ON public.agreements FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
