@@ -307,7 +307,7 @@ module Types
 
     field :skill_categories, [Types::SkillCategory], null: false
     def skill_categories
-      ::SkillCategory.all
+      ::SkillCategory.all.order(name: :asc)
     end
 
     field :skill_category, Types::SkillCategory, null: true do
