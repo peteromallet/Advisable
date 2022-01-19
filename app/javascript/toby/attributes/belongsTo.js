@@ -20,7 +20,7 @@ export default {
     return record[attribute.name]?.id || undefined;
   },
   copy: function (attribute, record) {
-    return record[attribute.name] || "";
+    return record[attribute.name]?._label || "";
   },
   input: function BelongsToAttributeInput({ resource, attribute, record }) {
     const schema = useSchema();
