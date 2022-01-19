@@ -45,9 +45,9 @@ module Types
     end
 
     field :current_company, Types::CompanyType, description: "Get the current company", null: true
-
     def current_company
-      current_user&.company
+      requires_client!
+      current_user.company
     end
 
     field :viewer, Types::ViewerUnion, "Get the current viewer", null: true
