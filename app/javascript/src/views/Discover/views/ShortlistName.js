@@ -26,6 +26,7 @@ export default function ShortlistName() {
           name: values.name,
           goals: location.state.goals,
           articles: location.state.articles,
+          categories: [location.state.category.slug],
         },
       },
     });
