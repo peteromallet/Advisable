@@ -1,9 +1,8 @@
 import { gql } from "@apollo/client";
 
 export default gql`
-  fragment GuildPostFields on PostInterface {
+  fragment GuildPostFields on Post {
     id
-    type
     title
     body
     excerpt
@@ -12,7 +11,6 @@ export default gql`
     engagementsCount
     authored
     createdAtTimeAgo
-    denormalizedType
     audienceType
     shareable
     pinned
@@ -36,11 +34,6 @@ export default gql`
       id
       name
       slug
-    }
-    ... on GuildPostCaseStudy {
-      article {
-        id
-      }
     }
   }
 `;

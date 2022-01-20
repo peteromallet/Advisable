@@ -31,7 +31,6 @@ RSpec.describe Mutations::PostCollaborationRequest do
       id = response.dig("data", "postCollaborationRequest", "post", "id")
       post = Guild::Post.find(id)
       expect(post.attributes).to include({
-        "type" => "Opportunity",
         "status" => "published",
         "specialist_id" => specialist.id,
         "shareable" => true

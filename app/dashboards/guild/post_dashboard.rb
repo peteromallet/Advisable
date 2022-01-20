@@ -19,7 +19,6 @@ module Guild
       labels: Field::HasMany,
       images: Field::HasMany.with_options(class_name: "Guild::PostImage"),
       id: Field::String.with_options(searchable: false),
-      type: Field::Select.with_options(searchable: false, collection: ->(_field) { Guild::Post::POST_TYPES }),
       body: Field::Text,
       title: Field::String,
       status: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.public_send(field.attribute.to_s.pluralize).keys }),
@@ -53,7 +52,6 @@ module Guild
       title
       labels
       status
-      type
       body
       created_at
       updated_at
@@ -70,7 +68,6 @@ module Guild
       specialist
       title
       labels
-      type
       body
       status
       created_at

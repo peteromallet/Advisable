@@ -25,10 +25,6 @@ end
 
 Rails.logger.info "Creating guild posts"
 
-def random_post_type
-  Guild::Post::POST_TYPES.sample
-end
-
 def random_specialist
   raise "Requires at least one Specialist" if Specialist.none?
 
@@ -43,7 +39,6 @@ Specialist.update_all(guild: true)
     specialist: random_specialist,
     title: Faker::Quote.yoda[0..149],
     body:,
-    type: random_post_type,
     status: "published",
     audience_type: "none"
   )

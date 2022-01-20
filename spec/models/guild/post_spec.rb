@@ -8,7 +8,6 @@ RSpec.describe Guild::Post, type: :model do
 
   describe "db columns" do
     it { expect(guild_post).to have_db_column(:id) }
-    it { expect(guild_post).to have_db_column(:type) }
     it { expect(guild_post).to have_db_column(:body) }
     it { expect(guild_post).to have_db_column(:title) }
     it { expect(guild_post).to have_db_column(:status) }
