@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_14_101524) do
+ActiveRecord::Schema.define(version: 2022_01_20_082446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -475,7 +475,7 @@ ActiveRecord::Schema.define(version: 2022_01_14_101524) do
     t.text "description", null: false
     t.string "url"
     t.string "color", null: false
-    t.bigint "host_id"
+    t.bigint "host_id", null: false
     t.boolean "featured", default: false
     t.datetime "published_at"
     t.datetime "starts_at"
