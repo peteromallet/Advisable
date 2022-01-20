@@ -23,9 +23,15 @@ module Mutations
 
       save_with_current_account!(agreement)
 
-      conversation = Conversation.by_accounts(agreement.specialist, current_account)
-      conversation.new_message!(nil, nil, kind: "AgreementCreated", send_emails: false)
-      conversation.new_message!(current_account, args[:message], attachments: args[:attachments])
+      conversation = Conversation.by_accounts(agreement.user, current_account)
+      conversation.new_message!(
+        current_account,
+        args[:message],
+        agreement:,
+        kind: "AgreementCreated",
+        attachments: args[:attachments],
+        send_emails: false
+      )
 
       {agreement:}
     end
