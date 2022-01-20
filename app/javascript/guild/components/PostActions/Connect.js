@@ -5,11 +5,6 @@ import PostAction from "./PostAction";
 import useViewer from "src/hooks/useViewer";
 import ConnectModal from "./ConnectModal";
 
-const LABELS = {
-  AdviceRequired: () => `Offer help`,
-  default: (name) => `Connect with ${name}`,
-};
-
 function ConnectAction({ post, size, walkthrough = false }) {
   const modal = useModal();
   const viewer = useViewer();
@@ -24,12 +19,12 @@ function ConnectAction({ post, size, walkthrough = false }) {
     }
   };
 
-  const label = LABELS[post.denormalizedType] || LABELS["default"];
+  const label = `Connect with ${firstName}`;
 
   return (
     <>
       <ConnectModal post={post} modal={modal} />
-      <Tooltip placement="top" content={label(firstName)}>
+      <Tooltip placement="top" content={label}>
         <Box
           css={`
             outline: none;
@@ -39,7 +34,7 @@ function ConnectAction({ post, size, walkthrough = false }) {
             size={size}
             bg="neutral100"
             color="blue800"
-            aria-label={label(firstName)}
+            aria-label={label}
             icon={<ChatbubbleEllipses />}
             onClick={handleConnect}
             data-walkthrough={walkthrough ? "postConnect" : null}

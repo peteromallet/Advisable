@@ -34,7 +34,7 @@ RSpec.describe "Collaboration requests", type: :system do
   end
 
   it "Specialist can edit their post" do
-    post = create(:opportunity_guild_post)
+    post = create(:guild_post)
     post.labels << design
     authenticate_as(post.specialist)
     visit("/posts/#{post.id}")
@@ -46,7 +46,7 @@ RSpec.describe "Collaboration requests", type: :system do
   end
 
   it "Can only edit if viewer is the author" do
-    post = create(:opportunity_guild_post)
+    post = create(:guild_post)
     specialist = create(:specialist)
     authenticate_as(specialist)
     visit("/posts/#{post.id}/edit")

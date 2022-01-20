@@ -9,14 +9,14 @@ module Mutations
     argument :shareable, Boolean, required: false
     argument :title, String, required: true
 
-    field :post, ::Types::Guild::Post::OpportunityType, null: true
+    field :post, ::Types::Guild::Post, null: true
 
     def authorized?(**_args)
       requires_accepted_specialist!
     end
 
     def resolve(**args)
-      post = ::Guild::Opportunity.new(
+      post = ::Guild::Post.new(
         specialist_id: current_user.id,
         title: args[:title],
         body: args[:body],

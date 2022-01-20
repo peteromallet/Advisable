@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::Guild::ResolveGuildPost do
   let(:specialist) { create(:specialist) }
-  let(:guild_post) { create(:guild_post, specialist:, type: "AdviceRequired") }
+  let(:guild_post) { create(:guild_post, specialist:) }
   let(:query) do
     <<-GRAPHQL
     mutation {

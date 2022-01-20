@@ -512,7 +512,6 @@ ActiveRecord::Schema.define(version: 2022_01_14_101524) do
   end
 
   create_table "guild_posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "type", default: "Post", null: false
     t.text "body"
     t.string "title"
     t.integer "status", default: 0, null: false

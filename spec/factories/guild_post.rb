@@ -7,16 +7,4 @@ FactoryBot.define do
     status   { Guild::Post.statuses["published"] }
     specialist
   end
-
-  factory :advice_required_guild_post, parent: :guild_post, class: "Guild::AdviceRequired" do
-    type { "AdviceRequired" }
-  end
-
-  factory :opportunity_guild_post, parent: :guild_post, class: "Guild::Opportunity" do
-    type { "Opportunity" }
-  end
-
-  factory :case_study_guild_post, parent: :guild_post, class: "Guild::CaseStudy" do
-    type { "CaseStudy" }
-  end
 end
