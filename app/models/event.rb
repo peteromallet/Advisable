@@ -84,7 +84,7 @@ end
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  google_calendar_id :string
-#  host_id            :bigint
+#  host_id            :bigint           not null
 #
 # Indexes
 #
