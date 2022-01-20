@@ -212,7 +212,7 @@ class NewTestData
     events_data = []
     10.times do
       starts_at = rand(1..10).days.from_now
-      events_data << {uid: Event.generate_uid, title: Faker::Hipster.sentence, description: Faker::Hipster.paragraph, color: Event::COLORS.sample, starts_at:, ends_at: starts_at + 1.hour, featured: rand(1..4) == 1, published_at: now, created_at: now, updated_at: now}
+      events_data << {uid: Event.generate_uid, host_id: specialist_ids.sample, title: Faker::Hipster.sentence, description: Faker::Hipster.paragraph, color: Event::COLORS.sample, starts_at:, ends_at: starts_at + 1.hour, featured: rand(1..4) == 1, published_at: now, created_at: now, updated_at: now}
     end
     @events = Event.insert_all(events_data).pluck("id")
   end
