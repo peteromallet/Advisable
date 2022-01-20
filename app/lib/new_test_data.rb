@@ -71,6 +71,7 @@ class NewTestData
     populate_case_studies if CaseStudy::Article.none?
     populate_reviews if Review.none?
     populate_events if Event.none?
+    populate_posts if Guild::Post.none?
   end
 
   private
@@ -215,6 +216,14 @@ class NewTestData
       events_data << {uid: Event.generate_uid, host_id: specialist_ids.sample, title: Faker::Hipster.sentence, description: Faker::Hipster.paragraph, color: Event::COLORS.sample, starts_at:, ends_at: starts_at + 1.hour, featured: rand(1..4) == 1, published_at: now, created_at: now, updated_at: now}
     end
     @events = Event.insert_all(events_data).pluck("id")
+  end
+
+  def populate_posts
+    posts_data = []
+    10.times do
+      posts_data << {title: Faker::Hipster.sentence, specialist_id: specialist_ids.sample, body: Faker::Hipster.paragraph, audience_type: Guild::Post::AUDIENCE_TYPES.sample, status: 1, created_at: now, updated_at: now}
+    end
+    @posts = Guild::Post.insert_all(posts_data).pluck("id")
   end
 
   def populate_case_studies
