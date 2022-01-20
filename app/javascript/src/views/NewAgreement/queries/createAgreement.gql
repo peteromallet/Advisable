@@ -1,0 +1,7 @@
+mutation CreateAgreement($input: CreateAgreementInput!) {
+  createAgreement(input: $input) {
+    agreement {
+      id
+    }
+  }
+}
