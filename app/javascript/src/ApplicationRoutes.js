@@ -35,6 +35,7 @@ const GuildEvent = lazy(() => import("guild/views/Event"));
 const GuildEvents = lazy(() => import("guild/views/Events"));
 const Discover = lazy(() => import("./views/Discover"));
 const NewPost = lazy(() => import("./views/NewPost"));
+const NewAgreement = lazy(() => import("./views/NewAgreement"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
@@ -193,6 +194,8 @@ const ApplicationRoutes = () => {
               <GuildEvents />
             </RequireAuthentication>
           </Route>
+
+          <Route path="/new_agreement/:userId" component={NewAgreement} />
 
           <Route>
             <NotFound />
