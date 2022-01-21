@@ -2,7 +2,12 @@ import React from "react";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
 // Hooks
-import { useHistory, useParams, useLocation, Redirect } from "react-router-dom";
+import {
+  useNavigate,
+  useParams,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import { useNotifications } from "src/components/Notifications";
 import { useReviewSpecialist } from "../queries";
 // Components
@@ -22,7 +27,7 @@ function ReviewComment({ data }) {
 
   // React Router data
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   // Apollo Mutation action
@@ -45,12 +50,12 @@ function ReviewComment({ data }) {
     if (response.errors) {
       error("Something went wrong. Please try again.");
     } else {
-      history.push(`/review/${specialist.id}/complete`);
+      navigate(`/review/${specialist.id}/complete`);
     }
   };
 
   if (!oauthViewer) {
-    return <Redirect to={`/review/${specialist.id}`} />;
+    return <Navigate to={`/review/${specialist.id}`} />;
   }
 
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import AccessDenied, { isNotAuthorized } from "src/views/AccessDenied";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import Loading from "src/components/Loading";
@@ -59,13 +59,12 @@ export default function Interview() {
   const interview = data.interview;
 
   return (
-    <Switch>
-      <Route path="/interviews/:id/reschedule">
-        <RescheduleInterview interview={interview} />
-      </Route>
-      <Route>
-        <InterviewState interview={interview} />
-      </Route>
-    </Switch>
+    <Routes>
+      <Route
+        path="reschedule"
+        element={<RescheduleInterview interview={interview} />}
+      />
+      <Route path="*" element={<InterviewState interview={interview} />} />
+    </Routes>
   );
 }

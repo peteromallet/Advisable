@@ -1,6 +1,6 @@
 import React from "react";
 import * as Sentry from "@sentry/react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { Box, Text } from "@advisable/donut";
 import { Exclamation } from "@styled-icons/heroicons-solid/Exclamation";
 import { Attribute } from "../../attributes";
@@ -9,12 +9,11 @@ import { recordPath } from "../../utilities";
 import CopyToClipboard from "../../components/CopyToClipboard";
 
 export default function Rows({ edges, resource, sizeForColumn, attributes }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const openRecord = (record) => () => {
-    history.push({
-      ...location,
-      pathname: recordPath(record),
+    navigate(recordPath(record), {
+      state: location?.state,
     });
   };
 

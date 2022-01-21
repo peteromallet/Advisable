@@ -4,10 +4,13 @@ import { NavItem } from "./styles";
 
 export default function NavigationLink({ prefix, children, to, ...props }) {
   const location = useLocation();
-  const match = matchPath(location.pathname, {
-    path: to,
-    exact: props.exact,
-  });
+  const match = matchPath(
+    {
+      path: to,
+      end: props.exact || props.end,
+    },
+    location.pathname,
+  );
   return (
     <NavItem {...props} href={to} className={match ? "active" : null}>
       {prefix && React.cloneElement(prefix)}

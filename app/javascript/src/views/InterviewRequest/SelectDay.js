@@ -6,12 +6,12 @@ import { Heading, Text, Modal, useModal } from "@advisable/donut";
 import { Day, RequestMore } from "./styles";
 import NoAvailability from "./NoAvailability";
 import RequestMoreAvailability from "./RequestMoreAvailability";
-import { useRouteMatch, useLocation } from "react-router";
+import { useParams, useLocation } from "react-router";
 
 const SelectDay = ({ clientName, availability, timeZone }) => {
   const modal = useModal();
   const location = useLocation();
-  const match = useRouteMatch();
+  const params = useParams();
 
   const dates = reduce(
     availability,
@@ -40,7 +40,7 @@ const SelectDay = ({ clientName, availability, timeZone }) => {
       <Modal label="Request more availability" modal={modal}>
         <RequestMoreAvailability
           clientName={clientName}
-          interviewID={match.params.interviewID}
+          interviewID={params.interviewID}
           onCancel={modal.hide}
         />
       </Modal>
@@ -55,7 +55,7 @@ const SelectDay = ({ clientName, availability, timeZone }) => {
                 key={d}
                 to={{
                   ...location,
-                  pathname: `${match.url}/${d}`,
+                  pathname: d,
                 }}
               >
                 <h4>{date.toFormat("cccc")}</h4>

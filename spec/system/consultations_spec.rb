@@ -40,7 +40,7 @@ RSpec.describe "Consultations", type: :system do
     click_on(user.availability[0].strftime("%A"))
     find_all("a[class^=styles__Time]").first.click
     click_on("Confirm Call")
-    expect(page).to have_content("scheduled a call for #{user.availability[0].strftime("%d %B %Y at %H:%M")}")
+    expect(page).to have_content("Call Scheduled")
   end
 
   it "specialist can decline a consultation request" do

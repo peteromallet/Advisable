@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Text, Box, Card, Button } from "@advisable/donut";
 import Logo from "src/components/Logo";
 import RequestResetForm from "./RequestResetForm";
@@ -17,7 +17,7 @@ const NO_ACCOUNT = "NO_ACCOUNT";
 const APPLICATION_IN_PROCESS = "APPLICATION_IN_PROCESS";
 
 function RequestPasswordReset() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [status, setStatus] = useState("REQUEST");
 
   const handleRequest = ({ data, errors }) => {
@@ -81,7 +81,7 @@ function RequestPasswordReset() {
               css="width: 100%;"
               variant="subtle"
               onClick={() => {
-                history.push("/clients/signup");
+                navigate("/clients/signup");
               }}
             >
               Apply to be a client
@@ -91,7 +91,7 @@ function RequestPasswordReset() {
               css="width: 100%;"
               variant="subtle"
               onClick={() => {
-                history.push("/freelancers/signup");
+                navigate("/freelancers/signup");
               }}
             >
               Apply to be a specialist

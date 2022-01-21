@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Box, useBackground } from "@advisable/donut";
-import { Route, Switch, useLocation } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 import Shortlist from "./views/Shortlist";
 import Shortlists from "./views/Shortlists";
 import ShortlistArticle from "./views/ShortlistArticle";
@@ -30,29 +30,18 @@ export default function Discover() {
           <ClientApplicationPrompt />
           <AccountConfirmationPrompt />
           {viewer.isAccepted && (
-            <Switch>
-              <Route path="/explore/new/goals">
-                <ShortlistGoals />
-              </Route>
-              <Route path="/explore/new/name">
-                <ShortlistName />
-              </Route>
-              <Route path="/explore/new/:slug">
-                <ShortlistArticleSelection />
-              </Route>
-              <Route path="/explore/new">
-                <ShortlistSkillCategory />
-              </Route>
-              <Route path="/explore/:id/:articleId">
-                <ShortlistArticle />
-              </Route>
-              <Route path="/explore/:id">
-                <Shortlist />
-              </Route>
-              <Route path="/explore">
-                <Shortlists />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route path="/new/goals" element={<ShortlistGoals />} />
+              <Route path="/new/name" element={<ShortlistName />} />
+              <Route
+                path="/new/:slug"
+                element={<ShortlistArticleSelection />}
+              />
+              <Route path="/new" element={<ShortlistSkillCategory />} />
+              <Route path="/:id/:articleId" element={<ShortlistArticle />} />
+              <Route path="/:id" element={<Shortlist />} />
+              <Route path="/" element={<Shortlists />} />
+            </Routes>
           )}
         </Box>
       </Page>

@@ -2,7 +2,7 @@ import React from "react";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Box, Error, Combobox } from "@advisable/donut";
 import FormField from "src/components/FormField";
@@ -22,7 +22,7 @@ export const validationSchema = object().shape({
 
 export default function CompanyOverview({ clientApplication, industries }) {
   const [update] = useMutation(UPDATE_CLIENT_APPLICATION);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const initialValues = {
     companyName: clientApplication.companyName || "",
@@ -43,7 +43,7 @@ export default function CompanyOverview({ clientApplication, industries }) {
       return;
     }
 
-    history.push("/clients/apply/company-stage");
+    navigate("/clients/apply/company-stage");
   };
 
   return (

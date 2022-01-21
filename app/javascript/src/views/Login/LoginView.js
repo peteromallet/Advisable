@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import queryString from "query-string";
 import { Box, Card, Text, Link } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
@@ -19,7 +19,7 @@ export default function LoginView() {
     if (queryParams.redirect) {
       window.location.href = queryParams.redirect;
     } else {
-      return <Redirect to={from} />;
+      return <Navigate to={from} />;
     }
   }
 

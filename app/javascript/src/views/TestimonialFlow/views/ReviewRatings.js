@@ -3,7 +3,12 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import isEmpty from "lodash/isEmpty";
 // Hooks
-import { useHistory, useParams, useLocation, Redirect } from "react-router-dom";
+import {
+  useNavigate,
+  useParams,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 // Components
 import {
   Card,
@@ -30,7 +35,7 @@ function ReviewRatings({ data }) {
 
   // React Router data
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   // Describe Formik initial state
@@ -47,20 +52,25 @@ function ReviewRatings({ data }) {
   // Trigger on continue button
   const handleContinue = (values) => {
     // Preserve Formik's state in the location state, to handle browser's back button
-    history.replace(`/review/${id}/ratings`, { ratings: values });
+    navigate(`/review/${id}/ratings`, {
+      state: { ratings: values },
+      replace: true,
+    });
     // Relocate to comment step and pass stars ratings there
-    history.push(`/review/${id}/comment`, {
-      ratings: values,
+    navigate(`/review/${id}/comment`, {
+      state: {
+        ratings: values,
+      },
     });
   };
 
   // Trigger on skip button
   const handleSkip = () => {
-    history.push(`/review/${id}/comment`);
+    navigate(`/review/${id}/comment`);
   };
 
   if (!oauthViewer) {
-    return <Redirect to={`/review/${specialist.id}`} />;
+    return <Navigate to={`/review/${specialist.id}`} />;
   }
 
   return (

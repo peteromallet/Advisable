@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Container, Box } from "@advisable/donut";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import Loading from "src/components/Loading";
@@ -22,20 +22,12 @@ export default function CaseStudyReview() {
         <Logo />
       </Box>
       <Container maxWidth="700px" pb="20px">
-        <Switch>
-          <Route path="/review/:id/case_studies/:article_id/ratings">
-            <ReviewRatings data={data} />
-          </Route>
-          <Route path="/review/:id/case_studies/:article_id/comment">
-            <ReviewComment data={data} />
-          </Route>
-          <Route path="/review/:id/case_studies/:article_id/complete">
-            <ReviewComplete data={data} />
-          </Route>
-          <Route path="/review/:id/case_studies/:article_id">
-            <ReviewIntro data={data} />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/ratings" element={<ReviewRatings data={data} />} />
+          <Route path="/comment" element={<ReviewComment data={data} />} />
+          <Route path="/complete" element={<ReviewComplete data={data} />} />
+          <Route path="/" element={<ReviewIntro data={data} />} />
+        </Routes>
       </Container>
     </>
   );

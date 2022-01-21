@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
 import Loading from "src/components/Loading";
 import RequireAuthentication from "./components/RequireAuthentication";
@@ -14,50 +14,42 @@ const ClientJoin = lazy(() => import("./views/ClientJoin"));
 const FreelancerJoin = lazy(() => import("./views/FreelancerJoin"));
 const VideoCall = lazy(() => import("./views/VideoCall"));
 
-const Routes = () => {
+const MainRoutes = () => {
   return (
     <Suspense fallback={<Loading />}>
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/reset_password">
-          <ResetPassword />
-        </Route>
-        <Route path="/confirm_account/:token">
-          <ConfirmAccount />
-        </Route>
-        <Route path="/signup/:id">
-          <Signup />
-        </Route>
-        <Route path="/clients/:userID/availability" exact>
-          <RequireAuthentication clientOnly>
-            <Availability />
-          </RequireAuthentication>
-        </Route>
-        <Route path="/calls/:id">
-          <RequireAuthentication>
-            <VideoCall />
-          </RequireAuthentication>
-        </Route>
-        <Route path="/clients/join">
-          <ClientJoin />
-        </Route>
-        <Route path="/freelancers/join">
-          <FreelancerJoin />
-        </Route>
-        <Route path="/review/:id/case_studies/:article_id">
-          <CaseStudyReview />
-        </Route>
-        <Route path="/review/:id">
-          <TestimonialFlow />
-        </Route>
-        <Route>
-          <ApplicationRoutes />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route path="/login/*" element={<Login />} />
+        <Route path="/reset_password/*" element={<ResetPassword />} />
+        <Route path="/confirm_account/:token" element={<ConfirmAccount />} />
+        <Route path="/signup/:id" element={<Signup />} />
+        <Route
+          path="/clients/:userID/availability"
+          exact
+          element={
+            <RequireAuthentication clientOnly>
+              <Availability />
+            </RequireAuthentication>
+          }
+        />
+        <Route
+          path="/calls/:id"
+          element={
+            <RequireAuthentication>
+              <VideoCall />
+            </RequireAuthentication>
+          }
+        />
+        <Route path="/clients/join/*" element={<ClientJoin />} />
+        <Route path="/freelancers/join/*" element={<FreelancerJoin />} />
+        <Route
+          path="/review/:id/case_studies/:article_id/*"
+          element={<CaseStudyReview />}
+        />
+        <Route path="/review/:id/*" element={<TestimonialFlow />} />
+        <Route path="*" element={<ApplicationRoutes />} />
+      </Routes>
     </Suspense>
   );
 };
 
-export default Routes;
+export default MainRoutes;

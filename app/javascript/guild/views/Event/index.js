@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Sticky from "react-stickynode";
 import { Text, Box, useTheme, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
@@ -25,7 +25,7 @@ import StatusNotice from "./components/StatusNotice";
 
 const Event = () => {
   useScrollToTop();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { eventId } = useParams();
   const viewer = useViewer();
   const theme = useTheme();
@@ -47,7 +47,7 @@ const Event = () => {
 
   const handleEventRegistration = () => {
     if (!viewer) {
-      history.push("/login");
+      navigate("/login");
       return;
     }
 

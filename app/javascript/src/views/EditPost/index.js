@@ -1,7 +1,7 @@
 import React from "react";
 import Loading from "src/components/Loading";
 import { X } from "@styled-icons/heroicons-solid";
-import { Redirect, Link, useParams, useHistory } from "react-router-dom";
+import { Navigate, Link, useParams, useNavigate } from "react-router-dom";
 import CircularButton from "src/components/CircularButton";
 import { Box, useBackground } from "@advisable/donut";
 import CollaborationRequestForm from "src/components/CollaborationRequestForm";
@@ -12,13 +12,13 @@ export default function EditPost() {
   useBackground("white");
   const viewer = useViewer();
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [update] = useUpdatePost();
   const { data, loading } = usePost(id);
 
   const post = data?.guildPost;
   if (post && post.author.id !== viewer.id) {
-    return <Redirect to={`/posts/${post.id}`} />;
+    return <Navigate to={`/posts/${post.id}`} />;
   }
 
   const handleSubmit = async (values) => {
@@ -33,7 +33,7 @@ export default function EditPost() {
       },
     });
 
-    history.push(`/posts/${id}`);
+    navigate(`/posts/${id}`);
   };
 
   if (loading) return <Loading />;

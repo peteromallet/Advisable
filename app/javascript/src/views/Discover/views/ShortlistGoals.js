@@ -1,26 +1,26 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { ArrowSmRight } from "@styled-icons/heroicons-solid";
-import { Redirect, useHistory, useLocation } from "react-router";
+import { Navigate, useNavigate, useLocation } from "react-router";
 import { Heading, Box, Text } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import BackButton from "src/components/BackButton";
 import GoalsFields from "../components/GoalsFields";
 
 export default function ShortlistGoals() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const articles = location?.state?.articles || [];
   const skillCategory = location?.state?.skillCategory;
 
   if (articles.length === 0) {
-    return <Redirect to={`/explore/new/${skillCategory}`} />;
+    return <Navigate to={`/explore/new/${skillCategory}`} />;
   }
 
   const handleSubmit = async (values) => {
     const state = { ...location.state, goals: values.goals };
-    history.replace({ ...location, state });
-    history.push("/explore/new/name", state);
+    navigate(location.pathname, { state, replace: true });
+    navigate("/explore/new/name", { state });
   };
 
   const initialValues = {

@@ -4,12 +4,12 @@ import filter from "lodash/filter";
 import sortBy from "lodash/sortBy";
 import { Box, Heading, Text } from "@advisable/donut";
 import { Times, Time } from "./styles";
-import { useRouteMatch, useLocation } from "react-router";
+import { useParams, useLocation } from "react-router";
 import BackButton from "src/components/BackButton";
 import TimezoneSelect from "src/components/ConnectButton/TimezoneSelect";
 
 export default function SelectTime(props) {
-  const match = useRouteMatch();
+  const params = useParams();
   const location = useLocation();
   const localTimezone = DateTime.local().zoneName;
   const { availability, timeZone, clientName } = props;
@@ -17,7 +17,7 @@ export default function SelectTime(props) {
     localTimezone || timeZone,
   );
 
-  const date = DateTime.fromISO(match.params.date, { zone: timeZone });
+  const date = DateTime.fromISO(params.date, { zone: timeZone });
   const times = sortBy(
     filter(availability, (t) => {
       const time = DateTime.fromISO(t, { zone: selectedTimeZone });
@@ -32,7 +32,7 @@ export default function SelectTime(props) {
         marginBottom={4}
         to={{
           ...location,
-          pathname: `/interview_request/${match.params.interviewID}`,
+          pathname: `/interview_request/${params.interviewID}`,
         }}
       />
       <Heading mb={2}>{date.toFormat("cccc, dd LLL yyyy")}</Heading>
@@ -48,7 +48,7 @@ export default function SelectTime(props) {
             <Time
               key={time}
               to={{
-                pathname: parsed.toUTC().toISO(),
+                pathname: parsed.toUTC().toFormat("HH:mm"),
                 state: {
                   ...location.state,
                   zone: selectedTimeZone,

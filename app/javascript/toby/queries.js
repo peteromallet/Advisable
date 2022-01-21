@@ -1,5 +1,5 @@
 import { useQuery, useMutation, gql } from "@apollo/client";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { pluralizeType } from "./utilities";
 
 const viewFragment = gql`
@@ -88,7 +88,7 @@ const DELETE_VIEW = gql`
 `;
 
 export function useDeleteView(resource, view) {
-  const history = useHistory();
+  const navigate = useNavigate();
   return useMutation(DELETE_VIEW, {
     variables: {
       id: view.id,
@@ -108,7 +108,7 @@ export function useDeleteView(resource, view) {
       });
     },
     onCompleted() {
-      history.push(pluralizeType(resource.type));
+      navigate(pluralizeType(resource.type));
     },
   });
 }
