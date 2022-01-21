@@ -2,8 +2,6 @@
 
 module Mutations
   class CreateClientAccount < Mutations::BaseMutation
-    include Mutations::Helpers::BlacklistedEmail
-
     description "Creates a new client account"
 
     argument :email, String, required: true
@@ -18,7 +16,6 @@ module Mutations
     field :viewer, Types::ViewerUnion, null: false
 
     def resolve(**args)
-      email_blacklisted?(args[:email])
       ActiveRecord::Base.transaction do
         account = create_account(**args)
 

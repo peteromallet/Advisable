@@ -4,8 +4,6 @@ module Mutations
   class CreateUserForCompany < Mutations::BaseMutation
     description "Creates User for a Company"
 
-    include Mutations::Helpers::BlacklistedEmail
-
     argument :email, String, required: true
     argument :first_name, String, required: true
     argument :last_name, String, required: true
@@ -20,7 +18,6 @@ module Mutations
 
     def resolve(email:, **optional)
       email_blank?(email)
-      email_blacklisted?(email)
       email_matches_domain?(email)
       attributes = optional.slice(:first_name, :last_name)
       attributes[:permissions] = optional[:team_manager] ? [:team_manager] : []
