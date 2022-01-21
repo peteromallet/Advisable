@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { theme, Heading, Box, Text, Link, Button } from "@advisable/donut";
 import AnimatedCard from "../components/AnimatedCard";
 import { validationSchema as introductionValidationSchema } from "./Introduction";
@@ -47,7 +47,7 @@ export default function Welcome({ specialist }) {
   if (actualStepIndex > 0)
     return (
       <motion.div exit>
-        <Redirect to={stepsMeta[actualStepIndex].path} />
+        <Navigate to={stepsMeta[actualStepIndex].path} />
       </motion.div>
     );
 

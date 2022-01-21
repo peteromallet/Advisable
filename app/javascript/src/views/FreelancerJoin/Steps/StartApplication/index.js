@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import queryString from "query-string";
 import { Form, Formik } from "formik";
 import {
@@ -22,7 +22,7 @@ import validationSchema from "./validationSchema";
 
 export default function StartApplication({ nextStep, forwards }) {
   const viewer = useViewer();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const isMobile = useBreakpoint("s");
   const queryParams = queryString.parse(location.search);
@@ -62,7 +62,7 @@ export default function StartApplication({ nextStep, forwards }) {
     const id = viewer
       ? res?.data?.createFreelancerAccount?.viewer?.id
       : res?.data?.updateProfile?.specialist?.id;
-    history.push({ ...history.location, pathname: nextStep.path }, { id });
+    navigate(nextStep.path, { state: { id } });
   };
 
   return (

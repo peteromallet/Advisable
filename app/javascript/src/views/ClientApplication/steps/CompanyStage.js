@@ -1,7 +1,7 @@
 import React from "react";
 import { object, string } from "yup";
 import { useMutation } from "@apollo/client";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Box } from "@advisable/donut";
 import ChevronButtonInput from "src/components/ChevronButtonInput";
 import { useNotifications } from "src/components/Notifications";
@@ -18,7 +18,7 @@ export const validationSchema = object().shape({
 export default function CompanyStage({ clientApplication }) {
   const [update, { loading }] = useMutation(UPDATE_CLIENT_APPLICATION);
   const { error } = useNotifications();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSelection = (option) => {
     update({
@@ -37,7 +37,7 @@ export default function CompanyStage({ clientApplication }) {
       onError: () => error("Something went wrong, please try again"),
     });
 
-    history.push("/clients/apply/goals");
+    navigate("/clients/apply/goals");
   };
 
   return (

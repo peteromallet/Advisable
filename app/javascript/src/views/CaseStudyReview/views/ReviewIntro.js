@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { Text, Heading, Card } from "@advisable/donut";
 import possessive from "src/utilities/possesive";
 import AuthenticateWithLinkedin from "src/components/AuthenticateWithLinkedin";
@@ -15,7 +15,7 @@ export default function ReviewIntro({ data }) {
     return <Reviewed />;
   }
   if (data.oauthViewer) {
-    return <Redirect to={`/review/${id}/case_studies/${article_id}/ratings`} />;
+    return <Navigate to={`/review/${id}/case_studies/${article_id}/ratings`} />;
   }
 
   return (

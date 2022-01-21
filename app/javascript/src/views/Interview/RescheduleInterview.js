@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import RescheduleAsClient from "./RescheduleAsClient";
 import RescheduleAsSpecialist from "./RescheduleAsSpecialist";
 import useViewer from "../../hooks/useViewer";
@@ -11,7 +11,7 @@ export default function RescheduleInterview({ interview }) {
   const isSpecialist = viewer.isSpecialist;
 
   if (!ALLOWED_STATUSES.includes(interview.status)) {
-    return <Redirect to={`/interviews/${interview.id}`} />;
+    return <Navigate to={`/interviews/${interview.id}`} />;
   }
 
   return isSpecialist ? (

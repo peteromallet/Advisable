@@ -2,14 +2,14 @@ import React from "react";
 import { X } from "@styled-icons/heroicons-solid";
 import { Box, useBackground } from "@advisable/donut";
 import CircularButton from "src/components/CircularButton";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import View from "src/components/View";
 import CollaborationRequestForm from "src/components/CollaborationRequestForm";
 import { usePostCollaborationRequest } from "./queries";
 
 export default function CollaborationRequest() {
   useBackground("white");
-  const history = useHistory();
+  const navigate = useNavigate();
   const [publish] = usePostCollaborationRequest();
 
   const handleSubmit = async (values) => {
@@ -23,7 +23,7 @@ export default function CollaborationRequest() {
       },
     });
 
-    history.push("/");
+    navigate("/");
   };
 
   return (

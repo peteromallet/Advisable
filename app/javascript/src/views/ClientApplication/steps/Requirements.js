@@ -2,7 +2,7 @@ import React from "react";
 import { object, string, boolean } from "yup";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import TilesInput from "src/components/TilesInput";
 import { Box, Error, Textarea } from "@advisable/donut";
@@ -41,7 +41,7 @@ export const validationSchema = object().shape({
 export default function Requirements({ clientApplication }) {
   const [update] = useMutation(UPDATE_CLIENT_APPLICATION);
   const [submit] = useMutation(SUBMIT_CLIENT_APPLICATION);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { status, feedback, specialistDescription, title, budget } =
     clientApplication;
@@ -84,7 +84,7 @@ export default function Requirements({ clientApplication }) {
       await submit();
     }
 
-    history.push("/");
+    navigate("/");
   };
 
   return (

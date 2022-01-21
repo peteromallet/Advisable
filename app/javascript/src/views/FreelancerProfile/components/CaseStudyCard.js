@@ -185,9 +185,12 @@ const CaseStudyBackgroundImage = React.memo(function CaseStudyBackgroundImage({
 export default function CaseStudyCard({ caseStudy, isOwner }) {
   const modal = useModal();
 
-  const isArticle = !!matchPath(location.pathname, {
-    path: "/profile/:username/:slug",
-  });
+  const isArticle = !!matchPath(
+    {
+      path: "/profile/:username/:slug",
+    },
+    location.pathname,
+  );
 
   const skills = caseStudy.skills.map(({ skill }) => (
     <StyledSkillTag key={skill.id}>{skill.name}</StyledSkillTag>

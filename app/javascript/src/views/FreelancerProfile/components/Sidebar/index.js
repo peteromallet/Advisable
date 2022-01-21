@@ -24,9 +24,12 @@ import SocialProfilesIcons from "../SocialProfilesIcons";
 import { SPECIALIST_BIO_LENGTH } from "src/constants";
 
 function Sidebar({ data, isOwner, ...props }) {
-  const isArticle = !!matchPath(location.pathname, {
-    path: "/profile/:username/:slug",
-  });
+  const isArticle = !!matchPath(
+    {
+      path: "/profile/:username/:slug",
+    },
+    location.pathname,
+  );
 
   const { specialist } = data;
 

@@ -3,7 +3,12 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import isEmpty from "lodash/isEmpty";
 // Hooks
-import { useHistory, useParams, useLocation, Redirect } from "react-router-dom";
+import {
+  useNavigate,
+  useParams,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 // Components
 import {
   Card,
@@ -31,7 +36,7 @@ function ReviewRatings({ data }) {
 
   // React Router data
   const { id, article_id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   // Describe Formik initial state
@@ -48,18 +53,22 @@ function ReviewRatings({ data }) {
   // Trigger on continue button
   const handleContinue = (values) => {
     // Preserve Formik's state in the location state, to handle browser's back button
-    history.replace(`/review/${id}/case_studies/${article_id}/ratings`, {
-      ratings: values,
+    navigate(`/review/${id}/case_studies/${article_id}/ratings`, {
+      state: {
+        ratings: values,
+      },
     });
     // Relocate to comment step and pass stars ratings there
-    history.push(`/review/${id}/case_studies/${article_id}/comment`, {
-      ratings: values,
+    navigate(`/review/${id}/case_studies/${article_id}/comment`, {
+      state: {
+        ratings: values,
+      },
     });
   };
 
   // Trigger on skip button
   const handleSkip = () => {
-    history.push(`/review/${id}/case_studies/${article_id}/comment`);
+    navigate(`/review/${id}/case_studies/${article_id}/comment`);
   };
 
   if (data.caseStudy.review) {
@@ -67,7 +76,7 @@ function ReviewRatings({ data }) {
   }
   if (!oauthViewer) {
     return (
-      <Redirect to={`/review/${specialist.id}/case_studies/${article_id}`} />
+      <Navigate to={`/review/${specialist.id}/case_studies/${article_id}`} />
     );
   }
 

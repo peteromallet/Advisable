@@ -17,7 +17,7 @@ function ProgressCircle({ steps }) {
 
   const currentStepIndex =
     steps.findIndex((step) =>
-      matchPath(location.pathname, { path: step.to, exact: true }),
+      matchPath({ path: step.to, end: true }, location.pathname),
     ) || 0;
 
   const range = transform(
@@ -75,12 +75,12 @@ export default function MultistepMenuItem({
     if (match) return true;
     if (steps.length > 0) {
       return steps.some((step) => {
-        return matchPath(location.pathname, { path: step.to, exact: true });
+        return matchPath({ path: step.to, exact: true }, location.pathname);
       });
     }
   };
 
-  const rootMatched = matchPath(location.pathname, { path: to });
+  const rootMatched = matchPath({ path: to }, location.pathname);
   const isActive = checkIsActive(rootMatched, location);
 
   return (

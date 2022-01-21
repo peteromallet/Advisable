@@ -9,7 +9,7 @@ import {
   theme,
   useBackground,
 } from "@advisable/donut";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import LighthouseIllustration from "src/illustrations/zest/lighthouse";
 
 export default function ReviewComplete({ data }) {
@@ -17,7 +17,7 @@ export default function ReviewComplete({ data }) {
   const { specialist, oauthViewer } = data;
 
   if (!oauthViewer) {
-    return <Redirect to={`/review/${specialist.id}`} />;
+    return <Navigate to={`/review/${specialist.id}`} />;
   }
 
   return (

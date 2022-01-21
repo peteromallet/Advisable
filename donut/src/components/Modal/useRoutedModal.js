@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDialogState } from "reakit/Dialog";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const useRoutedModal = (path, config) => {
   const modal = useDialogState();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -20,12 +20,12 @@ const useRoutedModal = (path, config) => {
   const routedModal = {
     ...modal,
     show: () => {
-      history.push(path);
+      navigate(path);
       modal.show();
     },
     hide: () => {
       if (config?.returnLocation) {
-        history.replace(config.returnLocation);
+        navigate(config.returnLocation, { replace: true });
       }
       modal.hide();
     },

@@ -12,7 +12,7 @@ import { PlusCircle } from "@styled-icons/heroicons-solid/PlusCircle";
 import HeaderButton, {
   StyledHeaderButtonGroup,
 } from "../../components/HeaderButton";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useCreateView, useDeleteView, useRenameView } from "../../queries";
 
 const StyledDropdown = styled.div`
@@ -222,7 +222,7 @@ export default function ViewsDropdown({
   sortBy,
   sortOrder,
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const menu = useMenuState();
 
@@ -233,18 +233,12 @@ export default function ViewsDropdown({
 
   const openMainView = () => {
     menu.hide();
-    history.push({
-      ...location,
-      search: null,
-    });
+    navigate(location.pathname);
   };
 
   const openView = (id) => {
     menu.hide();
-    history.push({
-      ...location,
-      search: `?view=${id}`,
-    });
+    navigate(`${location.pathname}?view=${id}`);
   };
 
   const handleCreateNewView = async (response) => {

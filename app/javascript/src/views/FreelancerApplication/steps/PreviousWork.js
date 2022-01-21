@@ -1,7 +1,7 @@
 import React from "react";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Box, Textarea, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
@@ -32,7 +32,7 @@ export const validationSchema = object().shape({
 });
 
 export default function PreviousWork({ specialist }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [update] = useMutation(UPDATE_PROFILE);
 
   const initialValues = {
@@ -50,7 +50,7 @@ export default function PreviousWork({ specialist }) {
     }
 
     track("Previous Work (Specialist Application)");
-    history.push("/freelancers/apply/preferences");
+    navigate("/freelancers/apply/preferences");
   };
 
   return (

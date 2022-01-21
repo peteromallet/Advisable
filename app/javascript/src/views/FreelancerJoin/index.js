@@ -1,6 +1,6 @@
 import React from "react";
 import { AnimatePresence } from "framer-motion";
-import { Redirect, Switch, useLocation } from "react-router";
+import { Navigate, Routes, useLocation } from "react-router-dom";
 import useViewer from "src/hooks/useViewer";
 import useSteps from "src/hooks/useSteps";
 import steps from "./Steps";
@@ -11,7 +11,9 @@ import Footer from "./Footer";
 import Header from "./Header";
 
 function FreelancerJoin() {
-  const { routes, currentStepIndex, forwards } = useSteps(steps);
+  const { routes, currentStepIndex, forwards } = useSteps(steps, {
+    basePath: "/freelancers/join",
+  });
   const location = useLocation();
   const largeScreen = useBreakpoint("xlUp");
   const viewer = useViewer();
@@ -22,7 +24,7 @@ function FreelancerJoin() {
     (viewer?.isSpecialist && viewer?.applicationStage !== "Started") ||
     (viewer?.isSpecialist && viewer?.needsToSetAPassword === false)
   ) {
-    return <Redirect to="/" />;
+    return <Navigate to="/freelancers/apply" />;
   }
 
   return (
@@ -68,9 +70,9 @@ function FreelancerJoin() {
           initial={false}
           custom={{ forwards, largeScreen }}
         >
-          <Switch location={location} key={location.pathname}>
+          <Routes location={location} key={location.pathname}>
             {routes}
-          </Switch>
+          </Routes>
         </AnimatePresence>
         {largeScreen ? <Footer /> : null}
       </Box>

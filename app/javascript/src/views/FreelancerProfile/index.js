@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { Switch, Route } from "react-router";
+import { Routes, Route } from "react-router";
 import { Box, useBackground } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -36,14 +36,13 @@ export default function FreelancerProfile() {
         pb={20}
         pt={[3, 5, 5, 5, 7]}
       >
-        <Switch>
-          <Route path="/profile/:username/:slug">
-            <Article isOwner={isOwner} profileData={data} />
-          </Route>
-          <Route>
-            <Profile isOwner={isOwner} data={data} />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route
+            path="/:slug"
+            element={<Article isOwner={isOwner} profileData={data} />}
+          />
+          <Route path="*" element={<Profile isOwner={isOwner} data={data} />} />
+        </Routes>
       </Box>
     </ErrorBoundary>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { InformationCircle } from "@styled-icons/ionicons-outline/InformationCircle";
 import { Card, Text, Box, Tooltip } from "@advisable/donut";
-import { Redirect } from "react-router";
+import { Navigate } from "react-router";
 import useViewer from "src/hooks/useViewer";
 import TeamMembers from "./TeamMembers";
 
@@ -9,7 +9,7 @@ export default function Team() {
   const viewer = useViewer();
 
   if (!viewer.isTeamManager) {
-    return <Redirect to="/settings" />;
+    return <Navigate to="/settings" />;
   }
 
   return (

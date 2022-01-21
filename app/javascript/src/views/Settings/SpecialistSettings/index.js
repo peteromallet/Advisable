@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
+import { Route, Routes, Navigate, useMatch } from "react-router-dom";
 import { Container, useBreakpoint } from "@advisable/donut";
 import View from "src/components/View";
 import Navigation from "./SpecialistSettingsNavigation";
@@ -10,9 +10,8 @@ import Availability from "./Availability";
 import AccountSettings from "../AccountSettings";
 
 function SpecialistSettings() {
-  const match = useRouteMatch();
   const breakpointS = useBreakpoint("sUp");
-  const isMobileView = useRouteMatch({ path: match.path, exact: !breakpointS });
+  const isMobileView = useMatch({ path: "/settings", end: !breakpointS });
 
   return (
     <View>
@@ -32,30 +31,18 @@ function SpecialistSettings() {
           paddingX={[4, 4, 6, 8]}
           maxWidth={{ l: "940px" }}
         >
-          <Switch>
-            <Route path="/settings/general">
-              <General />
-            </Route>
-            <Route path="/settings/availability">
-              <Availability />
-            </Route>
-            <Route path="/settings/payment-settings">
-              <PaymentSettings />
-            </Route>
-            <Route path="/settings/password">
-              <Password />
-            </Route>
-            <Route path="/settings/account">
-              <AccountSettings />
-            </Route>
+          <Routes>
+            <Route path="/general" element={<General />} />
+            <Route path="/availability" element={<Availability />} />
+            <Route path="/payment-settings" element={<PaymentSettings />} />
+            <Route path="/password" element={<Password />} />
+            <Route path="/account" element={<AccountSettings />} />
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
             {breakpointS && (
-              <Route>
-                <Redirect to="/settings/account" />
-              </Route>
+              <Route path="*" element={<Navigate to="/settings/general" />} />
             )}
-          </Switch>
+          </Routes>
         </Container>
       </View.Content>
     </View>

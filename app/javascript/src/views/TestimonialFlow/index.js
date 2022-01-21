@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { useReviewMeta } from "./queries";
-import { Route, useParams, Switch } from "react-router-dom";
+import { Route, useParams, Routes } from "react-router-dom";
 import { Box, Container } from "@advisable/donut";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import Loading from "src/components/Loading";
@@ -24,20 +24,12 @@ export default function TestimonialFlow() {
         <Logo />
       </Box>
       <Container maxWidth="700px" pb="20px">
-        <Switch>
-          <Route path="/review/:id/ratings">
-            <ReviewRatings data={data} />
-          </Route>
-          <Route path="/review/:id/comment">
-            <ReviewComment data={data} />
-          </Route>
-          <Route path="/review/:id/complete">
-            <ReviewComplete data={data} />
-          </Route>
-          <Route>
-            <ReviewIntro data={data} />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/ratings" element={<ReviewRatings data={data} />} />
+          <Route path="/comment" element={<ReviewComment data={data} />} />
+          <Route path="/complete" element={<ReviewComplete data={data} />} />
+          <Route path="/" element={<ReviewIntro data={data} />} />
+        </Routes>
       </Container>
     </Suspense>
   );
