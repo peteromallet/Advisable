@@ -13,10 +13,4 @@ namespace :data do
     industries = File.readlines(industries_file).map(&:strip)
     industries.each { |name| Industry.create(name:) }
   end
-
-  task blacklisted_domains: :environment do
-    file = Rails.root.join("lib", "tasks", "data", "blacklisted_domains.txt")
-    domains = File.readlines(file).map(&:strip)
-    domains.each { |domain| BlacklistedDomain.create(domain:) }
-  end
 end

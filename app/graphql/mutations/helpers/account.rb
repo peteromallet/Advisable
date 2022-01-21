@@ -3,8 +3,6 @@
 module Mutations
   module Helpers
     module Account
-      include Mutations::Helpers::BlacklistedEmail
-
       def find_or_create_user_by_email!(email, attributes = {})
         existing_acc = ::Account.find_by(email:)
         if existing_acc
@@ -12,7 +10,6 @@ module Mutations
 
           existing_acc.user
         else
-          email_blacklisted?(email)
           attributes = attributes.slice(:first_name, :last_name)
           account = ::Account.new(email:, **attributes)
           account.save!

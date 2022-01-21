@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_20_082446) do
+ActiveRecord::Schema.define(version: 2022_01_21_081143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -173,12 +173,6 @@ ActiveRecord::Schema.define(version: 2022_01_20_082446) do
     t.bigint "account_id", null: false
     t.index ["account_id"], name: "index_auth_providers_on_account_id"
     t.index ["provider", "uid"], name: "index_auth_providers_on_provider_and_uid", unique: true
-  end
-
-  create_table "blacklisted_domains", force: :cascade do |t|
-    t.string "domain"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "case_study_archived_articles", force: :cascade do |t|
