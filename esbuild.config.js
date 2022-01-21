@@ -11,12 +11,9 @@ process.env.BUILD_TIME = version;
 esbuild
   .build({
     watch: {
-      onRebuild(error) {
-        if (error) {
-          console.error("watch build failed:", error);
-        } else {
-          console.log("⚡️ Updated");
-        }
+      onRebuild(error, result) {
+        if (error) console.error("watch build failed:", error);
+        else console.log("watch build succeeded");
       },
     },
     entryPoints: ["app/javascript/application.js"],
