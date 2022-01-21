@@ -70,17 +70,6 @@ RSpec.describe Mutations::InviteUserToReviewApplications do
     end
   end
 
-  context "when provided a blacklisted email" do
-    let(:email) { "test@gmail.com" }
-
-    it "returns an error" do
-      create(:blacklisted_domain, domain: "gmail.com")
-      response = AdvisableSchema.execute(query, context:)
-      error = response["errors"].first["extensions"]["code"]
-      expect(error).to eq("NON_CORPORATE_EMAIL")
-    end
-  end
-
   context "when no email" do
     let(:email) { "" }
 

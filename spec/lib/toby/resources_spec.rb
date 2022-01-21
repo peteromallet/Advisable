@@ -32,7 +32,6 @@ RSpec.describe Toby::Resources do
           Toby::Resources::Message,
           Toby::Resources::Account,
           Toby::Resources::Payment,
-          Toby::Resources::BlacklistedDomain,
           Toby::Resources::Guild::Post,
           Toby::Resources::Label
         ]
