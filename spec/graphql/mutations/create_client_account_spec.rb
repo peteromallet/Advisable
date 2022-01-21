@@ -74,14 +74,4 @@ RSpec.describe(Mutations::CreateClientAccount) do
       expect(error).to eq("EMAIL_TAKEN")
     end
   end
-
-  context "when the email is blacklisted" do
-    let(:email) { "test@gmail.com" }
-
-    it "returns an error" do
-      create(:blacklisted_domain, domain: "gmail.com")
-      error = request["errors"][0]["extensions"]["code"]
-      expect(error).to eq("NON_CORPORATE_EMAIL")
-    end
-  end
 end
