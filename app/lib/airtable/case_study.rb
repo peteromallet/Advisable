@@ -100,11 +100,13 @@ module Airtable
 
         AttachCoverToArticleJob.perform_later(article)
 
+        article.industries.destroy_all
         Array(fields["Industry"]).each do |airtable_id|
           industry = ::Industry.find_by!(airtable_id:)
           ::CaseStudy::Industry.find_or_create_by!(industry:, article:)
         end
 
+        article.skills.destroy_all
         Array(fields["Skills"]).each do |airtable_id|
           skill = ::Skill.find_by!(airtable_id:)
           ::CaseStudy::Skill.find_or_create_by!(skill:, article:)
