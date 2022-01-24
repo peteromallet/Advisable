@@ -25,8 +25,6 @@ module Advisable
     config.assets.paths << Rails.root.join("app/assets/fonts")
     config.active_storage.variant_processor = :vips
 
-    config.skylight.probes += %w[redis graphql faraday]
-
     config.app_profiler.middleware = AppProfilerAuthorizedMiddleware
     config.app_profiler.storage = AppProfiler::Storage::S3Storage
     # Uncomment this if you want to test s3 uploads in development
