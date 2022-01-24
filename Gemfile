@@ -32,8 +32,6 @@ gem "slim"
 gem "bootsnap", require: false
 gem "dalli"
 
-gem "skylight"
-
 gem "pdfmonkey"
 
 gem "omniauth"
