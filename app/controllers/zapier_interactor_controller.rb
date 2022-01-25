@@ -173,7 +173,6 @@ class ZapierInteractorController < ApplicationController
 
   def find_and_update(model, attrs = {})
     record = model.public_send(:find_by!, uid: params[:uid])
-    return unless record
 
     if attrs.present?
       record.update!(attrs)
