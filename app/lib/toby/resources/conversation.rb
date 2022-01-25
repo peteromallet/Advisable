@@ -5,7 +5,7 @@ module Toby
     class Conversation < BaseResource
       model_name ::Conversation
       attribute :uid, Attributes::String, readonly: true
-      attribute :participant_name, Lookups::Conversations::ParticipantName
+      attribute :participant_names, Lookups::Conversations::ParticipantNames
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 

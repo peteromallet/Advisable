@@ -3,7 +3,7 @@
 module Toby
   module Lookups
     module Conversations
-      class ParticipantName < Attributes::TextArray
+      class ParticipantNames < Attributes::TextArray
         include Lookup
 
         filter "contains...", Filters::StringContains do |records, _attribute, value|
