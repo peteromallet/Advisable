@@ -16,12 +16,11 @@ class AccountsController < ApplicationController
 
   def user
     user = User.find_or_create_by(account:) do |u|
-      u.company = Company.new(name: params[:company_name].strip)
-
+      u.company = Company.create
       account.permissions << :team_manager
       account.save!
     end
-
+    user.company.update(name: params[:company_name].strip) if params[:company_name].present?
     user.airtable_id = params[:airtable_id].strip if params[:airtable_id].present?
 
     Logidze.with_responsible(user.account_id) do
