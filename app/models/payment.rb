@@ -11,6 +11,7 @@ class Payment < ApplicationRecord
   belongs_to :company
   belongs_to :specialist
   belongs_to :task, optional: true
+  belongs_to :payment_request, optional: true
 
   before_create :set_admin_fee
 
@@ -134,32 +135,35 @@ end
 #
 # Table name: payments
 #
-#  id                :bigint           not null, primary key
-#  admin_fee         :integer
-#  amount            :integer
-#  charged_at        :datetime
-#  deposit           :integer
-#  payment_method    :string
-#  retries           :integer
-#  status            :string
-#  uid               :string           not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  company_id        :uuid             not null
-#  payment_intent_id :string
-#  specialist_id     :bigint           not null
-#  task_id           :bigint
+#  id                 :bigint           not null, primary key
+#  admin_fee          :integer
+#  amount             :integer
+#  charged_at         :datetime
+#  deposit            :integer
+#  payment_method     :string
+#  retries            :integer
+#  status             :string
+#  uid                :string           not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  company_id         :uuid             not null
+#  payment_intent_id  :string
+#  payment_request_id :bigint
+#  specialist_id      :bigint           not null
+#  task_id            :bigint
 #
 # Indexes
 #
-#  index_payments_on_company_id     (company_id)
-#  index_payments_on_specialist_id  (specialist_id)
-#  index_payments_on_task_id        (task_id)
-#  index_payments_on_uid            (uid) UNIQUE
+#  index_payments_on_company_id          (company_id)
+#  index_payments_on_payment_request_id  (payment_request_id)
+#  index_payments_on_specialist_id       (specialist_id)
+#  index_payments_on_task_id             (task_id)
+#  index_payments_on_uid                 (uid) UNIQUE
 #
 # Foreign Keys
 #
 #  fk_rails_...  (company_id => companies.id)
+#  fk_rails_...  (payment_request_id => payment_requests.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #  fk_rails_...  (task_id => tasks.id)
 #
