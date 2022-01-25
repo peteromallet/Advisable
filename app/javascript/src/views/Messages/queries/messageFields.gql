@@ -71,6 +71,20 @@ fragment MessageFields on MessageInterface {
     }
   }
 
+  ... on AgreementDeclinedMessage {
+    agreement {
+      id
+      user {
+        id
+        name
+      }
+      specialist {
+        id
+        firstName
+      }
+    }
+  }
+
   ... on AgreementAcceptedMessage {
     agreement {
       id
