@@ -15,7 +15,7 @@ module Toby
                 query = query.where("accounts.first_name ILIKE ?", "%#{name}%").
                   or(query.where("accounts.last_name ILIKE ?", "%#{name}%"))
               end
-              query
+              query.distinct
             else
               records
             end

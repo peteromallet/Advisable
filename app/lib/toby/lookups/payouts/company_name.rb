@@ -13,7 +13,7 @@ module Toby
             names.each do |name|
               query = query.where("companies.name ILIKE ?", "%#{name}%")
             end
-            query
+            query.distinct
           else
             records
           end

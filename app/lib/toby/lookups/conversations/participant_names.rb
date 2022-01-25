@@ -2,13 +2,13 @@
 
 module Toby
   module Lookups
-    module Tasks
-      class SpecialistName < Attributes::String
+    module Conversations
+      class ParticipantNames < Attributes::TextArray
         include Lookup
 
         filter "contains...", Filters::StringContains do |records, _attribute, value|
           if value.any? && value.first.present?
-            query = records.joins(application: {specialist: :account})
+            query = records.joins(participants: :account)
             names = value.first.split
             names.each do |name|
               query = query.where("accounts.first_name ILIKE ?", "%#{name}%").
@@ -21,23 +21,27 @@ module Toby
         end
 
         def lazy_read_class
-          Toby::Lazy::Single
+          Toby::Lazy::Base
         end
 
         def includes
-          {specialist: :account}
+          [:account]
         end
 
         def via
-          :application_id
+          :id
+        end
+
+        def column
+          :conversation_id
         end
 
         def lazy_model
-          Application
+          ConversationParticipant
         end
 
-        def lazy_read(application)
-          application&.specialist&.account&.name
+        def lazy_read(participant)
+          participant&.account&.name
         end
       end
     end
