@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Button,
   Modal,
@@ -8,10 +8,12 @@ import {
   Text,
   Stack,
   Circle,
+  Textarea,
 } from "@advisable/donut";
 import { BaseMessage } from "./Message";
 import { Calendar } from "@styled-icons/heroicons-solid";
-import { useAcceptAgreement } from "../queries";
+import { useAcceptAgreement, useDeclineAgreement } from "../queries";
+import BackButton from "src/components/BackButton";
 
 function AgreementSection({ title, children }) {
   return (
@@ -26,7 +28,7 @@ function AgreementSection({ title, children }) {
   );
 }
 
-function AgreementPending({ agreement, onAccept }) {
+function AgreementPending({ agreement, onAccept, onDecline }) {
   const [accept, acceptState] = useAcceptAgreement();
 
   const handleAccept = async () => {
@@ -51,19 +53,30 @@ function AgreementPending({ agreement, onAccept }) {
       >
         Accept
       </Button>
-      <Button disabled={acceptState.loading} size="l" variant="secondary">
+      <Button
+        disabled={acceptState.loading}
+        size="l"
+        variant="secondary"
+        onClick={onDecline}
+      >
         Decline
       </Button>
     </Box>
   );
 }
 
-function AgreementActions({ agreement, onAccept }) {
+function AgreementActions({ agreement, onAccept, onDecline }) {
   if (agreement.status === "accepted") {
     return <>accepted</>;
   }
 
-  return <AgreementPending agreement={agreement} onAccept={onAccept} />;
+  return (
+    <AgreementPending
+      agreement={agreement}
+      onAccept={onAccept}
+      onDecline={onDecline}
+    />
+  );
 }
 
 const COLLABORATION_TYPES = {
@@ -79,7 +92,7 @@ const INVOICES_TYPES = {
   flexible: () => `flexible`,
 };
 
-function Agreement({ agreement, onAccept }) {
+function Agreement({ agreement, onAccept, onDecline }) {
   const { specialist, company } = agreement;
 
   const collaborationType = COLLABORATION_TYPES[agreement.collaboration];
@@ -123,8 +136,61 @@ function Agreement({ agreement, onAccept }) {
           remaining questions.
         </AgreementSection>
       </Stack>
-      <AgreementActions agreement={agreement} onAccept={onAccept} />
+      <AgreementActions
+        agreement={agreement}
+        onAccept={onAccept}
+        onDecline={onDecline}
+      />
     </>
+  );
+}
+
+function DeclineAgreement({ agreement, onBack }) {
+  const [decline, { loading }] = useDeclineAgreement();
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = () => {
+    decline({
+      variables: {
+        input: {
+          agreement: agreement.id,
+          message,
+        },
+      },
+    });
+  };
+
+  return (
+    <>
+      <Text>Decline request</Text>
+      <Textarea
+        name="message"
+        value={message}
+        placeholder="Message..."
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <Button onClick={handleSubmit} loading={loading}>
+        Decline Request
+      </Button>
+    </>
+  );
+}
+
+function AgreementModal({ agreement, modal }) {
+  const [step, setStep] = useState("VIEW");
+
+  if (step === "DECLINE") {
+    return (
+      <DeclineAgreement agreement={agreement} onClick={() => setStep("VIEW")} />
+    );
+  }
+
+  return (
+    <Agreement
+      agreement={agreement}
+      onAccept={modal.hide}
+      onDecline={() => setStep("DECLINE")}
+    />
   );
 }
 
@@ -140,7 +206,7 @@ function ViewAgreement({ agreement }) {
         )}
       </DialogDisclosure>
       <Modal modal={modal} width={640}>
-        <Agreement agreement={agreement} onAccept={modal.hide} />
+        <AgreementModal agreement={agreement} modal={modal} />
       </Modal>
     </>
   );
