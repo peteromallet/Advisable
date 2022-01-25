@@ -297,10 +297,28 @@ module Types
     field :payment, Types::Payment, null: true do
       argument :id, ID, required: true
     end
-
     def payment(id:)
       requires_client!
       ::Payment.find_by!(uid: id)
+    end
+
+    field :payment_requests, Types::PaymentRequest.connection_type, null: false
+    def payment_requests
+      requires_current_user!
+
+      if current_user.is_a?(::User)
+        current_user.company.payment_requests
+      else
+        current_user.payment_requests
+      end
+    end
+
+    field :payment_request, Types::PaymentRequest, null: true do
+      argument :id, ID, required: true
+    end
+    def payment_request(id:)
+      requires_current_user!
+      ::PaymentRequest.find_by!(uid: id)
     end
 
     field :conversations, Types::Conversation.connection_type, null: true
