@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_25_114720) do
+ActiveRecord::Schema.define(version: 2022_01_25_115408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -688,7 +688,9 @@ ActiveRecord::Schema.define(version: 2022_01_25_114720) do
     t.integer "deposit"
     t.integer "retries"
     t.datetime "charged_at"
+    t.bigint "payment_request_id"
     t.index ["company_id"], name: "index_payments_on_company_id"
+    t.index ["payment_request_id"], name: "index_payments_on_payment_request_id"
     t.index ["specialist_id"], name: "index_payments_on_specialist_id"
     t.index ["task_id"], name: "index_payments_on_task_id"
     t.index ["uid"], name: "index_payments_on_uid", unique: true
@@ -705,6 +707,8 @@ ActiveRecord::Schema.define(version: 2022_01_25_114720) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
+    t.bigint "payment_request_id"
+    t.index ["payment_request_id"], name: "index_payouts_on_payment_request_id"
     t.index ["specialist_id"], name: "index_payouts_on_specialist_id"
     t.index ["task_id"], name: "index_payouts_on_task_id"
     t.index ["uid"], name: "index_payouts_on_uid", unique: true
@@ -1197,8 +1201,10 @@ ActiveRecord::Schema.define(version: 2022_01_25_114720) do
   add_foreign_key "payment_requests", "companies"
   add_foreign_key "payment_requests", "specialists"
   add_foreign_key "payments", "companies"
+  add_foreign_key "payments", "payment_requests"
   add_foreign_key "payments", "specialists"
   add_foreign_key "payments", "tasks"
+  add_foreign_key "payouts", "payment_requests"
   add_foreign_key "payouts", "specialists"
   add_foreign_key "payouts", "tasks"
   add_foreign_key "problematic_flags", "applications"
