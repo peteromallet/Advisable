@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PaymentPolicy < BasePolicy
+class PaymentRequestPolicy < BasePolicy
   def read?
     specialist_owner? || company_user? || admin?
   end
