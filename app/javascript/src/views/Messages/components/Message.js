@@ -10,6 +10,8 @@ import MessageAttachment from "./MessageAttachment";
 import { motion } from "framer-motion";
 import InterviewScheduledMessage from "./SystemMessage/InterviewScheduled";
 import ConsultationDeclinedMessage from "./SystemMessage/ConsultationDeclined";
+import AgreementCreatedMessage from "./AgreementCreatedMessage";
+import AgreementAcceptedMessage from "./SystemMessage/AgreementAcceptedMessage";
 
 const COMPONENTS = {
   UserMessage,
@@ -18,6 +20,8 @@ const COMPONENTS = {
   ConsultationRequestMessage,
   InterviewScheduledMessage,
   ConsultationDeclinedMessage,
+  AgreementCreatedMessage,
+  AgreementAcceptedMessage,
 };
 
 export default function Message({ message }) {

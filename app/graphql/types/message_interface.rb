@@ -16,6 +16,7 @@ module Types
                  Types::SystemMessage,
                  Types::GuildPostMessage,
                  Types::Messages::AgreementCreated,
+                 Types::Messages::AgreementAccepted,
                  Types::Messages::ConsultationRequest,
                  Types::Messages::InterviewScheduled,
                  Types::Messages::ConsultationDeclined

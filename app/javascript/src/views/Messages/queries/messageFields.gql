@@ -47,6 +47,48 @@ fragment MessageFields on MessageInterface {
     }
   }
 
+  ... on AgreementCreatedMessage {
+    agreement {
+      id
+      status
+      invoicing
+      hourlyRate
+      collaboration
+      specialist {
+        id
+        name
+        firstName
+      }
+      company {
+        id
+        name
+      }
+    }
+    author {
+      id
+      name
+      avatar
+    }
+  }
+
+  ... on AgreementAcceptedMessage {
+    agreement {
+      id
+      user {
+        id
+        name
+      }
+      company {
+        id
+        name
+      }
+      specialist {
+        id
+        firstName
+      }
+    }
+  }
+
   ... on ConsultationDeclinedMessage {
     consultation {
       id
