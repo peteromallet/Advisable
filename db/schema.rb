@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_21_081143) do
+ActiveRecord::Schema.define(version: 2022_01_25_114720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -658,6 +658,20 @@ ActiveRecord::Schema.define(version: 2022_01_21_081143) do
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
   end
 
+  create_table "payment_requests", force: :cascade do |t|
+    t.string "uid", null: false
+    t.bigint "specialist_id", null: false
+    t.uuid "company_id", null: false
+    t.string "status", null: false
+    t.integer "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "log_data"
+    t.index ["company_id"], name: "index_payment_requests_on_company_id"
+    t.index ["specialist_id"], name: "index_payment_requests_on_specialist_id"
+    t.index ["uid"], name: "index_payment_requests_on_uid", unique: true
+  end
+
   create_table "payments", force: :cascade do |t|
     t.string "uid", null: false
     t.integer "amount"
@@ -1180,6 +1194,8 @@ ActiveRecord::Schema.define(version: 2022_01_21_081143) do
   add_foreign_key "messages", "guild_posts"
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
+  add_foreign_key "payment_requests", "companies"
+  add_foreign_key "payment_requests", "specialists"
   add_foreign_key "payments", "companies"
   add_foreign_key "payments", "specialists"
   add_foreign_key "payments", "tasks"
@@ -1513,5 +1529,8 @@ ActiveRecord::Schema.define(version: 2022_01_21_081143) do
   SQL
   create_trigger :logidze_on_agreements, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_agreements BEFORE INSERT OR UPDATE ON public.agreements FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_payment_requests, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_payment_requests BEFORE INSERT OR UPDATE ON public.payment_requests FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
