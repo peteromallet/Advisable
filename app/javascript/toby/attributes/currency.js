@@ -10,16 +10,8 @@ function convertToCents(inputValue) {
   const decimalPlaces = inputValue.split(".")[1]?.length || 0;
   const stripped = inputValue.replace(/[^\d]/g, "");
   if (!stripped) return undefined;
-
-  const asNumber = Number(stripped);
-  switch (decimalPlaces) {
-    case 0:
-      return asNumber * 100;
-    case 1:
-      return asNumber * 10;
-    default:
-      return asNumber;
-  }
+  const multiplier = 100 / 10 ** decimalPlaces;
+  return Number(stripped) * multiplier;
 }
 
 export default {
