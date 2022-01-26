@@ -8,6 +8,7 @@ class PaymentRequestPolicy < BasePolicy
   def approve?
     company_user? || admin?
   end
+  alias dispute? approve?
 
   private
 
