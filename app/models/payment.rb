@@ -5,6 +5,7 @@ class Payment < ApplicationRecord
 
   has_logidze
 
+  URL_EXPIRES_AT = 1.hour.to_i
   VALID_STATUSES = %w[requires_payment_method requires_confirmation requires_action processing requires_capture canceled succeeded failed pending refunded].freeze
   VALID_PAYMENT_METHODS = ["Bank Transfer", "Stripe", "Deposit"].freeze
 
@@ -31,6 +32,13 @@ class Payment < ApplicationRecord
 
   def amount_to_be_paid
     amount_with_fee - deposit.to_i
+  end
+
+  def pdf_url(regenerate: false)
+    self.pdf_key = nil if regenerate
+    GeneratePaymentInvoiceJob.perform_now(self) if pdf_key.blank?
+    obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: pdf_key)
+    obj.presigned_url(:get, expires_in: URL_EXPIRES_AT)
   end
 
   def send_receipt!
@@ -141,6 +149,7 @@ end
 #  charged_at         :datetime
 #  deposit            :integer
 #  payment_method     :string
+#  pdf_key            :string
 #  retries            :integer
 #  status             :string
 #  uid                :string           not null

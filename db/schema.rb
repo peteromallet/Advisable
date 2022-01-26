@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_26_122314) do
+ActiveRecord::Schema.define(version: 2022_01_26_123858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -690,6 +690,7 @@ ActiveRecord::Schema.define(version: 2022_01_26_122314) do
     t.integer "retries"
     t.datetime "charged_at"
     t.bigint "payment_request_id"
+    t.string "pdf_key"
     t.index ["company_id"], name: "index_payments_on_company_id"
     t.index ["payment_request_id"], name: "index_payments_on_payment_request_id"
     t.index ["specialist_id"], name: "index_payments_on_specialist_id"
