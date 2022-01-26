@@ -104,12 +104,12 @@ class SpecialistMailer < ApplicationMailer
   def consultation_request(consultation, message)
     @message = message
     @consultation = consultation
-    @sales_person = consultation.user.company.sales_person
+    @sales_person = default_sales_person_for(consultation.user.company)
 
     mail(
       from: @sales_person.email_with_name,
       to: @consultation.specialist.account.email,
-      bcc: ENV["CONSULTATIONS_BCC"],
+      bcc: @sales_person.email_with_name,
       subject: "Consultation request from #{@consultation.user.name_with_company}"
     ) do |format|
       format.html { render layout: false }
