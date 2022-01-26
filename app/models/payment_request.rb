@@ -2,6 +2,7 @@
 
 class PaymentRequest < ApplicationRecord
   include Uid
+  uid_prefix "pyr"
 
   has_logidze
 
@@ -22,6 +23,15 @@ class PaymentRequest < ApplicationRecord
   # Allows us to overwrite line_items amount if necessary
   def amount
     super.presence || line_items.sum { |item| item["amount"] }
+  end
+
+  # TODO: Add specs
+  def financialize!
+    return unless amount.to_i.positive?
+
+    Payout.create!(specialist:, payment_request: self, amount:, status: "pending")
+    payment = Payment.create!(company:, specialist:, amount:, payment_request: self, status: "pending")
+    payment.charge!
   end
 end
 
