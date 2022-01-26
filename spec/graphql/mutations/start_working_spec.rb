@@ -26,10 +26,12 @@ RSpec.describe Mutations::StartWorking do
   end
 
   it "sets all the attributes" do
+    expect(application.started_working_at).to be_nil
     AdvisableSchema.execute(query, context:)
 
     application.reload
     expect(application.status).to eq("Working")
+    expect(application.started_working_at).not_to be_nil
     expect(application.project_type).to eq("Fixed")
   end
 
