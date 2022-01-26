@@ -4,7 +4,23 @@ import Dinero from "dinero.js";
 import { Input } from "@advisable/donut";
 import currency from "src/utilities/currency";
 
-const CURRENCY_REGEX = /^[0-9,]+\.?(\d{1,2})?$/;
+const CURRENCY_REGEX = /^-?[\d,]+\.?(\d\d?)?$/;
+
+function convertToCents(inputValue) {
+  const decimalPlaces = inputValue.split(".")[1]?.length || 0;
+  const stripped = inputValue.replace(/[^\d]/g, "");
+  if (!stripped) return undefined;
+
+  const asNumber = Number(stripped);
+  switch (decimalPlaces) {
+    case 0:
+      return asNumber * 100;
+    case 1:
+      return asNumber * 10;
+    default:
+      return asNumber;
+  }
+}
 
 export default {
   render: function RenderCurrency({ record, attribute }) {
@@ -31,8 +47,7 @@ export default {
         return;
       }
 
-      const stripped = nextInputValue.replace(/[^0-9.-]+/g, "");
-      const value = stripped ? Number(stripped) * 100 : undefined;
+      const value = convertToCents(nextInputValue);
       setValue(value);
       setInputValue(nextInputValue);
     };
