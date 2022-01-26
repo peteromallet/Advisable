@@ -36,8 +36,8 @@ const Rate = ({ application }) => {
   };
 
   const calculateRate = (amount) => {
-    const rate = (amount * 0.8).toFixed(2);
-    return currency(rate);
+    const rate = (amount * 0.92).toFixed(2);
+    return currency(rate, { format: "$0,0.00" });
   };
 
   return (
