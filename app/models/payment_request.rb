@@ -14,6 +14,15 @@ class PaymentRequest < ApplicationRecord
   has_one :payout, dependent: :nullify
 
   validates :status, inclusion: {in: VALID_STATUSES}
+
+  def line_items
+    super.presence || []
+  end
+
+  # Allows us to overwrite line_items amount if necessary
+  def amount
+    super.presence || line_items.sum { |item| item["amount"] }
+  end
 end
 
 # == Schema Information
@@ -22,6 +31,7 @@ end
 #
 #  id            :bigint           not null, primary key
 #  amount        :integer
+#  line_items    :jsonb
 #  status        :string           not null
 #  uid           :string           not null
 #  created_at    :datetime         not null

@@ -14,6 +14,7 @@ module Types
     field :company, CompanyType, null: false
     field :specialist, SpecialistType, null: false
     field :status, String, null: false
+    field :line_items, [Types::PaymentRequestLineItem], null: false
     field :amount, Int, null: false
     field :payment, Types::Payment, null: false
 
