@@ -62,7 +62,8 @@ class Payment < ApplicationRecord
         update!(payment_intent_id: intent.id, status: intent.status, payment_method: "Stripe")
 
         if intent.status == "succeeded"
-          send_receipt!
+          # TODO: send invoice if payment_request present
+          send_receipt! if payment_request.blank? # rubocop:disable Metrics/BlockNesting
         else
           Slack.message(
             channel: "payments",

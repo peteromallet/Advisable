@@ -8,6 +8,6 @@ class PaymentPolicy < BasePolicy
   private
 
   def company_user?
-    record.company_id == current_user.company_id
+    current_user.respond_to?(:company_id) && record.company_id == current_user.company_id
   end
 end

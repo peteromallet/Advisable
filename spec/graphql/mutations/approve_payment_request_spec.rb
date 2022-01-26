@@ -1,0 +1,97 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+RSpec.describe Mutations::ApprovePaymentRequest do
+  let(:company) { create(:company) }
+  let(:current_user) { create(:user, company:) }
+  let(:payment_request) { create(:payment_request, amount: 30000, company:) }
+
+  let(:query) do
+    <<-GRAPHQL
+      mutation {
+        approvePaymentRequest(input: {
+          paymentRequest: "#{payment_request.uid}",
+        }) {
+          payment {
+            id
+          }
+        }
+      }
+    GRAPHQL
+  end
+
+  let(:context) { {current_user:} }
+
+  before { allow(Stripe::PaymentIntent).to receive(:create).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded")) }
+
+  it "sets the status to approved" do
+    expect(payment_request.reload.status).to eq("pending")
+    AdvisableSchema.execute(query, context:)
+    expect(payment_request.reload.status).to eq("approved")
+  end
+
+  it "creates a payment" do
+    count = Payment.count
+    AdvisableSchema.execute(query, context:)
+    expect(Payment.count).to eq(count + 1)
+    expect(Payment.last.attributes).to include("amount" => 30000, "admin_fee" => 1500, "status" => "succeeded", "company_id" => payment_request.company_id, "payment_request_id" => payment_request.id)
+  end
+
+  it "returns a payment" do
+    expect(payment_request.reload.payment).to be_nil
+    response = AdvisableSchema.execute(query, context:)
+    uid = response.dig("data", "approvePaymentRequest", "payment", "id")
+    payment = Payment.find_by(uid:)
+    expect(payment).to eq(payment_request.reload.payment)
+  end
+
+  context "when the user doesn't have access to the project" do
+    let(:context) { {current_user: create(:user)} }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context:)
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("NOT_AUTHORIZED")
+    end
+  end
+
+  context "when there is no user" do
+    let(:context) { {current_user: nil} }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context:)
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("NOT_AUTHORIZED")
+    end
+  end
+
+  context "when the specialist is logged in" do
+    let(:context) { {current_user: payment_request.specialist} }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context:)
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("NOT_AUTHORIZED")
+    end
+  end
+
+  context "when the request status is not pending" do
+    let(:payment_request) { create(:payment_request, status: "approved") }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context:)
+      error = response["errors"][0]["message"]
+      expect(error).to eq("You do not have permission to approve this payment request")
+    end
+  end
+
+  describe "creating payments" do
+    it "creates a Payment with all the right attributes" do
+      count = Payment.count
+      AdvisableSchema.execute(query, context:)
+      expect(Payment.count).to eq(count + 1)
+      expect(Payment.last.attributes).to include("amount" => 30000, "admin_fee" => 1500, "status" => "succeeded", "company_id" => payment_request.company_id, "specialist_id" => payment_request.specialist_id, "payment_request_id" => payment_request.id)
+    end
+  end
+end
