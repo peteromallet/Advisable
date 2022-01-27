@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Modal,
@@ -6,27 +6,14 @@ import {
   DialogDisclosure,
   Box,
   Text,
-  Stack,
   Circle,
   Textarea,
 } from "@advisable/donut";
 import { BaseMessage } from "./Message";
 import { Calendar } from "@styled-icons/heroicons-solid";
 import { useAcceptAgreement, useDeclineAgreement } from "../queries";
-import BackButton from "src/components/BackButton";
-
-function AgreementSection({ title, children }) {
-  return (
-    <Box>
-      <Text fontWeight={560} marginBottom={1} fontSize="l">
-        {title}
-      </Text>
-      <Text lineHeight="20px" color="neutral800">
-        {children}
-      </Text>
-    </Box>
-  );
-}
+import AgreementDetails from "src/views/NewAgreement/AgreementDetails";
+import { useMessagePrompt } from "./MessagePrompt";
 
 function AgreementPending({ agreement, onAccept, onDecline }) {
   const [accept, acceptState] = useAcceptAgreement();
@@ -79,68 +66,25 @@ function AgreementActions({ agreement, onAccept, onDecline }) {
   );
 }
 
-const COLLABORATION_TYPES = {
-  fixed: () => `fixed`,
-  hourly: () => `hourly`,
-  flexible: () => `flexible`,
-};
-
-const INVOICES_TYPES = {
-  upfront: () => `upfront`,
-  recurring: () => `recurring`,
-  after: () => `after`,
-  flexible: () => `flexible`,
-};
-
 function Agreement({ agreement, onAccept, onDecline }) {
   const { specialist, company } = agreement;
 
-  const collaborationType = COLLABORATION_TYPES[agreement.collaboration];
-  const invoiceType = INVOICES_TYPES[agreement.invoicing];
-
   return (
     <>
-      <Text
-        fontSize="4xl"
-        fontWeight={560}
-        marginBottom={2}
-        paddingRight={12}
-        letterSpacing="-0.02em"
-      >
-        Agreement between {specialist.name} and {company.name}
-      </Text>
-      <Text
-        fontSize="lg"
-        lineHeight="24px"
-        color="neutral700"
-        marginBottom={12}
-      >
-        Please review the agreement below and accept if you are happy to proceed
-        with working with {specialist.firstName}.
-      </Text>
-      <Stack spacing="2xl" divider="neutral100" marginBottom={10}>
-        <AgreementSection title="Collaboration Type">
-          {collaborationType(agreement)}
-        </AgreementSection>
-        <AgreementSection title="Invoicing">
-          {invoiceType(agreement)}
-        </AgreementSection>
-        <AgreementSection title="Trial period">
-          Each collaboration on Advisable kicks off with a Trial Period that
-          equals a $1,000 budget. It benefits both freelancers and clients as it
-          provides security regarding payments during your first hours of work.
-        </AgreementSection>
-        <AgreementSection title="Terms of service">
-          Advisable’s terms of service also apply to this agreement. Feel free
-          to take a look at the document once again in case you have any
-          remaining questions.
-        </AgreementSection>
-      </Stack>
-      <AgreementActions
-        agreement={agreement}
-        onAccept={onAccept}
-        onDecline={onDecline}
+      <AgreementDetails
+        specialistName={specialist.name}
+        companyName={company.name}
+        collaboration={agreement.collaboration}
+        invoicing={agreement.invoicing}
+        hourlyRate={agreement.hourlyRate}
       />
+      <Box marginTop={8}>
+        <AgreementActions
+          agreement={agreement}
+          onAccept={onAccept}
+          onDecline={onDecline}
+        />
+      </Box>
     </>
   );
 }
@@ -213,14 +157,22 @@ function ViewAgreement({ agreement }) {
 }
 
 export default function AgreementCreatedMessage({ message }) {
-  const sender = message.author?.name;
-  // const { show, dismiss, highlight } = useMessagePrompt(
-  //   message,
-  //   "New consultation request",
-  // );
+  const sender = message.agreement?.specialist?.firstName;
+  const { show, dismiss, highlight } = useMessagePrompt(
+    message,
+    "New request to work together",
+  );
+
+  useEffect(() => {
+    if (message.agreement?.status === "pending") {
+      show();
+    } else {
+      dismiss();
+    }
+  }, [show, dismiss, message]);
 
   return (
-    <BaseMessage message={message}>
+    <BaseMessage message={message} highlight={highlight}>
       <Box
         padding={4}
         borderRadius="20px"
