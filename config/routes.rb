@@ -51,14 +51,6 @@ Rails.application.routes.draw do
     resources :project_skills
     resources :countries
     resources :webhooks, only: %i[index show]
-    namespace :guild do
-      resources :posts, as: :opportunity
-      resources :posts, as: :case_study
-      resources :posts, as: :advice_required
-      resources :posts do
-        post "boost_post", on: :member
-      end
-    end
     namespace :case_study do
       resources :articles
       resources :skills
