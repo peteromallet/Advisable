@@ -4,7 +4,7 @@ import { Box, Text } from "@advisable/donut";
 import CollectFeedback from "./CollectFeedback";
 import DisconnectIllustration from "src/illustrations/zest/disconnect";
 
-export function PageError({ eventId }) {
+export function PageError({ eventId, title = "Oops..", children }) {
   return (
     <Box
       paddingY={4}
@@ -23,11 +23,11 @@ export function PageError({ eventId }) {
           fontWeight={700}
           letterSpacing="-0.05em"
         >
-          Oops..
+          {title}
         </Text>
         <Text lineHeight="20px" color="neutral900" mb={8}>
-          An unexpected error has occurred. We have been notified and are
-          working to fix the problem.
+          {children ||
+            "An unexpected error has occurred. We have been notified and are working to fix the problem."}
         </Text>
         {eventId ? <CollectFeedback eventId={eventId} /> : null}
       </Box>
