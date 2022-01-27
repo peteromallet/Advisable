@@ -20,17 +20,16 @@ class PaymentRequest < ApplicationRecord
     super.presence || []
   end
 
-  # Allows us to overwrite line_items amount if necessary
+  # Allows us to override line_items amount if necessary
   def amount
     super.presence || line_items.sum { |item| item["amount"] }
   end
 
-  # TODO: Add specs
   def financialize!
     return unless amount.to_i.positive?
 
-    Payout.create!(specialist:, payment_request: self, amount:, status: "pending")
-    payment = Payment.create!(company:, specialist:, amount:, payment_request: self, status: "pending")
+    create_payout!(specialist:, amount:, status: "pending")
+    payment = create_payment!(company:, specialist:, amount:, status: "pending")
     payment.charge!
   end
 end
