@@ -39,7 +39,7 @@ RSpec.describe Mutations::DisputePaymentRequest do
     expect(request.reload.payout).to be_nil
   end
 
-  context "when the user doesn't have access to the project" do
+  context "when the user doesn't have access to the request" do
     let(:context) { {current_user: create(:user)} }
 
     it "returns an error" do
