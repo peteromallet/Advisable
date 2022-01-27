@@ -2,11 +2,11 @@ import queryString from "query-string";
 import { ApolloClient, from, split, createHttpLink, gql } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
-import { RetryLink } from "@apollo/client/link/retry";
 import cable from "../channels/consumer";
 import createCache from "./apolloCache";
 import * as Sentry from "@sentry/react";
 import ActionCableLink from "graphql-ruby-client/subscriptions/ActionCableLink";
+import { csrfError } from "./views/RootErrorBoundary";
 
 const cache = createCache();
 
@@ -26,7 +26,7 @@ const authLink = setContext((_, { headers }) => {
     ...headers,
     "X-CSRF-Token": csrfToken,
     "X-RELEASED-AT": process.env.RELEASED_AT,
-    "X-TIMEZONE": Intl.DateTimeFormat().resolvedOptions().timeZone
+    "X-TIMEZONE": Intl.DateTimeFormat().resolvedOptions().timeZone,
   };
 
   if (queryParams.profile) {
@@ -43,18 +43,6 @@ const httpLink = createHttpLink({
   credentials: "same-origin",
 });
 
-const retryLink = new RetryLink({
-  delay: {
-    initial: 300,
-    max: Infinity,
-    jitter: true,
-  },
-  attempts: {
-    max: 3,
-    retryIf: (error) => !!error,
-  },
-});
-
 const errorLink = onError(({ graphQLErrors, operation, networkError }) => {
   if (networkError) {
     if (networkError.result?.message === "INVALID_CSRF") {
@@ -69,6 +57,8 @@ const errorLink = onError(({ graphQLErrors, operation, networkError }) => {
 
         Sentry.captureMessage("Invalid CSRF Token");
       });
+
+      csrfError(true);
     }
   }
 
@@ -112,7 +102,7 @@ const hasSubscriptionOperation = ({ query: { definitions } }) => {
 const httpOrSubscriptionLink = split(
   hasSubscriptionOperation,
   new ActionCableLink({ cable }),
-  from([retryLink, httpLink]),
+  from([httpLink]),
 );
 
 const client = new ApolloClient({
