@@ -3,5 +3,8 @@ mutation CreateAgreement($input: CreateAgreementInput!) {
     agreement {
       id
     }
+    conversation {
+      id
+    }
   }
 }

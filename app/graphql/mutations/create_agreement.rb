@@ -10,6 +10,7 @@ module Mutations
     argument :user, ID, required: true
 
     field :agreement, Types::Agreement, null: true
+    field :conversation, Types::Conversation, null: true
 
     def authorized?(**_args)
       requires_specialist!
@@ -33,7 +34,7 @@ module Mutations
         send_emails: false
       )
 
-      {agreement:}
+      {agreement:, conversation:}
     end
   end
 end

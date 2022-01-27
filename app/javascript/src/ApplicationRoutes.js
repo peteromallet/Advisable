@@ -195,7 +195,11 @@ const ApplicationRoutes = () => {
             </RequireAuthentication>
           </Route>
 
-          <Route path="/new_agreement/:userId" component={NewAgreement} />
+          <Route path="/new_agreement/:userId">
+            <RequireAuthentication specialistOnly>
+              <NewAgreement />
+            </RequireAuthentication>
+          </Route>
 
           <Route>
             <NotFound />
