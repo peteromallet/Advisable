@@ -1,8 +1,11 @@
+import { makeVar, useReactiveVar } from "@apollo/client";
 import React, { useEffect } from "react";
 import * as Sentry from "@sentry/react";
 import { RefreshCw } from "@styled-icons/feather/RefreshCw";
-import { Circle, Box, Text, Button } from "@advisable/donut";
+import { Link, Circle, Box, Text, Button } from "@advisable/donut";
 import { PageError } from "src/components/ErrorBoundary";
+
+export const csrfError = makeVar(false);
 
 const CHUNK_LOAD_EXPIRY = 60000; // 1 min
 
@@ -18,6 +21,20 @@ function handleChunkLoadWithrefresh() {
   if (!timestamp) return true;
   const isExpired = new Date().getTime() > timestamp;
   return isExpired;
+}
+
+function PromptToRefresh() {
+  return (
+    <PageError>
+      <Text marginBottom={3}>
+        An unexpected error has occurred. Please refresh the page and try again.
+      </Text>
+      <Text>
+        If the error persists please{" "}
+        <Link mailto="hello@advisable.com">contact us</Link>.
+      </Text>
+    </PageError>
+  );
 }
 
 // When a user visits a url on the app, their browser downloads the assets for
@@ -81,6 +98,12 @@ function RootErrorBoundaryFallback({ error, ...props }) {
 }
 
 export default function RootErrorBoundary({ children }) {
+  const csrfErrorOccured = useReactiveVar(csrfError);
+
+  if (csrfErrorOccured) {
+    return <PromptToRefresh />;
+  }
+
   return (
     <Sentry.ErrorBoundary fallback={RootErrorBoundaryFallback}>
       {children}
