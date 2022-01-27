@@ -67,7 +67,7 @@ export const StyledNav = styled.nav`
   }
 `;
 
-export const NavItem = styled(NavLink)`
+export const NavItem = styled.a`
   font-size: 16px;
   cursor: pointer;
   font-weight: 480;
