@@ -1,0 +1,10 @@
+query NewAgreement($id: ID!) {
+  user(id: $id) {
+    id
+    name
+    company {
+      id
+      name
+    }
+  }
+}
