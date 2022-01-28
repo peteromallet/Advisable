@@ -25,10 +25,10 @@ RSpec.describe Mutations::ApprovePaymentRequest do
 
   before { allow(Stripe::PaymentIntent).to receive(:create).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded")) }
 
-  it "sets the status to approved" do
+  it "sets the status to paid" do
     expect(payment_request.reload.status).to eq("pending")
     AdvisableSchema.execute(query, context:)
-    expect(payment_request.reload.status).to eq("approved")
+    expect(payment_request.reload.status).to eq("paid")
   end
 
   it "creates a payment" do

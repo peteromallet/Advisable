@@ -41,8 +41,12 @@ class Payment < ApplicationRecord
     obj.presigned_url(:get, expires_in: URL_EXPIRES_AT)
   end
 
-  def send_receipt!
-    UserMailer.payment_receipt(self).deliver_later
+  def mark_paid!
+    if payment_request
+      payment_request.update!(status: "paid")
+    else
+      UserMailer.payment_receipt(self).deliver_later
+    end
   end
 
   def charge!
@@ -64,7 +68,7 @@ class Payment < ApplicationRecord
       update!(payment_intent_id: intent.id, status: intent.status, payment_method: "Stripe")
 
       if intent.status == "succeeded"
-        send_receipt! if payment_request.blank?
+        mark_paid!
       else
         Slack.message(
           channel: "payments",
