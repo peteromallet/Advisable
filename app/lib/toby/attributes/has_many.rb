@@ -5,7 +5,7 @@ module Toby
     class HasMany < BaseAttribute
       filter "includes...", Filters::Includes
       filter "are blank", Filters::HasNone
-      # filter :not_empty, Filters::CheckNotNil
+      filter "are not blank", Filters::HasAny
 
       # optional for when we don't follow the class == resource convention
       def model
