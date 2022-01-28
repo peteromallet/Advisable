@@ -57,7 +57,7 @@ export default function CollaborationType({ user }) {
 
   const initialValues = {
     collaboration: "",
-    hourlyRate: "",
+    hourlyRate: undefined,
   };
 
   const companyName = user.company.name;

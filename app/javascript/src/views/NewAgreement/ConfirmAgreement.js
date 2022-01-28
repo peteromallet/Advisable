@@ -1,6 +1,6 @@
 import React from "react";
 import { object, string } from "yup";
-import { Form, Formik } from "formik";
+import { Form, Formik, Field } from "formik";
 import { Box, Container, Heading, Text, Textarea } from "@advisable/donut";
 import { useParams, useLocation, useHistory, Redirect } from "react-router-dom";
 import { useCreateAgreement } from "./queries";
@@ -9,6 +9,7 @@ import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import AgreementDetails from "./AgreementDetails";
 import useViewer from "src/hooks/useViewer";
+import { PaperAirplane } from "@styled-icons/heroicons-solid";
 
 const validationSchema = object().shape({
   message: string().required("Please provide a message."),
@@ -57,11 +58,11 @@ export default function ConfirmAgreement({ user }) {
             }}
           />
           <Heading mb={2} size="6xl">
-            Review and send
+            Send request
           </Heading>
           <Text fontSize="lg" mb={8} lineHeight="24px">
-            Please review and send your request. Once accepted you can begin
-            working together.
+            Please review and send your request. Once {user.company.name}{" "}
+            accepts you can begin working together.
           </Text>
           <Formik
             initialValues={initialValues}
@@ -70,17 +71,31 @@ export default function ConfirmAgreement({ user }) {
             validateOnMount
           >
             <Form>
-              <FormField
+              <Text
+                as="label"
+                htmlFor="message"
+                fontSize="l"
+                fontWeight={520}
+                display="block"
+                marginBottom={3}
+              >
+                Message to {user.name} from {user.company.name}
+              </Text>
+              <Field
                 as={Textarea}
+                id="message"
                 name="message"
                 marginBottom={10}
                 minRows={10}
                 autoFocus
-                label={`Message to ${user.name} from ${user.company.name}`}
-                description={`Your request will be sent to ${user.name}`}
                 placeholder="Message"
               />
-              <SubmitButton size="l" variant="gradient" disableUntilValid>
+              <SubmitButton
+                prefix={<PaperAirplane />}
+                size="l"
+                variant="gradient"
+                disableUntilValid
+              >
                 Send request
               </SubmitButton>
             </Form>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect, useParams } from "react-router-dom";
 import { useBackground } from "src/../../../donut/src";
+import { Loading } from "src/components";
 import CollaborationType from "./CollaborationType";
 import ConfirmAgreement from "./ConfirmAgreement";
 import Introduction from "./Introduction";
@@ -12,7 +13,7 @@ export default function NewAgreement() {
   const { userId } = useParams();
   const { data, loading } = useNewAgreement(userId);
 
-  if (loading) return <>loading...</>;
+  if (loading) return <Loading />;
 
   return (
     <Switch>
