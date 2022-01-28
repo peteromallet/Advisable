@@ -244,6 +244,18 @@ module Types
       ::CaseStudy::Article.active.where(published_at: 1.week.ago..).by_score.limit(3)
     end
 
+    field :case_studies_by_categories, Types::CaseStudy::Article.connection_type do
+      argument :skill_categories, [ID], required: true
+    end
+    def case_studies_by_categories(skill_categories:)
+      categories = ::SkillCategory.where(slug: skill_categories)
+      skill_ids = categories.flat_map do |category|
+        category.skills_with_similar.pluck(:id)
+      end.uniq
+      cs_skills = ::CaseStudy::Skill.where(skill_id: skill_ids)
+      ::CaseStudy::Article.searchable.where(skills: cs_skills).by_score
+    end
+
     field :shared_articles, [Types::CaseStudy::SharedArticle], null: false
     def shared_articles
       current_user.received_articles
