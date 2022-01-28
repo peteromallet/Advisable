@@ -73,9 +73,13 @@ const disabledStyles = css`
 const notDisabledStyles = css`
   cursor: pointer;
 
+  &:hover:not([aria-checked="true"]) {
+    border-color: ${theme.colors.neutral700};
+  }
+
   &:hover ${StyledRadioInput}:not(:checked) + ${StyledRadioToggle} {
     background: ${darken(0.015, theme.colors.neutral100)};
-    border: 2px solid ${darken(0.025, theme.colors.neutral300)};
+    border: 2px solid ${theme.colors.neutral600};
   }
 
   ${StyledRadioInput}:checked + ${StyledRadioToggle} {
