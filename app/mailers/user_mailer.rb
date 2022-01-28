@@ -74,6 +74,20 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def payment_invoice(payment)
+    @payment = payment
+
+    pdf = Faraday.get(payment.pdf_url)
+    raise "Payment does not have a pdf" unless pdf.success?
+
+    attachments["#{payment.uid.sub(/^pay_/, '')}-advisable-invoice.pdf"] = {mime_type: "application/pdf", content: pdf.body}
+    mail(
+      to: payment.company.billing_email,
+      cc: "finance@advisable.com",
+      subject: "#{payment.uid.sub(/^pay_/, '')} invoice from Advisable"
+    )
+  end
+
   def need_more_time_options(interview)
     @interview = interview
     @sales_person = interview.user.company.sales_person

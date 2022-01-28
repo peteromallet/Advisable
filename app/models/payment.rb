@@ -49,27 +49,27 @@ class Payment < ApplicationRecord
     return if status == "succeeded"
 
     use_deposit!
+    return self unless amount_to_be_paid.positive?
 
-    if amount_to_be_paid.positive?
-      if company.project_payment_method == "Bank Transfer"
-        update!(payment_method: "Bank Transfer")
-        Slack.message(channel: "payments", text: "New Bank Transfer for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})!\nPayment: #{uid}")
-      elsif payment_intent_id.blank?
-        intent = Stripe::PaymentIntent.create(
-          stripe_params.merge({confirm: true, off_session: true, payment_method: company.stripe_payment_method}),
-          {idempotency_key: "#{uid}_off_session_#{retries}"}
+    GeneratePaymentInvoiceJob.perform_later(self) if payment_request.present?
+
+    if company.project_payment_method == "Bank Transfer"
+      update!(payment_method: "Bank Transfer")
+      Slack.message(channel: "payments", text: "New Bank Transfer for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})!\nPayment: #{uid}\nPayment Request: #{payment_request&.uid || "none"}")
+    elsif payment_intent_id.blank?
+      intent = Stripe::PaymentIntent.create(
+        stripe_params.merge({confirm: true, off_session: true, payment_method: company.stripe_payment_method}),
+        {idempotency_key: "#{uid}_off_session_#{retries}"}
+      )
+      update!(payment_intent_id: intent.id, status: intent.status, payment_method: "Stripe")
+
+      if intent.status == "succeeded"
+        send_receipt! if payment_request.blank?
+      else
+        Slack.message(
+          channel: "payments",
+          text: " Payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid}) was not successful! Payment: #{uid}"
         )
-        update!(payment_intent_id: intent.id, status: intent.status, payment_method: "Stripe")
-
-        if intent.status == "succeeded"
-          # TODO: send invoice if payment_request present
-          send_receipt! if payment_request.blank? # rubocop:disable Metrics/BlockNesting
-        else
-          Slack.message(
-            channel: "payments",
-            text: " Payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid}) was not successful! Payment: #{uid}"
-          )
-        end
       end
     end
 

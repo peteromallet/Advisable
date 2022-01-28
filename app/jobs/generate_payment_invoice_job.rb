@@ -11,6 +11,7 @@ class GeneratePaymentInvoiceJob < ApplicationJob
   def perform(payment)
     @payment = payment
     generate_pdf
+    UserMailer.payment_invoice(payment).deliver_later
   end
 
   private
