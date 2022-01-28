@@ -14,6 +14,7 @@ import { Calendar } from "@styled-icons/heroicons-solid";
 import { useAcceptAgreement, useDeclineAgreement } from "../queries";
 import AgreementDetails from "src/views/NewAgreement/AgreementDetails";
 import { useMessagePrompt } from "./MessagePrompt";
+import useViewer from "src/hooks/useViewer";
 
 function AgreementPending({ agreement, onAccept, onDecline }) {
   const [accept, acceptState] = useAcceptAgreement();
@@ -67,6 +68,7 @@ function AgreementActions({ agreement, onAccept, onDecline }) {
 }
 
 function Agreement({ agreement, onAccept, onDecline }) {
+  const viewer = useViewer();
   const { specialist, company } = agreement;
 
   return (
@@ -78,13 +80,15 @@ function Agreement({ agreement, onAccept, onDecline }) {
         invoicing={agreement.invoicing}
         hourlyRate={agreement.hourlyRate}
       />
-      <Box marginTop={8}>
-        <AgreementActions
-          agreement={agreement}
-          onAccept={onAccept}
-          onDecline={onDecline}
-        />
-      </Box>
+      {!viewer.isSpecialist && (
+        <Box marginTop={8}>
+          <AgreementActions
+            agreement={agreement}
+            onAccept={onAccept}
+            onDecline={onDecline}
+          />
+        </Box>
+      )}
     </>
   );
 }
@@ -149,7 +153,7 @@ function ViewAgreement({ agreement }) {
           </Button>
         )}
       </DialogDisclosure>
-      <Modal modal={modal} width={640}>
+      <Modal modal={modal} width={600}>
         <AgreementModal agreement={agreement} modal={modal} />
       </Modal>
     </>
