@@ -84,7 +84,7 @@ class UserMailer < ApplicationMailer
     mail(
       to: payment.company.billing_email,
       cc: "finance@advisable.com",
-      subject: "#{payment.uid.sub(/^pay_/, '')} invoice from Advisable"
+      subject: "Invoice from Advisable (#{payment.uid.sub(/^pay_/, '')})"
     )
   end
 
