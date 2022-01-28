@@ -4,7 +4,7 @@ module Mutations
   class ApprovePaymentRequest < Mutations::BaseMutation
     argument :payment_request, ID, required: true
 
-    field :payment, Types::Payment, null: true
+    field :payment_request, Types::PaymentRequest, null: false
 
     def authorized?(**args)
       payment_request = PaymentRequest.find_by!(uid: args[:payment_request])
@@ -25,7 +25,7 @@ module Mutations
         payment_request.financialize!
       end
 
-      {payment: payment_request.payment}
+      {payment_request:}
     end
   end
 end

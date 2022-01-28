@@ -13,7 +13,7 @@ RSpec.describe Mutations::ApprovePaymentRequest do
         approvePaymentRequest(input: {
           paymentRequest: "#{payment_request.uid}",
         }) {
-          payment {
+          paymentRequest {
             id
           }
         }
@@ -41,8 +41,8 @@ RSpec.describe Mutations::ApprovePaymentRequest do
   it "returns a payment" do
     expect(payment_request.reload.payment).to be_nil
     response = AdvisableSchema.execute(query, context:)
-    uid = response.dig("data", "approvePaymentRequest", "payment", "id")
-    payment = Payment.find_by(uid:)
+    uid = response.dig("data", "approvePaymentRequest", "paymentRequest", "id")
+    payment = PaymentRequest.find_by(uid:).payment
     expect(payment).to eq(payment_request.reload.payment)
   end
 
@@ -83,15 +83,6 @@ RSpec.describe Mutations::ApprovePaymentRequest do
       response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["message"]
       expect(error).to eq("You do not have permission to approve this payment request")
-    end
-  end
-
-  describe "creating payments" do
-    it "creates a Payment with all the right attributes" do
-      count = Payment.count
-      AdvisableSchema.execute(query, context:)
-      expect(Payment.count).to eq(count + 1)
-      expect(Payment.last.attributes).to include("amount" => 30000, "admin_fee" => 1500, "status" => "succeeded", "company_id" => payment_request.company_id, "specialist_id" => payment_request.specialist_id, "payment_request_id" => payment_request.id)
     end
   end
 end
