@@ -8,8 +8,8 @@ class PaymentRequest < ApplicationRecord
 
   VALID_STATUSES = %w[pending approved paid disputed completed].freeze
 
-  belongs_to :company
-  belongs_to :specialist
+  belongs_to :company, optional: true
+  belongs_to :specialist, optional: true
 
   has_one :payment, dependent: :nullify
   has_one :payout, dependent: :nullify
@@ -38,15 +38,16 @@ end
 #
 # Table name: payment_requests
 #
-#  id            :bigint           not null, primary key
-#  amount        :integer
-#  line_items    :jsonb
-#  status        :string           not null
-#  uid           :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  company_id    :uuid             not null
-#  specialist_id :bigint           not null
+#  id             :bigint           not null, primary key
+#  amount         :integer
+#  dispute_reason :string
+#  line_items     :jsonb
+#  status         :string           not null
+#  uid            :string           not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  company_id     :uuid
+#  specialist_id  :bigint
 #
 # Indexes
 #
