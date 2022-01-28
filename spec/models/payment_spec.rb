@@ -41,6 +41,19 @@ RSpec.describe Payment, type: :model do
     let(:task) { create(:task, application: create(:application, project:)) }
     let(:payment) { create(:payment, amount: 1000, task:) }
 
+    context "when we have a payment request" do
+      let(:payment_request) { create(:payment_request) }
+      let(:payment) { create(:payment, payment_request:) }
+
+      it "charges stripe with full amount and schedules invoice creation" do
+        allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
+        expect(payment).not_to receive(:send_receipt!)
+        payment.charge!
+        expect(payment.payment_method).to eq("Stripe")
+        expect(GeneratePaymentInvoiceJob).to have_been_enqueued.with(payment).once
+      end
+    end
+
     context "when deposit is bigger than amount" do
       let(:project) { create(:project, deposit: 2000) }
 
