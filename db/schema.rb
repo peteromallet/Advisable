@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_26_123858) do
+ActiveRecord::Schema.define(version: 2022_01_28_085914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -660,14 +660,15 @@ ActiveRecord::Schema.define(version: 2022_01_26_123858) do
 
   create_table "payment_requests", force: :cascade do |t|
     t.string "uid", null: false
-    t.bigint "specialist_id", null: false
-    t.uuid "company_id", null: false
+    t.bigint "specialist_id"
+    t.uuid "company_id"
     t.string "status", null: false
     t.integer "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "log_data"
     t.jsonb "line_items"
+    t.string "dispute_reason"
     t.index ["company_id"], name: "index_payment_requests_on_company_id"
     t.index ["specialist_id"], name: "index_payment_requests_on_specialist_id"
     t.index ["uid"], name: "index_payment_requests_on_uid", unique: true

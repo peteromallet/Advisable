@@ -12,6 +12,7 @@ RSpec.describe Mutations::DisputePaymentRequest do
       mutation {
         disputePaymentRequest(input: {
           paymentRequest: "#{payment_request.uid}",
+          reason: "I don't like this",
         }) {
           paymentRequest {
             id
@@ -35,6 +36,8 @@ RSpec.describe Mutations::DisputePaymentRequest do
     uid = response.dig("data", "disputePaymentRequest", "paymentRequest", "id")
     request = PaymentRequest.find_by(uid:)
     expect(request).to eq(payment_request)
+    expect(request.status).to eq("disputed")
+    expect(request.dispute_reason).to eq("I don't like this")
     expect(request.reload.payment).to be_nil
     expect(request.reload.payout).to be_nil
   end

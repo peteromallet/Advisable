@@ -3,6 +3,7 @@
 module Mutations
   class DisputePaymentRequest < Mutations::BaseMutation
     argument :payment_request, ID, required: true
+    argument :reason, String, required: true
 
     field :payment_request, Types::PaymentRequest, null: true
 
@@ -20,8 +21,7 @@ module Mutations
       ApiError.invalid_request("MUST BE PENDING") if payment_request.status != "pending"
 
       current_account_responsible_for do
-        payment_request.update(status: "disputed")
-        # DO SOMETHING HERE
+        payment_request.update(status: "disputed", dispute_reason: args[:reason])
       end
 
       {payment_request:}
