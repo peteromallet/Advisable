@@ -1,7 +1,8 @@
 import React from "react";
+import { object, string } from "yup";
 import { Form, Formik } from "formik";
 import { Box, Container, Heading, Text, Textarea } from "@advisable/donut";
-import { useParams, useLocation, useHistory } from "react-router-dom";
+import { useParams, useLocation, useHistory, Redirect } from "react-router-dom";
 import { useCreateAgreement } from "./queries";
 import BackButton from "src/components/BackButton";
 import FormField from "src/components/FormField";
@@ -9,12 +10,20 @@ import SubmitButton from "src/components/SubmitButton";
 import AgreementDetails from "./AgreementDetails";
 import useViewer from "src/hooks/useViewer";
 
+const validationSchema = object().shape({
+  message: string().required("Please provide a message."),
+});
+
 export default function ConfirmAgreement({ user }) {
   const viewer = useViewer();
   const { userId } = useParams();
   const location = useLocation();
   const history = useHistory();
   const [createAgreement] = useCreateAgreement();
+
+  if (!location.state?.invoicing) {
+    return <Redirect to={`/new_agreement/${userId}/invoicing`} />;
+  }
 
   const handleSubmit = async (values) => {
     const response = await createAgreement({
@@ -41,7 +50,7 @@ export default function ConfirmAgreement({ user }) {
       <Box display="flex">
         <Box paddingRight={16}>
           <BackButton
-            marginBottom={2}
+            marginBottom={4}
             to={{
               pathname: `/new_agreement/${userId}/invoicing`,
               state: location.state,
@@ -54,7 +63,12 @@ export default function ConfirmAgreement({ user }) {
             Please review and send your request. Once accepted you can begin
             working together.
           </Text>
-          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+            validateOnMount
+          >
             <Form>
               <FormField
                 as={Textarea}
@@ -66,7 +80,7 @@ export default function ConfirmAgreement({ user }) {
                 description={`Your request will be sent to ${user.name}`}
                 placeholder="Message"
               />
-              <SubmitButton size="l" variant="gradient">
+              <SubmitButton size="l" variant="gradient" disableUntilValid>
                 Send request
               </SubmitButton>
             </Form>
