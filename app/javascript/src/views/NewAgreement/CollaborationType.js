@@ -1,4 +1,5 @@
 import React from "react";
+import { object, string, number } from "yup";
 import { Box, Container, Heading, Text } from "@advisable/donut";
 import { useHistory, useParams } from "react-router-dom";
 import { Field, Form, Formik, useField } from "formik";
@@ -9,18 +10,36 @@ import FormField from "src/components/FormField";
 import RadioOption from "./RadioOption";
 import HelpText from "./HelpText";
 
+const validationSchema = object().shape({
+  collaboration: string().required(),
+  hourlyRate: number().when("collaboration", {
+    is: "hourly",
+    then: number()
+      .required("Please provide your hourly rate.")
+      .min(100, "Houry rate must be greater than $1"),
+  }),
+});
+
 function HourlyRateInput() {
   const [collaboration] = useField("collaboration");
+  const [{ value }, , { setValue }] = useField("hourlyRate");
   if (collaboration.value !== "hourly") return null;
 
   return (
     <FormField
       as={CurrencyInput}
       prefix="$"
-      label="What is your hourly rate for this project?"
+      label="What is your hourly rate for this client?"
       name="hourlyRate"
       placeholder="0"
       marginTop={8}
+      value={value ? Number(value) / 100.0 : ""}
+      onChange={(e) => {
+        const nextValue = e.target.value;
+        const stripped = nextValue.replace(/[^0-9.-]+/g, "");
+        const val = stripped ? Number(stripped) * 100 : undefined;
+        setValue(val);
+      }}
     />
   );
 }
@@ -32,7 +51,7 @@ export default function CollaborationType({ user }) {
   const handleSubmit = (values) => {
     history.push(`/new_agreement/${userId}/invoicing`, {
       collaboration: values.collaboration,
-      hourlyRate: Number(values.hourlyRate) * 100,
+      hourlyRate: values.hourlyRate,
     });
   };
 
@@ -53,7 +72,12 @@ export default function CollaborationType({ user }) {
       </Text>
       <Box display="flex" style={{ gap: "40px" }}>
         <Box flex="1">
-          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+          <Formik
+            onSubmit={handleSubmit}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            validateOnMount
+          >
             <Form>
               <Box
                 display="flex"
@@ -81,7 +105,7 @@ export default function CollaborationType({ user }) {
                   type="radio"
                   name="collaboration"
                   label="Flexible"
-                  description="I will be charging a fixed fee for one or more projects over the course of our collaboration."
+                  description="I will charge diferently depending on the type of project."
                   value="flexible"
                 />
               </Box>

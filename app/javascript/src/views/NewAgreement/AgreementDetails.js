@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack, Text } from "@advisable/donut";
+import { Box, Link, Stack, Text } from "@advisable/donut";
 import currency from "src/utilities/currency";
 
 function AgreementSection({ title, children }) {
@@ -25,7 +25,7 @@ function CollaborationType({
     return (
       <AgreementSection title="Hourly billing">
         {specialistName} will charge an hourly rate of{" "}
-        <Text fontWeight={560} as="span">
+        <Text fontWeight={560} as="span" color="neutral900">
           {currency(hourlyRate)}
         </Text>
         .
@@ -128,13 +128,19 @@ export default function AgreementDetails({
         />
         <AgreementSection title="Trial period">
           Each collaboration on Advisable kicks off with a trial period that
-          equals a $1,000 budget. It benefits both freelancers and clients as it
-          provides security regarding payments during your first hours of work.
+          equals a{" "}
+          <Text fontWeight={560} as="span" color="neutral900">
+            $1,000
+          </Text>{" "}
+          budget. It benefits both freelancers and clients as it provides
+          security regarding payments during your first hours of work.
         </AgreementSection>
         <AgreementSection title="Terms of service">
-          Advisable’s terms of service also apply to this agreement. Feel free
-          to take a look at the document once again in case you have any
-          remaining questions.
+          <Link target="_blank" href="https://advisable.com/terms-of-service/">
+            Advisable's terms of service
+          </Link>{" "}
+          also apply to this agreement. Feel free to take a look at the document
+          once again in case you have any remaining questions.
         </AgreementSection>
       </Stack>
     </>
