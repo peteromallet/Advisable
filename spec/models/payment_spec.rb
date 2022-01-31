@@ -27,11 +27,11 @@ RSpec.describe Payment, type: :model do
     end
   end
 
-  describe "#send_receipt!" do
+  describe "#mark_paid!" do
     let(:payment) { create(:payment) }
 
     it "sends an email receipt to the company" do
-      payment.send_receipt!
+      payment.mark_paid!
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
     end
   end
@@ -40,6 +40,20 @@ RSpec.describe Payment, type: :model do
     let(:project) { create(:project) }
     let(:task) { create(:task, application: create(:application, project:)) }
     let(:payment) { create(:payment, amount: 1000, task:) }
+
+    context "when we have a payment request" do
+      let(:payment_request) { create(:payment_request) }
+      let(:payment) { create(:payment, payment_request:) }
+
+      it "charges stripe with full amount and schedules invoice creation" do
+        allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
+        expect(payment_request.reload.status).to eq("pending")
+        payment.charge!
+        expect(payment.payment_method).to eq("Stripe")
+        expect(GeneratePaymentInvoiceJob).to have_been_enqueued.with(payment, notify: true).once
+        expect(payment_request.reload.status).to eq("paid")
+      end
+    end
 
     context "when deposit is bigger than amount" do
       let(:project) { create(:project, deposit: 2000) }
@@ -57,10 +71,10 @@ RSpec.describe Payment, type: :model do
 
         it "doesn't do any deposit logic, sets payment method to stripe and charges stripe" do
           allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee - 100), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
-          expect(payment).to receive(:send_receipt!)
           payment.charge!
           expect(payment.payment_method).to eq("Stripe")
           expect(project.deposit_used).to eq(0)
+          expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
         end
       end
 
@@ -92,10 +106,10 @@ RSpec.describe Payment, type: :model do
 
       it "updates deposit_used, sets payment method to stripe and charges stripe" do
         allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee - 200), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
-        expect(payment).to receive(:send_receipt!)
         payment.charge!
         expect(payment.payment_method).to eq("Stripe")
         expect(project.deposit_used).to eq(200)
+        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
       end
 
       context "when company payment method is bank transfer" do
@@ -114,10 +128,10 @@ RSpec.describe Payment, type: :model do
 
       it "charges stripe with full amount" do
         allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
-        expect(payment).to receive(:send_receipt!)
         payment.charge!
         expect(payment.payment_method).to eq("Stripe")
         expect(project.deposit_used).to eq(0)
+        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
       end
     end
 
@@ -126,10 +140,10 @@ RSpec.describe Payment, type: :model do
 
       it "charges stripe with full amount" do
         allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
-        expect(payment).to receive(:send_receipt!)
         payment.charge!
         expect(payment.payment_method).to eq("Stripe")
         expect(project.deposit_used).to eq(2000)
+        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
       end
     end
 
@@ -138,10 +152,10 @@ RSpec.describe Payment, type: :model do
 
       it "charges stripe with full amount" do
         allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
-        expect(payment).to receive(:send_receipt!)
         payment.charge!
         expect(payment.payment_method).to eq("Stripe")
         expect(payment.deposit).to be_nil
+        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
       end
     end
   end

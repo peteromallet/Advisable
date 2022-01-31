@@ -29,6 +29,7 @@ class Specialist < ApplicationRecord
   belongs_to :referrer, class_name: "Specialist", inverse_of: :referred, optional: true
   belongs_to :interviewer, optional: true, class_name: "SalesPerson"
 
+  has_many :payment_requests, dependent: :nullify
   has_many :payments, dependent: :nullify
   has_many :payouts, dependent: :nullify
   has_many :reviews, dependent: :destroy
