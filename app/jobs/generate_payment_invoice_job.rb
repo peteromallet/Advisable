@@ -8,10 +8,10 @@ class GeneratePaymentInvoiceJob < ApplicationJob
 
   queue_as :default
 
-  def perform(payment)
+  def perform(payment, notify: false)
     @payment = payment
     generate_pdf
-    UserMailer.payment_invoice(payment).deliver_later
+    UserMailer.payment_invoice(payment).deliver_later if notify
   end
 
   private

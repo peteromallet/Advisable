@@ -50,7 +50,7 @@ RSpec.describe Payment, type: :model do
         expect(payment_request.reload.status).to eq("pending")
         payment.charge!
         expect(payment.payment_method).to eq("Stripe")
-        expect(GeneratePaymentInvoiceJob).to have_been_enqueued.with(payment).once
+        expect(GeneratePaymentInvoiceJob).to have_been_enqueued.with(payment, notify: true).once
         expect(payment_request.reload.status).to eq("paid")
       end
     end
