@@ -1,0 +1,18 @@
+- hello = ["Hi", @payment.company.invoice_name.presence].compact.join(" ")
+
+p #{hello},
+
+p
+  ' Your invoice for the request by
+  = @payment.payment_request.specialist.account.name
+  '  is available.
+
+p
+  ' You can find this and all the previous invoices in your
+  a href="#{root_url}settings/invoices" settings
+  ' .
+
+p
+  ' Thanks,
+  br
+  'The Advisable Team.

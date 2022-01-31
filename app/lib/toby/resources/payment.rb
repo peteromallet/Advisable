@@ -28,7 +28,7 @@ module Toby
         return if object.status == "succeeded"
 
         object.update!(status: "succeeded", charged_at: Time.zone.now)
-        object.send_receipt!
+        object.mark_paid!
       end
 
       def self.retry_payment(object, _context)
