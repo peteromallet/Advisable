@@ -15,5 +15,12 @@ module Types
     def is_viewer
       current_user.account == object
     end
+
+    field :subscriptions, GraphQL::Types::JSON, null: false
+    def subscriptions
+      ::Account::SUBSCRIPTIONS.index_with do |subscription|
+        !object.unsubscribed?(subscription)
+      end
+    end
   end
 end
