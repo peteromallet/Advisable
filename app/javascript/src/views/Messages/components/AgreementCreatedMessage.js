@@ -1,3 +1,4 @@
+import { object, string } from "yup";
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -8,13 +9,26 @@ import {
   Text,
   Circle,
   Textarea,
+  Heading,
 } from "@advisable/donut";
 import { BaseMessage } from "./Message";
-import { Calendar } from "@styled-icons/heroicons-solid";
+import {
+  ArrowLeft,
+  BadgeCheck,
+  Calendar,
+  XCircle,
+} from "@styled-icons/heroicons-solid";
 import { useAcceptAgreement, useDeclineAgreement } from "../queries";
 import AgreementDetails from "src/views/NewAgreement/AgreementDetails";
 import { useMessagePrompt } from "./MessagePrompt";
 import useViewer from "src/hooks/useViewer";
+import CircularButton from "src/components/CircularButton";
+import { Field, Form, Formik } from "formik";
+import SubmitButton from "src/components/SubmitButton";
+
+const declineValidationSchema = object().shape({
+  message: string().required(),
+});
 
 function AgreementPending({ agreement, onAccept, onDecline }) {
   const [accept, acceptState] = useAcceptAgreement();
@@ -38,6 +52,7 @@ function AgreementPending({ agreement, onAccept, onDecline }) {
         variant="gradient"
         onClick={handleAccept}
         loading={acceptState.loading}
+        prefix={<BadgeCheck />}
       >
         Accept
       </Button>
@@ -46,6 +61,7 @@ function AgreementPending({ agreement, onAccept, onDecline }) {
         size="l"
         variant="secondary"
         onClick={onDecline}
+        prefix={<XCircle />}
       >
         Decline
       </Button>
@@ -95,31 +111,57 @@ function Agreement({ agreement, onAccept, onDecline }) {
 
 function DeclineAgreement({ agreement, onBack }) {
   const [decline, { loading }] = useDeclineAgreement();
-  const [message, setMessage] = useState("");
+  const { specialist } = agreement;
 
-  const handleSubmit = () => {
-    decline({
+  const handleSubmit = async (values) => {
+    await decline({
       variables: {
         input: {
           agreement: agreement.id,
-          message,
+          message: values.message,
         },
       },
     });
   };
 
+  const initialValues = { message: "" };
+
   return (
     <>
-      <Text>Decline request</Text>
-      <Textarea
-        name="message"
-        value={message}
-        placeholder="Message..."
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <Button onClick={handleSubmit} loading={loading}>
-        Decline Request
-      </Button>
+      <Box position="absolute" left="12px" top="12px">
+        <CircularButton onClick={onBack} icon={ArrowLeft} />
+      </Box>
+      <Heading paddingTop={9} marginBottom={2}>
+        Decline request to work together
+      </Heading>
+      <Text fontSize="l" marginBottom={6}>
+        Let {specialist.firstName} know why you are declining their request.
+      </Text>
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+        validationSchema={declineValidationSchema}
+        validateOnMount
+      >
+        <Form>
+          <Field
+            autoFocus
+            as={Textarea}
+            minRows={8}
+            name="message"
+            placeholder="Message..."
+            marginBottom={6}
+          />
+          <SubmitButton
+            size="l"
+            variant="secondary"
+            loading={loading}
+            disableUntilValid
+          >
+            Decline Request
+          </SubmitButton>
+        </Form>
+      </Formik>
     </>
   );
 }
@@ -129,7 +171,7 @@ function AgreementModal({ agreement, modal }) {
 
   if (step === "DECLINE") {
     return (
-      <DeclineAgreement agreement={agreement} onClick={() => setStep("VIEW")} />
+      <DeclineAgreement agreement={agreement} onBack={() => setStep("VIEW")} />
     );
   }
 
