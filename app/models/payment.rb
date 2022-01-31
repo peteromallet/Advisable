@@ -55,7 +55,7 @@ class Payment < ApplicationRecord
     use_deposit!
     return self unless amount_to_be_paid.positive?
 
-    GeneratePaymentInvoiceJob.perform_later(self) if payment_request.present?
+    GeneratePaymentInvoiceJob.perform_later(self, notify: true) if payment_request.present?
 
     if company.project_payment_method == "Bank Transfer"
       update!(payment_method: "Bank Transfer")
