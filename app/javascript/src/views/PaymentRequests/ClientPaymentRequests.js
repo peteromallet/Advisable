@@ -1,14 +1,13 @@
 import React from "react";
-import { Heading, Box, Text, Button } from "@advisable/donut";
-import { useFreelancerPaymentRequests } from "./queries";
-import currency from "src/utilities/currency";
 import { DateTime } from "luxon";
-import { PlusSm } from "@styled-icons/heroicons-solid";
 import Table from "./Table";
+import { Heading, Box, Text, Button } from "@advisable/donut";
+import { useClientPaymentRequests } from "./queries";
+import currency from "src/utilities/currency";
 import PaymentRequestStatus from "./PaymentRequestStatus";
 
-export default function FreelancerPaymentRequests() {
-  const { data, loading, error, fetchMore } = useFreelancerPaymentRequests();
+export default function ClientPaymentRequests() {
+  const { data, loading, error, fetchMore } = useClientPaymentRequests();
 
   if (loading) return <>Loading...</>;
   if (error) return <>Something went wrong, please try again.</>;
@@ -25,20 +24,12 @@ export default function FreelancerPaymentRequests() {
 
   return (
     <Box>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        marginBottom={12}
-      >
-        <Heading size="5xl">Payments</Heading>
-        <Button variant="gradient" prefix={<PlusSm />}>
-          Request payment
-        </Button>
-      </Box>
+      <Heading size="5xl" marginBottom={10}>
+        Payments
+      </Heading>
       <Table>
         <Table.Header>
-          <Table.HeaderCell flex={1}>Client</Table.HeaderCell>
+          <Table.HeaderCell flex={1}>Name</Table.HeaderCell>
           <Table.HeaderCell width="140px">Sent</Table.HeaderCell>
           <Table.HeaderCell width="120px">Status</Table.HeaderCell>
           <Table.HeaderCell width="120px" textAlign="right">
@@ -54,7 +45,7 @@ export default function FreelancerPaymentRequests() {
                 color="neutral900"
                 letterSpacing="-0.01em"
               >
-                {pr.company.name}
+                {pr.specialist.name}
               </Text>
             </Table.Cell>
             <Table.Cell width="140px">
@@ -67,9 +58,7 @@ export default function FreelancerPaymentRequests() {
             </Table.Cell>
             <Table.Cell width="120px" textAlign="right">
               <Text fontWeight={560} color="neutral900">
-                {currency(pr.amount, {
-                  format: "$0,0.00",
-                })}
+                {currency(pr.amount, { format: "$0,0.00" })}
               </Text>
             </Table.Cell>
           </Table.Row>
