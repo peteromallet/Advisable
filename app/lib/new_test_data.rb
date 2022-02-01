@@ -13,7 +13,7 @@ class NewTestData
 
   extend Memoist
 
-  attr_reader :yml, :advisable_yml, :now, :sales_person, :country, :company
+  attr_reader :yml, :advisable_yml, :now, :sales_person, :country
 
   def self.yml_file
     unless File.exist?(YML_PATH)
@@ -58,7 +58,6 @@ class NewTestData
     @now = Time.zone.now
     @sales_person = SalesPerson.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, username: Faker::Internet.username)
     @country = Country.find_or_create_by(name: "Ireland")
-    @company = Company.find_or_create_by(name: "Advisable", sales_person:)
   end
 
   def seed!
@@ -67,12 +66,12 @@ class NewTestData
     populate_skill_categories if SkillCategory.none?
     populate_industries if Industry.none?
     populate_labels if Label.none?
+    populate_companies if Company.count < 2
     populate_advisable if User.none?
     populate_case_studies if CaseStudy::Article.none?
     populate_reviews if Review.none?
     populate_events if Event.none?
     populate_posts if Guild::Post.none?
-    populate_companies if Company.count < 2
     populate_payment_requests if PaymentRequest.none?
     populate_payments_and_payouts if Payment.none?
   end
@@ -232,7 +231,7 @@ class NewTestData
   def populate_companies
     companies_data = []
     10.times do
-      companies_data << {name: Faker::Company.name, business_type: Company::BUSINESS_TYPES.sample, created_at: now, updated_at: now}
+      companies_data << {name: Faker::Company.name, business_type: Company::BUSINESS_TYPES.sample, sales_person_id: sales_person.id, created_at: now, updated_at: now}
     end
     @company_ids = Company.insert_all(companies_data).pluck("id")
   end
@@ -429,7 +428,7 @@ class NewTestData
           },
           user: {
             uid: User.generate_uid,
-            company_id: company.id,
+            company_id: company_ids.sample,
             country_id: country.id,
             contact_status: "Application Accepted",
             updated_at: now,
