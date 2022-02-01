@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Mutations::CreateFreelancerAccount do
-  let(:project) { create(:project) }
   let(:email) { "test@test.com" }
   let(:referrer_id) { "referrer" }
   let(:session_manager) { SessionManager.new(session: OpenStruct.new, cookies: OpenStruct.new) }
@@ -15,7 +14,6 @@ RSpec.describe Mutations::CreateFreelancerAccount do
         firstName: "Test",
         lastName: "Account",
         email: "#{email}",
-        pid: "#{project.try(:uid)}",
         campaignName: "campaignName",
         campaignSource: "campaignSource",
         referrer: "#{referrer_id}"
@@ -62,13 +60,6 @@ RSpec.describe Mutations::CreateFreelancerAccount do
     expect(account.email).to eq(email)
   end
 
-  it "creates an application invitation if a PID is provided" do
-    data = response["data"]
-    uid = data.dig("createFreelancerAccount", "viewer", "id")
-    specialist = Specialist.find_by(uid:)
-    expect(specialist.applications.first.project).to eq(project)
-  end
-
   it "sends the confirmation email" do
     expect_any_instance_of(Specialist).to receive(:send_confirmation_email)
     response
@@ -77,17 +68,6 @@ RSpec.describe Mutations::CreateFreelancerAccount do
   it "schedules geocode job" do
     uid = response.dig("data", "createFreelancerAccount", "viewer", "id")
     expect(GeocodeAccountJob).to have_been_enqueued.with(Specialist.find_by(uid:).account, "1.2.3.4")
-  end
-
-  context "when no pid is provided" do
-    let(:project) { nil }
-
-    it "doesn't create any application record" do
-      data = response["data"]
-      uid = data.dig("createFreelancerAccount", "viewer", "id")
-      specialist = Specialist.find_by(uid:)
-      expect(specialist.applications).to be_empty
-    end
   end
 
   context "when given an email that is already been used" do
