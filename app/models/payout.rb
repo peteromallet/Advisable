@@ -6,6 +6,8 @@ class Payout < ApplicationRecord
 
   has_logidze
 
+  VALID_STATUSES = %w[pending processed].freeze
+
   belongs_to :specialist
   belongs_to :task, optional: true
   belongs_to :payment_request, optional: true
@@ -13,6 +15,7 @@ class Payout < ApplicationRecord
   before_create :set_sourcing_fee
 
   validates :amount, presence: true
+  validates :status, inclusion: {in: VALID_STATUSES}
 
   scope :with_status, ->(status) { where(status:) }
   scope :unprocessed, -> { where(processed_at: nil) }
