@@ -7,6 +7,10 @@ query FreelancerPaymentRequest($id: ID!) {
       id
       name
     }
+    specialist {
+      id
+      name
+    }
     lineItems {
       amount
       description

@@ -1,0 +1,12 @@
+mutation ApprovePaymentRequest($input: ApprovePaymentRequestInput!) {
+  approvePaymentRequest(input: $input) {
+    paymentRequest {
+      id
+      status
+      payment {
+        id
+        status
+      }
+    }
+  }
+}
