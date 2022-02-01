@@ -103,8 +103,6 @@ class Specialist < ApplicationRecord
   def self.find_by_username_or_id(username)
     if ::Specialist.valid_uid?(username)
       ::Specialist.find_by(uid: username)
-    elsif ::Specialist.airtable_id?(username)
-      ::Specialist.deprecated_find_by_airtable_id(username)
     else
       ::Specialist.find_by(username:)
     end

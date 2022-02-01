@@ -10,12 +10,12 @@ module Mutations
     def authorized?(consultation:, **_args)
       requires_specialist!
 
-      consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
+      consultation = Consultation.find_by!(uid: consultation)
       ConsultationPolicy.new(current_user, consultation).decline?
     end
 
     def resolve(consultation:, reason: nil)
-      consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
+      consultation = Consultation.find_by!(uid: consultation)
       create_system_message(consultation)
       message = create_user_message(consultation, reason)
       send_user_email(consultation, message)

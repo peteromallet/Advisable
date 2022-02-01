@@ -8,7 +8,7 @@ module Mutations
 
     def authorized?(**args)
       requires_current_user!
-      project = Project.find_by_uid_or_airtable_id!(args[:project])
+      project = Project.find_by!(uid: args[:project])
       policy = ProjectPolicy.new(current_user, project)
       return true if policy.can_access_project?
 
@@ -16,7 +16,7 @@ module Mutations
     end
 
     def resolve(**args)
-      project = Project.find_by_uid_or_airtable_id!(args[:project])
+      project = Project.find_by!(uid: args[:project])
       current_account_responsible_for { project.update(sourcing: !project.sourcing) }
       {project:}
     end

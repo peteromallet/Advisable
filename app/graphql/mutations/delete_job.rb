@@ -7,7 +7,7 @@ module Mutations
 
     def authorized?(id:)
       requires_current_user!
-      project = Project.find_by_uid_or_airtable_id!(id)
+      project = Project.find_by!(uid: id)
       policy = ProjectPolicy.new(current_user, project)
 
       ApiError.not_authorized("You do not have access to this project") unless policy.delete?
@@ -18,7 +18,7 @@ module Mutations
     end
 
     def resolve(id:)
-      project = Project.find_by_uid_or_airtable_id!(id)
+      project = Project.find_by!(uid: id)
       project.destroy
 
       {id:}

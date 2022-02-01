@@ -3,7 +3,6 @@
 module Airtable
   module Syncable
     extend ActiveSupport::Concern
-    include Searchable
 
     class_methods do
       attr_reader :airtable

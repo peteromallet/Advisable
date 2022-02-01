@@ -21,7 +21,7 @@ module SpecialistOrUser
     end
   end
 
-  %i[find_by_uid_or_airtable_id find_by_uid find_by_airtable_id].each do |method|
+  %i[find_by_uid find_by_airtable_id].each do |method|
     define_singleton_method(method) do |param|
       Specialist.public_send(method, param) || User.public_send(method, param)
     end

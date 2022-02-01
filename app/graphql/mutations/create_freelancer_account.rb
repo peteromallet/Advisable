@@ -85,7 +85,7 @@ module Mutations
 
       Sentry.capture_message("We're still getting airtable ids in referrers :unamused:", level: "debug") if uid.match?(/^rec[^_]/)
 
-      Specialist.find_by_uid_or_airtable_id(uid)&.id
+      Specialist.find_by(uid:)&.id
     end
 
     # When a freelancer signs up, they may have come from a campaign that passed
@@ -94,7 +94,7 @@ module Mutations
     def create_application_record(specialist, pid)
       return unless pid
 
-      project = Project.find_by_uid_or_airtable_id(pid)
+      project = Project.find_by(uid: pid)
       project = Airtable::Project.find(pid).sync if project.nil?
       return if project.blank?
 
