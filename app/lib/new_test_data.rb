@@ -244,7 +244,7 @@ class NewTestData
         dispute_reason = status == "disputed" ? Faker::Hipster.sentence : nil
         line_items = []
         rand(1..5).times do
-          line_items << {description: Faker::Commerce.product_name, amount: rand(1..10) * 100}
+          line_items << {description: Faker::Commerce.product_name, amount: Faker::Number.number(digits: 5)}
         end
         payment_requests_data << {uid: PaymentRequest.generate_uid, company_id: company_id, specialist_id: specialist_ids.sample, status: status, dispute_reason: dispute_reason, line_items: line_items, created_at: now, updated_at: now}
       end
