@@ -13,7 +13,7 @@ class NewTestData
 
   extend Memoist
 
-  attr_reader :yml, :advisable_yml, :now, :sales_person, :country, :company
+  attr_reader :yml, :advisable_yml, :now, :sales_person, :country
 
   def self.yml_file
     unless File.exist?(YML_PATH)
@@ -58,7 +58,6 @@ class NewTestData
     @now = Time.zone.now
     @sales_person = SalesPerson.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, username: Faker::Internet.username)
     @country = Country.find_or_create_by(name: "Ireland")
-    @company = Company.find_or_create_by(name: "Advisable", sales_person:)
   end
 
   def seed!
@@ -67,11 +66,14 @@ class NewTestData
     populate_skill_categories if SkillCategory.none?
     populate_industries if Industry.none?
     populate_labels if Label.none?
+    populate_companies if Company.count < 2
     populate_advisable if User.none?
     populate_case_studies if CaseStudy::Article.none?
     populate_reviews if Review.none?
     populate_events if Event.none?
     populate_posts if Guild::Post.none?
+    populate_payment_requests if PaymentRequest.none?
+    populate_payments_and_payouts if Payment.none?
   end
 
   private
@@ -226,6 +228,43 @@ class NewTestData
     @posts = Guild::Post.insert_all(posts_data).pluck("id")
   end
 
+  def populate_companies
+    companies_data = []
+    10.times do
+      companies_data << {name: Faker::Company.name, business_type: Company::BUSINESS_TYPES.sample, sales_person_id: sales_person.id, created_at: now, updated_at: now}
+    end
+    @company_ids = Company.insert_all(companies_data).pluck("id")
+  end
+
+  def populate_payment_requests
+    payment_requests_data = []
+    company_ids.each do |company_id|
+      3.times do
+        status = PaymentRequest::VALID_STATUSES.sample
+        dispute_reason = status == "disputed" ? Faker::Hipster.sentence : nil
+        line_items = []
+        rand(1..5).times do
+          line_items << {description: Faker::Commerce.product_name, amount: Faker::Number.number(digits: 5)}
+        end
+        payment_requests_data << {uid: PaymentRequest.generate_uid, company_id: company_id, specialist_id: specialist_ids.sample, status: status, dispute_reason: dispute_reason, line_items: line_items, created_at: now, updated_at: now}
+      end
+    end
+    @payment_requests = PaymentRequest.insert_all(payment_requests_data).pluck("id")
+  end
+
+  def populate_payments_and_payouts
+    approved_payment_requests = PaymentRequest.where(status: %w[approved paid]).pluck(:id, :line_items, :company_id, :specialist_id)
+    payments_data = []
+    payouts_data = []
+    approved_payment_requests.each do |id, line_items, company_id, specialist_id|
+      amount = line_items.sum { |li| li["amount"] }
+      payments_data << {uid: Payment.generate_uid, payment_request_id: id, company_id: company_id, specialist_id: specialist_id, amount: amount, admin_fee: (amount * 0.05).round, status: Payment::VALID_STATUSES.sample, created_at: now, updated_at: now}
+      payouts_data << {uid: Payout.generate_uid, payment_request_id: id, specialist_id: specialist_id, amount: amount, sourcing_fee: (amount * 0.08).round, status: Payout::VALID_STATUSES.sample, created_at: now, updated_at: now}
+    end
+    @payments = Payment.insert_all(payments_data).pluck("id")
+    @payouts = Payout.insert_all(payouts_data).pluck("id")
+  end
+
   def populate_case_studies
     populate_cs_companies
     populate_cs_articles
@@ -246,7 +285,7 @@ class NewTestData
         updated_at: now
       }
     end
-    @companies = CaseStudy::Company.upsert_all(companies).pluck("id")
+    @cs_company_ids = CaseStudy::Company.upsert_all(companies).pluck("id")
   end
 
   def populate_cs_articles
@@ -260,7 +299,7 @@ class NewTestData
         company_type: ["Major Corporation", "Growth-Stage Startup", "Medium-Sized Business", "Startup", "Non-Profit", "Small Business", "Government", "Education Institution", "Individual Entrepreneur", "Governement"].sample(rand(1..3)),
         goals: ["Rebranding", "Improve Retention", "Generate Leads", "Increase Brand Awareness", "Improve Conversion", "Increase Web Traffic", "Improve Profitability", "Improve Processes", "Analyse Existing Activities", "Improve Efficiency", "Develop Strategy", "Increase Brand Awarenes", "Improve Process"].sample(rand(1..3)),
         score: rand(100),
-        company_id: @companies[i],
+        company_id: @cs_company_ids[i],
         specialist_id: specialist_ids.sample,
         uid: CaseStudy::Article.generate_uid,
         published_at: now,
@@ -338,6 +377,10 @@ class NewTestData
     @specialist_ids ||= Specialist.pluck(:id)
   end
 
+  def company_ids
+    @company_ids ||= Company.pluck(:id)
+  end
+
   memoize def advisable_data
     advisable_yml.flat_map do |advisable|
       [
@@ -385,7 +428,7 @@ class NewTestData
           },
           user: {
             uid: User.generate_uid,
-            company_id: company.id,
+            company_id: company_ids.sample,
             country_id: country.id,
             contact_status: "Application Accepted",
             updated_at: now,
