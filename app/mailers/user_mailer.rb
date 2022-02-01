@@ -106,7 +106,7 @@ class UserMailer < ApplicationMailer
     mail(
       from: @sales_person.email_with_name,
       to: interview.user.account.email,
-      bcc: @sales_person.email_with_name,
+      bcc: [@sales_person.email_with_name, ENV["CONSULTATIONS_BCC"]].compact,
       subject: "Your call with #{interview.specialist.account.name} in 1 hour"
     ) do |format|
       format.html { render layout: false }
