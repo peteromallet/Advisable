@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import useViewer from "src/hooks/useViewer";
 import FreelancerPaymentRequest from "./FreelancerPaymentRequest";
 import FreelancerPaymentRequests from "./FreelancerPaymentRequests";
+import ClientPaymentRequests from "./ClientPaymentRequests";
 
 export default function PaymentRequests() {
   useBackground("white");
@@ -23,7 +24,7 @@ export default function PaymentRequests() {
           {viewer.isSpecialist ? (
             <FreelancerPaymentRequests />
           ) : (
-            <div>client payment requests</div>
+            <ClientPaymentRequests />
           )}
         </Route>
       </Switch>
