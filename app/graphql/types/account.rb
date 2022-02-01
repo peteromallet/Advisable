@@ -16,10 +16,13 @@ module Types
       current_user.account == object
     end
 
-    field :subscriptions, GraphQL::Types::JSON, null: false
+    field :subscriptions, [Types::Subscription], null: false
     def subscriptions
-      ::Account::SUBSCRIPTIONS.index_with do |subscription|
-        !object.unsubscribed?(subscription)
+      ::Account::SUBSCRIPTIONS.map do |subscription|
+        {
+          name: subscription,
+          subscribed: !object.unsubscribed?(subscription)
+        }
       end
     end
   end
