@@ -15,5 +15,15 @@ module Types
     def is_viewer
       current_user.account == object
     end
+
+    field :subscriptions, [Types::Subscription], null: false
+    def subscriptions
+      ::Account::SUBSCRIPTIONS.map do |subscription|
+        {
+          name: subscription,
+          subscribed: !object.unsubscribed?(subscription)
+        }
+      end
+    end
   end
 end
