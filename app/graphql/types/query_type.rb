@@ -9,7 +9,7 @@ module Types
     end
 
     def project(id:)
-      ::Project.find_by_uid_or_airtable_id!(id)
+      ::Project.find_by!(uid: id)
     end
 
     field :application,
@@ -41,7 +41,7 @@ module Types
     end
 
     def user(id:)
-      ::User.find_by_uid_or_airtable_id!(id)
+      ::User.find_by!(uid: id)
     end
 
     field :current_company, Types::CompanyType, description: "Get the current company", null: true
@@ -112,7 +112,7 @@ module Types
     end
 
     def consultation(id:)
-      ::Consultation.find_by_uid_or_airtable_id!(id)
+      ::Consultation.find_by!(uid: id)
     end
 
     field :oauth_viewer, Types::OauthViewer, null: true

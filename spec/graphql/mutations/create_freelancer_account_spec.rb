@@ -15,7 +15,7 @@ RSpec.describe Mutations::CreateFreelancerAccount do
         firstName: "Test",
         lastName: "Account",
         email: "#{email}",
-        pid: "#{project.try(:airtable_id)}",
+        pid: "#{project.try(:uid)}",
         campaignName: "campaignName",
         campaignSource: "campaignSource",
         referrer: "#{referrer_id}"
@@ -111,16 +111,6 @@ RSpec.describe Mutations::CreateFreelancerAccount do
       expect(specialist.referrer_id).to eq(referrer.id)
       expect(specialist.referrer).to eq(referrer)
       expect(referrer.referred).to eq([specialist])
-    end
-
-    context "when passed airtable id" do
-      let(:referrer_id) { referrer.airtable_id }
-
-      it "tells sentry about it" do
-        allow(Sentry).to receive(:capture_message)
-        expect(Sentry).to receive(:capture_message).with("We're still getting airtable ids in referrers :unamused:", level: "debug")
-        response
-      end
     end
   end
 end

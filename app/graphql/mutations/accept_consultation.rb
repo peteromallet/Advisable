@@ -10,13 +10,13 @@ module Mutations
     def authorized?(consultation:)
       requires_specialist!
 
-      consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
+      consultation = Consultation.find_by!(uid: consultation)
       ConsultationPolicy.new(current_user, consultation).accept?
     end
 
     def resolve(consultation:)
       ActiveRecord::Base.transaction do
-        consultation = Consultation.find_by_uid_or_airtable_id!(consultation)
+        consultation = Consultation.find_by!(uid: consultation)
         project = get_project(consultation)
         application = create_application(project, consultation.specialist)
         interview = create_interview(application)

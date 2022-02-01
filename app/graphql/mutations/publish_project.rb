@@ -16,7 +16,7 @@ module Mutations
     ALLOWED_STATUSES = ["Draft", "Brief Pending Confirmation"].freeze
 
     def authorized?(id:)
-      project = Project.find_by_uid_or_airtable_id!(id)
+      project = Project.find_by!(uid: id)
       policy = ProjectPolicy.new(current_user, project)
 
       ApiError.not_authorized("You don't have access to this project") unless policy.publish?
@@ -27,7 +27,7 @@ module Mutations
     end
 
     def resolve(id:)
-      project = Project.find_by_uid_or_airtable_id!(id)
+      project = Project.find_by!(uid: id)
       project.status = project.assisted? ? "Brief Confirmed" : "Pending Advisable Confirmation"
       project.published_at = Time.zone.now
       project.sales_status = "Open"

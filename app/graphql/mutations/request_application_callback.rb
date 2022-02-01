@@ -8,7 +8,7 @@ module Mutations
     field :client_application, Types::ClientApplicationType, null: true
 
     def authorized?(**args)
-      user = User.find_by_uid_or_airtable_id!(args[:id])
+      user = User.find_by!(uid: args[:id])
 
       if user.application_status != "Application Accepted"
         ApiError.invalid_request(
@@ -21,8 +21,8 @@ module Mutations
     end
 
     def resolve(**args)
-      user = User.find_by_uid_or_airtable_id!(args[:id])
-      user.update contact_status: "Call Scheduled"
+      user = User.find_by!(uid: args[:id])
+      user.update(contact_status: "Call Scheduled")
 
       call =
         user.client_calls.create(
