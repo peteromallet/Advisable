@@ -5,6 +5,7 @@ import useViewer from "src/hooks/useViewer";
 import FreelancerPaymentRequest from "./FreelancerPaymentRequest";
 import FreelancerPaymentRequests from "./FreelancerPaymentRequests";
 import ClientPaymentRequests from "./ClientPaymentRequests";
+import ClientPaymentRequest from "./ClientPaymentRequest";
 
 export default function PaymentRequests() {
   useBackground("white");
@@ -17,7 +18,7 @@ export default function PaymentRequests() {
           {viewer.isSpecialist ? (
             <FreelancerPaymentRequest />
           ) : (
-            <>client payment request</>
+            <ClientPaymentRequest />
           )}
         </Route>
         <Route path="/payment_requests">

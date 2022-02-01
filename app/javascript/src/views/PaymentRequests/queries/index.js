@@ -1,7 +1,8 @@
+import APPROVE from "./approvePaymentRequest.gql";
 import PAYMENT_REQUEST from "./paymentRequest.gql";
 import CLIENT_PAYMENT_REQUESTS from "./clientPaymentRequests.gql";
 import FREELANCER_PAYMENT_REQUESTS from "./freelancerPaymentRequests.gql";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
 export function useFreelancerPaymentRequests() {
@@ -17,4 +18,8 @@ export function usePaymentRequest() {
   return useQuery(PAYMENT_REQUEST, {
     variables: { id },
   });
+}
+
+export function useApprovePaymentRequest() {
+  return useMutation(APPROVE);
 }
