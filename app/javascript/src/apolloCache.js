@@ -42,6 +42,7 @@ const createCache = () => {
           // https://www.apollographql.com/docs/react/pagination/key-args/
           guildPosts: relayStylePagination(["type"]),
           events: relayStylePagination(),
+          paymentRequests: relayStylePagination(),
           labelPosts: relayStylePagination(),
           savedArticles: relayStylePagination(),
           followedLabels: {

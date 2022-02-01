@@ -25,5 +25,7 @@ module Types
     field :dispute_reason, String, null: true do
       authorize :dispute?
     end
+
+    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
   end
 end

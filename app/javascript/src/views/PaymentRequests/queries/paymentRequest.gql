@@ -1,0 +1,15 @@
+query FreelancerPaymentRequest($id: ID!) {
+  paymentRequest(id: $id) {
+    id
+    status
+    amount
+    company {
+      id
+      name
+    }
+    lineItems {
+      amount
+      description
+    }
+  }
+}
