@@ -8,7 +8,7 @@ module TobyHelpers
   end
 
   def execute_action(action, object, context = nil)
-    described_class.public_send(action.name, object, context)
+    action.execute(object, context)
   end
 end
 
