@@ -1,0 +1,18 @@
+fragment PaymentRequestFields on PaymentRequest {
+  id
+  status
+  amount
+  createdAt
+  lineItems {
+    amount
+    description
+  }
+  company {
+    id
+    name
+  }
+  specialist {
+    id
+    name
+  }
+}

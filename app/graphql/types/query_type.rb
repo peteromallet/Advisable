@@ -307,9 +307,9 @@ module Types
       requires_current_user!
 
       if current_user.is_a?(::User)
-        current_user.company.payment_requests
+        current_user.company.payment_requests.order(created_at: :desc)
       else
-        current_user.payment_requests
+        current_user.payment_requests.order(created_at: :desc)
       end
     end
 
