@@ -4,10 +4,10 @@ module Mutations
   class ResetClientApplication < Mutations::BaseMutation
     argument :id, ID, required: true
 
-    field :clientApplication, Types::ClientApplicationType, null: true
+    field :client_application, Types::ClientApplicationType, null: true
 
     def resolve(**args)
-      user = User.find_by_uid_or_airtable_id!(args[:id])
+      user = User.find_by!(uid: args[:id])
 
       user.application_status = "Application Started"
       user.accepted_guarantee_terms_at = nil

@@ -27,7 +27,7 @@ module Mutations
     field :project, Types::ProjectType, null: true
 
     def resolve(**args)
-      project = Project.find_by_uid_or_airtable_id!(args[:id])
+      project = Project.find_by!(uid: args[:id])
       project.assign_attributes(assign_attributes(args))
       update_skills(project, args)
       update_primary_skill(project, args[:primary_skill])

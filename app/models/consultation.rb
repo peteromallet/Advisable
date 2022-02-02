@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Consultation < ApplicationRecord
-  include ::Airtable::Searchable
   include Uid
 
   belongs_to :specialist
