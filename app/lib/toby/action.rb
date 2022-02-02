@@ -15,7 +15,7 @@ module Toby
       end
     end
 
-    def can_call?(object)
+    def callable?(object)
       return true if @conditional.nil?
 
       @conditional.call(object)

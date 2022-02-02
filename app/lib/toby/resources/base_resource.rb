@@ -87,7 +87,7 @@ module Toby
             field :_actions, [Toby::Types::Action], null: false
             define_method(:_actions) do
               root.actions.filter_map do |action|
-                action.can_call?(object) ? action : nil
+                action.callable?(object) ? action : nil
               end
             end
 
