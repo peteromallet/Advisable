@@ -9,7 +9,6 @@ AllCops:
   Exclude:
     - "db/schema.rb"
     - "db/migrate/20210129142307_init_schema.rb"
-    - "Gemfile"
     - "bin/*"
 
 Layout/SpaceInsideHashLiteralBraces:
