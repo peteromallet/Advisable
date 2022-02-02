@@ -56,9 +56,9 @@ module Toby
       end
 
       class << self
-        def filter(name, type, **args, &block)
+        def filter(name, type, **args, &)
           @filters ||= []
-          @filters << type.new(name, self, **args, &block)
+          @filters << type.new(name, self, **args, &)
         end
 
         def filters
@@ -94,7 +94,7 @@ module Toby
                 field name, type, null: true
 
                 define_method name do
-                  object.instance_variable_get("@options")[name]
+                  object.instance_variable_get(:@options)[name]
                 end
               end
             end
