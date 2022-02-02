@@ -57,8 +57,6 @@ module Mutations
         referrer_id: find_referrer(args[:referrer])
       )
 
-      # frozen_string_literal: false
-      # Creates a new freelancer account
       ApiError.invalid_request("EMAIL_TAKEN", "This email is already being used by another account") if !account.valid? && specialist.valid? && account.errors.added?(:email, "has already been taken")
 
       success = Logidze.with_responsible(specialist.account_id) do
@@ -68,7 +66,6 @@ module Mutations
       if success
         specialist.sync_to_airtable
         GeocodeAccountJob.perform_later(account, context[:client_ip])
-        create_application_record(specialist, args[:pid])
         specialist.send_confirmation_email
       end
 
@@ -79,26 +76,10 @@ module Mutations
 
     private
 
-    # TODO: remove airtable lookup
     def find_referrer(uid)
       return nil if uid.blank?
 
-      Sentry.capture_message("We're still getting airtable ids in referrers :unamused:", level: "debug") if uid.match?(/^rec[^_]/)
-
-      Specialist.find_by_uid_or_airtable_id(uid)&.id
-    end
-
-    # When a freelancer signs up, they may have come from a campaign that passed
-    # a pid (project ID) as a query param. This can be sent with the signup
-    # mutation to create an application record for that project.
-    def create_application_record(specialist, pid)
-      return unless pid
-
-      project = Project.find_by_uid_or_airtable_id(pid)
-      project = Airtable::Project.find(pid).sync if project.nil?
-      return if project.blank?
-
-      specialist.applications.create(project:, status: "Invited To Apply", source: "new-signup")
+      Specialist.find_by(uid:)&.id
     end
   end
 end

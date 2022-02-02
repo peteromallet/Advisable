@@ -11,7 +11,7 @@ module Mutations
 
     def resolve(**args)
       email_taken?(args[:email])
-      specialist_or_user = SpecialistOrUser.find_by_uid_or_airtable_id!(args[:id])
+      specialist_or_user = SpecialistOrUser.find_by_uid!(args[:id])
       account = specialist_or_user.account
       valid_account_already_exists?(account)
 
