@@ -28,6 +28,7 @@ module Toby
         return if object.processed_at?
 
         object.update!(processed_at: Time.zone.now, status: "processed")
+        object.payment_request&.update!(status: "paid_out")
       end
 
       def self.unprocess(object, _context)
