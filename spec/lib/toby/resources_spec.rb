@@ -32,6 +32,7 @@ RSpec.describe Toby::Resources do
           Toby::Resources::Message,
           Toby::Resources::Account,
           Toby::Resources::Payment,
+          Toby::Resources::PaymentRequest,
           Toby::Resources::Guild::Post,
           Toby::Resources::Label
         ]
