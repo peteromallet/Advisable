@@ -12,7 +12,8 @@ module Toby
       def resolve(id:, name:)
         resource = self.class.resource
         model = resource.model.find(id)
-        result = current_account_responsible_for { resource.public_send(name, model, context) }
+        action = resource.actions.find { |a| a.name == name.to_sym }
+        result = action.execute(model, context, responsible_id: current_account_id)
         result.is_a?(Hash) ? result : {resource: model}
       end
     end
