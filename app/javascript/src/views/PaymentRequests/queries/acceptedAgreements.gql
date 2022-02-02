@@ -1,0 +1,9 @@
+query AcceptedAgreements {
+  acceptedAgreements {
+    id
+    company {
+      id
+      name
+    }
+  }
+}

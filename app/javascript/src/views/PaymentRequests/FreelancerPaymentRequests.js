@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Heading, Box, Text, Button } from "@advisable/donut";
 import { useFreelancerPaymentRequests } from "./queries";
 import currency from "src/utilities/currency";
@@ -32,9 +33,11 @@ export default function FreelancerPaymentRequests() {
         marginBottom={12}
       >
         <Heading size="5xl">Payments</Heading>
-        <Button variant="gradient" prefix={<PlusSm />}>
-          Request payment
-        </Button>
+        <Link to="/payment_requests/new">
+          <Button variant="gradient" prefix={<PlusSm />}>
+            Request payment
+          </Button>
+        </Link>
       </Box>
       <Table>
         <Table.Header>
