@@ -15,10 +15,18 @@ module Toby
       end
     end
 
-    def can_call?(object)
+    def callable?(object)
       return true if @conditional.nil?
 
       @conditional.call(object)
+    end
+
+    def execute(object, context, responsible_id: nil)
+      return unless callable?(object)
+
+      Logidze.with_responsible(responsible_id) do
+        resource.public_send(name, object, context)
+      end
     end
   end
 end
