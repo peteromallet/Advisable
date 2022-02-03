@@ -62,6 +62,24 @@ RSpec.describe StripeEvents::PaymentIntentSucceeded do
       payment.reload
       expect(payment.status).to eq("succeeded")
       expect(payment.charged_at).to be_present
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
+    end
+
+    context "with payment request" do
+      let(:payment_request) { create(:payment_request) }
+      let(:payment) { create(:payment, payment_request:) }
+
+      it "updates the payment request status" do
+        expect(payment.status).to eq("pending")
+        expect(payment.charged_at).to be_nil
+        expect(payment_request.status).to eq("pending")
+        StripeEvents.process(event)
+        payment.reload
+        payment_request.reload
+        expect(payment.status).to eq("succeeded")
+        expect(payment.charged_at).to be_present
+        expect(payment_request.status).to eq("paid")
+      end
     end
   end
 
