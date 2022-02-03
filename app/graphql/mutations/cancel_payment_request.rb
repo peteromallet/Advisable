@@ -21,7 +21,7 @@ module Mutations
       ApiError.invalid_request("MUST BE PENDING OR DISPUTED") if %w[pending disputed].exclude?(payment_request.status)
 
       current_account_responsible_for do
-        payment_request.update(status: "cancelled", cancellation_reason: args[:reason])
+        payment_request.update(status: "canceled", cancellation_reason: args[:reason])
       end
 
       {payment_request:}
