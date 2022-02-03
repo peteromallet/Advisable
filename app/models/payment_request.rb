@@ -8,7 +8,7 @@ class PaymentRequest < ApplicationRecord
 
   has_logidze
 
-  VALID_STATUSES = %w[pending approved disputed canceled paid paid_out].freeze
+  VALID_STATUSES = %w[pending approved past_due disputed canceled paid paid_out].freeze
 
   belongs_to :company, optional: true
   belongs_to :specialist, optional: true
@@ -19,6 +19,9 @@ class PaymentRequest < ApplicationRecord
   validates :status, inclusion: {in: VALID_STATUSES}
 
   before_validation :set_due_at, on: :create
+
+  scope :with_status, ->(status) { where(status:) }
+  scope :due, -> { where(due_at: ..(Time.current - DUE_AT_DURATION)) }
 
   def line_items
     super.presence || []
@@ -40,7 +43,7 @@ class PaymentRequest < ApplicationRecord
   private
 
   def set_due_at
-    self.due_at = Time.current + DUE_AT_DURATION
+    self.due_at ||= Time.current + DUE_AT_DURATION
   end
 end
 
