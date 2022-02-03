@@ -17,7 +17,10 @@ module Types
     field :line_items, [Types::PaymentRequestLineItem], null: false
     field :amount, Int, null: false
     field :payment, Types::Payment, null: false
-    field :dispute_reason, String, null: true
+    field :dispute_reason, String, null: true do
+      authorize :dispute?
+    end
+
     field :cancellation_reason, String, null: true
     field :memo, String, null: true
 
