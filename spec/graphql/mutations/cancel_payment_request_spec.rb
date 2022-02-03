@@ -24,10 +24,10 @@ RSpec.describe Mutations::CancelPaymentRequest do
 
   let(:context) { {current_user: payment_request.specialist} }
 
-  it "sets the status to cancelled" do
+  it "sets the status to canceled" do
     expect(payment_request.reload.status).to eq("pending")
     AdvisableSchema.execute(query, context:)
-    expect(payment_request.reload.status).to eq("cancelled")
+    expect(payment_request.reload.status).to eq("canceled")
   end
 
   it "returns a payment request" do
@@ -36,7 +36,7 @@ RSpec.describe Mutations::CancelPaymentRequest do
     uid = response.dig("data", "cancelPaymentRequest", "paymentRequest", "id")
     request = PaymentRequest.find_by(uid:)
     expect(request).to eq(payment_request)
-    expect(request.status).to eq("cancelled")
+    expect(request.status).to eq("canceled")
     expect(request.cancellation_reason).to eq("I don't like this")
     expect(request.payment).to be_nil
     expect(request.payout).to be_nil
@@ -73,7 +73,7 @@ RSpec.describe Mutations::CancelPaymentRequest do
   end
 
   context "when the request status is not pending" do
-    let(:payment_request) { create(:payment_request, company:, status: "cancelled") }
+    let(:payment_request) { create(:payment_request, company:, status: "canceled") }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)
