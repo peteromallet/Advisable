@@ -5,6 +5,7 @@ import ApprovePaymentRequest from "./ApprovePaymentRequest";
 import DisputePaymentRequest from "./DisputePaymentRequest";
 import PaymentRequestStatus from "./PaymentRequestStatus";
 import { usePaymentRequest } from "./queries";
+import CapturePayment from "./CapturePayment";
 
 export default function ClientPaymentRequest() {
   const { data, loading, error } = usePaymentRequest();
@@ -26,13 +27,22 @@ export default function ClientPaymentRequest() {
           <li key={index}>{lineItem.description}</li>
         ))}
       </ul>
-      {["pending", "disputed"].includes(status) && (
-        <ApprovePaymentRequest paymentRequest={data.paymentRequest} />
+
+      <Box>
+        {["pending", "disputed"].includes(status) && (
+          <ApprovePaymentRequest paymentRequest={data.paymentRequest} />
+        )}
+      </Box>
+
+      {status === "approved" && (
+        <CapturePayment paymentRequest={data.paymentRequest} />
       )}
 
-      {status === "pending" && (
-        <DisputePaymentRequest paymentRequest={data.paymentRequest} />
-      )}
+      <Box>
+        {status === "pending" && (
+          <DisputePaymentRequest paymentRequest={data.paymentRequest} />
+        )}
+      </Box>
     </>
   );
 }

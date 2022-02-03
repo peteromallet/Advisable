@@ -11,6 +11,14 @@ query FreelancerPaymentRequest($id: ID!) {
       id
       name
     }
+    payment {
+      id
+      status
+      paymentMethod
+      paymentIntent {
+        secret
+      }
+    }
     lineItems {
       amount
       description
