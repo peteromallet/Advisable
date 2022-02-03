@@ -6,7 +6,7 @@ class PaymentRequest < ApplicationRecord
 
   has_logidze
 
-  VALID_STATUSES = %w[pending approved disputed paid paid_out].freeze
+  VALID_STATUSES = %w[pending approved disputed canceled paid paid_out].freeze
 
   belongs_to :company, optional: true
   belongs_to :specialist, optional: true
@@ -38,17 +38,18 @@ end
 #
 # Table name: payment_requests
 #
-#  id             :bigint           not null, primary key
-#  amount         :integer
-#  dispute_reason :string
-#  line_items     :jsonb
-#  memo           :string
-#  status         :string           not null
-#  uid            :string           not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  company_id     :uuid
-#  specialist_id  :bigint
+#  id                  :bigint           not null, primary key
+#  amount              :integer
+#  cancellation_reason :string
+#  dispute_reason      :string
+#  line_items          :jsonb
+#  memo                :string
+#  status              :string           not null
+#  uid                 :string           not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  company_id          :uuid
+#  specialist_id       :bigint
 #
 # Indexes
 #

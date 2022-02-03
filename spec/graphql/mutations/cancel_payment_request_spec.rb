@@ -2,15 +2,15 @@
 
 require "rails_helper"
 
-RSpec.describe Mutations::DisputePaymentRequest do
+RSpec.describe Mutations::CancelPaymentRequest do
   let(:company) { create(:company) }
-  let(:current_user) { create(:user, company:) }
-  let(:payment_request) { create(:payment_request, company:, amount: 30000) }
+  let(:user) { create(:user, company:) }
+  let(:payment_request) { create(:payment_request, amount: 30000, company:) }
 
   let(:query) do
     <<-GRAPHQL
       mutation {
-        disputePaymentRequest(input: {
+        cancelPaymentRequest(input: {
           paymentRequest: "#{payment_request.uid}",
           reason: "I don't like this",
         }) {
@@ -22,28 +22,28 @@ RSpec.describe Mutations::DisputePaymentRequest do
     GRAPHQL
   end
 
-  let(:context) { {current_user:} }
+  let(:context) { {current_user: payment_request.specialist} }
 
-  it "sets the status to disputed" do
+  it "sets the status to canceled" do
     expect(payment_request.reload.status).to eq("pending")
     AdvisableSchema.execute(query, context:)
-    expect(payment_request.reload.status).to eq("disputed")
+    expect(payment_request.reload.status).to eq("canceled")
   end
 
   it "returns a payment request" do
     expect(payment_request.reload.payment).to be_nil
     response = AdvisableSchema.execute(query, context:)
-    uid = response.dig("data", "disputePaymentRequest", "paymentRequest", "id")
+    uid = response.dig("data", "cancelPaymentRequest", "paymentRequest", "id")
     request = PaymentRequest.find_by(uid:)
     expect(request).to eq(payment_request)
-    expect(request.status).to eq("disputed")
-    expect(request.dispute_reason).to eq("I don't like this")
+    expect(request.status).to eq("canceled")
+    expect(request.cancellation_reason).to eq("I don't like this")
     expect(request.payment).to be_nil
     expect(request.payout).to be_nil
   end
 
   context "when the user doesn't have access to the request" do
-    let(:context) { {current_user: create(:user)} }
+    let(:context) { {current_user: create(:specialist)} }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)
@@ -62,8 +62,8 @@ RSpec.describe Mutations::DisputePaymentRequest do
     end
   end
 
-  context "when the specialist is logged in" do
-    let(:context) { {current_user: payment_request.specialist} }
+  context "when the user is logged in" do
+    let(:context) { {current_user: payment_request.company.users.first} }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)
@@ -73,13 +73,12 @@ RSpec.describe Mutations::DisputePaymentRequest do
   end
 
   context "when the request status is not pending" do
-    let(:payment_request) { create(:payment_request, company:, status: "disputed") }
+    let(:payment_request) { create(:payment_request, company:, status: "canceled") }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)
-      puts response
       error = response["errors"][0]["message"]
-      expect(error).to eq("MUST BE PENDING")
+      expect(error).to eq("MUST BE PENDING OR DISPUTED")
     end
   end
 end
