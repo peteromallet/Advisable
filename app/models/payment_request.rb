@@ -6,7 +6,7 @@ class PaymentRequest < ApplicationRecord
 
   has_logidze
 
-  VALID_STATUSES = %w[pending approved disputed paid].freeze
+  VALID_STATUSES = %w[pending approved disputed paid paid_out].freeze
 
   belongs_to :company, optional: true
   belongs_to :specialist, optional: true

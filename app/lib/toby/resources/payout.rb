@@ -6,6 +6,7 @@ module Toby
       model_name ::Payout
       attribute :uid, Attributes::String, readonly: true
       attribute :task, Attributes::BelongsTo
+      attribute :payment_request, Attributes::BelongsTo
       attribute :company, Lookups::Payouts::CompanyName
       attribute :specialist, Attributes::BelongsTo
       attribute :task_name, Lookups::Tasks::Name
@@ -15,7 +16,7 @@ module Toby
       attribute :gross_amount, Attributes::Currency, readonly: true
       attribute :sourcing_fee, Attributes::Currency
       attribute :amount_without_fee, Attributes::Currency, readonly: true
-      attribute :status, Attributes::String
+      attribute :status, Attributes::Select, options: ::Payout::VALID_STATUSES
       attribute :processed_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
@@ -27,6 +28,7 @@ module Toby
         return if object.processed_at?
 
         object.update!(processed_at: Time.zone.now, status: "processed")
+        object.payment_request&.update!(status: "paid_out")
       end
 
       def self.unprocess(object, _context)

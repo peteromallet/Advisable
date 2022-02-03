@@ -8,6 +8,7 @@ module Toby
       attribute :task, Attributes::BelongsTo
       attribute :company, Attributes::BelongsTo
       attribute :specialist, Attributes::BelongsTo
+      attribute :payment_request, Attributes::BelongsTo
       attribute :task_name, Lookups::Tasks::Name
       attribute :amount, Attributes::Currency
       attribute :admin_fee, Attributes::Currency
