@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::DisputePaymentRequest do
   let(:company) { create(:company) }
   let(:current_user) { create(:user, company:) }
-  let(:payment_request) { create(:payment_request, amount: 30000, company:) }
+  let(:payment_request) { create(:payment_request, company:, amount: 30000) }
 
   let(:query) do
     <<-GRAPHQL
@@ -38,8 +38,8 @@ RSpec.describe Mutations::DisputePaymentRequest do
     expect(request).to eq(payment_request)
     expect(request.status).to eq("disputed")
     expect(request.dispute_reason).to eq("I don't like this")
-    expect(request.reload.payment).to be_nil
-    expect(request.reload.payout).to be_nil
+    expect(request.payment).to be_nil
+    expect(request.payout).to be_nil
   end
 
   context "when the user doesn't have access to the request" do
@@ -73,12 +73,13 @@ RSpec.describe Mutations::DisputePaymentRequest do
   end
 
   context "when the request status is not pending" do
-    let(:payment_request) { create(:payment_request, status: "disputed") }
+    let(:payment_request) { create(:payment_request, company:, status: "disputed") }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)
+      puts response
       error = response["errors"][0]["message"]
-      expect(error).to eq("You do not have permission to dispute this payment request")
+      expect(error).to eq("MUST BE PENDING")
     end
   end
 end
