@@ -3,6 +3,8 @@ query FreelancerPaymentRequest($id: ID!) {
     id
     status
     amount
+    adminFee
+    sourcingFee
     company {
       id
       name
@@ -10,6 +12,8 @@ query FreelancerPaymentRequest($id: ID!) {
     specialist {
       id
       name
+      avatar
+      location
     }
     payment {
       id

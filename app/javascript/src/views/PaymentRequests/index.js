@@ -13,7 +13,7 @@ export default function PaymentRequests() {
   const viewer = useViewer();
 
   return (
-    <Container maxWidth="1020px" py={10}>
+    <Container maxWidth="1080px" py={10}>
       <Switch>
         {viewer.isSpecialist && (
           <Route path="/payment_requests/new">

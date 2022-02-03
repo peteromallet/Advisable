@@ -6,6 +6,7 @@ import {
   Text,
   Heading,
   Modal,
+  Link,
   useModal,
   DialogDisclosure,
   Textarea,
@@ -50,8 +51,10 @@ function DisputePaymentRequestForm({ modal, paymentRequest }) {
           We'll reach out to {specialist.name} and get back to you.
         </Text>
         <Field
+          autoFocus
           as={Textarea}
           name="reason"
+          minRows={6}
           placeholder="Reason..."
           marginBottom={6}
         />
@@ -72,13 +75,18 @@ export default function DisputePaymentRequest({ paymentRequest }) {
   const modal = useModal();
 
   return (
-    <>
+    <Box
+      marginTop={8}
+      borderTop="1px solid"
+      borderColor="neutral100"
+      paddingTop={6}
+    >
+      <Text lineHeight="24px" marginBottom={2} color="neutral700">
+        If you are not happy with paying this request you can dispute it and we
+        will reach out to {paymentRequest.specialist.name} and get back to you.
+      </Text>
       <DialogDisclosure {...modal}>
-        {(disclosure) => (
-          <Button variant="secondary" {...disclosure}>
-            Dispute
-          </Button>
-        )}
+        {(disclosure) => <Link {...disclosure}>Dispute request</Link>}
       </DialogDisclosure>
       <Modal modal={modal}>
         <DisputePaymentRequestForm
@@ -86,6 +94,6 @@ export default function DisputePaymentRequest({ paymentRequest }) {
           paymentRequest={paymentRequest}
         />
       </Modal>
-    </>
+    </Box>
   );
 }
