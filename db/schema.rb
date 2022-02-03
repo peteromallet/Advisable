@@ -669,6 +669,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_080527) do
     t.jsonb "log_data"
     t.jsonb "line_items"
     t.string "dispute_reason"
+    t.string "cancellation_reason"
     t.string "memo"
     t.index ["company_id"], name: "index_payment_requests_on_company_id"
     t.index ["specialist_id"], name: "index_payment_requests_on_specialist_id"

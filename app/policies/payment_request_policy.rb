@@ -10,6 +10,10 @@ class PaymentRequestPolicy < BasePolicy
   end
   alias dispute? approve?
 
+  def cancel?
+    specialist_owner? || admin?
+  end
+
   private
 
   def company_user?
