@@ -42,6 +42,7 @@ end
 #  amount         :integer
 #  dispute_reason :string
 #  line_items     :jsonb
+#  memo           :string
 #  status         :string           not null
 #  uid            :string           not null
 #  created_at     :datetime         not null

@@ -17,6 +17,7 @@ module Types
     field :line_items, [Types::PaymentRequestLineItem], null: false
     field :amount, Int, null: false
     field :payment, Types::Payment, null: false
+    field :memo, String, null: true
 
     field :admin_fee, Int, null: false
     def admin_fee
