@@ -4,6 +4,7 @@ module Mutations
   class CreatePaymentRequest < Mutations::BaseMutation
     argument :company, ID, required: true
     argument :line_items, [Types::PaymentRequestLineItemInput], required: true
+    argument :memo, String, required: false
 
     field :payment_request, Types::PaymentRequest, null: true
 
@@ -16,6 +17,7 @@ module Mutations
         company: Company.find(args[:company]),
         specialist: current_user,
         line_items: args[:line_items],
+        memo: args[:memo],
         status: "pending"
       )
 
