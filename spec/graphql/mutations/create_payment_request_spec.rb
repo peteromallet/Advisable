@@ -6,6 +6,7 @@ RSpec.describe Mutations::CreatePaymentRequest do
   let(:company) { create(:company) }
   let(:specialist) { create(:specialist) }
   let(:current_user) { specialist }
+  let(:extra) { "" }
 
   let(:query) do
     <<-GRAPHQL
@@ -15,7 +16,8 @@ RSpec.describe Mutations::CreatePaymentRequest do
             {description: "Hundo", amount: 10000},
             {description: "Two Hundo", amount: 20000}
           ],
-          company: "#{company.id}"
+          company: "#{company.id}",
+          #{extra}
         }) {
           paymentRequest {
             id
@@ -39,6 +41,20 @@ RSpec.describe Mutations::CreatePaymentRequest do
     expect(payment_request.line_items.first["description"]).to eq("Hundo")
     expect(payment_request.line_items.first["amount"]).to eq(10000)
     expect(payment_request.amount).to eq(30000)
+    expect(payment_request.memo).to be_nil
+  end
+
+  context "with memo" do
+    let(:extra) { %(memo: "This is a memo") }
+
+    it "saves the memo" do
+      response = AdvisableSchema.execute(query, context:)
+
+      id = response.dig("data", "createPaymentRequest", "paymentRequest", "id")
+      payment_request = PaymentRequest.find_by!(uid: id)
+      expect(payment_request.status).to eq("pending")
+      expect(payment_request.memo).to eq("This is a memo")
+    end
   end
 
   context "when there is no company" do
