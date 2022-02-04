@@ -1,8 +1,7 @@
 import React from "react";
 import { Box, Button, Text, Link } from "@advisable/donut";
 import { useApprovePaymentRequest } from "./queries";
-import stripe from "./assets/stripe.svg";
-import methods from "./assets/paymentMethods.png";
+import PaymentMethods from "src/components/PaymentMethodForm/PaymentMethods";
 
 export default function ApprovePaymentRequest({ paymentRequest }) {
   const [approve, { loading }] = useApprovePaymentRequest();
@@ -43,10 +42,7 @@ export default function ApprovePaymentRequest({ paymentRequest }) {
             if you would like to switch from bank transfers to card payments.
           </Text>
         ) : (
-          <Box color="neutral600">
-            <Box as="img" src={methods} height="28px" marginRight={1} />
-            <Box as="img" src={stripe} height="28px" opacity="0.4" />
-          </Box>
+          <PaymentMethods />
         )}
       </Box>
     </>
