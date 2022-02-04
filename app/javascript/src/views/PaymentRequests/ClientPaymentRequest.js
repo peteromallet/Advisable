@@ -6,6 +6,8 @@ import DisputePaymentRequest from "./DisputePaymentRequest";
 import { usePaymentRequest } from "./queries";
 import CapturePayment from "./CapturePayment";
 import currency from "src/utilities/currency";
+import PaymentRequestPaid from "./PaymentRequestPaid";
+import PaymentRequestCancelled from "./PaymentRequestCancelled";
 
 export default function ClientPaymentRequest() {
   const { data, loading, error } = usePaymentRequest();
@@ -53,6 +55,14 @@ export default function ClientPaymentRequest() {
             </Box>
           )}
 
+          {status === "canceled" && (
+            <PaymentRequestCancelled paymentRequest={data.paymentRequest} />
+          )}
+
+          {status === "paid" && (
+            <PaymentRequestPaid paymentRequest={data.paymentRequest} />
+          )}
+
           <Box>
             {status === "pending" && (
               <ApprovePaymentRequest paymentRequest={data.paymentRequest} />
@@ -70,7 +80,12 @@ export default function ClientPaymentRequest() {
           </Box>
         </Box>
         <Box width="460px" flexShrink={0}>
-          <Box bg="neutral100" padding={8} borderRadius="20px">
+          <Box
+            bg="neutral100"
+            padding={8}
+            borderRadius="24px"
+            paddingBottom={10}
+          >
             <Box display="flex" alignItems="center" marginBottom={8}>
               <Avatar name={specialist.name} url={specialist.avatar} size="m" />
               <Box paddingLeft={3}>
@@ -88,20 +103,20 @@ export default function ClientPaymentRequest() {
 
               {lineItems.map((lineItem, index) => (
                 <Box key={index} display="flex" justifyContent="space-between">
-                  <Text color="neutral700">{lineItem.description}</Text>
-                  <Text fontWeight={520}>{currency(lineItem.amount)}</Text>
+                  <Text color="neutral800">{lineItem.description}</Text>
+                  <Text fontWeight={560}>{currency(lineItem.amount)}</Text>
                 </Box>
               ))}
 
               <Box display="flex" justifyContent="space-between">
-                <Text color="neutral700">Advisable fee</Text>
-                <Text fontWeight={520}>
+                <Text color="neutral800">Advisable fee</Text>
+                <Text fontWeight={560}>
                   + {currency(data.paymentRequest.adminFee)}
                 </Text>
               </Box>
 
               <Box display="flex" justifyContent="space-between">
-                <Text color="neutral700">Total</Text>
+                <Text color="neutral800">Total</Text>
                 <Text fontSize="4xl" fontWeight={600}>
                   {currency(amount + adminFee)}
                 </Text>

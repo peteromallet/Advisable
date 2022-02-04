@@ -2,10 +2,11 @@ import React from "react";
 import { Badge } from "@advisable/donut";
 
 const STATUSES = {
-  pending: "neutral",
+  pending: "orange",
   paid: "cyan",
   approved: "cyan",
   disputed: "orange",
+  canceled: "neutral",
 };
 
 export default function PaymentRequestStatus({ paymentRequest }) {
