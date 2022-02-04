@@ -13,8 +13,11 @@ module Mutations
     end
 
     def resolve(**args)
+      company = Company.find(args[:company])
+      ApiError.invalid_request("NO_ACTIVE_AGREEMENT_WITH_THIS_COMPANY") unless current_user.agreements.accepted.exists?(company:)
+
       payment_request = PaymentRequest.new(
-        company: Company.find(args[:company]),
+        company:,
         specialist: current_user,
         line_items: args[:line_items],
         memo: args[:memo],
