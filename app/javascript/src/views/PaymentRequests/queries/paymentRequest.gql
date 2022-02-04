@@ -8,6 +8,7 @@ query FreelancerPaymentRequest($id: ID!) {
     company {
       id
       name
+      paymentMethod
     }
     specialist {
       id
@@ -18,6 +19,7 @@ query FreelancerPaymentRequest($id: ID!) {
     payment {
       id
       status
+      pdfUrl
       paymentMethod
       paymentIntent {
         secret

@@ -1,9 +1,8 @@
 import React from "react";
-import { Heading, Box, Stack, Text, Avatar } from "@advisable/donut";
+import { Box, Stack, Text, Avatar } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
 import ApprovePaymentRequest from "./ApprovePaymentRequest";
 import DisputePaymentRequest from "./DisputePaymentRequest";
-import PaymentRequestStatus from "./PaymentRequestStatus";
 import { usePaymentRequest } from "./queries";
 import CapturePayment from "./CapturePayment";
 import currency from "src/utilities/currency";
@@ -38,8 +37,24 @@ export default function ClientPaymentRequest() {
             released to {specialist.name} immediately after paying.
           </Text>
 
+          {status === "disputed" && (
+            <Box>
+              <Text
+                fontSize="l"
+                fontWeight={560}
+                letterSpacing="-0.02em"
+                marginBottom={2}
+              >
+                Payment request disputed
+              </Text>
+              <Text lineHeight="24px">
+                This payment request has been disputed.
+              </Text>
+            </Box>
+          )}
+
           <Box>
-            {["pending", "disputed"].includes(status) && (
+            {status === "pending" && (
               <ApprovePaymentRequest paymentRequest={data.paymentRequest} />
             )}
           </Box>
@@ -56,15 +71,7 @@ export default function ClientPaymentRequest() {
         </Box>
         <Box width="460px" flexShrink={0}>
           <Box bg="neutral100" padding={8} borderRadius="20px">
-            <Text
-              fontSize="lg"
-              fontWeight={520}
-              letterSpacing="-0.02em"
-              marginBottom={6}
-            >
-              Summary
-            </Text>
-            <Box display="flex" alignItems="center" marginBottom={6}>
+            <Box display="flex" alignItems="center" marginBottom={8}>
               <Avatar name={specialist.name} url={specialist.avatar} size="m" />
               <Box paddingLeft={3}>
                 <Text fontWeight={560} marginBottom={1} fontSize="lg">
@@ -75,6 +82,10 @@ export default function ClientPaymentRequest() {
             </Box>
 
             <Stack spacing={8} divider="neutral200">
+              <Text fontSize="lg" fontWeight={520} letterSpacing="-0.02em">
+                Summary
+              </Text>
+
               {lineItems.map((lineItem, index) => (
                 <Box key={index} display="flex" justifyContent="space-between">
                   <Text color="neutral700">{lineItem.description}</Text>
@@ -91,7 +102,7 @@ export default function ClientPaymentRequest() {
 
               <Box display="flex" justifyContent="space-between">
                 <Text color="neutral700">Total</Text>
-                <Text fontSize="3xl" fontWeight={600}>
+                <Text fontSize="4xl" fontWeight={600}>
                   {currency(amount + adminFee)}
                 </Text>
               </Box>
