@@ -1,8 +1,10 @@
 import { useApolloClient } from "@apollo/client";
 import React, { useState } from "react";
-import { Text, Box, Stack } from "@advisable/donut";
+import { Link, Button, Text, Box, Stack, Tabs, Badge } from "@advisable/donut";
 import PaymentMethodForm from "src/components/PaymentMethodForm";
 import { ExclamationCircle } from "@styled-icons/heroicons-solid/ExclamationCircle";
+import currency from "src/utilities/currency";
+import { Download } from "@styled-icons/heroicons-solid";
 
 function Row({ children }) {
   return (
@@ -41,92 +43,105 @@ function Value({ children }) {
   );
 }
 
-function BankTransferPending({ payment }) {
+function BankTransferPending({ paymentRequest }) {
+  const { payment } = paymentRequest;
+  const total = currency(paymentRequest.amount + paymentRequest.adminFee);
+
   return (
     <>
-      <Text lineHeight="24px">
-        Please send the total amount listed above via bank transfer using one of
-        the details below.
+      <Badge marginBottom={2} variant="orange">
+        Pending Transfer
+      </Badge>
+      <Text lineHeight="24px" marginBottom={4} fontSize="lg">
+        Please send the total amount of{" "}
+        <Text as="span" fontWeight={560}>
+          {total}
+        </Text>{" "}
+        via bank transfer using one of the options below.
       </Text>
-      <Stack spacing={6} divider="neutral100">
-        <Text fontSize="xl" fontWeight={500} mb={1} marginTop={12}>
-          EUR bank transfers
-        </Text>
-        <Row>
-          <Label>Reference number:</Label>
-          <Value>{payment.id}</Value>
-        </Row>
-        <Row>
-          <Label>Account name:</Label>
-          <Value>Hyper Mega Net</Value>
-        </Row>
-        <Row>
-          <Label>BIC Number</Label>
-          <Value>CPAYIE2D</Value>
-        </Row>
-        <Row>
-          <Label>IBAN</Label>
-          <Value>IE40 CPAY 9911 9900 7566 69</Value>
-        </Row>
-      </Stack>
 
-      <Stack spacing={6} divider="neutral100">
-        <Text fontSize="xl" fontWeight={500} mb={1} marginTop={12}>
-          USD bank transfers
-        </Text>
-        <Row>
-          <Label>Reference number:</Label>
-          <Value>{payment.id}</Value>
-        </Row>
-        <Row>
-          <Label>Account holder:</Label>
-          <Value>TransferWise FBO Advisable Hyper Mega Net Limited</Value>
-        </Row>
-        <Row>
-          <Label>Account number:</Label>
-          <Value>8310111553</Value>
-        </Row>
-        <Row>
-          <Label>Wire routing number:</Label>
-          <Value>026073008</Value>
-        </Row>
-        <Row>
-          <Label>ACH routing number</Label>
-          <Value>026073150</Value>
-        </Row>
-        <Row>
-          <Label>Bank code</Label>
-          <Value>CMFGUS33</Value>
-        </Row>
-        <Row>
-          <Label>Address</Label>
-          <Value>
-            TransferWise, 19 W 24th Street, New York, 10010, United States
-          </Value>
-        </Row>
-      </Stack>
+      <Link.External marginBottom={12} href={payment.pdfUrl}>
+        <Button size="s" variant="subtle" prefix={<Download />}>
+          Download invoice
+        </Button>
+      </Link.External>
 
-      <Stack spacing={6} divider="neutral100">
-        <Text fontSize="xl" fontWeight={500} mb={1} marginTop={12}>
-          GBP bank transfers
-        </Text>
-        <Row>
-          <Label>Reference number:</Label>
-          <Value>{payment.id}</Value>
-        </Row>
-        <Row>
-          <Label>Account name:</Label>
-          <Value>Advisable Hyper Mega Net Limited</Value>
-        </Row>
-        <Row>
-          <Label>Account number:</Label>
-          <Value>68022542</Value>
-        </Row>
-        <Row>
-          <Label>Sort code:</Label>
-          <Value>232221</Value>
-        </Row>
-      </Stack>
+      <Tabs label="bank transfer options">
+        <Tabs.Tab title="EUR">
+          <Stack paddingTop={3} spacing={6} divider="neutral100">
+            <Row>
+              <Label>Reference number:</Label>
+              <Value>{payment.id}</Value>
+            </Row>
+            <Row>
+              <Label>Account name:</Label>
+              <Value>Hyper Mega Net</Value>
+            </Row>
+            <Row>
+              <Label>BIC Number</Label>
+              <Value>CPAYIE2D</Value>
+            </Row>
+            <Row>
+              <Label>IBAN</Label>
+              <Value>IE40 CPAY 9911 9900 7566 69</Value>
+            </Row>
+          </Stack>
+        </Tabs.Tab>
+        <Tabs.Tab title="USD">
+          <Stack paddingTop={3} spacing={6} divider="neutral100">
+            <Row>
+              <Label>Reference number:</Label>
+              <Value>{payment.id}</Value>
+            </Row>
+            <Row>
+              <Label>Account holder:</Label>
+              <Value>TransferWise FBO Advisable Hyper Mega Net Limited</Value>
+            </Row>
+            <Row>
+              <Label>Account number:</Label>
+              <Value>8310111553</Value>
+            </Row>
+            <Row>
+              <Label>Wire routing number:</Label>
+              <Value>026073008</Value>
+            </Row>
+            <Row>
+              <Label>ACH routing number</Label>
+              <Value>026073150</Value>
+            </Row>
+            <Row>
+              <Label>Bank code</Label>
+              <Value>CMFGUS33</Value>
+            </Row>
+            <Row>
+              <Label>Address</Label>
+              <Value>
+                TransferWise, 19 W 24th Street, New York, 10010, United States
+              </Value>
+            </Row>
+          </Stack>
+        </Tabs.Tab>
+        <Tabs.Tab title="GBP">
+          <Stack paddingTop={3} spacing={6} divider="neutral100">
+            <Row>
+              <Label>Reference number:</Label>
+              <Value>{payment.id}</Value>
+            </Row>
+            <Row>
+              <Label>Account name:</Label>
+              <Value>Advisable Hyper Mega Net Limited</Value>
+            </Row>
+            <Row>
+              <Label>Account number:</Label>
+              <Value>68022542</Value>
+            </Row>
+            <Row>
+              <Label>Sort code:</Label>
+              <Value>232221</Value>
+            </Row>
+          </Stack>
+        </Tabs.Tab>
+      </Tabs>
     </>
   );
 }
@@ -210,7 +225,7 @@ export default function CapturePayment({ paymentRequest }) {
   const { payment } = paymentRequest;
 
   if (payment.paymentMethod === "Bank Transfer") {
-    return <BankTransferPending payment={payment} />;
+    return <BankTransferPending paymentRequest={paymentRequest} />;
   }
 
   return <CaptureCardPayment paymentRequest={paymentRequest} />;

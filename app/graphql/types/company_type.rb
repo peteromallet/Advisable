@@ -14,8 +14,8 @@ module Types
     field :address, Types::AddressType, null: true
     field :invoice_company_name, String, null: true
     field :vat_number, String, null: true
-
     field :apply_vat, Boolean, null: true, method: :apply_vat?
+    field :payment_method, String, null: true, method: :project_payment_method
 
     field :sales_person, Types::SalesPersonType, null: true do
       authorize :read?
