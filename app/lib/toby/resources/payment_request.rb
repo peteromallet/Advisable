@@ -9,10 +9,13 @@ module Toby
       attribute :company, Attributes::BelongsTo
       attribute :status, Attributes::Select, options: ::PaymentRequest::VALID_STATUSES
       attribute :dispute_reason, Attributes::String
+      attribute :cancellation_reason, Attributes::String
       attribute :line_items, Attributes::TextArray
       attribute :amount, Attributes::Currency
       attribute :payment, Attributes::HasOne
       attribute :payout, Attributes::HasOne
+      attribute :due_at, Attributes::DateTime
+      attribute :memo, Attributes::String
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
     end

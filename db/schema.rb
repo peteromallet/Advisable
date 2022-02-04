@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_03_080527) do
+ActiveRecord::Schema.define(version: 2022_02_03_115739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -671,6 +671,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_080527) do
     t.string "dispute_reason"
     t.string "cancellation_reason"
     t.string "memo"
+    t.datetime "due_at", precision: 6
     t.index ["company_id"], name: "index_payment_requests_on_company_id"
     t.index ["specialist_id"], name: "index_payment_requests_on_specialist_id"
     t.index ["uid"], name: "index_payment_requests_on_uid", unique: true
