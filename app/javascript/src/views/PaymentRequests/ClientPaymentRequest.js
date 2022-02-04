@@ -1,13 +1,14 @@
 import React from "react";
-import { Box, Stack, Text, Avatar } from "@advisable/donut";
+import { motion } from "framer-motion";
+import { Box, Text } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
 import ApprovePaymentRequest from "./ApprovePaymentRequest";
 import DisputePaymentRequest from "./DisputePaymentRequest";
 import { usePaymentRequest } from "./queries";
 import CapturePayment from "./CapturePayment";
-import currency from "src/utilities/currency";
 import PaymentRequestPaid from "./PaymentRequestPaid";
 import PaymentRequestCancelled from "./PaymentRequestCancelled";
+import PaymentRequestSummary from "./PaymentRequestSummary";
 
 export default function ClientPaymentRequest() {
   const { data, loading, error } = usePaymentRequest();
@@ -15,16 +16,22 @@ export default function ClientPaymentRequest() {
   if (loading) return <>loading...</>;
   if (error) return <>Something went wrong. Please try again.</>;
 
-  const { status, specialist, lineItems, amount, adminFee, company } =
-    data.paymentRequest;
+  const { status, specialist } = data.paymentRequest;
 
   return (
     <>
-      <Box marginBottom={4}>
+      <Box marginBottom={5}>
         <BackButton to="/payment_requests" />
       </Box>
       <Box display="flex">
-        <Box flex={1} paddingRight={12}>
+        <Box
+          as={motion.div}
+          flex={1}
+          paddingRight={12}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+        >
           <Text
             size="6xl"
             marginBottom={4}
@@ -80,49 +87,13 @@ export default function ClientPaymentRequest() {
           </Box>
         </Box>
         <Box width="460px" flexShrink={0}>
-          <Box
-            bg="neutral100"
-            padding={8}
-            borderRadius="24px"
-            paddingBottom={10}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
-            <Box display="flex" alignItems="center" marginBottom={8}>
-              <Avatar name={specialist.name} url={specialist.avatar} size="m" />
-              <Box paddingLeft={3}>
-                <Text fontWeight={560} marginBottom={1} fontSize="lg">
-                  {specialist.name}
-                </Text>
-                <Text>{specialist.location}</Text>
-              </Box>
-            </Box>
-
-            <Stack spacing={8} divider="neutral200">
-              <Text fontSize="lg" fontWeight={520} letterSpacing="-0.02em">
-                Summary
-              </Text>
-
-              {lineItems.map((lineItem, index) => (
-                <Box key={index} display="flex" justifyContent="space-between">
-                  <Text color="neutral800">{lineItem.description}</Text>
-                  <Text fontWeight={560}>{currency(lineItem.amount)}</Text>
-                </Box>
-              ))}
-
-              <Box display="flex" justifyContent="space-between">
-                <Text color="neutral800">Advisable fee</Text>
-                <Text fontWeight={560}>
-                  + {currency(data.paymentRequest.adminFee)}
-                </Text>
-              </Box>
-
-              <Box display="flex" justifyContent="space-between">
-                <Text color="neutral800">Total</Text>
-                <Text fontSize="4xl" fontWeight={600}>
-                  {currency(amount + adminFee)}
-                </Text>
-              </Box>
-            </Stack>
-          </Box>
+            <PaymentRequestSummary paymentRequest={data.paymentRequest} />
+          </motion.div>
         </Box>
       </Box>
     </>
