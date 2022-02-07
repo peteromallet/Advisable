@@ -54,7 +54,7 @@ function RequestConsultationSignup({ specialist, setStep }) {
   return (
     <>
       <Heading size="5xl" marginBottom={2}>
-        Work with {specialist.firstName}
+        Connect with {specialist.firstName}
       </Heading>
       <Text
         fontSize="lg"
