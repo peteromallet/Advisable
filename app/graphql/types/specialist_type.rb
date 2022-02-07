@@ -284,5 +284,13 @@ module Types
     field :previous_work_description, String, null: true
     field :previous_work_results, String, null: true
     field :ideal_project, String, null: true
+
+    field :sourcing_fee, Int, null: true do
+      authorize :specialist?
+    end
+
+    def sourcing_fee
+      (object.sourcing_fee.presence || ::Specialist::DEFAULT_SOURCING_FEE)
+    end
   end
 end

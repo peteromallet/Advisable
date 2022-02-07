@@ -1,35 +1,7 @@
+#import "./paymentRequestFields.gql"
+
 query FreelancerPaymentRequest($id: ID!) {
   paymentRequest(id: $id) {
-    id
-    status
-    amount
-    adminFee
-    dueAt
-    createdAt
-    sourcingFee
-    company {
-      id
-      name
-      paymentMethod
-    }
-    specialist {
-      id
-      name
-      avatar
-      location
-    }
-    payment {
-      id
-      status
-      pdfUrl
-      paymentMethod
-      paymentIntent {
-        secret
-      }
-    }
-    lineItems {
-      amount
-      description
-    }
+    ...PaymentRequestFields
   }
 }

@@ -54,7 +54,7 @@ export default function ClientPaymentRequests() {
               </Box>
             </Table.Cell>
             <Table.Cell width="120px">
-              <PaymentRequestStatus paymentRequest={pr} />
+              <PaymentRequestStatus status={pr.status} />
             </Table.Cell>
             <Table.Cell width="120px" textAlign="right">
               <Text fontWeight={560} color="neutral900">

@@ -1,19 +1,34 @@
 fragment PaymentRequestFields on PaymentRequest {
   id
+  memo
+  dueAt
   status
   amount
+  adminFee
   createdAt
-  dueAt
-  lineItems {
-    amount
-    description
-  }
+  sourcingFee
   company {
     id
     name
+    paymentMethod
   }
   specialist {
     id
     name
+    avatar
+    location
+  }
+  payment {
+    id
+    status
+    pdfUrl
+    paymentMethod
+    paymentIntent {
+      secret
+    }
+  }
+  lineItems {
+    amount
+    description
   }
 }
