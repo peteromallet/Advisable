@@ -1,3 +1,4 @@
+import { object, string, number, array } from "yup";
 import { Field, Form, Formik, useField } from "formik";
 import {
   Box,
@@ -21,6 +22,22 @@ import { DateTime } from "luxon";
 import css from "@styled-system/css";
 import useViewer from "src/hooks/useViewer";
 import BackButton from "src/components/BackButton";
+
+const lineItemSchema = object().shape({
+  description: string().required("Please provide a description"),
+  amount: number()
+    .required("Please provide a price")
+    .min(100, "Amount must be at least $1.00"),
+});
+
+const companySchema = object().shape({
+  value: string().required(),
+});
+
+const validationSchema = object().shape({
+  company: companySchema.required("Please select a client"),
+  lineItems: array().of(lineItemSchema).min(1, "Please add at least one item"),
+});
 
 function LineItemRateInput({ name }) {
   const [field, , { setValue }] = useField(name);
@@ -161,7 +178,12 @@ export default function NewPaymentRequest() {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={validationSchema}
+      validateOnMount
+    >
       {(formik) => (
         <Form>
           <Box marginBottom={5}>
@@ -201,7 +223,7 @@ export default function NewPaymentRequest() {
                 placeholder="Memo"
               />
 
-              <SubmitButton variant="gradient" size="l">
+              <SubmitButton variant="gradient" size="l" disableUntilValid>
                 Send request
               </SubmitButton>
             </Box>
