@@ -92,7 +92,10 @@ export default function ClientPaymentRequest() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <PaymentRequestSummary paymentRequest={data.paymentRequest} />
+            <PaymentRequestSummary
+              paymentRequest={data.paymentRequest}
+              showClientFee
+            />
           </motion.div>
         </Box>
       </Box>

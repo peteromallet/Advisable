@@ -47,7 +47,10 @@ export default function FreelancerPaymentRequest() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <PaymentRequestSummary paymentRequest={data.paymentRequest} />
+            <PaymentRequestSummary
+              paymentRequest={data.paymentRequest}
+              showFreelancerFee
+            />
           </motion.div>
         </Box>
       </Box>

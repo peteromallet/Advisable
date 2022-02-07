@@ -1,4 +1,9 @@
 query AcceptedAgreements {
+  viewer {
+    ... on Specialist {
+      sourcingFee
+    }
+  }
   acceptedAgreements {
     id
     company {

@@ -9,10 +9,6 @@ const STATUSES = {
   canceled: "neutral",
 };
 
-export default function PaymentRequestStatus({ paymentRequest }) {
-  return (
-    <Badge variant={STATUSES[paymentRequest.status]}>
-      {paymentRequest.status}
-    </Badge>
-  );
+export default function PaymentRequestStatus({ status }) {
+  return <Badge variant={STATUSES[status] || "neutral"}>{status}</Badge>;
 }

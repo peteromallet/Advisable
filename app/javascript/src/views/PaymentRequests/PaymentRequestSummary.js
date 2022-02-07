@@ -1,12 +1,46 @@
-import React from "react";
+import React, { useMemo } from "react";
 import currency from "src/utilities/currency";
-import { Box, Stack, Text, Avatar } from "@advisable/donut";
+import { Box, Stack, Text } from "@advisable/donut";
 import PaymentRequestStatus from "./PaymentRequestStatus";
 import { DateTime } from "luxon";
 
-export default function PaymentRequestSummary({ paymentRequest }) {
-  const { specialist, lineItems, amount, adminFee, createdAt, dueAt } =
-    paymentRequest;
+function SourcingFee({ amount = 0, sourcingFee }) {
+  if (amount <= 0) return null;
+
+  const earnings = amount - sourcingFee;
+  const fee = sourcingFee / amount;
+
+  return (
+    <Text marginTop={2} lineHeight="20px">
+      You will earn <b>{currency(earnings)}</b> after our <b>{fee * 100}%</b>{" "}
+      Advisable fee
+    </Text>
+  );
+}
+
+export default function PaymentRequestSummary({
+  paymentRequest,
+  showClientFee,
+  showFreelancerFee,
+}) {
+  const {
+    specialist,
+    company,
+    lineItems,
+    amount,
+    adminFee = 0,
+    createdAt,
+    dueAt,
+    status,
+    sourcingFee,
+    memo,
+  } = paymentRequest;
+
+  const total = useMemo(() => {
+    let result = amount;
+    if (showClientFee) result += adminFee;
+    return result;
+  }, [amount, showClientFee, adminFee]);
 
   return (
     <Box
@@ -18,16 +52,7 @@ export default function PaymentRequestSummary({ paymentRequest }) {
       boxShadow="rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px"
     >
       <Box position="absolute" right="20px" top="20px">
-        <PaymentRequestStatus paymentRequest={paymentRequest} />
-      </Box>
-      <Box display="flex" alignItems="center" marginBottom={8}>
-        <Avatar name={specialist.name} url={specialist.avatar} size="m" />
-        <Box paddingLeft={3}>
-          <Text fontWeight={560} marginBottom={1} fontSize="xl">
-            {specialist.name}
-          </Text>
-          <Text>{specialist.location}</Text>
-        </Box>
+        <PaymentRequestStatus status={status} />
       </Box>
 
       <Stack spacing={8} divider="neutral100">
@@ -35,16 +60,30 @@ export default function PaymentRequestSummary({ paymentRequest }) {
           Summary
         </Text>
 
+        {company ? (
+          <Box display="flex" justifyContent="space-between">
+            <Text color="neutral800">Billed to</Text>
+            <Text fontWeight={480}>{company.name}</Text>
+          </Box>
+        ) : null}
+
+        {specialist ? (
+          <Box display="flex" justifyContent="space-between">
+            <Text color="neutral800">From</Text>
+            <Text fontWeight={480}>{specialist.name}</Text>
+          </Box>
+        ) : null}
+
         <Box display="flex" justifyContent="space-between">
           <Text color="neutral800">Issued</Text>
-          <Text fontWeight={480} color="neutral600">
+          <Text fontWeight={480}>
             {DateTime.fromISO(createdAt).toFormat("dd MMM yyyy")}
           </Text>
         </Box>
 
         <Box display="flex" justifyContent="space-between">
           <Text color="neutral800">Due</Text>
-          <Text fontWeight={480} color="neutral600">
+          <Text fontWeight={480}>
             {DateTime.fromISO(dueAt).toFormat("dd MMM yyyy")}
           </Text>
         </Box>
@@ -58,20 +97,40 @@ export default function PaymentRequestSummary({ paymentRequest }) {
           </Box>
         ))}
 
-        <Box display="flex" justifyContent="space-between">
-          <Text color="neutral800">Advisable fee</Text>
-          <Text fontWeight={560} fontSize="l">
-            + {currency(paymentRequest.adminFee)}
-          </Text>
-        </Box>
+        {showClientFee && paymentRequest.adminFee && (
+          <Box display="flex" justifyContent="space-between">
+            <Text color="neutral800">Advisable fee</Text>
+            <Text fontWeight={560} fontSize="l">
+              + {currency(paymentRequest.adminFee)}
+            </Text>
+          </Box>
+        )}
 
         <Box display="flex" justifyContent="space-between">
           <Text color="neutral800">Total</Text>
-          <Text fontSize="5xl" fontWeight={600}>
-            {currency(amount + adminFee)}
-          </Text>
+          <Box textAlign="right">
+            <Text fontSize="5xl" fontWeight={600}>
+              {currency(total)}
+            </Text>
+            {showFreelancerFee && (
+              <Box width="200px">
+                <SourcingFee amount={amount} sourcingFee={sourcingFee} />
+              </Box>
+            )}
+          </Box>
         </Box>
       </Stack>
+
+      {memo ? (
+        <Box paddingTop={10}>
+          <Text marginBottom={2} fontWeight={520}>
+            Memo
+          </Text>
+          <Text fontSize="s" lineHeight="20px" color="neutral700">
+            {memo}
+          </Text>
+        </Box>
+      ) : null}
     </Box>
   );
 }
