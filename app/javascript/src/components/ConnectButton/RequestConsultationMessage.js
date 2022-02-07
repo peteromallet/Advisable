@@ -52,7 +52,7 @@ export default function RequestConsultationMessage({ specialist, onSubmit }) {
     <>
       <Box paddingBottom={6} paddingRight={4}>
         <Heading size="5xl" marginBottom={2}>
-          Work with {specialist.firstName}
+          Connect with {specialist.firstName}
         </Heading>
         <Text
           fontSize="lg"
