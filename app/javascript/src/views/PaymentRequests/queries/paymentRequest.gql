@@ -4,6 +4,8 @@ query FreelancerPaymentRequest($id: ID!) {
     status
     amount
     adminFee
+    dueAt
+    createdAt
     sourcingFee
     company {
       id
