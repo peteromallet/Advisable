@@ -2,9 +2,11 @@ import React from "react";
 import currency from "src/utilities/currency";
 import { Box, Stack, Text, Avatar } from "@advisable/donut";
 import PaymentRequestStatus from "./PaymentRequestStatus";
+import { DateTime } from "luxon";
 
 export default function PaymentRequestSummary({ paymentRequest }) {
-  const { specialist, lineItems, amount, adminFee } = paymentRequest;
+  const { specialist, lineItems, amount, adminFee, createdAt, dueAt } =
+    paymentRequest;
 
   return (
     <Box
@@ -36,14 +38,14 @@ export default function PaymentRequestSummary({ paymentRequest }) {
         <Box display="flex" justifyContent="space-between">
           <Text color="neutral800">Issued</Text>
           <Text fontWeight={480} color="neutral600">
-            20 Feb
+            {DateTime.fromISO(createdAt).toFormat("dd MMM yyyy")}
           </Text>
         </Box>
 
         <Box display="flex" justifyContent="space-between">
           <Text color="neutral800">Due</Text>
           <Text fontWeight={480} color="neutral600">
-            25 Feb
+            {DateTime.fromISO(dueAt).toFormat("dd MMM yyyy")}
           </Text>
         </Box>
 

@@ -3,6 +3,7 @@ fragment PaymentRequestFields on PaymentRequest {
   status
   amount
   createdAt
+  dueAt
   lineItems {
     amount
     description

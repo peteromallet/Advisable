@@ -27,5 +27,6 @@ module Types
     end
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :due_at, GraphQL::Types::ISO8601DateTime, null: false
   end
 end
