@@ -1,8 +1,10 @@
 import React from "react";
 import possesive from "src/utilities/possesive";
-import { Box, Text } from "@advisable/donut";
+import { Box, Link, Text } from "@advisable/donut";
+import useViewer from "src/hooks/useViewer";
 
 export default function AgreementDeclinedMessage({ message }) {
+  const viewer = useViewer();
   const {
     agreement: { user, specialist },
   } = message;
@@ -18,10 +20,19 @@ export default function AgreementDeclinedMessage({ message }) {
       borderColor="neutral100"
       textAlign="center"
     >
-      <Text fontWeight={520} marginBottom={1}>
+      <Text fontWeight={520}>
         {user.name} declined {possesive(specialist.firstName)} request to work
         together.
       </Text>
+
+      {viewer.id === specialist.id && (
+        <Text fontSize="sm" color="neutral600" paddingTop={2}>
+          <Link variant="underlined" to={`/new_agreement/${user.id}`}>
+            Click here
+          </Link>{" "}
+          to send another request.
+        </Text>
+      )}
     </Box>
   );
 }
