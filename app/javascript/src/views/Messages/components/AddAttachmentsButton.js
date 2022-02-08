@@ -7,7 +7,11 @@ const Input = styled.input`
   display: none;
 `;
 
-export default function AddAttachmentsButton({ onSelect }) {
+export default function AddAttachmentsButton({
+  onSelect,
+  icon = <PaperClip />,
+  label = "Attachment",
+}) {
   const inputRef = useRef();
 
   return (
@@ -23,8 +27,8 @@ export default function AddAttachmentsButton({ onSelect }) {
         type="button"
         onClick={() => inputRef.current.click()}
       >
-        <PaperClip />
-        <span>Attachment</span>
+        {icon}
+        <span>{label}</span>
       </StyledSecondaryComposerButton>
     </>
   );

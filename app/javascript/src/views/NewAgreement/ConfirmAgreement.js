@@ -1,25 +1,62 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { object, string } from "yup";
-import { Form, Formik, Field } from "formik";
-import { Box, Container, Heading, Text, Textarea } from "@advisable/donut";
+import { Form, Formik, Field, useField } from "formik";
+import {
+  Box,
+  Container,
+  Heading,
+  Text,
+  Stack,
+  Textarea,
+} from "@advisable/donut";
 import { useParams, useLocation, useHistory, Redirect } from "react-router-dom";
 import { useCreateAgreement } from "./queries";
 import BackButton from "src/components/BackButton";
-import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import AgreementDetails from "./AgreementDetails";
 import useViewer from "src/hooks/useViewer";
-import { PaperAirplane } from "@styled-icons/heroicons-solid";
+import { PaperAirplane, PlusSm } from "@styled-icons/heroicons-solid";
+import useAttachments from "../Messages/hooks/useAttachments";
+import AddAttachmentsButton from "../Messages/components/AddAttachmentsButton";
+import Attachment from "../Messages/components/Attachment";
 
 const validationSchema = object().shape({
   message: string().required("Please provide a message."),
 });
+
+function AgreementAttachments({
+  attachments,
+  addAttachments,
+  completeUpload,
+  removeAttachment,
+}) {
+  return (
+    <Stack divider="neutral100" marginBottom={10}>
+      {attachments.map((a) => (
+        <Attachment
+          key={a.id}
+          attachment={a}
+          completeUpload={completeUpload}
+          onRemove={() => removeAttachment(a.id)}
+        />
+      ))}
+      <Box paddingY={4}>
+        <AddAttachmentsButton
+          icon={<PlusSm />}
+          label="Add attachment"
+          onSelect={(e) => addAttachments(e.target.files)}
+        />
+      </Box>
+    </Stack>
+  );
+}
 
 export default function ConfirmAgreement({ user }) {
   const viewer = useViewer();
   const { userId } = useParams();
   const location = useLocation();
   const history = useHistory();
+  const attachmentProps = useAttachments();
   const [createAgreement] = useCreateAgreement();
 
   if (!location.state?.invoicing) {
@@ -34,6 +71,7 @@ export default function ConfirmAgreement({ user }) {
           collaboration: location.state.collaboration,
           invoicing: location.state.invoicing,
           hourlyRate: location.state.hourlyRate,
+          attachments: attachmentProps.signedIds,
           ...values,
         },
       },
@@ -85,11 +123,12 @@ export default function ConfirmAgreement({ user }) {
                 as={Textarea}
                 id="message"
                 name="message"
-                marginBottom={10}
+                marginBottom={2}
                 minRows={10}
                 autoFocus
                 placeholder="Message"
               />
+              <AgreementAttachments {...attachmentProps} />
               <SubmitButton
                 prefix={<PaperAirplane />}
                 size="l"
