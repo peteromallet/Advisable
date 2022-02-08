@@ -52,7 +52,7 @@ function AdvisableProtection() {
             You’re protected by Advisable
           </Text>
           <Text lineHeight="24px" color="neutral800">
-            In the rare event that the client is unhapppy with your work,
+            In the rare event that the client is unhappy with your work,
             Advisable guarantees each new collaboration with a $1,000 risk free
             trial.
           </Text>
