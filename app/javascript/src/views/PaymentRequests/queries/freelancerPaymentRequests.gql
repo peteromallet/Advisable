@@ -1,5 +1,3 @@
-#import "./paymentRequestFields.gql"
-
 query FreelancerPaymentRequests($cursor: String) {
   paymentRequests(after: $cursor, first: 20) {
     pageInfo {
@@ -8,7 +6,14 @@ query FreelancerPaymentRequests($cursor: String) {
     }
     edges {
       node {
-        ...PaymentRequestFields
+        id
+        status
+        amount
+        createdAt
+        lineItems {
+          amount
+          description
+        }
         company {
           id
           name
