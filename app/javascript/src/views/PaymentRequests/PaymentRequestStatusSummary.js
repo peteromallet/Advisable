@@ -10,6 +10,7 @@ import {
 } from "@styled-icons/heroicons-solid";
 import ApprovePaymentRequest from "./ApprovePaymentRequest";
 import CapturePayment from "./CapturePayment";
+import CancelPaymentRequest from "./CancelPaymentRequest";
 
 function Summary({ status, children, icon }) {
   return (
@@ -32,16 +33,19 @@ function Summary({ status, children, icon }) {
 export default function PaymentRequestStatusSummary({ paymentRequest }) {
   const viewer = useViewer();
   const { payment, company, specialist, status } = paymentRequest;
-  const isBankTransfer = payment?.paymentMethod === "Bank Transfer";
 
   if (status === "pending") {
     return (
       <Summary status={status} icon={<CreditCard />}>
         This request is awaiting payment from {company.name}. Once paid the
         funds will be released immediately to {specialist.name}.
-        {viewer.isClient && (
+        {viewer.isClient ? (
           <Box paddingTop={6}>
             <ApprovePaymentRequest paymentRequest={paymentRequest} />
+          </Box>
+        ) : (
+          <Box paddingTop={4}>
+            <CancelPaymentRequest paymentRequest={paymentRequest} />
           </Box>
         )}
       </Summary>
@@ -86,10 +90,23 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
   if (status === "disputed") {
     return (
       <Summary status={status} icon={<Exclamation />}>
-        This request was disputed by {company.name} and can no longer be paid.
-        We have have reached out to {specialist.name} to resolve the dispute. If
-        further payment is required, they will be able to send an additional
-        payment request.
+        {viewer.isSpecialist ? (
+          <>
+            This request was disputed by {company.name} and can no longer be
+            paid. You should have recieved an email from us to resolve this. You
+            can cancel this request and send them another one if required.
+            <Box paddingTop={4}>
+              <CancelPaymentRequest paymentRequest={paymentRequest} />
+            </Box>
+          </>
+        ) : (
+          <>
+            This request was disputed by {company.name} and can no longer be
+            paid. We have have reached out to {specialist.name} to resolve the
+            dispute. If further payment is required, they will be able to send
+            an additional payment request.
+          </>
+        )}
       </Summary>
     );
   }

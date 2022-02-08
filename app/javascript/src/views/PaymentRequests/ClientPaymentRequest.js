@@ -49,14 +49,6 @@ export default function ClientPaymentRequest() {
 
           <Box height="1px" bg="neutral100" marginY={8} />
 
-          {status === "canceled" && (
-            <PaymentRequestCancelled paymentRequest={data.paymentRequest} />
-          )}
-
-          {status === "paid" && (
-            <PaymentRequestPaid paymentRequest={data.paymentRequest} />
-          )}
-
           <AdvisableProtection />
 
           {status === "pending" && (
