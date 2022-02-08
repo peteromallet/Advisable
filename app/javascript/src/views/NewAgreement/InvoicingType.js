@@ -85,14 +85,6 @@ export default function InvoicingType({ user }) {
                   description="I will request payment on a recurring basis since my work follows a repetitive pattern."
                   value="recurring"
                 />
-                <Field
-                  as={RadioOption}
-                  type="radio"
-                  name="invoicing"
-                  label="Flexible"
-                  description="I will request payment differently depending on the type of work that is being done."
-                  value="flexible"
-                />
               </Box>
               <SubmitButton
                 size="l"

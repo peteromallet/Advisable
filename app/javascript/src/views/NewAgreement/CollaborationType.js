@@ -100,14 +100,6 @@ export default function CollaborationType({ user }) {
                   description="I will be charging a set hourly rate for each project over the course of our collaboration."
                   value="hourly"
                 />
-                <Field
-                  as={RadioOption}
-                  type="radio"
-                  name="collaboration"
-                  label="Flexible"
-                  description="I will charge diferently depending on the type of project."
-                  value="flexible"
-                />
               </Box>
 
               <HourlyRateInput />
