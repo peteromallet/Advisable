@@ -49,22 +49,13 @@ function BankTransferPending({ paymentRequest }) {
 
   return (
     <>
-      <Badge marginBottom={2} variant="orange">
-        Pending Transfer
-      </Badge>
-      <Text lineHeight="24px" marginBottom={4} fontSize="lg">
+      <Text lineHeight="24px" marginBottom={6} fontSize="lg">
         Please send the total amount of{" "}
         <Text as="span" fontWeight={560}>
           {total}
         </Text>{" "}
         via bank transfer using one of the options below.
       </Text>
-
-      <Link.External marginBottom={12} href={payment.pdfUrl}>
-        <Button size="s" variant="subtle" prefix={<Download />}>
-          Download invoice
-        </Button>
-      </Link.External>
 
       <Tabs label="bank transfer options">
         <Tabs.Tab title="EUR">
@@ -142,6 +133,12 @@ function BankTransferPending({ paymentRequest }) {
           </Stack>
         </Tabs.Tab>
       </Tabs>
+
+      <Link.External marginTop={8} href={payment.pdfUrl}>
+        <Button size="s" variant="subtle" prefix={<Download />}>
+          Download invoice
+        </Button>
+      </Link.External>
     </>
   );
 }

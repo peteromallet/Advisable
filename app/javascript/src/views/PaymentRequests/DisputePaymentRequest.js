@@ -14,6 +14,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import SubmitButton from "src/components/SubmitButton";
 import { useDisputePaymentRequest } from "./queries";
+import { QuestionMarkCircle } from "@styled-icons/heroicons-solid";
 
 const validationSchema = object().shape({
   reason: string().required("Please provide a reason"),
@@ -75,25 +76,33 @@ export default function DisputePaymentRequest({ paymentRequest }) {
   const modal = useModal();
 
   return (
-    <Box
-      marginTop={8}
-      borderTop="1px solid"
-      borderColor="neutral100"
-      paddingTop={6}
-    >
-      <Text lineHeight="24px" marginBottom={2} color="neutral700">
-        If you are not happy with paying this request you can dispute it and we
-        will reach out to {paymentRequest.specialist.name} and get back to you.
-      </Text>
-      <DialogDisclosure {...modal}>
-        {(disclosure) => <Link {...disclosure}>Dispute request</Link>}
-      </DialogDisclosure>
-      <Modal modal={modal}>
-        <DisputePaymentRequestForm
-          modal={modal}
-          paymentRequest={paymentRequest}
-        />
-      </Modal>
+    <Box display="flex">
+      <Box flexShrink={0} color="neutral500">
+        <QuestionMarkCircle size={28} />
+      </Box>
+      <Box paddingLeft={3}>
+        <Text fontWeight={520} marginBottom={1} fontSize="l">
+          Dispute payment
+        </Text>
+        <Text lineHeight="24px" marginBottom={2} color="neutral700">
+          If you are not happy with paying this request you can dispute it and
+          we will reach out to {paymentRequest.specialist.name} and get back to
+          you.
+        </Text>
+        <DialogDisclosure {...modal}>
+          {(disclosure) => (
+            <Link variant="underlined" {...disclosure}>
+              Dispute request
+            </Link>
+          )}
+        </DialogDisclosure>
+        <Modal modal={modal}>
+          <DisputePaymentRequestForm
+            modal={modal}
+            paymentRequest={paymentRequest}
+          />
+        </Modal>
+      </Box>
     </Box>
   );
 }

@@ -158,7 +158,7 @@ export default function NewPaymentRequest() {
 
     const { paymentRequest } = response.data.createPaymentRequest;
 
-    history.push(`/payment_requests/${paymentRequest.id}`);
+    history.replace(`/payment_requests/${paymentRequest.id}`);
   };
 
   const companyOptions = data.acceptedAgreements.map((a) => ({

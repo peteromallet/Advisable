@@ -1,9 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Box, Text } from "@advisable/donut";
+import { Box, Text, Badge } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
 import { usePaymentRequest } from "./queries";
 import PaymentRequestSummary from "./PaymentRequestSummary";
+import AdvisableProtection from "./AdvisableProtection";
+import PaymentRequestStatusSummary from "./PaymentRequestStatusSummary";
 
 export default function FreelancerPaymentRequest() {
   const { data, loading, error } = usePaymentRequest();
@@ -11,7 +13,7 @@ export default function FreelancerPaymentRequest() {
   if (loading) return <>loading...</>;
   if (error) return <>Something went wrong. Please try again.</>;
 
-  const { company } = data.paymentRequest;
+  const { company, status } = data.paymentRequest;
 
   return (
     <>
@@ -36,12 +38,16 @@ export default function FreelancerPaymentRequest() {
           >
             Payment request to {company.name}
           </Text>
-          <Text fontSize="xl" lineHeight="28px" marginBottom={8}>
-            Some text to explain to the freelancer what to expect. Funds will be
-            released immediately after {company.name} has paid.
-          </Text>
+
+          <Box height="1px" bg="neutral100" marginY={6} />
+
+          <PaymentRequestStatusSummary paymentRequest={data.paymentRequest} />
+
+          <Box height="1px" bg="neutral100" marginY={8} />
+
+          <AdvisableProtection />
         </Box>
-        <Box width="460px" flexShrink={0}>
+        <Box width="460px" flexShrink={0} paddingBottom={8}>
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
