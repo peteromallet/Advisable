@@ -94,7 +94,7 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
         {viewer.isSpecialist ? (
           <>
             This request was disputed by {company.name} and can no longer be
-            paid. You should have recieved an email from us to resolve this. You
+            paid. You should have received an email from us to resolve this. You
             can cancel this request and send them another one if required.
             <Box paddingTop={4}>
               <CancelPaymentRequest paymentRequest={paymentRequest} />
@@ -139,13 +139,13 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
       <Summary status={status} icon={<CheckCircle />}>
         {viewer.isSpecialist ? (
           <>
-            This request has been paid by {company.name} and transfered to your
+            This request has been paid by {company.name} and transferred to your
             account. You should receive the funds within 3 working days.
           </>
         ) : (
           <>
-            This request has been paid by {company.name} and has been transfered
-            to {specialist.name}.
+            This request has been paid by {company.name} and has been
+            transferred to {specialist.name}.
           </>
         )}
       </Summary>
