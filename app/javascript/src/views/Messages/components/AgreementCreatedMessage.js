@@ -25,6 +25,7 @@ import useViewer from "src/hooks/useViewer";
 import CircularButton from "src/components/CircularButton";
 import { Field, Form, Formik } from "formik";
 import SubmitButton from "src/components/SubmitButton";
+import css from "@styled-system/css";
 
 const declineValidationSchema = object().shape({
   message: string().required(),
@@ -207,6 +208,8 @@ function ViewAgreement({ agreement }) {
 }
 
 export default function AgreementCreatedMessage({ message }) {
+  const modal = useModal();
+  const viewer = useViewer();
   const sender = message.agreement?.specialist?.firstName;
   const { show, dismiss, highlight } = useMessagePrompt(
     message,
@@ -227,9 +230,16 @@ export default function AgreementCreatedMessage({ message }) {
         padding={4}
         borderRadius="20px"
         border="2px solid"
-        borderColor="neutral300"
         display="flex"
         alignItems="center"
+        onClick={modal.show}
+        css={css({
+          cursor: "pointer",
+          borderColor: "neutral300",
+          "&:hover": {
+            borderColor: "neutral400",
+          },
+        })}
       >
         <Circle size={40} bg="neutral200" color="neutral800">
           <Calendar size={20} />
@@ -242,9 +252,19 @@ export default function AgreementCreatedMessage({ message }) {
             Review the agreement
           </Text>
         </Box>
-        {message.agreement.status === "pending" && (
-          <ViewAgreement agreement={message.agreement} />
-        )}
+        <DialogDisclosure {...modal}>
+          {(disclosure) => (
+            <Button
+              variant={viewer.isClient ? "gradient" : "secondary"}
+              {...disclosure}
+            >
+              {viewer.isClient ? "Review" : "View"}
+            </Button>
+          )}
+        </DialogDisclosure>
+        <Modal modal={modal} width={600}>
+          <AgreementModal agreement={message.agreement} modal={modal} />
+        </Modal>
       </Box>
     </BaseMessage>
   );
