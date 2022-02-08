@@ -47,7 +47,7 @@ function CancelPaymentRequestForm({ modal, paymentRequest }) {
       <Form>
         <Heading marginBottom={2}>Cancel payment request</Heading>
         <Text lineHeight="20px" marginBottom={5}>
-          Let us know why you are cancelling this payment request.
+          Let us know why you are canceling this payment request.
         </Text>
         <Field
           autoFocus
