@@ -6,6 +6,7 @@ import CLIENT_PAYMENT_REQUESTS from "./clientPaymentRequests.gql";
 import FREELANCER_PAYMENT_REQUESTS from "./freelancerPaymentRequests.gql";
 import PAYMENT_REQUEST_FIELDS from "./paymentRequestFields.gql";
 import DISPUTE_PAYMENT_REQUEST from "./disputePaymentRequest.gql";
+import CANCEL_PAYMENT_REQUEST from "./cancelPaymentRequest.gql";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
@@ -66,4 +67,8 @@ export function useCreatePaymentRequest() {
 
 export function useDisputePaymentRequest() {
   return useMutation(DISPUTE_PAYMENT_REQUEST);
+}
+
+export function useCancelPaymentRequest() {
+  return useMutation(CANCEL_PAYMENT_REQUEST);
 }
