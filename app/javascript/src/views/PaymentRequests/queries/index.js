@@ -56,7 +56,7 @@ export function useCreatePaymentRequest() {
 
             return {
               ...existing,
-              edges: [newRef, ...existing.edges],
+              edges: [{ node: newRef }, ...existing.edges],
             };
           },
         },
