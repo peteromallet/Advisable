@@ -9,6 +9,8 @@ import CapturePayment from "./CapturePayment";
 import PaymentRequestPaid from "./PaymentRequestPaid";
 import PaymentRequestCancelled from "./PaymentRequestCancelled";
 import PaymentRequestSummary from "./PaymentRequestSummary";
+import AdvisableProtection from "./AdvisableProtection";
+import PaymentRequestStatusSummary from "./PaymentRequestStatusSummary";
 
 export default function ClientPaymentRequest() {
   const { data, loading, error } = usePaymentRequest();
@@ -34,33 +36,18 @@ export default function ClientPaymentRequest() {
         >
           <Text
             size="6xl"
-            marginBottom={4}
             lineHeight="40px"
             fontWeight={560}
             letterSpacing="-0.024em"
           >
             Payment request from {specialist.name}
           </Text>
-          <Text fontSize="xl" lineHeight="28px" marginBottom={8}>
-            Some text to explain to the client what to expect. Funds will be
-            released to {specialist.name} immediately after paying.
-          </Text>
 
-          {status === "disputed" && (
-            <Box>
-              <Text
-                fontSize="l"
-                fontWeight={560}
-                letterSpacing="-0.02em"
-                marginBottom={2}
-              >
-                Payment request disputed
-              </Text>
-              <Text lineHeight="24px">
-                This payment request has been disputed.
-              </Text>
-            </Box>
-          )}
+          <Box height="1px" bg="neutral100" marginY={6} />
+
+          <PaymentRequestStatusSummary paymentRequest={data.paymentRequest} />
+
+          <Box height="1px" bg="neutral100" marginY={8} />
 
           {status === "canceled" && (
             <PaymentRequestCancelled paymentRequest={data.paymentRequest} />
@@ -70,23 +57,20 @@ export default function ClientPaymentRequest() {
             <PaymentRequestPaid paymentRequest={data.paymentRequest} />
           )}
 
-          <Box>
-            {status === "pending" && (
-              <ApprovePaymentRequest paymentRequest={data.paymentRequest} />
-            )}
-          </Box>
+          <AdvisableProtection />
 
-          {status === "approved" && (
-            <CapturePayment paymentRequest={data.paymentRequest} />
-          )}
-
-          <Box>
-            {status === "pending" && (
+          {status === "pending" && (
+            <Box
+              marginTop={8}
+              paddingTop={6}
+              borderTop="1px solid"
+              borderColor="neutral100"
+            >
               <DisputePaymentRequest paymentRequest={data.paymentRequest} />
-            )}
-          </Box>
+            </Box>
+          )}
         </Box>
-        <Box width="460px" flexShrink={0}>
+        <Box width="460px" flexShrink={0} paddingBottom={8}>
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}

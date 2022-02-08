@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import currency from "src/utilities/currency";
-import { Box, Stack, Text } from "@advisable/donut";
+import { Box, Stack, Text, Link } from "@advisable/donut";
 import PaymentRequestStatus from "./PaymentRequestStatus";
 import { DateTime } from "luxon";
 
@@ -12,8 +12,14 @@ function SourcingFee({ amount = 0, sourcingFee }) {
 
   return (
     <Text marginTop={2} lineHeight="20px">
-      You will earn <b>{currency(earnings)}</b> after our <b>{fee * 100}%</b>{" "}
-      Advisable fee
+      You will earn <b>{currency(earnings)}</b> after our{" "}
+      <Link.External
+        variant="underlined"
+        target="_blank"
+        href="https://www.advisable.com/faq"
+      >
+        {fee * 100}% Advisable fee
+      </Link.External>
     </Text>
   );
 }
@@ -56,7 +62,7 @@ export default function PaymentRequestSummary({
       </Box>
 
       <Stack spacing={8} divider="neutral100">
-        <Text fontSize="xl" fontWeight={520} letterSpacing="-0.02em">
+        <Text fontSize="2xl" fontWeight={520} letterSpacing="-0.02em">
           Summary
         </Text>
 
@@ -99,18 +105,27 @@ export default function PaymentRequestSummary({
 
         {showClientFee && paymentRequest.adminFee && (
           <Box display="flex" justifyContent="space-between">
-            <Text color="neutral800">Advisable fee</Text>
+            <Box>
+              <Text color="neutral800" marginBottom={1}>
+                5% Advisable fee
+              </Text>
+              <Link.External fontSize="s" variant="underlined">
+                Read more
+              </Link.External>
+            </Box>
             <Text fontWeight={560} fontSize="l">
-              + {currency(paymentRequest.adminFee)}
+              {currency(paymentRequest.adminFee, { format: "$0,0.00" })}
             </Text>
           </Box>
         )}
 
         <Box display="flex" justifyContent="space-between">
-          <Text color="neutral800">Total</Text>
+          <Text fontSize="lg" color="neutral800">
+            Total
+          </Text>
           <Box textAlign="right">
             <Text fontSize="5xl" fontWeight={600}>
-              {currency(total)}
+              {currency(total, { format: "$0,0.00" })}
             </Text>
             {showFreelancerFee && (
               <Box width="200px">
