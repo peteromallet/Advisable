@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Box,
+  Link as DonutLink,
   Button,
   Circle,
   Container,
@@ -51,11 +52,19 @@ function AdvisableProtection() {
           >
             You’re protected by Advisable
           </Text>
-          <Text lineHeight="24px" color="neutral800">
+          <Text lineHeight="24px" color="neutral800" marginBottom={2}>
             In the rare event that the client is unhappy with your work,
             Advisable guarantees each new collaboration with a $1,000 risk free
             trial.
           </Text>
+
+          <DonutLink.External
+            variant="underlined"
+            target="_blank"
+            href="https://www.advisable.com/faq#freelancers-faq"
+          >
+            Learn more
+          </DonutLink.External>
         </Box>
       </Box>
       <Box height="1px" bg="neutral100" marginTop={8} />
