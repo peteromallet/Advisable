@@ -9,6 +9,7 @@ query ClientPaymentRequests($cursor: String) {
         id
         status
         amount
+        adminFee
         createdAt
         specialist {
           id

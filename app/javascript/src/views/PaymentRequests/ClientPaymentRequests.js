@@ -58,7 +58,7 @@ export default function ClientPaymentRequests() {
             </Table.Cell>
             <Table.Cell width="120px" textAlign="right">
               <Text fontWeight={560} color="neutral900">
-                {currency(pr.amount, { format: "$0,0.00" })}
+                {currency(pr.amount + pr.adminFee, { format: "$0,0.00" })}
               </Text>
             </Table.Cell>
           </Table.Row>

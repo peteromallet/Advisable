@@ -15,13 +15,13 @@ import DownloadInvoice from "./DownloadInvoice";
 
 function Summary({ status, children, icon }) {
   return (
-    <Box display="flex">
+    <Box display="flex" width="100%">
       {icon && (
         <Box flexShrink={0} color="neutral500" marginRight={4}>
           {React.cloneElement(icon, { size: 28 })}
         </Box>
       )}
-      <Box>
+      <Box flex={1}>
         <PaymentRequestStatus status={status} />
         <Text marginTop={3} fontSize="l" lineHeight="24px">
           {children}
