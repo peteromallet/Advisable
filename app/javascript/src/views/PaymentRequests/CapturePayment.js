@@ -1,10 +1,10 @@
 import { useApolloClient } from "@apollo/client";
 import React, { useState } from "react";
-import { Link, Button, Text, Box, Stack, Tabs, Badge } from "@advisable/donut";
+import { Text, Box, Stack, Tabs } from "@advisable/donut";
 import PaymentMethodForm from "src/components/PaymentMethodForm";
 import { ExclamationCircle } from "@styled-icons/heroicons-solid/ExclamationCircle";
 import currency from "src/utilities/currency";
-import { Download } from "@styled-icons/heroicons-solid";
+import DownloadInvoice from "./DownloadInvoice";
 
 function Row({ children }) {
   return (
@@ -134,11 +134,9 @@ function BankTransferPending({ paymentRequest }) {
         </Tabs.Tab>
       </Tabs>
 
-      <Link.External marginTop={8} href={payment.pdfUrl}>
-        <Button size="s" variant="subtle" prefix={<Download />}>
-          Download invoice
-        </Button>
-      </Link.External>
+      <Box paddingTop={8}>
+        <DownloadInvoice payment={payment} />
+      </Box>
     </>
   );
 }
