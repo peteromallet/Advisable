@@ -186,12 +186,16 @@ function AgreementModal({ agreement, modal }) {
 
 function ViewAgreement({ agreement }) {
   const modal = useModal();
+  const viewer = useViewer();
   return (
     <>
       <DialogDisclosure {...modal}>
         {(disclosure) => (
-          <Button variant="gradient" {...disclosure}>
-            Respond
+          <Button
+            variant={viewer.isClient ? "gradient" : "secondary"}
+            {...disclosure}
+          >
+            {viewer.isClient ? "Review" : "View"}
           </Button>
         )}
       </DialogDisclosure>
