@@ -11,6 +11,7 @@ import {
 import ApprovePaymentRequest from "./ApprovePaymentRequest";
 import CapturePayment from "./CapturePayment";
 import CancelPaymentRequest from "./CancelPaymentRequest";
+import DownloadInvoice from "./DownloadInvoice";
 
 function Summary({ status, children, icon }) {
   return (
@@ -115,6 +116,11 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
     return (
       <Summary status={status} icon={<CheckCircle />}>
         This request has been paid by {company.name}.
+        {viewer.isClient && (
+          <Box paddingTop={4}>
+            <DownloadInvoice payment={payment} />
+          </Box>
+        )}
       </Summary>
     );
   }
