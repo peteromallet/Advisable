@@ -572,8 +572,6 @@ GEM
     stackprof (0.2.17)
     statsd-ruby (1.5.0)
     stripe (5.43.0)
-    strong_migrations (0.7.9)
-      activerecord (>= 5)
     strscan (3.0.1)
     temple (0.8.2)
     thor (1.2.1)
@@ -702,7 +700,6 @@ DEPENDENCIES
   slim
   sql_spy
   stripe
-  strong_migrations
   timecop
   twilio-ruby
   web-console
