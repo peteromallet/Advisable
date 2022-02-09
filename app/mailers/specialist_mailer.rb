@@ -101,9 +101,9 @@ class SpecialistMailer < ApplicationMailer
     end
   end
 
-  def consultation_request(consultation, message)
-    @message = message
+  def consultation_request(consultation)
     @consultation = consultation
+    @message = @consultation.messages.consultation_requests.order(:created_at).last
     @sales_person = default_sales_person_for(consultation.user.company)
 
     mail(
