@@ -2,11 +2,11 @@ p Hi #{@consultation.specialist.account.first_name},
 
 p
   ' This is #{@sales_person.first_name} from Advisable.com.
-  ' Your case study was recommended to #{@consultation.user.company.name} and after reading it they requested a 30-minute call with you to discuss a potential project.
+  ' Your case study was recommended to #{@consultation.user.company.name.presence || @consultation.user.account.name} and after reading it they requested a 30-minute call with you to discuss a potential project.
 
 p This is a great opportunity for you to understand their requirements and figure out how you can work together.
 
-p  #{@consultation.user.account.name} from #{@consultation.user.company.name} left the following message:
+p  #{@consultation.user.name_with_company} left the following message:
 
 p "#{@message.content}"
 
