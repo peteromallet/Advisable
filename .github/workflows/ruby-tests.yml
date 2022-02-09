@@ -71,7 +71,7 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: Setup database
-        run: bin/rails db:create db:migrate db:test:prepare
+        run: bin/rails parallel:create parallel:migrate
 
       - name: Compile assets
         run: bin/rails webpacker:compile
