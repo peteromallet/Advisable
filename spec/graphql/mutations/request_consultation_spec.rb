@@ -48,10 +48,7 @@ RSpec.describe Mutations::RequestConsultation do
   it "notifies the freelancer viia email" do
     AdvisableSchema.execute(query, context:)
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "consultation_request", "deliver_now", {
-      args: [
-        an_instance_of(Consultation),
-        an_instance_of(Message)
-      ]
+      args: [an_instance_of(Consultation)]
     }).once
   end
 
