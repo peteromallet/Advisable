@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_03_115739) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_02_03_115739) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -25,21 +24,21 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "password_digest"
     t.citext "email"
     t.string "uid", null: false
-    t.datetime "confirmed_at"
+    t.datetime "confirmed_at", precision: nil
     t.string "confirmation_digest"
     t.string "reset_digest"
-    t.datetime "reset_sent_at"
+    t.datetime "reset_sent_at", precision: nil
     t.jsonb "permissions", default: []
     t.jsonb "completed_tutorials", default: []
     t.string "confirmation_token"
     t.boolean "test_account"
     t.string "remember_token"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "log_data"
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.jsonb "unsubscribed_from"
-    t.datetime "disabled_at"
+    t.datetime "disabled_at", precision: nil
     t.jsonb "features"
     t.string "timezone"
     t.index ["email"], name: "index_accounts_on_email", unique: true
@@ -50,8 +49,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.integer "status", default: 0, null: false
     t.string "message_id", null: false
     t.string "message_checksum", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
   end
 
@@ -60,7 +59,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.integer "position"
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -73,7 +72,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.text "metadata"
     t.bigint "byte_size", null: false
     t.string "checksum"
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -93,8 +92,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "invoicing"
     t.string "status"
     t.integer "hourly_rate"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.index ["company_id"], name: "index_agreements_on_company_id"
     t.index ["specialist_id"], name: "index_agreements_on_specialist_id"
@@ -106,8 +105,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "content"
     t.bigint "question_id", null: false
     t.bigint "specialist_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "uid", null: false
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["specialist_id"], name: "index_answers_on_specialist_id"
@@ -122,8 +121,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.integer "score"
     t.bigint "specialist_id"
     t.bigint "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "accepts_fee"
     t.boolean "accepts_terms"
     t.boolean "featured", default: false
@@ -131,7 +130,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.text "rejection_reason"
     t.text "rejection_reason_comment"
     t.string "invitation_rejection_reason"
-    t.datetime "applied_at"
+    t.datetime "applied_at", precision: nil
     t.boolean "hidden"
     t.string "proposal_comment"
     t.string "project_type"
@@ -139,15 +138,15 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "uid", null: false
     t.string "stopped_working_reason"
     t.boolean "trial_program"
-    t.datetime "invited_to_apply_at"
-    t.datetime "invitation_rejected_at"
-    t.datetime "application_rejected_at"
-    t.datetime "application_accepted_at"
-    t.datetime "interview_scheduled_at"
-    t.datetime "interview_completed_at"
-    t.datetime "proposal_sent_at"
-    t.datetime "started_working_at"
-    t.datetime "stopped_working_at"
+    t.datetime "invited_to_apply_at", precision: nil
+    t.datetime "invitation_rejected_at", precision: nil
+    t.datetime "application_rejected_at", precision: nil
+    t.datetime "application_accepted_at", precision: nil
+    t.datetime "interview_scheduled_at", precision: nil
+    t.datetime "interview_completed_at", precision: nil
+    t.datetime "proposal_sent_at", precision: nil
+    t.datetime "started_working_at", precision: nil
+    t.datetime "stopped_working_at", precision: nil
     t.boolean "auto_apply"
     t.boolean "hide_from_profile"
     t.jsonb "log_data"
@@ -166,10 +165,10 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "provider"
     t.string "token"
     t.string "refresh_token"
-    t.datetime "expires_at"
+    t.datetime "expires_at", precision: nil
     t.jsonb "blob"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
     t.index ["account_id"], name: "index_auth_providers_on_account_id"
     t.index ["provider", "uid"], name: "index_auth_providers_on_provider_and_uid", unique: true
@@ -178,8 +177,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "case_study_archived_articles", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "article_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_case_study_archived_articles_on_article_id"
     t.index ["user_id"], name: "index_case_study_archived_articles_on_user_id"
   end
@@ -188,8 +187,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "article_id", null: false
     t.bigint "skill_id"
     t.text "feedback"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_case_study_article_feedbacks_on_article_id"
     t.index ["skill_id"], name: "index_case_study_article_feedbacks_on_skill_id"
   end
@@ -203,13 +202,13 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.text "comment"
     t.string "excerpt"
     t.jsonb "goals"
-    t.datetime "published_at"
-    t.datetime "specialist_approved_at"
+    t.datetime "published_at", precision: nil
+    t.datetime "specialist_approved_at", precision: nil
     t.bigint "specialist_id", null: false
     t.bigint "interviewer_id"
     t.bigint "editor_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "company_id"
     t.jsonb "log_data"
     t.string "airtable_id"
@@ -217,7 +216,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.jsonb "targeting"
     t.text "editor_note"
     t.text "freelancer_edits"
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.boolean "hide_from_search", default: false
     t.string "slug"
     t.string "editor_url"
@@ -236,8 +235,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.text "description"
     t.string "website"
     t.string "business_type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.index ["uid"], name: "index_case_study_companies_on_uid", unique: true
   end
@@ -248,8 +247,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "type"
     t.integer "position"
     t.jsonb "content"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.index ["section_id"], name: "index_case_study_contents_on_section_id"
     t.index ["uid"], name: "index_case_study_contents_on_uid", unique: true
@@ -259,8 +258,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "uid", null: false
     t.bigint "article_id", null: false
     t.bigint "industry_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_industries_on_article_id"
     t.index ["industry_id"], name: "index_case_study_industries_on_industry_id"
@@ -271,9 +270,9 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "search_id", null: false
     t.bigint "article_id", null: false
     t.text "feedback"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "resolved_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "resolved_at", precision: nil
     t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_search_feedbacks_on_article_id"
     t.index ["search_id"], name: "index_case_study_search_feedbacks_on_search_id"
@@ -285,11 +284,11 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "user_id", null: false
     t.string "business_type"
     t.jsonb "goals"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.jsonb "results"
-    t.datetime "finalized_at"
+    t.datetime "finalized_at", precision: nil
     t.jsonb "preferences"
     t.jsonb "archived"
     t.jsonb "selected"
@@ -302,8 +301,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "article_id", null: false
     t.string "type"
     t.integer "position"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.index ["article_id"], name: "index_case_study_sections_on_article_id"
     t.index ["uid"], name: "index_case_study_sections_on_uid", unique: true
@@ -314,8 +313,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "shared_with_id", null: false
     t.bigint "shared_by_id", null: false
     t.text "message"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "uid", null: false
     t.index ["article_id"], name: "index_case_study_shared_articles_on_article_id"
     t.index ["shared_by_id"], name: "index_case_study_shared_articles_on_shared_by_id"
@@ -328,8 +327,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.boolean "primary"
     t.bigint "article_id"
     t.bigint "skill_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.bigint "search_id"
     t.index ["article_id"], name: "index_case_study_skills_on_article_id"
@@ -342,7 +341,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "airtable_id"
     t.integer "duration"
     t.bigint "project_id"
-    t.datetime "call_time"
+    t.datetime "call_time", precision: nil
     t.string "phone_number"
     t.string "email"
     t.string "event_type"
@@ -351,8 +350,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "sales_person_id"
     t.string "type_of_call"
     t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "call_attempt_count"
     t.index ["airtable_id"], name: "index_client_calls_on_airtable_id"
     t.index ["project_id"], name: "index_client_calls_on_project_id"
@@ -363,8 +362,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "companies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "kind"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "sales_person_id"
     t.bigint "industry_id"
     t.string "stripe_customer_id"
@@ -372,7 +371,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "setup_intent_status"
     t.boolean "payments_setup", default: false
     t.string "project_payment_method"
-    t.datetime "accepted_project_payment_terms_at"
+    t.datetime "accepted_project_payment_terms_at", precision: nil
     t.string "invoice_name"
     t.string "invoice_company_name"
     t.string "billing_email"
@@ -398,17 +397,17 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "topic"
     t.bigint "skill_id"
     t.string "airtable_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "interview_id"
     t.string "source"
     t.integer "likely_to_hire"
-    t.datetime "request_started_at"
-    t.datetime "request_completed_at"
-    t.datetime "sent_at"
-    t.datetime "accepted_at"
-    t.datetime "rejected_at"
-    t.datetime "advisable_rejected_at"
+    t.datetime "request_started_at", precision: nil
+    t.datetime "request_completed_at", precision: nil
+    t.datetime "sent_at", precision: nil
+    t.datetime "accepted_at", precision: nil
+    t.datetime "rejected_at", precision: nil
+    t.datetime "advisable_rejected_at", precision: nil
     t.bigint "search_id"
     t.string "rejection_reason"
     t.index ["airtable_id"], name: "index_consultations_on_airtable_id"
@@ -423,9 +422,9 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "conversation_participants", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "conversation_id", null: false
-    t.datetime "last_read_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "last_read_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "unread_count"
     t.index ["account_id"], name: "index_conversation_participants_on_account_id"
     t.index ["conversation_id"], name: "index_conversation_participants_on_conversation_id"
@@ -433,8 +432,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
 
   create_table "conversations", force: :cascade do |t|
     t.string "uid", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "idempotency_key"
     t.index ["idempotency_key"], name: "index_conversations_on_idempotency_key"
     t.index ["uid"], name: "index_conversations_on_uid", unique: true
@@ -444,8 +443,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "name"
     t.string "currency"
     t.string "airtable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "uid", null: false
     t.boolean "eu"
     t.string "alpha2"
@@ -456,8 +455,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "event_attendees", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "specialist_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_event_attendees_on_event_id"
     t.index ["specialist_id", "event_id"], name: "index_event_attendees_on_specialist_id_and_event_id", unique: true
     t.index ["specialist_id"], name: "index_event_attendees_on_specialist_id"
@@ -471,11 +470,11 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "color", null: false
     t.bigint "host_id", null: false
     t.boolean "featured", default: false
-    t.datetime "published_at"
-    t.datetime "starts_at"
-    t.datetime "ends_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "published_at", precision: nil
+    t.datetime "starts_at", precision: nil
+    t.datetime "ends_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "google_calendar_id"
     t.string "status"
     t.index ["host_id"], name: "index_events_on_host_id"
@@ -485,8 +484,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "guild_post_engagements", force: :cascade do |t|
     t.bigint "specialist_id"
     t.uuid "guild_post_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["guild_post_id"], name: "index_guild_post_engagements_on_guild_post_id"
     t.index ["specialist_id", "guild_post_id"], name: "index_guild_post_engagements_on_specialist_id_and_guild_post_id", unique: true
     t.index ["specialist_id"], name: "index_guild_post_engagements_on_specialist_id"
@@ -498,8 +497,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "string"
     t.integer "position"
     t.boolean "cover"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["guild_post_id"], name: "index_guild_post_images_on_guild_post_id"
     t.index ["string"], name: "index_guild_post_images_on_string"
     t.index ["uid"], name: "index_guild_post_images_on_uid", unique: true
@@ -510,13 +509,13 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "title"
     t.integer "status", default: 0, null: false
     t.bigint "specialist_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "engagements_count", default: 0
     t.boolean "shareable", default: false
     t.boolean "pinned", default: false
-    t.datetime "boosted_at"
-    t.datetime "resolved_at"
+    t.datetime "boosted_at", precision: nil
+    t.datetime "resolved_at", precision: nil
     t.string "audience_type"
     t.uuid "post_prompt_id"
     t.bigint "article_id"
@@ -528,8 +527,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "industries", force: :cascade do |t|
     t.string "name"
     t.string "uid", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "airtable_id"
     t.string "color"
     t.boolean "active"
@@ -538,21 +537,21 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
 
   create_table "interviews", force: :cascade do |t|
     t.bigint "application_id"
-    t.datetime "starts_at"
+    t.datetime "starts_at", precision: nil
     t.string "status"
     t.string "time_zone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "user_id"
     t.string "availability_note"
     t.string "zoom_meeting_id"
     t.string "uid", null: false
-    t.datetime "call_requested_at"
-    t.datetime "call_scheduled_at"
-    t.datetime "requested_more_time_options_at"
-    t.datetime "more_time_options_added_at"
-    t.datetime "client_requested_reschedule_at"
-    t.datetime "specialist_requested_reschedule_at"
+    t.datetime "call_requested_at", precision: nil
+    t.datetime "call_scheduled_at", precision: nil
+    t.datetime "requested_more_time_options_at", precision: nil
+    t.datetime "more_time_options_added_at", precision: nil
+    t.datetime "client_requested_reschedule_at", precision: nil
+    t.datetime "specialist_requested_reschedule_at", precision: nil
     t.jsonb "log_data"
     t.string "google_calendar_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
@@ -565,8 +564,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.integer "year", null: false
     t.uuid "company_id", null: false
     t.string "key"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "uid", null: false
     t.index ["company_id", "year", "month"], name: "index_invoices_on_company_id_and_year_and_month", unique: true
     t.index ["company_id"], name: "index_invoices_on_company_id"
@@ -576,8 +575,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "labelings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "label_id", null: false
     t.uuid "guild_post_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["guild_post_id"], name: "index_labelings_on_guild_post_id"
     t.index ["label_id", "guild_post_id"], name: "index_labelings_on_label_id_and_guild_post_id", unique: true
     t.index ["label_id"], name: "index_labelings_on_label_id"
@@ -586,13 +585,13 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "labels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "slug"
-    t.datetime "published_at"
+    t.datetime "published_at", precision: nil
     t.integer "labelings_count"
     t.bigint "country_id"
     t.bigint "industry_id"
     t.bigint "skill_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text "description"
     t.index ["country_id"], name: "index_labels_on_country_id", unique: true
     t.index ["industry_id"], name: "index_labels_on_industry_id", unique: true
@@ -604,17 +603,17 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "account_id", null: false
     t.string "path"
     t.string "digest"
-    t.datetime "expires_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "expires_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_magic_links_on_account_id"
   end
 
   create_table "matches", force: :cascade do |t|
     t.bigint "specialist_id"
     t.bigint "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "status"
     t.index ["project_id"], name: "index_matches_on_project_id"
     t.index ["specialist_id"], name: "index_matches_on_specialist_id"
@@ -625,8 +624,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.text "content"
     t.bigint "author_id"
     t.bigint "conversation_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "idempotency_key"
     t.string "kind"
     t.uuid "guild_post_id"
@@ -650,9 +649,9 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "action", null: false
     t.string "notifiable_type", null: false
     t.uuid "notifiable_id", null: false
-    t.datetime "read_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "read_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_notifications_on_account_id"
     t.index ["actor_id"], name: "index_notifications_on_actor_id"
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
@@ -664,14 +663,14 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.uuid "company_id"
     t.string "status", null: false
     t.integer "amount"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.jsonb "line_items"
     t.string "dispute_reason"
     t.string "cancellation_reason"
     t.string "memo"
-    t.datetime "due_at", precision: 6
+    t.datetime "due_at"
     t.index ["company_id"], name: "index_payment_requests_on_company_id"
     t.index ["specialist_id"], name: "index_payment_requests_on_specialist_id"
     t.index ["uid"], name: "index_payment_requests_on_uid", unique: true
@@ -686,13 +685,13 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "specialist_id", null: false
     t.bigint "task_id"
     t.string "payment_intent_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.string "payment_method"
     t.integer "deposit"
     t.integer "retries"
-    t.datetime "charged_at"
+    t.datetime "charged_at", precision: nil
     t.bigint "payment_request_id"
     t.string "pdf_key"
     t.index ["company_id"], name: "index_payments_on_company_id"
@@ -709,9 +708,9 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.integer "amount"
     t.integer "sourcing_fee"
     t.string "status"
-    t.datetime "processed_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "processed_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.bigint "payment_request_id"
     t.index ["payment_request_id"], name: "index_payouts_on_payment_request_id"
@@ -724,8 +723,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "application_id", null: false
     t.bigint "user_id", null: false
     t.text "message"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["application_id"], name: "index_problematic_flags_on_application_id"
     t.index ["user_id"], name: "index_problematic_flags_on_user_id"
   end
@@ -735,8 +734,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "project_type"
     t.bigint "project_id"
     t.boolean "primary"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["industry_id"], name: "index_project_industries_on_industry_id"
     t.index ["project_type", "project_id"], name: "index_project_industries_on_project_type_and_project_id"
   end
@@ -745,8 +744,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "skill_id"
     t.string "project_type"
     t.bigint "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "primary"
     t.index ["project_type", "project_id"], name: "index_project_skills_on_project"
     t.index ["skill_id"], name: "index_project_skills_on_skill_id"
@@ -755,8 +754,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.string "airtable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "currency"
     t.string "client_referral_url"
     t.text "company_description"
@@ -766,7 +765,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.text "questions", default: [], array: true
     t.text "required_characteristics", default: [], array: true
     t.text "characteristics", default: [], array: true
-    t.datetime "accepted_terms_at"
+    t.datetime "accepted_terms_at", precision: nil
     t.integer "deposit"
     t.string "status"
     t.integer "deposit_paid"
@@ -777,18 +776,18 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "sales_status"
     t.string "deposit_payment_intent_id"
     t.string "campaign_source"
-    t.datetime "brief_pending_confirmation_at"
-    t.datetime "brief_confirmed_at"
-    t.datetime "interview_scheduled_at"
-    t.datetime "call_scheduled_at"
-    t.datetime "candidate_proposed_at"
-    t.datetime "candidate_accepted_at"
-    t.datetime "interview_completed_at"
-    t.datetime "booking_request_sent_at"
-    t.datetime "booking_confirmed_at"
-    t.datetime "proposal_received_at"
-    t.datetime "won_at"
-    t.datetime "lost_at"
+    t.datetime "brief_pending_confirmation_at", precision: nil
+    t.datetime "brief_confirmed_at", precision: nil
+    t.datetime "interview_scheduled_at", precision: nil
+    t.datetime "call_scheduled_at", precision: nil
+    t.datetime "candidate_proposed_at", precision: nil
+    t.datetime "candidate_accepted_at", precision: nil
+    t.datetime "interview_completed_at", precision: nil
+    t.datetime "booking_request_sent_at", precision: nil
+    t.datetime "booking_confirmed_at", precision: nil
+    t.datetime "proposal_received_at", precision: nil
+    t.datetime "won_at", precision: nil
+    t.datetime "lost_at", precision: nil
     t.string "campaign_name"
     t.string "uid", null: false
     t.string "industry"
@@ -803,7 +802,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.integer "hired_count", default: 0
     t.boolean "sourcing"
     t.bigint "linkedin_campaign_id"
-    t.datetime "published_at"
+    t.datetime "published_at", precision: nil
     t.jsonb "log_data"
     t.integer "deposit_used"
     t.boolean "stop_candidate_proposed_emails"
@@ -818,8 +817,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
 
   create_table "questions", force: :cascade do |t|
     t.string "content"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "uid", null: false
     t.index ["uid"], name: "index_questions_on_uid", unique: true
   end
@@ -830,8 +829,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "project_id"
     t.text "comment"
     t.jsonb "ratings"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "uid", null: false
     t.bigint "case_study_article_id"
     t.string "first_name"
@@ -855,8 +854,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "calendly_url"
     t.string "asana_id"
     t.string "airtable_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "uid", null: false
     t.index ["uid"], name: "index_sales_people_on_uid", unique: true
     t.index ["username"], name: "index_sales_people_on_username", unique: true
@@ -864,8 +863,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
 
   create_table "skill_categories", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "slug", null: false
     t.string "description"
     t.index ["slug"], name: "index_skill_categories_on_slug", unique: true
@@ -874,8 +873,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "skill_category_skills", force: :cascade do |t|
     t.bigint "skill_id", null: false
     t.bigint "skill_category_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["skill_category_id"], name: "index_skill_category_skills_on_skill_category_id"
     t.index ["skill_id"], name: "index_skill_category_skills_on_skill_id"
   end
@@ -884,8 +883,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "skill1_id", null: false
     t.bigint "skill2_id", null: false
     t.integer "similarity", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["skill1_id", "skill2_id"], name: "index_skill_similarities_on_skill1_id_and_skill2_id", unique: true
     t.index ["skill1_id"], name: "index_skill_similarities_on_skill1_id"
     t.index ["skill2_id"], name: "index_skill_similarities_on_skill2_id"
@@ -894,8 +893,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "skills", force: :cascade do |t|
     t.string "name"
     t.string "airtable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "category"
     t.boolean "profile"
     t.string "uid", null: false
@@ -911,8 +910,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "specialist_industries", force: :cascade do |t|
     t.bigint "specialist_id", null: false
     t.bigint "industry_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["industry_id"], name: "index_specialist_industries_on_industry_id"
     t.index ["specialist_id"], name: "index_specialist_industries_on_specialist_id"
   end
@@ -920,8 +919,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "specialist_skills", force: :cascade do |t|
     t.bigint "specialist_id"
     t.bigint "skill_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["skill_id"], name: "index_specialist_skills_on_skill_id"
     t.index ["specialist_id"], name: "index_specialist_skills_on_specialist_id"
   end
@@ -933,8 +932,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "city"
     t.bigint "country_id"
     t.string "airtable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "encrypted_phone_number"
     t.string "encrypted_phone_number_iv"
     t.jsonb "ratings", default: {}
@@ -960,9 +959,9 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.boolean "guild", default: false
     t.string "community_status"
     t.bigint "account_id"
-    t.datetime "community_applied_at"
-    t.datetime "community_accepted_at"
-    t.datetime "community_invited_to_call_at"
+    t.datetime "community_applied_at", precision: nil
+    t.datetime "community_accepted_at", precision: nil
+    t.datetime "community_invited_to_call_at", precision: nil
     t.integer "community_score"
     t.integer "member_of_week_email"
     t.jsonb "log_data"
@@ -972,10 +971,10 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "ideal_project"
     t.string "vat_number"
     t.string "application_interview_calendly_id"
-    t.datetime "application_interview_starts_at"
+    t.datetime "application_interview_starts_at", precision: nil
     t.string "iban"
-    t.datetime "guild_joined_date"
-    t.datetime "guild_featured_member_at"
+    t.datetime "guild_joined_date", precision: nil
+    t.datetime "guild_featured_member_at", precision: nil
     t.string "guild_calendly_link"
     t.bigint "referrer_id"
     t.integer "sourcing_fee"
@@ -988,10 +987,10 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "instagram"
     t.string "medium"
     t.citext "username"
-    t.datetime "submitted_at"
-    t.datetime "invited_to_interview_at"
-    t.datetime "interview_completed_at"
-    t.datetime "accepted_at"
+    t.datetime "submitted_at", precision: nil
+    t.datetime "invited_to_interview_at", precision: nil
+    t.datetime "interview_completed_at", precision: nil
+    t.datetime "accepted_at", precision: nil
     t.index ["account_id"], name: "index_specialists_on_account_id", unique: true
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"
@@ -1003,8 +1002,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
 
   create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "specialist_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.uuid "label_id"
     t.index ["label_id"], name: "index_subscriptions_on_label_id"
     t.index ["specialist_id", "label_id"], name: "index_subscriptions_on_specialist_id_and_label_id", unique: true
@@ -1016,11 +1015,11 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "uid", null: false
     t.string "stage"
     t.integer "estimate"
-    t.datetime "due_date"
+    t.datetime "due_date", precision: nil
     t.string "description"
     t.string "submitted_for_approval_comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "application_id"
     t.string "repeat"
     t.integer "flexible_estimate"
@@ -1029,13 +1028,13 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "stripe_invoice_id"
     t.string "estimate_type"
     t.integer "final_cost"
-    t.datetime "to_be_invited_at"
-    t.datetime "quote_requested_at"
-    t.datetime "quote_provided_at"
-    t.datetime "assigned_at"
-    t.datetime "started_working_at"
-    t.datetime "submitted_at"
-    t.datetime "approved_at"
+    t.datetime "to_be_invited_at", precision: nil
+    t.datetime "quote_requested_at", precision: nil
+    t.datetime "quote_provided_at", precision: nil
+    t.datetime "assigned_at", precision: nil
+    t.datetime "started_working_at", precision: nil
+    t.datetime "submitted_at", precision: nil
+    t.datetime "approved_at", precision: nil
     t.jsonb "log_data"
     t.index ["application_id"], name: "index_tasks_on_application_id"
     t.index ["stage"], name: "index_tasks_on_stage"
@@ -1046,8 +1045,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "name"
     t.string "resource"
     t.jsonb "filters"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "sort_by"
     t.string "sort_order"
     t.index ["resource"], name: "index_toby_views_on_resource"
@@ -1057,8 +1056,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.bigint "application_id", null: false
     t.bigint "reporter_id", null: false
     t.text "message"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["application_id"], name: "index_unresponsiveness_reports_on_application_id"
     t.index ["reporter_id"], name: "index_unresponsiveness_reports_on_reporter_id"
   end
@@ -1066,8 +1065,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "user_skills", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "skill_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["skill_id"], name: "index_user_skills_on_skill_id"
     t.index ["user_id"], name: "index_user_skills_on_user_id"
   end
@@ -1075,8 +1074,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "users", force: :cascade do |t|
     t.string "airtable_id"
     t.text "availability"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "uid", null: false
     t.bigint "country_id"
     t.string "title"
@@ -1094,20 +1093,20 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "contact_status"
     t.string "fid"
     t.integer "locality_importance"
-    t.datetime "accepted_guarantee_terms_at"
+    t.datetime "accepted_guarantee_terms_at", precision: nil
     t.string "talent_quality"
     t.string "rejection_reason"
     t.string "number_of_freelancers"
-    t.datetime "application_accepted_at"
-    t.datetime "application_rejected_at"
-    t.datetime "application_reminder_at"
+    t.datetime "application_accepted_at", precision: nil
+    t.datetime "application_rejected_at", precision: nil
+    t.datetime "application_reminder_at", precision: nil
     t.bigint "account_id"
     t.jsonb "log_data"
     t.uuid "company_id"
-    t.datetime "application_interview_starts_at"
+    t.datetime "application_interview_starts_at", precision: nil
     t.string "trustpilot_review_status"
-    t.datetime "invited_to_interview_at"
-    t.datetime "submitted_at"
+    t.datetime "invited_to_interview_at", precision: nil
+    t.datetime "submitted_at", precision: nil
     t.index ["account_id"], name: "index_users_on_account_id", unique: true
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["company_id"], name: "index_users_on_company_id"
@@ -1118,8 +1117,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
   create_table "video_calls", force: :cascade do |t|
     t.string "uid", null: false
     t.bigint "interview_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "fallback"
     t.string "zoom_meeting_id"
     t.string "zoom_passcode"
@@ -1133,8 +1132,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_115739) do
     t.string "status"
     t.jsonb "data"
     t.text "response"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
