@@ -162,7 +162,7 @@ RSpec.describe ZapierInteractorController, type: :request do
   end
 
   describe "POST /update_consultation" do
-    let(:consultation) { create(:consultation, status: "Call Scheduled") }
+    let(:consultation) { create(:consultation, status: "Request Completed") }
     let(:status) { "Accepted By Specialist" }
     let(:params) { {status:, uid: consultation.uid, key:} }
 
