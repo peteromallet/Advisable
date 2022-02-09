@@ -321,7 +321,7 @@ export const consultation = (fields = {}) => {
     {
       __typename: "Consultation",
       id: uniqueId("con"),
-      status: "Request Started",
+      status: "Request Completed",
       topic: "Consultation topic",
       user: null,
       specialist: null,

@@ -163,13 +163,13 @@ RSpec.describe ZapierInteractorController, type: :request do
 
   describe "POST /update_consultation" do
     let(:consultation) { create(:consultation, status: "Call Scheduled") }
-    let(:status) { "Call Requested" }
+    let(:status) { "Accepted By Specialist" }
     let(:params) { {status:, uid: consultation.uid, key:} }
 
     it "updates the consultation and syncs to airtable" do
       post("/zapier_interactor/update_consultation", params:)
       expect(response).to have_http_status(:success)
-      expect(consultation.reload.status).to eq("Call Requested")
+      expect(consultation.reload.status).to eq("Accepted By Specialist")
     end
 
     context "when no key" do
