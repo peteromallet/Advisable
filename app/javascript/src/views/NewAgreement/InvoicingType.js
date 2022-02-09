@@ -1,7 +1,7 @@
 import React from "react";
 import { object, string } from "yup";
 import { Field, Form, Formik } from "formik";
-import { Box, Container, Heading, Text } from "@advisable/donut";
+import { Box, Heading, Text } from "@advisable/donut";
 import { Redirect, useHistory, useLocation, useParams } from "react-router-dom";
 import { ArrowSmRight } from "@styled-icons/heroicons-solid";
 import RadioOption from "./RadioOption";
@@ -33,7 +33,7 @@ export default function InvoicingType({ user }) {
   const initialValues = { invoicing: "" };
 
   return (
-    <Container paddingY={10} maxWidth="1080px">
+    <>
       <BackButton
         marginBottom={4}
         to={{
@@ -44,11 +44,11 @@ export default function InvoicingType({ user }) {
       <Heading size="6xl" mb={2}>
         Payments
       </Heading>
-      <Text fontSize="lg" mb={8}>
+      <Text fontSize="lg" lineHeight="24px" mb={8}>
         How are you going to request payments from {companyName}?
       </Text>
-      <Box display="flex" style={{ gap: "40px" }}>
-        <Box flex="1">
+      <Box display={{ _: "block", m: "flex" }} style={{ gap: "40px" }}>
+        <Box flex="1" marginBottom={10}>
           <Formik
             initialValues={initialValues}
             onSubmit={handleSubmit}
@@ -91,6 +91,7 @@ export default function InvoicingType({ user }) {
                 marginTop={10}
                 variant="gradient"
                 suffix={<ArrowSmRight />}
+                width={{ _: "100%", m: "auto" }}
                 disableUntilValid
               >
                 Continue
@@ -98,7 +99,7 @@ export default function InvoicingType({ user }) {
             </Form>
           </Formik>
         </Box>
-        <Box width="320px">
+        <Box width={{ _: "100%", m: "320px" }}>
           <HelpText>
             This step helps you define the invoicing flow to {companyName},
             whether you have agreed on a set of tasks or a single one-time
@@ -110,6 +111,6 @@ export default function InvoicingType({ user }) {
           </HelpText>
         </Box>
       </Box>
-    </Container>
+    </>
   );
 }

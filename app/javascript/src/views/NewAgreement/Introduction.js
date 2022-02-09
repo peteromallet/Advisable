@@ -4,7 +4,6 @@ import {
   Link as DonutLink,
   Button,
   Circle,
-  Container,
   Heading,
   Text,
   theme,
@@ -19,7 +18,7 @@ function IntroductionStep({ heading, illustration, children }) {
   return (
     <Box flex={1}>
       {React.createElement(illustration, {
-        width: "200px",
+        width: { _: "120px", m: "200px" },
         mb: 6,
         color: theme.colors.blue200,
       })}
@@ -77,15 +76,20 @@ export default function NewAgreementIntroduction({ user }) {
   const companyName = user.company?.name;
 
   return (
-    <Container paddingY={12} maxWidth="1080px">
+    <>
       <Heading mb={4} size="6xl">
         Work with {companyName}
       </Heading>
-      <Text fontSize="lg">
+      <Text fontSize="lg" lineHeight="24px">
         Send {companyName} a request to work together on Advisable.
       </Text>
 
-      <Box display="flex" style={{ gap: "40px" }} marginY={16}>
+      <Box
+        display="grid"
+        gridTemplateColumns={{ _: "1fr", m: "1fr 1fr 1fr" }}
+        style={{ gap: "40px" }}
+        marginY={16}
+      >
         <IntroductionStep
           heading="1. Create an agreement"
           illustration={ListIllustration}
@@ -112,10 +116,15 @@ export default function NewAgreementIntroduction({ user }) {
       <AdvisableProtection />
 
       <Link to={`/new_agreement/${userId}/collaboration`}>
-        <Button size="l" variant="gradient" suffix={<ArrowSmRight />}>
+        <Button
+          size="l"
+          variant="gradient"
+          suffix={<ArrowSmRight />}
+          width={{ _: "100%", m: "auto" }}
+        >
           Get Started
         </Button>
       </Link>
-    </Container>
+    </>
   );
 }

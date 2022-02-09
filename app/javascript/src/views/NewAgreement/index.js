@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect, useParams } from "react-router-dom";
-import { useBackground } from "src/../../../donut/src";
+import { Container, useBackground } from "src/../../../donut/src";
 import { Loading } from "src/components";
 import CollaborationType from "./CollaborationType";
 import ConfirmAgreement from "./ConfirmAgreement";
@@ -18,22 +18,24 @@ export default function NewAgreement() {
   if (loading) return <Loading />;
 
   return (
-    <Switch>
-      <Route exact path="/new_agreement/:userId">
-        <Introduction {...data} />
-      </Route>
-      <Route path="/new_agreement/:userId/collaboration">
-        <CollaborationType {...data} />
-      </Route>
-      <Route path="/new_agreement/:userId/invoicing">
-        <InvoicingType {...data} />
-      </Route>
-      <Route path="/new_agreement/:userId/confirm">
-        <ConfirmAgreement {...data} />
-      </Route>
-      <Route path="*">
-        <Redirect to={`/new_agreement/${userId}`} />
-      </Route>
-    </Switch>
+    <Container paddingY={10} maxWidth="1120px" paddingX={6}>
+      <Switch>
+        <Route exact path="/new_agreement/:userId">
+          <Introduction {...data} />
+        </Route>
+        <Route path="/new_agreement/:userId/collaboration">
+          <CollaborationType {...data} />
+        </Route>
+        <Route path="/new_agreement/:userId/invoicing">
+          <InvoicingType {...data} />
+        </Route>
+        <Route path="/new_agreement/:userId/confirm">
+          <ConfirmAgreement {...data} />
+        </Route>
+        <Route path="*">
+          <Redirect to={`/new_agreement/${userId}`} />
+        </Route>
+      </Switch>
+    </Container>
   );
 }

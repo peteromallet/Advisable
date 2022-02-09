@@ -1,14 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { object, string } from "yup";
-import { Form, Formik, Field, useField } from "formik";
-import {
-  Box,
-  Container,
-  Heading,
-  Text,
-  Stack,
-  Textarea,
-} from "@advisable/donut";
+import { Form, Formik, Field } from "formik";
+import { Box, Heading, Text, Stack, Textarea } from "@advisable/donut";
 import { useParams, useLocation, useHistory, Redirect } from "react-router-dom";
 import { useCreateAgreement } from "./queries";
 import BackButton from "src/components/BackButton";
@@ -85,9 +78,9 @@ export default function ConfirmAgreement({ user }) {
   const initialValues = { message: "" };
 
   return (
-    <Container paddingY={10} maxWidth="1080px">
+    <>
       <Box display="flex">
-        <Box paddingRight={16}>
+        <Box paddingRight={{ _: 0, m: 16 }}>
           <BackButton
             marginBottom={4}
             to={{
@@ -133,6 +126,7 @@ export default function ConfirmAgreement({ user }) {
                 prefix={<PaperAirplane />}
                 size="l"
                 variant="gradient"
+                width={{ _: "100%", m: "auto" }}
                 disableUntilValid
               >
                 Send request
@@ -140,7 +134,7 @@ export default function ConfirmAgreement({ user }) {
             </Form>
           </Formik>
         </Box>
-        <Box width="480px" flexShrink="0">
+        <Box display={{ _: "none", m: "block" }} width="480px" flexShrink="0">
           <Box boxShadow="m" padding={8} borderRadius="16px">
             <AgreementDetails
               specialistName={viewer.name}
@@ -152,6 +146,6 @@ export default function ConfirmAgreement({ user }) {
           </Box>
         </Box>
       </Box>
-    </Container>
+    </>
   );
 }

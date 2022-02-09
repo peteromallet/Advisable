@@ -1,6 +1,6 @@
 import React from "react";
 import { object, string, number } from "yup";
-import { Box, Container, Heading, Text } from "@advisable/donut";
+import { Box, Heading, Text } from "@advisable/donut";
 import { useHistory, useParams } from "react-router-dom";
 import { Field, Form, Formik, useField } from "formik";
 import SubmitButton from "src/components/SubmitButton";
@@ -63,15 +63,15 @@ export default function CollaborationType({ user }) {
   const companyName = user.company.name;
 
   return (
-    <Container paddingY={10} maxWidth="1080px">
+    <>
       <Heading mb={2} size="6xl">
         Collaboration type
       </Heading>
       <Text fontSize="lg" mb={8}>
         How are you going to charge {companyName}?
       </Text>
-      <Box display="flex" style={{ gap: "40px" }}>
-        <Box flex="1">
+      <Box display={{ _: "block", m: "flex" }} style={{ gap: "40px" }}>
+        <Box flex="1" marginBottom={10}>
           <Formik
             onSubmit={handleSubmit}
             initialValues={initialValues}
@@ -109,6 +109,7 @@ export default function CollaborationType({ user }) {
                 marginTop={10}
                 variant="gradient"
                 suffix={<ArrowSmRight />}
+                width={{ _: "100%", m: "auto" }}
                 disableUntilValid
               >
                 Continue
@@ -116,7 +117,7 @@ export default function CollaborationType({ user }) {
             </Form>
           </Formik>
         </Box>
-        <Box width="320px">
+        <Box width={{ _: "100%", m: "320px" }}>
           <HelpText>
             This step will help {companyName} understand the initial structure
             of your collaboration. Your selection here is not permanent and can
@@ -124,6 +125,6 @@ export default function CollaborationType({ user }) {
           </HelpText>
         </Box>
       </Box>
-    </Container>
+    </>
   );
 }
