@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::DeclineConsultation do
   let(:specialist) { create(:specialist) }
   let(:current_user) { specialist }
-  let(:consultation) { create(:consultation, specialist:, status: "Request Started") }
+  let(:consultation) { create(:consultation, specialist:, status: "Request Completed") }
   let(:context) { {current_user:} }
 
   let(:query) do
@@ -26,7 +26,7 @@ RSpec.describe Mutations::DeclineConsultation do
   it "sets the consultation status to 'Specialist Rejected'" do
     expect { AdvisableSchema.execute(query, context:) }.to change {
       consultation.reload.status
-    }.from("Request Started").
+    }.from("Request Completed").
       to("Specialist Rejected")
   end
 

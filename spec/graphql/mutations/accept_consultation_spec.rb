@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::AcceptConsultation do
   let(:specialist) { create(:specialist) }
   let(:current_user) { specialist }
-  let(:consultation) { create(:consultation, specialist:, status: "Request Started") }
+  let(:consultation) { create(:consultation, specialist:, status: "Request Completed") }
   let(:context) { {current_user:} }
 
   let(:query) do
@@ -29,7 +29,7 @@ RSpec.describe Mutations::AcceptConsultation do
   it "Sets the consultation status to 'Accepted By Specialist'" do
     expect { AdvisableSchema.execute(query, context:) }.to change {
       consultation.reload.status
-    }.from("Request Started").to("Accepted By Specialist")
+    }.from("Request Completed").to("Accepted By Specialist")
   end
 
   it "creates a project" do
