@@ -15,10 +15,12 @@ RSpec.configure do |config|
       Webdrivers::Chromedriver.required_version = ENV["CHROMEDRIVER_VERSION"]
     end
 
+    browser = ENV["CAPYBARA_BROWSER"] || "chrome"
+
     if ENV["HEADLESS"] == "false"
-      driven_by :selenium, using: :chrome
+      driven_by :selenium, using: browser.to_sym
     else
-      driven_by :selenium, using: :headless_chrome
+      driven_by :selenium, using: "headless_#{browser}".to_sym
     end
   end
 
