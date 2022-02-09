@@ -7,12 +7,14 @@ import ConfirmAgreement from "./ConfirmAgreement";
 import Introduction from "./Introduction";
 import InvoicingType from "./InvoicingType";
 import { useNewAgreement } from "./queries";
+import NotFound, { isNotFound } from "src/views/NotFound";
 
 export default function NewAgreement() {
   useBackground("white");
   const { userId } = useParams();
-  const { data, loading } = useNewAgreement(userId);
+  const { data, loading, error } = useNewAgreement(userId);
 
+  if (isNotFound(error)) return <NotFound />;
   if (loading) return <Loading />;
 
   return (
