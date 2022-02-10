@@ -34,6 +34,18 @@ class Payment < ApplicationRecord
     amount_with_fee - deposit.to_i
   end
 
+  def total_amount_to_be_paid
+    amount_to_be_paid + vat_amount
+  end
+
+  def vat_amount
+    amount_to_be_paid * vat_rate
+  end
+
+  def vat_rate
+    company.vat_number&.starts_with?("IE") ? 0.23 : 0.0
+  end
+
   def pdf_url(regenerate: false)
     self.pdf_key = nil if regenerate
     GeneratePaymentInvoiceJob.perform_now(self) if pdf_key.blank?
