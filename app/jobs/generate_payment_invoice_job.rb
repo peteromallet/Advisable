@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class GeneratePaymentInvoiceJob < ApplicationJob
-  TEMPLATE_ID = "81e7c7a3-7989-4f4c-aae8-03d0f0324811"
-  VAT_TEMPLATE_ID = "41FBCD83-E7E5-4CD1-B323-7BD9D16CF981"
+  TEMPLATE_ID = "3A631073-955C-4671-8A9D-210BD2F51055"
+  VAT_TEMPLATE_ID = "457838B9-AAA8-4754-9BAC-A49485A827C7"
 
   attr_reader :payment
 
@@ -42,14 +42,20 @@ class GeneratePaymentInvoiceJob < ApplicationJob
   end
 
   def pdf_monkey_data
+    due_date = payment&.payment_request&.due_at || payment.created_at
     {
       billing_address: payment.company.address.inline,
       vat_number: payment.company.vat_number,
       client_name: payment.company.name,
-      issue_date: Time.zone.today.strftime("%d.%m.%Y"),
-      due_date: Time.zone.today.strftime("%d.%m.%Y"),
-      invoice_number: "#{payment.company.id}-#{payment.uid.sub(/^pay_/, '')}",
+      issue_date: payment.created_at.strftime("%d.%m.%Y"),
+      due_date: due_date.strftime("%d.%m.%Y"),
+      invoice_number: payment.uid.sub(/^pay_/, "").to_s,
+      line_items_sum: payment.amount / 100.0,
+      admin_fee: payment.admin_fee / 100.0,
       total: payment.amount_with_fee / 100.0,
+      vat_amount: payment.vat_amount / 100.0,
+      total_amount_to_be_paid: payment.total_amount_to_be_paid / 100.0,
+      paid: payment.paid?,
       lineItems: line_items(payment)
     }
   end
@@ -58,13 +64,8 @@ class GeneratePaymentInvoiceJob < ApplicationJob
     payment.payment_request.line_items.flat_map do |line_item|
       {
         description: line_item["description"],
-        quantity: 1,
         price: line_item["amount"] / 100.0
       }
-    end + [{
-      description: "Administration Fee",
-      quantity: 1,
-      price: payment.admin_fee / 100.0
-    }]
+    end
   end
 end
