@@ -139,7 +139,7 @@ export default function PaymentRequestSummary({
       {memo ? (
         <Box paddingTop={10}>
           <Text marginBottom={2} fontWeight={520}>
-            Memo
+            Note
           </Text>
           <Text fontSize="s" lineHeight="20px" color="neutral700">
             {memo}
