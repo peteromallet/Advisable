@@ -17,8 +17,7 @@ class PaymentRequest < ApplicationRecord
   has_one :payout, dependent: :nullify
 
   validates :status, inclusion: {in: VALID_STATUSES}
-
-  before_validation :set_due_at, on: :create
+  before_save :set_due_at, unless: :due_at
 
   scope :with_status, ->(status) { where(status:) }
   scope :due, -> { where(due_at: ..(Time.current - DUE_AT_DURATION)) }
@@ -43,7 +42,7 @@ class PaymentRequest < ApplicationRecord
   private
 
   def set_due_at
-    self.due_at ||= Time.current + DUE_AT_DURATION
+    self.due_at ||= (created_at || Time.current) + DUE_AT_DURATION
   end
 end
 
