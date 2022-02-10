@@ -46,6 +46,10 @@ class Payment < ApplicationRecord
     company.vat_number&.starts_with?("IE") ? 0.23 : 0.0
   end
 
+  def paid?
+    status == "succeeded"
+  end
+
   def pdf_url(regenerate: false)
     self.pdf_key = nil if regenerate
     GeneratePaymentInvoiceJob.perform_now(self) if pdf_key.blank?
@@ -62,7 +66,7 @@ class Payment < ApplicationRecord
   end
 
   def charge!
-    return if status == "succeeded"
+    return if paid?
 
     use_deposit!
     return self unless amount_to_be_paid.positive?
