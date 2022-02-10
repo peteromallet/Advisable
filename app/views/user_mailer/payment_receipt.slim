@@ -26,9 +26,8 @@ css:
         td style="padding: 15px; font-family: arial;"
           | Total
         td style="padding: 15px; font-family: arial; text-align: right; font-weight: 600;"
-          = number_to_currency(@payment.amount_with_fee / 100.0)
-  
+          = number_to_currency(@payment.total / 100.0)
+
   = render "emails/spacing", height: "32px"
   = render "emails/paragraph" do
     | If you have any questions, contact us at #{mail_to("finance@advisable.com")}.
-

@@ -50,8 +50,8 @@ class GenerateInvoicePdfJob < ApplicationJob
       issue_date: Time.zone.today.strftime("%d.%m.%Y"),
       due_date: Time.zone.today.strftime("%d.%m.%Y"),
       invoice_number: "#{invoice.company.id}-#{invoice.year}-#{invoice.month}",
-      total: invoice.payments.sum(&:amount_with_fee) / 100.0,
-      deposit: invoice.payments.sum(:deposit) / 100.0,
+      total: invoice.payments.sum(&:total) / 100.0,
+      deposit: 0,
       lineItems: line_items(invoice.payments)
     }
   end

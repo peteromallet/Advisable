@@ -52,9 +52,9 @@ class GeneratePaymentInvoiceJob < ApplicationJob
       invoice_number: payment.uid.sub(/^pay_/, "").to_s,
       line_items_sum: payment.amount / 100.0,
       admin_fee: payment.admin_fee / 100.0,
-      total: payment.amount_with_fee / 100.0,
+      total: payment.total / 100.0,
       vat_amount: payment.vat_amount / 100.0,
-      total_amount_to_be_paid: payment.total_amount_to_be_paid / 100.0,
+      total_with_vat: payment.total_with_vat / 100.0,
       paid: payment.paid?,
       lineItems: line_items(payment)
     }

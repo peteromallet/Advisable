@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 class Payment < ApplicationRecord
+  self.ignored_columns += %i[deposit]
+
   include Uid
 
   has_logidze
 
   URL_EXPIRES_AT = 1.hour.to_i
   VALID_STATUSES = %w[requires_payment_method requires_confirmation requires_action processing requires_capture canceled succeeded failed pending refunded].freeze
-  VALID_PAYMENT_METHODS = ["Bank Transfer", "Stripe", "Deposit"].freeze
+  VALID_PAYMENT_METHODS = ["Bank Transfer", "Stripe"].freeze
 
   belongs_to :company
   belongs_to :specialist
@@ -26,20 +28,16 @@ class Payment < ApplicationRecord
     super.presence || 0
   end
 
-  def amount_with_fee
+  def total
     amount + admin_fee
   end
 
-  def amount_to_be_paid
-    amount_with_fee - deposit.to_i
-  end
-
-  def total_amount_to_be_paid
-    amount_to_be_paid + vat_amount
+  def total_with_vat
+    total + vat_amount
   end
 
   def vat_amount
-    amount_to_be_paid * vat_rate
+    total * vat_rate
   end
 
   def vat_rate
@@ -66,10 +64,7 @@ class Payment < ApplicationRecord
   end
 
   def charge!
-    return if paid?
-
-    use_deposit!
-    return self unless amount_to_be_paid.positive?
+    return self if paid? || !total.positive?
 
     GeneratePaymentInvoiceJob.perform_later(self, notify: true) if payment_request.present?
 
@@ -112,22 +107,6 @@ class Payment < ApplicationRecord
 
   private
 
-  def use_deposit!
-    return if task.nil? || deposit.to_i.positive?
-
-    ActiveRecord::Base.transaction do
-      project = task.application.project
-      deposit_remaining = project.deposit_remaining
-      if deposit_remaining >= amount_with_fee
-        update!(deposit: amount_with_fee, payment_method: "Deposit", status: "succeeded")
-        project.update!(deposit_used: project.deposit_used + amount_with_fee)
-      elsif deposit_remaining.positive?
-        update!(deposit: deposit_remaining)
-        project.update!(deposit_used: project.deposit_used + deposit_remaining)
-      end
-    end
-  end
-
   def create_on_session_intent!
     return if payment_intent_id.present?
 
@@ -142,7 +121,7 @@ class Payment < ApplicationRecord
 
   def stripe_params
     {
-      amount: amount_to_be_paid,
+      amount: total,
       currency: "usd",
       customer: company.stripe_customer_id,
       metadata: {
@@ -168,7 +147,6 @@ end
 #  admin_fee          :integer
 #  amount             :integer
 #  charged_at         :datetime
-#  deposit            :integer
 #  payment_method     :string
 #  pdf_key            :string
 #  retries            :integer

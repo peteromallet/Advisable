@@ -46,116 +46,12 @@ RSpec.describe Payment, type: :model do
       let(:payment) { create(:payment, payment_request:) }
 
       it "charges stripe with full amount and schedules invoice creation" do
-        allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
+        allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.total), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
         expect(payment_request.reload.status).to eq("pending")
         payment.charge!
         expect(payment.payment_method).to eq("Stripe")
         expect(GeneratePaymentInvoiceJob).to have_been_enqueued.with(payment, notify: true).once
         expect(payment_request.reload.status).to eq("paid")
-      end
-    end
-
-    context "when deposit is bigger than amount" do
-      let(:project) { create(:project, deposit: 2000) }
-
-      it "updates deposit_used, sets status to succeeded, payment method to deposit and doesn't charge stripe" do
-        expect(Stripe::PaymentIntent).not_to receive(:create)
-        payment.charge!
-        expect(payment.status).to eq("succeeded")
-        expect(payment.payment_method).to eq("Deposit")
-        expect(project.deposit_used).to eq(payment.amount_with_fee)
-      end
-
-      context "when deposit is not nil/0" do
-        let(:payment) { create(:payment, amount: 1000, task:, deposit: 100) }
-
-        it "doesn't do any deposit logic, sets payment method to stripe and charges stripe" do
-          allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee - 100), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
-          payment.charge!
-          expect(payment.payment_method).to eq("Stripe")
-          expect(project.deposit_used).to eq(0)
-          expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
-        end
-      end
-
-      context "when a bit of deposit has been used already" do
-        let(:project) { create(:project, deposit: 2000, deposit_used: 100) }
-
-        it "updates deposit_used, sets status to succeeded, payment method to deposit and doesn't charge stripe" do
-          expect(Stripe::PaymentIntent).not_to receive(:create)
-          payment.charge!
-          expect(payment.status).to eq("succeeded")
-          expect(payment.payment_method).to eq("Deposit")
-          expect(project.deposit_used).to eq(payment.amount_with_fee + 100)
-        end
-      end
-
-      context "when company payment method is bank transfer" do
-        it "updates deposit_used, sets payment method to deposit and doesn't charge stripe" do
-          payment.company.update!(project_payment_method: "Bank Transfer")
-          expect(Stripe::PaymentIntent).not_to receive(:create)
-          payment.charge!
-          expect(payment.payment_method).to eq("Deposit")
-          expect(project.deposit_used).to eq(payment.amount_with_fee)
-        end
-      end
-    end
-
-    context "when deposit is smaller than amount" do
-      let(:project) { create(:project, deposit: 200) }
-
-      it "updates deposit_used, sets payment method to stripe and charges stripe" do
-        allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee - 200), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
-        payment.charge!
-        expect(payment.payment_method).to eq("Stripe")
-        expect(project.deposit_used).to eq(200)
-        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
-      end
-
-      context "when company payment method is bank transfer" do
-        it "updates deposit_used, sets payment method to bank transfer and charges stripe" do
-          payment.company.update!(project_payment_method: "Bank Transfer")
-          expect(Stripe::PaymentIntent).not_to receive(:create)
-          payment.charge!
-          expect(payment.payment_method).to eq("Bank Transfer")
-          expect(project.deposit_used).to eq(200)
-        end
-      end
-    end
-
-    context "when deposit is nil" do
-      let(:project) { create(:project, deposit: nil) }
-
-      it "charges stripe with full amount" do
-        allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
-        payment.charge!
-        expect(payment.payment_method).to eq("Stripe")
-        expect(project.deposit_used).to eq(0)
-        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
-      end
-    end
-
-    context "when deposit has been used" do
-      let(:project) { create(:project, deposit: 2000, deposit_used: 2000) }
-
-      it "charges stripe with full amount" do
-        allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
-        payment.charge!
-        expect(payment.payment_method).to eq("Stripe")
-        expect(project.deposit_used).to eq(2000)
-        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
-      end
-    end
-
-    context "when no task" do
-      let(:payment) { create(:payment, amount: 1000, task: nil) }
-
-      it "charges stripe with full amount" do
-        allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.amount_with_fee), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
-        payment.charge!
-        expect(payment.payment_method).to eq("Stripe")
-        expect(payment.deposit).to be_nil
-        expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
       end
     end
   end
