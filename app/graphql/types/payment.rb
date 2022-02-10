@@ -15,6 +15,7 @@ module Types
     field :amount, Int, null: false
     field :admin_fee, Int, null: false
     field :deposit, Int, null: true
+    field :vat_rate, Float, null: false
     field :payment_method, String, null: true
 
     field :payment_intent, PaymentIntentType, null: true
