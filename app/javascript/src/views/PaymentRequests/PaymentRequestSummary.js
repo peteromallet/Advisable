@@ -1,8 +1,9 @@
 import React, { useMemo } from "react";
 import currency from "src/utilities/currency";
-import { Box, Stack, Text, Link } from "@advisable/donut";
+import { Box, Stack, Text, Link, Circle } from "@advisable/donut";
 import PaymentRequestStatus from "./PaymentRequestStatus";
 import { DateTime } from "luxon";
+import { Calendar, OfficeBuilding, User } from "@styled-icons/heroicons-solid";
 
 function SourcingFee({ amount = 0, sourcingFee }) {
   if (amount <= 0) return null;
@@ -21,6 +22,26 @@ function SourcingFee({ amount = 0, sourcingFee }) {
         {fee * 100}% Advisable fee
       </Link.External>
     </Text>
+  );
+}
+
+function PaymentRequestAttribute({ icon, label, value }) {
+  return (
+    <Box display="flex" alignItems="center">
+      <Box flexShrink={0}>
+        <Circle size={32} bg="blue100" color="blue900">
+          {icon && React.createElement(icon, { size: 16 })}
+        </Circle>
+      </Box>
+      <Box paddingLeft={3}>
+        <Text marginBottom={1} fontSize="sm" color="neutral500">
+          {label}
+        </Text>
+        <Text $truncate fontSize="sm" fontWeight={520}>
+          {value}
+        </Text>
+      </Box>
+    </Box>
   );
 }
 
@@ -61,39 +82,46 @@ export default function PaymentRequestSummary({
         <PaymentRequestStatus status={status} />
       </Box>
 
+      <Text
+        fontSize="3xl"
+        fontWeight={520}
+        letterSpacing="-0.02em"
+        marginBottom={8}
+      >
+        Summary
+      </Text>
+
+      <Box
+        display="grid"
+        gridTemplateColumns="1fr 1fr"
+        style={{ rowGap: "28px", columnGap: "12px" }}
+      >
+        <PaymentRequestAttribute
+          label="Billed to"
+          icon={OfficeBuilding}
+          value={company?.name || "-"}
+        />
+        <PaymentRequestAttribute
+          icon={User}
+          label="From"
+          value={specialist?.name || "-"}
+        />
+        <PaymentRequestAttribute
+          label="Issued"
+          icon={Calendar}
+          value={DateTime.fromISO(createdAt).toFormat("dd MMM yyyy")}
+        />
+        <PaymentRequestAttribute
+          label="Due"
+          icon={Calendar}
+          value={DateTime.fromISO(dueAt).toFormat("dd MMM yyyy")}
+        />
+      </Box>
+
       <Stack spacing={8} divider="neutral100">
-        <Text fontSize="2xl" fontWeight={520} letterSpacing="-0.02em">
-          Summary
+        <Text fontWeight={560} fontSize="lg" marginTop={10}>
+          Items
         </Text>
-
-        {company ? (
-          <Box display="flex" justifyContent="space-between">
-            <Text color="neutral800">Billed to</Text>
-            <Text fontWeight={480}>{company.name}</Text>
-          </Box>
-        ) : null}
-
-        {specialist ? (
-          <Box display="flex" justifyContent="space-between">
-            <Text color="neutral800">From</Text>
-            <Text fontWeight={480}>{specialist.name}</Text>
-          </Box>
-        ) : null}
-
-        <Box display="flex" justifyContent="space-between">
-          <Text color="neutral800">Issued</Text>
-          <Text fontWeight={480}>
-            {DateTime.fromISO(createdAt).toFormat("dd MMM yyyy")}
-          </Text>
-        </Box>
-
-        <Box display="flex" justifyContent="space-between">
-          <Text color="neutral800">Due</Text>
-          <Text fontWeight={480}>
-            {DateTime.fromISO(dueAt).toFormat("dd MMM yyyy")}
-          </Text>
-        </Box>
-
         {lineItems.map((lineItem, index) => (
           <Box key={index} display="flex" justifyContent="space-between">
             <Text color="neutral800">{lineItem.description}</Text>
@@ -138,7 +166,7 @@ export default function PaymentRequestSummary({
 
       {memo ? (
         <Box paddingTop={10}>
-          <Text marginBottom={2} fontWeight={520}>
+          <Text fontSize="lg" marginBottom={2} fontWeight={520}>
             Note
           </Text>
           <Text fontSize="s" lineHeight="20px" color="neutral700">
