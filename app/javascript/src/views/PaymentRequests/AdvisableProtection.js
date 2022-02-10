@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Link } from "@advisable/donut";
+import { Box, Link, Text } from "@advisable/donut";
 import { ShieldCheck } from "@styled-icons/heroicons-solid";
 
 export default function AdvisableProtection() {
@@ -9,20 +9,20 @@ export default function AdvisableProtection() {
         <ShieldCheck size={28} />
       </Box>
       <Box paddingLeft={4}>
-        <Text fontWeight={520} marginBottom={1} fontSize="l">
+        <Text fontWeight={520} marginBottom={1.5} fontSize="l">
           Protected by Advisable
         </Text>
-        <Text lineHeight="24px" color="neutral800" marginBottom={2}>
-          You should always pay and communicate through Advisable to ensure you
-          are protected by our $1,000 risk free trail.
+        <Text lineHeight="24px" color="neutral900" marginBottom={1.5}>
+          As per your agreement, you should always pay through Advisable to
+          ensure you are protected.
         </Text>
-        <Link.External
-          variant="underlined"
-          href="https://www.advisable.com/faq#freelancers-faq"
-          target="_blank"
-        >
-          Learn more
-        </Link.External>
+        <Text lineHeight="24px" fontSize="sm" color="neutral600">
+          If you have any questions please contact{" "}
+          <Link.External href="mailto:finance@advisable.com" variant="dark">
+            finance@advisable.com
+          </Link.External>
+          .
+        </Text>
       </Box>
     </Box>
   );
