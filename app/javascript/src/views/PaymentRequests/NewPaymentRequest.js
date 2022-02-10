@@ -22,6 +22,7 @@ import { DateTime } from "luxon";
 import css from "@styled-system/css";
 import useViewer from "src/hooks/useViewer";
 import BackButton from "src/components/BackButton";
+import NoActiveAgreements from "./NoActiveAgreements";
 
 const lineItemSchema = object().shape({
   description: string().required("Please provide a description"),
@@ -185,7 +186,7 @@ export default function NewPaymentRequest() {
           <Box marginBottom={5}>
             <BackButton to="/payment_requests" />
           </Box>
-          <Box display="flex">
+          <Box display="flex" paddingBottom={8}>
             <Box flex={1} paddingRight={12}>
               <Heading fontSize="5xl" marginBottom={2}>
                 New payment request
@@ -194,34 +195,40 @@ export default function NewPaymentRequest() {
                 Request payment from one of your clients.
               </Text>
 
-              <Text marginBottom={3} fontSize="l" fontWeight={480}>
-                Client
-              </Text>
-              <FormField
-                name="company"
-                as={Combobox}
-                marginBottom={10}
-                options={companyOptions}
-                onChange={(c) => formik.setFieldValue("company", c)}
-                placeholder="Select client"
-              />
+              {companyOptions.length > 0 ? (
+                <>
+                  <Text marginBottom={3} fontSize="l" fontWeight={480}>
+                    Client
+                  </Text>
+                  <FormField
+                    name="company"
+                    as={Combobox}
+                    marginBottom={10}
+                    options={companyOptions}
+                    onChange={(c) => formik.setFieldValue("company", c)}
+                    placeholder="Select client"
+                  />
 
-              <PaymentRequestLineItems />
+                  <PaymentRequestLineItems />
 
-              <Text marginBottom={3} fontSize="l" fontWeight={480}>
-                Note
-              </Text>
-              <FormField
-                name="memo"
-                as={Textarea}
-                minRows={2}
-                marginBottom={12}
-                placeholder="Memo"
-              />
+                  <Text marginBottom={3} fontSize="l" fontWeight={480}>
+                    Note
+                  </Text>
+                  <FormField
+                    name="memo"
+                    as={Textarea}
+                    minRows={3}
+                    marginBottom={12}
+                    placeholder="Memo"
+                  />
 
-              <SubmitButton variant="gradient" size="l" disableUntilValid>
-                Send request
-              </SubmitButton>
+                  <SubmitButton variant="gradient" size="l" disableUntilValid>
+                    Send request
+                  </SubmitButton>
+                </>
+              ) : (
+                <NoActiveAgreements />
+              )}
             </Box>
             <Box width="460px" flexShrink={0}>
               <PaymentRequestSummary

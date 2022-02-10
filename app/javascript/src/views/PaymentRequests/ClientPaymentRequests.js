@@ -5,6 +5,7 @@ import { Heading, Box, Text, Button } from "@advisable/donut";
 import { useClientPaymentRequests } from "./queries";
 import currency from "src/utilities/currency";
 import PaymentRequestStatus from "./PaymentRequestStatus";
+import NoPaymentRequests from "./NoPaymentRequests";
 
 export default function ClientPaymentRequests() {
   const { data, loading, error, fetchMore } = useClientPaymentRequests();
@@ -36,6 +37,11 @@ export default function ClientPaymentRequests() {
             Amount
           </Table.HeaderCell>
         </Table.Header>
+        {paymentRequests.length === 0 && (
+          <NoPaymentRequests>
+            You have not received any payment requests yet
+          </NoPaymentRequests>
+        )}
         {paymentRequests.map((pr) => (
           <Table.Row key={pr.id} to={`/payment_requests/${pr.id}`}>
             <Table.Cell flex={1}>

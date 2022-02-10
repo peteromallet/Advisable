@@ -7,6 +7,7 @@ import { DateTime } from "luxon";
 import { PlusSm } from "@styled-icons/heroicons-solid";
 import Table from "./Table";
 import PaymentRequestStatus from "./PaymentRequestStatus";
+import NoPaymentRequests from "./NoPaymentRequests";
 
 export default function FreelancerPaymentRequests() {
   const { data, loading, error, fetchMore } = useFreelancerPaymentRequests();
@@ -48,6 +49,11 @@ export default function FreelancerPaymentRequests() {
             Amount
           </Table.HeaderCell>
         </Table.Header>
+        {paymentRequests.length === 0 && (
+          <NoPaymentRequests>
+            You have not requested any payments yet
+          </NoPaymentRequests>
+        )}
         {paymentRequests.map((pr) => (
           <Table.Row key={pr.id} to={`/payment_requests/${pr.id}`}>
             <Table.Cell flex={1}>
