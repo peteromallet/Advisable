@@ -121,7 +121,9 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
   if (status === "paid") {
     return (
       <Summary status={status} icon={<CheckCircle />}>
-        This request has been paid by {company.name}.
+        This request has been paid by {company.name}. We have received the funds
+        and they will be paid out to your account within the next 3 working
+        days.
         {viewer.isClient && (
           <Box paddingTop={4}>
             <DownloadInvoice payment={payment} />
