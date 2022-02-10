@@ -45,7 +45,9 @@ function Value({ children }) {
 
 function BankTransferPending({ paymentRequest }) {
   const { payment } = paymentRequest;
-  const total = currency(paymentRequest.amount + paymentRequest.adminFee);
+  const total = currency(paymentRequest.amount + paymentRequest.adminFee, {
+    format: "$0,0.00",
+  });
 
   return (
     <>
