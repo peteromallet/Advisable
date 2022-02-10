@@ -23,7 +23,7 @@ module Toby
         end
 
         def lazy_read(task)
-          task&.payments&.sum { |payment| payment.amount_with_fee }
+          task&.payments&.sum { |payment| payment.total }
         end
       end
     end

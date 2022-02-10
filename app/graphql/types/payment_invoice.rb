@@ -12,7 +12,7 @@ module Types
 
     field :total, Int, null: false
     def total
-      object.payments.sum(&:amount_to_be_paid)
+      object.payments.sum(&:total)
     end
   end
 end
