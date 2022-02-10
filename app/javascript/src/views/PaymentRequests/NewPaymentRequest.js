@@ -30,12 +30,8 @@ const lineItemSchema = object().shape({
     .min(100, "Amount must be at least $1.00"),
 });
 
-const companySchema = object().shape({
-  value: string().required(),
-});
-
 const validationSchema = object().shape({
-  company: companySchema.required("Please select a client"),
+  company: object().required("Please select a client"),
   lineItems: array().of(lineItemSchema).min(1, "Please add at least one item"),
 });
 
@@ -127,13 +123,13 @@ export default function NewPaymentRequest() {
   const history = useHistory();
   const viewer = useViewer();
   const [send] = useCreatePaymentRequest();
-  const { data, loading, error } = useAcceptedAgreements();
+  const { data, loading } = useAcceptedAgreements();
 
   if (loading) return <>Loading...</>;
 
   const initialValues = {
     memo: "",
-    company: "",
+    company: undefined,
     lineItems: [
       {
         description: "",
