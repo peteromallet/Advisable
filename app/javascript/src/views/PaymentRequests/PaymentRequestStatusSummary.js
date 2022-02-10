@@ -38,16 +38,22 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
   if (status === "pending") {
     return (
       <Summary status={status} icon={<CreditCard />}>
-        This request is awaiting payment from {company.name}. Once paid the
-        funds will be released immediately to {specialist.name}.
-        {viewer.isClient ? (
-          <Box paddingTop={6}>
-            <ApprovePaymentRequest paymentRequest={paymentRequest} />
-          </Box>
+        {viewer.isSpecialist ? (
+          <>
+            This request is awaiting payment from {company.name}. Once paid, the
+            funds will be immediately released to you.
+            <Box paddingTop={4}>
+              <CancelPaymentRequest paymentRequest={paymentRequest} />
+            </Box>
+          </>
         ) : (
-          <Box paddingTop={4}>
-            <CancelPaymentRequest paymentRequest={paymentRequest} />
-          </Box>
+          <>
+            This request is awaiting payment from {company.name}. Once paid the
+            funds will be released immediately to {specialist.name}.
+            <Box paddingTop={6}>
+              <ApprovePaymentRequest paymentRequest={paymentRequest} />
+            </Box>
+          </>
         )}
       </Summary>
     );
