@@ -209,7 +209,7 @@ export default function NewPaymentRequest() {
               <PaymentRequestLineItems />
 
               <Text marginBottom={3} fontSize="l" fontWeight={480}>
-                Memo
+                Note
               </Text>
               <FormField
                 name="memo"
