@@ -18,6 +18,7 @@ class Message < ApplicationRecord
   before_validation :strip_content
 
   scope :with_content, -> { where.not(content: nil) }
+  scope :consultation_requests, -> { where(kind: "ConsultationRequest") }
 
   def system_message?
     kind == "system"

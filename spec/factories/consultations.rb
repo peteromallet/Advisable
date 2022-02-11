@@ -5,7 +5,7 @@ FactoryBot.define do
     user
     skill
     specialist
-    status { "Request Started" }
+    status { "Request Completed" }
     topic { "Consultation Topic" }
   end
 end

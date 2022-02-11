@@ -3,12 +3,18 @@
 class Consultation < ApplicationRecord
   include Uid
 
+  VALID_STATUSES = ["Request Completed", "Request Reminded", "Accepted By Specialist", "Specialist Rejected"].freeze
+
   belongs_to :specialist
   belongs_to :user
   belongs_to :skill, optional: true
   belongs_to :search, optional: true
   belongs_to :interview, optional: true
   has_many :messages, dependent: :destroy
+
+  validates :status, inclusion: {in: VALID_STATUSES}
+
+  scope :requested, -> { where(status: "Request Completed") }
 end
 
 # == Schema Information

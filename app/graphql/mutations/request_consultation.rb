@@ -24,7 +24,7 @@ module Mutations
         skill: specialist.articles.first&.skills&.primary&.first&.skill
       )
 
-      message = conversation.new_message!(
+      conversation.new_message!(
         current_user.account,
         args[:message],
         kind: "ConsultationRequest",
@@ -32,23 +32,10 @@ module Mutations
         send_emails: false
       )
 
-      slack_notification(consultation)
-      email_notification(consultation, message)
+      Slack.bg_message(channel: "consultation_requests", text: "We have a new consultation request for #{consultation.specialist.account.name} from #{consultation.user.name_with_company}.")
+      SpecialistMailer.consultation_request(consultation).deliver_later
 
       {consultation:}
-    end
-
-    private
-
-    def email_notification(consultation, message)
-      SpecialistMailer.consultation_request(consultation, message).deliver_later
-    end
-
-    def slack_notification(consultation)
-      Slack.bg_message(
-        channel: "consultation_requests",
-        text: "We have a new consultation request for #{consultation.specialist.account.name} from #{consultation.user.name_with_company}."
-      )
     end
   end
 end

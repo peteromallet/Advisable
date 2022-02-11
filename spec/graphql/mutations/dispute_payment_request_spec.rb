@@ -77,7 +77,6 @@ RSpec.describe Mutations::DisputePaymentRequest do
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)
-      puts response
       error = response["errors"][0]["message"]
       expect(error).to eq("MUST BE PENDING")
     end

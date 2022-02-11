@@ -101,9 +101,9 @@ class SpecialistMailer < ApplicationMailer
     end
   end
 
-  def consultation_request(consultation, message)
-    @message = message
+  def consultation_request(consultation)
     @consultation = consultation
+    @message = @consultation.messages.consultation_requests.order(:created_at).last
     @sales_person = default_sales_person_for(consultation.user.company)
 
     mail(
@@ -111,6 +111,21 @@ class SpecialistMailer < ApplicationMailer
       to: @consultation.specialist.account.email,
       bcc: @sales_person.email_with_name,
       subject: "Consultation request from #{@consultation.user.name_with_company}"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
+
+  def consultation_request_reminder(consultation)
+    @consultation = consultation
+    @message = @consultation.messages.consultation_requests.order(:created_at).last
+    @sales_person = default_sales_person_for(consultation.user.company)
+
+    mail(
+      from: @sales_person.email_with_name,
+      to: @consultation.specialist.account.email,
+      bcc: @sales_person.email_with_name,
+      subject: "Reminder for consultation request from #{@consultation.user.name_with_company}"
     ) do |format|
       format.html { render layout: false }
     end
