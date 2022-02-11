@@ -8,11 +8,12 @@ import { PlusSm } from "@styled-icons/heroicons-solid";
 import Table from "./Table";
 import PaymentRequestStatus from "./PaymentRequestStatus";
 import NoPaymentRequests from "./NoPaymentRequests";
+import { Loading } from "src/components";
 
 export default function FreelancerPaymentRequests() {
   const { data, loading, error, fetchMore } = useFreelancerPaymentRequests();
 
-  if (loading) return <>Loading...</>;
+  if (loading) return <Loading />;
   if (error) return <>Something went wrong, please try again.</>;
   const paymentRequests = data.paymentRequests.edges.map((e) => e.node);
   const pageInfo = data.paymentRequests.pageInfo;

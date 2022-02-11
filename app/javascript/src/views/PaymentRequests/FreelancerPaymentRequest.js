@@ -1,19 +1,20 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Box, Text, Badge } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
 import { usePaymentRequest } from "./queries";
 import PaymentRequestSummary from "./PaymentRequestSummary";
 import AdvisableProtection from "./AdvisableProtection";
 import PaymentRequestStatusSummary from "./PaymentRequestStatusSummary";
+import { Loading } from "src/components";
 
 export default function FreelancerPaymentRequest() {
   const { data, loading, error } = usePaymentRequest();
 
-  if (loading) return <>loading...</>;
+  if (loading) return <Loading />;
   if (error) return <>Something went wrong. Please try again.</>;
 
-  const { company, status } = data.paymentRequest;
+  const { company } = data.paymentRequest;
 
   return (
     <>
