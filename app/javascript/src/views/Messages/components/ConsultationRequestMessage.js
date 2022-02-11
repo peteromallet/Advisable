@@ -24,7 +24,9 @@ function ConsultationRequestMessageForSpecialist({ message }) {
       return true;
     }
 
-    return consultation?.status === "Request Completed";
+    return ["Request Completed", "Request Reminded"].includes(
+      consultation?.status,
+    );
   }, [message]);
 
   useEffect(() => {

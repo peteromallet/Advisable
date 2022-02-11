@@ -1,14 +1,18 @@
 p Hi #{@consultation.specialist.account.first_name},
 
-p #{@sales_person.first_name} from Advisable.com here. One of our clients is interested in arranging a 30-minute call with you. This is a great opportunity for you to understand their requirements and figure out how you can work with them.
+p
+  ' This is #{@sales_person.first_name} from Advisable.com.
+  ' Your case study was recommended to #{@consultation.user.company.name.presence || @consultation.user.account.name} and after reading it they requested a 30-minute call with you to discuss a potential project.
 
-p They left the following message:
+p This is a great opportunity for you to understand their requirements and figure out how you can work together.
+
+p  #{@consultation.user.name_with_company} left the following message:
 
 p "#{@message.content}"
 
-p You can accept or decline their request <a clicktracking=off href="#{magic_link(@consultation.specialist.account, consultation_request_url(@consultation))}">here</a>.
+p Please respond to their request as soon as possible. You can accept or decline it <a clicktracking=off href="#{magic_link(@consultation.specialist.account, consultation_request_url(@consultation))}">here</a>.
 
 p
-  | Best,
+  ' Best,
   br
   = @sales_person.first_name
