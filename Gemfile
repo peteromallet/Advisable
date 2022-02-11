@@ -53,7 +53,6 @@ gem "sidekiq"
 gem "sidekiq-scheduler"
 gem "slim"
 gem "stripe"
-gem "strong_migrations"
 gem "twilio-ruby"
 gem "webpacker", "~> 5.1"
 
