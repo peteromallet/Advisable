@@ -2,20 +2,17 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Box, Text } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
-import ApprovePaymentRequest from "./ApprovePaymentRequest";
 import DisputePaymentRequest from "./DisputePaymentRequest";
 import { usePaymentRequest } from "./queries";
-import CapturePayment from "./CapturePayment";
-import PaymentRequestPaid from "./PaymentRequestPaid";
-import PaymentRequestCancelled from "./PaymentRequestCancelled";
 import PaymentRequestSummary from "./PaymentRequestSummary";
 import AdvisableProtection from "./AdvisableProtection";
 import PaymentRequestStatusSummary from "./PaymentRequestStatusSummary";
+import { Loading } from "src/components";
 
 export default function ClientPaymentRequest() {
   const { data, loading, error } = usePaymentRequest();
 
-  if (loading) return <>loading...</>;
+  if (loading) return <Loading />;
   if (error) return <>Something went wrong. Please try again.</>;
 
   const { status, specialist } = data.paymentRequest;

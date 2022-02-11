@@ -6,11 +6,12 @@ import { useClientPaymentRequests } from "./queries";
 import currency from "src/utilities/currency";
 import PaymentRequestStatus from "./PaymentRequestStatus";
 import NoPaymentRequests from "./NoPaymentRequests";
+import { Loading } from "src/components";
 
 export default function ClientPaymentRequests() {
   const { data, loading, error, fetchMore } = useClientPaymentRequests();
 
-  if (loading) return <>Loading...</>;
+  if (loading) return <Loading />;
   if (error) return <>Something went wrong, please try again.</>;
   const paymentRequests = data.paymentRequests.edges.map((e) => e.node);
   const pageInfo = data.paymentRequests.pageInfo;

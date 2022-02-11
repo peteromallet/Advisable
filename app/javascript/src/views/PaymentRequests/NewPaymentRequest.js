@@ -23,6 +23,7 @@ import css from "@styled-system/css";
 import useViewer from "src/hooks/useViewer";
 import BackButton from "src/components/BackButton";
 import NoActiveAgreements from "./NoActiveAgreements";
+import { Loading } from "src/components";
 
 const lineItemSchema = object().shape({
   description: string().required("Please provide a description"),
@@ -126,7 +127,7 @@ export default function NewPaymentRequest() {
   const [send] = useCreatePaymentRequest();
   const { data, loading } = useAcceptedAgreements();
 
-  if (loading) return <>Loading...</>;
+  if (loading) return <Loading />;
 
   const initialValues = {
     memo: "",
