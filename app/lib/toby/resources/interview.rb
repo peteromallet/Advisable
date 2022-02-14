@@ -7,6 +7,7 @@ module Toby
       attribute :uid, Attributes::String, readonly: true
       attribute :starts_at, Attributes::DateTime
       attribute :status, Attributes::Select, options: ::Interview::VALID_STATUSES
+      attribute :specialist, Lookups::Applications::SpecialistName
       attribute :user, Attributes::BelongsTo, readonly: true
       attribute :application, Attributes::BelongsTo, readonly: true
       attribute :availability_note, Attributes::String
