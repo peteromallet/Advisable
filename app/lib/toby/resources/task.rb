@@ -6,10 +6,8 @@ module Toby
       model_name ::Task
       attribute :uid, Attributes::String, readonly: true
       attribute :application, Attributes::BelongsTo, readonly: true
-
       attribute :company, Lookups::Tasks::CompanyName
-      attribute :specialist, Lookups::Tasks::SpecialistName
-
+      attribute :specialist, Lookups::Applications::SpecialistName
       attribute :name, Attributes::String
       attribute :description, Attributes::String
       attribute :estimate_type, Attributes::String
@@ -23,7 +21,6 @@ module Toby
       attribute :stripe_invoice_id, Attributes::String
       attribute :stage, Attributes::String
       attribute :due_date, Attributes::DateTime
-
       attribute :quote_requested_at, Attributes::DateTime
       attribute :quote_provided_at, Attributes::DateTime
       attribute :assigned_at, Attributes::DateTime

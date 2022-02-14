@@ -2,7 +2,7 @@
 
 module Toby
   module Lookups
-    module Tasks
+    module Applications
       class SpecialistName < Attributes::String
         include Lookup
 
