@@ -121,7 +121,7 @@ class Payment < ApplicationRecord
 
   def stripe_params
     {
-      amount: total,
+      amount: total_with_vat,
       currency: "usd",
       customer: company.stripe_customer_id,
       metadata: {
