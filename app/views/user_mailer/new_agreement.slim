@@ -1,0 +1,15 @@
+= render "emails/container" do
+  = render "emails/spacing", height: "32px"
+  = render "emails/heading" do
+    | #{@agreement.specialist.name} has requested to work with you on Advisable
+
+  = render "emails/paragraph" do
+    | Hi #{@account.first_name}, <br />
+    | #{@agreement.specialist.name} has sent you a request to work together. Once you accept their request you cna begin working together and they will be able to request payments from you through Advisable.
+
+  = render "emails/spacing", height: "40px"
+
+  = render "emails/button", href: conversation_url(@conversation) do
+    | View Request
+
+  = render "emails/spacing", height: "52px"

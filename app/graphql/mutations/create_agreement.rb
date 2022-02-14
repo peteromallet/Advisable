@@ -34,6 +34,8 @@ module Mutations
         send_emails: false
       )
 
+      UserMailer.new_agreement(agreement).deliver_later
+
       {agreement:, conversation:}
     end
   end
