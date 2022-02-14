@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { object, string } from "yup";
 import { Form, Formik, Field } from "formik";
 import { Box, Heading, Text, Stack, Textarea } from "@advisable/donut";
@@ -51,6 +51,7 @@ export default function ConfirmAgreement({ user }) {
   const history = useHistory();
   const attachmentProps = useAttachments();
   const [createAgreement] = useCreateAgreement();
+  const { uploading } = attachmentProps;
 
   if (!location.state?.invoicing) {
     return <Redirect to={`/new_agreement/${userId}/invoicing`} />;
@@ -128,6 +129,7 @@ export default function ConfirmAgreement({ user }) {
                 variant="gradient"
                 width={{ _: "100%", m: "auto" }}
                 disableUntilValid
+                disabled={uploading}
               >
                 Send request
               </SubmitButton>
