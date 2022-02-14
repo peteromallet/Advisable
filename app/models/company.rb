@@ -29,6 +29,10 @@ class Company < ApplicationRecord
 
   attribute :address, AddressAttribute::Type.new
 
+  def apply_vat?
+    vat_number&.starts_with?("IE")
+  end
+
   def stripe_customer
     Stripe::Customer.retrieve({
       id: stripe_customer_id,
@@ -67,9 +71,9 @@ class Company < ApplicationRecord
     {
       name: invoice_name,
       company_name: invoice_company_name,
-      billing_email: billing_email,
-      vat_number: vat_number,
-      address: address
+      billing_email:,
+      vat_number:,
+      address:
     }
   end
 
