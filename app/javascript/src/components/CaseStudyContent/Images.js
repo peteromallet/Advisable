@@ -9,6 +9,7 @@ const StyledImage = styled.img`
   width: 100%;
   height: 120px;
   max-width: 200px;
+  object-fit: cover;
   border-radius: 12px;
   background-size: cover;
   background-position: center;
@@ -80,7 +81,6 @@ function CaseStudyImages({ images }) {
             key={image.id}
             onClick={() => dialog.open(index)}
             src={image.url}
-            // style={{ backgroundImage: `url("${image.url}")` }}
           />
         ))}
       </StyledImages>
