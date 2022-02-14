@@ -12,8 +12,9 @@ module Toby
       attribute :task_name, Lookups::Tasks::Name
       attribute :amount, Attributes::Currency
       attribute :admin_fee, Attributes::Currency
-      attribute :amount_with_fee, Attributes::Currency, readonly: true
-      attribute :deposit, Attributes::Currency
+      attribute :total, Attributes::Currency, readonly: true
+      attribute :vat_amount, Attributes::Currency, readonly: true
+      attribute :total_with_vat, Attributes::Currency, readonly: true
       attribute :status, Attributes::Select, options: ::Payment::VALID_STATUSES
       attribute :payment_method, Attributes::Select, options: ::Payment::VALID_PAYMENT_METHODS
       attribute :payment_intent_id, Attributes::String, readonly: true
@@ -21,26 +22,26 @@ module Toby
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
-      action :mark_as_successful, label: "Mark as successful", if: ->(payment) { payment.status != "succeeded" }
-      action :retry_payment, label: "Retry payment", if: ->(payment) { payment.status != "succeeded" }
-      action :refund_payment, label: "Refund payment", if: ->(payment) { payment.status == "succeeded" }
+      action :mark_as_successful, label: "Mark as successful", if: ->(payment) { !payment.paid? }
+      action :retry_payment, label: "Retry payment", if: ->(payment) { !payment.paid? }
+      action :refund_payment, label: "Refund payment", if: ->(payment) { payment.paid? }
 
       def self.mark_as_successful(object, _context)
-        return if object.status == "succeeded"
+        return if object.paid?
 
         object.update!(status: "succeeded", charged_at: Time.zone.now)
         object.mark_paid!
       end
 
       def self.retry_payment(object, _context)
-        return if object.status == "succeeded"
+        return if object.paid?
 
         object.update!(retries: object.retries + 1, payment_intent_id: nil)
         object.charge!
       end
 
       def self.refund_payment(object, _context)
-        return unless object.status == "succeeded"
+        return unless object.paid?
 
         object.refund!
       end
