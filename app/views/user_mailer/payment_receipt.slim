@@ -9,6 +9,7 @@ css:
     | Payment Receipt
   = render "emails/paragraph" do
     | We have successfully processed payment for your work with #{@payment.specialist.account.name}. If you believe this charge to be in error or have any questions, please email #{mail_to("finance@advisable.com")}.
+  = render "emails/spacing", height: "32px"
 
   div style="padding: 0 32px;"
     table style="background: #eee; width: 100%; border-radius: 12px;"
@@ -29,5 +30,10 @@ css:
           = number_to_currency(@payment.total / 100.0)
 
   = render "emails/spacing", height: "32px"
+  - if @payment.company.apply_vat?
+    = render "emails/paragraph" do
+      | VAT not included in payment summary.
+    = render "emails/spacing", height: "32px"
   = render "emails/paragraph" do
     | If you have any questions, contact us at #{mail_to("finance@advisable.com")}.
+  = render "emails/spacing", height: "32px"

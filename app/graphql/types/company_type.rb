@@ -15,10 +15,7 @@ module Types
     field :invoice_company_name, String, null: true
     field :vat_number, String, null: true
 
-    field :apply_vat, Boolean, null: true
-    def apply_vat
-      object.vat_number&.starts_with?("IE")
-    end
+    field :apply_vat, Boolean, null: true, method: :apply_vat?
 
     field :sales_person, Types::SalesPersonType, null: true do
       authorize :read?

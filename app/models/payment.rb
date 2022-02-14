@@ -41,7 +41,7 @@ class Payment < ApplicationRecord
   end
 
   def vat_rate
-    company.vat_number&.starts_with?("IE") ? 0.23 : 0.0
+    company.apply_vat? ? 0.23 : 0.0
   end
 
   def paid?

@@ -17,7 +17,7 @@ class GeneratePaymentInvoiceJob < ApplicationJob
   private
 
   def generate_pdf
-    template = payment.company.vat_number&.starts_with?("IE") ? VAT_TEMPLATE_ID : TEMPLATE_ID
+    template = payment.company.apply_vat? ? VAT_TEMPLATE_ID : TEMPLATE_ID
     document = Pdfmonkey::Document.generate!(template, pdf_monkey_data)
     if document.status == "success"
       upload_document(document)
