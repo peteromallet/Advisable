@@ -18,7 +18,12 @@ import {
   Calendar,
   XCircle,
 } from "@styled-icons/heroicons-solid";
-import { useAcceptAgreement, useDeclineAgreement } from "../queries";
+import {
+  useAcceptAgreement,
+  useDeclineAgreement,
+  useSetupPaymentsData,
+  useUpdateInvoiceSettings,
+} from "../queries";
 import AgreementDetails from "src/views/NewAgreement/AgreementDetails";
 import { useMessagePrompt } from "./MessagePrompt";
 import useViewer from "src/hooks/useViewer";
@@ -26,22 +31,31 @@ import CircularButton from "src/components/CircularButton";
 import { Field, Form, Formik } from "formik";
 import SubmitButton from "src/components/SubmitButton";
 import css from "@styled-system/css";
+import { Loading } from "src/components";
+import InvoiceSettingsFields from "src/components/InvoiceSettingsFields";
 
 const declineValidationSchema = object().shape({
   message: string().required(),
 });
 
-function AgreementPending({ agreement, onAccept, onDecline }) {
+function AgreementPending({ agreement, onAccept, setStep }) {
   const [accept, acceptState] = useAcceptAgreement();
 
   const handleAccept = async () => {
-    await accept({
+    const response = await accept({
       variables: {
         input: {
           agreement: agreement.id,
         },
       },
     });
+
+    const errorCode = response.errors?.[0]?.extensions?.code;
+
+    if (errorCode === "PAYMENTS_NOT_SETUP") {
+      setStep("SETUP_PAYMENTS");
+      return;
+    }
 
     onAccept();
   };
@@ -61,7 +75,7 @@ function AgreementPending({ agreement, onAccept, onDecline }) {
         disabled={acceptState.loading}
         size="l"
         variant="secondary"
-        onClick={onDecline}
+        onClick={() => setStep("DECLINE")}
         prefix={<XCircle />}
       >
         Decline
@@ -70,7 +84,7 @@ function AgreementPending({ agreement, onAccept, onDecline }) {
   );
 }
 
-function AgreementActions({ agreement, onAccept, onDecline }) {
+function AgreementActions({ agreement, onAccept, setStep }) {
   if (agreement.status === "accepted") {
     return <>accepted</>;
   }
@@ -79,12 +93,12 @@ function AgreementActions({ agreement, onAccept, onDecline }) {
     <AgreementPending
       agreement={agreement}
       onAccept={onAccept}
-      onDecline={onDecline}
+      setStep={setStep}
     />
   );
 }
 
-function Agreement({ agreement, onAccept, onDecline }) {
+function Agreement({ agreement, onAccept, setStep }) {
   const viewer = useViewer();
   const { specialist, company } = agreement;
 
@@ -102,7 +116,7 @@ function Agreement({ agreement, onAccept, onDecline }) {
           <AgreementActions
             agreement={agreement}
             onAccept={onAccept}
-            onDecline={onDecline}
+            setStep={setStep}
           />
         </Box>
       )}
@@ -167,43 +181,109 @@ function DeclineAgreement({ agreement, onBack }) {
   );
 }
 
-function AgreementModal({ agreement, modal }) {
-  const [step, setStep] = useState("VIEW");
+function SetupPayments({ agreement, onSuccess }) {
+  const { data, loading } = useSetupPaymentsData();
+  const [updateInvoiceSettings] = useUpdateInvoiceSettings();
+  const [accept] = useAcceptAgreement();
 
-  if (step === "DECLINE") {
-    return (
-      <DeclineAgreement agreement={agreement} onBack={() => setStep("VIEW")} />
-    );
-  }
+  if (loading) return <Loading />;
+  const { viewer, currentCompany } = data;
+  const { invoiceSettings } = currentCompany;
+
+  const initialValues = {
+    name: invoiceSettings?.name || viewer.name || "",
+    companyName: invoiceSettings?.companyName || currentCompany?.name || "",
+    billingEmail: invoiceSettings.email || viewer.email || "",
+    address: {
+      line1: invoiceSettings?.address?.line1 || "",
+      line2: invoiceSettings?.address?.line2 || "",
+      city: invoiceSettings?.address?.city || "",
+      state: invoiceSettings?.address?.state || "",
+      country: invoiceSettings?.address?.country || "",
+      postcode: invoiceSettings?.address?.postcode || "",
+    },
+    vatNumber: invoiceSettings?.vatNumber || "",
+  };
+
+  const handleSubmit = async (values) => {
+    await updateInvoiceSettings({
+      variables: {
+        input: values,
+      },
+    });
+
+    await accept({
+      variables: {
+        input: {
+          agreement: agreement.id,
+        },
+      },
+    });
+
+    onSuccess();
+  };
 
   return (
-    <Agreement
-      agreement={agreement}
-      onAccept={modal.hide}
-      onDecline={() => setStep("DECLINE")}
-    />
+    <>
+      <Heading marginBottom={2}>Setup billing</Heading>
+      <Text fontSize="l" marginBottom={6} lineHeight="24px">
+        It looks like you haven't provided your billing information yet. We need
+        to know some details in order to invoice you for payments.
+      </Text>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validateOnMount
+      >
+        {(formik) => (
+          <Form>
+            <InvoiceSettingsFields formik={formik} />
+            <Box paddingTop={4}>
+              <SubmitButton
+                variant="gradient"
+                width="100%"
+                size="l"
+                disableUntilValid
+              >
+                Save & Accept
+              </SubmitButton>
+            </Box>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 }
 
-function ViewAgreement({ agreement }) {
-  const modal = useModal();
-  const viewer = useViewer();
+function AgreementModal({ agreement, modal }) {
+  const [step, setStep] = useState("VIEW");
+
+  useEffect(() => {
+    if (!modal.visible) {
+      setStep("VIEW");
+    }
+  }, [modal]);
+
   return (
-    <>
-      <DialogDisclosure {...modal}>
-        {(disclosure) => (
-          <Button
-            variant={viewer.isClient ? "gradient" : "secondary"}
-            {...disclosure}
-          >
-            {viewer.isClient ? "Review" : "View"}
-          </Button>
-        )}
-      </DialogDisclosure>
-      <Modal modal={modal} width={600}>
-        <AgreementModal agreement={agreement} modal={modal} />
-      </Modal>
-    </>
+    <Modal modal={modal} width={600}>
+      {step === "DECLINE" && (
+        <DeclineAgreement
+          agreement={agreement}
+          onBack={() => setStep("VIEW")}
+        />
+      )}
+      {step === "VIEW" && (
+        <Agreement
+          agreement={agreement}
+          onAccept={modal.hide}
+          setStep={setStep}
+        />
+      )}
+
+      {step === "SETUP_PAYMENTS" && (
+        <SetupPayments agreement={agreement} onSuccess={modal.hide} />
+      )}
+    </Modal>
   );
 }
 
@@ -262,9 +342,7 @@ export default function AgreementCreatedMessage({ message }) {
             </Button>
           )}
         </DialogDisclosure>
-        <Modal modal={modal} width={600}>
-          <AgreementModal agreement={message.agreement} modal={modal} />
-        </Modal>
+        <AgreementModal agreement={message.agreement} modal={modal} />
       </Box>
     </BaseMessage>
   );

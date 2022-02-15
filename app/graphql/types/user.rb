@@ -87,7 +87,7 @@ module Types
       authorize :user?
     end
 
-    field :invoice_settings, Types::InvoiceSettingsType, null: true do
+    field :invoice_settings, Types::InvoiceSettingsType, deprecation_reason: "Use invoice_settings field on company type" do
       authorize :user?
     end
 

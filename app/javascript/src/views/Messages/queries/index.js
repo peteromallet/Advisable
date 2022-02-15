@@ -14,6 +14,8 @@ import ACCEPT_AGREEMENT from "./acceptAgreement.gql";
 import DECLINE_AGREEMENT from "./declineAgreement.gql";
 import ACCEPT_CONSULTATION from "./acceptConsultation.gql";
 import DECLINE_CONSULTATION from "./declineConsultationRequest.gql";
+import SETUP_PAYMENTS_DATA from "./setupPaymentsData.gql";
+import UPDATE_INVOICE_SETTINGS from "./updateInvoiceSettings.gql";
 
 export function useConversations() {
   return useQuery(CONVERSATIONS);
@@ -156,4 +158,12 @@ export function useAcceptAgreement() {
 
 export function useDeclineAgreement() {
   return useMutation(DECLINE_AGREEMENT);
+}
+
+export function useSetupPaymentsData(opts) {
+  return useQuery(SETUP_PAYMENTS_DATA, opts);
+}
+
+export function useUpdateInvoiceSettings() {
+  return useMutation(UPDATE_INVOICE_SETTINGS);
 }
