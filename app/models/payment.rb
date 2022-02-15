@@ -37,7 +37,7 @@ class Payment < ApplicationRecord
   end
 
   def vat_amount
-    total * vat_rate
+    (total * vat_rate).round
   end
 
   def vat_rate
@@ -83,7 +83,7 @@ class Payment < ApplicationRecord
       else
         Slack.message(
           channel: "payments",
-          text: " Payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid}) was not successful! Payment: #{uid}"
+          text: "Payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid}) was not successful! Payment: #{uid}"
         )
       end
     end
