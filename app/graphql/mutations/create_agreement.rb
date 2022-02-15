@@ -26,8 +26,8 @@ module Mutations
 
       conversation = Conversation.by_accounts(agreement.user, current_account)
       conversation.new_message!(
-        current_account,
-        args[:message],
+        author: current_account,
+        content: args[:message],
         agreement:,
         kind: "AgreementCreated",
         attachments: args[:attachments],

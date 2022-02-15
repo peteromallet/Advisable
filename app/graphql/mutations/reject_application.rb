@@ -31,7 +31,7 @@ module Mutations
       specialist_account = application.specialist.account
       user_account = current_user.account
       conversation = Conversation.by_accounts([specialist_account, user_account])
-      conversation.new_message!(user_account, content)
+      conversation.new_message!(author: user_account, content:)
     end
   end
 end

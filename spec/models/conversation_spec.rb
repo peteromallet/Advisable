@@ -77,13 +77,21 @@ RSpec.describe Conversation, type: :model do
     it "creates a message in a conversation and calls after create actions" do
       expect_any_instance_of(Message).to receive(:schedule_email_notifications)
       expect_any_instance_of(Message).to receive(:update_participants)
-      new_message = conversation.new_message!(user.account, "Test")
+      new_message = conversation.new_message!(author: user.account, content: "Test")
       message = conversation.messages.last
       expect(new_message).to eq(message)
     end
 
+    it "can create a message with no author and content" do
+      message = conversation.new_message!(kind: "AgreementAccepted")
+      expect(message.uid).not_to be_nil
+      expect(message.author).to be_nil
+      expect(message.content).to be_nil
+      expect(message.kind).to eq("AgreementAccepted")
+    end
+
     it "can take extra attributes" do
-      message = conversation.new_message!(user.account, "Test", uid: "msg_123456789012345", metadata: {foo: :bar}, consultation:)
+      message = conversation.new_message!(author: user.account, content: "Test", uid: "msg_123456789012345", metadata: {foo: :bar}, consultation:)
       expect(message.uid).to eq("msg_123456789012345")
       expect(message.metadata).to eq({"foo" => "bar"})
       expect(message.consultation).to eq(consultation)
@@ -92,20 +100,20 @@ RSpec.describe Conversation, type: :model do
     it "can create a message without scheduling email notifications" do
       expect_any_instance_of(Message).not_to receive(:schedule_email_notifications)
       expect_any_instance_of(Message).to receive(:update_participants)
-      message = conversation.new_message!(user.account, "Test", metadata: {foo: :bar}, consultation:, send_emails: false)
+      message = conversation.new_message!(author: user.account, content: "Test", metadata: {foo: :bar}, consultation:, send_emails: false)
       expect(message.metadata).to eq({"foo" => "bar"})
       expect(message.consultation).to eq(consultation)
     end
 
     it "can attach attachments" do
-      new_message = conversation.new_message!(user.account, "Test", attachments: [pdf, image])
+      new_message = conversation.new_message!(author: user.account, content: "Test", attachments: [pdf, image])
       expect(new_message.attachments.count).to eq(2)
       expect(new_message.attachments.map { |a| a.blob.filename.to_s }).to match_array(["test.pdf", "01.jpg"])
     end
 
     context "when author is nil" do
       it "marks it as system message" do
-        message = conversation.new_message!(nil, "Test")
+        message = conversation.new_message!(content: "Test")
         expect(message).to be_system_message
       end
     end

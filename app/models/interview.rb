@@ -22,7 +22,7 @@ class Interview < ApplicationRecord
 
   def create_system_message!
     conversation = Conversation.by_accounts([specialist.account, user.account])
-    conversation.new_message!(nil, nil, kind: "InterviewScheduled", interview: self, metadata: {starts_at:}, send_emails: false)
+    conversation.new_message!(kind: "InterviewScheduled", interview: self, metadata: {starts_at:}, send_emails: false)
   end
 end
 

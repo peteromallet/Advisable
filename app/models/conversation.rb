@@ -34,7 +34,7 @@ class Conversation < ApplicationRecord
     participant&.update!(last_read_at: Time.zone.now, unread_count: 0)
   end
 
-  def new_message!(author, content, attachments: [], send_emails: true, **attributes)
+  def new_message!(author: nil, content: nil, attachments: [], send_emails: true, **attributes)
     kind = author.present? ? nil : "system"
     message = messages.create!({author:, content:, kind:}.merge(attributes))
     message.attachments.attach(attachments) if attachments.present?

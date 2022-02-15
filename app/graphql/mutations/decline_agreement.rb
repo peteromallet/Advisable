@@ -19,8 +19,8 @@ module Mutations
       end
 
       conversation = Conversation.by_accounts(agreement.specialist, current_account)
-      conversation.new_message!(nil, nil, kind: "AgreementDeclined", agreement:, send_emails: false)
-      conversation.new_message!(current_account, args[:message], send_emails: false) if args[:message].present?
+      conversation.new_message!(kind: "AgreementDeclined", agreement:, send_emails: false)
+      conversation.new_message!(author: current_account, content: args[:message], send_emails: false) if args[:message].present?
 
       {agreement:}
     end

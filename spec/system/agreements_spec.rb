@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Agreements", type: :system do
   let(:user) { create(:user, account: create(:account, first_name: "Michael", last_name: "Scott")) }
   let(:specialist) { create(:specialist, account: create(:account, first_name: "Dwight")) }
-  let(:agreement) {
+  let(:agreement) do
     create(:agreement, {
       user:,
       specialist:,
@@ -14,7 +14,7 @@ RSpec.describe "Agreements", type: :system do
       invoicing: "after",
       status: "pending"
     })
-  }
+  end
 
   let(:conversation) { create(:conversation) }
 
@@ -22,8 +22,8 @@ RSpec.describe "Agreements", type: :system do
     conversation.participants.create!(account: user.account)
     conversation.participants.create!(account: specialist.account)
     conversation.new_message!(
-      specialist.account,
-      "Hey, I'm interested in working with you!",
+      author: specialist.account,
+      content: "Hey, I'm interested in working with you!",
       agreement:,
       kind: "AgreementCreated",
       send_emails: false
