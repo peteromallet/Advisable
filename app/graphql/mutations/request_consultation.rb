@@ -25,8 +25,8 @@ module Mutations
       )
 
       conversation.new_message!(
-        current_user.account,
-        args[:message],
+        author: current_user.account,
+        content: args[:message],
         kind: "ConsultationRequest",
         consultation:,
         send_emails: false

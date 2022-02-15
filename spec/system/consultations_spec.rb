@@ -19,8 +19,8 @@ RSpec.describe "Consultations", type: :system do
   let(:consultation) { create(:consultation, user:, specialist:, status: "Request Completed") }
   let(:message) do
     conversation.new_message!(
-      user.account,
-      "The consultation request message",
+      author: user.account,
+      content: "The consultation request message",
       kind: "ConsultationRequest",
       consultation:
     )
