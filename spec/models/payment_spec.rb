@@ -38,15 +38,23 @@ RSpec.describe Payment, type: :model do
 
   describe "#charge!" do
     let(:project) { create(:project) }
-    let(:task) { create(:task, application: create(:application, project:)) }
-    let(:payment) { create(:payment, amount: 1000, task:) }
+    let(:payment) { create(:payment, payment_request:, amount: 1000) }
+    let(:payment_request) { create(:payment_request) }
 
-    context "when we have a payment request" do
-      let(:payment_request) { create(:payment_request) }
-      let(:payment) { create(:payment, payment_request:) }
+    it "charges stripe with full amount and schedules invoice creation" do
+      allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: 1050), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
+      expect(payment_request.reload.status).to eq("pending")
+      payment.charge!
+      expect(payment.payment_method).to eq("Stripe")
+      expect(GeneratePaymentInvoiceJob).to have_been_enqueued.with(payment, notify: true).once
+      expect(payment_request.reload.status).to eq("paid")
+    end
 
-      it "charges stripe with full amount and schedules invoice creation" do
-        allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: payment.total), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
+    context "when VAT" do
+      before { allow(payment.company).to receive(:apply_vat?).and_return(true) }
+
+      it "charges stripe with full amount in integer and schedules invoice creation" do
+        allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: 1292), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
         expect(payment_request.reload.status).to eq("pending")
         payment.charge!
         expect(payment.payment_method).to eq("Stripe")
