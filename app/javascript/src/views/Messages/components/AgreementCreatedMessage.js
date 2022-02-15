@@ -1,5 +1,5 @@
 import { object, string } from "yup";
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   Button,
   Modal,
@@ -85,17 +85,17 @@ function AgreementPending({ agreement, onAccept, setStep }) {
 }
 
 function AgreementActions({ agreement, onAccept, setStep }) {
-  if (agreement.status === "accepted") {
-    return <>accepted</>;
+  if (agreement.status === "pending") {
+    return (
+      <AgreementPending
+        agreement={agreement}
+        onAccept={onAccept}
+        setStep={setStep}
+      />
+    );
   }
 
-  return (
-    <AgreementPending
-      agreement={agreement}
-      onAccept={onAccept}
-      setStep={setStep}
-    />
-  );
+  return null;
 }
 
 function Agreement({ agreement, onAccept, setStep }) {
@@ -295,14 +295,18 @@ export default function AgreementCreatedMessage({ message }) {
     message,
     "New request to work together",
   );
+  const isPending = useMemo(
+    () => message.agreement?.status === "pending",
+    [message],
+  );
 
   useEffect(() => {
-    if (message.agreement?.status === "pending") {
+    if (isPending) {
       show();
     } else {
       dismiss();
     }
-  }, [show, dismiss, message]);
+  }, [show, dismiss, isPending]);
 
   return (
     <BaseMessage message={message} highlight={highlight}>
@@ -335,7 +339,7 @@ export default function AgreementCreatedMessage({ message }) {
         <DialogDisclosure {...modal}>
           {(disclosure) => (
             <Button
-              variant={viewer.isClient ? "gradient" : "secondary"}
+              variant={viewer.isClient && isPending ? "gradient" : "secondary"}
               {...disclosure}
             >
               {viewer.isClient ? "Review" : "View"}
