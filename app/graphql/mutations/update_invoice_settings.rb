@@ -36,7 +36,7 @@ module Mutations
         current_user.bg_sync_to_airtable
 
         sync_vat_number_to_stripe if current_company.saved_change_to_vat_number?
-        current_company.update_payments_setup
+        current_company.update(payments_setup: true)
       end
 
       {user: current_user}

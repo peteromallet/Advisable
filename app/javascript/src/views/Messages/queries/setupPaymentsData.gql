@@ -1,0 +1,27 @@
+query SetupPaymentsData {
+  currentCompany {
+    id
+    name
+    invoiceSettings {
+      name
+      vatNumber
+      companyName
+      billingEmail
+      address {
+        line1
+        line2
+        city
+        state
+        country
+        postcode
+      }
+    }
+  }
+  viewer {
+    ... on User {
+      id
+      name
+      email
+    }
+  }
+}
