@@ -227,8 +227,9 @@ function SetupPayments({ agreement, onSuccess }) {
     <>
       <Heading marginBottom={2}>Setup billing</Heading>
       <Text fontSize="l" marginBottom={6} lineHeight="24px">
-        It looks like you haven't provided your billing information yet. We need
-        to know some details in order to invoice you for payments.
+        Please provide your company information in order to setup future
+        invoicing. Credit card input will be requested when receiving the first
+        payment request from {agreement.specialist.firstName}.
       </Text>
       <Formik
         initialValues={initialValues}
@@ -238,7 +239,7 @@ function SetupPayments({ agreement, onSuccess }) {
         {(formik) => (
           <Form>
             <InvoiceSettingsFields formik={formik} />
-            <Box paddingTop={4}>
+            <Box py={5}>
               <SubmitButton
                 variant="gradient"
                 width="100%"
@@ -248,6 +249,10 @@ function SetupPayments({ agreement, onSuccess }) {
                 Save & Accept
               </SubmitButton>
             </Box>
+            <Text fontSize="s" lineHeight="20px" textAlign="center">
+              You will not be charged anything until{" "}
+              {agreement.specialist.firstName} requests payment from you.
+            </Text>
           </Form>
         )}
       </Formik>
