@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Project
   module Constants
     STATUSES = [
@@ -20,10 +21,11 @@ class Project
       "Pending Advisable Confirmation"
     ].freeze
 
-    SERVICE_TYPES = [
-      "Assisted",
-      "Self-Service",
-      "Consultation"
+    SERVICE_TYPES = %w[
+      Assisted
+      Self-Service
+      Consultation
+      Interview
     ].freeze
 
     SALES_STATUSES = %w[
@@ -37,19 +39,19 @@ class Project
     INDUSTRY_EXPERIENCE_IMPORTANCE = {
       "Not Important" => 0,
       "Not Sure" => 1,
-      "Important" => 2,
+      "Important" => 2
     }.freeze
 
     LOCATION_IMPORTANCE = {
       "Not Important" => 0,
       "Not Sure" => 1,
-      "Important" => 2,
+      "Important" => 2
     }.freeze
 
     LIKELY_TO_HIRE = {
       "Not Likely" => 0,
       "Maybe" => 1,
-      "Very Likely" => 2,
+      "Very Likely" => 2
     }.freeze
   end
 end

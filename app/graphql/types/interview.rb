@@ -8,20 +8,22 @@ module Types
       super
     end
 
-    field :id, ID, null: false
+    field :id, ID, null: false, method: :uid
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
     field :availability, [GraphQL::Types::ISO8601DateTime], null: false
-    field :time_zone, String, null: true
     field :status, String, null: true
     field :starts_at, GraphQL::Types::ISO8601DateTime, null: true
     field :application, Types::ApplicationType, null: false
     field :user, Types::User, null: false
     field :specialist, Types::SpecialistType, null: true
+    field :messages, [Types::Messages::InterviewRequest], null: true
 
-    def id
-      object.uid
+    field :message, Types::Messages::InterviewRequest, null: true
+    def message
+      object.messages.first
     end
 
+    field :time_zone, String, null: true
     def time_zone
       return object.time_zone if object.time_zone.present?
 

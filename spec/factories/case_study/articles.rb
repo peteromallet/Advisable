@@ -16,7 +16,7 @@ FactoryBot.define do
     editor { association :account }
 
     trait :with_skills do
-      skills { [association(:case_study_skill), association(:case_study_skill)] }
+      skills { [association(:case_study_skill, primary: true), association(:case_study_skill)] }
     end
   end
 end
