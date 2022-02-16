@@ -101,6 +101,10 @@ class SpecialistMailer < ApplicationMailer
     end
   end
 
+  def interview_request(interview)
+    # TODO
+  end
+
   def consultation_request(consultation)
     @consultation = consultation
     @message = @consultation.messages.consultation_requests.order(:created_at).last

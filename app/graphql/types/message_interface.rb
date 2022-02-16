@@ -19,6 +19,7 @@ module Types
                  Types::Messages::AgreementAccepted,
                  Types::Messages::AgreementDeclined,
                  Types::Messages::ConsultationRequest,
+                 Types::Messages::InterviewRequest,
                  Types::Messages::InterviewScheduled,
                  Types::Messages::ConsultationDeclined
 
