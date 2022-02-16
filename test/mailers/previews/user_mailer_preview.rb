@@ -52,6 +52,10 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.new_agreement(agreement)
   end
 
+  def payment_request
+    UserMailer.payment_request(PaymentRequest.order("RANDOM()").first)
+  end
+
   %i[interview_reschedule_request need_more_time_options interview_reminder post_interview].each do |method|
     define_method(method) do
       UserMailer.public_send(method, random_interview)

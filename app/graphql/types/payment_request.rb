@@ -17,21 +17,13 @@ module Types
     field :line_items, [Types::PaymentRequestLineItem], null: false
     field :amount, Int, null: false
     field :payment, Types::Payment, null: false
-    field :dispute_reason, String, null: true do
-      authorize :dispute?
-    end
-
     field :cancellation_reason, String, null: true
     field :memo, String, null: true
-
     field :admin_fee, Int, null: false
-    def admin_fee
-      object.payment.admin_fee
-    end
-
     field :sourcing_fee, Int, null: false
-    def sourcing_fee
-      object.payout.sourcing_fee
+
+    field :dispute_reason, String, null: true do
+      authorize :dispute?
     end
   end
 end
