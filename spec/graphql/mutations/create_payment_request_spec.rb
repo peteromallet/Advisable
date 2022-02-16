@@ -44,6 +44,14 @@ RSpec.describe Mutations::CreatePaymentRequest do
     expect(payment_request.memo).to be_nil
   end
 
+  it "sends an email to the company" do
+    Agreement.create!(user:, company:, specialist:, status: "accepted")
+    response = AdvisableSchema.execute(query, context:)
+    id = response.dig("data", "createPaymentRequest", "paymentRequest", "id")
+    payment_request = PaymentRequest.find_by!(uid: id)
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_request", "deliver_now", {args: [payment_request]})
+  end
+
   context "with memo" do
     let(:extra) { %(memo: "This is a memo") }
 
