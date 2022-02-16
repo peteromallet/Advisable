@@ -8,7 +8,7 @@ class Interview < ApplicationRecord
 
   VALID_STATUSES = [
     "Call Scheduled", "Call Completed", "Call Requested", "Need More Time Options",
-    "More Time Options Added", "Specialist Requested Reschedule", "Client Requested Reschedule"
+    "More Time Options Added", "Specialist Requested Reschedule", "Client Requested Reschedule", "Specialist Declined"
   ].freeze
 
   belongs_to :application

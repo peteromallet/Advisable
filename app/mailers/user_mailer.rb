@@ -128,6 +128,10 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def interview_declined(interview, message)
+    # TODO
+  end
+
   def consultation_declined(consultation, message)
     @account = consultation.user.account
     @specialist = consultation.specialist
