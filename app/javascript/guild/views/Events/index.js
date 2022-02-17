@@ -1,7 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { Text, Box, Button, useModal } from "@advisable/donut";
-import { DialogDisclosure } from "reakit/Dialog";
+import { Text, Box, Button } from "@advisable/donut";
 import useViewer from "@advisable-main/hooks/useViewer";
 import { BottomScrollListener } from "react-bottom-scroll-listener";
 import { Plus } from "@styled-icons/heroicons-outline/Plus";
@@ -11,10 +10,8 @@ import FeaturedEvent from "./components/FeaturedEvent";
 import EventsList from "./components/EventsList";
 import Loading from "./components/Loading";
 import NoResults from "@guild/components/NoResults";
-import FormstackModal from "./components/FormstackModal";
 
 const Events = () => {
-  const modal = useModal();
   const viewer = useViewer();
 
   const { data, loading, fetchMore } = useQuery(EVENTS_QUERY, {
@@ -60,13 +57,13 @@ const Events = () => {
           >
             Events
           </Text>
-          <DialogDisclosure {...modal}>
-            {(disclosure) => (
-              <Button {...disclosure} prefix={<Plus />}>
-                Propose Event
-              </Button>
-            )}
-          </DialogDisclosure>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={`https://advisable.formstack.com/forms/host_an_event?sid=${viewer.id}`}
+          >
+            <Button prefix={<Plus />}>Propose Event</Button>
+          </a>
         </Box>
         {loading && !events.length ? <Loading /> : null}
         {featuredEvent && <FeaturedEvent event={featuredEvent} />}
@@ -84,11 +81,6 @@ const Events = () => {
           <NoResults message="There are no upcoming Events" />
         )}
       </Box>
-      <FormstackModal
-        modal={modal}
-        label="Create Event"
-        src={`https://advisable.formstack.com/forms/guild_event_form?id=${viewer.id}`}
-      />
     </ErrorBoundary>
   );
 };
