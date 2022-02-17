@@ -24,7 +24,7 @@ module Mutations
         status: "pending"
       )
 
-      success = save_with_current_account!(payment_request)
+      success = save_with_current_account(payment_request)
       UserMailer.payment_request(payment_request).deliver_later if success
 
       {payment_request:}

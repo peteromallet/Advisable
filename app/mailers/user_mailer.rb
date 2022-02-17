@@ -158,14 +158,15 @@ class UserMailer < ApplicationMailer
 
   def payment_request(payment_request)
     @payment_request = payment_request
-    @user = payment_request.specialist.agreements.find_by(company: payment_request.company).user
+    @agreement = Agreement.accepted.order(created_at: :desc).find_by(payment_request.slice(:specialist, :company))
+    @user = @agreement.user
     @account = @user.account
 
     mail(
-      from: "Advisable <hello@advisable.com>",
-      to: @user.account.email,
-      bcc: "finance@advisable.com",
-      subject: "New payment request"
+      from: "Advisable <finance@advisable.com>",
+      to: payment_request.company.billing_email,
+      cc: @user.account.email,
+      subject: "New Payment Request"
     ) do |format|
       format.html { render layout: "email_v2" }
     end
