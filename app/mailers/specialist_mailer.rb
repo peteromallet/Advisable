@@ -102,7 +102,18 @@ class SpecialistMailer < ApplicationMailer
   end
 
   def interview_request(interview)
-    # TODO
+    @interview = interview
+    @message = @interview.messages.interview_requests.order(:created_at).last
+    @sales_person = default_sales_person_for(interview.user.company)
+
+    mail(
+      from: @sales_person.email_with_name,
+      to: @interview.specialist.account.email,
+      bcc: @sales_person.email_with_name,
+      subject: "Consultation request from #{@interview.user.name_with_company}"
+    ) do |format|
+      format.html { render layout: false }
+    end
   end
 
   def consultation_request(consultation)

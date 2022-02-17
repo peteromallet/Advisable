@@ -41,10 +41,11 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def consultation_declined
-    UserMailer.consultation_declined(
-      Consultation.order("RANDOM()").first,
-      Message.order("RANDOM()").first
-    )
+    UserMailer.consultation_declined(Consultation.order("RANDOM()").first, Message.order("RANDOM()").first)
+  end
+
+  def interview_declined
+    UserMailer.interview_declined(Interview.order("RANDOM()").first, Message.order("RANDOM()").first)
   end
 
   def new_agreement
