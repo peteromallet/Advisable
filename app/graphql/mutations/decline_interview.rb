@@ -26,23 +26,13 @@ module Mutations
     def create_system_message(interview)
       return if interview.messages.none?
 
-      interview.messages.first.conversation.new_message!(
-        nil,
-        nil,
-        kind: "InterviewDeclined",
-        interview:,
-        send_emails: false
-      )
+      interview.messages.first.conversation.new_message!(kind: "InterviewDeclined", interview:, send_emails: false)
     end
 
     def create_user_message(interview, reason)
       return if reason.nil? || interview.messages.none?
 
-      message = interview.messages.first.conversation.new_message!(
-        current_user.account,
-        reason,
-        send_emails: false
-      )
+      message = interview.messages.first.conversation.new_message!(author: current_user.account, content: reason, send_emails: false)
       UserMailer.interview_declined(interview, message).deliver_later
     end
   end
