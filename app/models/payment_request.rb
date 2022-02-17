@@ -39,6 +39,18 @@ class PaymentRequest < ApplicationRecord
     payment.charge!
   end
 
+  def admin_fee
+    return payment.admin_fee if payment.present?
+
+    (amount * company.admin_fee_percentage).round
+  end
+
+  def sourcing_fee
+    return payout.sourcing_fee if payout.present?
+
+    (amount * specialist.sourcing_fee_percentage).round
+  end
+
   private
 
   def set_due_at
