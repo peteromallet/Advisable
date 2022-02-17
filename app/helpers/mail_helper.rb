@@ -58,6 +58,11 @@ module MailHelper
     end
   end
 
+  def interview_request_url(_consultation)
+    # TODO: Fill in once we have the frontend path for this
+    app_host
+  end
+
   def time_in_zone(timestamp, zone, format = "%d %B, %I:%M%P %Z")
     timestamp.in_time_zone(zone).strftime(format)
   end
