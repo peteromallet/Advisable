@@ -181,6 +181,20 @@ function DeclineAgreement({ agreement, onBack }) {
   );
 }
 
+const addressSchema = object().shape({
+  line1: string().required("Please provide your company address"),
+  city: string().required("Please provide your company address"),
+  state: string().required("Please provide your company address"),
+  country: string().required("Please provide your company address"),
+});
+
+const invoicingValidationSchema = object().shape({
+  name: string().required("Please provide your full name"),
+  companyName: string().required("Please provide a company name"),
+  billingEmail: string().required("Please provide a billing email"),
+  address: addressSchema,
+});
+
 function SetupPayments({ agreement, onSuccess }) {
   const { data, loading } = useSetupPaymentsData();
   const [updateInvoiceSettings] = useUpdateInvoiceSettings();
@@ -234,7 +248,7 @@ function SetupPayments({ agreement, onSuccess }) {
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        validateOnMount
+        validationSchema={invoicingValidationSchema}
       >
         {(formik) => (
           <Form>
