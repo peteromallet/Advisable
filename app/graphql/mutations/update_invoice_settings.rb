@@ -4,10 +4,10 @@ module Mutations
   class UpdateInvoiceSettings < Mutations::BaseMutation
     description "Update invoice settings"
 
-    argument :address, Types::AddressInput, required: false
-    argument :billing_email, String, "Billing Email", required: false
-    argument :company_name, String, "Company Name", required: false
-    argument :name, String, "Full Name", required: false
+    argument :address, Types::AddressInput, required: true
+    argument :billing_email, String, "Billing Email", required: true
+    argument :company_name, String, "Company Name", required: true
+    argument :name, String, "Full Name", required: true
     argument :payment_method, String, required: false
     argument :vat_number, String, "Vat ID", required: false
 

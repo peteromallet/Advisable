@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::UpdateInvoiceSettings do
   let(:company) do
     create(:company, {
+      payments_setup: false,
       stripe_customer_id: "cus_123",
       invoice_name: nil,
       invoice_company_name: nil,
@@ -50,7 +51,6 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
       name: "company name",
       email: "billing@test.com"
     })
-    allow(company).to receive(:update_payments_setup).and_return(nil)
     allow(Stripe::Customer).to receive(:create_tax_id)
   end
 
@@ -94,9 +94,10 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
     expect(company.address.postcode).to eq("NA")
   end
 
-  it "calls update_payments_setup on company" do
+  it "Sets payments_setup to true" do
+    expect(company.reload.payments_setup).to be_falsey
     AdvisableSchema.execute(query, context:)
-    expect(company).to have_received(:update_payments_setup)
+    expect(company.reload.payments_setup).to be_truthy
   end
 
   it "sets the vat number inside of stripe" do
