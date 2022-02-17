@@ -10,6 +10,8 @@ import MESSAGES from "./messages.gql";
 import SEND_MESSAGE from "./sendMessage.gql";
 import UPDATE_LAST_READ from "./updateLastRead.gql";
 import RECEIVED_MESSAGE from "./receivedMessage.gql";
+import ACCEPT_AGREEMENT from "./acceptAgreement.gql";
+import DECLINE_AGREEMENT from "./declineAgreement.gql";
 import ACCEPT_CONSULTATION from "./acceptConsultation.gql";
 import DECLINE_CONSULTATION from "./declineConsultationRequest.gql";
 
@@ -146,4 +148,12 @@ function appendToMessages(messages, message) {
     ...messages,
     edges: [...messages.edges, { node: message }],
   };
+}
+
+export function useAcceptAgreement() {
+  return useMutation(ACCEPT_AGREEMENT);
+}
+
+export function useDeclineAgreement() {
+  return useMutation(DECLINE_AGREEMENT);
 }

@@ -18,7 +18,7 @@ module Mutations
       end
 
       conversation = Conversation.by_accounts(agreement.specialist, current_account)
-      conversation.new_message!(nil, nil, kind: "AgreementAccepted")
+      conversation.new_message!(kind: "AgreementAccepted", agreement:, send_emails: false)
 
       {agreement:}
     end

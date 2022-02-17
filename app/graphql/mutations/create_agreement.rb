@@ -10,6 +10,7 @@ module Mutations
     argument :user, ID, required: true
 
     field :agreement, Types::Agreement, null: true
+    field :conversation, Types::Conversation, null: true
 
     def authorized?(**_args)
       requires_specialist!
@@ -23,11 +24,19 @@ module Mutations
 
       save_with_current_account!(agreement)
 
-      conversation = Conversation.by_accounts(agreement.specialist, current_account)
-      conversation.new_message!(nil, nil, kind: "AgreementCreated", send_emails: false)
-      conversation.new_message!(current_account, args[:message], attachments: args[:attachments])
+      conversation = Conversation.by_accounts(agreement.user, current_account)
+      conversation.new_message!(
+        author: current_account,
+        content: args[:message],
+        agreement:,
+        kind: "AgreementCreated",
+        attachments: args[:attachments],
+        send_emails: false
+      )
 
-      {agreement:}
+      UserMailer.new_agreement(agreement).deliver_later
+
+      {agreement:, conversation:}
     end
   end
 end

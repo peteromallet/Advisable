@@ -24,6 +24,9 @@ const createCache = () => {
         "ConsultationRequestMessage",
         "ConsultationDeclinedMessage",
         "InterviewScheduledMessage",
+        "AgreementCreatedMessage",
+        "AgreementAcceptedMessage",
+        "AgreementDeclinedMessage",
       ],
       ViewerUnion: ["User", "Specialist"],
       PostInterface: [

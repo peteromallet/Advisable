@@ -870,7 +870,7 @@ RSpec.describe ZapierInteractorController, type: :request do
 
         it "creates a message in existing conversation" do
           conversation = Conversation.by_accounts([user.account, second.account])
-          conversation.new_message!(second.account, "Existing message")
+          conversation.new_message!(author: second.account, content: "Existing message")
           post("/zapier_interactor/create_message", params:)
           expect(response).to have_http_status(:success)
           uid = JSON[response.body]["conversation"]
