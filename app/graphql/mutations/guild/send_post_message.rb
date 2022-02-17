@@ -22,7 +22,7 @@ module Mutations
         conversation = ::Conversation.by_accounts(accounts)
         metadata = {}
         metadata[:calendly_url] = args[:calendly_url] if args.key?(:calendly_url)
-        message = conversation.new_message!(current_account, args[:content], guild_post: post, metadata:)
+        message = conversation.new_message!(author: current_account, content: args[:content], guild_post: post, metadata:)
 
         create_post_engagement!(post)
         update_calendly_url(args[:calendly_url])

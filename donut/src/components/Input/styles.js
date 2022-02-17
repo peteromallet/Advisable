@@ -3,7 +3,7 @@ import { variant, margin } from "styled-system";
 import { rgba, lighten } from "polished";
 import styled, { css } from "styled-components";
 
-export const BORDER_RADIUS = 8;
+export const BORDER_RADIUS = 12;
 
 export const StyledInputDecoration = styled.div`
   display: flex;

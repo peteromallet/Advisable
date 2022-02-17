@@ -165,7 +165,7 @@ class ZapierInteractorController < ApplicationController
     end
     conversation = Conversation.by_accounts(accounts)
     author = params[:author].present? ? find_account_by_uid(params[:author]) : nil
-    conversation.new_message!(author, params[:content])
+    conversation.new_message!(author:, content: params[:content])
     render json: {status: "OK.", conversation: conversation.uid}
   end
 

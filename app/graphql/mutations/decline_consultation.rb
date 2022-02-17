@@ -39,8 +39,6 @@ module Mutations
       return if consultation.messages.none?
 
       consultation.messages.first.conversation.new_message!(
-        nil,
-        nil,
         kind: "ConsultationDeclined",
         consultation:,
         send_emails: false
@@ -51,8 +49,8 @@ module Mutations
       return if reason.nil? || consultation.messages.none?
 
       consultation.messages.first.conversation.new_message!(
-        current_user.account,
-        reason,
+        author: current_user.account,
+        content: reason,
         send_emails: false
       )
     end

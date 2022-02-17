@@ -15,6 +15,9 @@ module Types
     orphan_types Types::UserMessage,
                  Types::SystemMessage,
                  Types::GuildPostMessage,
+                 Types::Messages::AgreementCreated,
+                 Types::Messages::AgreementAccepted,
+                 Types::Messages::AgreementDeclined,
                  Types::Messages::ConsultationRequest,
                  Types::Messages::InterviewScheduled,
                  Types::Messages::ConsultationDeclined
@@ -25,8 +28,6 @@ module Types
           Object.const_get("Types::Messages::#{object.kind.camelize}")
         elsif object.system_message?
           Types::SystemMessage
-        elsif object.agreement_id
-          Types::AgreementMessage
         elsif object.guild_post_id
           Types::GuildPostMessage
         else

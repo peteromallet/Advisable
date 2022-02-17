@@ -1,0 +1,8 @@
+mutation DeclineAgreement($input: DeclineAgreementInput!) {
+  declineAgreement(input: $input) {
+    agreement {
+      id
+      status
+    }
+  }
+}

@@ -38,9 +38,11 @@ RSpec.describe Mutations::CreateAgreement do
       expect(agreement.log_data.responsible_id).to eq(specialist.account_id)
 
       conversation = Conversation.find_existing_with(user, specialist)
-      expect(conversation.messages.count).to eq(2)
+      expect(conversation.messages.count).to eq(1)
       expect(conversation.messages.first.kind).to eq("AgreementCreated")
       expect(conversation.messages.last.content).to eq("Hello")
+
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "new_agreement", "deliver_now", {args: [agreement]})
     end
   end
 
