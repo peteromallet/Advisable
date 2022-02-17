@@ -107,7 +107,7 @@ module Types
       Money::Currency.all.sort_by(&:name)
     end
 
-    field :consultation, Types::ConsultationType, null: true do
+    field :consultation, Types::ConsultationType, null: true, deprecation_reason: "Should not be used anymore due to new messages flows" do
       argument :id, ID, required: true
     end
 

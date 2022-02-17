@@ -24,7 +24,6 @@ const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication"),
 );
-const Consultation = lazy(() => import("./views/Consultation"));
 const Interview = lazy(() => import("./views/Interview"));
 const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
 const Payment = lazy(() => import("./views/Payment"));
@@ -125,12 +124,6 @@ const ApplicationRoutes = () => {
           <Route path="/manage/:applicationId">
             <RequireAuthentication clientOnly>
               <Booking />
-            </RequireAuthentication>
-          </Route>
-
-          <Route path="/consultations/:id">
-            <RequireAuthentication specialistOnly>
-              <Consultation />
             </RequireAuthentication>
           </Route>
 
