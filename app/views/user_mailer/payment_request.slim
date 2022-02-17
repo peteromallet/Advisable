@@ -1,0 +1,41 @@
+= render "emails/container" do
+  = render "emails/spacing", height: "32px"
+  = render "emails/heading" do
+    | #{@payment_request.specialist.account.name} requested payment from you
+  = render "emails/paragraph" do
+    | Hi #{@account.first_name}, <br/> <br />
+    | #{@payment_request.specialist.account.first_name} has requested the following payment from you. Please approve this payment as soon as possible to avoid any delay in #{@payment_request.specialist.first_name} being paid.
+  = render "emails/spacing", height: "32px"
+
+  div style="padding: 0 32px;"
+    table style="background: #eee; width: 100%; border-radius: 12px;"
+      - @payment_request.line_items.each do |pr|
+        tr
+          td style="padding: 15px; font-family: arial; border-bottom: 1px solid #ddd;"
+            | #{pr["description"]}
+          td style="padding: 15px; font-family: arial; border-bottom: 1px solid #ddd; text-align: right;"
+            = number_to_currency(pr["amount"] / 100.0)
+      tr
+        td style="padding: 15px; font-family: arial; border-bottom: 1px solid #ddd;"
+          | Advisable fee
+        td style="padding: 15px; font-family: arial; border-bottom: 1px solid #ddd; text-align: right;"
+          = number_to_currency(@payment_request.admin_fee / 100.0)
+      tr
+        td style="padding: 15px; font-family: arial;"
+          | Total
+        td style="padding: 15px; font-family: arial; text-align: right; font-weight: 600;"
+          = number_to_currency(@payment_request.amount / 100.0)
+
+  = render "emails/spacing", height: "32px"
+  = render "emails/button", href: magic_link(@account, payment_request_url(@payment_request)) do
+    | Complete payment
+
+  = render "emails/spacing", height: "32px"
+  - if @payment_request.company.apply_vat?
+    = render "emails/paragraph" do
+      | VAT not included in payment summary.
+    = render "emails/spacing", height: "32px"
+  div style="text-align: center;"
+    = render "emails/paragraph" do
+      | If you have any questions, contact us at #{mail_to("finance@advisable.com")}.
+  = render "emails/spacing", height: "32px"

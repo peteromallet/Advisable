@@ -44,6 +44,10 @@ module MailHelper
     "#{app_host}/applications/#{application.uid}/proposal"
   end
 
+  def payment_request_url(payment_request)
+    "#{app_host}/payment_requests/#{payment_request.uid}"
+  end
+
   # TODO: We can remove this fallback when we remove the consultation request
   # view.
   def consultation_request_url(consultation)
