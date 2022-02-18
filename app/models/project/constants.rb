@@ -25,7 +25,6 @@ class Project
       Assisted
       Self-Service
       Consultation
-      Interview
     ].freeze
 
     SALES_STATUSES = %w[

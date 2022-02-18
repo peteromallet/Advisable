@@ -15,13 +15,7 @@ module Types
     orphan_types Types::UserMessage,
                  Types::SystemMessage,
                  Types::GuildPostMessage,
-                 Types::Messages::AgreementCreated,
-                 Types::Messages::AgreementAccepted,
-                 Types::Messages::AgreementDeclined,
-                 Types::Messages::ConsultationRequest,
-                 Types::Messages::InterviewRequest,
-                 Types::Messages::InterviewScheduled,
-                 Types::Messages::ConsultationDeclined
+                 *Types::Messages.constants.map { |k| "Types::Messages::#{k}".constantize }
 
     definition_methods do
       def resolve_type(object, _)

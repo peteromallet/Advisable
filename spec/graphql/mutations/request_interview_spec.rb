@@ -16,9 +16,6 @@ RSpec.describe Mutations::RequestInterview do
       }) {
         interview {
           id
-          message {
-            id
-          }
         }
       }
     }
@@ -44,8 +41,7 @@ RSpec.describe Mutations::RequestInterview do
     interview = Interview.find_by!(uid:)
     expect(interview.specialist).to eq(specialist)
 
-    message_uid = response["data"]["requestInterview"]["interview"]["message"]["id"]
-    message = Message.find_by!(uid: message_uid)
+    message = interview.messages.first
     expect(message.content).to eq("Wanna work for me, bro?")
     expect(message.conversation.participants.pluck(:account_id, :unread_count)).to match_array([[specialist.account.id, 1], [current_user.account.id, 0]])
 

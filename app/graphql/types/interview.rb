@@ -16,12 +16,6 @@ module Types
     field :application, Types::ApplicationType, null: false
     field :user, Types::User, null: false
     field :specialist, Types::SpecialistType, null: true
-    field :messages, [Types::Messages::InterviewRequest], null: true
-
-    field :message, Types::Messages::InterviewRequest, null: true
-    def message
-      object.messages.first
-    end
 
     field :time_zone, String, null: true
     def time_zone

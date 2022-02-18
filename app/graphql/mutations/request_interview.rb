@@ -30,7 +30,7 @@ module Mutations
 
     def create_project(skill)
       current_account_responsible_for do
-        project = Project.create(user: current_user, skills: [skill], sales_status: "Open", status: "Project Created", service_type: "Interview", primary_skill: skill, name: "#{current_user.company.name} - #{skill&.name}")
+        project = Project.create(user: current_user, skills: [skill], sales_status: "Open", status: "Project Created", service_type: "Consultation", primary_skill: skill, name: "#{current_user.company.name} - #{skill&.name}")
         project.sync_to_airtable
         project
       end

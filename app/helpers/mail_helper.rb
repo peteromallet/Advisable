@@ -58,9 +58,8 @@ module MailHelper
     end
   end
 
-  def interview_request_url(_consultation)
-    # TODO: Fill in once we have the frontend path for this
-    app_host
+  def interview_request_url(conversation)
+    "#{app_host}/messages/#{conversation.uid}"
   end
 
   def time_in_zone(timestamp, zone, format = "%d %B, %I:%M%P %Z")

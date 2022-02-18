@@ -10,7 +10,7 @@ p  #{@interview.user.name_with_company} left the following message:
 
 p "#{@message.content}"
 
-p Please respond to their request as soon as possible. You can accept or decline it <a clicktracking=off href="#{magic_link(@interview.specialist.account, interview_request_url(@interview))}">here</a>.
+p Please respond to their request as soon as possible. You can accept or decline it <a clicktracking=off href="#{magic_link(@interview.specialist.account, interview_request_url(@message.conversation))}">here</a>.
 
 p
   ' Best,
