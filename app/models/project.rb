@@ -32,6 +32,8 @@ class Project < ApplicationRecord
   validates :location_importance, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
   validates :likely_to_hire, inclusion: {in: [0, 1, 2, 3]}, allow_nil: true
 
+  scope :with_primary_skill, ->(skill_id) { joins(project_skills: :skill).where(project_skills: {primary: true, skills: {id: skill_id}}) }
+
   after_update :send_paused_emails, if: -> { saved_change_to_sales_status? && sales_status == "Paused" }
 
   def nice_name

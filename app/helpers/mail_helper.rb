@@ -58,6 +58,10 @@ module MailHelper
     end
   end
 
+  def interview_request_url(conversation)
+    "#{app_host}/messages/#{conversation.uid}"
+  end
+
   def time_in_zone(timestamp, zone, format = "%d %B, %I:%M%P %Z")
     timestamp.in_time_zone(zone).strftime(format)
   end

@@ -11,4 +11,5 @@ class InterviewPolicy < BasePolicy
   def schedule?
     specialist_owner? || admin?
   end
+  alias decline? schedule?
 end
