@@ -4,10 +4,10 @@ module Mutations
   class UpdateInvoiceSettings < Mutations::BaseMutation
     description "Update invoice settings"
 
-    argument :address, Types::AddressInput, required: false
-    argument :billing_email, String, "Billing Email", required: false
-    argument :company_name, String, "Company Name", required: false
-    argument :name, String, "Full Name", required: false
+    argument :address, Types::AddressInput, required: true
+    argument :billing_email, String, "Billing Email", required: true
+    argument :company_name, String, "Company Name", required: true
+    argument :name, String, "Full Name", required: true
     argument :payment_method, String, required: false
     argument :vat_number, String, "Vat ID", required: false
 
@@ -36,7 +36,7 @@ module Mutations
         current_user.bg_sync_to_airtable
 
         sync_vat_number_to_stripe if current_company.saved_change_to_vat_number?
-        current_company.update_payments_setup
+        current_company.update(payments_setup: true)
       end
 
       {user: current_user}

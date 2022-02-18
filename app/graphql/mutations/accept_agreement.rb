@@ -13,6 +13,8 @@ module Mutations
     def resolve(agreement:)
       agreement = Agreement.find_by!(uid: agreement)
 
+      ApiError.invalid_request("PAYMENTS_NOT_SETUP", "Payments are not setup for this company.") unless agreement.company.payments_setup
+
       current_account_responsible_for do
         agreement.update!(status: "accepted")
       end

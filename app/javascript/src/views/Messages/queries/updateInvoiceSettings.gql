@@ -1,0 +1,23 @@
+mutation UpdateInvoiceSettings($input: UpdateInvoiceSettingsInput!) {
+  updateInvoiceSettings(input: $input) {
+    user {
+      id
+      paymentsSetup
+      projectPaymentMethod
+      invoiceSettings {
+        name
+        vatNumber
+        companyName
+        billingEmail
+        address {
+          line1
+          line2
+          city
+          state
+          country
+          postcode
+        }
+      }
+    }
+  }
+}
