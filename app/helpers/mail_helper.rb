@@ -63,7 +63,7 @@ module MailHelper
   end
 
   def set_password_url
-    "#{app_host}/set_password"
+    app_host
   end
 
   def manage_subscriptions_url(account)
