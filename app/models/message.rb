@@ -5,6 +5,7 @@ class Message < ApplicationRecord
   uid_prefix "msg"
 
   NOTIFICATION_WAIT_TIME = 10.minutes
+  KINDS = %w[AgreementAccepted AgreementCreated AgreementDeclined InterviewRequest InterviewScheduled InterviewDeclined ConsultationRequest ConsultationDeclined system].freeze
 
   belongs_to :conversation
   belongs_to :author, class_name: "Account", optional: true
@@ -17,8 +18,11 @@ class Message < ApplicationRecord
 
   before_validation :strip_content
 
+  validates :kind, inclusion: {in: KINDS}, allow_nil: true
+
   scope :with_content, -> { where.not(content: nil) }
   scope :consultation_requests, -> { where(kind: "ConsultationRequest") }
+  scope :interview_requests, -> { where(kind: "InterviewRequest") }
 
   def system_message?
     kind == "system"
