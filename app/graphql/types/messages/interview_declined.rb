@@ -6,7 +6,7 @@ module Types
       implements Types::MessageInterface
       graphql_name "InterviewDeclinedMessage"
 
-      field :consultation, Types::ConsultationType, null: true
+      field :interview, Types::Interview, null: true
     end
   end
 end
