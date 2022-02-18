@@ -75,5 +75,9 @@ module Types
     def candidates
       object.applications.active
     end
+
+    field :invoice_settings, Types::InvoiceSettingsType do
+      authorize :read?
+    end
   end
 end
