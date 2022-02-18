@@ -52,6 +52,10 @@ const ApplicationRoutes = () => {
         <Switch>
           {isClient && <Redirect from="/" exact to="/explore" />}
 
+          <Route path="/set_password">
+            <Redirect to="/" />
+          </Route>
+
           <Route path="/" exact>
             <RequireAuthentication>
               <FreelancerDashboard />
