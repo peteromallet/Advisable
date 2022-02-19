@@ -15,9 +15,6 @@ const Profile = () => {
   const notifications = useNotifications();
 
   const initialValues = {
-    email: data?.viewer?.email || "",
-    firstName: data?.viewer?.firstName || "",
-    lastName: data?.viewer?.lastName || "",
     remote: data?.viewer?.remote || true,
     hourlyRate: data?.viewer?.hourlyRate / 100.0,
     publicUse: data?.viewer?.publicUse || false,
@@ -25,9 +22,6 @@ const Profile = () => {
 
   const handleSubmit = async (values) => {
     const input = {
-      email: values.email,
-      firstName: values.firstName,
-      lastName: values.lastName,
       hourlyRate: values.hourlyRate * 100,
       remote: values.remote,
       publicUse: values.publicUse,
@@ -60,17 +54,6 @@ const Profile = () => {
             >
               General Settings
             </Text>
-            <Box display="flex">
-              <Box width="50%" paddingRight="xs">
-                <FormField name="firstName" label="First Name" />
-              </Box>
-              <Box width="50%" paddingLeft="xs">
-                <FormField name="lastName" label="Last Name" />
-              </Box>
-            </Box>
-            <Box height={1} bg="neutral100" my="l" />
-            <FormField name="email" label="Email" />
-            <Box height={1} bg="neutral100" my="l" />
             <Box paddingBottom="xs">
               <Text fontWeight="medium" color="neutral800">
                 Are you happy to work remotely?

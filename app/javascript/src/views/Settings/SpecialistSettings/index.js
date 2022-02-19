@@ -7,6 +7,7 @@ import General from "./General";
 import Password from "./Password";
 import PaymentSettings from "./PaymentSettings";
 import Availability from "./Availability";
+import AccountSettings from "../AccountSettings";
 
 function SpecialistSettings() {
   const match = useRouteMatch();
@@ -44,11 +45,14 @@ function SpecialistSettings() {
             <Route path="/settings/password">
               <Password />
             </Route>
+            <Route path="/settings/account">
+              <AccountSettings />
+            </Route>
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
             {breakpointS && (
               <Route>
-                <Redirect to="/settings/general" />
+                <Redirect to="/settings/account" />
               </Route>
             )}
           </Switch>
