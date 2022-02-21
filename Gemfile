@@ -55,7 +55,7 @@ gem "slim"
 gem "stripe"
 gem "tailwindcss-rails"
 gem "twilio-ruby"
-gem "webpacker", "~> 5.1"
+gem 'shakapacker', '6.1.1'
 
 group :development, :test do
   gem "database_cleaner-active_record"
