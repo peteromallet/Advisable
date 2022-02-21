@@ -36,40 +36,6 @@ Rails.application.routes.draw do
   get "/toby", to: "toby#index"
   get "/toby/*toby", to: "toby#index"
 
-  namespace :admin do
-    resources :applications
-    resources :accounts
-    resources :specialists
-    resources :users
-    resources :interviews
-    resources :reviews
-    resources :projects
-    resources :video_calls
-    resources :companies
-    resources :industries
-    resources :skills
-    resources :project_skills
-    resources :countries
-    resources :webhooks, only: %i[index show]
-    namespace :case_study do
-      resources :articles
-      resources :skills
-      resources :companies
-      resources :industries
-    end
-    resources :events do
-      delete :cover_photo, on: :member, action: :destroy_cover_photo
-    end
-    resources :labels
-
-    post "resync", to: "application#resync", as: :resync if ENV["STAGING"]
-    get "login/:gid", to: "application#login_as", as: :login_as
-
-    post "reset_test", to: "application#reset_test", as: :reset_test if ENV["STAGING"] || Rails.env.development?
-
-    root to: "applications#index"
-  end
-
   post "/graphql", to: "graphql#execute"
 
   post "/stripe_events", to: "stripe_events#create"
