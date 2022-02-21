@@ -23,9 +23,8 @@ module Mutations
         current_account.save
       end
 
-      current_user.bg_sync_to_airtable if current_user.is_a?(Specialist)
-
       ApiError.invalid_request("FAILED_TO_UPDATE", current_account.errors.full_messages.first) unless success
+      current_user.bg_sync_to_airtable if current_user.is_a?(Specialist)
 
       {account: current_account}
     end
