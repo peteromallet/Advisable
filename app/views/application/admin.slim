@@ -1,0 +1,9 @@
+h1 Admin
+
+= button_to "Sidekiq", sidekiq_web_path, style: 'width: 100%', method: :get
+
+= button_to "PG Hero", pg_hero_path, style: 'width: 100%', method: :get
+
+- if current_account && current_account.respond_to?(:auth_providers) && !current_account.auth_providers.google_calendar.exists?
+    div style=("margin-bottom: 10px;")
+    = button_to "Set Up Google Calendar for Robot", "/auth/google_oauth2_calendar", id: "sign_in", style: 'width: 100%'
