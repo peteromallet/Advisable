@@ -45,7 +45,7 @@ gem "rack-attack"
 gem "rails", "~> 7.0.0"
 gem "ruby-openai"
 gem "ruby-progressbar", require: false
-gem "sass-rails", ">= 6"
+gem "propshaft"
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "sentry-sidekiq"
