@@ -1,4 +1,4 @@
 web: ./bin/rails s -p 3000
 sidekiq: bundle exec sidekiq -t 25 -C config/sidekiq.yml
-webpack: ./bin/webpack-dev-server
+webpack: ./bin/webpacker-dev-server
 css: bin/rails tailwindcss:watch
