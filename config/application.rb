@@ -23,6 +23,7 @@ module Advisable
     config.action_mailer.preview_path = Rails.root.join("test/mailers/previews")
     config.action_mailbox.ingress = :sendgrid
     config.assets.paths << Rails.root.join("app/assets/fonts")
+    config.assets.css_compressor = nil
     config.active_storage.variant_processor = :vips
 
     config.app_profiler.middleware = AppProfilerAuthorizedMiddleware
