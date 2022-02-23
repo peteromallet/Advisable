@@ -1,21 +1,24 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Box, Text } from "@advisable/donut";
+import { Box } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
-import DisputePaymentRequest from "./DisputePaymentRequest";
 import { usePaymentRequest } from "./queries";
 import PaymentRequestSummary from "./PaymentRequestSummary";
 import AdvisableProtection from "./AdvisableProtection";
 import PaymentRequestStatusSummary from "./PaymentRequestStatusSummary";
 import { Loading } from "src/components";
+import NotFound, { isNotFound } from "../NotFound";
+import AccessDenied, { isNotAuthorized } from "../AccessDenied";
 
 export default function ClientPaymentRequest() {
   const { data, loading, error } = usePaymentRequest();
 
   if (loading) return <Loading />;
+  if (isNotFound(error)) return <NotFound />;
+  if (isNotAuthorized(error)) return <AccessDenied />;
   if (error) return <>Something went wrong. Please try again.</>;
 
-  const { status, specialist } = data.paymentRequest;
+  const { specialist } = data.paymentRequest;
 
   return (
     <>
