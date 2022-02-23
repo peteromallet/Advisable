@@ -28,7 +28,7 @@ namespace :production_case_study do
 
   task search: :environment do
     client = OpenAI::Client.new
-    file = "file-Xq6YE79SnkWpBHiKrtKaMKr7"
+    file = "file-LTvE9FbvlNOHV6yWmVVkb310"
     queries = [
       "acquire more customers for my fintech startup",
       "Create a podcast in the financial services sector",
@@ -42,7 +42,7 @@ namespace :production_case_study do
     ]
     articles = articles_for_openai
     queries.each do |query|
-      search = client.search(engine: "text-curie-001", parameters: {file:, query:})
+      search = client.search(engine: "text-babbage-001", parameters: {file:, query:})
       sorted_data = search["data"].sort_by { |d| d["score"] }.reverse
       top_results = []
       sorted_data.take(5).each do |d|
@@ -55,24 +55,23 @@ namespace :production_case_study do
         }
       end
       puts "-" * 100
-      puts "Top 5 results for query with Curie engine: #{query}"
+      puts "Top 5 results for query with babbage engine: #{query}"
       columns = top_results.first.keys
       output = CSV.generate do |csv|
         csv << columns
         top_results.each { |row| csv << columns.map { |c| row[c] } }
       end
       puts output
-      puts "-" * 100
     end
   end
 end
 
 def articles_for_openai
   CaseStudy::Article.searchable.map do |article|
-    text = article.contents.by_position.where(type: "CaseStudy::ParagraphContent").map { |c| c.content["text"] }
+    text = article.contents.by_position.map(&:to_text)
     {
       id: article.id,
-      text: text.join(" ").tr("\n", " ").split.first(1000).join(" ")
+      text: text.join(" ").tr("\n", " ").split.first(1500).join(" ")
     }
   end
 end
