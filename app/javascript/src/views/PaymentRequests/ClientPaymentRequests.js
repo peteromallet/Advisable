@@ -26,10 +26,10 @@ export default function ClientPaymentRequests() {
 
   return (
     <Box>
-      <h2 className="text-3xl font-semibold tracking-tight">Payments</h2>
+      <h2 className="text-3xl font-semibold tracking-tight mb-6">Payments</h2>
       <Table>
         <Table.Header>
-          <Table.HeaderCell flex={1}>Name</Table.HeaderCell>
+          <Table.HeaderCell className="flex-1">Name</Table.HeaderCell>
           <Table.HeaderCell className="hidden md:block w-[140px]">
             Sent
           </Table.HeaderCell>
@@ -47,7 +47,7 @@ export default function ClientPaymentRequests() {
         )}
         {paymentRequests.map((pr) => (
           <Table.Row key={pr.id} to={`/payment_requests/${pr.id}`}>
-            <Table.Cell flex={1}>
+            <Table.Cell className="flex-1">
               <Text
                 fontSize="lg"
                 fontWeight={520}

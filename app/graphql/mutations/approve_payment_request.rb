@@ -2,6 +2,7 @@
 
 module Mutations
   class ApprovePaymentRequest < Mutations::BaseMutation
+    ALLOWED_STATUSES = %w[pending past_due].freeze
     argument :payment_request, ID, required: true
 
     field :payment_request, Types::PaymentRequest, null: false
@@ -17,7 +18,7 @@ module Mutations
     def resolve(**args)
       payment_request = PaymentRequest.find_by!(uid: args[:payment_request])
 
-      ApiError.invalid_request("MUST BE PENDING") if payment_request.status != "pending"
+      ApiError.invalid_request("NOT IN AN APPROVABLE STATE") unless ALLOWED_STATUSES.include?(payment_request.status)
 
       current_account_responsible_for do
         success = payment_request.update(status: "approved")

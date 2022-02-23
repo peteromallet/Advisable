@@ -86,8 +86,11 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
           </>
         ) : (
           <>
-            This request is awaiting payment from {company.name}. Once paid the
-            funds will be released immediately to {specialist.name}.
+            <div className="mb-6">
+              This request is awaiting payment from {company.name}. Once paid
+              the funds will be released immediately to {specialist.name}.
+            </div>
+            <ApprovePaymentRequest paymentRequest={paymentRequest} />
           </>
         )}
       </Summary>
