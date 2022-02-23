@@ -17,6 +17,7 @@ RSpec.describe "Payment requests", type: :system do
   end
 
   before do
+    allow_any_instance_of(Payment).to receive(:pdf_url).and_return("https://example.com")
     allow(Stripe::PaymentIntent).to receive(:retrieve).and_return(payment_intent)
   end
 
