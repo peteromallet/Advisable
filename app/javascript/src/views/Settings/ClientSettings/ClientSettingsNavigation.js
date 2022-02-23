@@ -1,12 +1,15 @@
 import React from "react";
-import { Card } from "@styled-icons/ionicons-outline/Card";
-import { Document } from "@styled-icons/ionicons-outline/Document";
-import { LockClosed } from "@styled-icons/ionicons-outline/LockClosed";
-import { PeopleCircle } from "@styled-icons/ionicons-outline/PeopleCircle";
 import NavigationMenu from "../../../components/NavigationMenu";
 import styled from "styled-components";
 import { Text } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
+import {
+  User,
+  CreditCard,
+  Document,
+  LockClosed,
+  UserGroup,
+} from "@styled-icons/heroicons-outline";
 
 const SidebarTitle = styled.div`
   @media (max-width: 1024px) {
@@ -33,10 +36,13 @@ const ClientSettingsNavigation = () => {
       <NavigationMenu title="Settings">
         {viewer.isTeamManager ? (
           <>
-            <NavigationMenu.Item to="/settings/payments" icon={<Card />}>
+            <NavigationMenu.Item to="/settings/account" icon={<User />}>
+              Account
+            </NavigationMenu.Item>
+            <NavigationMenu.Item to="/settings/payments" icon={<CreditCard />}>
               Payments
             </NavigationMenu.Item>
-            <NavigationMenu.Item to="/settings/team" icon={<PeopleCircle />}>
+            <NavigationMenu.Item to="/settings/team" icon={<UserGroup />}>
               Team Members
             </NavigationMenu.Item>
             <NavigationMenu.Item to="/settings/invoices" icon={<Document />}>

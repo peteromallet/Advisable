@@ -1,0 +1,9 @@
+query AccountDetails {
+  currentAccount {
+    id
+    firstName
+    lastName
+    email
+    timezone
+  }
+}

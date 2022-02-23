@@ -10,6 +10,9 @@ module Types
     field :name, String, null: true
     field :timezone, String, null: true
     field :avatar, String, null: true, method: :cached_avatar_url
+    field :email, String do
+      authorize :current_account?
+    end
 
     field :is_viewer, Boolean, null: true
     def is_viewer
