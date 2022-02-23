@@ -10,6 +10,7 @@ fragment PaymentRequestFields on PaymentRequest {
   company {
     id
     name
+    applyVat
     paymentMethod
   }
   specialist {
