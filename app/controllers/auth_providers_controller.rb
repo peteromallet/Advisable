@@ -47,7 +47,7 @@ class AuthProvidersController < ApplicationController
     if account
       auth_provider = account.auth_providers.find_or_initialize_by(provider: "google_oauth2")
       auth_provider.update!(oauth.identifiers_with_blob_and_token)
-      session_manager.start_session(account)
+      session_manager.login(account)
       redirect_to oparams["navigate"] || "/"
     else
       flash[:notice] = "No account with that email found, please sign up."
@@ -65,7 +65,7 @@ class AuthProvidersController < ApplicationController
     account = Account.find_by!(email: oauth.email)
     auth_provider = account.auth_providers.find_or_initialize_by(provider: "google_oauth2_calendar")
     auth_provider.update!(oauth.identifiers_with_blob_and_token)
-    session_manager.start_session(account)
+    session_manager.login(account)
 
     redirect_to "/"
   rescue ActiveRecord::RecordNotFound
