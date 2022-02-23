@@ -130,6 +130,11 @@ export default function PaymentRequestSummary({
               <div className="text-3xl font-semibold tracking-tight">
                 {currency(total, { format: "$0,0.00" })}
               </div>
+              {showClientFee && company?.applyVat && (
+                <div className="mt-2 text-neutral700 w-[200px]">
+                  VAT not included in summary
+                </div>
+              )}
               {showFreelancerFee && (
                 <div className="w-[200px]">
                   <SourcingFee amount={amount} sourcingFee={sourcingFee} />
