@@ -28,7 +28,7 @@ namespace :production_case_study do
 
   task search: :environment do
     client = OpenAI::Client.new
-    file = "file-4YMtaXX5kFF2VeyC32bJzI2G"
+    file = "file-WFg4qaKGe6f9ME3eDm24iosW"
     queries = [
       "acquire more customers for my fintech startup",
       "Create a podcast in the financial services sector",
@@ -45,17 +45,18 @@ namespace :production_case_study do
       search = client.search(engine: "text-babbage-001", parameters: {file:, query:})
       sorted_data = search["data"].sort_by { |d| d["score"] }.reverse
       top_results = []
-      sorted_data.take(5).each do |d|
+      sorted_data.take(3).each do |d|
         id = articles.find { |a| a[:text] == d["text"] }[:id]
         article = CaseStudy::Article.find(id)
         top_results << {
           uid: article.uid,
           score: d["score"],
-          url: "https://app.advisable.com/case_studies/#{article.uid}"
+          url: "https://app.advisable.com/case_studies/#{article.uid}",
+          title: article.title
         }
       end
       puts "-" * 100
-      puts "Top 5 results for query with babbage engine: #{query}"
+      puts "Top 3 results for query with babbage engine: #{query}"
       columns = top_results.first.keys
       output = CSV.generate do |csv|
         csv << columns
@@ -69,8 +70,7 @@ end
 def articles_for_openai
   CaseStudy::Article.searchable.map do |article|
     text = article.title
-    text += article.contents.joins(:section).where(section: {type: "background"}).map(&:to_text).join(" ")
-    text += article.contents.joins(:section).where(section: {type: "outcome"}).map(&:to_text).join(" ")
+    text += article.contents.by_position.map(&:to_text).join(" ")
     {
       id: article.id,
       text: text.tr("\n", " ").split.first(1500).join(" ")
