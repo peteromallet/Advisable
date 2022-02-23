@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
 import { Container, useBreakpoint } from "@advisable/donut";
-import useViewer from "src/hooks/useViewer";
 import View from "src/components/View";
 import ClientSettingsNavigation from "./ClientSettingsNavigation";
 import PaymentSettings from "./PaymentSettings";
@@ -11,14 +10,13 @@ import Invoices from "./Invoices";
 import OldInvoices from "./StripeInvoices";
 import Password from "./Password";
 import Invoice from "./StripeInvoices/Invoice";
+import AccountSettings from "../AccountSettings";
 
 // Renders the settings view for a client user type.
 const ClientSettings = () => {
-  const viewer = useViewer();
   const match = useRouteMatch();
   const breakpointS = useBreakpoint("sUp");
 
-  const initialPath = viewer.isTeamManager ? "/payments" : "/password";
   const isMobileView = useRouteMatch({ path: match.path, exact: !breakpointS });
 
   return (
@@ -57,11 +55,14 @@ const ClientSettings = () => {
             <Route path="/settings/password">
               <Password />
             </Route>
+            <Route path="/settings/account">
+              <AccountSettings />
+            </Route>
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
             {breakpointS && (
               <Route exact path={match.path}>
-                <Redirect to={`/settings${initialPath}`} />
+                <Redirect to={`/settings/account`} />
               </Route>
             )}
           </Switch>
