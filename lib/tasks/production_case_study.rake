@@ -20,7 +20,7 @@ namespace :production_case_study do
     client = OpenAI::Client.new
     articles = articles_for_openai
     tempfile = Tempfile.new("openai_articles.jsonl").tap do |file|
-      file.write(articles.map { |a| a.slice(:text).to_json }.join("\n"))
+      file.write(articles.map { |a| {text: a[:text], metadata: a[:id]}.to_json }.join("\n"))
     end
     upload = client.files.upload(parameters: {file: tempfile.path, purpose: "search"})
     puts "Uploaded #{articles.size} articles to OpenAI. File ID: #{upload["id"]}"
@@ -28,7 +28,7 @@ namespace :production_case_study do
 
   task search: :environment do
     client = OpenAI::Client.new
-    file = "file-WFg4qaKGe6f9ME3eDm24iosW"
+    file = "file-QxexEmwZ5w03iSuJjkcwkPrR"
     queries = [
       "acquire more customers for my fintech startup",
       "Create a podcast in the financial services sector",
@@ -41,8 +41,9 @@ namespace :production_case_study do
       "to design a mobile app experience to increase repeat customers"
     ]
     articles = articles_for_openai
-    queries.each do |query|
-      search = client.search(engine: "text-babbage-001", parameters: {file:, query:})
+    queries.take(2).each do |query|
+      search = client.search(engine: "text-babbage-001", parameters: {file:, query:, return_metadata: true})
+      binding.pry
       sorted_data = search["data"].sort_by { |d| d["score"] }.reverse
       top_results = []
       sorted_data.take(3).each do |d|
