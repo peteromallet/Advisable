@@ -28,7 +28,7 @@ namespace :production_case_study do
 
   task search: :environment do
     client = OpenAI::Client.new
-    file = "file-LTvE9FbvlNOHV6yWmVVkb310"
+    file = "file-4YMtaXX5kFF2VeyC32bJzI2G"
     queries = [
       "acquire more customers for my fintech startup",
       "Create a podcast in the financial services sector",
@@ -68,10 +68,12 @@ end
 
 def articles_for_openai
   CaseStudy::Article.searchable.map do |article|
-    text = article.contents.by_position.map(&:to_text)
+    text = article.title
+    text += article.contents.joins(:section).where(section: {type: "background"}).map(&:to_text).join(" ")
+    text += article.contents.joins(:section).where(section: {type: "outcome"}).map(&:to_text).join(" ")
     {
       id: article.id,
-      text: text.join(" ").tr("\n", " ").split.first(1500).join(" ")
+      text: text.tr("\n", " ").split.first(1500).join(" ")
     }
   end
 end
