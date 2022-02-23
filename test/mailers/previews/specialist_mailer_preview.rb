@@ -12,6 +12,11 @@ class SpecialistMailerPreview < ActionMailer::Preview
     SpecialistMailer.project_paused(application.project, application)
   end
 
+  def payment_request_paid_out
+    payment_request = PaymentRequest.order(Arel.sql("RANDOM()")).first
+    SpecialistMailer.payment_request_paid_out(payment_request)
+  end
+
   %i[more_time_options_added interview_reminder first_interview_scheduled post_interview interview_reschedule_request interview_request].each do |method|
     define_method(method) do
       SpecialistMailer.public_send(method, random_interview)
