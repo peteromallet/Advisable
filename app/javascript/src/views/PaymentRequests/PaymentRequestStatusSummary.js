@@ -1,5 +1,4 @@
 import React from "react";
-import { Box, Text } from "@advisable/donut";
 import PaymentRequestStatus from "./PaymentRequestStatus";
 import useViewer from "src/hooks/useViewer";
 import {
@@ -15,19 +14,17 @@ import DownloadInvoice from "./DownloadInvoice";
 
 function Summary({ status, children, icon }) {
   return (
-    <Box display="flex" width="100%">
+    <div className="flex w-full">
       {icon && (
-        <Box flexShrink={0} color="neutral500" marginRight={4}>
+        <div className="shrink-0 text-neutral500 mr-4">
           {React.cloneElement(icon, { size: 28 })}
-        </Box>
+        </div>
       )}
-      <Box flex={1}>
+      <div className="flex-1">
         <PaymentRequestStatus status={status} />
-        <Text marginTop={3} fontSize="l" lineHeight="24px">
-          {children}
-        </Text>
-      </Box>
-    </Box>
+        <div className="mt-3 text-lg">{children}</div>
+      </div>
+    </div>
   );
 }
 
@@ -42,17 +39,17 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
           <>
             This request is awaiting payment from {company.name}. Once paid, the
             funds will be immediately released to you.
-            <Box paddingTop={4}>
+            <div className="pt-4">
               <CancelPaymentRequest paymentRequest={paymentRequest} />
-            </Box>
+            </div>
           </>
         ) : (
           <>
             This request is awaiting payment from {company.name}. Once paid the
             funds will be released immediately to {specialist.name}.
-            <Box paddingTop={6}>
+            <div className="pt-6">
               <ApprovePaymentRequest paymentRequest={paymentRequest} />
-            </Box>
+            </div>
           </>
         )}
       </Summary>
@@ -105,9 +102,9 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
             This request was disputed by {company.name} and can no longer be
             paid. You should have received an email from us to resolve this. You
             can cancel this request and send them another one if required.
-            <Box paddingTop={4}>
+            <div className="pt-4">
               <CancelPaymentRequest paymentRequest={paymentRequest} />
-            </Box>
+            </div>
           </>
         ) : (
           <>
@@ -128,9 +125,9 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
         and they will be paid out to your account within the next 3 working
         days.
         {viewer.isClient && (
-          <Box paddingTop={4}>
+          <div className="pt-4">
             <DownloadInvoice payment={payment} />
-          </Box>
+          </div>
         )}
       </Summary>
     );
