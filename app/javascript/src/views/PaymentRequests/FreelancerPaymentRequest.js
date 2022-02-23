@@ -6,11 +6,15 @@ import PaymentRequestSummary from "./PaymentRequestSummary";
 import AdvisableProtection from "./AdvisableProtection";
 import PaymentRequestStatusSummary from "./PaymentRequestStatusSummary";
 import { Loading } from "src/components";
+import NotFound, { isNotFound } from "../NotFound";
+import AccessDenied, { isNotAuthorized } from "../AccessDenied";
 
 export default function FreelancerPaymentRequest() {
   const { data, loading, error } = usePaymentRequest();
 
   if (loading) return <Loading />;
+  if (isNotFound(error)) return <NotFound />;
+  if (isNotAuthorized(error)) return <AccessDenied />;
   if (error) return <>Something went wrong. Please try again.</>;
 
   const { company } = data.paymentRequest;
