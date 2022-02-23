@@ -26,14 +26,16 @@ export default function ClientPaymentRequests() {
 
   return (
     <Box>
-      <Heading size="5xl" marginBottom={10}>
-        Payments
-      </Heading>
+      <h2 className="text-3xl font-semibold tracking-tight">Payments</h2>
       <Table>
         <Table.Header>
           <Table.HeaderCell flex={1}>Name</Table.HeaderCell>
-          <Table.HeaderCell width="140px">Sent</Table.HeaderCell>
-          <Table.HeaderCell width="120px">Status</Table.HeaderCell>
+          <Table.HeaderCell className="hidden md:block w-[140px]">
+            Sent
+          </Table.HeaderCell>
+          <Table.HeaderCell className="hidden md:block w-[120px]">
+            Status
+          </Table.HeaderCell>
           <Table.HeaderCell width="120px" textAlign="right">
             Amount
           </Table.HeaderCell>
@@ -55,12 +57,12 @@ export default function ClientPaymentRequests() {
                 {pr.specialist.name}
               </Text>
             </Table.Cell>
-            <Table.Cell width="140px">
+            <Table.Cell className="hidden md:block w-[140px]">
               <Box width="140px" color="neutral600" fontSize="sm">
                 {DateTime.fromISO(pr.createdAt).toFormat("dd LLL yyyy")}
               </Box>
             </Table.Cell>
-            <Table.Cell width="120px">
+            <Table.Cell className="hidden md:block w-[120px]">
               <PaymentRequestStatus status={pr.status} />
             </Table.Cell>
             <Table.Cell width="120px" textAlign="right">
@@ -72,11 +74,11 @@ export default function ClientPaymentRequests() {
         ))}
       </Table>
       {pageInfo.hasNextPage && (
-        <Box textAlign="center" paddingY={8}>
+        <div className="text-center py-8">
           <Button variant="secondary" onClick={handleLoadMore}>
             Load more
           </Button>
-        </Box>
+        </div>
       )}
     </Box>
   );

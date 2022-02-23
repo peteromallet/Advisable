@@ -16,7 +16,7 @@ module Types
     field :status, String, null: false
     field :line_items, [Types::PaymentRequestLineItem], null: false
     field :amount, Int, null: false
-    field :payment, Types::Payment, null: false
+    field :payment, Types::Payment, null: true
     field :cancellation_reason, String, null: true
     field :memo, String, null: true
     field :admin_fee, Int, null: false

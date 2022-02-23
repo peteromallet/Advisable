@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import currency from "src/utilities/currency";
-import { Box, Stack, Text, Link, Circle } from "@advisable/donut";
+import { Text, Link, Circle } from "@advisable/donut";
 import PaymentRequestStatus from "./PaymentRequestStatus";
 import { DateTime } from "luxon";
 import { Calendar, OfficeBuilding, User } from "@styled-icons/heroicons-solid";
@@ -27,21 +27,19 @@ function SourcingFee({ amount = 0, sourcingFee }) {
 
 function PaymentRequestAttribute({ icon, label, value }) {
   return (
-    <Box display="flex" alignItems="center">
-      <Box flexShrink={0}>
+    <div className="flex items-center">
+      <div className="shrink-0">
         <Circle size={32} bg="blue100" color="blue900">
           {icon && React.createElement(icon, { size: 16 })}
         </Circle>
-      </Box>
-      <Box paddingLeft={3}>
-        <Text marginBottom={1} fontSize="sm" color="neutral500">
-          {label}
-        </Text>
+      </div>
+      <div className="pl-3">
+        <span className="mb-1 text-sm text-neutral500">{label}</span>
         <Text $truncate fontSize="sm" fontWeight={520}>
           {value}
         </Text>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }
 
@@ -70,110 +68,84 @@ export default function PaymentRequestSummary({
   }, [amount, showClientFee, adminFee]);
 
   return (
-    <Box
-      bg="white"
-      padding={8}
-      borderRadius="24px"
-      paddingBottom={12}
-      position="relative"
-      boxShadow="rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px"
-    >
-      <Box position="absolute" right="20px" top="20px">
-        <PaymentRequestStatus status={status} />
-      </Box>
+    <div className="md:w-[460px] shrink-0 pb-8">
+      <div className="bg-white p-8 rounded-lg pb-12 relative shadow-2xl">
+        <div className="absolute right-5 top-5">
+          <PaymentRequestStatus status={status} />
+        </div>
 
-      <Text
-        fontSize="3xl"
-        fontWeight={520}
-        letterSpacing="-0.02em"
-        marginBottom={8}
-      >
-        Summary
-      </Text>
+        <h4 className="text-2xl font-medium tracking-tight mb-8">Summary</h4>
 
-      <Box
-        display="grid"
-        gridTemplateColumns="1fr 1fr"
-        style={{ rowGap: "28px", columnGap: "12px" }}
-      >
-        <PaymentRequestAttribute
-          label="Billed to"
-          icon={OfficeBuilding}
-          value={company?.name || "-"}
-        />
-        <PaymentRequestAttribute
-          icon={User}
-          label="From"
-          value={specialist?.name || "-"}
-        />
-        <PaymentRequestAttribute
-          label="Issued"
-          icon={Calendar}
-          value={DateTime.fromISO(createdAt).toFormat("dd MMM yyyy")}
-        />
-        <PaymentRequestAttribute
-          label="Due"
-          icon={Calendar}
-          value={DateTime.fromISO(dueAt).toFormat("dd MMM yyyy")}
-        />
-      </Box>
+        <div className="grid grid-cols-2 gap-y-7 gap-x-3">
+          <PaymentRequestAttribute
+            label="Billed to"
+            icon={OfficeBuilding}
+            value={company?.name || "-"}
+          />
+          <PaymentRequestAttribute
+            icon={User}
+            label="From"
+            value={specialist?.name || "-"}
+          />
+          <PaymentRequestAttribute
+            label="Issued"
+            icon={Calendar}
+            value={DateTime.fromISO(createdAt).toFormat("dd MMM yyyy")}
+          />
+          <PaymentRequestAttribute
+            label="Due"
+            icon={Calendar}
+            value={DateTime.fromISO(dueAt).toFormat("dd MMM yyyy")}
+          />
+        </div>
 
-      <Stack spacing={8} divider="neutral100">
-        <Text fontWeight={560} fontSize="lg" marginTop={10}>
-          Items
-        </Text>
-        {lineItems.map((lineItem, index) => (
-          <Box key={index} display="flex" justifyContent="space-between">
-            <Text color="neutral800">{lineItem.description}</Text>
-            <Text fontWeight={560} fontSize="l">
-              {currency(lineItem.amount)}
-            </Text>
-          </Box>
-        ))}
+        <div className="divide-y divide-solid divide-neutral100">
+          <h5 className="font-medium text-lg mt-10 mb-2">Items</h5>
+          {lineItems.map((lineItem, index) => (
+            <div key={index} className="flex justify-between py-4">
+              <span className="text-neutral800">{lineItem.description}</span>
+              <span className="font-semibold text-lg">
+                {currency(lineItem.amount)}
+              </span>
+            </div>
+          ))}
 
-        {showClientFee && paymentRequest.adminFee && (
-          <Box display="flex" justifyContent="space-between">
-            <Box>
-              <Text color="neutral800" marginBottom={1}>
-                5% Advisable fee
-              </Text>
-              <Link.External fontSize="s" variant="underlined">
-                Read more
-              </Link.External>
-            </Box>
-            <Text fontWeight={560} fontSize="l">
-              {currency(paymentRequest.adminFee, { format: "$0,0.00" })}
-            </Text>
-          </Box>
-        )}
+          {showClientFee && paymentRequest.adminFee && (
+            <div className="flex justify-between py-4">
+              <div>
+                <div className="text-neutral800 mb-1">5% Advisable fee</div>
+                <Link.External fontSize="s" variant="underlined">
+                  Read more
+                </Link.External>
+              </div>
+              <div className="font-medium text-lg">
+                {currency(paymentRequest.adminFee, { format: "$0,0.00" })}
+              </div>
+            </div>
+          )}
 
-        <Box display="flex" justifyContent="space-between">
-          <Text fontSize="lg" color="neutral800">
-            Total
-          </Text>
-          <Box textAlign="right">
-            <Text fontSize="5xl" fontWeight={600}>
-              {currency(total, { format: "$0,0.00" })}
-            </Text>
-            {showFreelancerFee && (
-              <Box width="200px">
-                <SourcingFee amount={amount} sourcingFee={sourcingFee} />
-              </Box>
-            )}
-          </Box>
-        </Box>
-      </Stack>
+          <div className="flex justify-between pt-4">
+            <div className="text-lg neutral800">Total</div>
+            <div className="text-right">
+              <div className="text-3xl font-semibold tracking-tight">
+                {currency(total, { format: "$0,0.00" })}
+              </div>
+              {showFreelancerFee && (
+                <div className="w-[200px]">
+                  <SourcingFee amount={amount} sourcingFee={sourcingFee} />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
 
-      {memo ? (
-        <Box paddingTop={10}>
-          <Text fontSize="lg" marginBottom={2} fontWeight={520}>
-            Note
-          </Text>
-          <Text fontSize="s" lineHeight="20px" color="neutral700">
-            {memo}
-          </Text>
-        </Box>
-      ) : null}
-    </Box>
+        {memo ? (
+          <div>
+            <h5 className="font-medium text-lg mt-10 mb-2">Note</h5>
+            <p className="text-md leading-relaxed text-neutral700">{memo}</p>
+          </div>
+        ) : null}
+      </div>
+    </div>
   );
 }
