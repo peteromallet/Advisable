@@ -14,8 +14,8 @@ export default function PaymentRequests() {
   const viewer = useViewer();
 
   return (
-    <Page maxWidth="1080px">
-      <Box paddingTop={8}>
+    <Page maxWidth="1120px">
+      <div className="pt-8 px-5">
         <Switch>
           {viewer.isSpecialist && (
             <Route path="/payment_requests/new">
@@ -37,7 +37,7 @@ export default function PaymentRequests() {
             )}
           </Route>
         </Switch>
-      </Box>
+      </div>
     </Page>
   );
 }

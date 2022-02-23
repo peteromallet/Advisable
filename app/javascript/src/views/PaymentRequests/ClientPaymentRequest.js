@@ -22,56 +22,36 @@ export default function ClientPaymentRequest() {
       <Box marginBottom={5}>
         <BackButton to="/payment_requests" />
       </Box>
-      <Box display="flex">
-        <Box
-          as={motion.div}
-          flex={1}
-          paddingRight={12}
+      <div className="flex flex-col-reverse md:flex-row">
+        <motion.div
+          className="flex-1 pr-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          <Text
-            size="6xl"
-            lineHeight="40px"
-            fontWeight={560}
-            letterSpacing="-0.024em"
-          >
+          <h2 className="text-4xl mb-4 font-semibold tracking-tight">
             Payment request from {specialist.name}
-          </Text>
+          </h2>
 
-          <Box height="1px" bg="neutral100" marginY={6} />
+          <div className="h-px bg-neutral100 my-6" />
 
           <PaymentRequestStatusSummary paymentRequest={data.paymentRequest} />
 
-          <Box height="1px" bg="neutral100" marginY={8} />
+          <div className="h-px bg-neutral100 my-8" />
 
           <AdvisableProtection />
-
-          {status === "pending" && (
-            <Box
-              marginTop={8}
-              paddingTop={6}
-              borderTop="1px solid"
-              borderColor="neutral100"
-            >
-              <DisputePaymentRequest paymentRequest={data.paymentRequest} />
-            </Box>
-          )}
-        </Box>
-        <Box width="460px" flexShrink={0} paddingBottom={8}>
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <PaymentRequestSummary
-              paymentRequest={data.paymentRequest}
-              showClientFee
-            />
-          </motion.div>
-        </Box>
-      </Box>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <PaymentRequestSummary
+            paymentRequest={data.paymentRequest}
+            showClientFee
+          />
+        </motion.div>
+      </div>
     </>
   );
 }

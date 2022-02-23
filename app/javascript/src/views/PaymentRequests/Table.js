@@ -4,54 +4,42 @@ import { Box } from "@advisable/donut";
 import { Link } from "react-router-dom";
 
 const Table = ({ children }) => {
-  return <Box>{children}</Box>;
+  return children;
 };
 
 Table.Header = function TableHeader({ children }) {
   return (
-    <Box>
-      <Box display="flex">{children}</Box>
-      <Box marginTop={4} height="1px" bg="neutral100" />
-    </Box>
+    <div className="w-full">
+      <div className="flex">{children}</div>
+      <div className="mt-4 border-b border-solid border-neutral100" />
+    </div>
   );
 };
 
-Table.HeaderCell = function TableHeaderCell({ children, ...props }) {
+Table.HeaderCell = function TableHeaderCell({ children, className, ...props }) {
+  const classes = `text-sm text-neutral600 ${className}`;
   return (
-    <Box fontSize="sm" color="neutral600" {...props}>
+    <div className={classes} {...props}>
       {children}
-    </Box>
+    </div>
   );
 };
 
 Table.Row = function TableRow({ children, to }) {
   return (
-    <Box>
+    <div>
       <Link to={to}>
-        <Box
-          marginY={1}
-          paddingY={3}
-          display="flex"
-          alignItems="center"
-          css={css({
-            borderRadius: "12px",
-            paddingX: 3,
-            marginX: "-12px",
-            "&:hover": {
-              bg: "neutral50",
-            },
-          })}
-        >
+        <div className="my-1 py-3 flex items-center px-3 -mx-3 rounded-sm hover:bg-neutral50">
           {children}
-        </Box>
+        </div>
       </Link>
-      <Box height="1px" bg="neutral100" />
-    </Box>
+      <div className="border-b border-solid border-neutral100" />
+    </div>
   );
 };
 
 Table.Cell = function TableCell({ children, ...props }) {
-  return <Box {...props}>{children}</Box>;
+  return <div {...props}>{children}</div>;
 };
 
 export default Table;

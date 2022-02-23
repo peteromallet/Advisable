@@ -1,25 +1,15 @@
 import { object, string, number, array } from "yup";
 import { Field, Form, Formik, useField } from "formik";
-import {
-  Box,
-  Textarea,
-  Combobox,
-  Input,
-  Text,
-  Button,
-  Stack,
-  Heading,
-} from "@advisable/donut";
+import { Textarea, Combobox, Input } from "@advisable/donut";
 import React from "react";
+import Button from "src/components/Button";
 import FormField from "src/components/FormField";
-import SubmitButton from "src/components/SubmitButton";
 import { useAcceptedAgreements, useCreatePaymentRequest } from "./queries";
 import CurrencyInput from "src/components/CurrencyInput";
 import { useHistory } from "react-router-dom";
 import { PlusSm, Trash } from "@styled-icons/heroicons-solid";
 import PaymentRequestSummary from "./PaymentRequestSummary";
 import { DateTime } from "luxon";
-import css from "@styled-system/css";
 import useViewer from "src/hooks/useViewer";
 import BackButton from "src/components/BackButton";
 import NoActiveAgreements from "./NoActiveAgreements";
@@ -69,55 +59,46 @@ function PaymentRequestLineItems() {
   };
 
   return (
-    <Box marginBottom={12}>
-      <Text marginBottom={2} fontSize="l" fontWeight={480}>
-        Items
-      </Text>
-      <Text marginBottom={3} color="neutral700">
+    <div className="mb-12">
+      <label className="block mb-1 text-lg font-medium">Items</label>
+      <p className="mb-4 text-neutral700">
         List the items you are charging for.
-      </Text>
-      <Stack divider="neutral100" spacing={8}>
+      </p>
+      <div className="mb-4">
         {field.value.map((_, index) => (
-          <Box
-            display="flex"
+          <div
             key={index}
-            style={{ gap: "12px" }}
-            alignItems="center"
+            className="py-4 first:pt-0 flex gap-3 items-center border-b border-solid border-neutral100"
           >
             <Field
               as={Input}
               name={`lineItems[${index}].description`}
               placeholder="Description"
             />
-            <Box width="200px">
+            <div classNamw="w-[200px]">
               <LineItemRateInput name={`lineItems[${index}].amount`} />
-            </Box>
+            </div>
             {field.value.length > 1 && (
-              <Box
+              <div
                 onClick={() => removeLineItem(index)}
-                css={css({
-                  color: "neutral500",
-                  "&:hover": {
-                    color: "neutral900",
-                  },
-                })}
+                className="text-neutral500 hover:text-neutral900"
               >
                 <Trash size={20} />
-              </Box>
+              </div>
             )}
-          </Box>
+          </div>
         ))}
-        <Button
-          size="s"
-          type="button"
-          variant="subtle"
-          onClick={handleAddLineItem}
-          prefix={<PlusSm />}
-        >
-          Add item
-        </Button>
-      </Stack>
-    </Box>
+      </div>
+      <Button
+        size="sm"
+        type="button"
+        variant="secondary"
+        onClick={handleAddLineItem}
+        prefix={<PlusSm />}
+      >
+        Add item
+      </Button>
+    </div>
   );
 }
 
@@ -184,23 +165,23 @@ export default function NewPaymentRequest() {
     >
       {(formik) => (
         <Form>
-          <Box marginBottom={5}>
+          <div className="mb-5">
             <BackButton to="/payment_requests" />
-          </Box>
-          <Box display="flex" paddingBottom={8}>
-            <Box flex={1} paddingRight={12}>
-              <Heading fontSize="5xl" marginBottom={2}>
+          </div>
+          <div className="flex pb-8">
+            <div className="flex-1 pr-0 md:pr-12">
+              <h2 className="text-3xl font-semibold tracking-tight mb-1">
                 New payment request
-              </Heading>
-              <Text fontSize="xl" lineHeight="28px" marginBottom={8}>
+              </h2>
+              <p className="text-lg mb-8">
                 Request payment from one of your clients.
-              </Text>
+              </p>
 
               {companyOptions.length > 0 ? (
                 <>
-                  <Text marginBottom={3} fontSize="l" fontWeight={480}>
+                  <label className="block mb-1 text-lg font-medium">
                     Client
-                  </Text>
+                  </label>
                   <FormField
                     name="company"
                     as={Combobox}
@@ -212,9 +193,7 @@ export default function NewPaymentRequest() {
 
                   <PaymentRequestLineItems />
 
-                  <Text marginBottom={3} fontSize="l" fontWeight={480}>
-                    Note
-                  </Text>
+                  <label className="block mb-1 text-lg font-medium">Note</label>
                   <FormField
                     name="memo"
                     as={Textarea}
@@ -223,15 +202,19 @@ export default function NewPaymentRequest() {
                     placeholder="Memo"
                   />
 
-                  <SubmitButton variant="gradient" size="l" disableUntilValid>
+                  <Button
+                    size="lg"
+                    loading={formik.isSubmitting}
+                    disabled={!formik.isValid}
+                  >
                     Send request
-                  </SubmitButton>
+                  </Button>
                 </>
               ) : (
                 <NoActiveAgreements />
               )}
-            </Box>
-            <Box width="460px" flexShrink={0}>
+            </div>
+            <div className="hidden md:block">
               <PaymentRequestSummary
                 showFreelancerFee
                 paymentRequest={{
@@ -248,8 +231,8 @@ export default function NewPaymentRequest() {
                   memo: formik.values.memo,
                 }}
               />
-            </Box>
-          </Box>
+            </div>
+          </div>
         </Form>
       )}
     </Formik>
