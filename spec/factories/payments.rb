@@ -7,6 +7,5 @@ FactoryBot.define do
     status { "pending" }
     company
     specialist
-    payment_intent_id { "pi_3KWHPkJA9h9obWOS0dkQeCPd" }
   end
 end
