@@ -94,6 +94,7 @@ group :test do
   gem "timecop"
   gem "webdrivers"
   gem "webmock"
+  gem 'stripe-ruby-mock', '~> 3.0.1', :require => 'stripe_mock'
 end
 
 gem "tailwindcss-rails", "~> 2.0"
