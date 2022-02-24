@@ -15,6 +15,7 @@ namespace :production_case_study do
   task seed: :environment do
     destroy_existing
     populate_all
+    populate_embeddings
   end
 
   task get_embeddings: :environment do
@@ -134,6 +135,7 @@ def articles_for_openai
 end
 
 def destroy_existing
+  puts "Destroying existing case studies"
   Review.destroy_all
   CaseStudy::Company.destroy_all
   CaseStudy::Article.destroy_all
@@ -144,6 +146,7 @@ def destroy_existing
 end
 
 def populate_all
+  puts "Populating case studies"
   populate("companies")
   populate("articles", ignore_columns: ["interviewer_id"], map_columns: ["specialist_id"])
   populate("sections")
@@ -172,4 +175,16 @@ def populate(table, ignore_columns: [], map_columns: [])
   end
   model = "CaseStudy::#{table.singularize.capitalize}".constantize
   model.upsert_all(sql)
+end
+
+def populate_embeddings
+  articles = articles_for_openai
+  CaseStudy::Embedding::ENGINES.each do |engine|
+    puts "Populating #{engine} embeddings"
+    yml = YAML.load_file("lib/tasks/data/case_studies/embeddings-#{engine}.yml")
+    yml.each do |data|
+      article = articles.find { |a| a[:text] == data[:text] }
+      CaseStudy::Embedding.create!(article_id: article[:id], embedding: data[:embedding], engine:)
+    end
+  end
 end
