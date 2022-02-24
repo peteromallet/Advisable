@@ -1,7 +1,7 @@
 import React from "react";
 import { DateTime } from "luxon";
 import Table from "./Table";
-import { Heading, Box, Text, Button } from "@advisable/donut";
+import { Box, Text, Button } from "@advisable/donut";
 import { useClientPaymentRequests } from "./queries";
 import currency from "src/utilities/currency";
 import PaymentRequestStatus from "./PaymentRequestStatus";

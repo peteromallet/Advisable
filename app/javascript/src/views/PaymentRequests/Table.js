@@ -1,6 +1,4 @@
 import React from "react";
-import css from "@styled-system/css";
-import { Box } from "@advisable/donut";
 import { Link } from "react-router-dom";
 
 const Table = ({ children }) => {

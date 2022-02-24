@@ -22,7 +22,6 @@ const validationSchema = object().shape({
 function CancelPaymentRequestForm({ modal, paymentRequest }) {
   const [cancel] = useCancelPaymentRequest();
   const initialValues = { reason: "" };
-  const { specialist } = paymentRequest;
 
   const handleSubmit = async (values) => {
     await cancel({
