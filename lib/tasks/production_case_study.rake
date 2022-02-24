@@ -28,7 +28,7 @@ namespace :production_case_study do
 
   task search: :environment do
     client = OpenAI::Client.new
-    file = "file-QxexEmwZ5w03iSuJjkcwkPrR"
+    file = "file-brc5l2Rzc2UPHp5tA2PgkdL3"
     queries = [
       "acquire more customers for my fintech startup",
       "Create a podcast in the financial services sector",
@@ -40,15 +40,12 @@ namespace :production_case_study do
       "Reposition manufacturing business as a service provider",
       "to design a mobile app experience to increase repeat customers"
     ]
-    articles = articles_for_openai
-    queries.take(2).each do |query|
+    queries.take(1).each do |query|
       search = client.search(engine: "text-babbage-001", parameters: {file:, query:, return_metadata: true})
-      binding.pry
       sorted_data = search["data"].sort_by { |d| d["score"] }.reverse
       top_results = []
       sorted_data.take(3).each do |d|
-        id = articles.find { |a| a[:text] == d["text"] }[:id]
-        article = CaseStudy::Article.find(id)
+        article = CaseStudy::Article.find(d["metadata"])
         top_results << {
           uid: article.uid,
           score: d["score"],
