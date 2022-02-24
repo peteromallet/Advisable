@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+  </head>
+  <body class="flex flex-col h-screen">
+    <div class="max-w-7xl mx-auto">
+      <%= yield %>
+    </div>
+  </body>
+</html>

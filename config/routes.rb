@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   post "accounts/user"
   post "accounts/specialist"
 
+  get "articles/search"
+
   post "zapier_interactor/create_application"
   post "zapier_interactor/update_application"
   post "zapier_interactor/update_interview"
