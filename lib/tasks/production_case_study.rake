@@ -31,7 +31,7 @@ namespace :production_case_study do
     File.write("lib/tasks/data/case_studies/embeddings-#{engine}.yml", articles.to_yaml)
   end
 
-  task :search_embeddings do
+  task search_embeddings: :environment do
     engine = "babbage"
     client = OpenAI::Client.new
     articles = YAML.load_file("lib/tasks/data/case_studies/embeddings-#{engine}.yml")
