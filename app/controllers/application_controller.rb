@@ -43,6 +43,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def admin
+    redirect_to "/" unless current_account&.admin?
+
+    render layout: false
+  end
+
   protected
 
   def prefetch_viewer
