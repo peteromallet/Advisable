@@ -18,19 +18,20 @@ namespace :production_case_study do
   end
 
   task get_embeddings: :environment do
-    engine = "babbage"
+    engine = "davinci"
     client = OpenAI::Client.new
     articles = articles_for_openai
-    embeddings = client.embeddings(engine: "text-search-#{engine}-doc-001", parameters: {input: articles_for_openai.pluck(:text)})
-    data = embeddings["data"]
-    articles.each.with_index do |article, index|
-      article[:embedding] = data[index]["embedding"]
+    articles.in_groups_of(20, false).each do |group|
+      embeddings = client.embeddings(engine: "text-search-#{engine}-doc-001", parameters: {input: group.pluck(:text)})
+      group.each.with_index do |article, index|
+        article[:embedding] = embeddings["data"][index]["embedding"]
+      end
     end
     File.write("lib/tasks/data/case_studies/embeddings-#{engine}.yml", articles.to_yaml)
   end
 
   task :search_embeddings do
-    engine = "babbage"
+    engine = "davinci"
     client = OpenAI::Client.new
     articles = YAML.load_file("lib/tasks/data/case_studies/embeddings-#{engine}.yml")
     articles.each do |article|
