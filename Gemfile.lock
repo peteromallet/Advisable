@@ -644,6 +644,7 @@ DEPENDENCIES
   letter_opener
   listen
   logidze
+  matrix
   memoist
   money
   nanoid
