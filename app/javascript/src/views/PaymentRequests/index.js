@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, useBackground } from "@advisable/donut";
+import { useBackground } from "@advisable/donut";
 import { Route, Switch } from "react-router-dom";
 import useViewer from "src/hooks/useViewer";
 import FreelancerPaymentRequest from "./FreelancerPaymentRequest";
