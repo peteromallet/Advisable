@@ -51,6 +51,10 @@ class PaymentRequest < ApplicationRecord
     (amount * specialist.sourcing_fee_percentage).round
   end
 
+  def approvable?
+    %w[pending past_due].include?(status)
+  end
+
   private
 
   def set_due_at
