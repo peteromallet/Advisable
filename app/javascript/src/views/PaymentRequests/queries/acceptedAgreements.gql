@@ -1,0 +1,15 @@
+query AcceptedAgreements {
+  viewer {
+    ... on Specialist {
+      id
+      sourcingFee
+    }
+  }
+  acceptedAgreements {
+    id
+    company {
+      id
+      name
+    }
+  }
+}

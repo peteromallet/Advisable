@@ -1,0 +1,7 @@
+#import "./paymentRequestFields.gql"
+
+query FreelancerPaymentRequest($id: ID!) {
+  paymentRequest(id: $id) {
+    ...PaymentRequestFields
+  }
+}

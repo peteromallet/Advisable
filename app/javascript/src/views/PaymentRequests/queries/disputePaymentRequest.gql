@@ -1,0 +1,9 @@
+#import "./paymentRequestFields.gql"
+
+mutation DisputePaymentRequest($input: DisputePaymentRequestInput!) {
+  disputePaymentRequest(input: $input) {
+    paymentRequest {
+      ...PaymentRequestFields
+    }
+  }
+}

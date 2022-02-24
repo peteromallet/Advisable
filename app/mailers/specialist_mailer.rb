@@ -146,6 +146,21 @@ class SpecialistMailer < ApplicationMailer
     end
   end
 
+  def payment_request_paid_out(payment_request)
+    @payment_request = payment_request
+    @account = payment_request.specialist.account
+    sales_person = default_sales_person_for(payment_request.company)
+
+    mail(
+      from: "Advisable <finance@advisable.com>",
+      to: @account.email,
+      bcc: sales_person,
+      subject: "Payment request paid out"
+    ) do |format|
+      format.html { render(layout: "email_v2") }
+    end
+  end
+
   private
 
   def default_sales_person_for(company)

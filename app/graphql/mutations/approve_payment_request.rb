@@ -17,7 +17,7 @@ module Mutations
     def resolve(**args)
       payment_request = PaymentRequest.find_by!(uid: args[:payment_request])
 
-      ApiError.invalid_request("MUST BE PENDING") if payment_request.status != "pending"
+      ApiError.invalid_request("NOT IN AN APPROVABLE STATE") unless payment_request.approvable?
 
       current_account_responsible_for do
         success = payment_request.update(status: "approved")

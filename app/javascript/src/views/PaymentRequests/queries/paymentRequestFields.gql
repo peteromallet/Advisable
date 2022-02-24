@@ -1,0 +1,35 @@
+fragment PaymentRequestFields on PaymentRequest {
+  id
+  memo
+  dueAt
+  status
+  amount
+  adminFee
+  createdAt
+  sourcingFee
+  company {
+    id
+    name
+    applyVat
+    paymentMethod
+  }
+  specialist {
+    id
+    name
+    avatar
+    location
+  }
+  payment {
+    id
+    status
+    pdfUrl
+    paymentMethod
+    paymentIntent {
+      secret
+    }
+  }
+  lineItems {
+    amount
+    description
+  }
+}

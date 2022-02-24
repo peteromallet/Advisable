@@ -5,6 +5,7 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { CardField } from "./styles";
 import FormField from "../FormField";
 import validationSchema from "./validationSchema";
+import PaymentMethods from "./PaymentMethods";
 
 // Used to update a user's payment method. It does not atomatically handle the
 // card details. They must be processed by passing the handleCardDetails prop,
@@ -68,6 +69,9 @@ const PaymentMethodForm = ({
                 }}
               />
             </CardField>
+            <Box marginTop={4}>
+              <PaymentMethods />
+            </Box>
             {formik.errors.card && (
               <InputError mt="2">{formik.errors.card}</InputError>
             )}

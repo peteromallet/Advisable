@@ -1,0 +1,13 @@
+#import "./paymentRequestFields.gql"
+
+mutation CreatePaymentRequest($input: CreatePaymentRequestInput!) {
+  createPaymentRequest(input: $input) {
+    paymentRequest {
+      ...PaymentRequestFields
+      company {
+        id
+        name
+      }
+    }
+  }
+}
