@@ -6,6 +6,7 @@ export default function NavigationLink({ prefix, children, to, ...props }) {
   const location = useLocation();
   const match = matchPath(location.pathname, {
     path: to,
+    exact: props.exact,
   });
   return (
     <NavItem {...props} href={to} className={match ? "active" : null}>
