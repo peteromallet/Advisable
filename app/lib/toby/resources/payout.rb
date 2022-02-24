@@ -29,7 +29,7 @@ module Toby
 
         object.update!(processed_at: Time.zone.now, status: "processed")
 
-        return if object.payment_request.blank?
+        return unless object.payment_request
 
         object.payment_request.update!(status: "paid_out")
         SpecialistMailer.payment_request_paid_out(object.payment_request).deliver_later
