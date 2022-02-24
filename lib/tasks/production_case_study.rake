@@ -18,7 +18,7 @@ namespace :production_case_study do
   end
 
   task get_embeddings: :environment do
-    engine = "davinci"
+    engine = "babbage"
     client = OpenAI::Client.new
     articles = articles_for_openai
     articles.in_groups_of(20, false).each do |group|
@@ -31,7 +31,7 @@ namespace :production_case_study do
   end
 
   task :search_embeddings do
-    engine = "davinci"
+    engine = "babbage"
     client = OpenAI::Client.new
     articles = YAML.load_file("lib/tasks/data/case_studies/embeddings-#{engine}.yml")
     articles.each do |article|
