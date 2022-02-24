@@ -20,7 +20,6 @@ namespace :production_case_study do
 
   task get_embeddings: :environment do
     engine = "babbage"
-    client = OpenAI::Client.new
     articles = articles_for_openai
     articles.in_groups_of(20, false).each do |group|
       embeddings = client.embeddings(engine: "text-search-#{engine}-doc-001", parameters: {input: group.pluck(:text)})
@@ -33,11 +32,6 @@ namespace :production_case_study do
 
   task search_embeddings: :environment do
     engine = "babbage"
-    client = OpenAI::Client.new
-    articles = YAML.load_file("lib/tasks/data/case_studies/embeddings-#{engine}.yml")
-    articles.each do |article|
-      article[:article] = CaseStudy::Article.find(article[:id])
-    end
     queries = [
       "acquire more customers for my fintech startup",
       "Create a podcast in the financial services sector",
@@ -49,22 +43,21 @@ namespace :production_case_study do
       "Reposition manufacturing business as a service provider",
       "to design a mobile app experience to increase repeat customers"
     ]
-    queries.each do |query|
-      embedding = client.embeddings(engine: "text-search-#{engine}-query-001", parameters: {input: query})
-      data = embedding["data"].first["embedding"]
+    queries.take(2).each do |q|
+      query = client.embeddings(engine: "text-search-#{engine}-query-001", parameters: {input: q})
+      data = query["data"].first["embedding"]
       query_vector = Vector.elements(data)
       results = []
-      articles.each do |article|
-        article_vector = Vector.elements(article[:embedding])
+      CaseStudy::Embedding.public_send(engine).each do |embedding|
         results << {
-          similarity: query_vector.dot(article_vector) / (query_vector.magnitude * article_vector.magnitude),
-          uid: article[:article].uid,
-          title: article[:article].title
+          similarity: embedding.cosine_similarity_to(query_vector),
+          title: embedding.article.title,
+          embedding_id: embedding.id
         }
       end
       sorted = results.sort_by { |r| r[:similarity] }.reverse.take(3)
       puts "-" * 100
-      puts "Top 3 results for query with #{engine} embeddings engine: #{query}"
+      puts "Top 3 results for query with #{engine} embeddings engine: #{q}"
       columns = sorted.first.keys
       output = CSV.generate do |csv|
         csv << columns
@@ -75,7 +68,6 @@ namespace :production_case_study do
   end
 
   task upload: :environment do
-    client = OpenAI::Client.new
     articles = articles_for_openai
     tempfile = Tempfile.new("openai_articles.jsonl").tap do |file|
       file.write(articles.map { |a| {text: a[:text], metadata: a[:id]}.to_json }.join("\n"))
@@ -85,7 +77,6 @@ namespace :production_case_study do
   end
 
   task search: :environment do
-    client = OpenAI::Client.new
     file = "file-brc5l2Rzc2UPHp5tA2PgkdL3"
     queries = [
       "acquire more customers for my fintech startup",
@@ -121,6 +112,10 @@ namespace :production_case_study do
       puts output
     end
   end
+end
+
+def client
+  @client ||= OpenAI::Client.new
 end
 
 def articles_for_openai
