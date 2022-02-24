@@ -1,0 +1,25 @@
+query ClientPaymentRequests($cursor: String) {
+  paymentRequests(after: $cursor, first: 20) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    edges {
+      node {
+        id
+        status
+        amount
+        adminFee
+        createdAt
+        specialist {
+          id
+          name
+        }
+        lineItems {
+          amount
+          description
+        }
+      }
+    }
+  }
+}

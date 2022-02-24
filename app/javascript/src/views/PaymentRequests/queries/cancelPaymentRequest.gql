@@ -1,0 +1,9 @@
+#import "./paymentRequestFields.gql"
+
+mutation CancelPaymentRequest($input: CancelPaymentRequestInput!) {
+  cancelPaymentRequest(input: $input) {
+    paymentRequest {
+      ...PaymentRequestFields
+    }
+  }
+}

@@ -1,0 +1,9 @@
+#import "./paymentRequestFields.gql"
+
+mutation ApprovePaymentRequest($input: ApprovePaymentRequestInput!) {
+  approvePaymentRequest(input: $input) {
+    paymentRequest {
+      ...PaymentRequestFields
+    }
+  }
+}

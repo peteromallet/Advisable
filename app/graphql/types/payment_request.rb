@@ -16,7 +16,7 @@ module Types
     field :status, String, null: false
     field :line_items, [Types::PaymentRequestLineItem], null: false
     field :amount, Int, null: false
-    field :payment, Types::Payment, null: false
+    field :payment, Types::Payment, null: true
     field :cancellation_reason, String, null: true
     field :memo, String, null: true
     field :admin_fee, Int, null: false
@@ -25,5 +25,8 @@ module Types
     field :dispute_reason, String, null: true do
       authorize :dispute?
     end
+
+    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :due_at, GraphQL::Types::ISO8601DateTime, null: false
   end
 end

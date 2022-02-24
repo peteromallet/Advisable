@@ -7,5 +7,7 @@ FactoryBot.define do
     company
     specialist
     status { "pending" }
+    invoicing { "after" }
+    collaboration { "fixed" }
   end
 end

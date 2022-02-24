@@ -9,6 +9,7 @@ class PaymentRequest < ApplicationRecord
   has_logidze
 
   VALID_STATUSES = %w[pending approved past_due disputed canceled paid paid_out].freeze
+  APPROVABLE_STATUSES = %w[pending past_due].freeze
 
   belongs_to :company, optional: true
   belongs_to :specialist, optional: true
@@ -49,6 +50,10 @@ class PaymentRequest < ApplicationRecord
     return payout.sourcing_fee if payout.present?
 
     (amount * specialist.sourcing_fee_percentage).round
+  end
+
+  def approvable?
+    APPROVABLE_STATUSES.include?(status)
   end
 
   private

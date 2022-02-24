@@ -28,7 +28,11 @@ module Toby
         return if object.processed_at?
 
         object.update!(processed_at: Time.zone.now, status: "processed")
-        object.payment_request&.update!(status: "paid_out")
+
+        return unless object.payment_request
+
+        object.payment_request.update!(status: "paid_out")
+        SpecialistMailer.payment_request_paid_out(object.payment_request).deliver_later
       end
 
       def self.unprocess(object, _context)

@@ -91,6 +91,7 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
+  gem "stripe-ruby-mock", "~> 3.0.1", require: "stripe_mock"
   gem "timecop"
   gem "webdrivers"
   gem "webmock"
