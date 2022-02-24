@@ -9,6 +9,7 @@ class PaymentRequest < ApplicationRecord
   has_logidze
 
   VALID_STATUSES = %w[pending approved past_due disputed canceled paid paid_out].freeze
+  APPROVABLE_STATUSES = %w[pending past_due].freeze
 
   belongs_to :company, optional: true
   belongs_to :specialist, optional: true
@@ -52,7 +53,7 @@ class PaymentRequest < ApplicationRecord
   end
 
   def approvable?
-    %w[pending past_due].include?(status)
+    APPROVABLE_STATUSES.include?(status)
   end
 
   private
