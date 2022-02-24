@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../config/environment"
+require "matrix"
 
 # Download csvs from production and save them:
 # \copy (SELECT * FROM case_study_articles) TO case_study_articles.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)
@@ -14,6 +15,61 @@ namespace :production_case_study do
   task seed: :environment do
     destroy_existing
     populate_all
+  end
+
+  task get_embeddings: :environment do
+    engine = "babbage"
+    client = OpenAI::Client.new
+    articles = articles_for_openai
+    embeddings = client.embeddings(engine: "text-search-#{engine}-doc-001", parameters: {input: articles_for_openai.pluck(:text)})
+    data = embeddings["data"]
+    articles.each.with_index do |article, index|
+      article[:embedding] = data[index]["embedding"]
+    end
+    File.write("lib/tasks/data/case_studies/embeddings-#{engine}.yml", articles.to_yaml)
+  end
+
+  task :search_embeddings do
+    engine = "babbage"
+    client = OpenAI::Client.new
+    articles = YAML.load_file("lib/tasks/data/case_studies/embeddings-#{engine}.yml")
+    articles.each do |article|
+      article[:article] = CaseStudy::Article.find(article[:id])
+    end
+    queries = [
+      "acquire more customers for my fintech startup",
+      "Create a podcast in the financial services sector",
+      "Create content focused on the German market",
+      "create funny B2B content",
+      "devise a growth strategy aimed at developers audience",
+      "I want to gain B2B search authority in a new space",
+      "re-position my fintech brand based on qualitative research.",
+      "Reposition manufacturing business as a service provider",
+      "to design a mobile app experience to increase repeat customers"
+    ]
+    queries.each do |query|
+      embedding = client.embeddings(engine: "text-search-#{engine}-query-001", parameters: {input: query})
+      data = embedding["data"].first["embedding"]
+      query_vector = Vector.elements(data)
+      results = []
+      articles.each do |article|
+        article_vector = Vector.elements(article[:embedding])
+        results << {
+          similarity: query_vector.dot(article_vector) / (query_vector.magnitude * article_vector.magnitude),
+          uid: article[:article].uid,
+          title: article[:article].title
+        }
+      end
+      sorted = results.sort_by { |r| r[:similarity] }.reverse.take(3)
+      puts "-" * 100
+      puts "Top 3 results for query with #{engine} embeddings engine: #{query}"
+      columns = sorted.first.keys
+      output = CSV.generate do |csv|
+        csv << columns
+        sorted.each { |row| csv << columns.map { |c| row[c] } }
+      end
+      puts output
+    end
   end
 
   task upload: :environment do
