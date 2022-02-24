@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "matrix"
+
 module CaseStudy
   class Embedding < ApplicationRecord
     ENGINES = %w[babbage davinci].freeze
@@ -9,6 +11,14 @@ module CaseStudy
     validates :engine, inclusion: {in: ENGINES}
 
     ENGINES.each { |engine| scope engine, -> { where(engine:) } }
+
+    def vector
+      Vector.elements(embedding)
+    end
+
+    def cosine_similarity_to(other_vector)
+      vector.dot(other_vector) / (vector.magnitude * other_vector.magnitude)
+    end
   end
 end
 
