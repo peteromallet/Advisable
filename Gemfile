@@ -5,8 +5,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "~> 3.1.1"
 
-gem "administrate"
-gem "administrate-field-active_storage"
 gem "airrecord"
 gem "app_profiler"
 gem "aws-sdk-s3"
