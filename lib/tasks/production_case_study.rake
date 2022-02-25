@@ -10,6 +10,9 @@ require "matrix"
 # \copy (SELECT * FROM case_study_industries) TO case_study_industries.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)
 # \copy (SELECT * FROM case_study_sections) TO case_study_sections.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)
 # \copy (SELECT * FROM case_study_skills) TO case_study_skills.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)
+# \copy (SELECT * FROM skills) TO skills.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)
+# \copy (SELECT * FROM skill_categories) TO skill_categories.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)
+# \copy (SELECT * FROM skill_category_skills) TO skill_category_skills.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)
 
 namespace :production_case_study do
   task seed: :environment do
@@ -130,14 +133,20 @@ def articles_for_openai
 end
 
 def destroy_existing
-  puts "Destroying existing case studies"
-  Review.destroy_all
-  CaseStudy::Company.destroy_all
-  CaseStudy::Article.destroy_all
-  CaseStudy::Content.destroy_all
-  CaseStudy::Section.destroy_all
-  CaseStudy::Industry.destroy_all
-  CaseStudy::Skill.destroy_all
+  puts "Destroying existing data"
+  Review.delete_all
+  Label.delete_all
+  ProjectSkill.delete_all
+  CaseStudy::Industry.delete_all
+  CaseStudy::Skill.delete_all
+  CaseStudy::Content.delete_all
+  CaseStudy::Section.delete_all
+  CaseStudy::Embedding.delete_all
+  CaseStudy::Article.delete_all
+  CaseStudy::Company.delete_all
+  SkillCategorySkill.delete_all
+  SkillCategory.delete_all
+  Skill.delete_all
 end
 
 def populate_all
@@ -147,11 +156,14 @@ def populate_all
   populate("sections")
   populate("contents")
   populate("industries", map_columns: ["industry_id"])
-  populate("skills", ignore_columns: ["search_id"], map_columns: ["skill_id"])
+  populate("skills", prefix: "")
+  populate("skill_categories", prefix: "")
+  populate("skill_category_skills", prefix: "")
+  populate("skills", ignore_columns: ["search_id"])
 end
 
-def populate(table, ignore_columns: [], map_columns: [])
-  rows = CSV.read("lib/tasks/data/case_studies/case_study_#{table}.csv", headers: true)
+def populate(table, ignore_columns: [], map_columns: [], prefix: "case_study_")
+  rows = CSV.read("lib/tasks/data/case_studies/#{prefix}#{table}.csv", headers: true)
   mapped_colums = {}
   map_columns.each do |column|
     mapped_colums[column] = column.sub(/_id$/, "").capitalize.constantize.pluck(:id)
@@ -164,11 +176,16 @@ def populate(table, ignore_columns: [], map_columns: [])
     row.each do |key, value|
       next unless value.is_a?(String) && (/^{(.*)}$/.match?(value) || /^\[(.*)\]$/.match?(value))
 
-      row[key] = JSON.parse(value)
+      begin
+        row[key] = JSON.parse(value)
+      rescue JSON::ParserError
+        next
+      end
     end
     row
   end
-  model = "CaseStudy::#{table.singularize.capitalize}".constantize
+  model_prefix = "#{prefix.camelize}::" if prefix.present?
+  model = "#{model_prefix}#{table.singularize.camelize}".constantize
   model.upsert_all(sql)
 end
 
