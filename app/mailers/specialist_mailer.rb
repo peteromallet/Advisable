@@ -146,6 +146,10 @@ class SpecialistMailer < ApplicationMailer
     end
   end
 
+  def interview_request_reminder(interview)
+    # TODO
+  end
+
   def payment_request_paid_out(payment_request)
     @payment_request = payment_request
     @account = payment_request.specialist.account

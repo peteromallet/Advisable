@@ -7,19 +7,12 @@ module Mutations
 
     field :interview, Types::Interview, null: true
 
-    ALLOWED_STATUES = [
-      "Call Requested",
-      "Client Requested Reschedule",
-      "Specialist Requested Reschedule",
-      "More Time Options Added"
-    ].freeze
-
     def authorized?(id:, **args)
       requires_specialist!
       interview = Interview.find_by!(uid: id)
       policy = InterviewPolicy.new(current_user, interview)
       ApiError.not_authorized("You do not have permission to schedule this interview") unless policy.schedule?
-      ApiError.invalid_request("INTERVIEW_IS_NOT_SCHEDULABLE", "Interview is not in a schedulable state.") unless ALLOWED_STATUES.include?(interview.status)
+      ApiError.invalid_request("INTERVIEW_IS_NOT_SCHEDULABLE", "Interview is not in a schedulable state.") unless Interview::SCHEDULABLE_STATUSES.include?(interview.status)
       ApiError.invalid_request("STARTS_AT_NOT_AVAILABLE_ON_CLIENT", "Argument `starts_at` is not inside of the client's availability.") unless interview.user.availability.include?(args[:starts_at])
       true
     end
