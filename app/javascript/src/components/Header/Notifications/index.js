@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import truncate from "lodash/truncate";
 import * as Sentry from "@sentry/react";
 import SimpleBar from "simplebar-react";
-import Loading from "@advisable-main/components/Loading";
+import Loading from "src/components/Loading";
 import useViewer from "src/hooks/useViewer";
 import { Box, Avatar, Text, Link, Stack } from "@advisable/donut";
 import {

@@ -1,21 +1,17 @@
-const SentryWebpackPlugin = require("@sentry/webpack-plugin");
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-const smp = new SpeedMeasurePlugin();
-
 process.env.NODE_ENV = process.env.NODE_ENV || "production";
 
+const { merge } = require("shakapacker");
+const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 const environment = require("./environment");
 
-// webpacker includes CaseSensitivePaths plugin and its slow.
-environment.plugins.delete("CaseSensitivePaths");
+const plugins = [];
 
-if (
+const hasSentry =
   process.env.SENTRY_ORG &&
   process.env.SENTRY_PROJECT &&
-  process.env.SENTRY_AUTH_TOKEN
-) {
-  environment.plugins.prepend(
-    "Sentry",
+  process.env.SENTRY_AUTH_TOKEN;
+if (hasSentry) {
+  plugins.push(
     new SentryWebpackPlugin({
       include: ".",
       ignoreFile: ".sentrycliignore",
@@ -25,5 +21,9 @@ if (
   );
 }
 
-console.log("Compiling webpack with production config");
-module.exports = smp.wrap(environment.toWebpackConfig());
+const customConfig = {
+  mode: "production",
+  plugins,
+};
+
+module.exports = merge({}, environment, customConfig);

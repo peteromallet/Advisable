@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text, Avatar } from "@advisable/donut";
 import pluralize from "src/utilities/pluralize";
-import AvatarStack from "@advisable-main/components/AvatarStack";
+import AvatarStack from "src/components/AvatarStack";
 
 export default function AttendeesStack({ attendees, attendeesCount }) {
   return (
