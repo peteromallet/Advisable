@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useQuery } from "@apollo/client";
 import { Card, Text, Box, Combobox, Heading } from "@advisable/donut";
 import { Plus } from "@styled-icons/heroicons-outline/Plus";
-import Loading from "@advisable-main/components/Loading";
+import Loading from "src/components/Loading";
 import { GUILD_TOP_TOPICS_QUERY, SEARCH_LABELS } from "./queries";
 import { useApolloClient } from "@apollo/client";
 import ErrorBoundary from "@guild/components/ErrorBoundary";

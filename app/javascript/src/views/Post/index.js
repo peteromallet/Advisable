@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Text, Avatar, Link, Box } from "@advisable/donut";
 import { Redirect, useParams, useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import Loading from "@advisable-main/components/Loading";
+import Loading from "src/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import { GUILD_POST_QUERY } from "./queries";
 import { CoverImage } from "@guild/components/CoverImage";
