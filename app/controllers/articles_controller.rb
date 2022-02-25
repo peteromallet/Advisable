@@ -6,7 +6,7 @@ class ArticlesController < ApplicationController
   layout "tailwind"
 
   def search
-    engine = "babbage"
+    engine = params[:engine].presence || "babbage"
     @query = params[:query]
 
     return if @query.blank?
