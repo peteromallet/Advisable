@@ -18,5 +18,7 @@ production:
     every: 10 minutes
   ConsultationReminderJob:
     every: 10 minutes
+  InterviewRequestReminderJob:
+    every: 10 minutes
   AccountDeleteJob:
     cron: "0 0 6 * * *" # Every day at 6 AM

@@ -7,13 +7,6 @@ module Mutations
 
     field :interview, Types::Interview, null: true
 
-    ALLOWED_STATUSES = [
-      "Call Requested",
-      "Client Requested Reschedule",
-      "Need More Time Options",
-      "More Time Options Added"
-    ].freeze
-
     def authorized?(id:, **_args)
       requires_current_user!
       interview = Interview.find_by!(uid: id)
@@ -26,7 +19,7 @@ module Mutations
     def resolve(**args)
       interview = Interview.find_by!(uid: args[:id])
 
-      unless ALLOWED_STATUSES.include?(interview.status)
+      unless Interview::SCHEDULABLE_STATUSES.include?(interview.status)
         ApiError.invalid_request(
           "interview.notRequested",
           "Interview is not in a requested state"
