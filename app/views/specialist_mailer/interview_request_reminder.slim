@@ -1,0 +1,18 @@
+p Hi #{@interview.specialist.account.first_name},
+
+p This is a reminder to respond to the meeting request from  #{@interview.user.company.name.presence || @interview.user.account.name}, who would like to discuss a potential project with you.
+
+p This is a great opportunity for you to understand their requirements and figure out how you can work together.
+
+p As a reminder, #{@interview.user.name_with_company} left the following message:
+
+p "#{@message.content}"
+
+p To not miss out on this opportunity, please respond <a clicktracking=off href="#{magic_link(@interview.specialist.account, interview_request_url(@message.conversation))}">here</a> as soon as possible.
+
+p If this project is not a good fit for you, make sure to still decline the request as this will help us improve the recommendations we make.
+
+p
+  ' Best,
+  br
+  = @sales_person.first_name
