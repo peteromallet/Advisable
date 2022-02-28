@@ -19,6 +19,7 @@ class Interview < ApplicationRecord
   belongs_to :user # An interview is scheduled with a specific user (client contact)
   has_one :specialist, through: :application
   has_one :video_call, dependent: :destroy
+  has_one :consultation, dependent: :destroy
   has_many :messages, dependent: :destroy
 
   scope :requested, -> { where(status: "Call Requested") }
