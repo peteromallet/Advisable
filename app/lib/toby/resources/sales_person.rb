@@ -10,8 +10,8 @@ module Toby
       attribute :email, Attributes::String
       attribute :name, Attributes::String, readonly: true
 
-      def self.label(record, context)
-        Lazy::Label.new(::SalesPerson, record.id, context, value_column: :username)
+      def self.label(record, _context)
+        record.username
       end
 
       def self.search(query)

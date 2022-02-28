@@ -17,8 +17,8 @@ module Toby
 
         attribute :search_feedbacks, Attributes::HasMany
 
-        def self.label(record, context)
-          Lazy::Label.new(::CaseStudy::Search, record.id, context, value_column: :name)
+        def self.label(record, _context)
+          record.name
         end
 
         def self.search(query)
