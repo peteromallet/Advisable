@@ -93,8 +93,8 @@ export default function InvoicingType({ user }) {
                   type="radio"
                   name="invoicing"
                   value="upfront"
-                  label="50% Upfront"
-                  description="I will request 50% of the amount up front and then the remaining 50% upon completing the work."
+                  label="Upfront"
+                  description="I will request a percentage of the amount upfront and the remaining amount upon completion of the work."
                 />
                 <Field
                   as={RadioOption}
