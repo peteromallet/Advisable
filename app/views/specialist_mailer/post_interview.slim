@@ -11,7 +11,7 @@
   = render "emails/option",
     title: "Send a proposal",
     text: "Send them a proposal to work together on Advisable",
-    href: "#{app_host}/applications/#{@interview.application.uid}/proposal?score=Ready%20To%20Send%20Proposal&click-id=#{@interview.uid}&email-type=specialist-post-interview"
+    href: magic_link(@account, "#{app_host}/new_agreement/#{@interview.user.uid}?score=Ready%20To%20Send%20Proposal&click-id=#{@interview.uid}&email-type=specialist-post-interview")
 
   = render "emails/spacing", height: "8px"
   

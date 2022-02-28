@@ -10,8 +10,8 @@ const FreelancerNavigation = ({ closeNav, isMobile }) => {
       <NavigationLink onClick={closeNav} to="/" exact>
         Dashboard
       </NavigationLink>
-      <NavigationLink onClick={closeNav} to="/clients">
-        Projects
+      <NavigationLink onClick={closeNav} to="/payment_requests">
+        Payments
       </NavigationLink>
       <NavigationLink
         prefix={<MessageCount />}

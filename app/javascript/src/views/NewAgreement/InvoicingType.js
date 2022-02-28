@@ -1,9 +1,9 @@
 import React from "react";
 import { object, string } from "yup";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, useField } from "formik";
 import { Box, Heading, Text } from "@advisable/donut";
 import { Redirect, useHistory, useLocation, useParams } from "react-router-dom";
-import { ArrowSmRight } from "@styled-icons/heroicons-solid";
+import { ArrowSmRight, InformationCircle } from "@styled-icons/heroicons-solid";
 import RadioOption from "./RadioOption";
 import HelpText from "./HelpText";
 import SubmitButton from "src/components/SubmitButton";
@@ -12,6 +12,25 @@ import BackButton from "src/components/BackButton";
 const validationSchema = object().shape({
   invoicing: string().required(),
 });
+
+function TypeNotice() {
+  const [field] = useField("invoicing");
+
+  if (field.value === "recurring") {
+    return (
+      <div className=" flex mt-4 bg-neutral100 p-5 rounded-md">
+        <InformationCircle className="w-6 h-6 text-neutral500 shrink-0 mr-3" />
+        <p className="leading-5">
+          Recurring payment requests will not automatically be generated for
+          you. You will still need to manually request them based on the time
+          frame you choose.
+        </p>
+      </div>
+    );
+  }
+
+  return null;
+}
 
 export default function InvoicingType({ user }) {
   const history = useHistory();
@@ -74,8 +93,8 @@ export default function InvoicingType({ user }) {
                   type="radio"
                   name="invoicing"
                   value="upfront"
-                  label="50% Upfront"
-                  description="I will request 50% of the amount up front and then the remaining 50% upon completing the work."
+                  label="Upfront"
+                  description="I will request a percentage of the amount upfront and the remaining amount upon completion of the work."
                 />
                 <Field
                   as={RadioOption}
@@ -86,6 +105,7 @@ export default function InvoicingType({ user }) {
                   value="recurring"
                 />
               </Box>
+              <TypeNotice />
               <SubmitButton
                 size="l"
                 marginTop={10}
