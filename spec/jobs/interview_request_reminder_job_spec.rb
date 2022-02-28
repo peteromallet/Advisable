@@ -15,6 +15,14 @@ RSpec.describe InterviewRequestReminderJob do
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_request_reminder", "deliver_now", {args: [interview]}).once
   end
 
+  context "when there's a consultation" do
+    it "does not send reminder" do
+      create(:consultation, interview:)
+      described_class.perform_now
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "interview_request_reminder", "deliver_now", any_args)
+    end
+  end
+
   context "when less than 2 days ago" do
     let(:created_at) { 1.day.ago }
 
