@@ -17,8 +17,8 @@ module Toby
         attribute :published_at, Attributes::DateTime
         attribute :deleted_at, Attributes::DateTime
 
-        def self.label(record, context)
-          Lazy::Label.new(::CaseStudy::Article, record.id, context, value_column: :title)
+        def self.label(record, _context)
+          record.title
         end
 
         def self.search(query)

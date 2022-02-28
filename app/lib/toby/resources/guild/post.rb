@@ -22,8 +22,8 @@ module Toby
           object.boost!
         end
 
-        def self.label(record, context)
-          Lazy::Label.new(::Guild::Post, record.id, context, value_column: :title)
+        def self.label(record, _context)
+          record.title
         end
 
         def self.search(query)

@@ -7,8 +7,8 @@ module Toby
       attribute :name, Attributes::String
       attribute :description, Attributes::String
 
-      def self.label(record, context)
-        Lazy::Label.new(::SkillCategory, record.id, context, value_column: :name)
+      def self.label(record, _context)
+        record.name
       end
 
       def self.search(query)
