@@ -12,6 +12,7 @@ module Toby
       attribute :collaboration, Attributes::Select, options: ::Agreement::COLLABORATION_OPTIONS
       attribute :invoicing, Attributes::Select, options: ::Agreement::INVOICING_OPTIONS
       attribute :hourly_rate, Attributes::Currency
+      attribute :messages, Attributes::HasMany
       attribute :updated_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
     end
