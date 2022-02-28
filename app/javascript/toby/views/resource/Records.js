@@ -1,10 +1,9 @@
 import css from "@styled-system/css";
 import { Reorder, useDragControls } from "framer-motion";
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Text } from "@advisable/donut";
 import { Exclamation } from "@styled-icons/heroicons-solid/Exclamation";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
-import { useNotifications } from "src/components/Notifications";
 import { useFetchResources } from "../../utilities";
 import {
   StyledHeaderRow,
@@ -73,17 +72,12 @@ export default function Records({ resource, filters, sortBy, sortOrder }) {
     useColumnSizes(resource);
 
   const { orderedAttributes, updateAttributeOrder } = useColumnOrder(resource);
-  const { error: notifyError } = useNotifications();
   const { loading, data, fetchMore, error } = useFetchResources(
     resource,
     filters,
     sortBy,
     sortOrder,
   );
-
-  useEffect(() => {
-    if (error) notifyError("Failed to load records");
-  }, [error, notifyError]);
 
   const scrollRef = useBottomScrollListener(() => {
     if (!loading && !hasNextPage) return;
