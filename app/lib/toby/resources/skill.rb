@@ -8,8 +8,8 @@ module Toby
       attribute :active, Attributes::Boolean
       attribute :skill_categories, Attributes::HasManyThrough
 
-      def self.label(record, context)
-        Lazy::Label.new(::Skill, record.id, context, value_column: :name)
+      def self.label(record, _context)
+        record.name
       end
 
       def self.search(query)

@@ -25,8 +25,8 @@ module Toby
         object.update!(published_at: nil)
       end
 
-      def self.label(record, context)
-        Lazy::Label.new(::Label, record.id, context, value_column: :name)
+      def self.label(record, _context)
+        record.name
       end
 
       def self.search(query)

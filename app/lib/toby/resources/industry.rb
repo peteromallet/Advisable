@@ -6,8 +6,8 @@ module Toby
       model_name ::Industry
       attribute :name, Attributes::String
 
-      def self.label(record, context)
-        Lazy::Label.new(::Industry, record.id, context, value_column: :name)
+      def self.label(record, _context)
+        record.name
       end
 
       def self.search(query)
