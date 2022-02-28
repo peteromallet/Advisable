@@ -14,6 +14,7 @@ export default function NoPaymentRequests({ children }) {
       <CreditCardIllustration
         width="200px"
         marginBottom={4}
+        className="mx-auto"
         color={theme.colors.blue100}
       />
       <Text fontSize="lg" fontWeight={520} lineHeight="24px">
