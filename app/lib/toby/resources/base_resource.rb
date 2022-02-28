@@ -47,7 +47,7 @@ module Toby
         end
 
         def label(record, _context)
-          record.id
+          record.respond_to?(:uid) ? record.uid : record.id
         end
 
         def search(input)
