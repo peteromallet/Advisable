@@ -20,7 +20,7 @@ p We suggest using <a clicktracking=off href="https://advisable.com/faq#freelanc
 
 strong Pricing & Logistics:
 
-p If you see an opportunity to collaborate with them, we encourage you to send a proposal to them as soon as possible in order to enable them to make a quick decision - companies that receive proposals ASAP hire far quicker and more frequently. You can do so using our tool <a href="#{proposal_url(@interview.application)}">here</a>. I'll share this link with you again after the call.
+p If you see an opportunity to collaborate with them, we encourage you to send a proposal to them as soon as possible in order to enable them to make a quick decision - companies that receive proposals ASAP hire far quicker and more frequently. You can do so using our tool <a href='#{magic_link(@interview.specialist.account, "#{app_host}/new_agreement/#{@interview.user.uid}")}'>here</a>. I'll share this link with you again after the call.
 
 p Please discuss the budget directly with #{@interview.user.account.first_name} on the call. Please remember to take into account that the fees you communicate should include the Advisable.com sourcing fee of 8% (f.e. if your usual fee is 92$/hour, then you should communicate 100$ as your hourly rate since the Advisable fee is 8$ in this case). There is no need for you to communicate your Advisable fees to Clients, although specialist fees are, of course, transparent and displayed on our website.
 

@@ -40,10 +40,6 @@ module MailHelper
     "#{app_host}/calls/#{video_call.uid}"
   end
 
-  def proposal_url(application)
-    "#{app_host}/applications/#{application.uid}/proposal"
-  end
-
   def payment_request_url(payment_request)
     "#{app_host}/payment_requests/#{payment_request.uid}"
   end
