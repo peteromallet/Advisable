@@ -51,6 +51,7 @@ gem "sidekiq"
 gem "sidekiq-scheduler"
 gem "slim"
 gem "stripe"
+gem "tailwindcss-rails"
 gem "twilio-ruby"
 gem "webpacker", "~> 5.1"
 
@@ -94,5 +95,3 @@ group :test do
   gem "webdrivers"
   gem "webmock"
 end
-
-gem "tailwindcss-rails", "~> 2.0"
