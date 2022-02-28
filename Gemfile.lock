@@ -676,7 +676,7 @@ DEPENDENCIES
   sql_spy
   stripe
   stripe-ruby-mock (~> 3.0.1)
-  tailwindcss-rails (~> 2.0)
+  tailwindcss-rails
   timecop
   twilio-ruby
   web-console
