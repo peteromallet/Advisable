@@ -10,10 +10,23 @@ module CaseStudy
 
     validates :engine, inclusion: {in: ENGINES}
 
-    ENGINES.each { |engine| scope engine, -> { where(engine:) } }
+    def self.for_article(article, engine: "babbage", refresh: false)
+      embedding = find_or_initialize_by(article:, engine:)
+      return embedding if embedding.persisted? && !refresh
+
+      text = article.title
+      text += article.contents.by_position.map(&:to_text).join(" ")
+      text = text.tr("\n", " ").split.first(1500).join(" ")
+
+      client = OpenAI::Client.new
+      response = client.embeddings(engine: "text-search-#{engine}-doc-001", parameters: {input: text})
+      embedding.data = response["data"].first["embedding"]
+      embedding.save!
+      embedding
+    end
 
     def vector
-      Vector.elements(embedding)
+      Vector.elements(data)
     end
 
     def cosine_similarity_to(other_vector)
@@ -27,7 +40,7 @@ end
 # Table name: case_study_embeddings
 #
 #  id         :bigint           not null, primary key
-#  embedding  :jsonb
+#  data       :jsonb
 #  engine     :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
