@@ -25,10 +25,4 @@ class TobyController < ApplicationController
 
     @prefetched_queries << {query:, result:}
   end
-
-  def admin?
-    return if current_account&.admin?
-
-    redirect_to(current_account ? "/" : "/login?redirect=/toby")
-  end
 end

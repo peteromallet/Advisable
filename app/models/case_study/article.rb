@@ -20,6 +20,7 @@ module CaseStudy
     has_many :contents, through: :sections
     has_many :search_feedbacks, dependent: :destroy
     has_many :shares, class_name: "SharedArticle", dependent: :destroy
+    has_many :embeddings, dependent: :destroy
     has_one :review, class_name: "::Review", foreign_key: :case_study_article, inverse_of: :case_study_article, dependent: :destroy
     has_one :guild_post, class_name: "::Guild::Post", dependent: :nullify
     has_one_attached :cover_photo
@@ -28,14 +29,6 @@ module CaseStudy
     scope :searchable, -> { active.published.where(hide_from_search: false) }
     scope :by_score, -> { order("score DESC NULLS LAST").order(id: :desc) }
     scope :available_specialists, -> { joins(:specialist).merge(Specialist.available).joins(specialist: :account).merge(Account.active) }
-
-    def slug_or_uid
-      slug || uid
-    end
-
-    def path
-      "/profile/#{specialist.username_or_uid}/#{slug_or_uid}"
-    end
 
     def self.find_by_slug_or_id(slug)
       if ::CaseStudy::Article.valid_uid?(slug)
@@ -47,6 +40,18 @@ module CaseStudy
 
     def self.find_by_slug_or_id!(slug)
       find_by_slug_or_id(slug) || raise(ActiveRecord::RecordNotFound)
+    end
+
+    def slug_or_uid
+      slug || uid
+    end
+
+    def path
+      "/profile/#{specialist.username_or_uid}/#{slug_or_uid}"
+    end
+
+    def to_text
+      title + contents.by_position.map(&:to_text).join(" ")
     end
   end
 end
