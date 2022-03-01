@@ -30,14 +30,14 @@ query Article($searchId: ID!, $articleId: ID!) {
       conversation {
         id
       }
+      interview {
+        id
+        status
+        startsAt
+      }
       consultation {
         id
         status
-        interview {
-          id
-          status
-          startsAt
-        }
       }
     }
     sections {

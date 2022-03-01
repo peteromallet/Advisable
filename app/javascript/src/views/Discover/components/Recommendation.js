@@ -82,9 +82,7 @@ export default function Recommendation({
             >
               {recommendation.comment}
             </Text>
-            {Boolean(recommendation.specialist.consultation) && (
-              <ConsultationStatus specialist={recommendation.specialist} />
-            )}
+            <ConsultationStatus specialist={recommendation.specialist} />
             <Box onClick={stopActionPropagation}>
               <MessageFreelancerButton
                 mr={3}

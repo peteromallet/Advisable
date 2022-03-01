@@ -35,6 +35,7 @@ class Specialist < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :consultations, dependent: :destroy
   has_many :applications, dependent: :destroy
+  has_many :interviews, through: :applications
   has_many :agreements, dependent: :destroy
   has_many :matches, dependent: :destroy
   has_many :projects, through: :applications

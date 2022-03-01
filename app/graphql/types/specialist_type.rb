@@ -299,5 +299,12 @@ module Types
 
       ::Conversation.find_existing_with(current_user, object)
     end
+
+    field :interview, Types::Interview, null: true
+    def interview
+      requires_client!
+
+      object.interviews.find_by(user: current_user)
+    end
   end
 end

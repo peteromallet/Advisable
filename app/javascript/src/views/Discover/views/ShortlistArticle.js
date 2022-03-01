@@ -81,9 +81,7 @@ export default function ShortlistArticle() {
           </Box>
         </Box>
         <Box paddingLeft={{ _: 0, s: 12 }}>
-          {data.caseStudy.specialist.consultation && (
-            <ConsultationStatus specialist={data.caseStudy.specialist} />
-          )}
+          <ConsultationStatus specialist={data.caseStudy.specialist} />
           <Article article={data.caseStudy} />
         </Box>
       </Box>
