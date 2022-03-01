@@ -17,7 +17,7 @@ export default function ClientRequestedReschedule({ interview }) {
     <Box maxWidth="500px" marginX="auto" paddingY="xl">
       <Card padding={["xl", "2xl"]}>
         <Box marginBottom={2}>
-          <BackButton to="/hire" />
+          <BackButton to="/messages" />
         </Box>
         <CalendarIllustration width="200px" color={theme.colors.blue200} />
         <Text
