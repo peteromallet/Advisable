@@ -12,7 +12,11 @@ export default function NoCandidates() {
       paddingBottom={8}
       textAlign="center"
     >
-      <CalendarIllustration color={theme.colors.blue300} width="164px" />
+      <CalendarIllustration
+        className="mx-auto"
+        color={theme.colors.blue100}
+        width="200px"
+      />
       <Text
         fontSize="20px"
         fontWeight={600}
