@@ -18,6 +18,27 @@ RSpec.describe "Interviews", type: :system do
     allow_any_instance_of(GoogleCalendar).to receive(:schedule_for_interview)
   end
 
+  it "specialist can accept an interview request via messages" do
+    interview = create(:interview, user:, status: "Call Requested")
+    conversation = Conversation.by_accounts(interview.user, interview.specialist)
+    message = conversation.new_message!(
+      author: user.account,
+      content: "Interview request message",
+      kind: "InterviewRequest",
+      interview:
+    )
+
+    authenticate_as(interview.specialist)
+    visit("/messages/#{conversation.uid}")
+    expect(page).to have_content(message.content)
+    click_on("Respond")
+    click_link("View availability")
+    click_on(user.availability[0].strftime("%A"))
+    find_all("a[class^=styles__Time]").first.click
+    click_on("Confirm Call")
+    expect(page).to have_content("scheduled a call for #{user.availability[0].strftime("%d %B %Y at %H:%M")}")
+  end
+
   it "allows the client to request to reschedule a call" do
     application = create(:application, status: "Application Accepted")
     interview = create(:interview, user: application.project.user, status: "Call Scheduled", application:)
