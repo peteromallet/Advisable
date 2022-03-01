@@ -67,12 +67,10 @@ export default function ShortlistArticle() {
               {truncate(data.caseStudy.specialist.bio, { length: 110 })}
             </Text>
             <Box marginBottom={3}>
-              {!data.caseStudy.specialist.consultation && (
-                <MessageFreelancerButton
-                  width={{ _: "100%", s: "auto" }}
-                  specialist={data.caseStudy.specialist}
-                />
-              )}
+              <MessageFreelancerButton
+                width={{ _: "100%", s: "auto" }}
+                specialist={data.caseStudy.specialist}
+              />
             </Box>
             <ArchiveButton
               width={{ _: "100%", s: "auto" }}

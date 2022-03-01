@@ -27,6 +27,9 @@ query Article($searchId: ID!, $articleId: ID!) {
       name
       firstName
       profilePath
+      conversation {
+        id
+      }
       consultation {
         id
         status

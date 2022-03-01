@@ -292,5 +292,12 @@ module Types
     def sourcing_fee
       (object.sourcing_fee.presence || ::Specialist::DEFAULT_SOURCING_FEE)
     end
+
+    field :conversation, Types::Conversation, null: true
+    def conversation
+      return if current_user.blank?
+
+      ::Conversation.find_existing_with(current_user, object)
+    end
   end
 end

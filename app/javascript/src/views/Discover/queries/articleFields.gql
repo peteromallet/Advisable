@@ -15,6 +15,9 @@ fragment ArticleFields on CaseStudyArticle {
     name
     firstName
     avatar
+    conversation {
+      id
+    }
     consultation {
       id
       status
