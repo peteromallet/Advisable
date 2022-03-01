@@ -15,9 +15,9 @@ export default function Signup() {
       position="relative"
       zIndex={2}
     >
-      <Box textAlign={["left", "center"]} mb={8}>
+      <div className="mb-8 grid place-items-center">
         <Logo />
-      </Box>
+      </div>
       <Card
         p={["0", "10"]}
         elevation={["none", "m"]}
