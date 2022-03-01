@@ -32,7 +32,7 @@ export default function MoreResults({ count, onLoadMore }) {
       mx="auto"
       textAlign="center"
     >
-      <img src={illustration} width="164px" />
+      <img className="mx-auto" src={illustration} width="164px" />
       <Text
         fontSize="20px"
         fontWeight={600}

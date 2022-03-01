@@ -16,7 +16,7 @@ export default function NoMoreResults() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <img src={illustration} width="132px" />
+      <img className="mx-auto" src={illustration} width="132px" />
       <Text
         marginTop={5}
         fontSize="20px"
