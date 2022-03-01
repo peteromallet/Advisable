@@ -14,11 +14,8 @@ module CaseStudy
       embedding = find_or_initialize_by(article:, engine:)
       return embedding if embedding.persisted? && !refresh
 
-      text = article.title
-      text += article.contents.by_position.map(&:to_text).join(" ")
-      text = text.tr("\n", " ").split.first(1500).join(" ")
-
       client = OpenAI::Client.new
+      text = article.to_text.tr("\n", " ").split.first(1500).join(" ")
       response = client.embeddings(engine: "text-search-#{engine}-doc-001", parameters: {input: text})
       embedding.data = response["data"].first["embedding"]
       embedding.save!
