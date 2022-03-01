@@ -4,15 +4,22 @@ import { useLocation } from "react-router";
 import { ChatAlt } from "@styled-icons/heroicons-solid/ChatAlt";
 import { Modal, useModal, Button, DialogDisclosure } from "@advisable/donut";
 import ConnectModal from "./ConnectModal";
+import { Link } from "react-router-dom";
 
-export default function ConnectButton({
-  specialist,
-  children = "Connect",
-  ...props
-}) {
+export default function ConnectButton({ specialist, ...props }) {
   const location = useLocation();
   const { prompt } = queryString.parse(location.search);
   const dialog = useModal({ visible: prompt === "true" });
+
+  if (specialist.conversation) {
+    return (
+      <Link to={`/messages/${specialist.conversation.id}`}>
+        <Button prefix={<ChatAlt />} {...props}>
+          Message
+        </Button>
+      </Link>
+    );
+  }
 
   return (
     <>
@@ -24,7 +31,7 @@ export default function ConnectButton({
         <ConnectModal dialog={dialog} specialist={specialist} />
       </Modal>
       <DialogDisclosure as={Button} prefix={<ChatAlt />} {...dialog} {...props}>
-        {children}
+        Connect
       </DialogDisclosure>
     </>
   );

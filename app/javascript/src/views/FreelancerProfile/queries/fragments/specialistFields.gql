@@ -49,4 +49,8 @@ fragment SpecialistFields on Specialist {
     companyName
     avatar
   }
+
+  conversation {
+    id
+  }
 }
