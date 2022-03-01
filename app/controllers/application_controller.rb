@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin
-    render layout: false
+    render layout: "tailwind"
   end
 
   private
