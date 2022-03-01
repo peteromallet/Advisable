@@ -47,6 +47,35 @@ fragment MessageFields on MessageInterface {
     }
   }
 
+  ... on InterviewRequestMessage {
+    interview {
+      id
+      status
+      specialist {
+        id
+      }
+    }
+    author {
+      id
+      name
+      avatar
+    }
+  }
+
+  ... on InterviewDeclinedMessage {
+    interview {
+      id
+      specialist {
+        id
+        firstName
+      }
+      user {
+        id
+        firstName
+      }
+    }
+  }
+
   ... on AgreementCreatedMessage {
     agreement {
       id

@@ -6,6 +6,7 @@ export const buttonStyles = composeStyles({
     flex
     relative
     items-center
+    justify-center
     rounded-full
     font-medium
   `,

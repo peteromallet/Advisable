@@ -16,6 +16,7 @@ import ACCEPT_CONSULTATION from "./acceptConsultation.gql";
 import DECLINE_CONSULTATION from "./declineConsultationRequest.gql";
 import SETUP_PAYMENTS_DATA from "./setupPaymentsData.gql";
 import UPDATE_INVOICE_SETTINGS from "./updateInvoiceSettings.gql";
+import DECLINE_INTERVIEW from "./declineInterview.gql";
 
 export function useConversations() {
   return useQuery(CONVERSATIONS);
@@ -166,4 +167,8 @@ export function useSetupPaymentsData(opts) {
 
 export function useUpdateInvoiceSettings() {
   return useMutation(UPDATE_INVOICE_SETTINGS);
+}
+
+export function useDeclineInterview() {
+  return useMutation(DECLINE_INTERVIEW);
 }
