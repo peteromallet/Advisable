@@ -257,7 +257,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_24_125351) do
   create_table "case_study_embeddings", force: :cascade do |t|
     t.bigint "article_id", null: false
     t.string "engine"
-    t.jsonb "embedding"
+    t.jsonb "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_case_study_embeddings_on_article_id"

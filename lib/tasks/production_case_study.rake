@@ -51,7 +51,7 @@ namespace :production_case_study do
       data = query["data"].first["embedding"]
       query_vector = Vector.elements(data)
       results = []
-      CaseStudy::Embedding.public_send(engine).each do |embedding|
+      CaseStudy::Embedding.where(engine:).each do |embedding|
         results << {
           similarity: embedding.cosine_similarity_to(query_vector),
           title: embedding.article.title,
@@ -196,7 +196,7 @@ def populate_embeddings
     yml = YAML.load_file("lib/tasks/data/case_studies/embeddings-#{engine}.yml")
     yml.each do |data|
       article = articles.find { |a| a[:text] == data[:text] }
-      CaseStudy::Embedding.create!(article_id: article[:id], embedding: data[:embedding], engine:)
+      CaseStudy::Embedding.create!(article_id: article[:id], data: data[:embedding], engine:)
     end
   end
 end
