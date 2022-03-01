@@ -3,6 +3,8 @@
 require "matrix"
 
 class ArticlesController < ApplicationController
+  before_action :admin?
+
   layout "tailwind"
 
   def search
@@ -20,22 +22,17 @@ class ArticlesController < ApplicationController
       articles = articles.where(skills: cs_skills)
     end
 
+    client = OpenAI::Client.new
     query = client.embeddings(engine: "text-search-#{engine}-query-001", parameters: {input: @query})
     data = query["data"].first["embedding"]
     query_vector = Vector.elements(data)
     @results = []
-    CaseStudy::Embedding.public_send(engine).where(article: articles).each do |embedding|
+    CaseStudy::Embedding.where(article: articles, engine:).includes(:article).each do |embedding|
       @results << {
         similarity: (embedding.cosine_similarity_to(query_vector) * 100).round(3),
         article: embedding.article
       }
     end
     @results = @results.sort_by { |r| r[:similarity] }.reverse
-  end
-
-  private
-
-  def client
-    @client ||= OpenAI::Client.new
   end
 end
