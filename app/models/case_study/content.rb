@@ -18,6 +18,14 @@ module CaseStudy
 
     scope :by_position, -> { order(:position) }
 
+    def to_text
+      content["text"]
+    end
+
+    def content
+      super.presence || {}
+    end
+
     private
 
     def valid_content; end

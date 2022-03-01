@@ -4,6 +4,10 @@ module CaseStudy
   class ResultsContent < Content
     uid_prefix "csc"
 
+    def to_text
+      content["results"].join("\n")
+    end
+
     private
 
     # { type: "results", content: { results: ["1", "2", "3"] } }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_03_115739) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_24_125351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -252,6 +252,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_03_115739) do
     t.jsonb "log_data"
     t.index ["section_id"], name: "index_case_study_contents_on_section_id"
     t.index ["uid"], name: "index_case_study_contents_on_uid", unique: true
+  end
+
+  create_table "case_study_embeddings", force: :cascade do |t|
+    t.bigint "article_id", null: false
+    t.string "engine"
+    t.jsonb "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_case_study_embeddings_on_article_id"
   end
 
   create_table "case_study_industries", force: :cascade do |t|
@@ -1155,6 +1164,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_03_115739) do
   add_foreign_key "case_study_articles", "case_study_companies", column: "company_id"
   add_foreign_key "case_study_articles", "specialists"
   add_foreign_key "case_study_contents", "case_study_sections", column: "section_id"
+  add_foreign_key "case_study_embeddings", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "industries"
   add_foreign_key "case_study_search_feedbacks", "case_study_articles", column: "article_id"
