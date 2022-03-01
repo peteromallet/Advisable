@@ -31,9 +31,9 @@ export default function LoginView() {
       pt={["10", "80px"]}
       maxWidth={["100%", 460]}
     >
-      <Box textAlign={["left", "center"]} mb={8}>
+      <div className="mb-8 grid place-items-center">
         <Logo />
-      </Box>
+      </div>
       <Card
         p={["0", "10"]}
         elevation={["none", "m"]}

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function NoShortlists() {
   return (
     <Box maxWidth="520px" px={8} paddingBottom={8} mx="auto" textAlign="center">
-      <img src={illustration} width="164px" />
+      <img className="mx-auto" src={illustration} width="164px" />
       <Text
         fontSize="20px"
         fontWeight={600}
