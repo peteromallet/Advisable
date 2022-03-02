@@ -61,7 +61,7 @@ RSpec.describe "Payment requests", type: :system do
 
       it "allows them to cancel the request" do
         visit("/payment_requests/#{payment_request.uid}")
-        click_link("Cancel request")
+        click_button("Cancel request")
         within("*[role='dialog']") do
           fill_in("reason", with: "Because")
           click_button("Submit")
