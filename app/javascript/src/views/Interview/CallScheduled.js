@@ -20,7 +20,7 @@ export default function CallScheduled({ interview }) {
     <Box maxWidth="500px" marginX="auto" paddingY="4xl">
       <Card padding={["xl", "2xl"]} borderRadius="20px">
         <Box>
-          <BackButton to="/hire" marginBottom={2} />
+          <BackButton to="/messages" marginBottom={2} />
           <Box marginBottom="xl">
             <CalendarIllustration width="200px" color={theme.colors.blue200} />
             <Text fontSize="xl" lineHeight="xl">
