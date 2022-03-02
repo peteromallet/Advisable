@@ -76,7 +76,7 @@ export default function CancelPaymentRequest({ paymentRequest }) {
     <>
       <DialogDisclosure {...modal}>
         {(disclosure) => (
-          <Link variant="underlined" {...disclosure}>
+          <Link as="button" variant="underlined" {...disclosure}>
             Cancel request
           </Link>
         )}

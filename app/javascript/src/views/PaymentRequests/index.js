@@ -1,6 +1,6 @@
 import React from "react";
 import { useBackground } from "@advisable/donut";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import useViewer from "src/hooks/useViewer";
 import FreelancerPaymentRequest from "./FreelancerPaymentRequest";
 import FreelancerPaymentRequests from "./FreelancerPaymentRequests";
@@ -16,27 +16,31 @@ export default function PaymentRequests() {
   return (
     <Page maxWidth="1120px">
       <div className="pt-8 px-5">
-        <Switch>
+        <Routes>
           {viewer.isSpecialist && (
-            <Route path="/payment_requests/new">
-              <NewPaymentRequest />
-            </Route>
+            <Route path="new" element={<NewPaymentRequest />} />
           )}
-          <Route path="/payment_requests/:id">
-            {viewer.isSpecialist ? (
-              <FreelancerPaymentRequest />
-            ) : (
-              <ClientPaymentRequest />
-            )}
-          </Route>
-          <Route path="/payment_requests">
-            {viewer.isSpecialist ? (
-              <FreelancerPaymentRequests />
-            ) : (
-              <ClientPaymentRequests />
-            )}
-          </Route>
-        </Switch>
+          <Route
+            path=":id"
+            element={
+              viewer.isSpecialist ? (
+                <FreelancerPaymentRequest />
+              ) : (
+                <ClientPaymentRequest />
+              )
+            }
+          />
+          <Route
+            path="/"
+            element={
+              viewer.isSpecialist ? (
+                <FreelancerPaymentRequests />
+              ) : (
+                <ClientPaymentRequests />
+              )
+            }
+          />
+        </Routes>
       </div>
     </Page>
   );
