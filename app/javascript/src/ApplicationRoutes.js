@@ -7,7 +7,6 @@ import Loading from "./components/Loading";
 import RequireAuthentication from "./components/RequireAuthentication";
 import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
-import Hire from "./views/Hire";
 import EditPost from "./views/EditPost";
 
 const Proposal = lazy(() => import("./views/Proposal"));
@@ -106,12 +105,6 @@ const ApplicationRoutes = () => {
           <Route path="/interviews/:id">
             <RequireAuthentication>
               <Interview />
-            </RequireAuthentication>
-          </Route>
-
-          <Route path="/hire">
-            <RequireAuthentication clientOnly>
-              <Hire />
             </RequireAuthentication>
           </Route>
 

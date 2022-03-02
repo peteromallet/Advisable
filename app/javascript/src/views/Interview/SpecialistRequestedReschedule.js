@@ -56,7 +56,7 @@ function SpecialistRequestedRescheduleAsClient({ interview }) {
     <Container paddingY="xl">
       <Card padding={["xl", "2xl"]}>
         <Box marginBottom={4}>
-          <BackButton to="/hire" />
+          <BackButton to="/messages" />
         </Box>
         <Text fontSize="4xl" fontWeight="medium" marginBottom="xs">
           {interview.specialist.firstName} has requested to reschedule your
