@@ -30,7 +30,6 @@ module Mutations
 
       interview.create_video_call! if interview.video_call.blank?
       interview.application.update(status: "Interview Scheduled")
-      interview.application.project.update(status: "Interview Scheduled")
       interview.create_system_message!
       GoogleCalendar.new.schedule_for_interview(interview)
 

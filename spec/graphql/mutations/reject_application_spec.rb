@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::RejectApplication do
   let(:application) { create(:application, status: "Applied") }
+  let(:interview) { create(:interview, application:) }
   let(:message) { "" }
   let(:query) do
     <<-GRAPHQL
@@ -21,7 +22,7 @@ RSpec.describe Mutations::RejectApplication do
     GRAPHQL
   end
 
-  let(:context) { {current_user: application.project.user} }
+  let(:context) { {current_user: interview.user} }
 
   def request
     AdvisableSchema.execute(query, context:)

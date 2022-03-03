@@ -2,7 +2,7 @@
 
 class ApplicationPolicy < BasePolicy
   def user_owner?
-    record.project.user == current_user
+    record.interview&.user == current_user
   end
 
   def specialist?
@@ -34,6 +34,6 @@ class ApplicationPolicy < BasePolicy
   private
 
   def company_of_record
-    record.project&.user&.company
+    record.interview&.user&.company
   end
 end

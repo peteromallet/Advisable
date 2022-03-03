@@ -8,24 +8,15 @@ RSpec.describe Types::SpecialistType do
   let(:response) { AdvisableSchema.execute(query, context:) }
 
   describe "applications field" do
-    let!(:application1) do
-      create(:application, specialist:, status: "Applied")
-    end
-    let!(:application2) do
-      create(:application, specialist:, status: "Applied")
-    end
-    let!(:application3) do
-      create(:application, specialist:, status: "Invited To Apply")
-    end
-    let!(:application4) do
-      create(:application, specialist:, status: "Working")
-    end
+    let!(:application1) { create(:application, specialist:, status: "Applied") }
+    let!(:application3) { create(:application, specialist:, status: "Invited To Apply") }
+    let!(:application4) { create(:application, specialist:, status: "Working") }
 
     let(:query) do
       <<-GRAPHQL
       {
         specialist(id: "#{specialist.uid}") {
-          applications(status: ["Applied", "Invited To Apply"], salesStatus: ["Open"]) {
+          applications(status: ["Applied", "Invited To Apply"]) {
             id
           }
         }
@@ -36,11 +27,6 @@ RSpec.describe Types::SpecialistType do
     it "returns the specialists applications" do
       applications = response["data"]["specialist"]["applications"]
       expect(applications).not_to be_empty
-    end
-
-    it "excludes the applications where project sales_status is Lost" do
-      applications = response["data"]["specialist"]["applications"]
-      expect(applications).not_to include({"id" => application2.uid})
     end
 
     it "can filter by status" do

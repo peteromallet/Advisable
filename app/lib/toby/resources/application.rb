@@ -7,7 +7,6 @@ module Toby
       attribute :uid, Attributes::String, readonly: true
       attribute :status, Attributes::Select, options: ["Applied"] + ::Application::ACTIVE_STATUSES + ::Application::HIRED_STATUSES
       attribute :specialist, Attributes::BelongsTo
-      attribute :project, Attributes::BelongsTo
       attribute :interview, Attributes::HasOne
       attribute :introduction, Attributes::LongText
       attribute :hidden, Attributes::Boolean

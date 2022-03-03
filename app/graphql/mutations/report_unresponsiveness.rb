@@ -11,7 +11,7 @@ module Mutations
       requires_current_user!
       application = Application.find_by!(uid: application_id)
 
-      return true if (current_user.is_a?(::Specialist) && application.specialist == current_user) || (current_user.is_a?(::User) && current_user == application.project.user)
+      return true if (current_user.is_a?(::Specialist) && application.specialist == current_user) || (current_user.is_a?(::User) && current_user == application.interview.user)
 
       ApiError.invalid_request("INVALID_APPLICATION", "The application does not belong to signed in user.")
     end

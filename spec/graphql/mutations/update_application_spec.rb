@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::UpdateApplication do
   let(:specialist) { create(:specialist) }
   let(:context) { {current_user: specialist} }
-  let(:application) { create(:application, {specialist:, introduction: false, questions: []}) }
+  let(:application) { create(:application, {specialist:, introduction: false}) }
   let(:extra) { "" }
   let(:response_fields) { "" }
   let(:query) do
@@ -41,45 +41,8 @@ RSpec.describe Mutations::UpdateApplication do
 
     it "updates the availability" do
       response = AdvisableSchema.execute(query, context:)
-      availability =
-        response["data"]["updateApplication"]["application"]["availability"]
+      availability = response["data"]["updateApplication"]["application"]["availability"]
       expect(availability).to eq("2 Weeks")
-    end
-  end
-
-  context "when updating questions" do
-    let(:question) { "This is a question?" }
-    let(:query) do
-      <<-GRAPHQL
-      mutation {
-        updateApplication(input: {
-          id: "#{application.uid}",
-          questions: [{question: "#{question}",
-            answer: "This is an answer"
-          }]
-        }) {
-          application {
-            id
-          }
-        }
-      }
-      GRAPHQL
-    end
-
-    it "updates the questions" do
-      expect { AdvisableSchema.execute(query, context:) }.to change {
-        application.reload.questions
-      }.from([]).to([{"question" => "This is a question?", "answer" => "This is an answer"}])
-    end
-
-    context "when an invalid question is passed" do
-      let(:question) { "Not a question?" }
-
-      it "returns an error" do
-        response = AdvisableSchema.execute(query, context:)
-        error = response["errors"][0]
-        expect(error["extensions"]["code"]).to eq("invalid_question")
-      end
     end
   end
 
