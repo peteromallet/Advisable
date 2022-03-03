@@ -3,7 +3,6 @@
 class Industry < ApplicationRecord
   include Uid
 
-  has_many :project_industries, dependent: :destroy
   has_many :companies, dependent: :nullify
   has_one :label, required: false, dependent: :nullify
   has_many :specialist_industries, dependent: :destroy

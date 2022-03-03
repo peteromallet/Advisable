@@ -18,39 +18,6 @@ RSpec.describe StripeEvents::PaymentIntentSucceeded do
     })
   end
 
-  describe "deposit" do
-    let(:project) { create(:project, deposit_paid: 0) }
-    let(:metadata) { OpenStruct.new({payment_type: "deposit", project: project.uid}) }
-
-    before do
-      allow(UpdateCompanysPaymentMethodJob).to receive(:perform_later)
-      allow_any_instance_of(User).to receive(:stripe_customer_id).and_return("cu_1234")
-      allow_any_instance_of(Project).to receive(:sync_to_airtable)
-    end
-
-    it "adds the amount to the deposit_paid" do
-      expect do
-        StripeEvents.process(event)
-      end.to change {
-        project.reload.deposit_paid
-      }.from(0).to(500_00)
-    end
-
-    it "attaches the payment method" do
-      expect(UpdateCompanysPaymentMethodJob).to receive(:perform_later).with(
-        instance_of(Company),
-        "pm_12345"
-      )
-      StripeEvents.process(event)
-    end
-
-    it "syncs to airtable" do
-      allow(Project).to receive(:find_by!).and_return(project)
-      expect(project).to receive(:sync_to_airtable)
-      StripeEvents.process(event)
-    end
-  end
-
   describe "payment" do
     let(:payment) { create(:payment) }
     let(:metadata) { OpenStruct.new({payment_type: "payment", payment: payment.uid}) }
@@ -87,7 +54,7 @@ RSpec.describe StripeEvents::PaymentIntentSucceeded do
     let(:metadata) { OpenStruct.new }
 
     it "does nothing" do
-      expect(StripeEvents.process(event)).to eq(nil)
+      expect(StripeEvents.process(event)).to be_nil
     end
   end
 
@@ -95,7 +62,7 @@ RSpec.describe StripeEvents::PaymentIntentSucceeded do
     let(:metadata) { OpenStruct.new({payment_type: "charge"}) }
 
     it "does nothing" do
-      expect(StripeEvents.process(event)).to eq(nil)
+      expect(StripeEvents.process(event)).to be_nil
     end
   end
 end

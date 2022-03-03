@@ -41,6 +41,8 @@
 # be set back to Working.
 #
 class Application < ApplicationRecord
+  self.ignored_columns += %i[project_id]
+
   include Uid
 
   has_logidze
@@ -56,18 +58,14 @@ class Application < ApplicationRecord
   ].freeze
 
   belongs_to :specialist
-  belongs_to :project
   has_many :unresponsiveness_reports, dependent: :destroy
   has_many :problematic_flags, dependent: :destroy
   has_one :interview, dependent: :destroy
 
   # Every time an application is created, updated or destroyed we want to:
   # - update the associated specialists average_score
-  # - update the counts for the associated project
   after_destroy :update_specialist_average_score
-  after_destroy :update_project_counts
   after_save :update_specialist_average_score
-  after_save :update_project_counts, if: :saved_change_to_status?
 
   scope :applied, -> { where(status: "Applied") }
   scope :high_score, -> { where("score > ?", 65) }
@@ -83,18 +81,11 @@ class Application < ApplicationRecord
   scope :not_hidden, -> { where(hidden: [nil, false]) }
   scope :active, -> { where(status: ACTIVE_STATUSES) }
 
-  # Filters a collection of application based on its associated projects sales status column.
-  scope :by_sales_status, ->(status) { joins(:project).where(projects: {sales_status: status}) }
-
   # Filters out any applications that are in a final state.
   scope :not_final, -> { where.not(status: ["Working", "Application Rejected", "Invited To Apply", "Invitation Rejected"]) }
 
   # Returns the top 3 candidates
   scope :top_three_applied, -> { applied.where("score > ?", 65.0).order(score: :desc).limit(3) }
-
-  def referral_url
-    "#{project.client_referral_url}&rid=#{specialist.uid}&referrer_firstname=#{specialist.account.first_name}&referrer_lastname=#{specialist.account.last_name}"
-  end
 
   def questions
     super || []
@@ -105,12 +96,6 @@ class Application < ApplicationRecord
   end
 
   private
-
-  def update_project_counts
-    return unless project
-
-    project.update_application_counts
-  end
 
   def update_specialist_average_score
     return if specialist.blank?
@@ -161,7 +146,6 @@ end
 #  uid                         :string           not null
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
-#  project_id                  :bigint
 #  specialist_id               :bigint
 #
 # Indexes

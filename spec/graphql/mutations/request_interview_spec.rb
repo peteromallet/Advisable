@@ -23,8 +23,6 @@ RSpec.describe Mutations::RequestInterview do
   end
 
   before do
-    allow_any_instance_of(Project).to receive(:sync_to_airtable)
-
     # Needed for Skill which is needed for Project which is needed for Application which is needed for Interview. Yes, I know. 😒
     create(:case_study_article, :with_skills, specialist:)
   end

@@ -8,8 +8,7 @@ RSpec.describe Mutations::InviteUserToInterview do
   let(:email) { Faker::Internet.email }
   let(:first_name) { Faker::Name.first_name }
   let(:last_name) { Faker::Name.last_name }
-  let(:project) { create(:project, user:) }
-  let(:application) { create(:application, project:) }
+  let(:application) { create(:application) }
 
   let(:query) do
     <<-GRAPHQL

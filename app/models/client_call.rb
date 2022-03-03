@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class ClientCall < ApplicationRecord
+  self.ignored_columns += %i[project_id]
+
   include ::Airtable::Syncable
-  belongs_to :project, optional: true
   belongs_to :sales_person, optional: true
   belongs_to :user, optional: true
 end
@@ -24,7 +25,6 @@ end
 #  updated_at         :datetime         not null
 #  airtable_id        :string
 #  calendly_id        :string
-#  project_id         :bigint
 #  sales_person_id    :bigint
 #  user_id            :bigint
 #
