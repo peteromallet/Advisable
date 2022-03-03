@@ -9,14 +9,12 @@ import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import EditPost from "./views/EditPost";
 
-const BookingSetup = lazy(() => import("./views/BookingSetup"));
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
   import("./views/FreelancerApplication"),
 );
 const ClientApplication = lazy(() => import("./views/ClientApplication"));
 const FreelancerProjects = lazy(() => import("./views/FreelancerProjects"));
-const Booking = lazy(() => import("./views/Booking"));
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const FreelancerActiveApplication = lazy(() =>
   import("./views/FreelancerActiveApplication"),
@@ -103,18 +101,6 @@ const ApplicationRoutes = () => {
           <Route path="/interviews/:id">
             <RequireAuthentication>
               <Interview />
-            </RequireAuthentication>
-          </Route>
-
-          <Route path="/book/:applicationId">
-            <RequireAuthentication>
-              <BookingSetup />
-            </RequireAuthentication>
-          </Route>
-
-          <Route path="/manage/:applicationId">
-            <RequireAuthentication clientOnly>
-              <Booking />
             </RequireAuthentication>
           </Route>
 
