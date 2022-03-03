@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_24_125351) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_03_072107) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -563,7 +563,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_24_125351) do
     t.datetime "specialist_requested_reschedule_at", precision: nil
     t.jsonb "log_data"
     t.string "google_calendar_id"
+    t.bigint "specialist_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
+    t.index ["specialist_id"], name: "index_interviews_on_specialist_id"
     t.index ["uid"], name: "index_interviews_on_uid", unique: true
     t.index ["user_id"], name: "index_interviews_on_user_id"
   end
@@ -1197,6 +1199,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_24_125351) do
   add_foreign_key "guild_posts", "case_study_articles", column: "article_id"
   add_foreign_key "guild_posts", "specialists"
   add_foreign_key "interviews", "applications"
+  add_foreign_key "interviews", "specialists"
   add_foreign_key "interviews", "users"
   add_foreign_key "invoices", "companies"
   add_foreign_key "labelings", "guild_posts"

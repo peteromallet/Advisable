@@ -16,6 +16,7 @@ class Interview < ApplicationRecord
   ].freeze
 
   belongs_to :application
+  belongs_to :specialist
   belongs_to :user # An interview is scheduled with a specific user (client contact)
   has_one :specialist, through: :application
   has_one :video_call, dependent: :destroy
@@ -53,17 +54,20 @@ end
 #  updated_at                         :datetime         not null
 #  application_id                     :bigint
 #  google_calendar_id                 :string
+#  specialist_id                      :bigint           not null
 #  user_id                            :bigint
 #  zoom_meeting_id                    :string
 #
 # Indexes
 #
 #  index_interviews_on_application_id  (application_id)
+#  index_interviews_on_specialist_id   (specialist_id)
 #  index_interviews_on_uid             (uid) UNIQUE
 #  index_interviews_on_user_id         (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (application_id => applications.id)
+#  fk_rails_...  (specialist_id => specialists.id)
 #  fk_rails_...  (user_id => users.id)
 #
