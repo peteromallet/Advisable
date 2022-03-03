@@ -1,0 +1,8 @@
+mutation declineInterview($input: DeclineInterviewInput!) {
+  declineInterview(input: $input) {
+    interview {
+      id
+      status
+    }
+  }
+}
