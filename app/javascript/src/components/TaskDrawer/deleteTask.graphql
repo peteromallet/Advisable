@@ -1,7 +1,0 @@
-mutation deleteTask($input: DeleteTaskInput!) {
-  deleteTask(input: $input) {
-    task {
-      id
-    }
-  }
-}

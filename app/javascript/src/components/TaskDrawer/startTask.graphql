@@ -1,8 +1,0 @@
-mutation startTask($input: StartTaskInput!) {
-  startTask(input: $input) {
-    task {
-      id
-      stage
-    }
-  }
-}
