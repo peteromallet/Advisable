@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Payout < ApplicationRecord
+  self.ignored_columns += %i[task_id]
+
   include Uid
   uid_prefix "pyo"
 
@@ -9,7 +11,6 @@ class Payout < ApplicationRecord
   VALID_STATUSES = %w[pending processed].freeze
 
   belongs_to :specialist
-  belongs_to :task, optional: true
   belongs_to :payment_request, optional: true
 
   before_create :set_sourcing_fee
@@ -59,7 +60,6 @@ end
 #  updated_at         :datetime         not null
 #  payment_request_id :bigint
 #  specialist_id      :bigint           not null
-#  task_id            :bigint
 #
 # Indexes
 #

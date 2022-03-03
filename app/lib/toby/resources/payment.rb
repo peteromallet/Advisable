@@ -5,11 +5,9 @@ module Toby
     class Payment < BaseResource
       model_name ::Payment
       attribute :uid, Attributes::String, readonly: true
-      attribute :task, Attributes::BelongsTo
       attribute :company, Attributes::BelongsTo
       attribute :specialist, Attributes::BelongsTo
       attribute :payment_request, Attributes::BelongsTo
-      attribute :task_name, Lookups::Tasks::Name
       attribute :amount, Attributes::Currency
       attribute :admin_fee, Attributes::Currency
       attribute :total, Attributes::Currency, readonly: true

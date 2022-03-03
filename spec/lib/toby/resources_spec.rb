@@ -11,7 +11,6 @@ RSpec.describe Toby::Resources do
           Toby::Resources::Project,
           Toby::Resources::SalesPerson,
           Toby::Resources::Specialist,
-          Toby::Resources::Task,
           Toby::Resources::CaseStudy::Article,
           Toby::Resources::CaseStudy::Search,
           Toby::Resources::CaseStudy::SearchFeedback,
