@@ -15,7 +15,7 @@ class Interview < ApplicationRecord
     "Call Requested", "Call Reminded", "Client Requested Reschedule", "Specialist Requested Reschedule", "More Time Options Added"
   ].freeze
 
-  before_save :set_specialist
+  before_validation :set_specialist
 
   belongs_to :application
   belongs_to :specialist
