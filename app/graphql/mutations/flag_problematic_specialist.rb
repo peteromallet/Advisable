@@ -7,11 +7,11 @@ module Mutations
 
     field :success, Boolean, null: true
 
-    def authorized?(application_id:, message:)
+    def authorized?(application_id:, **_args)
       requires_client!
 
       application = Application.find_by!(uid: application_id)
-      return true if current_user == application.project.user
+      return true if current_user == application.interview.user
 
       ApiError.invalid_request("INVALID_APPLICATION", "The application does not belong to signed in user.")
     end

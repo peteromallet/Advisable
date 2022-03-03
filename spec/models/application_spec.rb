@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Application do
-  it { is_expected.to belong_to(:project) }
   it { is_expected.to belong_to(:specialist) }
 
   describe "#questions" do
@@ -99,25 +98,6 @@ RSpec.describe Application do
       expect(described_class.top_three_applied[0]).to eq(b)
       expect(described_class.top_three_applied[1]).to eq(a)
       expect(described_class.top_three_applied[2]).to eq(c)
-    end
-  end
-
-  context "when update_project_counts" do
-    let!(:application) { create(:application, status: "Applied") }
-
-    it "is called when the status is updated" do
-      expect(application).to receive(:update_project_counts)
-      application.update(status: "Application Accepted")
-    end
-
-    it "is called when the application is destroyed" do
-      expect(application).to receive(:update_project_counts)
-      application.destroy
-    end
-
-    it "is not called when the status isnt updated" do
-      expect(application).not_to receive(:update_project_counts)
-      application.update(introduction: "Changed")
     end
   end
 end

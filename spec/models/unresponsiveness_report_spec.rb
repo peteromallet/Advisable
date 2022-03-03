@@ -5,8 +5,10 @@ require "rails_helper"
 RSpec.describe UnresponsivenessReport do
   let(:report) { create(:unresponsiveness_report) }
   let(:specialist) { report.application.specialist.account }
-  let(:user) { report.application.project.user.account }
+  let(:user) { report.application.interview.user.account }
   let(:conversation) { Conversation.by_accounts([specialist, user]) }
+
+  before { create(:interview, application: report.application) }
 
   it "has a valid factory" do
     expect(report).to be_valid

@@ -21,7 +21,7 @@ class UnresponsivenessReport < ApplicationRecord
   end
 
   def user_account
-    @user_account ||= application.project.user.account
+    @user_account ||= application.interview.user.account
   end
 
   def last_message_by(account)

@@ -6,6 +6,7 @@ RSpec.describe Mutations::FlagProblematicSpecialist do
   let(:user) { create(:user) }
   let(:application) { create(:application) }
   let(:message) { "This guy. I mean. COME ON!" }
+  let(:context) { {current_user: user} }
 
   let(:query) do
     <<-GRAPHQL
@@ -20,7 +21,7 @@ RSpec.describe Mutations::FlagProblematicSpecialist do
     GRAPHQL
   end
 
-  let(:context) { {current_user: user} }
+  before { create(:interview, user:, application:) }
 
   it "creates the flag and schedules the mailer" do
     response = AdvisableSchema.execute(query, context:)

@@ -65,12 +65,6 @@ RSpec.describe Mutations::ScheduleInterview do
     expect(application.reload.status).to eq("Interview Scheduled")
   end
 
-  it "updates the project" do
-    expect(application.project.reload.status).to be_nil
-    request
-    expect(application.project.reload.status).to eq("Interview Scheduled")
-  end
-
   it "creates a video call record" do
     expect { request }.to(change(VideoCall, :count).by(1))
   end

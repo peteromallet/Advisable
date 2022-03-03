@@ -21,6 +21,8 @@ RSpec.describe Mutations::ReportUnresponsiveness do
     GRAPHQL
   end
 
+  before { create(:interview, user:, application:) }
+
   context "when logged in as client" do
     let(:context) { {current_user: user} }
 
