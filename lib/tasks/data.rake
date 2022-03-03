@@ -13,4 +13,12 @@ namespace :data do
     industries = File.readlines(industries_file).map(&:strip)
     industries.each { |name| Industry.create(name:) }
   end
+
+  task interviews: :environment do
+    Interview.find_each do |interview|
+      next unless interview.application&.specialist_id
+
+      interview.update!(specialist_id: interview.application.specialist_id)
+    end
+  end
 end
