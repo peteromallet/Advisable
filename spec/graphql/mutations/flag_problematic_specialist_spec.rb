@@ -4,8 +4,7 @@ require "rails_helper"
 
 RSpec.describe Mutations::FlagProblematicSpecialist do
   let(:user) { create(:user) }
-  let(:project) { create(:project, user:) }
-  let(:application) { create(:application, project:) }
+  let(:application) { create(:application) }
   let(:message) { "This guy. I mean. COME ON!" }
 
   let(:query) do
@@ -27,7 +26,7 @@ RSpec.describe Mutations::FlagProblematicSpecialist do
     response = AdvisableSchema.execute(query, context:)
 
     success = response["data"]["flagProblematicSpecialist"]["success"]
-    expect(success).to eq(true)
+    expect(success).to be(true)
 
     flag = ProblematicFlag.find_by(user:, application:)
     expect(flag.message).to eq(message)

@@ -5,8 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::ReportUnresponsiveness do
   let(:user) { create(:user) }
   let(:specialist) { create(:specialist) }
-  let(:project) { create(:project, user:) }
-  let(:application) { create(:application, project:, specialist:) }
+  let(:application) { create(:application, specialist:) }
   let(:message) { "This guy. I mean. COME ON!" }
 
   let(:query) do
@@ -29,7 +28,7 @@ RSpec.describe Mutations::ReportUnresponsiveness do
       response = AdvisableSchema.execute(query, context:)
 
       success = response["data"]["reportUnresponsiveness"]["success"]
-      expect(success).to eq(true)
+      expect(success).to be(true)
 
       report = UnresponsivenessReport.find_by(reporter: user.account, application:)
       expect(report.message).to eq(message)
@@ -56,7 +55,7 @@ RSpec.describe Mutations::ReportUnresponsiveness do
       response = AdvisableSchema.execute(query, context:)
 
       success = response["data"]["reportUnresponsiveness"]["success"]
-      expect(success).to eq(true)
+      expect(success).to be(true)
 
       report = UnresponsivenessReport.find_by(reporter: specialist.account, application:)
       expect(report.message).to eq(message)

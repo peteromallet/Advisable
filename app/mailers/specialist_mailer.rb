@@ -9,32 +9,6 @@ class SpecialistMailer < ApplicationMailer
     mail(to: @specialist.account.email, subject: "Account Confirmation")
   end
 
-  def inform_about_project(project_id, specialist_id)
-    @project = Project.find(project_id)
-    @specialist = Specialist.find(specialist_id)
-    return if @specialist.account.unsubscribed?("Automated Invitations")
-
-    mail(
-      to: @specialist.account.email,
-      subject: "New Freelance Opportunity: #{@project.nice_name} with #{@project.industry} #{@project.company_type}"
-    )
-  end
-
-  def project_paused(project, application)
-    return if application.applied_at.blank?
-
-    @project = project
-    @application = application
-    @sales_person = project.user.company.sales_person
-    mail(
-      from: @sales_person.email_with_name,
-      to: @application.specialist.account.email,
-      subject: "#{@project.nice_name} Project Has Been Paused"
-    ) do |format|
-      format.html { render layout: false }
-    end
-  end
-
   def interview_reschedule_request(interview)
     @interview = interview
     @sales_person = interview.user.company.sales_person

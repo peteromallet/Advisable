@@ -5,8 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::UpdateApplication do
   let(:specialist) { create(:specialist) }
   let(:context) { {current_user: specialist} }
-  let(:project) { create(:project, questions: ["This is a question?"]) }
-  let(:application) { create(:application, {specialist:, introduction: false, project:, questions: []}) }
+  let(:application) { create(:application, {specialist:, introduction: false, questions: []}) }
   let(:extra) { "" }
   let(:response_fields) { "" }
   let(:query) do

@@ -11,12 +11,8 @@ RSpec.describe Types::SpecialistType do
     let!(:application1) do
       create(:application, specialist:, status: "Applied")
     end
-    let(:project) { create(:project, sales_status: "Lost") }
     let!(:application2) do
-      create(
-        :application,
-        specialist:, status: "Applied", project:
-      )
+      create(:application, specialist:, status: "Applied")
     end
     let!(:application3) do
       create(:application, specialist:, status: "Invited To Apply")
@@ -65,7 +61,7 @@ RSpec.describe Types::SpecialistType do
     end
 
     context "when logged in as a user" do
-      let(:context) { {current_user: project.user} }
+      let(:context) { {current_user: create(:user)} }
 
       it "prevents access" do
         error = response["errors"][0]["extensions"]["code"]
@@ -112,17 +108,6 @@ RSpec.describe Types::SpecialistType do
         error = response["errors"][0]["extensions"]["code"]
         expect(response["data"]["specialist"]["applications"]).to be_nil
         expect(error).to eq("INVALID_PERMISSIONS_FOR_FIELD")
-      end
-    end
-
-    context "when logged in as a user from the same company" do
-      let(:project) { create(:project) }
-      let(:application) { create(:application, specialist:, status: "Applied", project:) }
-      let(:context) { {current_user: create(:user, company: application.project.user.company)} }
-
-      it "allows access" do
-        email = response["data"]["specialist"]["email"]
-        expect(email).not_to be_nil
       end
     end
 

@@ -25,8 +25,6 @@ module Types
     field :project_type, String, null: true
     field :monthly_limit, Int, null: true
     field :questions, [Types::ApplicationQuestionType, {null: true}], null: true, deprecation_reason: "Gone with the ~wind~ new flow"
-    field :project, Types::ProjectType, null: false
-    field :referral_url, String, null: true
     field :accepts_fee, Boolean, null: true
     field :accepts_terms, Boolean, null: true
     field :interview, Types::Interview, null: true

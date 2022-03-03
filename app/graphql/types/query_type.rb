@@ -4,14 +4,6 @@ module Types
   class QueryType < Types::BaseType
     description "A defined set of types describing what can be queried"
 
-    field :project, Types::ProjectType, null: true do
-      argument :id, ID, required: true
-    end
-
-    def project(id:)
-      ::Project.find_by!(uid: id)
-    end
-
     field :application,
           Types::ApplicationType,
           description: "Get an application record by its airtable ID",
