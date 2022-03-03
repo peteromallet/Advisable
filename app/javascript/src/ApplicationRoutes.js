@@ -9,7 +9,6 @@ import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import EditPost from "./views/EditPost";
 
-const Proposal = lazy(() => import("./views/Proposal"));
 const BookingSetup = lazy(() => import("./views/BookingSetup"));
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
@@ -123,12 +122,6 @@ const ApplicationRoutes = () => {
           <Route path="/manage/:applicationId">
             <RequireAuthentication clientOnly>
               <Booking />
-            </RequireAuthentication>
-          </Route>
-
-          <Route path="/applications/:applicationId/proposal">
-            <RequireAuthentication>
-              <Proposal />
             </RequireAuthentication>
           </Route>
 
