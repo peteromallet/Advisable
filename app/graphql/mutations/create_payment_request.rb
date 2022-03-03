@@ -27,6 +27,8 @@ module Mutations
       save_with_current_account!(payment_request)
       UserMailer.payment_request(payment_request).deliver_later
 
+      Slack.bg_message(channel: "payments", text: "#{payment_request.specialist.account.name} has sent a payment request to #{payment_request.company.name} (<https://app.advisable.com/toby/paymentrequests/#{payment_request.id}|View in Toby>)")
+
       {payment_request:}
     end
   end
