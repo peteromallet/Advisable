@@ -21,6 +21,7 @@ module Mutations
       conversation = Conversation.by_accounts(agreement.specialist, current_account)
       conversation.new_message!(kind: "AgreementDeclined", agreement:, send_emails: false)
       conversation.new_message!(author: current_account, content: args[:message], send_emails: false) if args[:message].present?
+      Slack.bg_message(channel: "consultation_requests", text: "The Agreement #{agreement.uid} between #{agreement.specialist.account.name} and #{agreement.company.name} has been declined!")
 
       {agreement:}
     end
