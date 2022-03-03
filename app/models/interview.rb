@@ -15,9 +15,11 @@ class Interview < ApplicationRecord
     "Call Requested", "Call Reminded", "Client Requested Reschedule", "Specialist Requested Reschedule", "More Time Options Added"
   ].freeze
 
+  before_save :set_specialist
+
   belongs_to :application
-  belongs_to :user # An interview is scheduled with a specific user (client contact)
-  has_one :specialist, through: :application
+  belongs_to :specialist, optional: true # TODO: Make it non-optional and non null after migration
+  belongs_to :user
   has_one :video_call, dependent: :destroy
   has_one :consultation, dependent: :destroy
   has_many :messages, dependent: :destroy
@@ -30,6 +32,14 @@ class Interview < ApplicationRecord
   def create_system_message!
     conversation = Conversation.by_accounts([specialist.account, user.account])
     conversation.new_message!(kind: "InterviewScheduled", interview: self, metadata: {starts_at:}, send_emails: false)
+  end
+
+  private
+
+  def set_specialist
+    return if specialist_id || !application_id
+
+    self.specialist_id = application.specialist_id
   end
 end
 
@@ -53,17 +63,20 @@ end
 #  updated_at                         :datetime         not null
 #  application_id                     :bigint
 #  google_calendar_id                 :string
+#  specialist_id                      :bigint
 #  user_id                            :bigint
 #  zoom_meeting_id                    :string
 #
 # Indexes
 #
 #  index_interviews_on_application_id  (application_id)
+#  index_interviews_on_specialist_id   (specialist_id)
 #  index_interviews_on_uid             (uid) UNIQUE
 #  index_interviews_on_user_id         (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (application_id => applications.id)
+#  fk_rails_...  (specialist_id => specialists.id)
 #  fk_rails_...  (user_id => users.id)
 #
