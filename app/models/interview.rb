@@ -15,10 +15,10 @@ class Interview < ApplicationRecord
     "Call Requested", "Call Reminded", "Client Requested Reschedule", "Specialist Requested Reschedule", "More Time Options Added"
   ].freeze
 
-  before_save :set_specialist
+  before_validation :set_specialist
 
   belongs_to :application
-  belongs_to :specialist, optional: true # TODO: Make it non-optional and non null after migration
+  belongs_to :specialist
   belongs_to :user
   has_one :video_call, dependent: :destroy
   has_one :consultation, dependent: :destroy
@@ -63,7 +63,7 @@ end
 #  updated_at                         :datetime         not null
 #  application_id                     :bigint
 #  google_calendar_id                 :string
-#  specialist_id                      :bigint
+#  specialist_id                      :bigint           not null
 #  user_id                            :bigint
 #  zoom_meeting_id                    :string
 #
