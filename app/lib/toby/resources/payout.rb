@@ -5,11 +5,9 @@ module Toby
     class Payout < BaseResource
       model_name ::Payout
       attribute :uid, Attributes::String, readonly: true
-      attribute :task, Attributes::BelongsTo
       attribute :payment_request, Attributes::BelongsTo
       attribute :company, Lookups::Payouts::CompanyName
       attribute :specialist, Attributes::BelongsTo
-      attribute :task_name, Lookups::Tasks::Name
       attribute :vat_rate, Attributes::String, readonly: true
       attribute :amount, Attributes::Currency
       attribute :vat_amount, Attributes::Currency, readonly: true

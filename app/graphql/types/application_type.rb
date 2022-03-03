@@ -31,13 +31,8 @@ module Types
     field :accepts_terms, Boolean, null: true
     field :interview, Types::Interview, null: true
     field :trial_program, Boolean, null: true
-    field :trial_task, Types::TaskType, null: true
 
     field :proposal_comment, String, null: true do
-      authorize :read?
-    end
-
-    field :tasks, [Types::TaskType], null: true do
       authorize :read?
     end
 

@@ -57,10 +57,8 @@ class Application < ApplicationRecord
 
   belongs_to :specialist
   belongs_to :project
-  has_many :tasks, dependent: :destroy
   has_many :unresponsiveness_reports, dependent: :destroy
   has_many :problematic_flags, dependent: :destroy
-  has_one :trial_task, -> { where(trial: true) }, class_name: "Task", inverse_of: :application, dependent: :destroy
   has_one :interview, dependent: :destroy
 
   # Every time an application is created, updated or destroyed we want to:

@@ -77,15 +77,6 @@ class ZapierInteractorController < ApplicationController
     end
   end
 
-  def update_task
-    find_and_update(Task) do |task|
-      task.stage = params[:stage]
-      task.assign_attributes(TASK_STAGE_MAPPING[task.stage] => Time.current) if TASK_STAGE_MAPPING[task.stage]
-      task.save!
-      task.financialize! if task.stage == "Approved"
-    end
-  end
-
   def update_application
     find_and_update(Application) do |application|
       application.update!(application_params(application.meta_fields))

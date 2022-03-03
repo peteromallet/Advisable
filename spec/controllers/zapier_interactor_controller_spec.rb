@@ -508,63 +508,6 @@ RSpec.describe ZapierInteractorController, type: :request do
     end
   end
 
-  describe "POST /update_task" do
-    let(:task) { create(:task) }
-    let(:stage) { "Quote Provided" }
-    let(:params) { {stage:, uid: task.uid, key:} }
-
-    it "updates the task and datetime field" do
-      post("/zapier_interactor/update_task", params:)
-      expect(response).to have_http_status(:success)
-      task.reload
-      expect(task.stage).to eq("Quote Provided")
-      expect(task.quote_provided_at).to be_within(1.second).of(Time.zone.now)
-      expect(task.quote_requested_at).to be_nil
-    end
-
-    context "when stage changes to approved" do
-      let(:task) { create(:task, final_cost: 5000) }
-      let(:stage) { "Approved" }
-
-      before { allow(Stripe::PaymentIntent).to receive(:create).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded")) }
-
-      it "updates the task and datetime field, and charges" do
-        payout_count = Payout.count
-        payment_count = Payment.count
-        post("/zapier_interactor/update_task", params:)
-        expect(response).to have_http_status(:success)
-        task.reload
-        expect(task.stage).to eq("Approved")
-        expect(task.approved_at).to be_within(1.second).of(Time.zone.now)
-        expect(task.quote_requested_at).to be_nil
-        expect(Payout.count).to eq(payout_count + 1)
-        expect(Payment.count).to eq(payment_count + 1)
-      end
-    end
-
-    context "when stage doesn't have a corresponding datetime field" do
-      let(:stage) { "Deleted" }
-
-      it "updates the task and no datetime field" do
-        post("/zapier_interactor/update_task", params:)
-        expect(response).to have_http_status(:success)
-        task.reload
-        expect(task.stage).to eq("Deleted")
-        expect(task.approved_at).to be_nil
-        expect(task.quote_requested_at).to be_nil
-      end
-    end
-
-    context "when no key" do
-      let(:key) { "" }
-
-      it "is unauthorized" do
-        post("/zapier_interactor/update_task", params:)
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-  end
-
   describe "POST /create_magic_link" do
     let(:url) { "http://path.to/image.jpg" }
     let(:user) { create(:specialist) }

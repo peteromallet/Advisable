@@ -91,14 +91,6 @@ module Types
       ::Industry.active.order(name: :asc)
     end
 
-    field :task, Types::TaskType, null: true do
-      argument :id, ID, required: true
-    end
-
-    def task(id:)
-      ::Task.find_by!(uid: id)
-    end
-
     field :currencies, [Types::CurrencyType], null: false do
       description "A list of all currencies"
     end
