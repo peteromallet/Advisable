@@ -1,8 +1,0 @@
-mutation RequestConsultation($input: RequestConsultationInput!) {
-  requestConsultation(input: $input) {
-    consultation {
-      id
-      status
-    }
-  }
-}
