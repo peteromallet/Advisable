@@ -1,6 +1,0 @@
-p Hi #{@sales_person.name},
-p We just got a report from #{@user.account.name} that #{@specialist.account.name} has been problematic on #{link_to(@project.name, admin_project_skill_url(@project), target: "_blank")}.
-p This is what #{@user.account.first_name} said:
-= simple_format(@flag.message)
-p Please reach out to #{link_to(@specialist.account.name, admin_specialist_url(@specialist), target: "_blank")}.
-p Kthxbye,<br>AdvisaBot

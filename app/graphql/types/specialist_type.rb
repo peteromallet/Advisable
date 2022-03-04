@@ -183,25 +183,6 @@ module Types
       description "Calendly event id of initial application interview"
     end
 
-    # Eventually the applications field should be updated to support pagination
-    # using a connection type. By default we use the 'by_sales_status' scope
-    # to only fetch applications where the associated project sales_status is
-    # "Open"
-    field :applications, [Types::ApplicationType], null: true do
-      authorize :specialist?, :admin?
-      argument :status, [String], required: false
-      description <<~HEREDOC
-        The specialists applications. This can be filtered by passing an array of
-        statuses.
-      HEREDOC
-    end
-
-    def applications(status: nil)
-      applications = object.applications.order(created_at: :desc)
-      applications = applications.where(status:) if status.present?
-      applications
-    end
-
     field :email, String, null: true do
       authorize :admin?, :specialist?
       description "The specialists email address"

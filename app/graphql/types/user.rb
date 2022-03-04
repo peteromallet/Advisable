@@ -174,17 +174,6 @@ module Types
       times
     end
 
-    field :applications, [Types::ApplicationType], null: true do
-      authorize :user?
-      argument :status, [String], required: false
-    end
-
-    def applications(status: nil)
-      records = company.applications
-      records = records.where(status:) if status
-      records
-    end
-
     # The client application is another representation of a user that is
     # specifically used during the client signup flow.
     field :client_application, Types::ClientApplicationType, null: true do

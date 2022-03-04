@@ -3,8 +3,6 @@
 class ZapierInteractorController < ApplicationController
   include MagicLinkHelper
 
-  ALLOWED_APPLICATION_FIELDS = %i[comment featured hidden hide_from_profile introduction rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source].freeze
-  PARAMETRIZED_APPLICATION_META_FIELDS = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }.freeze
   ALLOWED_USER_FIELDS = %i[campaign_name campaign_medium campaign_source application_status trustpilot_review_status].freeze
   ALLOWED_SPECIALIST_FIELDS = %i[campaign_name campaign_source application_stage application_status campaign_medium case_study_status trustpilot_review_status].freeze
   TASK_STAGE_MAPPING = {"Quote Requested" => :quote_requested_at, "Quote Provided" => :quote_provided_at, "Assigned" => :assigned_at, "Submitted" => :submitted_at, "Approved" => :approved_at, "Working" => :started_working_at}.freeze
@@ -40,12 +38,6 @@ class ZapierInteractorController < ApplicationController
       end
       specialist.update!(attrs)
       update_unsubscriptions!(specialist.account)
-    end
-  end
-
-  def update_application
-    find_and_update(Application) do |application|
-      application.update!(application_params(application.meta_fields))
     end
   end
 
@@ -128,15 +120,6 @@ class ZapierInteractorController < ApplicationController
     render json: {error: "#{model} not found"}, status: :unprocessable_entity
   rescue ActiveRecord::RecordInvalid => e
     render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
-  end
-
-  def application_params(existng_meta_fields = {})
-    attrs = params.require(:application).permit(ALLOWED_APPLICATION_FIELDS + PARAMETRIZED_APPLICATION_META_FIELDS.keys).to_h
-    attrs[:meta_fields] = existng_meta_fields
-    PARAMETRIZED_APPLICATION_META_FIELDS.each do |param, field|
-      attrs[:meta_fields][field] = attrs.delete(param) if attrs.key?(param)
-    end
-    attrs
   end
 
   def update_unsubscriptions!(account)

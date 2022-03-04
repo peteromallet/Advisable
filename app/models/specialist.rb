@@ -33,13 +33,8 @@ class Specialist < ApplicationRecord
   has_many :payouts, dependent: :nullify
   has_many :reviews, dependent: :destroy
   has_many :consultations, dependent: :destroy
-  has_many :applications, dependent: :destroy
-  has_many :interviews, through: :applications
   has_many :agreements, dependent: :destroy
   has_many :interviews, dependent: :destroy
-
-  # Successful applications are applications that are either working or stopped working
-  has_many :successful_applications, -> { where(status: ["Working", "Stopped Working"]) }, class_name: "Application", inverse_of: :specialist, dependent: :destroy
   has_many :specialist_skills, dependent: :destroy
   has_many :skills, through: :specialist_skills
   has_many :specialist_industries, dependent: :destroy

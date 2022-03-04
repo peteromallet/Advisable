@@ -19,7 +19,7 @@ module Mutations
 
     def resolve(**args)
       interview = Interview.find_by!(uid: args[:id])
-      specialist = interview.application.specialist
+      specialist = interview.specialist
       current_account_responsible_for do
         interview.update!(
           starts_at: args[:starts_at],
@@ -29,7 +29,6 @@ module Mutations
       end
 
       interview.create_video_call! if interview.video_call.blank?
-      interview.application.update(status: "Interview Scheduled")
       interview.create_system_message!
       GoogleCalendar.new.schedule_for_interview(interview)
 
