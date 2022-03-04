@@ -5,64 +5,6 @@ require "rails_helper"
 RSpec.describe ZapierInteractorController, type: :request do
   let(:key) { ENV["ACCOUNTS_CREATE_KEY"] }
 
-  describe "POST /update_application" do
-    let(:application) { create(:application) }
-    let(:application_params) { {comment: "This is a comment", source: "And this is the source"} }
-    let(:extra_application_params) { {} }
-    let(:params) { {application: application_params.merge(extra_application_params), uid: application.uid, key:} }
-
-    it "updates the application" do
-      post("/zapier_interactor/update_application", params:)
-      expect(response).to have_http_status(:success)
-      application.reload
-      expect(application.comment).to eq("This is a comment")
-      expect(application.source).to eq("And this is the source")
-    end
-
-    context "when sending meta fields" do
-      let(:extra_application_params) { {"working_5_days_in_client_feedback" => "No feedback"} }
-
-      it "updates them" do
-        post("/zapier_interactor/update_application", params:)
-        expect(response).to have_http_status(:success)
-        application.reload
-        expect(application.meta_fields["Working - 5 Days In - Client Feedback"]).to eq("No feedback")
-      end
-    end
-
-    context "when application has existing meta fields" do
-      let(:application) { create(:application, meta_fields: {"Working - 5 Days In - Specialist Feedback" => "Not great. Not terrible.", "Working - 5 Days In - Client Feedback" => "Overwrite me."}) }
-
-      let(:extra_application_params) { {"working_5_days_in_client_feedback" => "No feedback"} }
-
-      it "does not overwrite them" do
-        post("/zapier_interactor/update_application", params:)
-        expect(response).to have_http_status(:success)
-        application.reload
-        expect(application.meta_fields["Working - 5 Days In - Specialist Feedback"]).to eq("Not great. Not terrible.")
-        expect(application.meta_fields["Working - 5 Days In - Client Feedback"]).to eq("No feedback")
-      end
-    end
-
-    context "when given unpermitted params" do
-      let(:extra_application_params) { {trial_program: "1234"} }
-
-      it "ignores the param" do
-        post("/zapier_interactor/update_application", params:)
-        expect(application.reload.trial_program).not_to eq("1234")
-      end
-    end
-
-    context "when no key" do
-      let(:key) { "" }
-
-      it "is unauthorized" do
-        post("/zapier_interactor/update_application", params:)
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-  end
-
   describe "POST /update_interview" do
     let(:interview) { create(:interview, status: "Call Scheduled") }
     let(:status) { "Call Requested" }

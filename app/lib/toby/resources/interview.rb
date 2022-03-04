@@ -8,9 +8,8 @@ module Toby
       attribute :starts_at, Attributes::DateTime
       attribute :status, Attributes::Select, options: ::Interview::VALID_STATUSES
       attribute :reason, Attributes::String
-      attribute :specialist, Lookups::Applications::SpecialistName
+      attribute :specialist, Attributes::BelongsTo
       attribute :user, Attributes::BelongsTo, readonly: true
-      attribute :application, Attributes::BelongsTo, readonly: true
       attribute :availability_note, Attributes::String
       attribute :call_requested_at, Attributes::DateTime
       attribute :call_scheduled_at, Attributes::DateTime

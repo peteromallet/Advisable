@@ -7,7 +7,6 @@ RSpec.describe Toby::Resources do
     it "gets all the resources" do
       expect(described_class.resource_classes).to match_array(
         [
-          Toby::Resources::Application,
           Toby::Resources::SalesPerson,
           Toby::Resources::Specialist,
           Toby::Resources::CaseStudy::Article,

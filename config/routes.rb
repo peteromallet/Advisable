@@ -55,7 +55,6 @@ Rails.application.routes.draw do
 
   get "articles/search"
 
-  post "zapier_interactor/update_application"
   post "zapier_interactor/update_interview"
   post "zapier_interactor/update_consultation"
   post "zapier_interactor/update_user"

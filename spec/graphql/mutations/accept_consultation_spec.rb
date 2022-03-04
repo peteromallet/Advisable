@@ -28,11 +28,11 @@ RSpec.describe Mutations::AcceptConsultation do
     }.from("Request Completed").to("Accepted By Specialist")
   end
 
-  it "creates an application" do
+  it "creates an interview" do
     response = AdvisableSchema.execute(query, context:)
     interview_id = response["data"]["acceptConsultation"]["interview"]["id"]
-    application = Interview.find_by(uid: interview_id).application
-    expect(application.attributes.slice("status", "score", "specialist_id", "trial_program").values).to match_array(["Applied", 90, consultation.specialist.id, true])
+    interview = Interview.find_by(uid: interview_id)
+    expect(interview.attributes.slice("user_id", "specialist_id", "status").values).to match_array(["Call Requested", consultation.specialist.id, consultation.user_id])
   end
 
   context "when no user is logged in" do

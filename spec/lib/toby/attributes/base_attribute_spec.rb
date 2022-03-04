@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe Toby::Attributes::BaseAttribute do
   let(:name) { :created_at }
-  let(:resource) { Toby::Resources::Application }
-  let(:application) { create(:application, created_at: "1.1.2021") }
+  let(:resource) { Toby::Resources::Account }
+  let(:account) { create(:account, created_at: "1.1.2021") }
   let(:options) { {} }
   let(:base) { described_class.new(name, resource, **options) }
 
@@ -65,15 +65,15 @@ RSpec.describe Toby::Attributes::BaseAttribute do
 
   describe "#read" do
     it "reads from the object" do
-      expect(base.read(application)).to eq("1.1.2021")
+      expect(base.read(account)).to eq("1.1.2021")
     end
   end
 
   describe "#write" do
     it "writes to the object" do
-      expect(application.created_at).to eq("1.1.2021")
-      base.write(application, "2.2.2021")
-      expect(application.created_at).to eq("2.2.2021")
+      expect(account.created_at).to eq("1.1.2021")
+      base.write(account, "2.2.2021")
+      expect(account.created_at).to eq("2.2.2021")
     end
   end
 end

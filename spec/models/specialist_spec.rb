@@ -7,7 +7,6 @@ RSpec.describe Specialist do
 
   include_examples "uid"
 
-  it { is_expected.to have_many(:applications) }
   it { is_expected.to have_many(:skills).through(:specialist_skills) }
 
   describe "#has_setup_payments" do

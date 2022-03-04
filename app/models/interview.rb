@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
+  self.ignored_columns += %i[application_id]
+
   extend Memoist
   include Uid
 
@@ -15,9 +17,6 @@ class Interview < ApplicationRecord
     "Call Requested", "Call Reminded", "Client Requested Reschedule", "Specialist Requested Reschedule", "More Time Options Added"
   ].freeze
 
-  before_validation :set_specialist
-
-  belongs_to :application
   belongs_to :specialist
   belongs_to :user
   has_one :video_call, dependent: :destroy
@@ -32,14 +31,6 @@ class Interview < ApplicationRecord
   def create_system_message!
     conversation = Conversation.by_accounts([specialist.account, user.account])
     conversation.new_message!(kind: "InterviewScheduled", interview: self, metadata: {starts_at:}, send_emails: false)
-  end
-
-  private
-
-  def set_specialist
-    return if specialist_id || !application_id
-
-    self.specialist_id = application.specialist_id
   end
 end
 
