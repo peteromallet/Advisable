@@ -136,9 +136,13 @@ export default function AgreementDetails({
           security regarding payments during your first hours of work.
         </AgreementSection>
         <AgreementSection title="Terms of service">
-          <Link target="_blank" href="https://advisable.com/terms-of-service/">
+          <Link.External
+            target="_blank"
+            variant="default"
+            href="https://advisable.com/terms-of-service/"
+          >
             Advisable's terms of service
-          </Link>{" "}
+          </Link.External>{" "}
           also apply to this agreement. Feel free to take a look at the document
           once again in case you have any remaining questions.
         </AgreementSection>
