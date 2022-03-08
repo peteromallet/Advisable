@@ -139,7 +139,7 @@ export default function AgreementDetails({
           <Link.External
             target="_blank"
             variant="default"
-            href="https://advisable.com/terms-of-service/"
+            href="https://advisable.com/legal/terms-of-service/"
           >
             Advisable's terms of service
           </Link.External>{" "}
