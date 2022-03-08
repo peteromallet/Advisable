@@ -1,8 +1,0 @@
-mutation requestQuote($input: RequestQuoteInput!) {
-  requestQuote(input: $input) {
-    task {
-      id
-      stage
-    }
-  }
-}
