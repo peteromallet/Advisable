@@ -25,7 +25,7 @@ function Footer() {
         •
       </Text>
       <Link.External
-        href="https://advisable.com/terms-of-service/"
+        href="https://advisable.com/legal/terms-of-service/"
         color={{ xl: "neutral900", _: "neutral500" }}
       >
         Terms of Service
