@@ -3,6 +3,6 @@
     | Admin
   .mt-8.flex.flex-col.mx-auto.space-y-4.text-white.text-sm.font-bold.leading-6.max-w-xs
     = button_to "Sidekiq", sidekiq_web_path, method: :get, class: "w-full text-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white shadow-lg bg-red-600 hover:bg-red-700"
-    = button_to "PG Hero", pg_hero_path, method: :get, class: "w-full text-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white shadow-lg bg-indigo-600 hover:bg-indigo-700"
+    = button_to "PG Hero", pg_hero_path, method: :get, class: "w-full text-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white shadow-lg bg-purple-600 hover:bg-purple-700"
     - if current_account.respond_to?(:auth_providers) && !current_account.auth_providers.google_calendar.exists?
       = button_to "Set Up Google Calendar for Robot", "/auth/google_oauth2_calendar", id: "sign_in", class: "w-full text-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white shadow-lg bg-blue-600 hover:bg-blue-700"
