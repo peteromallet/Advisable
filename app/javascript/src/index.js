@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import Root from "./Root";
 import * as Sentry from "@sentry/react";
 import "simplebar/dist/simplebar.min.css";
+import "./tailwind.css";
 
 if (process.env.SENTRY_FRONTEND_DSN) {
   Sentry.init({
