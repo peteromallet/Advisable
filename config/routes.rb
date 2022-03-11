@@ -33,9 +33,12 @@ Rails.application.routes.draw do
   mount PgHero::Engine, at: "/pghero", constraints: AdminConstraint.new
 
   post "/toby_graphql", to: "graphql#toby"
-  get "/admin", to: "application#admin"
   get "/toby", to: "toby#index"
   get "/toby/*toby", to: "toby#index"
+
+  resources :admin, only: [:index], constraints: AdminConstraint.new do
+    get :finance, on: :collection
+  end
 
   post "/graphql", to: "graphql#execute"
 
@@ -65,7 +68,6 @@ Rails.application.routes.draw do
   post "zapier_interactor/boost_guild_post"
   post "zapier_interactor/import_case_study"
   post "zapier_interactor/send_email"
-  post "zapier_interactor/send_finance_email"
   post "zapier_interactor/create_message"
 
   # redirections for old routes

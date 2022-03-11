@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   before_action :set_sentry_context
   before_action :prefetch_viewer
   before_action :authenticate_with_magic_link, only: %i[frontend guild_post]
-  before_action :admin?, only: %i[admin]
 
   def frontend
     respond_to(&:html)
@@ -42,10 +41,6 @@ class ApplicationController < ActionController::Base
     else
       Sentry.set_user(id: nil)
     end
-  end
-
-  def admin
-    render layout: "tailwind"
   end
 
   private
