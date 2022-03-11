@@ -73,9 +73,6 @@ jobs:
       - name: Setup database
         run: bin/rails parallel:setup
 
-      - name: Build tailwind
-        run: bin/rails tailwindcss:build
-
       - name: Compile assets
         run: bin/rails webpacker:compile
 

@@ -53,7 +53,6 @@ gem "sidekiq"
 gem "sidekiq-scheduler"
 gem "slim"
 gem "stripe"
-gem "tailwindcss-rails"
 gem "twilio-ruby"
 gem 'shakapacker', '6.1.1'
 
