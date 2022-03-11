@@ -1,0 +1,21 @@
+= render "emails/container" do
+  = render "emails/spacing", height: "32px"
+  = render "emails/heading" do
+    | #{@agreement.company.name} has accepted your agreement.
+
+  = render "emails/paragraph" do
+    | Hi #{@account.first_name}, <br />
+    | Congratulations! #{@agreement.user.account.first_name} from #{@agreement.company.name} has accepted the agreement you sent and has kicked off your collaboration.
+    <br />
+    <br />
+    | This means you're now able to start requesting payments according to the terms of your agreement. You can request a payment <a clicktracking="off" href="#{magic_link(@account, payment_requests_url)}">inside your account</a>.
+    <br />
+    <br />
+    | Good luck with your collaboration, and let me know if you have any questions! 
+    <br />
+    <br />
+    | Best,
+    <br />
+    | #{@sales_person.first_name}
+
+  = render "emails/spacing", height: "32px"

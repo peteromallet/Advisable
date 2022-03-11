@@ -33,6 +33,7 @@ RSpec.describe Mutations::AcceptAgreement do
       conversation = Conversation.find_existing_with(user, specialist)
       expect(conversation.messages.count).to eq(1)
       expect(conversation.messages.first.kind).to eq("AgreementAccepted")
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "agreement_accepted", "deliver_now", {args: [agr]})
     end
   end
 
