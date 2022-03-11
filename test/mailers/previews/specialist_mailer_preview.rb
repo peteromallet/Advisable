@@ -17,6 +17,11 @@ class SpecialistMailerPreview < ActionMailer::Preview
     SpecialistMailer.payment_request_paid_out(payment_request)
   end
 
+  def agreement_accepted
+    agreement = Agreement.order("RANDOM()").first
+    SpecialistMailer.agreement_accepted(agreement)
+  end
+
   %i[more_time_options_added interview_reminder first_interview_scheduled post_interview interview_reschedule_request interview_request interview_request_reminder].each do |method|
     define_method(method) do
       SpecialistMailer.public_send(method, random_interview)

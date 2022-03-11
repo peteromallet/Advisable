@@ -84,6 +84,10 @@ module MailHelper
     DateTime.parse(timestamp).strftime("%d %B, %I:%M%P %Z")
   end
 
+  def payment_requests_url
+    "#{app_host}/payment_requests"
+  end
+
   private
 
   def root_host
