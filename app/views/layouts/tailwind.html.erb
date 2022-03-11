@@ -6,6 +6,7 @@
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   </head>
   <body class="flex flex-col h-screen">
+    <%= render "shared/flash" %>
     <%= yield %>
   </body>
 </html>
