@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get "/toby/*toby", to: "toby#index"
 
   resources :admin, only: [:index], constraints: AdminConstraint.new do
+    get :finance, on: :collection
   end
 
   post "/graphql", to: "graphql#execute"
