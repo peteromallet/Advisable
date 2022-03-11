@@ -154,11 +154,6 @@ class ZapierInteractorController < ApplicationController
     end
   end
 
-  def send_finance_email
-    GenerateFinanceCsvJob.perform_later(params[:email])
-    render json: {status: "OK."}
-  end
-
   def create_message
     accounts = params[:uids].map do |uid|
       find_account_by_uid(uid)
