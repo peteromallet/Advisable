@@ -68,7 +68,6 @@ Rails.application.routes.draw do
   post "zapier_interactor/boost_guild_post"
   post "zapier_interactor/import_case_study"
   post "zapier_interactor/send_email"
-  post "zapier_interactor/send_finance_email"
   post "zapier_interactor/create_message"
 
   # redirections for old routes

@@ -777,25 +777,6 @@ RSpec.describe ZapierInteractorController, type: :request do
     end
   end
 
-  describe "POST /send_finance_email" do
-    let(:params) { {email: "test@test.com", key:} }
-
-    context "when no key" do
-      let(:key) { "" }
-
-      it "is unauthorized" do
-        post("/zapier_interactor/send_finance_email", params:)
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-
-    it "generates the csv" do
-      post("/zapier_interactor/send_finance_email", params:)
-      expect(response).to have_http_status(:success)
-      expect(GenerateFinanceCsvJob).to have_been_enqueued.with("test@test.com")
-    end
-  end
-
   describe "POST /create_message" do
     let(:user) { create(:user) }
     let(:account_ids) { [user.uid] }
