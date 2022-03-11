@@ -21,6 +21,7 @@ module Mutations
 
       conversation = Conversation.by_accounts(agreement.specialist, current_account)
       conversation.new_message!(kind: "AgreementAccepted", agreement:, send_emails: false)
+      SpecialistMailer.agreement_accepted(agreement).deliver_later
       Slack.bg_message(channel: "consultation_requests", text: "The Agreement #{agreement.uid} between #{agreement.specialist.account.name} and #{agreement.company.name} has been accepted!")
 
       {agreement:}

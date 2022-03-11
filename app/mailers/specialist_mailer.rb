@@ -169,8 +169,23 @@ class SpecialistMailer < ApplicationMailer
     mail(
       from: "Advisable <finance@advisable.com>",
       to: @account.email,
-      bcc: sales_person,
+      bcc: sales_person.email_with_name,
       subject: "Payment request paid out"
+    ) do |format|
+      format.html { render(layout: "email_v2") }
+    end
+  end
+
+  def agreement_accepted(agreement)
+    @agreement = agreement
+    @account = agreement.specialist.account
+    @sales_person = default_sales_person_for(agreement.company)
+
+    mail(
+      from: @sales_person.email_with_name,
+      to: @account.email,
+      bcc: @sales_person.email_with_name,
+      subject: "#{agreement.company.name} has accepted your agreement"
     ) do |format|
       format.html { render(layout: "email_v2") }
     end
