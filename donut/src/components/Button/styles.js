@@ -38,40 +38,52 @@ export const Loading = styled.div`
 `;
 
 const primaryStyles = css`
-  background: #3f3cff;
+  background: #3f3cff !important;
 
   &:not(:disabled):hover {
-    background: #5d59ff;
+    background: #5d59ff !important;
   }
 
   &:not(:disabled):active {
-    background: #3330d3;
+    background: #3330d3 !important;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 `;
 
 const solidGradientStyles = css`
-  background: linear-gradient(108.83deg, #9423ed -10%, #2350ed 120.66%);
+  background: linear-gradient(
+    108.83deg,
+    #9423ed -10%,
+    #2350ed 120.66%
+  ) !important;
 
   &:not(:disabled):hover {
-    background: linear-gradient(108.83deg, #b230f6 -39.74%, #2a61f6 120.66%);
+    background: linear-gradient(
+      108.83deg,
+      #b230f6 -39.74%,
+      #2a61f6 120.66%
+    ) !important;
   }
 
   &:not(:disabled):active {
-    background: linear-gradient(108.83deg, #9423ed -10%, #2350ed 120.66%);
+    background: linear-gradient(
+      108.83deg,
+      #9423ed -10%,
+      #2350ed 120.66%
+    ) !important;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 `;
 
 const secondaryStyles = css`
-  background: ${theme.colors.neutral900};
+  background: ${theme.colors.neutral900} !important;
 
   &:not(:disabled):hover {
-    background: ${theme.colors.neutral800};
+    background: ${theme.colors.neutral800} !important;
   }
 
   &:not(:disabled):active {
-    background: ${theme.colors.neutral700};
+    background: ${theme.colors.neutral700} !important;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
@@ -87,16 +99,16 @@ export const VARIANTS = {
   dark: secondaryStyles, // deprecated: use secondary variant instead
   subtle: css`
     color: ${theme.colors.blue700};
-    background: ${theme.colors.blue50};
+    background: ${theme.colors.blue50} !important;
 
     &:not(:disabled):hover {
       color: ${theme.colors.blue900};
-      background: ${theme.colors.blue100};
+      background: ${theme.colors.blue100} !important;
     }
 
     &:not(:disabled):active {
       color: ${theme.colors.blue900};
-      background: ${theme.colors.blue100};
+      background: ${theme.colors.blue100} !important;
     }
 
     ${Loading} {
@@ -108,11 +120,11 @@ export const VARIANTS = {
 
     &:not(:disabled):hover {
       color: ${theme.colors.neutral700};
-      background: ${rgba(theme.colors.blue500, 0.04)};
+      background: ${rgba(theme.colors.blue500, 0.04)} !important;
     }
 
     &:not(:disabled):active {
-      background: ${rgba(theme.colors.blue900, 0.08)};
+      background: ${rgba(theme.colors.blue900, 0.08)} !important;
     }
 
     ${Loading} {
@@ -120,7 +132,7 @@ export const VARIANTS = {
     }
 
     &[data-loading="true"] {
-      background: ${rgba("#3f3bff", 0.04)};
+      background: ${rgba("#3f3bff", 0.04)} !important;
     }
   `,
   minimal: css`
@@ -137,7 +149,7 @@ export const VARIANTS = {
     }
   `,
   outlined: css`
-    background: transparent;
+    background: transparent !important;
     color: ${theme.colors.neutral700};
     border: 1px solid ${theme.colors.neutral500};
 
@@ -275,7 +287,7 @@ export const StyledButton = styled.button`
   vertical-align: middle;
   justify-content: center;
   letter-spacing: -0.01em;
-  background: transparent;
+  background: transparent !important;
   transition: background 100ms;
   font-family: TTHoves, sans-serif;
   ${(props) => props.align === "left" && { justifyContent: "flex-start" }}
