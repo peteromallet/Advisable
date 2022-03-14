@@ -35,6 +35,7 @@ gem "omniauth-rails_csrf_protection"
 gem "pdfmonkey"
 gem "pg", ">= 0.18", "< 2.0"
 gem "pghero"
+gem "propshaft"
 gem "pry"
 gem "pry-byebug", github: "deivid-rodriguez/pry-byebug" # Uses pry 0.14
 gem "pry-doc"
@@ -45,16 +46,15 @@ gem "rack-attack"
 gem "rails", "~> 7.0.0"
 gem "ruby-openai"
 gem "ruby-progressbar", require: false
-gem "propshaft"
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "sentry-sidekiq"
+gem "shakapacker", "6.1.1"
 gem "sidekiq"
 gem "sidekiq-scheduler"
 gem "slim"
 gem "stripe"
 gem "twilio-ruby"
-gem 'shakapacker', '6.1.1'
 
 group :development, :test do
   gem "database_cleaner-active_record"
