@@ -1,1 +1,1 @@
-import "toby";
+import "./toby/index.js";
