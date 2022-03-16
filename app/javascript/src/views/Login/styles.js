@@ -35,7 +35,7 @@ export const Error = styled.div`
 
 export const StyledLoginWithGoogle = styled(StyledButton)`
   width: 100%;
-  background: white;
+  background: white !important;
   color: ${theme.colors.neutral800};
   border: 2px solid ${theme.colors.neutral200};
 

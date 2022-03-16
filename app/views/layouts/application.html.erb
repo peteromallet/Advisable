@@ -28,7 +28,6 @@
       src="https://assets.calendly.com/assets/external/widget.js"
       type="text/javascript"
     ></script>
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
 
@@ -141,8 +140,8 @@ mixpanel.init("<%= ENV["MIXPANEL"] %>", {"api_host": "https://api-eu.mixpanel.co
     <% end %>
 
 
-    <%= javascript_packs_with_chunks_tag "application" %>
-    <%= stylesheet_packs_with_chunks_tag "application" %>
+    <%= javascript_pack_tag "application" %>
+    <%= stylesheet_pack_tag "application" %>
     <noscript>
       Please enable javascript to view this application
     </noscript>

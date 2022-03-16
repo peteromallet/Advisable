@@ -1,11 +1,8 @@
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
+const { merge } = require("shakapacker");
 const environment = require("./environment");
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-const smp = new SpeedMeasurePlugin();
 
-// webpacker includes CaseSensitivePaths plugin and its slow.
-environment.plugins.delete("CaseSensitivePaths");
+const customConfig = {};
 
-console.log("Compiling webpack with test config");
-module.exports = smp.wrap(environment.toWebpackConfig());
+module.exports = merge({}, environment, customConfig);
