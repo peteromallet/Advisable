@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Text, Box } from "@advisable/donut";
-import CopyURL from "@advisable-main/components/CopyURL";
+import CopyURL from "src/components/CopyURL";
 
 const ShareModal = ({ externalUrl }) => {
   return (

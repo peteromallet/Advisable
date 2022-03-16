@@ -90,8 +90,8 @@ GEM
       stackprof (~> 0.2)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.566.0)
-    aws-sdk-core (3.129.1)
+    aws-partitions (1.567.0)
+    aws-sdk-core (3.130.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.525.0)
       aws-sigv4 (~> 1.1)
@@ -108,7 +108,7 @@ GEM
     barnes (0.0.9)
       multi_json (~> 1)
       statsd-ruby (~> 1.1)
-    bcrypt (3.1.16)
+    bcrypt (3.1.17)
     benchmark-ips (2.10.0)
     bindex (0.8.1)
     bootsnap (1.11.1)
@@ -195,7 +195,7 @@ GEM
     fx (0.6.2)
       activerecord (>= 4.0.0)
       railties (>= 4.0.0)
-    geocoder (1.7.3)
+    geocoder (1.7.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
     good_migrations (0.2.0)
@@ -268,7 +268,7 @@ GEM
       activerecord (>= 5.0)
       railties (>= 5.0)
       ruby-next-core (~> 0.9)
-    loofah (2.14.0)
+    loofah (2.15.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.2.8)
@@ -354,6 +354,11 @@ GEM
     pg (1.3.4)
     pghero (2.8.2)
       activerecord (>= 5)
+    propshaft (0.6.4)
+      actionpack (>= 7.0.0)
+      activesupport (>= 7.0.0)
+      rack
+      railties (>= 7.0.0)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -461,7 +466,7 @@ GEM
     rubocop-performance (1.13.3)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
-    rubocop-rails (2.13.2)
+    rubocop-rails (2.14.0)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
@@ -478,16 +483,6 @@ GEM
     rubyzip (2.3.2)
     rufus-scheduler (3.8.1)
       fugit (~> 1.1, >= 1.1.6)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
     selenium-webdriver (4.1.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -504,6 +499,11 @@ GEM
     sentry-sidekiq (5.2.0)
       sentry-ruby-core (~> 5.2.0)
       sidekiq (>= 3.0)
+    shakapacker (6.1.1)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     shellany (0.0.1)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
@@ -534,13 +534,6 @@ GEM
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
-    sprockets (4.0.3)
-      concurrent-ruby (~> 1.0)
-      rack (> 1, < 3)
-    sprockets-rails (3.4.2)
-      actionpack (>= 5.2)
-      activesupport (>= 5.2)
-      sprockets (>= 3.0.0)
     sql_spy (0.4.0)
     stackprof (0.2.19)
     statsd-ruby (1.5.0)
@@ -550,14 +543,6 @@ GEM
       multi_json (~> 1.0)
       stripe (> 5, < 6)
     strscan (3.0.1)
-    tailwindcss-rails (2.0.8)
-      railties (>= 6.0.0)
-    tailwindcss-rails (2.0.8-arm64-darwin)
-      railties (>= 6.0.0)
-    tailwindcss-rails (2.0.8-x86_64-darwin)
-      railties (>= 6.0.0)
-    tailwindcss-rails (2.0.8-x86_64-linux)
-      railties (>= 6.0.0)
     temple (0.8.2)
     thor (1.2.1)
     thwait (0.2.0)
@@ -587,11 +572,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webpacker (5.4.3)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     webrick (1.7.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
@@ -655,6 +635,7 @@ DEPENDENCIES
   pdfmonkey
   pg (>= 0.18, < 2.0)
   pghero
+  propshaft
   pry
   pry-byebug!
   pry-doc
@@ -674,11 +655,11 @@ DEPENDENCIES
   rubocop-rspec
   ruby-openai
   ruby-progressbar
-  sass-rails (>= 6)
   selenium-webdriver
   sentry-rails
   sentry-ruby
   sentry-sidekiq
+  shakapacker (= 6.1.1)
   shoulda-matchers
   sidekiq
   sidekiq-scheduler
@@ -687,13 +668,11 @@ DEPENDENCIES
   sql_spy
   stripe
   stripe-ruby-mock (~> 3.0.1)
-  tailwindcss-rails
   timecop
   twilio-ruby
   web-console
   webdrivers
   webmock
-  webpacker (~> 5.1)
 
 RUBY VERSION
    ruby 3.1.1p18

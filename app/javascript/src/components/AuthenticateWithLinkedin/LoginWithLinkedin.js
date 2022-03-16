@@ -13,7 +13,7 @@ const StyledLoginWithLinkedin = styled.button`
   appearance: none;
   font-weight: 600;
   align-items: center;
-  background: #2a67bc;
+  background: #2a67bc !important;
   border-radius: 25px;
   display: inline-flex;
 
@@ -22,7 +22,7 @@ const StyledLoginWithLinkedin = styled.button`
   }
 
   &:hover {
-    background: #4291d0;
+    background: #4291d0 !important;
   }
 `;
 

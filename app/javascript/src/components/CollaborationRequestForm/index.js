@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Text, Box, InputError } from "@advisable/donut";
-import SubmitButton from "@advisable-main/components/SubmitButton";
+import SubmitButton from "src/components/SubmitButton";
 import { yourPostValidationSchema } from "./validationSchemas";
 import PostTitle from "./PostTitle";
 import RichTextEditor from "src/components/RichTextEditor";

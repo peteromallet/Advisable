@@ -1,60 +1,48 @@
 const path = require("path");
-const { environment } = require("@rails/webpacker");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { webpackConfig, merge } = require("shakapacker");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 const version = require("./buildVersion");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 dotenv.config({ silent: true });
 
 process.env.RELEASED_AT = new Date().toISOString();
 process.env.BUILD_TIME = version;
 
-if (process.env.ANALYSE_BUNDLE === "true") {
-  environment.plugins.append("BundleAnalyzer", new BundleAnalyzerPlugin());
+const plugins = [
+  new webpack.EnvironmentPlugin({
+    RELEASED_AT: null,
+    BUILD_TIME: null,
+    INTERCOM_APP_ID: null,
+    SENTRY_FRONTEND_DSN: null,
+    SENTRY_ENVIRONMENT: null,
+  }),
+];
+
+if (process.env.ANALYZE_BUNDLE_SIZE === "true") {
+  plugins.push(new BundleAnalyzerPlugin());
 }
 
-environment.plugins.prepend(
-  "Environment",
-  new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(process.env))),
-);
-
-environment.loaders.append("graphql", {
-  test: /\.(graphql|gql)$/,
-  exclude: /node_modules/,
-  loader: "graphql-tag/loader",
-});
-
-environment.loaders.append("mp3", {
-  test: /\.(mp3)$/,
-  exclude: /node_modules/,
-  loader: "file-loader",
-});
-
-environment.config.merge({
-  resolve: {
-    alias: {
-      "@advisable/donut": path.join(__dirname, "../../donut/src"),
-      components: path.join(__dirname, "../../app/javascript/src/components"),
-      /* Guild */
-      "@advisable-main": path.resolve(
-        __dirname,
-        "..",
-        "..",
-        "app/javascript/src",
-      ),
-      "@guild": path.resolve(__dirname, "..", "..", "app/javascript/guild"),
-    },
+const customConfig = {
+  output: {
+    filename: "js/[name]-[contenthash].js",
+    chunkFilename: "js/[name]-[contenthash].chunk.js",
   },
-});
-
-environment.splitChunks();
-
-// https://github.com/framer/motion/issues/1307
-environment.config.merge({
+  plugins,
   module: {
     rules: [
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: "graphql-tag/loader",
+      },
+      {
+        test: /\.(mp3)$/,
+        exclude: /node_modules/,
+        loader: "file-loader",
+      },
       {
         type: "javascript/auto",
         test: /\.mjs$/,
@@ -62,6 +50,21 @@ environment.config.merge({
       },
     ],
   },
-});
+  resolve: {
+    alias: {
+      "@advisable/donut": path.join(__dirname, "../../donut/src"),
+      components: path.join(__dirname, "../../app/javascript/src/components"),
+      "@guild": path.resolve(__dirname, "..", "..", "app/javascript/guild"),
+    },
+  },
+  optimization: {
+    usedExports: true,
+    runtimeChunk: "single",
+    splitChunks: {
+      chunks: "all",
+      maxSize: 1260000,
+    },
+  },
+};
 
-module.exports = environment;
+module.exports = merge({}, webpackConfig, customConfig);
