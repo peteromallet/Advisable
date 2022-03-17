@@ -180,7 +180,8 @@ class UserMailer < ApplicationMailer
       from: "Advisable <finance@advisable.com>",
       to: payment_request.company.billing_email,
       cc: @user.account.email,
-      subject: "New Payment Request"
+      subject: "New Payment Request",
+      bcc: "finance@advisable.com"
     ) do |format|
       format.html { render layout: "email_v2" }
     end
