@@ -26,6 +26,10 @@ class PaymentRequest < ApplicationRecord
     super.presence || []
   end
 
+  def reminders
+    super.presence || []
+  end
+
   # Allows us to override line_items amount if necessary
   def amount
     super.presence || line_items.sum { |item| item["amount"] }
@@ -75,6 +79,7 @@ end
 #  due_at              :datetime
 #  line_items          :jsonb
 #  memo                :string
+#  reminders           :jsonb
 #  status              :string           not null
 #  uid                 :string           not null
 #  created_at          :datetime         not null
