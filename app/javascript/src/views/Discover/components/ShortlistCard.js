@@ -22,7 +22,9 @@ const StyledShortlistCard = styled.div(
 );
 
 export default function ShortlistCard({ shortlist, company }) {
-  const placeholders = [...Array(5 - shortlist.results.nodes.length).keys()];
+  const placeholders = Array.apply(null, {
+    length: 5 - shortlist.results.nodes.length,
+  });
 
   return (
     <StyledShortlistCard>
@@ -66,8 +68,8 @@ export default function ShortlistCard({ shortlist, company }) {
               />
             </Box>
           ))}
-          {placeholders.map((n) => (
-            <Box key={n}>
+          {placeholders.map((_, i) => (
+            <Box key={i}>
               <RecommendationAvatar size={{ _: "2xs", m: "xs" }} />
             </Box>
           ))}
