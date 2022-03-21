@@ -13,6 +13,7 @@ class Agreement < ApplicationRecord
   belongs_to :company
   belongs_to :specialist
   has_many :messages, dependent: :nullify
+  has_many :payment_requests, dependent: :nullify
 
   validates :status, inclusion: {in: STATUS_OPTIONS}
   validates :collaboration, inclusion: {in: COLLABORATION_OPTIONS}, allow_blank: true
