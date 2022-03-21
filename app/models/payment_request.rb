@@ -58,7 +58,7 @@ class PaymentRequest < ApplicationRecord
   private
 
   def set_due_at
-    return if agreement.nil? || due_at.present?
+    return if due_at.present? || agreement.nil?
 
     self.due_at = (created_at || Time.current) + agreement.due_days.days
   end
