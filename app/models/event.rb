@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
-  self.ignored_columns = %w[status]
-
   include Uid
   include Resizable
 

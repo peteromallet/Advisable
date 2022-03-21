@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Payment < ApplicationRecord
-  self.ignored_columns += %i[deposit]
-
   include Uid
 
   has_logidze

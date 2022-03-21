@@ -3,7 +3,6 @@
 module Guild
   class Post < ApplicationRecord
     class BoostError < StandardError; end
-    self.ignored_columns += %i[post_prompt_id]
 
     self.store_full_sti_class = false
 
@@ -104,9 +103,8 @@ end
 #
 # Indexes
 #
-#  index_guild_posts_on_article_id      (article_id)
-#  index_guild_posts_on_post_prompt_id  (post_prompt_id)
-#  index_guild_posts_on_specialist_id   (specialist_id)
+#  index_guild_posts_on_article_id     (article_id)
+#  index_guild_posts_on_specialist_id  (specialist_id)
 #
 # Foreign Keys
 #
