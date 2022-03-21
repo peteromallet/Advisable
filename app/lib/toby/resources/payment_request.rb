@@ -7,6 +7,7 @@ module Toby
       attribute :uid, Attributes::String, readonly: true
       attribute :specialist, Attributes::BelongsTo
       attribute :company, Attributes::BelongsTo
+      attribute :agreement, Attributes::BelongsTo
       attribute :status, Attributes::Select, options: ::PaymentRequest::VALID_STATUSES
       attribute :dispute_reason, Attributes::String
       attribute :cancellation_reason, Attributes::String
