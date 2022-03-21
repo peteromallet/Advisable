@@ -13,7 +13,7 @@ module Mutations
     end
 
     def resolve(**args)
-      agreement = Agreement.find(args[:agreement])
+      agreement = Agreement.find_by!(uid: args[:agreement])
       ApiError.invalid_request("NO_ACTIVE_AGREEMENT_WITH_THIS_COMPANY") unless agreement.status == "accepted"
 
       payment_request = PaymentRequest.new(
