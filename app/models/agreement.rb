@@ -20,6 +20,10 @@ class Agreement < ApplicationRecord
   validates :invoicing, inclusion: {in: INVOICING_OPTIONS}, allow_blank: true
 
   scope :accepted, -> { where(status: "accepted") }
+
+  def due_days
+    super.presence || DEFAULT_DUE_DAYS
+  end
 end
 
 # == Schema Information
@@ -28,6 +32,7 @@ end
 #
 #  id            :bigint           not null, primary key
 #  collaboration :string
+#  due_days      :integer
 #  hourly_rate   :integer
 #  invoicing     :string
 #  status        :string

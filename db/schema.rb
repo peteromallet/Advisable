@@ -95,6 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_102051) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
+    t.integer "due_days"
     t.index ["company_id"], name: "index_agreements_on_company_id"
     t.index ["specialist_id"], name: "index_agreements_on_specialist_id"
     t.index ["uid"], name: "index_agreements_on_uid", unique: true
