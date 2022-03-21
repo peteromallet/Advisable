@@ -4,8 +4,6 @@ class PaymentRequest < ApplicationRecord
   include Uid
   uid_prefix "pyr"
 
-  DUE_AT_DURATION = 5.days
-
   has_logidze
 
   VALID_STATUSES = %w[pending approved past_due disputed canceled paid paid_out].freeze
@@ -19,10 +17,10 @@ class PaymentRequest < ApplicationRecord
   has_one :payout, dependent: :nullify
 
   validates :status, inclusion: {in: VALID_STATUSES}
-  before_save :set_due_at, unless: :due_at
+  before_save :set_due_at
 
   scope :with_status, ->(status) { where(status:) }
-  scope :due, -> { where(due_at: ..(Time.current - DUE_AT_DURATION)) }
+  scope :due, -> { where(due_at: (..Time.current)) }
 
   def line_items
     super.presence || []
@@ -60,7 +58,9 @@ class PaymentRequest < ApplicationRecord
   private
 
   def set_due_at
-    self.due_at ||= (created_at || Time.current) + DUE_AT_DURATION
+    return if agreement.nil? || due_at.present?
+
+    self.due_at = (created_at || Time.current) + agreement.due_days.days
   end
 end
 
