@@ -128,6 +128,9 @@ Rails/ApplicationRecord:
   Exclude:
     - "db/migrate/**/*"
 
+Rails/I18nLocaleTexts:
+  Enabled: false
+
 RSpec/ExampleLength:
   Enabled: false
 
