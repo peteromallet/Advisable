@@ -18,6 +18,7 @@ const plugins = [
     INTERCOM_APP_ID: null,
     SENTRY_FRONTEND_DSN: null,
     SENTRY_ENVIRONMENT: null,
+    NODE_DEBUG: null,
   }),
 ];
 
