@@ -7,6 +7,8 @@ RSpec.describe Mutations::CreatePaymentRequest do
   let(:user) { create(:user, company:) }
   let(:specialist) { create(:specialist) }
   let(:current_user) { specialist }
+  let(:agreement_status) { "accepted" }
+  let(:agreement) { create(:agreement, user:, company:, specialist:, status: agreement_status) }
   let(:extra) { "" }
   let(:context) { {current_user:} }
 
@@ -18,7 +20,7 @@ RSpec.describe Mutations::CreatePaymentRequest do
             {description: "Hundo", amount: 10000},
             {description: "Two Hundo", amount: 20000}
           ],
-          company: "#{company.id}",
+          agreement: "#{agreement.id}",
           #{extra}
         }) {
           paymentRequest {
@@ -30,7 +32,6 @@ RSpec.describe Mutations::CreatePaymentRequest do
   end
 
   it "creates the payment request" do
-    Agreement.create!(user:, company:, specialist:, status: "accepted")
     response = AdvisableSchema.execute(query, context:)
     id = response.dig("data", "createPaymentRequest", "paymentRequest", "id")
     payment_request = PaymentRequest.find_by!(uid: id)
@@ -45,7 +46,6 @@ RSpec.describe Mutations::CreatePaymentRequest do
   end
 
   it "sends an email to the company" do
-    Agreement.create!(user:, company:, specialist:, status: "accepted")
     response = AdvisableSchema.execute(query, context:)
     id = response.dig("data", "createPaymentRequest", "paymentRequest", "id")
     payment_request = PaymentRequest.find_by!(uid: id)
@@ -56,7 +56,6 @@ RSpec.describe Mutations::CreatePaymentRequest do
     let(:extra) { %(memo: "This is a memo") }
 
     it "saves the memo" do
-      Agreement.create!(user:, company:, specialist:, status: "accepted")
       response = AdvisableSchema.execute(query, context:)
       id = response.dig("data", "createPaymentRequest", "paymentRequest", "id")
       payment_request = PaymentRequest.find_by!(uid: id)
@@ -65,8 +64,8 @@ RSpec.describe Mutations::CreatePaymentRequest do
     end
   end
 
-  context "when there is no company" do
-    let(:company) { instance_double("Company", id: "1234") }
+  context "when there is no agreement" do
+    let(:agreement) { instance_double("Agreement", id: "1234") }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)
@@ -75,17 +74,10 @@ RSpec.describe Mutations::CreatePaymentRequest do
     end
   end
 
-  context "when there is no agreement" do
-    it "returns an error" do
-      response = AdvisableSchema.execute(query, context:)
-      error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("NO_ACTIVE_AGREEMENT_WITH_THIS_COMPANY")
-    end
-  end
-
   context "when the agreement is pending" do
+    let(:agreement_status) { "pending" }
+
     it "returns an error" do
-      Agreement.create!(user:, company:, specialist:, status: "pending")
       response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NO_ACTIVE_AGREEMENT_WITH_THIS_COMPANY")
@@ -93,8 +85,9 @@ RSpec.describe Mutations::CreatePaymentRequest do
   end
 
   context "when the agreement is declined" do
+    let(:agreement_status) { "declined" }
+
     it "returns an error" do
-      Agreement.create!(user:, company:, specialist:, status: "declined")
       response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NO_ACTIVE_AGREEMENT_WITH_THIS_COMPANY")

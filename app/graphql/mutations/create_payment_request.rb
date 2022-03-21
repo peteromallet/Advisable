@@ -2,7 +2,7 @@
 
 module Mutations
   class CreatePaymentRequest < Mutations::BaseMutation
-    argument :company, ID, required: true
+    argument :agreement, ID, required: true
     argument :line_items, [Types::PaymentRequestLineItemInput], required: true
     argument :memo, String, required: false
 
@@ -13,11 +13,12 @@ module Mutations
     end
 
     def resolve(**args)
-      company = Company.find(args[:company])
-      ApiError.invalid_request("NO_ACTIVE_AGREEMENT_WITH_THIS_COMPANY") unless current_user.agreements.accepted.exists?(company:)
+      agreement = Agreement.find(args[:agreement])
+      ApiError.invalid_request("NO_ACTIVE_AGREEMENT_WITH_THIS_COMPANY") unless agreement.status == "accepted"
 
       payment_request = PaymentRequest.new(
-        company:,
+        agreement:,
+        company: agreement.company,
         specialist: current_user,
         line_items: args[:line_items],
         memo: args[:memo],

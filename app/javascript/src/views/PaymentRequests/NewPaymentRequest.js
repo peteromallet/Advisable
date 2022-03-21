@@ -23,7 +23,7 @@ const lineItemSchema = object().shape({
 });
 
 const validationSchema = object().shape({
-  company: object().required("Please select a client"),
+  agreement: object().required("Please select a client"),
   lineItems: array().of(lineItemSchema).min(1, "Please add at least one item"),
 });
 
@@ -112,7 +112,7 @@ export default function NewPaymentRequest() {
 
   const initialValues = {
     memo: "",
-    company: undefined,
+    agreement: undefined,
     lineItems: [
       {
         description: "",
@@ -126,7 +126,7 @@ export default function NewPaymentRequest() {
       variables: {
         input: {
           memo: values.memo,
-          company: values.company.value,
+          agreement: values.agreement.value,
           lineItems: values.lineItems.map((li) => ({
             description: li.description,
             amount: Number(li.amount),
@@ -141,7 +141,7 @@ export default function NewPaymentRequest() {
   };
 
   const companyOptions = data.acceptedAgreements.map((a) => ({
-    value: a.company.id,
+    value: a.id,
     label: a.company.name,
     name: a.company.name,
   }));
@@ -183,11 +183,11 @@ export default function NewPaymentRequest() {
                     Client
                   </label>
                   <FormField
-                    name="company"
+                    name="agreement"
                     as={Combobox}
                     marginBottom={10}
                     options={companyOptions}
-                    onChange={(c) => formik.setFieldValue("company", c)}
+                    onChange={(c) => formik.setFieldValue("agreement", c)}
                     placeholder="Select client"
                   />
 
