@@ -3,7 +3,8 @@
   <head>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= javascript_pack_tag "admin" %>
+    <%= stylesheet_pack_tag "admin" %>
   </head>
   <body class="flex flex-col h-screen">
     <%= render "shared/flash" %>
