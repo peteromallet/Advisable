@@ -72,6 +72,7 @@ class NewTestData
     populate_reviews if Review.none?
     populate_events if Event.none?
     populate_posts if Guild::Post.none?
+    populate_agreements if Agreement.none?
     populate_payment_requests if PaymentRequest.none?
     populate_payments_and_payouts if Payment.none?
   end
@@ -236,17 +237,27 @@ class NewTestData
     @company_ids = Company.insert_all(companies_data).pluck("id")
   end
 
+  def populate_agreements
+    agreements_data = []
+    User.pluck(:id, :company_id).product(specialist_ids).each do |(user_id, company_id), specialist_id|
+      due_days = rand(30)
+      due_days = nil if due_days < 10
+      agreements_data << {uid: Agreement.generate_uid, company_id:, user_id:, specialist_id:, status: Agreement::VALID_STATUSES.sample, collaboration: Agreement::VALID_COLLABORATIONS.sample, invoicing: Agreement::VALID_INVOICINGS.sample, hourly_rate: rand(1000) * 100, due_days:, created_at: now, updated_at: now}
+    end
+    @agreement_ids = Agreement.insert_all(agreements_data).pluck("id")
+  end
+
   def populate_payment_requests
     payment_requests_data = []
-    company_ids.each do |company_id|
-      3.times do
+    Agreement.pluck(:id, :company_id).each do |agreement_id, company_id|
+      rand(0..3).times do
         status = PaymentRequest::VALID_STATUSES.sample
         dispute_reason = status == "disputed" ? Faker::Hipster.sentence : nil
         line_items = []
         rand(1..5).times do
           line_items << {description: Faker::Commerce.product_name, amount: Faker::Number.number(digits: 5)}
         end
-        payment_requests_data << {uid: PaymentRequest.generate_uid, company_id: company_id, specialist_id: specialist_ids.sample, status: status, dispute_reason: dispute_reason, line_items: line_items, created_at: now, updated_at: now}
+        payment_requests_data << {uid: PaymentRequest.generate_uid, company_id:, agreement_id:, specialist_id: specialist_ids.sample, status:, dispute_reason:, line_items:, created_at: now, updated_at: now}
       end
     end
     @payment_requests = PaymentRequest.insert_all(payment_requests_data).pluck("id")
@@ -258,8 +269,8 @@ class NewTestData
     payouts_data = []
     approved_payment_requests.each do |id, line_items, company_id, specialist_id|
       amount = line_items.sum { |li| li["amount"] }
-      payments_data << {uid: Payment.generate_uid, payment_request_id: id, company_id: company_id, specialist_id: specialist_id, amount: amount, admin_fee: (amount * 0.05).round, status: Payment::VALID_STATUSES.sample, created_at: now, updated_at: now}
-      payouts_data << {uid: Payout.generate_uid, payment_request_id: id, specialist_id: specialist_id, amount: amount, sourcing_fee: (amount * 0.08).round, status: Payout::VALID_STATUSES.sample, created_at: now, updated_at: now}
+      payments_data << {uid: Payment.generate_uid, payment_request_id: id, company_id:, specialist_id:, amount:, admin_fee: (amount * 0.05).round, status: Payment::VALID_STATUSES.sample, created_at: now, updated_at: now}
+      payouts_data << {uid: Payout.generate_uid, payment_request_id: id, specialist_id:, amount:, sourcing_fee: (amount * 0.08).round, status: Payout::VALID_STATUSES.sample, created_at: now, updated_at: now}
     end
     @payments = Payment.insert_all(payments_data).pluck("id")
     @payouts = Payout.insert_all(payouts_data).pluck("id")
