@@ -43,12 +43,21 @@ export const StyledInputControl = styled.input`
   outline: none;
   font-size: 16px;
   box-sizing: border-box;
-  background: transparent;
+  background: transparent !important;
   padding-top: 0;
   padding-bottom: 0;
   border-radius: 0px;
   color: ${theme.colors.neutral900};
   font-family: TTHoves, sans-serif;
+
+  &:focus-visible {
+    outline: none !important;
+  }
+
+  &:focus {
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
 
   &::placeholder {
     color: ${theme.colors.neutral400};
