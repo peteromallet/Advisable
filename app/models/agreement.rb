@@ -5,9 +5,10 @@ class Agreement < ApplicationRecord
 
   has_logidze
 
-  STATUS_OPTIONS = %w[pending accepted declined].freeze
-  COLLABORATION_OPTIONS = %w[fixed hourly flexible].freeze
-  INVOICING_OPTIONS = %w[upfront recurring after flexible].freeze
+  DEFAULT_DUE_DAYS = 5
+  VALID_STATUSES = %w[pending accepted declined].freeze
+  VALID_COLLABORATIONS = %w[fixed hourly flexible].freeze
+  VALID_INVOICINGS = %w[upfront recurring after flexible].freeze
 
   belongs_to :user
   belongs_to :company
@@ -15,9 +16,9 @@ class Agreement < ApplicationRecord
   has_many :messages, dependent: :nullify
   has_many :payment_requests, dependent: :nullify
 
-  validates :status, inclusion: {in: STATUS_OPTIONS}
-  validates :collaboration, inclusion: {in: COLLABORATION_OPTIONS}, allow_blank: true
-  validates :invoicing, inclusion: {in: INVOICING_OPTIONS}, allow_blank: true
+  validates :status, inclusion: {in: VALID_STATUSES}
+  validates :collaboration, inclusion: {in: VALID_COLLABORATIONS}, allow_blank: true
+  validates :invoicing, inclusion: {in: VALID_INVOICINGS}, allow_blank: true
 
   scope :accepted, -> { where(status: "accepted") }
 

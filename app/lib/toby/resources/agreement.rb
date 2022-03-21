@@ -8,9 +8,9 @@ module Toby
       attribute :user, Attributes::BelongsTo
       attribute :company, Attributes::BelongsTo
       attribute :specialist, Attributes::BelongsTo
-      attribute :status, Attributes::Select, options: ::Agreement::STATUS_OPTIONS
-      attribute :collaboration, Attributes::Select, options: ::Agreement::COLLABORATION_OPTIONS
-      attribute :invoicing, Attributes::Select, options: ::Agreement::INVOICING_OPTIONS
+      attribute :status, Attributes::Select, options: ::Agreement::VALID_STATUSES
+      attribute :collaboration, Attributes::Select, options: ::Agreement::VALID_COLLABORATIONS
+      attribute :invoicing, Attributes::Select, options: ::Agreement::VALID_INVOICINGS
       attribute :hourly_rate, Attributes::Currency
       attribute :messages, Attributes::HasMany
       attribute :updated_at, Attributes::DateTime, readonly: true
