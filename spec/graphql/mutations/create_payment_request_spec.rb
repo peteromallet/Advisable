@@ -20,7 +20,7 @@ RSpec.describe Mutations::CreatePaymentRequest do
             {description: "Hundo", amount: 10000},
             {description: "Two Hundo", amount: 20000}
           ],
-          agreement: "#{agreement.id}",
+          agreement: "#{agreement.uid}",
           #{extra}
         }) {
           paymentRequest {
@@ -65,7 +65,7 @@ RSpec.describe Mutations::CreatePaymentRequest do
   end
 
   context "when there is no agreement" do
-    let(:agreement) { instance_double("Agreement", id: "1234") }
+    let(:agreement) { instance_double("Agreement", uid: "1234") }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)
