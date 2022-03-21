@@ -10,7 +10,6 @@
 # application is stored in the application_stage column.
 #
 class Specialist < ApplicationRecord
-  self.ignored_columns = %w[phone encrypted_phone_number encrypted_phone_number_iv]
   include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser

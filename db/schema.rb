@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_03_104859) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_21_073421) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -485,7 +485,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_03_104859) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "google_calendar_id"
-    t.string "status"
     t.index ["host_id"], name: "index_events_on_host_id"
     t.index ["uid"], name: "index_events_on_uid", unique: true
   end
@@ -526,10 +525,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_03_104859) do
     t.datetime "boosted_at", precision: nil
     t.datetime "resolved_at", precision: nil
     t.string "audience_type"
-    t.uuid "post_prompt_id"
     t.bigint "article_id"
     t.index ["article_id"], name: "index_guild_posts_on_article_id"
-    t.index ["post_prompt_id"], name: "index_guild_posts_on_post_prompt_id"
     t.index ["specialist_id"], name: "index_guild_posts_on_specialist_id"
   end
 
@@ -700,7 +697,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_03_104859) do
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.string "payment_method"
-    t.integer "deposit"
     t.integer "retries"
     t.datetime "charged_at", precision: nil
     t.bigint "payment_request_id"
@@ -945,8 +941,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_03_104859) do
     t.string "airtable_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "encrypted_phone_number"
-    t.string "encrypted_phone_number_iv"
     t.jsonb "ratings", default: {}
     t.integer "reviews_count"
     t.text "bio"
@@ -966,7 +960,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_03_104859) do
     t.string "campaign_source"
     t.decimal "average_score"
     t.integer "project_count"
-    t.string "phone"
     t.boolean "guild", default: false
     t.string "community_status"
     t.bigint "account_id"
