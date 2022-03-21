@@ -365,8 +365,8 @@ export default function AgreementCreatedMessage({ message }) {
             </Button>
           )}
         </DialogDisclosure>
-        <AgreementModal agreement={message.agreement} modal={modal} />
       </Box>
+      <AgreementModal agreement={message.agreement} modal={modal} />
     </BaseMessage>
   );
 }
