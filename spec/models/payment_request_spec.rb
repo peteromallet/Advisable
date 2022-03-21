@@ -45,4 +45,35 @@ RSpec.describe PaymentRequest, type: :model do
       end
     end
   end
+
+  describe "#set_due_at" do
+    context "when no agreement" do
+      let(:payment_request) { create(:payment_request, agreement_id: nil) }
+
+      it "does not set due_at" do
+        expect(payment_request).to be_persisted
+        expect(payment_request.due_at).to be_nil
+      end
+    end
+
+    context "when agreement doesn't have due days set" do
+      let(:agreement) { create(:agreement, due_days: nil) }
+      let(:payment_request) { create(:payment_request, agreement:) }
+
+      it "sets due_at to equal default" do
+        expect(payment_request).to be_persisted
+        expect(payment_request.due_at).to be_within(1.second).of(payment_request.created_at + Agreement::DEFAULT_DUE_DAYS.days)
+      end
+    end
+
+    context "when agreement has due days set" do
+      let(:agreement) { create(:agreement, due_days: 10) }
+      let(:payment_request) { create(:payment_request, agreement:) }
+
+      it "sets due_at to equal due days" do
+        expect(payment_request).to be_persisted
+        expect(payment_request.due_at).to be_within(1.second).of(payment_request.created_at + 10.days)
+      end
+    end
+  end
 end
