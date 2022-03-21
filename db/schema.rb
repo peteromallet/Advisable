@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_21_073421) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_21_102051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -679,6 +679,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_073421) do
     t.string "cancellation_reason"
     t.string "memo"
     t.datetime "due_at"
+    t.bigint "agreement_id"
+    t.index ["agreement_id"], name: "index_payment_requests_on_agreement_id"
     t.index ["company_id"], name: "index_payment_requests_on_company_id"
     t.index ["specialist_id"], name: "index_payment_requests_on_specialist_id"
     t.index ["uid"], name: "index_payment_requests_on_uid", unique: true
@@ -1209,6 +1211,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_073421) do
   add_foreign_key "messages", "guild_posts"
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
+  add_foreign_key "payment_requests", "agreements"
   add_foreign_key "payment_requests", "companies"
   add_foreign_key "payment_requests", "specialists"
   add_foreign_key "payments", "companies"

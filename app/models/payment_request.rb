@@ -13,6 +13,7 @@ class PaymentRequest < ApplicationRecord
 
   belongs_to :company, optional: true
   belongs_to :specialist, optional: true
+  belongs_to :agreement, optional: true
 
   has_one :payment, dependent: :nullify
   has_one :payout, dependent: :nullify
@@ -78,17 +79,20 @@ end
 #  uid                 :string           not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  agreement_id        :bigint
 #  company_id          :uuid
 #  specialist_id       :bigint
 #
 # Indexes
 #
+#  index_payment_requests_on_agreement_id   (agreement_id)
 #  index_payment_requests_on_company_id     (company_id)
 #  index_payment_requests_on_specialist_id  (specialist_id)
 #  index_payment_requests_on_uid            (uid) UNIQUE
 #
 # Foreign Keys
 #
+#  fk_rails_...  (agreement_id => agreements.id)
 #  fk_rails_...  (company_id => companies.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #
