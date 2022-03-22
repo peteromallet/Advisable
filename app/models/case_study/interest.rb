@@ -7,6 +7,31 @@ module CaseStudy
     has_logidze
 
     belongs_to :account
+
+    def articles
+      Article.searchable.where(id: results)
+    end
+
+    def load_results!
+      query = client.embeddings(engine: "text-search-#{Embedding::ENGINE}-query-001", parameters: {input: term})
+      data = query["data"].first["embedding"]
+      query_vector = Vector.elements(data)
+      results = []
+      Embedding.joins(:article).merge(Article.searchable).find_each do |embedding|
+        results << {
+          similarity: (embedding.cosine_similarity_to(query_vector) * 100).round(3),
+          article_id: embedding.article_id
+        }
+      end
+      results = results.sort_by { |r| r[:similarity] }.last(5).pluck(:article_id)
+      update!(results:)
+    end
+
+    private
+
+    def client
+      @client ||= OpenAI::Client.new
+    end
   end
 end
 
