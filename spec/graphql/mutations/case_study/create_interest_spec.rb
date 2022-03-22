@@ -32,9 +32,9 @@ RSpec.describe Mutations::CaseStudy::CreateInterest do
     interest = ::CaseStudy::Interest.find_by!(uid:)
     expect(interest.term).to eq("A Term")
     expect(interest.account).to eq(user.account)
-    expect(interest.results).to be_blank
+    expect(interest.article_ids).to be_blank
     expect(interest.articles).to match_array([article1, article2])
-    expect(interest.results).to match_array([article1.id, article2.id])
+    expect(interest.article_ids).to match_array([article1.id, article2.id])
   end
 
   context "when current_user is specialist" do
