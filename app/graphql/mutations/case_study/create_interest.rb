@@ -13,14 +13,9 @@ module Mutations
         requires_client!
       end
 
-      def resolve(**args)
-        interest = current_account_responsible_for do
-          term = args[:term].presence || args[:name]
-          interest = ::CaseStudy::Interest.create!(term:, account: current_user.account)
-          interest.load_results!
-          interest
-        end
-
+      def resolve(term:)
+        interest = ::CaseStudy::Interest.new(term:, account: current_user.account)
+        save_with_current_account!(interest)
         {interest:}
       end
     end
