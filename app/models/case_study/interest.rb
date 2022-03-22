@@ -9,6 +9,7 @@ module CaseStudy
     belongs_to :account
 
     def articles
+      load_results! if results.blank?
       Article.searchable.where(id: results)
     end
 
