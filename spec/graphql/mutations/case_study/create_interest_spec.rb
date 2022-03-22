@@ -24,10 +24,7 @@ RSpec.describe Mutations::CaseStudy::CreateInterest do
     GRAPHQL
   end
 
-  before do
-    url = "https://api.openai.com/v1/engines/text-search-babbage-query-001/embeddings"
-    stub_request(:post, url).to_return(body: {data: [{embedding: [-0.024432803, 0.02814213, 0.02230821]}]}.to_json, headers: {content_type: "application/json"})
-  end
+  before { allow_any_instance_of(OpenAiInteractor).to receive(:embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821]) }
 
   it "creates a new interest" do
     request = AdvisableSchema.execute(query, context:)
