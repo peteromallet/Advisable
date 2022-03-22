@@ -15,14 +15,17 @@ fragment ArticleFields on CaseStudyArticle {
     name
     firstName
     avatar
+    interview {
+      id
+      status
+      startsAt
+    }
+    conversation {
+      id
+    }
     consultation {
       id
       status
-      interview {
-        id
-        status
-        startsAt
-      }
     }
   }
 }

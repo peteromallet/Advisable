@@ -74,9 +74,9 @@ function ConsultationRequestRejected({ specialist }) {
 }
 
 function InterviewScheduled({ specialist }) {
-  const datetime = DateTime.fromISO(
-    specialist.consultation.interview.startsAt,
-  ).toFormat("cccc, dd LLLL y 'at' hh:mm a");
+  const datetime = DateTime.fromISO(specialist.interview.startsAt).toFormat(
+    "cccc, dd LLLL y 'at' hh:mm a",
+  );
   return (
     <StatusNotice
       title={`${specialist.firstName} has accepted your consultation request`}
@@ -90,7 +90,7 @@ function NeedMoreTimeOptions({ specialist }) {
   return (
     <StatusNotice
       actionLabel="Update"
-      path={`/interviews/${specialist.consultation.interview.id}`}
+      path={`/interviews/${specialist.interview.id}`}
       title={`${specialist.firstName} has requested more time options`}
     >
       {specialist.firstName} has accepted your request, however, none of your
@@ -104,7 +104,7 @@ function SpecialistRequestedReschedule({ specialist }) {
   return (
     <StatusNotice
       actionLabel="Reschedule"
-      path={`/interviews/${specialist.consultation.interview.id}`}
+      path={`/interviews/${specialist.interview.id}`}
       title={`${specialist.firstName} has requested to reschedule your call`}
     >
       Please update your availability to reschedule your call.
@@ -114,6 +114,7 @@ function SpecialistRequestedReschedule({ specialist }) {
 
 const INTERVIEW_STATUSES = {
   "Call Requested": ConsultationRequestSent,
+  "Call Reminded": ConsultationRequestSent,
   "Call Scheduled": InterviewScheduled,
   "Call Completed": InterviewScheduled,
   "Need More Time Options": NeedMoreTimeOptions,
@@ -123,8 +124,7 @@ const INTERVIEW_STATUSES = {
 };
 
 function InterviewStatus({ specialist }) {
-  const component =
-    INTERVIEW_STATUSES[specialist.consultation.interview.status];
+  const component = INTERVIEW_STATUSES[specialist.interview.status];
   if (!component) return null;
 
   return React.createElement(component, { specialist });
@@ -137,7 +137,9 @@ const CONSULTATION_STATUSES = {
 };
 
 export default function ConsultationStatus({ specialist }) {
-  const component = CONSULTATION_STATUSES[specialist.consultation.status];
+  const component =
+    CONSULTATION_STATUSES[specialist.consultation?.status] ||
+    INTERVIEW_STATUSES[specialist.interview?.status];
   if (!component) return null;
 
   return React.createElement(component, { specialist });

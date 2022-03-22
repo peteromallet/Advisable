@@ -124,9 +124,7 @@ function Sidebar({ data, isOwner, ...props }) {
                   variant="dark"
                   width={["100%", "auto"]}
                   size={["m", "m", "l"]}
-                >
-                  Work together
-                </ConnectButton>
+                />
               )}
             </Box>
             <SocialProfilesIcons isOwner={isOwner} specialist={specialist} />
