@@ -5,20 +5,8 @@ module Mutations
     class CreateInterest < Mutations::BaseMutation
       graphql_name "CreateCaseStudyInterest"
 
-      # TODO: Remove these because they are only here for the purpose of duck typing with CaseStudy::Search. 👇
-      argument :articles, [ID], required: false
-      argument :business_type, String, required: false
-      argument :categories, [ID], required: false
-      argument :goals, [String], required: false
-      argument :name, String, required: false
-      argument :preferences, [String], required: false
-      # TODO: Remove these because they are only here for the purpose of duck typing with CaseStudy::Search. 👆
+      argument :term, String, required: true
 
-      # TODO: Make it required once duck typing is removed
-      argument :term, String, required: false
-
-      # TODO: Search is here for duck typing. Remove when possible
-      field :search, Types::CaseStudy::Interest, null: false
       field :interest, Types::CaseStudy::Interest, null: false
 
       def authorized?(**_args)
@@ -33,7 +21,7 @@ module Mutations
           interest
         end
 
-        {search: interest, interest:}
+        {interest:}
       end
     end
   end
