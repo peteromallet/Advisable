@@ -1,12 +1,18 @@
-p
-  | Hi #{@user.account.first_name},
-p
-  | Your teammate #{@inviter.account.first_name} has invited you to join the #{@project.try(:name)} interview with #{@application.specialist.account.name} on Advisable.
-p
-  | All you have to do is <a target="_blank" clicktracking="off" href="#{magic_link(@user.account, @url)}">click this link</a> to accept the invite to Advisable. You should also receive a calendar invite to join the call.
-p
-  | If the link above does not work for you, we recommend you get a better email client. But until then you can get around it by copy/pasting this to your browser:
-  br
-  = magic_link(@user.account, @url)
-p
-  | We're looking forward to your interview!
+= render "emails/container" do
+  = render "emails/spacing", height: "32px"
+  = render "emails/heading" do
+    | #{@inviter.account.first_name} has invited you to join their interview with #{@interview.specialist.account.name}.
+  
+  = render "emails/paragraph" do
+    | Hi #{@user.account.first_name},
+    <br />
+    <br />
+    | Your teammate #{@inviter.account.first_name} has invited you to join their interview with #{@interview.specialist.account.name} on Advisable.
+    <br />
+    <br />
+    | All you have to do is <a target="_blank" clicktracking="off" href="#{magic_link(@user.account, interview_url(@interview))}">click this link</a> to accept the invite to Advisable. You should also receive a calendar invite to join the call.
+    <br />
+    <br />
+    | We're looking forward to your interview!
+
+  = render "emails/spacing", height: "32px"

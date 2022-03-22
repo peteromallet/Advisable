@@ -53,7 +53,6 @@ end
 #  uid                                :string           not null
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
-#  application_id                     :bigint
 #  google_calendar_id                 :string
 #  specialist_id                      :bigint           not null
 #  user_id                            :bigint

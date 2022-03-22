@@ -41,9 +41,8 @@ RSpec.describe "Interviews", type: :system do
   end
 
   it "allows the client to request to reschedule a call" do
-    application = create(:application, status: "Application Accepted")
-    interview = create(:interview, user: application.project.user, status: "Call Scheduled", application:)
-    authenticate_as(interview.application.project.user)
+    interview = create(:interview, user:, status: "Call Scheduled")
+    authenticate_as(interview.user)
     visit "/interviews/#{interview.uid}"
     click_on "Request To Reschedule"
     date = Time.zone.now.next_weekday.beginning_of_day
@@ -81,8 +80,7 @@ RSpec.describe "Interviews", type: :system do
 
   context "when specialist has requested to reschedule" do
     it "the client can update their availability" do
-      application = create(:application, status: "Application Accepted")
-      interview = create(:interview, user: application.project.user, status: "Specialist Requested Reschedule", application:)
+      interview = create(:interview, user:, status: "Specialist Requested Reschedule")
       authenticate_as interview.user
       visit "/interviews/#{interview.uid}"
       date = Time.zone.now.next_weekday.beginning_of_day
@@ -110,11 +108,10 @@ RSpec.describe "Interviews", type: :system do
   end
 
   it "allows the user to invite a member of their team" do
-    application = create(:application, status: "Application Accepted")
-    interview = create(:interview, user: application.project.user, status: "Call Requested", application:)
-    create(:user, account: create(:account, first_name: "Thomas"), company: application.project.user.company)
-    create(:interview, application:, status: "Call Scheduled", starts_at: 2.days.from_now, user: application.project.user)
-    authenticate_as(application.project.user)
+    interview = create(:interview, user:, status: "Call Requested")
+    create(:user, account: create(:account, first_name: "Thomas"), company: user.company)
+    create(:interview, status: "Call Scheduled", starts_at: 2.days.from_now, user:)
+    authenticate_as(user)
     visit "/interviews/#{interview.uid}"
     click_on("Invite Others")
     click_on("Share with Thomas")
@@ -123,10 +120,9 @@ RSpec.describe "Interviews", type: :system do
 
   it "allows the user to invite a new member of their team" do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
-    application = create(:application, status: "Application Accepted")
-    interview = create(:interview, user: application.project.user, status: "Call Requested", application:)
-    create(:interview, application:, status: "Call Scheduled", starts_at: 2.days.from_now, user: application.project.user)
-    authenticate_as(application.project.user)
+    interview = create(:interview, user:, status: "Call Requested")
+    create(:interview, status: "Call Scheduled", starts_at: 2.days.from_now, user:)
+    authenticate_as(user)
     visit "/interviews/#{interview.uid}"
     click_on("Invite Others")
     fill_in("name", with: "Jim Halpert")
