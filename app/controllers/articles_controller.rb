@@ -21,9 +21,7 @@ class ArticlesController < ApplicationController
       articles = articles.where(skills: cs_skills)
     end
 
-    client = OpenAI::Client.new
-    query = client.embeddings(engine: "text-search-#{CaseStudy::Embedding::ENGINE}-query-001", parameters: {input: @query})
-    data = query["data"].first["embedding"]
+    data = OpenAiInteractor.new.embedding_for(@query)
     query_vector = Vector.elements(data)
     @results = []
     CaseStudy::Embedding.where(article: articles).includes(:article).each do |embedding|

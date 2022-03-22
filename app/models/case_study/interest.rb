@@ -13,8 +13,7 @@ module CaseStudy
     end
 
     def load_results!
-      query = client.embeddings(engine: "text-search-#{Embedding::ENGINE}-query-001", parameters: {input: term})
-      data = query["data"].first["embedding"]
+      data = OpenAiInteractor.new.embedding_for(term)
       query_vector = Vector.elements(data)
       results = []
       Embedding.joins(:article).merge(Article.searchable).find_each do |embedding|
@@ -25,12 +24,6 @@ module CaseStudy
       end
       results = results.sort_by { |r| r[:similarity] }.last(5).pluck(:article_id)
       update!(results:)
-    end
-
-    private
-
-    def client
-      @client ||= OpenAI::Client.new
     end
   end
 end

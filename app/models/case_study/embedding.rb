@@ -4,8 +4,6 @@ require "matrix"
 
 module CaseStudy
   class Embedding < ApplicationRecord
-    ENGINE = "babbage"
-
     belongs_to :article
 
     def self.for_article(article, refresh: false)
@@ -13,11 +11,7 @@ module CaseStudy
       return embedding if embedding.persisted? && !refresh
 
       text = article.to_text.tr("\n", " ").split.first(1500).join(" ")
-      response = OpenAI::Client.new.embeddings(
-        engine: "text-search-#{ENGINE}-doc-001",
-        parameters: {input: text}
-      )
-      embedding.data = response["data"].first["embedding"]
+      embedding.data = OpenAiInteractor.new.embedding_for(text, type: "doc")
       embedding.save!
       embedding
     end
