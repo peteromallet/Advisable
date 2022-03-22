@@ -16,6 +16,17 @@ module CaseStudy
       embedding
     end
 
+    def self.ordered_articles_for(vector)
+      results = []
+      joins(:article).merge(Article.searchable).find_each do |embedding|
+        results << {
+          similarity: embedding.cosine_similarity_to(vector),
+          article_id: embedding.article_id
+        }
+      end
+      results.sort_by { |r| r[:similarity] }
+    end
+
     def vector
       Vector.elements(data)
     end

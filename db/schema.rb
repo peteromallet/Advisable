@@ -284,6 +284,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_114152) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
+    t.jsonb "term_data"
+    t.decimal "min_score"
     t.index ["account_id"], name: "index_case_study_interests_on_account_id"
     t.index ["uid"], name: "index_case_study_interests_on_uid", unique: true
   end

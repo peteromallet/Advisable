@@ -35,6 +35,7 @@ RSpec.describe Mutations::CaseStudy::CreateInterest do
     expect(interest.article_ids).to be_blank
     expect(interest.articles).to match_array([article1, article2])
     expect(interest.article_ids).to match_array([article1.id, article2.id])
+    expect(interest.min_score.round(4)).to eq(0.6078)
   end
 
   context "when current_user is specialist" do
