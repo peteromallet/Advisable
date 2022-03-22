@@ -14,17 +14,22 @@ module CaseStudy
     end
 
     def find_articles!
-      data = OpenAiInteractor.new.embedding_for(term)
-      query_vector = Vector.elements(data)
-      results = []
-      Embedding.joins(:article).merge(Article.searchable).find_each do |embedding|
-        results << {
-          similarity: (embedding.cosine_similarity_to(query_vector) * 100).round(3),
-          article_id: embedding.article_id
-        }
-      end
-      article_ids = results.sort_by { |r| r[:similarity] }.last(5).pluck(:article_id)
-      update!(article_ids:)
+      embeddings = Embedding.ordered_articles_for(term_vector).last(5)
+      update!(article_ids: embeddings.pluck(:article_id), min_score: embeddings.first[:similarity])
+    end
+
+    def term_vector
+      fetch_term_data!
+      Vector.elements(term_data)
+    end
+
+    private
+
+    def fetch_term_data!
+      return if term_data.present? || term.blank?
+
+      self.term_data = OpenAiInteractor.new.embedding_for(term)
+      save!
     end
   end
 end
@@ -35,7 +40,9 @@ end
 #
 #  id          :bigint           not null, primary key
 #  article_ids :jsonb
+#  min_score   :decimal(, )
 #  term        :string
+#  term_data   :jsonb
 #  uid         :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
