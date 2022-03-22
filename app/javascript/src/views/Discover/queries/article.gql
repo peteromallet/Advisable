@@ -27,14 +27,17 @@ query Article($searchId: ID!, $articleId: ID!) {
       name
       firstName
       profilePath
+      conversation {
+        id
+      }
+      interview {
+        id
+        status
+        startsAt
+      }
       consultation {
         id
         status
-        interview {
-          id
-          status
-          startsAt
-        }
       }
     }
     sections {

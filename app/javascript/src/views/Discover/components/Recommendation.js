@@ -82,16 +82,12 @@ export default function Recommendation({
             >
               {recommendation.comment}
             </Text>
-            {Boolean(recommendation.specialist.consultation) && (
-              <ConsultationStatus specialist={recommendation.specialist} />
-            )}
+            <ConsultationStatus specialist={recommendation.specialist} />
             <Box onClick={stopActionPropagation}>
-              {!recommendation.specialist.consultation && (
-                <MessageFreelancerButton
-                  mr={3}
-                  specialist={recommendation.specialist}
-                />
-              )}
+              <MessageFreelancerButton
+                mr={3}
+                specialist={recommendation.specialist}
+              />
               <ArchiveButton article={recommendation} search={search} />
             </Box>
           </Box>
