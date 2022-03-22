@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class OpenAiInteractor
+  class OpenAiInteractorError < StandardError; end
+
   ENGINE = "babbage"
 
   attr_reader :client
@@ -14,6 +16,9 @@ class OpenAiInteractor
       engine: "text-search-#{ENGINE}-#{type}-001",
       parameters: {input:}
     )
-    response["data"].first["embedding"]
+    data = response.try(:[], "data")
+    raise OpenAiInteractorError, "No data returned from OpenAI" if data.blank? || data[0].blank?
+
+    data[0]["embedding"]
   end
 end
