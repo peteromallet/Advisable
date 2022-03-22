@@ -27,13 +27,13 @@ class UserMailer < ApplicationMailer
     mail(to: @user.account.email, subject: "#{@inviter.account.first_name} invited you to review applications for a #{@project.try(:name)} project on Advisable")
   end
 
-  def invited_to_interview(inviter, user, application)
+  def invited_to_interview(inviter, user, interview)
     @inviter = inviter
     @user = user
-    @application = application
-    @project = @application.project
-    @url = application_url(@application.uid)
-    mail(to: @user.account.email, subject: "#{@inviter.account.first_name} invited you to join the #{@project.try(:name)} interview with #{@application.specialist.account.name} on Advisable")
+    @interview = interview
+    mail(to: @user.account.email, subject: "#{@inviter.account.first_name} invited you to join their interview with #{@interview.specialist.account.name} on Advisable") do |f|
+      f.html { render(layout: "email_v2") }
+    end
   end
 
   def case_study_searches_refreshed(user, updated_searches)
