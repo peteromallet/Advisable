@@ -54,37 +54,4 @@ RSpec.describe Mutations::CaseStudy::CreateInterest do
       expect(error).to eq("NOT_AUTHENTICATED")
     end
   end
-
-  context "when duck typed with search creation" do
-    let(:relevant_category) { create(:skill_category) }
-    let(:category_slugs) { [relevant_category.slug] }
-
-    let(:query) do
-      <<-GRAPHQL
-        mutation {
-          createCaseStudyInterest(input: {
-            articles: ["#{article1.uid}", "#{article2.uid}"],
-            businessType: "B2B",
-            goals: ["First", "Second"],
-            name: "A Name",
-            preferences: ["One", "Two"],
-            categories: #{category_slugs}
-          }) {
-            search {
-              id
-            }
-          }
-        }
-      GRAPHQL
-    end
-
-    it "creates a new interest" do
-      request = AdvisableSchema.execute(query, context:)
-      uid = request["data"]["createCaseStudyInterest"]["search"]["id"]
-      interest = ::CaseStudy::Interest.find_by!(uid:)
-      expect(interest.term).to eq("A Name")
-      expect(interest.account).to eq(user.account)
-      expect(interest.articles).to match_array([article1, article2])
-    end
-  end
 end
