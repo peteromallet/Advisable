@@ -6,7 +6,7 @@ class CreateCaseStudyInterests < ActiveRecord::Migration[7.0]
       t.string :uid, null: false
       t.references :account, null: false, foreign_key: true
       t.string :term
-      t.jsonb :results
+      t.jsonb :article_ids
 
       t.index :uid, unique: true
 

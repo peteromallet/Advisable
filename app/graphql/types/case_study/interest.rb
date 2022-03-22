@@ -31,7 +31,7 @@ module Types
         argument :refresh_results, Boolean, required: false
       end
       def results(refresh_results: false)
-        object.load_results! if refresh_results
+        object.find_articles! if refresh_results
         object.articles
       end
 

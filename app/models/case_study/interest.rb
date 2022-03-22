@@ -9,11 +9,11 @@ module CaseStudy
     belongs_to :account
 
     def articles
-      load_results! if results.blank?
-      Article.searchable.where(id: results)
+      find_articles! if article_ids.blank?
+      Article.searchable.where(id: article_ids)
     end
 
-    def load_results!
+    def find_articles!
       data = OpenAiInteractor.new.embedding_for(term)
       query_vector = Vector.elements(data)
       results = []
@@ -23,8 +23,8 @@ module CaseStudy
           article_id: embedding.article_id
         }
       end
-      results = results.sort_by { |r| r[:similarity] }.last(5).pluck(:article_id)
-      update!(results:)
+      article_ids = results.sort_by { |r| r[:similarity] }.last(5).pluck(:article_id)
+      update!(article_ids:)
     end
   end
 end
@@ -33,13 +33,13 @@ end
 #
 # Table name: case_study_interests
 #
-#  id         :bigint           not null, primary key
-#  results    :jsonb
-#  term       :string
-#  uid        :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  account_id :bigint           not null
+#  id          :bigint           not null, primary key
+#  article_ids :jsonb
+#  term        :string
+#  uid         :string           not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  account_id  :bigint           not null
 #
 # Indexes
 #
