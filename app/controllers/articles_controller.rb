@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
       articles = articles.where(skills: cs_skills)
     end
 
-    data = OpenAiInteractor.new.embedding_for(@query)
+    data = OpenAiInteractor.new.query_embedding_for(@query)
     query_vector = Vector.elements(data)
     @results = []
     CaseStudy::Embedding.where(article: articles).includes(:article).each do |embedding|

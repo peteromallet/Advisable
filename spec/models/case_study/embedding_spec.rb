@@ -23,7 +23,7 @@ RSpec.describe CaseStudy::Embedding, type: :model do
 
     context "when the embedding does not exist" do
       it "creates an embedding for the article" do
-        allow_any_instance_of(OpenAiInteractor).to receive(:embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821])
+        allow_any_instance_of(OpenAiInteractor).to receive(:document_embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821])
         embedding = described_class.for_article(article)
 
         expect(embedding).to be_persisted
@@ -31,14 +31,14 @@ RSpec.describe CaseStudy::Embedding, type: :model do
         expect(embedding.article).to eq(article)
         expect(embedding.vector).to eq(Vector[-0.024432803, 0.02814213, 0.02230821])
 
-        allow_any_instance_of(OpenAiInteractor).to receive(:embedding_for).and_return([-0.03375003, -0.04129375, -0.0095707765])
+        allow_any_instance_of(OpenAiInteractor).to receive(:document_embedding_for).and_return([-0.03375003, -0.04129375, -0.0095707765])
         new_embedding = described_class.for_article(article)
         expect(new_embedding.data).to eq(embedding.data)
         expect(new_embedding.vector).to eq(Vector[-0.024432803, 0.02814213, 0.02230821])
       end
 
       it "resends it if refresh is true" do
-        allow_any_instance_of(OpenAiInteractor).to receive(:embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821])
+        allow_any_instance_of(OpenAiInteractor).to receive(:document_embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821])
         embedding = described_class.for_article(article)
 
         expect(embedding).to be_persisted
@@ -46,7 +46,7 @@ RSpec.describe CaseStudy::Embedding, type: :model do
         expect(embedding.article).to eq(article)
         expect(embedding.vector).to eq(Vector[-0.024432803, 0.02814213, 0.02230821])
 
-        allow_any_instance_of(OpenAiInteractor).to receive(:embedding_for).and_return([-0.03375003, -0.04129375, -0.0095707765])
+        allow_any_instance_of(OpenAiInteractor).to receive(:document_embedding_for).and_return([-0.03375003, -0.04129375, -0.0095707765])
         new_embedding = described_class.for_article(article, refresh: true)
         expect(new_embedding.data).not_to eq(embedding.data)
         expect(new_embedding.vector).to eq(Vector[-0.03375003, -0.04129375, -0.0095707765])
