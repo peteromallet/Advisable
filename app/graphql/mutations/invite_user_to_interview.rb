@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class InviteUserToInterview < Mutations::BaseMutation
     include Mutations::Helpers::Account
@@ -19,8 +21,8 @@ module Mutations
       ApiError.not_authorized("You do not have permission to invite users to this interview.")
     end
 
-    def resolve(interview_id:, email:, **optional)
-      invited_user = find_or_create_user_by_email!(email, optional)
+    def resolve(interview_id:, email:, **args)
+      invited_user = find_or_create_user_by_email!(email, args)
       interview = current_user.interviews.find_by!(uid: interview_id)
       UserMailer.invited_to_interview(current_user, invited_user, interview).deliver_later
 
