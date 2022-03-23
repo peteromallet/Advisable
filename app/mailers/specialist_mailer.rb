@@ -46,6 +46,19 @@ class SpecialistMailer < ApplicationMailer
     end
   end
 
+  def interview_request_auto_declined(interview)
+    @interview = interview
+    @sales_person = default_sales_person_for(interview.user.company)
+    mail(
+      from: @sales_person.email_with_name,
+      to: interview.specialist.account.email,
+      bcc: @sales_person.email_with_name,
+      subject: "TODO"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
+
   def first_interview_scheduled(interview)
     @interview = interview
     @user = interview.user
