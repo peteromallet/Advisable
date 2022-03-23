@@ -172,7 +172,7 @@ class UserMailer < ApplicationMailer
 
   def payment_request(payment_request)
     @payment_request = payment_request
-    @agreement = Agreement.accepted.order(created_at: :desc).find_by(payment_request.slice(:specialist, :company))
+    @agreement = payment_request.agreement
     @user = @agreement.user
     @account = @user.account
 
