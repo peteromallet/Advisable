@@ -11,7 +11,7 @@ class SpecialistMailerPreview < ActionMailer::Preview
     SpecialistMailer.agreement_accepted(agreement)
   end
 
-  %i[more_time_options_added interview_reminder first_interview_scheduled post_interview interview_reschedule_request interview_request interview_request_reminder].each do |method|
+  %i[more_time_options_added interview_reminder first_interview_scheduled post_interview interview_reschedule_request interview_request interview_request_reminder interview_request_auto_declined].each do |method|
     define_method(method) do
       SpecialistMailer.public_send(method, random_interview)
     end

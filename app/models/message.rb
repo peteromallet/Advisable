@@ -5,7 +5,7 @@ class Message < ApplicationRecord
   uid_prefix "msg"
 
   NOTIFICATION_WAIT_TIME = 10.minutes
-  KINDS = %w[AgreementAccepted AgreementCreated AgreementDeclined InterviewRequest InterviewScheduled InterviewDeclined ConsultationRequest ConsultationDeclined system].freeze
+  KINDS = %w[AgreementAccepted AgreementCreated AgreementDeclined InterviewRequest InterviewScheduled InterviewDeclined ConsultationRequest ConsultationDeclined InterviewAutoDeclined system].freeze
 
   belongs_to :conversation
   belongs_to :author, class_name: "Account", optional: true
