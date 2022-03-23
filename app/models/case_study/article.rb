@@ -50,8 +50,17 @@ module CaseStudy
       "/profile/#{specialist.username_or_uid}/#{slug_or_uid}"
     end
 
-    def to_text
-      title + contents.by_position.map(&:to_text).join(" ")
+    def text_for_embedding
+      [
+        title,
+        skills.map { |css| css.skill.name },
+        industries.map { |csi| csi.industry.name },
+        company_type,
+        comment,
+        sections.by_type("background").map { |s| s.contents.map(&:to_text) },
+        sections.by_type("outcome").map { |s| s.contents.map(&:to_text) },
+        sections.by_type("overview").map { |s| s.contents.map(&:to_text) }
+      ].flatten.compact.join(" ").gsub(/\s+/, " ").strip
     end
   end
 end
