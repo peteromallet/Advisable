@@ -21,12 +21,9 @@ class PaymentRequest < ApplicationRecord
 
   scope :with_status, ->(status) { where(status:) }
   scope :due, -> { where(due_at: (..Time.current)) }
+  scope :unreminded, -> { where(reminded_at: nil) }
 
   def line_items
-    super.presence || []
-  end
-
-  def reminders
     super.presence || []
   end
 
@@ -79,7 +76,7 @@ end
 #  due_at              :datetime
 #  line_items          :jsonb
 #  memo                :string
-#  reminders           :jsonb
+#  reminded_at         :datetime
 #  status              :string           not null
 #  uid                 :string           not null
 #  created_at          :datetime         not null

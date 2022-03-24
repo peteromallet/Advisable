@@ -1,16 +1,11 @@
 # frozen_string_literal: true
 
 class PaymentRequestReminderJob < ApplicationJob
-  DAYS_TO_REMIND = [2, 4].freeze
+  REMIND_ON_DAY = 2
 
   def perform
-    PaymentRequest.with_status(%w[pending approved]).each do |payment_request|
-      reminders = DAYS_TO_REMIND.map { |i| (payment_request.created_at + i.days) }.reject { |reminder| reminder > Time.current }
-      reminders = reminders.map(&:to_i)
-      reminders -= payment_request.reminders
-      next if reminders.empty?
-
-      payment_request.update!(reminders: payment_request.reminders + reminders)
+    PaymentRequest.unreminded.with_status(%w[pending approved]).where(created_at: ..REMIND_ON_DAY.days.ago).find_each do |payment_request|
+      payment_request.update!(reminded_at: Time.current)
       UserMailer.payment_request_reminder(payment_request).deliver_later
     end
   end
