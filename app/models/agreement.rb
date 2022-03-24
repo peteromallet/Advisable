@@ -36,6 +36,7 @@ end
 #  due_days      :integer
 #  hourly_rate   :integer
 #  invoicing     :string
+#  reason        :string
 #  status        :string
 #  uid           :string           not null
 #  created_at    :datetime         not null

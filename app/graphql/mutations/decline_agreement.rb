@@ -14,10 +14,7 @@ module Mutations
     def resolve(agreement:, **args)
       agreement = Agreement.find_by!(uid: agreement)
 
-      current_account_responsible_for do
-        agreement.update!(status: "declined")
-      end
-
+      current_account_responsible_for { agreement.update!(status: "declined", reason: args[:message]) }
       conversation = Conversation.by_accounts(agreement.specialist, current_account)
       conversation.new_message!(kind: "AgreementDeclined", agreement:, send_emails: false)
       conversation.new_message!(author: current_account, content: args[:message], send_emails: false) if args[:message].present?

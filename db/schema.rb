@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_21_102051) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_24_111251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -96,6 +96,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_102051) do
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.integer "due_days"
+    t.string "reason"
     t.index ["company_id"], name: "index_agreements_on_company_id"
     t.index ["specialist_id"], name: "index_agreements_on_specialist_id"
     t.index ["uid"], name: "index_agreements_on_uid", unique: true
