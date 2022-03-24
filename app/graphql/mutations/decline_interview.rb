@@ -17,7 +17,7 @@ module Mutations
       interview = Interview.find_by!(uid: interview)
       create_system_message(interview)
       create_user_message(interview, reason)
-      interview.update(status: "Specialist Declined")
+      interview.update(status: "Specialist Declined", reason:)
       {interview:}
     end
 
