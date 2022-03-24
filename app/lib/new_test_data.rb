@@ -249,6 +249,7 @@ class NewTestData
 
   def populate_payment_requests
     payment_requests_data = []
+    due = 5.days.from_now
     Agreement.pluck(:id, :company_id).each do |agreement_id, company_id|
       rand(0..3).times do
         status = PaymentRequest::VALID_STATUSES.sample
@@ -257,7 +258,7 @@ class NewTestData
         rand(1..5).times do
           line_items << {description: Faker::Commerce.product_name, amount: Faker::Number.number(digits: 5)}
         end
-        payment_requests_data << {uid: PaymentRequest.generate_uid, company_id:, agreement_id:, specialist_id: specialist_ids.sample, status:, dispute_reason:, line_items:, created_at: now, updated_at: now}
+        payment_requests_data << {uid: PaymentRequest.generate_uid, company_id:, agreement_id:, specialist_id: specialist_ids.sample, status:, dispute_reason:, line_items:, due_at: due, created_at: now, updated_at: now}
       end
     end
     @payment_requests = PaymentRequest.insert_all(payment_requests_data).pluck("id")

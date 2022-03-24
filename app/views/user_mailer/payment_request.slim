@@ -3,7 +3,7 @@
   = render "emails/heading" do
     | #{@payment_request.specialist.account.name} requested payment from you
   = render "emails/paragraph" do
-    | Hi #{@account.first_name}, <br/> <br />
+    | Hi #{@agreement.user.account.first_name}, <br/> <br />
     | #{@payment_request.specialist.account.first_name} has requested the following payment from you. Please approve this payment as soon as possible to avoid any delay in #{@payment_request.specialist.first_name} being paid.
   = render "emails/spacing", height: "32px"
 
@@ -27,7 +27,7 @@
           = number_to_currency(@payment_request.amount / 100.0)
 
   = render "emails/spacing", height: "32px"
-  = render "emails/button", href: magic_link(@account, payment_request_url(@payment_request)) do
+  = render "emails/button", href: magic_link(@agreement.user.account, payment_request_url(@payment_request)) do
     | Complete payment
 
   = render "emails/spacing", height: "32px"

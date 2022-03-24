@@ -170,39 +170,22 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def payment_request(payment_request)
+  def payment_request_mail(payment_request)
     @payment_request = payment_request
     @agreement = payment_request.agreement
-    @user = @agreement.user
-    @account = @user.account
 
     mail(
       from: "Advisable <finance@advisable.com>",
       to: payment_request.company.billing_email,
-      cc: @user.account.email,
+      cc: @agreement.user.account.email,
       subject: "New Payment Request",
       bcc: "finance@advisable.com"
     ) do |format|
       format.html { render layout: "email_v2" }
     end
   end
-
-  def payment_request_reminder(payment_request)
-    @payment_request = payment_request
-    @agreement = payment_request.agreement
-    @user = @agreement.user
-    @account = @user.account
-
-    mail(
-      from: "Advisable <finance@advisable.com>",
-      to: payment_request.company.billing_email,
-      cc: @user.account.email,
-      subject: "New Payment Request",
-      bcc: "finance@advisable.com"
-    ) do |format|
-      format.html { render layout: "email_v2" }
-    end
-  end
+  alias payment_request payment_request_mail
+  alias payment_request_reminder payment_request_mail
 
   private
 
