@@ -15,6 +15,7 @@ module Toby
       attribute :due_days, Attributes::Integer
       attribute :messages, Attributes::HasMany
       attribute :payment_requests, Attributes::HasMany
+      attribute :declined_message, Lookups::Agreements::DeclinedMessage
       attribute :updated_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
     end
