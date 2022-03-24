@@ -9,13 +9,13 @@ module Toby
       attribute :company, Attributes::BelongsTo
       attribute :specialist, Attributes::BelongsTo
       attribute :status, Attributes::Select, options: ::Agreement::VALID_STATUSES
+      attribute :reason, Attributes::String
       attribute :collaboration, Attributes::Select, options: ::Agreement::VALID_COLLABORATIONS
       attribute :invoicing, Attributes::Select, options: ::Agreement::VALID_INVOICINGS
       attribute :hourly_rate, Attributes::Currency
       attribute :due_days, Attributes::Integer
       attribute :messages, Attributes::HasMany
       attribute :payment_requests, Attributes::HasMany
-      attribute :declined_message, Lookups::Agreements::DeclinedMessage
       attribute :updated_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
     end
