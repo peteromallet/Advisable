@@ -19,11 +19,8 @@ module Mutations
       create_system_message(consultation)
       message = create_user_message(consultation, reason)
       send_user_email(consultation, message)
-      consultation.update(
-        status: "Specialist Rejected",
-        rejected_at: Time.zone.now,
-        rejection_reason: reason
-      )
+      consultation.update(status: "Specialist Rejected", rejected_at: Time.zone.now, rejection_reason: reason)
+      Slack.bg_message(channel: "consultation_requests", text: "#{current_user.account.name} declined a consultation request from #{consultation.user.name_with_company}. They provided the following reason: \"#{reason}\".")
       {consultation:}
     end
 
@@ -38,21 +35,13 @@ module Mutations
     def create_system_message(consultation)
       return if consultation.messages.none?
 
-      consultation.messages.first.conversation.new_message!(
-        kind: "ConsultationDeclined",
-        consultation:,
-        send_emails: false
-      )
+      consultation.messages.first.conversation.new_message!(kind: "ConsultationDeclined", consultation:, send_emails: false)
     end
 
     def create_user_message(consultation, reason)
       return if reason.nil? || consultation.messages.none?
 
-      consultation.messages.first.conversation.new_message!(
-        author: current_user.account,
-        content: reason,
-        send_emails: false
-      )
+      consultation.messages.first.conversation.new_message!(author: current_user.account, content: reason, send_emails: false)
     end
   end
 end
