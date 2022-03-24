@@ -53,7 +53,7 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.new_agreement(agreement)
   end
 
-  %i[payment_request payment_request_reminder].each do |method|
+  %i[payment_request payment_request_reminder payment_request_due].each do |method|
     define_method(method) do
       UserMailer.public_send(method, random_payment_request)
     end
