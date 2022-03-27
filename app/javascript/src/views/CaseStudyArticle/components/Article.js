@@ -4,9 +4,9 @@ import ArticleSidebar from "./ArticleSidebar";
 
 export default function Article({ caseStudy }) {
   return (
-    <div>
-      <ArticleSidebar />
-      <ArticleContent />
+    <div className="flex gap-20">
+      <ArticleSidebar caseStudy={caseStudy} />
+      <ArticleContent caseStudy={caseStudy} />
     </div>
   );
 }
