@@ -1,4 +1,6 @@
 import React from "react";
+import PassportAvatar from "src/components/PassportAvatar";
+import AdvisableComment from "./AdvisableComment";
 
 const NUM_TO_WORD = ["first", "second", "third", "fourth", "fifth", "sixth"];
 
@@ -29,7 +31,14 @@ function Achievements({ caseStudy }) {
 export default function ArticleIntro({ caseStudy }) {
   return (
     <div>
+      <PassportAvatar
+        src={caseStudy.specialist.avatar}
+        size="sm"
+        name={caseStudy.specialist.name}
+      />
+      <img src={caseStudy.company.favicon} />
       <h1 className="text-5xl font-extrabold">{caseStudy.title}</h1>
+      <AdvisableComment caseStudy={caseStudy} />
       <Achievements caseStudy={caseStudy} />
     </div>
   );
