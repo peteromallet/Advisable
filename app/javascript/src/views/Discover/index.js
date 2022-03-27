@@ -3,7 +3,7 @@ import { Box, useBackground } from "@advisable/donut";
 import { Navigate, Route, Routes, useLocation } from "react-router";
 import Shortlist from "./views/Shortlist";
 import Shortlists from "./views/Shortlists";
-import ShortlistArticle from "./views/ShortlistArticle";
+import CaseStudyArticle from "src/views/CaseStudyArticle";
 import Page from "src/components/Page";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import ShortlistArticleSelection from "./views/ShortlistArticleSelection";
@@ -36,7 +36,7 @@ export default function Discover() {
             <Route path="/new/name" element={<ShortlistName />} />
             <Route path="/new/:slug" element={<ShortlistArticleSelection />} />
             <Route path="/new" element={<ShortlistSkillCategory />} />
-            <Route path="/:id/:articleId" element={<ShortlistArticle />} />
+            <Route path="/:id/:articleId" element={<CaseStudyArticle />} />
             <Route path="/:id" element={<Shortlist />} />
             <Route path="/" element={<Shortlists />} />
           </Routes>
