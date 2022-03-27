@@ -2,10 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function SidebarCard({ specialist }) {
-  console.log(specialist);
   return (
-    <div className="rounded-3xl bg-white drop-shadow p-8 pt-10">
-      <div className="rounded-full overflow-hidden w-48 h-48">
+    <div className="min-w-[320px] rounded-3xl bg-white drop-shadow p-8 pt-10 flex flex-col">
+      <div className="rounded-full overflow-hidden w-48 h-48 mx-auto mb-6">
         <img src={specialist.avatar} className="h-full w-full object-cover" />
       </div>
       <Link to={specialist.profilePath}>
