@@ -16,6 +16,7 @@ query Article($searchId: ID!, $articleId: ID!) {
     }
     company {
       id
+      name
       logo
       favicon
     }
