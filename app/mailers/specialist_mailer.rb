@@ -169,7 +169,7 @@ class SpecialistMailer < ApplicationMailer
     mail(
       from: "Advisable <finance@advisable.com>",
       to: @account.email,
-      bcc: sales_person.email_with_name,
+      bcc: [sales_person.email_with_name, "Advisable <finance@advisable.com>"],
       subject: "Payment request paid out"
     ) do |format|
       format.html { render(layout: "email_v2") }

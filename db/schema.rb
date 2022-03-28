@@ -695,6 +695,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_114152) do
     t.string "cancellation_reason"
     t.string "memo"
     t.datetime "due_at"
+    t.datetime "reminded_at"
     t.bigint "agreement_id"
     t.index ["agreement_id"], name: "index_payment_requests_on_agreement_id"
     t.index ["company_id"], name: "index_payment_requests_on_company_id"
