@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Card, useBreakpoint, useTheme } from "@advisable/donut";
 import { motion } from "framer-motion";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const cardAnimations = {
   enter: ({ largeScreen, forwards }) => {
@@ -30,7 +30,7 @@ const cardAnimations = {
 
 const AnimatedCard = (props) => {
   const theme = useTheme();
-  const history = useHistory();
+  const navigate = useNavigate();
   const largeScreen = useBreakpoint("lUp");
   const forwards = history.action === "PUSH";
   const isMobile = useBreakpoint("s");

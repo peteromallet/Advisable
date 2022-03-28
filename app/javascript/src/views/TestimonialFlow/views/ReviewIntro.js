@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Card, Box, Text, Heading } from "@advisable/donut";
 import AuthenticateWithLinkedin from "src/components/AuthenticateWithLinkedin";
 import MockTestimonials from "../components/Illustration";
@@ -18,7 +18,7 @@ function ReviewIntro({ data }) {
   const { specialist, oauthViewer } = data;
 
   if (oauthViewer) {
-    return <Redirect to={`/review/${data.specialist?.id}/ratings`} />;
+    return <Navigate to={`/review/${data.specialist?.id}/ratings`} />;
   }
 
   return (

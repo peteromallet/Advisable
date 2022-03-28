@@ -19,6 +19,8 @@ module Airtable
 
       # Updates or creates an airtable record for the instance
       def sync_to_airtable(additional_fields = {})
+        return if Rails.env.development?
+
         airtable_record = airtable_id.present? ? airtable_class.find(airtable_id) : airtable_class.new({})
         airtable_record.push(self, additional_fields)
       end

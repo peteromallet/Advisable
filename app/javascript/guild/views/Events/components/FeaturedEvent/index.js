@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text } from "@advisable/donut";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CoverImage } from "@guild/components/CoverImage";
 import StartsAtTag from "@guild/components/Event/StartsAtTag";
 import HostDetails from "@guild/components/Event/HostDetails";
@@ -11,12 +11,12 @@ import Markdown from "@guild/components/Markdown";
 
 export default function FeaturedEvent({ event }) {
   const attendees = event.attendees.edges.map((e) => e.node) || [];
-  const history = useHistory();
+  const navigate = useNavigate();
   const eventLink = `/events/${event.id}`;
 
   const handleClick = (e) => {
     e.preventDefault();
-    history.push(eventLink);
+    navigate(eventLink);
   };
   return (
     <StyledEventCard

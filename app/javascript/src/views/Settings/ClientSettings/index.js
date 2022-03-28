@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
+import { Route, Routes, Navigate, useMatch } from "react-router-dom";
 import { Container, useBreakpoint } from "@advisable/donut";
 import View from "src/components/View";
 import ClientSettingsNavigation from "./ClientSettingsNavigation";
@@ -14,10 +13,8 @@ import AccountSettings from "../AccountSettings";
 
 // Renders the settings view for a client user type.
 const ClientSettings = () => {
-  const match = useRouteMatch();
   const breakpointS = useBreakpoint("sUp");
-
-  const isMobileView = useRouteMatch({ path: match.path, exact: !breakpointS });
+  const isMobileView = useMatch({ path: "/", end: !breakpointS });
 
   return (
     <View>
@@ -36,44 +33,28 @@ const ClientSettings = () => {
           paddingX={[4, 4, 6, 8]}
           maxWidth={{ l: "940px" }}
         >
-          <Switch>
-            <Route path="/settings/payments">
-              <PaymentSettings />
-            </Route>
-            <Route path="/settings/team">
-              <Team />
-            </Route>
-            <Route path="/settings/invoices/old/:invoice_id">
-              <Invoice />
-            </Route>
-            <Route path="/settings/invoices/old">
-              <OldInvoices />
-            </Route>
-            <Route path="/settings/invoices">
-              <Invoices />
-            </Route>
-            <Route path="/settings/password">
-              <Password />
-            </Route>
-            <Route path="/settings/account">
-              <AccountSettings />
-            </Route>
+          <Routes>
+            <Route path="/payments" element={<PaymentSettings />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/invoices/old/:invoice_id" element={<Invoice />} />
+            <Route path="/invoices/old" element={<OldInvoices />} />
+            <Route path="/invoices/*" element={<Invoices />} />
+            <Route path="/password" element={<Password />} />
+            <Route path="/account" element={<AccountSettings />} />
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
             {breakpointS && (
-              <Route exact path={match.path}>
-                <Redirect to={`/settings/account`} />
-              </Route>
+              <Route
+                exact
+                path="/"
+                element={<Navigate to="/settings/account" />}
+              />
             )}
-          </Switch>
+          </Routes>
         </Container>
       </View.Content>
     </View>
   );
-};
-
-ClientSettings.propTypes = {
-  match: PropTypes.object,
 };
 
 export default ClientSettings;

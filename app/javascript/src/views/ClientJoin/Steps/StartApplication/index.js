@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Formik } from "formik";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { Box, Text, Input, Error, Link, Heading } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
@@ -13,7 +13,7 @@ import Divider from "src/components/Divider";
 
 export default function StartApplication({ nextStep, forwards }) {
   const viewer = useViewer();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [createClientAccount] = useCreateClientAccount();
 
   const initialValues = {
@@ -33,7 +33,7 @@ export default function StartApplication({ nextStep, forwards }) {
       return;
     }
 
-    history.push(nextStep.path);
+    navigate(nextStep.path);
   };
 
   return (

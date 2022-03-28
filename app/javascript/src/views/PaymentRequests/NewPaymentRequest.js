@@ -6,7 +6,7 @@ import Button from "src/components/Button";
 import FormField from "src/components/FormField";
 import { useAcceptedAgreements, useCreatePaymentRequest } from "./queries";
 import CurrencyInput from "src/components/CurrencyInput";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PlusSm, Trash } from "@styled-icons/heroicons-solid";
 import PaymentRequestSummary from "./PaymentRequestSummary";
 import { DateTime } from "luxon";
@@ -103,7 +103,7 @@ function PaymentRequestLineItems() {
 }
 
 export default function NewPaymentRequest() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const viewer = useViewer();
   const [send] = useCreatePaymentRequest();
   const { data, loading } = useAcceptedAgreements();
@@ -137,7 +137,7 @@ export default function NewPaymentRequest() {
 
     const { paymentRequest } = response.data.createPaymentRequest;
 
-    history.replace(`/payment_requests/${paymentRequest.id}`);
+    navigate(`/payment_requests/${paymentRequest.id}`, { replace: true });
   };
 
   const companyOptions = data.acceptedAgreements.map((a) => ({

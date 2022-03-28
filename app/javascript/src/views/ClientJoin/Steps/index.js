@@ -5,12 +5,12 @@ export default [
   {
     title: "Start Application",
     component: StartApplication,
-    path: "/clients/join",
+    path: "",
     exact: true,
   },
   {
     title: "Set Password",
     component: SetPassword,
-    path: "/clients/join/set_password",
+    path: "set_password",
   },
 ];

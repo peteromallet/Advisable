@@ -1,9 +1,10 @@
 import React, { useMemo, useCallback } from "react";
+
 import { Route, matchPath } from "react-router-dom";
 import usePathnameQueue from "src/utilities/usePathnameQueue";
 import findIndex from "lodash/findIndex";
 
-function useSteps(steps) {
+function useSteps(steps, { basePath = "/" }) {
   const [currentPathname, previousPathname] = usePathnameQueue(2);
   const activeSteps = useMemo(
     () => steps.filter((step) => !step.passive),
@@ -12,12 +13,18 @@ function useSteps(steps) {
 
   // STEPS search methods
   const matchStepPath = useCallback(
-    (pathname) => (step) =>
-      matchPath(pathname, {
-        path: step.path,
-        exact: step.exact,
-        strict: step.strict,
-      }),
+    (pathname) => (step) => {
+      if (!pathname) return false;
+
+      return matchPath(
+        {
+          path: `${basePath}/${step.path}`,
+          end: step.exact,
+          strict: step.strict,
+        },
+        pathname,
+      );
+    },
     [],
   );
 
@@ -58,17 +65,22 @@ function useSteps(steps) {
   const routes = useMemo(
     () =>
       steps.map((step, index) => (
-        <Route key={`step-${index}`} path={step.path} exact={step.exact}>
-          {step.component ? (
-            <step.component
-              nextStep={nextStep}
-              prevStep={prevStep}
-              forwards={forwards}
-            />
-          ) : (
-            <React.Fragment />
-          )}
-        </Route>
+        <Route
+          key={`step-${index}`}
+          path={step.path}
+          exact={step.exact}
+          element={
+            step.component ? (
+              <step.component
+                nextStep={nextStep}
+                prevStep={prevStep}
+                forwards={forwards}
+              />
+            ) : (
+              <React.Fragment />
+            )
+          }
+        />
       )),
     [forwards, nextStep, prevStep, steps],
   );

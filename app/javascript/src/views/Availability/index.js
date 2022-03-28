@@ -11,12 +11,12 @@ import useWindowSize from "src/utilities/useWindowSize";
 
 import { Container, Form, Header, Body, Footer } from "./styles";
 import { GET_AVAILABILITY, UPDATE_AVAILABILITY } from "./queries";
-import { useRouteMatch } from "react-router";
+import { useParams } from "react-router-dom";
 
 const DEFAULT_TIMEZONE = DateTime.local().zoneName || "UTC";
 
 const AvailabilityView = () => {
-  const match = useRouteMatch();
+  const { userID } = useParams();
   const notifications = useNotifications();
   const windowSize = useWindowSize();
   const sup = useBreakpoint("sUp");
@@ -27,7 +27,7 @@ const AvailabilityView = () => {
   });
 
   const { data, loading } = useQuery(GET_AVAILABILITY, {
-    variables: { id: match.params.userID },
+    variables: { id: userID },
   });
 
   return (

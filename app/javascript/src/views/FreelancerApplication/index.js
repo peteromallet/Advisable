@@ -1,6 +1,6 @@
 import React from "react";
 import { AnimatePresence } from "framer-motion";
-import { Route, Switch, useLocation, useHistory } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Container, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
@@ -19,13 +19,13 @@ export default function FreelancerApplication() {
   const { notify } = useNotifications();
   const location = useLocation();
   const viewer = useViewer();
-  const history = useHistory();
+  const navigate = useNavigate();
   const forwards = history.action === "PUSH";
   const largeScreen = useBreakpoint("lUp");
 
   if (viewer.isClient) {
     notify("You already registered as a client");
-    history.push("/");
+    navigate("/");
   }
 
   const { data, loading } = useGetSpecialist(viewer.id);
@@ -46,30 +46,39 @@ export default function FreelancerApplication() {
             custom={{ largeScreen, forwards }}
             exitBeforeEnter
           >
-            <Switch location={location} key={location.pathname}>
-              <Route path="/freelancers/apply/introduction">
-                <Introduction specialist={specialist} countries={countries} />
-              </Route>
-              <Route path="/freelancers/apply/overview">
-                <Overview specialist={specialist} />
-              </Route>
-              <Route path="/freelancers/apply/experience">
-                <PreviousWork specialist={specialist} />
-              </Route>
-              <Route path="/freelancers/apply/preferences">
-                <WorkPreferences
-                  skills={skills}
-                  industries={industries}
-                  specialist={specialist}
-                />
-              </Route>
-              <Route path="/freelancers/apply/ideal_project">
-                <IdealProject specialist={specialist} />
-              </Route>
-              <Route>
-                <Welcome specialist={specialist} />
-              </Route>
-            </Switch>
+            <Routes location={location} key={location.pathname}>
+              <Route
+                path="introduction"
+                element={
+                  <Introduction specialist={specialist} countries={countries} />
+                }
+              />
+              <Route
+                path="overview"
+                element={<Overview specialist={specialist} />}
+              />
+              <Route
+                path="experience"
+                element={<PreviousWork specialist={specialist} />}
+              />
+              <Route
+                path="preferences"
+                element={
+                  <WorkPreferences
+                    skills={skills}
+                    industries={industries}
+                    specialist={specialist}
+                  />
+                }
+              />
+
+              <Route
+                path="ideal_project"
+                element={<IdealProject specialist={specialist} />}
+              />
+
+              <Route path="*" element={<Welcome specialist={specialist} />} />
+            </Routes>
           </AnimatePresence>
         </Container>
       </View.Content>

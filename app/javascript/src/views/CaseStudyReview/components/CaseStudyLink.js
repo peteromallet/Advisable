@@ -75,7 +75,7 @@ export default function CaseStudyLink({ to, children }) {
     <Link to={to} target="_blank" mb={4}>
       <StyledCaseStudy p={4} pt={3}>
         <StyledCaseStudyIcon>
-          <ExternalLink color="neutral200" />
+          <ExternalLink color="neutral200" size={28} />
         </StyledCaseStudyIcon>
         <Box pt={1}>
           <StyledLinkType>Case Study</StyledLinkType>

@@ -2,7 +2,12 @@
 import React from "react";
 import { Formik } from "formik";
 import queryString from "query-string";
-import { Redirect, useParams, useLocation, useHistory } from "react-router-dom";
+import {
+  Navigate,
+  useParams,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { Button, Text, Link } from "@advisable/donut";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
@@ -17,7 +22,7 @@ const Signup = () => {
   useScrollRestore();
   const viewer = useViewer();
   const params = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
   const client = useApolloClient();
@@ -26,7 +31,7 @@ const Signup = () => {
   const notice = location?.state?.notice;
 
   if (viewer) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" />;
   }
 
   const handleSubmit = async (values, formikBag) => {
@@ -48,7 +53,7 @@ const Signup = () => {
     } else {
       await client.resetStore();
       const path = location.state?.from?.pathname || "/";
-      history.replace(path);
+      navigate(path, { replace: true });
     }
   };
 

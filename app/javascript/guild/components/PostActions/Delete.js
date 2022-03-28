@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Trash } from "@styled-icons/heroicons-outline/Trash";
 import { useNotifications } from "src/components/Notifications";
 import { Modal, Box, Tooltip, Button, Text, Paragraph } from "@advisable/donut";
@@ -10,7 +10,7 @@ import { useDialogState, DialogDisclosure } from "reakit/Dialog";
 import CannotChangeModal from "./CannotChangeModal";
 
 function DeletePost({ post, size }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const notifications = useNotifications();
   const modal = useDialogState();
 
@@ -25,7 +25,7 @@ function DeletePost({ post, size }) {
       },
     });
     notifications.notify("Deleted guild post");
-    history.push(`/feed`);
+    navigate(`/feed`);
   };
 
   return (

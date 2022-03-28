@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 // Components
 import { Box, Text, Stack, Badge, theme, StyledCard } from "@advisable/donut";
 import NotFound from "../../../NotFound";
@@ -29,7 +29,7 @@ function Invoices() {
   const { loading, error, data, client } = useInvoices();
 
   if (!viewer.isTeamManager) {
-    return <Redirect to="/settings" />;
+    return <Navigate to="/settings" />;
   }
 
   if (loading) return <Loading />;

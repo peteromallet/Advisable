@@ -1,8 +1,13 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { object, string } from "yup";
 import { Form, Formik, Field } from "formik";
 import { Box, Heading, Text, Stack, Textarea } from "@advisable/donut";
-import { useParams, useLocation, useHistory, Redirect } from "react-router-dom";
+import {
+  useParams,
+  useLocation,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import { useCreateAgreement } from "./queries";
 import BackButton from "src/components/BackButton";
 import SubmitButton from "src/components/SubmitButton";
@@ -48,13 +53,13 @@ export default function ConfirmAgreement({ user }) {
   const viewer = useViewer();
   const { userId } = useParams();
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const attachmentProps = useAttachments();
   const [createAgreement] = useCreateAgreement();
   const { uploading } = attachmentProps;
 
   if (!location.state?.invoicing) {
-    return <Redirect to={`/new_agreement/${userId}/invoicing`} />;
+    return <Navigate to={`/new_agreement/${userId}/invoicing`} />;
   }
 
   const handleSubmit = async (values) => {
@@ -73,7 +78,7 @@ export default function ConfirmAgreement({ user }) {
 
     const conversation = response.data.createAgreement.conversation;
 
-    history.push(`/messages/${conversation.id}`);
+    navigate(`/messages/${conversation.id}`);
   };
 
   const initialValues = { message: "" };
@@ -84,10 +89,8 @@ export default function ConfirmAgreement({ user }) {
         <Box paddingRight={{ _: 0, m: 16 }}>
           <BackButton
             marginBottom={4}
-            to={{
-              pathname: `/new_agreement/${userId}/invoicing`,
-              state: location.state,
-            }}
+            to={`/new_agreement/${userId}/invoicing`}
+            state={location.state}
           />
           <Heading mb={2} size="6xl">
             Send request

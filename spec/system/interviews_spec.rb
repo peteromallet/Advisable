@@ -36,7 +36,8 @@ RSpec.describe "Interviews", type: :system do
     click_on(user.availability[0].strftime("%A"))
     find_all("a[class^=styles__Time]").first.click
     click_on("Confirm Call")
-    expect(page).to have_content("scheduled a call for #{user.availability[0].strftime("%d %B %Y at %H:%M")}")
+    expect(page).to have_content("Call Scheduled")
+    expect(page).to have_content("#{user.availability[0].strftime("%H:%M")}")
   end
 
   it "allows the client to request to reschedule a call" do
