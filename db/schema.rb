@@ -258,7 +258,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_114152) do
 
   create_table "case_study_embeddings", force: :cascade do |t|
     t.bigint "article_id", null: false
-    t.string "engine"
     t.jsonb "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -275,6 +274,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_114152) do
     t.index ["article_id"], name: "index_case_study_industries_on_article_id"
     t.index ["industry_id"], name: "index_case_study_industries_on_industry_id"
     t.index ["uid"], name: "index_case_study_industries_on_uid", unique: true
+  end
+
+  create_table "case_study_interests", force: :cascade do |t|
+    t.string "uid", null: false
+    t.bigint "account_id", null: false
+    t.string "term"
+    t.jsonb "article_ids"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "log_data"
+    t.jsonb "term_data"
+    t.decimal "min_score"
+    t.index ["account_id"], name: "index_case_study_interests_on_account_id"
+    t.index ["uid"], name: "index_case_study_interests_on_uid", unique: true
   end
 
   create_table "case_study_search_feedbacks", force: :cascade do |t|
@@ -1167,6 +1180,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_114152) do
   add_foreign_key "case_study_embeddings", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "industries"
+  add_foreign_key "case_study_interests", "accounts"
   add_foreign_key "case_study_search_feedbacks", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_search_feedbacks", "case_study_searches", column: "search_id"
   add_foreign_key "case_study_searches", "users"
@@ -1555,5 +1569,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_114152) do
   SQL
   create_trigger :logidze_on_payment_requests, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_payment_requests BEFORE INSERT OR UPDATE ON public.payment_requests FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_case_study_interests, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_case_study_interests BEFORE INSERT OR UPDATE ON public.case_study_interests FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end

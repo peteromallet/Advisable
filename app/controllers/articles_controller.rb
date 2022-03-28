@@ -8,7 +8,6 @@ class ArticlesController < ApplicationController
   layout "tailwind"
 
   def search
-    engine = params[:engine].presence || "babbage"
     @query = params[:query]
 
     return if @query.blank?
@@ -22,12 +21,10 @@ class ArticlesController < ApplicationController
       articles = articles.where(skills: cs_skills)
     end
 
-    client = OpenAI::Client.new
-    query = client.embeddings(engine: "text-search-#{engine}-query-001", parameters: {input: @query})
-    data = query["data"].first["embedding"]
+    data = OpenAiInteractor.new.embedding_for(@query)
     query_vector = Vector.elements(data)
     @results = []
-    CaseStudy::Embedding.where(article: articles, engine:).includes(:article).each do |embedding|
+    CaseStudy::Embedding.where(article: articles).includes(:article).each do |embedding|
       @results << {
         similarity: (embedding.cosine_similarity_to(query_vector) * 100).round(3),
         article: embedding.article

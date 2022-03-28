@@ -3,7 +3,6 @@
 FactoryBot.define do
   factory :case_study_embedding, class: "CaseStudy::Embedding" do
     article { association :case_study_article }
-    engine { "babbage" }
     data { [1, 2, 3] }
   end
 end
