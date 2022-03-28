@@ -20,7 +20,6 @@ query InvoiceDetails($id: ID!) {
         id
         amount
         adminFee
-        deposit
         createdAt
         task {
           id
