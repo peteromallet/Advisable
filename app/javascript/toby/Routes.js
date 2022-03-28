@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Resource from "./views/resource";
-import { resourcePath } from "./utilities";
+import { resourcePath, pluralizeType } from "./utilities";
 import { useResources } from "./components/resources";
 
 export default function TobyRoutes() {
@@ -10,13 +10,13 @@ export default function TobyRoutes() {
   return (
     <Routes>
       {resources.map((resource) => (
-        <Route key={resource.type} path={resourcePath(resource)}>
-          <Resource resource={resource} />
-        </Route>
+        <Route
+          key={resource.type}
+          path={`/${pluralizeType(resource.type)}/*`}
+          element={<Resource resource={resource} />}
+        />
       ))}
-      <Route path="*">
-        <Navigate to={resourcePath(resources[0])} />
-      </Route>
+      <Route path="*" element={<Navigate to={resourcePath(resources[0])} />} />
     </Routes>
   );
 }
