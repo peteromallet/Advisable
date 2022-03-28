@@ -1,0 +1,27 @@
+= render "emails/container" do
+  = render "emails/spacing", height: "32px"
+  = render "emails/heading" do
+    ' Reminder for #{@payment_request.specialist.account.name} payment request
+  = render "emails/paragraph" do
+    ' Hi #{@agreement.user.account.first_name}, <br/>
+    ' Hope you are well!
+  = render "emails/spacing", height: "32px"
+  = render "emails/paragraph" do
+    ' We would like to remind you there's a pending payment request sent to you by #{@payment_request.specialist.account.name} two days ago.
+    ' You can approve it and complete the payment following the button below.
+  = render "emails/spacing", height: "32px"
+  = render "emails/paragraph" do
+    ' Please note that the request is due on #{@payment_request.due_date.strftime("%d %B %Y")}.
+    ' If you have any questions regarding the work it refers to feel free to reach out to #{@payment_request.specialist.account.name}, while if you need help completing your payment please contact us at <a href="mailto:finance@advisable.com">finance@advisable.com</a>.
+  = render "emails/spacing", height: "32px"
+  = render "emails/button", href: magic_link(@agreement.user.account, payment_request_url(@payment_request)) do
+    ' Complete payment
+  = render "emails/spacing", height: "32px"
+  = render "emails/paragraph" do
+    ' Have a nice day!
+  = render "emails/spacing", height: "32px"
+  = render "emails/paragraph" do
+    ' Thanks,
+    br
+    ' The Advisable Team.
+  = render "emails/spacing", height: "32px"
