@@ -48,7 +48,7 @@ export default function SelectTime(props) {
             <Time
               key={time}
               to={{
-                pathname: parsed.toFormat("HH:mm"),
+                pathname: parsed.toUTC().toFormat("HH:mm"),
                 state: {
                   ...location.state,
                   zone: selectedTimeZone,
