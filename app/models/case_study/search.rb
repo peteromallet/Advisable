@@ -4,10 +4,9 @@ module CaseStudy
   class Search < ApplicationRecord
     include Uid
     uid_prefix "csr"
+    has_logidze
 
     RESULT_LIMIT = 5
-
-    has_logidze
 
     belongs_to :user
     has_many :skills, dependent: :destroy

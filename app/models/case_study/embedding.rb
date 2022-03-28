@@ -4,22 +4,27 @@ require "matrix"
 
 module CaseStudy
   class Embedding < ApplicationRecord
-    ENGINES = %w[babbage davinci].freeze
-
     belongs_to :article
 
-    validates :engine, inclusion: {in: ENGINES}
-
-    def self.for_article(article, engine: "babbage", refresh: false)
-      embedding = find_or_initialize_by(article:, engine:)
+    def self.for_article(article, refresh: false)
+      embedding = find_or_initialize_by(article:)
       return embedding if embedding.persisted? && !refresh
 
-      client = OpenAI::Client.new
       text = article.to_text.tr("\n", " ").split.first(1500).join(" ")
-      response = client.embeddings(engine: "text-search-#{engine}-doc-001", parameters: {input: text})
-      embedding.data = response["data"].first["embedding"]
+      embedding.data = OpenAiInteractor.new.embedding_for(text, type: "doc")
       embedding.save!
       embedding
+    end
+
+    def self.ordered_articles_for(vector)
+      results = []
+      joins(:article).merge(Article.searchable).find_each do |embedding|
+        results << {
+          similarity: embedding.cosine_similarity_to(vector),
+          article_id: embedding.article_id
+        }
+      end
+      results.sort_by { |r| r[:similarity] }
     end
 
     def vector
@@ -38,7 +43,6 @@ end
 #
 #  id         :bigint           not null, primary key
 #  data       :jsonb
-#  engine     :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  article_id :bigint           not null
