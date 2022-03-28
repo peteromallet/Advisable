@@ -19,6 +19,7 @@ query Article($searchId: ID!, $articleId: ID!) {
       name
       logo
       favicon
+      businessType
     }
     comment
     specialist {
