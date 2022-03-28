@@ -34,7 +34,7 @@
     "babel-loader": "8.2.4",
     "babel-plugin-styled-components": "^2.0.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "body-scroll-lock": "^3.1.5",
+    "body-scroll-lock": "^4.0.0-beta.0",
     "camelcase": "^6.3.0",
     "clipboard-polyfill": "^3.0.3",
     "compression-webpack-plugin": "9",
