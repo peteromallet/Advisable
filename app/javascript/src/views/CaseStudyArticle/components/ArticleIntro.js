@@ -1,6 +1,7 @@
 import React from "react";
 import PassportAvatar from "src/components/PassportAvatar";
 import AdvisableComment from "./AdvisableComment";
+import CompanyBox from "./CompanyBox";
 
 const NUM_TO_WORD = ["first", "second", "third", "fourth", "fifth", "sixth"];
 
@@ -39,6 +40,7 @@ export default function ArticleIntro({ caseStudy }) {
       <img src={caseStudy.company.favicon} />
       <h1 className="text-5xl font-extrabold">{caseStudy.title}</h1>
       <AdvisableComment caseStudy={caseStudy} />
+      <CompanyBox caseStudy={caseStudy} />
       <Achievements caseStudy={caseStudy} />
     </div>
   );
