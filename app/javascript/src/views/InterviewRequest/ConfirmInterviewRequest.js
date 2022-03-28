@@ -11,10 +11,10 @@ export default function ConfirmInterviewRequest() {
   const navigate = useNavigate();
   const location = useLocation();
   const { date, time, interviewID } = useParams();
-  const parsed = DateTime.fromISO(`${date}T${time}`);
+  const parsed = DateTime.fromISO(`${date}T${time}Z`);
   const [scheduleInterview, { loading }] = useMutation(SCHEDULE_INTERVIEW);
 
-  const startsAt = parsed.toUTC().toISO();
+  const startsAt = parsed.toISO();
 
   const handleSchedule = async () => {
     await scheduleInterview({
