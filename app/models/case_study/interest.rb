@@ -28,7 +28,7 @@ module CaseStudy
     def fetch_term_data!
       return if term_data.present? || term.blank?
 
-      self.term_data = OpenAiInteractor.new.embedding_for(term)
+      self.term_data = OpenAiInteractor.new.query_embedding_for(term)
       save!
     end
   end

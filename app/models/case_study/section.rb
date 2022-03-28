@@ -4,15 +4,19 @@ module CaseStudy
   class Section < ApplicationRecord
     include Uid
     uid_prefix "css"
+    has_logidze
 
     self.inheritance_column = :_type_disabled
 
-    has_logidze
+    VALID_TYPES = %w[background overview outcome].freeze
 
     belongs_to :article
     has_many :contents, dependent: :destroy
 
     scope :by_position, -> { order(:position) }
+    scope :by_type, ->(type) { where(type:) }
+
+    validates :type, inclusion: {in: VALID_TYPES}
   end
 end
 

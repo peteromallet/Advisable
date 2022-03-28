@@ -10,8 +10,7 @@ module CaseStudy
       embedding = find_or_initialize_by(article:)
       return embedding if embedding.persisted? && !refresh
 
-      text = article.to_text.tr("\n", " ").split.first(1500).join(" ")
-      embedding.data = OpenAiInteractor.new.embedding_for(text, type: "doc")
+      embedding.data = OpenAiInteractor.new.document_embedding_for(article.text_for_embedding)
       embedding.save!
       embedding
     end
