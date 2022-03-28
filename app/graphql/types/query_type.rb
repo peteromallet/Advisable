@@ -352,5 +352,11 @@ module Types
       requires_current_user!
       current_user.agreements.accepted
     end
+
+    field :interests, [Types::Interest], null: true
+    def interests
+      requires_client!
+      current_user.account.interests
+    end
   end
 end
