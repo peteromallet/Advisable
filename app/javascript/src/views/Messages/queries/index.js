@@ -100,9 +100,12 @@ export async function updateConversationsList(client, conversation) {
 }
 
 export function updateConversation(client, location, message) {
-  const conversationPath = matchPath(location.pathname, {
-    path: "/messages/:id",
-  });
+  const conversationPath = matchPath(
+    {
+      path: "/messages/:id",
+    },
+    location.pathname,
+  );
 
   const isViewingConversation =
     document.hasFocus() &&

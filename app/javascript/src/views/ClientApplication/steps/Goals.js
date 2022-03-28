@@ -2,7 +2,7 @@ import React from "react";
 import { object, array } from "yup";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import { Box, Error } from "@advisable/donut";
 import FormField from "src/components/FormField";
@@ -33,7 +33,7 @@ const GOALS = [
 
 export default function CompanyOverview({ clientApplication }) {
   const [update] = useMutation(UPDATE_CLIENT_APPLICATION);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const initialValues = {
     goals: clientApplication.goals || [],
@@ -50,7 +50,7 @@ export default function CompanyOverview({ clientApplication }) {
       return;
     }
 
-    history.push("/clients/apply/requirements");
+    navigate("/clients/apply/requirements");
   };
 
   return (

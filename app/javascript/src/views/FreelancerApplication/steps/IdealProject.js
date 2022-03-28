@@ -11,7 +11,7 @@ import Description from "../components/Description";
 import AnimatedCard from "../components/AnimatedCard";
 import { useMutation } from "@apollo/client";
 import { COMPLETE_SETUP, UPDATE_PROFILE } from "../queries";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { track } from "src/utilities/mixpanel";
 
 export const validationSchema = object().shape({
@@ -26,7 +26,7 @@ export const validationSchema = object().shape({
 export default function IdealProject({ specialist }) {
   const [update] = useMutation(UPDATE_PROFILE);
   const [complete] = useMutation(COMPLETE_SETUP);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const initialValues = {
     idealProject: specialist.idealProject || "",
@@ -46,7 +46,7 @@ export default function IdealProject({ specialist }) {
     }
 
     track("Ideal Project (Specialist Application)");
-    history.push("/");
+    navigate("/");
   };
 
   return (

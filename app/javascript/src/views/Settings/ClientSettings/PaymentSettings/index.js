@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useDialogState } from "reakit/Dialog";
 import { useQuery, useMutation } from "@apollo/client";
 import { Formik, Form } from "formik";
@@ -20,7 +20,7 @@ const PaymentSettings = () => {
   const [updateInvoiceSettings] = useMutation(UPDATE_INVOICE_SETTINGS);
 
   if (!viewer.isTeamManager) {
-    return <Redirect to="/settings" />;
+    return <Navigate to="/settings" />;
   }
 
   const handleSubmit = async (values, formik) => {

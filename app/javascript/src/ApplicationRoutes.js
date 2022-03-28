@@ -1,6 +1,6 @@
 // ApplicationRoutes renders the routes that should be rendered with a header
 import React, { Suspense, lazy } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import NotFound from "./views/NotFound";
 import Header from "./components/Header";
 import Loading from "./components/Loading";
@@ -30,7 +30,7 @@ const PaymentRequests = lazy(() => import("./views/PaymentRequests"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
-  return <Redirect to={viewer.profilePath} />;
+  return <Navigate to={viewer.profilePath} />;
 }
 
 const ApplicationRoutes = () => {
@@ -41,123 +41,161 @@ const ApplicationRoutes = () => {
     <>
       <Header />
       <Suspense fallback={<Loading />}>
-        <Switch>
-          {isClient && <Redirect from="/" exact to="/explore" />}
+        <Routes>
+          {isClient && (
+            <Route path="/" exact element={<Navigate exact to="/explore" />} />
+          )}
 
-          <Route path="/set_password">
-            <Redirect to="/" />
-          </Route>
+          <Route path="/set_password" element={<Navigate to="/" />} />
 
-          <Route path="/" exact>
-            <RequireAuthentication>
-              <FreelancerDashboard />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/"
+            exact
+            element={
+              <RequireAuthentication>
+                <FreelancerDashboard />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/post">
-            <RequireAuthentication specialistOnly>
-              <NewPost />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/post"
+            element={
+              <RequireAuthentication specialistOnly>
+                <NewPost />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/messages">
-            <RequireAuthentication>
-              <Messages />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/messages/*"
+            element={
+              <RequireAuthentication>
+                <Messages />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/clients/apply">
-            <RequireAuthentication>
-              <ClientApplication />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/clients/apply/*"
+            element={
+              <RequireAuthentication>
+                <ClientApplication />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/freelancers/apply">
-            <RequireAuthentication>
-              <FreelancerApplication />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/freelancers/apply/*"
+            element={
+              <RequireAuthentication>
+                <FreelancerApplication />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/profile/:username">
-            <FreelancerProfile />
-          </Route>
+          <Route path="/profile/:username/*" element={<FreelancerProfile />} />
 
-          <Route path="/profile">
-            <RequireAuthentication>
-              <RedirectToFreelancerProfile />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/profile"
+            element={
+              <RequireAuthentication>
+                <RedirectToFreelancerProfile />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/interview_request/:interviewID">
-            <RequireAuthentication specialistOnly>
-              <InterviewRequest />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/interview_request/:interviewID/*"
+            element={
+              <RequireAuthentication specialistOnly>
+                <InterviewRequest />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/interviews/:id">
-            <RequireAuthentication>
-              <Interview />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/interviews/:id/*"
+            element={
+              <RequireAuthentication>
+                <Interview />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/settings">
-            <RequireAuthentication>
-              <Settings />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/settings/*"
+            element={
+              <RequireAuthentication>
+                <Settings />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/explore">
-            <RequireAuthentication clientOnly>
-              <Discover />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/explore/*"
+            element={
+              <RequireAuthentication clientOnly>
+                <Discover />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/payments/:id">
-            <RequireAuthentication clientOnly>
-              <Payment />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/payments/:id"
+            element={
+              <RequireAuthentication clientOnly>
+                <Payment />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/posts/:id/edit">
-            <EditPost />
-          </Route>
+          <Route path="/posts/:id/edit" element={<EditPost />} />
 
-          <Route path="/posts/:postId">
-            <GuildPost />
-          </Route>
+          <Route path="/posts/:postId" element={<GuildPost />} />
 
-          <Route exact path="/guild/topics">
-            <RequireAuthentication specialistOnly>
-              <GuildFollows />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            exact
+            path="/guild/topics"
+            element={
+              <RequireAuthentication specialistOnly>
+                <GuildFollows />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route exact path="/events/:eventId">
-            <GuildEvent />
-          </Route>
+          <Route exact path="/events/:eventId" element={<GuildEvent />} />
 
-          <Route exact path="/events">
-            <RequireAuthentication>
-              <GuildEvents />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            exact
+            path="/events"
+            element={
+              <RequireAuthentication>
+                <GuildEvents />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/new_agreement/:userId">
-            <RequireAuthentication specialistOnly>
-              <NewAgreement />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/new_agreement/:userId/*"
+            element={
+              <RequireAuthentication specialistOnly>
+                <NewAgreement />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route path="/payment_requests">
-            <RequireAuthentication>
-              <PaymentRequests />
-            </RequireAuthentication>
-          </Route>
+          <Route
+            path="/payment_requests/*"
+            element={
+              <RequireAuthentication>
+                <PaymentRequests />
+              </RequireAuthentication>
+            }
+          />
 
-          <Route>
-            <NotFound />
-          </Route>
-        </Switch>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </Suspense>
     </>
   );

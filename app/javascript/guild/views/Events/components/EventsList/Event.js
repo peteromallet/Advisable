@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { Box, Text } from "@advisable/donut";
 import { CoverImage } from "@guild/components/CoverImage";
@@ -9,12 +9,12 @@ import OrbitsBackground from "@guild/components/Event/OrbitsBackground";
 import { StyledLineClamp, StyledEventCard } from "@guild/views/Events/styles";
 
 export default function Event({ event }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const eventLink = `/events/${event.id}`;
 
   const handleClick = (e) => {
     e.preventDefault();
-    history.push(eventLink);
+    navigate(eventLink);
   };
 
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDialogState } from "reakit/Dialog";
 import { Pencil } from "@styled-icons/heroicons-outline/Pencil";
 import { Box, Tooltip } from "@advisable/donut";
@@ -7,11 +7,11 @@ import PostAction from "./PostAction";
 import CannotChangeModal from "./CannotChangeModal";
 
 function EditPost({ post, size }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const modal = useDialogState();
 
   function handleClick() {
-    post.article ? modal.show() : history.push(`/posts/${post.id}/edit`);
+    post.article ? modal.show() : navigate(`/posts/${post.id}/edit`);
   }
   return (
     <>

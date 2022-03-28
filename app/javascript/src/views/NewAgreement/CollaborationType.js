@@ -1,7 +1,7 @@
 import React from "react";
 import { object, string, number } from "yup";
 import { Box, Heading, Text } from "@advisable/donut";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Field, Form, Formik, useField } from "formik";
 import SubmitButton from "src/components/SubmitButton";
 import { ArrowSmRight } from "@styled-icons/heroicons-solid";
@@ -45,13 +45,15 @@ function HourlyRateInput() {
 }
 
 export default function CollaborationType({ user }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { userId } = useParams();
 
   const handleSubmit = (values) => {
-    history.push(`/new_agreement/${userId}/invoicing`, {
-      collaboration: values.collaboration,
-      hourlyRate: values.hourlyRate,
+    navigate(`/new_agreement/${userId}/invoicing`, {
+      state: {
+        collaboration: values.collaboration,
+        hourlyRate: values.hourlyRate,
+      },
     });
   };
 

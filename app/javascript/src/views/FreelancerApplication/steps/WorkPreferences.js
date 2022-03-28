@@ -3,7 +3,7 @@ import Combobox from "@advisable/donut/components/Combobox";
 import { array, object, string } from "yup";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Box, Error } from "@advisable/donut";
 import { ChoiceList } from "src/components";
 import FormField from "src/components/FormField";
@@ -24,7 +24,7 @@ export const validationSchema = object().shape({
 
 export default function WorkPreferences({ specialist, skills, industries }) {
   const [update] = useMutation(UPDATE_PROFILE);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const initialValues = {
     skills: specialist.skills || [],
@@ -53,7 +53,7 @@ export default function WorkPreferences({ specialist, skills, industries }) {
     }
 
     track("Preferences (Specialist Application)");
-    history.push("/freelancers/apply/ideal_project");
+    navigate("/freelancers/apply/ideal_project");
   };
 
   return (

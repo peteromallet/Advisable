@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Box, Text, Heading, Button } from "@advisable/donut";
 import BackButton from "src/components/BackButton";
 import { useCategoryArticles, useCurrentCompany } from "../queries";
-import { Redirect, useHistory, useLocation, useParams } from "react-router";
+import { Navigate, useNavigate, useLocation, useParams } from "react-router";
 import { ArrowSmRight } from "@styled-icons/heroicons-solid";
 import ArticleSelection from "../components/ArticleSelection";
 import Loading from "src/components/Loading";
 
 export default function ShortlistArticleSelection() {
   const { slug } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { data: companyData } = useCurrentCompany();
   const [selected, setSelected] = useState(location.state?.articles || []);
@@ -18,7 +18,7 @@ export default function ShortlistArticleSelection() {
   });
 
   if (!location.state?.category) {
-    return <Redirect to="/explore/new" />;
+    return <Navigate to="/explore/new" />;
   }
 
   const articles =
@@ -50,8 +50,8 @@ export default function ShortlistArticleSelection() {
       articles: selected,
     };
 
-    history.replace({ ...location, state });
-    history.push("/explore/new/goals", state);
+    navigate(location.pathname, { state, replace: true });
+    navigate("/explore/new/goals", { state });
   };
 
   return (

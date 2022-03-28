@@ -20,9 +20,12 @@ function CoverImage({ src, isOwner, ...props }) {
   const maxSizeInMB = 5;
   const accept = ".png, .jpg, .jpeg";
 
-  const isArticle = !!matchPath(location.pathname, {
-    path: "/profile/:username/:slug",
-  });
+  const isArticle = !!matchPath(
+    {
+      path: "/profile/:username/:slug",
+    },
+    location.pathname,
+  );
   const [updatePicture] = useSetCoverPhoto();
   const image = src || defaultCoverPhoto;
   const modal = useDialogState();

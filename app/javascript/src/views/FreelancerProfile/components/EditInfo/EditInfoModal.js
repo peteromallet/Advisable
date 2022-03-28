@@ -18,7 +18,7 @@ import { useUpdateProfile, useCountries } from "../../queries";
 import GET_PROFILE_DATA from "../../queries/getProfileData.gql";
 // Constant values
 import { SPECIALIST_BIO_LENGTH } from "src/constants";
-import { generatePath, useHistory, useRouteMatch } from "react-router";
+import { generatePath, useNavigate, useMatch } from "react-router";
 import { useApolloClient } from "@apollo/client";
 
 const validationSchema = object().shape({
@@ -39,8 +39,8 @@ const validationSchema = object().shape({
 
 function EditInfoModal({ modal, specialist }) {
   const client = useApolloClient();
-  const match = useRouteMatch();
-  const history = useHistory();
+  const match = useMatch({ path: "/profile/:username" });
+  const navigate = useNavigate();
   const notifications = useNotifications();
   const [mutate] = useUpdateProfile();
   const isWidescreen = useBreakpoint("sUp");
@@ -79,12 +79,12 @@ function EditInfoModal({ modal, specialist }) {
         },
       });
 
-      const nextPath = generatePath(match.path, {
+      const nextPath = generatePath("/profile/:username", {
         ...match.params,
         username: updatedSpecialist.username || updatedSpecialist.id,
       });
 
-      history.replace(nextPath);
+      navigate(nextPath, { replace: true });
 
       notifications.notify("Your profile has been updated");
       modal.hide();

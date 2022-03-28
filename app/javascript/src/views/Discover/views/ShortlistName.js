@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { ArrowSmRight } from "@styled-icons/heroicons-solid";
-import { Redirect, useHistory, useLocation } from "react-router";
+import { Navigate, useNavigate, useLocation } from "react-router";
 import { Heading, Box, Text } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
@@ -9,14 +9,14 @@ import BackButton from "src/components/BackButton";
 import { useCreateCaseStudySearch } from "../queries";
 
 export default function ShortlistName() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [createShortlist] = useCreateCaseStudySearch();
   const articles = location?.state?.articles || [];
   const skillCategory = location?.state?.skillCategory;
 
   if (articles.length === 0) {
-    return <Redirect to={`/explore/new/${skillCategory}`} />;
+    return <Navigate to={`/explore/new/${skillCategory}`} />;
   }
 
   const handleSubmit = async (values) => {
@@ -32,7 +32,7 @@ export default function ShortlistName() {
     });
 
     const search = response?.data?.createCaseStudySearch?.search;
-    history.push(`/explore/${search.id}`);
+    navigate(`/explore/${search.id}`);
   };
 
   const initialValues = {

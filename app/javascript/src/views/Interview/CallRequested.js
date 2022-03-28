@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { theme, Box, Card, Text, Paragraph } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import CalendarIllustration from "src/illustrations/zest/calendar";
@@ -11,7 +11,7 @@ export default function CallRequested({ interview }) {
   const { isSpecialist } = useViewer();
 
   if (isSpecialist) {
-    return <Redirect to={`/interview_request/${id}`} />;
+    return <Navigate to={`/interview_request/${id}`} />;
   }
 
   return (

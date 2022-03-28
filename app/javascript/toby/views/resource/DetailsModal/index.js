@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { Modal, Box, Text, Tag } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import SubmitButton from "src/components/SubmitButton";
-import { useHistory, useLocation, useRouteMatch } from "react-router";
+import { useNavigate, useLocation, useMatch } from "react-router";
 import { useSchema } from "../../../components/schema";
 import {
   attributeFormValueInitializer,
@@ -22,9 +22,9 @@ import { isEqual } from "lodash-es";
 
 function useRoutedModal(path, returnPath) {
   const modal = useDialogState();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
-  const match = useRouteMatch(path);
+  const match = useMatch(path);
 
   useEffect(() => {
     if (modal.visible && !match) {
@@ -37,13 +37,12 @@ function useRoutedModal(path, returnPath) {
   }, [modal, match]);
 
   const handleShow = useCallback(() => {
-    history.push(path);
+    navigate(path);
   }, [history, path]);
 
   const handleHide = useCallback(() => {
-    history.replace({
-      ...location,
-      pathname: returnPath,
+    navigate(returnPath, {
+      state: location.state,
     });
   }, [location, history, returnPath]);
 
@@ -188,7 +187,7 @@ function Details({ id, resource }) {
 }
 
 export default function DetailsModal({ resource }) {
-  const match = useRouteMatch("/:resource/:id");
+  const match = useMatch("/:resource/:id");
 
   const modal = useRoutedModal("/:resource/:id", resourcePath(resource));
 

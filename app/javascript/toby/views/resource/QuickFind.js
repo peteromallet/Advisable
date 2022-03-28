@@ -1,12 +1,12 @@
 import { Search } from "@styled-icons/heroicons-solid";
 import React from "react";
 import { Box } from "@advisable/donut";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Combobox from "src/components/Combobox";
 import { recordPath, useSearchResource } from "../../utilities";
 
 export default function QuickFind({ resource }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const search = useSearchResource(resource);
 
@@ -22,9 +22,8 @@ export default function QuickFind({ resource }) {
   };
 
   const handleSelect = (value) => {
-    history.push({
-      ...location,
-      pathname: recordPath(value),
+    navigate(recordPath(value), {
+      state: location?.state,
     });
   };
 

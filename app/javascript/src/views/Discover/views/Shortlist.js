@@ -5,7 +5,7 @@ import BackButton from "src/components/BackButton";
 import { useShortlist } from "../queries";
 import MoreResults from "../components/MoreResults";
 import NoMoreResults from "../components/NoMoreResults";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import RecommendationsSkeleton from "../components/RecommendationsSkeleton";
 import Recommendations from "../components/Recommendations";
 import DeleteSearch from "../components/DeleteSearch";
@@ -13,7 +13,7 @@ import AccessDenied, { isNotAuthorized } from "src/views/AccessDenied";
 
 export default function Shortlist() {
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [showLoadMore, setShowLoadMore] = useState(true);
   const { loading, data, error } = useShortlist();
 
@@ -25,7 +25,7 @@ export default function Shortlist() {
   const recommendations = shortlist?.results?.nodes || [];
 
   const handleClick = (recommendation) => {
-    history.push(`/explore/${id}/${recommendation.id}`);
+    navigate(`/explore/${id}/${recommendation.id}`);
   };
 
   const handleLoadMore = (_, { data }) => {

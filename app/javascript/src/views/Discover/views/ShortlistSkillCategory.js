@@ -39,10 +39,8 @@ export default function ShortlistSkillCategory() {
         {categories.map((c) => (
           <Link
             key={c.slug}
-            to={{
-              pathname: `/explore/new/${c.slug}`,
-              state: { category: c },
-            }}
+            to={`/explore/new/${c.slug}`}
+            state={{ category: c }}
           >
             <Box
               padding={5}

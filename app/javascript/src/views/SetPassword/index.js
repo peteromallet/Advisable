@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { object, string, ref } from "yup";
 import { useTranslation } from "react-i18next";
-import { Redirect, useLocation } from "react-router";
+import { Navigate, useLocation } from "react-router";
 import { Card, Box, Text } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
@@ -28,7 +28,7 @@ export default function SetPassword() {
   };
 
   if (!viewer.needsToSetAPassword) {
-    return <Redirect to={from} />;
+    return <Navigate to={from} />;
   }
 
   const initialValues = {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
-import { Redirect, useHistory } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { Heading, Box, Text, Error } from "@advisable/donut";
 import SubmitButton from "src/components/SubmitButton";
 import FormField from "src/components/FormField";
@@ -13,7 +13,7 @@ import validationSchema from "./validationSchema";
 export default function SetPassword({ prevStep, forwards }) {
   const viewer = useViewer();
   const [setPassword] = useUpdatePassword();
-  const history = useHistory();
+  const navigate = useNavigate();
   const initialValues = {
     password: "",
     passwordConfirmation: "",
@@ -22,7 +22,7 @@ export default function SetPassword({ prevStep, forwards }) {
   if (!viewer) {
     return (
       <motion.div exit>
-        <Redirect to={prevStep.path} />
+        <Navigate to={prevStep.path} />
       </motion.div>
     );
   }
@@ -36,7 +36,7 @@ export default function SetPassword({ prevStep, forwards }) {
       return;
     }
 
-    history.replace("/freelancers/apply");
+    navigate("/freelancers/apply", { replace: true });
   };
 
   return (

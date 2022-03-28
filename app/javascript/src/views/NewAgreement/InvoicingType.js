@@ -2,7 +2,12 @@ import React from "react";
 import { object, string } from "yup";
 import { Field, Form, Formik, useField } from "formik";
 import { Box, Heading, Text } from "@advisable/donut";
-import { Redirect, useHistory, useLocation, useParams } from "react-router-dom";
+import {
+  Navigate,
+  useNavigate,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import { ArrowSmRight, InformationCircle } from "@styled-icons/heroicons-solid";
 import RadioOption from "./RadioOption";
 import HelpText from "./HelpText";
@@ -33,19 +38,21 @@ function TypeNotice() {
 }
 
 export default function InvoicingType({ user }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { userId } = useParams();
   const companyName = user.company.name;
 
   if (!location.state?.collaboration) {
-    return <Redirect to={`/new_agreement/${userId}/collaboration`} />;
+    return <Navigate to={`/new_agreement/${userId}/collaboration`} />;
   }
 
   const handleSubmit = (values) => {
-    history.push(`/new_agreement/${userId}/confirm`, {
-      ...location.state,
-      ...values,
+    navigate(`/new_agreement/${userId}/confirm`, {
+      state: {
+        ...location.state,
+        ...values,
+      },
     });
   };
 

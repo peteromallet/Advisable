@@ -4,11 +4,11 @@ import { Modal, Text, Button, useModal } from "@advisable/donut";
 import IconButton from "src/components/IconButton";
 import { useDeleteSearch } from "../queries";
 import { useNotifications } from "src/components/Notifications";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 export default function DeleteSearch({ search }) {
   const modal = useModal();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { error } = useNotifications();
   const [deleteSearch, { loading }] = useDeleteSearch(search);
 
@@ -18,7 +18,7 @@ export default function DeleteSearch({ search }) {
       error("Something went wrong, please try again.");
     } else {
       modal.hide();
-      history.replace("/explore");
+      navigate("/explore", { replace: true });
     }
   };
 

@@ -2,23 +2,24 @@ import React from "react";
 import { Formik } from "formik";
 import queryString from "query-string";
 import { Button, Text, Box } from "@advisable/donut";
-import { withNotifications } from "src/components/Notifications";
 import Logo from "src/components/Logo";
 import FormField from "src/components/FormField";
 import validationSchema from "./validationSchema";
 import { Container, Card } from "../styles";
 import { useResetPassword } from "./queries";
-import { useHistory, useLocation, useRouteMatch } from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router";
+import { useNotifications } from "src/components/Notifications";
 
-export default withNotifications(({ notifications }) => {
-  const history = useHistory();
+export default function ResetPassword() {
+  const notifications = useNotifications();
+  const navigate = useNavigate();
   const location = useLocation();
-  const match = useRouteMatch();
+  const params = useParams();
   const [resetPassword] = useResetPassword();
   const queryParams = queryString.parse(location.search);
 
   if (!queryParams.email) {
-    history.replace("/reset_password");
+    navigate("/reset_password", { replace: true });
   }
 
   return (
@@ -33,7 +34,7 @@ export default withNotifications(({ notifications }) => {
             email: queryParams.email,
             password: "",
             passwordConfirmation: "",
-            token: match.params.token,
+            token: params.token,
           }}
           onSubmit={async (values) => {
             const { data, errors } = await resetPassword({
@@ -48,14 +49,14 @@ export default withNotifications(({ notifications }) => {
 
             if (data.resetPassword.reset) {
               notifications.notify("Your password has been updated");
-              history.replace("/login");
+              navigate("/login", { replace: true });
               return;
             }
 
             notifications.notify(
               "Failed to reset your password, Please try again",
             );
-            history.replace("/reset_password");
+            navigate("/reset_password", { replace: true });
           }}
           render={(formik) => (
             <form onSubmit={formik.handleSubmit}>
@@ -92,4 +93,4 @@ export default withNotifications(({ notifications }) => {
       </Card>
     </Container>
   );
-});
+}

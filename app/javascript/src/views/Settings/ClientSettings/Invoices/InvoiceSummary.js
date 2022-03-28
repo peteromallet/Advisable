@@ -4,17 +4,17 @@ import css from "@styled-system/css";
 import { Badge, Box, Text } from "@advisable/donut";
 import { ChevronRight } from "@styled-icons/heroicons-solid/ChevronRight";
 import currency from "src/utilities/currency";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function InvoiceSummary({ invoice }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const date = DateTime.fromObject({
     year: invoice.year,
     month: invoice.month,
   });
 
   const handleClick = () => {
-    history.push(`/settings/invoices/${invoice.id}`);
+    navigate(`/settings/invoices/${invoice.id}`);
   };
 
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 import {
@@ -40,7 +40,7 @@ export const validationSchema = object().shape({
 });
 
 export default function Introduction({ specialist, countries }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [profilePhoto, setProfilePhoto] = React.useState(specialist?.avatar);
   const [update] = useMutation(UPDATE_PROFILE);
 
@@ -62,7 +62,7 @@ export default function Introduction({ specialist, countries }) {
     }
 
     track("Introduction (Specialist Application)");
-    history.push("/freelancers/apply/overview");
+    navigate("/freelancers/apply/overview");
   };
 
   return (

@@ -14,21 +14,20 @@ import {
   DialogDisclosure,
   theme,
 } from "@advisable/donut";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import CircularButton from "src/components/CircularButton";
 import { ArrowLeft } from "@styled-icons/heroicons-solid";
 import { useNotifications } from "src/components/Notifications";
 import CalendarIllustration from "src/illustrations/zest/calendar";
 
 function ConsultationRequestPrompt({ message, sender, onDecline }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { error } = useNotifications();
   const [accept, { loading }] = useAcceptConsultationRequest();
 
   const gotoInterview = (i) =>
-    history.push({
-      pathname: `/interview_request/${i.id}`,
+    navigate(`/interview_request/${i.id}`, {
       state: {
         from: location.pathname,
       },
