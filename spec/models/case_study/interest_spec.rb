@@ -10,7 +10,7 @@ RSpec.describe CaseStudy::Interest, type: :model do
   end
 
   it "persists term_data" do
-    allow_any_instance_of(OpenAiInteractor).to receive(:embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821])
+    allow_any_instance_of(OpenAiInteractor).to receive(:query_embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821])
 
     expect(interest.term_data).to be_blank
     interest.term_vector

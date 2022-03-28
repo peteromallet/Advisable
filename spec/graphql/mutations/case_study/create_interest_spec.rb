@@ -24,7 +24,7 @@ RSpec.describe Mutations::CaseStudy::CreateInterest do
     GRAPHQL
   end
 
-  before { allow_any_instance_of(OpenAiInteractor).to receive(:embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821]) }
+  before { allow_any_instance_of(OpenAiInteractor).to receive(:query_embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821]) }
 
   it "creates a new interest" do
     request = AdvisableSchema.execute(query, context:)

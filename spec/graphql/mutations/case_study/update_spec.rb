@@ -19,11 +19,11 @@ RSpec.describe Mutations::CaseStudy::Update do
           sections: [
             {
               #{section_extra}
-              type: "execution",
+              type: "overview",
               content: #{content}
             },
             {
-              type: "results",
+              type: "outcome",
               content: [
                 {
                   type: "paragraph",
@@ -96,7 +96,7 @@ RSpec.describe Mutations::CaseStudy::Update do
     expect(response["data"]["updateCaseStudy"]["article"]["id"]).to eq(article.uid)
 
     expect(article.sections.count).to eq(2)
-    expect(article.sections.pluck(:type, :position)).to eq([["execution", 0], ["results", 1]])
+    expect(article.sections.pluck(:type, :position)).to eq([["overview", 0], ["outcome", 1]])
 
     contents = article.sections.find_by(position: 0).contents
     expect(contents.count).to eq(4)
