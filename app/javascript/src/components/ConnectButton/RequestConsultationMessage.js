@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 import React from "react";
 import FormField from "../FormField";
 import SubmitButton from "../SubmitButton";
-import { useRequestConsultation } from "./queries";
+import { useRequestInterview } from "./queries";
 import { object, string } from "yup";
 
 const validationSchema = object({
@@ -25,10 +25,10 @@ function ListItem({ children }) {
 }
 
 export default function RequestConsultationMessage({ specialist, onSubmit }) {
-  const [requestConsultation] = useRequestConsultation();
+  const [requestInterview] = useRequestInterview();
 
   const handleSubmit = async (values) => {
-    await requestConsultation({
+    await requestInterview({
       variables: {
         input: {
           specialist: specialist.id,
@@ -39,7 +39,7 @@ export default function RequestConsultationMessage({ specialist, onSubmit }) {
         cache.modify({
           id: cache.identify(specialist),
           fields: {
-            consultation: () => result.data.requestConsultation.consultation,
+            interview: () => result.data.requestInterview.interview,
           },
         });
       },
