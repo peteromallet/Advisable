@@ -10,7 +10,7 @@ module Types
     field :application_stage, String, null: true, method: :application_status
 
     field :email, String, null: false do
-      authorize :admin?, :user?, :candidate_for_user_project?, :owned_by_company?
+      authorize :admin?, :user?, :owned_by_company?
     end
     delegate :email, to: :account
 
@@ -157,18 +157,6 @@ module Types
 
     field :id, ID, null: false, method: :uid
 
-    field :projects, [Types::ProjectType], null: true, deprecation_reason: "Moved to Company" do
-      authorize :user?, :admin?
-    end
-    # Exclude any projects where the sales status is 'Lost'. We need to use an
-    # or statement here otherwise SQL will also exclude records where sales_status
-    # is null.
-    def projects
-      company.projects.where.not(sales_status: "Lost").or(
-        company.projects.where(sales_status: nil)
-      ).order(created_at: :desc)
-    end
-
     field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
       argument :exclude_conflicts,
                Boolean,
@@ -184,17 +172,6 @@ module Types
         times.reject! { |t| interviews.include?(t) }
       end
       times
-    end
-
-    field :applications, [Types::ApplicationType], null: true do
-      authorize :user?
-      argument :status, [String], required: false
-    end
-
-    def applications(status: nil)
-      records = company.applications
-      records = records.where(status:) if status
-      records
     end
 
     # The client application is another representation of a user that is

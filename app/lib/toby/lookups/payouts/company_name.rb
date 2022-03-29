@@ -8,7 +8,7 @@ module Toby
 
         filter "contains...", Filters::StringContains do |records, _attribute, value|
           if value.any? && value.first.present?
-            query = records.joins(task: {application: {project: {user: :company}}})
+            query = records.joins(payment_request: :company)
             names = value.first.split
             names.each do |name|
               query = query.where("companies.name ILIKE ?", "%#{name}%")
@@ -24,19 +24,19 @@ module Toby
         end
 
         def includes
-          {application: {project: {user: :company}}}
+          [:company]
         end
 
         def via
-          :task_id
+          :payment_request_id
         end
 
         def lazy_model
-          Task
+          PaymentRequest
         end
 
-        def lazy_read(task)
-          task&.application&.project&.user&.company&.name
+        def lazy_read(payment_request)
+          payment_request&.company&.name
         end
       end
     end

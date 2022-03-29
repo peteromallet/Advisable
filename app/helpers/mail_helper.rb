@@ -88,6 +88,10 @@ module MailHelper
     "#{app_host}/payment_requests"
   end
 
+  def interview_url(interview)
+    "#{app_host}/interviews/#{interview.uid}"
+  end
+
   private
 
   def root_host

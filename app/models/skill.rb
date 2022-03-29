@@ -8,7 +8,6 @@ class Skill < ApplicationRecord
   has_many :specialists, through: :specialist_skills
   has_many :user_skills, dependent: :destroy
   has_many :users, through: :user_skills
-  has_many :project_skills, dependent: :destroy
   has_many :consultations, dependent: :destroy
   has_many :case_study_skills, class_name: "CaseStudy::Skill", dependent: :destroy
   has_many :skill_category_skills, dependent: :destroy
@@ -28,7 +27,6 @@ class Skill < ApplicationRecord
     ActiveRecord::Base.transaction do
       duplicate.specialist_skills.update_all(skill_id: id)
       duplicate.user_skills.update_all(skill_id: id)
-      duplicate.project_skills.update_all(skill_id: id)
       duplicate.consultations.update_all(skill_id: id)
 
       if duplicate.label&.labelings&.any?
@@ -45,7 +43,7 @@ class Skill < ApplicationRecord
       duplicate.reload
 
       duplicate.destroy
-      Skill.reset_counters(id, :specialist_skills, :project_skills)
+      Skill.reset_counters(id, :specialist_skills)
     end
   end
   # rubocop:enable Rails/SkipsModelValidations

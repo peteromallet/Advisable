@@ -37,7 +37,6 @@ RSpec.describe Payment, type: :model do
   end
 
   describe "#charge!" do
-    let(:project) { create(:project) }
     let(:payment) { create(:payment, payment_request:, amount: 1000) }
     let(:payment_request) { create(:payment_request) }
 

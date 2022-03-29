@@ -22,43 +22,17 @@ RSpec.describe Mutations::AcceptConsultation do
     GRAPHQL
   end
 
-  before do
-    allow_any_instance_of(Project).to receive(:sync_to_airtable)
-  end
-
   it "Sets the consultation status to 'Accepted By Specialist'" do
     expect { AdvisableSchema.execute(query, context:) }.to change {
       consultation.reload.status
     }.from("Request Completed").to("Accepted By Specialist")
   end
 
-  it "creates a project" do
+  it "creates an interview" do
     response = AdvisableSchema.execute(query, context:)
     interview_id = response["data"]["acceptConsultation"]["interview"]["id"]
-    project = Interview.find_by(uid: interview_id).application.project
-    expect(project.attributes.slice("user_id", "sales_status", "status", "service_type", "name").values).to match_array([consultation.user_id, "Open", "Project Created", "Consultation", "#{consultation.user.company.name} - #{consultation.skill.name}"])
-    expect(project.primary_skill).to eq(consultation.skill)
-  end
-
-  it "creates an application" do
-    response = AdvisableSchema.execute(query, context:)
-    interview_id = response["data"]["acceptConsultation"]["interview"]["id"]
-    application = Interview.find_by(uid: interview_id).application
-    expect(application.attributes.slice("status", "score", "specialist_id", "trial_program").values).to match_array(["Applied", 90, consultation.specialist.id, true])
-  end
-
-  context "when the user already has a project with the skill" do
-    let!(:project) { create(:project, user: consultation.user, primary_skill: consultation.skill) }
-
-    it "doesnt create a new project" do
-      expect { AdvisableSchema.execute(query, context:) }.not_to change(Project, :count)
-    end
-
-    it "creates an application for that project" do
-      expect { AdvisableSchema.execute(query, context:) }.to change {
-        project.applications.count
-      }.by(1)
-    end
+    interview = Interview.find_by(uid: interview_id)
+    expect(interview.attributes.slice("user_id", "specialist_id", "status").values).to match_array(["Call Requested", consultation.specialist.id, consultation.user_id])
   end
 
   context "when no user is logged in" do

@@ -29,7 +29,6 @@ RSpec.describe SessionManager do
 
     context "when there is no session account_uid" do
       it "returns nil" do
-        user = create(:user)
         session = mock_session
         manager = described_class.new(session:, cookies: mock_cookies)
         expect(manager.current_user).to be_nil
@@ -102,7 +101,7 @@ RSpec.describe SessionManager do
     end
   end
 
-  context "admin override" do
+  context "when admin override" do
     let(:account) { create(:account, permissions:, remember_token: "12345") }
     let!(:user) { create(:user, account:) }
     let(:specialist) { create(:specialist) }
@@ -117,7 +116,7 @@ RSpec.describe SessionManager do
       expect(manager.current_user).to eq(specialist)
     end
 
-    context "not an admin" do
+    context "when not an admin" do
       let(:permissions) { [] }
 
       it "does not overwrite current_user" do
@@ -129,13 +128,13 @@ RSpec.describe SessionManager do
       end
     end
 
-    context "not a valid model" do
-      let(:project) { create(:project) }
+    context "when not a valid model" do
+      let(:payment_request) { create(:payment_request) }
 
       it "does not overwrite current_user" do
         session = double
         allow(session).to receive(:[]).with(:account_uid).and_return(account.uid)
-        allow(session).to receive(:[]).with(:admin_override).and_return(project.to_global_id)
+        allow(session).to receive(:[]).with(:admin_override).and_return(payment_request.to_global_id)
 
         manager = described_class.new(session:, cookies: mock_cookies)
         expect(session).to receive(:delete).with(:admin_override)

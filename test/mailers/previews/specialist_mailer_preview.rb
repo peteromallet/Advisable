@@ -1,17 +1,6 @@
 # frozen_string_literal: true
 
 class SpecialistMailerPreview < ActionMailer::Preview
-  def inform_about_project
-    project = Project.order("RANDOM()").first
-    specialist = Specialist.order("RANDOM()").first
-    SpecialistMailer.inform_about_project(project.id, specialist.id)
-  end
-
-  def project_paused
-    application = Application.order("RANDOM()").first
-    SpecialistMailer.project_paused(application.project, application)
-  end
-
   def payment_request_paid_out
     payment_request = PaymentRequest.order("RANDOM()").first
     SpecialistMailer.payment_request_paid_out(payment_request)

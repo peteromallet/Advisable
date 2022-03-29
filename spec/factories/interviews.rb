@@ -2,8 +2,7 @@
 
 FactoryBot.define do
   factory :interview do
-    application
-    specialist { application.specialist }
+    specialist
     user
     status { "Call Scheduled" }
     sequence(:uid) { "int_#{SecureRandom.hex[0..14]}" }

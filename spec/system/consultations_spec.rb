@@ -27,7 +27,6 @@ RSpec.describe "Consultations", type: :system do
   end
 
   before do
-    allow_any_instance_of(Project).to receive(:sync_to_airtable)
     allow_any_instance_of(GoogleCalendar).to receive(:schedule_for_interview)
   end
 

@@ -15,7 +15,7 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def invited_to_interview
-    UserMailer.invited_to_interview(User.first, User.last, random_application)
+    UserMailer.invited_to_interview(User.first, User.last, random_interview)
   end
 
   def case_study_searches_refreshed

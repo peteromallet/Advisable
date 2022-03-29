@@ -4,25 +4,6 @@ module Types
   class QueryType < Types::BaseType
     description "A defined set of types describing what can be queried"
 
-    field :project, Types::ProjectType, null: true do
-      argument :id, ID, required: true
-    end
-
-    def project(id:)
-      ::Project.find_by!(uid: id)
-    end
-
-    field :application,
-          Types::ApplicationType,
-          description: "Get an application record by its airtable ID",
-          null: true do
-      argument :id, ID, required: true
-    end
-
-    def application(id:)
-      ::Application.find_by!(uid: id)
-    end
-
     field :interview,
           Types::Interview,
           description: "Fetch an interview record by its airtable ID",
@@ -89,14 +70,6 @@ module Types
 
     def industries
       ::Industry.active.order(name: :asc)
-    end
-
-    field :task, Types::TaskType, null: true do
-      argument :id, ID, required: true
-    end
-
-    def task(id:)
-      ::Task.find_by!(uid: id)
     end
 
     field :currencies, [Types::CurrencyType], null: false do

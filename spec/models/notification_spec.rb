@@ -21,7 +21,7 @@ RSpec.describe Notification, type: :model do
   end
 
   it "is valid" do
-    expect(notification.valid?).to eq(true)
+    expect(notification.valid?).to be(true)
   end
 
   describe "actions" do

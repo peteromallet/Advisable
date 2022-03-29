@@ -29,18 +29,6 @@ module Types
       object.users.active
     end
 
-    field :projects, [Types::ProjectType], null: true do
-      authorize :read?
-    end
-    # Exclude any projects where the sales status is 'Lost'. We need to use an
-    # or statement here otherwise SQL will also exclude records where sales_status
-    # is null.
-    def projects
-      object.projects.where.not(sales_status: "Lost").or(
-        object.projects.where(sales_status: nil)
-      ).order(created_at: :desc)
-    end
-
     field :payments, Types::Payment.connection_type, null: true do
       authorize :read?
       argument :status, String, required: false
@@ -63,17 +51,6 @@ module Types
 
     def invoice(id:)
       object.invoices.find_by!(uid: id)
-    end
-
-    field :candidates, Types::ApplicationType.connection_type, null: false do
-      description <<~GRAPHQL
-        Returns applications that are in hireable state. i.e the client has
-        requested a consultation with them.
-      GRAPHQL
-    end
-
-    def candidates
-      object.applications.active
     end
 
     field :invoice_settings, Types::InvoiceSettingsType do

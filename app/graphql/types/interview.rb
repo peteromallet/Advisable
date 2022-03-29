@@ -13,7 +13,6 @@ module Types
     field :availability, [GraphQL::Types::ISO8601DateTime], null: false
     field :status, String, null: true
     field :starts_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :application, Types::ApplicationType, null: false
     field :user, Types::User, null: false
     field :specialist, Types::SpecialistType, null: true
 
