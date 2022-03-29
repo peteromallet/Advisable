@@ -37,6 +37,11 @@ function LineItemRateInput({ name }) {
       name={name}
       placeholder="Amount"
       value={field.value ? Number(field.value) / 100.0 : ""}
+      onKeyDown={(e) => {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+        }
+      }}
       onChange={(e) => {
         const nextValue = e.target.value;
         const stripped = nextValue.replace(/[^0-9.-]+/g, "");
@@ -74,6 +79,11 @@ function PaymentRequestLineItems() {
               as={Input}
               name={`lineItems[${index}].description`}
               placeholder="Description"
+              onKeyDown={(e) => {
+                if (e.keyCode === 13) {
+                  e.preventDefault();
+                }
+              }}
             />
             <div classNamw="w-[200px]">
               <LineItemRateInput name={`lineItems[${index}].amount`} />
