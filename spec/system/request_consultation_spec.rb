@@ -7,7 +7,6 @@ RSpec.describe "Request consultation" do
   let(:user) { create(:user) }
 
   before do
-    allow_any_instance_of(Project).to receive(:sync_to_airtable)
     create(:case_study_article, :with_skills, specialist: freelancer)
   end
 
