@@ -8,9 +8,7 @@ module Mutations
     field :user, Types::User, null: true
 
     def authorized?(**_args)
-      return true if current_user.is_a?(::User)
-
-      ApiError.not_authenticated
+      requires_client!
     end
 
     def resolve(**args)
