@@ -64,7 +64,7 @@ class Payment < ApplicationRecord
   def charge!
     return self if paid? || !total.positive?
 
-    GeneratePaymentInvoiceJob.perform_later(self, notify: true) if payment_request.present?
+    GeneratePaymentInvoiceJob.perform_later(self, notify: true) if payment_request.present? && pdf_key.blank?
 
     if company.project_payment_method == "Bank Transfer"
       update!(payment_method: "Bank Transfer")
