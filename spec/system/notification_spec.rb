@@ -9,7 +9,6 @@ RSpec.describe "Notification", type: :system do
   let!(:post) { create(:guild_post, specialist:) }
 
   before do
-    specialist.account.update!(completed_tutorials: ["guild"])
     Notification.create!(account: specialist.account, action: "suggested_post", notifiable: post)
     authenticate_as(specialist)
   end
