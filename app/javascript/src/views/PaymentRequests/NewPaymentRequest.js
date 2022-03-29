@@ -1,6 +1,13 @@
 import { object, string, number, array } from "yup";
-import { Field, Form, Formik, useField } from "formik";
-import { Textarea, Combobox, Input } from "@advisable/donut";
+import { Field, Form, Formik, useField, useFormikContext } from "formik";
+import {
+  Textarea,
+  Combobox,
+  Input,
+  Modal,
+  useModal,
+  DialogDisclosure,
+} from "@advisable/donut";
 import React from "react";
 import Button from "src/components/Button";
 import FormField from "src/components/FormField";
@@ -14,6 +21,7 @@ import useViewer from "src/hooks/useViewer";
 import BackButton from "src/components/BackButton";
 import NoActiveAgreements from "./NoActiveAgreements";
 import { Loading } from "src/components";
+import currency from "src/utilities/currency";
 
 const lineItemSchema = object().shape({
   description: string().required("Please provide a description"),
@@ -112,7 +120,33 @@ function PaymentRequestLineItems() {
   );
 }
 
+function ConfirmPaymentRequest({ modal, amount }) {
+  const { values, submitForm, isSubmitting } = useFormikContext();
+
+  return (
+    <Modal modal={modal} className="p-5">
+      <h3 className="text-xl font-semibold mb-1">
+        Request {currency(amount, { format: "$0,0.00" })} from{" "}
+        {values.agreement?.name}?
+      </h3>
+      <p className="mb-6">
+        Are you sure you want to send this payment request. Payment requests
+        can’t be edited after they’re sent.
+      </p>
+      <div className="flex gap-2">
+        <Button size="lg" onClick={submitForm} loading={isSubmitting}>
+          Send request
+        </Button>
+        <Button size="lg" type="hide" variant="outlined" onClick={modal.hide}>
+          Cancel
+        </Button>
+      </div>
+    </Modal>
+  );
+}
+
 export default function NewPaymentRequest() {
+  const modal = useModal();
   const navigate = useNavigate();
   const viewer = useViewer();
   const [send] = useCreatePaymentRequest();
@@ -175,6 +209,10 @@ export default function NewPaymentRequest() {
     >
       {(formik) => (
         <Form>
+          <ConfirmPaymentRequest
+            modal={modal}
+            amount={calculateTotal(formik)}
+          />
           <div className="mb-5">
             <BackButton to="/payment_requests" />
           </div>
@@ -212,13 +250,17 @@ export default function NewPaymentRequest() {
                     placeholder="Memo"
                   />
 
-                  <Button
-                    size="lg"
-                    loading={formik.isSubmitting}
-                    disabled={!formik.isValid}
-                  >
-                    Send request
-                  </Button>
+                  <DialogDisclosure {...modal}>
+                    {(disclosure) => (
+                      <Button
+                        size="lg"
+                        disabled={!formik.isValid}
+                        {...disclosure}
+                      >
+                        Send request
+                      </Button>
+                    )}
+                  </DialogDisclosure>
                 </>
               ) : (
                 <NoActiveAgreements />
