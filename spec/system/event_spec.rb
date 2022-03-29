@@ -13,6 +13,10 @@ RSpec.describe "Event view", type: :system do
       authenticate_as(specialist)
     end
 
+    after do
+      ENV["TZ"] = nil
+    end
+
     context "when viewing an event" do
       it "displays the event details in the users timezone" do
         override_tz = "America/New_York"
