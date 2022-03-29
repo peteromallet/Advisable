@@ -9,9 +9,11 @@ export default function ShortlistArticle() {
   const { data, loading, error } = useArticle();
   if (loading) return <Loading />;
 
+  console.log("data", data);
+
   return (
     <div>
-      <div className="flex gap-20">
+      <div className="flex gap-20 items-start">
         <SidebarCard specialist={data.caseStudy.specialist} />
         <ArticleIntro caseStudy={data.caseStudy} />
       </div>
