@@ -15,7 +15,7 @@ RSpec.describe "Notification", type: :system do
   end
 
   it "has an unread icon if notifications are unread" do
-    visit "/guild/feed"
+    visit "/"
     expect(page).to have_selector(:xpath, unread_selector)
   end
 
@@ -23,7 +23,7 @@ RSpec.describe "Notification", type: :system do
     notification = specialist.account.notifications.last
     notification.update!(read_at: Time.zone.at(0))
 
-    visit "/guild/feed"
+    visit "/"
     expect(page).not_to have_selector(:xpath, unread_selector)
   end
 
@@ -34,7 +34,7 @@ RSpec.describe "Notification", type: :system do
       notifiable: suggested_post
     )
 
-    visit "/guild/feed"
+    visit "/"
     find(:xpath, unread_selector).click
     expect(page).to have_content("You have a new suggested Post")
   end
