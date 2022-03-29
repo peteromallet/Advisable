@@ -14,12 +14,14 @@ query Article($searchId: ID!, $articleId: ID!) {
         name
       }
     }
+    companyType
     company {
       id
       name
       logo
       favicon
       businessType
+      website
     }
     comment
     specialist {
@@ -39,6 +41,10 @@ query Article($searchId: ID!, $articleId: ID!) {
           status
           startsAt
         }
+      }
+      account {
+        id
+        timezone
       }
     }
     sections {

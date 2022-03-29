@@ -12,12 +12,12 @@ export default function CompanyBox({ caseStudy }) {
       <Divider />
       <div>
         <div className="uppercase">type</div>
-        <div>{caseStudy.company.businessType}</div>
+        <div>{caseStudy.companyType?.[0]}</div>
       </div>
       <Divider />
       <div>
         <div className="uppercase">industry</div>
-        <div>{caseStudy.company.businessType}</div>
+        <div>NONE</div>
       </div>
       <Divider />
       <div>
@@ -27,7 +27,7 @@ export default function CompanyBox({ caseStudy }) {
       <Divider />
       <div>
         <div className="uppercase">website</div>
-        <div>NONE</div>
+        <div>{caseStudy.company.website}</div>
       </div>
     </div>
   );
