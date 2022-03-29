@@ -89,7 +89,7 @@ class Payment < ApplicationRecord
     self
   rescue Stripe::StripeError => e
     update!(status: "failed", payment_intent_id: e.json_body.dig(:error, :payment_intent, :id))
-    Sentry.capture_exception(e, extra: {stripe_error: e.json_body[:error]})
+    Sentry.capture_exception(e, extra: {stripe_error: e.json_body[:error]}, level: "info")
     text = [
       "Something went wrong with the payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})!",
       "Payment: #{uid}",
