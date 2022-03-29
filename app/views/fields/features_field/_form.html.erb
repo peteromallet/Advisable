@@ -1,9 +1,0 @@
-<div class="field-unit__label">
-  <%= f.label field.attribute %>
-</div>
-<div class="field-unit__field">
-  <% f.object.class.feature_flags.each do |flag| %>
-    <%= f.check_box field.attribute, { multiple: true, checked: f.object.public_send("#{flag}?") }, flag, false %>
-    <%= flag %>
-  <% end %>
-</div>
