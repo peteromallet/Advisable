@@ -25,8 +25,8 @@ export default function Discover() {
 
   return (
     <ErrorBoundary>
-      <Page width="1020px">
-        <Box paddingY={{ _: 8, m: 12 }} paddingX={{ _: 4, m: 8 }}>
+      <Page width="1198px">
+        <Box paddingY={{ _: 8, m: 12 }}>
           <ClientApplicationPrompt />
           <AccountConfirmationPrompt />
           {viewer.isAccepted && (
