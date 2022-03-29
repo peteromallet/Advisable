@@ -47,6 +47,9 @@ RSpec.describe "Payment requests", type: :system do
     fill_in("lineItems[1].amount", with: "500")
     fill_in("memo", with: "This is a memo")
     click_button("Send request")
+    within("*[data-dialog]") do
+      click_button("Send request")
+    end
     expect(page).to have_content("This request is awaiting payment")
   end
 
