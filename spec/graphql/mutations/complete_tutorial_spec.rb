@@ -4,17 +4,17 @@ require "rails_helper"
 
 RSpec.describe Mutations::CompleteTutorial do
   let(:account) { create(:account, completed_tutorials: []) }
-  let!(:user) { create(:user, account:) }
+  let!(:user) { create(:specialist, account:) }
   let(:context) { {current_user: user} }
 
   let(:query) do
     <<-GRAPHQL
     mutation {
       completeTutorial(input: {
-        tutorial: "fixed_projects",
+        tutorial: "introductory_call",
       }) {
         viewer {
-          ... on User {
+          ... on Specialist {
             id
             completedTutorials
           }
@@ -27,8 +27,8 @@ RSpec.describe Mutations::CompleteTutorial do
   it "marks the project as complete" do
     response = AdvisableSchema.execute(query, context:)
     data = response["data"]["completeTutorial"]["viewer"]["completedTutorials"]
-    expect(data).to eq(%w[fixed_projects])
-    expect(user.account.reload.completed_tutorials).to include("fixed_projects")
+    expect(data).to eq(%w[introductory_call])
+    expect(user.account.reload.completed_tutorials).to include("introductory_call")
   end
 
   context "when there is no user logged in" do

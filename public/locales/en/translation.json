@@ -91,20 +91,6 @@
       }
     }
   },
-  "tutorials": {
-    "flexible_projects": {
-      "prompt": "Watch a short video on how to use flexible projects",
-      "heading": "How to use flexible projects",
-      "clientSummary": "Flexible projects can be used to allow your freelancer to work flexibly up to a set maximum limit of monthly hours.",
-      "freelancerSummary": "Flexible projects can be used to allow you to work flexibly up to a set maximum limit of monthly hours."
-    },
-    "fixed_projects": {
-      "prompt": "Watch a short video on how to use fixed projects",
-      "heading": "How to use fixed projects",
-      "clientSummary": "Fixed projects can be used to work with your freelancer on pre-defined tasks and timelines.",
-      "freelancerSummary": "Fixed projects can be used to work with the client on pre-defined tasks and timelines."
-    }
-  },
   "clientSignup": {
     "resultsHeading": "Help us refine your search",
     "resultsSubHeadingWithType": "Here are {{count}} {{skill, lowercase}} specialists with experience working with $t(companyTypes.{{companyType}}_plural). In order to help us refine our search, please select any specialists that you are interested in. Once your project is live, we’ll then invite them and others like them to apply.",
