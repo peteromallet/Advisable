@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Events view", type: :system do
-  let(:account)    { create(:account, completed_tutorials: ["guild"]) }
+  let(:account)    { create(:account) }
   let(:specialist) { create(:specialist, account:) }
   let(:host)       { create(:specialist) }
 

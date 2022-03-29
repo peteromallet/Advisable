@@ -59,21 +59,9 @@ module Types
     end
 
     field :completed_tutorials, [String], null: false do
-      authorize :user?
+      authorize :user?, :admin?
     end
-
-    def completed_tutorials
-      object.account.completed_tutorials
-    end
-
-    field :has_completed_tutorial, Boolean, null: false do
-      argument :tutorial, String, required: true
-      authorize :user?
-    end
-
-    def has_completed_tutorial(tutorial:)
-      object.account.completed_tutorial?(tutorial)
-    end
+    delegate :completed_tutorials, to: :account
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
       authorize :user?

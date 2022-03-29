@@ -383,7 +383,7 @@ class TestData
             permissions: [],
             features: [],
             confirmed_at: 1.hour.ago,
-            completed_tutorials: %w[fixed_projects flexible_projects guild],
+            completed_tutorials: %w[introductory_call],
             updated_at: now,
             created_at: now
           },
@@ -411,7 +411,7 @@ class TestData
             permissions: %w[admin team_manager editor],
             features: [],
             confirmed_at: 1.hour.ago,
-            completed_tutorials: %w[fixed_projects flexible_projects recommendations],
+            completed_tutorials: [],
             updated_at: now,
             created_at: now
           },
