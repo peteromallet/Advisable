@@ -25,11 +25,11 @@ RSpec.describe Airtable::ClientContact do
     describe "syncs company type" do
       let!(:company) { create(:company, kind: "Startup") }
       let!(:user) { create(:user, company:) }
-      let(:airtable) { described_class.new({"Email Address" => "test@airtable.com", "Type of Company" => "Hyper Mega Company"}, id: user.airtable_id) }
+      let(:airtable) { described_class.new({"Email Address" => "test@airtable.com", "Type of Company" => "Non-Profit"}, id: user.airtable_id) }
 
       it "sync the company type to Company" do
         airtable.sync
-        expect(company.reload.kind).to eq("Hyper Mega Company")
+        expect(company.reload.kind).to eq("Non-Profit")
       end
     end
   end
