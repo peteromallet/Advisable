@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_24_114152) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_29_111539) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -409,6 +409,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_114152) do
     t.integer "admin_fee"
     t.string "stripe_payment_method"
     t.string "specialist_description"
+    t.string "intent"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
     t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
   end

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class Company < ApplicationRecord
-  PROJECT_PAYMENT_METHODS = ["Bank Transfer", "Card"].freeze
-
   has_logidze
 
-  BUSINESS_TYPES = %w[B2B B2C].freeze
+  PROJECT_PAYMENT_METHODS = ["Bank Transfer", "Card"].freeze
+  VALID_BUSINESS_TYPES = %w[B2B B2C].freeze
+  VALID_KINDS = ["Growth Stage Startup", "Individual Entrepreneur", "Education Institution", "Medium-Sized Business", "Non-Profit", "Government", "Growth-Stage Startup", "Small Business", "Startup", "Major Corporation"].freeze
   DEFAULT_ADMIN_FEE = 500
 
   belongs_to :sales_person, optional: true
@@ -23,7 +23,8 @@ class Company < ApplicationRecord
   has_many :consultations, through: :users
   # WIP Company migration 👆️
 
-  validates :business_type, inclusion: {in: BUSINESS_TYPES}, allow_nil: true
+  validates :business_type, inclusion: {in: VALID_BUSINESS_TYPES}, allow_nil: true
+  validates :kind, inclusion: {in: VALID_KINDS}, allow_nil: true
 
   attribute :address, AddressAttribute::Type.new
 
@@ -113,6 +114,7 @@ end
 #  business_type                     :string
 #  feedback                          :boolean
 #  goals                             :jsonb
+#  intent                            :string
 #  invoice_company_name              :string
 #  invoice_name                      :string
 #  kind                              :string

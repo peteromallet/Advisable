@@ -10,6 +10,7 @@ module Types
     field :name, String, null: true
     field :kind, String, null: true
     field :business_type, String, null: true
+    field :intent, String, null: true
     field :industry, Types::IndustryType, null: true
     field :address, Types::AddressType, null: true
     field :invoice_company_name, String, null: true
