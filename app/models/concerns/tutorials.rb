@@ -6,8 +6,8 @@ module Tutorials
   extend ActiveSupport::Concern
 
   TUTORIALS = {
-    "User" => %w[fixed_projects flexible_projects recommendations],
-    "Specialist" => %w[fixed_projects flexible_projects guild introductory_call]
+    "User" => [],
+    "Specialist" => %w[introductory_call]
   }.freeze
 
   included do

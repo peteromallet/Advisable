@@ -162,10 +162,6 @@ module Types
 
     field :completed_tutorials, [String], null: false do
       authorize :specialist?, :admin?
-      description <<~HEREDOC
-        An array of tutorial ID's that the user has completed. This is used to
-        track when to show onboarding flows for certain features.
-      HEREDOC
     end
     delegate :completed_tutorials, to: :account
 
