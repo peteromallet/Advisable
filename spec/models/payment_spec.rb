@@ -62,5 +62,16 @@ RSpec.describe Payment, type: :model do
         expect(payment_request.reload.status).to eq("paid")
       end
     end
+
+    context "when pdf is already generated" do
+      it "does not schedule invoice creation" do
+        payment.pdf_key = "some_key"
+        allow(Stripe::PaymentIntent).to receive(:create).with(hash_including(amount: 1050), anything).and_return(OpenStruct.new(id: "pi_#{SecureRandom.uuid}", status: "succeeded"))
+        expect(payment_request.reload.status).to eq("pending")
+        payment.charge!
+        expect(GeneratePaymentInvoiceJob).not_to have_been_enqueued.with(payment, notify: true)
+        expect(payment_request.reload.status).to eq("paid")
+      end
+    end
   end
 end
