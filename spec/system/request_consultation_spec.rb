@@ -6,6 +6,11 @@ RSpec.describe "Request consultation" do
   let(:freelancer) { create(:specialist) }
   let(:user) { create(:user) }
 
+  before do
+    allow_any_instance_of(Project).to receive(:sync_to_airtable)
+    create(:case_study_article, :with_skills, specialist: freelancer)
+  end
+
   def complete_request_consultation_flow
     monday = Date.parse("monday")
     delta = monday > Time.zone.now ? 0 : 7
