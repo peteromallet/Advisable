@@ -1,7 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { DateTime } from "luxon";
+
+const Availability = ({ unavailableUntil }) => (
+  <div className="flex justify-items-center items-center">
+    {unavailableUntil ? (
+      <>
+        <div className="h-2.5 w-2.5 bg-gray-600 rounded-full mr-2" />
+        <p>Unavailable for hire</p>
+      </>
+    ) : (
+      <>
+        <div className="h-2.5 w-2.5 bg-blue-700 rounded-full mr-2" />
+        <p> Available for hire </p>
+      </>
+    )}
+  </div>
+);
 
 export default function SidebarCard({ specialist }) {
+  const { timezone } = specialist.account;
+  const time = timezone && DateTime.now().setZone(specialist.account.timezone);
+  const timezoneFormat = time?.toFormat("ZZZZ '(UTC'Z)");
+  const [clock, setClock] = useState(time?.toFormat("hh:mm"));
+
+  useEffect(() => {
+    const updateClockInterval =
+      time &&
+      setInterval(
+        () =>
+          setClock(
+            DateTime.now()
+              .setZone(specialist.account.timezone)
+              .toFormat("hh:mm"),
+          ),
+        [1000],
+      );
+    return () => clearInterval(updateClockInterval);
+  }, [specialist.account.timezone, time]);
+
   return (
     <div className="min-w-[320px] rounded-3xl bg-white drop-shadow p-8 pt-10 flex flex-col">
       <div className="rounded-full overflow-hidden w-48 h-48 mx-auto mb-6">
@@ -10,16 +47,11 @@ export default function SidebarCard({ specialist }) {
       <Link to={specialist.profilePath}>
         <h4 className="font-bold text-3xl">{specialist.name}</h4>
       </Link>
-      <div className="flex justify-items-center items-center">
-        <div className="h-2.5 w-2.5 bg-blue-700 rounded-full mr-2" />
-        <p>
-          {specialist.unavailableUntil
-            ? "Unavailable for hire"
-            : "Available for hire"}
-        </p>
-      </div>
+      <Availability unavailableUntil={specialist.unavailableUntil} />
       <hr />
       <span>{specialist.location}</span>
+      <span>{timezoneFormat}</span>
+      <span>{clock}</span>
       <hr />
       <p>{specialist.bio}</p>
     </div>
