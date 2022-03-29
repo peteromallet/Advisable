@@ -68,12 +68,12 @@ export const StyledButton = styled.button`
   }
 `;
 
-function Member({ member, applicationId, onInvite, invited }) {
+function Member({ member, interview, onInvite, invited }) {
   const [inviteMember, { loading }] = useMutation(INVITE_TO_INTERVIEW, {
     variables: {
       input: {
         email: member.email,
-        applicationId,
+        interviewId: interview.id,
       },
     },
   });
@@ -113,7 +113,7 @@ const validationSchema = object({
   email: string().required("Email is required").email("Invalid email"),
 });
 
-function InviteNewMember({ applicationId, onInvite }) {
+function InviteNewMember({ interview, onInvite }) {
   const { t } = useTranslation();
   const [inviteMember] = useMutation(INVITE_TO_INTERVIEW);
 
@@ -129,7 +129,7 @@ function InviteNewMember({ applicationId, onInvite }) {
           firstName: values.name.split(" ")?.[0],
           lastName: values.name.split(" ")?.[1],
           email: values.email,
-          applicationId,
+          interviewId: interview.id,
         },
       },
     });
@@ -249,7 +249,7 @@ function InviteTeamMemberModal({ modal, interview }) {
               <Member
                 key={member.id}
                 member={member}
-                applicationId={interview.application.id}
+                interview={interview}
                 invited={invited.includes(member.id)}
                 onInvite={() => setInvited([...invited, member.id])}
               />
@@ -257,7 +257,7 @@ function InviteTeamMemberModal({ modal, interview }) {
           </Stack>
           <Box mb={8}>
             <InviteNewMember
-              applicationId={interview.application.id}
+              interview={interview}
               onInvite={handleNewTeamMember}
             />
           </Box>

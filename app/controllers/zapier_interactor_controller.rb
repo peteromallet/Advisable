@@ -3,11 +3,8 @@
 class ZapierInteractorController < ApplicationController
   include MagicLinkHelper
 
-  ALLOWED_APPLICATION_FIELDS = %i[comment featured hidden hide_from_profile introduction rejection_reason rejection_reason_comment rejection_feedback score started_working_at status stopped_working_at stopped_working_reason source].freeze
-  PARAMETRIZED_APPLICATION_META_FIELDS = Application::META_FIELDS.index_by { |f| f.delete("-").parameterize(separator: "_") }.freeze
   ALLOWED_USER_FIELDS = %i[campaign_name campaign_medium campaign_source application_status trustpilot_review_status].freeze
   ALLOWED_SPECIALIST_FIELDS = %i[campaign_name campaign_source application_stage application_status campaign_medium case_study_status trustpilot_review_status].freeze
-  ALLOWED_PROJECT_FIELDS = %i[status sales_status estimated_budget remote required_characteristics goals description deposit company_description stop_candidate_proposed_emails level_of_expertise_required likelihood_to_confirm lost_reason project_start].freeze
   TASK_STAGE_MAPPING = {"Quote Requested" => :quote_requested_at, "Quote Provided" => :quote_provided_at, "Assigned" => :assigned_at, "Submitted" => :submitted_at, "Approved" => :approved_at, "Working" => :started_working_at}.freeze
 
   skip_before_action :verify_authenticity_token
@@ -42,65 +39,6 @@ class ZapierInteractorController < ApplicationController
       specialist.update!(attrs)
       update_unsubscriptions!(specialist.account)
     end
-  end
-
-  def update_project
-    find_and_update(Project) do |project|
-      attrs = parse_params(params.permit(ALLOWED_PROJECT_FIELDS))
-
-      questions = parse_params(params.permit(:question_1, :question_2)).values # rubocop:disable Naming/VariableNumber
-      attrs[:questions] = questions.compact unless questions.empty?
-
-      if params[:required_characteristics].presence || params[:optional_characteristics].presence
-        required = params[:required_characteristics].presence || project.required_characteristics
-        optional = params[:optional_characteristics].presence || project.optional_characteristics
-        attrs[:characteristics] = ((required || []) + (optional || [])).uniq
-        attrs[:required_characteristics] = required
-      end
-
-      if params[:skills].present?
-        project.skills = params[:skills].filter_map do |name|
-          Skill.find_by(name:)
-        end
-      end
-
-      if params[:primary_skill].present?
-        skill = Skill.find_by(name: params[:primary_skill])
-        if skill
-          project.project_skills.where(primary: true).update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
-          project.skills << skill unless project.project_skills.find_by(skill:)
-          project.project_skills.find_by(skill:).update(primary: true)
-        end
-      end
-
-      project.update!(attrs)
-    end
-  end
-
-  def update_task
-    find_and_update(Task) do |task|
-      task.stage = params[:stage]
-      task.assign_attributes(TASK_STAGE_MAPPING[task.stage] => Time.current) if TASK_STAGE_MAPPING[task.stage]
-      task.save!
-      task.financialize! if task.stage == "Approved"
-    end
-  end
-
-  def update_application
-    find_and_update(Application) do |application|
-      application.update!(application_params(application.meta_fields))
-    end
-  end
-
-  def create_application
-    specialist = Specialist.find_by!(uid: params[:specialist_id])
-    project = Project.find_by!(uid: params[:project_id])
-    application = Application.create!(application_params.merge({specialist_id: specialist.id, project_id: project.id}))
-    render json: {status: "OK.", uid: application.uid}
-  rescue ActiveRecord::RecordNotFound => e
-    render json: {error: "Record not found", message: e.message}, status: :unprocessable_entity
-  rescue ActiveRecord::RecordInvalid => e
-    render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
   end
 
   def create_magic_link
@@ -182,15 +120,6 @@ class ZapierInteractorController < ApplicationController
     render json: {error: "#{model} not found"}, status: :unprocessable_entity
   rescue ActiveRecord::RecordInvalid => e
     render json: {error: "Validation failed", message: e.message}, status: :unprocessable_entity
-  end
-
-  def application_params(existng_meta_fields = {})
-    attrs = params.require(:application).permit(ALLOWED_APPLICATION_FIELDS + PARAMETRIZED_APPLICATION_META_FIELDS.keys).to_h
-    attrs[:meta_fields] = existng_meta_fields
-    PARAMETRIZED_APPLICATION_META_FIELDS.each do |param, field|
-      attrs[:meta_fields][field] = attrs.delete(param) if attrs.key?(param)
-    end
-    attrs
   end
 
   def update_unsubscriptions!(account)

@@ -5,12 +5,11 @@ require "rails_helper"
 RSpec.describe Mutations::ScheduleInterview do
   let(:status) { "Call Requested" }
   let(:specialist) { create(:specialist) }
-  let(:application) { create(:application, specialist:) }
   let(:user) { create(:user, availability: [Time.zone.now.next_weekday.beginning_of_day]) }
   let(:starts_at) { user.availability.first }
   let(:initial_starts_at) { nil }
   let(:current_user) { specialist }
-  let(:interview) { create(:interview, starts_at: initial_starts_at, status:, application:, user:) }
+  let(:interview) { create(:interview, specialist:, starts_at: initial_starts_at, status:, user:) }
 
   let(:query) do
     <<-GRAPHQL
@@ -57,18 +56,6 @@ RSpec.describe Mutations::ScheduleInterview do
   it "sets call_scheduled_at" do
     request
     expect(interview.reload.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
-  end
-
-  it "updates the application" do
-    expect(application.reload.status).to eq("Applied")
-    request
-    expect(application.reload.status).to eq("Interview Scheduled")
-  end
-
-  it "updates the project" do
-    expect(application.project.reload.status).to be_nil
-    request
-    expect(application.project.reload.status).to eq("Interview Scheduled")
   end
 
   it "creates a video call record" do

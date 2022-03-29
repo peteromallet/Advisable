@@ -9,13 +9,9 @@ RSpec.describe PostInterviewJob do
 
   it "updates all the statuses and schedules next job" do
     expect(interview.status).to eq("Call Scheduled")
-    expect(interview.application.status).to eq("Applied")
-    expect(interview.application.project.status).to be_nil
     described_class.perform_now
     interview.reload
     expect(interview.status).to eq("Call Completed")
-    expect(interview.application.status).to eq("Interview Completed")
-    expect(interview.application.project.status).to eq("Interview Completed")
     expect(PostInterviewReminderJob).to have_been_enqueued.with(interview).at(interview.starts_at + 1.day)
   end
 

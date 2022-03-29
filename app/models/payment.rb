@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Payment < ApplicationRecord
+  self.ignored_columns += %i[task_id]
+
   include Uid
 
   has_logidze
@@ -11,7 +13,6 @@ class Payment < ApplicationRecord
 
   belongs_to :company
   belongs_to :specialist
-  belongs_to :task, optional: true
   belongs_to :payment_request, optional: true
 
   before_create :set_admin_fee
@@ -168,7 +169,6 @@ end
 #  payment_intent_id  :string
 #  payment_request_id :bigint
 #  specialist_id      :bigint           not null
-#  task_id            :bigint
 #
 # Indexes
 #

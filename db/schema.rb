@@ -633,16 +633,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_114152) do
     t.index ["account_id"], name: "index_magic_links_on_account_id"
   end
 
-  create_table "matches", force: :cascade do |t|
-    t.bigint "specialist_id"
-    t.bigint "project_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "status"
-    t.index ["project_id"], name: "index_matches_on_project_id"
-    t.index ["specialist_id"], name: "index_matches_on_specialist_id"
-  end
-
   create_table "messages", force: :cascade do |t|
     t.string "uid", null: false
     t.text "content"
@@ -1220,8 +1210,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_114152) do
   add_foreign_key "labels", "countries"
   add_foreign_key "labels", "industries"
   add_foreign_key "labels", "skills"
-  add_foreign_key "matches", "projects"
-  add_foreign_key "matches", "specialists"
   add_foreign_key "messages", "accounts", column: "author_id"
   add_foreign_key "messages", "agreements"
   add_foreign_key "messages", "consultations"
