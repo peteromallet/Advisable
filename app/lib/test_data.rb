@@ -4,7 +4,7 @@ require "ruby-progressbar"
 require "csv"
 
 # rubocop:disable Rails/SkipsModelValidations
-class NewTestData
+class TestData
   AMOUNT_OF_RANDOM_IMAGES = 100
   AMOUNT_OF_CASE_STUDIES = 100
   YML_NAME = "test_data.yml"
@@ -174,29 +174,6 @@ class NewTestData
       path = "db/seeds/assets/avatars/#{advisable_yml[i][:avatar]}"
       user.account.avatar.attach(io: File.open(path), filename: advisable_yml[i][:avatar])
     end
-
-    project_data = []
-    @users.each_with_index do |user, i|
-      possesive = advisable_yml[i][:first_name]
-      possesive = possesive.end_with?("s") ? "#{possesive}'" : "#{possesive}'s"
-      project_data << {name: "#{possesive} Project", user_id: user, uid: Project.generate_uid, created_at: now, updated_at: now, hired_count: 1, sales_status: "Won"}
-    end
-    @projects = Project.insert_all(project_data).pluck("id")
-
-    application_data = []
-    @projects.each_with_index do |project, i|
-      application_data << {project_id: project, project_type: "Fixed", specialist_id: specialist_ids[i], status: "Working", uid: Application.generate_uid, created_at: now, updated_at: now, started_working_at: now - 1.week}
-    end
-    @applications = Application.insert_all(application_data).pluck("id")
-
-    project_skills_data = []
-    @projects.each do |project|
-      project_skills_data << {project_id: project, project_type: "Project", skill_id: skill_ids.sample, primary: true, created_at: now, updated_at: now}
-      skill_ids.sample(rand(1..5)).each do |skill_id|
-        project_skills_data << {project_id: project, project_type: "Project", skill_id:, primary: false, created_at: now, updated_at: now}
-      end
-    end
-    @project_skills = ProjectSkill.insert_all(project_skills_data).pluck("id")
   end
 
   def populate_reviews
