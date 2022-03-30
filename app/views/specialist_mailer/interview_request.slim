@@ -10,7 +10,9 @@ p  #{@interview.user.name_with_company} left the following message:
 
 p "#{@message.content}"
 
-p Please respond to their request as soon as possible. You can accept or decline it <a clicktracking=off href="#{magic_link(@interview.specialist.account, interview_request_url(@message.conversation))}">here</a>.
+p You can accept or decline their request <a clicktracking=off href="#{magic_link(@interview.specialist.account, interview_request_url(@message.conversation))}">here</a>.
+
+p Please note that if you don't respond within 4 days the request will be automatically declined, which could negatively affect your case study ranking and the chances of you being recommended in the future.
 
 p
   ' Best,

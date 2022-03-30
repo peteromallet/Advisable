@@ -53,7 +53,7 @@ class SpecialistMailer < ApplicationMailer
       from: @sales_person.email_with_name,
       to: interview.specialist.account.email,
       bcc: @sales_person.email_with_name,
-      subject: "TODO"
+      subject: "No response received for consultation request from #{interview.user.company.name}"
     ) do |format|
       format.html { render layout: false }
     end
