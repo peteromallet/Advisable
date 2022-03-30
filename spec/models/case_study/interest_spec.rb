@@ -18,7 +18,7 @@ RSpec.describe CaseStudy::Interest, type: :model do
   end
 
   context "when target audience is populated" do
-    let(:company) { create(:company, target_audience: "Hipsters") }
+    let(:company) { create(:company, audience: "Hipsters") }
     let(:user) { create(:user, company:) }
     let(:interest) { create(:case_study_interest, account: user.account, term: "funny B2B content") }
 

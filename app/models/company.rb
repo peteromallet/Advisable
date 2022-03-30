@@ -109,6 +109,7 @@ end
 #  accepted_project_payment_terms_at :datetime
 #  address                           :jsonb
 #  admin_fee                         :integer
+#  audience                          :string
 #  billing_email                     :string
 #  budget                            :bigint
 #  business_type                     :string
@@ -124,7 +125,6 @@ end
 #  setup_intent_status               :string
 #  specialist_description            :string
 #  stripe_payment_method             :string
-#  target_audience                   :string
 #  vat_number                        :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null

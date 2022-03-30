@@ -410,7 +410,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_30_084219) do
     t.string "stripe_payment_method"
     t.string "specialist_description"
     t.string "intent"
-    t.string "target_audience"
+    t.string "audience"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
     t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
   end
