@@ -209,7 +209,7 @@ class TestData
   def populate_companies
     companies_data = []
     10.times do
-      companies_data << {name: Faker::Company.name, business_type: Company::BUSINESS_TYPES.sample, sales_person_id: sales_person.id, created_at: now, updated_at: now}
+      companies_data << {name: Faker::Company.name, business_type: Company::VALID_BUSINESS_TYPES.sample, sales_person_id: sales_person.id, created_at: now, updated_at: now}
     end
     @company_ids = Company.insert_all(companies_data).pluck("id")
   end
