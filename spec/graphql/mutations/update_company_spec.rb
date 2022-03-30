@@ -16,7 +16,8 @@ RSpec.describe Mutations::UpdateCompany do
         industry: "#{marketing.uid}",
         intent: "I need some special services",
         kind: "Individual Entrepreneur",
-        name: "Michael's Company"
+        name: "Michael's Company",
+        targetAudience: "Hipsters"
       }) {
         user {
           id
@@ -38,6 +39,7 @@ RSpec.describe Mutations::UpdateCompany do
       expect(company.intent).to eq("I need some special services")
       expect(company.kind).to eq("Individual Entrepreneur")
       expect(company.name).to eq("Michael's Company")
+      expect(company.target_audience).to eq("Hipsters")
     end
   end
 

@@ -7,6 +7,7 @@ module Mutations
     argument :intent, String, required: false
     argument :kind, String, required: false
     argument :name, String, required: false
+    arguemnt :target_audience, String, required: false
 
     field :user, Types::User, null: false
 
@@ -20,6 +21,7 @@ module Mutations
       current_company.intent = args[:intent] if args[:intent]
       current_company.kind = args[:kind] if args[:kind]
       current_company.name = args[:name] if args[:name]
+      current_company.target_audience = args[:target_audience] if args[:target_audience]
 
       current_account_responsible_for { current_company.save }
 
