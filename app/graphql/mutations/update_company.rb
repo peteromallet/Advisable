@@ -7,7 +7,7 @@ module Mutations
     argument :intent, String, required: false
     argument :kind, String, required: false
     argument :name, String, required: false
-    arguemnt :target_audience, String, required: false
+    argument :target_audience, String, required: false
 
     field :user, Types::User, null: false
 
