@@ -124,6 +124,7 @@ end
 #  setup_intent_status               :string
 #  specialist_description            :string
 #  stripe_payment_method             :string
+#  target_audience                   :string
 #  vat_number                        :string
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
