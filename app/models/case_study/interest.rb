@@ -20,7 +20,7 @@ module CaseStudy
 
     def term_vector
       fetch_term_data!
-      Vector.elements(term_data)
+      Vector.elements(term_data) if term_data.present?
     end
 
     private
@@ -28,7 +28,11 @@ module CaseStudy
     def fetch_term_data!
       return if term_data.present? || term.blank?
 
-      self.term_data = OpenAiInteractor.new.query_embedding_for(term)
+      query = [
+        term,
+        account.user&.company&.target_audience.presence
+      ].compact.join(" for ")
+      self.term_data = OpenAiInteractor.new.query_embedding_for(query)
       save!
     end
   end
