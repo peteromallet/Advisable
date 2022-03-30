@@ -1,0 +1,14 @@
+mutation UpdateCompany($input: UpdateCompanyInput!) {
+  updateCompany(input: $input) {
+    user {
+      id
+      company {
+        id
+        name
+        kind
+        intent
+        businessType
+      }
+    }
+  }
+}
