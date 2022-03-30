@@ -19,7 +19,7 @@ module Types
       current_user.account == object
     end
 
-    field :subscriptions, [Types::Subscription], null: false
+    field :subscriptions, [Types::AccountSubscription], null: false
     def subscriptions
       ::Account::SUBSCRIPTIONS.map do |subscription|
         {
