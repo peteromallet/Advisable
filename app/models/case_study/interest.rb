@@ -30,7 +30,7 @@ module CaseStudy
 
       query = [
         term,
-        account.user&.company&.target_audience.presence
+        account.user&.company&.audience.presence
       ].compact.join(" for ")
       self.term_data = OpenAiInteractor.new.query_embedding_for(query)
       save!
