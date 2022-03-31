@@ -44,6 +44,10 @@ module MailHelper
     "#{app_host}/payment_requests/#{payment_request.uid}"
   end
 
+  def settings_url
+    "#{app_host}/settings/availability"
+  end
+
   # TODO: We can remove this fallback when we remove the consultation request
   # view.
   def consultation_request_url(consultation)

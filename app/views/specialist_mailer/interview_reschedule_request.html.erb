@@ -6,7 +6,7 @@
       time_in_zone(@interview.starts_at, @interview.user.time_zone) %>.
 </p>
 <p>
-  Please select a new time that works best for you. Once you select a time, we’ll send new invitations.
+  Please select a new time that works best for you. Once you select a time, we'll send new invitations.
 </p>
 <p>
   <a href="<%= ApplicationMailer.default_url_options[:host] %>/interview_request/<%= @interview.uid %>">Reschedule
