@@ -22,6 +22,7 @@ class Agreement < ApplicationRecord
   validates :invoicing, inclusion: {in: VALID_INVOICINGS}, allow_blank: true
 
   scope :accepted, -> { where(status: "accepted") }
+  scope :pending, -> { where(status: "pending") }
 
   def due_days
     super.presence || DEFAULT_DUE_DAYS
