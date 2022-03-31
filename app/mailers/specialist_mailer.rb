@@ -48,6 +48,7 @@ class SpecialistMailer < ApplicationMailer
 
   def interview_request_auto_declined(interview)
     @interview = interview
+    @conversation = Conversation.by_accounts([interview.specialist.account, interview.user.account])
     @sales_person = default_sales_person_for(interview.user.company)
     mail(
       from: @sales_person.email_with_name,

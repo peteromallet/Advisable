@@ -148,9 +148,9 @@ export default function Availability() {
         Availability
       </Text>
       <Text fontSize="l" lineHeight="1.2" color="neutral800" mb={6}>
-        If you don&apos;t have any availability for work at the moment you can
+        If you are unavailable for work at the moment you can
         set a date when you will be available again below and we won&apos;t
-        notify you about any other projects until then.
+        recommend you for new projects or consultation requests until then.
       </Text>
       {isAvailable ? (
         <Available viewer={data?.viewer} />
