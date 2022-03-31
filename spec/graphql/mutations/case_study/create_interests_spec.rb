@@ -2,21 +2,21 @@
 
 require "rails_helper"
 
-RSpec.describe Mutations::CaseStudy::CreateInterest do
+RSpec.describe Mutations::CaseStudy::CreateInterests do
   let(:user) { create(:user) }
-  let(:context) { {current_user: user} }
+  let(:context) { {current_user: user, current_account: user.account} }
+  let(:terms) { ["A Term"] }
   let(:embedding1) { create(:case_study_embedding) }
   let(:embedding2) { create(:case_study_embedding) }
   let!(:article1) { embedding1.article }
   let!(:article2) { embedding2.article }
-
   let(:query) do
     <<-GRAPHQL
       mutation {
-        createCaseStudyInterest(input: {
-          term: "A Term",
+        createCaseStudyInterests(input: {
+          terms: #{terms},
         }) {
-          interest {
+          interests {
             id
           }
         }
@@ -28,14 +28,29 @@ RSpec.describe Mutations::CaseStudy::CreateInterest do
 
   it "creates a new interest" do
     request = AdvisableSchema.execute(query, context:)
-    uid = request["data"]["createCaseStudyInterest"]["interest"]["id"]
-    interest = ::CaseStudy::Interest.find_by!(uid:)
+    uid = request.dig("data", "createCaseStudyInterests", "interests").first["id"]
+    interest = ::CaseStudy::Interest.with_log_data.find_by!(uid:)
     expect(interest.term).to eq("A Term")
     expect(interest.account).to eq(user.account)
+    expect(interest.log_data.responsible_id).to eq(user.account_id)
     expect(interest.article_ids).to be_blank
     expect(interest.articles).to match_array([article1, article2])
     expect(interest.article_ids).to match_array([article1.id, article2.id])
     expect(interest.min_score.round(4)).to eq(0.6078)
+  end
+
+  context "when multiple interests" do
+    let(:terms) { ["A Term", "Another Term", "a term"] }
+
+    it "creates unique interests" do
+      request = AdvisableSchema.execute(query, context:)
+      uids = request.dig("data", "createCaseStudyInterests", "interests").map { |i| i["id"] }
+      expect(uids.size).to eq(2)
+      interests = ::CaseStudy::Interest.with_log_data.where(uid: uids)
+      expect(interests.map(&:term)).to match_array(["A Term", "Another Term"])
+      expect(interests.map(&:account_id).uniq).to eq([user.account_id])
+      expect(interests.map { |i| i.log_data.responsible_id }.uniq).to eq([user.account_id])
+    end
   end
 
   context "when current_user is specialist" do
