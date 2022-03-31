@@ -6,7 +6,8 @@ class Agreement < ApplicationRecord
   has_logidze
 
   DEFAULT_DUE_DAYS = 5
-  VALID_STATUSES = %w[pending accepted declined].freeze
+  VALID_STATUSES = %w[pending reminded accepted declined].freeze
+  ACCEPTABLE_STATUSES = %w[pending reminded].freeze
   VALID_COLLABORATIONS = %w[fixed hourly flexible].freeze
   VALID_INVOICINGS = %w[upfront recurring after flexible].freeze
 
@@ -25,6 +26,11 @@ class Agreement < ApplicationRecord
   def due_days
     super.presence || DEFAULT_DUE_DAYS
   end
+
+  def acceptable?
+    ACCEPTABLE_STATUSES.include?(status)
+  end
+  alias declinable? acceptable?
 end
 
 # == Schema Information

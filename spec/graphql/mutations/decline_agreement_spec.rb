@@ -38,12 +38,30 @@ RSpec.describe Mutations::DeclineAgreement do
     end
   end
 
+  context "when agreement is not in an declinable state" do
+    let(:agreement) { create(:agreement, status: "declined", specialist:, user:) }
+
+    it "responds with an error" do
+      error = response["errors"][0]
+      expect(error["extensions"]["code"]).to eq("NOT_IN_AN_DECLINABLE_STATE")
+    end
+  end
+
   context "when the agreement does not exist" do
     let(:agreement) { nil }
 
     it "responds with not found error code" do
       error = response["errors"][0]
       expect(error["extensions"]["code"]).to eq("NOT_FOUND")
+    end
+  end
+
+  context "when the agreement belongs to another user" do
+    let(:agreement) { create(:agreement, status: "pending", user: create(:user)) }
+
+    it "responds with not found error code" do
+      error = response["errors"][0]
+      expect(error["extensions"]["code"]).to eq("NOT_AUTHORIZED")
     end
   end
 
