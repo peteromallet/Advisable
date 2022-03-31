@@ -183,6 +183,20 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def agreement_reminder(agreement)
+    @account = agreement.user.account
+    @agreement = agreement
+    @conversation = agreement.messages.find_by(kind: "AgreementCreated").conversation
+
+    mail(
+      to: @account.email,
+      from: "hello@advisable.com",
+      subject: "#{@agreement.specialist.account.name} has requested to work together on Advisable"
+    ) do |format|
+      format.html { render layout: "email_v2" }
+    end
+  end
+
   def payment_request(payment_request)
     payment_request_mail(payment_request, "New Payment Request")
   end

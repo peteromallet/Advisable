@@ -10,6 +10,8 @@ production:
   - action_mailbox_routing
   - action_mailbox_incineration
 :schedule:
+  AgreementReminderJob:
+    every: 10 minutes
   InterviewReminderJob:
     every: 10 minutes
   PostInterviewJob:
