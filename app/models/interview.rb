@@ -9,8 +9,9 @@ class Interview < ApplicationRecord
   has_logidze
 
   VALID_STATUSES = [
-    "Call Scheduled", "Call Completed", "Call Requested", "Call Reminded", "Need More Time Options",
-    "More Time Options Added", "Specialist Requested Reschedule", "Client Requested Reschedule", "Specialist Declined"
+    "Call Scheduled", "Call Completed", "Call Requested", "Call Reminded",
+    "Need More Time Options", "More Time Options Added", "Specialist Requested Reschedule",
+    "Client Requested Reschedule", "Specialist Declined", "Auto Declined"
   ].freeze
 
   SCHEDULABLE_STATUSES = [
@@ -23,8 +24,9 @@ class Interview < ApplicationRecord
   has_one :consultation, dependent: :destroy
   has_many :messages, dependent: :destroy
 
-  scope :requested, -> { where(status: "Call Requested") }
   scope :scheduled, -> { where(status: "Call Scheduled") }
+  scope :requested, -> { where(status: "Call Requested") }
+  scope :reminded, -> { where(status: "Call Reminded") }
 
   validates :status, inclusion: {in: VALID_STATUSES}
 

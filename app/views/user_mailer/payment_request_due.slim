@@ -6,10 +6,10 @@
     ' Hi #{@agreement.user.account.first_name},
   = render "emails/spacing", height: "32px"
   = render "emails/paragraph" do
-    ' Unfortunately, we still haven’t received your payment for #{@payment_request.specialist.account.name}'s payment request.
+    ' Unfortunately, we still haven't received your payment for #{@payment_request.specialist.account.name}'s payment request.
     ' It is due today.
     ' You can click the button below to complete the payment
-    ' Keep in mind that we won’t be able to process #{@payment_request.specialist.account.name}'s payout until the request has been approved and paid.
+    ' Keep in mind that we won't be able to process #{@payment_request.specialist.account.name}'s payout until the request has been approved and paid.
   = render "emails/spacing", height: "32px"
   = render "emails/paragraph" do
     ' If you have any questions regarding the work it refers to feel free to reach out to #{@payment_request.specialist.account.name}, while if you need help completing your payment please contact us at <a href="mailto:finance@advisable.com">finance@advisable.com</a>.

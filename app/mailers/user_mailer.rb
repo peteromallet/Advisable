@@ -142,6 +142,19 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def interview_request_auto_declined(interview)
+    @account = interview.user.account
+    @specialist = interview.specialist
+
+    mail(
+      to: @account.email,
+      from: "hello@advisable.com",
+      subject: "Consultation Request Declined: #{@specialist.account.name}"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
+
   def consultation_declined(consultation, message)
     @account = consultation.user.account
     @specialist = consultation.specialist
