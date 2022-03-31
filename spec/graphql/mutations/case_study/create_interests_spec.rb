@@ -53,6 +53,25 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
     end
   end
 
+  context "when interests exist already" do
+    let(:terms) { ["A Term", "Another Term", "a term"] }
+
+    before do
+      create(:case_study_interest, term: "a tErm", account: user.account)
+      create(:case_study_interest, term: "Another Term") # different account
+    end
+
+    it "creates unique interests" do
+      request = AdvisableSchema.execute(query, context:)
+      uids = request.dig("data", "createCaseStudyInterests", "interests").map { |i| i["id"] }
+      expect(uids.size).to eq(1)
+      interests = ::CaseStudy::Interest.with_log_data.where(account_id: user.account_id)
+      expect(interests.map(&:term)).to match_array(["a tErm", "Another Term"])
+      expect(interests.map(&:account_id).uniq).to eq([user.account_id])
+      expect(interests.map { |i| i.log_data.responsible_id }.uniq).to eq([nil, user.account_id])
+    end
+  end
+
   context "when current_user is specialist" do
     let(:user) { create(:specialist) }
 
