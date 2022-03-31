@@ -53,6 +53,12 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.new_agreement(agreement)
   end
 
+  %i[new_agreement agreement_reminder].each do |method|
+    define_method(method) do
+      UserMailer.public_send(method, random_agreement)
+    end
+  end
+
   %i[payment_request payment_request_reminder payment_request_due].each do |method|
     define_method(method) do
       UserMailer.public_send(method, random_payment_request)
@@ -66,6 +72,11 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   private
+
+  def random_agreement
+    Agreement.order("RANDOM()").first
+    Agreement.last
+  end
 
   def random_user
     User.order("RANDOM()").first
