@@ -3,12 +3,12 @@ import { Route, Routes } from "react-router-dom";
 import Welcome from "./Welcome";
 import Company from "./Company";
 import Industry from "./Industry";
-import Customers from "./Customers";
+import Audience from "./Audience";
 import Interests from "./Interests";
-import "./onboarding.css";
 import Logo from "src/components/Logo";
 import { useOnboardingData } from "./queries";
 import { Loading } from "src/components";
+import "./onboarding.css";
 
 export default function UserOnboarding() {
   const { loading, data } = useOnboardingData();
@@ -25,7 +25,7 @@ export default function UserOnboarding() {
           <Route path="/" exact element={<Welcome data={data} />} />
           <Route path="/company" element={<Company data={data} />} />
           <Route path="/industry" element={<Industry data={data} />} />
-          <Route path="/customers" element={<Customers data={data} />} />
+          <Route path="/customers" element={<Audience data={data} />} />
           <Route path="/interests" element={<Interests data={data} />} />
         </Routes>
       </div>

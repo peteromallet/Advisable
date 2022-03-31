@@ -18,6 +18,10 @@ module Types
     field :apply_vat, Boolean, null: true, method: :apply_vat?
     field :payment_method, String, null: true, method: :project_payment_method
 
+    field :audience, String, null: true do
+      authorize :read?
+    end
+
     field :sales_person, Types::SalesPersonType, null: true do
       authorize :read?
     end

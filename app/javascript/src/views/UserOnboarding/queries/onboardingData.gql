@@ -4,6 +4,7 @@ query OnboardingData {
     name
     kind
     intent
+    audience
     businessType
   }
   interests {

@@ -9,6 +9,7 @@ import React from "react";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { useNavigate } from "react-router-dom";
+import { useUpdateCopmany } from "./queries";
 
 const validationSchema = object().shape({
   audience: string()
@@ -16,13 +17,21 @@ const validationSchema = object().shape({
     .max(60, "Please keep this under 60 characters"),
 });
 
-export default function Customers() {
+export default function Audience({ data }) {
+  const [update] = useUpdateCopmany();
+
   const navigate = useNavigate();
   const initialValues = {
-    audience: "",
+    audience: data?.currentCompany?.audience || "",
   };
 
   const handleSubmit = async (values) => {
+    const response = await update({
+      variables: {
+        input: values,
+      },
+    });
+
     navigate("/setup/interests");
   };
 
