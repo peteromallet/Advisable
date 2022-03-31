@@ -9,7 +9,7 @@ import React from "react";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { useNavigate } from "react-router-dom";
-import { useUpdateCopmany } from "./queries";
+import { useUpdateCompany } from "./queries";
 
 const validationSchema = object().shape({
   audience: string()
@@ -18,7 +18,7 @@ const validationSchema = object().shape({
 });
 
 export default function Audience({ data }) {
-  const [update] = useUpdateCopmany();
+  const [update] = useUpdateCompany();
 
   const navigate = useNavigate();
   const initialValues = {

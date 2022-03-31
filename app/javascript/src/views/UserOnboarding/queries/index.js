@@ -8,7 +8,7 @@ export const useOnboardingData = () => {
   return useQuery(ONBOARDING_DATA);
 };
 
-export const useUpdateCopmany = () => {
+export const useUpdateCompany = () => {
   return useMutation(UPDATE_COMPANY);
 };
 

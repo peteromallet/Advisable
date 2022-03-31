@@ -3,10 +3,10 @@ import Fuse from "fuse.js";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "src/components/Input";
 import { Search } from "@styled-icons/heroicons-solid";
-import { useUpdateCopmany } from "./queries";
+import { useUpdateCompany } from "./queries";
 
 export default function Industry({ data }) {
-  const [update] = useUpdateCopmany();
+  const [update] = useUpdateCompany();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
 

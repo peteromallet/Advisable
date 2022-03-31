@@ -5,7 +5,7 @@ import SubmitButton from "src/components/SubmitButton";
 import { ArrowSmRight } from "@styled-icons/heroicons-solid";
 import { object, string } from "yup";
 import FormField from "src/components/FormField";
-import { useUpdateCopmany } from "./queries";
+import { useUpdateCompany } from "./queries";
 import { useNavigate } from "react-router-dom";
 
 const validationSchema = object().shape({
@@ -17,7 +17,7 @@ const validationSchema = object().shape({
 
 export default function Company({ data }) {
   const navigate = useNavigate();
-  const [update] = useUpdateCopmany();
+  const [update] = useUpdateCompany();
 
   const initialValues = {
     name: data?.currentCompany?.name || "",
