@@ -52,5 +52,26 @@ module.exports = {
     require("@tailwindcss/forms"),
     require("@tailwindcss/aspect-ratio"),
     require("@tailwindcss/typography"),
+    // This snippet defines each color in the tailwind config as a CSS variable
+    // on :root. This can be useful when you want to use a color outside of what
+    // tailwind provides. e.g working with SVG's.
+    function ({ addBase, theme }) {
+      function extractColorVars(colorObj, colorGroup = "") {
+        return Object.keys(colorObj).reduce((vars, colorKey) => {
+          const value = colorObj[colorKey];
+
+          const newVars =
+            typeof value === "string"
+              ? { [`--color${colorGroup}-${colorKey}`]: value }
+              : extractColorVars(value, `-${colorKey}`);
+
+          return { ...vars, ...newVars };
+        }, {});
+      }
+
+      addBase({
+        ":root": extractColorVars(theme("colors")),
+      });
+    },
   ],
 };
