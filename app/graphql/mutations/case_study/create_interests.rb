@@ -14,7 +14,8 @@ module Mutations
       end
 
       def resolve(terms:)
-        interests = terms.uniq(&:downcase).map do |term|
+        existing_interests = current_user.account.interests.pluck(:term).map(&:downcase)
+        interests = terms.uniq(&:downcase).reject { |t| existing_interests.include?(t.downcase) }.map do |term|
           current_account_responsible_for do
             ::CaseStudy::Interest.create!(term:, account: current_user.account)
           end
