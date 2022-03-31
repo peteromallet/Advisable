@@ -1,5 +1,11 @@
-import React, { createElement } from "react";
-import { Outlet, Route, Routes } from "react-router-dom";
+import React, { useMemo, createElement } from "react";
+import {
+  useLocation,
+  Route,
+  Routes,
+  matchPath,
+  resolvePath,
+} from "react-router-dom";
 import Welcome from "./Welcome";
 import Company from "./Company";
 import Industry from "./Industry";
@@ -35,7 +41,15 @@ export const STEPS = [
 ];
 
 export default function UserOnboarding() {
+  const location = useLocation();
   const { loading, data } = useOnboardingData();
+
+  const matchingStepIndex = useMemo(() => {
+    return STEPS.findIndex((step) => {
+      const resolved = resolvePath(step.path, "/setup");
+      return matchPath(resolved.pathname, location.pathname);
+    });
+  }, [location]);
 
   if (loading) return <Loading />;
 
@@ -43,8 +57,11 @@ export default function UserOnboarding() {
     <div className="onboarding flex flex-col min-h-screen">
       <header className="onboarding_heading px-5 flex justify-between items-center">
         <Logo />
-        <Progress />
-        <div>Step count</div>
+        <Progress matchingStepIndex={matchingStepIndex} />
+        <div className="w-[80px] text-neutral600">
+          Step {matchingStepIndex === -1 ? 0 : matchingStepIndex + 1} of{" "}
+          {STEPS.length}
+        </div>
       </header>
       <div className="onboarding_content flex flex-1">
         <Routes>

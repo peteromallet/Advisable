@@ -1,11 +1,4 @@
-import React, { useMemo } from "react";
-import {
-  matchPath,
-  resolvePath,
-  useLocation,
-  useMatch,
-  useResolvedPath,
-} from "react-router-dom";
+import React from "react";
 import composeStyles from "src/utilities/composeStyles";
 import { STEPS } from "./index";
 
@@ -13,7 +6,7 @@ const numberStyles = composeStyles({
   base: `w-5 h-5 bg-neutral300 rounded-full text-white grid place-items-center text-xs font-semibold`,
   variants: {
     active: `bg-blue900`,
-    complete: `bg-blue500 bg-gradient-to-br from-blue500 to-purple500`,
+    complete: `bg-blue500 bg-gradient-to-l from-blue500 to-purple500`,
   },
 });
 
@@ -48,16 +41,7 @@ function CheckIcon() {
   );
 }
 
-export default function Progress() {
-  const location = useLocation();
-
-  const matchingStepIndex = useMemo(() => {
-    return STEPS.findIndex((step) => {
-      const resolved = resolvePath(step.path, "/setup");
-      return matchPath(resolved.pathname, location.pathname);
-    });
-  }, [location]);
-
+export default function Progress({ matchingStepIndex }) {
   return (
     <div className="flex items-center gap-5">
       {STEPS.map((step, index) => {
@@ -71,7 +55,9 @@ export default function Progress() {
             >
               {step.title}
             </ProgressStep>
-            <div className="h-px bg-neutral-300 w-5" />
+            {index + 1 < STEPS.length && (
+              <div className="h-px bg-neutral-300 w-5" />
+            )}
           </React.Fragment>
         );
       })}
