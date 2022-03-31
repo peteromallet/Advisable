@@ -31,7 +31,7 @@ export default function Company({ data }) {
       variables: { input: values },
     });
 
-    navigate("/setup/industry");
+    navigate("../industry");
   };
 
   return (

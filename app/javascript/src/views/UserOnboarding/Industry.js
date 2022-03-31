@@ -5,7 +5,7 @@ export default function Industry() {
   return (
     <div>
       <h2>Industry</h2>
-      <Link to="/setup/customers">Next</Link>
+      <Link to="../audience">Next</Link>
     </div>
   );
 }

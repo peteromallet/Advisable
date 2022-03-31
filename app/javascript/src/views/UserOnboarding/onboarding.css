@@ -1,5 +1,5 @@
 .onboarding {
-  --header-size: 80px;
+  --header-size: 64px;
 }
 
 .onboarding_heading {
@@ -7,6 +7,7 @@
 }
 
 .onboarding_content {
+  padding-top: 40px;
   min-height: calc(100% - var(--header-size));
 }
 
@@ -14,7 +15,7 @@
   width: 100%;
   position: relative;
   overflow-y: scroll;
-  height: calc(100vh - var(--header-size) - 28px);
+  height: calc(100vh - var(--header-size) - 68px);
 
   &:before,
   &:after {

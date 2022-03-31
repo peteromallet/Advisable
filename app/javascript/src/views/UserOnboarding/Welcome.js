@@ -19,7 +19,7 @@ export default function Welcome() {
           Let’s build your feed. Your answers to the next few questions will
           help us know what case studies to recommend.
         </p>
-        <Link to="/setup/company">
+        <Link to="company">
           <Button size="lg" className="mx-auto">
             Get Started
           </Button>
