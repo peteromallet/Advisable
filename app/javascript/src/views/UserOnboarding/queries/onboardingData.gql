@@ -11,4 +11,8 @@ query OnboardingData {
     id
     term
   }
+  industries {
+    id
+    name
+  }
 }
