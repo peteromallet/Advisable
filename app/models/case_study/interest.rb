@@ -8,6 +8,8 @@ module CaseStudy
 
     belongs_to :account
 
+    validates :term, uniqueness: {case_sensitive: false, scope: :account_id} # rubocop:disable Rails/UniqueValidationWithoutIndex
+
     def articles
       find_articles! if article_ids.blank?
       Article.searchable.where(id: article_ids)

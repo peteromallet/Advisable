@@ -23,8 +23,8 @@ module CurrentUserUtilities
     current_user&.company
   end
 
-  def current_account_responsible_for(&block)
-    Logidze.with_responsible(current_account_id, &block)
+  def current_account_responsible_for(&)
+    Logidze.with_responsible(current_account_id, &)
   end
 
   def save_with_current_account!(object)
