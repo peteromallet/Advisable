@@ -2,6 +2,7 @@
 
 module Mutations
   class UpdateCompany < Mutations::BaseMutation
+    argument :audience, String, required: false
     argument :business_type, String, required: false
     argument :industry, ID, required: false
     argument :intent, String, required: false
@@ -20,6 +21,7 @@ module Mutations
       current_company.intent = args[:intent] if args[:intent]
       current_company.kind = args[:kind] if args[:kind]
       current_company.name = args[:name] if args[:name]
+      current_company.audience = args[:audience] if args[:audience]
 
       current_account_responsible_for { current_company.save }
 

@@ -109,6 +109,7 @@ end
 #  accepted_project_payment_terms_at :datetime
 #  address                           :jsonb
 #  admin_fee                         :integer
+#  audience                          :string
 #  billing_email                     :string
 #  budget                            :bigint
 #  business_type                     :string
