@@ -15,15 +15,15 @@ const validationSchema = object().shape({
   ),
 });
 
-export default function Company() {
+export default function Company({ data }) {
   const navigate = useNavigate();
   const [update] = useUpdateCopmany();
 
   const initialValues = {
-    name: "",
-    businessType: "B2B",
-    intent: "",
-    kind: "Startup",
+    name: data?.currentCompany?.name || "",
+    businessType: data?.currentCompany?.businessType || "B2B",
+    intent: data?.currentCompany?.intent || "",
+    kind: data?.currentCompany?.kind || "Startup",
   };
 
   const handleSubmit = async (values) => {
