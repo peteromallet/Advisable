@@ -25,6 +25,7 @@ const createCache = () => {
         "ConsultationDeclinedMessage",
         "InterviewRequestMessage",
         "InterviewDeclinedMessage",
+        "InterviewAutoDeclinedMessage",
         "InterviewScheduledMessage",
         "AgreementCreatedMessage",
         "AgreementAcceptedMessage",

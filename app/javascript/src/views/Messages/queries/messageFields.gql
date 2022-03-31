@@ -76,6 +76,16 @@ fragment MessageFields on MessageInterface {
     }
   }
 
+  ... on InterviewAutoDeclinedMessage {
+    interview {
+      id
+      specialist {
+        id
+        firstName
+      }
+    }
+  }
+
   ... on AgreementCreatedMessage {
     agreement {
       id
