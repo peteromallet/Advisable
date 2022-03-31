@@ -12,10 +12,4 @@ class UserPolicy < BasePolicy
   def invoices?
     owned_by_company? && team_manager?
   end
-
-  private
-
-  def company_of_record
-    record.company
-  end
 end
