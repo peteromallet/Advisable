@@ -29,7 +29,7 @@ export default function CreatingFeed() {
 
   return (
     <div className="w-full grid place-items-center">
-      <div>
+      <div className="-mt-20">
         <div className="mb-12 relative h-24 mx-auto w-20">
           <Card
             animate={{
