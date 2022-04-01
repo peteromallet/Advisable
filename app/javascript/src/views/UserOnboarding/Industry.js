@@ -58,7 +58,6 @@ export default function Industry({ data }) {
           </div>
         ))}
       </div>
-      <Link to="../audience">Next</Link>
     </div>
   );
 }
