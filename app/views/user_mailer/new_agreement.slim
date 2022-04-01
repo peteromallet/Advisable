@@ -1,11 +1,11 @@
 = render "emails/container" do
   = render "emails/spacing", height: "32px"
   = render "emails/heading" do
-    ' #{@agreement.specialist.name} has requested to work with you on Advisable
+    ' #{@agreement.specialist.account.name} has requested to work with you on Advisable
 
   = render "emails/paragraph" do
     ' Hi #{@agreement.user.account.first_name}, <br>
-    ' #{@agreement.specialist.name} has sent you a request to work together.
+    ' #{@agreement.specialist.account.name} has sent you a request to work together.
   = render "emails/spacing", height: "40px"
 
   = render "emails/paragraph" do
