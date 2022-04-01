@@ -2,7 +2,7 @@
   Hi <%= @interview.user.account.first_name %>,
 </p>
 <p>
-  Unfortunately, <%= @interview.specialist.first_name %> needs to reschedule your interview for <%=
+  Unfortunately, <%= @interview.specialist.account.first_name %> needs to reschedule your interview for <%=
       time_in_zone(@interview.starts_at, @interview.user.time_zone) %> and none of your existing availability works for
       them.
 </p>
@@ -12,7 +12,7 @@
 </p>
 <% if @interview.availability_note.present? %>
 <p>
-  <%= @interview.specialist.first_name %> left the following note: <%= @interview.availability_note %>
+  <%= @interview.specialist.account.first_name %> left the following note: <%= @interview.availability_note %>
 </p>
 <% end %>
 <p>
