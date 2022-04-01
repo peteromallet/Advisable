@@ -59,7 +59,6 @@ class GenerateInvoicePdfJob < ApplicationJob
   def line_items(payments)
     payments.flat_map do |payment|
       description = payment.specialist.account.name
-      description += " - #{payment.task.name}" if payment.task&.name&.present?
       {
         description:,
         quantity: 1,
