@@ -4,7 +4,7 @@
     | #{@payment_request.specialist.account.name} requested payment from you
   = render "emails/paragraph" do
     | Hi #{@agreement.user.account.first_name}, <br/> <br />
-    | #{@payment_request.specialist.account.first_name} has requested the following payment from you. Please approve this payment as soon as possible to avoid any delay in #{@payment_request.specialist.first_name} being paid.
+    | #{@payment_request.specialist.account.first_name} has requested the following payment from you. Please approve this payment as soon as possible to avoid any delay in #{@payment_request.specialist.account.first_name} being paid.
   = render "emails/spacing", height: "32px"
 
   div style="padding: 0 32px;"

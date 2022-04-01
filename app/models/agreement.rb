@@ -20,11 +20,18 @@ class Agreement < ApplicationRecord
   validates :collaboration, inclusion: {in: VALID_COLLABORATIONS}, allow_blank: true
   validates :invoicing, inclusion: {in: VALID_INVOICINGS}, allow_blank: true
 
-  scope :accepted, -> { where(status: "accepted") }
+  VALID_STATUSES.each do |status|
+    scope status, -> { where(status:) }
+  end
 
   def due_days
     super.presence || DEFAULT_DUE_DAYS
   end
+
+  def acceptable?
+    status == "pending"
+  end
+  alias declinable? acceptable?
 end
 
 # == Schema Information
@@ -37,6 +44,7 @@ end
 #  hourly_rate   :integer
 #  invoicing     :string
 #  reason        :string
+#  reminded_at   :datetime
 #  status        :string
 #  uid           :string           not null
 #  created_at    :datetime         not null

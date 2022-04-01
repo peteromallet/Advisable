@@ -170,17 +170,11 @@ class UserMailer < ApplicationMailer
   end
 
   def new_agreement(agreement)
-    @account = agreement.user.account
-    @agreement = agreement
-    @conversation = agreement.messages.find_by(kind: "AgreementCreated").conversation
+    agreement_mail(agreement, "#{agreement.specialist.account.name} has requested to work together on Advisable")
+  end
 
-    mail(
-      to: @account.email,
-      from: "hello@advisable.com",
-      subject: "#{@agreement.specialist.account.name} has requested to work together on Advisable"
-    ) do |format|
-      format.html { render layout: "email_v2" }
-    end
+  def agreement_reminder(agreement)
+    agreement_mail(agreement, "Reminder to respond to the agreement from #{agreement.specialist.account.name}")
   end
 
   def payment_request(payment_request)
@@ -207,6 +201,19 @@ class UserMailer < ApplicationMailer
       to: @payment_request.company.billing_email,
       cc: @agreement.user.account.email,
       bcc: "finance@advisable.com"
+    ) do |format|
+      format.html { render layout: "email_v2" }
+    end
+  end
+
+  def agreement_mail(agreement, subject)
+    @agreement = agreement
+    @conversation = @agreement.messages.find_by(kind: "AgreementCreated").conversation
+
+    mail(
+      to: @agreement.user.account.email,
+      from: "hello@advisable.com",
+      subject:
     ) do |format|
       format.html { render layout: "email_v2" }
     end
