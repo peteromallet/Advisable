@@ -1,9 +1,11 @@
 import React from "react";
 import { useArticle } from "./queries";
 import Loading from "src/components/Loading";
+import ErrorBoundary from "src/components/ErrorBoundary";
 import SidebarCard from "./components/SidebarCard";
 import ArticleIntro from "./components/ArticleIntro";
-import Article from "./components/Article";
+import ArticleContent from "./components/ArticleContent";
+import ArticleSidebar from "./components/ArticleSidebar";
 
 export default function ShortlistArticle() {
   const { data, loading, error } = useArticle();
@@ -12,13 +14,18 @@ export default function ShortlistArticle() {
   console.log("data", data);
 
   return (
-    <div>
-      <div className="flex gap-20 items-start">
-        <SidebarCard specialist={data.caseStudy.specialist} />
-        <ArticleIntro caseStudy={data.caseStudy} />
+    <ErrorBoundary>
+      <div>
+        <div className="flex gap-20 items-start">
+          <SidebarCard specialist={data.caseStudy.specialist} />
+          <ArticleIntro caseStudy={data.caseStudy} />
+        </div>
+        <hr />
+        <div className="flex gap-20">
+          <ArticleSidebar caseStudy={data.caseStudy} />
+          <ArticleContent caseStudy={data.caseStudy} />
+        </div>
       </div>
-      <hr />
-      <Article caseStudy={data.caseStudy} />
-    </div>
+    </ErrorBoundary>
   );
 }
