@@ -22,6 +22,7 @@ export default function ArticleContent({ caseStudy }) {
       {caseStudy.sections.map((section) => (
         <div key={section.id}>
           <h6 className="text-sm uppercase font-[550] leading-5">
+            <div id={section.id} className="relative top-[-92px]" />
             {section.type}
           </h6>
           {section.contents.map((content) => (
