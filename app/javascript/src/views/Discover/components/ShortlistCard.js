@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Box, Text } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
 import { Link } from "react-router-dom";
-import { shortlistDescription } from "../utilities";
 
 const StyledShortlistCard = styled.div(
   css({
@@ -21,7 +20,7 @@ const StyledShortlistCard = styled.div(
   }),
 );
 
-export default function ShortlistCard({ shortlist, company }) {
+export default function ShortlistCard({ shortlist }) {
   const placeholders = Array.apply(null, {
     length: 5 - shortlist.results.nodes.length,
   });
@@ -35,18 +34,9 @@ export default function ShortlistCard({ shortlist, company }) {
         justifyContent="space-between"
       >
         <Box maxWidth={{ l: "240px" }} paddingRight={2}>
-          <Text
-            fontSize="3xl"
-            fontWeight={600}
-            marginBottom={2}
-            color="neutral900"
-            letterSpacing="-0.032em"
-          >
+          <h4 className="text-2xl font-semibold tracking-tight text-blue900 leading-tight">
             {shortlist.name}
-          </Text>
-          <Text lineHeight="20px" color="neutral700" marginBottom={5}>
-            {shortlistDescription(shortlist, company)}
-          </Text>
+          </h4>
         </Box>
         <Box
           display="grid"

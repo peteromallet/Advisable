@@ -332,6 +332,14 @@ module Types
       current_user.account.interests
     end
 
+    field :interest, Types::CaseStudy::Interest, null: true do
+      argument :id, ID, required: true
+    end
+    def interest(id:)
+      requires_client!
+      current_user.account.interests.find_by!(uid: id)
+    end
+
     field :feed, Types::CaseStudy::InterestArticle.connection_type, null: true
     def feed
       requires_client!

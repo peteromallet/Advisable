@@ -34,9 +34,9 @@ export function useCurrentCompany() {
 }
 
 export function useArticle() {
-  const { id, articleId } = useParams();
+  const { articleId } = useParams();
   return useQuery(ARTICLE, {
-    variables: { searchId: id, articleId: articleId },
+    variables: { articleId: articleId },
   });
 }
 
