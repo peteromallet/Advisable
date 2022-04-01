@@ -11,12 +11,9 @@ import ShortlistSkillCategory from "./views/ShortlistSkillCategory";
 import ShortlistGoals from "./views/ShortlistGoals";
 import ShortlistName from "./views/ShortlistName";
 import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
-import ClientApplicationPrompt from "src/components/ClientApplicationPrompt";
-import useViewer from "src/hooks/useViewer";
 
 export default function Discover() {
   useBackground("beige");
-  const viewer = useViewer();
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -27,22 +24,16 @@ export default function Discover() {
     <ErrorBoundary>
       <Page width="1020px">
         <Box paddingY={{ _: 8, m: 12 }} paddingX={{ _: 4, m: 8 }}>
-          <ClientApplicationPrompt />
           <AccountConfirmationPrompt />
-          {viewer.isAccepted && (
-            <Routes>
-              <Route path="/new/goals" element={<ShortlistGoals />} />
-              <Route path="/new/name" element={<ShortlistName />} />
-              <Route
-                path="/new/:slug"
-                element={<ShortlistArticleSelection />}
-              />
-              <Route path="/new" element={<ShortlistSkillCategory />} />
-              <Route path="/:id/:articleId" element={<ShortlistArticle />} />
-              <Route path="/:id" element={<Shortlist />} />
-              <Route path="/" element={<Shortlists />} />
-            </Routes>
-          )}
+          <Routes>
+            <Route path="/new/goals" element={<ShortlistGoals />} />
+            <Route path="/new/name" element={<ShortlistName />} />
+            <Route path="/new/:slug" element={<ShortlistArticleSelection />} />
+            <Route path="/new" element={<ShortlistSkillCategory />} />
+            <Route path="/:id/:articleId" element={<ShortlistArticle />} />
+            <Route path="/:id" element={<Shortlist />} />
+            <Route path="/" element={<Shortlists />} />
+          </Routes>
         </Box>
       </Page>
     </ErrorBoundary>
