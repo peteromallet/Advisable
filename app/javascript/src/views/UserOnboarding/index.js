@@ -16,6 +16,7 @@ import { useOnboardingData } from "./queries";
 import { Loading } from "src/components";
 import "./onboarding.css";
 import Progress from "./Progress";
+import CreatingFeed from "./CreatingFeed";
 
 export const STEPS = [
   {
@@ -73,6 +74,7 @@ export default function UserOnboarding() {
               element={createElement(step.component, { data })}
             />
           ))}
+          <Route path="complete" element={<CreatingFeed />} />
         </Routes>
       </div>
     </div>

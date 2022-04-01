@@ -39,7 +39,7 @@ export default function Interests({ data }) {
       },
     });
 
-    navigate("/");
+    navigate("../complete");
   };
 
   const suggestedInterests = useMemo(() => {
