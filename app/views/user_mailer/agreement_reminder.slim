@@ -1,0 +1,17 @@
+= render "emails/container" do
+  = render "emails/spacing", height: "32px"
+  = render "emails/heading" do
+    ' Reminder to respond to the agreement from #{@agreement.specialist.account.name}
+
+  = render "emails/paragraph" do
+    ' Hi #{@agreement.user.account.first_name}, <br>
+    ' This is a reminder to review and respond to the Agreement that #{@agreement.specialist.account.first_name} sent for your potential collaboration.
+  = render "emails/spacing", height: "40px"
+
+  = render "emails/paragraph" do
+    ' You can view what #{@agreement.specialist.account.first_name} proposed based on your conversation, and either accept or decline. If you need more time, feel free to communicate this with them.
+  = render "emails/spacing", height: "40px"
+
+  = render "emails/button", href: conversation_url(@conversation) do
+    ' Respond to Agreement
+  = render "emails/spacing", height: "40px"

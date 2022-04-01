@@ -6,19 +6,22 @@ module Mutations
 
     field :agreement, Types::Agreement, null: true
 
-    def authorized?(**_args)
+    def authorized?(agreement:)
       requires_client!
+
+      agreement = Agreement.find_by!(uid: agreement)
+      policy = AgreementPolicy.new(current_user, agreement)
+      return true if policy.accept?
+
+      ApiError.not_authorized("You do not have permission to accept this Agreement")
     end
 
     def resolve(agreement:)
       agreement = Agreement.find_by!(uid: agreement)
-
+      ApiError.invalid_request("NOT_IN_AN_ACCEPTABLE_STATE") unless agreement.acceptable?
       ApiError.invalid_request("PAYMENTS_NOT_SETUP", "Payments are not setup for this company.") unless agreement.company.payments_setup
 
-      current_account_responsible_for do
-        agreement.update!(status: "accepted")
-      end
-
+      current_account_responsible_for { agreement.update!(status: "accepted") }
       conversation = Conversation.by_accounts(agreement.specialist, current_account)
       conversation.new_message!(kind: "AgreementAccepted", agreement:, send_emails: false)
       SpecialistMailer.agreement_accepted(agreement).deliver_later

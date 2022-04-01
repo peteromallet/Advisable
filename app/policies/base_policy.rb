@@ -46,6 +46,10 @@ class BasePolicy
   end
 
   def company_of_record
-    record.respond_to?(:user) && record.user&.company
+    if record.respond_to?(:company)
+      record.company
+    elsif record.respond_to?(:user)
+      record.user&.company
+    end
   end
 end
