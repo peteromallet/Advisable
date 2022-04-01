@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Button from "src/components/Button";
 import SearchIllustration from "src/illustrations/zest/search";
@@ -6,7 +7,12 @@ import SearchIllustration from "src/illustrations/zest/search";
 export default function Welcome() {
   return (
     <div className="w-full">
-      <div className="max-w-[640px] mx-auto bg-white shadow-xl p-12 pb-16 text-center rounded-xl">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-[640px] mx-auto bg-white shadow-xl p-12 pb-16 text-center rounded-xl"
+      >
         <SearchIllustration
           primaryColor="var(--color-pink-200)"
           secondaryColor="var(--color-blue900)"
@@ -24,7 +30,7 @@ export default function Welcome() {
             Get Started
           </Button>
         </Link>
-      </div>
+      </motion.div>
     </div>
   );
 }

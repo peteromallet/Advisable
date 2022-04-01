@@ -1,4 +1,5 @@
 import { Form, Formik } from "formik";
+import { motion } from "framer-motion";
 import { Input, Select } from "@advisable/donut";
 import React from "react";
 import SubmitButton from "src/components/SubmitButton";
@@ -36,7 +37,12 @@ export default function Company({ data }) {
 
   return (
     <div className="mx-auto max-w-[640px] w-full">
-      <div className="bg-white shadow-xl rounded-xl p-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white shadow-xl rounded-xl p-10"
+      >
         <h2 className="font-semibold text-3xl tracking-tight leading-none mb-2 text-blue900">
           Tell us about your company
         </h2>
@@ -117,7 +123,7 @@ export default function Company({ data }) {
             </SubmitButton>
           </Form>
         </Formik>
-      </div>
+      </motion.div>
     </div>
   );
 }

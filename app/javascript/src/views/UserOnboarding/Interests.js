@@ -1,5 +1,6 @@
 import { ArrowSmRight, XCircle } from "@styled-icons/heroicons-solid";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import SimpleBar from "simplebar-react";
 import Button from "src/components/Button";
@@ -49,7 +50,12 @@ export default function Interests({ data }) {
   return (
     <div className="container mx-auto flex gap-12">
       <div className="pb-12 max-w-[680px] w-full">
-        <div className="bg-white min-h-full p-10 rounded-xl shadow-xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white min-h-full p-10 rounded-xl shadow-xl"
+        >
           <h2 className="text-3xl font-semibold tracking-tight mb-2">
             What topics are you interested in?
           </h2>
@@ -83,14 +89,18 @@ export default function Interests({ data }) {
               interests
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
-      <div className="w-full">
+      <motion.div
+        className="w-full"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
         <SuggestedInterests
           suggestions={suggestedInterests}
           onClick={addInterest}
         />
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import {
   ArrowSmRight,
   QuestionMarkCircle,
 } from "@styled-icons/heroicons-solid";
+import { motion } from "framer-motion";
 import { object, string } from "yup";
 import { Textarea } from "@advisable/donut";
 import { Formik, Form } from "formik";
@@ -38,7 +39,12 @@ export default function Audience({ data }) {
   return (
     <div className="mx-auto w-[1080px] flex gap-10">
       <div className="min-w-[680px] w-full pb-12">
-        <div className="bg-white rounded-xl shadow-xl p-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-xl shadow-xl p-10"
+        >
           <h2 className="font-semibold text-3xl tracking-tight leading-none mb-2 text-blue900">
             Who are your customers?
           </h2>
@@ -72,10 +78,14 @@ export default function Audience({ data }) {
               </SubmitButton>
             </Form>
           </Formik>
-        </div>
+        </motion.div>
       </div>
       <div className="w-full">
-        <div className="rounded-xl bg-neutral100 p-10 border-2 border-solid border-neutral200">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="rounded-xl bg-neutral100 p-10 border-2 border-solid border-neutral200"
+        >
           <QuestionMarkCircle className="w-10 h-10 mb-4 -ml-1 text-blue900" />
 
           <p className="mb-8 text-lg">
@@ -84,13 +94,14 @@ export default function Audience({ data }) {
 
           <h5 className="font-medium mb-1">Examples</h5>
           <ul className="text-neutral900">
+            <li>Entrepreneurs</li>
             <li>Startups in fintech</li>
-            <li>Entrepreneurs in fashion</li>
+            <li>Companies in fashion</li>
             <li>Accounting companies in Germany</li>
             <li>Some other example</li>
             <li>Another example</li>
           </ul>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
